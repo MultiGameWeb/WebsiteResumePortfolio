@@ -1,0 +1,24 @@
+const hero="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85";
+const gallery=[
+  ["Weddings","https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80"],
+  ["Portraits","https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1000&q=80"],
+  ["Nature","https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=80"]
+];
+function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+export function render(d, selected=[]){
+  const has=id=>selected.includes(id);
+  return `<div class="site-preview" style="font-family:Arial,sans-serif;color:#20231f;background:#fff">
+    <div class="template-preview-nav"><strong>${esc(d.businessName||"Your Studio")}</strong><nav>${has("about")?"<span>About</span>":""}${has("services")?"<span>Services</span>":""}${has("gallery")?"<span>Gallery</span>":""}${has("reviews")?"<span>Reviews</span>":""}${has("contact")?"<span>Contact</span>":""}</nav></div>
+    ${has("home")?`<section class="tp-hero"><img src="${hero}" alt=""><div class="tp-overlay"></div><div class="tp-hero-content"><small>${esc(d.ownerName||"PHOTOGRAPHY STUDIO").toUpperCase()}</small><h1>${esc(d.homeTitle||d.businessName||"Your Studio")}</h1><p>${esc(d.homeText||"")}</p><div style="display:flex;gap:8px;margin-top:13px">${has("gallery")?'<a href="#gallery" style="background:#fff;color:#20231f;padding:9px 12px;border-radius:9px;font-size:10px;font-weight:700">View Portfolio</a>':""}${has("whatsapp")&&d.whatsapp?`<a href="https://wa.me/${String(d.whatsapp).replace(/\\D/g,"")}" target="_blank" style="background:#2c7d4d;color:white;padding:9px 12px;border-radius:9px;font-size:10px;font-weight:700">WhatsApp Us</a>`:""}</div></div></section>`:""}
+    ${has("about")&&d.aboutText?`<section class="tp-section" id="about"><div class="tp-inner"><small class="eyebrow">ABOUT THE STUDIO</small><h2 class="tp-title">${esc(d.aboutText)}</h2></div></section>`:""}
+    ${has("services")?`<section class="tp-section tinted"><div class="tp-inner"><small class="eyebrow">WHAT WE OFFER</small><h2 class="tp-title">Photography Services</h2><div class="tp-grid">${["Weddings","Pre-Wedding","Maternity"].map(x=>`<article class="tp-card"><h3>${x}</h3><strong>Custom package</strong><p>Beautiful coverage planned around your story.</p></article>`).join("")}</div></div></section>`:""}
+    ${has("gallery")?`<section class="tp-section" id="gallery"><div class="tp-inner"><small class="eyebrow">SELECTED WORK</small><h2 class="tp-title">Portfolio</h2><div class="tp-gallery">${gallery.map(g=>`<figure><img src="${g[1]}" alt="${g[0]}" loading="lazy"><figcaption>${g[0]}</figcaption></figure>`).join("")}</div></div></section>`:""}
+    ${has("reviews")?`<section class="tp-section tinted"><div class="tp-inner"><small class="eyebrow">KIND WORDS</small><h2 class="tp-title">Reviews & ratings</h2><div class="tp-grid"><article class="tp-card"><h3>★★★★★</h3><p>“Beautiful work and effortless communication.”</p><strong>— Ananya, Google</strong></article><article class="tp-card"><h3>★★★★★</h3><p>“Every picture feels personal and timeless.”</p><strong>— Kavya, Facebook</strong></article></div></div></section>`:""}
+    ${has("contact")?`<section class="tp-section"><div class="tp-inner"><small class="eyebrow">GET IN TOUCH</small><h2 class="tp-title">Enquire about your date</h2><p>${esc(d.callNumber||"")}</p><p>${esc(d.location||"")}</p><div style="display:flex;gap:8px;flex-wrap:wrap">${has("location")&&d.mapsLink?`<a href="${esc(d.mapsLink)}" target="_blank" style="border:1px solid #ddd;padding:9px 12px;border-radius:9px;font-size:10px">Get Directions</a>`:""}${has("whatsapp")&&d.whatsapp?`<a href="https://wa.me/${String(d.whatsapp).replace(/\\D/g,"")}" target="_blank" style="background:#2c7d4d;color:#fff;padding:9px 12px;border-radius:9px;font-size:10px">WhatsApp Us</a>`:""}</div></div></section>`:""}
+    ${has("faq")?`<section class="tp-section" style="max-width:800px;margin:auto"><small class="eyebrow">FAQ</small><h2 class="tp-title">Frequently asked</h2><div class="tp-faq">${["Do you travel for shoots?","How long does delivery take?","What is the booking process?"].map(q=>`<button>${q}<span>＋</span></button>`).join("")}</div></section>`:""}
+    <div class="tp-footer"><span>© ${new Date().getFullYear()} ${esc(d.businessName||"Your Studio")}</span><span>${esc(d.tagline||"")}</span></div>
+  </div>`;
+}
+export function renderFullHtml(d, selected=[]){
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(d.businessName||"Photography Studio")}</title><link rel="stylesheet" href="style.css"></head><body>${render(d,selected)}</body></html>`;
+}

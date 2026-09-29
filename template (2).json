@@ -1,0 +1,46 @@
+{
+  "id":"photography-01",
+  "name":"Photography — Editorial",
+  "category":"Photography",
+  "features":[
+    {"id":"home","label":"Home"},
+    {"id":"about","label":"About"},
+    {"id":"services","label":"Services"},
+    {"id":"gallery","label":"Gallery"},
+    {"id":"reviews","label":"Reviews"},
+    {"id":"contact","label":"Contact"},
+    {"id":"faq","label":"FAQ"},
+    {"id":"whatsapp","label":"WhatsApp"},
+    {"id":"location","label":"Location"}
+  ],
+  "fields":[
+    {"key":"businessName","label":"Business Name","required":true,"placeholder":"Lumière Frames"},
+    {"key":"ownerName","label":"Owner / Photographer Name","placeholder":"Rahul Photography"},
+    {"key":"tagline","label":"Motto / Tagline","placeholder":"Stories, beautifully framed."},
+    {"key":"homeTitle","label":"Home Heading","required":true,"placeholder":"Moments that feel like forever."},
+    {"key":"homeText","label":"Home Text","type":"textarea","placeholder":"Candid wedding, portrait and brand photography..."},
+    {"key":"aboutText","label":"About Us","type":"textarea","placeholder":"Tell visitors about your style..."},
+    {"key":"whatsapp","label":"WhatsApp Number","placeholder":"919876543210"},
+    {"key":"callNumber","label":"Call Number","placeholder":"+91 98765 43210"},
+    {"key":"location","label":"Location","placeholder":"Banjara Hills, Hyderabad"},
+    {"key":"mapsLink","label":"Google Maps Link","placeholder":"https://maps.google.com/?q=..."},
+    {"key":"instagram","label":"Instagram Link","placeholder":"https://instagram.com/..."},
+    {"key":"facebook","label":"Facebook Link","placeholder":"https://facebook.com/..."},
+    {"key":"youtube","label":"YouTube Link","placeholder":"https://youtube.com/..."}
+  ],
+  "demoData":{
+    "businessName":"Lumière Frames",
+    "ownerName":"Rahul Photography",
+    "tagline":"Stories, beautifully framed.",
+    "homeTitle":"Moments that feel like forever.",
+    "homeText":"Candid wedding, portrait and brand photography crafted with a cinematic eye.",
+    "aboutText":"We turn real moments into timeless photographs with a calm, candid and editorial approach.",
+    "whatsapp":"919876543210",
+    "callNumber":"+91 98765 43210",
+    "location":"Banjara Hills, Hyderabad",
+    "mapsLink":"https://maps.google.com/?q=Banjara+Hills+Hyderabad",
+    "instagram":"https://instagram.com/",
+    "facebook":"https://facebook.com/",
+    "youtube":"https://youtube.com/"
+  }
+}

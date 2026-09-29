@@ -1,52 +1,28 @@
-# Photography Template 01 — v3
+# SiteCraft Generic Builder v1
 
-A premium, GitHub Pages-friendly photography website template with a separate local admin panel.
+This package establishes the one-time architecture for many website templates.
 
-## Files
+## Flow
 
-- `index.html` — public photography website
-- `style.css` — public website UI, 3D buttons and animations
-- `script.js` — public rendering, filters, enquiry form and local sync
-- `data.js` — default content/data model
-- `admin.html` — admin control panel
-- `admin.css` — admin UI
-- `admin.js` — admin logic, storage picker, CRUD and settings
-- `template.json` — template metadata
-- `assets/preview.svg` — optional marketplace thumbnail
+Marketplace → Select template → Select features → Enter details → Live preview → Demo payment → Download → Optional domain handoff.
 
-## Admin controls
+## Important architecture
 
-The admin controls the public-facing content instead of asking the customer to paste image URLs or write long forms.
+The builder/checkout/success code is generic. Each template provides only:
 
-Business: business name, owner name, motto, experience and specialty line.
-Home: ribbon, hero heading/subtitle, hero badge, CTA labels, proof points and middle CTA.
-Images & Storage: upload images, browser-side compression, choose hero image, delete images.
-Gallery: choose stored images, category, title, optional featured video, show/hide, delete.
-Video: add/edit/delete YouTube/Vimeo videos and show/hide.
-Services: add/edit/delete and show/hide.
-Reviews: add/edit/delete, rating/source and show/hide.
-Contact & Links: WhatsApp, Call, Email, Location, Maps and social links.
-About Us: about text and specialty/experience lines.
-FAQ: add/edit/delete and show/hide.
-Privacy: edit the privacy text.
-Section Visibility: turn sections and animations on/off.
-Security: password protection is OFF by default; password can be enabled later. In this static demo it is browser-local and not production authentication.
+- `template.json` — metadata, features, fields and demo data
+- `template.js` — `render(data, selectedFeatures)` and `renderFullHtml(data, selectedFeatures)`
+- `style.css` — template-specific styling
+- `assets/` — template-specific images/assets if needed
 
-## Run on GitHub Pages
+To add Template 03, create a new folder under `templates/`, add its manifest/module/styles, then add ONE registry object to `js/registry.js`.
 
-Upload the files at repository root. Open `index.html` as the public site. Open `admin.html` for administration.
+No new builder, payment or success flow should be written for a new template.
 
-## Data behavior
+## GitHub Pages
 
-The public site and admin share `localStorage` keys in the same browser/device. The public tab listens for storage updates and can refresh visible content after an admin change.
+This is plain HTML/CSS/JS. It can run as a static site. The builder uses browser localStorage for the prototype state and uses dynamic ES modules for template modules. Serve over HTTP (GitHub Pages, Cloudflare Pages, or a local HTTP server); do not open `builder.html` as a `file://` URL because fetch/import requests are blocked by browser security.
 
-Enquiries are stored under `sitecraft-enquiries` in the same browser.
+## Production
 
-## Production upgrade
-
-For real customer websites, move content/media to a backend such as Supabase/Firebase, add authentication, cloud image storage and image transformation/compression on upload.
-
-
-## Latest UI update
-- Added subtle scroll-focus shake when important sections/features enter the reading zone.
-- Improved mobile-first spacing, touch targets, buttons and sticky CTA behavior.
+For real customers, replace localStorage with a backend, authenticated admin, cloud media storage, real payment gateway and domain provisioning.

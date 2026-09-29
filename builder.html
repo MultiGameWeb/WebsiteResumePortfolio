@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SiteCraft — Customize</title>
+  <link rel="stylesheet" href="css/global.css">
+</head>
+<body data-page="builder">
+  <header class="builder-top"><a class="logo" href="index.html">SiteCraft</a><div><strong id="templateName">Template</strong><small id="templateCategory"></small></div><a class="btn ghost small" href="index.html">← Templates</a></header>
+  <div class="progress"><span class="on">1 Template</span><span class="on">2 Details</span><span>3 Preview</span><span>4 Checkout</span><span>5 Done</span></div>
+
+  <main class="builder-shell">
+    <aside class="builder-panel">
+      <div id="featureBox"></div>
+      <div id="fieldBox"></div>
+      <div class="tip">Tip: fields marked optional can be left blank. Blank optional sections stay hidden in the final website.</div>
+      <div class="editor-actions"><button class="btn ghost" id="resetBtn">Reset</button><button class="btn primary" id="previewBtn">Continue →</button></div>
+    </aside>
+    <section class="preview-workspace">
+      <div class="preview-head"><div><p class="eyebrow">LIVE PREVIEW</p><span>Sample content is already loaded.</span></div><div class="device-toggle"><button class="active" data-device="desktop">Desktop</button><button data-device="tablet">Tablet</button><button data-device="mobile">Mobile</button></div></div>
+      <div id="previewFrame" class="preview-frame desktop"><div id="sitePreview"></div></div>
+    </section>
+  </main>
+  <script src="js/store.js"></script>
+  <script src="js/registry.js"></script>
+  <script src="js/builder.js"></script>
+</body>
+</html>
