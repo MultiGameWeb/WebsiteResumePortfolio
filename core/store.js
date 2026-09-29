@@ -1,0 +1,1 @@
+(() => { const KEY='sitecraft_builder_state_v2'; window.Store={read(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch{return{}}},write(s){localStorage.setItem(KEY,JSON.stringify(s||{}))},update(p){const n={...this.read(),...p};this.write(n);return n},clear(){localStorage.removeItem(KEY)}}; })();
