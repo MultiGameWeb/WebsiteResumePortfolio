@@ -1,37 +1,47 @@
-# Photography Template 01 — v2
+# Photography Template 01 — v3
 
-A premium static HTML/CSS/JS photography website with a local demo admin panel.
+A premium, GitHub Pages-friendly photography website template with a separate local admin panel.
 
 ## Files
 
 - `index.html` — public photography website
-- `style.css` — public website design, 3D buttons and animations
-- `script.js` — public rendering + filters + enquiry handling
-- `data.js` — default site data
+- `style.css` — public website UI, 3D buttons and animations
+- `script.js` — public rendering, filters, enquiry form and local sync
+- `data.js` — default content/data model
 - `admin.html` — admin control panel
-- `admin.css` — admin design
-- `admin.js` — add/edit/delete/save/import/export controls
+- `admin.css` — admin UI
+- `admin.js` — admin logic, storage picker, CRUD and settings
 - `template.json` — template metadata
-- `preview.svg` — preview thumbnail
+- `assets/preview.svg` — optional marketplace thumbnail
 
-## Admin control
+## Admin controls
 
-Open `admin.html` from the same GitHub Pages site. The admin can edit or delete:
+The admin controls the public-facing content instead of asking the customer to paste image URLs or write long forms.
 
-- Studio/brand text
-- Hero title, subtitle, image and CTAs
-- Phone, email, WhatsApp number, location and Google Maps URL
-- Instagram, Facebook, YouTube and Pinterest links
-- Services/packages
-- Gallery images, category and YouTube/Vimeo links
-- Reviews and visibility/approval
-- FAQs
-- Section visibility
-- Accent colour
-- Top ribbon, hero badge and animations
+Business: business name, owner name, motto, experience and specialty line.
+Home: ribbon, hero heading/subtitle, hero badge, CTA labels, proof points and middle CTA.
+Images & Storage: upload images, browser-side compression, choose hero image, delete images.
+Gallery: choose stored images, category, title, optional featured video, show/hide, delete.
+Video: add/edit/delete YouTube/Vimeo videos and show/hide.
+Services: add/edit/delete and show/hide.
+Reviews: add/edit/delete, rating/source and show/hide.
+Contact & Links: WhatsApp, Call, Email, Location, Maps and social links.
+About Us: about text and specialty/experience lines.
+FAQ: add/edit/delete and show/hide.
+Privacy: edit the privacy text.
+Section Visibility: turn sections and animations on/off.
+Security: password protection is OFF by default; password can be enabled later. In this static demo it is browser-local and not production authentication.
 
-Image uploads are supported as browser-local data URLs for the demo. All settings use the same `localStorage` key as the public page, so changes immediately appear on the same browser/device.
+## Run on GitHub Pages
 
-## Important production note
+Upload the files at repository root. Open `index.html` as the public site. Open `admin.html` for administration.
 
-This is intentionally a static demo. `localStorage` does not provide secure or shared admin control across different devices. For a real customer product, connect the same data model to Supabase/Firebase (or another backend), add authentication/authorization, cloud image storage, image compression and server-side persistence.
+## Data behavior
+
+The public site and admin share `localStorage` keys in the same browser/device. The public tab listens for storage updates and can refresh visible content after an admin change.
+
+Enquiries are stored under `sitecraft-enquiries` in the same browser.
+
+## Production upgrade
+
+For real customer websites, move content/media to a backend such as Supabase/Firebase, add authentication, cloud image storage and image transformation/compression on upload.

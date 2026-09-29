@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Premium photography studio website template with portfolio, packages, reviews, FAQ and enquiry form.">
-  <meta name="theme-color" content="#171714">
-  <title>Lumière Frames — Photography Studio</title>
+  <meta name="description" content="Premium photography studio website template.">
+  <meta name="theme-color" content="#171915">
+  <title>Photography Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
@@ -13,107 +13,119 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <div class="top-ribbon" id="topRibbon"><span>Now booking weddings, portraits &amp; brand stories</span><a href="#contact">Check availability →</a></div>
+  <div class="top-ribbon" id="topRibbon"><div class="container ribbon-inner"><span data-field="home.ribbonText"></span><a href="#contact" data-field="home.ribbonCta"></a></div></div>
 
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="Home">
-        <span class="brand-name" data-field="studioName">Lumière Frames</span>
-        <span class="brand-motto" data-field="motto">Stories, beautifully framed.</span>
+        <span class="brand-name" data-field="brand.businessName"></span>
+        <span class="brand-motto" data-field="brand.motto"></span>
       </a>
       <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteNav">Menu</button>
       <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
-        <a href="#about">About</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
+        <a href="#about" data-field="ui.navAbout"></a><a href="#services" data-field="ui.navServices"></a><a href="#gallery" data-field="ui.navGallery"></a><a href="#reviews" data-field="ui.navReviews"></a><a href="#contact" data-field="ui.navContact"></a>
       </nav>
-      <a class="button button-dark button-3d header-cta js-whatsapp" href="#contact"><span data-field="hero.secondaryText">WhatsApp us</span></a>
+      <a class="button button-dark button-3d js-whatsapp" href="#contact"><span data-field="home.secondaryText"></span><b>↗</b></a>
     </div>
   </header>
 
   <main id="main">
     <section class="hero" aria-labelledby="heroTitle">
-      <div class="hero-media"><img id="heroImage" alt="Photography studio hero"><div class="hero-shade"></div></div>
-      <div class="hero-particles" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <div class="hero-bg" id="heroBg"></div>
+      <div class="hero-media-wrap">
+        <div class="hero-media"><img id="heroImage" alt="Photography studio hero"></div>
+        <div class="hero-floating-card"><span>CURATED FOR</span><strong data-field="brand.businessName"></strong><small data-field="brand.ownerName"></small></div>
+      </div>
+      <div class="hero-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
       <div class="container hero-content reveal hero-reveal">
-        <p class="eyebrow light hero-badge" data-field="hero.badge">PHOTOGRAPHY STUDIO</p>
-        <h1 id="heroTitle" data-field="hero.title">Moments that feel like forever.</h1>
-        <p class="hero-subtitle" data-field="hero.subtitle">Candid wedding, portrait and brand photography crafted with a cinematic eye.</p>
+        <p class="eyebrow light hero-badge" data-field="home.heroBadge"></p>
+        <h1 id="heroTitle" data-field="home.heroTitle"></h1>
+        <p class="hero-subtitle" data-field="home.heroSubtitle"></p>
         <div class="hero-actions">
-          <a class="button button-light button-3d" href="#gallery"><span data-field="hero.primaryText">View portfolio</span><b>↗</b></a>
-          <a class="button button-glass button-3d js-whatsapp" href="#contact"><span data-field="hero.secondaryText">WhatsApp us</span><b>⌁</b></a>
+          <a class="button button-light button-3d" href="#gallery"><span data-field="home.primaryText"></span><b>↗</b></a>
+          <a class="button button-glass button-3d js-whatsapp" href="#contact"><span data-field="home.secondaryText"></span><b>⌁</b></a>
         </div>
-        <div class="hero-proof"><span>8+ years</span><span>500+ stories</span><span>Hyderabad &amp; travel</span></div>
+        <div class="hero-proof"><span data-field="home.proof1"></span><span data-field="home.proof2"></span><span data-field="home.proof3"></span></div>
       </div>
       <div class="hero-scroll" aria-hidden="true"><span>Scroll to explore</span><i></i></div>
     </section>
 
     <section class="section intro-section reveal" id="about">
       <div class="container narrow center">
-        <p class="eyebrow" data-field="copy.aboutEyebrow">ABOUT THE STUDIO</p>
-        <h2 data-field="about">We turn real moments into timeless photographs with a calm, candid and editorial approach.</h2>
-        <div class="meta-row"><span data-field="experience">8+ years of experience</span><span data-field="teamStyle">Weddings · Portraits · Brands</span></div>
+        <p class="eyebrow" data-field="copy.aboutEyebrow"></p>
+        <h2 data-field="brand.about"></h2>
+        <div class="meta-row"><span data-field="brand.experience"></span><span data-field="brand.teamStyle"></span></div>
       </div>
     </section>
 
     <section class="section tinted reveal" id="services">
       <div class="container">
-        <div class="section-heading"><div><p class="eyebrow" data-field="copy.servicesEyebrow">WHAT WE OFFER</p><h2 data-field="copy.servicesTitle">Packages &amp; services</h2></div><p class="section-caption" data-field="copy.servicesCaption">Clear packages. Thoughtful coverage. A finished gallery your family keeps forever.</p></div>
+        <div class="section-heading"><div><p class="eyebrow" data-field="copy.servicesEyebrow"></p><h2 data-field="copy.servicesTitle"></h2></div><p class="section-caption" data-field="copy.servicesCaption"></p></div>
         <div class="cards-grid" id="servicesGrid"></div>
       </div>
     </section>
 
     <section class="mid-cta reveal" id="midCta">
+      <div class="mid-aurora a1"></div><div class="mid-aurora a2"></div>
       <div class="container mid-cta-inner">
-        <div class="mid-orbit"><span>01</span><span>02</span><span>03</span></div>
-        <div><p class="eyebrow light" data-field="copy.midEyebrow">YOUR STORY DESERVES MORE THAN A FOLDER</p><h2 data-field="copy.midTitle">Make the feeling impossible to forget.</h2><p data-field="copy.midText">From first look to final print, every frame is designed to feel personal, warm and unmistakably yours.</p></div>
-        <a class="button button-light button-3d" href="#contact"><span data-field="copy.midButton">Plan your shoot</span> <b>→</b></a>
+        <div class="mid-orbit"><span>01</span><span>02</span><span>03</span><i></i></div>
+        <div><p class="eyebrow light" data-field="home.midEyebrow"></p><h2 data-field="home.midTitle"></h2><p data-field="home.midText"></p></div>
+        <a class="button button-light button-3d" href="#contact"><span data-field="home.midButton"></span> <b>→</b></a>
+      </div>
+    </section>
+
+    <section class="section reveal" id="video">
+      <div class="container video-section">
+        <div class="section-heading"><div><p class="eyebrow" data-field="copy.videoEyebrow"></p><h2 data-field="copy.videoTitle"></h2></div><span class="soft-chip">FILM</span></div>
+        <div id="videoGrid" class="video-grid"></div>
       </div>
     </section>
 
     <section class="section reveal" id="gallery">
       <div class="container">
-        <div class="section-heading gallery-heading"><div><p class="eyebrow" data-field="copy.galleryEyebrow">SELECTED WORK</p><h2 data-field="copy.galleryTitle">Portfolio</h2></div><div class="filter-row" id="galleryFilters"></div></div>
+        <div class="section-heading gallery-heading"><div><p class="eyebrow" data-field="copy.galleryEyebrow"></p><h2 data-field="copy.galleryTitle"></h2></div><div class="filter-row" id="galleryFilters"></div></div>
         <div class="gallery-grid" id="galleryGrid"></div>
       </div>
     </section>
 
     <section class="section tinted reveal" id="reviews">
       <div class="container">
-        <div class="section-heading"><div><p class="eyebrow" data-field="copy.reviewsEyebrow">KIND WORDS</p><h2 data-field="copy.reviewsTitle">Reviews &amp; ratings</h2></div><div class="rating-summary"><span class="stars">★★★★★</span><strong id="reviewAverage">5.0</strong><span data-field="copy.reviewLabel">average customer rating</span></div></div>
+        <div class="section-heading"><div><p class="eyebrow" data-field="copy.reviewsEyebrow"></p><h2 data-field="copy.reviewsTitle"></h2></div><div class="rating-summary"><span class="stars">★★★★★</span><strong id="reviewAverage">5.0</strong><span data-field="copy.reviewLabel"></span></div></div>
         <div class="cards-grid" id="reviewsGrid"></div>
       </div>
     </section>
 
     <section class="section contact-section reveal" id="contact">
       <div class="container contact-grid">
-        <div><p class="eyebrow" data-field="copy.contactEyebrow">GET IN TOUCH</p><h2 data-field="copy.contactTitle">Let's make your date memorable.</h2><p class="contact-copy" data-field="copy.contactCopy">Tell us a little about the shoot. We’ll reply with availability, package options and next steps.</p>
+        <div><p class="eyebrow" data-field="copy.contactEyebrow"></p><h2 data-field="copy.contactTitle"></h2><p class="contact-copy" data-field="copy.contactCopy"></p>
           <form class="contact-form" id="enquiryForm" novalidate>
-            <label><span>Your name</span><input id="enquiryName" required autocomplete="name" placeholder="Your name"></label>
-            <label><span>Phone number</span><input id="enquiryPhone" required autocomplete="tel" placeholder="+91 98765 43210"></label>
-            <label><span>Message</span><textarea id="enquiryMessage" rows="5" placeholder="Tell us about your shoot"></textarea></label>
-            <button class="button button-dark button-3d" type="submit">Send enquiry <b>→</b></button>
+            <label><span data-field="ui.formNameLabel"></span><input id="enquiryName" required autocomplete="name"></label>
+            <label><span data-field="ui.formPhoneLabel"></span><input id="enquiryPhone" required autocomplete="tel"></label>
+            <label><span data-field="ui.formMessageLabel"></span><textarea id="enquiryMessage" rows="5"></textarea></label>
+            <button class="button button-dark button-3d" type="submit"><span data-field="ui.formSubmit"></span> <b>→</b></button>
             <p class="form-note" id="formNote" role="status"></p>
           </form>
         </div>
         <aside class="contact-card">
-          <div class="contact-item"><span class="contact-label">Phone</span><a data-field-link="phone" data-field="phone" href="tel:+919876543210">+91 98765 43210</a></div>
-          <div class="contact-item"><span class="contact-label">Email</span><a data-field-link="email" data-field="email" href="mailto:hello@lumiereframes.com">hello@lumiereframes.com</a></div>
-          <div class="contact-item"><span class="contact-label">Studio</span><p data-field="address">Banjara Hills, Hyderabad, Telangana</p></div>
-          <div class="contact-actions"><a class="button button-outline button-3d" data-field-link="mapsUrl" href="https://maps.google.com/?q=Banjara+Hills+Hyderabad" target="_blank" rel="noreferrer">Get directions</a><a class="button button-whatsapp button-3d js-whatsapp" href="#contact">WhatsApp</a></div>
+          <div class="contact-item"><span class="contact-label" data-field="ui.callLabel"></span><a id="callLink" href="#" data-field="contact.callNumber"></a></div>
+          <div class="contact-item"><span class="contact-label" data-field="ui.emailLabel"></span><a id="emailLink" href="#" data-field="contact.email"></a></div>
+          <div class="contact-item"><span class="contact-label" data-field="ui.locationLabel"></span><p data-field="contact.locationName"></p></div>
+          <div class="contact-actions"><a class="button button-outline button-3d" id="mapsLink" href="#" target="_blank" rel="noreferrer"><span data-field="ui.mapsButton"></span> ↗</a><a class="button button-whatsapp button-3d js-whatsapp" href="#"><span data-field="ui.whatsappButton"></span></a></div>
           <div class="social-links" id="socialLinks"></div>
         </aside>
       </div>
     </section>
 
     <section class="section faq-section reveal" id="faq">
-      <div class="container narrow"><p class="eyebrow" data-field="copy.faqEyebrow">FAQ</p><h2 data-field="copy.faqTitle">Frequently asked</h2><div class="faq-list" id="faqList"></div></div>
+      <div class="container narrow"><p class="eyebrow" data-field="copy.faqEyebrow"></p><h2 data-field="copy.faqTitle"></h2><div class="faq-list" id="faqList"></div></div>
     </section>
   </main>
 
   <footer class="site-footer" id="footer">
-    <div class="container footer-inner"><div><strong data-field="studioName">Lumière Frames</strong><p class="privacy-text" data-field="privacy">We use enquiry details only to respond to your request and provide our services. We do not sell personal information.</p></div><div class="footer-links"><a data-field-href-label="footerBackLabel" href="#top">Back to top</a><a data-field-href-label="footerFaqLabel" href="#faq">FAQs</a><a data-field-href-label="footerEnquiryLabel" href="#contact">Enquiry</a><a data-field-href-label="footerAdminLabel" href="./admin.html">Admin</a></div></div>
+    <div class="container footer-inner"><div><strong data-field="brand.businessName"></strong><p class="privacy-text" data-field="privacy"></p></div><div class="footer-links"><a href="#top" data-field="copy.footerBackLabel"></a><a href="#faq" data-field="copy.footerFaqLabel"></a><a href="#contact" data-field="copy.footerEnquiryLabel"></a><a href="./admin.html" data-field="copy.footerAdminLabel"></a></div></div>
   </footer>
 
-  <div class="mobile-book-bar"><div><span>Planning a shoot?</span><strong>Check your date</strong></div><a class="button button-dark button-3d js-whatsapp" href="#contact">WhatsApp</a></div>
+  <div class="mobile-book-bar"><div><span data-field="ui.mobileBarText"></span><strong data-field="ui.mobileBarTitle"></strong></div><a class="button button-dark button-3d js-whatsapp" href="#contact"><span data-field="ui.mobileBarButton"></span></a></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="./data.js"></script><script src="./script.js"></script>
 </body>

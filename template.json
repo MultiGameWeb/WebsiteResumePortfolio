@@ -1,12 +1,18 @@
 {
-  "id":"photography-01",
-  "name":"Photography — Editorial Moments",
-  "version":"2.0.0",
-  "category":"Photography",
-  "entry":"index.html",
-  "admin":"admin.html",
-  "description":"Premium photography website template with a fully editable local demo admin panel.",
-  "features":["Home","About","Services","Gallery","Reviews","Contact","FAQ","Privacy","WhatsApp","Google Maps","Social links","Local admin controls","3D-style buttons","Scroll reveal animations"],
-  "storage":"localStorage demo",
-  "productionNote":"For shared multi-device admin control, connect the same schema to Supabase/Firebase or another backend and add authentication."
+  "id": "photography-01",
+  "name": "Photography — Editorial Moments",
+  "version": "3.0.0",
+  "category": "Photography",
+  "entry": "index.html",
+  "admin": "admin.html",
+  "description": "Premium photography website template with a full local admin control panel and browser image storage.",
+  "features": [
+    "Home", "About", "Services", "Video", "Gallery", "Reviews", "Contact", "FAQ", "Privacy",
+    "WhatsApp", "Call", "Google Maps", "Social links", "Image storage", "Image compression",
+    "Choose from storage", "3D buttons", "Hero entrance animation", "Scroll reveal animations",
+    "Local admin password toggle", "Export / import settings"
+  ],
+  "storage": "browser localStorage demo",
+  "imageInput": "admin storage picker — no hero image URL field",
+  "productionNote": "For true multi-device admin control, connect the same data model to Supabase/Firebase or another backend with authentication and cloud media storage."
 }
