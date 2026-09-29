@@ -85,8 +85,9 @@
     Object.entries(copy).forEach(([key, value]) => text(`copy.${key}`, value || ''));
 
     const hero = $('#heroImage');
-    if (hero) { hero.src = getMedia(data.hero?.mediaId, data.hero?.imageFallback); hero.alt = `${b.businessName || 'Photography'} hero`; }
-    $('#heroBg')?.style.setProperty('backgroundImage', `url("${getMedia(data.hero?.mediaId, data.hero?.imageFallback)}")`);
+    const heroSrc = getMedia(data.hero?.mediaId, data.hero?.imageFallback);
+    if (hero) { if (heroSrc) hero.src = heroSrc; else hero.removeAttribute('src'); hero.alt = `${b.businessName || 'Photography'} hero`; }
+    const heroBg = $('#heroBg'); if (heroBg) heroBg.style.backgroundImage = heroSrc ? `url("${heroSrc.replace(/"/g, '%22')}")` : 'none';
     const call = $('#callLink'); if (call) call.href = filled(c.callNumber) ? `tel:${c.callNumber.replace(/\s+/g,'')}` : '#contact';
     const mail = $('#emailLink'); if (mail) mail.href = filled(c.email) ? `mailto:${c.email}` : '#contact';
     const maps = $('#mapsLink'); if (maps) { maps.href = c.mapsUrl || '#contact'; maps.hidden = !filled(c.mapsUrl); }
@@ -124,11 +125,14 @@
     const items = (data.videos || []).filter(x => x.enabled !== false && filled(x.url));
     root.innerHTML = items.map((x) => {
       const id = youtubeId(x.url);
+      const vid = vimeoId(x.url);
+      if (vid) return `<article class="video-card"><div class="video-frame"><iframe src="https://player.vimeo.com/video/${attr(vid)}" title="${esc(x.title || 'Photography film')}" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div><div class="video-meta"><strong>${esc(x.title || 'Photography film')}</strong><span>${esc(x.source || 'Video')}</span></div></article>`;
       if (id) return `<article class="video-card"><div class="video-frame"><iframe src="https://www.youtube.com/embed/${attr(id)}" title="${esc(x.title || 'Photography film')}" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div><div class="video-meta"><strong>${esc(x.title || 'Photography film')}</strong><span>${esc(x.source || 'Video')}</span></div></article>`;
       return `<article class="video-card"><a class="video-link-card" href="${attr(x.url)}" target="_blank" rel="noreferrer"><span>Watch film ↗</span><strong>${esc(x.title || 'Photography film')}</strong><small>${esc(x.source || 'External video')}</small></a></article>`;
     }).join('');
   }
 
+  function vimeoId(url) { const m = String(url || '').match(/vimeo\.com\/(?:video\/)?(\d+)/); return m ? m[1] : ''; }
   function youtubeId(url) { const match = String(url || '').match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{6,})/); return match ? match[1] : ''; }
 
   function renderGallery() {
@@ -179,40 +183,32 @@
 
   function setupForm() {
     const f = $('#enquiryForm'), note = $('#formNote'); if (!f) return;
-    f.onsubmit = (e) => { e.preventDefault(); const name = $('#enquiryName').value.trim(), phone = $('#enquiryPhone').value.trim(), message = $('#enquiryMessage').value.trim(); if (!name || !phone) { note.textContent = 'Please enter your name and phone number.'; note.className = 'form-note error'; return; } const saved = JSON.parse(localStorage.getItem('sitecraft-enquiries') || '[]'); saved.unshift({ name, phone, message, createdAt: new Date().toISOString(), template: 'photography-01' }); localStorage.setItem('sitecraft-enquiries', JSON.stringify(saved)); note.textContent = 'Thanks! Your enquiry has been received.'; note.className = 'form-note success'; f.reset(); toast('Enquiry received'); };
+    f.onsubmit = (e) => { e.preventDefault(); const name = $('#enquiryName').value.trim(), phone = $('#enquiryPhone').value.trim(), message = $('#enquiryMessage').value.trim(); if (!name || !phone) { note.textContent = 'Please enter your name and phone number.'; note.className = 'form-note error'; return; } let saved = []; try { saved = JSON.parse(localStorage.getItem('sitecraft-enquiries') || '[]'); if (!Array.isArray(saved)) saved = []; } catch { saved = []; } saved.unshift({ name, phone, message, createdAt: new Date().toISOString(), template: 'photography-01' }); localStorage.setItem('sitecraft-enquiries', JSON.stringify(saved)); note.textContent = 'Thanks! Your enquiry has been received.'; note.className = 'form-note success'; f.reset(); toast('Enquiry received'); };
   }
 
+  let revealObserver = null, focusObserver = null;
   function observeReveals() {
     const reduceMotion = document.body.classList.contains('no-motion') || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) {
+    if (reduceMotion || !('IntersectionObserver' in window)) {
       $$('.reveal,.reveal-child').forEach(n => n.classList.add('visible'));
       $$('[data-scroll-focus]').forEach(n => n.classList.add('scroll-focus-target'));
       return;
     }
-
-    // First pass: the existing reveal animation only runs once.
-    const revealObserver = new IntersectionObserver(entries => entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        revealObserver.unobserve(e.target);
-      }
-    }), { threshold: .12 });
+    // Reveal once. threshold 0 so very tall sections (long galleries on phones) can never get stuck invisible.
+    if (!revealObserver) revealObserver = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+    }), { threshold: 0, rootMargin: '0px 0px -8% 0px' });
     $$('.reveal:not(.visible),.reveal-child:not(.visible)').forEach(el => revealObserver.observe(el));
 
-    // Second pass: as sections/features cross the comfortable reading zone, give
-    // them a tiny lift + left/right shake. Keep observing so it can happen again
-    // on later scrolls without becoming distracting.
-    const focusObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+    // Repeatable scroll-focus shake. Single shared observer (observe() on an already-observed element is a no-op).
+    if (!focusObserver) focusObserver = new IntersectionObserver(entries => entries.forEach(entry => {
       const el = entry.target;
       if (entry.isIntersecting && entry.intersectionRatio >= .32) {
         el.classList.add('scroll-focus-target');
-        const last = Number(el.dataset.lastFocus || 0);
-        const now = performance.now();
+        const last = Number(el.dataset.lastFocus || 0), now = performance.now();
         if (now - last > 850) {
           el.dataset.lastFocus = String(now);
-          el.classList.remove('scroll-focus');
-          void el.offsetWidth;
-          el.classList.add('scroll-focus');
+          el.classList.remove('scroll-focus'); void el.offsetWidth; el.classList.add('scroll-focus');
           clearTimeout(el._scrollFocusTimer);
           el._scrollFocusTimer = setTimeout(() => el.classList.remove('scroll-focus'), 760);
         }

@@ -39,9 +39,11 @@
   }
 
   function save(message = 'Changes saved') {
-    localStorage.setItem(KEY, JSON.stringify(data));
+    try { localStorage.setItem(KEY, JSON.stringify(data)); }
+    catch (err) { toast('Storage full — delete some images or upload smaller ones'); const i = $('#saveIndicator'); if (i) i.textContent = 'NOT SAVED (storage full)'; return false; }
     const indicator = $('#saveIndicator'); if (indicator) indicator.textContent = message;
     toast(message);
+    return true;
   }
 
   function toast(message) {
@@ -95,7 +97,7 @@
   function renderPicker() {
     const root = $('#pickerGrid');
     const items = data.mediaLibrary.filter(x => x.type === 'image');
-    root.innerHTML = items.length ? items.map(x => `<button class="picker-item" data-pick-media="${x.id}"><img src="${esc(x.src)}" alt=""><span>${esc(x.name)}</span></button>`).join('') : '<div class="empty-state">No images in storage. Upload one first.</div>';
+    root.innerHTML = items.length ? items.map(x => `<button class="picker-item" data-pick-media="${esc(x.id)}"><img src="${esc(x.src)}" alt=""><span>${esc(x.name)}</span></button>`).join('') : '<div class="empty-state">No images in storage. Upload one first.</div>';
     $$('[data-pick-media]').forEach(btn => btn.onclick = () => { if (pickerTarget) pickerTarget(btn.dataset.pickMedia); $('#pickerOverlay').hidden = true; });
   }
 
@@ -202,10 +204,14 @@
     $('#imageUpload').onchange = async (e) => {
       const files = [...(e.target.files || [])];
       if (!files.length) return;
+      const added = [];
       for (const file of files) {
-        try { const src = await compressImage(file); data.mediaLibrary.push({ id: uid('img'), name: file.name.replace(/\.[^.]+$/, ''), type: 'image', src }); } catch (error) { toast(error.message || 'Image upload failed'); }
+        try { const src = await compressImage(file); const item = { id: uid('img'), name: file.name.replace(/\.[^.]+$/, ''), type: 'image', src }; data.mediaLibrary.push(item); added.push(item); } catch (error) { toast(error.message || 'Image upload failed'); }
       }
-      save(`${files.length} image${files.length === 1 ? '' : 's'} added to storage`); renderMedia(); renderStats(); e.target.value = '';
+      if (added.length && !save(`${added.length} image${added.length === 1 ? '' : 's'} added to storage`)) {
+        data.mediaLibrary = data.mediaLibrary.filter(x => !added.includes(x)); // roll back so memory matches what is saved
+      }
+      renderMedia(); renderStats(); e.target.value = '';
     };
   }
 
