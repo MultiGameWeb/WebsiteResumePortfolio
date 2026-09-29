@@ -4,7 +4,7 @@ This package establishes the one-time architecture for many website templates.
 
 ## Flow
 
-Marketplace → Select template → Select features → Enter details → Live preview → Demo payment → Download → Optional domain handoff.
+**1. Templates → 2. Features → 3. Details + live preview → 4. Checkout → 5. Done**\n\nThe customer opens directly on the template marketplace. Current order: Restaurants first, then Photography as one category containing two designs (Editorial and Cinematic). Checkout asks for domain and customer online-payment requirements. When online payments are selected, the UI shows: “Our executive will call you in 10 min. You can continue payment and download your website now.” Payment is still a demo simulation in this prototype.
 
 ## Important architecture
 
@@ -15,7 +15,7 @@ The builder/checkout/success code is generic. Each template provides only:
 - `style.css` — template-specific styling
 - `assets/` — template-specific images/assets if needed
 
-To add Template 03, create a new folder under `templates/`, add its manifest/module/styles, then add ONE registry object to `js/registry.js`.
+To add Template 03, create a new folder under `templates/`, add its manifest/module/styles, then add one registry object to `core/registry.js`.
 
 No new builder, payment or success flow should be written for a new template.
 
@@ -26,3 +26,4 @@ This is plain HTML/CSS/JS. It can run as a static site. The builder uses browser
 ## Production
 
 For real customers, replace localStorage with a backend, authenticated admin, cloud media storage, real payment gateway and domain provisioning.
+\n## Current templates\n\n- Restaurants → Restaurant — Signature\n- Photography → Editorial, Cinematic\n
