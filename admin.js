@@ -4,11 +4,10 @@
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const KEY = 'sitecraft-photography-01';
   const ENQ_KEY = 'sitecraft-enquiries';
-  const defaults = structuredClone(window.PHOTOGRAPHY_DEFAULTS || {});
+  const clone = (v) => structuredClone(v);
+  const defaults = clone(window.PHOTOGRAPHY_DEFAULTS || {});
   let data = loadStored();
   let pickerTarget = null;
-
-  const clone = (v) => structuredClone(v);
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const filled = (v) => typeof v === 'string' && v.trim() !== '';
   const uid = (prefix) => `${prefix}-${Math.random().toString(36).slice(2, 10)}`;
@@ -123,8 +122,8 @@
     const item = imageById(id); if (!item) return;
     if (!confirm(`Delete “${item.name}” from storage?`)) return;
     data.mediaLibrary = data.mediaLibrary.filter(x => x.id !== id);
-    if (data.hero.mediaId === id) data.hero.mediaId = '';
-    data.gallery.forEach(x => { if (x.mediaId === id) x.mediaId = ''; });
+    if (data.hero.mediaId === id) { data.hero.mediaId = ''; data.hero.imageFallback = ''; }
+    data.gallery.forEach(x => { if (x.mediaId === id) { x.mediaId = ''; x.fallbackImage = ''; } });
     save('Image deleted'); renderMedia(); renderGallery(); renderStats();
   }
 
