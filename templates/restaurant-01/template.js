@@ -1,0 +1,21 @@
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safe=v=>String(v??'').replace(/[^0-9]/g,'');
+export function render(d={},selected=[]){
+  const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},ok=x=>selected.includes(x);
+  const menu=(d.menu||[]).filter(x=>x.enabled!==false);
+  const offers=(d.offers||[]).filter(x=>x.enabled!==false);
+  const gallery=(d.gallery||[]).filter(x=>x.enabled!==false);
+  const reviews=(d.reviews||[]).filter(x=>x.enabled!==false);
+  return `<div class="site-preview restaurant-01">
+    <header class="restaurant-nav"><div><strong>${esc(b.businessName||'Your Restaurant')}</strong><small>${esc(b.tagline||'')}</small></div><nav>${ok('about')?'<a href="#about">About</a>':''}${ok('menu')?'<a href="#menu">Menu</a>':''}${ok('offers')?'<a href="#offers">Offers</a>':''}${ok('gallery')?'<a href="#gallery">Gallery</a>':''}${ok('contact')?'<a href="#contact">Contact</a>':''}</nav></header>
+    ${ok('home')?`<section class="restaurant-hero"><img src="${esc(d.hero||'')}" alt=""><div class="restaurant-hero-overlay"></div><div class="restaurant-hero-copy"><small>${esc(b.ownerName||'KITCHEN & TABLE')}</small><h1>${esc(h.title||b.businessName||'Good food. Great company.')}</h1><p>${esc(h.text||'')}</p><div class="restaurant-actions">${ok('reservation')?'<a class="r-btn light" href="#reservation">Reserve a table</a>':''}${ok('whatsapp')&&c.whatsapp?`<a class="r-btn outline" target="_blank" href="https://wa.me/${safe(c.whatsapp)}">WhatsApp</a>`:''}</div></div></section>`:''}
+    ${ok('about')&&s.showAbout!==false?`<section id="about" class="r-section intro"><small>OUR STORY</small><h2>${esc(b.about||'')}</h2></section>`:''}
+    ${ok('menu')&&s.showMenu!==false?`<section id="menu" class="r-section warm"><div class="r-head"><div><small>THE MENU</small><h2>Kitchen favourites</h2></div><span>Seasonal · Fresh · Made to order</span></div><div class="menu-grid">${menu.map(x=>`<article><div><small>${esc(x.category||'')}</small><h3>${esc(x.name)}</h3><p>${esc(x.description||'')}</p></div><strong>${esc(x.price||'')}</strong></article>`).join('')}</div></section>`:''}
+    ${ok('offers')&&s.showOffers!==false?`<section id="offers" class="r-section offers"><small>THIS WEEK</small><h2>Specials at the table</h2><div class="offer-grid">${offers.map(x=>`<article><span>✦</span><h3>${esc(x.title)}</h3><p>${esc(x.text||'')}</p></article>`).join('')}</div></section>`:''}
+    ${ok('gallery')&&s.showGallery!==false?`<section id="gallery" class="r-section"><small>THE SPACE</small><h2>A table worth returning to.</h2><div class="restaurant-gallery">${gallery.map(x=>`<figure><img src="${esc(x.image||'')}" alt="${esc(x.title||'')}"><figcaption>${esc(x.title||'')}</figcaption></figure>`).join('')}</div></section>`:''}
+    ${ok('reviews')&&s.showReviews!==false?`<section class="r-section warm"><small>GUEST NOTES</small><h2>Good words, shared.</h2><div class="review-row">${reviews.map(x=>`<article><b>${'★'.repeat(Number(x.rating)||0)}</b><p>“${esc(x.text||'')}”</p><strong>${esc(x.name||'Guest')}</strong></article>`).join('')}</div></section>`:''}
+    ${ok('reservation')&&s.showReservation!==false?`<section id="reservation" class="r-section reservation"><div><small>RESERVATIONS</small><h2>Make a table for tonight.</h2><p>Call us or send a WhatsApp message and our team will confirm your table.</p></div><div class="restaurant-actions">${c.phone?`<a class="r-btn dark" href="tel:${esc(c.phone)}">Call ${esc(c.phone)}</a>`:''}${c.whatsapp?`<a class="r-btn" target="_blank" href="https://wa.me/${safe(c.whatsapp)}">WhatsApp us</a>`:''}</div></section>`:''}
+    ${ok('contact')&&s.showContact!==false?`<section id="contact" class="r-section contact"><small>FIND US</small><h2>${esc(b.businessName||'Your Restaurant')}</h2><p>${esc(c.address||'')}</p><div class="restaurant-actions">${ok('location')&&c.maps?`<a class="r-btn dark" target="_blank" href="${esc(c.maps)}">Get directions</a>`:''}${c.phone?`<a class="r-btn outline dark-outline" href="tel:${esc(c.phone)}">Call</a>`:''}</div></section>`:''}
+    <footer><strong>${esc(b.businessName||'Your Restaurant')}</strong><span>${esc(b.tagline||'')}</span></footer>
+  </div>`;
+}
