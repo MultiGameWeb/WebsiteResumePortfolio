@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Photography Admin — SiteCraft</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./admin.css">
+</head>
+<body>
+  <header class="admin-top"><div><strong>SiteCraft</strong><span>Photography Template 01 · Admin</span></div><div class="actions"><a class="ghost" href="./index.html">View website ↗</a><button class="dark" id="saveTop">Save changes</button></div></header>
+  <div class="admin-shell">
+    <aside class="sidebar">
+      <span class="demo-badge">Demo control panel</span>
+      <button class="side-tab active" data-tab="overview">Overview</button>
+      <button class="side-tab" data-tab="brand">Brand & Hero</button>
+      <button class="side-tab" data-tab="copy">Site Copy</button>
+      <button class="side-tab" data-tab="contact">Contact & Links</button>
+      <button class="side-tab" data-tab="services">Services</button>
+      <button class="side-tab" data-tab="gallery">Images & Gallery</button>
+      <button class="side-tab" data-tab="reviews">Reviews</button>
+      <button class="side-tab" data-tab="faqs">FAQs</button>
+      <button class="side-tab" data-tab="settings">Site Settings</button>
+      <div class="sidebar-bottom"><button class="ghost full" id="resetBtn">Reset to defaults</button><button class="ghost full" id="exportBtn">Export settings JSON</button><label class="ghost full file-btn">Import settings JSON<input id="importInput" type="file" accept="application/json"></label></div>
+    </aside>
+
+    <main class="content">
+      <section class="tab-panel active" id="tab-overview">
+        <div class="page-head"><div><span class="kicker">OVERVIEW</span><h1>Control every visible section.</h1><p>Changes are saved to this browser and immediately appear on the public template.</p></div><span class="live-pill"><i></i> Live preview sync</span></div>
+        <div class="stat-grid"><article><span>Services</span><strong id="statServices">0</strong></article><article><span>Gallery images</span><strong id="statGallery">0</strong></article><article><span>Approved reviews</span><strong id="statReviews">0</strong></article><article><span>FAQs</span><strong id="statFaqs">0</strong></article></div>
+        <div class="overview-grid"><article class="card hero-card"><div><span class="kicker">SITE PREVIEW</span><h2 id="overviewName">Lumière Frames</h2><p id="overviewMotto">Stories, beautifully framed.</p><a class="button dark" href="./index.html">Open public website ↗</a></div><div class="hero-thumb"><img id="overviewImage" alt="Hero preview"></div></article><article class="card"><div class="card-head"><h3>Quick controls</h3><span>Visibility</span></div><div class="quick-grid"><label><input type="checkbox" data-setting="showAbout"> About</label><label><input type="checkbox" data-setting="showServices"> Services</label><label><input type="checkbox" data-setting="showGallery"> Gallery</label><label><input type="checkbox" data-setting="showReviews"> Reviews</label><label><input type="checkbox" data-setting="showContact"> Contact</label><label><input type="checkbox" data-setting="showFaq"> FAQ</label></div></article></div>
+      </section>
+
+      <section class="tab-panel" id="tab-brand"><div class="page-head"><div><span class="kicker">BRAND & HERO</span><h1>Make the first impression yours.</h1></div></div><div class="card form-card"><div class="two-col">
+<label class="field"><span>Studio name</span><input data-path="brand.studioName"></label>
+<label class="field"><span>Motto</span><input data-path="brand.motto"></label>
+<label class="field"><span>Hero badge</span><input data-path="hero.badge"></label>
+<label class="field"><span>Hero title</span><input data-path="hero.title"></label>
+<label class="field wide"><span>Hero subtitle</span><textarea data-path="hero.subtitle" rows="3"></textarea></label>
+<label class="field wide"><span>Hero image URL</span><input data-path="hero.image"></label>
+<label class="field"><span>Primary CTA</span><input data-path="hero.primaryText"></label>
+<label class="field"><span>Secondary CTA</span><input data-path="hero.secondaryText"></label>
+<label class="field wide"><span>About text</span><textarea data-path="brand.about" rows="4"></textarea></label>
+<label class="field"><span>Experience label</span><input data-path="brand.experience"></label>
+<label class="field"><span>Team / style</span><input data-path="brand.teamStyle"></label>
+</div><p class="hint">For production, replace URL inputs with your real cloud image upload / compression service.</p></div></section>
+
+      <section class="tab-panel" id="tab-copy"><div class="page-head"><div><span class="kicker">SITE COPY</span><h1>Edit the words customers see.</h1><p>All major public-facing headings, captions and calls to action can be changed here.</p></div></div><div class="card form-card"><div class="two-col">
+<label class="field"><span>About eyebrow</span><input data-path="copy.aboutEyebrow"></label><label class="field"><span>Services eyebrow</span><input data-path="copy.servicesEyebrow"></label>
+<label class="field"><span>Services title</span><input data-path="copy.servicesTitle"></label><label class="field"><span>Services caption</span><input data-path="copy.servicesCaption"></label>
+<label class="field"><span>Mid-page eyebrow</span><input data-path="copy.midEyebrow"></label><label class="field"><span>Mid-page title</span><input data-path="copy.midTitle"></label>
+<label class="field wide"><span>Mid-page text</span><textarea data-path="copy.midText" rows="3"></textarea></label><label class="field"><span>Mid-page button</span><input data-path="copy.midButton"></label>
+<label class="field"><span>Gallery eyebrow</span><input data-path="copy.galleryEyebrow"></label><label class="field"><span>Gallery title</span><input data-path="copy.galleryTitle"></label>
+<label class="field"><span>Reviews eyebrow</span><input data-path="copy.reviewsEyebrow"></label><label class="field"><span>Reviews title</span><input data-path="copy.reviewsTitle"></label>
+<label class="field"><span>Review label</span><input data-path="copy.reviewLabel"></label><label class="field"><span>Contact eyebrow</span><input data-path="copy.contactEyebrow"></label>
+<label class="field"><span>Contact title</span><input data-path="copy.contactTitle"></label><label class="field"><span>Contact copy</span><textarea data-path="copy.contactCopy" rows="2"></textarea></label>
+<label class="field"><span>FAQ eyebrow</span><input data-path="copy.faqEyebrow"></label><label class="field"><span>FAQ title</span><input data-path="copy.faqTitle"></label>
+<label class="field"><span>Footer privacy text</span><textarea data-path="privacy" rows="3"></textarea></label><label class="field"><span>Footer back label</span><input data-path="copy.footerBackLabel"></label>
+<label class="field"><span>Footer FAQ label</span><input data-path="copy.footerFaqLabel"></label><label class="field"><span>Footer enquiry label</span><input data-path="copy.footerEnquiryLabel"></label><label class="field"><span>Footer admin label</span><input data-path="copy.footerAdminLabel"></label>
+</div></div></section>
+
+      <section class="tab-panel" id="tab-contact"><div class="page-head"><div><span class="kicker">CONTACT & LINKS</span><h1>Every click goes where you choose.</h1></div></div><div class="card form-card"><div class="two-col">
+<label class="field"><span>Phone</span><input data-path="contact.phone"></label>
+<label class="field"><span>Email</span><input data-path="contact.email"></label>
+<label class="field wide"><span>Studio / office location</span><textarea data-path="contact.address" rows="2"></textarea></label>
+<label class="field"><span>WhatsApp number (digits, country code)</span><input data-path="contact.whatsapp"></label>
+<label class="field"><span>Google Maps URL</span><input data-path="contact.mapsUrl"></label>
+<label class="field"><span>Instagram URL</span><input data-path="socials.instagram"></label>
+<label class="field"><span>Facebook URL</span><input data-path="socials.facebook"></label>
+<label class="field"><span>YouTube URL</span><input data-path="socials.youtube"></label>
+<label class="field"><span>Pinterest URL</span><input data-path="socials.pinterest"></label>
+</div></div></section>
+
+      <section class="tab-panel" id="tab-services"><div class="page-head"><div><span class="kicker">SERVICES</span><h1>Add, edit or delete packages.</h1></div><button class="dark" id="addService">+ Add service</button></div><div id="servicesEditor" class="repeat-list"></div></section>
+      <section class="tab-panel" id="tab-gallery"><div class="page-head"><div><span class="kicker">IMAGES & GALLERY</span><h1>Control every photo, category and film link.</h1><p>Upload from your device or paste a hosted image URL. Uploaded files are stored locally for this demo.</p></div><button class="dark" id="addGallery">+ Add image</button></div><div id="galleryEditor" class="repeat-list"></div></section>
+      <section class="tab-panel" id="tab-reviews"><div class="page-head"><div><span class="kicker">REVIEWS</span><h1>Approve the social proof you want shown.</h1></div><button class="dark" id="addReview">+ Add review</button></div><div id="reviewsEditor" class="repeat-list"></div></section>
+      <section class="tab-panel" id="tab-faqs"><div class="page-head"><div><span class="kicker">FAQS</span><h1>Answer the questions customers ask before booking.</h1></div><button class="dark" id="addFaq">+ Add FAQ</button></div><div id="faqEditor" class="repeat-list"></div></section>
+
+      <section class="tab-panel" id="tab-settings"><div class="page-head"><div><span class="kicker">SITE SETTINGS</span><h1>Control visibility, motion and accent colour.</h1></div></div><div class="card form-card"><div class="toggle-grid"><label><input type="checkbox" data-setting="showTopRibbon"> Top booking ribbon</label><label><input type="checkbox" data-setting="showHeroBadge"> Hero badge</label><label><input type="checkbox" data-setting="showAbout"> About section</label><label><input type="checkbox" data-setting="showServices"> Services section</label><label><input type="checkbox" data-setting="showGallery"> Gallery section</label><label><input type="checkbox" data-setting="showReviews"> Reviews section</label><label><input type="checkbox" data-setting="showContact"> Contact section</label><label><input type="checkbox" data-setting="showFaq"> FAQ section</label><label><input type="checkbox" data-setting="showPrivacy"> Privacy text</label><label><input type="checkbox" data-setting="animations"> Animations</label></div><div class="accent-row"><label>Accent colour <input type="color" data-setting-value="brandAccent"></label><label>Default price label <input class="text-input" data-setting-value="priceLabel"></label></div></div></section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="./data.js"></script><script src="./admin.js"></script>
+</body>
+</html>
+

@@ -1,47 +1,37 @@
-# Photography Template 01
+# Photography Template 01 — v2
 
-This is the first photography template for the modular Website-s-Builder project.
-
-## Folder
-
-`templates/photography-01/`
+A premium static HTML/CSS/JS photography website with a local demo admin panel.
 
 ## Files
 
-- `index.html` — page structure
-- `style.css` — template-only styles
-- `script.js` — gallery filters, FAQ accordion, mobile navigation, WhatsApp link and enquiry handling
-- `data.js` — all editable demo content
-- `template.json` — metadata / builder contract
+- `index.html` — public photography website
+- `style.css` — public website design, 3D buttons and animations
+- `script.js` — public rendering + filters + enquiry handling
+- `data.js` — default site data
+- `admin.html` — admin control panel
+- `admin.css` — admin design
+- `admin.js` — add/edit/delete/save/import/export controls
+- `template.json` — template metadata
+- `preview.svg` — preview thumbnail
 
-## How the builder can customize it
+## Admin control
 
-The template reads content from:
+Open `admin.html` from the same GitHub Pages site. The admin can edit or delete:
 
-```js
-window.PHOTOGRAPHY_TEMPLATE_DATA
-```
+- Studio/brand text
+- Hero title, subtitle, image and CTAs
+- Phone, email, WhatsApp number, location and Google Maps URL
+- Instagram, Facebook, YouTube and Pinterest links
+- Services/packages
+- Gallery images, category and YouTube/Vimeo links
+- Reviews and visibility/approval
+- FAQs
+- Section visibility
+- Accent colour
+- Top ribbon, hero badge and animations
 
-The simplest integration is to replace that object before `script.js` runs. This keeps the template independent from the main builder code.
+Image uploads are supported as browser-local data URLs for the demo. All settings use the same `localStorage` key as the public page, so changes immediately appear on the same browser/device.
 
-## Features included
+## Important production note
 
-- Home / hero
-- About
-- Services packages
-- Category-based gallery filtering
-- YouTube/Vimeo “Watch film” links
-- Reviews and rating summary
-- Contact / enquiry form
-- WhatsApp click-to-chat
-- Google Maps button
-- Instagram / Facebook / YouTube / Pinterest links
-- FAQ accordion
-- Privacy policy footer
-- Responsive mobile/tablet/desktop layout
-- Optional-field hiding
-- Demo enquiry storage in browser localStorage
-
-## Important
-
-The current template is a front-end website template. Real image upload/compression, admin authentication, production enquiry storage, online payments and domain provisioning belong to the main Website-s-Builder/backend layer.
+This is intentionally a static demo. `localStorage` does not provide secure or shared admin control across different devices. For a real customer product, connect the same data model to Supabase/Firebase (or another backend), add authentication/authorization, cloud image storage, image compression and server-side persistence.

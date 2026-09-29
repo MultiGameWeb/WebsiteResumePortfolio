@@ -1,231 +1,116 @@
 (() => {
-  "use strict";
+  'use strict';
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+  const filled = (v) => typeof v === 'string' && v.trim() !== '';
+  const clone = (v) => structuredClone(v);
+  const STORE_KEY = 'sitecraft-photography-01';
+  const defaults = window.PHOTOGRAPHY_DEFAULTS || window.PHOTOGRAPHY_TEMPLATE_DATA;
 
-  const data = window.PHOTOGRAPHY_TEMPLATE_DATA || {};
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-  const filled = (value) => typeof value === "string" && value.trim() !== "";
+  let data = clone(defaults || {});
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null');
+    if (saved) data = saved;
+  } catch {}
+  window.SITECRAFT_DATA = data;
 
-  function waLink(number, message = "Hi! I would like to enquire about a photography shoot.") {
-    const digits = String(number || "").replace(/\D/g, "");
-    return digits ? `https://wa.me/${digits}?text=${encodeURIComponent(message)}` : "#contact";
-  }
+  const esc = (v) => String(v ?? '').replace(/[&<>\"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+  const attr = (v) => esc(v).replace(/'/g,'&#39;');
+  const waLink = (number) => { const digits = String(number || '').replace(/\D/g,''); return digits ? `https://wa.me/${digits}?text=${encodeURIComponent('Hi! I would like to enquire about a photography shoot.')}` : '#contact'; };
 
-  function setText(field, value) {
-    $$(`[data-field="${field}"]`).forEach((node) => { node.textContent = value || ""; });
-  }
-
-  function setHref(field, value) {
-    $$(`[data-field-link="${field}"]`).forEach((node) => {
-      node.setAttribute("href", value || "#contact");
-      node.hidden = !filled(value);
-    });
-  }
+  function text(field, value) { $$(`[data-field="${field}"]`).forEach(n => n.textContent = value || ''); }
+  function href(field, value) { $$(`[data-field-link="${field}"]`).forEach(n => { n.href = value || '#contact'; n.hidden = !filled(value); }); }
 
   function renderBase() {
-    setText("studioName", data.brand?.studioName || "Your Studio");
-    setText("motto", data.brand?.motto || "");
-    setText("about", data.brand?.about || "");
-    setText("experience", data.brand?.experience || "");
-    setText("teamStyle", data.brand?.teamStyle || "");
-    setText("heroTitle", data.hero?.title || data.brand?.studioName || "Your Studio");
-    setText("heroSubtitle", data.hero?.subtitle || "");
-    setText("phone", data.contact?.phone || "");
-    setText("email", data.contact?.email || "");
-    setText("address", data.contact?.address || "");
-    setText("privacy", data.privacy || "");
-
-    const hero = $("#heroImage");
-    if (hero && filled(data.hero?.image)) hero.src = data.hero.image;
-
-    setHref("phone", filled(data.contact?.phone) ? `tel:${data.contact.phone.replace(/\s+/g, "")}` : "");
-    setHref("email", filled(data.contact?.email) ? `mailto:${data.contact.email}` : "");
-    setHref("mapsUrl", data.contact?.mapsUrl || "");
-
-    const studioName = data.brand?.studioName || "Your Studio";
-    document.title = `${studioName} — Photography Studio`;
-
-    const contactCard = $(".contact-card");
-    if (contactCard) contactCard.hidden = !filled(data.contact?.phone) && !filled(data.contact?.email) && !filled(data.contact?.address) && !filled(data.contact?.whatsapp) && !filled(data.contact?.mapsUrl);
-
-    const aboutSection = $("#about");
-    if (aboutSection) aboutSection.hidden = !filled(data.brand?.about) && !filled(data.brand?.experience) && !filled(data.brand?.teamStyle);
-    const faqSection = $("#faq");
-    if (faqSection) faqSection.hidden = !(data.faqs || []).length;
+    const s = data.settings || {};
+    text('studioName', data.brand?.studioName || 'Your Studio');
+    text('motto', data.brand?.motto || '');
+    const copy = data.copy || {};
+    Object.keys(copy).forEach(key => text(`copy.${key}`, copy[key]));
+    const labels = { footerBackLabel:'Back to top', footerFaqLabel:'FAQs', footerEnquiryLabel:'Enquiry', footerAdminLabel:'Admin' };
+    Object.keys(labels).forEach(key => { const el=$(`[data-field-href-label="${key}"]`); if(el) el.textContent=copy[key] || labels[key]; });
+    text('about', data.brand?.about || '');
+    text('experience', data.brand?.experience || '');
+    text('teamStyle', data.brand?.teamStyle || '');
+    text('phone', data.contact?.phone || '');
+    text('email', data.contact?.email || '');
+    text('address', data.contact?.address || '');
+    text('privacy', data.privacy || '');
+    text('hero.badge', data.hero?.badge || '');
+    text('hero.title', data.hero?.title || data.brand?.studioName || 'Your Studio');
+    text('hero.subtitle', data.hero?.subtitle || '');
+    text('hero.primaryText', data.hero?.primaryText || 'View portfolio');
+    text('hero.secondaryText', data.hero?.secondaryText || 'WhatsApp us');
+    const hero = $('#heroImage'); if (hero) { hero.src = data.hero?.image || ''; hero.alt = `${data.brand?.studioName || 'Photography'} hero`; }
+    href('phone', filled(data.contact?.phone) ? `tel:${data.contact.phone.replace(/\s+/g,'')}` : '');
+    href('email', filled(data.contact?.email) ? `mailto:${data.contact.email}` : '');
+    href('mapsUrl', data.contact?.mapsUrl || '');
+    $$('.js-whatsapp').forEach(n => { n.href = waLink(data.contact?.whatsapp); n.hidden = !filled(data.contact?.whatsapp); });
+    document.documentElement.style.setProperty('--accent', s.brandAccent || '#a88350');
+    document.title = `${data.brand?.studioName || 'Photography Studio'} — Photography Studio`;
+    setSection('about', !!s.showAbout);
+    setSection('services', !!s.showServices);
+    setSection('gallery', !!s.showGallery);
+    setSection('reviews', !!s.showReviews);
+    setSection('contact', !!s.showContact);
+    setSection('faq', !!s.showFaq);
+    $('#topRibbon').hidden = s.showTopRibbon === false;
+    $$('.hero-badge').forEach(n => n.hidden = s.showHeroBadge === false || !filled(data.hero?.badge));
+    $('#footer').hidden = false;
+    $$('.privacy-text').forEach(n => n.closest('.footer-inner')?.classList.toggle('hide-privacy', s.showPrivacy === false || !filled(data.privacy)));
+    document.body.classList.toggle('no-motion', s.animations === false || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }
 
+  function setSection(id, on) { const el = document.getElementById(id); if (el) el.hidden = !on; }
+
   function renderServices() {
-    const grid = $("#servicesGrid");
-    const section = $("#services");
-    const services = (data.services || []).filter((item) => filled(item?.name));
-    if (!grid || !section) return;
-    section.hidden = services.length === 0;
-    grid.innerHTML = services.map((item) => `
-      <article class="service-card">
-        <h3>${escapeHtml(item.name)}</h3>
-        ${filled(item.price) ? `<strong>${escapeHtml(item.price)}</strong>` : ""}
-        ${filled(item.description) ? `<p>${escapeHtml(item.description)}</p>` : ""}
-      </article>
-    `).join("");
+    const grid = $('#servicesGrid'); if (!grid) return;
+    const items = (data.services || []).filter(x => filled(x.name));
+    grid.innerHTML = items.map((x,i) => `<article class="service-card lift reveal-child" style="--delay:${i*60}ms"><span class="service-index">0${i+1}</span><h3>${esc(x.name)}</h3>${filled(x.price)?`<strong>${esc(x.price)}</strong>`:''}${filled(x.description)?`<p>${esc(x.description)}</p>`:''}<a href="#contact" class="service-link">Enquire about this →</a></article>`).join('');
   }
 
   function renderGallery() {
-    const grid = $("#galleryGrid");
-    const filters = $("#galleryFilters");
-    const section = $("#gallery");
-    const items = (data.gallery || []).filter((item) => filled(item?.image));
-    if (!grid || !filters || !section) return;
-    section.hidden = items.length === 0;
-
-    const categories = ["All", ...new Set(items.map((item) => item.category).filter(filled))];
-    filters.innerHTML = categories.map((category, index) => `<button class="filter${index === 0 ? " active" : ""}" data-filter="${escapeAttr(category)}">${escapeHtml(category)}</button>`).join("");
-
-    const render = (category) => {
-      const shown = category === "All" ? items : items.filter((item) => item.category === category);
-      grid.innerHTML = shown.map((item) => `
-        <figure class="gallery-card">
-          <img src="${escapeAttr(item.image)}" alt="${escapeAttr(item.title || item.category || "Photography portfolio image")}" loading="lazy">
-          ${(filled(item.title) || filled(item.video)) ? `<figcaption><span>${escapeHtml(item.title || item.category)}</span>${filled(item.video) ? `<a href="${escapeAttr(item.video)}" target="_blank" rel="noreferrer">Watch film ↗</a>` : ""}</figcaption>` : ""}
-        </figure>
-      `).join("");
+    const grid = $('#galleryGrid'), filters = $('#galleryFilters'); if (!grid || !filters) return;
+    const items = (data.gallery || []).filter(x => filled(x.image));
+    const cats = ['All', ...new Set(items.map(x => x.category).filter(filled))];
+    filters.innerHTML = cats.map((c,i)=>`<button class="filter${i===0?' active':''}" data-filter="${attr(c)}">${esc(c)}</button>`).join('');
+    const paint = (cat) => {
+      const shown = cat === 'All' ? items : items.filter(x => x.category === cat);
+      grid.innerHTML = shown.map((x,i)=>`<figure class="gallery-card reveal-child" style="--delay:${i*55}ms"><div class="gallery-image-wrap"><img src="${attr(x.image)}" alt="${attr(x.title || x.category || 'Photography portfolio image')}" loading="lazy"><span class="image-overlay">${esc(x.category || 'Portfolio')}<b>↗</b></span></div>${filled(x.title)||filled(x.video)?`<figcaption><span>${esc(x.title || x.category)}</span>${filled(x.video)?`<a href="${attr(x.video)}" target="_blank" rel="noreferrer">Watch film ↗</a>`:''}</figcaption>`:''}</figure>`).join('');
+      observeReveals();
     };
-    render("All");
-
-    filters.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-filter]");
-      if (!button) return;
-      $$(".filter", filters).forEach((node) => node.classList.remove("active"));
-      button.classList.add("active");
-      render(button.dataset.filter || "All");
-    });
+    paint('All');
+    filters.onclick = (e) => { const b = e.target.closest('[data-filter]'); if (!b) return; $$('.filter',filters).forEach(x=>x.classList.remove('active')); b.classList.add('active'); paint(b.dataset.filter || 'All'); };
   }
 
   function renderReviews() {
-    const grid = $("#reviewsGrid");
-    const section = $("#reviews");
-    const items = (data.reviews || []).filter((item) => filled(item?.name) && filled(item?.text));
-    if (!grid || !section) return;
-    section.hidden = items.length === 0;
-    const average = items.length ? (items.reduce((sum, item) => sum + Number(item.rating || 0), 0) / items.length).toFixed(1) : "0.0";
-    $("#reviewAverage").textContent = average;
-    grid.innerHTML = items.map((item) => {
-      const rating = Math.max(0, Math.min(5, Number(item.rating || 0)));
-      const stars = "★".repeat(rating) + "☆".repeat(5 - rating);
-      return `<blockquote class="review-card"><div class="stars">${stars}</div><p>“${escapeHtml(item.text)}”</p><footer>${escapeHtml(item.name)} · via ${escapeHtml(item.source || "Customer")}</footer></blockquote>`;
-    }).join("");
+    const grid=$('#reviewsGrid'), avg=$('#reviewAverage'); if(!grid)return;
+    const items=(data.reviews||[]).filter(x=>x.approved !== false && filled(x.name) && filled(x.text));
+    const average=items.length?(items.reduce((s,x)=>s+Number(x.rating||0),0)/items.length).toFixed(1):'0.0';
+    if(avg) avg.textContent=average;
+    grid.innerHTML=items.map(x=>`<blockquote class="review-card"><div class="stars">${'★'.repeat(Math.max(0,Math.min(5,Number(x.rating||0))))}${'☆'.repeat(5-Math.max(0,Math.min(5,Number(x.rating||0))))}</div><p>“${esc(x.text)}”</p><footer>${esc(x.name)} · via ${esc(x.source||'Customer')}</footer></blockquote>`).join('');
   }
 
   function renderFaqs() {
-    const list = $("#faqList");
-    const section = $("#faq");
-    const items = (data.faqs || []).filter((item) => filled(item?.question) && filled(item?.answer));
-    if (!list || !section) return;
-    section.hidden = items.length === 0;
-    list.innerHTML = items.map((item, index) => `
-      <div class="faq-item">
-        <button type="button" class="faq-question" aria-expanded="false" aria-controls="faqAnswer${index}">
-          <span>${escapeHtml(item.question)}</span><span aria-hidden="true">＋</span>
-        </button>
-        <div class="faq-answer" id="faqAnswer${index}" hidden>${escapeHtml(item.answer)}</div>
-      </div>
-    `).join("");
-
-    list.addEventListener("click", (event) => {
-      const button = event.target.closest(".faq-question");
-      if (!button) return;
-      const answer = $("#" + button.getAttribute("aria-controls"));
-      const expanded = button.getAttribute("aria-expanded") === "true";
-      $$(".faq-question", list).forEach((node) => node.setAttribute("aria-expanded", "false"));
-      $$(".faq-answer", list).forEach((node) => { node.hidden = true; });
-      if (!expanded && answer) {
-        button.setAttribute("aria-expanded", "true");
-        answer.hidden = false;
-      }
-    });
+    const list=$('#faqList'); if(!list)return;
+    const items=(data.faqs||[]).filter(x=>filled(x.question)&&filled(x.answer));
+    list.innerHTML=items.map((x,i)=>`<div class="faq-item"><button class="faq-question" aria-expanded="false"><span>${esc(x.question)}</span><b>＋</b></button><div class="faq-answer" hidden>${esc(x.answer)}</div></div>`).join('');
+    list.onclick=(e)=>{const q=e.target.closest('.faq-question');if(!q)return;const a=q.nextElementSibling;const open=q.getAttribute('aria-expanded')==='true';$$('.faq-question',list).forEach(n=>n.setAttribute('aria-expanded','false'));$$('.faq-answer',list).forEach(n=>n.hidden=true);if(!open){q.setAttribute('aria-expanded','true');a.hidden=false;}};
+    const sec=$('#faq'); if(sec)sec.hidden=items.length===0 || data.settings?.showFaq===false;
   }
 
-  function renderSocials() {
-    const root = $("#socialLinks");
-    if (!root) return;
-    const socials = [
-      ["Instagram", data.social?.instagram, "IG"],
-      ["Facebook", data.social?.facebook, "FB"],
-      ["YouTube", data.social?.youtube, "YT"],
-      ["Pinterest", data.social?.pinterest, "P"],
-    ].filter((item) => filled(item[1]));
-    root.hidden = socials.length === 0;
-    root.innerHTML = socials.map(([label, url, short]) => `<a href="${escapeAttr(url)}" target="_blank" rel="noreferrer" aria-label="${escapeAttr(label)}"><span>${short}</span></a>`).join("");
+  function renderSocials(){
+    const root=$('#socialLinks');if(!root)return;
+    const items=[['Instagram',data.socials?.instagram,'IG'],['Facebook',data.socials?.facebook,'FB'],['YouTube',data.socials?.youtube,'YT'],['Pinterest',data.socials?.pinterest,'P']].filter(x=>filled(x[1]));
+    root.hidden=items.length===0;root.innerHTML=items.map(x=>`<a href="${attr(x[1])}" target="_blank" rel="noreferrer" aria-label="${attr(x[0])}">${x[2]}</a>`).join('');
   }
 
-  function renderWhatsApp() {
-    const number = data.contact?.whatsapp || "";
-    const link = waLink(number);
-    $$(".js-whatsapp, [data-whatsapp-only]").forEach((node) => {
-      node.setAttribute("href", link);
-      node.hidden = !filled(number);
-    });
-  }
+  function setupMenu(){const t=$('#menuToggle'),n=$('#siteNav');if(!t||!n)return;t.onclick=()=>{const open=t.getAttribute('aria-expanded')==='true';t.setAttribute('aria-expanded',String(!open));n.classList.toggle('open',!open)};$$('a',n).forEach(a=>a.onclick=()=>{t.setAttribute('aria-expanded','false');n.classList.remove('open')});}
 
-  function setupMenu() {
-    const toggle = $("#menuToggle");
-    const nav = $("#siteNav");
-    if (!toggle || !nav) return;
-    toggle.addEventListener("click", () => {
-      const open = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!open));
-      nav.classList.toggle("open", !open);
-    });
-    $$('a', nav).forEach((link) => link.addEventListener("click", () => {
-      toggle.setAttribute("aria-expanded", "false");
-      nav.classList.remove("open");
-    }));
-  }
+  function setupForm(){const f=$('#enquiryForm'),note=$('#formNote');if(!f)return;f.onsubmit=e=>{e.preventDefault();const name=$('#enquiryName').value.trim(),phone=$('#enquiryPhone').value.trim(),message=$('#enquiryMessage').value.trim();if(!name||!phone){note.textContent='Please enter your name and phone number.';note.className='form-note error';return;}const saved=JSON.parse(localStorage.getItem('sitecraft-enquiries')||'[]');saved.unshift({name,phone,message,createdAt:new Date().toISOString()});localStorage.setItem('sitecraft-enquiries',JSON.stringify(saved));note.textContent='Thanks! Your enquiry has been received.';note.className='form-note success';f.reset();showToast('Enquiry received');}}
+  function showToast(m){const t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('show');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove('show'),2300)}
 
-  function setupForm() {
-    const form = $("#enquiryForm");
-    const note = $("#formNote");
-    if (!form || !note) return;
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const name = $("#enquiryName").value.trim();
-      const phone = $("#enquiryPhone").value.trim();
-      const message = $("#enquiryMessage").value.trim();
-      if (!name || !phone) {
-        note.textContent = "Please enter your name and phone number.";
-        note.className = "form-note error";
-        return;
-      }
-      const saved = JSON.parse(localStorage.getItem("sitecraft-enquiries") || "[]");
-      saved.unshift({ name, phone, message, createdAt: new Date().toISOString() });
-      localStorage.setItem("sitecraft-enquiries", JSON.stringify(saved));
-      note.textContent = "Thanks! Your enquiry has been received. (Demo form)";
-      note.className = "form-note success";
-      form.reset();
-      showToast("Enquiry received (demo)");
-    });
-  }
+  function observeReveals(){ if(document.body.classList.contains('no-motion')){$$('.reveal,.reveal-child').forEach(n=>n.classList.add('visible'));return;} const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.14}); $$('.reveal:not(.visible),.reveal-child:not(.visible)').forEach(el=>io.observe(el)); }
 
-  function showToast(message) {
-    const toast = $("#toast");
-    if (!toast) return;
-    toast.textContent = message;
-    toast.classList.add("show");
-    window.clearTimeout(showToast.timer);
-    showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 2200);
-  }
-
-  function escapeHtml(value) {
-    return String(value ?? "").replace(/[&<>\"]/g, (char) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[char]));
-  }
-  function escapeAttr(value) { return escapeHtml(value).replace(/'/g, "&#39;"); }
-
-  renderBase();
-  renderServices();
-  renderGallery();
-  renderReviews();
-  renderFaqs();
-  renderSocials();
-  renderWhatsApp();
-  setupMenu();
-  setupForm();
+  renderBase();renderServices();renderGallery();renderReviews();renderFaqs();renderSocials();setupMenu();setupForm();observeReveals();
 })();
