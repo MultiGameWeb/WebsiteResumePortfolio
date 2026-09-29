@@ -45,3 +45,8 @@ Enquiries are stored under `sitecraft-enquiries` in the same browser.
 ## Production upgrade
 
 For real customer websites, move content/media to a backend such as Supabase/Firebase, add authentication, cloud image storage and image transformation/compression on upload.
+
+
+## Latest UI update
+- Added subtle scroll-focus shake when important sections/features enter the reading zone.
+- Improved mobile-first spacing, touch targets, buttons and sticky CTA behavior.

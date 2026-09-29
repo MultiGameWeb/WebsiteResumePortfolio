@@ -183,9 +183,42 @@
   }
 
   function observeReveals() {
-    if (document.body.classList.contains('no-motion')) { $$('.reveal,.reveal-child').forEach(n => n.classList.add('visible')); return; }
-    const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }), { threshold: .12 });
-    $$('.reveal:not(.visible),.reveal-child:not(.visible)').forEach(el => io.observe(el));
+    const reduceMotion = document.body.classList.contains('no-motion') || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      $$('.reveal,.reveal-child').forEach(n => n.classList.add('visible'));
+      $$('[data-scroll-focus]').forEach(n => n.classList.add('scroll-focus-target'));
+      return;
+    }
+
+    // First pass: the existing reveal animation only runs once.
+    const revealObserver = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    }), { threshold: .12 });
+    $$('.reveal:not(.visible),.reveal-child:not(.visible)').forEach(el => revealObserver.observe(el));
+
+    // Second pass: as sections/features cross the comfortable reading zone, give
+    // them a tiny lift + left/right shake. Keep observing so it can happen again
+    // on later scrolls without becoming distracting.
+    const focusObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting && entry.intersectionRatio >= .32) {
+        el.classList.add('scroll-focus-target');
+        const last = Number(el.dataset.lastFocus || 0);
+        const now = performance.now();
+        if (now - last > 850) {
+          el.dataset.lastFocus = String(now);
+          el.classList.remove('scroll-focus');
+          void el.offsetWidth;
+          el.classList.add('scroll-focus');
+          clearTimeout(el._scrollFocusTimer);
+          el._scrollFocusTimer = setTimeout(() => el.classList.remove('scroll-focus'), 760);
+        }
+      }
+    }), { threshold: [.32, .58], rootMargin: '-18% 0px -18% 0px' });
+    $$('[data-scroll-focus]').forEach(el => focusObserver.observe(el));
   }
 
   function renderAll() { renderBase(); renderServices(); renderVideo(); renderGallery(); renderReviews(); renderFaqs(); renderSocials(); observeReveals(); }
