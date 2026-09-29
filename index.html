@@ -1,1 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Photography studio website template — portfolio, services, reviews, FAQs and contact.">
+  <meta name="theme-color" content="#171917">
+  <title>Lumière Frames — Photography Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Photography studio home">
+        <span class="brand-name" data-field="studioName">Lumière Frames</span>
+        <span class="brand-motto" data-field="motto">Stories, beautifully framed.</span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Open navigation">Menu</button>
+      <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="header-cta js-whatsapp" href="#contact">WhatsApp</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-media">
+        <img id="heroImage" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=88" alt="Wedding couple photography">
+        <div class="hero-shade"></div>
+      </div>
+      <div class="container hero-content">
+        <p class="eyebrow light">PHOTOGRAPHY STUDIO</p>
+        <h1 id="heroTitle" data-field="heroTitle">Moments that feel like forever.</h1>
+        <p class="hero-subtitle" data-field="heroSubtitle">Candid wedding, portrait and brand photography crafted with a cinematic eye.</p>
+        <div class="hero-actions">
+          <a class="button button-light" href="#gallery">View portfolio</a>
+          <a class="button button-whatsapp js-whatsapp" href="#contact">WhatsApp us</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section intro-section" id="about">
+      <div class="container narrow center">
+        <p class="eyebrow" data-field="aboutEyebrow">ABOUT THE STUDIO</p>
+        <h2 data-field="about">We turn real moments into timeless photographs with a calm, candid and editorial approach.</h2>
+        <div class="meta-row">
+          <span data-field="experience">8+ years of experience</span>
+          <span data-field="teamStyle">Weddings · Portraits · Brands</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tinted" id="services">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">WHAT WE OFFER</p>
+            <h2>Packages &amp; services</h2>
+          </div>
+          <p class="section-caption">Thoughtful coverage, clear packages and images built to last.</p>
+        </div>
+        <div class="cards-grid" id="servicesGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="container">
+        <div class="section-heading gallery-heading">
+          <div>
+            <p class="eyebrow">SELECTED WORK</p>
+            <h2>Portfolio</h2>
+          </div>
+          <div class="filter-row" id="galleryFilters" aria-label="Gallery category filters"></div>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </div>
+    </section>
+
+    <section class="section tinted" id="reviews">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">KIND WORDS</p>
+            <h2>Reviews &amp; ratings</h2>
+          </div>
+          <div class="rating-summary"><span class="stars" aria-label="Five star rating">★★★★★</span><strong id="reviewAverage">5.0</strong><span>customer rating</span></div>
+        </div>
+        <div class="cards-grid" id="reviewsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="container contact-grid">
+        <div>
+          <p class="eyebrow">GET IN TOUCH</p>
+          <h2>Enquire about your date.</h2>
+          <p class="contact-copy">Tell us a little about the shoot. We’ll get back to you with availability and package details.</p>
+          <form class="contact-form" id="enquiryForm" novalidate>
+            <label><span>Your name</span><input id="enquiryName" required autocomplete="name" placeholder="Your name"></label>
+            <label><span>Phone number</span><input id="enquiryPhone" required autocomplete="tel" placeholder="+91 98765 43210"></label>
+            <label><span>Message</span><textarea id="enquiryMessage" rows="5" placeholder="Tell us about your shoot"></textarea></label>
+            <button class="button button-dark" type="submit">Send enquiry</button>
+            <p class="form-note" id="formNote" role="status"></p>
+          </form>
+        </div>
+        <aside class="contact-card">
+          <div class="contact-item"><span class="contact-label">Phone</span><a data-field-link="phone" href="tel:+919876543210" data-field="phone">+91 98765 43210</a></div>
+          <div class="contact-item"><span class="contact-label">Email</span><a data-field-link="email" href="mailto:hello@lumiereframes.com" data-field="email">hello@lumiereframes.com</a></div>
+          <div class="contact-item"><span class="contact-label">Studio</span><p data-field="address">Banjara Hills, Hyderabad, Telangana</p></div>
+          <div class="contact-actions">
+            <a class="button button-outline" data-field-link="mapsUrl" href="https://maps.google.com/?q=Banjara+Hills+Hyderabad" target="_blank" rel="noreferrer">Get directions</a>
+            <a class="button button-whatsapp" data-whatsapp-only href="#">WhatsApp</a>
+          </div>
+          <div class="social-links" id="socialLinks" aria-label="Social media links"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section faq-section" id="faq">
+      <div class="container narrow">
+        <p class="eyebrow">FAQ</p>
+        <h2>Frequently asked</h2>
+        <div class="faq-list" id="faqList"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong data-field="studioName">Lumière Frames</strong>
+        <p data-field="privacy">We use enquiry details only to respond to your request and provide our services. We do not sell personal information.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#top">Back to top</a>
+        <a href="#faq">FAQs</a>
+        <a href="#contact">Enquiry</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./data.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>
