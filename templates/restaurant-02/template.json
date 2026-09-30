@@ -1,0 +1,127 @@
+{
+  "id":"restaurant-02",
+  "name":"Restaurant — Color Pop",
+  "category":"Restaurants",
+  "price":"₹5,999",
+  "features":[
+    {"id":"home","label":"Home"},
+    {"id":"about","label":"About"},
+    {"id":"menu","label":"Menu"},
+    {"id":"offers","label":"Offers"},
+    {"id":"reviews","label":"Reviews"},
+    {"id":"reservation","label":"Table Booking"},
+    {"id":"contact","label":"Contact"},
+    {"id":"whatsapp","label":"WhatsApp"},
+    {"id":"location","label":"Location"},
+    {"id":"onlineOrder","label":"Online Ordering"}
+  ],
+  "fields":[
+    {"path":"brand.businessName","label":"Restaurant Name","required":true,"placeholder":"Pepper & Plate"},
+    {"path":"brand.ownerName","label":"Owner / Chef Name","placeholder":"Chef Meera"},
+    {"path":"brand.tagline","label":"Caption / Tagline","placeholder":"Big flavours. Bright nights."},
+    {"path":"home.title","label":"Home Heading","required":true,"placeholder":"Eat bright. Order easy."},
+    {"path":"home.text","label":"Home Text","type":"textarea","placeholder":"Fresh plates, fun tables and your favourite dishes ready to order."},
+    {"path":"brand.about","label":"About Restaurant","type":"textarea"},
+    {"path":"contact.phone","label":"Call Number","type":"tel"},
+    {"path":"contact.whatsapp","label":"WhatsApp Order / Booking Number","type":"tel"},
+    {"path":"contact.address","label":"Restaurant Address"},
+    {"path":"contact.maps","label":"Google Maps Link","type":"url"}
+  ],
+  "demoData":{
+    "brand":{
+      "businessName":"Pepper & Plate",
+      "ownerName":"Chef Meera",
+      "tagline":"Big flavours. Bright nights.",
+      "about":"A cheerful neighbourhood kitchen serving colourful comfort food, quick favourites and easy table bookings."
+    },
+    "home":{
+      "title":"Eat bright. Order easy.",
+      "text":"Fresh plates, fun tables and your favourite dishes ready to order."
+    },
+    "contact":{
+      "phone":"+91 98765 11111",
+      "whatsapp":"919876511111",
+      "address":"Madhapur, Hyderabad, Telangana",
+      "maps":"https://maps.google.com/?q=Madhapur+Hyderabad"
+    },
+    "hero":"https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1800&q=85",
+    "menu":[
+      {"id":"m1","name":"Smoky Paneer Bowl","price":399,"displayPrice":"₹399","category":"Bowls","description":"Paneer, peppers, rice and house chilli sauce.","image":"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80","enabled":true},
+      {"id":"m2","name":"Cheesy Peri Peri Fries","price":249,"displayPrice":"₹249","category":"Small Plates","description":"Crispy fries, cheese drizzle and peri peri dust.","image":"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80","enabled":true},
+      {"id":"m3","name":"Butter Chicken Bowl","price":499,"displayPrice":"₹499","category":"Mains","description":"Creamy butter chicken with fragrant rice.","image":"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80","enabled":true},
+      {"id":"m4","name":"Mango Cheesecake","price":299,"displayPrice":"₹299","category":"Desserts","description":"Mango cream, biscuit crunch and fresh fruit.","image":"https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?auto=format&fit=crop&w=800&q=80","enabled":true}
+    ],
+    "offers":[
+      {"id":"o1","title":"Combo Hour","text":"Any bowl + drink from ₹499, 12 PM to 4 PM.","enabled":true},
+      {"id":"o2","title":"Friday Friends","text":"Book a table for four and get a dessert platter.","enabled":true}
+    ],
+    "reviews":[
+      {"id":"r1","name":"Nisha","text":"The ordering was super easy and the food was even better.","rating":5,"enabled":true},
+      {"id":"r2","name":"Rahul","text":"Loved the colours, quick service and friendly team.","rating":5,"enabled":true}
+    ],
+    "settings":{
+      "showAbout":true,
+      "showMenu":true,
+      "showOffers":true,
+      "showReviews":true,
+      "showReservation":true,
+      "showContact":true,
+      "passwordProtected":false,
+      "adminPassword":""
+    }
+  },
+  "admin":{
+    "storageKey":"sitecraft:restaurant-02",
+    "heroPath":"hero",
+    "overviewNamePath":"brand.businessName",
+    "overviewMottoPath":"brand.tagline",
+    "sections":[
+      {"id":"overview","label":"Overview","type":"overview"},
+      {"id":"business","label":"Business","fields":[
+        {"path":"brand.businessName","label":"Restaurant name"},
+        {"path":"brand.ownerName","label":"Owner / chef"},
+        {"path":"brand.tagline","label":"Caption / tagline"},
+        {"path":"brand.about","label":"About","type":"textarea"}
+      ]},
+      {"id":"home","label":"Home","fields":[
+        {"path":"home.title","label":"Hero heading"},
+        {"path":"home.text","label":"Hero text","type":"textarea"},
+        {"path":"hero","label":"Hero image","type":"media"}
+      ]},
+      {"id":"menu","label":"Menu","type":"collection","itemLabel":"dish","path":"menu","titleKey":"name","fields":[
+        {"key":"name","label":"Dish name"},
+        {"key":"price","label":"Price"},
+        {"key":"category","label":"Category"},
+        {"key":"description","label":"Description","type":"textarea"},
+        {"key":"image","label":"Dish image","type":"media"},
+        {"key":"enabled","label":"Available","type":"checkbox"}
+      ],"addDefaults":{"name":"New dish","price":0,"category":"Mains","description":"","image":"","enabled":true}},
+      {"id":"offers","label":"Offers","type":"collection","itemLabel":"offer","path":"offers","titleKey":"title","fields":[
+        {"key":"title","label":"Title"},
+        {"key":"text","label":"Offer text","type":"textarea"},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"title":"New offer","text":"","enabled":true}},
+      {"id":"reviews","label":"Reviews","type":"collection","itemLabel":"review","path":"reviews","titleKey":"name","fields":[
+        {"key":"name","label":"Customer"},
+        {"key":"text","label":"Review","type":"textarea"},
+        {"key":"rating","label":"Rating","type":"select","options":[5,4,3,2,1]},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"name":"New customer","text":"","rating":5,"enabled":true}},
+      {"id":"contact","label":"Contact","fields":[
+        {"path":"contact.phone","label":"Call number","type":"tel"},
+        {"path":"contact.whatsapp","label":"WhatsApp order / booking","type":"tel"},
+        {"path":"contact.address","label":"Address"},
+        {"path":"contact.maps","label":"Maps URL","type":"url"}
+      ]},
+      {"id":"visibility","label":"Visibility","fields":[
+        {"path":"settings.showAbout","label":"About","type":"checkbox"},
+        {"path":"settings.showMenu","label":"Menu","type":"checkbox"},
+        {"path":"settings.showOffers","label":"Offers","type":"checkbox"},
+        {"path":"settings.showReviews","label":"Reviews","type":"checkbox"},
+        {"path":"settings.showReservation","label":"Table Booking","type":"checkbox"},
+        {"path":"settings.showContact","label":"Contact","type":"checkbox"}
+      ]},
+      {"id":"security","label":"Security","type":"security"}
+    ]
+  }
+}
