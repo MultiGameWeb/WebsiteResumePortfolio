@@ -27,3 +27,4 @@ This is plain HTML/CSS/JS. It can run as a static site. The builder uses browser
 
 For real customers, replace localStorage with a backend, authenticated admin, cloud media storage, real payment gateway and domain provisioning.
 \n## Current templates\n\n- Restaurants → Restaurant — Signature\n- Photography → Editorial, Cinematic\n
+- Restaurants → Color Pop (online ordering + WhatsApp table booking)
