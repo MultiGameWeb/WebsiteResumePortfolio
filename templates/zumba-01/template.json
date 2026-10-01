@@ -103,6 +103,21 @@
       "placeholder": "Train hard. Move better. Live stronger."
     },
     {
+      "path": "fitness.type",
+      "label": "Fitness Type",
+      "type": "select",
+      "options": [
+        "General Gym",
+        "Yoga",
+        "Zumba",
+        "CrossFit",
+        "HIIT",
+        "Strength Circuit",
+        "Mobility"
+      ],
+      "required": true
+    },
+    {
       "path": "brand.about",
       "label": "About Gym",
       "type": "textarea"
