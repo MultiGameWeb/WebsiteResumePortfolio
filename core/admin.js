@@ -93,7 +93,32 @@ function renderCollection(s){const r=$('#list-'+s.id);if(!r)return;const list=ge
 function renderMedia(){const r=$('#mediaGrid');if(!r)return;const a=(d.mediaLibrary||[]).filter(x=>x.type==='image');$('#mediaCount').textContent=a.length+' stored images';r.innerHTML=a.map(x=>`<article class="media-card"><div class="media-thumb"><img src="${esc(x.src)}" alt=""></div><div class="media-body"><strong>${esc(x.name)}</strong><div class="media-actions"><button class="button danger small" data-media-del="${esc(x.id)}">Delete</button></div></div></article>`).join('')||'<div class="empty-state">No images yet. Upload images to build your library.</div>'}
 function renderStats(){const c=(id)=>{const s=m.admin?.sections?.find(x=>x.id===id);const a=s?get(d,s.path):[];return Array.isArray(a)?a.filter(x=>x.enabled!==false).length:0};if($('#statImages'))$('#statImages').textContent=(d.mediaLibrary||[]).length;if($('#statServices'))$('#statServices').textContent=c(['restaurant-01','restaurant-02','catering-01'].includes(m.id)?'menu':'services');if($('#statGallery'))$('#statGallery').textContent=c('gallery');if($('#statEnquiries'))$('#statEnquiries').textContent='0';if($('#overviewName'))$('#overviewName').textContent=get(d,m.admin?.overviewNamePath||'brand.businessName')||m.name;if($('#overviewMotto'))$('#overviewMotto').textContent=get(d,m.admin?.overviewMottoPath||'brand.tagline')||get(d,m.admin?.overviewMottoPath||'brand.motto')||''}
 function render(){ $$('[data-path]').forEach(e=>{const v=get(d,e.dataset.path);if(e.type==='checkbox')e.checked=v!==false;else e.value=v??''});$$('.media-field').forEach(x=>{const b=x.querySelector('[data-pick]');if(!b)return;const target=JSON.parse(b.dataset.pick);let v='';if(target.kind==='path')v=get(d,target.path);else if(target.kind==='item')v=((get(d,m.admin.sections.find(s=>s.id===target.sectionId)?.path)||[]).find(i=>i.id===target.itemId)?.[target.key]||'');else if(target.kind==='nestedGroup')v=((get(d,m.admin.sections.find(s=>s.id===target.sectionId)?.path)||[]).find(i=>i.id===target.groupId)?.[target.key]||'');else if(target.kind==='nestedItem'){const g=(get(d,m.admin.sections.find(s=>s.id===target.sectionId)?.path)||[]).find(i=>i.id===target.groupId);v=(g?.items||[]).find(i=>i.id===target.itemId)?.[target.key]||''}const small=x.querySelector('small');if(small)small.textContent=v?'Image selected':'No image selected'});(m.admin?.sections||[]).filter(s=>s.type==='collection').forEach(renderCollection);(m.admin?.sections||[]).filter(s=>s.type==='nestedCollection').forEach(renderNestedCollection);renderMedia();renderStats();updateSecurity()}
-function openPicker(target){pickerTarget=target;const a=(d.mediaLibrary||[]).filter(x=>x.type==='image');const o=$('#pickerOverlay'),g=$('#pickerGrid');if(!o||!g)return;g.innerHTML=a.map(x=>`<button class="picker-item" type="button" data-pick-id="${esc(x.id)}"><img src="${esc(x.src)}" alt=""><span>${esc(x.name)}</span></button>`).join('')||'<div class="empty-state">Upload an image first.</div>';o.hidden=false}
+function openPicker(target){
+ pickerTarget=target;
+ const a=(d.mediaLibrary||[]).filter(x=>x.type==='image');
+ const o=$('#pickerOverlay'),g=$('#pickerGrid');if(!o||!g)return;
+ g.innerHTML=a.map(x=>`<button class="picker-item" type="button" data-pick-id="${esc(x.id)}"><img src="${esc(x.src)}" alt=""><span>${esc(x.name)}</span></button>`).join('')||'<div class="empty-state">No images in storage yet.</div>';
+ const head=o.querySelector('.picker-head');
+ if(head&&!head.querySelector('#pickerUpload')){
+   const wrap=document.createElement('label');wrap.className='button dark picker-upload-btn';wrap.id='pickerUpload';
+   wrap.innerHTML='+ Upload image<input id="pickerImageUpload" type="file" accept="image/*">';
+   head.appendChild(wrap);
+   $('#pickerImageUpload')?.addEventListener('change',async e=>{
+     for(const f of [...e.target.files]){
+       try{
+         const b=await createImageBitmap(f),cv=document.createElement('canvas'),scale=Math.min(1,1800/Math.max(b.width,b.height));
+         cv.width=Math.max(1,Math.round(b.width*scale));cv.height=Math.max(1,Math.round(b.height*scale));
+         cv.getContext('2d').drawImage(b,0,0,cv.width,cv.height);
+         d.mediaLibrary=d.mediaLibrary||[];
+         const src=cv.toDataURL('image/jpeg',.82);
+         d.mediaLibrary.push({id:crypto.randomUUID(),name:f.name,type:'image',src});
+       }catch{toast('Could not process '+f.name)}
+     }
+     save('Image uploaded'); openPicker(pickerTarget);
+   });
+ }
+ o.hidden=false;
+}
 function closePicker(){$('#pickerOverlay').hidden=true;pickerTarget=null}
 function bind(){
  document.addEventListener('input',e=>{if(e.target.matches('[data-path]')){set(d,e.target.dataset.path,e.target.type==='checkbox'?e.target.checked:e.target.value);save('Draft saved')}}); 
