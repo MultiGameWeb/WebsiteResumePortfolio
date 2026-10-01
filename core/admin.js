@@ -6,7 +6,7 @@ const set=(o,p,v)=>{const a=p.split('.');let x=o;a.slice(0,-1).forEach(k=>{if(!x
 const root=p=>new URL(p,location.href).href;
 const id=new URLSearchParams(location.search).get('template')||Store.read().templateId||'restaurant-01';
 const t=getTemplate(id);if(!t){location.href='index.html';return}
-let m,d,key='sitecraft:'+id,pickerTarget=null;
+let m,d,key='sitecraft:'+id,pickerTarget=null,leadFilters={date:'',status:''};
 async function boot(){m=await fetch(root(t.manifest)).then(r=>{if(!r.ok)throw Error('Manifest load failed');return r.json()});d=load();ensureMediaLibrary();$('#adminTemplateName').textContent=m.name||t.name;$('#adminTemplateCategory').textContent=m.category||t.category||'';if(isProtected()&&sessionStorage.getItem(authKey())!=='1'){showAuth();return}build();bind();render()}
 function load(){
   let x;
@@ -98,10 +98,23 @@ function renderCollection(s){const r=$('#list-'+s.id);if(!r)return;const list=ge
 function csvCell(v){const s=String(v??'').replace(/"/g,'""');return '"'+s+'"'}
 function renderLeads(s){
  const r=$('#leadTable-'+s.id);if(!r)return;
- const list=Array.isArray(get(d,s.path))?get(d,s.path):[];
- $('#leadCount').textContent=list.length+' '+(list.length===1?'lead':'leads');
- const cols=s.columns||['createdAt','name','phone','email','propertyType','budget','purpose','property','date','time','message'];
- r.innerHTML=list.length?`<table class="lead-table"><thead><tr>${cols.map(k=>'<th>'+esc(s.labels?.[k]||k)+'</th>').join('')}<th></th></tr></thead><tbody>${list.map((it,i)=>'<tr>'+cols.map(k=>'<td>'+esc(it[k]||'')+'</td>').join('')+'<td><button class="button danger small" data-del-lead="'+esc(it.id)+'">Delete</button></td></tr>').join('')}</tbody></table>`:'<div class="empty-state">No leads yet. Customer enquiries will appear here.</div>';
+ const list=Array.isArray(get(d,s.path))?get(d,s.path):[],statuses=s.statuses||['New','Confirmed','Rescheduled','Completed','Cancelled'],dateKey=s.dateKey||'date',statusKey=s.statusKey||'status';
+ list.forEach(it=>{if(!it[statusKey])it[statusKey]='New'});
+ const filtered=list.filter(it=>(!leadFilters.date||String(it[dateKey]||'')===leadFilters.date)&&(!leadFilters.status||String(it[statusKey]||'New')===leadFilters.status));
+ const counts=statuses.map(st=>st+': '+list.filter(it=>String(it[statusKey]||'New')===st).length).join('  •  ');
+ const cols=s.columns||['createdAt','status','name','phone','email','service','doctor','date','slot','time','notes'];
+ const options=statuses.map(st=>'<option value="'+esc(st)+'">'+esc(st)+'</option>').join('');
+ const actions=it=>{
+   const st=String(it[statusKey]||'New');
+   let x='<div class="lead-actions">';
+   if(st!=='Confirmed'&&st!=='Completed'&&st!=='Cancelled')x+='<button class="button ghost small" data-lead-action="confirm" data-lead-id="'+esc(it.id)+'">Confirm</button>';
+   if(st!=='Completed'&&st!=='Cancelled')x+='<button class="button ghost small" data-lead-action="reschedule" data-lead-id="'+esc(it.id)+'">Reschedule</button>';
+   if(st!=='Completed'&&st!=='Cancelled')x+='<button class="button dark small" data-lead-action="complete" data-lead-id="'+esc(it.id)+'">Complete</button>';
+   if(st!=='Cancelled'&&st!=='Completed')x+='<button class="button danger small" data-lead-action="cancel" data-lead-id="'+esc(it.id)+'">Cancel</button>';
+   return x+'</div>';
+ };
+ r.innerHTML='<div class="lead-filters"><label class="field"><span>Appointment date</span><input type="date" data-lead-filter-date value="'+esc(leadFilters.date)+'"></label><label class="field"><span>Status</span><select data-lead-filter-status><option value="">All statuses</option>'+options.replace(' value="'+esc(leadFilters.status)+'"','')+'</select></label><button type="button" class="button ghost small" data-clear-lead-filters>Clear filters</button><div class="lead-summary">'+esc(counts)+'</div></div>'+ (filtered.length?'<div class="lead-table-scroll"><table class="lead-table"><thead><tr>'+cols.map(k=>'<th>'+esc(s.labels?.[k]||k)+'</th>').join('')+'<th>Actions</th></tr></thead><tbody>'+filtered.map(it=>'<tr>'+cols.map(k=>k===statusKey?'<td><select class="lead-status" data-lead-status data-lead-id="'+esc(it.id)+'">'+statuses.map(st=>'<option value="'+esc(st)+'" '+(String(st)===String(it[k]||'New')?'selected':'')+'>'+esc(st)+'</option>').join('')+'</select></td>':'<td>'+esc(it[k]||'')+'</td>').join('')+'<td>'+actions(it)+'</td></tr>').join('')+'</tbody></table></div>':'<div class="empty-state">'+(list.length?'No appointments match these filters.':'No leads yet. Customer appointment requests will appear here.')+'</div>');
+ const statusSelect=r.querySelector('[data-lead-filter-status]');if(statusSelect)statusSelect.value=leadFilters.status;
 }
 function exportLeads(s){
  const list=Array.isArray(get(d,s.path))?get(d,s.path):[];
@@ -145,6 +158,8 @@ function bind(){
  document.addEventListener('change',e=>{if(e.target.matches('[data-path]')){set(d,e.target.dataset.path,e.target.type==='checkbox'?e.target.checked:e.target.value);save('Setting saved')}});
  document.addEventListener('input',e=>{if(e.target.matches('[data-item]')){const s=m.admin.sections.find(x=>x.id===e.target.dataset.item),it=(get(d,s.path)||[]).find(x=>x.id===e.target.dataset.id);if(it){it[e.target.dataset.key]=e.target.type==='checkbox'?e.target.checked:e.target.value;save('Item saved')}}});
  document.addEventListener('change',e=>{if(e.target.matches('[data-item]')){const s=m.admin.sections.find(x=>x.id===e.target.dataset.item),it=(get(d,s.path)||[]).find(x=>x.id===e.target.dataset.id);if(it){it[e.target.dataset.key]=e.target.type==='checkbox'?e.target.checked:e.target.value;save('Item saved')}}});
+ document.addEventListener('change',e=>{if(e.target.matches('[data-lead-status]')){const s=m.admin.sections.find(x=>x.type==='leads'),it=s?(get(d,s.path)||[]).find(x=>x.id===e.target.dataset.leadId):null;if(it){it.status=e.target.value;save('Appointment status updated');renderLeads(s)}}});
+ document.addEventListener('change',e=>{if(e.target.matches('[data-lead-filter-date]')){leadFilters.date=e.target.value||'';const s=m.admin.sections.find(x=>x.type==='leads');if(s)renderLeads(s)}else if(e.target.matches('[data-lead-filter-status]')){leadFilters.status=e.target.value||'';const s=m.admin.sections.find(x=>x.type==='leads');if(s)renderLeads(s)}});
  document.addEventListener('change',e=>{if(e.target.matches('[data-video-upload]')){const f=e.target.files?.[0];if(!f)return;if(f.size>10*1024*1024){toast('Please use a video under 10 MB for this browser-stored demo.');e.target.value='';return}const s=m.admin.sections.find(x=>x.id===e.target.dataset.sectionId),it=s?((get(d,s.path)||[]).find(x=>x.id===e.target.dataset.itemId)):null;if(!s||!it)return;const fr=new FileReader();fr.onload=()=>{it[e.target.dataset.key]=fr.result;save('Video uploaded');renderCollection(s)};fr.onerror=()=>toast('Could not read video');fr.readAsDataURL(f)}});
  document.addEventListener('input',e=>{if(e.target.matches('[data-group]')){const s=m.admin.sections.find(x=>x.id===e.target.dataset.group),g=(get(d,s.path)||[]).find(x=>x.id===e.target.dataset.id);if(g){g[e.target.dataset.key]=e.target.type==='checkbox'?e.target.checked:e.target.value;save('Menu saved')}}});
  document.addEventListener('change',e=>{if(e.target.matches('[data-group]')){const s=m.admin.sections.find(x=>x.id===e.target.dataset.group),g=(get(d,s.path)||[]).find(x=>x.id===e.target.dataset.id);if(g){g[e.target.dataset.key]=e.target.type==='checkbox'?e.target.checked:e.target.value;save('Menu saved')}}});
@@ -159,6 +174,14 @@ function bind(){
   const a=e.target.closest('[data-add]');if(a){const s=m.admin.sections.find(x=>x.id===a.dataset.add),list=get(d,s.path)||[],it={id:crypto.randomUUID(),...(s.addDefaults||{})};(s.fields||[]).forEach(f=>{if(it[f.key]===undefined)it[f.key]=f.default??(f.type==='checkbox'?true:'')});list.push(it);set(d,s.path,list);save('Item added');renderCollection(s);return}
   const del=e.target.closest('[data-del]');if(del){const s=m.admin.sections.find(x=>x.id===del.dataset.del);set(d,s.path,(get(d,s.path)||[]).filter(x=>x.id!==del.dataset.id));save('Item deleted');renderCollection(s);return}
   const ex=e.target.closest('[data-export-leads]');if(ex){const s=m.admin.sections.find(x=>x.type==='leads');if(s)exportLeads(s);return}
+  const filterClear=e.target.closest('[data-clear-lead-filters]');if(filterClear){leadFilters={date:'',status:''};const s=m.admin.sections.find(x=>x.type==='leads');if(s)renderLeads(s);return}
+  const leadAction=e.target.closest('[data-lead-action]');if(leadAction){const s=m.admin.sections.find(x=>x.type==='leads'),it=s?(get(d,s.path)||[]).find(x=>x.id===leadAction.dataset.leadId):null;if(!s||!it)return;
+    const action=leadAction.dataset.leadAction;
+    if(action==='confirm'){it.status='Confirmed';it.confirmedAt=new Date().toLocaleString();save('Appointment confirmed');renderLeads(s)}
+    else if(action==='complete'){it.status='Completed';it.completedAt=new Date().toLocaleString();save('Appointment completed');renderLeads(s)}
+    else if(action==='cancel'){it.status='Cancelled';it.cancelledAt=new Date().toLocaleString();save('Appointment cancelled');renderLeads(s)}
+    else if(action==='reschedule'){const nd=window.prompt('New appointment date (YYYY-MM-DD):',it.date||'');if(nd===null)return;const nt=window.prompt('New appointment time (optional):',it.time||'');if(nt===null)return;it.date=nd;it.time=nt;it.status='Rescheduled';it.rescheduledAt=new Date().toLocaleString();save('Appointment rescheduled');renderLeads(s)}
+    return}
   const dl=e.target.closest('[data-del-lead]');if(dl){const s=m.admin.sections.find(x=>x.type==='leads');if(s){set(d,s.path,(get(d,s.path)||[]).filter(x=>x.id!==dl.dataset.delLead));save('Lead deleted');renderLeads(s)}return}
   const md=e.target.closest('[data-media-del]');if(md&&confirm('Delete image?')){const removed=(d.mediaLibrary||[]).find(x=>x.id===md.dataset.mediaDel);d.mediaLibrary=(d.mediaLibrary||[]).filter(x=>x.id!==md.dataset.mediaDel);if(removed){(m.admin?.sections||[]).filter(s=>s.type==='collection').forEach(s=>{const list=get(d,s.path)||[];list.forEach(it=>(s.fields||[]).filter(f=>f.type==='media').forEach(f=>{if(it[f.key]===removed.src)it[f.key]=''}))});
 (m.admin?.sections||[]).filter(s=>s.type==='nestedCollection').forEach(s=>{(get(d,s.path)||[]).forEach(g=>{(s.groupFields||[]).filter(f=>f.type==='media').forEach(f=>{if(g[f.key]===removed.src)g[f.key]=''});(g.items||[]).forEach(it=>(s.itemFields||[]).filter(f=>f.type==='media').forEach(f=>{if(it[f.key]===removed.src)it[f.key]=''}))})});(m.admin?.sections||[]).forEach(s=>(s.fields||[]).filter(f=>f.type==='media').forEach(f=>{if(get(d,f.path)===removed.src)set(d,f.path,'')}))}save('Image deleted');render()}
