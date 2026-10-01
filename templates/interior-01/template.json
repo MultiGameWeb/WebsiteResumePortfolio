@@ -1,0 +1,294 @@
+{
+  "id":"interior-01",
+  "name":"Interior Designers & Architects — Interior Studio",
+  "category":"Interior Designers & Architects",
+  "price":"₹4,999",
+  "features":[
+    {"id":"home","label":"Home"},
+    {"id":"about","label":"About Studio"},
+    {"id":"projects","label":"Project Portfolio"},
+    {"id":"floorplans","label":"2D / 3D Floor Plans"},
+    {"id":"materials","label":"Materials & Quality Selection"},
+    {"id":"services","label":"Design Services"},
+    {"id":"team","label":"Design Team"},
+    {"id":"reviews","label":"Client Reviews"},
+    {"id":"estimator","label":"Interior Cost Estimator"},
+    {"id":"consultation","label":"Consultation Enquiry"},
+    {"id":"whatsapp","label":"WhatsApp"},
+    {"id":"location","label":"Studio Location"},
+    {"id":"faq","label":"FAQ"},
+    {"id":"contact","label":"Contact"},
+    {"id":"terms","label":"Terms & Conditions"},
+    {"id":"privacy","label":"Privacy Policy"}
+  ],
+  "defaultSelectedFeatures":["home","about","projects","floorplans","materials","services","team","reviews","estimator","consultation","whatsapp","location","faq","contact","terms","privacy"],
+  "fields":[
+    {"path":"brand.businessName","label":"Studio / Company Name","required":true,"placeholder":"Atelier Forma"},
+    {"path":"brand.ownerName","label":"Founder / Principal Designer","placeholder":"Arjun Rao"},
+    {"path":"brand.tagline","label":"Tagline","placeholder":"Spaces shaped around how you live and work."},
+    {"path":"home.title","label":"Home Heading","required":true,"placeholder":"Interiors with a point of view."},
+    {"path":"home.text","label":"Home Text","type":"textarea","placeholder":"Luxury homes, offices and crafted spaces from concept to execution."},
+    {"path":"brand.about","label":"About Studio","type":"textarea"},
+    {"path":"contact.phone","label":"Call Number","type":"tel"},
+    {"path":"contact.whatsapp","label":"WhatsApp Number","type":"tel"},
+    {"path":"contact.email","label":"Email"},
+    {"path":"contact.address","label":"Studio Address"},
+    {"path":"contact.maps","label":"Google Maps Link","type":"url"},
+    {"path":"contact.hours","label":"Studio Hours","placeholder":"Mon–Sat · 10:00 AM–7:00 PM"},
+    {"path":"estimator.currency","label":"Estimator Currency","placeholder":"₹"},
+    {"path":"termsText","label":"Terms & Conditions","type":"textarea"},
+    {"path":"privacyPolicy","label":"Privacy Policy","type":"textarea"}
+  ],
+  "demoData":{
+    "runtime":{"templateId":"interior-01"},
+    "brand":{
+      "businessName":"Atelier Forma",
+      "ownerName":"Arjun Rao",
+      "tagline":"Spaces shaped around how you live and work.",
+      "about":"We are an interior design and architecture studio creating refined residential and commercial spaces. Our process blends planning, materials, lighting and execution detailing into one clear journey from concept to handover."
+    },
+    "home":{
+      "title":"Interiors with a point of view.",
+      "text":"From luxury residences to focused workspaces, we design calm, functional interiors with strong material choices and disciplined detailing."
+    },
+    "hero":"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=88",
+    "projects":[
+      {
+        "id":"p1",
+        "title":"Horizon Villa",
+        "type":"Luxury Residence",
+        "location":"Jubilee Hills, Hyderabad",
+        "area":"4,800 sq.ft",
+        "year":"2026",
+        "summary":"Warm contemporary residence with natural stone, oak textures and layered lighting.",
+        "coverImage":"https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=86",
+        "floorPlan2D":"https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1100&q=86",
+        "floorPlan3D":"https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1100&q=86",
+        "photos":[
+          {"id":"p1g1","title":"Living Space","image":"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=84","enabled":true},
+          {"id":"p1g2","title":"Dining","image":"https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1000&q=84","enabled":true},
+          {"id":"p1g3","title":"Bedroom","image":"https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1000&q=84","enabled":true}
+        ],
+        "featured":true,
+        "enabled":true
+      },
+      {
+        "id":"p2",
+        "title":"Studio 27",
+        "type":"Office Interior",
+        "location":"HITEC City, Hyderabad",
+        "area":"7,200 sq.ft",
+        "year":"2025",
+        "summary":"Executive office designed around focused work zones, acoustic comfort and hospitality-led meeting spaces.",
+        "coverImage":"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=86",
+        "floorPlan2D":"https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1100&q=86",
+        "floorPlan3D":"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1100&q=86",
+        "photos":[
+          {"id":"p2g1","title":"Work Lounge","image":"https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=84","enabled":true},
+          {"id":"p2g2","title":"Meeting Room","image":"https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=1000&q=84","enabled":true}
+        ],
+        "featured":true,
+        "enabled":true
+      },
+      {
+        "id":"p3",
+        "title":"Terrace Apartment",
+        "type":"Premium Apartment",
+        "location":"Kondapur, Hyderabad",
+        "area":"2,100 sq.ft",
+        "year":"2026",
+        "summary":"Space-efficient apartment with concealed storage, tactile finishes and a soft neutral palette.",
+        "coverImage":"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=86",
+        "floorPlan2D":"https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1100&q=86",
+        "floorPlan3D":"https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1100&q=86",
+        "photos":[
+          {"id":"p3g1","title":"Kitchen","image":"https://images.unsplash.com/photo-1600585152915-d208bec867a1?auto=format&fit=crop&w=1000&q=84","enabled":true},
+          {"id":"p3g2","title":"Bedroom","image":"https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=84","enabled":true}
+        ],
+        "featured":false,
+        "enabled":true
+      }
+    ],
+    "materials":[
+      {"id":"m1","name":"Wood & Veneer","quality":"Premium","description":"Natural veneer, engineered wood and detailed edge profiles.","addonPerSqft":90,"enabled":true},
+      {"id":"m2","name":"Stone / Quartz","quality":"Premium","description":"Quartz, marble-look surfaces and statement stone applications.","addonPerSqft":140,"enabled":true},
+      {"id":"m3","name":"Lighting Layers","quality":"Signature","description":"Architectural lighting, task lighting and concealed ambient layers.","addonPerSqft":70,"enabled":true},
+      {"id":"m4","name":"Modular Kitchen","quality":"Premium","description":"Custom cabinetry, hardware and appliance-ready planning.","addonPerSqft":120,"enabled":true},
+      {"id":"m5","name":"Wardrobes & Storage","quality":"Premium","description":"Full-height wardrobes and tailored storage solutions.","addonPerSqft":110,"enabled":true},
+      {"id":"m6","name":"Smart Home Preparation","quality":"Optional","description":"Structured wiring and provision planning for future automation.","addonPerSqft":85,"enabled":true}
+    ],
+    "services":[
+      {"id":"s1","name":"Interior Design","description":"Concept, layout planning, moodboards, materials and detailed interior direction.","enabled":true},
+      {"id":"s2","name":"Architecture & Space Planning","description":"Floor planning, circulation studies, zoning and design coordination for new or reworked spaces.","enabled":true},
+      {"id":"s3","name":"3D Visualization","description":"Photorealistic views that help clients understand the final space before execution.","enabled":true},
+      {"id":"s4","name":"Turnkey Execution","description":"Coordinated execution with procurement, site supervision and handover support.","enabled":true},
+      {"id":"s5","name":"Renovation & Makeover","description":"Targeted upgrades for kitchens, living rooms, bedrooms, offices and full homes.","enabled":true},
+      {"id":"s6","name":"Material & Lighting Selection","description":"Curated finish palettes, lighting plans and material sampling for a cohesive result.","enabled":true}
+    ],
+    "team":[
+      {"id":"t1","name":"Arjun Rao","role":"Founder & Principal Designer","credentials":"B.Arch · 11 years","specialization":"Luxury residences & hospitality-led homes","image":"https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=84","enabled":true},
+      {"id":"t2","name":"Meera Iyer","role":"Senior Interior Designer","credentials":"Interior Design · 8 years","specialization":"Residential interiors & materials","image":"https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=84","enabled":true},
+      {"id":"t3","name":"Kabir Sen","role":"Project & Execution Lead","credentials":"Construction Management · 9 years","specialization":"Turnkey execution & site coordination","image":"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=84","enabled":true}
+    ],
+    "reviews":[
+      {"id":"r1","name":"Priya & Karan","rating":5,"text":"The floor plans and material boards made our decisions much easier. The execution stayed aligned with the design.","enabled":true},
+      {"id":"r2","name":"Nikhil M.","rating":5,"text":"Excellent communication from concept to site. We always knew what was being selected and why.","enabled":true},
+      {"id":"r3","name":"Aparna S.","rating":5,"text":"The 3D views helped us feel confident before work started. The final space matched the design direction beautifully.","enabled":true}
+    ],
+    "faq":[
+      {"id":"f1","question":"Can you share 2D floor plans before the design starts?","answer":"Yes. The studio can present 2D planning drawings as part of the design process, based on the project scope.","enabled":true},
+      {"id":"f2","question":"Do you provide 3D views?","answer":"Yes. 3D visualizations can be included to communicate materials, furniture, lighting and the intended spatial feel.","enabled":true},
+      {"id":"f3","question":"How does the cost estimator work?","answer":"Enter an approximate area, choose a quality tier and select the material scopes you want to explore. The result is an indicative planning estimate, not a final quotation.","enabled":true},
+      {"id":"f4","question":"Do you handle execution?","answer":"Turnkey execution and site coordination can be offered depending on the project and service scope. Confirm the exact deliverables during consultation.","enabled":true},
+      {"id":"f5","question":"Can you work with my existing contractor?","answer":"The studio can discuss design-only or coordinated design support with your existing execution team, subject to project fit.","enabled":true}
+    ],
+    "estimator":{
+      "currency":"₹",
+      "baseRates":{"Basic":1250,"Premium":1850,"Luxury":2800},
+      "qualityTiers":[
+        {"id":"Basic","label":"Essential","note":"Clean finishes, practical selections","rate":1250},
+        {"id":"Premium","label":"Premium","note":"Higher-grade finishes & detailing","rate":1850},
+        {"id":"Luxury","label":"Luxury","note":"Custom detailing & statement materials","rate":2800}
+      ],
+      "projectTypes":[
+        {"id":"Apartment","label":"Apartment","multiplier":1},
+        {"id":"Villa","label":"Villa","multiplier":1.15},
+        {"id":"Office","label":"Office","multiplier":1.05},
+        {"id":"Retail","label":"Retail / Studio","multiplier":1.12},
+        {"id":"Penthouse","label":"Penthouse","multiplier":1.25}
+      ],
+      "rows":[
+        {"id":"e1","category":"Design & Space Planning","note":"Concept, layout and design direction","included":true,"basic":250,"premium":320,"luxury":450,"enabled":true},
+        {"id":"e2","category":"Flooring & Wall Finishes","note":"Floor, wall and surface finish allowance","included":true,"basic":300,"premium":430,"luxury":620,"enabled":true},
+        {"id":"e3","category":"Kitchen & Utility","note":"Cabinetry, counters and utility detailing","included":true,"basic":220,"premium":340,"luxury":520,"enabled":true},
+        {"id":"e4","category":"Wardrobes & Storage","note":"Custom storage and wardrobe allowance","included":true,"basic":180,"premium":270,"luxury":390,"enabled":true},
+        {"id":"e5","category":"Lighting & Electrical","note":"Lighting layers, fixtures and electrical detailing","included":true,"basic":140,"premium":210,"luxury":320,"enabled":true},
+        {"id":"e6","category":"Furniture & Soft Furnishings","note":"Selected loose furniture and soft-finish allowance","included":false,"basic":160,"premium":260,"luxury":420,"enabled":true},
+        {"id":"e7","category":"Execution & Site Coordination","note":"Indicative execution coordination allowance","included":true,"basic":100,"premium":170,"luxury":260,"enabled":true}
+      ]
+    },
+    "contact":{"phone":"+91 90000 12345","whatsapp":"919000012345","email":"hello@atelierforma.example","address":"Banjara Hills, Hyderabad, Telangana","maps":"https://maps.google.com/?q=Banjara+Hills+Hyderabad","hours":"Mon–Sat · 10:00 AM–7:00 PM"},
+    "termsText":"Design scope, drawings, revisions, material allowances, execution responsibilities, payment milestones and site conditions should be confirmed in the project's written quotation and agreement.",
+    "privacyPolicy":"We use enquiry details to respond to consultation requests and project enquiries. Replace this sample copy with the studio's final privacy and data-handling policy before publishing.",
+    "settings":{"showAbout":true,"showProjects":true,"showFloorPlans":true,"showMaterials":true,"showServices":true,"showTeam":true,"showReviews":true,"showEstimator":true,"showConsultation":true,"showLocation":true,"showFAQ":true,"showContact":true,"showTerms":true,"showPrivacy":true},
+    "leads":[]
+  },
+  "admin":{
+    "storageKey":"sitecraft:interior-01",
+    "heroPath":"hero",
+    "overviewNamePath":"brand.businessName",
+    "overviewMottoPath":"brand.tagline",
+    "sections":[
+      {"id":"overview","label":"Overview","type":"overview"},
+      {"id":"media","label":"Images / Storage","type":"media"},
+      {"id":"business","label":"Business","fields":[
+        {"path":"brand.businessName","label":"Studio / company name"},
+        {"path":"brand.ownerName","label":"Founder / principal designer"},
+        {"path":"brand.tagline","label":"Tagline"},
+        {"path":"brand.about","label":"About studio","type":"textarea"}
+      ]},
+      {"id":"home","label":"Home","fields":[
+        {"path":"home.title","label":"Hero heading"},
+        {"path":"home.text","label":"Hero text","type":"textarea"},
+        {"path":"hero","label":"Hero image","type":"media"}
+      ]},
+      {"id":"projects","label":"Project Portfolio","type":"nestedCollection","itemLabel":"project","path":"projects","titleKey":"title","description":"Add completed or ongoing projects with cover image, 2D plan, 3D plan and project photography.","groupFields":[
+        {"key":"title","label":"Project title"},
+        {"key":"type","label":"Project type","type":"select","options":["Luxury Residence","Premium Apartment","Office Interior","Retail / Studio","Hospitality","Renovation"]},
+        {"key":"location","label":"Location"},
+        {"key":"area","label":"Area"},
+        {"key":"year","label":"Year"},
+        {"key":"summary","label":"Project summary","type":"textarea"},
+        {"key":"coverImage","label":"Cover image","type":"media"},
+        {"key":"floorPlan2D","label":"2D floor plan","type":"media"},
+        {"key":"floorPlan3D","label":"3D floor plan / render","type":"media"},
+        {"key":"featured","label":"Featured project","type":"checkbox"},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],
+      "itemFields":[
+        {"key":"title","label":"Photo title"},
+        {"key":"image","label":"Project photo","type":"media"},
+        {"key":"enabled","label":"Show photo","type":"checkbox"}
+      ],
+      "addDefaults":{"title":"New project","type":"Luxury Residence","location":"","area":"","year":"","summary":"","coverImage":"","floorPlan2D":"","floorPlan3D":"","photos":[],"featured":true,"enabled":true}
+      },
+      {"id":"materials","label":"Materials & Quality","type":"collection","itemLabel":"material","path":"materials","titleKey":"name","fields":[
+        {"key":"name","label":"Material / scope"},
+        {"key":"quality","label":"Quality label"},
+        {"key":"description","label":"Description","type":"textarea"},
+        {"key":"addonPerSqft","label":"Indicative add-on / sq.ft","type":"number"},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"name":"New material","quality":"Premium","description":"","addonPerSqft":0,"enabled":true}},
+      {"id":"services","label":"Design Services","type":"collection","itemLabel":"service","path":"services","titleKey":"name","fields":[
+        {"key":"name","label":"Service name"},
+        {"key":"description","label":"Description","type":"textarea"},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"name":"New design service","description":"","enabled":true}},
+      {"id":"team","label":"Design Team","type":"collection","itemLabel":"designer","path":"team","titleKey":"name","fields":[
+        {"key":"name","label":"Name"},
+        {"key":"role","label":"Role"},
+        {"key":"credentials","label":"Qualification / experience"},
+        {"key":"specialization","label":"Specialization","type":"textarea"},
+        {"key":"image","label":"Profile image","type":"media"},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"name":"New designer","role":"Interior Designer","credentials":"","specialization":"","image":"","enabled":true}},
+      {"id":"reviews","label":"Client Reviews","type":"collection","itemLabel":"review","path":"reviews","titleKey":"name","fields":[
+        {"key":"name","label":"Client name"},
+        {"key":"text","label":"Review","type":"textarea"},
+        {"key":"rating","label":"Rating","type":"select","options":[5,4,3,2,1]},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"name":"New client","text":"","rating":5,"enabled":true}},
+      {"id":"faq","label":"FAQ","type":"collection","itemLabel":"FAQ item","path":"faq","titleKey":"question","fields":[
+        {"key":"question","label":"Question"},
+        {"key":"answer","label":"Answer","type":"textarea"},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"question":"New question","answer":"","enabled":true}},
+      {"id":"estimator","label":"Cost Estimator","fields":[
+        {"path":"estimator.currency","label":"Currency symbol"},
+        {"path":"estimator.baseRates.Basic","label":"Essential base rate / sq.ft","type":"number"},
+        {"path":"estimator.baseRates.Premium","label":"Premium base rate / sq.ft","type":"number"},
+        {"path":"estimator.baseRates.Luxury","label":"Luxury base rate / sq.ft","type":"number"}
+      ]},
+      {"id":"estimatorRows","label":"Estimator Cost Table","type":"collection","itemLabel":"cost row","path":"estimator.rows","titleKey":"category","fields":[
+        {"key":"category","label":"Cost category"},
+        {"key":"note","label":"Description","type":"textarea"},
+        {"key":"included","label":"Included by default","type":"checkbox"},
+        {"key":"basic","label":"Essential / sq.ft","type":"number"},
+        {"key":"premium","label":"Premium / sq.ft","type":"number"},
+        {"key":"luxury","label":"Luxury / sq.ft","type":"number"},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"category":"New cost item","note":"","included":false,"basic":0,"premium":0,"luxury":0,"enabled":true}},
+      {"id":"contact","label":"Contact","fields":[
+        {"path":"contact.phone","label":"Call number","type":"tel"},
+        {"path":"contact.whatsapp","label":"WhatsApp number","type":"tel"},
+        {"path":"contact.email","label":"Email"},
+        {"path":"contact.address","label":"Studio address"},
+        {"path":"contact.maps","label":"Google Maps URL","type":"url"},
+        {"path":"contact.hours","label":"Studio hours"}
+      ]},
+      {"id":"consultation","label":"Consultation","fields":[
+        {"path":"consultation.heading","label":"Consultation heading"},
+        {"path":"consultation.text","label":"Consultation intro","type":"textarea"},
+        {"path":"consultation.buttonText","label":"Button text"}
+      ]},
+      {"id":"visibility","label":"Visibility","fields":[
+        {"path":"settings.showAbout","label":"About Studio","type":"checkbox"},
+        {"path":"settings.showProjects","label":"Project Portfolio","type":"checkbox"},
+        {"path":"settings.showFloorPlans","label":"2D / 3D Floor Plans","type":"checkbox"},
+        {"path":"settings.showMaterials","label":"Materials & Quality","type":"checkbox"},
+        {"path":"settings.showServices","label":"Design Services","type":"checkbox"},
+        {"path":"settings.showTeam","label":"Design Team","type":"checkbox"},
+        {"path":"settings.showReviews","label":"Client Reviews","type":"checkbox"},
+        {"path":"settings.showEstimator","label":"Cost Estimator","type":"checkbox"},
+        {"path":"settings.showConsultation","label":"Consultation","type":"checkbox"},
+        {"path":"settings.showLocation","label":"Studio Location","type":"checkbox"},
+        {"path":"settings.showFAQ","label":"FAQ","type":"checkbox"},
+        {"path":"settings.showContact","label":"Contact","type":"checkbox"},
+        {"path":"settings.showTerms","label":"Terms","type":"checkbox"},
+        {"path":"settings.showPrivacy","label":"Privacy","type":"checkbox"}
+      ]},
+      {"id":"leads","label":"Consultation Leads","type":"leads","title":"Design Consultation Leads","description":"Consultation enquiries submitted from the website appear here. Download them as CSV.","path":"leads","columns":["createdAt","name","phone","email","project","spaceType","area","budget","timeline","message"],"labels":{"createdAt":"Date","name":"Name","phone":"Phone","email":"Email","project":"Project / requirement","spaceType":"Space Type","area":"Area","budget":"Budget","timeline":"Timeline","message":"Message"}},
+      {"id":"security","label":"Security","type":"security"}
+    ]
+  }
+}
