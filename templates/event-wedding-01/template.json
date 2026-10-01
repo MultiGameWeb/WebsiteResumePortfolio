@@ -1,0 +1,1552 @@
+{
+  "id": "event-wedding-01",
+  "name": "Event & Wedding Planners — Celebration Studio",
+  "category": "Event & Wedding Planners",
+  "price": "₹4,999",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "eventTypes",
+      "label": "Event Types"
+    },
+    {
+      "id": "packages",
+      "label": "Packages & Pricing"
+    },
+    {
+      "id": "services",
+      "label": "Event Services"
+    },
+    {
+      "id": "gallery",
+      "label": "Portfolio Gallery"
+    },
+    {
+      "id": "videos",
+      "label": "Event Videos"
+    },
+    {
+      "id": "venues",
+      "label": "Venue Showcase"
+    },
+    {
+      "id": "availability",
+      "label": "Date Availability"
+    },
+    {
+      "id": "enquiry",
+      "label": "Event Enquiry"
+    },
+    {
+      "id": "reviews",
+      "label": "Client Reviews"
+    },
+    {
+      "id": "about",
+      "label": "About Us"
+    },
+    {
+      "id": "team",
+      "label": "Planning Team"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "call",
+      "label": "Call"
+    },
+    {
+      "id": "location",
+      "label": "Studio / Office Location"
+    },
+    {
+      "id": "social",
+      "label": "Social Media"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "hours",
+      "label": "Contact Hours"
+    },
+    {
+      "id": "terms",
+      "label": "Booking & Cancellation Terms"
+    },
+    {
+      "id": "privacy",
+      "label": "Privacy Policy"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "eventTypes",
+    "packages",
+    "services",
+    "gallery",
+    "videos",
+    "venues",
+    "availability",
+    "enquiry",
+    "reviews",
+    "about",
+    "team",
+    "whatsapp",
+    "call",
+    "location",
+    "social",
+    "faq",
+    "hours",
+    "terms",
+    "privacy"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Planner / Company Name",
+      "required": true,
+      "placeholder": "Celebria Events"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Founder / Lead Planner",
+      "placeholder": "Ananya Rao"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Thoughtful planning. Beautiful celebrations."
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Your celebration, beautifully planned."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea",
+      "placeholder": "Weddings, receptions, birthdays and corporate events — planned from the first brief to the final guest."
+    },
+    {
+      "path": "brand.about",
+      "label": "About Company",
+      "type": "textarea"
+    },
+    {
+      "path": "brand.experienceYears",
+      "label": "Years of Experience",
+      "type": "number",
+      "placeholder": "9"
+    },
+    {
+      "path": "brand.eventsCompleted",
+      "label": "Events Completed",
+      "type": "number",
+      "placeholder": "180"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Image",
+      "type": "media"
+    },
+    {
+      "path": "heroVideo",
+      "label": "Hero Video URL (optional)",
+      "type": "url",
+      "placeholder": "https://.../wedding-walkthrough.mp4"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Call Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email"
+    },
+    {
+      "path": "contact.address",
+      "label": "Studio / Office Address"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hoursText",
+      "label": "Contact Hours"
+    },
+    {
+      "path": "social.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    },
+    {
+      "path": "social.facebook",
+      "label": "Facebook URL",
+      "type": "url"
+    },
+    {
+      "path": "social.youtube",
+      "label": "YouTube URL",
+      "type": "url"
+    },
+    {
+      "path": "termsText",
+      "label": "Booking / Cancellation Terms",
+      "type": "textarea"
+    },
+    {
+      "path": "privacyPolicy",
+      "label": "Privacy Policy",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "runtime": {
+      "templateId": "event-wedding-01"
+    },
+    "brand": {
+      "businessName": "Celebria Events",
+      "ownerName": "Ananya Rao",
+      "tagline": "Thoughtful planning. Beautiful celebrations.",
+      "about": "We plan weddings, receptions, engagements, birthdays and corporate events with one clear goal: make every moving part feel calm, coordinated and personal.",
+      "experienceYears": 9,
+      "eventsCompleted": 180
+    },
+    "home": {
+      "title": "Your celebration, beautifully planned.",
+      "text": "From the first moodboard to the final guest, we coordinate venues, décor, vendors and timelines so you can stay present for the moments that matter."
+    },
+    "hero": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=88",
+    "heroVideo": "",
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@celebria.example",
+      "address": "Banjara Hills, Hyderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Banjara+Hills+Hyderabad",
+      "hoursText": "Mon–Sat · 10:00 AM–7:00 PM"
+    },
+    "social": {
+      "instagram": "https://instagram.com/",
+      "facebook": "https://facebook.com/",
+      "youtube": "https://youtube.com/"
+    },
+    "eventTypes": [
+      {
+        "id": "wedding",
+        "name": "Wedding",
+        "icon": "💍",
+        "description": "Full wedding planning, styling, guest flow and day-of coordination.",
+        "enabled": true
+      },
+      {
+        "id": "reception",
+        "name": "Reception",
+        "icon": "✨",
+        "description": "Reception décor, stage, entertainment and hospitality coordination.",
+        "enabled": true
+      },
+      {
+        "id": "engagement",
+        "name": "Engagement",
+        "icon": "💫",
+        "description": "Intimate engagement celebrations with customized décor and timelines.",
+        "enabled": true
+      },
+      {
+        "id": "birthday",
+        "name": "Birthday",
+        "icon": "🎂",
+        "description": "Milestone birthdays, family celebrations and themed experiences.",
+        "enabled": true
+      },
+      {
+        "id": "corporate",
+        "name": "Corporate Event",
+        "icon": "🏢",
+        "description": "Launches, offsites, conferences and brand events with professional coordination.",
+        "enabled": true
+      },
+      {
+        "id": "babyshower",
+        "name": "Baby Shower",
+        "icon": "🍼",
+        "description": "Warm, themed celebrations with décor, activities and vendor coordination.",
+        "enabled": true
+      }
+    ],
+    "packages": [
+      {
+        "id": "pkg1",
+        "name": "Essential Celebration",
+        "tier": "Essential",
+        "price": "₹75,000+",
+        "starting": "Starting from",
+        "guestRange": "Up to 100 guests",
+        "summary": "Planning support and a focused vendor coordination package.",
+        "includes": [
+          "Event planning checklist",
+          "Vendor coordination",
+          "Basic décor direction",
+          "Event-day schedule",
+          "On-site coordination"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "pkg2",
+        "name": "Signature Wedding",
+        "tier": "Premium",
+        "price": "₹1.85 Lakh+",
+        "starting": "Starting from",
+        "guestRange": "100–300 guests",
+        "summary": "End-to-end wedding planning with design direction and managed vendor coordination.",
+        "includes": [
+          "Concept + moodboard",
+          "Venue & vendor coordination",
+          "Décor planning",
+          "Guest-flow schedule",
+          "Event-day management"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "pkg3",
+        "name": "Luxury Celebration",
+        "tier": "Luxury",
+        "price": "₹3.50 Lakh+",
+        "starting": "Project based",
+        "guestRange": "250–700+ guests",
+        "summary": "High-touch planning for premium weddings and large-format celebrations.",
+        "includes": [
+          "Creative direction",
+          "Multi-vendor production",
+          "Premium décor styling",
+          "Detailed production timeline",
+          "Dedicated event manager"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "pkg4",
+        "name": "Corporate / Custom",
+        "tier": "Custom",
+        "price": "Custom Quote",
+        "starting": "Based on scope",
+        "guestRange": "Custom guest count",
+        "summary": "Flexible packages for launches, offsites, conferences and special productions.",
+        "includes": [
+          "Custom event brief",
+          "Production planning",
+          "Venue & logistics coordination",
+          "Branding integration",
+          "On-ground event team"
+        ],
+        "enabled": true
+      }
+    ],
+    "services": [
+      {
+        "id": "s1",
+        "icon": "✦",
+        "name": "Event Planning & Coordination",
+        "description": "Budgets, checklists, vendors, timelines and day-of coordination under one planning workflow.",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "icon": "❀",
+        "name": "Wedding Décor & Styling",
+        "description": "Stage concepts, floral styling, table décor, lighting direction and themed setups.",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "icon": "◉",
+        "name": "Venue & Vendor Management",
+        "description": "Venue shortlisting plus coordination with decorators, caterers, artists and production teams.",
+        "enabled": true
+      },
+      {
+        "id": "s4",
+        "icon": "♫",
+        "name": "Entertainment & Production",
+        "description": "DJ, live music, anchors, sound, lighting, AV and stage-production coordination.",
+        "enabled": true
+      },
+      {
+        "id": "s5",
+        "icon": "◌",
+        "name": "Guest Experience",
+        "description": "Invitations, hospitality, welcome desks, guest movement and special-family requirements.",
+        "enabled": true
+      },
+      {
+        "id": "s6",
+        "icon": "▦",
+        "name": "Corporate Events",
+        "description": "Brand launches, team events, conferences, offsites and professional event production.",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Wedding Stage",
+        "category": "Wedding",
+        "image": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Reception Styling",
+        "category": "Reception",
+        "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Table Styling",
+        "category": "Wedding",
+        "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Engagement Setup",
+        "category": "Engagement",
+        "image": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g5",
+        "title": "Birthday Event",
+        "category": "Birthday",
+        "image": "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g6",
+        "title": "Corporate Launch",
+        "category": "Corporate",
+        "image": "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      }
+    ],
+    "videos": [
+      {
+        "id": "v1",
+        "title": "Wedding Setup Walkthrough",
+        "url": "https://www.youtube.com/",
+        "thumbnail": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=86",
+        "description": "Replace with your wedding walkthrough or event reel.",
+        "enabled": true
+      },
+      {
+        "id": "v2",
+        "title": "Behind the Scenes",
+        "url": "https://www.youtube.com/",
+        "thumbnail": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=86",
+        "description": "Show your planning, styling and on-ground coordination process.",
+        "enabled": true
+      },
+      {
+        "id": "v3",
+        "title": "Corporate Event Reel",
+        "url": "https://www.youtube.com/",
+        "thumbnail": "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=86",
+        "description": "Use this slot for a brand launch, conference or office-event reel.",
+        "enabled": true
+      }
+    ],
+    "venues": [
+      {
+        "id": "vn1",
+        "name": "The Courtyard Manor",
+        "type": "Luxury Banquet",
+        "capacity": "250–600 guests",
+        "area": "Jubilee Hills, Hyderabad",
+        "parking": "Ample",
+        "indoorOutdoor": "Indoor + Lawn",
+        "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=86",
+        "maps": "https://maps.google.com/?q=Jubilee+Hills+Hyderabad",
+        "enabled": true
+      },
+      {
+        "id": "vn2",
+        "name": "Lakeview Gardens",
+        "type": "Outdoor / Lawn",
+        "capacity": "150–450 guests",
+        "area": "Gandipet, Hyderabad",
+        "parking": "On-site",
+        "indoorOutdoor": "Open Lawn",
+        "image": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&q=86",
+        "maps": "https://maps.google.com/?q=Gandipet+Hyderabad",
+        "enabled": true
+      },
+      {
+        "id": "vn3",
+        "name": "The Atelier Hall",
+        "type": "Boutique Venue",
+        "capacity": "80–220 guests",
+        "area": "Banjara Hills, Hyderabad",
+        "parking": "Valet / Nearby",
+        "indoorOutdoor": "Indoor",
+        "image": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=86",
+        "maps": "https://maps.google.com/?q=Banjara+Hills+Hyderabad",
+        "enabled": true
+      }
+    ],
+    "availability": [
+      {
+        "id": "d1",
+        "date": "2026-10-10",
+        "status": "Booked",
+        "note": "Wedding production date",
+        "enabled": true
+      },
+      {
+        "id": "d2",
+        "date": "2026-10-18",
+        "status": "Available",
+        "note": "Available for new enquiries",
+        "enabled": true
+      },
+      {
+        "id": "d3",
+        "date": "2026-10-24",
+        "status": "Enquiry",
+        "note": "Tentative hold — confirm with planner",
+        "enabled": true
+      },
+      {
+        "id": "d4",
+        "date": "2026-11-07",
+        "status": "Available",
+        "note": "Available for selected event types",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Priya & Karan",
+        "rating": 5,
+        "text": "The planning felt organized from the first meeting and the wedding day itself was beautifully coordinated.",
+        "image": "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80",
+        "event": "Wedding",
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Meghana",
+        "rating": 5,
+        "text": "They handled décor, vendors and guest flow without making the process stressful for our family.",
+        "image": "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=700&q=80",
+        "event": "Reception",
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Rohit — Corporate",
+        "rating": 5,
+        "text": "Clear timelines, professional coordination and one team managing multiple event vendors.",
+        "image": "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=700&q=80",
+        "event": "Corporate Event",
+        "enabled": true
+      }
+    ],
+    "team": [
+      {
+        "id": "t1",
+        "name": "Ananya Rao",
+        "role": "Founder & Lead Planner",
+        "credentials": "Event Management · 9 years",
+        "specialization": "Wedding planning, creative direction, premium events",
+        "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t2",
+        "name": "Rohan Mehta",
+        "role": "Production Manager",
+        "credentials": "Event Production · 7 years",
+        "specialization": "Vendor coordination, logistics, stage and production",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t3",
+        "name": "Ishita Sen",
+        "role": "Styling & Décor Lead",
+        "credentials": "Design & Styling · 6 years",
+        "specialization": "Floral styling, décor concepts and guest experience",
+        "image": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      }
+    ],
+    "aboutStats": [
+      {
+        "id": "a1",
+        "value": "9+",
+        "label": "years of experience",
+        "enabled": true
+      },
+      {
+        "id": "a2",
+        "value": "180+",
+        "label": "events coordinated",
+        "enabled": true
+      },
+      {
+        "id": "a3",
+        "value": "One team",
+        "label": "planning to handover",
+        "enabled": true
+      }
+    ],
+    "faq": [
+      {
+        "id": "f1",
+        "question": "Do you handle complete wedding planning?",
+        "answer": "Yes, where offered. The planner can coordinate the agreed venue, décor, vendors, logistics, timeline and event-day requirements defined in the package.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Can I book only décor or coordination?",
+        "answer": "Yes. Use the enquiry form to request a specific service or a custom package.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Can I check a date before enquiring?",
+        "answer": "Yes. Use the date availability section as a planning guide. A date marked Enquiry or Available still requires confirmation from the planning team.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Do you help with venues?",
+        "answer": "Where offered, the team can suggest or coordinate venue options based on guest count, event type, location and style.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "How are payments and cancellations handled?",
+        "answer": "The final advance schedule, cancellation rules and vendor-specific charges should be stated in the written booking agreement and confirmed before payment.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "10:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "10:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "10:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "10:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "10:00 AM",
+        "close": "7:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "10:00 AM",
+        "close": "7:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "11:00 AM",
+        "close": "5:00 PM",
+        "enabled": true
+      }
+    ],
+    "enquiry": {
+      "heading": "Tell us about your celebration.",
+      "text": "Share your event type, date, location, guest count, budget and the services you need. We will use this enquiry to prepare the right planning conversation.",
+      "buttonText": "Send Enquiry on WhatsApp"
+    },
+    "termsText": "Event dates, vendor availability, package inclusions, advance payments, cancellation charges, rescheduling, venue policies and balance-payment milestones must be confirmed in the written booking agreement. Sample website pricing is indicative until the final proposal is accepted.",
+    "privacyPolicy": "We use enquiry information to respond to event-planning requests, coordinate proposals and communicate about services. Replace this sample text with your company's final privacy and data-handling policy before publishing.",
+    "settings": {
+      "showHome": true,
+      "showEventTypes": true,
+      "showPackages": true,
+      "showServices": true,
+      "showGallery": true,
+      "showVideos": true,
+      "showVenues": true,
+      "showAvailability": true,
+      "showEnquiry": true,
+      "showReviews": true,
+      "showAbout": true,
+      "showTeam": true,
+      "showLocation": true,
+      "showSocial": true,
+      "showFAQ": true,
+      "showHours": true,
+      "showTerms": true,
+      "showPrivacy": true
+    },
+    "leads": []
+  },
+  "admin": {
+    "storageKey": "sitecraft:event-wedding-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "media",
+        "label": "Images / Storage",
+        "type": "media"
+      },
+      {
+        "id": "business",
+        "label": "Business",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Planner / company name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Founder / lead planner"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About us",
+            "type": "textarea"
+          },
+          {
+            "path": "brand.experienceYears",
+            "label": "Experience years",
+            "type": "number"
+          },
+          {
+            "path": "brand.eventsCompleted",
+            "label": "Events completed",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          },
+          {
+            "path": "heroVideo",
+            "label": "Hero video URL (optional)",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "eventTypes",
+        "label": "Event Types",
+        "type": "collection",
+        "itemLabel": "event type",
+        "path": "eventTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Event type"
+          },
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New event type",
+          "icon": "✦",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "packages",
+        "label": "Packages & Pricing",
+        "type": "collection",
+        "itemLabel": "package",
+        "path": "packages",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Package name"
+          },
+          {
+            "key": "tier",
+            "label": "Plan tier",
+            "type": "select",
+            "options": [
+              "Essential",
+              "Premium",
+              "Luxury",
+              "Custom"
+            ]
+          },
+          {
+            "key": "price",
+            "label": "Display price"
+          },
+          {
+            "key": "starting",
+            "label": "Price note"
+          },
+          {
+            "key": "guestRange",
+            "label": "Guest range"
+          },
+          {
+            "key": "summary",
+            "label": "Summary",
+            "type": "textarea"
+          },
+          {
+            "key": "includes",
+            "label": "Included services",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New package",
+          "tier": "Premium",
+          "price": "Custom Quote",
+          "starting": "Based on scope",
+          "guestRange": "Custom",
+          "summary": "",
+          "includes": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "services",
+        "label": "Event Services",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✦",
+          "name": "New service",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Portfolio Gallery",
+        "type": "collection",
+        "itemLabel": "gallery image",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New gallery image",
+          "category": "Wedding",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "videos",
+        "label": "Event Videos",
+        "type": "collection",
+        "itemLabel": "video",
+        "path": "videos",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Video title"
+          },
+          {
+            "key": "url",
+            "label": "Video URL",
+            "type": "url"
+          },
+          {
+            "key": "thumbnail",
+            "label": "Thumbnail",
+            "type": "media"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New event reel",
+          "url": "",
+          "thumbnail": "",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "venues",
+        "label": "Venue Showcase",
+        "type": "collection",
+        "itemLabel": "venue",
+        "path": "venues",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Venue name"
+          },
+          {
+            "key": "type",
+            "label": "Venue type"
+          },
+          {
+            "key": "capacity",
+            "label": "Capacity"
+          },
+          {
+            "key": "area",
+            "label": "Area / city"
+          },
+          {
+            "key": "parking",
+            "label": "Parking"
+          },
+          {
+            "key": "indoorOutdoor",
+            "label": "Indoor / outdoor"
+          },
+          {
+            "key": "image",
+            "label": "Venue image",
+            "type": "media"
+          },
+          {
+            "key": "maps",
+            "label": "Map URL",
+            "type": "url"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New venue",
+          "type": "Venue",
+          "capacity": "",
+          "area": "",
+          "parking": "",
+          "indoorOutdoor": "Indoor",
+          "image": "",
+          "maps": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "availability",
+        "label": "Date Availability",
+        "type": "collection",
+        "itemLabel": "date",
+        "path": "availability",
+        "titleKey": "date",
+        "description": "Maintain a simple planning guide. Final availability should still be confirmed with the event team.",
+        "fields": [
+          {
+            "key": "date",
+            "label": "Event date",
+            "type": "date"
+          },
+          {
+            "key": "status",
+            "label": "Status",
+            "type": "select",
+            "options": [
+              "Available",
+              "Enquiry",
+              "Booked"
+            ]
+          },
+          {
+            "key": "note",
+            "label": "Note",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "date": "",
+          "status": "Available",
+          "note": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "enquiry",
+        "label": "Event Enquiry",
+        "fields": [
+          {
+            "path": "enquiry.heading",
+            "label": "Enquiry heading"
+          },
+          {
+            "path": "enquiry.text",
+            "label": "Enquiry intro",
+            "type": "textarea"
+          },
+          {
+            "path": "enquiry.buttonText",
+            "label": "Button text"
+          }
+        ]
+      },
+      {
+        "id": "reviews",
+        "label": "Client Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Client name"
+          },
+          {
+            "key": "event",
+            "label": "Event type"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Client / event photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New client",
+          "event": "Wedding",
+          "rating": 5,
+          "text": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "aboutStats",
+        "label": "About Highlights",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "aboutStats",
+        "titleKey": "label",
+        "fields": [
+          {
+            "key": "value",
+            "label": "Value"
+          },
+          {
+            "key": "label",
+            "label": "Label"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "value": "10+",
+          "label": "years",
+          "enabled": true
+        }
+      },
+      {
+        "id": "team",
+        "label": "Planning Team",
+        "type": "collection",
+        "itemLabel": "team member",
+        "path": "team",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Name"
+          },
+          {
+            "key": "role",
+            "label": "Role"
+          },
+          {
+            "key": "credentials",
+            "label": "Qualification / experience"
+          },
+          {
+            "key": "specialization",
+            "label": "Specialization",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Profile image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New planner",
+          "role": "Event Planner",
+          "credentials": "",
+          "specialization": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "FAQ item",
+        "path": "faq",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Call number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Studio / office address"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hoursText",
+            "label": "Contact hours"
+          }
+        ]
+      },
+      {
+        "id": "social",
+        "label": "Social Media",
+        "fields": [
+          {
+            "path": "social.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "social.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "social.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "hours",
+        "label": "Contact Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "enabled",
+            "label": "Open",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "New day",
+          "open": "10:00 AM",
+          "close": "7:00 PM",
+          "enabled": true
+        }
+      },
+      {
+        "id": "leads",
+        "label": "Event Enquiries",
+        "type": "leads",
+        "title": "Event Enquiry Leads",
+        "description": "Event enquiries submitted from the website appear here. Export them as CSV. Status can be updated manually.",
+        "path": "leads",
+        "statusKey": "status",
+        "statuses": [
+          "New",
+          "Contacted",
+          "Proposal Sent",
+          "Booked",
+          "Completed",
+          "Cancelled"
+        ],
+        "disableActions": true,
+        "columns": [
+          "createdAt",
+          "status",
+          "name",
+          "phone",
+          "email",
+          "eventType",
+          "eventDate",
+          "location",
+          "guests",
+          "budget",
+          "package",
+          "services",
+          "message"
+        ],
+        "labels": {
+          "createdAt": "Date",
+          "status": "Status",
+          "name": "Name",
+          "phone": "Phone",
+          "email": "Email",
+          "eventType": "Event Type",
+          "eventDate": "Event Date",
+          "location": "Location",
+          "guests": "Guests",
+          "budget": "Budget",
+          "package": "Package",
+          "services": "Services",
+          "message": "Message"
+        }
+      },
+      {
+        "id": "terms",
+        "label": "Booking & Cancellation Terms",
+        "fields": [
+          {
+            "path": "termsText",
+            "label": "Booking / cancellation policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy Policy",
+        "fields": [
+          {
+            "path": "privacyPolicy",
+            "label": "Privacy policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEventTypes",
+            "label": "Event Types",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPackages",
+            "label": "Packages",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Services",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showVideos",
+            "label": "Videos",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showVenues",
+            "label": "Venues",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAvailability",
+            "label": "Date Availability",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Enquiry",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTeam",
+            "label": "Team",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFAQ",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTerms",
+            "label": "Terms",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPrivacy",
+            "label": "Privacy",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
