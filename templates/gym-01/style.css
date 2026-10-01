@@ -17,3 +17,18 @@
 .gym-float-wa{background:#1ca765;color:#fff}
 @media(max-width:1050px){.gym-service-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.gym-service-grid{grid-template-columns:1fr}.gym-floating-contact{right:10px;bottom:10px}.gym-floating-contact a{min-width:108px;padding:9px 11px;font-size:9px}}
+
+/* Fitness-type visual presets */
+.gym-type-yoga{--gym-bg:#111414;--gym-panel:#171b19;--gym-panel2:#1d2420;--gym-accent:#d8c7ff;--gym-hot:#b5a1ff}
+.gym-type-zumba{--gym-bg:#130e14;--gym-panel:#1b1119;--gym-panel2:#24141f;--gym-accent:#ff6f91;--gym-hot:#ffb347}
+.gym-type-crossfit{--gym-bg:#100f0e;--gym-panel:#181514;--gym-panel2:#211c1a;--gym-accent:#ffb347;--gym-hot:#ff5b3d}
+.gym-type-hiit{--gym-bg:#0b1018;--gym-panel:#101923;--gym-panel2:#14222f;--gym-accent:#55d9ff;--gym-hot:#6e8cff}
+.gym-type-strength-circuit{--gym-bg:#11100d;--gym-panel:#191713;--gym-panel2:#221d17;--gym-accent:#ffc857;--gym-hot:#ff8f3d}
+.gym-type-mobility{--gym-bg:#0b1111;--gym-panel:#101b1a;--gym-panel2:#152422;--gym-accent:#67e6c4;--gym-hot:#55cbb0}
+.gym-type-yoga .gym-hero::after{background:linear-gradient(90deg,#101412e6 0%,#10141292 50%,#10141230 100%),linear-gradient(0deg,var(--gym-bg) 0%,transparent 45%)}
+.gym-type-zumba .gym-plan.featured{box-shadow:0 0 0 1px var(--gym-accent),0 24px 70px #ff4f7d24}
+.gym-type-crossfit .gym-service-icon,.gym-type-hiit .gym-service-icon,.gym-type-strength-circuit .gym-service-icon{border-radius:8px}
+.gym-type-yoga .gym-service,.gym-type-mobility .gym-service{border-radius:18px}
+.gym-type-zumba .gym-service,.gym-type-zumba .gym-trainer{border-radius:10px 24px 10px 24px}
+.gym-type-crossfit .gym-plan,.gym-type-hiit .gym-plan{border-width:2px}
+.gym-type-strength-circuit .gym-facility-img{height:250px}
