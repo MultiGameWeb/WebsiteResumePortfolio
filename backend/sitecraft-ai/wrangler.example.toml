@@ -1,0 +1,16 @@
+name = "sitecraft-ai"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+# After creating these resources in Cloudflare, replace the placeholders:
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "sitecraft"
+# database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+# [[r2_buckets]]
+# binding = "MEDIA_BUCKET"
+# bucket_name = "sitecraft-media"
+
+[vars]
+GEMINI_MODEL = "gemini-2.5-flash"
