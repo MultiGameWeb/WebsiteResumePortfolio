@@ -21,6 +21,14 @@
       "label": "Doctors & Specialists"
     },
     {
+      "id": "trust",
+      "label": "Hygiene & Trust"
+    },
+    {
+      "id": "beforeAfter",
+      "label": "Before / After Gallery"
+    },
+    {
       "id": "facilities",
       "label": "Facilities & Care"
     },
@@ -33,12 +41,20 @@
       "label": "Patient Reviews"
     },
     {
+      "id": "videoTestimonials",
+      "label": "Video Testimonials"
+    },
+    {
+      "id": "insurance",
+      "label": "Insurance & Payments"
+    },
+    {
       "id": "faq",
       "label": "FAQ"
     },
     {
       "id": "appointment",
-      "label": "Appointment Booking"
+      "label": "Doctor Appointment Booking"
     },
     {
       "id": "whatsapp",
@@ -46,11 +62,15 @@
     },
     {
       "id": "location",
-      "label": "Location"
+      "label": "Location & Landmarks"
     },
     {
       "id": "hours",
-      "label": "Opening Hours"
+      "label": "Clinic Timings"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
     },
     {
       "id": "terms",
@@ -59,10 +79,6 @@
     {
       "id": "privacy",
       "label": "Privacy Policy"
-    },
-    {
-      "id": "contact",
-      "label": "Contact"
     }
   ],
   "fields": [
@@ -92,7 +108,7 @@
       "path": "home.text",
       "label": "Home Text",
       "type": "textarea",
-      "placeholder": "A modern dental and primary-care centre with simple appointments, specialist profiles and clear next-step communication."
+      "placeholder": "Book dental or medical consultation appointments with clear doctor profiles, treatment information and simple Morning / Evening slot requests."
     },
     {
       "path": "brand.about",
@@ -115,12 +131,31 @@
       "type": "tel"
     },
     {
+      "path": "contact.emergency",
+      "label": "Emergency Helpline",
+      "type": "tel"
+    },
+    {
       "path": "contact.email",
       "label": "Email"
     },
     {
       "path": "contact.address",
-      "label": "Address"
+      "label": "Clinic Address"
+    },
+    {
+      "path": "contact.floor",
+      "label": "Floor / Room"
+    },
+    {
+      "path": "contact.parking",
+      "label": "Parking Details",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.landmarks",
+      "label": "Landmark / Navigation Notes",
+      "type": "textarea"
     },
     {
       "path": "contact.maps",
@@ -128,8 +163,21 @@
       "type": "url"
     },
     {
+      "path": "googleReviewsUrl",
+      "label": "Google Reviews URL",
+      "type": "url"
+    },
+    {
       "path": "hours.weekdays",
-      "label": "Weekday Hours"
+      "label": "Main Working Hours"
+    },
+    {
+      "path": "hours.morningSlot",
+      "label": "Morning OP Slot"
+    },
+    {
+      "path": "hours.eveningSlot",
+      "label": "Evening OP Slot"
     },
     {
       "path": "hours.weekends",
@@ -142,6 +190,11 @@
     {
       "path": "appointment.text",
       "label": "Appointment Intro",
+      "type": "textarea"
+    },
+    {
+      "path": "medicalDisclaimer",
+      "label": "Medical Disclaimer",
       "type": "textarea"
     },
     {
@@ -167,27 +220,33 @@
       "businessName": "NexaCare Dental & Medical",
       "ownerName": "Dr. Riya Mehta",
       "tagline": "Modern care, made easier.",
-      "about": "NexaCare Dental & Medical provides dental and general medical consultations in a welcoming setting. Replace the sample copy with your centre's actual specialties, credentials, services and policies before publishing."
+      "about": "NexaCare Dental & Medical provides dental and general medical consultations in a welcoming clinical setting. Replace the sample copy with the centre's actual specialties, credentials, services, registrations, policies and patient information before publishing."
     },
     "home": {
       "title": "Your health visit, without the clutter.",
-      "text": "A modern dental and primary-care centre with simple appointments, specialist profiles and clear next-step communication."
+      "text": "Book dental or medical consultation appointments with clear doctor profiles, treatment information and simple Morning / Evening slot requests."
     },
     "hero": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1800&q=86",
     "contact": {
       "phone": "+91 90000 44001",
       "whatsapp": "919000055001",
+      "emergency": "+91 90000 44999",
       "email": "hello@nexacare.example",
       "address": "Kondapur, Hyderabad, Telangana",
+      "floor": "2nd Floor · Suite 204",
+      "parking": "Basement parking available — replace with your actual parking instructions.",
+      "landmarks": "Near a major landmark — replace with your actual navigation notes.",
       "maps": "https://maps.google.com/?q=Kondapur%2C%20Hyderabad%2C%20Telangana"
     },
     "hours": {
       "weekdays": "Mon–Sat · 9:00 AM – 8:00 PM",
+      "morningSlot": "10:00 AM – 2:00 PM",
+      "eveningSlot": "5:00 PM – 9:00 PM",
       "weekends": "Sun · 10:00 AM – 2:00 PM"
     },
     "appointment": {
-      "heading": "Book a visit that fits your day.",
-      "text": "Choose a service, preferred doctor, date and time. The centre can confirm the appointment through WhatsApp or phone."
+      "heading": "Book a doctor appointment.",
+      "text": "Select a treatment, preferred doctor, date and Morning / Evening slot. The centre will confirm the appointment through the configured contact channel."
     },
     "services": [
       {
@@ -203,64 +262,163 @@
       },
       {
         "id": "m2",
-        "name": "Dental Hygiene Visit",
+        "name": "Professional Teeth Whitening",
         "category": "Dental",
-        "duration": "45 min",
-        "fee": "Ask center",
-        "description": "Preventive oral-care review and hygiene guidance.",
+        "duration": "60 min",
+        "fee": "Starting price",
+        "description": "Professional teeth-whitening consultation and in-clinic treatment where offered.",
         "image": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=900&q=82",
         "featured": true,
         "enabled": true
       },
       {
         "id": "m3",
-        "name": "Primary Care Consultation",
-        "category": "Medical",
-        "duration": "30 min",
-        "fee": "Consultation",
-        "description": "General health consultation and appropriate next-step guidance.",
-        "image": "https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=900&q=82",
+        "name": "Root Canal Evaluation",
+        "category": "Dental",
+        "duration": "60–90 min",
+        "fee": "Ask center",
+        "description": "Evaluation and endodontic treatment planning for teeth that may require root-canal care.",
+        "image": "https://images.unsplash.com/photo-1606265752439-1f18756aa7a5?auto=format&fit=crop&w=900&q=82",
         "featured": false,
         "enabled": true
       },
       {
         "id": "m4",
-        "name": "Family Wellness Visit",
-        "category": "Medical",
-        "duration": "45 min",
+        "name": "Implant Planning",
+        "category": "Dental",
+        "duration": "Consultation",
         "fee": "Ask center",
-        "description": "Structured consultation for common family health concerns.",
-        "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=82",
+        "description": "Implant suitability assessment, treatment discussion and referral or procedural planning where offered.",
+        "image": "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=900&q=82",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "m5",
+        "name": "Braces & Aligners",
+        "category": "Dental",
+        "duration": "Consultation",
+        "fee": "Ask center",
+        "description": "Orthodontic assessment and discussion of suitable braces or aligner options.",
+        "image": "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=900&q=82",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "m6",
+        "name": "Smile Design Consultation",
+        "category": "Dental",
+        "duration": "45 min",
+        "fee": "Consultation",
+        "description": "Aesthetic dental consultation for smile-design goals and treatment planning.",
+        "image": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=82",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "m7",
+        "name": "Primary Care Consultation",
+        "category": "Medical",
+        "duration": "30 min",
+        "fee": "Consultation",
+        "description": "General health assessment and appropriate next-step guidance.",
+        "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=82",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "m8",
+        "name": "Pediatric Consultation",
+        "category": "Medical",
+        "duration": "30 min",
+        "fee": "Consultation",
+        "description": "Child-health consultation with age-appropriate assessment and guidance.",
+        "image": "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=900&q=82",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "m9",
+        "name": "Cardiology Consultation",
+        "category": "Medical",
+        "duration": "30 min",
+        "fee": "Consultation",
+        "description": "Cardiology consultation or referral coordination where the centre provides the specialty.",
+        "image": "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=900&q=82",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "m10",
+        "name": "Diagnostics / Blood Test Coordination",
+        "category": "Medical",
+        "duration": "Varies",
+        "fee": "Ask center",
+        "description": "Information and coordination for diagnostics or laboratory tie-ups available through the centre.",
+        "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=82",
         "featured": false,
         "enabled": true
       }
     ],
     "doctors": [
       {
-        "id": "n1",
+        "id": "mD1",
         "name": "Dr. Nisha Kapoor",
         "role": "Dental Consultant",
         "qualification": "BDS",
+        "experience": "10+ years",
+        "registrationAuthority": "State Dental Council",
+        "registrationNumber": "Add registration number",
         "bio": "Preventive dental care, restorative consultations and patient-friendly treatment planning.",
         "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=82",
+        "monday": "10:00 AM–2:00 PM · 5:00 PM–8:00 PM",
+        "tuesday": "10:00 AM–2:00 PM · 5:00 PM–8:00 PM",
+        "wednesday": "10:00 AM–2:00 PM",
+        "thursday": "10:00 AM–2:00 PM · 5:00 PM–8:00 PM",
+        "friday": "10:00 AM–2:00 PM · 5:00 PM–8:00 PM",
+        "saturday": "10:00 AM–2:00 PM",
+        "sunday": "Closed",
+        "leaveNote": "Add leave or unavailable dates in Admin.",
         "enabled": true
       },
       {
-        "id": "n2",
+        "id": "mD2",
         "name": "Dr. Rohan Iyer",
         "role": "General Physician",
         "qualification": "MBBS",
+        "experience": "12+ years",
+        "registrationAuthority": "State Medical Council",
+        "registrationNumber": "Add registration number",
         "bio": "General medical consultations with clear communication and referral coordination where appropriate.",
         "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=82",
+        "monday": "9:00 AM–1:00 PM · 5:00 PM–8:00 PM",
+        "tuesday": "9:00 AM–1:00 PM",
+        "wednesday": "9:00 AM–1:00 PM · 5:00 PM–8:00 PM",
+        "thursday": "9:00 AM–1:00 PM",
+        "friday": "9:00 AM–1:00 PM · 5:00 PM–8:00 PM",
+        "saturday": "9:00 AM–1:00 PM",
+        "sunday": "10:00 AM–1:00 PM",
+        "leaveNote": "Add leave or unavailable dates in Admin.",
         "enabled": true
       },
       {
-        "id": "n3",
+        "id": "mD3",
         "name": "Dr. Kavya Nair",
         "role": "Family Dental Consultant",
         "qualification": "BDS",
+        "experience": "8+ years",
+        "registrationAuthority": "State Dental Council",
+        "registrationNumber": "Add registration number",
         "bio": "Family dental care with a calm, preventive and consultation-led approach.",
         "image": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=82",
+        "monday": "11:00 AM–2:00 PM",
+        "tuesday": "5:00 PM–8:00 PM",
+        "wednesday": "11:00 AM–2:00 PM",
+        "thursday": "5:00 PM–8:00 PM",
+        "friday": "11:00 AM–2:00 PM",
+        "saturday": "11:00 AM–2:00 PM · 5:00 PM–7:00 PM",
+        "sunday": "Closed",
+        "leaveNote": "Add leave or unavailable dates in Admin.",
         "enabled": true
       }
     ],
@@ -371,26 +529,116 @@
         "enabled": true
       }
     ],
-    "termsText": "Appointments, consultation fees and service availability are subject to the centre's final policies and professional assessment. Add your final cancellation, deposit and patient-visit policies before publishing.",
-    "privacyPolicy": "We use appointment and contact details to respond to enquiries, confirm visits and provide requested centre communication. Replace this with your final privacy and patient-data handling policy before publishing.",
+    "termsText": "Appointments, consultation fees, treatment plans, availability and service policies are subject to the centre's final terms and professional assessment. Add your actual cancellation, deposit, refund and patient-visit policies before publishing.",
+    "privacyPolicy": "We use appointment and contact details to respond to enquiries, confirm visits and provide requested clinic communication. Replace this with your final privacy and patient-data handling policy before publishing.",
     "settings": {
       "showAbout": true,
       "showServices": true,
       "showDoctors": true,
+      "showTrust": true,
+      "showBeforeAfter": true,
       "showFacilities": true,
       "showGallery": true,
       "showReviews": true,
+      "showVideoTestimonials": true,
+      "showInsurance": true,
       "showFAQ": true,
       "showAppointment": true,
       "showLocation": true,
       "showHours": true,
+      "showContact": true,
       "showTerms": true,
       "showPrivacy": true,
-      "showContact": true,
       "passwordProtected": false,
       "adminPassword": ""
     },
-    "leads": []
+    "leads": [],
+    "googleReviewsUrl": "https://www.google.com/search?q=NexaCare%20Dental%20%26%20Medical",
+    "medicalDisclaimer": "Information on this website is for general awareness and clinic information only. It is not a substitute for professional medical advice, diagnosis or emergency care. In a medical emergency, contact your local emergency service.",
+    "trustBadges": [
+      {
+        "id": "mt1",
+        "title": "Clean, organised clinical space",
+        "text": "Use this badge to describe your actual sterilization, disinfection and clinical-safety practices.",
+        "icon": "✦",
+        "enabled": true
+      },
+      {
+        "id": "mt2",
+        "title": "Safety protocols",
+        "text": "Describe which items are single-use and how clinical waste is handled at your centre.",
+        "icon": "◈",
+        "enabled": true
+      },
+      {
+        "id": "mt3",
+        "title": "Transparent consultation",
+        "text": "Tell patients that treatment options, fees and next steps are discussed before proceeding where applicable.",
+        "icon": "✓",
+        "enabled": true
+      },
+      {
+        "id": "mt4",
+        "title": "Patient privacy",
+        "text": "Add your centre's privacy and record-handling practices here.",
+        "icon": "⌁",
+        "enabled": true
+      }
+    ],
+    "beforeAfter": [
+      {
+        "id": "ba1",
+        "title": "Smile treatment example",
+        "description": "Replace with your own genuine before / after patient images and add appropriate permissions.",
+        "beforeImage": "https://images.unsplash.com/photo-1606265752439-1f18756aa7a5?auto=format&fit=crop&w=900&q=82",
+        "afterImage": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=900&q=82",
+        "enabled": true
+      },
+      {
+        "id": "ba2",
+        "title": "Orthodontic progress",
+        "description": "Use authentic patient-consented images for braces or aligner progress.",
+        "beforeImage": "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=900&q=82",
+        "afterImage": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=900&q=82",
+        "enabled": true
+      }
+    ],
+    "insurancePayments": [
+      {
+        "id": "i1",
+        "title": "Cashless / insurance",
+        "text": "Add insurers or cashless facilities actually accepted by your centre.",
+        "enabled": true
+      },
+      {
+        "id": "i2",
+        "title": "UPI & card payments",
+        "text": "Add the payment methods your clinic actually accepts.",
+        "enabled": true
+      },
+      {
+        "id": "i3",
+        "title": "EMI / finance",
+        "text": "Add only financing or EMI options genuinely available for eligible treatments.",
+        "enabled": true
+      }
+    ],
+    "videoTestimonials": [
+      {
+        "id": "v1",
+        "title": "Patient testimonial",
+        "videoUrl": "",
+        "posterImage": "",
+        "enabled": true
+      },
+      {
+        "id": "v2",
+        "title": "Treatment journey",
+        "videoUrl": "",
+        "posterImage": "",
+        "enabled": true
+      }
+    ]
   },
   "admin": {
     "storageKey": "sitecraft:medical-02",
@@ -473,7 +721,7 @@
           },
           {
             "key": "fee",
-            "label": "Fee / consultation note"
+            "label": "Fee / pricing note"
           },
           {
             "key": "description",
@@ -528,6 +776,18 @@
             "label": "Qualifications"
           },
           {
+            "key": "experience",
+            "label": "Experience"
+          },
+          {
+            "key": "registrationAuthority",
+            "label": "Registration authority"
+          },
+          {
+            "key": "registrationNumber",
+            "label": "Medical / Dental Registration Number"
+          },
+          {
             "key": "bio",
             "label": "Profile",
             "type": "textarea"
@@ -536,6 +796,39 @@
             "key": "image",
             "label": "Profile image",
             "type": "media"
+          },
+          {
+            "key": "monday",
+            "label": "Monday timings"
+          },
+          {
+            "key": "tuesday",
+            "label": "Tuesday timings"
+          },
+          {
+            "key": "wednesday",
+            "label": "Wednesday timings"
+          },
+          {
+            "key": "thursday",
+            "label": "Thursday timings"
+          },
+          {
+            "key": "friday",
+            "label": "Friday timings"
+          },
+          {
+            "key": "saturday",
+            "label": "Saturday timings"
+          },
+          {
+            "key": "sunday",
+            "label": "Sunday timings"
+          },
+          {
+            "key": "leaveNote",
+            "label": "Leave / unavailable dates",
+            "type": "textarea"
           },
           {
             "key": "enabled",
@@ -547,8 +840,19 @@
           "name": "New doctor",
           "role": "Consultant",
           "qualification": "",
+          "experience": "",
+          "registrationAuthority": "State Medical / Dental Council",
+          "registrationNumber": "",
           "bio": "",
           "image": "",
+          "monday": "",
+          "tuesday": "",
+          "wednesday": "",
+          "thursday": "",
+          "friday": "",
+          "saturday": "",
+          "sunday": "",
+          "leaveNote": "",
           "enabled": true
         }
       },
@@ -711,12 +1015,31 @@
             "type": "tel"
           },
           {
+            "path": "contact.emergency",
+            "label": "Emergency helpline",
+            "type": "tel"
+          },
+          {
             "path": "contact.email",
             "label": "Email"
           },
           {
             "path": "contact.address",
-            "label": "Address"
+            "label": "Clinic address"
+          },
+          {
+            "path": "contact.floor",
+            "label": "Floor / room"
+          },
+          {
+            "path": "contact.parking",
+            "label": "Parking details",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.landmarks",
+            "label": "Landmark / navigation notes",
+            "type": "textarea"
           },
           {
             "path": "contact.maps",
@@ -731,7 +1054,15 @@
         "fields": [
           {
             "path": "hours.weekdays",
-            "label": "Weekday hours"
+            "label": "Main working hours"
+          },
+          {
+            "path": "hours.morningSlot",
+            "label": "Morning OP slot"
+          },
+          {
+            "path": "hours.eveningSlot",
+            "label": "Evening OP slot"
           },
           {
             "path": "hours.weekends",
@@ -748,12 +1079,14 @@
         "path": "leads",
         "columns": [
           "createdAt",
+          "status",
           "name",
           "phone",
           "email",
           "service",
           "doctor",
           "date",
+          "slot",
           "time",
           "notes"
         ],
@@ -767,7 +1100,16 @@
           "date": "Appointment date",
           "time": "Time",
           "notes": "Notes"
-        }
+        },
+        "statuses": [
+          "New",
+          "Confirmed",
+          "Rescheduled",
+          "Completed",
+          "Cancelled"
+        ],
+        "dateKey": "date",
+        "statusKey": "status"
       },
       {
         "id": "terms",
@@ -811,6 +1153,16 @@
             "type": "checkbox"
           },
           {
+            "path": "settings.showTrust",
+            "label": "Trust",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showBeforeAfter",
+            "label": "Before After",
+            "type": "checkbox"
+          },
+          {
             "path": "settings.showFacilities",
             "label": "Facilities",
             "type": "checkbox"
@@ -826,8 +1178,18 @@
             "type": "checkbox"
           },
           {
+            "path": "settings.showVideoTestimonials",
+            "label": "Video Testimonials",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showInsurance",
+            "label": "Insurance",
+            "type": "checkbox"
+          },
+          {
             "path": "settings.showFAQ",
-            "label": "FAQ",
+            "label": "F A Q",
             "type": "checkbox"
           },
           {
@@ -846,6 +1208,11 @@
             "type": "checkbox"
           },
           {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
             "path": "settings.showTerms",
             "label": "Terms",
             "type": "checkbox"
@@ -854,11 +1221,6 @@
             "path": "settings.showPrivacy",
             "label": "Privacy",
             "type": "checkbox"
-          },
-          {
-            "path": "settings.showContact",
-            "label": "Contact",
-            "type": "checkbox"
           }
         ]
       },
@@ -866,6 +1228,167 @@
         "id": "security",
         "label": "Security",
         "type": "security"
+      },
+      {
+        "id": "trust",
+        "label": "Hygiene & Trust",
+        "type": "collection",
+        "itemLabel": "trust item",
+        "path": "trustBadges",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Trust badge title"
+          },
+          {
+            "key": "text",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "icon",
+            "label": "Icon / symbol"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New trust badge",
+          "text": "",
+          "icon": "✓",
+          "enabled": true
+        }
+      },
+      {
+        "id": "beforeAfter",
+        "label": "Before / After Gallery",
+        "type": "collection",
+        "itemLabel": "before / after item",
+        "path": "beforeAfter",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "beforeImage",
+            "label": "Before image",
+            "type": "media"
+          },
+          {
+            "key": "afterImage",
+            "label": "After image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New before / after",
+          "description": "",
+          "beforeImage": "",
+          "afterImage": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "insurance",
+        "label": "Insurance & Payments",
+        "type": "collection",
+        "itemLabel": "payment option",
+        "path": "insurancePayments",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Option / insurer"
+          },
+          {
+            "key": "text",
+            "label": "Details",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New payment option",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "videoTestimonials",
+        "label": "Video Testimonials",
+        "type": "collection",
+        "itemLabel": "testimonial video",
+        "path": "videoTestimonials",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Video title"
+          },
+          {
+            "key": "videoUrl",
+            "label": "Video URL",
+            "type": "url"
+          },
+          {
+            "key": "posterImage",
+            "label": "Poster image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New video testimonial",
+          "videoUrl": "",
+          "posterImage": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviewsInfo",
+        "label": "Review Links",
+        "fields": [
+          {
+            "path": "googleReviewsUrl",
+            "label": "Google Reviews URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "medicalDisclaimer",
+        "label": "Medical Disclaimer",
+        "fields": [
+          {
+            "path": "medicalDisclaimer",
+            "label": "Medical disclaimer",
+            "type": "textarea"
+          }
+        ]
       }
     ]
   }
