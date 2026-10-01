@@ -1,0 +1,872 @@
+{
+  "id": "medical-02",
+  "name": "Dental & Medical Center — Modern Care",
+  "category": "Dental & Medical Centers",
+  "price": "₹4,999",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home"
+    },
+    {
+      "id": "about",
+      "label": "About Us"
+    },
+    {
+      "id": "services",
+      "label": "Services & Treatments"
+    },
+    {
+      "id": "doctors",
+      "label": "Doctors & Specialists"
+    },
+    {
+      "id": "facilities",
+      "label": "Facilities & Care"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Patient Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "appointment",
+      "label": "Appointment Booking"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "location",
+      "label": "Location"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "terms",
+      "label": "Terms & Conditions"
+    },
+    {
+      "id": "privacy",
+      "label": "Privacy Policy"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Center Name",
+      "required": true,
+      "placeholder": "NexaCare Dental & Medical"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Medical Director / Founder",
+      "placeholder": "Dr. Riya Mehta"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Modern care, made easier."
+    },
+    {
+      "path": "home.title",
+      "label": "Home Heading",
+      "required": true,
+      "placeholder": "Your health visit, without the clutter."
+    },
+    {
+      "path": "home.text",
+      "label": "Home Text",
+      "type": "textarea",
+      "placeholder": "A modern dental and primary-care centre with simple appointments, specialist profiles and clear next-step communication."
+    },
+    {
+      "path": "brand.about",
+      "label": "About Center",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero image",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Call Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email"
+    },
+    {
+      "path": "contact.address",
+      "label": "Address"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "hours.weekdays",
+      "label": "Weekday Hours"
+    },
+    {
+      "path": "hours.weekends",
+      "label": "Weekend Hours"
+    },
+    {
+      "path": "appointment.heading",
+      "label": "Appointment Heading"
+    },
+    {
+      "path": "appointment.text",
+      "label": "Appointment Intro",
+      "type": "textarea"
+    },
+    {
+      "path": "termsText",
+      "label": "Terms & Conditions",
+      "type": "textarea"
+    },
+    {
+      "path": "privacyPolicy",
+      "label": "Privacy Policy",
+      "type": "textarea"
+    },
+    {
+      "path": "gallery",
+      "label": "Gallery images",
+      "type": "mediaCollection",
+      "titleKey": "title",
+      "imageKey": "image"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "NexaCare Dental & Medical",
+      "ownerName": "Dr. Riya Mehta",
+      "tagline": "Modern care, made easier.",
+      "about": "NexaCare Dental & Medical provides dental and general medical consultations in a welcoming setting. Replace the sample copy with your centre's actual specialties, credentials, services and policies before publishing."
+    },
+    "home": {
+      "title": "Your health visit, without the clutter.",
+      "text": "A modern dental and primary-care centre with simple appointments, specialist profiles and clear next-step communication."
+    },
+    "hero": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1800&q=86",
+    "contact": {
+      "phone": "+91 90000 44001",
+      "whatsapp": "919000055001",
+      "email": "hello@nexacare.example",
+      "address": "Kondapur, Hyderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Kondapur%2C%20Hyderabad%2C%20Telangana"
+    },
+    "hours": {
+      "weekdays": "Mon–Sat · 9:00 AM – 8:00 PM",
+      "weekends": "Sun · 10:00 AM – 2:00 PM"
+    },
+    "appointment": {
+      "heading": "Book a visit that fits your day.",
+      "text": "Choose a service, preferred doctor, date and time. The centre can confirm the appointment through WhatsApp or phone."
+    },
+    "services": [
+      {
+        "id": "m1",
+        "name": "Smile Assessment",
+        "category": "Dental",
+        "duration": "30 min",
+        "fee": "Consultation",
+        "description": "Dental assessment, discussion and treatment-planning consultation.",
+        "image": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=900&q=82",
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "m2",
+        "name": "Dental Hygiene Visit",
+        "category": "Dental",
+        "duration": "45 min",
+        "fee": "Ask center",
+        "description": "Preventive oral-care review and hygiene guidance.",
+        "image": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=900&q=82",
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "m3",
+        "name": "Primary Care Consultation",
+        "category": "Medical",
+        "duration": "30 min",
+        "fee": "Consultation",
+        "description": "General health consultation and appropriate next-step guidance.",
+        "image": "https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=900&q=82",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "m4",
+        "name": "Family Wellness Visit",
+        "category": "Medical",
+        "duration": "45 min",
+        "fee": "Ask center",
+        "description": "Structured consultation for common family health concerns.",
+        "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=82",
+        "featured": false,
+        "enabled": true
+      }
+    ],
+    "doctors": [
+      {
+        "id": "n1",
+        "name": "Dr. Nisha Kapoor",
+        "role": "Dental Consultant",
+        "qualification": "BDS",
+        "bio": "Preventive dental care, restorative consultations and patient-friendly treatment planning.",
+        "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=82",
+        "enabled": true
+      },
+      {
+        "id": "n2",
+        "name": "Dr. Rohan Iyer",
+        "role": "General Physician",
+        "qualification": "MBBS",
+        "bio": "General medical consultations with clear communication and referral coordination where appropriate.",
+        "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=82",
+        "enabled": true
+      },
+      {
+        "id": "n3",
+        "name": "Dr. Kavya Nair",
+        "role": "Family Dental Consultant",
+        "qualification": "BDS",
+        "bio": "Family dental care with a calm, preventive and consultation-led approach.",
+        "image": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=800&q=82",
+        "enabled": true
+      }
+    ],
+    "facilities": [
+      {
+        "id": "mf1",
+        "title": "Modern consultation rooms",
+        "text": "Add your centre's sterilisation and infection-control information here.",
+        "enabled": true
+      },
+      {
+        "id": "mf2",
+        "title": "Organised care spaces",
+        "text": "Describe your consultation and treatment spaces here.",
+        "enabled": true
+      },
+      {
+        "id": "mf3",
+        "title": "Dental + medical under one roof",
+        "text": "Website appointment requests can be followed up by your team.",
+        "enabled": true
+      },
+      {
+        "id": "mf4",
+        "title": "Easy digital appointment support",
+        "text": "Add parking, lift, accessibility and nearby landmark details.",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "mg1",
+        "title": "Care Reception",
+        "image": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=82",
+        "enabled": true
+      },
+      {
+        "id": "mg2",
+        "title": "Modern Consultation",
+        "image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=900&q=82",
+        "enabled": true
+      },
+      {
+        "id": "mg3",
+        "title": "Clinical Workspace",
+        "image": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=900&q=82",
+        "enabled": true
+      },
+      {
+        "id": "mg4",
+        "title": "Waiting Area",
+        "image": "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=900&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "mr1",
+        "name": "Priya",
+        "rating": 5,
+        "text": "Simple booking, clear service information and a comfortable visit.",
+        "enabled": true
+      },
+      {
+        "id": "mr2",
+        "name": "Karthik",
+        "rating": 5,
+        "text": "Quick communication and a well-organised appointment process.",
+        "enabled": true
+      },
+      {
+        "id": "mr3",
+        "name": "Family Client",
+        "rating": 5,
+        "text": "Useful option for a family needing dental and general consultation support.",
+        "enabled": true
+      }
+    ],
+    "faq": [
+      {
+        "id": "mfq1",
+        "question": "What can I book through the website?",
+        "answer": "Yes. Use the appointment form to request a date and time. The centre can confirm the visit through WhatsApp or phone.",
+        "enabled": true
+      },
+      {
+        "id": "mfq2",
+        "question": "Can I request a specific doctor?",
+        "answer": "Yes. Select a preferred doctor when available, or choose Any available.",
+        "enabled": true
+      },
+      {
+        "id": "mfq3",
+        "question": "How do I confirm current consultation information?",
+        "answer": "Fees and availability can change. Confirm the latest consultation or service information with the centre.",
+        "enabled": true
+      },
+      {
+        "id": "mfq4",
+        "question": "Can I contact the centre through WhatsApp?",
+        "answer": "Yes. The WhatsApp button can open a pre-filled appointment enquiry.",
+        "enabled": true
+      },
+      {
+        "id": "mfq5",
+        "question": "Is medicine ordering included?",
+        "answer": "No. This template is for centre information, appointments and enquiries only; it does not include medicine ordering or an online pharmacy.",
+        "enabled": true
+      }
+    ],
+    "termsText": "Appointments, consultation fees and service availability are subject to the centre's final policies and professional assessment. Add your final cancellation, deposit and patient-visit policies before publishing.",
+    "privacyPolicy": "We use appointment and contact details to respond to enquiries, confirm visits and provide requested centre communication. Replace this with your final privacy and patient-data handling policy before publishing.",
+    "settings": {
+      "showAbout": true,
+      "showServices": true,
+      "showDoctors": true,
+      "showFacilities": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFAQ": true,
+      "showAppointment": true,
+      "showLocation": true,
+      "showHours": true,
+      "showTerms": true,
+      "showPrivacy": true,
+      "showContact": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    },
+    "leads": []
+  },
+  "admin": {
+    "storageKey": "sitecraft:medical-02",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "media",
+        "label": "Images / Storage",
+        "type": "media"
+      },
+      {
+        "id": "business",
+        "label": "Business",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Center name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Medical director / founder"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About center",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "services",
+        "label": "Services & Treatments",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "duration",
+            "label": "Typical duration"
+          },
+          {
+            "key": "fee",
+            "label": "Fee / consultation note"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Service image",
+            "type": "media"
+          },
+          {
+            "key": "featured",
+            "label": "Featured",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "category": "General",
+          "duration": "",
+          "fee": "",
+          "description": "",
+          "image": "",
+          "featured": false,
+          "enabled": true
+        }
+      },
+      {
+        "id": "doctors",
+        "label": "Doctors & Specialists",
+        "type": "collection",
+        "itemLabel": "doctor",
+        "path": "doctors",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Doctor name"
+          },
+          {
+            "key": "role",
+            "label": "Specialty / role"
+          },
+          {
+            "key": "qualification",
+            "label": "Qualifications"
+          },
+          {
+            "key": "bio",
+            "label": "Profile",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Profile image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New doctor",
+          "role": "Consultant",
+          "qualification": "",
+          "bio": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "facilities",
+        "label": "Facilities & Care",
+        "type": "collection",
+        "itemLabel": "facility",
+        "path": "facilities",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Facility / care point"
+          },
+          {
+            "key": "text",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New facility",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "gallery image",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "image",
+            "label": "Gallery image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New gallery image",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Patient Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Patient name"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New patient",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "FAQ item",
+        "path": "faq",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "appointment",
+        "label": "Appointment Booking",
+        "fields": [
+          {
+            "path": "appointment.heading",
+            "label": "Appointment heading"
+          },
+          {
+            "path": "appointment.text",
+            "label": "Appointment intro",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "label": "Contact",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Call number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "fields": [
+          {
+            "path": "hours.weekdays",
+            "label": "Weekday hours"
+          },
+          {
+            "path": "hours.weekends",
+            "label": "Weekend hours"
+          }
+        ]
+      },
+      {
+        "id": "leads",
+        "label": "Appointment Leads",
+        "type": "leads",
+        "title": "Appointment Enquiries",
+        "description": "Appointment requests submitted from this website appear here. Download them as CSV.",
+        "path": "leads",
+        "columns": [
+          "createdAt",
+          "name",
+          "phone",
+          "email",
+          "service",
+          "doctor",
+          "date",
+          "time",
+          "notes"
+        ],
+        "labels": {
+          "createdAt": "Date",
+          "name": "Name",
+          "phone": "Phone",
+          "email": "Email",
+          "service": "Service",
+          "doctor": "Doctor",
+          "date": "Appointment date",
+          "time": "Time",
+          "notes": "Notes"
+        }
+      },
+      {
+        "id": "terms",
+        "label": "Terms & Conditions",
+        "fields": [
+          {
+            "path": "termsText",
+            "label": "Terms & Conditions",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy Policy",
+        "fields": [
+          {
+            "path": "privacyPolicy",
+            "label": "Privacy policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Services",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showDoctors",
+            "label": "Doctors",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFacilities",
+            "label": "Facilities",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFAQ",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAppointment",
+            "label": "Appointment",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTerms",
+            "label": "Terms",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPrivacy",
+            "label": "Privacy",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
