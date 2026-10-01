@@ -705,7 +705,13 @@
         "text": "Add your actual steam-bath availability, access rules and hygiene information.",
         "enabled": true
       }
-    ]
+    ],
+    "fitness": {
+      "type": "General Gym"
+    },
+    "runtime": {
+      "templateId": "gym-01"
+    }
   },
   "admin": {
     "storageKey": "sitecraft:gym-01",
@@ -743,6 +749,20 @@
             "path": "brand.about",
             "label": "About gym",
             "type": "textarea"
+          },
+          {
+            "path": "fitness.type",
+            "label": "Fitness type",
+            "type": "select",
+            "options": [
+              "General Gym",
+              "Yoga",
+              "Zumba",
+              "CrossFit",
+              "HIIT",
+              "Strength Circuit",
+              "Mobility"
+            ]
           }
         ]
       },
@@ -1475,5 +1495,27 @@
         "type": "security"
       }
     ]
-  }
+  },
+  "defaultSelectedFeatures": [
+    "home",
+    "about",
+    "membership",
+    "services",
+    "trainers",
+    "schedule",
+    "facilities",
+    "transformations",
+    "bmi",
+    "merchandise",
+    "gallery",
+    "reviews",
+    "faq",
+    "trial",
+    "whatsapp",
+    "location",
+    "hours",
+    "contact",
+    "terms",
+    "privacy"
+  ]
 }
