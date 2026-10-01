@@ -56,3 +56,18 @@
 .catering-01 .cat-hero-note span,.catering-01 .cat-event-tags span{font-size:12px}.catering-01 .cat-location p{font-size:15px}.catering-01 .cat-privacy p{font-size:13px}.catering-01 .cat-footer{font-size:12px}
 @media(max-width:1000px){.catering-01 .cat-menu-group-head{display:block}.catering-01 .cat-menu-summary{justify-content:flex-start;margin-top:14px}}
 @media(max-width:650px){.catering-01 .cat-menu-group{padding:15px;box-shadow:5px 6px 0 #ddd5c5}.catering-01 .cat-menu-group-head h3{font-size:29px}.catering-01 .cat-menu-group-head p{font-size:14px}.catering-01 .cat-item-grid{grid-template-columns:1fr}.catering-01 .cat-menu-item{grid-template-columns:86px 1fr}.catering-01 .cat-item-image{width:86px;height:86px}.catering-01 .cat-item-copy h4{font-size:19px}.catering-01 .faq-toggle span{font-size:19px}}
+
+/* Compact catering menus for high item counts */
+.catering-01 .cat-menu-groups{gap:14px}
+.catering-01 .cat-menu-group{padding:18px}
+.catering-01 .cat-menu-group-head{padding-bottom:14px}
+.catering-01 .cat-menu-group-head h3{font-size:30px}
+.catering-01 .cat-item-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding-top:13px}
+.catering-01 .cat-menu-item{grid-template-columns:76px 1fr;gap:9px;padding:8px;border-radius:12px}
+.catering-01 .cat-item-image{width:76px;height:76px;border-radius:8px}
+.catering-01 .cat-item-copy h4{font-size:17px;margin:1px 0 4px}
+.catering-01 .cat-item-copy p{font-size:11px;line-height:1.45}
+.catering-01 .cat-item-copy strong{font-size:12px;padding-top:5px}
+.catering-01 .cat-menu-group>.cat-text-link{font-size:12px;margin-top:12px}
+@media(max-width:1050px){.catering-01 .cat-item-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.catering-01 .cat-item-grid{grid-template-columns:1fr}.catering-01 .cat-menu-group{padding:14px}.catering-01 .cat-menu-group-head h3{font-size:27px}.catering-01 .cat-menu-item{grid-template-columns:82px 1fr}.catering-01 .cat-item-image{width:82px;height:82px}.catering-01 .cat-item-copy h4{font-size:18px}.catering-01 .cat-item-copy p{font-size:12px}}
