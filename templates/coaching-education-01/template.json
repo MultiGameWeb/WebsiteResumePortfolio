@@ -1,0 +1,1580 @@
+{
+  "id": "coaching-education-01",
+  "name": "Coaching & Educational — Academy",
+  "category": "Coaching & Educational Institutes",
+  "price": "₹4,999",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "courses",
+      "label": "Courses & Programs"
+    },
+    {
+      "id": "courseDetails",
+      "label": "Course Details & Syllabus"
+    },
+    {
+      "id": "fees",
+      "label": "Fee Plans & Comparison"
+    },
+    {
+      "id": "batches",
+      "label": "Batch Timings & Seats"
+    },
+    {
+      "id": "faculty",
+      "label": "Faculty & Mentors"
+    },
+    {
+      "id": "demo",
+      "label": "Free Demo Class"
+    },
+    {
+      "id": "admission",
+      "label": "Admission Enquiry"
+    },
+    {
+      "id": "results",
+      "label": "Results & Achievements"
+    },
+    {
+      "id": "studentStories",
+      "label": "Student Success Stories"
+    },
+    {
+      "id": "resources",
+      "label": "Study Resources"
+    },
+    {
+      "id": "facilities",
+      "label": "Campus / Facilities"
+    },
+    {
+      "id": "reviews",
+      "label": "Student & Parent Reviews"
+    },
+    {
+      "id": "about",
+      "label": "About Institute"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "location",
+      "label": "Location & Directions"
+    },
+    {
+      "id": "hours",
+      "label": "Office / Counselling Hours"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp & Call"
+    },
+    {
+      "id": "terms",
+      "label": "Terms & Policies"
+    },
+    {
+      "id": "privacy",
+      "label": "Privacy Policy"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "courses",
+    "courseDetails",
+    "fees",
+    "batches",
+    "faculty",
+    "demo",
+    "admission",
+    "results",
+    "studentStories",
+    "resources",
+    "facilities",
+    "reviews",
+    "about",
+    "faq",
+    "location",
+    "hours",
+    "whatsapp",
+    "terms",
+    "privacy"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Institute / Academy Name",
+      "required": true,
+      "placeholder": "NextStep Academy"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Founder / Director",
+      "placeholder": "Dr. Ananya Rao"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Learn with clarity. Prepare with confidence."
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Turn your learning goals into a clear plan."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea",
+      "placeholder": "Competitive exams, school tuition and career skills with expert faculty and structured batches."
+    },
+    {
+      "path": "brand.about",
+      "label": "About Institute",
+      "type": "textarea"
+    },
+    {
+      "path": "brand.foundedYear",
+      "label": "Founded Year",
+      "type": "number",
+      "placeholder": "2014"
+    },
+    {
+      "path": "brand.students",
+      "label": "Students Guided",
+      "type": "number",
+      "placeholder": "2500"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Image",
+      "type": "media"
+    },
+    {
+      "path": "heroVideo",
+      "label": "Hero Video URL (optional)",
+      "type": "url"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Call Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email"
+    },
+    {
+      "path": "contact.address",
+      "label": "Institute Address"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hoursText",
+      "label": "Counselling Hours"
+    },
+    {
+      "path": "contact.onlineText",
+      "label": "Online / Offline Classes Text"
+    },
+    {
+      "path": "social.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    },
+    {
+      "path": "social.youtube",
+      "label": "YouTube URL",
+      "type": "url"
+    },
+    {
+      "path": "termsText",
+      "label": "Terms & Admission Policy",
+      "type": "textarea"
+    },
+    {
+      "path": "privacyPolicy",
+      "label": "Privacy Policy",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "runtime": {
+      "templateId": "coaching-education-01"
+    },
+    "brand": {
+      "businessName": "NextStep Academy",
+      "ownerName": "Dr. Ananya Rao",
+      "tagline": "Learn with clarity. Prepare with confidence.",
+      "about": "NextStep Academy provides structured coaching, school support and career-focused learning through experienced mentors, practical study plans and small-group guidance.",
+      "foundedYear": 2014,
+      "students": 2500
+    },
+    "home": {
+      "title": "Turn your learning goals into a clear plan.",
+      "text": "Exam preparation, school tuition and career skills — structured courses, focused faculty and flexible batch options."
+    },
+    "hero": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=88",
+    "heroVideo": "",
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@nextstep.example",
+      "address": "Madhapur, Hyderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Madhapur+Hyderabad",
+      "hoursText": "Mon–Sat · 9:00 AM–7:30 PM",
+      "onlineText": "Online + classroom batches available"
+    },
+    "social": {
+      "instagram": "https://instagram.com/",
+      "youtube": "https://youtube.com/"
+    },
+    "courses": [
+      {
+        "id": "c1",
+        "name": "JEE Main & Advanced",
+        "category": "Competitive Exams",
+        "level": "11–12 / Repeaters",
+        "duration": "12 months",
+        "format": "Classroom + Online",
+        "price": "₹65,000 / year",
+        "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=85",
+        "summary": "Physics, Chemistry and Mathematics with concept classes, problem solving and mock tests.",
+        "syllabus": [
+          "Concept strengthening",
+          "Daily problem practice",
+          "Weekly tests",
+          "Full-length mocks",
+          "Doubt-clearing sessions"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "NEET Preparation",
+        "category": "Competitive Exams",
+        "level": "11–12 / Repeaters",
+        "duration": "12 months",
+        "format": "Classroom + Online",
+        "price": "₹70,000 / year",
+        "image": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=85",
+        "summary": "Biology, Physics and Chemistry preparation with structured revision and test practice.",
+        "syllabus": [
+          "NCERT-focused learning",
+          "Topic tests",
+          "Revision cycles",
+          "Mock exams",
+          "Mentor support"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "School Tuition — CBSE",
+        "category": "School Tuition",
+        "level": "Classes 6–10",
+        "duration": "Academic year",
+        "format": "Classroom + Online",
+        "price": "₹2,499 / month",
+        "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=85",
+        "summary": "Subject support in Mathematics, Science and English with regular parent updates.",
+        "syllabus": [
+          "Concept classes",
+          "Homework support",
+          "Chapter tests",
+          "Exam revision",
+          "Parent progress updates"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "c4",
+        "name": "Coding & Python Foundations",
+        "category": "Skill Development",
+        "level": "Beginners",
+        "duration": "10 weeks",
+        "format": "Weekend / Online",
+        "price": "₹12,500",
+        "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85",
+        "summary": "Practical introduction to programming, Python basics and small projects.",
+        "syllabus": [
+          "Programming basics",
+          "Python syntax",
+          "Problem solving",
+          "Mini projects",
+          "Portfolio guidance"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "c5",
+        "name": "Spoken English & Communication",
+        "category": "Skill Development",
+        "level": "Students / Professionals",
+        "duration": "8 weeks",
+        "format": "Weekday / Weekend",
+        "price": "₹7,500",
+        "image": "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1000&q=85",
+        "summary": "Practice-led communication training for confidence, vocabulary and everyday speaking.",
+        "syllabus": [
+          "Conversation practice",
+          "Vocabulary",
+          "Grammar in context",
+          "Presentation skills",
+          "Interview practice"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "c6",
+        "name": "Foundation Mathematics",
+        "category": "Foundation",
+        "level": "Classes 5–8",
+        "duration": "6 months",
+        "format": "Classroom",
+        "price": "₹1,999 / month",
+        "image": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1000&q=85",
+        "summary": "Build strong arithmetic, algebra and reasoning fundamentals before advanced coursework.",
+        "syllabus": [
+          "Arithmetic",
+          "Fractions & decimals",
+          "Algebra basics",
+          "Geometry",
+          "Reasoning"
+        ],
+        "enabled": true
+      }
+    ],
+    "fees": [
+      {
+        "id": "f1",
+        "name": "Foundation",
+        "tier": "Essential",
+        "price": "₹1,999 / month",
+        "billing": "Monthly",
+        "bestFor": "School support",
+        "includes": [
+          "Core classes",
+          "Weekly worksheet",
+          "Monthly test",
+          "Basic doubt support"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "name": "Focused Prep",
+        "tier": "Premium",
+        "price": "₹4,999 / month",
+        "billing": "Monthly",
+        "bestFor": "Exam preparation",
+        "includes": [
+          "Regular classes",
+          "Weekly tests",
+          "Doubt sessions",
+          "Study planner",
+          "Mentor check-ins"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "name": "Complete Program",
+        "tier": "Elite",
+        "price": "₹65,000+",
+        "billing": "Program based",
+        "bestFor": "Long-term preparation",
+        "includes": [
+          "Full syllabus",
+          "Test series",
+          "Mentoring",
+          "Revision plan",
+          "Parent / progress updates"
+        ],
+        "enabled": true
+      }
+    ],
+    "batches": [
+      {
+        "id": "b1",
+        "day": "Monday",
+        "time": "6:00 PM – 7:30 PM",
+        "course": "JEE Main & Advanced",
+        "faculty": "Arjun Mehta",
+        "mode": "Classroom",
+        "seatsTotal": 30,
+        "seatsLeft": 8,
+        "status": "Open",
+        "enabled": true
+      },
+      {
+        "id": "b2",
+        "day": "Tuesday",
+        "time": "6:00 PM – 7:30 PM",
+        "course": "NEET Preparation",
+        "faculty": "Dr. Meera Iyer",
+        "mode": "Classroom",
+        "seatsTotal": 30,
+        "seatsLeft": 5,
+        "status": "Open",
+        "enabled": true
+      },
+      {
+        "id": "b3",
+        "day": "Wednesday",
+        "time": "5:00 PM – 6:15 PM",
+        "course": "School Tuition — CBSE",
+        "faculty": "Kavya Rao",
+        "mode": "Classroom",
+        "seatsTotal": 20,
+        "seatsLeft": 7,
+        "status": "Open",
+        "enabled": true
+      },
+      {
+        "id": "b4",
+        "day": "Saturday",
+        "time": "10:00 AM – 12:00 PM",
+        "course": "Coding & Python Foundations",
+        "faculty": "Rohit Sen",
+        "mode": "Online",
+        "seatsTotal": 25,
+        "seatsLeft": 12,
+        "status": "Open",
+        "enabled": true
+      },
+      {
+        "id": "b5",
+        "day": "Saturday",
+        "time": "4:00 PM – 5:30 PM",
+        "course": "Spoken English & Communication",
+        "faculty": "Nisha Kapoor",
+        "mode": "Hybrid",
+        "seatsTotal": 18,
+        "seatsLeft": 4,
+        "status": "Filling Fast",
+        "enabled": true
+      },
+      {
+        "id": "b6",
+        "day": "Sunday",
+        "time": "9:00 AM – 10:15 AM",
+        "course": "Foundation Mathematics",
+        "faculty": "Kavya Rao",
+        "mode": "Classroom",
+        "seatsTotal": 20,
+        "seatsLeft": 10,
+        "status": "Open",
+        "enabled": true
+      }
+    ],
+    "faculty": [
+      {
+        "id": "t1",
+        "name": "Arjun Mehta",
+        "role": "Mathematics & Physics Mentor",
+        "credentials": "M.Tech · 10 years",
+        "specialization": "JEE preparation, problem solving, advanced mathematics",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t2",
+        "name": "Dr. Meera Iyer",
+        "role": "Biology Faculty",
+        "credentials": "M.Sc · 8 years",
+        "specialization": "NEET Biology, NCERT strategy and revision planning",
+        "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t3",
+        "name": "Rohit Sen",
+        "role": "Coding Mentor",
+        "credentials": "MCA · 7 years",
+        "specialization": "Python, programming foundations and project-based learning",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t4",
+        "name": "Nisha Kapoor",
+        "role": "Communication Coach",
+        "credentials": "MA English · 6 years",
+        "specialization": "Spoken English, presentations and interview practice",
+        "image": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      }
+    ],
+    "demoClass": {
+      "heading": "Try a free demo class.",
+      "text": "Pick a course and preferred slot. The academy team can confirm the available demo session.",
+      "buttonText": "Book Free Demo"
+    },
+    "admission": {
+      "heading": "Talk to an academic counsellor.",
+      "text": "Share the learner's class, target course, preferred batch and learning goal. We will contact you with the relevant course and fee details.",
+      "buttonText": "Request Admission Info"
+    },
+    "results": [
+      {
+        "id": "r1",
+        "title": "Mock Test Growth",
+        "value": "+18%",
+        "caption": "sample improvement metric — replace with verified data",
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "title": "Learners Guided",
+        "value": "2500+",
+        "caption": "students guided — update from your actual records",
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "title": "Courses",
+        "value": "6",
+        "caption": "current programs",
+        "enabled": true
+      },
+      {
+        "id": "r4",
+        "title": "Mentor Access",
+        "value": "1:1",
+        "caption": "available on selected programs",
+        "enabled": true
+      }
+    ],
+    "stories": [
+      {
+        "id": "ss1",
+        "name": "Aditi",
+        "course": "JEE Preparation",
+        "quote": "The weekly test routine helped me understand where I needed more practice.",
+        "image": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      },
+      {
+        "id": "ss2",
+        "name": "Rahul's Parent",
+        "course": "CBSE Tuition",
+        "quote": "The progress updates made it easier for us to support our son's study routine at home.",
+        "image": "https://images.unsplash.com/photo-1494386346843-e12284507169?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      },
+      {
+        "id": "ss3",
+        "name": "Sanjay",
+        "course": "Python Foundations",
+        "quote": "The project work helped me move beyond theory and actually build small programs.",
+        "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      }
+    ],
+    "resources": [
+      {
+        "id": "res1",
+        "title": "Weekly Practice Sheets",
+        "type": "Worksheet",
+        "description": "Replace this sample item with your downloadable or linked resource.",
+        "url": "#",
+        "enabled": true
+      },
+      {
+        "id": "res2",
+        "title": "Mock Test Series",
+        "type": "Test",
+        "description": "Publish current test-series details and access rules here.",
+        "url": "#",
+        "enabled": true
+      },
+      {
+        "id": "res3",
+        "title": "Exam Revision Checklist",
+        "type": "Guide",
+        "description": "A simple revision guide for students and parents.",
+        "url": "#",
+        "enabled": true
+      },
+      {
+        "id": "res4",
+        "title": "Course Orientation Video",
+        "type": "Video",
+        "description": "Add your official course introduction or orientation video.",
+        "url": "https://youtube.com/",
+        "enabled": true
+      }
+    ],
+    "facilities": [
+      {
+        "id": "fac1",
+        "title": "Smart Classrooms",
+        "text": "Projectors, digital boards and structured classroom layouts.",
+        "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "fac2",
+        "title": "Doubt Support",
+        "text": "Describe your actual doubt-clearing process and timings.",
+        "image": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "fac3",
+        "title": "Study Library",
+        "text": "Add the real library, reading-room or study-space facilities you provide.",
+        "image": "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rv1",
+        "name": "Srinivas",
+        "type": "Parent",
+        "rating": 5,
+        "text": "The batch timings and communication were easy to understand, and the mentor updates were useful.",
+        "image": "https://images.unsplash.com/photo-1494386346843-e12284507169?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      },
+      {
+        "id": "rv2",
+        "name": "Aditi",
+        "type": "Student",
+        "rating": 5,
+        "text": "I liked the weekly tests and the way difficult topics were broken into smaller steps.",
+        "image": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      },
+      {
+        "id": "rv3",
+        "name": "Nikhil",
+        "type": "Student",
+        "rating": 5,
+        "text": "The coding classes were practical and gave me projects to work on between sessions.",
+        "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      }
+    ],
+    "faq": [
+      {
+        "id": "q1",
+        "question": "Can I attend a free demo class?",
+        "answer": "Yes, where offered. Submit the demo form with your course and preferred slot; the academy will confirm available sessions.",
+        "enabled": true
+      },
+      {
+        "id": "q2",
+        "question": "Do you offer both online and classroom batches?",
+        "answer": "Where enabled by the institute, yes. The batch section shows the mode configured for each sample batch.",
+        "enabled": true
+      },
+      {
+        "id": "q3",
+        "question": "How are fees structured?",
+        "answer": "Fee cards are sample starting prices. Update the actual tuition fee, registration charges, discounts, taxes and payment schedule in Admin before publishing.",
+        "enabled": true
+      },
+      {
+        "id": "q4",
+        "question": "Are batch seats guaranteed after enquiry?",
+        "answer": "No. The seat counter is a planning display. Final seat availability requires confirmation from the institute.",
+        "enabled": true
+      },
+      {
+        "id": "q5",
+        "question": "Can parents request progress updates?",
+        "answer": "Where offered, the institute can configure its actual parent-update process and communication schedule.",
+        "enabled": true
+      }
+    ],
+    "hours": {
+      "weekdays": "Mon–Sat · 9:00 AM – 7:30 PM",
+      "weekends": "Sun · 9:00 AM – 1:00 PM"
+    },
+    "termsText": "Course availability, batch timings, seat counts, faculty allocation, fee amounts, discounts, refunds, transfers, make-up classes and admission terms are subject to the institute's written policies. Replace this sample copy with your final admission and fee terms.",
+    "privacyPolicy": "We use student, parent and enquiry information to respond to course, demo, counselling and admission requests. Replace this sample with the institute's final privacy and data-handling policy before publishing.",
+    "settings": {
+      "showHome": true,
+      "showCourses": true,
+      "showCourseDetails": true,
+      "showFees": true,
+      "showBatches": true,
+      "showFaculty": true,
+      "showDemo": true,
+      "showAdmission": true,
+      "showResults": true,
+      "showStudentStories": true,
+      "showResources": true,
+      "showFacilities": true,
+      "showReviews": true,
+      "showAbout": true,
+      "showFAQ": true,
+      "showLocation": true,
+      "showHours": true,
+      "showWhatsApp": true,
+      "showTerms": true,
+      "showPrivacy": true
+    },
+    "leads": []
+  },
+  "admin": {
+    "storageKey": "sitecraft:coaching-education-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "media",
+        "label": "Images / Storage",
+        "type": "media"
+      },
+      {
+        "id": "business",
+        "label": "Institute",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Institute name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Founder / director"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About institute",
+            "type": "textarea"
+          },
+          {
+            "path": "brand.foundedYear",
+            "label": "Founded year",
+            "type": "number"
+          },
+          {
+            "path": "brand.students",
+            "label": "Students guided",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          },
+          {
+            "path": "heroVideo",
+            "label": "Hero video URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "courses",
+        "label": "Courses & Programs",
+        "type": "collection",
+        "itemLabel": "course",
+        "path": "courses",
+        "titleKey": "name",
+        "description": "Manage course title, category, level, duration, format, pricing, image and syllabus.",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Course name"
+          },
+          {
+            "key": "category",
+            "label": "Category",
+            "type": "select",
+            "options": [
+              "Competitive Exams",
+              "School Tuition",
+              "Skill Development",
+              "Foundation",
+              "Other"
+            ]
+          },
+          {
+            "key": "level",
+            "label": "Level / class"
+          },
+          {
+            "key": "duration",
+            "label": "Duration"
+          },
+          {
+            "key": "format",
+            "label": "Format"
+          },
+          {
+            "key": "price",
+            "label": "Display price"
+          },
+          {
+            "key": "image",
+            "label": "Course image",
+            "type": "media"
+          },
+          {
+            "key": "summary",
+            "label": "Summary",
+            "type": "textarea"
+          },
+          {
+            "key": "syllabus",
+            "label": "Syllabus items",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New course",
+          "category": "Other",
+          "level": "All levels",
+          "duration": "",
+          "format": "Classroom",
+          "price": "",
+          "image": "",
+          "summary": "",
+          "syllabus": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "fees",
+        "label": "Fee Plans & Comparison",
+        "type": "collection",
+        "itemLabel": "fee plan",
+        "path": "fees",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Plan name"
+          },
+          {
+            "key": "tier",
+            "label": "Tier",
+            "type": "select",
+            "options": [
+              "Essential",
+              "Premium",
+              "Elite"
+            ]
+          },
+          {
+            "key": "price",
+            "label": "Display fee"
+          },
+          {
+            "key": "billing",
+            "label": "Billing period"
+          },
+          {
+            "key": "bestFor",
+            "label": "Best for"
+          },
+          {
+            "key": "includes",
+            "label": "Included items",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New fee plan",
+          "tier": "Premium",
+          "price": "",
+          "billing": "Monthly",
+          "bestFor": "",
+          "includes": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "batches",
+        "label": "Batch Timings & Seats",
+        "type": "collection",
+        "itemLabel": "batch",
+        "path": "batches",
+        "titleKey": "course",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "time",
+            "label": "Time"
+          },
+          {
+            "key": "course",
+            "label": "Course"
+          },
+          {
+            "key": "faculty",
+            "label": "Faculty"
+          },
+          {
+            "key": "mode",
+            "label": "Mode",
+            "type": "select",
+            "options": [
+              "Classroom",
+              "Online",
+              "Hybrid"
+            ]
+          },
+          {
+            "key": "seatsTotal",
+            "label": "Total seats",
+            "type": "number"
+          },
+          {
+            "key": "seatsLeft",
+            "label": "Seats left",
+            "type": "number"
+          },
+          {
+            "key": "status",
+            "label": "Status",
+            "type": "select",
+            "options": [
+              "Open",
+              "Filling Fast",
+              "Full"
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "time": "6:00 PM – 7:30 PM",
+          "course": "New course",
+          "faculty": "",
+          "mode": "Classroom",
+          "seatsTotal": 30,
+          "seatsLeft": 10,
+          "status": "Open",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faculty",
+        "label": "Faculty & Mentors",
+        "type": "collection",
+        "itemLabel": "faculty",
+        "path": "faculty",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Name"
+          },
+          {
+            "key": "role",
+            "label": "Role"
+          },
+          {
+            "key": "credentials",
+            "label": "Qualification / experience"
+          },
+          {
+            "key": "specialization",
+            "label": "Specialization",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Profile image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New faculty",
+          "role": "Mentor",
+          "credentials": "",
+          "specialization": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "demo",
+        "label": "Free Demo Class",
+        "fields": [
+          {
+            "path": "demoClass.heading",
+            "label": "Demo heading"
+          },
+          {
+            "path": "demoClass.text",
+            "label": "Demo intro",
+            "type": "textarea"
+          },
+          {
+            "path": "demoClass.buttonText",
+            "label": "Button text"
+          }
+        ]
+      },
+      {
+        "id": "admission",
+        "label": "Admission Enquiry",
+        "fields": [
+          {
+            "path": "admission.heading",
+            "label": "Admission heading"
+          },
+          {
+            "path": "admission.text",
+            "label": "Admission intro",
+            "type": "textarea"
+          },
+          {
+            "path": "admission.buttonText",
+            "label": "Button text"
+          }
+        ]
+      },
+      {
+        "id": "results",
+        "label": "Results & Achievements",
+        "type": "collection",
+        "itemLabel": "achievement",
+        "path": "results",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Metric / achievement"
+          },
+          {
+            "key": "value",
+            "label": "Value"
+          },
+          {
+            "key": "caption",
+            "label": "Caption",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New result",
+          "value": "",
+          "caption": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "studentStories",
+        "label": "Student Success Stories",
+        "type": "collection",
+        "itemLabel": "story",
+        "path": "stories",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Student name"
+          },
+          {
+            "key": "course",
+            "label": "Course"
+          },
+          {
+            "key": "quote",
+            "label": "Story / quote",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Student photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New student",
+          "course": "Course",
+          "quote": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "resources",
+        "label": "Study Resources",
+        "type": "collection",
+        "itemLabel": "resource",
+        "path": "resources",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Resource title"
+          },
+          {
+            "key": "type",
+            "label": "Type"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "url",
+            "label": "Resource URL",
+            "type": "url"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New resource",
+          "type": "Worksheet",
+          "description": "",
+          "url": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "facilities",
+        "label": "Campus / Facilities",
+        "type": "collection",
+        "itemLabel": "facility",
+        "path": "facilities",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Facility title"
+          },
+          {
+            "key": "text",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New facility",
+          "text": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Student & Parent Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Reviewer name"
+          },
+          {
+            "key": "type",
+            "label": "Reviewer type"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New reviewer",
+          "type": "Student",
+          "rating": 5,
+          "text": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "FAQ item",
+        "path": "faq",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Call number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Institute address"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hoursText",
+            "label": "Counselling hours"
+          },
+          {
+            "path": "contact.onlineText",
+            "label": "Online / offline classes"
+          }
+        ]
+      },
+      {
+        "id": "social",
+        "label": "Social Media",
+        "fields": [
+          {
+            "path": "social.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "social.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "hours",
+        "label": "Office / Counselling Hours",
+        "fields": [
+          {
+            "path": "hours.weekdays",
+            "label": "Weekday hours"
+          },
+          {
+            "path": "hours.weekends",
+            "label": "Weekend hours"
+          }
+        ]
+      },
+      {
+        "id": "leads",
+        "label": "Admission & Demo Leads",
+        "type": "leads",
+        "title": "Admission / Demo Enquiries",
+        "description": "Demo, admission and course enquiries submitted from the website appear here. Export them as CSV and manage status manually.",
+        "path": "leads",
+        "statusKey": "status",
+        "statuses": [
+          "New",
+          "Contacted",
+          "Demo Booked",
+          "Counselling",
+          "Enrolled",
+          "Not Interested"
+        ],
+        "disableActions": true,
+        "columns": [
+          "createdAt",
+          "status",
+          "leadType",
+          "name",
+          "phone",
+          "email",
+          "course",
+          "classLevel",
+          "preferredBatch",
+          "mode",
+          "budget",
+          "location",
+          "message"
+        ],
+        "labels": {
+          "createdAt": "Date",
+          "status": "Status",
+          "leadType": "Lead Type",
+          "name": "Name",
+          "phone": "Phone",
+          "email": "Email",
+          "course": "Course",
+          "classLevel": "Class / Level",
+          "preferredBatch": "Preferred Batch",
+          "mode": "Mode",
+          "budget": "Budget",
+          "location": "Location",
+          "message": "Message"
+        }
+      },
+      {
+        "id": "terms",
+        "label": "Terms & Admission Policy",
+        "fields": [
+          {
+            "path": "termsText",
+            "label": "Terms / fee / refund policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy Policy",
+        "fields": [
+          {
+            "path": "privacyPolicy",
+            "label": "Privacy policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCourses",
+            "label": "Courses",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCourseDetails",
+            "label": "Course Details",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFees",
+            "label": "Fee Plans",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showBatches",
+            "label": "Batches",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaculty",
+            "label": "Faculty",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showDemo",
+            "label": "Free Demo",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAdmission",
+            "label": "Admission",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showResults",
+            "label": "Results",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showStudentStories",
+            "label": "Student Stories",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showResources",
+            "label": "Resources",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFacilities",
+            "label": "Facilities",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFAQ",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWhatsApp",
+            "label": "WhatsApp / Call",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTerms",
+            "label": "Terms",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPrivacy",
+            "label": "Privacy",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
