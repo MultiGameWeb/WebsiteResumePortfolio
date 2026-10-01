@@ -71,3 +71,13 @@
 .catering-01 .cat-menu-group>.cat-text-link{font-size:12px;margin-top:12px}
 @media(max-width:1050px){.catering-01 .cat-item-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.catering-01 .cat-item-grid{grid-template-columns:1fr}.catering-01 .cat-menu-group{padding:14px}.catering-01 .cat-menu-group-head h3{font-size:27px}.catering-01 .cat-menu-item{grid-template-columns:82px 1fr}.catering-01 .cat-item-image{width:82px;height:82px}.catering-01 .cat-item-copy h4{font-size:18px}.catering-01 .cat-item-copy p{font-size:12px}}
+
+/* Optional video showcase + flexible custom content */
+.catering-01 .cat-videos{background:#1b241e;color:#fff;max-width:none}.catering-01 .cat-videos .cat-kicker{color:#d8bf8a}.catering-01 .cat-videos .cat-heading>p{color:#c8d0ca}
+.catering-01 .cat-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:1180px;margin:auto}.catering-01 .cat-video-grid article{background:#243129;border:1px solid #3d493f;border-radius:18px;overflow:hidden}
+.catering-01 .cat-video-frame{background:#0f1511;aspect-ratio:16/9}.catering-01 .cat-video-frame video{width:100%;height:100%;display:block;object-fit:cover}.catering-01 .cat-video-empty{height:100%;display:grid;place-items:center;color:#9fa9a0;font-size:13px}
+.catering-01 .cat-video-copy{padding:17px 18px 20px}.catering-01 .cat-video-copy h3{font:600 25px/1.05 Georgia,serif;margin:0 0 7px}.catering-01 .cat-video-copy p{color:#ccd4ce;font-size:14px;margin:0}
+.catering-01 .cat-custom-content{background:#dfe4cf;max-width:none}.catering-01 .cat-custom-content>article{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;max-width:1180px;margin:auto;padding:24px;background:#f8f6ed;border:1px solid #c9c9b7;border-radius:20px}
+.catering-01 .cat-custom-copy h2{font-size:43px;margin-bottom:8px}.catering-01 .cat-custom-copy h3{font:500 23px Georgia,serif;margin:0 0 10px;color:#6f644e}.catering-01 .cat-custom-copy p{font-size:15px;margin:0}.catering-01 .cat-custom-image{min-height:250px;border-radius:15px;overflow:hidden}.catering-01 .cat-custom-image img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:850px){.catering-01 .cat-video-grid{grid-template-columns:1fr}.catering-01 .cat-custom-content>article{grid-template-columns:1fr}.catering-01 .cat-custom-image{min-height:220px}}
+@media(max-width:650px){.catering-01 .cat-video-copy h3{font-size:22px}.catering-01 .cat-video-copy p{font-size:13px}.catering-01 .cat-custom-copy h2{font-size:34px}}
