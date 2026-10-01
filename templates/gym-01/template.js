@@ -3,9 +3,22 @@ const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const wa=(n,msg='')=>{const p=safe(n);return p?'https://wa.me/'+p+(msg?'?text='+encodeURIComponent(msg):''):''};
 const txt=v=>String(v??'');
 const image=(src,alt='')=>src?'<img src="'+esc(src)+'" alt="'+esc(alt)+'" loading="lazy">':'';
+const fitnessRules={
+  'Yoga':{hide:['facilities','transformations','merchandise'],hero:'Find balance. Build strength.',servicesTitle:'Mindful movement & classes.'},
+  'Mobility':{hide:['facilities','transformations','merchandise'],hero:'Move better. Feel better.',servicesTitle:'Mobility & recovery sessions.'},
+  'Zumba':{hide:['transformations'],hero:'Move with the beat.',servicesTitle:'Dance fitness & group classes.'},
+  'CrossFit':{hide:[],hero:'Train hard. Move different.',servicesTitle:'Functional training & classes.'},
+  'HIIT':{hide:[],hero:'Short. Intense. Focused.',servicesTitle:'High-intensity training & classes.'},
+  'Strength Circuit':{hide:['about'],hero:'Build strength that lasts.',servicesTitle:'Strength & conditioning sessions.'},
+  'General Gym':{hide:[],hero:'Build the strongest version of you.',servicesTitle:'Training services & classes.'}
+};
 
 export function render(d={},selected=[]){
-  const b=d.brand||{},h=d.home||{},c=d.contact||{},hours=d.hours||{},trial=d.trial||{},s=d.settings||{},ok=id=>selected.includes(id);
+  const b=d.brand||{},h=d.home||{},c=d.contact||{},hours=d.hours||{},trial=d.trial||{},s=d.settings||{};
+  const fitnessType=String(d.fitness?.type||'General Gym');
+  const fitnessRule=fitnessRules[fitnessType]||fitnessRules['General Gym'];
+  const ok=id=>selected.includes(id)&&!fitnessRule.hide.includes(id);
+  const runtimeId=String(d.runtime?.templateId||'gym-01');
   const slides=(d.heroSlides||[]).filter(x=>x.enabled!==false&&x.image);
   const plans=(d.plans||[]).filter(x=>x.enabled!==false);
   const services=(d.services||[]).filter(x=>x.enabled!==false);
@@ -36,7 +49,9 @@ export function render(d={},selected=[]){
     '</article>';
   }).join('');
 
-  let html='<div class="gym-preview-wrap">';
+  const topTransform=fitnessType==='CrossFit'||fitnessType==='HIIT';
+  const renderTransformationsBlock=(sectionId,kicker)=>'<section class="gym-section dark" id="'+esc(sectionId)+'"><div class="gym-section-head"><div class="gym-kicker">'+esc(kicker)+'</div><h2>Real stories, shown responsibly.</h2><p>Replace demo placeholders with authentic member stories, accurate time periods and appropriate permission before publishing.</p></div><div class="gym-transform-grid">'+transformations.map((x,i)=>'<article class="gym-transform"><div class="gym-transform-stage"><img src="'+esc(x.beforeImage)+'" alt="Before" loading="lazy"><div class="gym-transform-after" data-transform-after="'+i+'"><img src="'+esc(x.afterImage)+'" alt="After" loading="lazy"></div><span class="gym-transform-label before">Before</span><span class="gym-transform-label after">After</span></div><div class="gym-transform-control"><small>Drag slider</small><input type="range" min="0" max="100" value="50" data-transform="'+i+'"></div><h3>'+esc(x.title||'Transformation story')+'</h3><p>'+esc(x.period||'')+' · '+esc(x.description||'')+'</p></article>').join('')+'</div></section>';
+  let html='<div class="gym-preview-wrap gym-type-'+esc(fitnessType.toLowerCase().replace(/[^a-z0-9]+/g,'-'))+'">';
   html+='<header class="gym-nav"><a class="gym-brand" href="#home"><span class="gym-mark">FG</span><span><strong>'+esc(b.businessName||'Forge Fitness Club')+'</strong><small>'+esc(b.tagline||'FITNESS & PERFORMANCE')+'</small></span></a><nav>';
   if(ok('home'))html+='<a href="#home">Home</a>';
   if(ok('membership'))html+='<a href="#membership">Plans</a>';
@@ -51,15 +66,17 @@ export function render(d={},selected=[]){
     html+='<section class="gym-hero" id="home">';
     html+=slides.map((x,i)=>'<div class="gym-hero-slide '+(i===0?'active':'')+'" data-hero-slide="'+i+'">'+image(x.image,x.title)+'</div>').join('');
     if(txt(d.heroVideo))html+='<video class="gym-hero-video" autoplay muted loop playsinline poster="'+esc(firstSlide)+'"><source src="'+esc(d.heroVideo)+'" type="video/mp4"></video>';
-    html+='<div class="gym-hero-content"><div class="gym-eyebrow">'+esc(h.badge||'FREE TRIAL')+'</div><h1>'+esc(h.title||'Build the strongest version of you.')+'</h1><p>'+esc(h.text||'Premium training, expert coaching and flexible memberships.')+'</p><div class="gym-hero-actions"><a class="gym-cta" href="#trial" data-scroll-trial>Start Your Free Trial</a><a class="gym-cta dark" href="#membership">View Memberships</a></div><div class="gym-hero-meta"><span class="gym-pill">'+esc(hours.weekdays||'')+'</span><span class="gym-pill">'+esc(hours.weekends||'')+'</span></div></div>';
+    html+='<div class="gym-hero-content"><div class="gym-eyebrow">'+esc(h.badge||'FREE TRIAL')+'</div><h1>'+esc(h.title||fitnessRule.hero)+'</h1><p>'+esc(h.text||'Premium training, expert coaching and flexible memberships.')+'</p><div class="gym-hero-actions"><a class="gym-cta" href="#trial" data-scroll-trial>Start Your Free Trial</a><a class="gym-cta dark" href="#membership">View Memberships</a></div><div class="gym-hero-meta"><span class="gym-pill">'+esc(hours.weekdays||'')+'</span><span class="gym-pill">'+esc(hours.weekends||'')+'</span></div></div>';
     html+='<div class="gym-hero-dots">'+slides.map((x,i)=>'<button type="button" class="'+(i===0?'active':'')+'" data-hero-dot="'+i+'" aria-label="Slide '+(i+1)+'"></button>').join('')+'</div></section>';
   }
 
   if(ok('about'))html+='<section class="gym-section panel" id="about"><div class="gym-2col"><div class="gym-about-copy"><div class="gym-kicker">01 · About</div><div class="gym-section-head" style="margin-left:0"><h2>A serious place to train.</h2><p>'+esc(b.about||'')+'</p></div></div><div class="gym-about-card"><div class="gym-about-stat"><strong>'+plans.length+'</strong><small>Membership tiers</small></div><div class="gym-about-stat"><strong>'+trainers.length+'</strong><small>Coaches</small></div><div class="gym-about-stat"><strong>'+schedule.length+'</strong><small>Weekly class slots</small></div><div class="gym-about-stat"><strong>1 DAY</strong><small>Guest pass option</small></div></div></div></section>';
 
-  if(ok('services'))html+='<section class="gym-section dark" id="services"><div class="gym-section-head"><div class="gym-kicker">02 · Services & Classes</div><h2>Train your way.</h2><p>Show the gym floor, cardio, group classes, conditioning and recovery options in one quick-scan catalog.</p></div><div class="gym-service-grid">'+services.map(x=>'<article class="gym-service"><div class="gym-service-icon">'+esc(x.icon||'✦')+'</div><div><small>'+esc(x.category||'Fitness')+'</small><h3>'+esc(x.name||'Service')+'</h3><p>'+esc(x.text||'')+'</p></div></article>').join('')+'</div></section>'
+  if(ok('services'))html+='<section class="gym-section dark" id="services"><div class="gym-section-head"><div class="gym-kicker">02 · Services & Classes</div><h2>'+esc(fitnessRule.servicesTitle)+'</h2><p>Show the gym floor, cardio, group classes, conditioning and recovery options in one quick-scan catalog.</p></div><div class="gym-service-grid">'+services.map(x=>'<article class="gym-service"><div class="gym-service-icon">'+esc(x.icon||'✦')+'</div><div><small>'+esc(x.category||'Fitness')+'</small><h3>'+esc(x.name||'Service')+'</h3><p>'+esc(x.text||'')+'</p></div></article>').join('')+'</div></section>'
 
   if(ok('membership'))html+='<section class="gym-section dark" id="membership"><div class="gym-section-head"><div class="gym-kicker">02 · Membership</div><h2>Pick your training level.</h2><p>Compare monthly, quarterly and annual plans with clear inclusions, offers and savings. Replace all sample pricing before publishing.</p></div><div class="gym-plan-grid">'+planCards+'</div></section>';
+
+  if(topTransform&&ok('transformations'))html+=renderTransformationsBlock('transformations-priority','03 · Priority Transformations');
 
   if(ok('trainers'))html+='<section class="gym-section panel" id="trainers"><div class="gym-section-head"><div class="gym-kicker">03 · Trainers</div><h2>Coaches with a clear specialty.</h2><p>Certifications, specialization and availability stay visible so visitors can ask for the right coach.</p></div><div class="gym-trainer-grid">'+trainers.map(t=>'<article class="gym-trainer"><div class="gym-trainer-img">'+image(t.image,t.name)+'</div><div class="gym-trainer-body"><h3>'+esc(t.name)+'</h3><strong>'+esc(t.role||'Trainer')+'</strong><div class="gym-trainer-tags"><span>'+esc(t.certification||'Certification not added')+'</span><span>'+esc(t.specialization||'Fitness')+'</span></div><p>'+esc(t.bio||'')+'</p><div class="gym-trainer-tags"><span>'+esc(t.availability||'Availability on request')+'</span></div></div></article>').join('')+'</div></section>';
 
@@ -67,7 +84,7 @@ export function render(d={},selected=[]){
 
   if(ok('facilities'))html+='<section class="gym-section panel" id="facilities"><div class="gym-section-head"><div class="gym-kicker">05 · Facilities</div><h2>Equipment you can actually see.</h2><p>Highlight the strength floor, cardio, studio, recovery and locker spaces with real photos.</p></div><div class="gym-facility-grid">'+facilities.map(x=>'<article class="gym-facility"><div class="gym-facility-img">'+image(x.image,x.title)+'</div><div class="gym-facility-body"><h3>'+esc(x.title)+'</h3><p>'+esc(x.text)+'</p></div></article>').join('')+'</div></section>';
 
-  if(ok('transformations'))html+='<section class="gym-section dark" id="transformations"><div class="gym-section-head"><div class="gym-kicker">06 · Transformations</div><h2>Real stories, shown responsibly.</h2><p>Replace demo placeholders with authentic member stories, accurate time periods and appropriate permission before publishing.</p></div><div class="gym-transform-grid">'+transformations.map((x,i)=>'<article class="gym-transform"><div class="gym-transform-stage"><img src="'+esc(x.beforeImage)+'" alt="Before" loading="lazy"><div class="gym-transform-after" data-transform-after="'+i+'"><img src="'+esc(x.afterImage)+'" alt="After" loading="lazy"></div><span class="gym-transform-label before">Before</span><span class="gym-transform-label after">After</span></div><div class="gym-transform-control"><small>Drag slider</small><input type="range" min="0" max="100" value="50" data-transform="'+i+'"></div><h3>'+esc(x.title||'Transformation story')+'</h3><p>'+esc(x.period||'')+' · '+esc(x.description||'')+'</p></article>').join('')+'</div></section>';
+  if(ok('transformations')&&!topTransform)html+=renderTransformationsBlock('transformations','06 · Transformations');
 
   if(ok('bmi'))html+='<section class="gym-section panel" id="bmi"><div class="gym-section-head"><div class="gym-kicker">07 · BMI</div><h2>A quick starting point.</h2><p>Calculate a BMI value in the browser as a general screening measure, not a medical diagnosis.</p></div><div class="gym-bmi-grid"><div class="gym-bmi-card"><div class="gym-bmi-form"><label><span>Height (cm)</span><input id="gymBmiHeight" type="number" inputmode="decimal" min="50" max="250" placeholder="170"></label><label><span>Weight (kg)</span><input id="gymBmiWeight" type="number" inputmode="decimal" min="10" max="300" placeholder="70"></label></div><div class="gym-bmi-result"><strong id="gymBmiValue">—</strong><span id="gymBmiLabel">Enter values to calculate.</span></div><div class="gym-note">BMI does not account for every aspect of body composition. Use it as one data point and seek qualified health advice for personal medical questions.</div></div><div class="gym-bmi-card"><h3 style="margin-top:0;font-size:25px">Use the number as a conversation starter.</h3><p style="font-size:12px;line-height:1.8;color:#929c97">Coaches can discuss goals, training history, routine and lifestyle context to help plan fitness sessions. Do not use BMI alone to make medical decisions.</p></div></div></section>';
 
@@ -135,7 +152,7 @@ export function init(rootEl,d={}){
     const fd=new FormData(form);
     const lead={id:crypto.randomUUID(),createdAt:new Date().toLocaleString(),status:'New',name:fd.get('name')||'',phone:fd.get('phone')||'',goal:fd.get('goal')||'',plan:fd.get('plan')||'',date:fd.get('date')||'',time:fd.get('time')||'',source:'Website Trial Form',message:fd.get('message')||''};
     try{
-      const key='sitecraft:gym-01',raw=localStorage.getItem(key),saved=raw?JSON.parse(raw):{templateId:'gym-01',data:{}};
+      const key='sitecraft:'+runtimeId,raw=localStorage.getItem(key),saved=raw?JSON.parse(raw):{templateId:runtimeId,data:{}};
       saved.data=saved.data||{};saved.data.leads=Array.isArray(saved.data.leads)?saved.data.leads:[];saved.data.leads.unshift(lead);localStorage.setItem(key,JSON.stringify(saved));
       if(msg)msg.textContent='Thanks — your request is saved. The gym team can confirm your trial by phone or WhatsApp.';
       const wtext='Gym trial enquiry\nName: '+lead.name+'\nPhone: '+lead.phone+'\nGoal: '+lead.goal+'\nPlan: '+(lead.plan||'Not decided')+'\nDate: '+(lead.date||'Not specified')+'\nTime: '+(lead.time||'Not specified')+'\nMessage: '+lead.message;
