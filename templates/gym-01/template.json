@@ -17,6 +17,10 @@
       "label": "Membership Plans"
     },
     {
+      "id": "services",
+      "label": "Services & Classes Catalog"
+    },
+    {
       "id": "trainers",
       "label": "Trainers & Experts"
     },
@@ -58,7 +62,7 @@
     },
     {
       "id": "whatsapp",
-      "label": "WhatsApp Guest Pass"
+      "label": "WhatsApp & Call Triggers"
     },
     {
       "id": "location",
@@ -624,9 +628,84 @@
       "showTerms": true,
       "showPrivacy": true,
       "passwordProtected": false,
-      "adminPassword": ""
+      "adminPassword": "",
+      "showServices": true
     },
-    "leads": []
+    "leads": [],
+    "services": [
+      {
+        "id": "sv1",
+        "name": "Gym Floor Access",
+        "category": "Core Access",
+        "icon": "🏋️",
+        "text": "Access to the main strength-training floor and core workout equipment.",
+        "enabled": true
+      },
+      {
+        "id": "sv2",
+        "name": "Cardio Zone",
+        "category": "Cardio",
+        "icon": "🏃",
+        "text": "Treadmills, bikes and cardio equipment for conditioning sessions.",
+        "enabled": true
+      },
+      {
+        "id": "sv3",
+        "name": "Yoga",
+        "category": "Group Class",
+        "icon": "🧘",
+        "text": "Mobility, breathwork and yoga sessions for flexibility and recovery.",
+        "enabled": true
+      },
+      {
+        "id": "sv4",
+        "name": "Zumba",
+        "category": "Group Class",
+        "icon": "💃",
+        "text": "High-energy dance fitness sessions for conditioning and fun.",
+        "enabled": true
+      },
+      {
+        "id": "sv5",
+        "name": "CrossFit",
+        "category": "Functional Training",
+        "icon": "🔥",
+        "text": "Coach-led functional workouts combining strength, conditioning and movement.",
+        "enabled": true
+      },
+      {
+        "id": "sv6",
+        "name": "HIIT",
+        "category": "Conditioning",
+        "icon": "⚡",
+        "text": "Short, focused high-intensity intervals with scalable workout options.",
+        "enabled": true
+      },
+      {
+        "id": "sv7",
+        "name": "Strength Circuit",
+        "category": "Strength",
+        "icon": "💪",
+        "text": "Structured circuit sessions combining strength stations and conditioning.",
+        "enabled": true
+      },
+      {
+        "id": "sv8",
+        "name": "Mobility",
+        "category": "Recovery",
+        "icon": "🧎",
+        "text": "Mobility-focused sessions supporting movement quality and recovery.",
+        "enabled": true
+      },
+      {
+        "id": "sv9",
+        "name": "Steam Bath",
+        "category": "Recovery",
+        "icon": "♨️",
+        "text": "Add your actual steam-bath availability, access rules and hygiene information.",
+        "enabled": true
+      }
+    ]
   },
   "admin": {
     "storageKey": "sitecraft:gym-01",
@@ -777,6 +856,46 @@
           "discount": "",
           "features": "Gym Access\\nCardio Zone",
           "featured": false,
+          "enabled": true
+        }
+      },
+      {
+        "id": "services",
+        "label": "Services & Classes Catalog",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "description": "Manage the service and class catalog shown as an icon-led grid.",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service / class name"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "icon",
+            "label": "Icon / emoji"
+          },
+          {
+            "key": "text",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "category": "Group Class",
+          "icon": "✦",
+          "text": "",
           "enabled": true
         }
       },
@@ -1244,6 +1363,11 @@
           {
             "path": "settings.showMembership",
             "label": "Membership Plans",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Services & Classes",
             "type": "checkbox"
           },
           {
