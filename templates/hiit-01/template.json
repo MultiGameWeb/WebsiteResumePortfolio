@@ -1,0 +1,1519 @@
+{
+  "id": "hiit-01",
+  "name": "Gym & Fitness — HIIT",
+  "category": "Gyms & Fitness Centers",
+  "price": "₹4,999",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home"
+    },
+    {
+      "id": "about",
+      "label": "About Us"
+    },
+    {
+      "id": "membership",
+      "label": "Membership Plans"
+    },
+    {
+      "id": "services",
+      "label": "Services & Classes Catalog"
+    },
+    {
+      "id": "trainers",
+      "label": "Trainers & Experts"
+    },
+    {
+      "id": "schedule",
+      "label": "Batch Timings & Classes"
+    },
+    {
+      "id": "facilities",
+      "label": "Facilities & Equipment"
+    },
+    {
+      "id": "transformations",
+      "label": "Transformation Stories"
+    },
+    {
+      "id": "bmi",
+      "label": "BMI Calculator"
+    },
+    {
+      "id": "merchandise",
+      "label": "Merchandise Showcase"
+    },
+    {
+      "id": "gallery",
+      "label": "Gym Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Member Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "trial",
+      "label": "Free Trial / Lead Form"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp & Call Triggers"
+    },
+    {
+      "id": "location",
+      "label": "Location & Parking"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "terms",
+      "label": "Terms & Conditions"
+    },
+    {
+      "id": "privacy",
+      "label": "Privacy Policy"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Gym / Fitness Center Name",
+      "required": true,
+      "placeholder": "Forge Fitness Club"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Founder / Head Coach",
+      "placeholder": "Coach Arjun"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Train hard. Move better. Live stronger."
+    },
+    {
+      "path": "brand.about",
+      "label": "About Gym",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Build the strongest version of you."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea",
+      "placeholder": "Premium training, expert coaching and flexible memberships designed around real goals."
+    },
+    {
+      "path": "home.badge",
+      "label": "Hero Badge",
+      "placeholder": "7-DAY FREE TRIAL"
+    },
+    {
+      "path": "heroVideo",
+      "label": "Optional Hero Video URL",
+      "type": "url"
+    },
+    {
+      "path": "heroSlides",
+      "label": "Hero Slider Images",
+      "type": "mediaCollection",
+      "titleKey": "title",
+      "imageKey": "image"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Call Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email"
+    },
+    {
+      "path": "contact.address",
+      "label": "Gym Address"
+    },
+    {
+      "path": "contact.parking",
+      "label": "Parking Details",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.landmarks",
+      "label": "Landmarks / Navigation",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "hours.weekdays",
+      "label": "Weekday Hours"
+    },
+    {
+      "path": "hours.weekends",
+      "label": "Weekend Hours"
+    },
+    {
+      "path": "trial.heading",
+      "label": "Trial Form Heading"
+    },
+    {
+      "path": "trial.text",
+      "label": "Trial Intro",
+      "type": "textarea"
+    },
+    {
+      "path": "trial.passText",
+      "label": "Guest Pass Text"
+    },
+    {
+      "path": "trial.goalsText",
+      "label": "Goal Options (comma separated)"
+    },
+    {
+      "path": "termsText",
+      "label": "Terms & Conditions",
+      "type": "textarea"
+    },
+    {
+      "path": "privacyPolicy",
+      "label": "Privacy Policy",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Forge Fitness Club",
+      "ownerName": "Coach Arjun",
+      "tagline": "Short. Intense. Focused.",
+      "about": "Forge Fitness Club is a modern training space built around strength, conditioning, group classes and practical coaching. Replace the sample content with your gym's actual facilities, certifications, pricing, policies and contact details before publishing."
+    },
+    "home": {
+      "title": "Short. Intense. Focused.",
+      "text": "Specialized hiit coaching, flexible memberships and class schedules designed around your goals.",
+      "badge": "HIIT FREE TRIAL"
+    },
+    "heroVideo": "",
+    "heroSlides": [
+      {
+        "id": "hs1",
+        "title": "Strength Floor",
+        "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=88",
+        "enabled": true
+      },
+      {
+        "id": "hs2",
+        "title": "Functional Training",
+        "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1800&q=88",
+        "enabled": true
+      },
+      {
+        "id": "hs3",
+        "title": "Group Workout",
+        "image": "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1800&q=88",
+        "enabled": true
+      }
+    ],
+    "plans": [
+      {
+        "id": "p1",
+        "name": "Silver",
+        "monthly": "₹1,499 / month",
+        "quarterly": "₹3,999 / quarter",
+        "annual": "₹11,999 / year",
+        "offer": "Free 1-day guest pass",
+        "discount": "Save 20% annually",
+        "features": [
+          "Gym Access",
+          "Cardio Zone",
+          "Locker Access"
+        ],
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Gold",
+        "monthly": "₹1,999 / month",
+        "quarterly": "₹5,499 / quarter",
+        "annual": "₹15,999 / year",
+        "offer": "1 fitness assessment / month",
+        "discount": "Save 25% annually",
+        "features": [
+          "Gym Access",
+          "Cardio Zone",
+          "Group Classes",
+          "Steam Bath",
+          "Fitness Assessment"
+        ],
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Platinum",
+        "monthly": "₹3,499 / month",
+        "quarterly": "₹9,499 / quarter",
+        "annual": "₹27,999 / year",
+        "offer": "2 PT sessions / month",
+        "discount": "Save 30% annually",
+        "features": [
+          "Gym Access",
+          "Cardio Zone",
+          "All Group Classes",
+          "Steam Bath",
+          "Personal Trainer",
+          "Priority Booking"
+        ],
+        "featured": false,
+        "enabled": true
+      }
+    ],
+    "trainers": [
+      {
+        "id": "t1",
+        "name": "Coach Arjun",
+        "role": "Head Strength Coach",
+        "certification": "Gold's Gym Certified · K11",
+        "specialization": "Muscle Gain · Strength",
+        "bio": "Strength programming, safe lifting technique and progressive training plans.",
+        "availability": "Mon–Sat · 6:00 AM–11:00 AM",
+        "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t2",
+        "name": "Coach Neha",
+        "role": "Transformation Coach",
+        "certification": "K11 · Certified Personal Trainer",
+        "specialization": "Weight Loss · Conditioning",
+        "bio": "Goal-based conditioning, habit-focused coaching and sustainable progress plans.",
+        "availability": "Mon–Fri · 5:00 PM–9:00 PM",
+        "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t3",
+        "name": "Coach Rahul",
+        "role": "Functional & CrossFit Coach",
+        "certification": "CrossFit Level 1",
+        "specialization": "Functional Fitness · Mobility",
+        "bio": "Functional movement, group coaching and mobility-led performance sessions.",
+        "availability": "Mon–Sat · 7:00 AM–10:00 AM · 5:00 PM–8:00 PM",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=84",
+        "enabled": true
+      }
+    ],
+    "schedule": [
+      {
+        "id": "c1",
+        "day": "Monday",
+        "time": "6:00 AM",
+        "class": "Yoga",
+        "coach": "Coach Neha",
+        "level": "All Levels",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "day": "Monday",
+        "time": "7:00 AM",
+        "class": "Zumba",
+        "coach": "Coach Neha",
+        "level": "All Levels",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "day": "Tuesday",
+        "time": "8:00 AM",
+        "class": "CrossFit",
+        "coach": "Coach Rahul",
+        "level": "Intermediate",
+        "enabled": true
+      },
+      {
+        "id": "c4",
+        "day": "Wednesday",
+        "time": "6:00 PM",
+        "class": "HIIT",
+        "coach": "Coach Arjun",
+        "level": "Intermediate",
+        "enabled": true
+      },
+      {
+        "id": "c5",
+        "day": "Thursday",
+        "time": "7:00 PM",
+        "class": "Strength Circuit",
+        "coach": "Coach Arjun",
+        "level": "All Levels",
+        "enabled": true
+      },
+      {
+        "id": "c6",
+        "day": "Saturday",
+        "time": "8:00 AM",
+        "class": "Mobility",
+        "coach": "Coach Rahul",
+        "level": "All Levels",
+        "enabled": true
+      }
+    ],
+    "facilities": [
+      {
+        "id": "f1",
+        "title": "Strength Floor",
+        "text": "Free weights, racks and strength machines for progressive training.",
+        "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "title": "Cardio Zone",
+        "text": "Treadmills, bikes and cardio machines for warm-ups and conditioning.",
+        "image": "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "title": "Functional Area",
+        "text": "Open training area for circuits, mobility and functional workouts.",
+        "image": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "title": "Group Studio",
+        "text": "Dedicated studio for yoga, Zumba, HIIT and class-based workouts.",
+        "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "title": "Steam & Recovery",
+        "text": "Add your real steam, shower and recovery facilities here.",
+        "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "f6",
+        "title": "Locker Rooms",
+        "text": "Describe your changing rooms, lockers, showers and hygiene practices.",
+        "image": "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      }
+    ],
+    "transformations": [
+      {
+        "id": "tr1",
+        "title": "12-week weight-loss journey",
+        "period": "12 weeks",
+        "description": "Demo placeholder — replace with an authentic member story and consented images.",
+        "beforeImage": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1000&q=84",
+        "afterImage": "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "tr2",
+        "title": "6-month strength journey",
+        "period": "6 months",
+        "description": "Demo placeholder — replace with a verified transformation story and consented images.",
+        "beforeImage": "https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=1000&q=84",
+        "afterImage": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "tr3",
+        "title": "General fitness journey",
+        "period": "3 months",
+        "description": "Use real member progress images only with appropriate permission and accurate context.",
+        "beforeImage": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=84",
+        "afterImage": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      }
+    ],
+    "products": [
+      {
+        "id": "m1",
+        "name": "Forge Performance Tee",
+        "type": "Merchandise",
+        "price": "₹799",
+        "text": "Branded training tee. Replace with your actual stock and size details.",
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=84",
+        "enabled": true
+      },
+      {
+        "id": "m2",
+        "name": "Training Shaker",
+        "type": "Accessories",
+        "price": "₹399",
+        "text": "Branded shaker bottle. Replace with actual capacity and material details.",
+        "image": "https://images.unsplash.com/photo-1620843002800-079bf1737f31?auto=format&fit=crop&w=900&q=84",
+        "enabled": true
+      },
+      {
+        "id": "m3",
+        "name": "Protein Product Display",
+        "type": "Supplements",
+        "price": "Ask gym",
+        "text": "Show only genuine products sold by your gym and include current manufacturer information.",
+        "image": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=900&q=84",
+        "enabled": true
+      },
+      {
+        "id": "m4",
+        "name": "Gym Towel",
+        "type": "Merchandise",
+        "price": "₹249",
+        "text": "Branded towel. Replace with your actual product information.",
+        "image": "https://images.unsplash.com/photo-1600369671236-e74521d4b6ad?auto=format&fit=crop&w=900&q=84",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Strength Area",
+        "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Dumbbells",
+        "image": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Group Class",
+        "image": "https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Functional Training",
+        "image": "https://images.unsplash.com/photo-1517964603305-11c0f6f66012?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "g5",
+        "title": "Cardio Area",
+        "image": "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "g6",
+        "title": "Recovery Area",
+        "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Member A",
+        "rating": 5,
+        "text": "Good equipment, helpful coaches and a simple trial-booking process.",
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Member B",
+        "rating": 5,
+        "text": "The group classes keep me consistent and the timings are easy to understand.",
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Member C",
+        "rating": 5,
+        "text": "I liked getting a clear goal-based plan before joining a membership.",
+        "enabled": true
+      }
+    ],
+    "faq": [
+      {
+        "id": "q1",
+        "question": "Can I take a free trial before joining?",
+        "answer": "Yes. Use the trial form or WhatsApp guest-pass button to request your trial. Your team can confirm the slot and any trial conditions.",
+        "enabled": true
+      },
+      {
+        "id": "q2",
+        "question": "Which membership is right for me?",
+        "answer": "Use the plan comparison as a starting point, then ask the gym team about your training goal, class access, coaching and current offers.",
+        "enabled": true
+      },
+      {
+        "id": "q3",
+        "question": "Can I book a personal trainer?",
+        "answer": "Yes, when PT slots are available. Ask the gym for the current trainer availability and applicable pricing.",
+        "enabled": true
+      },
+      {
+        "id": "q4",
+        "question": "Are supplements included in membership?",
+        "answer": "Not automatically. Membership benefits and any products or services should be confirmed with the gym.",
+        "enabled": true
+      },
+      {
+        "id": "q5",
+        "question": "How do class timings work?",
+        "answer": "The timetable shows sample batch slots. Replace them with your actual weekly schedule before publishing.",
+        "enabled": true
+      }
+    ],
+    "trial": {
+      "heading": "Start your HIIT journey.",
+      "text": "Tell us your goal and preferred time. The team will follow up to confirm your trial pass or membership enquiry.",
+      "passText": "1-Day HIIT Guest Pass · Book on WhatsApp",
+      "goalsText": "Weight Loss,Muscle Gain,General Fitness,Strength & Conditioning,Personal Training,Group Classes"
+    },
+    "contact": {
+      "phone": "+91 90000 77001",
+      "whatsapp": "919000077001",
+      "email": "hello@forgefitness.example",
+      "address": "Jubilee Hills, Hyderabad, Telangana",
+      "parking": "Basement parking — replace with your actual parking and bike-parking instructions.",
+      "landmarks": "Near the main junction — replace with your actual landmark and navigation notes.",
+      "maps": "https://maps.google.com/?q=Jubilee%20Hills%2C%20Hyderabad%2C%20Telangana"
+    },
+    "hours": {
+      "weekdays": "Mon–Sat · 5:30 AM – 10:00 PM",
+      "weekends": "Sun · 7:00 AM – 1:00 PM"
+    },
+    "termsText": "Membership prices, offers, trial conditions, class schedules, facility availability, refunds, freezes and cancellation rules should be replaced with the gym's actual terms before publishing. Fitness activities carry inherent risks; members should follow gym safety guidance and disclose relevant limitations to qualified professionals where appropriate.",
+    "privacyPolicy": "We use lead and contact details to respond to trial, membership and enquiry requests. Replace this text with the gym's final privacy and data-handling policy before publishing.",
+    "settings": {
+      "showAbout": true,
+      "showMembership": true,
+      "showTrainers": true,
+      "showSchedule": true,
+      "showFacilities": true,
+      "showTransformations": true,
+      "showBMI": true,
+      "showMerchandise": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFAQ": true,
+      "showTrial": true,
+      "showLocation": true,
+      "showHours": true,
+      "showContact": true,
+      "showTerms": true,
+      "showPrivacy": true,
+      "passwordProtected": false,
+      "adminPassword": "",
+      "showServices": true
+    },
+    "leads": [],
+    "services": [
+      {
+        "id": "sv1",
+        "name": "HIIT Circuit",
+        "category": "HIIT",
+        "icon": "⚡",
+        "text": "Coach-led intervals combining strength, cardio and bodyweight work.",
+        "enabled": true
+      },
+      {
+        "id": "sv2",
+        "name": "Tabata",
+        "category": "Intervals",
+        "icon": "🔥",
+        "text": "Compact work-rest intervals designed for fast-paced conditioning.",
+        "enabled": true
+      },
+      {
+        "id": "sv3",
+        "name": "Sprint Conditioning",
+        "category": "Cardio",
+        "icon": "🏃",
+        "text": "Running and conditioning intervals with scalable options.",
+        "enabled": true
+      },
+      {
+        "id": "sv4",
+        "name": "Core Blast",
+        "category": "Core",
+        "icon": "💥",
+        "text": "Focused core sessions that can complement full-body training.",
+        "enabled": true
+      },
+      {
+        "id": "sv5",
+        "name": "Metabolic Conditioning",
+        "category": "Conditioning",
+        "icon": "⏱️",
+        "text": "Structured sessions that combine movement, strength and cardio.",
+        "enabled": true
+      },
+      {
+        "id": "sv6",
+        "name": "Strength + HIIT",
+        "category": "Hybrid",
+        "icon": "🏋️",
+        "text": "Strength blocks followed by focused conditioning intervals.",
+        "enabled": true
+      },
+      {
+        "id": "sv7",
+        "name": "Beginner HIIT",
+        "category": "Starter",
+        "icon": "🌱",
+        "text": "Lower-impact versions of key HIIT movements for new members.",
+        "enabled": true
+      },
+      {
+        "id": "sv8",
+        "name": "Mobility Reset",
+        "category": "Recovery",
+        "icon": "🌀",
+        "text": "Short mobility sequences before and after intense sessions.",
+        "enabled": true
+      },
+      {
+        "id": "sv9",
+        "name": "Personal Coaching",
+        "category": "Coaching",
+        "icon": "🎯",
+        "text": "Individual guidance for goals, pacing and exercise technique.",
+        "enabled": true
+      }
+    ],
+    "fitness": {
+      "type": "HIIT"
+    },
+    "runtime": {
+      "templateId": "hiit-01"
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:hiit-01",
+    "heroPath": "heroSlides.0.image",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "media",
+        "label": "Images / Storage",
+        "type": "media"
+      },
+      {
+        "id": "business",
+        "label": "Business",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Gym name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Founder / head coach"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About gym",
+            "type": "textarea"
+          },
+          {
+            "path": "fitness.type",
+            "label": "Fitness type",
+            "type": "select",
+            "options": [
+              "General Gym",
+              "Yoga",
+              "Zumba",
+              "CrossFit",
+              "HIIT",
+              "Strength Circuit",
+              "Mobility"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home / Hero",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "home.badge",
+            "label": "Hero badge"
+          },
+          {
+            "path": "heroVideo",
+            "label": "Hero video URL",
+            "type": "url"
+          },
+          {
+            "path": "heroSlides",
+            "label": "Hero slider images",
+            "type": "collection",
+            "itemLabel": "hero slide",
+            "titleKey": "title",
+            "fields": [
+              {
+                "key": "title",
+                "label": "Slide title"
+              },
+              {
+                "key": "image",
+                "label": "Slide image",
+                "type": "media"
+              },
+              {
+                "key": "enabled",
+                "label": "Show",
+                "type": "checkbox"
+              }
+            ],
+            "addDefaults": {
+              "title": "New hero slide",
+              "image": "",
+              "enabled": true
+            }
+          }
+        ]
+      },
+      {
+        "id": "membership",
+        "label": "Membership Plan Manager",
+        "type": "collection",
+        "itemLabel": "membership plan",
+        "path": "plans",
+        "titleKey": "name",
+        "description": "Create monthly, quarterly and annual packages, features, offers and discounts.",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Plan name"
+          },
+          {
+            "key": "monthly",
+            "label": "Monthly price"
+          },
+          {
+            "key": "quarterly",
+            "label": "Quarterly price"
+          },
+          {
+            "key": "annual",
+            "label": "Annual price"
+          },
+          {
+            "key": "offer",
+            "label": "Offer"
+          },
+          {
+            "key": "discount",
+            "label": "Discount / saving"
+          },
+          {
+            "key": "features",
+            "label": "Features (one per line)",
+            "type": "textarea"
+          },
+          {
+            "key": "featured",
+            "label": "Featured plan",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New plan",
+          "monthly": "",
+          "quarterly": "",
+          "annual": "",
+          "offer": "",
+          "discount": "",
+          "features": "Gym Access\\nCardio Zone",
+          "featured": false,
+          "enabled": true
+        }
+      },
+      {
+        "id": "services",
+        "label": "Services & Classes Catalog",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "description": "Manage the service and class catalog shown as an icon-led grid.",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service / class name"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "icon",
+            "label": "Icon / emoji"
+          },
+          {
+            "key": "text",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "category": "Group Class",
+          "icon": "✦",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "trainers",
+        "label": "Trainer Profile Settings",
+        "type": "collection",
+        "itemLabel": "trainer",
+        "path": "trainers",
+        "titleKey": "name",
+        "description": "Manage trainer photos, certifications, specialization and availability.",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Trainer name"
+          },
+          {
+            "key": "role",
+            "label": "Role"
+          },
+          {
+            "key": "certification",
+            "label": "Certifications"
+          },
+          {
+            "key": "specialization",
+            "label": "Specialization"
+          },
+          {
+            "key": "bio",
+            "label": "Bio",
+            "type": "textarea"
+          },
+          {
+            "key": "availability",
+            "label": "Availability"
+          },
+          {
+            "key": "image",
+            "label": "Profile image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New trainer",
+          "role": "Personal Trainer",
+          "certification": "Add certification",
+          "specialization": "General Fitness",
+          "bio": "",
+          "availability": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "schedule",
+        "label": "Batch Timings & Slots",
+        "type": "collection",
+        "itemLabel": "class batch",
+        "path": "schedule",
+        "titleKey": "class",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day",
+            "type": "select",
+            "options": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday"
+            ]
+          },
+          {
+            "key": "time",
+            "label": "Time"
+          },
+          {
+            "key": "class",
+            "label": "Class / Batch"
+          },
+          {
+            "key": "coach",
+            "label": "Coach"
+          },
+          {
+            "key": "level",
+            "label": "Level"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "time": "6:00 AM",
+          "class": "New Class",
+          "coach": "",
+          "level": "All Levels",
+          "enabled": true
+        }
+      },
+      {
+        "id": "facilities",
+        "label": "Facilities & Equipment",
+        "type": "collection",
+        "itemLabel": "facility",
+        "path": "facilities",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Facility name"
+          },
+          {
+            "key": "text",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Facility image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New facility",
+          "text": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "transformations",
+        "label": "Transformation Stories",
+        "type": "collection",
+        "itemLabel": "transformation",
+        "path": "transformations",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Story title"
+          },
+          {
+            "key": "period",
+            "label": "Period"
+          },
+          {
+            "key": "description",
+            "label": "Story / disclaimer",
+            "type": "textarea"
+          },
+          {
+            "key": "beforeImage",
+            "label": "Before image",
+            "type": "media"
+          },
+          {
+            "key": "afterImage",
+            "label": "After image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New transformation",
+          "period": "",
+          "description": "Use authentic member content with permission.",
+          "beforeImage": "",
+          "afterImage": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "merchandise",
+        "label": "Merchandise Showcase",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "products",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "type",
+            "label": "Type"
+          },
+          {
+            "key": "price",
+            "label": "Display price"
+          },
+          {
+            "key": "text",
+            "label": "Product note",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Product image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New product",
+          "type": "Merchandise",
+          "price": "",
+          "text": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Facilities Gallery",
+        "type": "collection",
+        "itemLabel": "gallery image",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "image",
+            "label": "Gallery image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New gallery image",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Member Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Member name"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New member",
+          "rating": 5,
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "FAQ item",
+        "path": "faq",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "trial",
+        "label": "Free Trial / Lead Form",
+        "fields": [
+          {
+            "path": "trial.heading",
+            "label": "Form heading"
+          },
+          {
+            "path": "trial.text",
+            "label": "Form intro",
+            "type": "textarea"
+          },
+          {
+            "path": "trial.passText",
+            "label": "Guest pass text"
+          },
+          {
+            "path": "trial.goalsText",
+            "label": "Goal options (comma separated)"
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "label": "Contact",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Call number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Gym address"
+          },
+          {
+            "path": "contact.parking",
+            "label": "Parking details",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.landmarks",
+            "label": "Landmarks / navigation",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "fields": [
+          {
+            "path": "hours.weekdays",
+            "label": "Weekday hours"
+          },
+          {
+            "path": "hours.weekends",
+            "label": "Weekend hours"
+          }
+        ]
+      },
+      {
+        "id": "leads",
+        "label": "Leads & Trial Tracker",
+        "type": "leads",
+        "title": "Trial & Membership Leads",
+        "description": "Track free-trial, guest-pass and membership enquiries. Statuses can be updated by the sales team.",
+        "path": "leads",
+        "statuses": [
+          "New",
+          "Follow-up",
+          "Joined",
+          "Not Interested"
+        ],
+        "statusKey": "status",
+        "dateKey": "date",
+        "columns": [
+          "createdAt",
+          "status",
+          "name",
+          "phone",
+          "goal",
+          "plan",
+          "date",
+          "time",
+          "source",
+          "message"
+        ],
+        "labels": {
+          "createdAt": "Created",
+          "status": "Status",
+          "name": "Name",
+          "phone": "Phone",
+          "goal": "Goal",
+          "plan": "Plan",
+          "date": "Preferred Date",
+          "time": "Preferred Time",
+          "source": "Source",
+          "message": "Message"
+        },
+        "disableActions": true
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "About Us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMembership",
+            "label": "Membership Plans",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Services & Classes",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTrainers",
+            "label": "Trainers",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSchedule",
+            "label": "Batch Timings",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFacilities",
+            "label": "Facilities",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTransformations",
+            "label": "Transformations",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showBMI",
+            "label": "BMI Calculator",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMerchandise",
+            "label": "Merchandise",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFAQ",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTrial",
+            "label": "Trial / Lead Form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening Hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTerms",
+            "label": "Terms",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPrivacy",
+            "label": "Privacy",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "terms",
+        "label": "Terms & Conditions",
+        "fields": [
+          {
+            "path": "termsText",
+            "label": "Terms & Conditions",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy Policy",
+        "fields": [
+          {
+            "path": "privacyPolicy",
+            "label": "Privacy Policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  },
+  "defaultSelectedFeatures": [
+    "home",
+    "about",
+    "membership",
+    "services",
+    "trainers",
+    "schedule",
+    "transformations",
+    "facilities",
+    "gallery",
+    "reviews",
+    "faq",
+    "trial",
+    "whatsapp",
+    "location",
+    "hours",
+    "contact",
+    "terms",
+    "privacy"
+  ]
+}
