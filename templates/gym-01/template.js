@@ -8,6 +8,7 @@ export function render(d={},selected=[]){
   const b=d.brand||{},h=d.home||{},c=d.contact||{},hours=d.hours||{},trial=d.trial||{},s=d.settings||{},ok=id=>selected.includes(id);
   const slides=(d.heroSlides||[]).filter(x=>x.enabled!==false&&x.image);
   const plans=(d.plans||[]).filter(x=>x.enabled!==false);
+  const services=(d.services||[]).filter(x=>x.enabled!==false);
   const trainers=(d.trainers||[]).filter(x=>x.enabled!==false);
   const schedule=(d.schedule||[]).filter(x=>x.enabled!==false);
   const facilities=(d.facilities||[]).filter(x=>x.enabled!==false&&x.image);
@@ -39,6 +40,7 @@ export function render(d={},selected=[]){
   html+='<header class="gym-nav"><a class="gym-brand" href="#home"><span class="gym-mark">FG</span><span><strong>'+esc(b.businessName||'Forge Fitness Club')+'</strong><small>'+esc(b.tagline||'FITNESS & PERFORMANCE')+'</small></span></a><nav>';
   if(ok('home'))html+='<a href="#home">Home</a>';
   if(ok('membership'))html+='<a href="#membership">Plans</a>';
+  if(ok('services'))html+='<a href="#services">Services</a>';
   if(ok('trainers'))html+='<a href="#trainers">Trainers</a>';
   if(ok('schedule'))html+='<a href="#schedule">Classes</a>';
   if(ok('facilities'))html+='<a href="#facilities">Facilities</a>';
@@ -54,6 +56,8 @@ export function render(d={},selected=[]){
   }
 
   if(ok('about'))html+='<section class="gym-section panel" id="about"><div class="gym-2col"><div class="gym-about-copy"><div class="gym-kicker">01 · About</div><div class="gym-section-head" style="margin-left:0"><h2>A serious place to train.</h2><p>'+esc(b.about||'')+'</p></div></div><div class="gym-about-card"><div class="gym-about-stat"><strong>'+plans.length+'</strong><small>Membership tiers</small></div><div class="gym-about-stat"><strong>'+trainers.length+'</strong><small>Coaches</small></div><div class="gym-about-stat"><strong>'+schedule.length+'</strong><small>Weekly class slots</small></div><div class="gym-about-stat"><strong>1 DAY</strong><small>Guest pass option</small></div></div></div></section>';
+
+  if(ok('services'))html+='<section class="gym-section dark" id="services"><div class="gym-section-head"><div class="gym-kicker">02 · Services & Classes</div><h2>Train your way.</h2><p>Show the gym floor, cardio, group classes, conditioning and recovery options in one quick-scan catalog.</p></div><div class="gym-service-grid">'+services.map(x=>'<article class="gym-service"><div class="gym-service-icon">'+esc(x.icon||'✦')+'</div><div><small>'+esc(x.category||'Fitness')+'</small><h3>'+esc(x.name||'Service')+'</h3><p>'+esc(x.text||'')+'</p></div></article>').join('')+'</div></section>'
 
   if(ok('membership'))html+='<section class="gym-section dark" id="membership"><div class="gym-section-head"><div class="gym-kicker">02 · Membership</div><h2>Pick your training level.</h2><p>Compare monthly, quarterly and annual plans with clear inclusions, offers and savings. Replace all sample pricing before publishing.</p></div><div class="gym-plan-grid">'+planCards+'</div></section>';
 
@@ -84,6 +88,7 @@ export function render(d={},selected=[]){
   if(ok('terms'))html+='<section class="gym-legal" id="terms"><h3>Terms & Conditions</h3><p>'+esc(d.termsText||'')+'</p></section>';
   if(ok('privacy'))html+='<section class="gym-legal" id="privacy"><h3>Privacy Policy</h3><p>'+esc(d.privacyPolicy||'')+'</p></section>';
   if(ok('contact'))html+='<section class="gym-contact" id="contact"><div><h2>Ready to train?</h2><p>'+esc(b.tagline||'')+'</p></div><div class="gym-contact-links"><a href="tel:'+esc(c.phone||'')+'">'+esc(c.phone||'')+'</a><a href="mailto:'+esc(c.email||'')+'">'+esc(c.email||'')+'</a><a class="gym-cta" href="#trial">Start Your Free Trial</a></div></section>';
+  if(ok('whatsapp'))html+='<div class="gym-floating-contact" aria-label="Quick contact">'+(c.phone?'<a class="gym-float-call" href="tel:'+esc(c.phone)+'"><span>☎</span><b>Call</b></a>':'')+(c.whatsapp?'<a class="gym-float-wa" href="'+esc(wa(c.whatsapp,'I want to enquire about joining '+(b.businessName||'the gym')))+'" target="_blank" rel="noopener"><span>◉</span><b>WhatsApp</b></a>':'')+'</div>';
   html+='<footer class="gym-footer"><div><strong>'+esc(b.businessName||'Forge Fitness Club')+'</strong><small>'+esc(b.tagline||'')+'</small></div><div class="gym-footer-links"><a href="#contact">Contact</a><a href="#trial">Free Trial</a></div></footer>';
   html+='<div class="gym-modal" id="gymGalleryModal" hidden><div class="gym-modal-backdrop" data-close-modal></div><div class="gym-modal-panel"><button class="gym-modal-close" type="button" data-close-modal>×</button><img id="gymModalImg" src="" alt=""></div></div>';
   html+='</div>';
