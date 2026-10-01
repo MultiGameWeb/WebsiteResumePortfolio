@@ -35,7 +35,7 @@ export function render(d={},selected=[]){
   if(ok('privacy')&&s.showPrivacy!==false)html+='<section id="privacy" class="re-legal light"><span class="re-kicker">PRIVACY POLICY</span><p>'+esc(d.privacyPolicy||'')+'</p></section>';
   if(ok('rera')&&s.showRera!==false)html+='<section id="rera" class="re-rera"><div><span class="re-kicker">RERA INFORMATION</span><h2>Verify project registration details before proceeding.</h2><p>'+esc(d.rera?.text||'')+'</p></div><strong>'+esc(d.rera?.number||'Add RERA / registration number in Admin')+'</strong></section>';
 
-  html+='<footer class="re-footer"><div><strong>'+esc(b.businessName||'Your Realty Agency')+'</strong><span>'+esc(b.tagline||'Property Advisory & Site Visits')}</span></div><div class="re-footer-links">'+(c.whatsapp?'<a target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>':'')+(c.email?'<a href="mailto:'+esc(c.email)+'">'+esc(c.email)+'</a>':'')+'</div><a class="template-admin-link" href="admin.html?template=realestate-01">Admin</a></footer></div>';
+  html+='<footer class="re-footer"><div><strong>'+esc(b.businessName||'Your Realty Agency')+'</strong><span>'+esc(b.tagline||'Property Advisory & Site Visits')+'</span></div><div class="re-footer-links">'+(c.whatsapp?'<a target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>':'')+(c.email?'<a href="mailto:'+esc(c.email)+'">'+esc(c.email)+'</a>':'')+'</div><a class="template-admin-link" href="admin.html?template=realestate-01">Admin</a></footer></div>';
   return html;
 }
 export function init(root,d={},selected=[]){
