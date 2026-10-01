@@ -1,0 +1,1532 @@
+{
+  "id": "automotive-01",
+  "name": "Automotive Service — Garage & Detailing",
+  "category": "Automotive Services",
+  "price": "₹4,999",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "services",
+      "label": "Services & Pricing"
+    },
+    {
+      "id": "packages",
+      "label": "Service Packages"
+    },
+    {
+      "id": "vehicle",
+      "label": "Vehicle Type Selector"
+    },
+    {
+      "id": "booking",
+      "label": "Service Booking"
+    },
+    {
+      "id": "pickup",
+      "label": "Pickup & Drop"
+    },
+    {
+      "id": "beforeAfter",
+      "label": "Before / After Gallery"
+    },
+    {
+      "id": "gallery",
+      "label": "Workshop Gallery"
+    },
+    {
+      "id": "specials",
+      "label": "Offers & Service Specials"
+    },
+    {
+      "id": "team",
+      "label": "Technicians & Experts"
+    },
+    {
+      "id": "trust",
+      "label": "Brands, Warranty & Trust"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "about",
+      "label": "About Workshop"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "location",
+      "label": "Workshop Location"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "call",
+      "label": "Call"
+    },
+    {
+      "id": "terms",
+      "label": "Service Terms"
+    },
+    {
+      "id": "privacy",
+      "label": "Privacy Policy"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "services",
+    "packages",
+    "vehicle",
+    "booking",
+    "pickup",
+    "beforeAfter",
+    "gallery",
+    "specials",
+    "team",
+    "trust",
+    "reviews",
+    "about",
+    "faq",
+    "location",
+    "hours",
+    "whatsapp",
+    "call",
+    "terms",
+    "privacy"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Workshop / Garage Name",
+      "required": true,
+      "placeholder": "DriveCare Auto Studio"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Service Manager",
+      "placeholder": "Rohit Mehta"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Transparent service. Better drives."
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Keep your car looking and driving its best."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea",
+      "placeholder": "Routine service, detailing, diagnostics and premium car care from one trusted workshop."
+    },
+    {
+      "path": "brand.about",
+      "label": "About Workshop",
+      "type": "textarea"
+    },
+    {
+      "path": "brand.years",
+      "label": "Years in Service",
+      "type": "number",
+      "placeholder": "12"
+    },
+    {
+      "path": "brand.carsServed",
+      "label": "Cars Served",
+      "type": "number",
+      "placeholder": "8500"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Image",
+      "type": "media"
+    },
+    {
+      "path": "heroVideo",
+      "label": "Hero Video URL (optional)",
+      "type": "url",
+      "placeholder": "https://.../garage-walkthrough.mp4"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Call Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email"
+    },
+    {
+      "path": "contact.address",
+      "label": "Workshop Address"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hoursText",
+      "label": "Opening Hours Summary"
+    },
+    {
+      "path": "contact.serviceArea",
+      "label": "Pickup / Drop Service Area"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    },
+    {
+      "path": "termsText",
+      "label": "Service Terms & Policy",
+      "type": "textarea"
+    },
+    {
+      "path": "privacyPolicy",
+      "label": "Privacy Policy",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "runtime": {
+      "templateId": "automotive-01"
+    },
+    "brand": {
+      "businessName": "DriveCare Auto Studio",
+      "ownerName": "Rohit Mehta",
+      "tagline": "Transparent service. Better drives.",
+      "about": "We provide routine maintenance, diagnostics, detailing and premium car-care services with clear estimates, skilled technicians and practical communication from check-in to delivery.",
+      "years": 12,
+      "carsServed": 8500
+    },
+    "home": {
+      "title": "Keep your car looking and driving its best.",
+      "text": "Service, diagnostics, detailing and protection — handled by one workshop with clear packages and direct booking."
+    },
+    "hero": "https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=1800&q=88",
+    "heroVideo": "",
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "service@drivecare.example",
+      "address": "Hitech City, Hyderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Hitech+City+Hyderabad",
+      "hoursText": "Mon–Sat · 8:30 AM–7:30 PM",
+      "serviceArea": "Pickup & drop available in selected Hyderabad areas"
+    },
+    "social": {
+      "instagram": "https://instagram.com/",
+      "facebook": "https://facebook.com/",
+      "youtube": "https://youtube.com/"
+    },
+    "vehicleTypes": [
+      {
+        "id": "hatchback",
+        "name": "Hatchback",
+        "icon": "🚗",
+        "multiplier": 1,
+        "enabled": true
+      },
+      {
+        "id": "sedan",
+        "name": "Sedan",
+        "icon": "🚘",
+        "multiplier": 1.08,
+        "enabled": true
+      },
+      {
+        "id": "suv",
+        "name": "SUV",
+        "icon": "🚙",
+        "multiplier": 1.18,
+        "enabled": true
+      },
+      {
+        "id": "luxury",
+        "name": "Luxury / Premium",
+        "icon": "🏎️",
+        "multiplier": 1.35,
+        "enabled": true
+      },
+      {
+        "id": "ev",
+        "name": "EV",
+        "icon": "⚡",
+        "multiplier": 1.12,
+        "enabled": true
+      }
+    ],
+    "services": [
+      {
+        "id": "s1",
+        "icon": "🛠️",
+        "name": "Periodic Car Service",
+        "category": "Maintenance",
+        "basePrice": 1499,
+        "description": "Oil, filters, fluids, inspection and routine service checks based on vehicle requirements.",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "icon": "🔍",
+        "name": "Computer Diagnostics",
+        "category": "Diagnostics",
+        "basePrice": 799,
+        "description": "Scan, fault-code reading and diagnostic inspection before repair recommendations.",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "icon": "✨",
+        "name": "Premium Car Detailing",
+        "category": "Detailing",
+        "basePrice": 3499,
+        "description": "Deep exterior and interior cleaning with paint-safe detailing and finish restoration.",
+        "enabled": true
+      },
+      {
+        "id": "s4",
+        "icon": "🧽",
+        "name": "Interior Deep Cleaning",
+        "category": "Detailing",
+        "basePrice": 1999,
+        "description": "Seats, carpets, dashboard and interior surfaces cleaned with appropriate products.",
+        "enabled": true
+      },
+      {
+        "id": "s5",
+        "icon": "💡",
+        "name": "AC Service",
+        "category": "Mechanical",
+        "basePrice": 1299,
+        "description": "Air-conditioning inspection, cabin filter checks and service recommendations.",
+        "enabled": true
+      },
+      {
+        "id": "s6",
+        "icon": "🛞",
+        "name": "Wheel Alignment & Balancing",
+        "category": "Tyres & Wheels",
+        "basePrice": 899,
+        "description": "Alignment and wheel-balance checks for stable handling and reduced uneven wear.",
+        "enabled": true
+      },
+      {
+        "id": "s7",
+        "icon": "🛡️",
+        "name": "Paint Protection / Ceramic",
+        "category": "Protection",
+        "basePrice": 8999,
+        "description": "Protection packages with prep work, coating options and maintenance guidance.",
+        "enabled": true
+      },
+      {
+        "id": "s8",
+        "icon": "🧴",
+        "name": "Engine Bay Cleaning",
+        "category": "Detailing",
+        "basePrice": 1099,
+        "description": "Controlled engine-bay cleaning with care around sensitive components.",
+        "enabled": true
+      },
+      {
+        "id": "s9",
+        "icon": "🚿",
+        "name": "Foam Wash & Exterior Care",
+        "category": "Wash",
+        "basePrice": 499,
+        "description": "Exterior wash, dry-down and finish care for regular maintenance.",
+        "enabled": true
+      }
+    ],
+    "packages": [
+      {
+        "id": "p1",
+        "name": "Essential Care",
+        "tier": "Essential",
+        "price": "₹1,999+",
+        "vehicle": "Hatchback / Sedan",
+        "summary": "Routine maintenance package for customers due for a basic service visit.",
+        "includes": [
+          "Basic inspection",
+          "Engine oil replacement allowance",
+          "Filter checks",
+          "Brake / tyre visual checks",
+          "Service reminder"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Complete Care",
+        "tier": "Premium",
+        "price": "₹4,999+",
+        "vehicle": "Sedan / SUV",
+        "summary": "Broader service package with diagnostics and additional inspection points.",
+        "includes": [
+          "Periodic service",
+          "Computer diagnostics",
+          "AC check",
+          "Brake & suspension inspection",
+          "Exterior care"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Detail & Protect",
+        "tier": "Premium",
+        "price": "₹8,999+",
+        "vehicle": "SUV / Premium",
+        "summary": "Detailing-focused package for owners who want a refreshed exterior and interior finish.",
+        "includes": [
+          "Deep exterior detail",
+          "Interior deep clean",
+          "Paint decontamination",
+          "Machine polish / prep",
+          "Protection consultation"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Luxury Signature",
+        "tier": "Luxury",
+        "price": "₹15,999+",
+        "vehicle": "Luxury / Premium",
+        "summary": "High-touch premium car care with protection, detailing and inspection add-ons.",
+        "includes": [
+          "Premium detailing",
+          "Ceramic / protection option",
+          "Interior restoration",
+          "Diagnostics scan",
+          "Priority appointment"
+        ],
+        "enabled": true
+      }
+    ],
+    "pickup": {
+      "enabled": true,
+      "feeText": "Pickup & drop fee depends on distance and service area.",
+      "serviceArea": "Selected Hyderabad areas",
+      "note": "Pickup and drop availability must be confirmed by the workshop before the appointment."
+    },
+    "beforeAfter": [
+      {
+        "id": "ba1",
+        "title": "Paint Correction",
+        "category": "Detailing",
+        "before": "https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?auto=format&fit=crop&w=1400&q=84",
+        "after": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=84",
+        "note": "Show the result of actual work performed by your workshop.",
+        "enabled": true
+      },
+      {
+        "id": "ba2",
+        "title": "Interior Restoration",
+        "category": "Interior",
+        "before": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=1400&q=84",
+        "after": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1400&q=84",
+        "note": "Replace with your own before/after photos.",
+        "enabled": true
+      },
+      {
+        "id": "ba3",
+        "title": "Exterior Detailing",
+        "category": "Exterior",
+        "before": "https://images.unsplash.com/photo-1494905998402-395d579af36f?auto=format&fit=crop&w=1400&q=84",
+        "after": "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1400&q=84",
+        "note": "Show a real customer vehicle transformation.",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Workshop Bay",
+        "category": "Workshop",
+        "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Detailing Finish",
+        "category": "Detailing",
+        "image": "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Technician at Work",
+        "category": "Service",
+        "image": "https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Premium Car Care",
+        "category": "Premium",
+        "image": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g5",
+        "title": "Clean Delivery",
+        "category": "Delivery",
+        "image": "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g6",
+        "title": "Customer Pickup",
+        "category": "Workshop",
+        "image": "https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      }
+    ],
+    "specials": [
+      {
+        "id": "sp1",
+        "title": "Weekday Service Check",
+        "text": "Book selected maintenance services Monday–Thursday for a workshop inspection offer.",
+        "enabled": true
+      },
+      {
+        "id": "sp2",
+        "title": "Detailing Combo",
+        "text": "Combine exterior detail + interior deep clean for a packaged price.",
+        "enabled": true
+      },
+      {
+        "id": "sp3",
+        "title": "Monsoon Ready",
+        "text": "Ask about tyres, brakes, wipers, AC and visibility checks before seasonal driving.",
+        "enabled": true
+      }
+    ],
+    "team": [
+      {
+        "id": "t1",
+        "name": "Rohit Mehta",
+        "role": "Service Manager",
+        "credentials": "Automotive Service · 12 years",
+        "specialization": "Diagnostics, service planning and customer support",
+        "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t2",
+        "name": "Vivek Rao",
+        "role": "Senior Technician",
+        "credentials": "ASE-style training · 9 years",
+        "specialization": "Mechanical service, brakes and suspension",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t3",
+        "name": "Aarav Singh",
+        "role": "Detailing Specialist",
+        "credentials": "Paint & detailing · 7 years",
+        "specialization": "Paint correction, ceramic prep and interior detailing",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      }
+    ],
+    "trust": [
+      {
+        "id": "tr1",
+        "title": "OEM / Quality Parts",
+        "text": "Describe the parts brands or grade options actually available at your workshop.",
+        "enabled": true
+      },
+      {
+        "id": "tr2",
+        "title": "Service Warranty",
+        "text": "Add your real labour / service warranty terms here.",
+        "enabled": true
+      },
+      {
+        "id": "tr3",
+        "title": "Transparent Estimates",
+        "text": "Explain how inspections, approvals and additional work are communicated.",
+        "enabled": true
+      },
+      {
+        "id": "tr4",
+        "title": "Trained Technicians",
+        "text": "Add verified technician certifications, training or experience.",
+        "enabled": true
+      },
+      {
+        "id": "tr5",
+        "title": "Workshop Hygiene",
+        "text": "Describe workshop cleaning, vehicle protection and handover practices.",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Karthik",
+        "rating": 5,
+        "event": "Periodic Service",
+        "text": "The service estimate was easy to understand and the team kept me updated before additional work.",
+        "image": "https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Priya",
+        "rating": 5,
+        "event": "Detailing",
+        "text": "The car looked refreshed inside and out, and pickup/drop communication was clear.",
+        "image": "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Rahul",
+        "rating": 5,
+        "event": "Diagnostics",
+        "text": "They explained the diagnostic findings first instead of jumping straight to repairs.",
+        "image": "https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      }
+    ],
+    "faq": [
+      {
+        "id": "f1",
+        "question": "Can I book a service online?",
+        "answer": "Yes. Choose a vehicle type, service or package, preferred date and time, then submit the booking request. The workshop should confirm the appointment.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do you provide pickup and drop?",
+        "answer": "Where offered, pickup and drop can be requested in selected service areas. Availability and charges must be confirmed by the workshop.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Are service prices final?",
+        "answer": "Displayed prices are indicative starting prices. Final cost depends on vehicle, parts, labour, inspection findings and customer approval.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Do you service EVs?",
+        "answer": "If EV service is offered, specify the supported makes, models and services in Admin. Do not publish unsupported EV capabilities.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Do you provide a warranty?",
+        "answer": "Add your actual workshop or service warranty terms in the Trust and Service Terms sections.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "8:30 AM",
+        "close": "7:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "8:30 AM",
+        "close": "7:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "8:30 AM",
+        "close": "7:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "8:30 AM",
+        "close": "7:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "8:30 AM",
+        "close": "7:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "8:00 AM",
+        "close": "8:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "9:00 AM",
+        "close": "2:00 PM",
+        "enabled": true
+      }
+    ],
+    "booking": {
+      "heading": "Book a service visit.",
+      "text": "Tell us what you drive, what you need and when you want to come in. We will confirm the appointment and any pickup/drop details.",
+      "buttonText": "Book Service on WhatsApp"
+    },
+    "settings": {
+      "showHome": true,
+      "showServices": true,
+      "showPackages": true,
+      "showVehicle": true,
+      "showBooking": true,
+      "showPickup": true,
+      "showBeforeAfter": true,
+      "showGallery": true,
+      "showSpecials": true,
+      "showTeam": true,
+      "showTrust": true,
+      "showReviews": true,
+      "showAbout": true,
+      "showFAQ": true,
+      "showLocation": true,
+      "showHours": true,
+      "showTerms": true,
+      "showPrivacy": true
+    },
+    "leads": []
+  },
+  "admin": {
+    "storageKey": "sitecraft:automotive-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "media",
+        "label": "Images / Storage",
+        "type": "media"
+      },
+      {
+        "id": "business",
+        "label": "Business",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Workshop / garage name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / service manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About workshop",
+            "type": "textarea"
+          },
+          {
+            "path": "brand.years",
+            "label": "Years in service",
+            "type": "number"
+          },
+          {
+            "path": "brand.carsServed",
+            "label": "Cars served",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          },
+          {
+            "path": "heroVideo",
+            "label": "Hero video URL (optional)",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "services",
+        "label": "Services & Pricing",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "description": "Manage service names, categories, icons and starting prices.",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "category",
+            "label": "Category",
+            "type": "select",
+            "options": [
+              "Maintenance",
+              "Diagnostics",
+              "Detailing",
+              "Mechanical",
+              "Tyres & Wheels",
+              "Protection",
+              "Wash",
+              "Other"
+            ]
+          },
+          {
+            "key": "basePrice",
+            "label": "Starting price (₹)",
+            "type": "number"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "🛠️",
+          "name": "New service",
+          "category": "Maintenance",
+          "basePrice": 0,
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "packages",
+        "label": "Service Packages",
+        "type": "collection",
+        "itemLabel": "package",
+        "path": "packages",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Package name"
+          },
+          {
+            "key": "tier",
+            "label": "Tier",
+            "type": "select",
+            "options": [
+              "Essential",
+              "Premium",
+              "Luxury"
+            ]
+          },
+          {
+            "key": "price",
+            "label": "Display price"
+          },
+          {
+            "key": "vehicle",
+            "label": "Vehicle scope"
+          },
+          {
+            "key": "summary",
+            "label": "Summary",
+            "type": "textarea"
+          },
+          {
+            "key": "includes",
+            "label": "Included services",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New package",
+          "tier": "Premium",
+          "price": "₹0+",
+          "vehicle": "All vehicles",
+          "summary": "",
+          "includes": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "vehicleTypes",
+        "label": "Vehicle Types",
+        "type": "collection",
+        "itemLabel": "vehicle type",
+        "path": "vehicleTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "id",
+            "label": "Vehicle ID"
+          },
+          {
+            "key": "name",
+            "label": "Vehicle type"
+          },
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "multiplier",
+            "label": "Price multiplier",
+            "type": "number"
+          },
+          {
+            "key": "enabled",
+            "label": "Available",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "id": "new-vehicle",
+          "name": "New vehicle type",
+          "icon": "🚗",
+          "multiplier": 1,
+          "enabled": true
+        }
+      },
+      {
+        "id": "pickup",
+        "label": "Pickup & Drop",
+        "fields": [
+          {
+            "path": "pickup.enabled",
+            "label": "Pickup & drop available",
+            "type": "checkbox"
+          },
+          {
+            "path": "pickup.feeText",
+            "label": "Fee note"
+          },
+          {
+            "path": "pickup.serviceArea",
+            "label": "Service area"
+          },
+          {
+            "path": "pickup.note",
+            "label": "Customer note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "beforeAfter",
+        "label": "Before / After",
+        "type": "collection",
+        "itemLabel": "transformation",
+        "path": "beforeAfter",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "before",
+            "label": "Before image",
+            "type": "media"
+          },
+          {
+            "key": "after",
+            "label": "After image",
+            "type": "media"
+          },
+          {
+            "key": "note",
+            "label": "Note",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New transformation",
+          "category": "Detailing",
+          "before": "",
+          "after": "",
+          "note": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Workshop Gallery",
+        "type": "collection",
+        "itemLabel": "gallery item",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New workshop image",
+          "category": "Workshop",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "specials",
+        "label": "Offers & Specials",
+        "type": "collection",
+        "itemLabel": "special",
+        "path": "specials",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "text",
+            "label": "Offer text",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New special",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "team",
+        "label": "Technicians & Experts",
+        "type": "collection",
+        "itemLabel": "technician",
+        "path": "team",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Name"
+          },
+          {
+            "key": "role",
+            "label": "Role"
+          },
+          {
+            "key": "credentials",
+            "label": "Qualification / experience"
+          },
+          {
+            "key": "specialization",
+            "label": "Specialization",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Profile image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New technician",
+          "role": "Technician",
+          "credentials": "",
+          "specialization": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "trust",
+        "label": "Brands, Warranty & Trust",
+        "type": "collection",
+        "itemLabel": "trust item",
+        "path": "trust",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Trust title"
+          },
+          {
+            "key": "text",
+            "label": "Supporting text",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New trust item",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer name"
+          },
+          {
+            "key": "event",
+            "label": "Service type"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Vehicle / customer photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New customer",
+          "event": "Service",
+          "rating": 5,
+          "text": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "booking",
+        "label": "Booking Content",
+        "fields": [
+          {
+            "path": "booking.heading",
+            "label": "Booking heading"
+          },
+          {
+            "path": "booking.text",
+            "label": "Booking intro",
+            "type": "textarea"
+          },
+          {
+            "path": "booking.buttonText",
+            "label": "Button text"
+          }
+        ]
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "enabled",
+            "label": "Open",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "New day",
+          "open": "8:30 AM",
+          "close": "7:30 PM",
+          "enabled": true
+        }
+      },
+      {
+        "id": "social",
+        "label": "Social Media",
+        "fields": [
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "social.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "social.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Call number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Workshop address"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hoursText",
+            "label": "Hours summary"
+          },
+          {
+            "path": "contact.serviceArea",
+            "label": "Pickup / drop service area"
+          }
+        ]
+      },
+      {
+        "id": "leads",
+        "label": "Service Bookings",
+        "type": "leads",
+        "title": "Service Booking Leads",
+        "description": "Customer service requests submitted from the website appear here. Status can be updated manually and entries exported as CSV.",
+        "path": "leads",
+        "statusKey": "status",
+        "statuses": [
+          "New",
+          "Contacted",
+          "Confirmed",
+          "In Service",
+          "Ready",
+          "Completed",
+          "Cancelled"
+        ],
+        "disableActions": true,
+        "columns": [
+          "createdAt",
+          "status",
+          "name",
+          "phone",
+          "email",
+          "vehicleType",
+          "service",
+          "package",
+          "serviceDate",
+          "timeSlot",
+          "location",
+          "pickupDrop",
+          "total",
+          "message"
+        ],
+        "labels": {
+          "createdAt": "Date",
+          "status": "Status",
+          "name": "Name",
+          "phone": "Phone",
+          "email": "Email",
+          "vehicleType": "Vehicle",
+          "service": "Service",
+          "package": "Package",
+          "serviceDate": "Service Date",
+          "timeSlot": "Time Slot",
+          "location": "Location",
+          "pickupDrop": "Pickup / Drop",
+          "total": "Estimate",
+          "message": "Message"
+        }
+      },
+      {
+        "id": "terms",
+        "label": "Service Terms",
+        "fields": [
+          {
+            "path": "termsText",
+            "label": "Service terms / warranty / cancellation",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy Policy",
+        "fields": [
+          {
+            "path": "privacyPolicy",
+            "label": "Privacy policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "FAQ item",
+        "path": "faq",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Services",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPackages",
+            "label": "Packages",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showVehicle",
+            "label": "Vehicle Selector",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showBooking",
+            "label": "Booking",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPickup",
+            "label": "Pickup & Drop",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showBeforeAfter",
+            "label": "Before / After",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSpecials",
+            "label": "Offers & Specials",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTeam",
+            "label": "Team",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTrust",
+            "label": "Trust",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFAQ",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTerms",
+            "label": "Terms",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPrivacy",
+            "label": "Privacy",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
