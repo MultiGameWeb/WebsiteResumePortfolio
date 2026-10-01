@@ -120,7 +120,7 @@ export default {
     }
 
     const url = new URL(request.url);
-    const path = url.pathname.replace(//+$/, "") || "/";
+    const path = url.pathname.replace(/\/+$/, "") || "/";
     const model = env.GEMINI_MODEL || MODEL;
 
     if (request.method === "GET" && path === "/api/health") {
