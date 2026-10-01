@@ -1138,7 +1138,9 @@
           "floorPlan3D": "",
           "photos": [],
           "featured": true,
-          "enabled": true
+          "enabled": true,
+          "beforeImage": "",
+          "afterImage": ""
         }
       },
       {
@@ -1458,10 +1460,6 @@
             "path": "estimator.baseRates.Luxury",
             "label": "Luxury base rate / sq.ft",
             "type": "number"
-          },
-          {
-            "path": "estimator.bhkOptions.0.label",
-            "label": "BHK options are managed below"
           }
         ]
       },
