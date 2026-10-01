@@ -1,7 +1,7 @@
 {
   "id": "coaching-education-01",
-  "name": "Coaching & Educational — Academy",
-  "category": "Coaching & Educational Institutes",
+  "name": "Coaching, Schools & Colleges — Education Hub",
+  "category": "Schools, Colleges, Coaching & Educational Institutes",
   "price": "₹4,999",
   "features": [
     {
@@ -9,40 +9,48 @@
       "label": "Home / Hero"
     },
     {
-      "id": "courses",
-      "label": "Courses & Programs"
+      "id": "academics",
+      "label": "Courses / Academic Programs"
     },
     {
       "id": "courseDetails",
-      "label": "Course Details & Syllabus"
+      "label": "Program Details & Syllabus"
     },
     {
       "id": "fees",
-      "label": "Fee Plans & Comparison"
+      "label": "Fees / Tuition / Plans"
     },
     {
       "id": "batches",
-      "label": "Batch Timings & Seats"
+      "label": "Batch / Class Timings & Seats"
     },
     {
       "id": "faculty",
-      "label": "Faculty & Mentors"
+      "label": "Faculty / Teachers / Mentors"
     },
     {
       "id": "demo",
-      "label": "Free Demo Class"
+      "label": "Free Demo / Campus Visit"
     },
     {
       "id": "admission",
       "label": "Admission Enquiry"
     },
     {
+      "id": "departments",
+      "label": "Departments / Subjects"
+    },
+    {
       "id": "results",
-      "label": "Results & Achievements"
+      "label": "Results / Achievements"
+    },
+    {
+      "id": "placements",
+      "label": "Placements & Career Outcomes"
     },
     {
       "id": "studentStories",
-      "label": "Student Success Stories"
+      "label": "Student / Alumni Stories"
     },
     {
       "id": "resources",
@@ -53,12 +61,28 @@
       "label": "Campus / Facilities"
     },
     {
+      "id": "campusLife",
+      "label": "Campus Life & Activities"
+    },
+    {
+      "id": "notices",
+      "label": "Announcements / Notices"
+    },
+    {
+      "id": "calendar",
+      "label": "Academic Calendar / Important Dates"
+    },
+    {
+      "id": "transport",
+      "label": "Transport / Bus Routes"
+    },
+    {
       "id": "reviews",
       "label": "Student & Parent Reviews"
     },
     {
       "id": "about",
-      "label": "About Institute"
+      "label": "About Institution"
     },
     {
       "id": "faq",
@@ -87,17 +111,23 @@
   ],
   "defaultSelectedFeatures": [
     "home",
-    "courses",
+    "academics",
     "courseDetails",
     "fees",
     "batches",
     "faculty",
     "demo",
     "admission",
+    "departments",
     "results",
+    "placements",
     "studentStories",
     "resources",
     "facilities",
+    "campusLife",
+    "notices",
+    "calendar",
+    "transport",
     "reviews",
     "about",
     "faq",
@@ -108,6 +138,18 @@
     "privacy"
   ],
   "fields": [
+    {
+      "path": "education.type",
+      "label": "Education Type",
+      "type": "select",
+      "options": [
+        "School",
+        "College",
+        "Coaching Institute",
+        "Training Institute"
+      ],
+      "required": true
+    },
     {
       "path": "brand.businessName",
       "label": "Institute / Academy Name",
@@ -212,6 +254,61 @@
     {
       "path": "privacyPolicy",
       "label": "Privacy Policy",
+      "type": "textarea"
+    },
+    {
+      "path": "school.principal",
+      "label": "School Principal / Head",
+      "placeholder": "Principal name"
+    },
+    {
+      "path": "school.curriculum",
+      "label": "Curriculum / Board",
+      "placeholder": "CBSE / ICSE / State Board"
+    },
+    {
+      "path": "school.grades",
+      "label": "Grades / Classes",
+      "placeholder": "Nursery–XII"
+    },
+    {
+      "path": "school.academicYear",
+      "label": "Academic Year",
+      "placeholder": "2026–27"
+    },
+    {
+      "path": "school.transportText",
+      "label": "School Transport Text",
+      "type": "textarea"
+    },
+    {
+      "path": "school.admissionText",
+      "label": "School Admission Text",
+      "type": "textarea"
+    },
+    {
+      "path": "college.principal",
+      "label": "College Principal / Director",
+      "placeholder": "Principal / Director name"
+    },
+    {
+      "path": "college.accreditation",
+      "label": "Accreditation / Affiliation",
+      "type": "textarea"
+    },
+    {
+      "path": "college.departmentsText",
+      "label": "College Departments",
+      "type": "textarea"
+    },
+    {
+      "path": "college.placementText",
+      "label": "College Placement Text",
+      "type": "textarea"
+    },
+    {
+      "path": "college.campusLifeText",
+      "label": "Campus Life Text",
       "type": "textarea"
     }
   ],
@@ -733,9 +830,190 @@
       "showHours": true,
       "showWhatsApp": true,
       "showTerms": true,
-      "showPrivacy": true
+      "showPrivacy": true,
+      "showDepartments": true,
+      "showPlacements": true,
+      "showCampusLife": true,
+      "showNotices": true,
+      "showCalendar": true,
+      "showTransport": true
     },
-    "leads": []
+    "leads": [],
+    "education": {
+      "type": "School"
+    },
+    "school": {
+      "principal": "Dr. Kavitha Rao",
+      "curriculum": "CBSE · Classes I–XII",
+      "grades": "Pre-Primary · Primary · Middle · Secondary · Senior Secondary",
+      "academicYear": "2026–27",
+      "transportText": "School bus routes available across selected Hyderabad areas. Update route list in Admin.",
+      "admissionText": "Admissions are subject to availability, document verification and the school's published admission process."
+    },
+    "college": {
+      "principal": "Prof. R. Suresh",
+      "accreditation": "UGC / NAAC / statutory details — replace with the institution's verified status",
+      "departmentsText": "Computer Science · Commerce · Management · Humanities",
+      "placementText": "Add verified placement statistics, recruiters, internship support and career services here.",
+      "campusLifeText": "Clubs, events, sports, student societies and campus activities."
+    },
+    "departments": [
+      {
+        "id": "d1",
+        "name": "Computer Science & Engineering",
+        "head": "Prof. Priya Menon",
+        "programs": "B.Tech · M.Tech",
+        "text": "Add department description, labs and contact details.",
+        "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "d2",
+        "name": "Commerce & Management",
+        "head": "Dr. Rahul Verma",
+        "programs": "B.Com · BBA · MBA",
+        "text": "Add department programs, faculty and facilities.",
+        "image": "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "d3",
+        "name": "Science & Humanities",
+        "head": "Dr. Neha Iyer",
+        "programs": "B.Sc · BA · Foundation",
+        "text": "Add department programs and academic highlights.",
+        "image": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      }
+    ],
+    "placements": [
+      {
+        "id": "p1",
+        "title": "Career Counselling",
+        "value": "1:1",
+        "caption": "Add your verified career counselling details.",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "title": "Industry Internships",
+        "value": "Available",
+        "caption": "Replace with actual internship partners and eligibility.",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "title": "Placement Support",
+        "value": "Dedicated Cell",
+        "caption": "Replace with verified placement services and outcomes.",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "title": "Alumni Network",
+        "value": "Active",
+        "caption": "Add accurate alumni and networking information.",
+        "enabled": true
+      }
+    ],
+    "campusLife": [
+      {
+        "id": "cl1",
+        "title": "Student Clubs",
+        "text": "Academic, cultural and interest-based clubs.",
+        "image": "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "cl2",
+        "title": "Sports & Fitness",
+        "text": "Add your actual indoor/outdoor sports facilities.",
+        "image": "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      },
+      {
+        "id": "cl3",
+        "title": "Events & Activities",
+        "text": "Showcase annual days, fests, workshops and student activities.",
+        "image": "https://images.unsplash.com/photo-1515169067868-5387ec356754?auto=format&fit=crop&w=1000&q=84",
+        "enabled": true
+      }
+    ],
+    "notices": [
+      {
+        "id": "n1",
+        "date": "10 Oct 2026",
+        "title": "Admissions Open",
+        "text": "Update with your current admissions notice.",
+        "tag": "Admission",
+        "enabled": true
+      },
+      {
+        "id": "n2",
+        "date": "18 Oct 2026",
+        "title": "Parent / Student Orientation",
+        "text": "Add the official event details and registration link.",
+        "tag": "Event",
+        "enabled": true
+      },
+      {
+        "id": "n3",
+        "date": "25 Oct 2026",
+        "title": "Mock Test / Internal Assessment",
+        "text": "Replace with your institution's official assessment notice.",
+        "tag": "Academic",
+        "enabled": true
+      }
+    ],
+    "calendar": [
+      {
+        "id": "ac1",
+        "date": "2026-06-08",
+        "title": "Academic Year Begins",
+        "text": "Replace with the official academic calendar.",
+        "enabled": true
+      },
+      {
+        "id": "ac2",
+        "date": "2026-08-15",
+        "title": "Mid-Term / Assessment Window",
+        "text": "Replace with official examination dates.",
+        "enabled": true
+      },
+      {
+        "id": "ac3",
+        "date": "2026-12-20",
+        "title": "Semester / Term Review",
+        "text": "Replace with your official academic calendar.",
+        "enabled": true
+      }
+    ],
+    "transport": [
+      {
+        "id": "tr1",
+        "route": "Route A",
+        "areas": "Madhapur · Kondapur · Hafeezpet",
+        "time": "7:15 AM",
+        "text": "Sample route — replace with actual stops and timings.",
+        "enabled": true
+      },
+      {
+        "id": "tr2",
+        "route": "Route B",
+        "areas": "Tarnaka · Habsiguda · Uppal",
+        "time": "7:10 AM",
+        "text": "Sample route — replace with actual stops and timings.",
+        "enabled": true
+      },
+      {
+        "id": "tr3",
+        "route": "Route C",
+        "areas": "Kukatpally · KPHB · Moosapet",
+        "time": "7:00 AM",
+        "text": "Sample route — replace with actual stops and timings.",
+        "enabled": true
+      }
+    ]
   },
   "admin": {
     "storageKey": "sitecraft:coaching-education-01",
@@ -747,6 +1025,23 @@
         "id": "overview",
         "label": "Overview",
         "type": "overview"
+      },
+      {
+        "id": "educationType",
+        "label": "Education Type",
+        "fields": [
+          {
+            "path": "education.type",
+            "label": "Education Type",
+            "type": "select",
+            "options": [
+              "School",
+              "College",
+              "Coaching Institute",
+              "Training Institute"
+            ]
+          }
+        ]
       },
       {
         "id": "media",
@@ -1433,7 +1728,7 @@
           "name": "Name",
           "phone": "Phone",
           "email": "Email",
-          "course": "Course",
+          "course": "Program / Course",
           "classLevel": "Class / Level",
           "preferredBatch": "Preferred Batch",
           "mode": "Mode",
@@ -1567,6 +1862,36 @@
             "path": "settings.showPrivacy",
             "label": "Privacy",
             "type": "checkbox"
+          },
+          {
+            "path": "settings.showDepartments",
+            "label": "Departments / Subjects",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPlacements",
+            "label": "Placements",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCampusLife",
+            "label": "Campus Life",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showNotices",
+            "label": "Notices",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCalendar",
+            "label": "Academic Calendar",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTransport",
+            "label": "Transport",
+            "type": "checkbox"
           }
         ]
       },
@@ -1574,6 +1899,296 @@
         "id": "security",
         "label": "Security",
         "type": "security"
+      },
+      {
+        "id": "school",
+        "label": "School Settings",
+        "fields": [
+          {
+            "path": "school.principal",
+            "label": "Principal / Head"
+          },
+          {
+            "path": "school.curriculum",
+            "label": "Curriculum / Board"
+          },
+          {
+            "path": "school.grades",
+            "label": "Grades / Classes"
+          },
+          {
+            "path": "school.academicYear",
+            "label": "Academic Year"
+          },
+          {
+            "path": "school.transportText",
+            "label": "Transport information",
+            "type": "textarea"
+          },
+          {
+            "path": "school.admissionText",
+            "label": "Admission information",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "college",
+        "label": "College Settings",
+        "fields": [
+          {
+            "path": "college.principal",
+            "label": "Principal / Director"
+          },
+          {
+            "path": "college.accreditation",
+            "label": "Accreditation / Affiliation",
+            "type": "textarea"
+          },
+          {
+            "path": "college.departmentsText",
+            "label": "Departments",
+            "type": "textarea"
+          },
+          {
+            "path": "college.placementText",
+            "label": "Placement text",
+            "type": "textarea"
+          },
+          {
+            "path": "college.campusLifeText",
+            "label": "Campus life text",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "departments",
+        "label": "Departments / Subjects",
+        "type": "collection",
+        "itemLabel": "department",
+        "path": "departments",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Department / Subject"
+          },
+          {
+            "key": "head",
+            "label": "Head / Teacher"
+          },
+          {
+            "key": "programs",
+            "label": "Programs / Classes"
+          },
+          {
+            "key": "text",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New department",
+          "head": "",
+          "programs": "",
+          "text": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "placements",
+        "label": "Placements & Career Outcomes",
+        "type": "collection",
+        "itemLabel": "career item",
+        "path": "placements",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Career item"
+          },
+          {
+            "key": "value",
+            "label": "Value"
+          },
+          {
+            "key": "caption",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New career item",
+          "value": "",
+          "caption": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "campusLife",
+        "label": "Campus Life & Activities",
+        "type": "collection",
+        "itemLabel": "campus life item",
+        "path": "campusLife",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "text",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New activity",
+          "text": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "notices",
+        "label": "Announcements / Notices",
+        "type": "collection",
+        "itemLabel": "notice",
+        "path": "notices",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "date",
+            "label": "Date"
+          },
+          {
+            "key": "title",
+            "label": "Notice title"
+          },
+          {
+            "key": "tag",
+            "label": "Tag"
+          },
+          {
+            "key": "text",
+            "label": "Notice",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "date": "",
+          "title": "New notice",
+          "tag": "General",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "calendar",
+        "label": "Academic Calendar",
+        "type": "collection",
+        "itemLabel": "calendar item",
+        "path": "calendar",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "date",
+            "label": "Date",
+            "type": "date"
+          },
+          {
+            "key": "title",
+            "label": "Event / date title"
+          },
+          {
+            "key": "text",
+            "label": "Details",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "date": "",
+          "title": "New academic date",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "transport",
+        "label": "Transport / Bus Routes",
+        "type": "collection",
+        "itemLabel": "route",
+        "path": "transport",
+        "titleKey": "route",
+        "fields": [
+          {
+            "key": "route",
+            "label": "Route"
+          },
+          {
+            "key": "areas",
+            "label": "Areas / Stops",
+            "type": "textarea"
+          },
+          {
+            "key": "time",
+            "label": "Time"
+          },
+          {
+            "key": "text",
+            "label": "Route details",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "route": "New route",
+          "areas": "",
+          "time": "",
+          "text": "",
+          "enabled": true
+        }
       }
     ]
   }
