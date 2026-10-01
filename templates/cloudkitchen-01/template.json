@@ -1,0 +1,1574 @@
+{
+  "id": "cloudkitchen-01",
+  "name": "Cloud Kitchen & Home Bakers — Direct Orders",
+  "category": "Cloud Kitchen & Home Bakers",
+  "price": "₹4,999",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "menu",
+      "label": "Menu Grid"
+    },
+    {
+      "id": "cake",
+      "label": "Customize Your Cake"
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery Slots & Areas"
+    },
+    {
+      "id": "party",
+      "label": "Party / Bulk Orders"
+    },
+    {
+      "id": "order",
+      "label": "Direct Order Cart & Form"
+    },
+    {
+      "id": "offers",
+      "label": "Offers & Combos"
+    },
+    {
+      "id": "gallery",
+      "label": "Food / Cake Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "about",
+      "label": "About Kitchen / Baker"
+    },
+    {
+      "id": "services",
+      "label": "Services & Order Types"
+    },
+    {
+      "id": "hygiene",
+      "label": "Kitchen Hygiene & Trust"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "call",
+      "label": "Call"
+    },
+    {
+      "id": "location",
+      "label": "Kitchen / Pickup Location"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "social",
+      "label": "Social Media"
+    },
+    {
+      "id": "terms",
+      "label": "Terms & Order Policy"
+    },
+    {
+      "id": "privacy",
+      "label": "Privacy Policy"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "menu",
+    "cake",
+    "delivery",
+    "party",
+    "order",
+    "offers",
+    "gallery",
+    "reviews",
+    "about",
+    "services",
+    "hygiene",
+    "faq",
+    "whatsapp",
+    "call",
+    "location",
+    "hours",
+    "social",
+    "terms",
+    "privacy"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Business Name",
+      "required": true,
+      "placeholder": "Homestyle Bakes & Kitchen"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Chef / Baker",
+      "placeholder": "Chef Ananya"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Made fresh. Delivered with care."
+    },
+    {
+      "path": "home.title",
+      "label": "Home Heading",
+      "required": true,
+      "placeholder": "Your cravings. Delivered direct."
+    },
+    {
+      "path": "home.text",
+      "label": "Home Text",
+      "type": "textarea",
+      "placeholder": "Fresh cakes, biryani and home-style favourites — ordered directly from our kitchen."
+    },
+    {
+      "path": "brand.about",
+      "label": "About Kitchen / Baker",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Call Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email"
+    },
+    {
+      "path": "contact.address",
+      "label": "Kitchen / Pickup Address"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.deliveryArea",
+      "label": "Delivery Area Text",
+      "placeholder": "Within 8 km · selected Hyderabad areas"
+    },
+    {
+      "path": "contact.hoursText",
+      "label": "Opening Hours Summary",
+      "placeholder": "11:00 AM–10:30 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "party.capacityText",
+      "label": "Party Order Capacity Text",
+      "placeholder": "Party orders for 10–150 guests"
+    },
+    {
+      "path": "orderSettings.currency",
+      "label": "Currency Symbol",
+      "placeholder": "₹"
+    },
+    {
+      "path": "orderSettings.deliveryFeeText",
+      "label": "Delivery Fee Text",
+      "placeholder": "Delivery fee confirmed by area / order size"
+    },
+    {
+      "path": "termsText",
+      "label": "Terms & Order Policy",
+      "type": "textarea"
+    },
+    {
+      "path": "privacyPolicy",
+      "label": "Privacy Policy",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "runtime": {
+      "templateId": "cloudkitchen-01"
+    },
+    "brand": {
+      "businessName": "Homestyle Bakes & Kitchen",
+      "ownerName": "Chef Ananya",
+      "tagline": "Made fresh. Delivered with care.",
+      "about": "A direct-order cloud kitchen and home bakery serving fresh cakes, biryani, meal boxes and celebration favourites. Customers can browse the menu, customize cakes and send orders directly to the kitchen."
+    },
+    "home": {
+      "title": "Your cravings. Delivered direct.",
+      "text": "Freshly prepared cakes, biryani and comfort food — ordered straight from our kitchen without marketplace distractions."
+    },
+    "hero": "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1800&q=88",
+    "heroVideo": "",
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "orders@homestyle.example",
+      "address": "Banjara Hills, Hyderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Banjara+Hills+Hyderabad",
+      "deliveryArea": "Within 8 km · selected Hyderabad areas",
+      "hoursText": "11:00 AM–10:30 PM",
+      "instagram": "https://instagram.com/"
+    },
+    "menu": [
+      {
+        "id": "m1",
+        "name": "Hyderabadi Chicken Biryani",
+        "price": 320,
+        "displayPrice": "₹320",
+        "category": "Biryani",
+        "description": "Fragrant basmati rice, slow-cooked chicken and house spice blend.",
+        "unit": "box",
+        "image": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=1000&q=85",
+        "veg": false,
+        "enabled": true
+      },
+      {
+        "id": "m2",
+        "name": "Mutton Biryani",
+        "price": 450,
+        "displayPrice": "₹450",
+        "category": "Biryani",
+        "description": "Tender mutton layered with aromatic rice and saffron.",
+        "unit": "box",
+        "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=1000&q=85",
+        "veg": false,
+        "enabled": true
+      },
+      {
+        "id": "m3",
+        "name": "Paneer Rice Bowl",
+        "price": 220,
+        "displayPrice": "₹220",
+        "category": "Meals",
+        "description": "Paneer, seasoned rice, gravy and a fresh side.",
+        "unit": "box",
+        "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=85",
+        "veg": true,
+        "enabled": true
+      },
+      {
+        "id": "m4",
+        "name": "Classic Chicken Meals",
+        "price": 260,
+        "displayPrice": "₹260",
+        "category": "Meals",
+        "description": "Comfort-style meal box with chicken curry, rice and sides.",
+        "unit": "box",
+        "image": "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=1000&q=85",
+        "veg": false,
+        "enabled": true
+      },
+      {
+        "id": "m5",
+        "name": "Red Velvet Celebration Cake",
+        "price": 950,
+        "displayPrice": "₹950",
+        "category": "Cakes",
+        "description": "Soft red velvet sponge with creamy frosting. Custom text available.",
+        "unit": "cake",
+        "image": "https://images.unsplash.com/photo-1586788224331-947f68671cf9?auto=format&fit=crop&w=1000&q=85",
+        "veg": true,
+        "enabled": true
+      },
+      {
+        "id": "m6",
+        "name": "Belgian Chocolate Cake",
+        "price": 1100,
+        "displayPrice": "₹1,100",
+        "category": "Cakes",
+        "description": "Rich chocolate sponge with dark chocolate ganache.",
+        "unit": "cake",
+        "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1000&q=85",
+        "veg": true,
+        "enabled": true
+      },
+      {
+        "id": "m7",
+        "name": "Salted Caramel Brownie Box",
+        "price": 420,
+        "displayPrice": "₹420",
+        "category": "Desserts",
+        "description": "Fudgy brownies with salted caramel finish.",
+        "unit": "box",
+        "image": "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1000&q=85",
+        "veg": true,
+        "enabled": true
+      },
+      {
+        "id": "m8",
+        "name": "Fresh Lime Cooler",
+        "price": 120,
+        "displayPrice": "₹120",
+        "category": "Beverages",
+        "description": "Fresh lime, mint and chilled soda.",
+        "unit": "glass",
+        "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=1000&q=85",
+        "veg": true,
+        "enabled": true
+      }
+    ],
+    "cake": {
+      "title": "Build your cake your way.",
+      "bases": [
+        {
+          "id": "vanilla",
+          "name": "Vanilla",
+          "price": 0,
+          "enabled": true
+        },
+        {
+          "id": "chocolate",
+          "name": "Chocolate",
+          "price": 120,
+          "enabled": true
+        },
+        {
+          "id": "redvelvet",
+          "name": "Red Velvet",
+          "price": 180,
+          "enabled": true
+        },
+        {
+          "id": "butterscotch",
+          "name": "Butterscotch",
+          "price": 160,
+          "enabled": true
+        }
+      ],
+      "sizes": [
+        {
+          "id": "0.5kg",
+          "name": "0.5 kg",
+          "price": 650,
+          "enabled": true
+        },
+        {
+          "id": "1kg",
+          "name": "1 kg",
+          "price": 950,
+          "enabled": true
+        },
+        {
+          "id": "1.5kg",
+          "name": "1.5 kg",
+          "price": 1350,
+          "enabled": true
+        },
+        {
+          "id": "2kg",
+          "name": "2 kg",
+          "price": 1750,
+          "enabled": true
+        }
+      ],
+      "fillings": [
+        {
+          "id": "vanilla-cream",
+          "name": "Vanilla Cream",
+          "price": 0,
+          "enabled": true
+        },
+        {
+          "id": "chocolate-ganache",
+          "name": "Chocolate Ganache",
+          "price": 180,
+          "enabled": true
+        },
+        {
+          "id": "salted-caramel",
+          "name": "Salted Caramel",
+          "price": 220,
+          "enabled": true
+        },
+        {
+          "id": "fruit-cream",
+          "name": "Fresh Fruit Cream",
+          "price": 200,
+          "enabled": true
+        }
+      ],
+      "toppings": [
+        {
+          "id": "fresh-fruit",
+          "name": "Fresh Fruits",
+          "price": 120,
+          "enabled": true
+        },
+        {
+          "id": "choco-drip",
+          "name": "Chocolate Drip",
+          "price": 100,
+          "enabled": true
+        },
+        {
+          "id": "custom-message",
+          "name": "Cake Message",
+          "price": 40,
+          "enabled": true
+        },
+        {
+          "id": "photo-topper",
+          "name": "Photo / Custom Topper",
+          "price": 180,
+          "enabled": true
+        }
+      ]
+    },
+    "delivery": {
+      "slots": [
+        {
+          "id": "slot1",
+          "label": "12:00 PM – 1:00 PM",
+          "enabled": true
+        },
+        {
+          "id": "slot2",
+          "label": "1:00 PM – 2:00 PM",
+          "enabled": true
+        },
+        {
+          "id": "slot3",
+          "label": "5:00 PM – 6:00 PM",
+          "enabled": true
+        },
+        {
+          "id": "slot4",
+          "label": "6:00 PM – 7:00 PM",
+          "enabled": true
+        },
+        {
+          "id": "slot5",
+          "label": "7:00 PM – 8:00 PM",
+          "enabled": true
+        },
+        {
+          "id": "slot6",
+          "label": "8:00 PM – 9:00 PM",
+          "enabled": true
+        }
+      ],
+      "sameDayNote": "Same-day delivery depends on kitchen capacity, preparation time and the selected slot.",
+      "deliveryFeeText": "Delivery fee confirmed by area / order size.",
+      "minimumOrder": 299
+    },
+    "party": {
+      "capacityText": "Party orders for 10–150 guests",
+      "leadTimeText": "For large orders, please enquire at least 24–48 hours ahead.",
+      "packages": [
+        {
+          "id": "p1",
+          "name": "Birthday / Family",
+          "guests": "10–25",
+          "note": "Cakes, starters and meal boxes.",
+          "enabled": true
+        },
+        {
+          "id": "p2",
+          "name": "Small Party",
+          "guests": "25–60",
+          "note": "Biryani, mains, sides and dessert add-ons.",
+          "enabled": true
+        },
+        {
+          "id": "p3",
+          "name": "Corporate / Event",
+          "guests": "60–150",
+          "note": "Bulk meal boxes and scheduled delivery.",
+          "enabled": true
+        }
+      ]
+    },
+    "offers": [
+      {
+        "id": "o1",
+        "title": "Weekday Meal Combo",
+        "text": "Meal box + beverage from ₹299 on selected days.",
+        "enabled": true
+      },
+      {
+        "id": "o2",
+        "title": "Cake + Brownie Box",
+        "text": "Pair a celebration cake with a brownie box for a ready-made dessert table.",
+        "enabled": true
+      },
+      {
+        "id": "o3",
+        "title": "Party Order Enquiry",
+        "text": "Share your guest count and menu idea for a bulk-order quote.",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Celebration Cake",
+        "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Biryani Box",
+        "image": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Fresh Brownies",
+        "image": "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Kitchen Prep",
+        "image": "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Riya",
+        "rating": 5,
+        "text": "The cake customization was easy and the order arrived exactly in the requested slot.",
+        "image": "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Karthik",
+        "rating": 5,
+        "text": "Ordered biryani directly on WhatsApp. Clear communication and fresh food.",
+        "image": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Meghana",
+        "rating": 5,
+        "text": "The party order was handled through one chat and the bulk packaging worked well.",
+        "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80",
+        "enabled": true
+      }
+    ],
+    "aboutStats": [
+      {
+        "id": "a1",
+        "value": "Made fresh",
+        "label": "small-batch kitchen",
+        "enabled": true
+      },
+      {
+        "id": "a2",
+        "value": "Direct",
+        "label": "WhatsApp ordering",
+        "enabled": true
+      },
+      {
+        "id": "a3",
+        "value": "Same-day*",
+        "label": "selected slots",
+        "enabled": true
+      }
+    ],
+    "services": [
+      {
+        "id": "s1",
+        "icon": "🍰",
+        "name": "Custom Cakes",
+        "description": "Choose size, cake base, filling and toppings for a celebration-ready cake.",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "icon": "🍗",
+        "name": "Biryani & Meals",
+        "description": "Fresh meal boxes and biryani for home, office and family orders.",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "icon": "🎉",
+        "name": "Party Orders",
+        "description": "Bulk food and dessert orders with advance planning and scheduled delivery.",
+        "enabled": true
+      },
+      {
+        "id": "s4",
+        "icon": "🎁",
+        "name": "Gift Boxes",
+        "description": "Curated brownies, desserts and small celebration boxes for gifting.",
+        "enabled": true
+      }
+    ],
+    "hygiene": [
+      {
+        "id": "h1",
+        "title": "Fresh Preparation",
+        "text": "Add your preparation and batch standards here.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "title": "Clean Kitchen",
+        "text": "Describe your hygiene, cleaning and storage practices.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "title": "Ingredient Transparency",
+        "text": "Add allergen / ingredient information that applies to your menu.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "title": "Packaging Care",
+        "text": "Describe sealed packaging, handling and delivery practices.",
+        "enabled": true
+      }
+    ],
+    "faq": [
+      {
+        "id": "f1",
+        "question": "Can I order directly without Swiggy or Zomato?",
+        "answer": "Yes. Use the menu, cart and order form, or send the order directly on WhatsApp.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Can I customize a cake?",
+        "answer": "Choose your size, base, filling and toppings in the cake builder. Add a message or custom topper where available.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Can I choose a delivery slot?",
+        "answer": "Yes. Select an available delivery slot in the order form. Final confirmation depends on kitchen capacity and service area.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Do you take party and bulk orders?",
+        "answer": "Yes, where capacity permits. Enter the guest count and requirements in the party-order form so the kitchen can confirm availability.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Is the estimator or menu price final?",
+        "answer": "Displayed prices are sample business pricing. Confirm final price, availability, delivery fee and customisation charges before payment or preparation.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "11:00 AM",
+        "close": "10:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "11:00 AM",
+        "close": "10:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "11:00 AM",
+        "close": "10:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "11:00 AM",
+        "close": "10:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "11:00 AM",
+        "close": "11:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "10:30 AM",
+        "close": "11:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "10:30 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      }
+    ],
+    "social": {
+      "instagram": "https://instagram.com/",
+      "facebook": "https://facebook.com/",
+      "youtube": ""
+    },
+    "termsText": "Orders are subject to menu availability, preparation capacity, delivery area and slot confirmation. Custom cakes may require advance notice. Final prices, delivery fees, cancellations, refunds and payment terms should be stated in the business's confirmed order message.",
+    "privacyPolicy": "We use the information submitted through the order and enquiry forms to prepare, confirm and deliver requested orders and respond to support messages. Replace this sample text with the business's final privacy and data-handling policy before publishing.",
+    "orderSettings": {
+      "currency": "₹",
+      "deliveryFeeText": "Delivery fee confirmed by area / order size.",
+      "minimumOrder": 299
+    },
+    "settings": {
+      "showHome": true,
+      "showMenu": true,
+      "showCake": true,
+      "showDelivery": true,
+      "showParty": true,
+      "showOrder": true,
+      "showOffers": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showAbout": true,
+      "showServices": true,
+      "showHygiene": true,
+      "showFAQ": true,
+      "showLocation": true,
+      "showHours": true,
+      "showSocial": true,
+      "showTerms": true,
+      "showPrivacy": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    },
+    "leads": []
+  },
+  "admin": {
+    "storageKey": "sitecraft:cloudkitchen-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "media",
+        "label": "Images / Storage",
+        "type": "media"
+      },
+      {
+        "id": "business",
+        "label": "Business",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Business name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / chef / baker"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About kitchen",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.deliveryArea",
+            "label": "Delivery area text"
+          },
+          {
+            "path": "party.capacityText",
+            "label": "Party order capacity text"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          },
+          {
+            "path": "heroVideo",
+            "label": "Hero video URL (optional)",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Menu",
+        "type": "collection",
+        "itemLabel": "menu item",
+        "path": "menu",
+        "titleKey": "name",
+        "description": "Manage direct-order menu items, categories, prices and photos.",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Item name"
+          },
+          {
+            "key": "price",
+            "label": "Numeric price",
+            "type": "number"
+          },
+          {
+            "key": "displayPrice",
+            "label": "Display price"
+          },
+          {
+            "key": "category",
+            "label": "Category",
+            "type": "select",
+            "options": [
+              "Biryani",
+              "Meals",
+              "Cakes",
+              "Desserts",
+              "Beverages",
+              "Combos",
+              "Other"
+            ]
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "unit",
+            "label": "Unit"
+          },
+          {
+            "key": "veg",
+            "label": "Vegetarian",
+            "type": "checkbox"
+          },
+          {
+            "key": "image",
+            "label": "Food image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New menu item",
+          "price": 0,
+          "displayPrice": "₹0",
+          "category": "Meals",
+          "description": "",
+          "unit": "box",
+          "veg": true,
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "cakeBases",
+        "label": "Cake Bases",
+        "type": "collection",
+        "itemLabel": "base",
+        "path": "cake.bases",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "id",
+            "label": "ID"
+          },
+          {
+            "key": "name",
+            "label": "Base name"
+          },
+          {
+            "key": "price",
+            "label": "Extra price",
+            "type": "number"
+          },
+          {
+            "key": "enabled",
+            "label": "Available",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "id": "new-base",
+          "name": "New cake base",
+          "price": 0,
+          "enabled": true
+        }
+      },
+      {
+        "id": "cakeSizes",
+        "label": "Cake Sizes",
+        "type": "collection",
+        "itemLabel": "size",
+        "path": "cake.sizes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "id",
+            "label": "ID"
+          },
+          {
+            "key": "name",
+            "label": "Size"
+          },
+          {
+            "key": "price",
+            "label": "Base price",
+            "type": "number"
+          },
+          {
+            "key": "enabled",
+            "label": "Available",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "id": "new-size",
+          "name": "1 kg",
+          "price": 0,
+          "enabled": true
+        }
+      },
+      {
+        "id": "cakeFillings",
+        "label": "Cake Fillings",
+        "type": "collection",
+        "itemLabel": "filling",
+        "path": "cake.fillings",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "id",
+            "label": "ID"
+          },
+          {
+            "key": "name",
+            "label": "Filling"
+          },
+          {
+            "key": "price",
+            "label": "Extra price",
+            "type": "number"
+          },
+          {
+            "key": "enabled",
+            "label": "Available",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "id": "new-filling",
+          "name": "New filling",
+          "price": 0,
+          "enabled": true
+        }
+      },
+      {
+        "id": "cakeToppings",
+        "label": "Cake Toppings",
+        "type": "collection",
+        "itemLabel": "topping",
+        "path": "cake.toppings",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "id",
+            "label": "ID"
+          },
+          {
+            "key": "name",
+            "label": "Topping / add-on"
+          },
+          {
+            "key": "price",
+            "label": "Extra price",
+            "type": "number"
+          },
+          {
+            "key": "enabled",
+            "label": "Available",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "id": "new-topping",
+          "name": "New topping",
+          "price": 0,
+          "enabled": true
+        }
+      },
+      {
+        "id": "delivery",
+        "label": "Delivery Slots & Rules",
+        "type": "collection",
+        "itemLabel": "slot",
+        "path": "delivery.slots",
+        "titleKey": "label",
+        "fields": [
+          {
+            "key": "id",
+            "label": "Slot ID"
+          },
+          {
+            "key": "label",
+            "label": "Delivery slot"
+          },
+          {
+            "key": "enabled",
+            "label": "Available",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "id": "new-slot",
+          "label": "10:00 AM – 11:00 AM",
+          "enabled": true
+        }
+      },
+      {
+        "id": "deliverySettings",
+        "label": "Delivery Settings",
+        "fields": [
+          {
+            "path": "delivery.sameDayNote",
+            "label": "Same-day delivery note",
+            "type": "textarea"
+          },
+          {
+            "path": "delivery.deliveryFeeText",
+            "label": "Delivery fee text"
+          },
+          {
+            "path": "delivery.minimumOrder",
+            "label": "Minimum order",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "id": "party",
+        "label": "Party / Bulk Orders",
+        "type": "collection",
+        "itemLabel": "package",
+        "path": "party.packages",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Package name"
+          },
+          {
+            "key": "guests",
+            "label": "Guest range"
+          },
+          {
+            "key": "note",
+            "label": "Details",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New party package",
+          "guests": "10–25",
+          "note": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "partySettings",
+        "label": "Party Capacity",
+        "fields": [
+          {
+            "path": "party.capacityText",
+            "label": "Capacity text"
+          },
+          {
+            "path": "party.leadTimeText",
+            "label": "Lead-time note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "offers",
+        "label": "Offers & Combos",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "offers",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Offer title"
+          },
+          {
+            "key": "text",
+            "label": "Offer text",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New offer",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "gallery item",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New image",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "services",
+        "label": "Services & Order Types",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "🍽️",
+          "name": "New service",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hygiene",
+        "label": "Kitchen Hygiene & Trust",
+        "type": "collection",
+        "itemLabel": "trust item",
+        "path": "hygiene",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Trust title"
+          },
+          {
+            "key": "text",
+            "label": "Supporting text",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New hygiene / trust item",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer name"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Customer / food photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New customer",
+          "rating": 5,
+          "text": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "enabled",
+            "label": "Open",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "New day",
+          "open": "11:00 AM",
+          "close": "10:00 PM",
+          "enabled": true
+        }
+      },
+      {
+        "id": "social",
+        "label": "Social Media",
+        "fields": [
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "social.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "social.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Delivery Area",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Call number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number",
+            "type": "tel"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Kitchen / pickup address"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.deliveryArea",
+            "label": "Delivery area"
+          },
+          {
+            "path": "contact.hoursText",
+            "label": "Hours summary"
+          }
+        ]
+      },
+      {
+        "id": "orderSettings",
+        "label": "Order Settings",
+        "fields": [
+          {
+            "path": "orderSettings.currency",
+            "label": "Currency"
+          },
+          {
+            "path": "orderSettings.deliveryFeeText",
+            "label": "Delivery fee note"
+          },
+          {
+            "path": "orderSettings.minimumOrder",
+            "label": "Minimum order",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "id": "leads",
+        "label": "Orders & Enquiries",
+        "type": "leads",
+        "title": "Direct Orders & Enquiries",
+        "description": "Customer orders and party/cake enquiries submitted from the website appear here. Update status or export as CSV.",
+        "path": "leads",
+        "statusKey": "status",
+        "statuses": [
+          "New",
+          "Confirmed",
+          "Preparing",
+          "Out for Delivery",
+          "Completed",
+          "Cancelled"
+        ],
+        "disableActions": true,
+        "columns": [
+          "createdAt",
+          "status",
+          "orderType",
+          "name",
+          "phone",
+          "location",
+          "deliveryDate",
+          "deliverySlot",
+          "total",
+          "partyGuests",
+          "message"
+        ],
+        "labels": {
+          "createdAt": "Date",
+          "status": "Status",
+          "orderType": "Order Type",
+          "name": "Name",
+          "phone": "Phone",
+          "location": "Location",
+          "deliveryDate": "Delivery Date",
+          "deliverySlot": "Slot",
+          "total": "Total",
+          "partyGuests": "Party Guests",
+          "message": "Order / Message"
+        }
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Menu",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCake",
+            "label": "Cake Customizer",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showDelivery",
+            "label": "Delivery Slots",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showParty",
+            "label": "Party Orders",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showOrder",
+            "label": "Order Form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showOffers",
+            "label": "Offers",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Services",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHygiene",
+            "label": "Hygiene & Trust",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFAQ",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening Hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTerms",
+            "label": "Terms & Order Policy",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPrivacy",
+            "label": "Privacy",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
