@@ -662,7 +662,7 @@ function handlerHealth(env) {
 }
 
 export async function handleAiBuilderRoute(request, env, url) {
-  const path = url.pathname.replace(/\\/+$/, "") || "/";
+  const path = url.pathname.replace(/\/+$/, "") || "/";
 
   if (request.method === "GET" && path === "/api/ai-builder/health") {
     return handlerHealth(env);
