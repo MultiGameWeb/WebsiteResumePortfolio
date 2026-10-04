@@ -1,4 +1,4 @@
-const MODEL = "gemini-2.5-flash";
+import { handleAiBuilderRoute } from "./ai-builder.js";\nconst MODEL = "gemini-2.5-flash";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
