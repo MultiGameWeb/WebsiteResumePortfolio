@@ -2,5 +2,10 @@ name = "sitecraft-ai"
 main = "worker.js"
 compatibility_date = "2026-10-01"
 
+[[d1_databases]]
+binding = "DB"
+database_name = "sitecraft-db"
+database_id = "4b639752-7dd1-4543-b9e7-9d0f0eb4afe9"
+
 [vars]
 GEMINI_MODEL = "gemini-2.5-flash"
