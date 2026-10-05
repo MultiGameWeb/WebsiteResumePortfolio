@@ -121,6 +121,10 @@ export default {
     }
 
     const url = new URL(request.url);
+
+    const aiBuilderResponse = await handleAiBuilderRoute(request, env, url);
+    if (aiBuilderResponse) return aiBuilderResponse;
+
     const path = url.pathname.replace(/\/+$/, "") || "/";
     const model = env.GEMINI_MODEL || MODEL;
 
