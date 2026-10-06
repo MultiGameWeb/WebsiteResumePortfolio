@@ -239,7 +239,7 @@ function choosePersona(id,initial){
 }
 
 function skipOnboarding(){onboarded=true;$("#onboarding").style.display="none";renderAll()}
-function showOnboarding(){renderPersonaCards();$("#onboarding").style.display="grid";setTimeout(function{$("#personaGrid button")?.focus()},0)}
+function showOnboarding(){renderPersonaCards();$("#onboarding").style.display="grid";setTimeout(function(){$("#personaGrid button")?.focus()},0)}
 function renderPersonaCards(){var list=[["student","Student / Fresher",icon("education"),"Friendly, bright and education-first"],["professional","Working Professional",icon("experience"),"Clean corporate hierarchy and timeline"],["creative","Freelancer / Creative",icon("projects"),"Bold visuals and image-first work"],["developer","Developer / Tech",icon("skills"),"Dark, monospace and code-inspired"]];$("#personaGrid").innerHTML=list.map(function(x){return '<button class="persona-card" type="button" data-persona="'+x[0]+'"><span class="persona-icon">'+x[2]+'</span><strong>'+x[1]+'</strong><span>'+x[3]+'</span></button>'}).join("");$("[data-persona]").forEach(function(b){b.onclick=function(){choosePersona(b.dataset.persona,!onboarded)}})}
 
 function socialLinks(){
