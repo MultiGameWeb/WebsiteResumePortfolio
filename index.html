@@ -15,7 +15,7 @@
           <h1>Create your website<br><em>with a ready design.</em></h1>
           <p>Choose from our ready-made templates, select the features you need, enter your details, preview the website, and continue to checkout.</p>
           <div class="builder-choice-pills">
-            <span>23+ templates</span>
+            <span>26+ templates</span>
             <span>50+ more coming</span>
             <span>Choose features</span>
             <span>Live preview</span>
@@ -35,7 +35,7 @@
           <p>Give us a simple prompt, answer the details we need, generate your base website, then keep adding features while the preview and price update live.</p>
           <div class="builder-choice-pills">
             <span>Starts at ₹499</span>
-            <span>AI-built from your prompt</span>
+            <span>AI builder coming soon</span>
             <span>Add features as you go</span>
             <span>No repeated suggestions</span>
           </div>
@@ -43,7 +43,7 @@
         <div class="builder-choice-action">
           <strong>Create a custom website with AI</strong>
           <span>Example: “Create a photography website for me.” We’ll first collect the essential details, then build the base website.</span>
-          <a class="btn primary large" href="ai-builder.html">Start with AI →</a>
+          <button class="btn primary large ai-coming-soon-btn" type="button" disabled>Coming soon</button>
         </div>
       </div>
     </section>
@@ -68,6 +68,9 @@
           <a class="filter-chip" href="#templates">Events</a>
           <a class="filter-chip" href="#templates">Automotive</a>
           <a class="filter-chip" href="#templates">Education</a>
+          <a class="filter-chip" href="#templates">Astrology</a>
+          <a class="filter-chip" href="#templates">E-commerce</a>
+          <a class="filter-chip" href="#templates">Portfolio</a>
         </div>
         <label class="template-search">
           <span class="sr-only">Search templates</span>
@@ -107,7 +110,10 @@
     "cloud kitchen": "cloud kitchen & home bakers",
     events: "event & wedding planners",
     automotive: "automotive services",
-    education: "schools, colleges & coaching"
+    education: "schools, colleges & coaching",
+    astrology: "astrology",
+    "e-commerce": "e-commerce",
+    portfolio: "portfolio creator"
   };
 
   // Category-level synonyms make natural searches such as
@@ -123,7 +129,10 @@
     "cloud kitchen home bakers": "food delivery restaurant online kitchen takeaway tiffin bakery cake cakes home baker cloud kitchen",
     "events wedding planners": "wedding party planner event decoration birthday conference celebration venue",
     "automotive services": "car bike garage showroom vehicle mechanic service dealer detailing auto automobile repair",
-    "schools colleges coaching": "college school coaching institute academy tuition course university classes education learning"
+    "schools colleges coaching": "college school coaching institute academy tuition course university classes education learning",
+    astrology: "astrology astrologer jyotish vedic horoscope kundali rashi zodiac muhurtham marriage career",
+    "e-commerce": "ecommerce e-commerce online store shop shopping products product retail catalogue catalog checkout order",
+    "portfolio creator": "portfolio personal website resume cv designer developer freelancer creative professional showcase work projects"
   };
 
   const TEMPLATE_KEYWORDS = {
@@ -149,7 +158,10 @@
     "cloudkitchen-01": "cloud kitchen food delivery takeaway bakery tiffin online orders",
     "event-wedding-01": "wedding event planner party decoration celebration",
     "automotive-01": "car garage mechanic detailing vehicle service repair",
-    "coaching-education-01": "school college coaching institute academy tuition university courses"
+    "coaching-education-01": "school college coaching institute academy tuition university courses",
+    "astrology-01": "astrology astrologer jyotish vedic horoscope kundali rashi zodiac muhurtham marriage career",
+    "ecommerce-01": "ecommerce e-commerce online store shop retail products shopping order whatsapp",
+    "portfolio-01": "portfolio resume cv personal website designer developer freelancer projects skills"
   };
 
   const normalize = (value) =>
