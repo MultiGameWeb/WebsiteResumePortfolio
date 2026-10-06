@@ -1,0 +1,173 @@
+{
+  "id": "bridal-makeup-01",
+  "name": "Bridal Makeup — Luxe Bride",
+  "category": "Salon & Spa",
+  "price": "₹599",
+  "defaultSelectedFeatures": ["home","about","packages","beforeAfter","reviews","location","contact","whatsapp"],
+  "features": [
+    {"id":"home","label":"Home / Hero"},
+    {"id":"about","label":"About the Artist"},
+    {"id":"packages","label":"Service Packages & Rates"},
+    {"id":"beforeAfter","label":"Before / After Gallery"},
+    {"id":"reviews","label":"Client Testimonials"},
+    {"id":"location","label":"Location & Travel Policy"},
+    {"id":"contact","label":"Contact"},
+    {"id":"whatsapp","label":"WhatsApp Booking"}
+  ],
+  "fields": [
+    {"path":"brand.businessName","label":"Artist / Studio Name","required":true,"placeholder":"Ananya Bridal Studio"},
+    {"path":"brand.ownerName","label":"Bridal Makeup Artist","placeholder":"Ananya Sharma"},
+    {"path":"brand.motto","label":"Brand Motto","placeholder":"Makeup that feels as unforgettable as the day."},
+    {"path":"brand.about","label":"About the Artist","type":"textarea","placeholder":"Tell brides about your style, experience and what makes your service special."},
+    {"path":"hero","label":"Hero Bridal Photo","type":"media"},
+    {"path":"home.title","label":"Hero Heading","required":true,"placeholder":"Premium Bridal Makeup Services in Hyderabad"},
+    {"path":"home.text","label":"Hero Text","type":"textarea","placeholder":"Luxury bridal looks, HD makeup, hair styling and saree draping for your special day."},
+    {"path":"home.availability","label":"Availability Badge","placeholder":"Now booking 2026–27 wedding dates"},
+    {"path":"home.eventDate","label":"Wedding / Event Date","type":"date"},
+    {"path":"packages.0.name","label":"Package 1 Name","placeholder":"Traditional Bridal Makeup"},
+    {"path":"packages.0.price","label":"Package 1 Price","placeholder":"₹12,000"},
+    {"path":"packages.0.description","label":"Package 1 Details","placeholder":"HD Makeup · Hair Styling · Saree Draping"},
+    {"path":"packages.1.name","label":"Package 2 Name","placeholder":"Reception / Engagement Look"},
+    {"path":"packages.1.price","label":"Package 2 Price","placeholder":"₹8,000"},
+    {"path":"packages.1.description","label":"Package 2 Details","placeholder":"HD Makeup · Hair Styling · Draping"},
+    {"path":"packages.2.name","label":"Package 3 Name","placeholder":"Party Makeup (Family)"},
+    {"path":"packages.2.price","label":"Package 3 Price","placeholder":"₹2,500 / person"},
+    {"path":"packages.2.description","label":"Package 3 Details","placeholder":"Makeup · Hair Styling"},
+    {"path":"packages.3.name","label":"Package 4 Name","placeholder":"Airbrush / Premium Celebrity Makeup"},
+    {"path":"packages.3.price","label":"Package 4 Price","placeholder":"₹20,000"},
+    {"path":"packages.3.description","label":"Package 4 Details","placeholder":"Airbrush finish · Premium products · Hair · Draping"},
+    {"path":"beforeAfter.0.title","label":"Transformation 1 Title","placeholder":"Soft Glam Bride"},
+    {"path":"beforeAfter.0.beforeImage","label":"Transformation 1 Before Image URL","type":"url"},
+    {"path":"beforeAfter.0.afterImage","label":"Transformation 1 After Image URL","type":"url"},
+    {"path":"beforeAfter.0.caption","label":"Transformation 1 Caption","placeholder":"HD bridal transformation"},
+    {"path":"beforeAfter.1.title","label":"Transformation 2 Title","placeholder":"Classic South Indian Bride"},
+    {"path":"beforeAfter.1.beforeImage","label":"Transformation 2 Before Image URL","type":"url"},
+    {"path":"beforeAfter.1.afterImage","label":"Transformation 2 After Image URL","type":"url"},
+    {"path":"beforeAfter.1.caption","label":"Transformation 2 Caption","placeholder":"Traditional bridal finish"},
+    {"path":"beforeAfter.2.title","label":"Transformation 3 Title","placeholder":"Reception Glow"},
+    {"path":"beforeAfter.2.beforeImage","label":"Transformation 3 Before Image URL","type":"url"},
+    {"path":"beforeAfter.2.afterImage","label":"Transformation 3 After Image URL","type":"url"},
+    {"path":"beforeAfter.2.caption","label":"Transformation 3 Caption","placeholder":"Elegant reception look"},
+    {"path":"reviews.0.name","label":"Review 1 — Client","placeholder":"Ramya, Madhapur"},
+    {"path":"reviews.0.text","label":"Review 1 — Feedback","type":"textarea","placeholder":"My makeup stayed perfect for 10 hours! Thank you."},
+    {"path":"reviews.1.name","label":"Review 2 — Client","placeholder":"Keerthi, Jubilee Hills"},
+    {"path":"reviews.1.text","label":"Review 2 — Feedback","type":"textarea","placeholder":"Loved the look, the calm service and every little detail."},
+    {"path":"contact.whatsapp","label":"WhatsApp Number","placeholder":"919876543210"},
+    {"path":"contact.phone","label":"Call Number","placeholder":"+91 98765 43210"},
+    {"path":"contact.email","label":"Email","type":"email","placeholder":"hello@example.com"},
+    {"path":"contact.location","label":"Studio / Service Area","placeholder":"Hyderabad, Telangana"},
+    {"path":"contact.maps","label":"Google Maps Link","type":"url"},
+    {"path":"contact.travelPolicy","label":"Travel Policy","type":"textarea","placeholder":"Available for on-venue services across Hyderabad."},
+    {"path":"contact.extraCharge","label":"Travel Extra Charges","placeholder":"Beyond 20 km, travelling charges apply."}
+  ],
+  "demoData": {
+    "brand": {
+      "businessName":"Lumière Bridal Studio",
+      "ownerName":"Ananya Sharma",
+      "motto":"Making your special day more magical.",
+      "about":"A boutique bridal makeup studio focused on polished, photo-ready looks that still feel like you. Bridal makeup, hair styling and saree draping are tailored around your outfit, jewellery, venue and wedding-day timeline."
+    },
+    "hero":"https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&q=85",
+    "home": {
+      "title":"Premium Bridal Makeup Services in Hyderabad",
+      "text":"HD bridal makeup, elegant hair styling and saree draping for brides who want a timeless, camera-ready finish.",
+      "availability":"Now booking 2026–27 wedding dates",
+      "eventDate":"2026-12-12"
+    },
+    "packages":[
+      {"id":"p1","name":"Traditional Bridal Makeup","price":"₹12,000","description":"HD Makeup · Hair Styling · Saree Draping","enabled":true},
+      {"id":"p2","name":"Reception / Engagement Look","price":"₹8,000","description":"HD Makeup · Hair Styling · Draping","enabled":true},
+      {"id":"p3","name":"Party Makeup (For Family)","price":"₹2,500 / person","description":"Makeup · Hair Styling","enabled":true},
+      {"id":"p4","name":"Airbrush / Premium Celebrity Makeup","price":"₹20,000","description":"Airbrush finish · Premium products · Hair · Draping","enabled":true}
+    ],
+    "beforeAfter":[
+      {"id":"ba1","title":"Soft Glam Bride","beforeImage":"https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80","afterImage":"https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80","caption":"HD bridal transformation","enabled":true},
+      {"id":"ba2","title":"Classic South Indian Bride","beforeImage":"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80","afterImage":"https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80","caption":"Traditional bridal finish","enabled":true},
+      {"id":"ba3","title":"Reception Glow","beforeImage":"https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80","afterImage":"https://images.unsplash.com/photo-1507504031003-b7a84f9e1c38?auto=format&fit=crop&w=900&q=80","caption":"Elegant reception look","enabled":true}
+    ],
+    "reviews":[
+      {"id":"r1","name":"Ramya, Madhapur","text":"My makeup stayed perfect for 10 hours! The look was elegant, comfortable and beautiful in photos.","rating":5,"enabled":true},
+      {"id":"r2","name":"Keerthi, Jubilee Hills","text":"Loved the look, the calm service and every little detail. I felt like myself, just more polished.","rating":5,"enabled":true}
+    ],
+    "contact":{
+      "whatsapp":"919876543210",
+      "phone":"+91 98765 43210",
+      "email":"hello@lumierebridal.example",
+      "location":"Hyderabad, Telangana",
+      "maps":"https://maps.google.com/?q=Hyderabad+Telangana",
+      "travelPolicy":"Available for on-venue services across Hyderabad. For outstation weddings, contact the studio for a travel quote.",
+      "extraCharge":"Beyond a 20 km radius, travelling charges apply."
+    },
+    "settings":{
+      "showHome":true,
+      "showAbout":true,
+      "showPackages":true,
+      "showBeforeAfter":true,
+      "showReviews":true,
+      "showLocation":true,
+      "showContact":true,
+      "passwordProtected":false,
+      "adminPassword":""
+    }
+  },
+  "admin": {
+    "storageKey":"sitecraft:bridal-makeup-01",
+    "heroPath":"hero",
+    "overviewNamePath":"brand.businessName",
+    "overviewMottoPath":"brand.motto",
+    "sections":[
+      {"id":"overview","label":"Overview","type":"overview"},
+      {"id":"business","label":"Business","fields":[
+        {"path":"brand.businessName","label":"Artist / Studio name"},
+        {"path":"brand.ownerName","label":"Artist name"},
+        {"path":"brand.motto","label":"Motto"},
+        {"path":"brand.about","label":"About","type":"textarea"}
+      ]},
+      {"id":"home","label":"Home","fields":[
+        {"path":"home.title","label":"Hero heading"},
+        {"path":"home.text","label":"Hero text","type":"textarea"},
+        {"path":"home.availability","label":"Availability badge"},
+        {"path":"home.eventDate","label":"Wedding / event date","type":"date"},
+        {"path":"hero","label":"Hero bridal photo","type":"media"}
+      ]},
+      {"id":"packages","label":"Packages & Rates","type":"collection","itemLabel":"package","path":"packages","titleKey":"name","fields":[
+        {"key":"name","label":"Package name"},
+        {"key":"price","label":"Price"},
+        {"key":"description","label":"Included","type":"textarea"},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"name":"New package","price":"Custom quote","description":"","enabled":true}},
+      {"id":"beforeAfter","label":"Before / After","type":"collection","itemLabel":"transformation","path":"beforeAfter","titleKey":"title","fields":[
+        {"key":"title","label":"Title"},
+        {"key":"beforeImage","label":"Before image","type":"media"},
+        {"key":"afterImage","label":"After image","type":"media"},
+        {"key":"caption","label":"Caption"},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"title":"New transformation","beforeImage":"","afterImage":"","caption":"","enabled":true}},
+      {"id":"reviews","label":"Testimonials","type":"collection","itemLabel":"review","path":"reviews","titleKey":"name","fields":[
+        {"key":"name","label":"Client"},
+        {"key":"text","label":"Review","type":"textarea"},
+        {"key":"rating","label":"Rating","type":"select","options":[5,4,3,2,1]},
+        {"key":"enabled","label":"Show","type":"checkbox"}
+      ],"addDefaults":{"name":"New client","text":"","rating":5,"enabled":true}},
+      {"id":"contact","label":"Contact & Travel","fields":[
+        {"path":"contact.whatsapp","label":"WhatsApp"},
+        {"path":"contact.phone","label":"Call number"},
+        {"path":"contact.email","label":"Email"},
+        {"path":"contact.location","label":"Location"},
+        {"path":"contact.maps","label":"Google Maps URL","type":"url"},
+        {"path":"contact.travelPolicy","label":"Travel policy","type":"textarea"},
+        {"path":"contact.extraCharge","label":"Extra travel charges"}
+      ]},
+      {"id":"visibility","label":"Visibility","fields":[
+        {"path":"settings.showHome","label":"Home","type":"checkbox"},
+        {"path":"settings.showAbout","label":"About","type":"checkbox"},
+        {"path":"settings.showPackages","label":"Packages","type":"checkbox"},
+        {"path":"settings.showBeforeAfter","label":"Before / After","type":"checkbox"},
+        {"path":"settings.showReviews","label":"Testimonials","type":"checkbox"},
+        {"path":"settings.showLocation","label":"Location","type":"checkbox"},
+        {"path":"settings.showContact","label":"Contact","type":"checkbox"}
+      ]},
+      {"id":"security","label":"Security","type":"security"}
+    ]
+  }
+}
