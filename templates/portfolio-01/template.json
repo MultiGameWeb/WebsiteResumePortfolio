@@ -1,0 +1,357 @@
+{
+  "id": "portfolio-01",
+  "name": "Portfolio Creator — Editorial",
+  "category": "Portfolio Creator",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home"
+    },
+    {
+      "id": "about",
+      "label": "About Me"
+    },
+    {
+      "id": "skills",
+      "label": "Skills"
+    },
+    {
+      "id": "projects",
+      "label": "Projects"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "location",
+      "label": "Location"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Your Name / Brand",
+      "required": true,
+      "placeholder": "Your Name"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Professional Title"
+    },
+    {
+      "path": "brand.motto",
+      "label": "Motto"
+    },
+    {
+      "path": "brand.about",
+      "label": "About Me",
+      "type": "textarea"
+    },
+    {
+      "path": "brand.resumeUrl",
+      "label": "Resume URL",
+      "type": "url"
+    },
+    {
+      "path": "home.title",
+      "label": "Home Heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Home Text",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Image",
+      "type": "media"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email"
+    },
+    {
+      "path": "contact.call",
+      "label": "Call Number"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number"
+    },
+    {
+      "path": "contact.location",
+      "label": "Location"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "id": "portfolio-01",
+    "brand": {
+      "businessName": "Your Name",
+      "ownerName": "Designer & Developer",
+      "motto": "Selected work and thoughtful ideas.",
+      "about": "Introduce yourself, your experience, strengths and the kind of work you want to attract.",
+      "resumeUrl": "https://example.com"
+    },
+    "home": {
+      "title": "A portfolio that puts your work first.",
+      "text": "Showcase your best projects, capabilities and ways to get in touch."
+    },
+    "contact": {
+      "email": "hello@example.com",
+      "whatsapp": "919876543210",
+      "call": "+91 98765 43210",
+      "location": "Hyderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Hyderabad"
+    },
+    "hero": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1800&q=85",
+    "projects": [
+      {
+        "id": "p1",
+        "name": "Project One",
+        "role": "Case Study",
+        "description": "Describe the goal, your role and the result.",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Project Two",
+        "role": "Featured Work",
+        "description": "A second project to showcase your work.",
+        "image": "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1000&q=80",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Project Three",
+        "role": "Experiment",
+        "description": "Use this card for another highlight.",
+        "image": "https://images.unsplash.com/photo-1545235617-9465d2a55698?auto=format&fit=crop&w=1000&q=80",
+        "enabled": true
+      }
+    ],
+    "skills": [
+      {
+        "id": "s1",
+        "name": "Design",
+        "level": "Advanced",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "name": "Development",
+        "level": "Advanced",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "name": "Strategy",
+        "level": "Working knowledge",
+        "enabled": true
+      },
+      {
+        "id": "s4",
+        "name": "Photography",
+        "level": "Working knowledge",
+        "enabled": true
+      }
+    ],
+    "settings": {
+      "showAbout": true,
+      "showContact": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:portfolio-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.motto",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Profile",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Name / brand"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Professional title"
+          },
+          {
+            "path": "brand.motto",
+            "label": "Motto"
+          },
+          {
+            "path": "brand.about",
+            "label": "About me",
+            "type": "textarea"
+          },
+          {
+            "path": "brand.resumeUrl",
+            "label": "Resume URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "skills",
+        "label": "Skills",
+        "type": "collection",
+        "itemLabel": "skill",
+        "path": "skills",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Skill"
+          },
+          {
+            "key": "level",
+            "label": "Level"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New skill",
+          "level": "Working knowledge",
+          "enabled": true
+        }
+      },
+      {
+        "id": "projects",
+        "label": "Projects",
+        "type": "collection",
+        "itemLabel": "project",
+        "path": "projects",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Project"
+          },
+          {
+            "key": "role",
+            "label": "Role"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New project",
+          "role": "Case study",
+          "description": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact",
+        "fields": [
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.call",
+            "label": "Call number"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.location",
+            "label": "Location"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Maps URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
