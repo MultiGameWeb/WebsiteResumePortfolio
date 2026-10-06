@@ -1,0 +1,408 @@
+{
+  "id": "ecommerce-01",
+  "name": "E-commerce — Modern Store",
+  "category": "E-commerce",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home"
+    },
+    {
+      "id": "about",
+      "label": "About"
+    },
+    {
+      "id": "products",
+      "label": "Products / Shop"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Reviews"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "location",
+      "label": "Location"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Store Name",
+      "required": true,
+      "placeholder": "Nova Market"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Store Team"
+    },
+    {
+      "path": "brand.motto",
+      "label": "Motto"
+    },
+    {
+      "path": "home.title",
+      "label": "Home Heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Home Text",
+      "type": "textarea"
+    },
+    {
+      "path": "brand.about",
+      "label": "About Us",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Image",
+      "type": "media"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number"
+    },
+    {
+      "path": "contact.call",
+      "label": "Call Number"
+    },
+    {
+      "path": "contact.location",
+      "label": "Location"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "id": "ecommerce-01",
+    "brand": {
+      "businessName": "Nova Market",
+      "ownerName": "Store Team",
+      "motto": "Simple shopping, thoughtful products.",
+      "about": "A modern online storefront for showcasing products, collections and easy customer enquiries."
+    },
+    "home": {
+      "title": "A storefront made for your products.",
+      "text": "Show your products, add prices, accept enquiries and guide customers to WhatsApp."
+    },
+    "contact": {
+      "whatsapp": "919876543210",
+      "call": "+91 98765 43210",
+      "location": "Hyderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Hyderabad"
+    },
+    "hero": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85",
+    "products": [
+      {
+        "id": "p1",
+        "name": "Signature Product",
+        "category": "Featured",
+        "price": "₹999",
+        "description": "A sample product ready to customize.",
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Best Seller",
+        "category": "Popular",
+        "price": "₹1,499",
+        "description": "Replace this with your own product details.",
+        "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "New Arrival",
+        "category": "New",
+        "price": "₹799",
+        "description": "A new arrival card for your storefront.",
+        "image": "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Premium Pick",
+        "category": "Premium",
+        "price": "₹2,499",
+        "description": "Showcase higher-value products here.",
+        "image": "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=900&q=80",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Collection",
+        "image": "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=1000&q=80",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Featured",
+        "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1000&q=80",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer",
+        "text": "Beautiful products and smooth communication.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "settings": {
+      "showAbout": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showContact": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:ecommerce-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.motto",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Business",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Store name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / team"
+          },
+          {
+            "path": "brand.motto",
+            "label": "Motto"
+          },
+          {
+            "path": "brand.about",
+            "label": "About",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "products",
+        "label": "Products",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "products",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New product",
+          "category": "Featured",
+          "price": "₹0",
+          "description": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "gallery item",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New image",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New customer",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact",
+        "fields": [
+          {
+            "path": "contact.call",
+            "label": "Call number"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.location",
+            "label": "Location"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Maps URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
