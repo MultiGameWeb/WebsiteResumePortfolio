@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SiteCraft — Create with AI</title>
+  <link rel="stylesheet" href="global.css">
+</head>
+<body data-page="ai-builder">
+  <header class="builder-top">
+    <a class="logo" href="index.html">SiteCraft</a>
+    <div>
+      <strong>Create with AI</strong>
+      <small>Custom website generator</small>
+    </div>
+    <a class="btn ghost small" href="index.html">← Back</a>
+  </header>
+
+  <div class="progress">
+    <span class="on">1 AI Prompt</span>
+    <span id="progressDetails">2 Details</span>
+    <span id="progressBuild">3 Build</span>
+    <span id="progressFeatures">4 Add features</span>
+    <span id="progressPay">5 Checkout</span>
+  </div>
+
+  <main class="ai-page">
+    <section class="ai-page-head">
+      <div>
+        <p class="eyebrow">AI WEBSITE GENERATOR</p>
+        <h1>Start with a sentence.<br><em>Build the rest together.</em></h1>
+        <p>Tell SiteCraft what you need. We’ll identify the essentials first, ask only for the information required, generate the base website, and then let you add useful features one at a time.</p>
+      </div>
+    </section>
+
+    <section class="ai-layout">
+      <aside class="ai-panel">
+        <div id="promptStep" class="ai-step">
+          <span class="ai-step-label">STEP 1 · YOUR IDEA</span>
+          <textarea id="aiPrompt" class="field input ai-prompt" placeholder="Example: Create a photography website for me."></textarea>
+          <button id="analyzeBtn" class="btn primary full">Continue →</button>
+        </div>
+
+        <div id="detailsStep" class="ai-step ai-hidden">
+          <span class="ai-step-label">STEP 2 · ESSENTIAL DETAILS</span>
+          <h2 id="detailsTitle">Tell us about your business.</h2>
+          <p id="detailsHelp">These details are used to create the first website preview.</p>
+          <form id="aiDetailsForm" class="ai-form"></form>
+          <button id="buildBtn" class="btn primary full" type="button">Build my website →</button>
+        </div>
+
+        <div id="buildInfo" class="ai-step ai-hidden">
+          <span class="ai-step-label">BUILD STATUS</span>
+          <div class="ai-progress" id="aiProgress"></div>
+        </div>
+
+        <div id="aiStatus" class="ai-status" aria-live="polite"></div>
+      </aside>
+
+      <section class="ai-preview-card">
+        <div class="ai-preview-head">
+          <div>
+            <strong id="previewTitle">Your AI website preview</strong>
+            <div id="previewSubtitle" class="muted">The preview appears here after generation.</div>
+          </div>
+          <div class="ai-price" id="aiPrice">₹499</div>
+        </div>
+
+        <div class="ai-preview-frame">
+          <iframe id="aiPreview" title="AI website preview" sandbox="allow-scripts allow-forms allow-popups"></iframe>
+        </div>
+
+        <section id="suggestionsPanel" class="ai-suggestions ai-hidden">
+          <div class="ai-suggestions-head">
+            <div>
+              <h3>Make your website more powerful</h3>
+              <p id="suggestionSubtitle">Recommended features for your business.</p>
+            </div>
+            <button id="moreSuggestionsBtn" class="btn ghost small" type="button">View more</button>
+          </div>
+          <div id="suggestionGrid" class="ai-suggestion-grid"></div>
+          <div id="suggestionMore" class="ai-more ai-hidden"></div>
+        </section>
+
+        <div id="checkoutBar" class="ai-suggestions ai-hidden">
+          <div class="ai-suggestions-head">
+            <div>
+              <h3>Ready to finish?</h3>
+              <p>Your current website price is calculated by the backend from the base website + installed features.</p>
+            </div>
+            <button id="checkoutBtn" class="btn primary" type="button">Continue to checkout →</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="ai-builder.js"></script>
+</body>
+</html>
