@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171915">
+<title>SiteCraft — Portfolio Creator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f2ec;--panel:#ffffff;--panel-2:#faf9f5;--text:#1d201c;--muted:#6d726b;--line:#e4e3db;
+  --accent:#9a7342;--accent-strong:#7a572f;--danger:#a84432;--shadow:0 20px 60px rgba(31,33,28,.09);
+  --radius:18px;--font:"DM Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.55}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 45%,white);outline-offset:2px}
+.app{min-height:100vh;display:grid;grid-template-columns:410px minmax(0,1fr);grid-template-rows:68px 1fr}
+.topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(16px);position:sticky;top:0;z-index:20}
+.brand{display:flex;gap:11px;align-items:center}.brand-mark{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--text);color:#fff;font-weight:800}.brand strong{display:block;font-size:15px}.brand span{display:block;font-size:10px;color:var(--muted)}
+.top-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid #dddcd5;background:#fff;border-radius:11px;padding:9px 12px;color:var(--text);font-weight:700;font-size:12px;transition:.18s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(31,33,28,.08)}
+.btn.primary{background:var(--text);border-color:var(--text);color:#fff}.btn.danger{color:#fff;background:var(--danger);border-color:var(--danger)}.btn.ghost{background:#fff}
+.btn.tiny{padding:7px 9px;font-size:11px;border-radius:9px}
+.editor{padding:18px 18px 28px;border-right:1px solid var(--line);overflow:auto;min-height:calc(100vh - 68px);background:var(--panel-2)}
+.preview-area{padding:18px;min-width:0;display:grid;grid-template-rows:auto 1fr;gap:12px}
+.editor-head{padding:8px 4px 16px}.editor-head h1{font-size:26px;line-height:1.05;letter-spacing:-.04em;margin:6px 0 6px}.editor-head p{margin:0;color:var(--muted);font-size:12px}
+.progress{border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px;margin-bottom:12px}
+.progress-head{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:11px;font-weight:700}.progress-head span:last-child{color:var(--muted)}
+.progress-bar{height:7px;background:#efeee7;border-radius:999px;overflow:hidden;margin-top:8px}.progress-bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:999px;transition:.2s}
+.accordion{display:grid;gap:8px}.section{border:1px solid var(--line);background:#fff;border-radius:16px;overflow:hidden}
+.section summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:15px 16px;cursor:pointer}.section summary::-webkit-details-marker{display:none}
+.section summary strong{font-size:13px}.section summary small{color:var(--muted);font-size:10px}
+.chev{transition:.2s;font-size:13px}.section[open] .chev{transform:rotate(180deg)}
+.section-body{padding:0 16px 16px;display:grid;gap:12px;border-top:1px solid var(--line)}
+.section-body>.subhead:first-child{margin-top:14px}
+.subhead{display:flex;justify-content:space-between;gap:8px;align-items:center}.subhead strong{font-size:12px}.subhead span{font-size:10px;color:var(--muted)}
+.field{display:grid;gap:5px}.field label,.field>span{font-size:10px;font-weight:800;color:#5d625b;letter-spacing:.02em}
+.field input,.field textarea,.field select{width:100%;border:1px solid #dad9d2;border-radius:10px;background:#fff;color:var(--text);padding:10px 11px;font-size:12px}
+.field textarea{min-height:86px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.inline>*{flex:1 1 140px}
+.photo-row{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center}.avatar{width:76px;height:76px;border-radius:50%;overflow:hidden;background:#efeee8;border:1px solid var(--line);display:grid;place-items:center;color:#8b8f88;font-size:10px;text-align:center}.avatar img{width:100%;height:100%;object-fit:cover}
+.upload{position:relative;overflow:hidden}.upload input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.help{font-size:10px;color:var(--muted)}
+.tag-editor{border:1px solid #dad9d2;border-radius:11px;background:#fff;padding:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.tag-editor input{border:0;outline:0;min-width:130px;flex:1;padding:4px;background:transparent}.tag{display:inline-flex;gap:5px;align-items:center;padding:6px 8px;border-radius:999px;background:var(--text);color:#fff;font-size:10px}.tag button{border:0;background:transparent;color:#fff;padding:0;line-height:1;font-size:12px}
+.repeat-list{display:grid;gap:9px}.repeat-card{border:1px solid #e1e0d9;border-radius:13px;padding:11px;background:#fafaf6}.repeat-head{display:flex;justify-content:space-between;align-items:center;gap:9px;margin-bottom:10px}.repeat-head strong{font-size:11px}.repeat-head span{display:block;color:var(--muted);font-size:9px}
+.empty{padding:12px;border:1px dashed #d7d6cf;border-radius:12px;color:var(--muted);font-size:11px;text-align:center}
+.preview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:2px 3px}
+.preview-title strong{display:block;font-size:13px}.preview-title span{display:block;font-size:10px;color:var(--muted)}
+.controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.select{border:1px solid #dddcd5;background:#fff;border-radius:10px;padding:8px 10px;font-size:11px}
+.device-toggle{display:flex;gap:4px;padding:3px;border:1px solid var(--line);background:#fff;border-radius:10px}.device-toggle button{border:0;background:transparent;border-radius:7px;padding:7px 9px;font-size:10px}.device-toggle button.active{background:var(--text);color:#fff}
+.preview-shell{min-height:0;background:#dcdcd5;border:1px solid #cbcac2;border-radius:18px;overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:18px}
+.preview-viewport{width:100%;transition:width .2s;display:flex;justify-content:center}.preview-viewport.desktop{width:100%}.preview-viewport.tablet{width:820px;max-width:100%}.preview-viewport.mobile{width:390px;max-width:100%}
+.website{width:100%;min-height:100%;background:#fff;color:#20231f;overflow:hidden}
+.website a{color:inherit}.website .container{max-width:1080px;margin:0 auto;padding:0 28px}.website nav{display:flex;gap:18px;font-size:11px;color:inherit}.website-header{padding:16px 0;border-bottom:1px solid color-mix(in srgb,var(--website-line) 80%,transparent);position:sticky;top:0;background:color-mix(in srgb,var(--website-bg) 92%,transparent);backdrop-filter:blur(10px);z-index:2}.website-header-row{display:flex;align-items:center;justify-content:space-between;gap:14px}.website-brand{font-weight:800;font-size:16px}.hero{padding:82px 0 90px}.hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(240px,.9fr);align-items:center;gap:30px}.hero-kicker{font-size:10px;letter-spacing:.16em;font-weight:800;color:var(--website-accent);text-transform:uppercase}.hero h1{font-family:var(--website-font);font-size:clamp(42px,6vw,76px);line-height:.98;letter-spacing:-.05em;margin:12px 0}.hero p{font-size:14px;line-height:1.75;color:var(--website-muted);max-width:650px}.hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.site-btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:10px 14px;background:var(--website-accent);color:#fff!important;font-size:11px;font-weight:800}.site-btn.outline{background:transparent;color:var(--website-text)!important;border:1px solid var(--website-line)}.hero-photo{width:100%;aspect-ratio:1/1;border-radius:24px;overflow:hidden;background:var(--website-soft);border:1px solid var(--website-line)}.hero-photo img{width:100%;height:100%;object-fit:cover}.hero-photo.placeholder{display:grid;place-items:center;font-size:12px;color:var(--website-muted)}
+.site-section{padding:74px 0;border-top:1px solid var(--website-line)}.site-section.soft{background:var(--website-soft)}.site-section h2{font-family:var(--website-font);font-size:clamp(28px,4vw,50px);line-height:1.02;letter-spacing:-.04em;margin:8px 0 16px}.section-kicker{font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--website-accent);font-weight:800}.about-copy{max-width:820px;font-size:17px;line-height:1.8;color:var(--website-muted)}
+.skills{display:flex;gap:8px;flex-wrap:wrap}.skill-pill{padding:9px 12px;border-radius:999px;border:1px solid var(--website-line);background:var(--website-bg);font-size:11px}.skill-pill small{display:block;color:var(--website-muted);font-size:9px;margin-top:2px}
+.project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.project{border:1px solid var(--website-line);border-radius:17px;overflow:hidden;background:var(--website-bg)}.project img,.project-thumb{width:100%;height:230px;object-fit:cover;display:block;background:var(--website-soft)}.project-body{padding:16px}.project-body h3{font-family:var(--website-font);font-size:23px;line-height:1.08;margin:5px 0}.project-body p{font-size:12px;color:var(--website-muted);line-height:1.7}.tech-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tech{font-size:9px;padding:5px 7px;border-radius:999px;background:var(--website-soft);border:1px solid var(--website-line)}.project-links{display:flex;gap:7px;flex-wrap:wrap}
+.timeline{position:relative;margin-top:8px;padding-left:24px}.timeline:before{content:"";position:absolute;left:5px;top:7px;bottom:7px;width:2px;background:var(--website-line)}.timeline-item{position:relative;padding:0 0 28px}.timeline-item:last-child{padding-bottom:0}.timeline-item:before{content:"";position:absolute;left:-22px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--website-accent);box-shadow:0 0 0 4px var(--website-soft)}.timeline-item h3{font-size:15px;margin:0}.timeline-item strong{display:block;font-size:11px;color:var(--website-accent);margin-top:2px}.timeline-item span{font-size:10px;color:var(--website-muted)}.timeline-item p{font-size:12px;color:var(--website-muted);line-height:1.7}
+.edu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.edu{border:1px solid var(--website-line);border-radius:14px;padding:16px;background:var(--website-bg)}.edu h3{margin:0;font-size:15px}.edu span{font-size:10px;color:var(--website-accent)}.edu p{font-size:11px;color:var(--website-muted);margin:5px 0 0}
+.contact-box{padding:28px;border-radius:21px;border:1px solid var(--website-line);background:var(--website-bg)}.contact-box p{font-size:13px;color:var(--website-muted)}.footer{padding:22px 0;border-top:1px solid var(--website-line);font-size:10px;color:var(--website-muted)}
+.website.minimal{--website-bg:#fff;--website-soft:#f7f7f3;--website-text:#20231f;--website-muted:#6d726b;--website-line:#e4e3db;font-family:var(--website-font)}
+.website.modern-dark{--website-bg:#101210;--website-soft:#181b18;--website-text:#f7f7f2;--website-muted:#aeb4ab;--website-line:#2a2e29;font-family:var(--website-font);background:var(--website-bg);color:var(--website-text)}.website.modern-dark .site-btn.outline{color:var(--website-text)!important}.website.modern-dark .hero-photo{border-color:var(--website-line)}
+.website.gradient{--website-bg:#fff;--website-soft:#f3f2ff;--website-text:#222128;--website-muted:#6f6c7a;--website-line:#e5e2ef;font-family:var(--website-font);background:linear-gradient(180deg,#fff,#f9f6ff)}.website.gradient .hero{background:radial-gradient(circle at 80% 15%,color-mix(in srgb,var(--website-accent) 18%,transparent),transparent 35%)}
+.website.corporate{--website-bg:#fbfcfd;--website-soft:#eef2f6;--website-text:#19222c;--website-muted:#67737f;--website-line:#dbe1e6;font-family:var(--website-font)}.website.corporate .hero h1{font-family:var(--website-font)}
+.mode-dark{--bg:#171915;--panel:#20231f;--panel-2:#191b18;--text:#f4f4ef;--muted:#a8ada5;--line:#30332d}.mode-dark .topbar{background:rgba(29,31,27,.94)}.mode-dark .btn,.mode-dark .select,.mode-dark .section,.mode-dark .progress,.mode-dark .repeat-card,.mode-dark .field input,.mode-dark .field textarea,.mode-dark .field select,.mode-dark .tag-editor,.mode-dark .photo-row .avatar,.mode-dark .device-toggle{background:#232620;color:var(--text);border-color:#363a33}.mode-dark .editor{background:#191b18}.mode-dark .preview-shell{background:#252721}.mode-dark .section summary{color:var(--text)}
+.settings-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.control-card{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px}.mode-dark .control-card{background:#232620}.control-card strong{display:block;font-size:10px;margin-bottom:6px}.color-row{display:flex;gap:7px;align-items:center}.color-row input[type=color]{width:40px;height:32px;border:0;padding:0;background:transparent}.color-value{font-size:11px;color:var(--muted)}
+.toast{position:fixed;right:18px;bottom:18px;z-index:40;background:var(--text);color:#fff;padding:10px 13px;border-radius:11px;font-size:11px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateY(0)}
+.import-label{position:relative;overflow:hidden}.import-label input{position:absolute;inset:0;opacity:0}
+@media(max-width:1050px){.app{grid-template-columns:360px minmax(0,1fr)}.hero-grid{grid-template-columns:1fr}.hero-photo{max-width:420px}.preview-shell{padding:12px}}
+@media(max-width:800px){.app{display:block}.topbar{position:sticky}.editor{border-right:0;border-bottom:1px solid var(--line);max-height:none}.preview-area{min-height:700px}.preview-shell{min-height:620px}.project-grid,.edu-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.topbar{padding:0 12px}.top-actions .btn:not(.primary){display:none}.editor{padding:14px 12px 20px}.preview-area{padding:12px}.grid2,.settings-row{grid-template-columns:1fr}.photo-row{grid-template-columns:64px 1fr}.avatar{width:64px;height:64px}.website .container{padding:0 18px}.hero{padding:56px 0 66px}.site-section{padding:54px 0}.project-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+<header class="topbar">
+  <div class="brand"><div class="brand-mark">P</div><div><strong>Portfolio Creator</strong><span>Build a professional portfolio in real time</span></div></div>
+  <div class="top-actions">
+    <button class="btn" id="importBtn" type="button">Import JSON</button>
+    <label class="btn import-label">Choose JSON<input id="importFile" type="file" accept="application/json"></label>
+    <button class="btn" id="exportJsonBtn" type="button">Export JSON</button>
+    <button class="btn" id="resetBtn" type="button">Reset</button>
+    <button class="btn primary" id="downloadBtn" type="button">Download Portfolio</button>
+  </div>
+</header>
+
+<aside class="editor" aria-label="Portfolio editor">
+  <div class="editor-head">
+    <div class="help">LIVE PORTFOLIO BUILDER</div>
+    <h1>Make your portfolio yours.</h1>
+    <p>Type on the left. Your finished website updates instantly on the right.</p>
+  </div>
+
+  <div class="progress" aria-label="Portfolio completion">
+    <div class="progress-head"><span id="progressText">0% complete</span><span id="progressDetail">0 of 0 key fields</span></div>
+    <div class="progress-bar"><i id="progressFill"></i></div>
+  </div>
+
+  <div class="accordion">
+    <details class="section" open>
+      <summary><div><strong>1. Personal Info</strong><small>Identity, contact and profile photo</small></div><span class="chev">⌄</span></summary>
+      <div class="section-body">
+        <div class="photo-row">
+          <div class="avatar" id="avatarPreview">Photo</div>
+          <div class="field"><span>Profile Photo</span><label class="btn tiny upload">Upload photo<input id="profilePhoto" type="file" accept="image/*"></label><div class="help">The photo is cropped to a circle automatically.</div></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><span>Full Name</span><input data-path="personal.name" placeholder="Alex Morgan" autocomplete="name"></div>
+          <div class="field"><span>Professional Title</span><input data-path="personal.title" placeholder="Product Designer"></div>
+        </div>
+        <div class="field"><span>Short Bio</span><textarea data-path="personal.bio" placeholder="A short introduction about who you are and what you do."></textarea></div>
+        <div class="grid2">
+          <div class="field"><span>Location</span><input data-path="personal.location" placeholder="Hyderabad, India" autocomplete="address-level2"></div>
+          <div class="field"><span>Email</span><input data-path="personal.email" type="email" placeholder="hello@example.com" autocomplete="email"></div>
+        </div>
+        <div class="field"><span>Phone</span><input data-path="personal.phone" placeholder="+91 98765 43210" autocomplete="tel"></div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><div><strong>2. Social Links</strong><small>Professional networks and website</small></div><span class="chev">⌄</span></summary>
+      <div class="section-body">
+        <div class="field"><span>LinkedIn</span><input data-path="social.linkedin" placeholder="https://linkedin.com/in/yourname"></div>
+        <div class="grid2">
+          <div class="field"><span>GitHub</span><input data-path="social.github" placeholder="https://github.com/yourname"></div>
+          <div class="field"><span>Twitter / X</span><input data-path="social.twitter" placeholder="https://x.com/yourname"></div>
+        </div>
+        <div class="grid2">
+          <div class="field"><span>Instagram</span><input data-path="social.instagram" placeholder="https://instagram.com/yourname"></div>
+          <div class="field"><span>Personal Website</span><input data-path="social.website" placeholder="https://yourname.com"></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><div><strong>3. Skills</strong><small>Tags + optional proficiency</small></div><span class="chev">⌄</span></summary>
+      <div class="section-body">
+        <div class="subhead"><strong>Skill tags</strong><span>Type a skill and press Enter</span></div>
+        <div class="tag-editor" id="skillsEditor"><div id="skillsTags"></div><input id="skillInput" placeholder="e.g. Figma"></div>
+        <div id="skillLevels"></div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><div><strong>4. Projects</strong><small>Multiple projects with tags and links</small></div><span class="chev">⌄</span></summary>
+      <div class="section-body">
+        <div class="subhead"><strong>Your projects</strong><button class="btn tiny" id="addProject" type="button">+ Add Project</button></div>
+        <div class="repeat-list" id="projectsList"></div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><div><strong>5. Experience</strong><small>Career timeline</small></div><span class="chev">⌄</span></summary>
+      <div class="section-body">
+        <div class="subhead"><strong>Experience entries</strong><button class="btn tiny" id="addExperience" type="button">+ Add Experience</button></div>
+        <div class="repeat-list" id="experienceList"></div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><div><strong>6. Education</strong><small>Academic background</small></div><span class="chev">⌄</span></summary>
+      <div class="section-body">
+        <div class="subhead"><strong>Education entries</strong><button class="btn tiny" id="addEducation" type="button">+ Add Education</button></div>
+        <div class="repeat-list" id="educationList"></div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><div><strong>7. Contact</strong><small>Message and email CTA</small></div><span class="chev">⌄</span></summary>
+      <div class="section-body">
+        <div class="field"><span>Contact Heading</span><input data-path="contact.heading" placeholder="Let's work together."></div>
+        <div class="field"><span>Message</span><textarea data-path="contact.message" placeholder="Tell clients what you'd like them to contact you about."></textarea></div>
+        <div class="field"><span>Button Label</span><input data-path="contact.button" placeholder="Email me"></div>
+      </div>
+    </details>
+
+    <details class="section">
+      <summary><div><strong>8. Design & Customization</strong><small>Template, accent, font, mode</small></div><span class="chev">⌄</span></summary>
+      <div class="section-body">
+        <div class="settings-row">
+          <div class="control-card"><strong>Template</strong><select class="select" id="templateSelect"><option value="minimal">Minimal</option><option value="modern-dark">Modern Dark</option><option value="gradient">Creative Gradient</option><option value="corporate">Corporate</option></select></div>
+          <div class="control-card"><strong>Font</strong><select class="select" id="fontSelect"><option value="dm">DM Sans</option><option value="manrope">Manrope</option><option value="playfair">Playfair Display</option><option value="space">Space Grotesk</option></select></div>
+        </div>
+        <div class="settings-row">
+          <div class="control-card"><strong>Accent Color</strong><div class="color-row"><input id="accentColor" type="color" value="#9a7342"><span class="color-value" id="accentValue">#9a7342</span></div></div>
+          <div class="control-card"><strong>Editor mode</strong><button class="btn tiny" id="modeToggle" type="button">Switch to dark</button></div>
+        </div>
+      </div>
+    </details>
+  </div>
+</aside>
+
+<main class="preview-area">
+  <div class="preview-head">
+    <div class="preview-title"><strong>LIVE PREVIEW</strong><span>Exported file contains only your finished portfolio.</span></div>
+    <div class="controls">
+      <div class="device-toggle" aria-label="Preview device">
+        <button type="button" class="active" data-device="desktop">Desktop</button>
+        <button type="button" data-device="tablet">Tablet</button>
+        <button type="button" data-device="mobile">Mobile</button>
+      </div>
+      <select class="select" id="previewTemplate" aria-label="Template"></select>
+    </div>
+  </div>
+  <div class="preview-shell">
+    <div id="previewViewport" class="preview-viewport desktop"><div id="preview"></div></div>
+  </div>
+</main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+'use strict';
+
+const FONT_MAP = {
+  dm: '"DM Sans",system-ui,sans-serif',
+  manrope: '"Manrope",system-ui,sans-serif',
+  playfair: '"Playfair Display",Georgia,serif',
+  space: '"Space Grotesk",system-ui,sans-serif'
+};
+
+const demo = {
+  personal:{name:"Alex Morgan",title:"Product Designer & Creative Technologist",bio:"I design digital products, brand experiences and thoughtful interfaces that turn complex ideas into simple, useful experiences.",location:"Hyderabad, India",email:"alex@example.com",phone:"+91 98765 43210",photo:""},
+  social:{linkedin:"https://linkedin.com",github:"https://github.com",twitter:"https://x.com",instagram:"https://instagram.com",website:"https://example.com"},
+  skills:[
+    {name:"Product Design",level:"Advanced"},
+    {name:"Figma",level:"Advanced"},
+    {name:"Design Systems",level:"Advanced"},
+    {name:"Prototyping",level:"Expert"},
+    {name:"HTML & CSS",level:"Working"}
+  ],
+  projects:[
+    {title:"Atlas Finance",description:"A mobile-first banking experience that makes everyday money decisions clearer and faster.",tech:["Figma","UX Research","Design Systems"],live:"https://example.com",github:"https://github.com",image:""},
+    {title:"Studio Notes",description:"A focused publishing platform for independent creators, with flexible content blocks and a calm reading experience.",tech:["UI Design","HTML","CSS"],live:"https://example.com",github:"https://github.com",image:""}
+  ],
+  experience:[
+    {company:"Northstar Studio",role:"Lead Product Designer",start:"2023",end:"Present",description:"Led product strategy and interface design across web and mobile experiences, partnering closely with engineering and founders."},
+    {company:"Pixel Foundry",role:"Product Designer",start:"2020",end:"2023",description:"Designed customer-facing products, built reusable components and improved the end-to-end onboarding journey."}
+  ],
+  education:[
+    {institution:"Design Institute",degree:"B.Des — Communication Design",year:"2016 — 2020"}
+  ],
+  contact:{heading:"Let’s work together.",message:"Have a project, a product idea or a creative challenge? I’d love to hear what you’re building.",button:"Email me"},
+  design:{template:"minimal",accent:"#9a7342",font:"dm",dark:false}
+};
+
+let state = structuredClone(demo);
+let sessionAutoSaveAt = Date.now();
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+
+function esc(v){return String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function get(o,path){return path.split('.').reduce((x,k)=>x?.[k],o);}
+function set(o,path,val){const parts=path.split('.');let x=o;for(let i=0;i<parts.length-1;i++){if(!x[parts[i]]||typeof x[parts[i]]!=='object')x[parts[i]]={};x=x[parts[i]];}x[parts.at(-1)]=val;}
+function text(v,fallback=''){return String(v??'').trim() || fallback;}
+function safeUrl(value){
+  const s=String(value||'').trim(); if(!s)return '';
+  try{const u=new URL(s);return /^https?:$/.test(u.protocol)?u.href:'';}catch{return '';}
+}
+function emailHref(email){const e=String(email||'').trim();return e?('mailto:'+encodeURIComponent(e)):'#';}
+function dataUrl(file){
+  return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result||''));r.onerror=reject;r.readAsDataURL(file);});
+}
+function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),1700);}
+function touch(){sessionAutoSaveAt=Date.now();renderProgress();}
+
+function bindFields(){
+  $$('[data-path]').forEach(el=>{
+    const p=el.dataset.path;
+    el.value=get(state,p) ?? '';
+    el.addEventListener('input',()=>{set(state,p,el.value);touch();renderPreview();});
+  });
+}
+
+function renderSkillsEditor(){
+  const tags=$('#skillsTags'), levels=$('#skillLevels');
+  tags.innerHTML=state.skills.map((x,i)=>'<span class="tag">'+esc(x.name)+' <button type="button" data-remove-skill="'+i+'" aria-label="Remove '+esc(x.name)+'">×</button></span>').join('');
+  levels.innerHTML=state.skills.map((x,i)=>'<div class="inline" style="margin-top:7px"><input data-skill-level="'+i+'" value="'+esc(x.level||'')+'" placeholder="Proficiency (optional)"><button class="btn tiny danger" type="button" data-remove-skill="'+i+'">Remove</button></div>').join('');
+  $$('[data-remove-skill]').forEach(b=>b.onclick=()=>{state.skills.splice(Number(b.dataset.removeSkill),1);renderSkillsEditor();touch();renderPreview();});
+  $$('[data-skill-level]').forEach(i=>i.oninput=()=>{state.skills[Number(i.dataset.skillLevel)].level=i.value;touch();renderPreview();});
+}
+
+function renderProjects(){
+  const root=$('#projectsList');
+  if(!state.projects.length){root.innerHTML='<div class="empty">No projects yet. Add your first project.</div>';return;}
+  root.innerHTML=state.projects.map((p,i)=>'<article class="repeat-card"><div class="repeat-head"><div><span>Project '+(i+1)+'</span><strong>'+esc(text(p.title,'Untitled project'))+'</strong></div><button class="btn tiny danger" type="button" data-remove-project="'+i+'">Remove</button></div>'+
+  '<div class="field"><span>Title</span><input data-project="'+i+'" data-key="title" value="'+esc(p.title||'')+'" placeholder="Project title"></div>'+
+  '<div class="field"><span>Description</span><textarea data-project="'+i+'" data-key="description" placeholder="What did you build and why?">'+esc(p.description||'')+'</textarea></div>'+
+  '<div class="field"><span>Tech Stack Tags</span><div class="tag-editor"><div class="project-tags" data-project-tags="'+i+'">'+(p.tech||[]).map((t,j)=>'<span class="tag">'+esc(t)+' <button type="button" data-project-tag-remove="'+i+'" data-tag-index="'+j+'">×</button></span>').join('')+'</div><input data-project-tag-input="'+i+'" placeholder="Type + Enter"></div></div>'+
+  '<div class="grid2"><div class="field"><span>Live Link</span><input data-project="'+i+'" data-key="live" value="'+esc(p.live||'')+'" placeholder="https://example.com"></div><div class="field"><span>GitHub Link</span><input data-project="'+i+'" data-key="github" value="'+esc(p.github||'')+'" placeholder="https://github.com/..."></div></div>'+
+  '<div class="field"><span>Thumbnail</span><label class="btn tiny upload">Upload image<input type="file" accept="image/*" data-project-image="'+i+'"></label>'+(p.image?'<div class="help">Image selected.</div>':'<div class="help">Optional — placeholder shown until added.</div>')+'</div></article>').join('');
+  $$('[data-remove-project]').forEach(b=>b.onclick=()=>{state.projects.splice(Number(b.dataset.removeProject),1);renderProjects();touch();renderPreview();});
+  $$('[data-project]').forEach(el=>el.oninput=()=>{state.projects[Number(el.dataset.project)][el.dataset.key]=el.value;touch();renderPreview();});
+  $$('[data-project-tag-input]').forEach(el=>el.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();const i=Number(el.dataset.projectTagInput),v=el.value.trim();if(v){state.projects[i].tech.push(v);el.value='';renderProjects();touch();renderPreview();}}});
+  $$('[data-project-tag-remove]').forEach(b=>b.onclick=()=>{state.projects[Number(b.dataset.projectTagRemove)].tech.splice(Number(b.dataset.tagIndex),1);renderProjects();touch();renderPreview();});
+  $$('[data-project-image]').forEach(el=>el.onchange=async()=>{const f=el.files?.[0];if(!f)return;state.projects[Number(el.dataset.projectImage)].image=await dataUrl(f);renderProjects();touch();renderPreview();});
+}
+
+function renderExperience(){
+  const root=$('#experienceList');
+  if(!state.experience.length){root.innerHTML='<div class="empty">No experience entries yet. Add your first role.</div>';return;}
+  root.innerHTML=state.experience.map((x,i)=>'<article class="repeat-card"><div class="repeat-head"><div><span>Experience '+(i+1)+'</span><strong>'+esc(text(x.role,'Role'))+' · '+esc(text(x.company,'Company'))+'</strong></div><button class="btn tiny danger" type="button" data-remove-experience="'+i+'">Remove</button></div>'+
+    '<div class="grid2"><div class="field"><span>Company</span><input data-exp="'+i+'" data-key="company" value="'+esc(x.company||'')+'"></div><div class="field"><span>Role</span><input data-exp="'+i+'" data-key="role" value="'+esc(x.role||'')+'"></div></div>'+
+    '<div class="grid2"><div class="field"><span>Start</span><input data-exp="'+i+'" data-key="start" value="'+esc(x.start||'')+'"></div><div class="field"><span>End</span><input data-exp="'+i+'" data-key="end" value="'+esc(x.end||'')+'"></div></div>'+
+    '<div class="field"><span>Description</span><textarea data-exp="'+i+'" data-key="description">'+esc(x.description||'')+'</textarea></div></article>').join('');
+  $$('[data-remove-experience]').forEach(b=>b.onclick=()=>{state.experience.splice(Number(b.dataset.removeExperience),1);renderExperience();touch();renderPreview();});
+  $$('[data-exp]').forEach(el=>el.oninput=()=>{state.experience[Number(el.dataset.exp)][el.dataset.key]=el.value;touch();renderPreview();});
+}
+
+function renderEducation(){
+  const root=$('#educationList');
+  if(!state.education.length){root.innerHTML='<div class="empty">No education entries yet. Add your first qualification.</div>';return;}
+  root.innerHTML=state.education.map((x,i)=>'<article class="repeat-card"><div class="repeat-head"><div><span>Education '+(i+1)+'</span><strong>'+esc(text(x.degree,'Degree'))+' · '+esc(text(x.institution,'Institution'))+'</strong></div><button class="btn tiny danger" type="button" data-remove-education="'+i+'">Remove</button></div>'+
+    '<div class="grid2"><div class="field"><span>Institution</span><input data-edu="'+i+'" data-key="institution" value="'+esc(x.institution||'')+'"></div><div class="field"><span>Degree</span><input data-edu="'+i+'" data-key="degree" value="'+esc(x.degree||'')+'"></div></div>'+
+    '<div class="field"><span>Year</span><input data-edu="'+i+'" data-key="year" value="'+esc(x.year||'')+'"></div></article>').join('');
+  $$('[data-remove-education]').forEach(b=>b.onclick=()=>{state.education.splice(Number(b.dataset.removeEducation),1);renderEducation();touch();renderPreview();});
+  $$('[data-edu]').forEach(el=>el.oninput=()=>{state.education[Number(el.dataset.edu)][el.dataset.key]=el.value;touch();renderPreview();});
+}
+
+function setupImageInputs(){
+  $('#profilePhoto').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;state.personal.photo=await dataUrl(f);updateAvatar();touch();renderPreview();};
+}
+function updateAvatar(){
+  const a=$('#avatarPreview');
+  a.innerHTML=state.personal.photo?'<img src="'+esc(state.personal.photo)+'" alt="Profile photo">':'Photo';
+}
+
+function renderProgress(){
+  const required=[
+    state.personal.name,state.personal.title,state.personal.bio,state.personal.email,state.personal.location,
+    state.contact.heading,state.contact.message
+  ];
+  const filled=required.filter(v=>String(v||'').trim()).length,total=required.length;
+  const pct=Math.round((filled/total)*100);
+  $('#progressText').textContent=pct+'% complete';
+  $('#progressDetail').textContent=filled+' of '+total+' key fields';
+  $('#progressFill').style.width=pct+'%';
+}
+
+function styleVars(){
+  document.documentElement.style.setProperty('--accent',state.design.accent);
+  document.documentElement.style.setProperty('--font',FONT_MAP[state.design.font]||FONT_MAP.dm);
+  $('#accentValue').textContent=state.design.accent.toUpperCase();
+  $('#accentColor').value=state.design.accent;
+  $('#templateSelect').value=state.design.template;
+  $('#previewTemplate').value=state.design.template;
+  $('#fontSelect').value=state.design.font;
+  $('#modeToggle').textContent=state.design.dark?'Switch to light':'Switch to dark';
+  $('#app').classList.toggle('mode-dark',!!state.design.dark);
+}
+
+function socialLinks(s){
+  const map=[['LinkedIn','linkedin'],['GitHub','github'],['X / Twitter','twitter'],['Instagram','instagram'],['Website','website']];
+  return map.map(([label,key])=>{const url=safeUrl(s[key]);return url?'<a href="'+esc(url)+'" target="_blank" rel="noreferrer">'+label+'</a>':''}).filter(Boolean).join('');
+}
+
+function photoMarkup(src){
+  if(src)return '<div class="hero-photo"><img src="'+esc(src)+'" alt="Profile photo"></div>';
+  return '<div class="hero-photo placeholder">Add a profile photo in Personal Info</div>';
+}
+
+function portfolioMarkup(){
+  const p=state.personal,s=state.social,c=state.contact,d=state.design;
+  const template=d.template, font=FONT_MAP[d.font]||FONT_MAP.dm;
+  const skills=(state.skills||[]).filter(x=>String(x.name||'').trim());
+  const projects=(state.projects||[]).filter(x=>String(x.title||x.description||'').trim());
+  const exp=(state.experience||[]).filter(x=>String(x.company||x.role||x.description||'').trim());
+  const edu=(state.education||[]).filter(x=>String(x.institution||x.degree||'').trim());
+  const links=socialLinks(s);
+  const heroName=text(p.name,'Your Name'), heroTitle=text(p.title,'Creative Professional'),bio=text(p.bio,'Add a short introduction about your work and the value you bring.');
+  let html='<article class="website '+esc(template)+'" style="--website-accent:'+esc(d.accent)+';--website-font:'+esc(font)+'"><header class="website-header"><div class="container"><div class="website-header-row"><div class="website-brand">'+esc(heroName)+'</div><nav aria-label="Portfolio navigation">'+
+    '<a href="#about">About</a>'+ (skills.length?'<a href="#skills">Skills</a>':'') +(projects.length?'<a href="#projects">Projects</a>':'') +(exp.length?'<a href="#experience">Experience</a>':'') +(edu.length?'<a href="#education">Education</a>':'') +'<a href="#contact">Contact</a></nav></div></div></header>';
+  html+='<section class="hero"><div class="container"><div class="hero-grid"><div><div class="hero-kicker">'+esc(heroTitle)+'</div><h1>'+esc(heroName)+'</h1><p>'+esc(bio)+'</p><div class="hero-actions">'+(p.email?'<a class="site-btn" href="'+esc(emailHref(p.email))+'">'+esc(text(c.button,'Email me'))+'</a>':'')+(safeUrl(s.website)?'<a class="site-btn outline" href="'+esc(safeUrl(s.website))+'" target="_blank" rel="noreferrer">Personal website</a>':'')+'</div></div>'+photoMarkup(p.photo)+'</div></div></section>';
+  html+='<section class="site-section" id="about"><div class="container"><div class="section-kicker">About</div><h2>What I do</h2><p class="about-copy">'+esc(bio)+'</p></div></section>';
+  if(skills.length){html+='<section class="site-section soft" id="skills"><div class="container"><div class="section-kicker">Skills</div><h2>Tools & capabilities</h2><div class="skills">'+skills.map(x=>'<span class="skill-pill">'+esc(x.name)+(x.level?'<small>'+esc(x.level)+'</small>':'')+'</span>').join('')+'</div></div></section>';}
+  if(projects.length){html+='<section class="site-section" id="projects"><div class="container"><div class="section-kicker">Projects</div><h2>Selected work</h2><div class="project-grid">'+projects.map(x=>{
+    const image=x.image?'<img src="'+esc(x.image)+'" alt="'+esc(x.title||'Project')+'">':'<div class="project-thumb"></div>';
+    return '<article class="project">'+image+'<div class="project-body"><h3>'+esc(text(x.title,'Untitled project'))+'</h3><p>'+esc(text(x.description,'Project description'))+'</p><div class="tech-tags">'+(x.tech||[]).map(t=>'<span class="tech">'+esc(t)+'</span>').join('')+'</div><div class="project-links">'+(safeUrl(x.live)?'<a class="site-btn" href="'+esc(safeUrl(x.live))+'" target="_blank" rel="noreferrer">Live</a>':'')+(safeUrl(x.github)?'<a class="site-btn outline" href="'+esc(safeUrl(x.github))+'" target="_blank" rel="noreferrer">GitHub</a>':'')+'</div></div></article>';
+  }).join('')+'</div></div></section>';}
+  if(exp.length){html+='<section class="site-section soft" id="experience"><div class="container"><div class="section-kicker">Experience</div><h2>Where I’ve worked</h2><div class="timeline">'+exp.map(x=>'<div class="timeline-item"><h3>'+esc(text(x.role,'Role'))+'</h3><strong>'+esc(text(x.company,'Company'))+'</strong><span>'+esc([x.start,x.end].filter(Boolean).join(' — ')||'Dates available on request')+'</span><p>'+esc(text(x.description,'Describe the impact you made in this role.'))+'</p></div>').join('')+'</div></div></section>';}
+  if(edu.length){html+='<section class="site-section" id="education"><div class="container"><div class="section-kicker">Education</div><h2>Learning & qualifications</h2><div class="edu-grid">'+edu.map(x=>'<article class="edu"><h3>'+esc(text(x.institution,'Institution'))+'</h3><span>'+esc(text(x.degree,'Degree'))+'</span><p>'+esc(text(x.year,'Year'))+'</p></article>').join('')+'</div></div></section>';}
+  html+='<section class="site-section soft" id="contact"><div class="container"><div class="contact-box"><div class="section-kicker">Contact</div><h2>'+esc(text(c.heading,'Let’s work together.'))+'</h2><p>'+esc(text(c.message,'Tell me a little about your project and what you need.'))+'</p><div class="hero-actions">'+(p.email?'<a class="site-btn" href="'+esc(emailHref(p.email))+'">'+esc(text(c.button,'Email me'))+'</a>':'')+(p.phone?'<a class="site-btn outline" href="'+esc('tel:'+p.phone.replace(/[^+0-9]/g,''))+'">Call '+esc(p.phone)+'</a>':'')+'</div></div></div></section>';
+  html+='<footer class="footer"><div class="container"><div>'+esc(heroName)+' · '+esc(heroTitle)+'</div><div style="margin-top:7px">'+(links||'')+'</div><div style="margin-top:8px">© '+new Date().getFullYear()+' '+esc(heroName)+'</div></div></footer></article>';
+  return html;
+}
+
+function renderPreview(){styleVars();$('#preview').innerHTML=portfolioMarkup();}
+
+function initialSetup(){
+  bindFields();renderSkillsEditor();renderProjects();renderExperience();renderEducation();setupImageInputs();updateAvatar();
+  $('#skillInput').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();const v=e.target.value.trim();if(v){state.skills.push({name:v,level:''});e.target.value='';renderSkillsEditor();touch();renderPreview();}}};
+  $('#addProject').onclick=()=>{state.projects.push({title:'',description:'',tech:[],live:'',github:'',image:''});renderProjects();touch();renderPreview();};
+  $('#addExperience').onclick=()=>{state.experience.push({company:'',role:'',start:'',end:'',description:''});renderExperience();touch();renderPreview();};
+  $('#addEducation').onclick=()=>{state.education.push({institution:'',degree:'',year:''});renderEducation();touch();renderPreview();};
+  $('#templateSelect').onchange=e=>{state.design.template=e.target.value;touch();renderPreview();};
+  $('#previewTemplate').onchange=e=>{state.design.template=e.target.value;touch();renderPreview();};
+  $('#fontSelect').onchange=e=>{state.design.font=e.target.value;touch();renderPreview();};
+  $('#accentColor').oninput=e=>{state.design.accent=e.target.value;touch();renderPreview();};
+  $('#modeToggle').onclick=()=>{state.design.dark=!state.design.dark;touch();styleVars();};
+  $$('[data-device]').forEach(b=>b.onclick=()=>{$$('[data-device]').forEach(x=>x.classList.remove('active'));b.classList.add('active');$('#previewViewport').className='preview-viewport '+b.dataset.device;});
+  $('#exportJsonBtn').onclick=exportJson;
+  $('#importFile').onchange=importJson;
+  $('#importBtn').onclick=()=>$('#importFile').click();
+  $('#resetBtn').onclick=resetAll;
+  $('#downloadBtn').onclick=downloadPortfolio;
+  renderPreview();renderProgress();styleVars();
+}
+function exportJson(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='portfolio-data.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('JSON exported');
+}
+async function importJson(e){
+  const f=e.target.files?.[0];if(!f)return;
+  try{
+    const parsed=JSON.parse(await f.text());
+    if(!parsed.personal||!parsed.design)throw new Error('Invalid portfolio data');
+    state={...structuredClone(demo),...parsed,personal:{...structuredClone(demo.personal),...(parsed.personal||{})},social:{...structuredClone(demo.social),...(parsed.social||{})},contact:{...structuredClone(demo.contact),...(parsed.contact||{})},design:{...structuredClone(demo.design),...(parsed.design||{})}};
+    state.skills=Array.isArray(parsed.skills)?parsed.skills:[];state.projects=Array.isArray(parsed.projects)?parsed.projects:[];state.experience=Array.isArray(parsed.experience)?parsed.experience:[];state.education=Array.isArray(parsed.education)?parsed.education:[];
+    document.querySelectorAll('[data-path]').forEach(el=>el.value=get(state,el.dataset.path)??'');
+    renderSkillsEditor();renderProjects();renderExperience();renderEducation();updateAvatar();touch();renderPreview();toast('Portfolio data imported');
+  }catch(err){toast('Import failed: '+err.message);}
+  e.target.value='';
+}
+function resetAll(){
+  if(!confirm('Reset the portfolio to the sample demo data? Your current edits will be lost.'))return;
+  state=structuredClone(demo);
+  document.querySelectorAll('[data-path]').forEach(el=>el.value=get(state,el.dataset.path)??'');
+  renderSkillsEditor();renderProjects();renderExperience();renderEducation();updateAvatar();touch();renderPreview();toast('Portfolio reset');
+}
+
+function exportCss(){
+  return '<style>'+document.querySelector('style').textContent+'</style>';
+}
+function staticPortfolioDocument(){
+  const content=portfolioMarkup();
+  const css=exportCss();
+  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="'+esc(state.design.accent)+'"><title>'+esc(text(state.personal.name,'My Portfolio'))+' — Portfolio</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">'+css+'</head><body style="margin:0;background:#fff">'+content+'</body></html>';
+}
+function downloadPortfolio(){
+  const html=staticPortfolioDocument();
+  const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(text(state.personal.name,'portfolio').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'portfolio')+'.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('Standalone portfolio downloaded');
+}
+
+$('#app').addEventListener('input',e=>{if(e.target.matches('[data-path]')){set(state,e.target.dataset.path,e.target.value);renderProgress();renderPreview();}});
+initialSetup();
+})();
+</script>
+</body>
+</html>
