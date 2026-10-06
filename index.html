@@ -274,6 +274,11 @@
   function setActiveChip(chip) {
     chips.forEach(item => item.classList.toggle("active", item === chip));
     activeCategory = getChipCategory(chip);
+    if (activeCategory === "all") {
+      searchInput.value = "";
+      query = "";
+      clearButton.hidden = true;
+    }
     applyFilters(activeCategory !== "all");
   }
 
