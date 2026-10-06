@@ -117,11 +117,13 @@
       .replace(/[^a-z0-9]+/g, " ")
       .trim();
 
-  const groupCategory = (group) =>
+  const getGroupCategory = (group) =>
     normalize(group.querySelector(".template-group-head h2")?.textContent || "");
 
-  const chipCategory = (chip) =>
-    normalize(categoryMap[normalize(chip.textContent)] || chip.textContent);
+  const getChipCategory = (chip) => {
+    const label = normalize(chip.textContent);
+    return normalize(categoryMap[label] || chip.textContent);
+  };
 
   const emptyState = document.createElement("div");
   emptyState.className = "template-empty-state";
@@ -132,6 +134,7 @@
   const searchIcon = document.createElement("span");
   searchIcon.className = "template-search-icon";
   searchIcon.setAttribute("aria-hidden", "true");
+  searchIcon.textContent = "⌕";
   searchWrap.prepend(searchIcon);
 
   const clearButton = document.createElement("button");
@@ -139,6 +142,7 @@
   clearButton.className = "template-search-clear";
   clearButton.setAttribute("aria-label", "Clear template search");
   clearButton.textContent = "×";
+  clearButton.hidden = true;
   searchWrap.appendChild(clearButton);
 
   let activeCategory = "all";
@@ -160,12 +164,12 @@
       img.decoding = "async";
       img.width = 1600;
       img.height = 1000;
-      img.classList.remove("is-loaded");
+      if (img.complete && img.naturalWidth) img.classList.add("is-loaded");
       img.addEventListener("load", () => img.classList.add("is-loaded"), { once: true });
       img.addEventListener("error", () => img.classList.remove("is-loaded"), { once: true });
     }
 
-    let select = body.querySelector("a[href*='features.html?template=']");
+    const select = body.querySelector("a[href*='features.html?template=']");
     if (!select) return;
 
     let actions = body.querySelector(".template-card-actions");
@@ -186,12 +190,16 @@
     const href = select.getAttribute("href") || "";
     const match = href.match(/template=([^&]+)/);
     const templateId = match ? decodeURIComponent(match[1]) : "";
+
     if (templateId && !actions.querySelector(".template-live-preview")) {
       const preview = document.createElement("a");
       preview.className = "btn ghost small template-live-preview";
       preview.href = "builder.html?template=" + encodeURIComponent(templateId);
       preview.textContent = "Live preview";
-      preview.setAttribute("aria-label", "Live preview " + (card.querySelector("h3")?.textContent || "template"));
+      preview.setAttribute(
+        "aria-label",
+        "Live preview " + (card.querySelector("h3")?.textContent || "template")
+      );
       actions.insertBefore(preview, select);
     }
   }
@@ -199,45 +207,43 @@
   function enhanceGroups() {
     [...grid.querySelectorAll(".template-group")].forEach(group => {
       const cards = [...group.querySelectorAll(".template-card")];
-      const viewAll = group.querySelector(".template-view-all");
       cards.forEach(enhanceCard);
 
       cards.forEach((card, index) => {
-        card.dataset.category = groupCategory(group);
+        card.dataset.category = getGroupCategory(group);
         card.dataset.search = cardMeta(card);
-        card.hidden = index >= 3 && !group.classList.contains("show-all");
+        card.dataset.originalIndex = String(index);
       });
 
-      if (cards.length > 3) {
-        if (!viewAll) {
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "template-view-all";
-          button.textContent = "View all";
-          button.addEventListener("click", () => {
-            group.classList.toggle("show-all");
-            button.textContent = group.classList.contains("show-all") ? "Show less" : "View all";
-            applyFilters(false);
-          });
-          group.querySelector(".template-group-head")?.appendChild(button);
-        }
+      if (cards.length > 3 && !group.querySelector(".template-view-all")) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "template-view-all";
+        button.textContent = "View all";
+        button.addEventListener("click", () => {
+          group.classList.toggle("show-all");
+          button.textContent = group.classList.contains("show-all") ? "Show less" : "View all";
+          applyFilters(false);
+        });
+        group.querySelector(".template-group-head")?.appendChild(button);
       }
     });
   }
 
-  function applyFilters(scrollToMatch) {
+  function applyFilters(shouldScroll) {
     const needle = normalize(query);
     let visibleCount = 0;
 
     [...grid.querySelectorAll(".template-group")].forEach(group => {
       const cards = [...group.querySelectorAll(".template-card")];
-      const matchesCategory = activeCategory === "all" || groupCategory(group) === activeCategory;
+      const matchesCategory =
+        activeCategory === "all" || getGroupCategory(group) === activeCategory;
       let groupVisible = false;
 
       cards.forEach((card, index) => {
         const matchesSearch = !needle || card.dataset.search.includes(needle);
-        const withinInitialLimit = index < 3 || group.classList.contains("show-all");
-        const visible = matchesCategory && matchesSearch && withinInitialLimit;
+        const initialLimit = index < 3 || group.classList.contains("show-all");
+        const visible = matchesCategory && matchesSearch && (needle ? true : initialLimit);
         card.hidden = !visible;
         if (visible) {
           visibleCount += 1;
@@ -246,27 +252,35 @@
       });
 
       group.hidden = !groupVisible;
+
+      const viewAll = group.querySelector(".template-view-all");
+      if (viewAll) {
+        const hasMore = cards.some(card => !card.hidden && Number(card.dataset.originalIndex) >= 3);
+        viewAll.hidden = Boolean(needle) || !matchesCategory || cards.length <= 3 || group.classList.contains("show-all");
+        if (!needle && matchesCategory) {
+          viewAll.textContent = group.classList.contains("show-all") ? "Show less" : "View all";
+        }
+      }
     });
 
     emptyState.hidden = visibleCount !== 0;
 
-    if (scrollToMatch && activeCategory !== "all") {
-      const target = [...grid.querySelectorAll(".template-group")].find(g => !g.hidden);
+    if (shouldScroll && activeCategory !== "all") {
+      const target = [...grid.querySelectorAll(".template-group")].find(group => !group.hidden);
       target?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }
 
-  function setActiveChip(chip, shouldScroll) {
+  function setActiveChip(chip) {
     chips.forEach(item => item.classList.toggle("active", item === chip));
-    activeCategory = chipCategory(chip);
-    query = searchInput.value.trim();
-    applyFilters(shouldScroll);
+    activeCategory = getChipCategory(chip);
+    applyFilters(activeCategory !== "all");
   }
 
   chips.forEach(chip => {
     chip.addEventListener("click", event => {
       event.preventDefault();
-      setActiveChip(chip, chipCategory(chip) !== "all");
+      setActiveChip(chip);
     });
   });
 
@@ -284,7 +298,17 @@
     applyFilters(false);
   });
 
-  clearButton.hidden = true;
+  // core/app.js renders template cards asynchronously. Observe that DOM update,
+  // then enhance the generated cards without changing its logic.
+  const observer = new MutationObserver(() => {
+    if (!grid.querySelector(".template-group")) return;
+    enhanceGroups();
+    applyFilters(false);
+    observer.disconnect();
+  });
+  observer.observe(grid, { childList: true, subtree: true });
+
+  // Also handle an already-rendered marketplace.
   enhanceGroups();
   applyFilters(false);
 })();
