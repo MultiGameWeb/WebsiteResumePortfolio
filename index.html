@@ -84,5 +84,210 @@
   </main>
   <footer class="footer">© 2026 SiteCraft · Template Builder</footer>
   <script src="core/store.js"></script><script src="core/registry.js"></script><script src="core/app.js"></script>
+  <script>
+(() => {
+  "use strict";
+
+  const grid = document.querySelector("#templateGrid");
+  const filterBar = document.querySelector(".template-filter-bar");
+  const chips = [...document.querySelectorAll(".filter-chip")];
+  const searchWrap = document.querySelector(".template-search");
+  const searchInput = searchWrap?.querySelector("input");
+  if (!grid || !filterBar || !chips.length || !searchInput) return;
+
+  const categoryMap = {
+    all: "all",
+    restaurants: "restaurants",
+    photography: "photography",
+    catering: "catering services",
+    "real estate": "real estate",
+    "salon & spa": "salon & spa",
+    medical: "dental & medical centers",
+    fitness: "gyms & fitness centers",
+    "cloud kitchen": "cloud kitchen & home bakers",
+    events: "event & wedding planners",
+    automotive: "automotive services",
+    education: "schools, colleges & coaching"
+  };
+
+  const normalize = (value) =>
+    String(value || "")
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+
+  const groupCategory = (group) =>
+    normalize(group.querySelector(".template-group-head h2")?.textContent || "");
+
+  const chipCategory = (chip) =>
+    normalize(categoryMap[normalize(chip.textContent)] || chip.textContent);
+
+  const emptyState = document.createElement("div");
+  emptyState.className = "template-empty-state";
+  emptyState.hidden = true;
+  emptyState.innerHTML = "<strong>No templates found</strong><span>Try another category or search term.</span>";
+  grid.after(emptyState);
+
+  const searchIcon = document.createElement("span");
+  searchIcon.className = "template-search-icon";
+  searchIcon.setAttribute("aria-hidden", "true");
+  searchWrap.prepend(searchIcon);
+
+  const clearButton = document.createElement("button");
+  clearButton.type = "button";
+  clearButton.className = "template-search-clear";
+  clearButton.setAttribute("aria-label", "Clear template search");
+  clearButton.textContent = "×";
+  searchWrap.appendChild(clearButton);
+
+  let activeCategory = "all";
+  let query = "";
+
+  function cardMeta(card) {
+    const category = card.querySelector(".template-meta")?.textContent || "";
+    const name = card.querySelector("h3")?.textContent || "";
+    return normalize(category + " " + name);
+  }
+
+  function enhanceCard(card) {
+    const img = card.querySelector("img");
+    const body = card.querySelector(".template-card-body");
+    if (!body) return;
+
+    if (img) {
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.width = 1600;
+      img.height = 1000;
+      img.classList.remove("is-loaded");
+      img.addEventListener("load", () => img.classList.add("is-loaded"), { once: true });
+      img.addEventListener("error", () => img.classList.remove("is-loaded"), { once: true });
+    }
+
+    let select = body.querySelector("a[href*='features.html?template=']");
+    if (!select) return;
+
+    let actions = body.querySelector(".template-card-actions");
+    if (!actions) {
+      actions = document.createElement("div");
+      actions.className = "template-card-actions";
+      body.appendChild(actions);
+    }
+
+    if (!actions.contains(select)) {
+      select.remove();
+      actions.appendChild(select);
+    }
+
+    select.textContent = "Select →";
+    select.classList.add("btn", "primary", "small");
+
+    const href = select.getAttribute("href") || "";
+    const match = href.match(/template=([^&]+)/);
+    const templateId = match ? decodeURIComponent(match[1]) : "";
+    if (templateId && !actions.querySelector(".template-live-preview")) {
+      const preview = document.createElement("a");
+      preview.className = "btn ghost small template-live-preview";
+      preview.href = "builder.html?template=" + encodeURIComponent(templateId);
+      preview.textContent = "Live preview";
+      preview.setAttribute("aria-label", "Live preview " + (card.querySelector("h3")?.textContent || "template"));
+      actions.insertBefore(preview, select);
+    }
+  }
+
+  function enhanceGroups() {
+    [...grid.querySelectorAll(".template-group")].forEach(group => {
+      const cards = [...group.querySelectorAll(".template-card")];
+      const viewAll = group.querySelector(".template-view-all");
+      cards.forEach(enhanceCard);
+
+      cards.forEach((card, index) => {
+        card.dataset.category = groupCategory(group);
+        card.dataset.search = cardMeta(card);
+        card.hidden = index >= 3 && !group.classList.contains("show-all");
+      });
+
+      if (cards.length > 3) {
+        if (!viewAll) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "template-view-all";
+          button.textContent = "View all";
+          button.addEventListener("click", () => {
+            group.classList.toggle("show-all");
+            button.textContent = group.classList.contains("show-all") ? "Show less" : "View all";
+            applyFilters(false);
+          });
+          group.querySelector(".template-group-head")?.appendChild(button);
+        }
+      }
+    });
+  }
+
+  function applyFilters(scrollToMatch) {
+    const needle = normalize(query);
+    let visibleCount = 0;
+
+    [...grid.querySelectorAll(".template-group")].forEach(group => {
+      const cards = [...group.querySelectorAll(".template-card")];
+      const matchesCategory = activeCategory === "all" || groupCategory(group) === activeCategory;
+      let groupVisible = false;
+
+      cards.forEach((card, index) => {
+        const matchesSearch = !needle || card.dataset.search.includes(needle);
+        const withinInitialLimit = index < 3 || group.classList.contains("show-all");
+        const visible = matchesCategory && matchesSearch && withinInitialLimit;
+        card.hidden = !visible;
+        if (visible) {
+          visibleCount += 1;
+          groupVisible = true;
+        }
+      });
+
+      group.hidden = !groupVisible;
+    });
+
+    emptyState.hidden = visibleCount !== 0;
+
+    if (scrollToMatch && activeCategory !== "all") {
+      const target = [...grid.querySelectorAll(".template-group")].find(g => !g.hidden);
+      target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function setActiveChip(chip, shouldScroll) {
+    chips.forEach(item => item.classList.toggle("active", item === chip));
+    activeCategory = chipCategory(chip);
+    query = searchInput.value.trim();
+    applyFilters(shouldScroll);
+  }
+
+  chips.forEach(chip => {
+    chip.addEventListener("click", event => {
+      event.preventDefault();
+      setActiveChip(chip, chipCategory(chip) !== "all");
+    });
+  });
+
+  searchInput.addEventListener("input", () => {
+    query = searchInput.value;
+    clearButton.hidden = !query;
+    applyFilters(false);
+  });
+
+  clearButton.addEventListener("click", () => {
+    searchInput.value = "";
+    query = "";
+    clearButton.hidden = true;
+    searchInput.focus();
+    applyFilters(false);
+  });
+
+  clearButton.hidden = true;
+  enhanceGroups();
+  applyFilters(false);
+})();
+</script>
 </body>
 </html>
