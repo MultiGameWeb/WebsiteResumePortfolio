@@ -110,6 +110,48 @@
     education: "schools, colleges & coaching"
   };
 
+  // Category-level synonyms make natural searches such as
+  // "hotel", "food", "gym" and "college" discover the right templates.
+  const CATEGORY_KEYWORDS = {
+    restaurants: "hotel food dining cafe café eatery restaurant restaurants bistro menu biryani bar dhaba",
+    photography: "photo photographer photography camera wedding portrait studio gallery shoot photos",
+    "catering services": "food wedding party buffet banquet event meals catering caterer tiffin",
+    "real estate": "property house home flat apartment plot villa builder broker rent rental property sales",
+    "salon spa": "salon spa beauty parlour parlor hair makeup massage barber bridal skincare haircut",
+    "dental medical centers": "doctor clinic hospital health dental pharmacy care dentist medicine medical healthcare",
+    "gyms fitness centers": "gym yoga trainer workout health sports crossfit zumba fitness exercise strength",
+    "cloud kitchen home bakers": "food delivery restaurant online kitchen takeaway tiffin bakery cake cakes home baker cloud kitchen",
+    "events wedding planners": "wedding party planner event decoration birthday conference celebration venue",
+    "automotive services": "car bike garage showroom vehicle mechanic service dealer detailing auto automobile repair",
+    "schools colleges coaching": "college school coaching institute academy tuition course university classes education learning"
+  };
+
+  const TEMPLATE_KEYWORDS = {
+    "restaurant-01": "fine dining luxury hotel family restaurant biryani menu",
+    "restaurant-02": "colorful vibrant cafe restaurant food menu dining",
+    "photography-01": "editorial fashion portrait wedding camera studio photoshoot",
+    "photography-02": "cinematic wedding film photo camera couple studio",
+    "catering-01": "celebration wedding catering buffet banquet party food meals",
+    "realestate-01": "property house home apartment villa real estate broker rent",
+    "interior-01": "interior architecture architect home design floor plan decor materials",
+    "realestate-02": "luxury property villa home apartment builder real estate investment",
+    "salon-01": "elegant salon spa beauty hair makeup bridal",
+    "salon-02": "bold salon beauty barber haircut makeup spa",
+    "medical-01": "clinic doctor hospital dental medical healthcare consultation",
+    "medical-02": "doctor clinic hospital health dentist care appointment",
+    "gym-01": "gym workout fitness trainer strength performance",
+    "yoga-01": "yoga fitness wellness meditation flexibility trainer",
+    "zumba-01": "zumba dance fitness workout cardio trainer",
+    "crossfit-01": "crossfit gym strength workout functional fitness",
+    "hiit-01": "hiit cardio gym workout fitness training",
+    "strength-circuit-01": "strength gym workout circuit trainer fitness",
+    "mobility-01": "mobility stretching recovery fitness yoga wellness",
+    "cloudkitchen-01": "cloud kitchen food delivery takeaway bakery tiffin online orders",
+    "event-wedding-01": "wedding event planner party decoration celebration",
+    "automotive-01": "car garage mechanic detailing vehicle service repair",
+    "coaching-education-01": "school college coaching institute academy tuition university courses"
+  };
+
   const normalize = (value) =>
     String(value || "")
       .toLowerCase()
@@ -149,9 +191,21 @@
   let query = "";
 
   function cardMeta(card) {
-    const category = card.querySelector(".template-meta")?.textContent || "";
+    const category = normalize(card.dataset.category || card.querySelector(".template-meta")?.textContent || "");
     const name = card.querySelector("h3")?.textContent || "";
-    return normalize(category + " " + name);
+    const keywords = card.dataset.keywords || "";
+    return normalize([card.textContent || "", name, category, CATEGORY_KEYWORDS[category] || "", keywords].join(" "));
+  }
+
+  function canonicalSearchCategory(group) {
+    const category = getGroupCategory(group);
+    if (category === "salon spa") return "salon spa";
+    if (category === "dental medical centers") return "dental medical centers";
+    if (category === "gyms fitness centers") return "gyms fitness centers";
+    if (category === "cloud kitchen home bakers") return "cloud kitchen home bakers";
+    if (category === "events wedding planners") return "events wedding planners";
+    if (category === "schools colleges coaching") return "schools colleges coaching";
+    return category;
   }
 
   function enhanceCard(card) {
@@ -211,6 +265,14 @@
 
       cards.forEach((card, index) => {
         card.dataset.category = getGroupCategory(group);
+        card.dataset.categoryKey = canonicalSearchCategory(group);
+
+        const select = card.querySelector("a[href*='features.html?template=']");
+        const href = select?.getAttribute("href") || "";
+        const match = href.match(/template=([^&]+)/);
+        const templateId = match ? decodeURIComponent(match[1]) : "";
+
+        card.dataset.keywords = TEMPLATE_KEYWORDS[templateId] || "";
         card.dataset.search = cardMeta(card);
         card.dataset.originalIndex = String(index);
       });
@@ -230,6 +292,21 @@
     });
   }
 
+  function cardMatches(card, queryText) {
+    const q = normalize(queryText);
+    if (!q) return true;
+
+    const category = normalize(card.dataset.categoryKey || card.dataset.category || "");
+    const searchable = [
+      card.textContent || "",
+      category,
+      CATEGORY_KEYWORDS[category] || "",
+      card.dataset.keywords || ""
+    ].join(" ");
+
+    return q.split(/\s+/).filter(Boolean).every(word => normalize(searchable).includes(word));
+  }
+
   function applyFilters(shouldScroll) {
     const needle = normalize(query);
     let visibleCount = 0;
@@ -241,7 +318,7 @@
       let groupVisible = false;
 
       cards.forEach((card, index) => {
-        const matchesSearch = !needle || card.dataset.search.includes(needle);
+        const matchesSearch = cardMatches(card, query);
         const initialLimit = index < 3 || group.classList.contains("show-all");
         const visible = matchesCategory && matchesSearch && (needle ? true : initialLimit);
         card.hidden = !visible;
