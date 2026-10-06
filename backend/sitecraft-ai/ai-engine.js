@@ -1,4 +1,4 @@
-const DEFAULT_MODEL = "gemini-2.5-flash";
+const DEFAULT_MODEL = "gemini-3.8-flash";
 const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504]);
 
 const KEY_ENV = {
