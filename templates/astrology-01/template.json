@@ -1,0 +1,474 @@
+{
+  "id": "astrology-01",
+  "name": "Astrology — Vedic Guide",
+  "category": "Astrology",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home"
+    },
+    {
+      "id": "about",
+      "label": "About"
+    },
+    {
+      "id": "services",
+      "label": "Services"
+    },
+    {
+      "id": "rashis",
+      "label": "Rashi / Zodiac"
+    },
+    {
+      "id": "reviews",
+      "label": "Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "location",
+      "label": "Location"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Business Name",
+      "required": true,
+      "placeholder": "Sri Jyotish Alayam"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Astrologer Name",
+      "placeholder": "M N Acharya"
+    },
+    {
+      "path": "brand.motto",
+      "label": "Motto",
+      "placeholder": "Clarity through Vedic wisdom."
+    },
+    {
+      "path": "home.title",
+      "label": "Home Heading",
+      "required": true,
+      "placeholder": "Guidance for every important chapter."
+    },
+    {
+      "path": "home.text",
+      "label": "Home Text",
+      "type": "textarea"
+    },
+    {
+      "path": "brand.about",
+      "label": "About Us",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Image",
+      "type": "media"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number"
+    },
+    {
+      "path": "contact.call",
+      "label": "Call Number"
+    },
+    {
+      "path": "contact.location",
+      "label": "Location"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "id": "astrology-01",
+    "brand": {
+      "businessName": "Sri Jyotish Alayam",
+      "ownerName": "M N Acharya",
+      "motto": "Clarity through Vedic wisdom.",
+      "about": "Personal consultations rooted in Vedic astrology, practical guidance and respectful one-to-one conversations."
+    },
+    "home": {
+      "title": "Guidance for every important chapter.",
+      "text": "Kundali, Muhurtham, career, marriage and life guidance with a calm, personal approach."
+    },
+    "contact": {
+      "whatsapp": "919876543210",
+      "call": "+91 98765 43210",
+      "location": "Tarnaka, Secunderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Tarnaka+Secunderabad"
+    },
+    "hero": "https://images.unsplash.com/photo-1532968961962-8a0b3b0c1a05?auto=format&fit=crop&w=1800&q=85",
+    "services": [
+      {
+        "id": "s1",
+        "name": "Kundali Reading",
+        "price": "From ₹999",
+        "description": "Birth-chart based consultation.",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "name": "Marriage Matching",
+        "price": "From ₹1,499",
+        "description": "Compatibility and timing guidance.",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "name": "Shubha Muhurtham",
+        "price": "Custom",
+        "description": "Auspicious dates for important beginnings.",
+        "enabled": true
+      }
+    ],
+    "rashis": [
+      {
+        "id": "r1",
+        "name": "Aries",
+        "symbol": "♈",
+        "description": "Courage, action and initiative.",
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Taurus",
+        "symbol": "♉",
+        "description": "Stability, patience and value.",
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Gemini",
+        "symbol": "♊",
+        "description": "Communication, curiosity and adaptability.",
+        "enabled": true
+      },
+      {
+        "id": "r4",
+        "name": "Cancer",
+        "symbol": "♋",
+        "description": "Care, intuition and protection.",
+        "enabled": true
+      },
+      {
+        "id": "r5",
+        "name": "Leo",
+        "symbol": "♌",
+        "description": "Confidence, creativity and leadership.",
+        "enabled": true
+      },
+      {
+        "id": "r6",
+        "name": "Virgo",
+        "symbol": "♍",
+        "description": "Precision, service and practical thinking.",
+        "enabled": true
+      },
+      {
+        "id": "r7",
+        "name": "Libra",
+        "symbol": "♎",
+        "description": "Balance, partnership and harmony.",
+        "enabled": true
+      },
+      {
+        "id": "r8",
+        "name": "Scorpio",
+        "symbol": "♏",
+        "description": "Depth, transformation and focus.",
+        "enabled": true
+      },
+      {
+        "id": "r9",
+        "name": "Sagittarius",
+        "symbol": "♐",
+        "description": "Exploration, optimism and learning.",
+        "enabled": true
+      },
+      {
+        "id": "r10",
+        "name": "Capricorn",
+        "symbol": "♑",
+        "description": "Discipline, ambition and structure.",
+        "enabled": true
+      },
+      {
+        "id": "r11",
+        "name": "Aquarius",
+        "symbol": "♒",
+        "description": "Innovation, independence and ideas.",
+        "enabled": true
+      },
+      {
+        "id": "r12",
+        "name": "Pisces",
+        "symbol": "♓",
+        "description": "Empathy, imagination and spirituality.",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Client Review",
+        "text": "Clear, respectful and easy to understand.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "Do I need birth time?",
+        "answer": "Accurate birth time improves the reading.",
+        "enabled": true
+      }
+    ],
+    "settings": {
+      "showAbout": true,
+      "showServices": true,
+      "showReviews": true,
+      "showContact": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:astrology-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.motto",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Business",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Business name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Astrologer name"
+          },
+          {
+            "path": "brand.motto",
+            "label": "Motto"
+          },
+          {
+            "path": "brand.about",
+            "label": "About",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "services",
+        "label": "Services",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Name"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "price": "Custom quote",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "rashis",
+        "label": "Rashi / Zodiac",
+        "type": "collection",
+        "itemLabel": "rashi",
+        "path": "rashis",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Name"
+          },
+          {
+            "key": "symbol",
+            "label": "Symbol"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New Rashi",
+          "symbol": "✦",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New customer",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact",
+        "fields": [
+          {
+            "path": "contact.call",
+            "label": "Call number"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.location",
+            "label": "Location"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Maps URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Services",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
