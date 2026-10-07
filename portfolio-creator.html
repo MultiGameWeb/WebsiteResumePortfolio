@@ -576,7 +576,7 @@ function setupDivider(){
     raf=0;if(!dragging)return;setEditorWidth(pendingX);
   }
   d.addEventListener("pointerdown",function(e){
-    if(innerWidth<=800)return;
+    if(innerWidth<=899)return;
     dragging=true;pointerId=e.pointerId;pendingX=e.clientX;
     d.setPointerCapture?.(e.pointerId);
     document.body.classList.add("divider-dragging");
@@ -590,7 +590,7 @@ function setupDivider(){
   d.addEventListener("lostpointercapture",endDrag);
   d.addEventListener("dblclick",function(){if(innerWidth>899)setEditorWidth(410)});
   d.addEventListener("keydown",function(e){
-    if(innerWidth<=800)return;
+    if(innerWidth<=899)return;
     var b=editorBounds(),step=e.shiftKey?48:16;
     if(e.key==="ArrowLeft"){e.preventDefault();setEditorWidth(editorWidth-step)}
     else if(e.key==="ArrowRight"){e.preventDefault();setEditorWidth(editorWidth+step)}
