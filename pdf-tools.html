@@ -31,12 +31,12 @@ main{max-width:1200px;margin:auto;padding:46px 20px 72px}.hero{display:grid;grid
 <main>
 <section class="hero"><div><div class="eyebrow">Document utility suite</div><h1>PDF tools, all in one place.</h1><p>Convert, organize, optimize, and prepare PDF files without creating an account.</p></div><div class="privacy"><strong>Privacy first.</strong><br>Files are processed for the selected task and are not intended to be stored permanently. Production processing should enforce automatic cleanup after a short retention window.</div></section>
 <section class="grid" aria-label="PDF tools">
-<article class="tool" data-tool="image"><div class="icon">⇩</div><h2>PDF → JPG / PNG</h2><p>Convert each PDF page into an image.</p><button type="button" data-open="image" >Use tool</button></article><article class="tool" data-tool="word"><div class="icon">W</div><h2>PDF → Word</h2><p>Turn text-rich PDFs into editable Word documents.</p><button type="button" data-open="word" disabled>Backend required</button></article><article class="tool" data-tool="excel"><div class="icon">X</div><h2>PDF → Excel</h2><p>Extract tables/data into editable spreadsheets.</p><button type="button" data-open="excel" disabled>Backend required</button></article><article class="tool" data-tool="html"><div class="icon">⌁</div><h2>HTML → PDF</h2><p>Convert a web page URL into a PDF snapshot.</p><button type="button" data-open="html" disabled>Backend required</button></article><article class="tool" data-tool="compress"><div class="icon">↓</div><h2>Compress PDF</h2><p>Reduce PDF size for uploads and sharing.</p><button type="button" data-open="compress" >Use tool</button></article><article class="tool" data-tool="protect"><div class="icon">●</div><h2>Protect PDF</h2><p>Add password protection to a PDF file.</p><button type="button" data-open="protect" disabled>Backend required</button></article><article class="tool" data-tool="unlock"><div class="icon">○</div><h2>Unlock PDF</h2><p>Remove protection when you have the password.</p><button type="button" data-open="unlock" disabled>Backend required</button></article><article class="tool" data-tool="split"><div class="icon">✂</div><h2>Split PDF</h2><p>Create a new PDF from selected pages.</p><button type="button" data-open="split" >Use tool</button></article><article class="tool" data-tool="delete"><div class="icon">−</div><h2>Delete Pages</h2><p>Remove unwanted pages from a PDF.</p><button type="button" data-open="delete" >Use tool</button></article><article class="tool" data-tool="rotate"><div class="icon">↻</div><h2>Rotate PDF</h2><p>Rotate selected pages by 90° steps.</p><button type="button" data-open="rotate" >Use tool</button></article><article class="tool" data-tool="watermark"><div class="icon">✧</div><h2>Watermark</h2><p>Add text or a logo overlay to every page.</p><button type="button" data-open="watermark" >Use tool</button></article>
-</section>
+<article class="tool" data-tool="image"><div class="icon">⇩</div><h2>PDF → JPG / PNG</h2><p>Convert each PDF page into an image.</p><button type="button" data-open="image" >Use tool</button></article><article class="tool" data-tool="word"><div class="icon">W</div><h2>PDF → Word</h2><p>Turn text-rich PDFs into editable Word documents.</p><button type="button" data-open="word">Backend required</button></article><article class="tool" data-tool="excel"><div class="icon">X</div><h2>PDF → Excel</h2><p>Extract tables/data into editable spreadsheets.</p><button type="button" data-open="excel">Backend required</button></article><article class="tool" data-tool="html"><div class="icon">⌁</div><h2>HTML → PDF</h2><p>Convert a web page URL into a PDF snapshot.</p><button type="button" data-open="html" disabled>Backend required</button></article><article class="tool" data-tool="compress"><div class="icon">↓</div><h2>Compress PDF</h2><p>Reduce PDF size for uploads and sharing.</p><button type="button" data-open="compress" >Use tool</button></article><article class="tool" data-tool="protect"><div class="icon">●</div><h2>Protect PDF</h2><p>Add password protection to a PDF file.</p><button type="button" data-open="protect" disabled>Backend required</button></article><article class="tool" data-tool="unlock"><div class="icon">○</div><h2>Unlock PDF</h2><p>Remove protection when you have the password.</p><button type="button" data-open="unlock" disabled>Backend required</button></article><article class="tool" data-tool="split"><div class="icon">✂</div><h2>Split PDF</h2><p>Create a new PDF from selected pages.</p><button type="button" data-open="split" >Use tool</button></article><article class="tool" data-tool="delete"><div class="icon">−</div><h2>Delete Pages</h2><p>Remove unwanted pages from a PDF.</p><button type="button" data-open="delete" >Use tool</button></article><article class="tool" data-tool="rotate"><div class="icon">↻</div><h2>Rotate PDF</h2><p>Rotate selected pages by 90° steps.</p><button type="button" data-open="rotate" >Use tool</button></article><article class="tool" data-tool="watermark"><div class="icon">✧</div><h2>Watermark</h2><p>Add text or a logo overlay to every page.</p><button type="button" data-open="watermark" >Use tool</button></article>
+<article class="tool" data-tool="imagepdf"><div class="icon">▧</div><h2>Image → PDF</h2><p>Convert a single JPG, PNG or WebP image into a PDF.</p><button type="button" data-open="imagepdf">Use tool</button></article><article class="tool" data-tool="imagespdf"><div class="icon">▦</div><h2>Images → PDF</h2><p>Merge multiple images into one PDF, one image per page.</p><button type="button" data-open="imagespdf">Use tool</button></article><article class="tool" data-tool="textpdf"><div class="icon">T</div><h2>Text → PDF</h2><p>Turn typed text into a clean downloadable PDF.</p><button type="button" data-open="textpdf">Use tool</button></article><article class="tool" data-tool="merge"><div class="icon">＋</div><h2>Merge PDF</h2><p>Merge multiple PDF files into a single PDF.</p><button type="button" data-open="merge">Use tool</button></article></section>
 
 <section class="panel" id="workspace">
 <div class="panel-head"><div class="panel-title" id="panelTitle">Choose a PDF tool</div><div class="status" id="status">No file selected</div></div>
-<div class="drop" id="drop"><div><div style="font-size:30px">↑</div><h3>Drag & drop your PDF here</h3><p>or choose a PDF from your device</p><label class="choose">Choose PDF<input class="file-input" id="fileInput" type="file" accept="application/pdf"></label></div></div>
+<div class="drop" id="drop"><div><div style="font-size:30px">↑</div><h3 id="dropTitle">Drag & drop your file here</h3><p id="dropHint">or choose a file from your device</p><label class="choose" id="chooseLabel">Choose file<input class="file-input" id="fileInput" type="file"></label></div></div>
 <div id="workspaceBody" class="hidden">
 <div class="file-list" id="fileList"></div>
 <div class="options" id="options"></div>
@@ -49,98 +49,133 @@ main{max-width:1200px;margin:auto;padding:46px 20px 72px}.hero{display:grid;grid
 <footer class="footer">© 2026 SiteCraft · PDF Tools · Use only files you are authorized to process.</footer>
 
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docx@9.5.1/build/index.umd.js"></script>
 <script type="module">
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const state={tool:null,file:null,bytes:null,removed:new Set(),rotations:new Map()};
+
+const state={tool:null,file:null,files:[],bytes:null};
 const toolInfo={
- image:{title:"PDF → JPG / PNG",note:"Renders each page in your browser. Large PDFs can use more memory.",type:"image"},
- compress:{title:"Compress PDF",note:"Browser-side optimization uses object streams. For stronger image recompression, connect a server-side PDF optimizer.",type:"compress"},
- split:{title:"Split PDF",note:"Enter the page range to export into a new PDF.",type:"range"},
- delete:{title:"Delete Pages",note:"Enter pages to remove, for example: 2,4,7.",type:"delete"},
- rotate:{title:"Rotate PDF",note:"Rotate all pages or selected pages clockwise.",type:"rotate"},
- watermark:{title:"Add Watermark",note:"Adds a text watermark to every page. Logo watermark can be connected to the backend later.",type:"watermark"}
+ image:{title:"PDF → JPG / PNG",note:"Renders each PDF page in your browser.",accept:"application/pdf",multiple:false,kind:"pdf"},
+ word:{title:"PDF → Word",note:"Client-side text extraction creates an editable DOCX. Complex layouts and scanned PDFs may need OCR.",accept:"application/pdf",multiple:false,kind:"pdf"},
+ excel:{title:"PDF → Excel",note:"Client-side extraction places extracted text into worksheet rows. It is not full table-layout OCR.",accept:"application/pdf",multiple:false,kind:"pdf"},
+ compress:{title:"Compress PDF",note:"Browser-side optimization uses object streams; image-heavy PDFs may not shrink much.",accept:"application/pdf",multiple:false,kind:"pdf"},
+ split:{title:"Split PDF",note:"Enter the page range to export into a new PDF.",accept:"application/pdf",multiple:false,kind:"pdf"},
+ delete:{title:"Delete Pages",note:"Enter pages to remove, for example: 2,4,7.",accept:"application/pdf",multiple:false,kind:"pdf"},
+ rotate:{title:"Rotate PDF",note:"Rotate all pages or selected pages clockwise.",accept:"application/pdf",multiple:false,kind:"pdf"},
+ watermark:{title:"Add Watermark",note:"Adds a text watermark to every page.",accept:"application/pdf",multiple:false,kind:"pdf"},
+ imagepdf:{title:"Image → PDF",note:"Convert a single image into a PDF.",accept:"image/*",multiple:false,kind:"image"},
+ imagespdf:{title:"Multiple Images → PDF",note:"Creates one PDF with one image per page in selected order.",accept:"image/*",multiple:true,kind:"images"},
+ merge:{title:"Merge PDF",note:"Combines multiple PDF files into one PDF in selected order.",accept:"application/pdf",multiple:true,kind:"pdfs"},
+ textpdf:{title:"Text → PDF",note:"Type or paste text below and generate a multi-page PDF in the browser.",accept:"",multiple:false,kind:"text"}
 };
 function setStatus(t){$("status").textContent=t}
-function fmt(bytes){if(bytes<1024) return bytes+" B"; const u=["KB","MB","GB"];let i=-1,n=bytes;do{n/=1024;i++}while(n>=1024&&i<u.length-1);return n.toFixed(n>10?1:2)+" "+u[i]}
-function filename(base,suffix,ext="pdf"){return base.replace(/\.pdf$/i,"")+suffix+"."+ext}
+function fmt(bytes){if(bytes<1024)return bytes+" B";const u=["KB","MB","GB"];let i=-1,n=bytes;do{n/=1024;i++}while(n>=1024&&i<u.length-1);return n.toFixed(n>10?1:2)+" "+u[i]}
+function stripExt(n){return n.replace(/\.[^.]+$/,"")}
+function filename(base,suffix,ext){return stripExt(base)+suffix+"."+(ext||"pdf")}
 function setTool(tool){
-  state.tool=tool; state.removed=new Set(); state.rotations=new Map();
-  $$(".tool").forEach(c=>c.classList.toggle("active",c.dataset.tool===tool));
-  $("panelTitle").textContent=toolInfo[tool]?.title||"Choose a PDF tool";
-  $("options").innerHTML="";
-  $("output").innerHTML="";
-  $("note").innerHTML=toolInfo[tool]?.note||"Choose a supported tool and upload a PDF.";
-  updateWorkspace();
+ state.tool=tool;state.file=null;state.files=[];state.bytes=null;
+ $$(".tool").forEach(c=>c.classList.toggle("active",c.dataset.tool===tool));
+ $("panelTitle").textContent=toolInfo[tool]?.title||"Choose a PDF tool";
+ $("output").innerHTML="";$("note").innerHTML=toolInfo[tool]?.note||"Choose a supported tool.";
+ const info=toolInfo[tool]||{};
+ $("fileInput").accept=info.accept||"";$("fileInput").multiple=!!info.multiple;
+ $("drop").classList.toggle("hidden",info.kind==="text");
+ $("dropTitle").textContent=info.multiple?"Drag & drop your files here":"Drag & drop your file here";
+ $("dropHint").textContent=info.multiple?"or choose multiple files from your device":"or choose a file from your device";
+ $("options").innerHTML="";renderOptions();updateWorkspace();
 }
 function updateWorkspace(){
-  if(!state.file){$("workspaceBody").classList.add("hidden");setStatus(state.tool?"Awaiting PDF":"No file selected");return}
-  $("workspaceBody").classList.remove("hidden");
-  $("fileList").innerHTML=`<div class="file-row"><span>📄 ${state.file.name}</span><small>${fmt(state.file.size)}</small></div>`;
-  renderOptions();setStatus("Ready");
+ if(state.tool==="textpdf"){ $("workspaceBody").classList.remove("hidden");renderOptions();setStatus("Text ready");return }
+ if(!state.files.length){$("workspaceBody").classList.add("hidden");setStatus(state.tool?"Awaiting file":"No file selected");return}
+ $("workspaceBody").classList.remove("hidden");
+ $("fileList").innerHTML=state.files.map(function(f,i){return '<div class="file-row"><span>📄 '+f.name+'</span><small>'+fmt(f.size)+(state.files.length>1?' · #'+(i+1):'')+'</small></div>'}).join("");
+ renderOptions();setStatus("Ready");
 }
 function renderOptions(){
-  const opt=$("options");
-  if(state.tool==="split") opt.innerHTML='<label>From page<input id="fromPage" type="number" min="1" value="1"></label><label>To page<input id="toPage" type="number" min="1" value="1"></label>';
-  else if(state.tool==="delete") opt.innerHTML='<label>Pages to delete<input id="deletePages" type="text" placeholder="2,4,7"></label>';
-  else if(state.tool==="rotate") opt.innerHTML='<label>Pages<input id="rotatePages" type="text" placeholder="all or 1,3,5"></label><label>Angle<select id="rotateAngle"><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select></label>';
-  else if(state.tool==="watermark") opt.innerHTML='<label>Watermark text<input id="watermarkText" type="text" value="SiteCraft"></label><label>Opacity<input id="watermarkOpacity" type="number" min=".1" max="1" step=".1" value=".35"></label>';
-  else if(state.tool==="image") opt.innerHTML='<label>Format<select id="imageFormat"><option value="png">PNG</option><option value="jpg">JPG</option></select></label><label>Scale<select id="imageScale"><option value="1">1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>';
+ const opt=$("options");
+ if(state.tool==="split")opt.innerHTML='<label>From page<input id="fromPage" type="number" min="1" value="1"></label><label>To page<input id="toPage" type="number" min="1" value="1"></label>';
+ else if(state.tool==="delete")opt.innerHTML='<label>Pages to delete<input id="deletePages" type="text" placeholder="2,4,7"></label>';
+ else if(state.tool==="rotate")opt.innerHTML='<label>Pages<input id="rotatePages" type="text" placeholder="all or 1,3,5"></label><label>Angle<select id="rotateAngle"><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select></label>';
+ else if(state.tool==="watermark")opt.innerHTML='<label>Watermark text<input id="watermarkText" type="text" value="SiteCraft"></label><label>Opacity<input id="watermarkOpacity" type="number" min=".1" max="1" step=".1" value=".35"></label>';
+ else if(state.tool==="image")opt.innerHTML='<label>Format<select id="imageFormat"><option value="png">PNG</option><option value="jpg">JPG</option></select></label><label>Scale<select id="imageScale"><option value="1">1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>';
+ else if(state.tool==="textpdf")opt.innerHTML='<label style="display:block;min-width:100%">Text<textarea id="textContent" rows="12" placeholder="Type or paste your text here..." style="display:block;width:100%;margin-top:6px;border:1px solid var(--line);border-radius:10px;padding:12px;resize:vertical"></textarea></label>';
+ else if(state.tool==="imagespdf")opt.innerHTML='<div class="note">Images are used in the order shown above.</div>';
 }
-async function loadPdf(){if(!state.bytes) state.bytes=await state.file.arrayBuffer();return PDFLib.PDFDocument.load(state.bytes)}
 function parsePages(text,max){
-  if(!text||text.trim().toLowerCase()==="all") return Array.from({length:max},(_,i)=>i);
-  const out=new Set();
-  text.split(",").forEach(v=>{const n=parseInt(v.trim(),10);if(Number.isInteger(n)&&n>=1&&n<=max)out.add(n-1)});
-  return [...out].sort((a,b)=>a-b);
+ if(!text||text.trim().toLowerCase()==="all")return Array.from({length:max},(_,i)=>i);
+ const out=new Set();text.split(",").forEach(v=>{const n=parseInt(v.trim(),10);if(Number.isInteger(n)&&n>=1&&n<=max)out.add(n-1)});return [...out].sort((a,b)=>a-b);
 }
-async function makeDownload(bytes,name){
-  const blob=new Blob([bytes],{type:"application/pdf"}),url=URL.createObjectURL(blob);
-  $("output").insertAdjacentHTML("beforeend",`<div class="result"><span>${name}</span><a download="${name}" href="${url}">Download</a></div>`);
+async function loadPdf(file){return PDFLib.PDFDocument.load(await file.arrayBuffer())}
+async function makeDownload(bytes,name,mime){
+ const blob=new Blob([bytes],{type:mime||"application/pdf"}),url=URL.createObjectURL(blob);
+ const row=document.createElement("div");row.className="result";row.innerHTML='<span>'+name+'</span><a download="'+name+'" href="'+url+'">Download</a>';$("output").appendChild(row);
+}
+async function convertImagesToPdf(files){
+ const out=await PDFLib.PDFDocument.create(),W=595.28,H=841.89,M=28;
+ for(const file of files){
+  const bytes=new Uint8Array(await file.arrayBuffer());let img;
+  if(file.type==="image/jpeg")img=await out.embedJpg(bytes);
+  else if(file.type==="image/png")img=await out.embedPng(bytes);
+  else{
+   const bmp=await createImageBitmap(file),canvas=document.createElement("canvas");canvas.width=bmp.width;canvas.height=bmp.height;canvas.getContext("2d").drawImage(bmp,0,0);
+   const blob=await new Promise(r=>canvas.toBlob(r,"image/png"));img=await out.embedPng(new Uint8Array(await blob.arrayBuffer()));
+  }
+  const page=out.addPage([W,H]),scale=Math.min((W-M*2)/img.width,(H-M*2)/img.height),w=img.width*scale,h=img.height*scale;
+  page.drawImage(img,{x:(W-w)/2,y:(H-h)/2,width:w,height:h});
+ }
+ return out.save();
+}
+async function getPdfText(file){
+ const pdfjs=await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs");
+ pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+ const pdf=await pdfjs.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise,pages=[];
+ for(let n=1;n<=pdf.numPages;n++){
+  const page=await pdf.getPage(n),content=await page.getTextContent(),items=content.items.filter(x=>x.str&&x.str.trim());
+  items.sort((a,b)=>{const ay=a.transform?.[5]||0,by=b.transform?.[5]||0;if(Math.abs(ay-by)>3)return by-ay;return (a.transform?.[4]||0)-(b.transform?.[4]||0)});
+  let lines=[],y=null,line="";
+  for(const it of items){const iy=it.transform?.[5]||0;if(y===null||Math.abs(iy-y)<=3){line+=(line?" ":"")+it.str;if(y===null)y=iy}else{if(line.trim())lines.push(line.trim());line=it.str;y=iy}}
+  if(line.trim())lines.push(line.trim());pages.push(lines);
+ }
+ return pages;
+}
+async function makeTextPdf(text){
+ const out=await PDFLib.PDFDocument.create(),font=await out.embedFont(PDFLib.StandardFonts.Helvetica),W=595.28,H=841.89,M=42,size=12,lineH=18,usable=W-M*2;
+ let page=out.addPage([W,H]),y=H-M;
+ const paras=text.split(/\r?\n/);
+ for(const para of paras){
+  const words=para.split(/\s+/),lines=[],flush=function(s){lines.push(s||"")};let line="";
+  for(const word of words){const test=line?line+" "+word:word;if(font.widthOfTextAtSize(test,size)>usable){flush(line);line=word}else line=test}flush(line);
+  if(!words.length)lines.push("");
+  for(const l of lines){if(y<M+lineH){page=out.addPage([W,H]);y=H-M}page.drawText(l,{x:M,y,size,font});y-=lineH}y-=6;
+ }
+ return out.save();
 }
 async function run(){
-  if(!state.file){setStatus("Choose a PDF first");return}
-  $("output").innerHTML="";setStatus("Processing…");$("runBtn").disabled=true;
-  try{
-    if(state.tool==="image"){
-      const pdfjs=await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs");
-      pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
-      const pdf=await pdfjs.getDocument({data:new Uint8Array(state.bytes||await state.file.arrayBuffer())}).promise;
-      const fmt=$("imageFormat").value,scale=parseFloat($("imageScale").value);
-      for(let i=1;i<=pdf.numPages;i++){
-        const page=await pdf.getPage(i),vp=page.getViewport({scale});
-        const canvas=document.createElement("canvas");canvas.width=Math.ceil(vp.width);canvas.height=Math.ceil(vp.height);
-        await page.render({canvasContext:canvas.getContext("2d"),viewport:vp}).promise;
-        const mime=fmt==="jpg"?"image/jpeg":"image/png",url=canvas.toDataURL(mime,.92);
-        $("output").insertAdjacentHTML("beforeend",`<div class="result"><span>Page ${i}</span><a download="${filename(state.file.name,`-page-${i}`,fmt)}" href="${url}">Download</a></div>`);
-      }
-    } else {
-      const doc=await loadPdf(),count=doc.getPageCount();
-      if(state.tool==="compress"){
-        const bytes=await doc.save({useObjectStreams:true,addDefaultPage:false});
-        await makeDownload(bytes,filename(state.file.name,"-optimized")); 
-      } else if(state.tool==="split"){
-        let a=Math.max(1,parseInt($("fromPage").value||1,10)),b=Math.min(count,parseInt($("toPage").value||a,10)); if(a>b)[a,b]=[b,a];
-        const out=await PDFLib.PDFDocument.create(),pages=await out.copyPages(doc,Array.from({length:b-a+1},(_,i)=>a-1+i));pages.forEach(p=>out.addPage(p));
-        await makeDownload(await out.save(),filename(state.file.name,`-pages-${a}-${b}`));
-      } else if(state.tool==="delete"){
-        const del=new Set(parsePages($("deletePages").value,count)),out=await PDFLib.PDFDocument.create(),keep=[];
-        for(let i=0;i<count;i++)if(!del.has(i))keep.push(i);
-        const pages=await out.copyPages(doc,keep);pages.forEach(p=>out.addPage(p));
-        await makeDownload(await out.save(),filename(state.file.name,"-pages-removed"));
-      } else if(state.tool==="rotate"){
-        const pages=parsePages($("rotatePages").value,count),angle=parseInt($("rotateAngle").value,10);
-        pages.forEach(i=>{const p=doc.getPage(i),cur=p.getRotation().angle||0;p.setRotation(PDFLib.degrees((cur+angle)%360))});
-        await makeDownload(await doc.save(),filename(state.file.name,"-rotated"));
-      } else if(state.tool==="watermark"){
-        const text=$("watermarkText").value.trim()||"SiteCraft",opacity=Math.max(.1,Math.min(1,parseFloat($("watermarkOpacity").value)||.35));
-        const font=await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-        doc.getPages().forEach(p=>{const {width,height}=p.getSize();p.drawText(text,{x:36,y:height/2,size:28,font,color:PDFLib.rgb(.22,.24,.28),opacity,rotate:PDFLib.degrees(30)})});
-        await makeDownload(await doc.save(),filename(state.file.name,"-watermarked"));
-      }
-    }
-    setStatus("Done");
-  }catch(err){console.error(err);$("output").innerHTML=`<div class="note"><strong>Could not process this PDF.</strong><br>${String(err.message||err)}</div>`;setStatus("Error")}
-  finally{$("runBtn").disabled=false}
+ if(state.tool==="textpdf"&&!($("textContent")?.value||"").trim()){setStatus("Enter some text first");return}
+ if(state.tool!=="textpdf"&&!state.files.length){setStatus("Choose a file first");return}
+ $("output").innerHTML="";setStatus("Processing…");$("runBtn").disabled=true;
+ try{
+  if(state.tool==="image"){
+   const pdfjs=await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs");pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+   const pdf=await pdfjs.getDocument({data:new Uint8Array(await state.files[0].arrayBuffer())}).promise,ext=$("imageFormat").value,scale=parseFloat($("imageScale").value);
+   for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i),vp=page.getViewport({scale}),canvas=document.createElement("canvas");canvas.width=Math.ceil(vp.width);canvas.height=Math.ceil(vp.height);await page.render({canvasContext:canvas.getContext("2d"),viewport:vp}).promise;const url=canvas.toDataURL(ext==="jpg"?"image/jpeg":"image/png",.92);const row=document.createElement("div");row.className="result";row.innerHTML='<span>Page '+i+'</span><a download="'+filename(state.files[0].name,"-page-"+i,ext)+'" href="'+url+'">Download</a>';$("output").appendChild(row)}
+  }else if(state.tool==="imagepdf"||state.tool==="imagespdf"){await makeDownload(await convertImagesToPdf(state.files),state.files.length===1?filename(state.files[0].name,"-converted"):"images-to-pdf.pdf")}
+  else if(state.tool==="merge"){const out=await PDFLib.PDFDocument.create();for(const file of state.files){const doc=await loadPdf(file),pages=await out.copyPages(doc,doc.getPageIndices());pages.forEach(p=>out.addPage(p))}await makeDownload(await out.save(),"merged-pdf.pdf")}
+  else if(state.tool==="textpdf"){await makeDownload(await makeTextPdf($("textContent").value.trim()),"text-to-pdf.pdf")}
+  else if(state.tool==="word"){const pages=await getPdfText(state.files[0]);if(!window.docx)throw new Error("DOCX library did not load.");const children=[];pages.forEach(function(lines,pi){children.push(new docx.Paragraph({text:"Page "+(pi+1),heading:docx.HeadingLevel.HEADING_2}));lines.forEach(function(line){children.push(new docx.Paragraph({text:line}))})});const doc=new docx.Document({sections:[{children:children}]});const blob=await docx.Packer.toBlob(doc);await makeDownload(blob,filename(state.files[0].name,"-converted","docx"),"application/vnd.openxmlformats-officedocument.wordprocessingml.document")}
+  else if(state.tool==="excel"){const pages=await getPdfText(state.files[0]);const rows=[["Page","Line","Extracted text"]];pages.forEach(function(lines,pi){lines.forEach(function(line,i){rows.push([pi+1,i+1,line])})});const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(rows);XLSX.utils.book_append_sheet(wb,ws,"PDF Text");const bytes=XLSX.write(wb,{bookType:"xlsx",type:"array"});await makeDownload(bytes,filename(state.files[0].name,"-converted","xlsx"),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")}
+  else{
+   const doc=await loadPdf(state.files[0]),count=doc.getPageCount();
+   if(state.tool==="compress")await makeDownload(await doc.save({useObjectStreams:true,addDefaultPage:false}),filename(state.files[0].name,"-optimized"));
+   else if(state.tool==="split"){let a=Math.max(1,parseInt($("fromPage").value||1,10)),b=Math.min(count,parseInt($("toPage").value||a,10));if(a>b)[a,b]=[b,a];const out=await PDFLib.PDFDocument.create(),pages=await out.copyPages(doc,Array.from({length:b-a+1},(_,i)=>a-1+i));pages.forEach(p=>out.addPage(p));await makeDownload(await out.save(),filename(state.files[0].name,"-pages-"+a+"-"+b))}
+   else if(state.tool==="delete"){const del=new Set(parsePages($("deletePages").value,count)),out=await PDFLib.PDFDocument.create(),keep=[];for(let i=0;i<count;i++)if(!del.has(i))keep.push(i);const pages=await out.copyPages(doc,keep);pages.forEach(p=>out.addPage(p));await makeDownload(await out.save(),filename(state.files[0].name,"-pages-removed"))}
+   else if(state.tool==="rotate"){const pages=parsePages($("rotatePages").value,count),angle=parseInt($("rotateAngle").value,10);pages.forEach(i=>{const p=doc.getPage(i),cur=p.getRotation().angle||0;p.setRotation(PDFLib.degrees((cur+angle)%360))});await makeDownload(await doc.save(),filename(state.files[0].name,"-rotated"))}
+   else if(state.tool==="watermark"){const text=$("watermarkText").value.trim()||"SiteCraft",opacity=Math.max(.1,Math.min(1,parseFloat($("watermarkOpacity").value)||.35)),font=await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);doc.getPages().forEach(function(p){const s=p.getSize();p.drawText(text,{x:36,y:s.height/2,size:28,font:font,color:PDFLib.rgb(.22,.24,.28),opacity:opacity,rotate:PDFLib.degrees(30)})});await makeDownload(await doc.save(),filename(state.files[0].name,"-watermarked"))}
+  }
+  setStatus("Done");
+ }catch(err){console.error(err);$("output").innerHTML='<div class="note"><strong>Could not process this file.</strong><br>'+String(err.message||err)+'</div>';setStatus("Error")}
+ finally{$("runBtn").disabled=false}
 }
 $$("[data-open]").forEach(b=>b.addEventListener("click",()=>setTool(b.dataset.open)));
 $("fileInput").addEventListener("change",e=>{state.file=e.target.files[0]||null;state.bytes=null;updateWorkspace()});
@@ -149,6 +184,24 @@ $("drop").addEventListener("dragleave",()=>$("drop").classList.remove("dragover"
 $("drop").addEventListener("drop",e=>{e.preventDefault();$("drop").classList.remove("dragover");const f=e.dataTransfer.files?.[0];if(f&&f.type==="application/pdf"){state.file=f;state.bytes=null;updateWorkspace()}else setStatus("Please drop a PDF file")});
 $("runBtn").addEventListener("click",run);
 $("clearBtn").addEventListener("click",()=>{state.file=null;state.bytes=null;$("fileInput").value="";$("output").innerHTML="";$("options").innerHTML="";$("workspaceBody").classList.add("hidden");$$(".tool").forEach(c=>c.classList.remove("active"));$("panelTitle").textContent="Choose a PDF tool";$("note").innerHTML="Choose a supported tool and upload a PDF.";setStatus("No file selected")});
+setTool("image");
+
+$$("[data-open]").forEach(function(b){b.addEventListener("click",function(){setTool(b.dataset.open)})});
+$("fileInput").addEventListener("change",function(e){state.files=[...e.target.files];state.bytes=null;updateWorkspace()});
+$("drop").addEventListener("dragover",function(e){e.preventDefault();$("drop").classList.add("dragover")});
+$("drop").addEventListener("dragleave",function(){$("drop").classList.remove("dragover")});
+$("drop").addEventListener("drop",function(e){
+ e.preventDefault();$("drop").classList.remove("dragover");
+ const info=toolInfo[state.tool]||{},isImages=info.kind==="image"||info.kind==="images";
+ const fs=[...e.dataTransfer.files].filter(function(f){return isImages?f.type.startsWith("image/"):f.type==="application/pdf"});
+ if(fs.length){state.files=info.multiple?fs:[fs[0]];updateWorkspace()}else setStatus("Unsupported file type");
+});
+$("runBtn").addEventListener("click",run);
+$("clearBtn").addEventListener("click",function(){
+ state.files=[];state.file=null;state.bytes=null;$("fileInput").value="";$("output").innerHTML="";$("options").innerHTML="";
+ if(state.tool==="textpdf"){renderOptions();$("workspaceBody").classList.remove("hidden");setStatus("Text ready")}else{$("workspaceBody").classList.add("hidden");}
+ $$(".tool").forEach(function(c){c.classList.remove("active")});$("panelTitle").textContent="Choose a PDF tool";$("note").innerHTML="Choose a supported tool.";
+});
 setTool("image");
 </script>
 </body>
