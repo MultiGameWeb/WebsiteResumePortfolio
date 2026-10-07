@@ -113,6 +113,8 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
 </style>
 <style id="portfolioMobileHardening">
 @media(max-width:899px){
+  #saveStatus{display:flex!important;font-size:10px;gap:4px;min-width:0;white-space:nowrap}
+  #saveStatus i{width:7px;height:7px;flex:0 0 auto}
   html,body{width:100%;max-width:100%;overflow-x:hidden}
   /* Mobile tabs, compact top actions, and universal button hit target */
 
@@ -382,7 +384,7 @@ function warnSaveFailure(err){
 }
 function autosaveNow(){
   if(!autosaveReady)return;
-  setSaveStatus("Saving...");
+  setSaveStatus("Saving...","saving");
   saveStateToDb().then(function(){
     setSaveStatus("Saved");autosaveReady=true;
   }).catch(warnSaveFailure);
