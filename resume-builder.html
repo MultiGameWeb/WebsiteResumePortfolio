@@ -818,6 +818,7 @@ function normalizeResumeState(x){
   out.dateFormat=allowedDate.indexOf(out.dateFormat)>=0?out.dateFormat:'MMM YYYY';
   out.icons=out.icons!==false;out.photoEnabled=out.photoEnabled===true;
   out.preset=(out.preset==='Empty'||DEMOS[out.preset])?out.preset:(typeof out.preset==='string'&&out.preset?'Imported':'Empty');
+  if(!Object.prototype.hasOwnProperty.call(migrated,'format')){out.format=defaultFormatState();out.format.global.fontFamily=out.font;out.format.global.fontSize=out.fontSize;out.format.global.lineSpacing=out.lineSpacing;}
   out.sections={};
   Object.keys(SECTION_LABELS).forEach(function(id){out.sections[id]=sanitizeSection(id,migrated.sections[id],blank.sections[id])});
   out.custom=Array.isArray(migrated.custom)?migrated.custom.filter(isRecord).slice(0,6).map(function(c){return{title:norm(c.title)||'Custom section',mode:c.mode==='paragraph'?'paragraph':'bullets',content:norm(c.content),bullets:Array.isArray(c.bullets)?c.bullets.map(norm).filter(Boolean).slice(0,8):[],show:c.show!==false}}):[];
