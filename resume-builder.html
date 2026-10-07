@@ -486,8 +486,28 @@ function health(){
   var done=checks.filter(function(x){return x.ok}).length,score=Math.round(done/checks.length*100);return{checks:checks,score:score}
 }
 function renderHealth(){
-  var h=health();$('#healthScore').textContent=h.score+'%';$('#healthBar').style.width=h.score+'%';$('#healthList').innerHTML=h.checks.map(function(c){return'<button class="health-item '+(c.ok?'done':'')+'" type="button" data-health-jump="'+esc(c.id)+'"><span class="health-icon">'+(c.ok?'✓':'!')+'</span><span><strong>'+esc(c.label)+'</strong><br><small>'+esc(c.small)+'</small></span><span>›</span></button>'}).join('');
-  $$('[data-health-jump]').forEach(function(b){b.onclick=function(){var id=b.dataset.healthJump;var target=id==='summary'?'.section-card[data-editor-section="summary"]':id==='email'?'.section-card[data-editor-section="header"]':id==='quantified'||id==='verbs'||id==='bullet'?'.section-card[data-editor-section="experience"], .section-card[data-editor-section="projects"]':id==='pages'?'.preview-scroll':'.section-card[data-editor-section="'+id+'"]';var el=$(target);if(el){el.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});if(el.classList.contains('section-card')){el.classList.add('open');openSections[el.dataset.editorSection]=true}}}}
+  var h=health();
+  $('#healthScore').textContent=h.score+'%';
+  $('#healthBar').style.width=h.score+'%';
+  $('#healthList').innerHTML=h.checks.map(function(c){
+    return '<button class="health-item '+(c.ok?'done':'')+'" type="button" data-health-jump="'+esc(c.id)+'"><span class="health-icon">'+(c.ok?'✓':'!')+'</span><span><strong>'+esc(c.label)+'</strong><br><small>'+esc(c.small)+'</small></span><span>›</span></button>';
+  }).join('');
+  $$('[data-health-jump]').forEach(function(btn){
+    btn.onclick=function(){
+      var id=btn.dataset.healthJump;
+      var target=id==='summary'?'.section-card[data-editor-section="summary"]':
+        id==='email'?'.section-card[data-editor-section="header"]':
+        (id==='quantified'||id==='verbs'||id==='bullet')?'.section-card[data-editor-section="experience"], .section-card[data-editor-section="projects"]':
+        id==='pages'?'.preview-scroll':'.section-card[data-editor-section="'+id+'"]';
+      var el=$(target);
+      if(!el)return;
+      el.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});
+      if(el.classList.contains('section-card')){
+        el.classList.add('open');
+        openSections[el.dataset.editorSection]=true;
+      }
+    };
+  });
 }
 function keywordHelper(){
   var job=$('#jobDescription').value||'',tokens=textTokens(job),resume=new Set(textTokens(allResumeText())),freq={},stop=new Set(['that','this','with','from','your','their','have','will','into','about','over','they','then','than','using','used','work','working','role','team','teams','must','should','you','our','are','the','and','for','with','and','or','job','description','years','year','what','where','who','how','more','less','able','good','strong','across','within','through','such']);
