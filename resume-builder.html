@@ -459,7 +459,7 @@ function textItemsForSection(id,sec){
   if(id==='experience')return (sec.items||[]).filter(itemHasContent).map(function(x){return{type:'experience',data:x}});
   if(id==='education')return (sec.items||[]).filter(itemHasContent).map(function(x){return{type:'education',data:x}});
   if(id==='skills'){
-    var groups=(sec.groups||[]).filter(function(g){return norm(g.name)||(g.items||[]).some(function(x){return norm(x)})});
+    var groups=(sec.groups||[]).filter(function(g){return (g.items||[]).some(function(x){return norm(x)})});
     return groups.length?[{type:'skills',data:{groups:groups}}]:[];
   }
   if(id==='projects')return (sec.items||[]).filter(itemHasContent).map(function(x){return{type:'project',data:x}});
