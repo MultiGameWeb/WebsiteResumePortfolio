@@ -1215,7 +1215,7 @@ function runResumeBuilderClickAudit(){
     var considered=0,passed=0;
     descriptors.forEach(function(d){
       resetTo(mode);
-      var b=$('#editor button').find(function(x){return x.outerHTML===d.html});
+      var b=Array.prototype.find.call(document.querySelectorAll('#editor button'),function(x){return x.outerHTML===d.html});
       if(!b){addResult('editor-'+mode,d.text||d.id||'button',false,'control disappeared before click');return}
       considered++;
       var before=fp();click(b);var after=fp(),changed=JSON.stringify(before)!==JSON.stringify(after);
