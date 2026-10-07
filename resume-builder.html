@@ -798,7 +798,7 @@ function normalizeResumeState(x){
   Object.keys(SECTION_LABELS).forEach(function(id){
     if(!validSectionObject(src[id]))throw new Error('Invalid resume JSON: '+id+' must be an object.');
   });
-  state=clone(src);if(!isRecord(state.sections))state.sections=clone(temp.sections);if(!Array.isArray(state.custom))state.custom=clone(temp.custom);migrateLegacySectionRoots();
+  state=clone(src);state.sections=Object.assign(clone(blank.sections),isRecord(state.sections)?state.sections:{});if(!Array.isArray(state.custom))state.custom=clone(temp.custom);migrateLegacySectionRoots();
   var migrated=clone(state);state=src;
   var out=blankResumeState();
   ['version','paper','template','goal','margin','font','fontSize','lineSpacing','accent','divider','dateFormat','icons','photoEnabled','preset','_editor'].forEach(function(k){
