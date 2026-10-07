@@ -203,31 +203,37 @@ function enableOverlayDrag(el,o,pageIndex){
    o.x=Math.max(0,Math.min(.88,o.x+dx/parent.width));o.y=Math.max(0,Math.min(.92,o.y+dy/parent.height));
    el.style.left=(o.x*100)+"%";el.style.top=(o.y*100)+"%";
  });
- el.addEventListener("pointerup",function(){if(el.releasePointerCapture)el.releasePointerCapture(ev.pointerId);});
+ el.addEventListener("pointerup",function(ev){if(el.releasePointerCapture)el.releasePointerCapture(ev.pointerId);});
 }
 function addEditorText(){
  const txt=($("editorText").value||"New text").trim()||"New text",size=Math.max(8,Math.min(72,parseInt($("editorTextSize").value||18,10)));
  const arr=editorState.overlays.get(editorState.selected)||[];arr.push({type:"text",text:txt,size,x:.08,y:.08});editorState.overlays.set(editorState.selected,arr);renderEditor();
 }
-function addEditorImage(file){
- const rd=new FileReader();rd.onload=function(){const arr=editorState.overlays.get(editorState.selected)||[];arr.push({type:"image",src:rd.result,w:.28,x:.08,y:.18});editorState.overlays.set(editorState.selected,arr);renderEditor()};rd.readAsDataURL(file);
+async function addEditorImage(file){
+ const bmp=await createImageBitmap(file),canvas=document.createElement("canvas");
+ canvas.width=bmp.width;canvas.height=bmp.height;canvas.getContext("2d").drawImage(bmp,0,0);
+ const blob=await new Promise(function(resolve){canvas.toBlob(resolve,"image/png")}),reader=new FileReader();
+ reader.onload=function(){const arr=editorState.overlays.get(editorState.selected)||[];arr.push({type:"image",src:reader.result,w:.28,x:.08,y:.18});editorState.overlays.set(editorState.selected,arr);renderEditor()};
+ reader.readAsDataURL(blob);
 }
 async function saveEditorPdf(){
- if(!editorState.pdf)return;
+ if(!editorState.pdf||!state.files[0])return;
  setStatus("Saving edited PDF…");
- const base=new Uint8Array(await state.files[0].arrayBuffer()),out=await PDFLib.PDFDocument.load(base);
- for(let i=out.getPageCount()-1;i>=editorState.pages.length;i--)out.removePage(i);
+ const base=new Uint8Array(await state.files[0].arrayBuffer()),source=await PDFLib.PDFDocument.load(base),out=await PDFLib.PDFDocument.create();
  for(let i=0;i<editorState.pages.length;i++){
-   const meta=editorState.pages[i],page=out.getPage(i);
+   const meta=editorState.pages[i],copied=await out.copyPages(source,[meta.pageNum-1]),page=copied[0];
+   out.addPage(page);
    if(meta.rotation)page.setRotation(PDFLib.degrees(meta.rotation));
-   const s=page.getSize();
-   const overlays=editorState.overlays.get(i)||[];
+   const s=page.getSize(),overlays=editorState.overlays.get(i)||[];
    for(const o of overlays){
-     const x=o.x*s.width,y=s.height-o.y*s.height;
-     if(o.type==="text")page.drawText(o.text,{x:x,y:y,size:o.size||18,color:PDFLib.rgb(.1,.1,.1)});
-     else if(o.type==="image"){
-       const data=atob(o.src.split(",")[1]),bytes=new Uint8Array(data.length);for(let j=0;j<data.length;j++)bytes[j]=data.charCodeAt(j);
-       const img=o.src.includes("image/png")?await out.embedPng(bytes):await out.embedJpg(bytes),w=s.width*o.w,h=img.height/img.width*w;page.drawImage(img,{x:x,y:y-h,width:w,height:h});
+     const x=Math.max(0,Math.min(s.width-10,o.x*s.width)),top=Math.max(0,Math.min(s.height-10,o.y*s.height));
+     if(o.type==="text"){
+       page.drawText(o.text,{x:x,y:s.height-top-(o.size||18),size:o.size||18,color:PDFLib.rgb(.1,.1,.1)});
+     }else if(o.type==="image"){
+       const data=atob(o.src.split(",")[1]),bytes=new Uint8Array(data.length);
+       for(let j=0;j<data.length;j++)bytes[j]=data.charCodeAt(j);
+       const img=await out.embedPng(bytes),w=Math.min(s.width*.8,s.width*(o.w||.28)),h=img.height/img.width*w;
+       page.drawImage(img,{x:x,y:Math.max(0,s.height-top-h),width:w,height:h});
      }
    }
  }
