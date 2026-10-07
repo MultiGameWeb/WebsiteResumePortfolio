@@ -1201,7 +1201,11 @@ function runResumeBuilderClickAudit(){
   var arrayKeys=['experience','education','projects','certifications','awards','languages','volunteering','publications','references'];
   function resetTo(mode){
     state=clone(mode==='demo'?DEMOS.Experienced:blankResumeState());
-    ensureState();openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
+    ensureState();
+    ['experience','education','projects','certifications','awards','languages','volunteering','publications','references'].forEach(function(k){var items=state.sections[k].items||[];items.forEach(function(item,idx){item.__audit=k+':'+idx;if(Array.isArray(item.bullets))item.bullets=item.bullets.map(function(v,bidx){return 'AUDIT-'+k+'-'+idx+'-'+bidx})})});
+    if(state.sections.skills&&Array.isArray(state.sections.skills.groups))state.sections.skills.groups.forEach(function(g,idx){g.__audit='skills:'+idx;});
+    if(Array.isArray(state.custom))state.custom.forEach(function(c,idx){c.__audit='custom:'+idx;c.bullets=(c.bullets||[]).map(function(v,bidx){return 'AUDIT-custom-'+idx+'-'+bidx})});
+    openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
     history=[];future=[];typingGroup=null;typingTimer=null;pendingReplacement=null;dirty=false;restoreInProgress=false;autosaveReady=false;
     renderEditor();renderPreview();renderHealth();updateTopControls();
   }
@@ -1211,11 +1215,12 @@ function runResumeBuilderClickAudit(){
   function expectedBoundaryNoop(ds){if(ds.moveSection){var idx=state.order.indexOf(ds.moveSection),dir=Number(ds.dir);return(dir<0&&idx===0)||(dir>0&&idx===state.order.length-1)}if(ds.moveArray){var arr=arrayForKey(ds.moveArray),i=Number(ds.index),d=Number(ds.dir);return!!arr&&((d<0&&i===0)||(d>0&&i===arr.length-1))}if(ds.moveBullet){var it=state.sections.experience.items[Number(ds.index)],i2=Number(ds.bulletIndex),d2=Number(ds.dir);return!!it&&((d2<0&&i2===0)||(d2>0&&i2===it.bullets.length-1))}return false}
   function rawEditorButtons(mode){
     resetTo(mode);
-    var descriptors=Array.prototype.filter.call(document.querySelectorAll('#editor button'),function(b){return !b.disabled}).map(function(b){return{html:b.outerHTML,text:norm(b.textContent),id:b.id,ds:Object.assign({},b.dataset),drag:b.hasAttribute('data-drag-handle')}});
+    var descriptors=Array.prototype.filter.call(document.querySelectorAll('#editor button'),function(b){return !b.disabled}).map(function(b,index){return{index:index,text:norm(b.textContent),id:b.id,ds:Object.assign({},b.dataset),drag:b.hasAttribute('data-drag-handle')}});
     var considered=0,passed=0;
     descriptors.forEach(function(d){
       resetTo(mode);
-      var b=Array.prototype.find.call(document.querySelectorAll('#editor button'),function(x){return x.outerHTML===d.html});
+      var buttons=Array.prototype.filter.call(document.querySelectorAll('#editor button'),function(x){return !x.disabled});
+      var b=buttons[d.index];
       if(!b){addResult('editor-'+mode,d.text||d.id||'button',false,'control disappeared before click');return}
       considered++;
       var boundary=expectedBoundaryNoop(d);
@@ -1229,15 +1234,31 @@ function runResumeBuilderClickAudit(){
         else if(d.ds.healthJump==='pages')healthTarget=$('#previewScroll');
         else if(!healthTarget)healthTarget=$('.section-card[data-editor-section="'+d.ds.healthJump+'"]');
       }
-      var before=fp();click(b);var after=fp(),changed=JSON.stringify(before)!==JSON.stringify(after);
+      var beforeFp=fp();
+      var beforeMove= d.ds.moveSection?state.order.slice() :
+        d.ds.moveArray?(arrayForKey(d.ds.moveArray)||[]).map(function(x){return x.__audit||JSON.stringify(x)}) :
+        d.ds.moveBullet?((state.sections.experience.items[Number(d.ds.index)]||{}).bullets||[]).slice() :
+        d.ds.removeBullet?((state.sections.experience.items[Number(d.ds.index)]||{}).bullets||[]).slice() :
+        d.ds.addBullet?((state.sections.experience.items[Number(d.ds.index)]||{}).bullets||[]).slice() : null;
+      click(b);
+      var afterFp=fp(),changed=JSON.stringify(beforeFp)!==JSON.stringify(afterFp);
+      var afterMove= d.ds.moveSection?state.order.slice() :
+        d.ds.moveArray?(arrayForKey(d.ds.moveArray)||[]).map(function(x){return x.__audit||JSON.stringify(x)}) :
+        d.ds.moveBullet?((state.sections.experience.items[Number(d.ds.index)]||{}).bullets||[]).slice() :
+        d.ds.removeBullet?((state.sections.experience.items[Number(d.ds.index)]||{}).bullets||[]).slice() :
+        d.ds.addBullet?((state.sections.experience.items[Number(d.ds.index)]||{}).bullets||[]).slice() : null;
+      var explicitMoveChanged=beforeMove&&afterMove&&JSON.stringify(beforeMove)!==JSON.stringify(afterMove);
       var modalExpected=!!d.ds.preset||d.id==='startEmptyBtn';
       var jumpExpected=!!d.ds.healthJump;
       var ok;
-      if(modalExpected)ok=activePreset?!changed:!!($('#resetModal')&&$('#resetModal').classList.contains('show'));
+      if(modalExpected)ok=activePreset?!$('#resetModal').classList.contains('show'):$('#resetModal').classList.contains('show');
       else if(jumpExpected)ok=!healthTarget||(healthTarget.classList.contains('open')||document.activeElement===healthTarget||document.activeElement?.closest?.('.section-card')===healthTarget||d.ds.healthJump==='pages');
-      else ok=boundary?!changed:changed;
-      if(d.drag){ok=true;report.skipped.push({mode:mode,label:d.text||d.id||'drag handle',reason:'drag handle is pointer-drag control; click dispatch verified no exception'});}
-      addResult('editor-'+mode,d.text||d.id||'button',ok,d.drag?'drag-only control':(boundary&&!changed?'expected boundary no-op':(activePreset&&!changed?'expected active-preset no-op':'')));
+      else if(d.ds.moveSection||d.ds.moveArray||d.ds.moveBullet)ok=boundary?!explicitMoveChanged:explicitMoveChanged;
+      else if(d.drag){ok=true;report.skipped.push({mode:mode,label:d.text||d.id||'drag handle',reason:'drag handle is pointer-drag control; click dispatch verified no exception'});}
+      else ok=changed;
+      var detail=d.drag?'drag-only control':(boundary&&!explicitMoveChanged?'expected boundary no-op':(activePreset&&!changed?'expected active-preset no-op':''));
+      if(d.drag)ok=true;
+      addResult('editor-'+mode,(d.text||d.id||'button')+' ['+JSON.stringify(d.ds)+']',ok,detail);
       if(ok)passed++;
     });
     report.modes[mode]={buttonsConsidered:considered,buttonsPassed:passed,buttonsFailed:considered-passed};
