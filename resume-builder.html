@@ -179,7 +179,7 @@ var clone=function(v){return JSON.parse(JSON.stringify(v))};
 var esc=function(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 var norm=function(v){return String(v==null?'':v).trim()};
 var safeUrl=function(v){var s=norm(v);return /^https?:\/\//i.test(s)?s:''};
-var safeImage=function(v){var s=norm(v);return /^data:image\/(?:png|jpe?g|gif|webp|avif);base64,[A-Za-z0-9+/=\\s]+$/i.test(s)?s:(/^https?:\\/\\//i.test(s)?s:'')};
+var safeImage=function(v){var s=norm(v);return /^data:image\/(?:png|jpe?g|gif|webp|avif);base64,[A-Za-z0-9+/=\s]+$/i.test(s)?s:(/^https?:\/\//i.test(s)?s:'')};
 var slug=function(v){return (norm(v).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'resume')};
 var reduced=function(){return window.matchMedia('(prefers-reduced-motion: reduce)').matches};
 
