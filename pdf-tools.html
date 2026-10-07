@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17181d">
+<title>PDF Tools — SiteCraft</title>
+<style>
+:root{--bg:#f6f7f9;--surface:#fff;--surface2:#f1f3f6;--text:#17181d;--muted:#66707d;--line:#dfe3e8;--accent:#5f5cf3;--accent2:#ecebff;--success:#137a4b;--danger:#a63a47;--shadow:0 18px 50px rgba(23,24,29,.08)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}body{line-height:1.5}button,input,select{font:inherit}button{cursor:pointer}
+.header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.header-inner{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:900}.logo-mark{width:36px;height:36px;border-radius:11px;background:#17181d;color:#fff;display:grid;place-items:center}.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;font-weight:800;color:var(--muted)}.nav a{color:inherit;text-decoration:none}.nav a:hover{color:var(--text)}
+main{max-width:1200px;margin:auto;padding:46px 20px 72px}.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:end;margin-bottom:28px}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;color:var(--accent)}h1{font-size:clamp(38px,6vw,64px);line-height:1.02;letter-spacing:-.05em;margin:10px 0}.hero p{max-width:700px;color:var(--muted);font-size:16px;margin:0}.privacy{padding:18px 20px;border:1px solid var(--line);border-radius:18px;background:var(--surface);box-shadow:var(--shadow);font-size:13px;color:var(--muted)}.privacy strong{color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:26px 0}.tool{border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:20px;min-height:184px;display:flex;flex-direction:column;box-shadow:0 8px 26px rgba(23,24,29,.04);transition:.18s}.tool:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(23,24,29,.08)}.tool.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}.icon{width:42px;height:42px;border-radius:13px;background:var(--accent2);color:var(--accent);display:grid;place-items:center;font-size:19px;font-weight:900}.tool h2{font-size:18px;margin:14px 0 6px}.tool p{font-size:12px;color:var(--muted);margin:0}.tool button{margin-top:auto;border:0;background:#17181d;color:#fff;border-radius:10px;padding:10px 12px;font-weight:900;font-size:12px}.tool button[disabled]{opacity:.45;cursor:not-allowed}
+.panel{border:1px solid var(--line);border-radius:24px;background:var(--surface);box-shadow:var(--shadow);padding:24px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.panel-title{font-size:22px;font-weight:900}.status{font-size:12px;font-weight:800;color:var(--muted)}.drop{border:2px dashed #cfd5dd;border-radius:20px;min-height:230px;display:grid;place-items:center;text-align:center;padding:24px;transition:.16s;background:var(--surface2)}.drop.dragover{border-color:var(--accent);background:var(--accent2)}.drop h3{margin:8px 0 5px}.drop p{margin:0;color:var(--muted);font-size:13px}.choose{display:inline-flex;margin-top:15px;align-items:center;justify-content:center;padding:11px 16px;border:0;border-radius:11px;background:#17181d;color:#fff;font-weight:900;font-size:12px}.file-input{display:none}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.btn{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:11px;padding:10px 14px;font-weight:900;font-size:12px}.btn.primary{background:#17181d;color:#fff;border-color:#17181d}.btn.danger{color:var(--danger)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.file-list{margin-top:16px;display:grid;gap:8px}.file-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:12px;font-size:13px}.file-row small{color:var(--muted)}
+.output{margin-top:18px;display:grid;gap:10px}.result{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px}.result a{font-weight:900;color:var(--accent);text-decoration:none}
+.options{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.options label{font-size:12px;font-weight:800;color:var(--muted)}.options input,.options select{display:block;margin-top:5px;border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff;min-width:130px}
+.note{margin-top:14px;padding:12px 14px;border-radius:12px;background:#f8f9fb;color:var(--muted);font-size:12px}.note strong{color:var(--text)}
+.hidden{display:none!important}.pages-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px}.page-card{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fafbfc}.page-card img,.page-card canvas{width:100%;height:auto;border-radius:8px;background:#fff;display:block}.page-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;font-size:11px;color:var(--muted)}.page-meta button{border:0;background:none;font-weight:900;color:var(--danger)}
+.footer{border-top:1px solid var(--line);padding:24px 20px;color:var(--muted);font-size:12px;text-align:center}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:1fr}.pages-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){main{padding:28px 14px 55px}.header-inner{padding:11px 14px}.nav{gap:10px;font-size:11px}.grid{grid-template-columns:1fr}.panel{padding:16px}.pages-grid{grid-template-columns:1fr}.hero p{font-size:14px}}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1013;--surface:#15181d;--surface2:#1b1f25;--text:#f3f5f7;--muted:#aab1bc;--line:#2a3038;--accent2:#242447;--shadow:0 18px 50px rgba(0,0,0,.28)}.logo-mark{background:#f3f5f7;color:#111}.drop{border-color:#414852}.btn,.options input,.options select{background:#171b20;color:var(--text)}.note{background:#1b1f25}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+</head>
+<body>
+<header class="header"><div class="header-inner"><a class="logo" href="index.html"><span class="logo-mark">✦</span><span>SiteCraft</span></a><nav class="nav" aria-label="Primary"><a href="templates.html">Templates</a><a href="portfolio-creator.html">Portfolio Creator</a><a href="resume-builder.html">Resume Builder</a><a href="pdf-tools.html">PDF Tools</a></nav></div></header>
+<main>
+<section class="hero"><div><div class="eyebrow">Document utility suite</div><h1>PDF tools, all in one place.</h1><p>Convert, organize, optimize, and prepare PDF files without creating an account.</p></div><div class="privacy"><strong>Privacy first.</strong><br>Files are processed for the selected task and are not intended to be stored permanently. Production processing should enforce automatic cleanup after a short retention window.</div></section>
+<section class="grid" aria-label="PDF tools">
+<article class="tool" data-tool="image"><div class="icon">⇩</div><h2>PDF → JPG / PNG</h2><p>Convert each PDF page into an image.</p><button type="button" data-open="image" >Use tool</button></article><article class="tool" data-tool="word"><div class="icon">W</div><h2>PDF → Word</h2><p>Turn text-rich PDFs into editable Word documents.</p><button type="button" data-open="word" disabled>Backend required</button></article><article class="tool" data-tool="excel"><div class="icon">X</div><h2>PDF → Excel</h2><p>Extract tables/data into editable spreadsheets.</p><button type="button" data-open="excel" disabled>Backend required</button></article><article class="tool" data-tool="html"><div class="icon">⌁</div><h2>HTML → PDF</h2><p>Convert a web page URL into a PDF snapshot.</p><button type="button" data-open="html" disabled>Backend required</button></article><article class="tool" data-tool="compress"><div class="icon">↓</div><h2>Compress PDF</h2><p>Reduce PDF size for uploads and sharing.</p><button type="button" data-open="compress" >Use tool</button></article><article class="tool" data-tool="protect"><div class="icon">●</div><h2>Protect PDF</h2><p>Add password protection to a PDF file.</p><button type="button" data-open="protect" disabled>Backend required</button></article><article class="tool" data-tool="unlock"><div class="icon">○</div><h2>Unlock PDF</h2><p>Remove protection when you have the password.</p><button type="button" data-open="unlock" disabled>Backend required</button></article><article class="tool" data-tool="split"><div class="icon">✂</div><h2>Split PDF</h2><p>Create a new PDF from selected pages.</p><button type="button" data-open="split" >Use tool</button></article><article class="tool" data-tool="delete"><div class="icon">−</div><h2>Delete Pages</h2><p>Remove unwanted pages from a PDF.</p><button type="button" data-open="delete" >Use tool</button></article><article class="tool" data-tool="rotate"><div class="icon">↻</div><h2>Rotate PDF</h2><p>Rotate selected pages by 90° steps.</p><button type="button" data-open="rotate" >Use tool</button></article><article class="tool" data-tool="watermark"><div class="icon">✧</div><h2>Watermark</h2><p>Add text or a logo overlay to every page.</p><button type="button" data-open="watermark" >Use tool</button></article>
+</section>
+
+<section class="panel" id="workspace">
+<div class="panel-head"><div class="panel-title" id="panelTitle">Choose a PDF tool</div><div class="status" id="status">No file selected</div></div>
+<div class="drop" id="drop"><div><div style="font-size:30px">↑</div><h3>Drag & drop your PDF here</h3><p>or choose a PDF from your device</p><label class="choose">Choose PDF<input class="file-input" id="fileInput" type="file" accept="application/pdf"></label></div></div>
+<div id="workspaceBody" class="hidden">
+<div class="file-list" id="fileList"></div>
+<div class="options" id="options"></div>
+<div class="actions"><button class="btn primary" id="runBtn">Process PDF</button><button class="btn" id="clearBtn">Clear</button></div>
+<div class="note" id="note"></div>
+<div class="output" id="output"></div>
+</div>
+</section>
+</main>
+<footer class="footer">© 2026 SiteCraft · PDF Tools · Use only files you are authorized to process.</footer>
+
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script type="module">
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const state={tool:null,file:null,bytes:null,removed:new Set(),rotations:new Map()};
+const toolInfo={
+ image:{title:"PDF → JPG / PNG",note:"Renders each page in your browser. Large PDFs can use more memory.",type:"image"},
+ compress:{title:"Compress PDF",note:"Browser-side optimization uses object streams. For stronger image recompression, connect a server-side PDF optimizer.",type:"compress"},
+ split:{title:"Split PDF",note:"Enter the page range to export into a new PDF.",type:"range"},
+ delete:{title:"Delete Pages",note:"Enter pages to remove, for example: 2,4,7.",type:"delete"},
+ rotate:{title:"Rotate PDF",note:"Rotate all pages or selected pages clockwise.",type:"rotate"},
+ watermark:{title:"Add Watermark",note:"Adds a text watermark to every page. Logo watermark can be connected to the backend later.",type:"watermark"}
+};
+function setStatus(t){$("status").textContent=t}
+function fmt(bytes){if(bytes<1024) return bytes+" B"; const u=["KB","MB","GB"];let i=-1,n=bytes;do{n/=1024;i++}while(n>=1024&&i<u.length-1);return n.toFixed(n>10?1:2)+" "+u[i]}
+function filename(base,suffix,ext="pdf"){return base.replace(/\.pdf$/i,"")+suffix+"."+ext}
+function setTool(tool){
+  state.tool=tool; state.removed=new Set(); state.rotations=new Map();
+  $$(".tool").forEach(c=>c.classList.toggle("active",c.dataset.tool===tool));
+  $("panelTitle").textContent=toolInfo[tool]?.title||"Choose a PDF tool";
+  $("options").innerHTML="";
+  $("output").innerHTML="";
+  $("note").innerHTML=toolInfo[tool]?.note||"Choose a supported tool and upload a PDF.";
+  updateWorkspace();
+}
+function updateWorkspace(){
+  if(!state.file){$("workspaceBody").classList.add("hidden");setStatus(state.tool?"Awaiting PDF":"No file selected");return}
+  $("workspaceBody").classList.remove("hidden");
+  $("fileList").innerHTML=`<div class="file-row"><span>📄 ${state.file.name}</span><small>${fmt(state.file.size)}</small></div>`;
+  renderOptions();setStatus("Ready");
+}
+function renderOptions(){
+  const opt=$("options");
+  if(state.tool==="split") opt.innerHTML='<label>From page<input id="fromPage" type="number" min="1" value="1"></label><label>To page<input id="toPage" type="number" min="1" value="1"></label>';
+  else if(state.tool==="delete") opt.innerHTML='<label>Pages to delete<input id="deletePages" type="text" placeholder="2,4,7"></label>';
+  else if(state.tool==="rotate") opt.innerHTML='<label>Pages<input id="rotatePages" type="text" placeholder="all or 1,3,5"></label><label>Angle<select id="rotateAngle"><option value="90">90°</option><option value="180">180°</option><option value="270">270°</option></select></label>';
+  else if(state.tool==="watermark") opt.innerHTML='<label>Watermark text<input id="watermarkText" type="text" value="SiteCraft"></label><label>Opacity<input id="watermarkOpacity" type="number" min=".1" max="1" step=".1" value=".35"></label>';
+  else if(state.tool==="image") opt.innerHTML='<label>Format<select id="imageFormat"><option value="png">PNG</option><option value="jpg">JPG</option></select></label><label>Scale<select id="imageScale"><option value="1">1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>';
+}
+async function loadPdf(){if(!state.bytes) state.bytes=await state.file.arrayBuffer();return PDFLib.PDFDocument.load(state.bytes)}
+function parsePages(text,max){
+  if(!text||text.trim().toLowerCase()==="all") return Array.from({length:max},(_,i)=>i);
+  const out=new Set();
+  text.split(",").forEach(v=>{const n=parseInt(v.trim(),10);if(Number.isInteger(n)&&n>=1&&n<=max)out.add(n-1)});
+  return [...out].sort((a,b)=>a-b);
+}
+async function makeDownload(bytes,name){
+  const blob=new Blob([bytes],{type:"application/pdf"}),url=URL.createObjectURL(blob);
+  $("output").insertAdjacentHTML("beforeend",`<div class="result"><span>${name}</span><a download="${name}" href="${url}">Download</a></div>`);
+}
+async function run(){
+  if(!state.file){setStatus("Choose a PDF first");return}
+  $("output").innerHTML="";setStatus("Processing…");$("runBtn").disabled=true;
+  try{
+    if(state.tool==="image"){
+      const pdfjs=await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs");
+      pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+      const pdf=await pdfjs.getDocument({data:new Uint8Array(state.bytes||await state.file.arrayBuffer())}).promise;
+      const fmt=$("imageFormat").value,scale=parseFloat($("imageScale").value);
+      for(let i=1;i<=pdf.numPages;i++){
+        const page=await pdf.getPage(i),vp=page.getViewport({scale});
+        const canvas=document.createElement("canvas");canvas.width=Math.ceil(vp.width);canvas.height=Math.ceil(vp.height);
+        await page.render({canvasContext:canvas.getContext("2d"),viewport:vp}).promise;
+        const mime=fmt==="jpg"?"image/jpeg":"image/png",url=canvas.toDataURL(mime,.92);
+        $("output").insertAdjacentHTML("beforeend",`<div class="result"><span>Page ${i}</span><a download="${filename(state.file.name,`-page-${i}`,fmt)}" href="${url}">Download</a></div>`);
+      }
+    } else {
+      const doc=await loadPdf(),count=doc.getPageCount();
+      if(state.tool==="compress"){
+        const bytes=await doc.save({useObjectStreams:true,addDefaultPage:false});
+        await makeDownload(bytes,filename(state.file.name,"-optimized")); 
+      } else if(state.tool==="split"){
+        let a=Math.max(1,parseInt($("fromPage").value||1,10)),b=Math.min(count,parseInt($("toPage").value||a,10)); if(a>b)[a,b]=[b,a];
+        const out=await PDFLib.PDFDocument.create(),pages=await out.copyPages(doc,Array.from({length:b-a+1},(_,i)=>a-1+i));pages.forEach(p=>out.addPage(p));
+        await makeDownload(await out.save(),filename(state.file.name,`-pages-${a}-${b}`));
+      } else if(state.tool==="delete"){
+        const del=new Set(parsePages($("deletePages").value,count)),out=await PDFLib.PDFDocument.create(),keep=[];
+        for(let i=0;i<count;i++)if(!del.has(i))keep.push(i);
+        const pages=await out.copyPages(doc,keep);pages.forEach(p=>out.addPage(p));
+        await makeDownload(await out.save(),filename(state.file.name,"-pages-removed"));
+      } else if(state.tool==="rotate"){
+        const pages=parsePages($("rotatePages").value,count),angle=parseInt($("rotateAngle").value,10);
+        pages.forEach(i=>{const p=doc.getPage(i),cur=p.getRotation().angle||0;p.setRotation(PDFLib.degrees((cur+angle)%360))});
+        await makeDownload(await doc.save(),filename(state.file.name,"-rotated"));
+      } else if(state.tool==="watermark"){
+        const text=$("watermarkText").value.trim()||"SiteCraft",opacity=Math.max(.1,Math.min(1,parseFloat($("watermarkOpacity").value)||.35));
+        const font=await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+        doc.getPages().forEach(p=>{const {width,height}=p.getSize();p.drawText(text,{x:36,y:height/2,size:28,font,color:PDFLib.rgb(.22,.24,.28),opacity,rotate:PDFLib.degrees(30)})});
+        await makeDownload(await doc.save(),filename(state.file.name,"-watermarked"));
+      }
+    }
+    setStatus("Done");
+  }catch(err){console.error(err);$("output").innerHTML=`<div class="note"><strong>Could not process this PDF.</strong><br>${String(err.message||err)}</div>`;setStatus("Error")}
+  finally{$("runBtn").disabled=false}
+}
+$$("[data-open]").forEach(b=>b.addEventListener("click",()=>setTool(b.dataset.open)));
+$("fileInput").addEventListener("change",e=>{state.file=e.target.files[0]||null;state.bytes=null;updateWorkspace()});
+$("drop").addEventListener("dragover",e=>{e.preventDefault();$("drop").classList.add("dragover")});
+$("drop").addEventListener("dragleave",()=>$("drop").classList.remove("dragover"));
+$("drop").addEventListener("drop",e=>{e.preventDefault();$("drop").classList.remove("dragover");const f=e.dataTransfer.files?.[0];if(f&&f.type==="application/pdf"){state.file=f;state.bytes=null;updateWorkspace()}else setStatus("Please drop a PDF file")});
+$("runBtn").addEventListener("click",run);
+$("clearBtn").addEventListener("click",()=>{state.file=null;state.bytes=null;$("fileInput").value="";$("output").innerHTML="";$("options").innerHTML="";$("workspaceBody").classList.add("hidden");$$(".tool").forEach(c=>c.classList.remove("active"));$("panelTitle").textContent="Choose a PDF tool";$("note").innerHTML="Choose a supported tool and upload a PDF.";setStatus("No file selected")});
+setTool("image");
+</script>
+</body>
+</html>
