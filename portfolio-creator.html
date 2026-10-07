@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="portfolio-creator 8A+cleanup 2026-10-07">
+<meta name="build" content="portfolio-creator 8C+export-import 2026-10-07">
 <title>Portfolio Creator — SiteCraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -123,12 +123,12 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
   <div class="top-actions">
     <div class="saved"><i></i><span>Saved in memory</span></div>
     <div class="shortcut"><span class="kbd">Ctrl+S</span><span>Export</span></div>
-    <button class="btn soft" id="shareBtn" type="button" title="Copy placeholder link">↗ <span>Copy placeholder link</span></button>
+    <button class="btn soft" id="shareBtn" type="button" disabled aria-disabled="true" title="Publishing is not available yet">↗ <span>Publish link: coming soon</span></button>
     <button class="btn soft" id="undoBtn" type="button">↶ <span>Undo</span></button>
     <button class="btn soft" id="redoBtn" type="button">↷ <span>Redo</span></button>
     <button class="icon-btn" id="editorThemeBtn" type="button" aria-label="Toggle editor theme">◐</button>
     <div class="more-wrap"><button class="icon-btn" id="moreBtn" type="button" aria-label="More actions" aria-expanded="false" aria-controls="moreMenu">⋯</button><div class="more-menu" id="moreMenu" hidden>
-      <button type="button" data-more-action="share">Copy placeholder link</button><button type="button" data-more-action="undo">Undo</button><button type="button" data-more-action="redo">Redo</button><button type="button" data-more-action="change">Choose style</button><button type="button" data-more-action="editor">Editor dark mode</button><button type="button" data-more-action="focus">Focus preview</button><button type="button" data-more-action="preview">Preview in new tab</button><button type="button" data-more-action="json">Export JSON</button><button type="button" data-more-action="reset">Reset demo</button>
+      <button type="button" data-more-action="undo">Undo</button><button type="button" data-more-action="redo">Redo</button><button type="button" data-more-action="change">Choose style</button><button type="button" data-more-action="editor">Editor dark mode</button><button type="button" data-more-action="focus">Focus preview</button><button type="button" data-more-action="preview">Preview in new tab</button><button type="button" data-more-action="json">Export JSON</button><button type="button" data-more-action="reset">Reset demo</button>
     </div></div>
     <button class="btn primary" id="downloadBtn" type="button">↓ <span>Download Portfolio</span></button>
   </div>
@@ -203,6 +203,9 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
 <div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-hidden="true">
   <div class="modal-card narrow"><div class="modal-step">Reset portfolio</div><h2 id="confirmTitle">Start over?</h2><p class="confirm-copy">Your current in-memory edits will be replaced with the default Working Professional demo and undo/redo history will be cleared.</p><div class="modal-bottom"><button class="btn soft" id="cancelReset" type="button">Cancel</button><button class="btn danger" id="confirmReset" type="button">Reset portfolio</button></div></div>
 </div>
+<div class="modal" id="importModal" role="dialog" aria-modal="true" aria-labelledby="importTitle" aria-hidden="true">
+  <div class="modal-card narrow"><div class="modal-step">Import portfolio</div><h2 id="importTitle">Replace current portfolio?</h2><p class="confirm-copy">Importing this file will replace the current in-memory portfolio. Your current data will remain available through Undo.</p><div class="modal-bottom"><button class="btn soft" id="cancelImport" type="button">Cancel</button><button class="btn primary" id="confirmImport" type="button">Import portfolio</button></div></div>
+</div>
 <div class="modal" id="leaveModal" role="dialog" aria-modal="true" aria-labelledby="leaveTitle" aria-hidden="true">
   <div class="modal-card narrow"><div class="modal-step">Leave Portfolio Creator</div><h2 id="leaveTitle">Leave this page?</h2><p class="confirm-modal-copy">Your portfolio is only kept in memory. Download it before leaving?</p><div class="leave-modal-actions"><button class="btn soft" id="leaveStay" type="button">Stay</button><button class="btn danger" id="leaveAnyway" type="button">Leave anyway</button><button class="btn primary" id="leaveDownload" type="button">Download first</button></div></div>
 </div>
@@ -248,7 +251,7 @@ state.sectionOrder=THEMES.professional.sectionOrder.slice();
 state.editorOrder=["personal","social","skills","projects","experience","education","certifications","contact","design"];
 state.optionalSections={};state.sectionMeta={};state.links={resume:"",whatsapp:"",calendly:"",formspree:""};state.availability={enabled:false,type:"open",text:"Open to work"};state.profileShape="circle";state.heroLayout="left";state.uiLanguage="en";
 
-var history=[],future=[],typingGroup=null,typingTimer=null,previewTimer=null,dragPayload=null,modalReturnFocus=null,cropState=null,leaveTarget="",step1Expanded=true,openSections={personal:true,experience:true,skills:true,projects:true},editorWidth=410;
+var history=[],future=[],typingGroup=null,typingTimer=null,previewTimer=null,dragPayload=null,modalReturnFocus=null,cropState=null,pendingImport=null,leaveTarget="",step1Expanded=true,openSections={personal:true,experience:true,skills:true,projects:true},editorWidth=410;
 
 function icon(n){var m={personal:"✦",social:"◎",skills:"✧",projects:"▦",experience:"◷",education:"▤",certifications:"✓",contact:"↗",design:"◌",drag:"⋮⋮"};return '<span aria-hidden="true">'+(m[n]||"•")+"</span>"}
 function toast(msg,type){var t=$("#toast");t.textContent=msg;t.className="toast"+(type==="error"?" error":"")+" show";clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("show")},2500)}
@@ -427,36 +430,41 @@ function applyDevice(){
 function applyTheme(id,fromUser){var t=THEMES[id];if(!t)return;flushTyping();var before=snapshot();state.design.theme=id;state.design.font=t.fonts[0];state.design.accent=t.colors.accent;state.design.mode=id==="dark-modern"?"dark":"light";state.sectionOrder=t.sectionOrder.slice();if(id==="actor"&&!(state.optionalSections.actor&&state.optionalSections.actor[0]))state.optionalSections.actor=clone(ACTOR_DEFAULT);if(id==="actor"&&state.editorOrder.indexOf("actor")<0)state.editorOrder.splice(1,0,"actor");if(id==="assistant-director"&&!(state.optionalSections["assistant-director"]&&state.optionalSections["assistant-director"][0]))state.optionalSections["assistant-director"]=clone(AD_DEFAULT);if(id==="assistant-director"&&state.editorOrder.indexOf("assistant-director")<0)state.editorOrder.splice(1,0,"assistant-director");push(before);var root=$("#preview");if(root)root.classList.remove("theme-fade");renderEditor();updateThemePicker();schedulePreview();if(fromUser)toast(t.name+" theme applied")}
 function showSuggestionBanner(){var map={photographer:["gallery","services"],academic:["publications","awards"],"bento-grid":["stats","testimonials"],professional:["testimonials","services"],creative:["gallery","services"]},ids=map[state.design.theme]||[],box=$("#suggestionBanner");if(!box)return;var missing=ids.filter(function(id){return !optionalContent(id)});if(!missing.length){box.hidden=true;return}box.hidden=false;box.innerHTML='<strong>Recommended</strong><span class="suggestion-copy">For '+esc(THEMES[state.design.theme].name)+', consider '+missing.map(function(id){return esc(OPTIONAL[id].name)}).join(' + ')+'.</span>'+missing.map(function(id){return '<button class="btn soft" type="button" data-suggest-add="'+id+'">Add '+esc(OPTIONAL[id].name)+'</button>'}).join('')+'<button class="icon-btn" type="button" data-dismiss-suggestion aria-label="Dismiss">×</button>';$$('[data-suggest-add]',box).forEach(function(b){b.onclick=function(){$('[data-add-optional="'+b.dataset.suggestAdd+'"]')?.click();showSuggestionBanner()}});$('[data-dismiss-suggestion]',box).onclick=function(){box.hidden=true}}
 function renderAll(){ensureState();renderEditor();renderProgress();$("#previewThemeSelect").value=state.design.theme;syncHistoryButtons();schedulePreview();applyDevice();updateThemePicker();showSuggestionBanner()}
+function isRecord(v){return !!v&&typeof v==='object'&&!Array.isArray(v)}
 function validateImported(x){
-  if(!x||typeof x!=='object'||Array.isArray(x))throw new Error('Invalid JSON file.');
-  if(!x.personal||typeof x.personal!=='object'||Array.isArray(x.personal))throw new Error('Personal Info is missing or invalid.');
-  if(x.skills!==undefined&&!Array.isArray(x.skills))throw new Error('skills must be an array.');
-  if(x.projects!==undefined&&!Array.isArray(x.projects))throw new Error('projects must be an array.');
-  if(x.experience!==undefined&&!Array.isArray(x.experience))throw new Error('experience must be an array.');
-  if(x.education!==undefined&&!Array.isArray(x.education))throw new Error('education must be an array.');
-  if(x.certifications!==undefined&&!Array.isArray(x.certifications))throw new Error('certifications must be an array.');
-  if(x.optionalSections!==undefined&&(!x.optionalSections||typeof x.optionalSections!=='object'||Array.isArray(x.optionalSections)))throw new Error('Optional sections are invalid.');
-  var theme=x.design&&typeof x.design==='object'&&THEMES[x.design.theme]?x.design.theme:'minimal';
+  if(!isRecord(x))throw new Error('Invalid JSON file.');
+  if(x.personal!==undefined&&!isRecord(x.personal))throw new Error('Personal Info is invalid.');
+  if(x.social!==undefined&&!isRecord(x.social))throw new Error('social must be an object.');
+  if(x.contact!==undefined&&!isRecord(x.contact))throw new Error('contact must be an object.');
+  if(x.design!==undefined&&!isRecord(x.design))throw new Error('design must be an object.');
+  if(x.seo!==undefined&&!isRecord(x.seo))throw new Error('seo must be an object.');
+  if(x.links!==undefined&&!isRecord(x.links))throw new Error('links must be an object.');
+  if(x.availability!==undefined&&!isRecord(x.availability))throw new Error('availability must be an object.');
+  if(x.sectionMeta!==undefined&&!isRecord(x.sectionMeta))throw new Error('sectionMeta must be an object.');
+  if(x.optionalSections!==undefined&&!isRecord(x.optionalSections))throw new Error('Optional sections are invalid.');
+  ['skills','projects','experience','education','certifications'].forEach(function(k){if(x[k]!==undefined&&!Array.isArray(x[k]))throw new Error(k+' must be an array.')});
+  var theme=x.design&&THEMES[x.design.theme]?x.design.theme:'minimal';
   if(x.design&&x.design.theme==='resume-cv')theme='minimal';
-  var t=THEMES[theme]||THEMES.minimal,b=clone(PERSONAS.empty.demo);
-  b.personal=Object.assign(b.personal,x.personal);
-  b.social=Object.assign(b.social,x.social||{});
-  b.contact=Object.assign(b.contact,x.contact||{});
-  b.design=Object.assign({theme:theme},x.design||{});
-  b.design.theme=theme;
-  b.seo=Object.assign({title:'',description:'',favicon:'',ogImage:'auto'},x.seo||{});
-  b.links=Object.assign({resume:'',whatsapp:'',calendly:'',formspree:''},x.links||{});
-  b.availability=Object.assign({enabled:false,type:'open',text:'Open to work'},x.availability||{});
-  b.profileShape=x.profileShape||'circle';
-  b.heroLayout=x.heroLayout||'left';
+  var t=THEMES[theme]||THEMES.minimal,b=clone(PERSONAS.empty.demo),original=state;
+  b=Object.assign(b,clone(x));
+  b.personal=Object.assign(clone(PERSONAS.empty.demo.personal||{}),clone(x.personal||{}));
+  b.social=Object.assign({},clone(x.social||{}));
+  b.contact=Object.assign({},clone(x.contact||{}));
+  b.design=Object.assign({theme:theme},clone(x.design||{}));b.design.theme=theme;
+  b.seo=Object.assign({title:'',description:'',favicon:'',ogImage:'auto'},clone(x.seo||{}));
+  b.links=Object.assign({resume:'',whatsapp:'',calendly:'',formspree:''},clone(x.links||{}));
+  b.availability=Object.assign({enabled:false,type:'open',text:'Open to work'},clone(x.availability||{}));
+  b.profileShape=typeof x.profileShape==='string'&&x.profileShape?x.profileShape:'circle';
+  b.heroLayout=typeof x.heroLayout==='string'&&x.heroLayout?x.heroLayout:'left';
   b.uiLanguage=x.uiLanguage==='te'?'te':'en';
-  b.sectionMeta=x.sectionMeta&&typeof x.sectionMeta==='object'?clone(x.sectionMeta):{};
-  b.optionalSections=x.optionalSections&&typeof x.optionalSections==='object'?clone(x.optionalSections):{};
+  b.sectionMeta=isRecord(x.sectionMeta)?clone(x.sectionMeta):{};
+  b.optionalSections=isRecord(x.optionalSections)?clone(x.optionalSections):{};
   ['skills','projects','experience','education','certifications'].forEach(function(k){b[k]=Array.isArray(x[k])?clone(x[k]):[]});
-  b.persona=typeof x.persona==='string'?x.persona:'';
+  b.title=typeof x.title==='string'?x.title:(typeof b.title==='string'?b.title:'');
+  b.persona=typeof x.persona==='string'?x.persona:(typeof b.persona==='string'?b.persona:'');
   b.sectionOrder=Array.isArray(x.sectionOrder)?clone(x.sectionOrder):t.sectionOrder.slice();
-  b.editorOrder=Array.isArray(x.editorOrder)?clone(x.editorOrder):['personal','social','skills','projects','experience','education','certifications','contact','design'];
-  return b
+  b.editorOrder=Array.isArray(x.editorOrder)?clone(x.editorOrder):['personal','social','skills','projects','experience','education','certifications','contact','design'].slice();
+  state=b;ensureState();var normalized=clone(state);state=original;return normalized;
 }
 function downloadPortfolio(){var name=((norm(state.personal.name)||"portfolio").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"portfolio")+".html";downloadBlob(new Blob([staticDocument()],{type:"text/html;charset=utf-8"}),name);toast("Portfolio downloaded")}
 function exportJson(){downloadBlob(new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),"portfolio-data.json");toast("JSON exported")}
@@ -466,24 +474,21 @@ function staticDocument(){
  var og=safeHttpsUrl(seo.ogImage);if(!og&&seo.ogImage==="cover")og=safeHttpsUrl(state.personal.cover);if(!og&&seo.ogImage==="photo")og=safeHttpsUrl(state.personal.photo);if(!og&&seo.ogImage==="auto")og=safeHttpsUrl(state.personal.cover)||safeHttpsUrl(state.personal.photo);
  var ftxt=(norm(seo.favicon)||norm(state.personal.name)||"P").slice(0,4),fav='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="'+esc(safeColor(state.design.accent,t.colors.accent))+'"/><text x="32" y="42" text-anchor="middle" font-size="28" font-family="Arial" fill="white">'+esc(ftxt)+'</text></svg>',style=document.getElementById("previewStyles")?.textContent||"";
  style+='.portfolio-site .reveal{opacity:1!important;transform:none!important;visibility:visible!important}.portfolio-site{overflow:clip!important;font-family:'+fontStack(state.design.font)+'!important}.portfolio-site h1,.portfolio-site h2,.portfolio-site h3,.portfolio-site h4{font-family:'+fontStack(state.design.font)+'!important}';
- var fallback='<script>(function(){document.querySelectorAll("[data-contact-fallback]").forEach(function(form){form.addEventListener("submit",function(e){e.preventDefault();var to=(form.dataset.mailto||"").trim(),fd=new FormData(form),subject="Portfolio inquiry",body=["Name: "+(fd.get("name")||""),"Email: "+(fd.get("email")||""),"Message: "+(fd.get("message")||"")].join("\n");if(to)window.location.href="mailto:"+to+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body)})})})();<\/script>';
+ var fallback='<script>(function(){document.querySelectorAll("[data-contact-fallback]").forEach(function(form){form.addEventListener("submit",function(e){e.preventDefault();var to=(form.dataset.mailto||"").trim(),fd=new FormData(form),subject="Portfolio inquiry",body=["Name: "+(fd.get("name")||""),"Email: "+(fd.get("email")||""),"Message: "+(fd.get("message")||"")].join("\\n");if(to)window.location.href="mailto:"+to+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body)})})})();<\/script>';
  return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(title)+'</title><meta name="description" content="'+esc(desc)+'"><meta property="og:title" content="'+esc(title)+'"><meta property="og:description" content="'+esc(desc)+'"><meta property="og:type" content="website">'+(og?'<meta property="og:image" content="'+esc(og)+'">':"")+'<meta name="twitter:card" content="'+(og?'summary_large_image':'summary')+'"><meta name="theme-color" content="'+esc(safeColor(state.design.accent,t.colors.accent))+'"><link rel="icon" href="data:image/svg+xml,'+encodeURIComponent(fav)+'"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"><style>'+style+'</style></head><body style="margin:0;background:'+esc(t.colors.bg)+'">'+previewHtml()+fallback+'</body></html>'
 }function previewNewTab(){var url=URL.createObjectURL(new Blob([staticDocument()],{type:"text/html;charset=utf-8"})),w=window.open(url,"_blank");if(!w){toast("Popup blocked. Allow popups to preview.","error");URL.revokeObjectURL(url);return}setTimeout(function(){URL.revokeObjectURL(url)},60000)}
-function shareLink(){var slug=(norm(state.personal.name)||"username").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"username";return"https://yoursite.com/"+slug}
-function copyShare(){var v=shareLink();if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(function(){toast("Placeholder link copied")}).catch(function(){toast(v,"error")});else{var ta=document.createElement("textarea");ta.value=v;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();toast("Placeholder link copied")}}
-
 function setupTools(){
   var box=$("#editorTools");
   box.innerHTML='<div class="editor-tools-stack"><div class="width-presets" role="group" aria-label="Editor width"><span>Editor</span><button type="button" data-editor-preset="360">Compact</button><button type="button" data-editor-preset="410" class="active">Default</button><button type="button" data-editor-preset="560">Wide</button></div><div class="editor-tool-actions"><label class="btn soft upload" title="Import JSON">↥ Import<input id="importJson" type="file" accept="application/json"></label><button class="icon-btn" id="exportJson" type="button" title="Export JSON" aria-label="Export JSON">↗</button><button class="btn danger" id="resetBtn" type="button">Reset</button></div></div>';
   $("#exportJson").onclick=exportJson;$("#resetBtn").onclick=showResetConfirm;
   $$("[data-editor-preset]").forEach(function(b){b.onclick=function(){var v=+b.dataset.editorPreset;setEditorWidth(v);$$("[data-editor-preset]").forEach(function(x){x.classList.toggle("active",+x.dataset.editorPreset===editorWidth)})}});
-  $("#importJson").onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)return;f.text().then(function(txt){var x;try{x=JSON.parse(txt)}catch(err){throw new Error("That file is not valid JSON.")}var next=validateImported(x),before=snapshot();flushTyping();state=next;push(before);renderAll();restoreUi(before.ui);toast("Portfolio data imported")}).catch(function(err){toast(err.message||"Import failed.","error")});e.target.value=""}
+  $("#importJson").onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)return;f.text().then(function(txt){var x;try{x=JSON.parse(txt)}catch(err){throw new Error("That file is not valid JSON.")}var next=validateImported(x);showImportConfirm(next)}).catch(function(err){toast(err.message||"Import failed.","error")});e.target.value=""}
 }
 
 function setupPreviewScroll(){var shell=$("#previewShell");if(!shell)return;shell.addEventListener("scroll",function(){updateScrollSpy();$("#backTop")?.classList.toggle("show",shell.scrollTop>260)},{passive:true});shell.addEventListener("keydown",function(e){if((e.target.closest&&e.target.closest("input,textarea,select,button,a"))&&e.target!==shell)return;var step=Math.max(180,Math.round(shell.clientHeight*.82));if(e.key==="PageDown"||(e.key===" "&&!e.shiftKey)){e.preventDefault();shell.scrollBy({top:step,behavior:reduced()?"auto":"smooth"})}else if(e.key==="PageUp"||(e.key===" "&&e.shiftKey)){e.preventDefault();shell.scrollBy({top:-step,behavior:reduced()?"auto":"smooth"})}else if(e.key==="Home"&&e.ctrlKey){e.preventDefault();shell.scrollTo({top:0,behavior:reduced()?"auto":"smooth"})}else if(e.key==="End"&&e.ctrlKey){e.preventDefault();shell.scrollTo({top:shell.scrollHeight,behavior:reduced()?"auto":"smooth"})}});$("#backTop").onclick=function(){shell.scrollTo({top:0,behavior:reduced()?"auto":"smooth"})}}
-function setupModalKeys(){document.addEventListener("keydown",function(e){var modal=$$(".modal").find(function(m){return m.style.display==="grid"});if(modal){if(e.key==="Escape"){e.preventDefault();if(modal.id==="cropModal")closeCrop();else if(modal.id==="confirmModal")closeResetConfirm();else if(modal.id==="leaveModal")closeLeaveConfirm();return}if(e.key==="Tab"){var f=$$("button,input,textarea,select,[href],[tabindex]",modal).filter(function(x){return !x.disabled&&x.offsetParent!==null}),first=f[0],last=f[f.length-1];if(first&&last){if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}}}})}
+function setupModalKeys(){document.addEventListener("keydown",function(e){var modal=$$(".modal").find(function(m){return m.style.display==="grid"});if(modal){if(e.key==="Escape"){e.preventDefault();if(modal.id==="cropModal")closeCrop();else if(modal.id==="confirmModal")closeResetConfirm();else if(modal.id==="importModal")closeImportConfirm();else if(modal.id==="leaveModal")closeLeaveConfirm();return}if(e.key==="Tab"){var f=$$("button,input,textarea,select,[href],[tabindex]",modal).filter(function(x){return !x.disabled&&x.offsetParent!==null}),first=f[0],last=f[f.length-1];if(first&&last){if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}}}})}
 function setupTop(){
-  $("#undoBtn").onclick=undo;$("#redoBtn").onclick=redo;$("#downloadBtn").onclick=downloadPortfolio;$("#previewNewTabBtn").onclick=previewNewTab;$("#shareBtn").onclick=copyShare;
+  $("#undoBtn").onclick=undo;$("#redoBtn").onclick=redo;$("#downloadBtn").onclick=downloadPortfolio;$("#previewNewTabBtn").onclick=previewNewTab;
   $("#focusBtn").onclick=function(){var f=$("#app").classList.toggle("focus");$("#focusBtn").querySelector("span").textContent=f?"Exit focus":"Focus preview"};
   $("#editorThemeBtn").onclick=function(){document.body.classList.toggle("editor-dark")};
   $("#editTab").onclick=function(){document.body.classList.remove("mobile-preview");$("#editTab").classList.add("active");$("#previewTab").classList.remove("active")};
@@ -491,12 +496,12 @@ function setupTop(){
   $("#previewThemeSelect").onchange=function(e){applyTheme(e.target.value,true)};
   $("#moreBtn")?.addEventListener("click",function(){var m=$("#moreMenu"),open=m.hasAttribute("hidden");if(open)m.removeAttribute("hidden");else m.setAttribute("hidden","");this.setAttribute("aria-expanded",String(open))});
   $$('[data-preview-theme]').forEach(function(b){b.onclick=function(){applyTheme(b.dataset.previewTheme,true)}});
-  $$('[data-more-action]').forEach(function(b){b.onclick=function(){var a=b.dataset.moreAction;$("#moreMenu").setAttribute("hidden","");$("#moreBtn").setAttribute("aria-expanded","false");if(a==="share")copyShare();else if(a==="undo")undo();else if(a==="redo")redo();else if(a==="change")focusStep1();else if(a==="editor")$("#editorThemeBtn").click();else if(a==="focus")$("#focusBtn").click();else if(a==="preview")previewNewTab();else if(a==="json")exportJson();else if(a==="reset")showResetConfirm()}});
+  $$('[data-more-action]').forEach(function(b){b.onclick=function(){var a=b.dataset.moreAction;$("#moreMenu").setAttribute("hidden","");$("#moreBtn").setAttribute("aria-expanded","false");if(a==="undo")undo();else if(a==="redo")redo();else if(a==="change")focusStep1();else if(a==="editor")$("#editorThemeBtn").click();else if(a==="focus")$("#focusBtn").click();else if(a==="preview")previewNewTab();else if(a==="json")exportJson();else if(a==="reset")showResetConfirm()}});
   document.addEventListener("click",function(e){var m=$("#moreMenu");if(m&&!e.target.closest(".more-wrap")){m.setAttribute("hidden","");$("#moreBtn")?.setAttribute("aria-expanded","false")}});
-  setupPreviewScroll();setupModalKeys();$("#cropZoom").addEventListener("input",function(e){if(cropState){cropState.zoom=+e.target.value;drawCrop()}});$("#cancelCrop").onclick=closeCrop;$("#applyCrop").onclick=applyCrop;$("#cancelReset").onclick=closeResetConfirm;$("#confirmReset").onclick=resetPortfolio;
+  setupPreviewScroll();setupModalKeys();$("#cancelImport").onclick=function(){closeImportConfirm()};$("#confirmImport").onclick=confirmImport;$("#cropZoom").addEventListener("input",function(e){if(cropState){cropState.zoom=+e.target.value;drawCrop()}});$("#cancelCrop").onclick=closeCrop;$("#applyCrop").onclick=applyCrop;$("#cancelReset").onclick=closeResetConfirm;$("#confirmReset").onclick=resetPortfolio;
   $("#leaveStay").onclick=closeLeaveConfirm;$("#leaveAnyway").onclick=function(){var target=leaveTarget||'index.html';closeLeaveConfirm();location.href=target};$("#leaveDownload").onclick=function(){var target=leaveTarget||'index.html';downloadPortfolio();closeLeaveConfirm();setTimeout(function(){location.href=target},60)};
   $$('[data-leave-link]').forEach(function(a){a.addEventListener('click',function(e){handleLeave(a.dataset.leaveLink,e)})});
-  document.addEventListener("keydown",function(e){var mod=e.ctrlKey||e.metaKey;if($("#cropModal").style.display==="grid"||$("#confirmModal").style.display==="grid"||$("#leaveModal").style.display==="grid")return;if(mod&&e.key.toLowerCase()==="s"){e.preventDefault();downloadPortfolio()}else if(mod&&e.key.toLowerCase()==="z"&&!e.shiftKey){e.preventDefault();undo()}else if((mod&&e.key.toLowerCase()==="y")||(mod&&e.shiftKey&&e.key.toLowerCase()==="z")){e.preventDefault();redo()}});
+  document.addEventListener("keydown",function(e){var mod=e.ctrlKey||e.metaKey;if($("#cropModal").style.display==="grid"||$("#confirmModal").style.display==="grid"||$("#importModal").style.display==="grid"||$("#leaveModal").style.display==="grid")return;if(mod&&e.key.toLowerCase()==="s"){e.preventDefault();downloadPortfolio()}else if(mod&&e.key.toLowerCase()==="z"&&!e.shiftKey){e.preventDefault();undo()}else if((mod&&e.key.toLowerCase()==="y")||(mod&&e.shiftKey&&e.key.toLowerCase()==="z")){e.preventDefault();redo()}});
   document.addEventListener("click",function(e){var b=e.target.closest(".btn,.icon-btn,.move-btn,.theme-card,.theme-pick,.step1-card");if(!b||reduced())return;var rr=b.getBoundingClientRect(),r=document.createElement("span"),size=Math.max(rr.width,rr.height);r.className="ripple";r.style.width=r.style.height=size+"px";r.style.left=(e.clientX-rr.left-size/2)+"px";r.style.top=(e.clientY-rr.top-size/2)+"px";b.appendChild(r);setTimeout(function(){r.remove()},500)})
 }
 
