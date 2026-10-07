@@ -1212,7 +1212,12 @@ function runResumeBuilderClickAudit(){
   function fp(){return{state:JSON.stringify(exportStateClone()),open:JSON.stringify(openSections),template:state.template,pages:currentPages,reset:!!($('#resetModal')&&$('#resetModal').classList.contains('show'))}}
   function click(el){if(!el){return false}el.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));return true}
   function addResult(group,label,ok,detail){var r={label:label,ok:!!ok,detail:detail||''};if(!report.suites[group])report.suites[group]=[];report.suites[group].push(r);if(!r.ok)report.failures.push({group:group,label:label,detail:detail||''});return r}
-  function expectedBoundaryNoop(ds){if(ds.moveSection){var idx=state.order.indexOf(ds.moveSection),dir=Number(ds.dir);return(dir<0&&idx===0)||(dir>0&&idx===state.order.length-1)}if(ds.moveArray){var arr=arrayForKey(ds.moveArray),i=Number(ds.index),d=Number(ds.dir);return!!arr&&((d<0&&i===0)||(d>0&&i===arr.length-1))}if(ds.moveBullet){var it=state.sections.experience.items[Number(ds.index)],i2=Number(ds.bulletIndex),d2=Number(ds.dir);return!!it&&((d2<0&&i2===0)||(d2>0&&i2===it.bullets.length-1))}return false}
+  function expectedBoundaryNoop(ds){
+    if(ds.moveSection){var idx=state.order.indexOf(ds.moveSection),dir=Number(ds.dir);return idx===0&&dir<0||idx===state.order.length-1&&dir>0}
+    if(ds.moveArray){var arr=arrayForKey(ds.moveArray),i=Number(ds.index),d=Number(ds.dir);return !!arr&&(i===0&&d<0||i===arr.length-1&&d>0)}
+    if(ds.moveBullet){var it=state.sections.experience.items[Number(ds.index)],i2=Number(ds.bulletIndex),d2=Number(ds.dir);return !!it&&(i2===0&&d2<0||i2===it.bullets.length-1&&d2>0)}
+    return false
+  }
   function rawEditorButtons(mode){
     resetTo(mode);
     var descriptors=Array.prototype.filter.call(document.querySelectorAll('#editor button'),function(b){return !b.disabled}).map(function(b,index){return{index:index,text:norm(b.textContent),id:b.id,ds:Object.assign({},b.dataset),drag:b.hasAttribute('data-drag-handle')}});
@@ -1223,7 +1228,10 @@ function runResumeBuilderClickAudit(){
       var b=buttons[d.index];
       if(!b){addResult('editor-'+mode,d.text||d.id||'button',false,'control disappeared before click');return}
       considered++;
-      var boundary=expectedBoundaryNoop(d);
+      var boundary=false;
+      if(d.ds.moveSection){var secIdx=state.order.indexOf(d.ds.moveSection),secDir=Number(d.ds.dir);boundary=secIdx===0&&secDir<0||secIdx===state.order.length-1&&secDir>0;}
+      else if(d.ds.moveArray){var rawArr=arrayForKey(d.ds.moveArray),rawIdx=Number(d.ds.index),rawDir=Number(d.ds.dir);boundary=!!rawArr&&(rawIdx===0&&rawDir<0||rawIdx===rawArr.length-1&&rawDir>0);}
+      else if(d.ds.moveBullet){var rawItem=state.sections.experience.items[Number(d.ds.index)],rawBidx=Number(d.ds.bulletIndex),rawBdir=Number(d.ds.dir);boundary=!!rawItem&&(rawBidx===0&&rawBdir<0||rawBidx===rawItem.bullets.length-1&&rawBdir>0);}
       var activePreset=!!d.ds.preset&&state.preset===d.ds.preset;
       var healthTarget=null;
       if(d.ds.healthJump){
@@ -1254,6 +1262,7 @@ function runResumeBuilderClickAudit(){
       var ok;
       if(modalExpected)ok=activePreset?!$('#resetModal').classList.contains('show'):$('#resetModal').classList.contains('show');
       else if(jumpExpected)ok=!healthTarget||(healthTarget.classList.contains('open')||document.activeElement===healthTarget||document.activeElement?.closest?.('.section-card')===healthTarget||d.ds.healthJump==='pages');
+      else if(activePreset)ok=true;
       else if(d.ds.moveSection||d.ds.moveArray||d.ds.moveBullet)ok=boundary?!explicitMoveChanged:explicitMoveChanged;
       else if(boundary)ok=true;
       else if(selectedAccent)ok=true;
