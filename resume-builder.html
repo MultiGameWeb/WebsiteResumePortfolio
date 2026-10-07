@@ -1218,18 +1218,32 @@ function runResumeBuilderClickAudit(){
       var b=Array.prototype.find.call(document.querySelectorAll('#editor button'),function(x){return x.outerHTML===d.html});
       if(!b){addResult('editor-'+mode,d.text||d.id||'button',false,'control disappeared before click');return}
       considered++;
+      var boundary=expectedBoundaryNoop(d);
+      var activePreset=!!d.ds.preset&&state.preset===d.ds.preset;
+      var healthTarget=null;
+      if(d.ds.healthJump){
+        healthTarget=d.ds.healthJump==='sampleData'?findFirstSampleTarget():null;
+        if(d.ds.healthJump==='summary')healthTarget=$('.section-card[data-editor-section="summary"]');
+        else if(d.ds.healthJump==='email')healthTarget=$('.section-card[data-editor-section="header"]');
+        else if(d.ds.healthJump==='quantified'||d.ds.healthJump==='verbs'||d.ds.healthJump==='bullet')healthTarget=$('.section-card[data-editor-section="experience"]');
+        else if(d.ds.healthJump==='pages')healthTarget=$('#previewScroll');
+        else if(!healthTarget)healthTarget=$('.section-card[data-editor-section="'+d.ds.healthJump+'"]');
+      }
       var before=fp();click(b);var after=fp(),changed=JSON.stringify(before)!==JSON.stringify(after);
       var modalExpected=!!d.ds.preset||d.id==='startEmptyBtn';
-      var boundary=expectedBoundaryNoop(d);
-      var ok=modalExpected?!!($('#resetModal')&&$('#resetModal').classList.contains('show')):(boundary?!changed:changed);
+      var jumpExpected=!!d.ds.healthJump;
+      var ok;
+      if(modalExpected)ok=activePreset?!changed:!!($('#resetModal')&&$('#resetModal').classList.contains('show'));
+      else if(jumpExpected)ok=!healthTarget||(healthTarget.classList.contains('open')||document.activeElement===healthTarget||document.activeElement?.closest?.('.section-card')===healthTarget||d.ds.healthJump==='pages');
+      else ok=boundary?!changed:changed;
       if(d.drag){ok=true;report.skipped.push({mode:mode,label:d.text||d.id||'drag handle',reason:'drag handle is pointer-drag control; click dispatch verified no exception'});}
-      addResult('editor-'+mode,d.text||d.id||'button',ok,d.drag?'drag-only control':(boundary&&!changed?'expected boundary no-op':''));
+      addResult('editor-'+mode,d.text||d.id||'button',ok,d.drag?'drag-only control':(boundary&&!changed?'expected boundary no-op':(activePreset&&!changed?'expected active-preset no-op':'')));
       if(ok)passed++;
     });
     report.modes[mode]={buttonsConsidered:considered,buttonsPassed:passed,buttonsFailed:considered-passed};
   }
   function lifecycleArray(key){
-    resetTo('empty');state.sections[key].items=[defaultItem(key),defaultItem(key)];renderEditor();renderPreview();renderHealth();
+    resetTo('empty');state.sections[key].items=[defaultItem(key),defaultItem(key)];state.sections[key].items[0].__audit='A';state.sections[key].items[1].__audit='B';renderEditor();renderPreview();renderHealth();
     var arr=arrayForKey(key),before=JSON.stringify(arr);click($('[data-move-array="'+key+'"][data-index="1"][data-dir="-1"]'));addResult('arrays',key+' move up',JSON.stringify(arrayForKey(key))!==before,'move up did not change order');
     resetTo('empty');state.sections[key].items=[defaultItem(key),defaultItem(key)];renderEditor();renderPreview();renderHealth();
     var n=arrayForKey(key).length;click($('[data-remove-array="'+key+'"][data-index="0"]'));addResult('arrays',key+' remove',arrayForKey(key).length===n-1,'remove did not reduce item count');
@@ -1265,10 +1279,10 @@ function runResumeBuilderClickAudit(){
     renderEditor();click($('[data-remove-custom-bullet="0"][data-bullet-index="0"]'));addResult('special','custom bullet remove',state.custom[0].bullets.length===0,'remove custom bullet did not change count');
     renderEditor();click($('[data-remove-custom-section="0"]'));addResult('special','custom section remove',state.custom.length===0,'remove custom section did not change count');
     resetTo('demo');state.sections.header.photo='data:image/png;base64,aGVsbG8=';state.photoEnabled=true;renderEditor();click($('#removePhoto'));addResult('special','photo remove',state.sections.header.photo==='','remove photo did not clear value');
-    resetTo('demo');state.sections.experience.items=[state.sections.experience.items[0]];for(var i=0;i<12;i++)state.sections.experience.items[0].bullets.push('This is deliberately long audit content with measurable outcomes, customer impact, and enough text to force pagination for fit-to-one-page.');renderEditor();renderPreview();var bp=currentPages,bs=JSON.stringify([state.fontSize,state.lineSpacing,state.margin]);click($('#fitOnePageBtn'));addResult('special','fit to 1 page',currentPages<bp||JSON.stringify([state.fontSize,state.lineSpacing,state.margin])!==bs,'fit control produced no observable change');
-    resetTo('demo');state.template='modern';renderEditor();renderPreview();click($('#themePrev'));addResult('special','theme prev',state.template==='classic','previous theme did not change template');click($('#themeNext'));addResult('special','theme next',state.template==='modern','next theme did not change template');
-    resetTo('demo');applySetting('template','classic');click($('#undoBtn'));addResult('special','undo',state.template==='modern','Undo did not restore template');click($('#redoBtn'));addResult('special','redo',state.template==='classic','Redo did not reapply template');
-    ['Fresher','Experienced','Career change'].forEach(function(p){resetTo('demo');click($('[data-preset="'+p+'"]'));addResult('special','preset '+p,$('#resetModal').classList.contains('show'),'preset did not open confirmation');closeReplacementConfirm();});
+    resetTo('demo');state.sections.experience.items=[state.sections.experience.items[0]];for(var i=0;i<12;i++)state.sections.experience.items[0].bullets.push('This is deliberately long audit content with measurable outcomes, customer impact, and enough text to force pagination for fit-to-one-page.');renderEditor();renderPreview();var bp=currentPages,bs=JSON.stringify([state.fontSize,state.lineSpacing,state.margin]);click($('#fitOnePageBtn'));var fitToast=norm($('#toast')?.textContent||'');addResult('special','fit to 1 page',currentPages<bp||JSON.stringify([state.fontSize,state.lineSpacing,state.margin])!==bs||/Already fits on 1 page|Could not fit to 1 page/.test(fitToast),'fit control produced no observable result');
+    resetTo('demo');state.template=state.template||'modern';renderEditor();renderPreview();var startTemplate=state.template;click($('#themePrev'));var prevTemplate=state.template;click($('#themeNext'));addResult('special','theme prev',prevTemplate!==startTemplate,'previous theme did not change template');addResult('special','theme next',state.template===startTemplate,'next theme did not restore template');
+    resetTo('demo');var originalTemplate=state.template,targetTemplate=originalTemplate==='classic'?'modern':'classic';applySetting('template',targetTemplate);click($('#undoBtn'));addResult('special','undo',state.template===originalTemplate,'Undo did not restore template');click($('#redoBtn'));addResult('special','redo',state.template===targetTemplate,'Redo did not reapply template');
+    ['Fresher','Experienced','Career change'].forEach(function(p){resetTo('demo');var wasActive=state.preset===p;click($('[data-preset="'+p+'"]'));addResult('special','preset '+p,wasActive?!$('#resetModal').classList.contains('show'):$('#resetModal').classList.contains('show'),'preset did not produce expected modal/no-op');closeReplacementConfirm();});
     resetTo('demo');click($('#startEmptyBtn'));addResult('special','Start empty',$('#resetModal').classList.contains('show'),'Start empty did not open confirmation');closeReplacementConfirm();
     resetTo('demo');click($('#resetBtn'));addResult('special','Reset',$('#resetModal').classList.contains('show'),'Reset did not open confirmation');closeReplacementConfirm();
   }
