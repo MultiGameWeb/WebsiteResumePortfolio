@@ -1206,7 +1206,7 @@ function runResumeBuilderClickAudit(){
     if(state.sections.skills&&Array.isArray(state.sections.skills.groups))state.sections.skills.groups.forEach(function(g,idx){g.__audit='skills:'+idx;});
     if(Array.isArray(state.custom))state.custom.forEach(function(c,idx){c.__audit='custom:'+idx;c.bullets=(c.bullets||[]).map(function(v,bidx){return 'AUDIT-custom-'+idx+'-'+bidx})});
     openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
-    history=[];future=[];typingGroup=null;typingTimer=null;pendingReplacement=null;dirty=false;restoreInProgress=false;autosaveReady=false;
+    history=[];future=[];typingGroup=null;typingTimer=null;pendingReplacement=null;dirty=false;restoreInProgress=false;autosaveReady=false;closeReplacementConfirm();
     renderEditor();renderPreview();renderHealth();updateTopControls();
   }
   function fp(){return{state:JSON.stringify(exportStateClone()),open:JSON.stringify(openSections),template:state.template,pages:currentPages,reset:!!($('#resetModal')&&$('#resetModal').classList.contains('show'))}}
