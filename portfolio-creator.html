@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="build" content="portfolio-creator 8D+mobile 2026-10-07">
+<meta name="build" content="portfolio-creator 8E+autosave 2026-10-07">
 <title>Portfolio Creator — SiteCraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -179,7 +179,12 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
   .editor{padding-inline:10px}
   .editor-tools-row{margin-inline:0}
 }
-</style></head>
+</style><style id="portfolioAutosaveStyles">
+.saved.saving i{background:#d5902f;box-shadow:0 0 0 3px rgba(213,144,47,.12)}
+.saved.error i{background:#b43f4a;box-shadow:0 0 0 3px rgba(180,63,74,.12)}
+.saved.error span{color:#a33a45;font-weight:900}
+</style>
+</head>
 <body>
 <div class="app" id="app">
 <header class="topbar">
@@ -189,7 +194,7 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
     <a class="brand" href="index.html" data-leave-link="index.html" aria-label="SiteCraft Home"><div class="brand-mark" aria-hidden="true">✦</div><div><strong>Portfolio Creator</strong><span>Persona-based portfolio studio</span></div></a>
   </div>
   <div class="top-actions">
-    <div class="saved"><i></i><span>Saved in memory</span></div>
+    <div class="saved" id="saveStatus" role="status" aria-live="polite"><i></i><span>Saved</span></div>
     <div class="shortcut"><span class="kbd">Ctrl+S</span><span>Export</span></div>
     <button class="btn soft" id="shareBtn" type="button" disabled aria-disabled="true" title="Publishing is not available yet">↗ <span>Publish link: coming soon</span></button>
     <button class="btn soft" id="undoBtn" type="button">↶ <span>Undo</span></button>
@@ -269,13 +274,13 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-hidden="true">
-  <div class="modal-card narrow"><div class="modal-step">Reset portfolio</div><h2 id="confirmTitle">Start over?</h2><p class="confirm-copy">Your current in-memory edits will be replaced with the default Working Professional demo and undo/redo history will be cleared.</p><div class="modal-bottom"><button class="btn soft" id="cancelReset" type="button">Cancel</button><button class="btn danger" id="confirmReset" type="button">Reset portfolio</button></div></div>
+  <div class="modal-card narrow"><div class="modal-step">Reset portfolio</div><h2 id="confirmTitle">Start over?</h2><p class="confirm-copy">Your current edits will be replaced with the default Working Professional demo and your saved portfolio data will be cleared.</p><div class="modal-bottom"><button class="btn soft" id="cancelReset" type="button">Cancel</button><button class="btn danger" id="confirmReset" type="button">Reset portfolio</button></div></div>
 </div>
 <div class="modal" id="importModal" role="dialog" aria-modal="true" aria-labelledby="importTitle" aria-hidden="true">
   <div class="modal-card narrow"><div class="modal-step">Import portfolio</div><h2 id="importTitle">Replace current portfolio?</h2><p class="confirm-copy">Importing this file will replace the current in-memory portfolio. Your current data will remain available through Undo.</p><div class="modal-bottom"><button class="btn soft" id="cancelImport" type="button">Cancel</button><button class="btn primary" id="confirmImport" type="button">Import portfolio</button></div></div>
 </div>
 <div class="modal" id="leaveModal" role="dialog" aria-modal="true" aria-labelledby="leaveTitle" aria-hidden="true">
-  <div class="modal-card narrow"><div class="modal-step">Leave Portfolio Creator</div><h2 id="leaveTitle">Leave this page?</h2><p class="confirm-modal-copy">Your portfolio is only kept in memory. Download it before leaving?</p><div class="leave-modal-actions"><button class="btn soft" id="leaveStay" type="button">Stay</button><button class="btn danger" id="leaveAnyway" type="button">Leave anyway</button><button class="btn primary" id="leaveDownload" type="button">Download first</button></div></div>
+  <div class="modal-card narrow"><div class="modal-step">Leave Portfolio Creator</div><h2 id="leaveTitle">Leave this page?</h2><p class="confirm-modal-copy">Your portfolio is autosaved on this device. Download a JSON backup before leaving?</p><div class="leave-modal-actions"><button class="btn soft" id="leaveStay" type="button">Stay</button><button class="btn danger" id="leaveAnyway" type="button">Leave anyway</button><button class="btn primary" id="leaveDownload" type="button">Download first</button></div></div>
 </div>
 <div class="modal" id="cropModal" role="dialog" aria-modal="true" aria-labelledby="cropTitle" aria-hidden="true">
   <div class="modal-card narrow"><div class="modal-step">Profile photo</div><h2 id="cropTitle">Crop & zoom</h2><p class="confirm-copy">Fit the image inside the circular frame.</p><div class="crop-canvas-wrap"><canvas id="cropCanvas" width="420" height="420" aria-label="Profile crop preview"></canvas></div><div class="crop-controls"><label for="cropZoom" class="help">Zoom</label><input id="cropZoom" type="range" min="1" max="2.2" step=".01" value="1" aria-label="Profile photo zoom"></div><div class="modal-bottom"><button class="btn soft" id="cancelCrop" type="button">Cancel</button><button class="btn primary" id="applyCrop" type="button">Use photo</button></div></div>
@@ -319,8 +324,88 @@ state.sectionOrder=THEMES.professional.sectionOrder.slice();
 state.editorOrder=["personal","social","skills","projects","experience","education","certifications","contact","design"];
 state.optionalSections={};state.sectionMeta={};state.links={resume:"",whatsapp:"",calendly:"",formspree:""};state.availability={enabled:false,type:"open",text:"Open to work"};state.profileShape="circle";state.heroLayout="left";state.uiLanguage="en";
 
-var history=[],future=[],typingGroup=null,typingTimer=null,previewTimer=null,dragPayload=null,modalReturnFocus=null,cropState=null,pendingImport=null,leaveTarget="",step1Expanded=true,openSections={personal:true,experience:true,skills:true,projects:true},editorWidth=410;
+var history=[],future=[],typingGroup=null,typingTimer=null,previewTimer=null,dragPayload=null,modalReturnFocus=null,cropState=null,pendingImport=null,leaveTarget="",step1Expanded=true,openSections={personal:true,experience:true,skills:true,projects:true},editorWidth=410,autosaveTimer=null,autosaveReady=false,savedDbName="sitecraft-portfolio",savedDbVersion=1,savedDbKey="current";
 
+function setSaveStatus(text,kind){
+  var el=$("#saveStatus");if(!el)return;
+  el.className="saved "+(kind||"");
+  var span=el.querySelector("span"),dot=el.querySelector("i");
+  if(span)span.textContent=text;
+  if(dot)dot.setAttribute("aria-hidden","true");
+}
+function openSaveDb(){
+  return new Promise(function(resolve,reject){
+    if(!window.indexedDB)return reject(new Error("IndexedDB is unavailable in this browser."));
+    var req=indexedDB.open(savedDbName,savedDbVersion);
+    req.onupgradeneeded=function(){
+      var db=req.result;if(!db.objectStoreNames.contains("state"))db.createObjectStore("state");
+    };
+    req.onsuccess=function(){resolve(req.result)};
+    req.onerror=function(){reject(req.error||new Error("Could not open saved-data storage."))};
+    req.onblocked=function(){reject(new Error("Saved-data storage is blocked by another tab."))};
+  });
+}
+function saveStateToDb(){
+  return openSaveDb().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction("state","readwrite"),store=tx.objectStore("state");
+      store.put({version:1,savedAt:Date.now(),state:clone(state)},savedDbKey);
+      tx.oncomplete=function(){db.close();resolve()};
+      tx.onerror=function(){db.close();reject(tx.error||new Error("Could not save your portfolio."))};
+      tx.onabort=function(){db.close();reject(tx.error||new Error("Could not save your portfolio."))};
+    });
+  });
+}
+function loadStateFromDb(){
+  return openSaveDb().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction("state","readonly"),store=tx.objectStore("state"),req=store.get(savedDbKey);
+      req.onsuccess=function(){db.close();resolve(req.result||null)};
+      req.onerror=function(){db.close();reject(req.error||new Error("Could not read saved portfolio."))};
+    });
+  });
+}
+function deleteSavedState(){
+  return openSaveDb().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction("state","readwrite"),store=tx.objectStore("state"),req=store.delete(savedDbKey);
+      req.onsuccess=function(){};
+      tx.oncomplete=function(){db.close();resolve()};
+      tx.onerror=function(){db.close();reject(tx.error||new Error("Could not clear saved portfolio."))};
+      tx.onabort=function(){db.close();reject(tx.error||new Error("Could not clear saved portfolio."))};
+    });
+  });
+}
+function warnSaveFailure(err){
+  autosaveReady=false;setSaveStatus("Not saved — Export JSON","error");
+  toast("Your work could not be autosaved. Please use Export JSON.","error");
+}
+function autosaveNow(){
+  if(!autosaveReady)return;
+  setSaveStatus("Saving...");
+  saveStateToDb().then(function(){
+    setSaveStatus("Saved");autosaveReady=true;
+  }).catch(warnSaveFailure);
+}
+function scheduleAutosave(){
+  if(!autosaveReady)return;
+  setSaveStatus("Saving...");
+  clearTimeout(autosaveTimer);
+  autosaveTimer=setTimeout(autosaveNow,700);
+}
+function restoreSavedPortfolio(){
+  return loadStateFromDb().then(function(payload){
+    if(!payload)return false;
+    try{
+      var saved=payload&&payload.state!==undefined?payload.state:payload;
+      if(!isRecord(saved))throw new Error("Saved portfolio is invalid.");
+      var restored=validateImported(saved);
+      state=restored;ensureState();return true;
+    }catch(err){
+      return deleteSavedState().then(function(){throw new Error("Saved portfolio was corrupted and was cleared.")});
+    }
+  });
+}
 function icon(n){var m={personal:"✦",social:"◎",skills:"✧",projects:"▦",experience:"◷",education:"▤",certifications:"✓",contact:"↗",design:"◌",drag:"⋮⋮"};return '<span aria-hidden="true">'+(m[n]||"•")+"</span>"}
 function toast(msg,type){var t=$("#toast");t.textContent=msg;t.className="toast"+(type==="error"?" error":"")+" show";clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("show")},2500)}
 function syncHistoryButtons(){$("#undoBtn").disabled=!history.length;$("#redoBtn").disabled=!future.length}
@@ -367,7 +452,7 @@ function readPath(path){return path.split(".").reduce(function(o,k){return o&&o[
 function writePath(path,val){var a=path.split("."),last=a.pop(),o=a.reduce(function(x,k){return x[k]},state);o[last]=val}
 function validate(el){var w=el.closest(".field");if(!w)return true;var msg="",v=norm(el.value),k=el.dataset.validate;if(k==="required"&&!v)msg="This field is required.";if(k==="email"&&v&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))msg="Please enter a valid email.";if(k==="url"&&v&&!safeUrl(v))msg="Use a full URL starting with http:// or https://";if(k==="https"&&v&&!safeHttpsUrl(v))msg="Use a full HTTPS URL (https://...).";el.classList.toggle("has-error",!!msg);var e=w.querySelector(".error-text");if(e)e.textContent=msg;return !msg}
 function counter(el){var host=el.closest(".counter-field")||el.closest(".field");var c=host?.querySelector(".counter-val");if(c&&el.maxLength>0)c.textContent=String(el.value||"").length+" / "+el.maxLength}
-function schedulePreview(){var sk=$("#skeleton");if(sk){sk.classList.remove("show");sk.style.display="none"}clearTimeout(previewTimer);previewTimer=setTimeout(function(){renderPreview();if(sk){sk.classList.remove("show");sk.style.display="none"}},30)}
+function schedulePreview(){scheduleAutosave();var sk=$("#skeleton");if(sk){sk.classList.remove("show");sk.style.display="none"}clearTimeout(previewTimer);previewTimer=setTimeout(function(){renderPreview();if(sk){sk.classList.remove("show");sk.style.display="none"}},30)}
 function moveItem(type,dir,key){var d=dir==="up"?-1:1;if(type==="section"){var arr=state.editorOrder||[],i=arr.indexOf(key),j=i+d;if(i<0||j<0||j>=arr.length)return;var before=snapshot(),v=arr.splice(i,1)[0];arr.splice(j,0,v);push(before);renderEditor();schedulePreview();return}var map={project:"projects",experience:"experience",education:"education",certification:"certifications"},a=state[map[type]],i=+key,j=i+d;if(!a||i<0||j<0||j>=a.length)return;var b=snapshot(),v=a.splice(i,1)[0];a.splice(j,0,v);push(b);renderEditor();schedulePreview()}
 
 function renderPersonal(){
@@ -459,7 +544,10 @@ function closeLeaveConfirm(){var m=$("#leaveModal");if(!m)return;m.style.display
 function handleLeave(target,e){flushTyping();if(history.length){e.preventDefault();showLeaveConfirm(target)}}
 function showResetConfirm(){modalReturnFocus=document.activeElement;$("#confirmModal").style.display="grid";$("#confirmModal").setAttribute("aria-hidden","false");setTimeout(function(){$("#cancelReset")?.focus()},0)}
 function closeResetConfirm(){var m=$("#confirmModal");m.style.display="none";m.setAttribute("aria-hidden","true");var f=modalReturnFocus;modalReturnFocus=null;if(f&&document.contains(f))f.focus()}
-function resetPortfolio(){state=clone(PERSONAS.professional.demo);state.design={theme:'professional',font:'dm',accent:'#344b70',mode:'light',showBadge:true};state.seo={title:'',description:'',favicon:'',ogImage:'auto'};state.persona='Working Professional';state.sectionOrder=THEMES.professional.sectionOrder.slice();state.editorOrder=['personal','social','skills','projects','experience','education','certifications','contact','design'];state.optionalSections={};state.sectionMeta={};state.links={resume:'',whatsapp:'',calendly:'',formspree:''};state.availability={enabled:false,type:'open',text:'Open to work'};state.profileShape='circle';state.heroLayout='left';state.uiLanguage='en';history=[];future=[];openSections={personal:true,experience:true,skills:true,projects:true};closeResetConfirm();renderAll();toast('Reset to default demo')}
+function resetPortfolio(){
+  autosaveReady=false;state=clone(PERSONAS.professional.demo);state.design={theme:'professional',font:'dm',accent:'#344b70',mode:'light',showBadge:true};state.seo={title:'',description:'',favicon:'',ogImage:'auto'};state.persona='Working Professional';state.sectionOrder=THEMES.professional.sectionOrder.slice();state.editorOrder=['personal','social','skills','projects','experience','education','certifications','contact','design'];state.optionalSections={};state.sectionMeta={};state.links={resume:'',whatsapp:'',calendly:'',formspree:''};state.availability={enabled:false,type:'open',text:'Open to work'};state.profileShape='circle';state.heroLayout='left';state.uiLanguage='en';history=[];future=[];openSections={personal:true,experience:true,skills:true,projects:true};closeResetConfirm();renderAll();toast('Reset to default demo');
+  deleteSavedState().then(function(){autosaveReady=true;setSaveStatus("Saved")}).catch(function(err){setSaveStatus("Not saved — Export JSON","error");toast("Reset cleared the editor but saved data could not be cleared. Export JSON for a backup.","error");autosaveReady=true;saveStateToDb().catch(warnSaveFailure)});
+}
 function renderStep1(){var cards=[["student","Student / Fresher",icon("education"),"Education-first and friendly"],["professional","Working Professional",icon("experience"),"Refined corporate hierarchy"],["creative","Freelancer / Creative",icon("projects"),"Bold visual presentation"],["developer","Developer / Tech",icon("skills"),"Dark, technical and direct"]],grid=$("#step1Grid"),summary=$("#step1Summary"),body=$("#step1Body"),box=$("#step1Inline");if(!grid||!summary||!body||!box)return;var selectedKey=Object.keys(PERSONAS).find(function(k){return PERSONAS[k]&&PERSONAS[k].name===state.persona})||null;grid.innerHTML=cards.map(function(x,i){var on=selectedKey===x[0];return '<button class="step1-card" type="button" data-step1-persona="'+x[0]+'" aria-pressed="'+on+'" tabindex="'+(on||(!selectedKey&&i===0)?'0':'-1')+'"><span class="persona-icon">'+x[2]+'</span><span><strong>'+esc(x[1])+'</strong><small>'+esc(x[3])+'</small></span></button>'}).join('');var summaryText=$("#step1SummaryText");if(summaryText)summaryText.textContent='Persona: '+(state.persona||THEMES[state.design.theme].name);summary.hidden=step1Expanded;body.hidden=!step1Expanded;box.classList.toggle('collapsed',!step1Expanded);$$('[data-step1-persona]').forEach(function(b){b.onclick=function(){choosePersona(b.dataset.step1Persona)};b.onkeydown=function(e){var list=$$('[data-step1-persona]'),i=list.indexOf(b);if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();list[(i+1)%list.length].focus()}else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();list[(i-1+list.length)%list.length].focus()}else if(e.key==='Enter'||e.key===' '){e.preventDefault();choosePersona(b.dataset.step1Persona)}}});$("#step1ChangeBtn").onclick=function(){step1Expanded=true;renderStep1();setTimeout(function(){$('#step1Grid .step1-card[aria-pressed="true"]')?.focus()},0)};$("#emptyStartBtn").onclick=function(){choosePersona('empty',true)}}
 function choosePersona(id,forceEmpty){var p=PERSONAS[id],t=p&&THEMES[p.theme];if(id==='empty'){flushTyping();state=clone(PERSONAS.empty.demo);state.design={theme:'minimal',font:THEMES.minimal.fonts[0],accent:THEMES.minimal.colors.accent,mode:'light',showBadge:true};state.seo={title:'',description:'',favicon:'',ogImage:'auto'};state.persona='Empty Portfolio';state.sectionOrder=THEMES.minimal.sectionOrder.slice();state.editorOrder=["personal","social","skills","projects","experience","education","certifications","contact","design"];state.optionalSections={};state.sectionMeta={};state.links={resume:'',whatsapp:'',calendly:'',formspree:''};state.availability={enabled:false,type:'open',text:'Open to work'};state.profileShape='circle';state.heroLayout='left';state.uiLanguage='en';history=[];future=[];step1Expanded=false;renderAll();toast('Empty portfolio started');focusStep2();return}if(!p||!t)return;flushTyping();var loadDemo=history.length===0;if(loadDemo){state=clone(p.demo);state.design={theme:p.theme,font:t.fonts[0],accent:t.colors.accent,mode:p.theme==='dark-modern'?'dark':'light',showBadge:true};state.seo={title:'',description:'',favicon:'',ogImage:'auto'};state.persona=p.name;state.sectionOrder=t.sectionOrder.slice();state.editorOrder=["personal","social","skills","projects","experience","education","certifications","contact","design"];state.optionalSections={};state.sectionMeta={};state.links={resume:'',whatsapp:'',calendly:'',formspree:''};state.availability={enabled:false,type:'open',text:'Open to work'};state.profileShape='circle';state.heroLayout='left';state.uiLanguage='en';history=[];future=[]}else{var before=snapshot();state.persona=p.name;state.design.theme=p.theme;state.design.font=t.fonts[0];state.design.accent=t.colors.accent;state.design.mode=p.theme==='dark-modern'?'dark':state.design.mode;state.sectionOrder=t.sectionOrder.slice();push(before)}openSections={};(p.open||[]).forEach(function(k){openSections[k]=true});step1Expanded=false;ensureState();renderAll();toast(loadDemo?'Welcome, '+p.name:p.name+' style applied');focusStep2()}
 function focusStep1(){step1Expanded=true;renderStep1();setTimeout(function(){$("#step1Inline")?.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});$('#step1Grid .step1-card[aria-pressed="true"]')?.focus()},0)}
@@ -617,7 +705,19 @@ function setupDivider(){
   window.addEventListener("resize",function(){if(innerWidth>899)setEditorWidth(editorWidth)});
   setEditorWidth(editorWidth||410);
 }
-function start(){setupTop();setupTools();setupDivider();ensureState();renderAll();setTimeout(function(){$("#app").classList.add("ready")},30)}
+function start(){
+  setupTop();setupTools();setupDivider();ensureState();renderAll();
+  setTimeout(function(){$("#app").classList.add("ready")},30);
+  restoreSavedPortfolio().then(function(found){
+    if(found){renderAll();toast("Saved portfolio restored");setSaveStatus("Saved")}
+    else setSaveStatus("Saved");
+    autosaveReady=true;
+  }).catch(function(err){
+    setSaveStatus("Not saved — Export JSON","error");
+    toast("Could not restore saved data. Starting with the demo.","error");
+    autosaveReady=true;
+  });
+}
 start();
 })();
 </script>
