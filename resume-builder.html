@@ -989,8 +989,22 @@ function setupDivider(){
   setWidth(state._editor||410)
 }
 function renderAccentSwatches(){
-  var colors=['#334155','#1d4ed8','#166534','#9a3412','#7c3aed','#be123c','#0f766e'];
-  $('#accentSwatches').innerHTML=colors.map(function(c){return '<button type="button" class="swatch" data-accent="'+c+'" aria-label="Accent '+c+'" style="width:28px;min-height:28px;border-radius:50%;padding:0;background:'+c+'"></button>'}).join('');
+  var colors=[
+    {hex:'#334155',name:'Slate'},
+    {hex:'#1d4ed8',name:'Blue'},
+    {hex:'#166534',name:'Green'},
+    {hex:'#9a3412',name:'Rust'},
+    {hex:'#7c3aed',name:'Purple'},
+    {hex:'#be123c',name:'Crimson'},
+    {hex:'#0f766e',name:'Teal'},
+    {hex:'#111827',name:'Charcoal'},
+    {hex:'#0c4a6e',name:'Deep Ocean'},
+    {hex:'#7f1d1d',name:'Burgundy'},
+    {hex:'#713f12',name:'Espresso'},
+    {hex:'#3f6212',name:'Olive'},
+    {hex:'#581c87',name:'Plum'}
+  ];
+  $('#accentSwatches').innerHTML=colors.map(function(c){return '<button type="button" class="swatch" data-accent="'+c.hex+'" aria-label="Accent '+c.name+'" title="'+c.name+' — '+c.hex+'" style="width:28px;min-height:28px;border-radius:50%;padding:0;background:'+c.hex+'"></button>'}).join('');
   $('#accentSwatches').querySelectorAll('[data-accent]').forEach(function(b){b.onclick=function(){applySetting('accent',b.dataset.accent)}});
 }
 function fitToOnePage(){flushTyping();var before=snapshot(),oldSize=String(state.fontSize),oldLine=String(state.lineSpacing),oldMargin=state.margin;if(currentPages<=1){toast('Already fits on 1 page');return}var sizes=['10.5','10','9'],lines=['1.25','1.15'],margins=['normal','narrow'],found=false;for(var mi=0;mi<margins.length&&!found;mi++)for(var li=0;li<lines.length&&!found;li++)for(var si=0;si<sizes.length&&!found;si++){state.margin=margins[mi];state.lineSpacing=lines[li];state.fontSize=sizes[si];renderPreview();if(currentPages<=1)found=true}if(found){pushHistory(before);setDirty(true);updateTopControls();toast('Fit to 1 page applied')}else{state.fontSize=oldSize;state.lineSpacing=oldLine;state.margin=oldMargin;renderPreview();toast('Could not fit to 1 page within safe limits.')}}
