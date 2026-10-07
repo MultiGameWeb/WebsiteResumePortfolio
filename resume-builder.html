@@ -40,7 +40,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 @container (max-width:559px){.preview-row.two{grid-template-columns:minmax(0,1fr) auto}.theme-nav{display:none}.theme-select{display:block}.theme-strip{padding-inline:4px}}
 @media(max-width:1100px) and (min-width:801px){.shortcut,.saved{display:none}.topbar-right .btn{padding:0 9px}}
 @media(max-width:800px){
-  .app-shell{grid-template-columns:1fr;grid-template-rows:68px 52px minmax(0,1fr)}.topbar{grid-column:1}.nav-links a{display:none}.topbar-left{flex:1}.topbar-right .btn:not(#downloadHtmlBtn),.topbar-right .shortcut,.topbar-right .saved{display:none}.mobile-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:6px;border-bottom:1px solid var(--line);background:var(--surface);grid-column:1;grid-row:2}.mobile-tabs button{border:0;background:transparent;color:var(--muted);border-radius:9px;font-weight:900}.mobile-tabs button.active{background:#171b21;color:#fff}.editor{grid-column:1;grid-row:3}.preview-area{display:none;grid-column:1;grid-row:3}.mobile-preview .editor{display:none}.mobile-preview .preview-area{display:grid}.divider{display:none}.brand-copy span{display:none}.back-link{font-size:0;width:44px;padding:0}.back-link:first-letter{font-size:18px}.topbar-left .brand{margin-left:0}.preview-scroll{padding:10px}.preview-pages{gap:10px}.resume-page{box-shadow:0 8px 25px rgba(23,27,33,.18)}.page-counter{font-size:12px}
+  .app-shell{grid-template-columns:1fr;grid-template-rows:68px 52px minmax(0,1fr)}.topbar{grid-column:1}.nav-links a{display:none}.topbar-left{flex:1}.topbar-right .btn:not(#downloadHtmlBtn):not(#importPortfolioBtn),.topbar-right .shortcut,.topbar-right .saved{display:none}.mobile-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:6px;border-bottom:1px solid var(--line);background:var(--surface);grid-column:1;grid-row:2}.mobile-tabs button{border:0;background:transparent;color:var(--muted);border-radius:9px;font-weight:900}.mobile-tabs button.active{background:#171b21;color:#fff}.editor{grid-column:1;grid-row:3}.preview-area{display:none;grid-column:1;grid-row:3}.mobile-preview .editor{display:none}.mobile-preview .preview-area{display:grid}.divider{display:none}.brand-copy span{display:none}.back-link{font-size:0;width:44px;padding:0}.back-link:first-letter{font-size:18px}.topbar-left .brand{margin-left:0}.preview-scroll{padding:10px}.preview-pages{gap:10px}.resume-page{box-shadow:0 8px 25px rgba(23,27,33,.18)}.page-counter{font-size:12px}
 }
 @media(max-width:560px){.grid2,.link-row{grid-template-columns:1fr}.resume-name{font-size:22pt}.sidebar-layout{grid-template-columns:160px 1fr;gap:14px}.sidebar-col{padding:12px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.toast{transition:none}}
@@ -67,7 +67,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
     <nav class="nav-links" aria-label="Primary"><a href="templates.html" data-nav="templates.html">Templates</a><a href="portfolio-creator.html" data-nav="portfolio-creator.html">Portfolio Creator</a></nav>
   </div>
   <div class="topbar-right">
-    <div class="saved" id="savedStatus"><i></i><span>Saved in memory</span></div>
+    <div class="saved" id="savedStatus"><i></i><span>Saved</span></div>
     <span class="shortcut"><span class="kbd">Ctrl+S</span> HTML</span>
     <button class="btn soft" id="undoBtn" type="button">↶ Undo</button>
     <button class="btn soft" id="redoBtn" type="button">↷ Redo</button>
@@ -75,6 +75,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
     <button class="btn primary" id="downloadHtmlBtn" type="button">↓ Download HTML</button>
     <label class="btn soft">↥ Import JSON<input id="importJson" type="file" accept="application/json" hidden></label>
     <button class="btn soft" id="exportJsonBtn" type="button">↗ Export JSON</button>
+    <button class="btn soft" id="importPortfolioBtn" type="button">↟ Import from Portfolio</button>
+    <input id="portfolioImportJson" type="file" accept="application/json" hidden>
     <button class="btn danger" id="resetBtn" type="button">Reset</button>
   </div>
 </header>
@@ -82,7 +84,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 
 <aside class="editor" id="editor" aria-label="Resume editor">
   <div class="editor-head">
-    <div><div class="help">SITECRAFT · RESUME STUDIO</div><h1>Build an ATS-friendly resume</h1><p>Everything stays in memory until you export or print.</p></div>
+    <div><div class="help">SITECRAFT · RESUME STUDIO</div><h1>Build an ATS-friendly resume</h1><p>Your resume is autosaved locally when browser storage is available.</p></div>
     <div class="editor-tools"><a class="btn soft" href="resume-builder.html" data-nav="resume-builder.html">Home</a></div>
   </div>
 
@@ -168,10 +170,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <div class="modal" id="resetModal" role="dialog" aria-modal="true" aria-labelledby="resetTitle">
-  <div class="modal-card"><div class="help">RESET RESUME</div><h2 id="resetTitle">Reset this resume?</h2><p>Your current in-memory edits will be replaced with the selected demo preset.</p><div class="modal-actions"><button class="btn soft" data-close-modal="resetModal" type="button">Cancel</button><button class="btn danger" id="confirmReset" type="button">Reset</button></div></div>
+  <div class="modal-card"><div class="help">RESET RESUME</div><h2 id="resetTitle">Reset this resume?</h2><p id="resetMessage">Your current edits will stay available through Undo.</p><div class="modal-actions"><button class="btn soft" data-close-modal="resetModal" type="button">Cancel</button><button class="btn danger" id="confirmReset" type="button">Reset</button></div></div>
 </div>
 <div class="modal" id="leaveModal" role="dialog" aria-modal="true" aria-labelledby="leaveTitle">
-  <div class="modal-card"><div class="help">UNSAVED CHANGES</div><h2 id="leaveTitle">Leave this page?</h2><p>Download your resume first, or leave it only in memory.</p><div class="modal-actions"><button class="btn soft" id="leaveStay" type="button">Stay</button><button class="btn danger" id="leaveAnyway" type="button">Leave anyway</button><button class="btn primary" id="leaveDownload" type="button">Download first</button></div></div>
+  <div class="modal-card"><div class="help">UNSAVED CHANGES</div><h2 id="leaveTitle">Leave this page?</h2><p>Your latest changes may still be saving. You can stay here while autosave finishes.</p><div class="modal-actions"><button class="btn soft" id="leaveStay" type="button">Stay</button><button class="btn danger" id="leaveAnyway" type="button">Leave anyway</button><button class="btn primary" id="leaveDownload" type="button">Download first</button></div></div>
 </div>
 
 <script>
@@ -258,11 +260,37 @@ var state={
   accent:'#334155',divider:'rule',dateFormat:'MMM YYYY',icons:true,photoEnabled:false,preset:'Experienced',
   order:clone(DEMOS.Experienced.order),sections:clone(DEMOS.Experienced.sections),custom:[]
 };
-var history=[],future=[],typingGroup=null,typingTimer=null,dirty=false,leaveTarget='',dragSection='',openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
+var history=[],future=[],typingGroup=null,typingTimer=null,dirty=false,leaveTarget='',dragSection='',pendingReplacement=null,autosaveTimer=null,autosaveReady=false,restoreInProgress=true,savedDbName='sitecraft-resume',savedDbVersion=1,savedDbKey='current',openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
 var currentPages=1, device='desktop';
 
 function toast(msg,type){var el=$('#toast');el.textContent=msg;el.className='toast'+(type==='error'?' error':'')+' show';clearTimeout(toast.t);toast.t=setTimeout(function(){el.classList.remove('show')},2300)}
-function setDirty(v){dirty=!!v;var s=$('#savedStatus');s.innerHTML='<i></i><span>'+(dirty?'Unsaved changes':'Saved in memory')+'</span>';s.querySelector('i').style.background=dirty?'#b58a2a':'#36a168'}
+function setSaveStatus(text,kind){
+  var el=$('#savedStatus');if(!el)return;
+  el.className='saved '+(kind||'');
+  var span=el.querySelector('span'),dot=el.querySelector('i');
+  if(span)span.textContent=text;
+  if(dot)dot.setAttribute('aria-hidden','true');
+}
+function setDirty(v){
+  dirty=!!v;
+  if(!v){
+    clearTimeout(autosaveTimer);autosaveTimer=null;
+    setSaveStatus('Saved');
+    return;
+  }
+  if(autosaveReady){
+    setSaveStatus('Saving...','saving');
+    clearTimeout(autosaveTimer);
+    autosaveTimer=setTimeout(autosaveNow,700);
+  }else if(!restoreInProgress){
+    setSaveStatus('Not saved — Export JSON','error');
+  }
+}
+function persistedStateClone(){
+  var out=exportStateClone();
+  delete out._editor;
+  return out;
+}
 function captureFocus(){var a=document.activeElement;if(!a||a===document.body)return null;return{id:a.id||'',section:a.dataset.section||'',field:a.dataset.field||'',index:a.dataset.index||'',bullet:a.dataset.bullet||'',start:typeof a.selectionStart==='number'?a.selectionStart:null,end:typeof a.selectionEnd==='number'?a.selectionEnd:null}}
 function restoreFocus(f){if(!f)return;requestAnimationFrame(function(){var el=(f.id&&$('#'+f.id))||$('.section-card [data-section="'+CSS.escape(f.section||'')+'"][data-field="'+CSS.escape(f.field||'')+'"][data-index="'+CSS.escape(f.index||'')+'"]')||$('.section-card [data-section="'+CSS.escape(f.section||'')+'"][data-bullet="'+CSS.escape(f.bullet||'')+'"]');if(el){el.focus({preventScroll:true});if(f.start!=null&&el.setSelectionRange)try{el.setSelectionRange(f.start,f.end==null?f.start:f.end)}catch(e){}}})}
 function snapshot(){return{state:clone(state),open:clone(openSections)}}
@@ -384,6 +412,7 @@ function migrateLegacySectionRoots(){
 function exportStateClone(){
   var out=clone(state);
   Object.keys(SECTION_LABELS).forEach(function(id){delete out[id]});
+  delete out._editor;
   return out;
 }
 function renderTopTheme(){var cards=$$('[data-template]');cards.forEach(function(b){b.classList.toggle('active',b.dataset.template===state.template)});$('#templateSelect').value=state.template;$('#themeSelectCompact').value=state.template;var active=$('[data-template="'+CSS.escape(state.template)+'"]');if(active)active.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'nearest',inline:'center'})}
@@ -402,9 +431,84 @@ function ensureState(){
   state.order=state.order.filter(function(id){return !/^custom-\d+$/.test(id)||Number(id.split('-')[1])<=state.custom.length});
   if(!state.order.length)state.order=clone(DEMOS.Experienced.order);
 }
-function preset(id){
-  var d=DEMOS[id]||DEMOS.Experienced;state.preset=id;state.sections=clone(d.sections);state.order=clone(d.order);state.custom=[];state.template=id==='Fresher'?'classic':id==='Career change'?'modern':'modern';openSections={header:true,summary:true,experience:true,education:true,skills:true,projects:true,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};dirty=true;history=[];future=[];typingGroup=null;renderEditor();renderPreview();renderHealth();updateTopControls();setDirty(true);toast(id+' preset loaded')}
-function startEmpty(){var empty={};Object.keys(SECTION_LABELS).forEach(function(id){empty[id]=clone(DEMOS.Experienced.sections[id]||{show:true});});empty.header={show:true,name:'',headline:'',email:'',phone:'',location:'',linkedin:'',github:'',website:'',customLinks:[],photo:''};empty.summary={show:true,text:'',max:700};empty.experience={show:true,items:[]};empty.education={show:true,items:[]};empty.skills={show:true,groups:[{name:'Skills',items:[]}],tags:[]};empty.projects={show:true,items:[]};empty.certifications={show:true,items:[]};empty.awards={show:true,items:[]};empty.languages={show:true,items:[]};empty.volunteering={show:true,items:[]};empty.publications={show:true,items:[]};empty.references={show:true,onRequest:true,items:[]};state.sections=empty;state.order=Object.keys(SECTION_LABELS);state.custom=[];state.preset='Empty';state.template='classic';history=[];future=[];openSections={header:true,summary:true};setDirty(true);renderEditor();renderPreview();renderHealth();updateTopControls();toast('Started with an empty resume')}
+function blankResumeState(){
+  var empty={};
+  Object.keys(SECTION_LABELS).forEach(function(id){empty[id]={show:true};});
+  empty.header={show:true,name:'',headline:'',email:'',phone:'',location:'',linkedin:'',github:'',website:'',customLinks:[],photo:''};
+  empty.summary={show:true,text:'',max:700};
+  empty.experience={show:true,items:[]};
+  empty.education={show:true,items:[]};
+  empty.skills={show:true,groups:[{name:'Skills',items:[]}],tags:[]};
+  empty.projects={show:true,items:[]};
+  empty.certifications={show:true,items:[]};
+  empty.awards={show:true,items:[]};
+  empty.languages={show:true,items:[]};
+  empty.volunteering={show:true,items:[]};
+  empty.publications={show:true,items:[]};
+  empty.references={show:true,onRequest:true,items:[]};
+  return{
+    version:1,paper:'A4',template:'modern',goal:'one',margin:'normal',font:'Inter',fontSize:'10.5',lineSpacing:'1.25',
+    accent:'#334155',divider:'rule',dateFormat:'MMM YYYY',icons:true,photoEnabled:false,preset:'Empty',
+    order:Object.keys(SECTION_LABELS),sections:empty,custom:[]
+  };
+}
+function resetTargetPreset(){
+  if(state.preset==='Empty')return 'Empty';
+  return DEMOS[state.preset]?state.preset:'Empty';
+}
+function showReplacementConfirm(kind,payload){
+  pendingReplacement={kind:kind,payload:payload};
+  var title='Replace this resume?',message='Your current edits will stay available through Undo.',action='Replace';
+  if(kind==='preset'){title='Use the '+payload+' preset?';message='Your current resume data will be replaced with this demo. Your current edits will stay available through Undo.';action='Use '+payload;}
+  else if(kind==='empty'){title='Start with an empty resume?';message='Your current resume data will be replaced by an empty state. Your current edits will stay available through Undo.';action='Start empty';}
+  else if(kind==='reset'){title='Reset this resume?';message=payload==='Empty'?'Your resume will return to the empty state you were using. Your current edits will stay available through Undo.':'Your resume will return to the '+payload+' demo state. Your current edits will stay available through Undo.';action='Reset';}
+  else if(kind==='import'){title='Import this resume JSON?';message='The imported file will replace the current resume. Your current edits will stay available through Undo.';action='Import';}
+  else if(kind==='portfolio'){title='Import from Portfolio?';message='Your portfolio data will replace the current resume and be mapped into resume sections. Your current edits will stay available through Undo.';action='Import portfolio';}
+  $('#resetTitle').textContent=title;
+  $('#resetMessage').textContent=message;
+  $('#confirmReset').textContent=action;
+  $('#resetModal').classList.add('show');
+  $('#confirmReset').focus();
+}
+function closeReplacementConfirm(){
+  var m=$('#resetModal');if(m)m.classList.remove('show');
+  pendingReplacement=null;
+}
+function applyPresetState(id){
+  var d=DEMOS[id]||DEMOS.Experienced,before=snapshot();flushTyping();
+  state.preset=id;state.sections=clone(d.sections);state.order=clone(d.order);state.custom=[];
+  openSections={header:true,summary:true,experience:true,education:true,skills:true,projects:true,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
+  pushHistory(before);setDirty(true);renderEditor();renderPreview();renderHealth();updateTopControls();toast(id+' preset loaded');
+}
+function applyEmptyState(){
+  var before=snapshot();flushTyping();
+  var empty=blankResumeState();state.preset='Empty';state.sections=clone(empty.sections);state.order=clone(empty.order);state.custom=[];
+  openSections={header:true,summary:true};
+  pushHistory(before);setDirty(true);renderEditor();renderPreview();renderHealth();updateTopControls();toast('Started with an empty resume');
+}
+function applyImportedState(next,label){
+  flushTyping();var before=snapshot();state=clone(next);ensureState();
+  history.push(before);if(history.length>80)history.shift();future=[];
+  openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
+  setDirty(true);renderEditor();renderPreview();renderHealth();updateTopControls();toast(label||'Resume imported');
+}
+function preset(id){if(DEMOS[id])showReplacementConfirm('preset',id)}
+function startEmpty(){showReplacementConfirm('empty')}
+function confirmReplacement(){
+  var pending=pendingReplacement;if(!pending){closeReplacementConfirm();return;}
+  closeReplacementConfirm();
+  if(pending.kind==='preset'){applyPresetState(pending.payload);return;}
+  if(pending.kind==='empty'){applyEmptyState();return;}
+  if(pending.kind==='import'){applyImportedState(pending.payload,'Resume JSON imported');return;}
+  if(pending.kind==='portfolio'){applyImportedState(pending.payload,'Portfolio imported');return;}
+  if(pending.kind==='reset'){
+    var target=pending.payload;
+    if(target==='Empty')applyEmptyState();else applyPresetState(target);
+    if(target==='Empty'){state.preset='Empty';}
+    clearTimeout(autosaveTimer);autosaveTimer=null;
+    deleteSavedState().then(function(){dirty=false;setSaveStatus('Saved');toast('Resume reset and saved data cleared')}).catch(function(){dirty=false;setSaveStatus('Not saved — Export JSON','error');toast('Resume reset, but saved data could not be cleared. Export JSON as backup.','error')});
+  }
+}
 function applySetting(key,val){var before=snapshot();state[key]=val;pushHistory(before);setDirty(true);renderPreview();renderHealth();updateTopControls()}
 function updateSectionField(el){
   var path=el.dataset.path;if(!path)return;var v=el.type==='checkbox'?el.checked:el.value,before=snapshot();
@@ -666,26 +770,192 @@ function keywordHelper(){
 }
 
 function exportJson(){
-  flushTyping();var out={app:'SiteCraft Resume Builder',version:1,state:exportStateClone()};downloadBlob(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}),'resume-data.json');setDirty(false);toast('JSON exported')
+  flushTyping();var out={app:'SiteCraft Resume Builder',version:1,state:persistedStateClone()};downloadBlob(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}),'resume-data.json');clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved');toast('JSON exported')
+}
+function isRecord(v){return !!v&&typeof v==='object'&&!Array.isArray(v)}
+function validSectionObject(v){return v===undefined||isRecord(v)}
+function sanitizeSection(id,sec,def){
+  sec=isRecord(sec)?sec:{};
+  var out=Object.assign(clone(def),sec);
+  out.show=out.show!==false;
+  if(id==='header')out.customLinks=Array.isArray(out.customLinks)?out.customLinks.filter(isRecord).slice(0,8):[];
+  if(id==='skills'){
+    out.groups=Array.isArray(out.groups)?out.groups.filter(isRecord).map(function(g){return{name:norm(g.name),items:Array.isArray(g.items)?g.items.map(function(v){return norm(v)}).filter(Boolean).slice(0,40):[]}}):[];
+    if(!out.groups.length)out.groups=[{name:'Skills',items:[]}];
+    out.tags=Array.isArray(out.tags)?out.tags.map(norm).filter(Boolean).slice(0,40):[];
+  }else if(Object.prototype.hasOwnProperty.call(out,'items')){
+    out.items=Array.isArray(out.items)?out.items.filter(isRecord).slice(0,40):[];
+  }
+  return out;
+}
+function normalizeResumeState(x){
+  var raw=x;
+  if(isRecord(x)&&x.app==='SiteCraft Resume Builder'&&x.state!==undefined)raw=x.state;
+  if(!isRecord(raw))throw new Error('Invalid resume JSON: expected an object.');
+  if(raw.sections!==undefined&&!isRecord(raw.sections))throw new Error('Invalid resume JSON: sections must be an object.');
+  var src=clone(raw),blank=blankResumeState(),temp={sections:isRecord(src.sections)?src.sections:{},custom:Array.isArray(src.custom)?src.custom:[]};
+  Object.keys(SECTION_LABELS).forEach(function(id){
+    if(!validSectionObject(src[id]))throw new Error('Invalid resume JSON: '+id+' must be an object.');
+  });
+  state=temp;migrateLegacySectionRoots();
+  var migrated=clone(state);state=src;
+  var out=blankResumeState();
+  ['version','paper','template','goal','margin','font','fontSize','lineSpacing','accent','divider','dateFormat','icons','photoEnabled','preset','_editor'].forEach(function(k){
+    if(Object.prototype.hasOwnProperty.call(migrated,k))out[k]=migrated[k];
+  });
+  var allowedPaper=['A4','Letter'],allowedTemplate=['classic','modern','compact','sidebar'],allowedGoal=['one','two'],allowedMargin=['narrow','normal','wide'],allowedFont=['Inter','Source Serif','Lato','Merriweather'],allowedDate=['MMM YYYY','MM/YYYY','YYYY','Mon YY'],allowedDivider=['rule','bold','none','box'];
+  out.paper=allowedPaper.indexOf(out.paper)>=0?out.paper:'A4';
+  out.template=allowedTemplate.indexOf(out.template)>=0?out.template:'modern';
+  out.goal=allowedGoal.indexOf(out.goal)>=0?out.goal:'one';
+  out.margin=allowedMargin.indexOf(out.margin)>=0?out.margin:'normal';
+  out.font=allowedFont.indexOf(out.font)>=0?out.font:'Inter';
+  out.fontSize=['9','10','10.5','11','12'].indexOf(String(out.fontSize))>=0?String(out.fontSize):'10.5';
+  out.lineSpacing=['1.15','1.25','1.4'].indexOf(String(out.lineSpacing))>=0?String(out.lineSpacing):'1.25';
+  out.accent=safeColor(out.accent,'#334155');
+  out.divider=allowedDivider.indexOf(out.divider)>=0?out.divider:'rule';
+  out.dateFormat=allowedDate.indexOf(out.dateFormat)>=0?out.dateFormat:'MMM YYYY';
+  out.icons=out.icons!==false;out.photoEnabled=out.photoEnabled===true;
+  out.preset=(out.preset==='Empty'||DEMOS[out.preset])?out.preset:(typeof out.preset==='string'&&out.preset?'Imported':'Empty');
+  out.sections={};
+  Object.keys(SECTION_LABELS).forEach(function(id){out.sections[id]=sanitizeSection(id,migrated.sections[id],blank.sections[id])});
+  out.custom=Array.isArray(migrated.custom)?migrated.custom.filter(isRecord).slice(0,6).map(function(c){return{title:norm(c.title)||'Custom section',mode:c.mode==='paragraph'?'paragraph':'bullets',content:norm(c.content),bullets:Array.isArray(c.bullets)?c.bullets.map(norm).filter(Boolean).slice(0,8):[],show:c.show!==false}}):[];
+  var wantedOrder=Array.isArray(migrated.order)?migrated.order.slice():blank.order.slice(),validIds=Object.keys(SECTION_LABELS);
+  out.order=wantedOrder.filter(function(id){return validIds.indexOf(id)>=0||(/^custom-\d+$/.test(id)&&Number(id.split('-')[1])>=1&&Number(id.split('-')[1])<=out.custom.length)});
+  if(!out.order.length)out.order=blank.order.slice();
+  delete out._editor;
+  var previous=state;state=out;ensureState();var normalized=clone(state);state=previous;return normalized;
+}
+function portfolioMonthToResume(v){
+  var s=norm(v);if(!s)return '';
+  var m=s.match(/^(\d{4})-(\d{2})$/);if(m){var dt=new Date(+m[1],+m[2]-1,1);return dt.toLocaleString('en-US',{month:'short',year:'numeric'});}
+  var n=s.match(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[ ,\-/]*(\d{4})$/i);if(n)return n[1].slice(0,3)[0].toUpperCase()+n[1].slice(1,3).toLowerCase()+' '+n[2];
+  return s;
+}
+function portfolioSkillGroups(skills){
+  var groups=[],byName={};
+  (Array.isArray(skills)?skills:[]).forEach(function(item){
+    var x=isRecord(item)?item:{name:item},name=norm(x.name),cat=norm(x.category)||'Skills',level=norm(x.level);
+    if(!name)return;
+    var key=cat.toLowerCase();
+    if(!byName[key]){byName[key]={name:cat,items:[]};groups.push(byName[key]);}
+    var textValue=level&&level.toLowerCase()!==name.toLowerCase()?name+' — '+level:name;
+    byName[key].items.push(textValue);
+  });
+  return groups.length?groups:[{name:'Skills',items:[]}];
 }
 function portfolioToResume(x){
-  var p=x.personal||{},out=clone(DEMOS.Experienced);out.preset='Imported portfolio';out.order=['header','summary','experience','skills','projects','education','certifications','awards','languages','volunteering','publications','references'];
-  out.sections.header={show:true,name:p.name||'',headline:p.title||'',email:p.email||'',phone:p.phone||'',location:p.location||'',linkedin:(x.social&&x.social.linkedin)||'',github:(x.social&&x.social.github)||'',website:(x.social&&x.social.website)||'',customLinks:[],photo:safeImage(p.photo)};
-  out.sections.summary={show:true,text:p.bio||'',max:700};
-  out.sections.skills={show:true,groups:[{name:'Skills',items:Array.isArray(x.skills)?x.skills.map(function(s){return typeof s==='string'?s:s.name||''}).filter(Boolean):[]}],tags:[]};
-  out.sections.experience={show:true,items:Array.isArray(x.experience)?x.experience.map(function(e){return{company:e.company||'',role:e.role||'',location:e.location||'',start:e.start||'',end:e.end||'',bullets:(e.bullets||e.description?((Array.isArray(e.bullets)?e.bullets:[e.description||'']).filter(Boolean)):[])}}):[]};
-  out.sections.education={show:true,items:Array.isArray(x.education)?x.education.map(function(e){return{institution:e.institution||'',degree:e.degree||'',field:e.field||'',start:e.start||'',end:e.end||'',score:e.score||'',notes:e.notes||'',}}):[]};
-  out.sections.certifications={show:true,items:Array.isArray(x.certifications)?x.certifications.map(function(c){return{name:c.name||'',issuer:c.issuer||'',date:c.year||c.date||'',link:safeUrl(c.link)||''}}):[]};
-  out.sections.projects={show:true,items:Array.isArray(x.projects)?x.projects.map(function(pr){return{name:pr.title||pr.name||'',link:safeUrl(pr.live)||safeUrl(pr.link)||'',tech:Array.isArray(pr.tech)?pr.tech:[],bullets:(pr.bullets||pr.description?((Array.isArray(pr.bullets)?pr.bullets:[pr.description||'']).filter(Boolean)):[])}}):[]};
-  return out
+  if(!isRecord(x))throw new Error('Invalid portfolio data.');
+  var p=isRecord(x.personal)?x.personal:{};
+  if(!isRecord(x.social)&&x.social!==undefined)throw new Error('Portfolio social data is invalid.');
+  if(x.experience!==undefined&&!Array.isArray(x.experience))throw new Error('Portfolio experience must be an array.');
+  if(x.education!==undefined&&!Array.isArray(x.education))throw new Error('Portfolio education must be an array.');
+  if(x.skills!==undefined&&!Array.isArray(x.skills))throw new Error('Portfolio skills must be an array.');
+  var out=blankResumeState();
+  out.preset='Imported';
+  out.order=['header','summary','experience','skills','projects','education','certifications','awards','languages','volunteering','publications','references'];
+  out.sections.header={show:true,name:norm(p.name),headline:norm(p.title),email:norm(p.email),phone:norm(p.phone),location:norm(p.location),linkedin:norm(x.social&&x.social.linkedin),github:norm(x.social&&x.social.github),website:norm(x.social&&x.social.website),customLinks:[],photo:safeImage(p.photo)};
+  out.sections.summary={show:true,text:norm(p.bio),max:700};
+  out.sections.skills={show:true,groups:portfolioSkillGroups(x.skills),tags:[]};
+  out.sections.experience={show:true,items:Array.isArray(x.experience)?x.experience.filter(isRecord).map(function(e){var bullets=Array.isArray(e.bullets)?e.bullets.map(norm).filter(Boolean):[];if(!bullets.length&&norm(e.description))bullets=[norm(e.description)];return{company:norm(e.company),role:norm(e.role),location:norm(e.location),start:portfolioMonthToResume(e.start),end:e.currently===true?'Present':portfolioMonthToResume(e.end),bullets:bullets.slice(0,8)}}):[]};
+  out.sections.education={show:true,items:Array.isArray(x.education)?x.education.filter(isRecord).map(function(e){return{institution:norm(e.institution),degree:norm(e.degree),field:norm(e.field||e.fieldOfStudy),start:norm(e.start),end:e.ongoing===true?'Present':norm(e.end),score:norm(e.score||e.gpa),notes:norm(e.notes)}}):[]};
+  out.sections.certifications={show:true,items:Array.isArray(x.certifications)?x.certifications.filter(isRecord).map(function(c){return{name:norm(c.name),issuer:norm(c.issuer),date:norm(c.year||c.date),link:safeUrl(c.link)}}):[]};
+  out.sections.projects={show:true,items:Array.isArray(x.projects)?x.projects.filter(isRecord).map(function(pr){var bullets=Array.isArray(pr.bullets)?pr.bullets.map(norm).filter(Boolean):[];if(!bullets.length&&norm(pr.description))bullets=[norm(pr.description)];return{name:norm(pr.title||pr.name),link:safeUrl(pr.live||pr.link),tech:Array.isArray(pr.tech)?pr.tech.map(norm).filter(Boolean).slice(0,12):[],bullets:bullets.slice(0,8)}}):[]};
+  return normalizeResumeState(out);
 }
 function importData(x){
-  if(!x||typeof x!=='object')throw new Error('Invalid JSON file.');
-  if(x.app==='SiteCraft Resume Builder'&&x.state){state=clone(x.state);ensureState();history=[];future=[];setDirty(true);renderEditor();renderPreview();renderHealth();updateTopControls();toast('Resume JSON imported');return}
-  if(x.personal){var mapped=portfolioToResume(x);state=clone(mapped);ensureState();history=[];future=[];setDirty(true);renderEditor();renderPreview();renderHealth();updateTopControls();var counts=['header.name','summary','skills','experience','education','certifications','projects'].filter(function(k){return true}).length;toast('Portfolio imported: personal info, skills, experience, education, certifications and projects mapped')}
-  else throw new Error('This JSON does not look like a SiteCraft portfolio or resume.')
+  var next;
+  if(x&&x.app==='SiteCraft Resume Builder'&&x.state!==undefined)next=normalizeResumeState(x);
+  else if(x&&isRecord(x.sections))next=normalizeResumeState(x);
+  else if(x&&x.personal)next=portfolioToResume(x);
+  else throw new Error('This JSON does not look like a SiteCraft resume or portfolio.');
+  showReplacementConfirm('import',next);
 }
 function downloadBlob(blob,name){var a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=name;a.click();setTimeout(function(){URL.revokeObjectURL(u)},1200)}
+function openSaveDb(){
+  return new Promise(function(resolve,reject){
+    if(!window.indexedDB)return reject(new Error('IndexedDB is unavailable in this browser.'));
+    var req=indexedDB.open(savedDbName,savedDbVersion);
+    req.onupgradeneeded=function(){var db=req.result;if(!db.objectStoreNames.contains('state'))db.createObjectStore('state');};
+    req.onsuccess=function(){resolve(req.result)};
+    req.onerror=function(){reject(req.error||new Error('Could not open saved-data storage.'))};
+    req.onblocked=function(){reject(new Error('Saved-data storage is blocked by another tab.'))};
+  });
+}
+function saveStateToDb(){
+  return openSaveDb().then(function(db){return new Promise(function(resolve,reject){
+    var tx=db.transaction('state','readwrite'),store=tx.objectStore('state');
+    store.put({version:1,savedAt:Date.now(),state:persistedStateClone()},savedDbKey);
+    tx.oncomplete=function(){db.close();resolve()};tx.onerror=function(){db.close();reject(tx.error||new Error('Could not save your resume.'))};tx.onabort=function(){db.close();reject(tx.error||new Error('Could not save your resume.'))};
+  })});
+}
+function loadStateFromDb(){
+  return openSaveDb().then(function(db){return new Promise(function(resolve,reject){
+    var tx=db.transaction('state','readonly'),store=tx.objectStore('state'),req=store.get(savedDbKey);
+    req.onsuccess=function(){db.close();resolve(req.result||null)};req.onerror=function(){db.close();reject(req.error||new Error('Could not read saved resume.'))};
+  })});
+}
+function backupCorruptSavedState(payload){
+  return openSaveDb().then(function(db){return new Promise(function(resolve,reject){
+    var tx=db.transaction('state','readwrite'),store=tx.objectStore('state'),stamp=Date.now();
+    store.put({version:1,backedUpAt:stamp,reason:'corrupt',payload:clone(payload)},'corrupt-'+stamp);
+    store.put({version:1,savedAt:stamp,state:persistedStateClone()},savedDbKey);
+    tx.oncomplete=function(){db.close();resolve()};tx.onerror=function(){db.close();reject(tx.error||new Error('Could not back up the corrupted resume.'))};tx.onabort=function(){db.close();reject(tx.error||new Error('Could not back up the corrupted resume.'))};
+  })});
+}
+function deleteSavedState(){
+  return openSaveDb().then(function(db){return new Promise(function(resolve,reject){
+    var tx=db.transaction('state','readwrite'),store=tx.objectStore('state'),req=store.delete(savedDbKey);
+    tx.oncomplete=function(){db.close();resolve()};tx.onerror=function(){db.close();reject(tx.error||new Error('Could not clear saved resume.'))};tx.onabort=function(){db.close();reject(tx.error||new Error('Could not clear saved resume.'))};
+  })});
+}
+function warnAutosaveFailure(err){
+  autosaveReady=false;clearTimeout(autosaveTimer);autosaveTimer=null;setSaveStatus('Not saved — Export JSON','error');toast('Your resume could not be autosaved. Please use Export JSON.','error');
+}
+function autosaveNow(){
+  if(!autosaveReady||!dirty)return;
+  setSaveStatus('Saving...','saving');
+  saveStateToDb().then(function(){dirty=false;setSaveStatus('Saved');autosaveReady=true}).catch(warnAutosaveFailure);
+}
+function scheduleAutosave(){if(!autosaveReady||!dirty)return;setSaveStatus('Saving...','saving');clearTimeout(autosaveTimer);autosaveTimer=setTimeout(autosaveNow,700)}
+function restoreSavedResume(){
+  return loadStateFromDb().then(function(payload){
+    if(!payload)return{found:false,corrupt:false};
+    try{
+      var saved=payload&&payload.state!==undefined?payload.state:payload,restored=normalizeResumeState(saved);
+      state=restored;ensureState();history=[];future=[];return{found:true,corrupt:false};
+    }catch(err){
+      return backupCorruptSavedState(payload).then(function(){return{found:false,corrupt:true,error:err}});
+    }
+  });
+}
+function openPortfolioDb(){
+  return new Promise(function(resolve,reject){
+    if(!window.indexedDB)return reject(new Error('IndexedDB is unavailable in this browser.'));
+    var req=indexedDB.open('sitecraft-portfolio');
+    req.onsuccess=function(){resolve(req.result)};
+    req.onerror=function(){reject(req.error||new Error('Could not open the Portfolio database.'))};
+    req.onblocked=function(){reject(new Error('The Portfolio database is blocked by another tab.'))};
+  });
+}
+function loadPortfolioStateDb(){
+  return openPortfolioDb().then(function(db){return new Promise(function(resolve,reject){
+    if(!db.objectStoreNames.contains('state')){db.close();resolve(null);return;}
+    var tx=db.transaction('state','readonly'),store=tx.objectStore('state'),req=store.get('current');
+    req.onsuccess=function(){db.close();resolve(req.result||null)};req.onerror=function(){db.close();reject(req.error||new Error('Could not read Portfolio data.'))};
+  })});
+}
+function beginPortfolioImport(){
+  loadPortfolioStateDb().then(function(payload){
+    if(!payload){$('#portfolioImportJson').click();return;}
+    try{
+      var raw=payload&&payload.state!==undefined?payload.state:payload,next=portfolioToResume(raw);
+      showReplacementConfirm('portfolio',next);
+    }catch(err){
+      toast('Saved Portfolio data is not valid. Choose a Portfolio JSON export.','error');
+      $('#portfolioImportJson').click();
+    }
+  }).catch(function(){toast('Could not read saved Portfolio data. Choose a Portfolio JSON export.','error');$('#portfolioImportJson').click()});
+}
 function googleFontUrl(){
   return 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lato:wght@400;700;900&family=Merriweather:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap';
 }
@@ -702,8 +972,8 @@ function standaloneDocument(){
   pages.forEach(function(p){doc+=p.replace('class="page-wrap"','class="page"')});
   doc+='</body></html>';return doc
 }
-function downloadHtml(){flushTyping();var blob=new Blob([standaloneDocument()],{type:'text/html;charset=utf-8'});downloadBlob(blob,slug(state.sections.header.name||'resume')+'-resume.html');setDirty(false);toast('Standalone HTML downloaded')}
-function downloadPdf(){flushTyping();buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);setDirty(false)}
+function downloadHtml(){flushTyping();var blob=new Blob([standaloneDocument()],{type:'text/html;charset=utf-8'});downloadBlob(blob,slug(state.sections.header.name||'resume')+'-resume.html');clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved');toast('Standalone HTML downloaded')}
+function downloadPdf(){flushTyping();buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved')}
 function handleNav(target,e){if(target==='resume-builder.html')return;if(dirty){e.preventDefault();leaveTarget=target;$('#leaveModal').classList.add('show');$('#leaveStay').focus()}}
 function setDevice(v){device=v;$$('[data-device]').forEach(function(b){b.classList.toggle('active',b.dataset.device===v)});if(v==='mobile')$('#zoomSelect').value='50';else if(v==='tablet')$('#zoomSelect').value='75';applyPageVars();renderPreview()}
 function setupDivider(){
@@ -726,11 +996,13 @@ function renderAccentSwatches(){
   $('#accentSwatches').querySelectorAll('[data-accent]').forEach(function(b){b.onclick=function(){applySetting('accent',b.dataset.accent)}});
 }
 function setupEvents(){
-  $('#undoBtn').onclick=undo;$('#redoBtn').onclick=redo;$('#downloadPdfBtn').onclick=downloadPdf;$('#downloadHtmlBtn').onclick=downloadHtml;$('#exportJsonBtn').onclick=exportJson;$('#resetBtn').onclick=function(){$('#resetModal').classList.add('show');$('#resetModal').querySelector('button').focus()};
-  $$('[data-close-modal]').forEach(function(b){b.onclick=function(){$('#'+b.dataset.closeModal).classList.remove('show')}});
-  $('#confirmReset').onclick=function(){var p=state.preset&&DEMOS[state.preset]?state.preset:'Experienced';$('#resetModal').classList.remove('show');preset(p)};
+  $('#undoBtn').onclick=undo;$('#redoBtn').onclick=redo;$('#downloadPdfBtn').onclick=downloadPdf;$('#downloadHtmlBtn').onclick=downloadHtml;$('#exportJsonBtn').onclick=exportJson;
+  $('#resetBtn').onclick=function(){showReplacementConfirm('reset',resetTargetPreset())};
   $('#startEmptyBtn').onclick=startEmpty;
-  $$('[data-preset]').forEach(function(b){b.onclick=function(){if(state.preset===b.dataset.preset)return;preset(b.dataset.preset)}});
+  $('#importPortfolioBtn').onclick=beginPortfolioImport;
+  $('#confirmReset').onclick=confirmReplacement;
+  $('[data-close-modal]').forEach(function(b){b.onclick=closeReplacementConfirm});
+  $('[data-preset]').forEach(function(b){b.onclick=function(){if(state.preset===b.dataset.preset)return;preset(b.dataset.preset)}});
   $('#templateSelect').onchange=function(e){applySetting('template',e.target.value)};
   $('#themeSelectCompact').onchange=function(e){applySetting('template',e.target.value)};
   $('#paperSelect').onchange=function(e){applySetting('paper',e.target.value)};
@@ -747,9 +1019,21 @@ function setupEvents(){
   $('#zoomSelect').onchange=function(){applyPageVars();renderPreview()};
   renderAccentSwatches();
   $('#fitWidthBtn').onclick=function(){var d=paperDims(),avail=Math.max(320,$('#previewScroll').clientWidth-44),z=Math.max(50,Math.min(150,Math.round(avail/d.w*100)));$('#zoomSelect').value=String(z);applyPageVars();renderPreview()};
-  $('#themePrev').onclick=function(){var a=$$('[data-template]'),i=a.findIndex(function(x){return x.dataset.template===state.template});if(i>0)applySetting('template',a[i-1].dataset.template)};
-  $('#themeNext').onclick=function(){var a=$$('[data-template]'),i=a.findIndex(function(x){return x.dataset.template===state.template});if(i<a.length-1)applySetting('template',a[i+1].dataset.template)};
-  $$('[data-template]').forEach(function(b){b.onclick=function(){applySetting('template',b.dataset.template)}});
+  $('#importJson').onchange=function(e){
+    var f=e.target.files&&e.target.files[0];if(!f)return;
+    f.text().then(function(txt){var x=JSON.parse(txt);importData(x)}).catch(function(err){toast(err&&err.name==='SyntaxError'?'That file is not valid JSON.':(err.message||'Import failed.'),'error')});
+    e.target.value='';
+  };
+  $('#portfolioImportJson').onchange=function(e){
+    var f=e.target.files&&e.target.files[0];if(!f)return;
+    f.text().then(function(txt){
+      var x=JSON.parse(txt);
+      if(!x||!isRecord(x)||!x.personal)throw new Error('This does not look like a Portfolio JSON export.');
+      showReplacementConfirm('portfolio',portfolioToResume(x));
+    }).catch(function(err){toast(err&&err.name==='SyntaxError'?'That file is not valid JSON.':(err.message||'Portfolio import failed.'),'error')});
+    e.target.value='';
+  };
+  $('[data-template]').forEach(function(b){b.onclick=function(){applySetting('template',b.dataset.template)}});
   $$('[data-device]').forEach(function(b){b.onclick=function(){setDevice(b.dataset.device)}});
   $('#jobDescription').oninput=keywordHelper;
   $('#importJson').onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)return;f.text().then(function(txt){var x;try{x=JSON.parse(txt)}catch(err){throw new Error('That file is not valid JSON.')}importData(x)}).catch(function(err){toast(err.message||'Import failed.','error')});e.target.value=''};
@@ -810,11 +1094,19 @@ function setupEvents(){
   $('#editor').addEventListener('dragend',function(){dragSection='';$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')})});
   $('#photoInput')?.addEventListener('keydown',function(e){});
   document.addEventListener('keydown',function(e){var mod=e.ctrlKey||e.metaKey;if($('#resetModal').classList.contains('show')||$('#leaveModal').classList.contains('show'))return;if(mod&&e.key.toLowerCase()==='s'){e.preventDefault();downloadHtml()}else if(mod&&e.key.toLowerCase()==='p'){e.preventDefault();downloadPdf()}else if(mod&&e.key.toLowerCase()==='z'&&!e.shiftKey){e.preventDefault();undo()}else if((mod&&e.key.toLowerCase()==='y')||(mod&&e.shiftKey&&e.key.toLowerCase()==='z')){e.preventDefault();redo()}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('#resetModal').classList.contains('show')){e.preventDefault();closeReplacementConfirm()}});
   window.addEventListener('beforeunload',function(e){if(!dirty)return;e.preventDefault();e.returnValue=''});
 }
 
 function init(){
-  ensureState();setDirty(false);renderEditor();renderPreview();renderHealth();updateTopControls();setupDivider();setupEvents();keywordHelper();
+  ensureState();setSaveStatus('Saved');dirty=false;renderEditor();renderPreview();renderHealth();updateTopControls();setupDivider();setupEvents();keywordHelper();
+  restoreSavedResume().then(function(result){
+    if(result.found){renderEditor();renderPreview();renderHealth();updateTopControls();dirty=false;setSaveStatus('Saved');toast('Saved resume restored')}
+    else if(result.corrupt){dirty=false;setSaveStatus('Not saved — Export JSON','error');toast('Saved resume was corrupted; a backup was kept and the app started safely.','error')}
+    else setSaveStatus('Saved');
+    restoreInProgress=false;autosaveReady=!!window.indexedDB;
+    if(dirty&&autosaveReady)scheduleAutosave();
+  }).catch(function(err){restoreInProgress=false;autosaveReady=false;setSaveStatus('Not saved — Export JSON','error');toast('Could not restore saved resume. Export JSON is available as a safe backup.','error')});
 }
 init();
 })();
