@@ -317,8 +317,71 @@ function renderEditor(){
   html+='<button class="btn soft" type="button" id="addCustomSection" '+(state.custom.length>=6?'disabled':'')+'>+ Add custom section ('+state.custom.length+'/6)</button>';
   $('#accordion').innerHTML=html;
 }
-function statePath(path){return path.split('.').reduce(function(o,k){return o&&o[k]},state)}
-function setPath(path,val){var a=path.split('.'),last=a.pop(),o=state;a.forEach(function(k){if(o[k]==null)o[k]={};o=o[k]});o[last]=val}
+function dataPathTarget(path){
+  var a=String(path||'').split('.'),root=a[0],o=null,rest=[];
+  if(root==='custom'){
+    var ci=Number(a[1]);
+    if(!Array.isArray(state.custom)||!Number.isInteger(ci)||ci<0||ci>=state.custom.length)return null;
+    o=state.custom[ci];rest=a.slice(2);
+  }else if(state.sections&&Object.prototype.hasOwnProperty.call(SECTION_LABELS,root)){
+    var sec=state.sections[root];
+    if(!sec||typeof sec!=='object')return null;
+    if(root==='skills'&&a[1]==='groups'){
+      if(!Array.isArray(sec.groups))return null;
+      o=sec.groups;rest=a.slice(2);
+    }else if(Array.isArray(sec.items)&&/^\d+$/.test(a[1]||'')){
+      o=sec.items;rest=a.slice(1);
+    }else{
+      o=sec;rest=a.slice(1);
+    }
+  }else{
+    return null;
+  }
+  return{object:o,parts:rest};
+}
+function statePath(path){
+  var target=dataPathTarget(path);if(!target||!target.object||!target.parts.length)return undefined;
+  return target.parts.reduce(function(o,k){return o==null?undefined:o[k]},target.object);
+}
+function setPath(path,val){
+  var target=dataPathTarget(path);if(!target||!target.object||!target.parts.length)return false;
+  var o=target.object,a=target.parts.slice(),last=a.pop();
+  if(Array.isArray(o)&&/^\d+$/.test(last))o[Number(last)]=val;
+  else{
+    a.forEach(function(k){if(o[k]==null||typeof o[k]!=='object')o[k]={};o=o[k]});
+    o[last]=val;
+  }
+  return true;
+}
+function migrateLegacySectionRoots(){
+  if(!state||!state.sections)return;
+  Object.keys(SECTION_LABELS).forEach(function(id){
+    if(!Object.prototype.hasOwnProperty.call(state,id))return;
+    var legacy=state[id],target=state.sections[id];
+    if(!legacy||typeof legacy!=='object'||!target||typeof target!=='object'){delete state[id];return}
+    if(id==='skills'&&legacy.groups&&typeof legacy.groups==='object'&&!Array.isArray(legacy.groups)){
+      if(!Array.isArray(target.groups))target.groups=[];
+      Object.keys(legacy.groups).forEach(function(k){
+        if(/^\d+$/.test(k))target.groups[Number(k)]=Object.assign({},target.groups[Number(k)]||{},clone(legacy.groups[k]));
+      });
+      Object.keys(legacy).forEach(function(k){if(k!=='groups')target[k]=clone(legacy[k])});
+    }else if(Array.isArray(target.items)){
+      Object.keys(legacy).forEach(function(k){
+        if(/^\d+$/.test(k))target.items[Number(k)]=Object.assign({},target.items[Number(k)]||{},clone(legacy[k]));
+        else if(k!=='items')target[k]=clone(legacy[k]);
+      });
+      if(Array.isArray(legacy.items))target.items=clone(legacy.items);
+    }else{
+      Object.keys(legacy).forEach(function(k){target[k]=clone(legacy[k])});
+    }
+    delete state[id];
+  });
+}
+function exportStateClone(){
+  var out=clone(state);
+  Object.keys(SECTION_LABELS).forEach(function(id){delete out[id]});
+  return out;
+}
 function renderTopTheme(){var cards=$$('[data-template]');cards.forEach(function(b){b.classList.toggle('active',b.dataset.template===state.template)});$('#templateSelect').value=state.template;$('#themeSelectCompact').value=state.template;var active=$('[data-template="'+CSS.escape(state.template)+'"]');if(active)active.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'nearest',inline:'center'})}
 function updateTopControls(){
   renderTopTheme();$('#paperSelect').value=state.paper;$('#goalSelect').value=state.goal;$('#marginSelect').value=state.margin;$('#fontSelect').value=state.font;$('#fontSizeSelect').value=state.fontSize;$('#lineSelect').value=state.lineSpacing;$('#accentPicker').value=state.accent;$('#dividerSelect').value=state.divider;$('#iconsToggle').setAttribute('aria-pressed',String(state.icons));$('#iconsToggle').textContent='Icons: '+(state.icons?'On':'Off');$('#photoToggle').setAttribute('aria-pressed',String(state.photoEnabled));$('#photoToggle').textContent='Photo: '+(state.photoEnabled?'On':'Off');$$('[data-preset]').forEach(function(b){b.classList.toggle('active',b.dataset.preset===state.preset)});$('#undoBtn').disabled=!history.length;$('#redoBtn').disabled=!future.length;
@@ -326,6 +389,7 @@ function updateTopControls(){
 function createCustom(){state.custom.push({title:'Custom section',mode:'bullets',content:'',bullets:[],show:true});state.order.push('custom-'+state.custom.length);openSections['custom-'+state.custom.length]=true}
 function selectedSection(id){if(id.indexOf('custom-')===0)return state.custom[Number(id.split('-')[1])-1];return state.sections[id]}
 function ensureState(){
+  migrateLegacySectionRoots();
   Object.keys(DEMOS.Experienced.sections).forEach(function(k){if(!state.sections[k])state.sections[k]=clone(DEMOS.Experienced.sections[k])});
   state.order=state.order.filter(function(id){return state.sections[id]||/^custom-\d+$/.test(id)});
   state.sections.header.customLinks=Array.isArray(state.sections.header.customLinks)?state.sections.header.customLinks:[];
@@ -515,7 +579,7 @@ function keywordHelper(){
 }
 
 function exportJson(){
-  flushTyping();var out={app:'SiteCraft Resume Builder',version:1,state:clone(state)};downloadBlob(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}),'resume-data.json');setDirty(false);toast('JSON exported')
+  flushTyping();var out={app:'SiteCraft Resume Builder',version:1,state:exportStateClone()};downloadBlob(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}),'resume-data.json');setDirty(false);toast('JSON exported')
 }
 function portfolioToResume(x){
   var p=x.personal||{},out=clone(DEMOS.Experienced);out.preset='Imported portfolio';out.order=['header','summary','experience','skills','projects','education','certifications','awards','languages','volunteering','publications','references'];
