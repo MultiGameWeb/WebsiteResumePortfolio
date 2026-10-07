@@ -114,6 +114,17 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
 <style id="portfolioMobileHardening">
 @media(max-width:899px){
   html,body{width:100%;max-width:100%;overflow-x:hidden}
+  /* Mobile tabs, compact top actions, and universal button hit target */
+
+  .mobile-tabs{grid-column:1;grid-row:2;display:grid;grid-template-columns:1fr 1fr;padding:4px;gap:4px;border-bottom:1px solid var(--line);background:var(--surface)}
+  .mobile-tab{min-height:44px;height:44px}
+  .top-actions .persona-top,.top-actions .saved,.top-actions .shortcut,.top-actions .btn.soft,.top-actions .icon-btn{display:none}
+  .top-actions #downloadBtn,.top-actions #moreBtn{display:inline-flex}
+  button{min-height:44px!important}
+  .step1-empty,.check-item,.accordion-toggle{min-height:44px}
+  .portfolio-toggle{min-height:44px}
+
+
   .app{width:100%;max-width:100%;min-width:0;grid-template-columns:1fr;grid-template-rows:72px 52px minmax(0,1fr)}
   .topbar,.top-left-nav,.top-actions,.brand,.editor,.preview-area,.editor-tools-row,.editor-tools-stack{min-width:0;max-width:100%}
   .topbar{overflow:hidden}
