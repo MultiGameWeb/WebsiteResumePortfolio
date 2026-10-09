@@ -615,7 +615,7 @@ root.addEventListener("click",function(e){
  }
  if(a==="export-csv"){exportCsv();return;}
  if(a==="print-pdf"){window.print();return;}
- if(a==="save-rules"){const box=document.querySelector("[data-rule-content]");if(box)state.rulesHtml=sanitizeRules(box.innerHTML);toast(t("rulesSaved"));return;}
+ if(a==="save-rules"){const box=document.querySelector("[data-rule-content]");if(box)state.rulesHtml=sanitizeRules(box.innerHTML);if(state.liveWorkspace&&state.dbChitId){const id=state.dbChitId;persistAndReload(()=>window.AuctionChitBackend.saveChit(id,state.chit,state.rulesHtml));}else toast(t("rulesSaved"));return;}
  if(el.hasAttribute("data-rule-cmd")){document.execCommand(a,false,null);const box=document.querySelector("[data-rule-content]");if(box)state.rulesHtml=sanitizeRules(box.innerHTML);return;}
 });
 root.addEventListener("change",function(e){
