@@ -132,4 +132,10 @@ body:has(.app) .sc-cross-sell--floating,body:has(.app-shell) .sc-cross-sell--flo
 body:has(.groups),body:has(.benefits),body:has(.four-template-grid),body:has(.privacy){background:#100f17!important;color:#f8f6ff!important}
 body:has(.groups) main,body:has(.benefits) main,body:has(.four-template-grid) main,body:has(.privacy) main{color:#f8f6ff}
 body:has(.groups) .intro,body:has(.benefits) .hero,body:has(.four-template-grid) .intro{border-color:var(--sc-line)}
+body:has(.benefits) .benefit,body:has(.benefits) .progress-card,body:has(.benefits) .notify{background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025))!important;color:#f8f6ff!important;border-color:var(--sc-line)!important;box-shadow:0 14px 38px rgba(0,0,0,.18)!important}
+body:has(.benefits) .benefit b,body:has(.benefits) .progress-top{color:#f8f6ff!important}
+body:has(.benefits) .benefit span,body:has(.benefits) .progress-note,body:has(.benefits) .notify p{color:#c1bbd0!important}
+body:has(.benefits) .bar{background:rgba(255,255,255,.1)!important}
+body:has(.benefits) .notify-form input{background:rgba(255,255,255,.055)!important;color:#f8f6ff!important;border-color:var(--sc-line)!important}
+body:has(.benefits) .message{color:#c1bbd0!important}
 body:has(.groups) .footer,body:has(.four-template-grid) .footer{background:rgba(255,255,255,.025);color:#b4aec5}
