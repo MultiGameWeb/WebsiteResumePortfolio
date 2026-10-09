@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap');
 /* Shared SiteCraft navigation. All URLs are relative for GitHub Pages subpaths. */
 #sitecraftGlobalNav{position:sticky;top:0;z-index:9999;width:100%;box-sizing:border-box;background:rgba(255,255,255,.97);color:#17181d;border-bottom:1px solid #dfe3e8;box-shadow:0 5px 18px rgba(17,24,39,.07);font:inherit;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 #sitecraftGlobalNav *{box-sizing:border-box}
@@ -33,13 +34,13 @@
 @media print{#sitecraftGlobalNav,#sitecraftGlobalNav *{display:none!important;visibility:hidden!important}}
 
 /* Premium SiteCraft layer: shared navigation, page chrome and reusable UI. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap');
+
 :root{--sc-bg:#100f17;--sc-panel:#191823;--sc-panel-2:#211f2c;--sc-text:#f8f6ff;--sc-muted:#b4aec5;--sc-line:rgba(255,255,255,.12);--sc-violet:#8b5cf6;--sc-pink:#ec4899;--sc-orange:#fb923c;--sc-gradient:linear-gradient(110deg,#8b5cf6 0%,#ec4899 52%,#fb923c 100%);--sc-radius:22px}
 #sitecraftGlobalNav{position:sticky;top:0;z-index:9999;width:100%;box-sizing:border-box;background:rgba(16,15,23,.88)!important;color:var(--sc-text)!important;border-bottom:1px solid var(--sc-line)!important;box-shadow:0 8px 34px rgba(0,0,0,.18)!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);font-family:Inter,system-ui,sans-serif!important}
 #sitecraftGlobalNav *{box-sizing:border-box}#sitecraftGlobalNav .sc-nav-inner{width:min(1240px,calc(100% - 36px));min-height:76px;margin:0 auto;display:flex;align-items:center;gap:25px}
 #sitecraftGlobalNav .sc-brand{display:inline-flex;align-items:center;gap:11px;flex:0 0 auto;color:var(--sc-text)!important;font:800 18px/1 Sora,Inter,sans-serif;letter-spacing:-.04em;text-decoration:none}
 #sitecraftGlobalNav .sc-brand-mark{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:var(--sc-gradient);color:#fff!important;box-shadow:0 8px 26px rgba(236,72,153,.25)}
-#sitecraftGlobalNav .sc-menu{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-left:auto}
+#sitecraftGlobalNav .sc-menu{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-left:auto;order:2}
 #sitecraftGlobalNav .sc-menu a,#sitecraftGlobalNav .sc-dropdown-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 13px;border:1px solid transparent;border-radius:12px;background:transparent;color:#d7d1e4!important;font:600 13px/1 Inter,system-ui,sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease}
 #sitecraftGlobalNav .sc-menu a:hover,#sitecraftGlobalNav .sc-dropdown-toggle:hover,#sitecraftGlobalNav .sc-menu a[aria-current=page]{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.08);color:#fff!important}
 #sitecraftGlobalNav .sc-dropdown{position:relative}#sitecraftGlobalNav .sc-dropdown-toggle:after{content:"";width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .18s ease}
@@ -49,9 +50,9 @@
 #sitecraftGlobalNav .sc-dropdown-menu a{min-height:42px;justify-content:flex-start;padding-inline:12px}
 #sitecraftGlobalNav .sc-get-started{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;flex:0 0 auto;padding:0 17px;border-radius:13px;background:var(--sc-gradient);box-shadow:0 10px 28px rgba(196,65,193,.24);color:#fff!important;font:800 13px/1 Inter,system-ui,sans-serif;text-decoration:none;white-space:nowrap;transition:transform .18s ease,box-shadow .18s ease}
 #sitecraftGlobalNav .sc-get-started:hover{transform:translateY(-2px);box-shadow:0 15px 36px rgba(196,65,193,.35)}
-#sitecraftGlobalNav .sc-actions{display:flex;align-items:center;gap:7px;order:-1}#sitecraftGlobalNav .sc-action{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 11px;border:1px solid var(--sc-line);border-radius:11px;background:rgba(255,255,255,.045);color:var(--sc-muted)!important;font:600 12px/1 Inter,sans-serif;text-decoration:none}
+#sitecraftGlobalNav .sc-actions{display:flex;align-items:center;gap:7px;order:1;margin-left:0}#sitecraftGlobalNav .sc-action{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 11px;border:1px solid var(--sc-line);border-radius:11px;background:rgba(255,255,255,.045);color:var(--sc-muted)!important;font:600 12px/1 Inter,sans-serif;text-decoration:none}
 #sitecraftGlobalNav .sc-menu-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid var(--sc-line);border-radius:12px;background:rgba(255,255,255,.055);color:#fff;font-size:22px;cursor:pointer}
-#sitecraftGlobalNav .sc-nav-right{display:flex;align-items:center;gap:10px;margin-left:4px}#sitecraftGlobalNav .sc-legacy-site-nav{display:none!important}
+#sitecraftGlobalNav .sc-nav-right{display:flex;align-items:center;gap:10px;margin-left:0;order:3}#sitecraftGlobalNav .sc-legacy-site-nav{display:none!important}
 body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}h1,h2,h3,h4{font-family:Sora,Inter,system-ui,sans-serif;letter-spacing:-.035em}button,a,input,select,textarea{font-family:inherit}
 :where(.header,.top,.builder-top,.site-header){background:rgba(16,15,23,.92)!important;color:var(--sc-text)!important;border-color:var(--sc-line)!important;box-shadow:0 8px 34px rgba(0,0,0,.14)}
 :where(.header-inner,.top-inner){color:var(--sc-text)!important}:where(.intro,.hero,.feature-intro,.checkout-intro){color:var(--sc-text)}
@@ -75,7 +76,7 @@ body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}h1,h2,h3,h4
 @keyframes scConfetti{0%{transform:translate3d(0,-8vh,0) rotate(0);opacity:1}100%{transform:translate3d(var(--drift,40px),110vh,0) rotate(720deg);opacity:0}}
 @media(max-width:900px){
  #sitecraftGlobalNav .sc-nav-inner{width:calc(100% - 28px);min-height:68px;gap:10px;flex-wrap:wrap}
- #sitecraftGlobalNav .sc-brand{font-size:17px}#sitecraftGlobalNav .sc-actions{order:0;margin-left:auto}
+ #sitecraftGlobalNav .sc-brand{font-size:17px}#sitecraftGlobalNav .sc-actions{order:1;margin-left:auto}#sitecraftGlobalNav .sc-nav-right{order:2}
  #sitecraftGlobalNav .sc-menu-toggle{display:inline-flex}
  #sitecraftGlobalNav .sc-menu{display:none;position:absolute;top:100%;left:0;right:0;z-index:9999;align-items:stretch;justify-content:flex-start;flex-direction:column;gap:4px;padding:12px 16px 16px;margin:0;border-bottom:1px solid var(--sc-line);background:rgba(16,15,23,.97);box-shadow:0 20px 36px rgba(0,0,0,.25)}
  #sitecraftGlobalNav .sc-menu.sc-open{display:flex}#sitecraftGlobalNav .sc-menu>a,#sitecraftGlobalNav .sc-dropdown-toggle{width:100%;justify-content:flex-start;min-height:46px;padding-inline:13px}
@@ -86,3 +87,24 @@ body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}h1,h2,h3,h4
 }
 @media(max-width:520px){#sitecraftGlobalNav .sc-nav-inner{width:calc(100% - 22px)}#sitecraftGlobalNav .sc-brand-mark{width:35px;height:35px}#sitecraftGlobalNav .sc-actions .sc-action{width:36px;overflow:hidden;padding:0;font-size:0;justify-content:center}.sc-cross-sell--floating{right:10px;bottom:10px;width:calc(100vw - 20px)}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Template marketplace, card grids and skip-link polish. */
+.skip-link{position:absolute;left:12px;top:-80px;z-index:10010;padding:10px 14px;border-radius:10px;background:var(--sc-gradient);color:#fff;text-decoration:none;font-weight:800}
+.skip-link:focus{top:10px}
+.tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:10px auto 28px}
+.tools #chips{display:flex;gap:8px;flex-wrap:wrap}
+.tools [data-cat]{min-height:40px;padding:0 14px;border:1px solid var(--sc-line);border-radius:999px;background:rgba(255,255,255,.045);color:#c8c1d5;font-size:12px;font-weight:700;cursor:pointer}
+.tools [data-cat].active,.tools [data-cat]:hover{background:rgba(139,92,246,.18);border-color:rgba(186,139,255,.55);color:#fff}
+.search{flex:1;min-width:190px;min-height:44px;padding:0 15px;border:1px solid var(--sc-line);border-radius:13px;background:rgba(255,255,255,.055)!important;color:var(--sc-text)!important}
+.groups{display:grid;gap:42px}.group-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:20px 0 16px}.group-head h2{margin:0;font:700 clamp(23px,3vw,32px)/1.15 Sora,Inter,sans-serif;letter-spacing:-.04em;color:var(--sc-text)}.count{padding:6px 10px;border:1px solid var(--sc-line);border-radius:99px;color:var(--sc-muted);font-size:11px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.grid>.card{overflow:hidden;border:1px solid var(--sc-line)!important;border-radius:21px!important;background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025))!important;transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease}
+.grid>.card>img{display:block;width:100%;height:220px;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.65,.25,1),filter .4s ease}
+.grid>.card:hover>img{transform:translateY(-3%) scale(1.04);filter:saturate(1.12)}
+.card-body{padding:19px}.card-body .meta{display:inline-flex;margin-bottom:9px;color:#d8adff;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.card-body h3{margin:0 0 10px;font:700 18px/1.25 Sora,Inter,sans-serif;color:#fff;letter-spacing:-.035em}
+.card-body p{margin:0 0 15px;color:#c2bbd0;font-size:12px;line-height:1.7}
+.actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.actions .btn{min-height:42px;padding:0 13px;border-radius:11px;font-size:11px;text-decoration:none}
+.empty{padding:28px;border:1px dashed var(--sc-line);border-radius:18px;background:rgba(255,255,255,.025);color:#c9c1d7}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.grid>.card>img{height:240px}.card-body{padding:16px}.tools{align-items:stretch}.search{flex-basis:100%}}
