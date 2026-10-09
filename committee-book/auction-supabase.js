@@ -42,15 +42,15 @@ async function loadWorkspace(requestedChitId){
  const cycles=(cycleRes.data||[]).map(cy=>{
   cycleIdToNo.set(cy.id,cy.month_no);
   const m=new Date(cy.auction_starts_at);
-  return {dbId:cy.id,monthNo:cy.month_no,status:cy.status,winnerId:cy.winner_member_id,winningBidPaise:cy.winning_bid_paise,prizePaise:cy.prize_paise||0,discountPaise:cy.discount_paise||0,commissionPaise:cy.commission_paise||0,dividendPerHeadPaise:cy.dividend_per_head_paise||0,dividendPoolPaise:cy.dividend_pool_paise||0,leftoverPaise:cy.rounding_leftover_paise||0,completedAt:cy.completed_at,dueDate:cy.due_date,baseContributionPaise:cy.base_contribution_paise,startingFloorPaise:cy.floor_price_paise,maxDiscountPct:cy.max_discount_pct,memberCount:cy.member_count,dividendRule:cy.dividend_rule,commissionPct:cy.commission_pct,lateFinePerDayPaise:cy.late_fine_per_day_paise,periodStartDate:monthIso(chit.start_date,cy.month_no),auctionStartsAt:cy.auction_starts_at,auctionEndsAt:cy.auction_ends_at};
+  return {dbId:cy.id,monthNo:cy.month_no,status:cy.status,winnerId:cy.winner_member_id,winningBidPaise:cy.winning_bid_paise==null?null:Number(cy.winning_bid_paise),prizePaise:Number(cy.prize_paise||0),discountPaise:Number(cy.discount_paise||0),commissionPaise:Number(cy.commission_paise||0),dividendPerHeadPaise:Number(cy.dividend_per_head_paise||0),dividendPoolPaise:Number(cy.dividend_pool_paise||0),leftoverPaise:Number(cy.rounding_leftover_paise||0),completedAt:cy.completed_at,dueDate:cy.due_date,baseContributionPaise:Number(cy.base_contribution_paise||0),startingFloorPaise:Number(cy.floor_price_paise||0),maxDiscountPct:Number(cy.max_discount_pct||0),memberCount:Number(cy.member_count||0),dividendRule:cy.dividend_rule,commissionPct:cy.commission_pct,lateFinePerDayPaise:cy.late_fine_per_day_paise,periodStartDate:monthIso(chit.start_date,cy.month_no),auctionStartsAt:cy.auction_starts_at,auctionEndsAt:cy.auction_ends_at};
  });
  members.forEach(m=>{cycles.forEach(cy=>{if(cy.winnerId===m.id){m.status="winner";m.wonMonths.push(cy.monthNo);}});});
- const bids=(bidRes.data||[]).map(b=>({id:b.id,dbId:b.id,memberId:b.member_id,cycleNo:cycleIdToNo.get(b.cycle_id),cycleDbId:b.cycle_id,amountPaise:b.amount_paise,status:b.status,createdAt:b.created_at,approvedAt:b.approved_at,approvedBy:b.approved_by}));
+ const bids=(bidRes.data||[]).map(b=>({id:b.id,dbId:b.id,memberId:b.member_id,cycleNo:cycleIdToNo.get(b.cycle_id),cycleDbId:b.cycle_id,amountPaise:Number(b.amount_paise),status:b.status,createdAt:b.created_at,approvedAt:b.approved_at,approvedBy:b.approved_by}));
  const payRows=paymentRes.data||[],byPayment=new Map(),payments=[];
  payRows.forEach(p=>{
   let g=byPayment.get(p.member_id+"|"+cycleIdToNo.get(p.cycle_id));
   if(!g){g={id:p.id,dbId:p.id,memberId:p.member_id,cycleNo:cycleIdToNo.get(p.cycle_id),paidPaise:0,status:"pending",mode:p.mode||"upi",paidAt:"",history:[],entries:[]};byPayment.set(p.member_id+"|"+g.cycleNo,g);payments.push(g);}
-  const item={dbId:p.id,type:p.entry_type==="reversal"?"reversal":"payment",amountPaise:p.amount_paise,date:p.created_at,mode:p.mode,ref:p.id,status:p.status};
+  const item={dbId:p.id,type:p.entry_type==="reversal"?"reversal":"payment",amountPaise:Number(p.amount_paise),date:p.created_at,mode:p.mode,ref:p.id,status:p.status};
   g.entries.push(item);
   if(p.status==="confirmed"){
    g.history.push({type:item.type,amountPaise:item.amountPaise,date:item.date,mode:item.mode,ref:item.ref});
@@ -62,15 +62,15 @@ async function loadWorkspace(requestedChitId){
   }
  });
  payments.forEach(p=>{p.paidPaise=Math.max(0,p.paidPaise);p.status=p.paidPaise>0?"paid":"pending";});
- const dividendHistory=(dividendRes.data||[]).map(d=>({dbId:d.id,cycleNo:cycleIdToNo.get(d.cycle_id),memberId:d.member_id,amountPaise:d.amount_paise,createdAt:d.created_at}));
+ const dividendHistory=(dividendRes.data||[]).map(d=>({dbId:d.id,cycleNo:cycleIdToNo.get(d.cycle_id),memberId:d.member_id,amountPaise:Number(d.amount_paise),createdAt:d.created_at}));
  const isOwner=chit.owner_id===user.id;
- const mappedChit={dbId:chit.id,name:chit.name,potPaise:chit.pot_paise,memberCount:chit.member_count,startingFloorPaise:chit.starting_floor_paise,maxDiscountPct:Number(chit.max_discount_pct),commissionPct:Number(chit.commission_pct),dividendRule:chit.dividend_rule==="non_winners"?"nonWinners":"allMembers",startDate:chit.start_date,auctionStartDay:chit.auction_start_day,auctionEndDay:chit.auction_end_day,dueDay:chit.due_day,lateFinePerDayPaise:chit.late_fine_per_day_paise,upiId:chit.upi_id||"",status:chit.status};
+ const mappedChit={dbId:chit.id,name:chit.name,potPaise:Number(chit.pot_paise),memberCount:Number(chit.member_count),startingFloorPaise:Number(chit.starting_floor_paise),maxDiscountPct:Number(chit.max_discount_pct),commissionPct:Number(chit.commission_pct),dividendRule:chit.dividend_rule==="non_winners"?"nonWinners":"allMembers",startDate:chit.start_date,auctionStartDay:chit.auction_start_day,auctionEndDay:chit.auction_end_day,dueDay:chit.due_day,lateFinePerDayPaise:Number(chit.late_fine_per_day_paise||0),upiId:chit.upi_id||"",status:chit.status};
  const workspace={chit:mappedChit,members:members,cycles:cycles,bids:bids,payments:payments,dividendHistory:dividendHistory,rulesHtml:chit.rules_html||"",role:isOwner?"organizer":"member",previewMemberId:(members.find(m=>m.authUserId===user.id)||members.find(m=>m.status!=="removed")||{}).id||null,selectedMonth:cycles.find(cy=>cy.status!=="completed")?.monthNo||cycles.length};
  return {user:user,chits:list.map(x=>({id:x.id,name:x.name,ownerId:x.owner_id})),workspace:workspace};
 }
-async function createWorkspace(chit,members){
+async function createWorkspace(chit,members,rulesHtml){
  const c=getClient(),user=await getUser();if(!c||!user)throw new Error("Sign in with Google before creating a live chit.");
- const values={owner_id:user.id,name:chit.name,pot_paise:chit.potPaise,member_count:chit.memberCount,starting_floor_paise:chit.startingFloorPaise,max_discount_pct:chit.maxDiscountPct,commission_pct:chit.commissionPct,dividend_rule:chit.dividendRule==="nonWinners"?"non_winners":"all_members",start_date:chit.startDate,auction_start_day:chit.auctionStartDay,auction_end_day:chit.auctionEndDay,due_day:chit.dueDay,late_fine_per_day_paise:chit.lateFinePerDayPaise,upi_id:chit.upiId||null,rules_html:chit.rulesHtml||"",status:"active"};
+ const values={owner_id:user.id,name:chit.name,pot_paise:chit.potPaise,member_count:chit.memberCount,starting_floor_paise:chit.startingFloorPaise,max_discount_pct:chit.maxDiscountPct,commission_pct:chit.commissionPct,dividend_rule:chit.dividendRule==="nonWinners"?"non_winners":"all_members",start_date:chit.startDate,auction_start_day:chit.auctionStartDay,auction_end_day:chit.auctionEndDay,due_day:chit.dueDay,late_fine_per_day_paise:chit.lateFinePerDayPaise,upi_id:chit.upiId||null,rules_html:rulesHtml||chit.rulesHtml||"",status:"active"};
  const {data,error}=await c.from("chits").insert(values).select("*").single();if(error)throw error;
  const rows=[];
  for(let i=0;i<chit.memberCount;i++){
@@ -107,9 +107,14 @@ async function uploadPrivateFile(chitId,memberId,file){
  const clean=String(file.name||"document").replace(/[^a-zA-Z0-9._-]/g,"_"),path=chitId+"/"+memberId+"/"+Date.now()+"-"+clean;
  const {error}=await c.storage.from("chit-private-docs").upload(path,file,{upsert:false,contentType:file.type||"application/octet-stream"});if(error)throw error;return path;
 }
+async function saveMemberDocument(chitId,memberId,path,column){
+ const c=getClient();if(!c)throw new Error("Supabase is not configured.");
+ if(!["kyc_doc_path"].includes(column))throw new Error("Unsupported document field.");
+ const {error}=await c.from("members").update({[column]:path}).eq("id",memberId).eq("chit_id",chitId);if(error)throw error;
+}
 async function signedFileUrl(path,seconds){
  const c=getClient();if(!c)throw new Error("Supabase is not configured.");
  const {data,error}=await c.storage.from("chit-private-docs").createSignedUrl(path,seconds||120);if(error)throw error;return data.signedUrl;
 }
-window.AuctionChitBackend={configured:configured,client:getClient,signInGoogle:signInGoogle,signOut:signOut,getUser:getUser,loadWorkspace:loadWorkspace,createWorkspace:createWorkspace,saveChit:saveChit,saveMember:saveMember,placeBid:placeBid,approveBid:approveBid,declareWinner:declareWinner,autoDeclare:autoDeclare,recordPayment:recordPayment,submitPayment:submitPayment,confirmPayment:confirmPayment,reversePayment:reversePayment,uploadPrivateFile:uploadPrivateFile,signedFileUrl:signedFileUrl};
+window.AuctionChitBackend={configured:configured,client:getClient,signInGoogle:signInGoogle,signOut:signOut,getUser:getUser,loadWorkspace:loadWorkspace,createWorkspace:createWorkspace,saveChit:saveChit,saveMember:saveMember,placeBid:placeBid,approveBid:approveBid,declareWinner:declareWinner,autoDeclare:autoDeclare,recordPayment:recordPayment,submitPayment:submitPayment,confirmPayment:confirmPayment,reversePayment:reversePayment,uploadPrivateFile:uploadPrivateFile,saveMemberDocument:saveMemberDocument,signedFileUrl:signedFileUrl};
 })();
