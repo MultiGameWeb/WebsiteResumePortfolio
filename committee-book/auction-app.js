@@ -302,9 +302,25 @@ function setup(){
  '</div><div class="form-actions"><span class="hint">'+esc(t("editNotFormula"))+'</span><button class="btn primary" data-action="save-setup">✓ '+esc(t("saveChanges"))+'</button></div></div></div>'+
  '<div class="panel"><div class="panel-head"><div><h2>'+esc(t("floorLogic"))+'</h2><p>'+esc(t("floorLogicHelp"))+'</p></div></div><div class="panel-body"><div class="calc-grid">'+calcCard(t("baseFloor"),money(c.startingFloorPaise),t("baseFloor"))+calcCard(t("maxDiscountCap"),String(c.maxDiscountPct)+"%",t("floorFormula"))+calcCard(t("autoFloor"),money(calc),t("floorMonth")+" "+(currentCycle()?currentCycle().monthNo:1))+'</div><div class="info" style="margin-top:12px">'+esc(t("floorFormula"))+'</div></div></div>';
 }
+async function openPrivateDocument(path){
+ if(!state.liveWorkspace||!path){toast(t("notAvailable"),true);return;}
+ try{const url=await window.AuctionChitBackend.signedFileUrl(path,120);window.open(url,"_blank","noopener,noreferrer");}
+ catch(error){toast(error.message||String(error),true);}
+}
 function membersView(){
- const rows=state.members.map((m,i)=>{const total=memberTotals(m);return '<tr><td>'+(i+1)+'</td><td>'+memberCell(m)+'</td><td>'+esc(m.phone||"—")+'</td><td>'+esc(m.email||"—")+'</td><td>'+badge(m.status)+'</td><td class="money">'+money(total.paid)+'</td><td class="money">'+money(total.dividend)+'</td><td class="money">'+money(total.profitLoss)+'</td><td><div class="row-actions"><button class="btn small" disabled title="'+esc(t("noKycUpload"))+'">'+esc(t("kycDoc"))+' · '+esc(t("comingSoon"))+'</button><button class="btn small" disabled title="'+esc(t("noKycUpload"))+'">'+esc(t("agreement"))+' · '+esc(t("comingSoon"))+'</button></div></td><td>'+(state.role==="organizer"?'<div class="row-actions"><button class="btn small" data-action="edit-member" data-id="'+m.id+'">'+esc(t("edit"))+'</button><button class="btn small danger" data-action="remove-member" data-id="'+m.id+'" '+(m.status==="removed"?"disabled":"")+'>'+esc(t("removeMember"))+'</button></div>':"—")+'</td></tr>';}).join("");
- return heading(t("members"),t("membersHelp"),state.role==="organizer"?'<button class="btn primary" data-action="add-member">＋ '+esc(t("addMember"))+'</button>':"")+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("membersTable"))+' · '+state.members.length+'</h2><p>'+esc(t("membersHelp"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("serialNo"))+'</th><th>'+esc(t("member"))+'</th><th>'+esc(t("phone"))+'</th><th>'+esc(t("email"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("netPL"))+'</th><th>'+esc(t("kycDoc"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div></div><div class="info">'+esc(t("privacyNotice"))+'</div>';
+ const rows=state.members.map((m,i)=>{
+  const total=memberTotals(m);
+  const uploadControl=(type,label,path)=>{
+   const upload=state.liveWorkspace&&state.role==="organizer"?'<label class="btn small">'+esc(label)+'<input type="file" data-action="upload-document" data-doc-type="'+type+'" data-id="'+m.id+'" accept="application/pdf,image/jpeg,image/png" style="display:none"></label>':'<button class="btn small" disabled title="'+esc(t("noKycUpload"))+'">'+esc(label)+' · '+esc(t("comingSoon"))+'</button>';
+   const view=state.liveWorkspace&&path?'<button class="btn small" data-action="view-document" data-path="'+esc(path)+'">'+esc(t("details"))+'</button>':"";
+   return '<div class="row-actions">'+upload+view+'</div>';
+  };
+  const docs='<td>'+uploadControl("kyc",t("kycDoc"),m.kycDocPath)+uploadControl("agreement",t("agreement"),m.agreementDocPath)+'</td>';
+  const actions=state.role==="organizer"?'<div class="row-actions"><button class="btn small" data-action="edit-member" data-id="'+m.id+'">'+esc(t("edit"))+'</button>'+(state.liveWorkspace?'<button class="btn small" data-action="invite-member" data-id="'+m.id+'">'+esc(t("inviteMember"))+'</button>':"")+'<button class="btn small danger" data-action="remove-member" data-id="'+m.id+'" '+(m.status==="removed"?"disabled":"")+'>'+esc(t("removeMember"))+'</button></div>':"—";
+  return '<tr><td>'+(i+1)+'</td><td>'+memberCell(m)+'</td><td>'+esc(m.phone||"—")+'</td><td>'+esc(m.email||"—")+'</td><td>'+badge(m.status)+'</td><td class="money">'+money(total.paid)+'</td><td class="money">'+money(total.dividend)+'</td><td class="money">'+money(total.profitLoss)+'</td>'+docs+'<td>'+actions+'</td></tr>';
+ }).join("");
+ const addButton=state.role==="organizer"&&!state.liveWorkspace?'<button class="btn primary" data-action="add-member">＋ '+esc(t("addMember"))+'</button>':"";
+ return heading(t("members"),t("membersHelp"),addButton)+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("membersTable"))+' · '+state.members.length+'</h2><p>'+esc(t("membersHelp"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("serialNo"))+'</th><th>'+esc(t("member"))+'</th><th>'+esc(t("phone"))+'</th><th>'+esc(t("email"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("netPL"))+'</th><th>'+esc(t("documents"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div></div><div class="info">'+esc(t("privacyNotice"))+'</div>';
 }
 function auctionView(){
  const c=currentCycle();if(!c)return heading(t("auction"),t("noHistory"));
