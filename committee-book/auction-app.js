@@ -130,9 +130,11 @@ function memberTotals(m){
 function paymentDue(m,c){
  const bid=c.status==="completed"?null:lowestBid(c);
  const calc=cycleCalc(c,bid);
- const base=c.status==="completed"?(calc.due[m.id]||baseContribution()):(calc.due[m.id]||baseContribution());
+ const baseSnapshot=c.status==="completed"&&c.baseContributionPaise!=null?c.baseContributionPaise:baseContribution();
+ const historicalDividend=c.status==="completed"?state.dividendHistory.filter(h=>h.cycleNo===c.monthNo&&h.memberId===m.id).reduce((sum,h)=>sum+(h.amountPaise||0),0):(calc.dividends[m.id]||0);
+ const base=Math.max(0,baseSnapshot-historicalDividend);
  const p=paymentFor(m.id,c.monthNo),paid=Math.max(0,p.paidPaise||0);
- const fine=paid<base?Math.max(0,daysLate(c))*Math.max(0,state.chit.lateFinePerDayPaise):0;
+ const fine=paid<base?Math.max(0,daysLate(c))*Math.max(0,c.status==="completed"&&c.lateFinePerDayPaise!=null?c.lateFinePerDayPaise:state.chit.lateFinePerDayPaise):0;
  const remaining=Math.max(0,base+fine-paid);
  return {base:base,paid:paid,remaining:remaining,fine:fine,payment:p,calc:calc};
 }
@@ -199,17 +201,18 @@ function setup(){
  const calc=floorPrice(currentCycle()?currentCycle().monthNo:1);
  return heading(t("setup"),t("editNotFormula"))+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("chitSetup"))+'</h2><p>'+esc(t("lockedFields"))+'</p></div><span class="lock">⚙ '+esc(t("edit"))+'</span></div><div class="panel-body"><div class="form-grid">'+
  field("name",t("chitName"),c.name,"text","required")+
- field("pot",t("potAmount"),(c.potPaise/100).toFixed(2),"number",'min="1" step="0.01"')+
- field("memberCount",t("numberMembers"),c.memberCount,"number",'min="2" step="1"')+
+ field("pot",t("potAmount"),(c.potPaise/100).toFixed(2),"number",'min="1" step="0.01"',"",configurationLocked)+
+ field("memberCount",t("numberMembers"),c.memberCount,"number",'min="2" step="1"',"",configurationLocked)+
  field("contribution",t("monthlyContribution"),(baseContribution()/100).toFixed(2),"text",'disabled',t("editNotFormula"))+
  field("startingFloor",t("baseFloor"),(c.startingFloorPaise/100).toFixed(2),"number",'min="0.01" step="0.01"')+
- field("maxDiscountPct",t("maxDiscountCap"),c.maxDiscountPct,"number",'min="0" max="100" step="0.01"')+
+ field("maxDiscountPct",t("maxDiscountCap"),c.maxDiscountPct,"number",'min="0" max="100" step="0.01"',"",configurationLocked)+
  field("commissionPct",t("commissionPercent"),c.commissionPct,"number",'min="0" max="100" step="0.01"')+
- select("dividendRule",t("dividendRule"),c.dividendRule,[["allMembers",t("allMembersRule")],["nonWinners",t("nonWinnersRule")]])+
+ select("dividendRule",t("dividendRule"),c.dividendRule,[["allMembers",t("allMembersRule")],["nonWinners",t("nonWinnersRule")]],configurationLocked)+
  field("startDate",t("startDate"),c.startDate,"date","required")+
- field("auctionStartDay",t("windowStart"),c.auctionStartDay,"number",'min="1" max="31" step="1"')+
- field("auctionEndDay",t("windowEnd"),c.auctionEndDay,"number",'min="1" max="31" step="1"')+
- field("dueDay",t("paidDate"),c.dueDay,"number",'min="1" max="31" step="1"')+
+ select("floorLogic",t("auctionFloorLogic"),"automatic",[["automatic",t("floorAutoIncrease")]],true)+
+ field("auctionStartDay",t("auctionStartDay"),c.auctionStartDay,"number",'min="1" max="31" step="1"')+
+ field("auctionEndDay",t("auctionEndDay"),c.auctionEndDay,"number",'min="1" max="31" step="1"')+
+ field("dueDay",t("dueDay"),c.dueDay,"number",'min="1" max="31" step="1"')+
  field("lateFine",t("lateFine"),(c.lateFinePerDayPaise/100).toFixed(2),"number",'min="0" step="0.01"')+
  field("upiId",t("upiId"),c.upiId,"text",'placeholder="organizer@upi"')+
  '<div class="field span2"><label>'+esc(t("rulesText"))+'</label>'+rulesEditor(false)+'</div>'+
