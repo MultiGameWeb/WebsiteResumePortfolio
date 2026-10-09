@@ -5,10 +5,10 @@ const pathParts=location.pathname.split("/").filter(Boolean);
 const lastPart=pathParts[pathParts.length-1]||"index.html";
 const leaf=(lastPart.indexOf(".")===-1?"index.html":lastPart).toLowerCase();
 const isHome=leaf==="index.html";
-const menuItems=[["Home","index.html","home"],["Templates","templates.html","templates"],["Portfolio Creator","portfolio-creator.html","portfolio"],["Resume Builder","resume-builder.html","resume"],["PDF Tools","pdf-tools.html","pdf"],["Document Editor","document-editor.html","document"],["Committee Book","committee-book.html","committee"],["How it works","index.html#how-it-works","how"]];
+const menuItems=[["Home","index.html","home"],["Templates","templates.html","templates"],["Portfolio Creator","portfolio-creator.html","portfolio"],["Resume Builder","resume-builder.html","resume"],["PDF Tools","pdf-tools.html","pdf"],["Document Editor","document-editor.html","document"],["Presentation Maker","presentation-maker.html","presentation"],["Committee Book","committee-book.html","committee"],["How it works","index.html#how-it-works","how"]];
 const committeePages=new Set(["committee-book.html","my-chits.html","auction-chit-manager.html","fixed-discount-chit-manager.html","fixed-rotation-bc-chit-manager.html","lottery-kuri-chit-manager.html"]);
 const templateFlow=new Set(["templates.html","features.html","builder.html","checkout.html","success.html","admin.html","ai-builder.html","ai-websites.html"]);
-const currentKey=isHome?"home":committeePages.has(leaf)?"committee":templateFlow.has(leaf)?"templates":({"portfolio-creator.html":"portfolio","resume-builder.html":"resume","pdf-tools.html":"pdf","document-editor.html":"document"})[leaf]||"";
+const currentKey=isHome?"home":committeePages.has(leaf)?"committee":templateFlow.has(leaf)?"templates":({"portfolio-creator.html":"portfolio","resume-builder.html":"resume","pdf-tools.html":"pdf","document-editor.html":"document","presentation-maker.html":"presentation"})[leaf]||"";
 const nav=document.createElement("header");
 nav.id="sitecraftGlobalNav";nav.setAttribute("aria-label","SiteCraft site navigation");
 nav.innerHTML='<div class="sc-nav-inner"><a class="sc-brand" href="index.html" aria-label="SiteCraft home"><span class="sc-brand-mark" aria-hidden="true">✦</span><span>SiteCraft</span></a><div class="sc-actions">'+(isHome?"":'<button class="sc-action sc-back" type="button" aria-label="Go back to the previous page">← Back</button><a class="sc-action sc-home" href="index.html" aria-label="Go to Home"><svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg><span>Home</span></a>')+'</div><button type="button" class="sc-menu-toggle" aria-label="Open site menu" aria-controls="scSiteMenu" aria-expanded="false"><span aria-hidden="true">☰</span></button><nav class="sc-menu" id="scSiteMenu" aria-label="Main menu"></nav></div>';
@@ -59,8 +59,8 @@ if("MutationObserver"in window){
  });
  legacyObserver.observe(document.body,{childList:true,subtree:true});
 }
-const guardPages=new Set(["document-editor.html","resume-builder.html","portfolio-creator.html","pdf-tools.html","committee-book.html","my-chits.html","auction-chit-manager.html","fixed-discount-chit-manager.html","fixed-rotation-bc-chit-manager.html","lottery-kuri-chit-manager.html"]);
-const autoSavePages=new Set(["document-editor.html","resume-builder.html","portfolio-creator.html","my-chits.html"]);
+const guardPages=new Set(["document-editor.html","presentation-maker.html","resume-builder.html","portfolio-creator.html","pdf-tools.html","committee-book.html","my-chits.html","auction-chit-manager.html","fixed-discount-chit-manager.html","fixed-rotation-bc-chit-manager.html","lottery-kuri-chit-manager.html"]);
+const autoSavePages=new Set(["document-editor.html","presentation-maker.html","resume-builder.html","portfolio-creator.html","my-chits.html"]);
 let dirty=false,saveFailed=false,saveTimer=null;
 function reportSaved(){dirty=false;saveFailed=false;clearTimeout(saveTimer)}
 function reportFailure(){dirty=true;saveFailed=true;clearTimeout(saveTimer)}
