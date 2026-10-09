@@ -48,12 +48,17 @@ function cycleCalc(cycle,bid){
  const commission=cycle.status==="completed"?(cycle.commissionPaise||0):commissionAmount();
  const pool=Math.max(0,discount-commission);
  const roster=activeMembers();
- const eligible=state.chit.dividendRule==="allMembers"?roster:roster.filter(m=>m.id!==(cycle.status==="completed"?cycle.winnerId:(bid?bid.memberId:null)));
- const divisor=eligible.length;
+ const rule=cycle.status==="completed"&&cycle.dividendRule?cycle.dividendRule:state.chit.dividendRule;
+ const base=cycle.status==="completed"&&cycle.baseContributionPaise!=null?Number(cycle.baseContributionPaise):baseContribution();
+ const remoteMember=state.liveWorkspace&&state.role==="member"&&roster.length<Number(state.chit.memberCount);
+ const currentWinner=cycle.status==="completed"?cycle.winnerId:(bid?bid.memberId:null);
+ const eligible=rule==="allMembers"?roster:roster.filter(m=>m.id!==currentWinner);
+ let divisor=eligible.length;
+ if(remoteMember)divisor=rule==="allMembers"?Number(cycle.memberCount||state.chit.memberCount):Math.max(0,Number(cycle.memberCount||state.chit.memberCount)-1);
  const per=divisor?Math.floor(pool/divisor):0,leftover=pool-per*divisor;
- const dividends={};eligible.forEach(m=>dividends[m.id]=per);
- const due={};roster.forEach(m=>due[m.id]=Math.max(0,baseContribution()-(dividends[m.id]||0)));
- return {prizePaise:prize,discountPaise:discount,commissionPaise:commission,dividendPoolPaise:pool,dividendPerHeadPaise:per,eligibleIds:eligible.map(m=>m.id),dividends:dividends,due:due,leftoverPaise:leftover,monthlyCollectionPaise:baseContribution()*Number(state.chit.memberCount)};
+ const dividends={};eligible.forEach(m=>{if(rule==="allMembers"||m.id!==currentWinner)dividends[m.id]=per;});
+ const due={};roster.forEach(m=>due[m.id]=Math.max(0,base-(dividends[m.id]||0)));
+ return {prizePaise:prize,discountPaise:discount,commissionPaise:commission,dividendPoolPaise:pool,dividendPerHeadPaise:per,eligibleIds:remoteMember?Array.from({length:divisor},(_,i)=>"recipient-"+i):eligible.map(m=>m.id),dividends:dividends,due:due,leftoverPaise:leftover,monthlyCollectionPaise:base*Number(state.chit.memberCount)};
 }
 function cycleName(c){const d=new Date((c.periodStartDate||(()=>{const x=new Date(state.chit.startDate+"T00:00:00");x.setMonth(x.getMonth()+c.monthNo-1);return iso(x);})())+"T00:00:00");return new Intl.DateTimeFormat(state.lang==="te"?"te-IN":"en-IN",{month:"short",year:"numeric"}).format(d);}
 function seedDemo(){
@@ -198,7 +203,7 @@ function financialPosition(m){
 }
 function memberTotals(m){
  let paid=0,div=0,prize=0;
- state.payments.filter(p=>p.memberId===m.id).forEach(p=>{paid+=p.history.reduce((sum,h)=>sum+(h.type==="reversal"?-h.amountPaise:h.amountPaise),0);});
+ state.payments.filter(p=>p.memberId===m.id).forEach(p=>{paid+=(p.history||[]).filter(h=>paymentHistoryIncluded(h)).reduce((sum,h)=>sum+(h.type==="reversal"?-h.amountPaise:h.amountPaise),0);});
  state.dividendHistory.filter(h=>h.memberId===m.id).forEach(h=>div+=h.amountPaise||0);
  state.cycles.filter(c=>c.status==="completed"&&c.winnerId===m.id).forEach(c=>prize+=c.prizePaise||0);
  return {paid:paid,dividend:div,prize:prize,profitLoss:prize+div-paid};
