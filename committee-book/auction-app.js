@@ -487,7 +487,24 @@ root.addEventListener("click",function(e){
  const a=el.getAttribute("data-action");
  if(a==="toggle-lang"){state.lang=state.lang==="en"?"te":"en";render();return;}
  if(a==="reset-demo"){resetDemo();return;}
- if(a==="sign-in"){toast(t("googleNotConfigured"),true);return;}
+ if(a==="sign-in"){
+  const backend=window.AuctionChitBackend;if(!backend||!backend.configured()){toast(t("backendSetupMissing"),true);return;}
+  backend.signInGoogle().catch(error=>toast(error.message||String(error),true));return;
+ }
+ if(a==="sign-out"){
+  const backend=window.AuctionChitBackend;
+  if(!backend){state.authUser=null;state.liveWorkspace=false;state.dbChitId=null;render();return;}
+  backend.signOut().then(()=>{const lang=state.lang;state=seedDemo();state.lang=lang;state.backendConfigured=backend.configured();state.authUser=null;state.availableChits=[];state.dbChitId=null;state.liveWorkspace=false;render();}).catch(error=>toast(error.message||String(error),true));return;
+ }
+ if(a==="create-live-chit"){createLiveChit();return;}
+ if(a==="switch-chit"){refreshLiveWorkspace(el.value);return;}
+ if(a==="invite-member"){
+  if(!state.liveWorkspace||!state.dbChitId){toast(t("backendSetupMissing"),true);return;}
+  const inviteUrl=window.location.origin+window.location.pathname+"?chit="+encodeURIComponent(state.dbChitId);
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(inviteUrl).then(()=>toast(t("inviteLinkCopied"))).catch(()=>window.prompt(t("inviteMember"),inviteUrl));}
+  else window.prompt(t("inviteMember"),inviteUrl);
+  return;
+ }
  if(a==="save-setup"){saveSetup();return;}
  if(a==="add-member"){openMember(null);return;}
  if(a==="edit-member"){openMember(el.getAttribute("data-id"));return;}
@@ -536,5 +553,5 @@ function selfCheck(){
  console.assert(calc.commissionPaise===250000&&calc.dividendPoolPaise===1000000&&calc.dividendPerHeadPaise===100000,"Auction Chit Manager: commission ₹2,500, pool ₹10,000, dividend ₹1,000.");
  state=original;
 }
-render();selfCheck();setInterval(tick,1000);
+render();selfCheck();setInterval(tick,1000);if(window.AuctionChitBackend&&window.AuctionChitBackend.configured())setTimeout(bootstrapBackend,0);
 })();
