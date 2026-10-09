@@ -14,12 +14,41 @@
 .main{min-width:0;padding:18px 22px 50px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.doc-title{font-size:20px;font-weight:900}.save-state{font-size:11px;color:var(--muted);font-weight:800}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:9px 12px;font-size:12px;font-weight:900}.btn.primary{background:#17181d;color:#fff;border-color:#17181d}.btn:disabled{opacity:.5;cursor:not-allowed}
 .fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:12px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}.field label{display:block;font-size:10px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}.field input,.field textarea{width:100%;margin-top:4px;border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:var(--surface);color:var(--text);outline:none}.field textarea{min-height:88px;resize:vertical;line-height:1.45}.field input:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}
 .editor-shell{position:relative;min-width:0}.floating{position:sticky;top:73px;z-index:10;display:flex;justify-content:center;margin:0 auto 12px}.toolbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:7px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(12px);border-radius:13px;box-shadow:0 12px 35px rgba(23,24,29,.1)}.toolbar button,.toolbar select{height:32px;border:1px solid var(--line);background:var(--surface);border-radius:8px;color:var(--text);font-size:12px;font-weight:900}.toolbar button{min-width:32px}.toolbar button:hover{border-color:#bfc5ce;background:var(--surface2)}.toolbar button.active{background:var(--accent2);border-color:var(--accent);color:var(--accent)}.toolbar .sep{height:22px;width:1px;background:var(--line);margin:0 2px}.toolbar select{padding:0 8px}
-.page-wrap{display:flex;justify-content:center;padding:4px 0 50px}.page{width:var(--paper-w);min-height:var(--paper-h);background:var(--paper);box-shadow:0 20px 55px rgba(23,24,29,.13);padding:72px 70px;color:#1b1e24;outline:none;line-height:1.6;font-family:Arial,Helvetica,sans-serif;font-size:14px}.page:focus{box-shadow:0 0 0 2px var(--accent),0 20px 55px rgba(23,24,29,.13)}.page h1,.page h2,.page h3{margin:0 0 12px;line-height:1.2}.page h1{font-size:26px;text-align:center}.page h2{font-size:18px}.page h3{font-size:15px}.page p{margin:0 0 14px}.page ul,.page ol{margin:0 0 14px;padding-left:25px}.page .center{text-align:center}.page .subject{font-weight:700}.page .field-token{background:#f0efff;border-radius:4px;padding:1px 3px}.page hr{border:0;border-top:1px solid #d9dde3;margin:22px 0}.page table{width:100%;border-collapse:collapse;margin:12px 0}.page th,.page td{border:1px solid #bfc5ce;padding:7px;text-align:left}.statusline{font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
+[hidden]{display:none!important}
+.floating{position:sticky;top:73px;z-index:20;display:flex;flex-direction:column;align-items:center;gap:6px}
+.table-tools{max-width:100%;justify-content:center;flex-wrap:wrap;padding:7px;gap:5px}
+.table-tools button,.table-tools select{min-height:30px;padding:4px 7px;font-size:10px}
+.table-tools .table-color-label{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:800;color:var(--muted)}
+.table-color-label select{max-width:110px}
+.toolbar-popover{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);z-index:60;width:min(370px,calc(100vw - 24px));max-height:min(72vh,620px);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:0 18px 45px rgba(23,24,29,.18)}
+.popover-title{font-weight:900;font-size:13px;margin-bottom:8px}
+.grid-caption{min-height:20px;font-size:11px;color:var(--muted);margin-bottom:7px}
+.table-picker-grid{display:grid;grid-template-columns:repeat(8,22px);gap:3px;width:max-content;max-width:100%;margin:0 auto 12px}
+.table-picker-grid button{width:22px;height:22px;min-width:0;padding:0;border:1px solid #bfc5ce;border-radius:3px;background:#fff;touch-action:manipulation}
+.table-picker-grid button.grid-cell-active{background:var(--accent2);border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.custom-table-form{display:flex;align-items:end;gap:8px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px}
+.custom-table-form strong{width:100%;font-size:12px}
+.custom-table-form label{display:grid;gap:3px;font-size:10px;font-weight:800;color:var(--muted)}
+.custom-table-form input[type=number]{width:70px;border:1px solid var(--line);border-radius:7px;padding:7px}
+.custom-table-form .check-label{display:flex;align-items:center;gap:5px;min-height:32px}
+.custom-table-form .btn{font-size:10px;padding:8px}
+.boxes-popover{width:min(300px,calc(100vw - 24px));display:grid;gap:6px}
+.boxes-popover button{width:100%;text-align:left;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:11px;font-weight:800}
+.boxes-popover button:hover{background:var(--surface2);border-color:var(--accent)}
+.page .table-scroll{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;margin:12px 0;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.page .table-scroll table{width:100%;table-layout:fixed;border-collapse:collapse;margin:0;max-width:none}
+.page .table-scroll td,.page .table-scroll th{min-width:0;min-height:34px;height:auto;padding:7px;border:1px solid #bfc5ce;text-align:left;vertical-align:top;overflow-wrap:anywhere;white-space:pre-wrap}
+.page .table-scroll td p,.page .table-scroll th p{margin:0;min-height:18px}
+.page .table-scroll .table-cell-active{outline:2px solid var(--accent);outline-offset:-2px;position:relative}
+.page .table-scroll .table-cell-selected{background-color:var(--accent2)!important;box-shadow:inset 0 0 0 2px var(--accent)}
+.page .table-scroll table[data-borders="off"] td,.page .table-scroll table[data-borders="off"] th{border-color:transparent}
+@media(max-width:760px){.floating{top:66px;align-items:stretch}.toolbar,.table-tools{width:100%;justify-content:flex-start}.toolbar-popover{left:0;transform:none;width:min(370px,100%)}.table-picker-grid{grid-template-columns:repeat(8,25px)}.table-picker-grid button{width:25px;height:25px}.page .table-scroll{max-width:100%}}
+.page-wrap{display:flex;justify-content:center;padding:4px 0 50px}.page{width:var(--paper-w);min-height:var(--paper-h);background:var(--paper);box-shadow:0 20px 55px rgba(23,24,29,.13);padding:72px 70px;color:#1b1e24;outline:none;line-height:1.6;font-family:Arial,Helvetica,sans-serif;font-size:14px}.page:focus{box-shadow:0 0 0 2px var(--accent),0 20px 55px rgba(23,24,29,.13)}.page h1,.page h2,.page h3{margin:0 0 12px;line-height:1.2}.page h1{font-size:26px;text-align:center}.page h2{font-size:18px}.page h3{font-size:15px}.page p{margin:0 0 14px}.page ul,.page ol{margin:0 0 14px;padding-left:25px}.page .center{text-align:center}.page .subject{font-weight:700}.page .field-token{background:#f0efff;border-radius:4px;padding:1px 3px}.page hr{border:0;border-top:1px solid #d9dde3;margin:22px 0}.page table{width:100%;table-layout:fixed;border-collapse:collapse;margin:12px 0;break-inside:auto}.page th,.page td{border:1px solid #bfc5ce;padding:7px;text-align:left;break-inside:avoid}.statusline{font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
 @media(max-width:1050px){.app{grid-template-columns:240px 1fr}.fields{grid-template-columns:repeat(2,minmax(0,1fr))}.page{transform:scale(.86);transform-origin:top center;margin-bottom:-150px}}
 @media(max-width:760px){.app{display:block}.sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px;display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.side-title,.help{grid-column:1/-1}.template{margin:0}.blank{margin:0}.main{padding:14px 10px}.fields{grid-template-columns:1fr}.floating{position:sticky;top:66px}.toolbar{justify-content:center}.page{transform:none;width:min(100%,794px);min-height:1050px;padding:42px 30px;font-size:13px}.page-wrap{padding-bottom:20px}.topbar{align-items:flex-start;flex-direction:column}}
 @page{size:A4;margin:0}
 @media print{
- html,body{width:210mm!important;min-height:297mm!important;margin:0!important;padding:0!important;background:#fff!important}body *{visibility:hidden!important}.header,.sidebar,.topbar,.actions,.fields,.floating,.statusline{display:none!important}.app,.main,.editor-shell,.page-wrap{display:block!important;visibility:visible!important;max-width:none!important;width:210mm!important;margin:0!important;padding:0!important}.page-wrap{padding:0!important;break-inside:auto!important;page-break-inside:auto!important}.page,.page *{visibility:visible!important}.page{display:block!important;width:210mm!important;min-height:297mm!important;box-shadow:none!important;margin:0!important;padding:18mm!important;transform:none!important;outline:none!important;break-after:auto!important;page-break-after:auto!important}.page:focus{box-shadow:none!important}
+ html,body{width:210mm!important;min-height:297mm!important;margin:0!important;padding:0!important;background:#fff!important}body *{visibility:hidden!important}.header,.sidebar,.topbar,.actions,.fields,.floating,.statusline,.table-tools,.toolbar-popover{display:none!important}.app,.main,.editor-shell,.page-wrap{display:block!important;visibility:visible!important;max-width:none!important;width:210mm!important;margin:0!important;padding:0!important}.page-wrap{padding:0!important;break-inside:auto!important;page-break-inside:auto!important}.page,.page *{visibility:visible!important}.page{display:block!important;width:210mm!important;min-height:297mm!important;box-shadow:none!important;margin:0!important;padding:18mm!important;transform:none!important;outline:none!important;break-after:auto!important;page-break-after:auto!important}.page .table-scroll{width:100%!important;max-width:100%!important;overflow:visible!important;break-inside:auto!important;page-break-inside:auto!important}.page .table-scroll table{width:100%!important;min-width:0!important;table-layout:fixed!important;break-inside:auto!important}.page .table-scroll tr,.page .table-scroll td,.page .table-scroll th{break-inside:avoid!important;page-break-inside:avoid!important}.page:focus{box-shadow:none!important}
 }
 @media(prefers-color-scheme:dark){:root{--bg:#0e1013;--surface:#15181d;--surface2:#1b1f25;--text:#f3f5f7;--muted:#aab1bc;--line:#2a3038;--accent2:#242447;--paper:#fff}.page{color:#1b1e24}.toolbar select,.toolbar button,.field input{background:#171b20;color:var(--text)}.field input::placeholder{color:#818995}}
 </style>
@@ -68,6 +97,51 @@
         <button type="button" data-cmd="insertUnorderedList" title="Bulleted list">• List</button>
         <button type="button" data-cmd="insertOrderedList" title="Numbered list">1. List</button>
         <button type="button" data-cmd="removeFormat" title="Clear formatting">Clear</button>
+        <span class="sep"></span>
+        <button type="button" id="insertTableBtn" aria-expanded="false">▦ Insert Table ▾</button>
+        <button type="button" id="boxesBtn" aria-expanded="false">▤ Boxes ▾</button>
+      </div>
+      <div class="toolbar table-tools" id="tableTools" aria-label="Table tools" hidden>
+        <button type="button" data-table-action="row-above">Row ↑</button>
+        <button type="button" data-table-action="row-below">Row ↓</button>
+        <button type="button" data-table-action="col-left">Column ←</button>
+        <button type="button" data-table-action="col-right">Column →</button>
+        <button type="button" data-table-action="delete-row">Delete row</button>
+        <button type="button" data-table-action="delete-col">Delete column</button>
+        <button type="button" data-table-action="delete-table">Delete table</button>
+        <button type="button" data-table-action="merge">Merge cells</button>
+        <button type="button" data-table-action="split">Split cell</button>
+        <button type="button" data-table-action="align-left">Left</button>
+        <button type="button" data-table-action="align-center">Center</button>
+        <button type="button" data-table-action="align-right">Right</button>
+        <label class="table-color-label">Cell color
+          <select id="tableCellColor" aria-label="Cell background color">
+            <option value="#ffffff">White</option><option value="#f2f3f7">Light gray</option><option value="#fff2cc">Light yellow</option><option value="#e2f0d9">Light green</option><option value="#dbeafe">Light blue</option><option value="#fce7f3">Light pink</option>
+          </select>
+        </label>
+        <button type="button" data-table-action="toggle-borders">Hide borders</button>
+        <button type="button" data-table-action="equal-widths">Equal widths</button>
+      </div>
+      <div class="toolbar-popover" id="insertTableMenu" hidden>
+        <div class="popover-title">Insert Table</div>
+        <div class="grid-caption" id="tableGridLabel">Hover or tap a cell to choose a size</div>
+        <div class="table-picker-grid" id="tablePickerGrid" role="grid" aria-label="Choose table size"></div>
+        <div class="custom-table-form">
+          <strong>Custom size</strong>
+          <label>Rows <input id="customTableRows" type="number" min="1" max="30" value="3"></label>
+          <label>Columns <input id="customTableCols" type="number" min="1" max="20" value="3"></label>
+          <label class="check-label"><input id="tableHeaderRow" type="checkbox"> Header row</label>
+          <button type="button" class="btn primary" id="customTableInsert">Insert custom table</button>
+        </div>
+      </div>
+      <div class="toolbar-popover boxes-popover" id="boxesMenu" hidden>
+        <div class="popover-title">Ready-made Boxes</div>
+        <button type="button" data-box-kind="title-box">Title box</button>
+        <button type="button" data-box-kind="title-mini">Title + mini title box</button>
+        <button type="button" data-box-kind="name-value">Name | Value grid</button>
+        <button type="button" data-box-kind="signature">Signature block</button>
+        <button type="button" data-box-kind="grid-3">3 × 3 blank grid</button>
+        <button type="button" data-box-kind="grid-5">5 × 5 blank grid</button>
       </div>
     </div>
     <div class="page-wrap"><article class="page" id="page" contenteditable="true" spellcheck="true"></article></div>
@@ -266,7 +340,98 @@ function runCommand(command,value=null){
  rememberSelection();
  hasManualEdits=true;queueSave();updateToolbarState();
 }
-$(".template").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.template)));
+
+/* Table insertion, formatting and cell navigation. Uses native DOM APIs only. */
+let activeCell=null,selectedCells=[];
+const tableTools=$("#tableTools"),insertTableMenu=$("#insertTableMenu"),boxesMenu=$("#boxesMenu");
+function tableFromCell(cell){return cell&&cell.closest?cell.closest("table"):null}
+function wrapperFromTable(table){return table&&table.closest?table.closest(".table-scroll"):null}
+function validSize(value,min,max){const n=Math.floor(Number(value));return Number.isFinite(n)?Math.max(min,Math.min(max,n)):min}
+function closeTableMenus(){insertTableMenu.hidden=true;boxesMenu.hidden=true;$("#insertTableBtn").setAttribute("aria-expanded","false");$("#boxesBtn").setAttribute("aria-expanded","false")}
+function toggleTableMenu(which){const opening=which==="table"?insertTableMenu.hidden:boxesMenu.hidden;closeTableMenus();if(opening){if(which==="table"){insertTableMenu.hidden=false;$("#insertTableBtn").setAttribute("aria-expanded","true")}else{boxesMenu.hidden=false;$("#boxesBtn").setAttribute("aria-expanded","true")}}}
+function makeEditableCell(tag,text,header){
+ const cell=document.createElement(tag||(header?"th":"td"));cell.contentEditable="true";cell.style.border="1px solid #bfc5ce";cell.style.padding="7px";cell.style.minHeight="34px";cell.style.verticalAlign="top";cell.style.textAlign="left";cell.style.whiteSpace="pre-wrap";
+ if(header){cell.style.backgroundColor="#f2f3f7";cell.style.fontWeight="700"}
+ if(text!==undefined&&text!==null&&String(text)!==""){const p=document.createElement("p");p.style.margin="0";p.textContent=String(text);cell.appendChild(p)}else cell.innerHTML="<p><br></p>";
+ return cell;
+}
+function makeTable(rows,cols,options){
+ options=options||{};rows=validSize(rows,1,30);cols=validSize(cols,1,20);
+ const wrapper=document.createElement("div");wrapper.className="table-scroll";wrapper.setAttribute("data-table-wrapper","true");
+ const table=document.createElement("table");table.setAttribute("data-editor-table","true");table.setAttribute("data-borders","on");table.setAttribute("data-columns",String(cols));table.setAttribute("data-header-row",options.header?"true":"false");table.style.width="100%";table.style.tableLayout="fixed";table.style.borderCollapse="collapse";table.style.minWidth=Math.max(100,cols*100)+"px";
+ const colgroup=document.createElement("colgroup");for(let c=0;c<cols;c++){const col=document.createElement("col");col.style.width=(100/cols)+"%";colgroup.appendChild(col)}table.appendChild(colgroup);
+ const tbody=document.createElement("tbody");table.appendChild(tbody);
+ for(let r=0;r<rows;r++){const tr=document.createElement("tr");for(let c=0;c<cols;c++){const header=!!options.header&&r===0,val=options.cells&&options.cells[r]?options.cells[r][c]:undefined,cell=makeEditableCell(header?"th":"td",val,header);if(options.titleBox&&r===0){cell.style.backgroundColor="#f2f3f7";cell.style.fontWeight="700";cell.style.textAlign="center";cell.style.minHeight="44px"}if(options.cells&&options.cells[r]&&options.cells[r][c]!==undefined)cell.style.verticalAlign="middle";tr.appendChild(cell)}tbody.appendChild(tr)}
+ wrapper.appendChild(table);return wrapper;
+}
+function nodeHasUsefulContent(fragment){return !!(fragment.textContent.trim()||fragment.querySelector("img,br,hr,table,ul,ol"))}
+function insertWrapperAtCaret(wrapper){
+ const page=$("#page"),after=document.createElement("p");after.innerHTML="<br>";page.focus();restoreSelection();
+ let range=null;const sel=window.getSelection();
+ if(savedRange&&rangeInsidePage(savedRange))range=savedRange.cloneRange();else if(sel&&sel.rangeCount&&rangeInsidePage(sel.getRangeAt(0)))range=sel.getRangeAt(0).cloneRange();
+ let rangeNode=range&&range.commonAncestorContainer,anchor=rangeNode&&(rangeNode.nodeType===1?rangeNode:rangeNode.parentElement),selectedCell=anchor&&anchor.closest?anchor.closest("td,th"):null;
+ if(selectedCell){const oldWrapper=wrapperFromTable(tableFromCell(selectedCell));if(oldWrapper){range.setStartAfter(oldWrapper);range.collapse(true);range.insertNode(wrapper);wrapper.after(after)}else page.append(wrapper,after)}
+ else if(range&&rangeInsidePage(range)){
+  anchor=range.startContainer.nodeType===1?range.startContainer:range.startContainer.parentElement;const block=anchor&&anchor.closest?anchor.closest("p,h1,h2,h3,blockquote,pre"):null;
+  if(block&&page.contains(block)){
+   const beforeRange=document.createRange();beforeRange.selectNodeContents(block);beforeRange.setEnd(range.startContainer,range.startOffset);const afterRange=document.createRange();afterRange.selectNodeContents(block);afterRange.setStart(range.startContainer,range.startOffset);
+   const before=beforeRange.cloneContents(),afterContent=afterRange.cloneContents(),output=document.createDocumentFragment();
+   if(nodeHasUsefulContent(before)){const left=block.cloneNode(false);left.appendChild(before);output.appendChild(left)}output.appendChild(wrapper);output.appendChild(after);if(nodeHasUsefulContent(afterContent)){const right=block.cloneNode(false);right.appendChild(afterContent);output.appendChild(right)}block.replaceWith(output);
+  }else{range.deleteContents();range.insertNode(wrapper);wrapper.after(after)}
+ }else page.append(wrapper,after);
+ const table=wrapper.querySelector("table"),first=table&&table.rows[0]&&table.rows[0].cells[0];
+ if(first){activeCell=first;selectedCells=[first];refreshCellHighlights();showTableTools(true);const caret=first.querySelector("p")||first,next=document.createRange();next.selectNodeContents(caret);next.collapse(true);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(next);savedRange=next.cloneRange();page.focus()}
+ hasManualEdits=true;queueSave();closeTableMenus();
+}
+function insertTable(rows,cols,header,cells,options){insertWrapperAtCaret(makeTable(rows,cols,{header:header,cells:cells,titleBox:options&&options.titleBox}))}
+function activeTable(){return tableFromCell(activeCell)}
+function clearSelectedClasses(){$$("#page .table-cell-active,#page .table-cell-selected").forEach(cell=>cell.classList.remove("table-cell-active","table-cell-selected"))}
+function refreshCellHighlights(){clearSelectedClasses();selectedCells=selectedCells.filter(cell=>cell&&cell.isConnected&&$("#page").contains(cell));selectedCells.forEach(cell=>cell.classList.add("table-cell-selected"));if(activeCell&&activeCell.isConnected)activeCell.classList.add("table-cell-active")}
+function showTableTools(show){tableTools.hidden=!show;if(show&&activeCell){const table=activeTable(),button=$('[data-table-action="toggle-borders"]');if(button)button.textContent=table&&table.dataset.borders==="off"?"Show borders":"Hide borders"}}
+function selectActiveCell(cell,add){if(!cell)return;if(add){if(!selectedCells.includes(cell))selectedCells.push(cell)}else selectedCells=[cell];activeCell=cell;refreshCellHighlights();showTableTools(true)}
+function getColumnCount(table){if(!table)return 1;let count=1;Array.from(table.rows).forEach(row=>{let total=0;Array.from(row.cells).forEach(cell=>total+=Number(cell.colSpan)||1);count=Math.max(count,total)});return count}
+function syncTableColumns(table){if(!table)return;const count=getColumnCount(table);let cols=table.querySelector("colgroup");if(!cols){cols=document.createElement("colgroup");table.insertBefore(cols,table.firstChild)}cols.innerHTML="";for(let i=0;i<count;i++){const col=document.createElement("col");col.style.width=(100/count)+"%";cols.appendChild(col)}table.dataset.columns=String(count);table.style.width="100%";table.style.tableLayout="fixed";table.style.minWidth=Math.max(100,count*100)+"px"}
+function resetCellToBlank(cell){cell.innerHTML="<p><br></p>";cell.removeAttribute("colspan");cell.removeAttribute("rowspan");cell.style.backgroundColor="";cell.style.fontWeight=""}
+function newCellForTable(table,rowIndex){const header=table.dataset.headerRow==="true"&&rowIndex===0;return makeEditableCell(header?"th":"td","",header)}
+function runTableAction(action,value){
+ const cell=activeCell,table=activeTable();if(!cell||!table){showTableTools(false);return}
+ const row=cell.parentElement,rows=Array.from(table.rows),rowIndex=rows.indexOf(row),cellIndex=cell.cellIndex,wrapper=wrapperFromTable(table);
+ if(action==="row-above"||action==="row-below"){const newRow=document.createElement("tr"),count=Math.max(1,row.cells.length),header=table.dataset.headerRow==="true"&&action==="row-above"&&rowIndex===0;for(let i=0;i<count;i++)newRow.appendChild(makeEditableCell(header?"th":"td","",header));row.parentElement.insertBefore(newRow,action==="row-above"?row:row.nextSibling);activeCell=newRow.cells[Math.min(cellIndex,newRow.cells.length-1)];selectedCells=[activeCell]}
+ else if(action==="col-left"||action==="col-right"){rows.forEach((r,ri)=>{const tag=table.dataset.headerRow==="true"&&ri===0?"th":"td",added=makeEditableCell(tag,"",tag==="th"),target=r.cells[Math.min(cellIndex,r.cells.length-1)];if(!target)r.appendChild(added);else if(action==="col-left")r.insertBefore(added,target);else if(target.nextSibling)r.insertBefore(added,target.nextSibling);else r.appendChild(added)});syncTableColumns(table);activeCell=rows[rowIndex].cells[Math.min(cellIndex+(action==="col-right"?1:0),rows[rowIndex].cells.length-1)];selectedCells=[activeCell]}
+ else if(action==="delete-row"){if(rows.length===1){Array.from(row.cells).forEach(resetCellToBlank);activeCell=row.cells[Math.min(cellIndex,row.cells.length-1)];selectedCells=[activeCell]}else{const next=row.nextElementSibling||row.previousElementSibling;row.remove();activeCell=next&&next.cells[Math.min(cellIndex,next.cells.length-1)]||null;selectedCells=activeCell?[activeCell]:[]}}
+ else if(action==="delete-col"){const count=getColumnCount(table);if(count<=1){rows.forEach(r=>{if(r.cells[0])resetCellToBlank(r.cells[0])});activeCell=rows[rowIndex].cells[0];selectedCells=[activeCell]}else{rows.forEach(r=>{const target=r.cells[Math.min(cellIndex,r.cells.length-1)];if(target)target.remove()});syncTableColumns(table);const currentRow=rows[Math.min(rowIndex,rows.length-1)];activeCell=currentRow.cells[Math.min(cellIndex,currentRow.cells.length-1)]||null;selectedCells=activeCell?[activeCell]:[]}}
+ else if(action==="delete-table"){if(wrapper){const p=wrapper.nextElementSibling;if(p&&p.tagName==="P"){p.focus();const range=document.createRange();range.selectNodeContents(p);range.collapse(true);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);savedRange=range.cloneRange()}wrapper.remove()}activeCell=null;selectedCells=[];showTableTools(false);closeTableMenus();hasManualEdits=true;queueSave();return}
+ else if(action==="align-left"||action==="align-center"||action==="align-right"){const align=action==="align-left"?"left":action==="align-center"?"center":"right";(selectedCells.length?selectedCells:[cell]).forEach(c=>c.style.textAlign=align)}
+ else if(action==="cell-color"){(selectedCells.length?selectedCells:[cell]).forEach(c=>c.style.backgroundColor=value)}
+ else if(action==="toggle-borders"){const hide=table.dataset.borders!=="off";table.dataset.borders=hide?"off":"on";Array.from(table.querySelectorAll("td,th")).forEach(c=>{c.style.borderStyle=hide?"hidden":"solid";if(!hide)c.style.borderColor="#bfc5ce"})}
+ else if(action==="equal-widths"){syncTableColumns(table)}
+ else if(action==="merge"){
+  const chosen=(selectedCells.length?selectedCells:[cell]).filter(c=>c&&c.isConnected);if(chosen.length<2){alert("Select two adjacent cells with Ctrl/Cmd-click, then choose Merge cells.");return}if(chosen.some(c=>tableFromCell(c)!==table)){alert("Select cells from the same table.");return}
+  const r0=rows.indexOf(chosen[0].parentElement),r1=rows.indexOf(chosen[1].parentElement),c0=chosen[0].cellIndex,c1=chosen[1].cellIndex;let main=null,other=null,spanType="";
+  if(r0===r1&&Math.abs(c0-c1)===1){main=c0<c1?chosen[0]:chosen[1];other=main===chosen[0]?chosen[1]:chosen[0];spanType="colSpan"}else if(c0===c1&&Math.abs(r0-r1)===1){main=r0<r1?chosen[0]:chosen[1];other=main===chosen[0]?chosen[1]:chosen[0];spanType="rowSpan"}else{alert("Merge currently supports two adjacent cells in one row or one column.");return}
+  main.appendChild(document.createElement("br"));while(other.firstChild)main.appendChild(other.firstChild);main[spanType]=Math.max(1,Number(main[spanType])||1)+Math.max(1,Number(other[spanType])||1);other.remove();activeCell=main;selectedCells=[main];syncTableColumns(table);
+ }else if(action==="split"){const colSpan=Number(cell.colSpan)||1,rowSpan=Number(cell.rowSpan)||1;if(colSpan>1){cell.colSpan=1;for(let n=1;n<colSpan;n++){const added=makeEditableCell(cell.tagName.toLowerCase(),"",cell.tagName==="TH");cell.parentElement.insertBefore(added,cell.nextSibling)}}else if(rowSpan>1){cell.rowSpan=1;for(let n=1;n<rowSpan;n++){const target=rows[rowIndex+n];if(target){const added=newCellForTable(table,rowIndex+n);target.insertBefore(added,target.cells[Math.min(cellIndex,target.cells.length)]||null)}}}else{alert("This cell is not merged, so there is nothing to split.");return}syncTableColumns(table);activeCell=cell;selectedCells=[cell]}
+ if(activeCell&&!activeCell.isConnected)activeCell=null;refreshCellHighlights();showTableTools(!!activeCell);hasManualEdits=true;queueSave();rememberSelection();
+}
+function insertReadyBox(kind){let rows=1,cols=1,options={},cells=null,header=false;if(kind==="title-box"){cells=[["Title"]];options.titleBox=true}else if(kind==="title-mini"){rows=2;cells=[["Title"],["Mini title"]];options.titleBox=true}else if(kind==="name-value"){rows=4;cols=2;header=true;cells=[["Name","Value"],["",""],["",""],["",""]]}else if(kind==="signature"){rows=2;cols=2;cells=[["Name","Designation"],["Date","Signature"]]}else if(kind==="grid-3"){rows=3;cols=3}else if(kind==="grid-5"){rows=5;cols=5}else return;insertWrapperAtCaret(makeTable(rows,cols,{header:header,cells:cells,titleBox:options.titleBox}))}
+function buildTablePicker(){const grid=$("#tablePickerGrid");for(let row=1;row<=8;row++)for(let col=1;col<=8;col++){const button=document.createElement("button");button.type="button";button.dataset.gridRows=String(row);button.dataset.gridCols=String(col);button.setAttribute("aria-label",row+" rows by "+col+" columns");button.title=row+" x "+col;grid.appendChild(button)}grid.addEventListener("pointerover",function(event){const target=event.target.closest("[data-grid-rows]");if(!target)return;const rows=Number(target.dataset.gridRows),cols=Number(target.dataset.gridCols);$$("#tablePickerGrid button").forEach(b=>b.classList.toggle("grid-cell-active",Number(b.dataset.gridRows)<=rows&&Number(b.dataset.gridCols)<=cols));$("#tableGridLabel").textContent=rows+" x "+cols});grid.addEventListener("pointerleave",function(){$$("#tablePickerGrid button").forEach(b=>b.classList.remove("grid-cell-active"));$("#tableGridLabel").textContent="Hover or tap a cell to choose a size"})}
+buildTablePicker();
+$("#insertTableBtn").addEventListener("click",function(){rememberSelection();toggleTableMenu("table")});
+$("#boxesBtn").addEventListener("click",function(){rememberSelection();toggleTableMenu("boxes")});
+$("#tablePickerGrid").addEventListener("click",function(event){const button=event.target.closest("[data-grid-rows]");if(button)insertTable(Number(button.dataset.gridRows),Number(button.dataset.gridCols),$("#tableHeaderRow").checked)});
+$("#customTableInsert").addEventListener("click",function(){insertTable(validSize($("#customTableRows").value,1,30),validSize($("#customTableCols").value,1,20),$("#tableHeaderRow").checked)});
+$("#boxesMenu").addEventListener("click",function(event){const button=event.target.closest("[data-box-kind]");if(button)insertReadyBox(button.dataset.boxKind)});
+$("#tableTools").addEventListener("mousedown",function(event){const control=event.target.closest("button,select");if(control){rememberSelection();if(control.tagName==="BUTTON")event.preventDefault()}});
+$("#tableTools").addEventListener("click",function(event){const button=event.target.closest("[data-table-action]");if(button)runTableAction(button.dataset.tableAction)});
+$("#tableCellColor").addEventListener("change",function(event){runTableAction("cell-color",event.target.value)});
+document.addEventListener("mousedown",function(event){const control=event.target.closest("#tablePickerGrid button,#boxesMenu button,#insertTableBtn,#boxesBtn,#customTableInsert");if(control){rememberSelection();event.preventDefault()}});
+document.addEventListener("click",function(event){const inMenus=event.target.closest("#insertTableMenu,#boxesMenu,#insertTableBtn,#boxesBtn");if(!inMenus){insertTableMenu.hidden=true;boxesMenu.hidden=true;$("#insertTableBtn").setAttribute("aria-expanded","false");$("#boxesBtn").setAttribute("aria-expanded","false")}if(!event.target.closest("#tableTools")&&!event.target.closest("#page td")&&!event.target.closest("#page th")&&!event.target.closest("#insertTableMenu"))showTableTools(false)});
+$("#page").addEventListener("click",function(event){const cell=event.target.closest("td,th");if(cell&&$("#page").contains(cell)){selectActiveCell(cell,!!(event.ctrlKey||event.metaKey||event.shiftKey));rememberSelection()}else if(!cell){activeCell=null;selectedCells=[];refreshCellHighlights();showTableTools(false)}});
+$("#page").addEventListener("focusin",function(event){const cell=event.target.closest("td,th");if(cell)selectActiveCell(cell,false)});
+document.addEventListener("selectionchange",function(){const sel=window.getSelection();if(!sel||!sel.rangeCount)return;const range=sel.getRangeAt(0);if(!rangeInsidePage(range))return;const node=range.commonAncestorContainer,el=node&&(node.nodeType===1?node:node.parentElement),cell=el&&el.closest?el.closest("td,th"):null;if(cell){activeCell=cell;showTableTools(true)}else if(!document.activeElement.closest||!document.activeElement.closest("#tableTools")){activeCell=null;selectedCells=[];refreshCellHighlights();showTableTools(false)}});
+$("#page").addEventListener("keydown",function(event){const cell=event.target.closest("td,th");if(!cell||event.key!=="Tab")return;const cells=Array.from($("#page").querySelectorAll("td,th")),index=cells.indexOf(cell),next=cells[index+(event.shiftKey?-1:1)];event.preventDefault();if(next){next.focus();const range=document.createRange();range.selectNodeContents(next);range.collapse(true);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);activeCell=next;selectedCells=[next];refreshCellHighlights();showTableTools(true);rememberSelection()}else if(!event.shiftKey){const table=tableFromCell(cell),lastRow=table.rows[table.rows.length-1],newRow=document.createElement("tr");for(let i=0;i<lastRow.cells.length;i++)newRow.appendChild(makeEditableCell("td","",false));lastRow.parentElement.appendChild(newRow);const last=newRow.cells[0];activeCell=last;selectedCells=[last];last.focus();const range=document.createRange();range.selectNodeContents(last);range.collapse(true);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);refreshCellHighlights();showTableTools(true);rememberSelection();hasManualEdits=true;queueSave()}});
+
+$$(".template").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.template)));
 $("#blankBtn").addEventListener("click",function(){
  blankMode=true;values={};hasManualEdits=false;renderFields();
  $("#page").innerHTML="<p><br></p>";$("#docTitle").textContent="Blank Document";
@@ -276,11 +441,11 @@ $("#page").addEventListener("input",function(){if(!isRenderingDoc)hasManualEdits
 $("#page").addEventListener("keyup",function(){rememberSelection();updateToolbarState()});
 $("#page").addEventListener("mouseup",function(){rememberSelection();updateToolbarState()});
 document.addEventListener("selectionchange",function(){rememberSelection();updateToolbarState()});
-$(".toolbar button").forEach(button=>{
+$$(".toolbar button[data-cmd]").forEach(button=>{
  button.addEventListener("mousedown",function(event){rememberSelection();event.preventDefault()});
  button.addEventListener("click",function(){runCommand(button.dataset.cmd)});
 });
-$(".toolbar select").forEach(select=>{
+$$(".toolbar select").forEach(select=>{
  select.addEventListener("mousedown",rememberSelection);select.addEventListener("focus",rememberSelection);
 });
 $("#fontSize").addEventListener("change",function(event){runCommand("fontSize",event.target.value)});
