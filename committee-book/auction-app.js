@@ -276,7 +276,8 @@ function bidRows(c,lb){
 }
 function setup(){
  const c=state.chit;
- const configurationLocked=false;
+ const configurationLocked=state.liveWorkspace||state.cycles.some(cy=>cy.status==="completed");
+ const distributionLocked=state.cycles.some(cy=>cy.status==="completed");
  const field=(key,label,val,type,attrs,help,locked)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+(locked?' <span class="lock" title="'+esc(t("editNotFormula"))+'">🔒 '+esc(t("locked"))+'</span>':"")+'</label><input id="f-'+key+'" data-field="'+key+'" type="'+type+'" value="'+esc(val==null?"":val)+'" '+(attrs||"")+(locked?' disabled title="'+esc(t("editNotFormula"))+'"':"")+'>'+(help?'<div class="hint">'+esc(help)+'</div>':"")+'</div>';
  const select=(key,label,val,opts,locked)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+(locked?' <span class="lock" title="'+esc(t("editNotFormula"))+'">🔒 '+esc(t("locked"))+'</span>':"")+'</label><select id="f-'+key+'" data-field="'+key+'" '+(locked?'disabled title="'+esc(t("editNotFormula"))+'"':"")+'>'+opts.map(o=>'<option value="'+esc(o[0])+'" '+(o[0]===val?"selected":"")+'>'+esc(o[1])+'</option>').join("")+'</select></div>';
  const calc=floorPrice(currentCycle()?currentCycle().monthNo:1);
@@ -289,7 +290,7 @@ function setup(){
  field("startingFloor",t("baseFloor"),(c.startingFloorPaise/100).toFixed(2),"number",'min="0.01" step="0.01"')+
  field("maxDiscountPct",t("maxDiscountCap"),c.maxDiscountPct,"number",'min="0" max="100" step="0.01"',"",configurationLocked)+
  field("commissionPct",t("commissionPercent"),c.commissionPct,"number",'min="0" max="100" step="0.01"')+
- select("dividendRule",t("dividendRule"),c.dividendRule,[["allMembers",t("allMembersRule")],["nonWinners",t("nonWinnersRule")]],configurationLocked)+
+ select("dividendRule",t("dividendRule"),c.dividendRule,[["allMembers",t("allMembersRule")],["nonWinners",t("nonWinnersRule")]],distributionLocked)+
  field("startDate",t("startDate"),c.startDate,"date","required")+
  select("floorLogic",t("auctionFloorLogic"),"automatic",[["automatic",t("floorAutoIncrease")]],true)+
  field("auctionStartDay",t("auctionStartDay"),c.auctionStartDay,"number",'min="1" max="31" step="1"')+
@@ -393,8 +394,8 @@ function saveSetup(){
  const box=document.querySelector("[data-rule-content]");if(box)state.rulesHtml=sanitizeRules(box.innerHTML);
  if(members<oldCount)state.members.slice(members).forEach(m=>{m.status="removed";});
  while(state.members.length<members){const idx=state.members.length+1;state.members.push({id:"m"+idx,name:"Member "+String(idx).padStart(2,"0"),phone:"",email:"",status:"active",wonMonths:[]});}
- syncDemoCycles();
- toast(t("saved"));
+ if(state.liveWorkspace&&state.dbChitId){const chitId=state.dbChitId;persistAndReload(()=>window.AuctionChitBackend.saveChit(chitId,state.chit,state.rulesHtml));return;}
+ syncDemoCycles();toast(t("saved"));
 }
 function openMember(id){state.modal={id:id||null};render();}
 function saveMember(){
