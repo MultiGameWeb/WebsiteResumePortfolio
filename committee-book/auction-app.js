@@ -196,8 +196,9 @@ function bidRows(c,lb){
 }
 function setup(){
  const c=state.chit;
- const field=(key,label,val,type,attrs,help)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+'</label><input id="f-'+key+'" data-field="'+key+'" type="'+type+'" value="'+esc(val==null?"":val)+'" '+(attrs||"")+'>'+(help?'<div class="hint">'+esc(help)+'</div>':"")+'</div>';
- const select=(key,label,val,opts)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+'</label><select id="f-'+key+'" data-field="'+key+'">'+opts.map(o=>'<option value="'+esc(o[0])+'" '+(o[0]===val?"selected":"")+'>'+esc(o[1])+'</option>').join("")+'</select></div>';
+ const configurationLocked=state.cycles.some(cy=>cy.status==="completed");
+ const field=(key,label,val,type,attrs,help,locked)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+(locked?' <span class="lock" title="'+esc(t("lockedFields"))+'">🔒 '+esc(t("locked"))+'</span>':"")+'</label><input id="f-'+key+'" data-field="'+key+'" type="'+type+'" value="'+esc(val==null?"":val)+'" '+(attrs||"")+(locked?' disabled title="'+esc(t("lockedFields"))+'"':"")+'>'+(help?'<div class="hint">'+esc(help)+'</div>':"")+'</div>';
+ const select=(key,label,val,opts,locked)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+(locked?' <span class="lock" title="'+esc(t("lockedFields"))+'">🔒 '+esc(t("locked"))+'</span>':"")+'</label><select id="f-'+key+'" data-field="'+key+'" '+(locked?'disabled title="'+esc(t("lockedFields"))+'"':"")+'>'+opts.map(o=>'<option value="'+esc(o[0])+'" '+(o[0]===val?"selected":"")+'>'+esc(o[1])+'</option>').join("")+'</select></div>';
  const calc=floorPrice(currentCycle()?currentCycle().monthNo:1);
  return heading(t("setup"),t("editNotFormula"))+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("chitSetup"))+'</h2><p>'+esc(t("lockedFields"))+'</p></div><span class="lock">⚙ '+esc(t("edit"))+'</span></div><div class="panel-body"><div class="form-grid">'+
  field("name",t("chitName"),c.name,"text","required")+
