@@ -759,7 +759,7 @@ function init(){
   try{sameOriginReferrer=!!document.referrer&&new URL(document.referrer).origin===location.origin}catch(_){}
   if(history.length>1&&sameOriginReferrer)history.back();else location.href="index.html";
  });
- $("#pmAddSlideBtn".addEventListener("contextmenu",function(e){e.preventDefault();addSlide()});
+ $("#pmAddSlideBtn").addEventListener("contextmenu",function(e){e.preventDefault();addSlide()});
  const seen=(function(){try{return localStorage.getItem("sitecraft-presentation-tour-seen")}catch(_){return "1"}})();
  if(!seen)setTimeout(startTour,450);
 }
