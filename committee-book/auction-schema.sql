@@ -304,6 +304,9 @@ begin
   if exists (select 1 from public.monthly_cycles where chit_id = p_chit_id) then
     raise exception 'Cycles already initialized; do not recreate financial history';
   end if;
+  if (select count(*) from public.members where chit_id=p_chit_id and status <> 'removed') <> v_chit.member_count then
+    raise exception 'Add exactly the configured member count before initializing monthly cycles';
+  end if;
   for v_month in 1..v_chit.member_count loop
     v_month_start := (date_trunc('month', v_chit.start_date::timestamp) + ((v_month - 1) * interval '1 month'))::date;
     v_last_day := extract(day from (v_month_start + interval '1 month - 1 day'))::integer;
@@ -578,7 +581,7 @@ begin
   if not found or v_cycle.status <> 'completed' then raise exception 'The month must be completed before payment confirmation'; end if;
   select * into v_member from public.members where chit_id = v_cycle.chit_id and auth_user_id = auth.uid() and status <> 'removed';
   if not found then raise exception 'Active membership not found'; end if;
-  select coalesce(amount_paise,0) into v_dividend from public.dividend_history where cycle_id = v_cycle.id and member_id = v_member.id;
+  select coalesce((select dh.amount_paise from public.dividend_history dh where dh.cycle_id = v_cycle.id and dh.member_id = v_member.id),0) into v_dividend;
   v_base_due := greatest(0, v_cycle.base_contribution_paise - v_dividend);
   v_fine := greatest(0,current_date-v_cycle.due_date) * v_cycle.late_fine_per_day_paise;
   select coalesce(sum(case when p.entry_type='reversal' then -p.amount_paise else p.amount_paise end),0)
@@ -617,7 +620,7 @@ begin
   if p_mode not in ('upi','cash','bank','other') then raise exception 'Invalid payment mode'; end if;
   select * into v_member from public.members where id=p_member_id and chit_id=v_cycle.chit_id and status <> 'removed';
   if not found then raise exception 'Active member not found'; end if;
-  select coalesce(amount_paise,0) into v_dividend from public.dividend_history where cycle_id=v_cycle.id and member_id=v_member.id;
+  select coalesce((select dh.amount_paise from public.dividend_history dh where dh.cycle_id=v_cycle.id and dh.member_id=v_member.id),0) into v_dividend;
   v_base_due:=greatest(0,v_cycle.base_contribution_paise-v_dividend);
   v_fine:=greatest(0,current_date-v_cycle.due_date)*v_cycle.late_fine_per_day_paise;
   select coalesce(sum(case when p.entry_type='reversal' then -p.amount_paise else p.amount_paise end),0)
