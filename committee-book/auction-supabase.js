@@ -37,14 +37,15 @@ async function loadWorkspace(requestedChitId){
  }
  if(!list.length)return {user:user,chits:[],workspace:null};
  let chit=(requestedChitId&&list.find(x=>x.id===requestedChitId))||list.find(x=>x.owner_id===user.id)||list[0];
- const [memberRes,cycleRes,bidRes,paymentRes,dividendRes]=await Promise.all([
+ const [memberRes,cycleRes,bidRes,paymentRes,dividendRes,documentRes]=await Promise.all([
   c.from("members").select("*").eq("chit_id",chit.id).order("created_at",{ascending:true}),
   c.from("monthly_cycles").select("*").eq("chit_id",chit.id).order("month_no",{ascending:true}),
   c.from("auction_bids").select("*").eq("chit_id",chit.id).order("created_at",{ascending:true}),
   c.from("payments").select("*").eq("chit_id",chit.id).order("created_at",{ascending:true}),
-  c.from("dividend_history").select("*").eq("chit_id",chit.id).order("created_at",{ascending:true})
+  c.from("dividend_history").select("*").eq("chit_id",chit.id).order("created_at",{ascending:true}),
+  c.from("member_documents").select("*").eq("chit_id",chit.id).order("created_at",{ascending:false})
  ]);
- for(const res of [memberRes,cycleRes,bidRes,paymentRes,dividendRes])if(res.error)throw res.error;
+ for(const res of [memberRes,cycleRes,bidRes,paymentRes,dividendRes,documentRes])if(res.error)throw res.error;
  const members=(memberRes.data||[]).map(m=>({id:m.id,dbId:m.id,name:m.name,phone:m.phone||"",email:m.email||"",status:m.status,authUserId:m.auth_user_id,kycDocPath:m.kyc_doc_path,wonMonths:[]}));
  const cycleIdToNo=new Map();
  const cycles=(cycleRes.data||[]).map(cy=>{
@@ -52,7 +53,7 @@ async function loadWorkspace(requestedChitId){
   const m=new Date(cy.auction_starts_at);
   return {dbId:cy.id,monthNo:cy.month_no,status:cy.status,winnerId:cy.winner_member_id,winningBidPaise:cy.winning_bid_paise==null?null:Number(cy.winning_bid_paise),prizePaise:Number(cy.prize_paise||0),discountPaise:Number(cy.discount_paise||0),commissionPaise:Number(cy.commission_paise||0),dividendPerHeadPaise:Number(cy.dividend_per_head_paise||0),dividendPoolPaise:Number(cy.dividend_pool_paise||0),leftoverPaise:Number(cy.rounding_leftover_paise||0),completedAt:cy.completed_at,dueDate:cy.due_date,baseContributionPaise:Number(cy.base_contribution_paise||0),startingFloorPaise:Number(cy.floor_price_paise||0),maxDiscountPct:Number(cy.max_discount_pct||0),memberCount:Number(cy.member_count||0),dividendRule:cy.dividend_rule,commissionPct:cy.commission_pct,lateFinePerDayPaise:cy.late_fine_per_day_paise,periodStartDate:monthIso(chit.start_date,cy.month_no),auctionStartsAt:cy.auction_starts_at,auctionEndsAt:cy.auction_ends_at};
  });
- members.forEach(m=>{cycles.forEach(cy=>{if(cy.winnerId===m.id){m.status="winner";m.wonMonths.push(cy.monthNo);}});});
+ members.forEach(m=>{m.agreementDocPath=(documentRes.data||[]).find(d=>d.member_id===m.id&&d.document_type==="agreement")?.storage_path||null;cycles.forEach(cy=>{if(cy.winnerId===m.id){m.status="winner";m.wonMonths.push(cy.monthNo);}});});
  const bids=(bidRes.data||[]).map(b=>({id:b.id,dbId:b.id,memberId:b.member_id,cycleNo:cycleIdToNo.get(b.cycle_id),cycleDbId:b.cycle_id,amountPaise:Number(b.amount_paise),status:b.status,createdAt:b.created_at,approvedAt:b.approved_at,approvedBy:b.approved_by}));
  const payRows=paymentRes.data||[],byPayment=new Map(),payments=[];
  payRows.forEach(p=>{
@@ -119,10 +120,15 @@ async function uploadPrivateFile(chitId,memberId,file){
  const clean=String(file.name||"document").replace(/[^a-zA-Z0-9._-]/g,"_"),path=chitId+"/"+memberId+"/"+Date.now()+"-"+clean;
  const {error}=await c.storage.from("chit-private-docs").upload(path,file,{upsert:false,contentType:file.type||"application/octet-stream"});if(error)throw error;return path;
 }
-async function saveMemberDocument(chitId,memberId,path,column){
+async function saveMemberDocument(chitId,memberId,path,documentType){
  const c=getClient();if(!c)throw new Error("Supabase is not configured.");
- if(!["kyc_doc_path"].includes(column))throw new Error("Unsupported document field.");
- const {error}=await c.from("members").update({[column]:path}).eq("id",memberId).eq("chit_id",chitId);if(error)throw error;
+ if(documentType==="kyc"){
+  const {error}=await c.from("members").update({kyc_doc_path:path}).eq("id",memberId).eq("chit_id",chitId);if(error)throw error;return path;
+ }
+ if(documentType==="agreement"){
+  const {error}=await c.from("member_documents").insert({chit_id:chitId,member_id:memberId,document_type:"agreement",storage_path:path});if(error)throw error;return path;
+ }
+ throw new Error("Unsupported document type.");
 }
 async function signedFileUrl(path,seconds){
  const c=getClient();if(!c)throw new Error("Supabase is not configured.");
