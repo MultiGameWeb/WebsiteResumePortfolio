@@ -154,6 +154,19 @@ create table if not exists public.dividend_history (
 );
 create index if not exists dividend_history_member_idx on public.dividend_history(chit_id, member_id, created_at);
 
+create table if not exists public.member_documents (
+  id uuid primary key default gen_random_uuid(),
+  chit_id uuid not null references public.chits(id) on delete restrict,
+  member_id uuid not null,
+  document_type text not null check (document_type in ('kyc','agreement')),
+  storage_path text not null,
+  uploaded_by uuid references auth.users(id) on delete set null,
+  created_at timestamptz not null default now(),
+  foreign key (member_id, chit_id) references public.members(id, chit_id) on delete restrict,
+  unique (member_id, document_type, storage_path)
+);
+create index if not exists member_documents_member_idx on public.member_documents(chit_id, member_id, document_type, created_at);
+
 create table if not exists public.payment_audit (
   id uuid primary key default gen_random_uuid(),
   chit_id uuid not null references public.chits(id) on delete restrict,
@@ -231,6 +244,7 @@ alter table public.auction_bids enable row level security;
 alter table public.payments enable row level security;
 alter table public.dividend_history enable row level security;
 alter table public.payment_audit enable row level security;
+alter table public.member_documents enable row level security;
 
 drop policy if exists "profiles_select_self_or_platform_admin" on public.profiles;
 create policy "profiles_select_self_or_platform_admin" on public.profiles for select to authenticated
@@ -279,6 +293,14 @@ using (public.can_manage_chit(chit_id) or exists (select 1 from public.members m
 drop policy if exists "payment_audit_select_owner" on public.payment_audit;
 create policy "payment_audit_select_owner" on public.payment_audit for select to authenticated
 using (public.can_manage_chit(chit_id));
+
+drop policy if exists "member_documents_select_owner_or_self" on public.member_documents;
+create policy "member_documents_select_owner_or_self" on public.member_documents for select to authenticated
+using (public.can_manage_chit(chit_id) or exists (select 1 from public.members m where m.id=member_id and m.chit_id=chit_id and m.auth_user_id=auth.uid() and m.status<>'removed'));
+
+drop policy if exists "member_documents_insert_owner" on public.member_documents;
+create policy "member_documents_insert_owner" on public.member_documents for insert to authenticated
+with check (public.can_manage_chit(chit_id) and uploaded_by=auth.uid());
 
 -- Create the private bucket for KYC documents and payment screenshots. Paths use chit UUID/member UUID/file name.
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
@@ -713,7 +735,7 @@ revoke all on function public.record_organizer_payment(uuid,uuid,bigint,text,tex
 revoke all on function public.confirm_payment_report(uuid,boolean,text) from public, anon;
 revoke all on function public.reverse_confirmed_payment(uuid,text) from public, anon;
 
-grant select on public.profiles, public.chits, public.members, public.monthly_cycles, public.auction_bids, public.payments, public.dividend_history, public.payment_audit to authenticated;
+grant select on public.profiles, public.chits, public.members, public.monthly_cycles, public.auction_bids, public.payments, public.dividend_history, public.payment_audit, public.member_documents to authenticated;
 grant insert, update on public.chits, public.members to authenticated;
 -- Auction cycles and bids are mutated through controlled RPCs, not direct browser writes.
 grant execute on function public.initialize_chit_cycles(uuid) to authenticated;
