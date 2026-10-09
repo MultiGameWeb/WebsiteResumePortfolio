@@ -1,0 +1,33 @@
+/* Shared SiteCraft navigation. All URLs are relative for GitHub Pages subpaths. */
+#sitecraftGlobalNav{position:sticky;top:0;z-index:9999;width:100%;box-sizing:border-box;background:rgba(255,255,255,.97);color:#17181d;border-bottom:1px solid #dfe3e8;box-shadow:0 5px 18px rgba(17,24,39,.07);font:inherit;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#sitecraftGlobalNav *{box-sizing:border-box}
+#sitecraftGlobalNav .sc-nav-inner{width:min(1440px,100%);min-height:64px;padding:9px 18px;margin:0 auto;display:flex;align-items:center;gap:10px}
+#sitecraftGlobalNav .sc-brand{display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;color:#17181d;text-decoration:none;font-size:17px;font-weight:900;letter-spacing:-.035em;white-space:nowrap}
+#sitecraftGlobalNav .sc-brand-mark{display:inline-grid;place-items:center;width:31px;height:31px;border-radius:10px;background:#17181d;color:#fff;font-size:18px}
+#sitecraftGlobalNav .sc-actions{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+#sitecraftGlobalNav .sc-action,#sitecraftGlobalNav .sc-menu-toggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:7px 11px;border:1px solid #d4d8df;border-radius:10px;background:#fff;color:#20242b;text-decoration:none;font:inherit;font-size:12px;font-weight:800;white-space:nowrap;cursor:pointer}
+#sitecraftGlobalNav .sc-action:hover,#sitecraftGlobalNav .sc-menu-toggle:hover{background:#f3f4f6;border-color:#aeb5c0}
+#sitecraftGlobalNav .sc-home{background:#17181d;border-color:#17181d;color:#fff}
+#sitecraftGlobalNav .sc-home:hover{background:#30323a;border-color:#30323a}
+#sitecraftGlobalNav .sc-menu-toggle{display:none;width:38px;padding:6px;font-size:19px;margin-left:auto}
+#sitecraftGlobalNav .sc-menu{margin-left:auto;display:flex;align-items:center;justify-content:flex-end;gap:3px;min-width:0}
+#sitecraftGlobalNav .sc-menu a{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:8px 10px;border:1px solid transparent;border-radius:9px;color:#3f4652;text-decoration:none;font-size:12px;font-weight:800;white-space:nowrap}
+#sitecraftGlobalNav .sc-menu a:hover{background:#f3f4f6;color:#17181d}
+#sitecraftGlobalNav .sc-menu a[aria-current="page"]{background:#eeedf5;border-color:#d9d7e9;color:#17181d}
+#sitecraftGlobalNav button:focus-visible,#sitecraftGlobalNav a:focus-visible{outline:3px solid #1d4ed8;outline-offset:2px}
+.sc-legacy-site-nav{display:none!important}
+.sitecraft-anchor{display:block;position:relative;top:-78px;visibility:hidden}
+@media(max-width:1080px){#sitecraftGlobalNav .sc-nav-inner{gap:7px;padding-left:12px;padding-right:12px}#sitecraftGlobalNav .sc-brand{font-size:15px}#sitecraftGlobalNav .sc-menu a{padding:8px 7px;font-size:11px}}
+@media(max-width:850px){
+ #sitecraftGlobalNav .sc-nav-inner{position:relative;min-height:58px;gap:7px;padding:8px 10px;flex-wrap:nowrap}
+ #sitecraftGlobalNav .sc-brand{font-size:15px;gap:6px}
+ #sitecraftGlobalNav .sc-brand-mark{width:29px;height:29px}
+ #sitecraftGlobalNav .sc-actions{gap:5px}
+ #sitecraftGlobalNav .sc-action{min-height:34px;padding:6px 8px;font-size:12px}
+ #sitecraftGlobalNav .sc-menu-toggle{display:inline-flex;flex:0 0 36px;min-height:36px;margin-left:auto}
+ #sitecraftGlobalNav .sc-menu{display:none;position:absolute;top:calc(100% + 1px);left:8px;right:8px;z-index:10000;width:auto;max-width:calc(100vw - 16px);max-height:min(72vh,560px);overflow-y:auto;margin:0;padding:8px;align-items:stretch;justify-content:flex-start;flex-direction:column;gap:3px;border:1px solid #dfe3e8;border-radius:13px;background:#fff;box-shadow:0 15px 40px rgba(17,24,39,.19)}
+ #sitecraftGlobalNav .sc-menu.sc-open{display:flex}
+ #sitecraftGlobalNav .sc-menu a{justify-content:flex-start;width:100%;min-height:40px;padding:10px 12px;font-size:13px;white-space:normal}
+}
+@media(max-width:390px){#sitecraftGlobalNav .sc-nav-inner{padding-left:7px;padding-right:7px;gap:5px}#sitecraftGlobalNav .sc-brand{font-size:14px}#sitecraftGlobalNav .sc-brand-mark{width:27px;height:27px}#sitecraftGlobalNav .sc-action{padding:5px 6px;font-size:11px;gap:4px}#sitecraftGlobalNav .sc-menu-toggle{flex-basis:34px;width:34px;min-height:34px}}
+@media print{#sitecraftGlobalNav,#sitecraftGlobalNav *{display:none!important;visibility:hidden!important}}

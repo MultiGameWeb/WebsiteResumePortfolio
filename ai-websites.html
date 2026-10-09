@@ -9,6 +9,7 @@
 @media(prefers-color-scheme:dark){:root{--bg:#0e1013;--surface:#15181d;--text:#f5f6f8;--muted:#adb5bf;--line:#2b3037}.mark{background:#f5f6f8;color:#111}.primary{background:#f5f6f8;color:#111;border-color:#f5f6f8}.bar{background:#292d34}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
+<link rel="stylesheet" href="site-navigation.css">
 </head>
 <body>
 <header class="header"><div class="header-inner"><a class="back" href="index.html">← Back to Home</a><a class="logo" href="index.html"><span class="mark">✦</span>SiteCraft</a><nav class="nav"><a href="templates.html">Website Templates</a><a href="portfolio-creator.html">Portfolio Creator</a><a href="resume-builder.html">Resume Builder</a></nav></div></header>
@@ -23,4 +24,5 @@
 (function(){'use strict';const form=document.querySelector('#notifyForm'),email=document.querySelector('#notifyEmail'),message=document.querySelector('#notifyMessage');
 // Future backend note: Cloudflare Worker + D1 can store opted-in notification emails later. No network request is sent by this page today.
 form.addEventListener('submit',function(e){e.preventDefault();const value=email.value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)){message.textContent='Please enter a valid email address.';message.style.color='#a33a45';email.focus();return}message.textContent="Thanks! We'll keep you posted.";message.style.color='#397357';form.reset()})})();
-</script></body></html>
+</script><script src="site-navigation.js"></script>
+</body></html>
