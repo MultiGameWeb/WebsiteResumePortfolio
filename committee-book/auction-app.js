@@ -318,24 +318,24 @@ function approveBid(id,approve){
  const b=state.bids.find(x=>x.id===id);if(!b)return;
  b.status=approve?"approved":"rejected";b.approvedAt=approve?nowISO():null;toast(approve?t("bidApproved"):t("bidRejected"));
 }
-function declareWinner(){
- const c=currentCycle();if(!c){toast(t("cycleLocked"),true);return;}
- const b=lowestBid(c);if(!b){toast(t("needApprovedBid"),true);return;}
- if(!window.confirm(t("winnerConfirm")))return;
- const m=mBy(b.memberId);if(!m){toast(t("noRows"),true);return;}
+function finalizeWinner(manual){
+ const c=currentCycle();if(!c){if(manual)toast(t("cycleLocked"),true);return false;}
+ const b=lowestBid(c);if(!b){if(manual)toast(t("needApprovedBid"),true);return false;}
+ if(manual&&!window.confirm(t("winnerConfirm")))return false;
+ const m=mBy(b.memberId);if(!m){if(manual)toast(t("noRows"),true);return false;}
  const discount=state.chit.potPaise-b.amountPaise,commission=commissionAmount();
- if(discount<commission){toast(t("validationCommission"),true);return;}
- const provisional={...c,status:"completed",winnerId:m.id,winningBidPaise:b.amountPaise,prizePaise:b.amountPaise,discountPaise:discount,commissionPaise:commission};
- const calc=cycleCalc(provisional,b);Object.assign(provisional,{dividendPoolPaise:calc.dividendPoolPaise,dividendPerHeadPaise:calc.dividendPerHeadPaise,leftoverPaise:calc.leftoverPaise,eligibleIds:calc.eligibleIds,dividends:calc.dividends,due:calc.due,completedAt:nowISO()});
- Object.assign(c,provisional);
- b.status="winner";
- m.status="winner";m.wonMonths=m.wonMonths||[];m.wonMonths.push(c.monthNo);
+ if(discount<commission){if(manual)toast(t("validationCommission"),true);return false;}
+ const provisional={...c,status:"open",winnerId:m.id,winningBidPaise:b.amountPaise,prizePaise:b.amountPaise,discountPaise:discount,commissionPaise:commission};
+ const calc=cycleCalc(provisional,b),due=iso(dueDate(c));
+ Object.assign(c,{status:"completed",winnerId:m.id,winningBidPaise:b.amountPaise,prizePaise:b.amountPaise,discountPaise:discount,commissionPaise:commission,dividendPoolPaise:calc.dividendPoolPaise,dividendPerHeadPaise:calc.dividendPerHeadPaise,leftoverPaise:calc.leftoverPaise,eligibleIds:calc.eligibleIds,dividends:calc.dividends,due:calc.due,completedAt:nowISO(),baseContributionPaise:baseContribution(),dividendRule:state.chit.dividendRule,commissionPct:state.chit.commissionPct,lateFinePerDayPaise:state.chit.lateFinePerDayPaise,dueDate:due,autoDeclared:!manual});
+ b.status="winner";m.status="winner";m.wonMonths=m.wonMonths||[];if(!m.wonMonths.includes(c.monthNo))m.wonMonths.push(c.monthNo);
  state.dividendHistory=state.dividendHistory.filter(h=>h.cycleNo!==c.monthNo);
  calc.eligibleIds.forEach(id=>state.dividendHistory.push({cycleNo:c.monthNo,memberId:id,amountPaise:calc.dividendPerHeadPaise}));
- c.nextDue=calc.due;
  const next=state.cycles.find(x=>x.monthNo===c.monthNo+1);if(next&&next.status==="upcoming")next.status="open";
- state.page="cycles";toast(t("winnerDeclared"));
+ if(manual){state.page="cycles";toast(t("winnerDeclared"));}else{state.page="dashboard";toast(t("winnerDeclared"));}
+ return true;
 }
+function declareWinner(){return finalizeWinner(true);}
 function markPayment(id,kind){
  const c=currentCycle();if(!c)return;const m=mBy(id),d=paymentDue(m,c),p=d.payment;let amount=0;
  if(kind==="paid")amount=d.remaining;
@@ -416,6 +416,7 @@ root.addEventListener("input",function(e){
 });
 function tick(){
  const c=currentCycle();if(!c)return;const d=timerData(c),el=document.getElementById("timerValue");if(el)el.textContent=d.text;
+ if(d.status==="closed"&&c.status!=="completed"&&lowestBid(c)){finalizeWinner(false);return;}
  const bar=document.getElementById("timerProgress");if(bar)bar.style.width=(d.status==="closed"?100:d.status==="upcoming"?0:Math.max(2,Math.min(100,((Date.now()-d.start)/(d.end-d.start))*100)))+"%";
 }
 function selfCheck(){
