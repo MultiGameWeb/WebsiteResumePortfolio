@@ -576,7 +576,6 @@ root.addEventListener("click",function(e){
   backend.signOut().then(()=>{const lang=state.lang;state=seedDemo();state.lang=lang;state.backendConfigured=backend.configured();state.authUser=null;state.availableChits=[];state.dbChitId=null;state.liveWorkspace=false;render();}).catch(error=>toast(error.message||String(error),true));return;
  }
  if(a==="create-live-chit"){createLiveChit();return;}
- if(a==="switch-chit"){refreshLiveWorkspace(el.value);return;}
  if(a==="invite-member"){
   if(!state.liveWorkspace||!state.dbChitId){toast(t("backendSetupMissing"),true);return;}
   const inviteUrl=window.location.origin+window.location.pathname+"?chit="+encodeURIComponent(state.dbChitId);
@@ -621,6 +620,7 @@ root.addEventListener("click",function(e){
 root.addEventListener("change",function(e){
  const el=e.target,a=el.getAttribute("data-action");
  if(a==="role-select"){state.role=el.value;render();return;}
+ if(a==="switch-chit"){refreshLiveWorkspace(el.value);return;}
  if(a==="preview-member"){state.previewMemberId=el.value;render();return;}
  if(a==="payment-month"){state.selectedPaymentMonth=Number(el.value);render();return;}
  if(a==="payment-mode"){const c=state.cycles.find(x=>x.monthNo===Number(state.selectedPaymentMonth))||currentCycle();const p=paymentFor(el.getAttribute("data-id"),c.monthNo);p.mode=el.value;if(state.liveWorkspace){toast(t("saved"));return;}render();return;}
