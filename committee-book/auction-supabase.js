@@ -24,9 +24,17 @@ function monthIso(start,monthNo){const d=new Date(start+"T00:00:00");d.setMonth(
 async function loadWorkspace(requestedChitId){
  const c=getClient();if(!c)throw new Error("Supabase is not configured.");
  const {data:{user},error:userError}=await c.auth.getUser();if(userError)throw userError;if(!user)return {user:null,chits:[],workspace:null};
- const {data:chits,error}=await c.from("chits").select("*").order("created_at",{ascending:false});
+ let {data:chits,error}=await c.from("chits").select("*").order("created_at",{ascending:false});
  if(error)throw error;
- const list=chits||[];
+ let list=chits||[];
+ if(requestedChitId&&!list.some(x=>x.id===requestedChitId)){
+  const {error:claimError}=await c.rpc("claim_member_by_email",{p_chit_id:requestedChitId});
+  if(!claimError){
+   const refreshed=await c.from("chits").select("*").order("created_at",{ascending:false});
+   if(refreshed.error)throw refreshed.error;
+   chits=refreshed.data||[];list=chits;
+  }
+ }
  if(!list.length)return {user:user,chits:[],workspace:null};
  let chit=(requestedChitId&&list.find(x=>x.id===requestedChitId))||list.find(x=>x.owner_id===user.id)||list[0];
  const [memberRes,cycleRes,bidRes,paymentRes,dividendRes]=await Promise.all([
@@ -67,6 +75,10 @@ async function loadWorkspace(requestedChitId){
  const mappedChit={dbId:chit.id,name:chit.name,potPaise:Number(chit.pot_paise),memberCount:Number(chit.member_count),startingFloorPaise:Number(chit.starting_floor_paise),maxDiscountPct:Number(chit.max_discount_pct),commissionPct:Number(chit.commission_pct),dividendRule:chit.dividend_rule==="non_winners"?"nonWinners":"allMembers",startDate:chit.start_date,auctionStartDay:chit.auction_start_day,auctionEndDay:chit.auction_end_day,dueDay:chit.due_day,lateFinePerDayPaise:Number(chit.late_fine_per_day_paise||0),upiId:chit.upi_id||"",status:chit.status};
  const workspace={chit:mappedChit,members:members,cycles:cycles,bids:bids,payments:payments,dividendHistory:dividendHistory,rulesHtml:chit.rules_html||"",role:isOwner?"organizer":"member",previewMemberId:(members.find(m=>m.authUserId===user.id)||members.find(m=>m.status!=="removed")||{}).id||null,selectedMonth:cycles.find(cy=>cy.status!=="completed")?.monthNo||cycles.length};
  return {user:user,chits:list.map(x=>({id:x.id,name:x.name,ownerId:x.owner_id})),workspace:workspace};
+}
+async function claimMemberByEmail(chitId){
+ const c=getClient();if(!c)throw new Error("Supabase is not configured.");
+ const {data,error}=await c.rpc("claim_member_by_email",{p_chit_id:chitId});if(error)throw error;return data;
 }
 async function createWorkspace(chit,members,rulesHtml){
  const c=getClient(),user=await getUser();if(!c||!user)throw new Error("Sign in with Google before creating a live chit.");
@@ -116,5 +128,5 @@ async function signedFileUrl(path,seconds){
  const c=getClient();if(!c)throw new Error("Supabase is not configured.");
  const {data,error}=await c.storage.from("chit-private-docs").createSignedUrl(path,seconds||120);if(error)throw error;return data.signedUrl;
 }
-window.AuctionChitBackend={configured:configured,client:getClient,signInGoogle:signInGoogle,signOut:signOut,getUser:getUser,loadWorkspace:loadWorkspace,createWorkspace:createWorkspace,saveChit:saveChit,saveMember:saveMember,placeBid:placeBid,approveBid:approveBid,declareWinner:declareWinner,autoDeclare:autoDeclare,recordPayment:recordPayment,submitPayment:submitPayment,confirmPayment:confirmPayment,reversePayment:reversePayment,uploadPrivateFile:uploadPrivateFile,saveMemberDocument:saveMemberDocument,signedFileUrl:signedFileUrl};
+window.AuctionChitBackend={configured:configured,client:getClient,signInGoogle:signInGoogle,signOut:signOut,getUser:getUser,loadWorkspace:loadWorkspace,claimMemberByEmail:claimMemberByEmail,createWorkspace:createWorkspace,saveChit:saveChit,saveMember:saveMember,placeBid:placeBid,approveBid:approveBid,declareWinner:declareWinner,autoDeclare:autoDeclare,recordPayment:recordPayment,submitPayment:submitPayment,confirmPayment:confirmPayment,reversePayment:reversePayment,uploadPrivateFile:uploadPrivateFile,saveMemberDocument:saveMemberDocument,signedFileUrl:signedFileUrl};
 })();
