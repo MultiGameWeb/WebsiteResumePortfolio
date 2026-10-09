@@ -164,6 +164,30 @@ create table if not exists public.payment_audit (
   created_at timestamptz not null default now()
 );
 
+-- Members can attach their Google-authenticated account only when the registered member email matches.
+-- Share the chit link with the member; RLS keeps other organizers' data inaccessible.
+create or replace function public.claim_member_by_email(p_chit_id uuid)
+returns uuid language plpgsql security definer set search_path = public as $
+declare
+  v_member public.members%rowtype;
+  v_email text := lower(coalesce(auth.jwt()->>'email',''));
+begin
+  if auth.uid() is null or v_email = '' then raise exception 'Sign in with a Google account that has a verified email'; end if;
+  select * into v_member
+  from public.members
+  where chit_id = p_chit_id
+    and lower(coalesce(email,'')) = v_email
+    and status <> 'removed'
+    and (auth_user_id is null or auth_user_id = auth.uid())
+  order by created_at
+  limit 1
+  for update;
+  if not found then raise exception 'No active member record matches this Google email in this chit'; end if;
+  update public.members set auth_user_id = auth.uid() where id = v_member.id;
+  return v_member.id;
+end;
+$;
+
 create or replace function public.can_manage_chit(p_chit_id uuid)
 returns boolean language sql stable security definer set search_path = public as $$
   select exists (select 1 from public.chits c where c.id = p_chit_id and c.owner_id = auth.uid())
@@ -677,6 +701,7 @@ end;
 $$;
 
 revoke all on function public.initialize_chit_cycles(uuid) from public, anon;
+revoke all on function public.claim_member_by_email(uuid) from public, anon;
 revoke all on function public.sync_open_auction_cycles(uuid) from public, anon;
 revoke all on function public.place_auction_bid(uuid,bigint) from public, anon;
 revoke all on function public.approve_auction_bid(uuid,boolean) from public, anon;
@@ -692,6 +717,7 @@ grant select on public.profiles, public.chits, public.members, public.monthly_cy
 grant insert, update on public.chits, public.members to authenticated;
 -- Auction cycles and bids are mutated through controlled RPCs, not direct browser writes.
 grant execute on function public.initialize_chit_cycles(uuid) to authenticated;
+grant execute on function public.claim_member_by_email(uuid) to authenticated;
 grant execute on function public.sync_open_auction_cycles(uuid) to authenticated;
 grant execute on function public.place_auction_bid(uuid,bigint) to authenticated;
 grant execute on function public.approve_auction_bid(uuid,boolean) to authenticated;
