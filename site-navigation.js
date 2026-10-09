@@ -39,11 +39,14 @@ function cleanLegacyHeader(header){
  const visibleLinks=[...header.querySelectorAll("a")].some(a=>!a.hidden);
  if(hasBrand&&!controls&&!pageNavs.length&&!meaningful&&!visibleLinks){header.classList.add("sc-legacy-site-nav");header.setAttribute("aria-hidden","true")}
 }
+function isNavigationChromeParent(parent){
+ return !!parent&&(parent===document.body||parent.matches(".app,.app-shell,#app,.admin-app,#auction-app,#chit-suite-app"));
+}
 function cleanLegacyNavigation(root){
  const headers=[];
- if(root&&root.matches&&root.matches("header:not(#sitecraftGlobalNav)"))headers.push(root);
- if(root&&root.querySelectorAll)root.querySelectorAll("header:not(#sitecraftGlobalNav)").forEach(h=>headers.push(h));
- headers.forEach(cleanLegacyHeader);
+ if(root&&root.matches&&root.matches("header:not(#sitecraftGlobalNav)")&&isNavigationChromeParent(root.parentElement))headers.push(root);
+ if(root&&root.querySelectorAll)root.querySelectorAll("header:not(#sitecraftGlobalNav)").forEach(h=>{if(isNavigationChromeParent(h.parentElement))headers.push(h)});
+ [...new Set(headers)].forEach(cleanLegacyHeader);
 }
 cleanLegacyNavigation(document);
 document.addEventListener("DOMContentLoaded",function(){cleanLegacyNavigation(document)},{once:true});
@@ -70,9 +73,10 @@ if(guardPages.has(leaf)){
  document.addEventListener("change",function(e){if(!nav.contains(e.target))markDirty()},true);
  document.addEventListener("click",function(e){if(nav.contains(e.target))return;const b=e.target.closest("button,[role=button]");if(!b)return;if(/\b(?:download|export|print|save|back|home|cancel|close|undo|redo|help|preview)\b/i.test((b.textContent||"")+" "+(b.id||"")+" "+(b.dataset.action||"")))return;if(leaf==="portfolio-creator.html"||leaf==="my-chits.html"||leaf==="committee-book.html")markDirty()},true);
 }
-function wantsLeave(){if(!guardPages.has(leaf)||!dirty)return true;return window.confirm(saveFailed?"Leave this page? Your work may not be saved.":"Leave this page? Your work is saved automatically on this device.")}
+function wantsLeave(){if(!guardPages.has(leaf)||!dirty)return true;return window.confirm(saveFailed||!autoSavePages.has(leaf)?"Leave this page? Your work may not be saved.":"Leave this page? Your work is saved automatically on this device.")}
 nav.querySelector(".sc-back")?.addEventListener("click",function(){if(!wantsLeave())return;let sameOriginReferrer=false;try{sameOriginReferrer=!!document.referrer&&new URL(document.referrer).origin===location.origin}catch(_){}if(history.length>1&&sameOriginReferrer)history.back();else location.href="index.html"});
 nav.querySelector(".sc-home")?.addEventListener("click",function(e){if(!wantsLeave())e.preventDefault()});
+nav.querySelector(".sc-brand")?.addEventListener("click",function(e){if(!wantsLeave())e.preventDefault()});
 navMenu.addEventListener("click",function(e){const a=e.target.closest("a");if(!a)return;const dest=(a.getAttribute("href")||"").split(/[?#]/)[0]||leaf;if(dest.toLowerCase()===leaf&&a.hash==="")return;if(!wantsLeave())e.preventDefault()});
 window.addEventListener("beforeunload",function(e){if(!guardPages.has(leaf)||!dirty)return;e.preventDefault();e.returnValue=""});
 })();
