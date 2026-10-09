@@ -1,7 +1,9 @@
 (function(){
 "use strict";
 if(document.getElementById("sitecraftGlobalNav"))return;
-const leaf=(location.pathname.split("/").filter(Boolean).pop()||"index.html").toLowerCase();
+const pathParts=location.pathname.split("/").filter(Boolean);
+const lastPart=pathParts[pathParts.length-1]||"index.html";
+const leaf=(lastPart.indexOf(".")===-1?"index.html":lastPart).toLowerCase();
 const isHome=leaf==="index.html";
 const menuItems=[["Home","index.html","home"],["Templates","templates.html","templates"],["Portfolio Creator","portfolio-creator.html","portfolio"],["Resume Builder","resume-builder.html","resume"],["PDF Tools","pdf-tools.html","pdf"],["Document Editor","document-editor.html","document"],["Committee Book","committee-book.html","committee"],["How it works","index.html#how-it-works","how"]];
 const committeePages=new Set(["committee-book.html","my-chits.html","auction-chit-manager.html","fixed-discount-chit-manager.html","fixed-rotation-bc-chit-manager.html","lottery-kuri-chit-manager.html"]);
@@ -16,7 +18,8 @@ document.body.insertBefore(nav,document.body.firstChild);
 const toggle=nav.querySelector(".sc-menu-toggle");
 toggle.addEventListener("click",function(){const open=toggle.getAttribute("aria-expanded")!=="true";toggle.setAttribute("aria-expanded",String(open));toggle.setAttribute("aria-label",open?"Close site menu":"Open site menu");toggle.firstElementChild.textContent=open?"×":"☰";navMenu.classList.toggle("sc-open",open)});
 document.addEventListener("click",function(e){if(!nav.contains(e.target)){navMenu.classList.remove("sc-open");toggle.setAttribute("aria-expanded","false");toggle.setAttribute("aria-label","Open site menu");toggle.firstElementChild.textContent="☰"}});
-document.querySelectorAll("header:not(#sitecraftGlobalNav)").forEach(header=>{
+function cleanLegacyHeader(header){
+ if(!header||header.id==="sitecraftGlobalNav")return;
  const hasBrand=!!header.querySelector("a.logo,a.brand");
  const controls=!!header.querySelector("button,input,select,textarea,form,.top-actions,.topbar-right,.admin-top-actions,.more-wrap,#saveState,#savedStatus,#saveStatus");
  const pageNavs=header.querySelectorAll("nav");
@@ -30,12 +33,29 @@ document.querySelectorAll("header:not(#sitecraftGlobalNav)").forEach(header=>{
   const oldHome=/^(?:←\s*)?home(?:\s*↗)?$/i.test(label)&&href!=="index.html#how-it-works";
   if(brand||back||oldHome){a.hidden=true;a.setAttribute("aria-hidden","true")}
  });
+ header.querySelectorAll(".top-left-nav>a,.topbar-left>a,.topbar-left>nav").forEach(a=>{a.hidden=true;a.setAttribute("aria-hidden","true")});
  if(hasBrand&&pageNavs.length&&!controls){header.classList.add("sc-legacy-site-nav");header.setAttribute("aria-hidden","true")}
  const meaningful=header.querySelector("h1,h2,h3,strong,[id='templateName'],[id='templateCategory'],.top-actions,.admin-top-actions,.topbar-right,.more-wrap,#saveStatus,#savedStatus,#saveState,button,input,select,form");
  const visibleLinks=[...header.querySelectorAll("a")].some(a=>!a.hidden);
  if(hasBrand&&!controls&&!pageNavs.length&&!meaningful&&!visibleLinks){header.classList.add("sc-legacy-site-nav");header.setAttribute("aria-hidden","true")}
-});
-document.querySelectorAll(".top-left-nav>a,.topbar-left>a,.topbar-left>nav").forEach(a=>{a.hidden=true;a.setAttribute("aria-hidden","true")});
+}
+function cleanLegacyNavigation(root){
+ const headers=[];
+ if(root&&root.matches&&root.matches("header:not(#sitecraftGlobalNav)"))headers.push(root);
+ if(root&&root.querySelectorAll)root.querySelectorAll("header:not(#sitecraftGlobalNav)").forEach(h=>headers.push(h));
+ headers.forEach(cleanLegacyHeader);
+}
+cleanLegacyNavigation(document);
+document.addEventListener("DOMContentLoaded",function(){cleanLegacyNavigation(document)},{once:true});
+if("MutationObserver"in window){
+ const legacyObserver=new MutationObserver(records=>{
+  records.forEach(record=>record.addedNodes.forEach(node=>{
+   if(node.nodeType!==1)return;
+   if((node.matches&&node.matches("header:not(#sitecraftGlobalNav)"))||(node.querySelector&&node.querySelector("header:not(#sitecraftGlobalNav)")))cleanLegacyNavigation(node);
+  }));
+ });
+ legacyObserver.observe(document.body,{childList:true,subtree:true});
+}
 const guardPages=new Set(["document-editor.html","resume-builder.html","portfolio-creator.html","pdf-tools.html","committee-book.html","my-chits.html","auction-chit-manager.html","fixed-discount-chit-manager.html","fixed-rotation-bc-chit-manager.html","lottery-kuri-chit-manager.html"]);
 const autoSavePages=new Set(["document-editor.html","resume-builder.html","portfolio-creator.html","my-chits.html"]);
 let dirty=false,saveFailed=false,saveTimer=null;
