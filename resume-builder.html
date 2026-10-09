@@ -4,6 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#17181d">
+<meta name="description" content="Create and export an ATS-friendly resume with SiteCraft's free resume builder.">
+<link rel="canonical" href="https://multigameweb.github.io/WebsiteResumePortfolio/resume-builder.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SiteCraft">
+<meta property="og:title" content="Resume Builder — SiteCraft">
+<meta property="og:description" content="Create and export an ATS-friendly resume with SiteCraft's free resume builder.">
+<meta property="og:url" content="https://multigameweb.github.io/WebsiteResumePortfolio/resume-builder.html">
+<meta property="og:image" content="https://multigameweb.github.io/WebsiteResumePortfolio/preview.svg">
+<meta property="og:image:alt" content="SiteCraft website preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Resume Builder — SiteCraft">
+<meta name="twitter:description" content="Create and export an ATS-friendly resume with SiteCraft's free resume builder.">
+<meta name="twitter:image" content="https://multigameweb.github.io/WebsiteResumePortfolio/preview.svg">
 <title>Resume Builder — SiteCraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,6 +70,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   .resume-page:last-child{page-break-after:auto;break-after:auto}
   .format-selected{outline:none!important}
 }</style>
+<link rel="stylesheet" href="global.css">
 <link rel="stylesheet" href="site-navigation.css">
 </head>
 <body>
@@ -973,6 +987,7 @@ function standaloneDocument(){
   var pages=paginateResume(state.template),fontUrl=googleFontUrl(),doc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(norm(state.sections.header.name)||'Your Name')+' - Resume</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="'+fontUrl+'"><style>'+exportCss()+'</style></head><body>';
   pages.forEach(function(p){doc+=p.replace('class="page-wrap"','class="page"')});
   doc+='<script src="site-navigation.js"></script>
+<aside class="sc-cross-sell sc-cross-sell--floating" aria-label="Website template cross-sell"><div><strong>Need a website for your business too?</strong><p>Start with a premium design made for businesses like yours.</p></div><a class="sc-cross-sell-btn" href="templates.html">Browse templates <span aria-hidden="true">↗</span></a></aside>
 </body></html>';return doc
 }
 function downloadHtml(){flushTyping();var blob=new Blob([standaloneDocument()],{type:'text/html;charset=utf-8'});downloadBlob(blob,slug(state.sections.header.name||'resume')+'-resume.html');clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved');toast('Standalone HTML downloaded')}
