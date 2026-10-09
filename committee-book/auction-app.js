@@ -114,6 +114,77 @@ function seedDemo(){
 }
 function stateDummyDividendEligible(chit,m,winnerId){return chit.dividendRule==="allMembers"||m.id!==winnerId;}
 let state=seedDemo();
+state.backendConfigured=!!(window.AuctionChitBackend&&window.AuctionChitBackend.configured());
+state.authUser=null;
+state.availableChits=[];
+state.dbChitId=null;
+state.liveWorkspace=false;
+state.backendLoading=false;
+state.backendBusy=false;
+state.backendError=null;
+async function refreshLiveWorkspace(requestedChitId){
+ const backend=window.AuctionChitBackend;
+ if(!backend||!backend.configured()){state.backendConfigured=false;render();return;}
+ const lang=state.lang,page=state.page;
+ state.backendLoading=true;render();
+ try{
+  const inviteId=requestedChitId||(new URLSearchParams(window.location.search)).get("chit")||state.dbChitId||null;
+  const payload=await backend.loadWorkspace(inviteId);
+  state.authUser=payload.user||null;state.availableChits=payload.chits||[];state.backendConfigured=true;state.backendError=null;
+  if(payload.workspace){
+   Object.assign(state,payload.workspace);
+   state.dbChitId=payload.workspace.chit.dbId;
+   state.liveWorkspace=true;
+   state.authUser=payload.user;
+   state.availableChits=payload.chits||[];
+   state.backendConfigured=true;
+   state.backendLoading=false;
+   state.backendBusy=false;
+   state.backendError=null;
+   state.lang=lang;state.page=page;
+   state.modal=null;state.toast=null;
+  }else{
+   state.dbChitId=null;state.liveWorkspace=false;state.backendLoading=false;state.backendBusy=false;
+   state.lang=lang;state.page=page;
+   if(payload.user)state.role="organizer";
+  }
+  render();
+ }catch(error){
+  state.backendLoading=false;state.backendBusy=false;state.backendError=error&&error.message?error.message:String(error);
+  render();
+  toast(state.backendError,true);
+ }
+}
+async function bootstrapBackend(){
+ const backend=window.AuctionChitBackend;
+ if(!backend||!backend.configured()){state.backendConfigured=false;render();return;}
+ state.backendConfigured=true;
+ try{const user=await backend.getUser();state.authUser=user||null;if(user)await refreshLiveWorkspace((new URLSearchParams(window.location.search)).get("chit")||null);else render();}
+ catch(error){state.backendError=error.message||String(error);render();}
+}
+async function createLiveChit(){
+ const backend=window.AuctionChitBackend;
+ if(!backend||!backend.configured()){toast(t("backendSetupMissing"),true);return;}
+ if(!state.authUser){toast(t("signInReady"),true);return;}
+ if(!window.confirm(t("createLiveChit")+"? "+t("privacyNotice")))return;
+ state.backendBusy=true;render();
+ try{
+  const id=await backend.createWorkspace(state.chit,state.members,state.rulesHtml);
+  await refreshLiveWorkspace(id);
+  state.page="dashboard";render();toast(t("liveWorkspaceCreated"));
+ }catch(error){state.backendBusy=false;state.backendError=error.message||String(error);render();toast(state.backendError,true);}
+}
+async function persistLiveMember(member){
+ if(!state.liveWorkspace||!state.dbChitId)return;
+ const backend=window.AuctionChitBackend;
+ try{const id=await backend.saveMember(state.dbChitId,member);if(!member.dbId){member.dbId=id;member.id=id;}await refreshLiveWorkspace(state.dbChitId);}
+ catch(error){toast(error.message||String(error),true);}
+}
+async function persistAndReload(action){
+ try{state.backendBusy=true;render();await action();await refreshLiveWorkspace(state.dbChitId);}
+ catch(error){state.backendBusy=false;toast(error.message||String(error),true);}
+}
+function paymentHistoryIncluded(h){return h.type!=="reported";}
 function paymentFor(memberId,cycleNo){
  let p=state.payments.find(x=>x.memberId===memberId&&x.cycleNo===Number(cycleNo));
  if(!p){p={id:"p"+cycleNo+"-"+memberId,memberId:memberId,cycleNo:Number(cycleNo),paidPaise:0,status:"pending",mode:"upi",paidAt:"",screenshotName:"",history:[]};state.payments.push(p);}
