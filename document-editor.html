@@ -12,17 +12,18 @@
 .app{max-width:1380px;margin:auto;display:grid;grid-template-columns:300px minmax(0,1fr);min-height:calc(100vh - 61px)}.sidebar{border-right:1px solid var(--line);background:var(--surface);padding:20px;position:sticky;top:61px;height:calc(100vh - 61px);overflow:auto}.side-title{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin:2px 0 12px}.template{width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);padding:13px;border-radius:13px;margin-bottom:9px;font-weight:800;color:var(--text);transition:.15s}.template:hover{border-color:#c9c3ff;background:#faf9ff}.template.active{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}.template small{display:block;color:var(--muted);font-size:11px;font-weight:600;margin-top:3px}.blank{margin-top:6px;width:100%;border:1px dashed #c9ced6;border-radius:13px;background:var(--surface2);padding:12px;font-weight:900;color:var(--text)}
 .help{margin-top:18px;padding:13px;border-radius:13px;background:var(--surface2);font-size:11px;color:var(--muted)}.help strong{color:var(--text)}
 .main{min-width:0;padding:18px 22px 50px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.doc-title{font-size:20px;font-weight:900}.save-state{font-size:11px;color:var(--muted);font-weight:800}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:9px 12px;font-size:12px;font-weight:900}.btn.primary{background:#17181d;color:#fff;border-color:#17181d}.btn:disabled{opacity:.5;cursor:not-allowed}
-.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:12px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}.field label{display:block;font-size:10px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}.field input{width:100%;margin-top:4px;border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:var(--surface);color:var(--text);outline:none}.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}
-.editor-shell{position:relative;min-width:0}.floating{position:sticky;top:73px;z-index:10;display:flex;justify-content:center;margin:0 auto 12px}.toolbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:7px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(12px);border-radius:13px;box-shadow:0 12px 35px rgba(23,24,29,.1)}.toolbar button,.toolbar select{height:32px;border:1px solid var(--line);background:var(--surface);border-radius:8px;color:var(--text);font-size:12px;font-weight:900}.toolbar button{min-width:32px}.toolbar button:hover{border-color:#bfc5ce;background:var(--surface2)}.toolbar .sep{height:22px;width:1px;background:var(--line);margin:0 2px}.toolbar select{padding:0 8px}
+.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:12px;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}.field label{display:block;font-size:10px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}.field input,.field textarea{width:100%;margin-top:4px;border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:var(--surface);color:var(--text);outline:none}.field textarea{min-height:88px;resize:vertical;line-height:1.45}.field input:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}
+.editor-shell{position:relative;min-width:0}.floating{position:sticky;top:73px;z-index:10;display:flex;justify-content:center;margin:0 auto 12px}.toolbar{display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:7px;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(12px);border-radius:13px;box-shadow:0 12px 35px rgba(23,24,29,.1)}.toolbar button,.toolbar select{height:32px;border:1px solid var(--line);background:var(--surface);border-radius:8px;color:var(--text);font-size:12px;font-weight:900}.toolbar button{min-width:32px}.toolbar button:hover{border-color:#bfc5ce;background:var(--surface2)}.toolbar button.active{background:var(--accent2);border-color:var(--accent);color:var(--accent)}.toolbar .sep{height:22px;width:1px;background:var(--line);margin:0 2px}.toolbar select{padding:0 8px}
 .page-wrap{display:flex;justify-content:center;padding:4px 0 50px}.page{width:var(--paper-w);min-height:var(--paper-h);background:var(--paper);box-shadow:0 20px 55px rgba(23,24,29,.13);padding:72px 70px;color:#1b1e24;outline:none;line-height:1.6;font-family:Arial,Helvetica,sans-serif;font-size:14px}.page:focus{box-shadow:0 0 0 2px var(--accent),0 20px 55px rgba(23,24,29,.13)}.page h1,.page h2,.page h3{margin:0 0 12px;line-height:1.2}.page h1{font-size:26px;text-align:center}.page h2{font-size:18px}.page h3{font-size:15px}.page p{margin:0 0 14px}.page ul,.page ol{margin:0 0 14px;padding-left:25px}.page .center{text-align:center}.page .subject{font-weight:700}.page .field-token{background:#f0efff;border-radius:4px;padding:1px 3px}.page hr{border:0;border-top:1px solid #d9dde3;margin:22px 0}.page table{width:100%;border-collapse:collapse;margin:12px 0}.page th,.page td{border:1px solid #bfc5ce;padding:7px;text-align:left}.statusline{font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
 @media(max-width:1050px){.app{grid-template-columns:240px 1fr}.fields{grid-template-columns:repeat(2,minmax(0,1fr))}.page{transform:scale(.86);transform-origin:top center;margin-bottom:-150px}}
 @media(max-width:760px){.app{display:block}.sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:12px;display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.side-title,.help{grid-column:1/-1}.template{margin:0}.blank{margin:0}.main{padding:14px 10px}.fields{grid-template-columns:1fr}.floating{position:sticky;top:66px}.toolbar{justify-content:center}.page{transform:none;width:min(100%,794px);min-height:1050px;padding:42px 30px;font-size:13px}.page-wrap{padding-bottom:20px}.topbar{align-items:flex-start;flex-direction:column}}
+@page{size:A4;margin:0}
 @media print{
- body{background:#fff!important}.header,.sidebar,.topbar,.actions,.fields,.floating,.statusline{display:none!important}.app,.main,.editor-shell,.page-wrap{display:block!important;max-width:none!important;margin:0!important;padding:0!important}.page{width:210mm!important;min-height:297mm!important;box-shadow:none!important;margin:0 auto!important;padding:18mm!important;transform:none!important}.page:focus{box-shadow:none!important}
+ html,body{width:210mm!important;min-height:297mm!important;margin:0!important;padding:0!important;background:#fff!important}body *{visibility:hidden!important}.header,.sidebar,.topbar,.actions,.fields,.floating,.statusline{display:none!important}.app,.main,.editor-shell,.page-wrap{display:block!important;visibility:visible!important;max-width:none!important;width:210mm!important;margin:0!important;padding:0!important}.page-wrap{padding:0!important;break-inside:auto!important;page-break-inside:auto!important}.page,.page *{visibility:visible!important}.page{display:block!important;width:210mm!important;min-height:297mm!important;box-shadow:none!important;margin:0!important;padding:18mm!important;transform:none!important;outline:none!important;break-after:auto!important;page-break-after:auto!important}.page:focus{box-shadow:none!important}
 }
 @media(prefers-color-scheme:dark){:root{--bg:#0e1013;--surface:#15181d;--surface2:#1b1f25;--text:#f3f5f7;--muted:#aab1bc;--line:#2a3038;--accent2:#242447;--paper:#fff}.page{color:#1b1e24}.toolbar select,.toolbar button,.field input{background:#171b20;color:var(--text)}.field input::placeholder{color:#818995}}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js" onerror="window.htmlDocxLoadFailed=true"></script>
 </head>
 <body>
 <header class="header"><div class="header-inner"><a class="logo" href="index.html"><span class="logo-mark">✦</span><span>SiteCraft</span></a><nav class="nav" aria-label="Primary"><a href="templates.html">Templates</a><a href="portfolio-creator.html">Portfolio Creator</a><a href="resume-builder.html">Resume Builder</a><a href="pdf-tools.html">PDF Tools</a><a href="document-editor.html">Document Editor</a></nav></div></header>
@@ -78,32 +79,33 @@
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const STORAGE_KEY="sitecraft-document-editor-v1";
+const todayLong=()=>new Intl.DateTimeFormat("en-GB",{day:"numeric",month:"long",year:"numeric"}).format(new Date());
 const templates={
  noc:{
   title:"NOC Undertaking",
   fields:[
-   ["name","Full name","Dr M Devendra"],["designation","Designation","Assistant Professor (Part-Time)"],["department","Department","Department of Telugu"],["institution","Institution","Veeranari Chakali Ilamma Women’s University"],["authority","Authority / office","The Director General, National Testing Agency"],["city","City","New Delhi"],["subject","Subject","Undertaking to furnish No Objection Certificate"],["date","Date","7 October 2026"]
+   ["name","Full name","Dr M Devendra"],["designation","Designation","Assistant Professor (Part-Time)"],["department","Department","Department of Telugu"],["institution","Institution","Veeranari Chakali Ilamma Women’s University"],["authority","Authority / office","The Director General, National Testing Agency"],["city","City","New Delhi"],["subject","Subject","Undertaking to furnish No Objection Certificate"],["date","Date",todayLong()]
   ],
   html:d=>`<h1>UNDERTAKING FOR NO OBJECTION CERTIFICATE (NOC)</h1><p>To,</p><p>${d.authority}<br>${d.city}</p><p class="subject">Subject: ${d.subject}</p><p>Sir/Madam,</p><p>I, <strong>${d.name}</strong>, ${d.designation}, ${d.department}, <strong>${d.institution}</strong>, hereby submit this undertaking in connection with my application. I undertake to furnish the required No Objection Certificate as applicable.</p><p>I declare that the information furnished by me is true and correct to the best of my knowledge and belief.</p><p>Thanking you,</p><p>Yours faithfully,</p><p><strong>${d.name}</strong><br>${d.designation}<br>${d.institution}<br>Date: ${d.date}</p>`
  },
  job:{
   title:"Job Application",
-  fields:[["name","Applicant name","Your Name"],["role","Position","Subject Matter Expert"],["company","Organization","Organization Name"],["address","Address","Organization Address"],["date","Date","7 October 2026"]],
+  fields:[["name","Applicant name","Your Name"],["role","Position","Subject Matter Expert"],["company","Organization","Organization Name"],["address","Address","Organization Address"],["date","Date",todayLong()]],
   html:d=>`<p style="text-align:right">${d.date}</p><p>To,<br>${d.company}<br>${d.address}</p><p class="subject">Subject: Application for the position of ${d.role}</p><p>Sir/Madam,</p><p>I, <strong>${d.name}</strong>, wish to apply for the position of <strong>${d.role}</strong>. I believe my qualifications and experience make me a suitable candidate for the role.</p><p>I request you to kindly consider my application. I would be grateful for an opportunity to discuss my candidature further.</p><p>Thanking you,</p><p>Yours faithfully,<br><strong>${d.name}</strong></p>`
  },
  leave:{
   title:"Leave Letter",
-  fields:[["name","Name","Your Name"],["designation","Designation","Your Designation"],["department","Department","Your Department"],["from","From date","7 October 2026"],["to","To date","9 October 2026"],["reason","Reason","Personal work"],["authority","To","The Head of Department"]],
+  fields:[["name","Name","Your Name"],["designation","Designation","Your Designation"],["department","Department","Your Department"],["from","From date",todayLong()],["to","To date",todayLong()],["reason","Reason","Personal work"],["authority","To","The Head of Department"]],
   html:d=>`<p>${d.authority}<br>${d.department}</p><p class="subject">Subject: Request for leave from ${d.from} to ${d.to}</p><p>Sir/Madam,</p><p>I, <strong>${d.name}</strong>, working as ${d.designation} in ${d.department}, request leave from <strong>${d.from}</strong> to <strong>${d.to}</strong> due to ${d.reason}.</p><p>I kindly request you to grant me leave for the above period. I shall resume my duties thereafter.</p><p>Thanking you,</p><p>Yours faithfully,<br><strong>${d.name}</strong><br>${d.designation}</p>`
  },
  request:{
   title:"Request Letter",
-  fields:[["name","Name","Your Name"],["designation","Designation","Your Designation"],["organization","Organization","Organization Name"],["authority","Authority","The Concerned Authority"],["subject","Subject","Request for necessary action"],["details","Details","Please provide the required information or request here."],["date","Date","7 October 2026"]],
+  fields:[["name","Name","Your Name"],["designation","Designation","Your Designation"],["organization","Organization","Organization Name"],["authority","Authority","The Concerned Authority"],["subject","Subject","Request for necessary action"],["details","Details","Please provide the required information or request here."],["date","Date",todayLong()]],
   html:d=>`<p>${d.authority}</p><p class="subject">Subject: ${d.subject}</p><p>Sir/Madam,</p><p>I, <strong>${d.name}</strong>, ${d.designation} at ${d.organization}, respectfully submit the following request.</p><p>${d.details}</p><p>I kindly request you to consider the matter and take the necessary action.</p><p>Thanking you,</p><p>Yours faithfully,<br><strong>${d.name}</strong><br>${d.designation}<br>Date: ${d.date}</p>`
  },
  declaration:{
   title:"Declaration",
-  fields:[["name","Full name","Your Name"],["address","Address","Your Address"],["subject","Declaration regarding","The information submitted"],["details","Declaration text","I hereby declare that all information furnished by me is true and correct."],["date","Date","7 October 2026"],["place","Place","Hyderabad"]],
+  fields:[["name","Full name","Your Name"],["address","Address","Your Address"],["subject","Declaration regarding","The information submitted"],["details","Declaration text","I hereby declare that all information furnished by me is true and correct."],["date","Date",todayLong()],["place","Place","Hyderabad"]],
   html:d=>`<h1>DECLARATION</h1><p>I, <strong>${d.name}</strong>, residing at ${d.address}, hereby make the following declaration regarding <strong>${d.subject}</strong>.</p><p>${d.details}</p><p>I understand that any false statement may have consequences under the applicable rules.</p><p>Place: ${d.place}<br>Date: ${d.date}</p><p style="margin-top:60px"><strong>Signature</strong><br>${d.name}</p>`
  },
  resume:{
@@ -113,55 +115,212 @@ const templates={
  },
  general:{
   title:"General Application",
-  fields:[["name","Name","Your Name"],["authority","To","The Concerned Authority"],["organization","Organization","Organization Name"],["subject","Subject","Application regarding"],["details","Application details","Write your application here."],["date","Date","7 October 2026"]],
+  fields:[["name","Name","Your Name"],["authority","To","The Concerned Authority"],["organization","Organization","Organization Name"],["subject","Subject","Application regarding"],["details","Application details","Write your application here."],["date","Date",todayLong()]],
   html:d=>`<p>${d.authority}<br>${d.organization}</p><p class="subject">Subject: ${d.subject}</p><p>Sir/Madam,</p><p>I, <strong>${d.name}</strong>, respectfully submit the following application.</p><p>${d.details}</p><p>I request you to kindly consider my application and take the necessary action.</p><p>Thanking you,</p><p>Yours faithfully,<br><strong>${d.name}</strong><br>Date: ${d.date}</p>`
  }
 };
-let current="noc",values={};
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",""":"&quot;","'":"&#039;"}[m]))}
+let current="noc",values={},blankMode=false,hasManualEdits=false,isRenderingDoc=false,savedRange=null;
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function safeText(s){return esc(s).replace(/\r\n?|\n/g,"<br>")}
 function getDefaults(key){const o={};templates[key].fields.forEach(f=>o[f[0]]=f[2]);return o}
+function rawTemplateValues(key,extra){return {...getDefaults(key),...(extra||{})}}
+function buildTemplateHtml(key,extra){
+ const raw=rawTemplateValues(key,extra);
+ const safe=Object.fromEntries(Object.entries(raw).map(([k,v])=>[k,safeText(v==null?"":v)]));
+ return templates[key].html(safe);
+}
 function renderFields(){
- const t=templates[current],d={...getDefaults(current),...values};
- $("fields").innerHTML=t.fields.map(f=>'<div class="field"><label>'+esc(f[1])+'</label><input data-key="'+f[0]+'" value="'+esc(d[f[0]]||"")+'"></div>').join("");
- $$("#fields input").forEach(i=>i.addEventListener("input",function(){values[i.dataset.key]=i.value;renderDoc(false);queueSave()}));
+ const box=$("#fields");
+ if(blankMode){box.innerHTML="";return}
+ const t=templates[current],d=rawTemplateValues(current,values);
+ const longFields=new Set(["details","summary","experience","education"]);
+ box.innerHTML=t.fields.map(f=>{
+  const key=f[0],value=String(d[key]??"");
+  const control=longFields.has(key)
+   ?'<textarea data-key="'+esc(key)+'" rows="3" aria-label="'+esc(f[1])+'">'+esc(value)+'</textarea>'
+   :'<input data-key="'+esc(key)+'" value="'+esc(value)+'" aria-label="'+esc(f[1])+'">';
+  return '<div class="field"><label>'+esc(f[1])+'</label>'+control+'</div>';
+ }).join("");
+ $$("#fields [data-key]").forEach(el=>el.addEventListener("input",function(){
+  const key=el.dataset.key,defaults=getDefaults(current);
+  const previous=values[key]??defaults[key]??"";
+  if(hasManualEdits){
+   const proceed=window.confirm("You have manually edited the document. Changing this field will rebuild it from the template and replace those manual edits. Continue?");
+   if(!proceed){el.value=String(previous);return}
+  }
+  values[key]=el.value;
+  renderDoc(false);
+  queueSave();
+ }));
 }
 function renderDoc(focus=true){
- const d={...getDefaults(current),...values};
- $("page").innerHTML=templates[current].html(d);
- $("docTitle").textContent=templates[current].title;
- if(focus)$("page").focus();
+ if(blankMode){
+  $("#docTitle").textContent="Blank Document";
+  if(focus)$("#page").focus();
+  return;
+ }
+ isRenderingDoc=true;
+ $("#page").innerHTML=buildTemplateHtml(current,values);
+ isRenderingDoc=false;
+ hasManualEdits=false;
+ $("#docTitle").textContent=templates[current].title;
+ if(focus)$("#page").focus();
+ updateToolbarState();
 }
+function showSaveStatus(message){const el=$("#saveState");if(el)el.textContent=message}
 function save(){
- const payload={template:current,values:values,html:$("page").innerHTML};
- localStorage.setItem(STORAGE_KEY,JSON.stringify(payload));
- $("saveState").textContent="Saved just now";
- setTimeout(()=>{$("saveState").textContent="Auto-save on"},1200);
+ const payload={template:blankMode?"blank":current,lastTemplate:current,values:blankMode?{}:values,html:$("#page").innerHTML};
+ try{
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(payload));
+  showSaveStatus("Saved just now");
+  setTimeout(()=>{if($("#saveState"))showSaveStatus("Auto-save on")},1200);
+ }catch(error){
+  showSaveStatus("Could not save on this device");
+  console.warn("Document Editor: local storage write failed.",error);
+ }
 }
 let saveTimer;
 function queueSave(){clearTimeout(saveTimer);saveTimer=setTimeout(save,400)}
-function loadSaved(){
- try{const s=JSON.parse(localStorage.getItem(STORAGE_KEY));if(!s)return false;if(templates[s.template])current=s.template;values=s.values||{};renderFields();$("page").innerHTML=s.html||"";$("docTitle").textContent=templates[current].title;setActive();return true}catch(e){return false}
+function htmlHasContent(html){
+ if(typeof html!=="string"||!html.trim())return false;
+ const probe=document.createElement("div");
+ try{probe.innerHTML=html}catch(_){return false}
+ return !!(probe.textContent.trim()||probe.querySelector("img,table,hr,svg,canvas,video,iframe,object"));
 }
-function setActive(){$$(".template").forEach(b=>b.classList.toggle("active",b.dataset.template===current))}
-function choose(key){current=key;values={};renderFields();renderDoc(false);setActive();save()}
-$$(".template").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.template)));
-$("blankBtn").addEventListener("click",function(){current="general";values={};renderFields();$("page").innerHTML="<p><br></p>";$("docTitle").textContent="Blank Document";setActive();save()});
-$("page").addEventListener("input",queueSave);
-$$("[data-cmd]").forEach(b=>b.addEventListener("click",()=>{document.execCommand(b.dataset.cmd,false,null);$("page").focus();queueSave()}));
-$("fontSize").addEventListener("change",e=>{document.execCommand("fontSize",false,e.target.value);$("page").focus();queueSave()});
-$("blockFormat").addEventListener("change",e=>{document.execCommand("formatBlock",false,e.target.value);$("page").focus();queueSave()});
-$("pdfBtn").addEventListener("click",()=>{save();window.print()});
-$("wordBtn").addEventListener("click",()=>{
- save();
- if(!window.htmlDocx){alert("Word export library did not load. Please try again.");return}
- const css=".page{width:210mm;min-height:297mm;padding:18mm;color:#1b1e24;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6}.page h1{font-size:26px;text-align:center}.page h2{font-size:18px}.page p{margin:0 0 14px}.page table{width:100%;border-collapse:collapse}.page th,.page td{border:1px solid #999;padding:7px}";
- const source="<html><head><meta charset='utf-8'><style>"+css+"</style></head><body>"+$("page").outerHTML+"</body></html>";
- const blob=window.htmlDocx.asBlob(source);
- const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=(templates[current]?.title||"document").replace(/\s+/g,"-").toLowerCase()+".docx";a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
+function loadSaved(){
+ let stored;
+ try{stored=localStorage.getItem(STORAGE_KEY)}catch(error){showSaveStatus("Local storage is unavailable");console.warn("Document Editor: local storage read failed.",error);return false}
+ if(!stored)return false;
+ let saved;
+ try{saved=JSON.parse(stored)}catch(error){console.warn("Document Editor: saved data is invalid JSON.",error);return false}
+ if(!saved||typeof saved!=="object")return false;
+ if(saved.template==="blank"){
+  blankMode=true;
+  current=templates[saved.lastTemplate]?saved.lastTemplate:"noc";
+  values={};
+  renderFields();
+  $("#page").innerHTML=typeof saved.html==="string"&&saved.html.trim()?saved.html:"<p><br></p>";
+  $("#docTitle").textContent="Blank Document";
+  hasManualEdits=true;
+  setActive();
+  updateToolbarState();
+  return true;
+ }
+ if(!templates[saved.template])return false;
+ current=saved.template;
+ blankMode=false;
+ values=saved.values&&typeof saved.values==="object"&&!Array.isArray(saved.values)?saved.values:{};
+ renderFields();
+ if(!htmlHasContent(saved.html)){
+  renderDoc(false);
+  setActive();
+  return true;
+ }
+ $("#page").innerHTML=saved.html;
+ $("#docTitle").textContent=templates[current].title;
+ hasManualEdits=saved.html!==buildTemplateHtml(current,values);
+ setActive();
+ updateToolbarState();
+ return true;
+}
+function setActive(){$$(".template").forEach(b=>b.classList.toggle("active",!blankMode&&b.dataset.template===current))}
+function choose(key){
+ current=key;blankMode=false;values={};hasManualEdits=false;
+ renderFields();renderDoc(false);setActive();save();
+}
+function rangeInsidePage(range){
+ if(!range)return false;
+ const node=range.commonAncestorContainer,el=node&&(node.nodeType===1?node:node.parentElement);
+ return !!el&&$("#page").contains(el);
+}
+function rememberSelection(){
+ const sel=window.getSelection();
+ if(sel&&sel.rangeCount){const range=sel.getRangeAt(0);if(rangeInsidePage(range))savedRange=range.cloneRange()}
+}
+function restoreSelection(){
+ if(!savedRange)return false;
+ const sel=window.getSelection();
+ try{sel.removeAllRanges();sel.addRange(savedRange);return true}catch(_){return false}
+}
+function updateToolbarState(){
+ const sel=window.getSelection();
+ if(!sel||!sel.rangeCount||!rangeInsidePage(sel.getRangeAt(0)))return;
+ const node=sel.anchorNode,element=node&&(node.nodeType===1?node:node.parentElement);
+ const block=element&&element.closest?element.closest("h1,h2,h3,p,li,div"):null;
+ let format="p";
+ if(block&&$("#page").contains(block)){
+  const tag=block.tagName.toLowerCase();
+  if(tag==="h1")format="h1";else if(tag==="h2")format="h2";else if(tag==="h3")format="h3";
+ }
+ $("#blockFormat").value=format;
+ ["bold","italic","underline"].forEach(cmd=>{
+  const button=$('[data-cmd="'+cmd+'"]');if(!button)return;
+  let active=false;try{active=document.queryCommandState(cmd)}catch(_){}
+  button.classList.toggle("active",active);button.setAttribute("aria-pressed",active?"true":"false");
+ });
+}
+function runCommand(command,value=null){
+ $("#page").focus();
+ restoreSelection();
+ try{document.execCommand(command,false,value)}catch(error){console.warn("Document Editor formatting command failed:",command,error)}
+ rememberSelection();
+ hasManualEdits=true;queueSave();updateToolbarState();
+}
+$$("#.template").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.template)));
+$("#blankBtn").addEventListener("click",function(){
+ blankMode=true;values={};hasManualEdits=false;renderFields();
+ $("#page").innerHTML="<p><br></p>";$("#docTitle").textContent="Blank Document";
+ setActive();updateToolbarState();save();
 });
-$("clearBtn").addEventListener("click",()=>{if(!confirm("Reset this document to the template defaults?"))return;localStorage.removeItem(STORAGE_KEY);values={};renderFields();renderDoc(false);});
-$("page").addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="s"){e.preventDefault();save()}});
-if(!loadSaved()){renderFields();renderDoc(false)}
+$("#page").addEventListener("input",function(){if(!isRenderingDoc)hasManualEdits=true;rememberSelection();updateToolbarState();queueSave()});
+$("#page").addEventListener("keyup",function(){rememberSelection();updateToolbarState()});
+$("#page").addEventListener("mouseup",function(){rememberSelection();updateToolbarState()});
+document.addEventListener("selectionchange",function(){rememberSelection();updateToolbarState()});
+$$("#.toolbar button").forEach(button=>{
+ button.addEventListener("mousedown",function(event){rememberSelection();event.preventDefault()});
+ button.addEventListener("click",function(){runCommand(button.dataset.cmd)});
+});
+$$("#.toolbar select").forEach(select=>{
+ select.addEventListener("mousedown",rememberSelection);select.addEventListener("focus",rememberSelection);
+});
+$("#fontSize").addEventListener("change",function(event){runCommand("fontSize",event.target.value)});
+$("#blockFormat").addEventListener("change",function(event){runCommand("formatBlock",event.target.value)});
+$("#page").addEventListener("paste",function(event){
+ event.preventDefault();rememberSelection();restoreSelection();
+ const clipboard=event.clipboardData||window.clipboardData;
+ const text=clipboard?clipboard.getData("text/plain"):"";
+ try{document.execCommand("insertText",false,text)}catch(_){
+  const sel=window.getSelection();
+  if(sel&&sel.rangeCount){const range=sel.getRangeAt(0);range.deleteContents();range.insertNode(document.createTextNode(text));range.collapse(false);sel.removeAllRanges();sel.addRange(range)}
+ }
+ hasManualEdits=true;rememberSelection();queueSave();updateToolbarState();
+});
+try{document.execCommand("defaultParagraphSeparator",false,"p")}catch(_){}
+$("#pdfBtn").addEventListener("click",function(){save();window.print()});
+$("#wordBtn").addEventListener("click",function(){
+ save();
+ if(!window.htmlDocx||typeof window.htmlDocx.asBlob!=="function"){
+  alert("Word export is unavailable because the html-docx-js library failed to load. Check your internet connection and reload this page, or use Print / Save PDF.");
+  return;
+ }
+ const css=".page{width:210mm;min-height:297mm;padding:18mm;color:#1b1e24;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6}.page h1{font-size:26px;text-align:center}.page h2{font-size:18px}.page p{margin:0 0 14px}.page table{width:100%;border-collapse:collapse}.page th,.page td{border:1px solid #999;padding:7px}";
+ const source="<html><head><meta charset='utf-8'><style>"+css+"</style></head><body><div class='page'>"+$("#page").innerHTML+"</div></body></html>";
+ try{
+  const blob=window.htmlDocx.asBlob(source);if(!blob)throw new Error("The Word export library did not return a document.");
+  const url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download=(blankMode?"document":(templates[current]?.title||"document")).replace(/\s+/g,"-").toLowerCase()+".docx";
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+ }catch(error){console.error("Document Editor: Word export failed.",error);alert("Word export failed. Please try again or use Print / Save PDF.")}
+});
+$("#clearBtn").addEventListener("click",function(){
+ if(!confirm("Reset this document to the template defaults?"))return;
+ try{localStorage.removeItem(STORAGE_KEY)}catch(error){console.warn("Document Editor: could not clear local storage.",error)}
+ values={};hasManualEdits=false;
+ if(blankMode){$("#page").innerHTML="<p><br></p>";renderFields();$("#docTitle").textContent="Blank Document";save()}
+ else{renderFields();renderDoc(false);save()}
+});
+$("#page").addEventListener("keydown",function(event){if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==="s"){event.preventDefault();save()}});
+if(!loadSaved()){renderFields();renderDoc(false);setActive();}
 </script>
 </body>
 </html>
