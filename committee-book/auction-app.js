@@ -505,7 +505,7 @@ function finalizeWinner(manual){
 }
 function declareWinner(){return finalizeWinner(true);}
 function markPayment(id,kind){
- const c=currentCycle();if(!c)return;const m=mBy(id),d=paymentDue(m,c),p=d.payment;let amount=0;
+ const c=state.cycles.find(x=>x.monthNo===Number(state.selectedPaymentMonth))||currentCycle();if(!c)return;const m=mBy(id),d=paymentDue(m,c),p=d.payment;let amount=0;
  if(kind==="paid")amount=d.remaining;
  else{const answer=window.prompt(t("amountReceived")+" ("+money(d.remaining)+")",(d.remaining/100).toFixed(2));if(answer===null)return;amount=parseMoney(answer);if(amount<=0||amount>=d.remaining){toast(t("validationPot"),true);return;}}
  if(amount<=0){toast(t("saved"));return;}
@@ -519,7 +519,7 @@ function markPayment(id,kind){
  toast(t("paymentSaved"));
 }
 function reversePayment(id){
- const c=currentCycle();if(!c)return;const p=paymentFor(id,c.monthNo);if(p.paidPaise<=0)return;
+ const c=state.cycles.find(x=>x.monthNo===Number(state.selectedPaymentMonth))||currentCycle();if(!c)return;const p=paymentFor(id,c.monthNo);if(p.paidPaise<=0)return;
  if(!window.confirm(t("reverseConfirm")))return;
  if(state.liveWorkspace){
   const ids=(p.entries||[]).filter(entry=>entry.type==="payment"&&entry.status==="confirmed"&&!entry.alreadyReversed).map(entry=>entry.dbId);
@@ -531,7 +531,7 @@ function reversePayment(id){
  toast(t("reversalSaved"));
 }
 function generateQr(id){
- const m=mBy(id||state.previewMemberId),c=currentCycle();if(!m||!c)return;
+ const m=mBy(id||state.previewMemberId),c=state.cycles.find(x=>x.monthNo===Number(state.selectedPaymentMonth))||currentCycle();if(!m||!c)return;
  const d=paymentDue(m,c);
  const box=document.getElementById("qrBox"),image=document.getElementById("qrImage");
  if(!state.chit.upiId){if(box)box.textContent=t("qrNotConfigured");return;}
@@ -596,6 +596,18 @@ root.addEventListener("click",function(e){
  if(a==="reverse-payment"){reversePayment(el.getAttribute("data-id"));return;}
  if(a==="show-qr"){generateQr(el.getAttribute("data-id"));return;}
  if(a==="view-document"){openPrivateDocument(el.getAttribute("data-path"));return;}
+ if(a==="submit-payment-report"){
+  const monthNo=Number(state.selectedPaymentMonth)||(currentCycle()&&currentCycle().monthNo),c=state.cycles.find(x=>x.monthNo===monthNo),m=mBy(state.previewMemberId);
+  const amount=parseMoney((document.getElementById("reported-payment-amount")||{}).value||"");const mode=(document.getElementById("reported-payment-mode")||{}).value||"upi";const file=(document.getElementById("payment-screenshot")||{}).files?.[0];
+  if(!state.liveWorkspace||!c||c.status!=="completed"){toast(t("cycleLocked"),true);return;}
+  if(!m||!file||amount<=0){toast(t("screenshotRequired"),true);return;}
+  const due=paymentDue(m,c);if(amount>due.remaining+due.fine){toast(t("validationPot"),true);return;}
+  const chitId=state.dbChitId,cycleId=c.dbId,memberId=m.id;
+  persistAndReload(async()=>{const path=await window.AuctionChitBackend.uploadPrivateFile(chitId,memberId,file);await window.AuctionChitBackend.submitPayment(cycleId,amount,mode,path);});return;
+ }
+ if(a==="confirm-payment-report"||a==="reject-payment-report"){
+  const approve=a==="confirm-payment-report";persistAndReload(()=>window.AuctionChitBackend.confirmPayment(el.getAttribute("data-id"),approve));return;
+ }
  if(a==="export-csv"){exportCsv();return;}
  if(a==="print-pdf"){window.print();return;}
  if(a==="save-rules"){const box=document.querySelector("[data-rule-content]");if(box)state.rulesHtml=sanitizeRules(box.innerHTML);toast(t("rulesSaved"));return;}
@@ -605,7 +617,8 @@ root.addEventListener("change",function(e){
  const el=e.target,a=el.getAttribute("data-action");
  if(a==="role-select"){state.role=el.value;render();return;}
  if(a==="preview-member"){state.previewMemberId=el.value;render();return;}
- if(a==="payment-mode"){const p=paymentFor(el.getAttribute("data-id"),currentCycle().monthNo);p.mode=el.value;render();return;}
+ if(a==="payment-month"){state.selectedPaymentMonth=Number(el.value);render();return;}
+ if(a==="payment-mode"){const c=state.cycles.find(x=>x.monthNo===Number(state.selectedPaymentMonth))||currentCycle();const p=paymentFor(el.getAttribute("data-id"),c.monthNo);p.mode=el.value;if(state.liveWorkspace){toast(t("saved"));return;}render();return;}
  if(a==="payment-toggle"){if(el.checked)markPayment(el.getAttribute("data-id"),"paid");else reversePayment(el.getAttribute("data-id"));return;}
  if(a==="upload-document"){const file=el.files&&el.files[0];if(!file)return;if(!state.liveWorkspace||!state.dbChitId){toast(t("noKycUpload"),true);return;}const member=mBy(el.getAttribute("data-id")),type=el.getAttribute("data-doc-type");if(!member){toast(t("noRows"),true);return;}const chitId=state.dbChitId;persistAndReload(async()=>{const path=await window.AuctionChitBackend.uploadPrivateFile(chitId,member.id,file);await window.AuctionChitBackend.saveMemberDocument(chitId,member.id,path,type);});return;}
 });
