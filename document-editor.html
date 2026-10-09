@@ -751,9 +751,7 @@ $("#wordBtn").addEventListener("click",function(){
   const dims=currentPaperDimensions(),marginMm=PAPER_MARGINS[paperSettings.margin]||PAPER_MARGINS.normal,contentWidth=Math.max(10,dims.width-2*marginMm),theme=currentTheme();
   const css="@page{size:"+dims.width+"mm "+dims.height+"mm;margin:"+marginMm+"mm}body{margin:0;color:#171b21;background-color:"+pageBackground+";font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6}.page{box-sizing:border-box;width:"+contentWidth+"mm;min-height:"+Math.max(10,dims.height-2*marginMm)+"mm;padding:0;color:#171b21;background-color:"+pageBackground+";border:"+(pageBorder?"1px solid "+theme.accent:"0 solid transparent")+";font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6}.page h1,.page h2,.page h3{color:"+theme.heading+"}.page h1{font-size:26px;text-align:center}.page h2{font-size:18px}.page p{margin:0 0 14px}.page hr{border-top-color:"+theme.divider+"}.page table{width:100%;min-width:0!important;table-layout:fixed;border-collapse:collapse;margin:12px 0}.page .table-scroll{width:100%;overflow:visible}.page th,.page td{border:1px solid "+theme.border+";padding:7px;vertical-align:top;break-inside:avoid}.page tr{break-inside:avoid}.page th,.page table[data-header-row='true'] tr:first-child td,.page table[data-header-row='true'] tr:first-child th,.page table[data-title-box='true'] tr:first-child td{background-color:"+theme.header+";color:"+theme.headerText+"}.page table[data-header-band='true'] td{background-color:"+theme.accent+";color:#ffffff}.page table[data-borders='off'] td,.page table[data-borders='off'] th{border-color:transparent}";
   const exportRoot=document.createElement("div");exportRoot.innerHTML=serializablePageHTML({stripEditable:true});prepareColorExport(exportRoot);
-  const source="<html><head><meta charset='utf-8'><style>"+css+"</style></head><body bgcolor='"+pageBackground+"'><div class='page' style='background-color:"+pageBackground+";border:"+(pageBorder?"1px solid "+theme.accent:"0 solid transparent")+"'>"+exportRoot.innerHTML+"</div><script src="site-navigation.js"></script>
-<aside class="sc-cross-sell" aria-label="Website template cross-sell"><div><strong>Need a website for your business too?</strong><p>Start with a premium design made for businesses like yours.</p></div><a class="sc-cross-sell-btn" href="templates.html">Browse templates <span aria-hidden="true">↗</span></a></aside>
-</body></html>";
+  const source="<html><head><meta charset='utf-8'><style>"+css+"</style></head><body bgcolor='"+pageBackground+"'><div class='page' style='background-color:"+pageBackground+";border:"+(pageBorder?"1px solid "+theme.accent:"0 solid transparent")+"'>"+exportRoot.innerHTML+"</div></body></html>";
   const marginTwips=Math.round(marginMm*1440/25.4);
   const blob=window.htmlDocx.asBlob(source,{orientation:paperSettings.orientation==="landscape"?"landscape":"portrait",margins:{top:marginTwips,right:marginTwips,bottom:marginTwips,left:marginTwips}});
   if(!blob)throw new Error("The Word export library returned an empty document.");
@@ -781,5 +779,7 @@ $("#page").addEventListener("keydown",function(event){
 if(!loadSaved()){renderFields();renderDoc(false);setActive();}
 applyPaperSettings();applyDocumentTheme();setFieldsPanelOpen(fieldsPanelOpen);updatePaperScale();decorateTables();initHistory();
 </script>
+<script src="site-navigation.js"></script>
+<aside class="sc-cross-sell" aria-label="Website template cross-sell"><div><strong>Need a website for your business too?</strong><p>Start with a premium design made for businesses like yours.</p></div><a class="sc-cross-sell-btn" href="templates.html">Browse templates <span aria-hidden="true">↗</span></a></aside>
 </body>
 </html>
