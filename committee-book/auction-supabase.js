@@ -56,10 +56,11 @@ async function loadWorkspace(requestedChitId){
  members.forEach(m=>{m.agreementDocPath=(documentRes.data||[]).find(d=>d.member_id===m.id&&d.document_type==="agreement")?.storage_path||null;cycles.forEach(cy=>{if(cy.winnerId===m.id){m.status="winner";m.wonMonths.push(cy.monthNo);}});});
  const bids=(bidRes.data||[]).map(b=>({id:b.id,dbId:b.id,memberId:b.member_id,cycleNo:cycleIdToNo.get(b.cycle_id),cycleDbId:b.cycle_id,amountPaise:Number(b.amount_paise),status:b.status,createdAt:b.created_at,approvedAt:b.approved_at,approvedBy:b.approved_by}));
  const payRows=paymentRes.data||[],byPayment=new Map(),payments=[];
+ const reversedOriginalIds=new Set(payRows.filter(p=>p.entry_type==="reversal"&&p.status==="confirmed"&&p.original_payment_id).map(p=>p.original_payment_id));
  payRows.forEach(p=>{
   let g=byPayment.get(p.member_id+"|"+cycleIdToNo.get(p.cycle_id));
   if(!g){g={id:p.id,dbId:p.id,memberId:p.member_id,cycleNo:cycleIdToNo.get(p.cycle_id),paidPaise:0,status:"pending",mode:p.mode||"upi",paidAt:"",history:[],entries:[]};byPayment.set(p.member_id+"|"+g.cycleNo,g);payments.push(g);}
-  const item={dbId:p.id,type:p.entry_type==="reversal"?"reversal":"payment",amountPaise:Number(p.amount_paise),date:p.created_at,mode:p.mode,ref:p.id,status:p.status};
+  const item={dbId:p.id,type:p.entry_type==="reversal"?"reversal":"payment",amountPaise:Number(p.amount_paise),date:p.created_at,mode:p.mode,ref:p.id,status:p.status,originalPaymentId:p.original_payment_id||null};
   g.entries.push(item);
   if(p.status==="confirmed"){
    g.history.push({type:item.type,amountPaise:item.amountPaise,date:item.date,mode:item.mode,ref:item.ref});
@@ -70,7 +71,7 @@ async function loadWorkspace(requestedChitId){
    g.history.push({...item,type:"reported"});
   }
  });
- payments.forEach(p=>{p.paidPaise=Math.max(0,p.paidPaise);p.status=p.paidPaise>0?"paid":"pending";});
+ payments.forEach(p=>{p.entries.forEach(e=>{e.alreadyReversed=reversedOriginalIds.has(e.dbId);});p.paidPaise=Math.max(0,p.paidPaise);p.status=p.paidPaise>0?"paid":p.entries.some(e=>e.status==="reported")?"reported":"pending";});
  const dividendHistory=(dividendRes.data||[]).map(d=>({dbId:d.id,cycleNo:cycleIdToNo.get(d.cycle_id),memberId:d.member_id,amountPaise:Number(d.amount_paise),createdAt:d.created_at}));
  const isOwner=chit.owner_id===user.id;
  const mappedChit={dbId:chit.id,name:chit.name,potPaise:Number(chit.pot_paise),memberCount:Number(chit.member_count),startingFloorPaise:Number(chit.starting_floor_paise),maxDiscountPct:Number(chit.max_discount_pct),commissionPct:Number(chit.commission_pct),dividendRule:chit.dividend_rule==="non_winners"?"nonWinners":"allMembers",startDate:chit.start_date,auctionStartDay:chit.auction_start_day,auctionEndDay:chit.auction_end_day,dueDay:chit.due_day,lateFinePerDayPaise:Number(chit.late_fine_per_day_paise||0),upiId:chit.upi_id||"",status:chit.status};
