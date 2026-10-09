@@ -170,6 +170,17 @@ returns boolean language sql stable security definer set search_path = public as
       or exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'platform_admin');
 $$;
 
+create or replace function public.is_platform_admin()
+returns boolean language sql stable security definer set search_path = public as $
+  select exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'platform_admin');
+$;
+
+create or replace function public.can_manage_chit_document(p_name text)
+returns boolean language sql stable security definer set search_path = public as $
+  select exists (select 1 from public.chits c where c.id::text = split_part(p_name, '/', 1) and c.owner_id = auth.uid())
+      or public.is_platform_admin();
+$;
+
 create or replace function public.is_chit_participant(p_chit_id uuid)
 returns boolean language sql stable security definer set search_path = public as $$
   select public.can_manage_chit(p_chit_id)
@@ -199,7 +210,7 @@ alter table public.payment_audit enable row level security;
 
 drop policy if exists "profiles_select_self_or_platform_admin" on public.profiles;
 create policy "profiles_select_self_or_platform_admin" on public.profiles for select to authenticated
-using (id = auth.uid() or exists (select 1 from public.profiles admin_profile where admin_profile.id = auth.uid() and admin_profile.role = 'platform_admin'));
+using (id = auth.uid() or public.is_platform_admin());
 
 drop policy if exists "chits_select_participants" on public.chits;
 create policy "chits_select_participants" on public.chits for select to authenticated
@@ -229,21 +240,9 @@ drop policy if exists "cycles_select_participants" on public.monthly_cycles;
 create policy "cycles_select_participants" on public.monthly_cycles for select to authenticated
 using (public.is_chit_participant(chit_id));
 
-drop policy if exists "cycles_insert_owner" on public.monthly_cycles;
-create policy "cycles_insert_owner" on public.monthly_cycles for insert to authenticated
-with check (public.can_manage_chit(chit_id));
-
-drop policy if exists "cycles_update_owner" on public.monthly_cycles;
-create policy "cycles_update_owner" on public.monthly_cycles for update to authenticated
-using (public.can_manage_chit(chit_id)) with check (public.can_manage_chit(chit_id));
-
 drop policy if exists "bids_select_chit_participants" on public.auction_bids;
 create policy "bids_select_chit_participants" on public.auction_bids for select to authenticated
 using (public.is_chit_participant(chit_id));
-
-drop policy if exists "bids_update_owner" on public.auction_bids;
-create policy "bids_update_owner" on public.auction_bids for update to authenticated
-using (public.can_manage_chit(chit_id)) with check (public.can_manage_chit(chit_id));
 
 drop policy if exists "payments_select_owner_or_self" on public.payments;
 create policy "payments_select_owner_or_self" on public.payments for select to authenticated
@@ -265,7 +264,7 @@ on conflict (id) do nothing;
 drop policy if exists "chit_docs_select_owner_or_self" on storage.objects;
 create policy "chit_docs_select_owner_or_self" on storage.objects for select to authenticated
 using (bucket_id = 'chit-private-docs' and (
-  public.can_manage_chit(nullif(split_part(name, '/', 1), '')::uuid)
+  public.can_manage_chit_document(name)
   or public.is_own_chit_document(name)
 ));
 
@@ -638,6 +637,9 @@ revoke all on function public.record_organizer_payment(uuid,uuid,bigint,text,tex
 revoke all on function public.confirm_payment_report(uuid,boolean,text) from public, anon;
 revoke all on function public.reverse_confirmed_payment(uuid,text) from public, anon;
 
+grant select on public.profiles, public.chits, public.members, public.monthly_cycles, public.auction_bids, public.payments, public.dividend_history, public.payment_audit to authenticated;
+grant insert, update on public.chits, public.members to authenticated;
+-- Auction cycles and bids are mutated through controlled RPCs, not direct browser writes.
 grant execute on function public.initialize_chit_cycles(uuid) to authenticated;
 grant execute on function public.place_auction_bid(uuid,bigint) to authenticated;
 grant execute on function public.approve_auction_bid(uuid,boolean) to authenticated;
