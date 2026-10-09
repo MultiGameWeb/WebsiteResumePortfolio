@@ -218,7 +218,7 @@ function sLabel(s){return ({paid:t("paid"),due:t("due"),partial:t("partial"),pen
 function badge(s){const cl=({paid:"green",active:"green",approved:"green",completed:"green",winner:"blue",due:"red",rejected:"red",pending:"amber",partial:"amber",submitted:"amber",upcoming:"gray",removed:"gray"})[s]||"gray";return '<span class="badge '+cl+'">'+esc(sLabel(s))+'</span>';}
 function memberCell(m){return '<div class="member-cell"><span class="avatar">'+esc(m.name.trim().split(/\s+/).slice(0,2).map(s=>s.charAt(0)).join("").toUpperCase())+'</span><span><span class="member-name">'+esc(m.name)+'</span><span class="member-meta">'+esc(m.phone||m.email||"")+'</span></span></div>';}
 function heading(title,desc,actions){return '<section class="page-heading"><div><h1>'+esc(title)+'</h1><p>'+esc(desc||"")+'</p></div><div class="heading-actions">'+(actions||"")+'</div></section>';}
-function banner(){return '<div class="demo-banner"><span class="banner-icon">i</span><div><strong>'+esc(t("demoNotice"))+'</strong><span>'+esc(t("demoText"))+'</span><div style="margin-top:5px;font-weight:800">'+esc(t("privacyNotice"))+'</div></div></div>';}
+function banner(){if(state.liveWorkspace)return '<div class="demo-banner"><span class="banner-icon">✓</span><div><strong>'+esc(t("liveConnected"))+'</strong><span>'+esc(t("liveBanner"))+'</span></div></div>';if(state.authUser&&state.backendConfigured)return '<div class="demo-banner"><span class="banner-icon">i</span><div><strong>'+esc(t("noWorkspace"))+'</strong><span>'+esc(t("privacyNotice"))+'</span></div></div>';return '<div class="demo-banner"><span class="banner-icon">i</span><div><strong>'+esc(t("demoNotice"))+'</strong><span>'+esc(t("demoText"))+'</span><div style="margin-top:5px;font-weight:800">'+esc(t("privacyNotice"))+'</div></div></div>';}
 function nav(){
  const items=["dashboard","setup","members","auction","cycles","payments","rules","reports"],icons={dashboard:"▦",setup:"⚙",members:"♙",auction:"↗",cycles:"◷",payments:"₹",rules:"≡",reports:"▤"};
  return '<aside class="sidebar"><div class="side-label">'+esc(t("brand"))+'</div><nav class="nav-list">'+items.map(k=>'<button class="nav-item '+(state.page===k?"active":"")+'" data-page="'+k+'"><span class="nav-icon">'+icons[k]+'</span>'+esc(t(k))+'</button>').join("")+'</nav><div class="sidebar-note"><strong>'+esc(t("copyPreview"))+'</strong>'+esc(t("membersHelp"))+'</div></aside>';
@@ -354,7 +354,7 @@ function modalView(){
 }
 function render(){
  document.title=t("pageTitle");document.documentElement.lang=state.lang==="te"?"te":"en";
- const footerStatus=state.liveWorkspace?t("liveConnected"):state.backendLoading?t("loadingData"):state.authUser&&state.backendConfigured?t("noHistory"):t("supabaseMissing");
+ const footerStatus=state.liveWorkspace?t("liveConnected"):state.backendLoading?t("loadingData"):state.authUser&&state.backendConfigured?t("noWorkspace"):t("supabaseMissing");
  root.innerHTML=header()+'<div class="shell">'+nav()+'<main class="main">'+pageContent()+'<footer class="footer">'+esc(t("footer"))+' · '+esc(footerStatus)+'</footer></main></div>'+modalView()+'<div class="toast-area" id="toast-area">'+(state.toast?'<div class="toast '+(state.toast.error?"error":"")+'">'+esc(state.toast.message)+'</div>':"")+'</div>';
 }
 function toast(message,error){state.toast={message:message,error:!!error};render();clearTimeout(state.toastTimer);state.toastTimer=setTimeout(()=>{state.toast=null;const el=document.getElementById("toast-area");if(el)el.innerHTML="";},2800);}
