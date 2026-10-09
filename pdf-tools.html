@@ -70,7 +70,7 @@ function showError(error){
  $("workspaceBody").classList.remove("hidden");setStatus("Error");
 }
 function showInputError(message){
- $("output").replaceChildren();$("workspaceBody").classList.remove("hidden");
+ clearDownloadUrls();$("output").replaceChildren();$("workspaceBody").classList.remove("hidden");
  const note=document.createElement("div");note.className="note";
  const title=document.createElement("strong");title.textContent="File not accepted.";
  const detail=document.createElement("div");detail.textContent=message;
@@ -121,7 +121,7 @@ function stripExt(n){return n.replace(/\.[^.]+$/,"")}
 function filename(base,suffix,ext){return stripExt(base)+suffix+"."+(ext||"pdf")}
 function setTool(tool){
  state.tool=tool;state.file=null;state.files=[];state.bytes=null;
- clearDownloadUrls();$("fileInput").value="";$("fileList").replaceChildren();$("output").replaceChildren();$("editorWorkspace").classList.add("hidden");
+ clearDownloadUrls();resetEditorState();$("fileInput").value="";$("fileList").replaceChildren();$("output").replaceChildren();$("editorWorkspace").classList.add("hidden");
  $$(".tool").forEach(card=>card.classList.toggle("active",card.dataset.tool===tool));
  $("panelTitle").textContent=toolInfo[tool]?.title||"Choose a PDF tool";$("note").textContent=toolInfo[tool]?.note||"Choose a supported tool.";
  const info=toolInfo[tool]||{};$("fileInput").accept=info.accept||"";$("fileInput").multiple=!!info.multiple;
@@ -215,6 +215,10 @@ async function getPdfText(file){
  return pages;
 }
 let editorState={pdf:null,pages:[],selected:0,scale:1.15,overlays:new Map()};
+function resetEditorState(){
+ const old=editorState.pdf;editorState={pdf:null,pages:[],selected:0,scale:1.15,overlays:new Map()};
+ if(old&&typeof old.destroy==="function")old.destroy().catch(()=>{});
+}
 async function initEditor(file){
  const pdfjs=await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs");
  pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
@@ -406,7 +410,7 @@ $("fileList").addEventListener("click",function(event){
 });
 $("runBtn").addEventListener("click",run);
 $("clearBtn").addEventListener("click",function(){
- clearDownloadUrls();state.files=[];state.file=null;state.bytes=null;$("fileInput").value="";
+ clearDownloadUrls();resetEditorState();state.files=[];state.file=null;state.bytes=null;$("fileInput").value="";
  $("output").replaceChildren();$("options").replaceChildren();$("fileList").replaceChildren();$("editorWorkspace").classList.add("hidden");
  $$(".tool").forEach(card=>card.classList.remove("active"));
  $("panelTitle").textContent="Choose a PDF tool";$("note").textContent="Choose a supported tool.";
