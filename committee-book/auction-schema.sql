@@ -296,7 +296,7 @@ using (public.can_manage_chit(chit_id));
 
 drop policy if exists "member_documents_select_owner_or_self" on public.member_documents;
 create policy "member_documents_select_owner_or_self" on public.member_documents for select to authenticated
-using (public.can_manage_chit(chit_id) or exists (select 1 from public.members m where m.id=member_id and m.chit_id=chit_id and m.auth_user_id=auth.uid() and m.status<>'removed'));
+using (public.can_manage_chit(chit_id) or exists (select 1 from public.members m where m.id=public.member_documents.member_id and m.chit_id=public.member_documents.chit_id and m.auth_user_id=auth.uid() and m.status<>'removed'));
 
 drop policy if exists "member_documents_insert_owner" on public.member_documents;
 create policy "member_documents_insert_owner" on public.member_documents for insert to authenticated
@@ -737,6 +737,7 @@ revoke all on function public.reverse_confirmed_payment(uuid,text) from public, 
 
 grant select on public.profiles, public.chits, public.members, public.monthly_cycles, public.auction_bids, public.payments, public.dividend_history, public.payment_audit, public.member_documents to authenticated;
 grant insert, update on public.chits, public.members to authenticated;
+grant insert on public.member_documents to authenticated;
 -- Auction cycles and bids are mutated through controlled RPCs, not direct browser writes.
 grant execute on function public.initialize_chit_cycles(uuid) to authenticated;
 grant execute on function public.claim_member_by_email(uuid) to authenticated;
