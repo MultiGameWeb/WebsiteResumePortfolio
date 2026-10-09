@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#17181d">
 <title>Presentation Maker — SiteCraft</title>
 <link rel="stylesheet" href="site-navigation.css">
-<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
 <style>
@@ -27,7 +27,7 @@
 @media print{html,body{background:#fff!important;margin:0!important;padding:0!important}body.pm-printing>*:not(#pmPrintDeck){display:none!important;visibility:hidden!important}body.pm-printing #pmPrintDeck{display:block!important;visibility:visible!important}#pmPrintDeck .pm-print-slide{width:100vw;height:100vh;aspect-ratio:auto;page-break-after:always;break-after:page;position:relative;overflow:hidden;background:#fff;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}#pmPrintDeck .pm-print-slide:last-child{page-break-after:auto;break-after:auto}#pmPrintDeck *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}@page{size:landscape;margin:0}}
 @media(max-width:1180px){.pm-edit-grid{grid-template-columns:180px minmax(0,1fr) 220px;gap:9px}.pm-template-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:930px){.pm-edit-grid{grid-template-columns:minmax(0,1fr) 225px}.pm-slide-panel{grid-column:1/-1;grid-row:2;order:3}.pm-slide-list{display:flex;max-height:none;overflow-x:auto;gap:9px;padding-bottom:4px}.pm-thumb{flex:0 0 150px}.pm-stage-panel{grid-column:1;grid-row:1}.pm-inspector{grid-column:2;grid-row:1}.pm-template-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:650px){.pm-app{padding:14px 8px 24px}.pm-intro{align-items:flex-start;flex-direction:column;gap:12px}.pm-start-grid{grid-template-columns:1fr}.pm-template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pm-toolbar-wrap{flex-wrap:nowrap;overflow-x:auto;align-items:stretch;overscroll-behavior-x:contain}.pm-tool-group{flex:0 0 auto}.pm-edit-grid{grid-template-columns:minmax(0,1fr)}.pm-slide-panel{grid-row:3;grid-column:1;order:3}.pm-slide-list{display:flex;overflow-x:auto}.pm-thumb{flex-basis:135px}.pm-stage-panel{grid-row:1;grid-column:1}.pm-inspector{grid-row:2;grid-column:1}.pm-stage-wrap{min-height:170px;padding:8px}.pm-stage-foot{gap:5px}.pm-work-head{align-items:flex-start}.pm-project-title{max-width:150px}.pm-presenter-grid{grid-template-columns:1fr;overflow:auto}.pm-presenter-side{display:grid;grid-template-columns:1fr 1fr}.pm-presenter-side .pm-present-slide{grid-column:1/-1}.pm-present-title{max-width:35vw}}
+@media(max-width:650px){.pm-thumb-actions{opacity:1}.pm-app{padding:14px 8px 24px}.pm-intro{align-items:flex-start;flex-direction:column;gap:12px}.pm-start-grid{grid-template-columns:1fr}.pm-template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pm-toolbar-wrap{flex-wrap:nowrap;overflow-x:auto;align-items:stretch;overscroll-behavior-x:contain}.pm-tool-group{flex:0 0 auto}.pm-edit-grid{grid-template-columns:minmax(0,1fr)}.pm-slide-panel{grid-row:3;grid-column:1;order:3}.pm-slide-list{display:flex;overflow-x:auto}.pm-thumb{flex-basis:135px}.pm-stage-panel{grid-row:1;grid-column:1}.pm-inspector{grid-row:2;grid-column:1}.pm-stage-wrap{min-height:170px;padding:8px}.pm-stage-foot{gap:5px}.pm-work-head{align-items:flex-start}.pm-project-title{max-width:150px}.pm-presenter-grid{grid-template-columns:1fr;overflow:auto}.pm-presenter-side{display:grid;grid-template-columns:1fr 1fr}.pm-presenter-side .pm-present-slide{grid-column:1/-1}.pm-present-title{max-width:35vw}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -261,7 +261,7 @@ function renderChart(e){
 }
 function renderElement(e,container,editable){
  const node=document.createElement("div");node.className="pm-object"+(e.type==="shape"?" pm-shape":"");node.dataset.objectId=e.id;node.style.left=e.x+"%";node.style.top=e.y+"%";node.style.width=e.w+"%";node.style.height=e.h+"%";node.style.transform="rotate("+(e.rotate||0)+"deg)";node.style.opacity=Math.max(0.1,Math.min(1,(e.opacity||100)/100));node.style.zIndex=String(e.z||1);
- const body=document.createElement("div");body.className="pm-object-body";body.style.fontFamily=e.font||"Arial";body.style.fontSize="clamp(6px,"+Math.max(6,Math.min(120,e.fontSize||18))+"pt,100px)";body.style.lineHeight=String(e.lineSpacing||1.2);body.style.color=e.color||"#17181d";body.style.textAlign=e.align||"left";body.style.fontWeight=e.bold?"800":"400";body.style.fontStyle=e.italic?"italic":"normal";body.style.textDecoration=e.underline?"underline":"none";body.style.backgroundColor=e.highlight&&e.highlight!=="transparent"?e.highlight:"transparent";body.style.border=e.type==="shape"?(Math.max(0,e.borderWidth||0)+"px solid "+(e.border||"transparent")):"0";body.style.borderRadius=e.type==="shape"?(e.shape==="circle"?"50%":(e.radius||0)+"px"):"0";
+ const body=document.createElement("div");body.className="pm-object-body";body.style.fontFamily=e.font||"Arial";const slideHeight=container.clientHeight||container.getBoundingClientRect().height||720;body.style.fontSize=Math.max(6,slideHeight*(Math.max(6,Math.min(120,e.fontSize||18))/540))+"px";body.style.lineHeight=String(e.lineSpacing||1.2);body.style.color=e.color||"#17181d";body.style.textAlign=e.align||"left";body.style.fontWeight=e.bold?"800":"400";body.style.fontStyle=e.italic?"italic":"normal";body.style.textDecoration=e.underline?"underline":"none";body.style.backgroundColor=e.highlight&&e.highlight!=="transparent"?e.highlight:"transparent";body.style.border=e.type==="shape"?(Math.max(0,e.borderWidth||0)+"px solid "+(e.border||"transparent")):"0";body.style.borderRadius=e.type==="shape"?(e.shape==="circle"?"50%":(e.radius||0)+"px"):"0";
  if(e.type==="text"){body.classList.add("pm-text-body");body.textContent=displayText(e);if(editable){body.contentEditable="true";body.spellcheck=true;body.setAttribute("aria-label","Edit slide text")}}
  else if(e.type==="shape"){
   body.style.background=e.shape==="line"?"transparent":(e.fill||"#6158e8");
@@ -271,7 +271,7 @@ function renderElement(e,container,editable){
  }else if(e.type==="image"){
   const img=document.createElement("img");img.src=e.src||"";img.alt=e.alt||"Slide image";img.draggable=false;body.appendChild(img)
  }else if(e.type==="table"){
-  const tbl=document.createElement("table");const rows=e.rows||[["Header 1","Header 2","Header 3"],["","",""],["","",""]];
+  const tbl=document.createElement("table");const slideHeight=container.clientHeight||container.getBoundingClientRect().height||720;tbl.style.fontSize=Math.max(7,slideHeight*((e.fontSize||12)/540))+"px";const rows=e.rows||[["Header 1","Header 2","Header 3"],["","",""],["","",""]];
   rows.forEach((row,ri)=>{const tr=document.createElement("tr");row.forEach((val,ci)=>{const cell=document.createElement(ri===0?"th":"td");cell.textContent=val;cell.contentEditable=editable?"true":"false";cell.dataset.row=String(ri);cell.dataset.col=String(ci);cell.style.background=ri===0?(e.fill||"#eef0ff"):"#fff";cell.style.color=ri===0?(e.color||"#17181d"):"#343944";tr.appendChild(cell)});tbl.appendChild(tr)});body.appendChild(tbl)
  }else if(e.type==="chart"){body.innerHTML=renderChart(e)}
  node.appendChild(body);
@@ -336,9 +336,11 @@ function renderThumbnails(){
  if(!deck)return;
  const list=$("#pmSlideList");list.innerHTML="";
  deck.slides.forEach((s,i)=>{
-  const b=document.createElement("button");b.type="button";b.className="pm-thumb";b.draggable=true;b.dataset.slideId=s.id;b.setAttribute("aria-current",String(s.id===activeSlideId));b.setAttribute("aria-label","Select slide "+(i+1));
+  const b=document.createElement("div");b.className="pm-thumb";b.setAttribute("role","button");b.tabIndex=0;b.draggable=true;b.dataset.slideId=s.id;b.setAttribute("aria-current",String(s.id===activeSlideId));b.setAttribute("aria-label","Select slide "+(i+1));
   b.innerHTML=miniMarkup(s)+'<div class="pm-thumb-number"><span>'+String(i+1).padStart(2,"0")+'</span><span>'+escapeHtml(s.layout||"slide")+'</span></div><div class="pm-thumb-actions"><button type="button" data-thumb-action="duplicate" data-id="'+s.id+'" aria-label="Duplicate slide '+(i+1)+'" title="Duplicate">⧉</button><button type="button" data-thumb-action="delete" data-id="'+s.id+'" aria-label="Delete slide '+(i+1)+'" title="Delete">×</button></div>';
   b.addEventListener("click",function(e){if(e.target.closest("[data-thumb-action]"))return;activeSlideId=s.id;selectedObjectId=null;renderStage()});
+  b.addEventListener("keydown",function(e){if(e.target===b&&(e.key==="Enter"||e.key===" ")){e.preventDefault();activeSlideId=s.id;selectedObjectId=null;renderStage()}});
+  b.querySelectorAll("[data-thumb-action]").forEach(function(action){action.draggable=false;action.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();activeSlideId=s.id;selectedObjectId=null;if(action.dataset.thumbAction==="duplicate")duplicateSlide();else if(action.dataset.thumbAction==="delete")deleteSlide()})});
   b.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/slide-id",s.id);e.dataTransfer.effectAllowed="move"});
   b.addEventListener("dragover",function(e){e.preventDefault();b.classList.add("pm-drop-target")});
   b.addEventListener("dragleave",function(){b.classList.remove("pm-drop-target")});
@@ -491,8 +493,8 @@ function downloadBlob(blob,name){const url=URL.createObjectURL(blob),a=document.
 async function exportPptx(){
  if(!deck)return;
  try{
-  if(!window.pptxgen)throw new Error("PPTX export library did not load.");
-  const pptx=new window.pptxgen();const wide=deck.ratio!=="4:3",sw=wide?13.333:10,sh=7.5;
+  if(!window.PptxGenJS)throw new Error("PPTX export library did not load.");
+  const pptx=new window.PptxGenJS();const wide=deck.ratio!=="4:3",sw=wide?13.333:10,sh=7.5;
   pptx.defineLayout({name:"SITECraft_CUSTOM",width:sw,height:sh});pptx.layout="SITECraft_CUSTOM";pptx.author="SiteCraft";pptx.subject="Created in SiteCraft Presentation Maker";pptx.title=deck.name||"Presentation";pptx.company="SiteCraft";pptx.lang="en-US";pptx.theme={headFontFace:deck.font||"Arial",bodyFontFace:deck.font||"Arial",lang:"en-US"};
   const conv=function(v,base){return v/100*base};
   for(const s of deck.slides){
@@ -540,7 +542,7 @@ function exportPdf(){
  if(!deck)return;
  const oldDeck=$("#pmPrintDeck");oldDeck.innerHTML="";
  deck.slides.forEach(function(s){
-  const slide=document.createElement("div");slide.className="pm-print-slide";slide.style.aspectRatio=deck.ratio==="4:3"?"4 / 3":"16 / 9";renderSlideTo(slide,s,false);oldDeck.appendChild(slide)
+  const slide=document.createElement("div");slide.className="pm-print-slide";slide.style.width=deck.ratio==="4:3"?"960px":"1280px";slide.style.height="720px";slide.style.aspectRatio=deck.ratio==="4:3"?"4 / 3":"16 / 9";oldDeck.appendChild(slide);renderSlideTo(slide,s,false)
  });
  document.body.classList.add("pm-printing");
  const reset=function(){document.body.classList.remove("pm-printing");oldDeck.innerHTML="";window.removeEventListener("afterprint",reset)};
