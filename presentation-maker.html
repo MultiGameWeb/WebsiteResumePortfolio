@@ -537,45 +537,69 @@ function exportJson(){
  try{const blob=new Blob([JSON.stringify(deck,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},60000)}catch(_){alert("Could not export the project file. Please try again.")}
 }
 function downloadBlob(blob,name,revokeDelay){const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},Number(revokeDelay)||60000)}
+function resolvePptxHex(value,fallback){
+ const fallbackHex=String(fallback||"#17181d").replace("#","").toUpperCase();
+ let raw=String(value==null?"":value).trim();if(!raw||raw==="transparent")raw=fallback||"#17181d";
+ const probe=document.createElement("span");probe.style.color=raw;if(!probe.style.color)probe.style.color=fallback||"#17181d";
+ document.body.appendChild(probe);const computed=getComputedStyle(probe).color;probe.remove();
+ const rgb=computed.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
+ if(rgb)return [rgb[1],rgb[2],rgb[3]].map(n=>Number(n).toString(16).padStart(2,"0")).join("").toUpperCase();
+ if(/^#[0-9a-f]{3}$/i.test(raw))return raw.slice(1).split("").map(ch=>ch+ch).join("").toUpperCase();
+ if(/^#?[0-9a-f]{6}$/i.test(raw))return raw.replace("#","").toUpperCase();
+ return fallbackHex;
+}
+function decodePptxText(raw){const el=document.createElement("div");el.innerHTML=String(raw||"");el.querySelectorAll("script,style").forEach(n=>n.remove());return el.textContent||""}
+function pptxTextRuns(raw,defaultHighlight){
+ const source=String(raw||""),pattern=/<mark\b([^>]*)>([\s\S]*?)<\/mark>/gi,runs=[];let last=0,m;
+ function plainRun(value){if(value)runs.push({text:decodePptxText(value)})}
+ while((m=pattern.exec(source))!==null){
+  plainRun(source.slice(last,m.index));
+  const style=(m[1].match(/style\s*=\s*(["'])(.*?)\1/i)||[])[2]||"";
+  const bg=(style.match(/background(?:-color)?\s*:\s*([^;]+)/i)||[])[1]||defaultHighlight||"#fff2a8";
+  runs.push({text:decodePptxText(m[2]),options:{fill:{color:resolvePptxHex(bg,"#fff2a8")}}});last=pattern.lastIndex;
+ }
+ if(!runs.length)return null;plainRun(source.slice(last));return runs;
+}
 async function exportPptx(){
  if(!deck)return;
  try{
   if(!window.PptxGenJS)throw new Error("PPTX export library did not load.");
   const pptx=new window.PptxGenJS();const wide=deck.ratio!=="4:3",sw=wide?13.333:10,sh=7.5;
-  pptx.defineLayout({name:"SITECraft_CUSTOM",width:sw,height:sh});pptx.layout="SITECraft_CUSTOM";pptx.author="SiteCraft";pptx.subject="Created in SiteCraft Presentation Maker";pptx.title=deck.name||"Presentation";pptx.company="SiteCraft";pptx.lang="en-US";pptx.theme={headFontFace:deck.font||"Arial",bodyFontFace:deck.font||"Arial",lang:"en-US"};
+  pptx.defineLayout({name:"SITECraft_CUSTOM",width:sw,height:sh});pptx.layout="SITECraft_CUSTOM";pptx.author="SiteCraft";pptx.subject="Created in SiteCraft Presentation Maker";pptx.title=deck.name||"Presentation";pptx.company="SiteCraft";pptx.lang="en-US";pptx.theme={headFontFace:deck.fontHead||deck.font||"Arial",bodyFontFace:deck.fontBody||deck.font||"Arial",lang:"en-US"};
   const conv=function(v,base){return v*base};
   for(const s of deck.slides){
    const sl=pptx.addSlide(),bg=s.background||{type:"color",color:"#ffffff"};
-   if(bg.type==="color"||bg.type==="gradient")sl.background={color:(bg.color||"#ffffff").replace("#","")};
-   if(bg.type==="image"&&bg.image){sl.addImage({data:bg.image,x:0,y:0,w:sw,h:sh})}
-   const elements=s.elements.slice().sort((a,b)=>(a.z||1)-(b.z||1));
+   if(bg.type==="color"||bg.type==="gradient")sl.background={color:resolvePptxHex(bg.color||"#ffffff","#ffffff")};
+   if(bg.type==="image"&&bg.image)sl.addImage({data:bg.image,x:0,y:0,w:sw,h:sh});
+   const elements=(s.elements||[]).slice().sort((a,b)=>(a.z||1)-(b.z||1));
    for(const e of elements){
     const o={x:conv(e.x,sw),y:conv(e.y,sh),w:conv(e.w,sw),h:conv(e.h,sh),rotate:e.rotate||0,transparency:100-(e.opacity||100),margin:0.04,breakLine:false};
     if(e.type==="text"){
-     let txt=e.text||"";if(e.bullets)txt=txt.split("\n").map((x)=>({text:x,options:{bullet:{indent:14}}}));else if(e.numbered)txt=txt.split("\n").map(x=>({text:x,options:{bullet:{type:"number",indent:14}}}));
-     sl.addText(txt,Object.assign(o,{fontFace:e.font||deck.font||"Arial",fontSize:e.fontSize||18,bold:!!e.bold,italic:!!e.italic,underline:!!e.underline,color:(e.color||"#17181d").replace("#",""),align:e.align||"left",valign:"mid",breakLine:false,paraSpaceAfterPt:6,lineSpacingMultiple:e.lineSpacing||1.2,highlight:e.highlight&&e.highlight!=="transparent"?e.highlight.replace("#",""):undefined,fill:e.highlight&&e.highlight!=="transparent"?{color:e.highlight.replace("#","")}:undefined}));
+     const marked=pptxTextRuns(e.text,e.highlight&&e.highlight!=="transparent"?e.highlight:null);
+     let txt=marked||e.text||"";if(!marked&&e.bullets)txt=String(txt).split("\n").map(x=>({text:x,options:{bullet:{indent:14}}}));else if(!marked&&e.numbered)txt=String(txt).split("\n").map(x=>({text:x,options:{bullet:{type:"number",indent:14}}}));
+     const hi=e.highlight&&e.highlight!=="transparent"?{color:resolvePptxHex(e.highlight,"#fff2a8")}:undefined;
+     sl.addText(txt,Object.assign({},o,{fontFace:e.font||deck.fontBody||deck.font||"Arial",fontSize:e.fontSize||18,bold:!!e.bold,italic:!!e.italic,underline:!!e.underline,color:resolvePptxHex(e.color||"#17181d","#17181d"),align:e.align||"left",valign:"mid",breakLine:false,paraSpaceAfterPt:6,lineSpacingMultiple:e.lineSpacing||1.2,fill:marked?undefined:hi}));
     }else if(e.type==="shape"){
      const types={rect:pptx.ShapeType.rect,circle:pptx.ShapeType.ellipse,arrow:pptx.ShapeType.rightArrow,line:pptx.ShapeType.line,star:pptx.ShapeType.star5};
-     const opts=Object.assign({},o,{fill:{color:(e.fill||"FFFFFF").replace("#",""),transparency:e.opacity?100-e.opacity:0},line:{color:(e.border||"FFFFFF").replace("#",""),width:e.borderWidth||0,transparency:e.borderWidth?0:100},radius:e.radius||0});
+     const opts=Object.assign({},o,{fill:{color:resolvePptxHex(e.fill||"#ffffff","#ffffff"),transparency:e.opacity?100-e.opacity:0},line:{color:resolvePptxHex(e.border||"#ffffff","#ffffff"),width:e.borderWidth||0,transparency:e.borderWidth?0:100},radius:e.radius||0});
      sl.addShape(types[e.shape]||pptx.ShapeType.rect,opts);
     }else if(e.type==="image"&&e.src)sl.addImage(Object.assign({},o,{data:e.src,sizingCrop:true}));
     else if(e.type==="table"){
-     const rows=(e.rows||[]).map((row,ri)=>row.map(cell=>({text:String(cell==null?"":cell),options:{fill:{color:(ri===0?(e.fill||"#EEF0FF"):"#FFFFFF").replace("#","")},color:(ri===0?(e.color||"#17181D"):"#343944").replace("#",""),bold:ri===0,fontFace:e.font||deck.font||"Arial",fontSize:e.fontSize||12}})));sl.addTable(rows,Object.assign({},o,{border:{type:"solid",color:(e.border||"BFC5CE").replace("#",""),pt:Math.max(.5,e.borderWidth||.5)},fill:{color:"FFFFFF"},color:(e.color||"17181D").replace("#",""),fontFace:e.font||deck.font||"Arial",fontSize:e.fontSize||12,margin:.05,autoFit:false,breakLine:false}));
+     const rows=(e.rows||[]).map((row,ri)=>row.map(cell=>({text:String(cell==null?"":cell),options:{fill:{color:resolvePptxHex(ri===0?(e.fill||"#EEF0FF"):"#FFFFFF","#FFFFFF")},color:resolvePptxHex(ri===0?(e.color||"#17181D"):"#343944","#343944"),bold:ri===0,fontFace:e.font||deck.fontBody||deck.font||"Arial",fontSize:e.fontSize||12}})));
+     sl.addTable(rows,Object.assign({},o,{border:{type:"solid",color:resolvePptxHex(e.border||"#BFC5CE","#BFC5CE"),pt:Math.max(.5,e.borderWidth||.5)},fill:{color:"FFFFFF"},color:resolvePptxHex(e.color||"#17181D","#17181D"),fontFace:e.font||deck.fontBody||deck.font||"Arial",fontSize:e.fontSize||12,margin:.05,autoFit:false,breakLine:false}));
     }else if(e.type==="chart"){
      const ct=e.chartType==="pie"?pptx.ChartType.pie:e.chartType==="line"?pptx.ChartType.line:pptx.ChartType.bar;
-     const data=[{name:"Series 1",labels:e.labels||[],values:e.values||[]}];sl.addChart(ct,data,Object.assign({},o,{showTitle:false,showLegend:false,showValue:true,catAxisLabelFontFace:deck.font||"Arial",catAxisLabelFontSize:10,valAxisLabelFontSize:10,chartColors:[(e.color||"#6158e8").replace("#","")],showCatName:false,showValAxisTitle:false,showCatAxisTitle:false}));
+     const data=[{name:"Series 1",labels:e.labels||[],values:e.values||[]}];
+     sl.addChart(ct,data,Object.assign({},o,{showTitle:false,showLegend:false,showValue:true,catAxisLabelFontFace:deck.fontBody||deck.font||"Arial",catAxisLabelFontSize:10,valAxisLabelFontSize:10,chartColors:[resolvePptxHex(e.color||"#6158e8","#6158e8")],showCatName:false,showValAxisTitle:false,showCatAxisTitle:false}));
     }
    }
    if(typeof sl.addNotes==="function"&&s.notes)sl.addNotes(s.notes);
   }
   await pptx.writeFile({fileName:(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+".pptx"});
-  setStatus("PPTX downloaded");
-  alert("PPTX note: gradient backgrounds are exported as a solid-color fallback. Some text wrapping, highlight styling, shape opacity/rounded corners, or chart and table styling may look slightly different in PowerPoint. Speaker notes are included.");
- }catch(_){setStatus("PPTX export failed");alert("Could not export PPTX. Check your connection and try again.")}
+  setStatus("PPTX downloaded");alert("PPTX note: gradients export as a solid-color fallback. Some text wrapping, shape opacity/rounded corners or chart/table styling can differ. Speaker notes are included.");
+ }catch(error){setStatus("PPTX export failed");alert("Could not export PPTX. "+(error&&error.message||"Check your connection and try again."))}
 }
-function dataUrlToBlob(dataUrl){const parts=String(dataUrl||"").split(","),mime=((parts[0]||"").match(/data:([^;]+)/)||[])[1]||"application/octet-stream",bin=atob(parts[1]||""),bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return new Blob([bytes],{type:mime})}
-async function originalBlobForSlide(slide){const sources=[];(slide.elements||[]).forEach(e=>{if(e.type==="image"&&e.src)sources.push(e.src)});if(slide.background&&slide.background.type==="image"&&slide.background.image)sources.push(slide.background.image);for(const src of sources){const stored=originalImageBlobs.get(src);if(stored)return stored;if(/^data:image\//i.test(src)){try{return dataUrlToBlob(src)}catch(_){}}else if(/^https?:\/\//i.test(src)){try{const response=await fetch(src,{mode:"cors",credentials:"omit"});if(response.ok)return await response.blob()}catch(_){}}}return null}
-function safePngBlob(canvas,slide){return new Promise((resolve,reject)=>{const fallback=async error=>{try{const blob=await originalBlobForSlide(slide);if(blob){resolve({blob,sourceFallback:true,mime:blob.type||"application/octet-stream"});return}}catch(_){}reject(error||new Error("PNG encoding failed"))};try{canvas.toBlob(blob=>{if(blob){resolve({blob,sourceFallback:false,mime:"image/png"});return}try{resolve({blob:dataUrlToBlob(canvas.toDataURL("image/png")),sourceFallback:false,mime:"image/png"})}catch(error){fallback(error)}},"image/png")}catch(error){try{resolve({blob:dataUrlToBlob(canvas.toDataURL("image/png")),sourceFallback:false,mime:"image/png"})}catch(taint){fallback(taint)}}})}
+
 async function exportPngs(){
  if(!deck)return;if(!window.html2canvas){alert("PNG export library is loading. Please try again.");return}
  const previous=activeSlideId,files=[],fallbackFiles=[];let failed=0;
@@ -603,12 +627,15 @@ function exportPdf(){
   alert("Could not prepare Print / Save PDF. Please try again or check your browser's print settings.");
  }
 }
+function clearPresenterTimer(){if(presenterInterval!==null){clearInterval(presenterInterval);presenterInterval=null}}
 function startPresent(presenter){
- if(!deck)return;presenting=true;presenterMode=!!presenter;presenterStarted=Date.now();$("#pmPresentOverlay").classList.remove("pm-hidden");$("#pmPresentOverlay").classList.add("open");$("#pmPresentOverlay").classList.toggle("presenter",presenterMode);drawPresent();
+ if(!deck)return;clearPresenterTimer();presenting=true;presenterMode=!!presenter;presenterStarted=Date.now();$("#pmPresentOverlay").classList.remove("pm-hidden");$("#pmPresentOverlay").classList.add("open");$("#pmPresentOverlay").classList.toggle("presenter",presenterMode);drawPresent();
  if($("#pmPresentOverlay").requestFullscreen){$("#pmPresentOverlay").requestFullscreen().catch(function(){})}
- clearInterval(presenterInterval);presenterInterval=setInterval(updateTimer,1000);updateTimer();
+ presenterInterval=setInterval(updateTimer,1000);updateTimer();
 }
-function exitPresent(){presenting=false;presenterMode=false;$("#pmPresentOverlay").classList.remove("open");$("#pmPresentOverlay").classList.add("pm-hidden");$("#pmPresentOverlay").classList.remove("presenter");clearInterval(presenterInterval);if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(function(){});$("#pmPresentBtn").focus()}
+function exitPresent(){presenting=false;presenterMode=false;clearPresenterTimer();$("#pmPresentOverlay").classList.remove("open");$("#pmPresentOverlay").classList.add("pm-hidden");$("#pmPresentOverlay").classList.remove("presenter");if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(function(){});$("#pmPresentBtn").focus()}
+document.addEventListener("fullscreenchange",function(){if(!document.fullscreenElement)clearPresenterTimer()});
+
 function drawPresent(){
  if(!presenting||!deck)return;const s=currentSlide();renderSlideTo($("#pmPresentSlide"),s,false);const animated=$("#pmPresentSlide");animated.classList.remove("pm-slide-arrive");void animated.offsetWidth;animated.classList.add("pm-slide-arrive");renderSlideTo($("#pmPresenterCurrent"),s,false);const next=deck.slides[selectedIndex()+1]||s;renderSlideTo($("#pmPresenterNext"),next,false);$("#pmPresentTitle").textContent=deck.name||"Presentation";$("#pmPresentCounter").textContent=(selectedIndex()+1)+" / "+deck.slides.length;$("#pmPresentProgress").style.width=((selectedIndex()+1)/deck.slides.length*100)+"%";$("#pmPresenterNotes").textContent=s.notes||"No notes for this slide.";$("#pmPresenterViewBtn").textContent=presenterMode?"Audience view":"Presenter view";
 }
