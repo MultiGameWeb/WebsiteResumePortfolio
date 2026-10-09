@@ -40,14 +40,9 @@
 #sitecraftGlobalNav *{box-sizing:border-box}#sitecraftGlobalNav .sc-nav-inner{width:min(1240px,calc(100% - 36px));min-height:76px;margin:0 auto;display:flex;align-items:center;gap:25px}
 #sitecraftGlobalNav .sc-brand{display:inline-flex;align-items:center;gap:11px;flex:0 0 auto;color:var(--sc-text)!important;font:800 18px/1 Sora,Inter,sans-serif;letter-spacing:-.04em;text-decoration:none}
 #sitecraftGlobalNav .sc-brand-mark{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:var(--sc-gradient);color:#fff!important;box-shadow:0 8px 26px rgba(236,72,153,.25)}
-#sitecraftGlobalNav .sc-menu{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-left:auto;order:2}
-#sitecraftGlobalNav .sc-menu a,#sitecraftGlobalNav .sc-dropdown-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:0 13px;border:1px solid transparent;border-radius:12px;background:transparent;color:#d7d1e4!important;font:600 13px/1 Inter,system-ui,sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease}
-#sitecraftGlobalNav .sc-menu a:hover,#sitecraftGlobalNav .sc-dropdown-toggle:hover,#sitecraftGlobalNav .sc-menu a[aria-current=page]{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.08);color:#fff!important}
-#sitecraftGlobalNav .sc-dropdown{position:relative}#sitecraftGlobalNav .sc-dropdown-toggle:after{content:"";width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .18s ease}
-#sitecraftGlobalNav .sc-dropdown.sc-dropdown-open .sc-dropdown-toggle:after{transform:rotate(225deg) translate(-1px,-1px)}
-#sitecraftGlobalNav .sc-dropdown-menu{display:none;position:absolute;top:calc(100% + 10px);left:0;min-width:230px;padding:8px;border:1px solid var(--sc-line);border-radius:17px;background:rgba(25,24,35,.98);box-shadow:0 22px 60px rgba(0,0,0,.36);backdrop-filter:blur(18px)}
-#sitecraftGlobalNav .sc-dropdown.sc-dropdown-open .sc-dropdown-menu,#sitecraftGlobalNav .sc-dropdown:focus-within .sc-dropdown-menu{display:grid}
-#sitecraftGlobalNav .sc-dropdown-menu a{min-height:42px;justify-content:flex-start;padding-inline:12px}
+#sitecraftGlobalNav .sc-menu{display:flex;align-items:center;justify-content:flex-end;gap:2px;margin-left:auto;order:2}
+#sitecraftGlobalNav .sc-menu a{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 9px;border:1px solid transparent;border-radius:12px;background:transparent;color:#d7d1e4!important;font:600 12px/1 Inter,system-ui,sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease}
+#sitecraftGlobalNav .sc-menu a:hover,#sitecraftGlobalNav .sc-menu a[aria-current=page]{background:rgba(255,255,255,.075);border-color:rgba(255,255,255,.08);color:#fff!important}
 #sitecraftGlobalNav .sc-get-started{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;flex:0 0 auto;padding:0 17px;border-radius:13px;background:var(--sc-gradient);box-shadow:0 10px 28px rgba(196,65,193,.24);color:#fff!important;font:800 13px/1 Inter,system-ui,sans-serif;text-decoration:none;white-space:nowrap;transition:transform .18s ease,box-shadow .18s ease}
 #sitecraftGlobalNav .sc-get-started:hover{transform:translateY(-2px);box-shadow:0 15px 36px rgba(196,65,193,.35)}
 #sitecraftGlobalNav .sc-actions{display:flex;align-items:center;gap:7px;order:1;margin-left:0}#sitecraftGlobalNav .sc-action{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 11px;border:1px solid var(--sc-line);border-radius:11px;background:rgba(255,255,255,.045);color:var(--sc-muted)!important;font:600 12px/1 Inter,sans-serif;text-decoration:none}
@@ -79,13 +74,19 @@ body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}h1,h2,h3,h4
  #sitecraftGlobalNav .sc-brand{font-size:17px}#sitecraftGlobalNav .sc-actions{order:1;margin-left:auto}#sitecraftGlobalNav .sc-nav-right{order:2}
  #sitecraftGlobalNav .sc-menu-toggle{display:inline-flex}
  #sitecraftGlobalNav .sc-menu{display:none;position:absolute;top:100%;left:0;right:0;z-index:9999;align-items:stretch;justify-content:flex-start;flex-direction:column;gap:4px;padding:12px 16px 16px;margin:0;border-bottom:1px solid var(--sc-line);background:rgba(16,15,23,.97);box-shadow:0 20px 36px rgba(0,0,0,.25)}
- #sitecraftGlobalNav .sc-menu.sc-open{display:flex}#sitecraftGlobalNav .sc-menu>a,#sitecraftGlobalNav .sc-dropdown-toggle{width:100%;justify-content:flex-start;min-height:46px;padding-inline:13px}
- #sitecraftGlobalNav .sc-dropdown{width:100%}#sitecraftGlobalNav .sc-dropdown-menu{position:static;width:100%;min-width:0;margin:4px 0 7px;padding:6px;background:rgba(255,255,255,.035);box-shadow:none}
- #sitecraftGlobalNav .sc-dropdown-menu a{padding-left:24px}#sitecraftGlobalNav .sc-get-started{display:none}
+ #sitecraftGlobalNav .sc-menu.sc-open{display:flex}#sitecraftGlobalNav .sc-menu>a{width:100%;justify-content:flex-start;min-height:46px;padding-inline:13px}
+  #sitecraftGlobalNav .sc-get-started{display:none}
  .sc-cross-sell{align-items:flex-start;flex-direction:column}.sc-cross-sell .sc-cross-sell-btn{width:100%}
  .sc-cross-sell--floating{flex-direction:row;align-items:center}.sc-cross-sell--floating .sc-cross-sell-btn{width:auto}
 }
 @media(max-width:520px){#sitecraftGlobalNav .sc-nav-inner{width:calc(100% - 22px)}#sitecraftGlobalNav .sc-brand-mark{width:35px;height:35px}#sitecraftGlobalNav .sc-actions .sc-action{width:36px;overflow:hidden;padding:0;font-size:0;justify-content:center}.sc-cross-sell--floating{right:10px;bottom:10px;width:calc(100vw - 20px)}}
+@media(max-width:1080px) and (min-width:901px){
+ #sitecraftGlobalNav .sc-nav-inner{gap:12px}
+ #sitecraftGlobalNav .sc-brand{font-size:16px}
+ #sitecraftGlobalNav .sc-menu{gap:1px}
+ #sitecraftGlobalNav .sc-menu a{padding-inline:5px;font-size:11px}
+ #sitecraftGlobalNav .sc-get-started{padding-inline:11px;font-size:11px}
+}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
 /* Template marketplace, card grids and skip-link polish. */
