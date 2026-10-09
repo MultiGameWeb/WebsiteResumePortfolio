@@ -61,64 +61,13 @@ function cycleCalc(cycle,bid){
  return {prizePaise:prize,discountPaise:discount,commissionPaise:commission,dividendPoolPaise:pool,dividendPerHeadPaise:per,eligibleIds:remoteMember?Array.from({length:divisor},(_,i)=>"recipient-"+i):eligible.map(m=>m.id),dividends:dividends,due:due,leftoverPaise:leftover,monthlyCollectionPaise:base*Number(state.chit.memberCount)};
 }
 function cycleName(c){const d=new Date((c.periodStartDate||(()=>{const x=new Date(state.chit.startDate+"T00:00:00");x.setMonth(x.getMonth()+c.monthNo-1);return iso(x);})())+"T00:00:00");return new Intl.DateTimeFormat(state.lang==="te"?"te-IN":"en-IN",{month:"short",year:"numeric"}).format(d);}
-function seedDemo(){
- const n=new Date(),start=new Date(n.getFullYear(),n.getMonth()-3,1);
- const chit={name:"Srinivasa Auction Chit",potPaise:5000000,memberCount:10,startingFloorPaise:3000000,maxDiscountPct:40,commissionPct:5,dividendRule:"allMembers",startDate:iso(start),auctionStartDay:1,auctionEndDay:10,dueDay:10,lateFinePerDayPaise:5000,upiId:""};
- const members=[
-  {id:"m1",name:"Ravi Kumar",phone:"9876500001",email:"ravi@example.com",status:"winner",wonMonths:[1]},
-  {id:"m2",name:"Lakshmi Devi",phone:"9876500002",email:"lakshmi@example.com",status:"winner",wonMonths:[2]},
-  {id:"m3",name:"Suresh Reddy",phone:"9876500003",email:"suresh@example.com",status:"winner",wonMonths:[3]},
-  {id:"m4",name:"Anitha Rao",phone:"9876500004",email:"anitha@example.com",status:"active",wonMonths:[]},
-  {id:"m5",name:"Kiran Kumar",phone:"9876500005",email:"kiran@example.com",status:"active",wonMonths:[]},
-  {id:"m6",name:"Priya Sharma",phone:"9876500006",email:"priya@example.com",status:"active",wonMonths:[]},
-  {id:"m7",name:"Mahesh Babu",phone:"9876500007",email:"mahesh@example.com",status:"active",wonMonths:[]},
-  {id:"m8",name:"Swathi Rani",phone:"9876500008",email:"swathi@example.com",status:"active",wonMonths:[]},
-  {id:"m9",name:"Naveen Kumar",phone:"9876500009",email:"naveen@example.com",status:"active",wonMonths:[]},
-  {id:"m10",name:"Deepa Lakshmi",phone:"9876500010",email:"deepa@example.com",status:"active",wonMonths:[]}
- ];
- const cycles=[];
- const outcomes=[
-  {bid:3500000,discount:1500000,commission:250000,per:125000},
-  {bid:3600000,discount:1400000,commission:250000,per:115000},
-  {bid:3800000,discount:1200000,commission:250000,per:95000}
- ];
- for(let i=1;i<=10;i++){
-  const o=outcomes[i-1];
-  cycles.push({monthNo:i,status:i<=3?"completed":i===4?"open":"upcoming",winnerId:i<=3?"m"+i:null,winningBidPaise:o?o.bid:null,prizePaise:o?o.bid:0,discountPaise:o?o.discount:0,commissionPaise:o?o.commission:0,dividendPerHeadPaise:o?o.per:0,dividendPoolPaise:o?o.discount-o.commission:0,completedAt:o?new Date(start.getFullYear(),start.getMonth()+i-1,8,12).toISOString():null});
- }
- const bids=[],d=new Date();
- const makeBid=(id,amount,status,ago)=>({id:"b"+(bids.length+1),memberId:id,cycleNo:4,amountPaise:amount,status:status,createdAt:new Date(d.getTime()-ago*60000).toISOString(),approvedAt:status==="approved"?new Date(d.getTime()-(ago-2)*60000).toISOString():null});
- bids.push(makeBid("m5",3750000,"approved",72));
- bids.push(makeBid("m6",3800000,"submitted",61));
- bids.push(makeBid("m7",3750000,"approved",49));
- bids.push(makeBid("m8",3950000,"submitted",37));
- bids.push(makeBid("m9",3875000,"approved",28));
- bids.push(makeBid("m10",3900000,"rejected",20));
- const payments=[];
- const statuses=[
-  ["paid","paid","paid","paid","paid","partial","paid","paid","paid","pending"],
-  ["paid","paid","paid","partial","paid","paid","pending","paid","paid","paid"],
-  ["paid","paid","paid","paid","pending","paid","paid","partial","paid","paid"],
-  ["paid","paid","partial","pending","pending","pending","pending","pending","pending","pending"]
- ];
- const dueByMonth=[375000,385000,405000,400000];
- for(let mo=1;mo<=4;mo++){
-  statuses[mo-1].forEach((s,i)=>{
-   const due=dueByMonth[mo-1],paid=s==="paid"?due:s==="partial"?Math.floor(due*.42):0;
-   const pd=paid?new Date(d.getTime()-(i+mo+1)*3600000).toISOString():"";
-   payments.push({id:"p"+mo+"-"+(i+1),memberId:members[i].id,cycleNo:mo,paidPaise:paid,status:s,mode:i%2?"cash":"upi",paidAt:pd,screenshotName:"",history:paid?[{type:"payment",amountPaise:paid,date:pd,mode:i%2?"cash":"upi",ref:"DEMO-"+mo+"-"+(i+1)}]:[]});
-  });
- }
- const dividendHistory=[];
- cycles.filter(c=>c.status==="completed").forEach(c=>{
-  const o=outcomes[c.monthNo-1];
-  members.forEach(m=>{if(stateDummyDividendEligible(chit,m,c.winnerId))dividendHistory.push({cycleNo:c.monthNo,memberId:m.id,amountPaise:o.per});});
- });
+function blankState(){
+ const chit={name:"",potPaise:0,memberCount:2,startingFloorPaise:0,maxDiscountPct:0,commissionPct:0,dividendRule:"allMembers",startDate:today(),auctionStartDay:1,auctionEndDay:10,dueDay:10,lateFinePerDayPaise:0,upiId:""};
  const rulesHtml="<h3>Chit and auction rules</h3><ul><li>Only active, eligible members who have not received a prize may submit bids for a new auction cycle.</li><li>Each valid bid must be at or above the calculated floor price and no higher than the total chit pot.</li><li>The lowest approved valid bid wins. If bid values tie, the earliest submitted bid wins.</li><li>Foreman commission is calculated from the pot. The remaining eligible discount amount is distributed as dividend using the selected rule.</li><li>Payment changes and corrections must be recorded transparently. A correction is a reversal entry; original history should not be deleted.</li><li>Organizer must ensure that the chit operation and its terms comply with applicable registration and legal requirements.</li></ul>";
- return {lang:"en",role:"organizer",previewMemberId:"m5",page:"dashboard",chit:chit,members:members,cycles:cycles,bids:bids,payments:payments,dividendHistory:dividendHistory,rulesHtml:rulesHtml,modal:null,toast:null,selectedMonth:4};
+ return {lang:"en",role:"organizer",previewMemberId:null,page:"dashboard",chit:chit,members:[],cycles:[],bids:[],payments:[],dividendHistory:[],rulesHtml:rulesHtml,modal:null,toast:null,selectedMonth:1,selectedPaymentMonth:1};
 }
-function stateDummyDividendEligible(chit,m,winnerId){return chit.dividendRule==="allMembers"||m.id!==winnerId;}
-let state=seedDemo();
+let state=blankState();
+
 state.backendConfigured=!!(window.AuctionChitBackend&&window.AuctionChitBackend.configured());
 state.authUser=null;
 state.availableChits=[];
@@ -323,7 +272,7 @@ function membersView(){
   const docs='<td>'+uploadControl("kyc",t("kycDoc"),m.kycDocPath)+uploadControl("agreement",t("agreement"),m.agreementDocPath)+'</td>';
   const actions=state.role==="organizer"?'<div class="row-actions"><button class="btn small" data-action="edit-member" data-id="'+m.id+'">'+esc(t("edit"))+'</button>'+(state.liveWorkspace?'<button class="btn small" data-action="invite-member" data-id="'+m.id+'">'+esc(t("inviteMember"))+'</button>':"")+'<button class="btn small danger" data-action="remove-member" data-id="'+m.id+'" '+(m.status==="removed"?"disabled":"")+'>'+esc(t("removeMember"))+'</button></div>':"—";
   return '<tr><td>'+(i+1)+'</td><td>'+memberCell(m)+'</td><td>'+esc(m.phone||"—")+'</td><td>'+esc(m.email||"—")+'</td><td>'+badge(m.status)+'</td><td class="money">'+money(total.paid)+'</td><td class="money">'+money(total.dividend)+'</td><td class="money">'+money(total.profitLoss)+'</td>'+docs+'<td>'+actions+'</td></tr>';
- }).join("");
+ }).join("")||'<tr><td colspan="10" class="empty">'+esc(t("noRows"))+'</td></tr>';
  const addButton=state.role==="organizer"&&!state.liveWorkspace?'<button class="btn primary" data-action="add-member">＋ '+esc(t("addMember"))+'</button>':"";
  return heading(t("members"),t("membersHelp"),addButton)+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("membersTable"))+' · '+state.members.length+'</h2><p>'+esc(t("membersHelp"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("serialNo"))+'</th><th>'+esc(t("member"))+'</th><th>'+esc(t("phone"))+'</th><th>'+esc(t("email"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("netPL"))+'</th><th>'+esc(t("documents"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div></div><div class="info">'+esc(t("privacyNotice"))+'</div>';
 }
@@ -337,7 +286,7 @@ function auctionView(){
  return heading(t("auction"),t("liveAuctionHelp"),state.role==="organizer"?'<button class="btn primary" data-action="declare-winner" '+(!lowestBid(c)?"disabled":"")+'>'+esc(t("declareWinner"))+'</button>':"")+banner()+'<div class="grid2"><div><div class="panel"><div class="panel-head"><div><h2>'+esc(t("liveAuction"))+'</h2><p>'+esc(t("auctionWindow"))+' · '+esc(dateText(iso(timer.start)))+' – '+esc(dateText(iso(timer.end)))+'</p></div>'+badge(timer.status==="open"?"approved":timer.status==="upcoming"?"upcoming":"completed")+'</div><div class="panel-body">'+(state.role==="member"?roleSelector:"")+(state.role==="member"&&member&&member.status!=="removed"&&!hasWon(member.id)?bidEntry:'<div class="info">'+esc(state.role==="member"?(hasWon(state.previewMemberId)?t("winnerCannotBid"):t("memberOnly")):t("bidApprovalRequired"))+'</div>')+'<div class="table-wrap" style="margin-top:14px"><table><thead><tr><th>'+esc(t("bidder"))+'</th><th>'+esc(t("bidAmount"))+'</th><th>'+esc(t("bidTime"))+'</th><th>'+esc(t("isLowest"))+'</th><th>'+esc(t("status"))+'</th>'+(state.role==="organizer"?"<th>"+esc(t("action"))+"</th>":"")+'</tr></thead><tbody>'+bidRows(c,lowestBid(c))+'</tbody></table></div>'+ (state.role==="organizer"?'<div class="form-actions"><span class="hint">'+esc(t("lowestRule"))+'</span><button class="btn primary" data-action="declare-winner" '+(!lowestBid(c)?"disabled":"")+'>'+esc(t("declareWinner"))+'</button></div>':"")+'</div></div></div><div><div class="panel"><div class="panel-head"><div><h2>'+esc(t("auctionTimer"))+'</h2><p>'+esc(t("timeLeft"))+'</p></div></div><div class="panel-body"><div class="timer"><div class="timer-label">'+esc(t("auctionWindow"))+'</div><div class="timer-value" id="timerValue">'+esc(timer.text)+'</div><div class="timer-caption">'+esc(timer.status==="open"?t("timerOpen"):timer.status==="upcoming"?t("timerUpcoming"):t("timerClosed"))+'</div></div><div class="calc-grid" style="margin-top:12px">'+calcCard(t("floorPrice"),money(floorPrice(c.monthNo)),t("floorMonth")+" "+c.monthNo)+calcCard(t("lowestBid"),lowestBid(c)?money(lowestBid(c).amountPaise):t("noBid"),lowestBid(c)?mBy(lowestBid(c).memberId).name:t("noValidBids"))+calcCard(t("dividendPerHead"),money(cycleCalc(c,lowestBid(c)).dividendPerHeadPaise),t("eligibleMembers"))+'</div></div></div><div class="panel"><div class="panel-head"><div><h2>'+esc(t("calcSummary"))+'</h2><p>'+esc(t("lowestRule"))+'</p></div></div><div class="panel-body"><div class="calc-grid">'+calcCard(t("prize"),money(cycleCalc(c,lowestBid(c)).prizePaise),"")+calcCard(t("discount"),money(cycleCalc(c,lowestBid(c)).discountPaise),"")+calcCard(t("commission"),money(cycleCalc(c,lowestBid(c)).commissionPaise),String(state.chit.commissionPct)+"%")+calcCard(t("dividendPool"),money(cycleCalc(c,lowestBid(c)).dividendPoolPaise),"")+calcCard(t("roundingLeftover"),money(cycleCalc(c,lowestBid(c)).leftoverPaise),t("toForeman"))+'</div></div></div></div></div>';
 }
 function cyclesView(){
- const rows=state.cycles.map(c=>{const b=c.status==="completed"?null:lowestBid(c),calc=cycleCalc(c,b);return '<tr><td><strong>'+c.monthNo+'</strong></td><td>'+esc(cycleName(c))+'</td><td>'+esc(c.winnerId&&mBy(c.winnerId)?mBy(c.winnerId).name:b&&mBy(b.memberId)?mBy(b.memberId).name:"—")+'</td><td class="money">'+money(c.status==="completed"?c.prizePaise:calc.prizePaise)+'</td><td class="money">'+money(c.status==="completed"?c.discountPaise:calc.discountPaise)+'</td><td class="money">'+money(c.status==="completed"?c.commissionPaise:calc.commissionPaise)+'</td><td class="money">'+money(c.status==="completed"?c.dividendPerHeadPaise:calc.dividendPerHeadPaise)+'</td><td>'+badge(c.status)+'</td></tr>';}).join("");
+ const rows=state.cycles.map(c=>{const b=c.status==="completed"?null:lowestBid(c),calc=cycleCalc(c,b);return '<tr><td><strong>'+c.monthNo+'</strong></td><td>'+esc(cycleName(c))+'</td><td>'+esc(c.winnerId&&mBy(c.winnerId)?mBy(c.winnerId).name:b&&mBy(b.memberId)?mBy(b.memberId).name:"—")+'</td><td class="money">'+money(c.status==="completed"?c.prizePaise:calc.prizePaise)+'</td><td class="money">'+money(c.status==="completed"?c.discountPaise:calc.discountPaise)+'</td><td class="money">'+money(c.status==="completed"?c.commissionPaise:calc.commissionPaise)+'</td><td class="money">'+money(c.status==="completed"?c.dividendPerHeadPaise:calc.dividendPerHeadPaise)+'</td><td>'+badge(c.status)+'</td></tr>';}).join("")||'<tr><td colspan="8" class="empty">'+esc(t("noHistory"))+'</td></tr>';
  const c=currentCycle(),b=c?lowestBid(c):null,calc=c?cycleCalc(c,b):null;
  const complete=c&&state.role==="organizer"?'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("currentMonth"))+' · '+esc(cycleName(c))+'</h2><p>'+esc(t("declareAuto"))+'</p></div>'+badge(c.status)+'</div><div class="panel-body"><div class="calc-grid">'+calcCard(t("winner"),b?mBy(b.memberId).name:t("noValidBids"),"")+calcCard(t("prize"),money(calc.prizePaise),"")+calcCard(t("dividendPerHead"),money(calc.dividendPerHeadPaise),"")+'</div><div class="form-actions"><span class="hint">'+esc(t("editNotFormula"))+'</span><button class="btn primary" data-action="declare-winner" '+(!b?"disabled":"")+'>'+esc(t("completeMonth"))+'</button></div></div></div>':"";
  return heading(t("cycles"),t("auctionHistory"))+banner()+complete+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("monthLedger"))+'</h2><p>'+esc(t("floorLogic"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("monthNo"))+'</th><th>'+esc(t("month"))+'</th><th>'+esc(t("winner"))+'</th><th>'+esc(t("prize"))+'</th><th>'+esc(t("discount"))+'</th><th>'+esc(t("commission"))+'</th><th>'+esc(t("dividendPerHead"))+'</th><th>'+esc(t("status"))+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div></div>';
@@ -400,7 +349,7 @@ function render(){
  root.innerHTML=header()+'<div class="shell">'+nav()+'<main class="main">'+pageContent()+'<footer class="footer">'+esc(t("footer"))+' · '+esc(footerStatus)+'</footer></main></div>'+modalView()+'<div class="toast-area" id="toast-area">'+(state.toast?'<div class="toast '+(state.toast.error?"error":"")+'">'+esc(state.toast.message)+'</div>':"")+'</div>';
 }
 function toast(message,error){state.toast={message:message,error:!!error};render();clearTimeout(state.toastTimer);state.toastTimer=setTimeout(()=>{state.toast=null;const el=document.getElementById("toast-area");if(el)el.innerHTML="";},2800);}
-function syncDemoCycles(){
+function syncCycles(){
  const completed=state.cycles.filter(c=>c.status==="completed").length;
  const existing=new Map(state.cycles.map(c=>[c.monthNo,c]));
  const nextCycles=[];
@@ -434,9 +383,8 @@ function saveSetup(){
  state.chit={...state.chit,name:name,potPaise:pot,memberCount:members,startingFloorPaise:floor,maxDiscountPct:cap,commissionPct:commission,dividendRule:val("dividendRule"),startDate:start||state.chit.startDate,auctionStartDay:sday,auctionEndDay:eday,dueDay:due,lateFinePerDayPaise:fine,upiId:upi};
  const box=document.querySelector("[data-rule-content]");if(box)state.rulesHtml=sanitizeRules(box.innerHTML);
  if(members<oldCount)state.members.slice(members).forEach(m=>{m.status="removed";});
- while(state.members.length<members){const idx=state.members.length+1;state.members.push({id:"m"+idx,name:"Member "+String(idx).padStart(2,"0"),phone:"",email:"",status:"active",wonMonths:[]});}
  if(state.liveWorkspace&&state.dbChitId){const chitId=state.dbChitId;persistAndReload(()=>window.AuctionChitBackend.saveChit(chitId,state.chit,state.rulesHtml));return;}
- syncDemoCycles();toast(t("saved"));
+ syncCycles();toast(t("saved"));
 }
 function openMember(id){state.modal={id:id||null};render();}
 function saveMember(){
@@ -453,6 +401,7 @@ function saveMember(){
   savedMember={id:"m"+next,name:name,phone:phone,email:email,status:"active",wonMonths:[]};
   state.members.push(savedMember);
  }
+ if(!state.previewMemberId&&savedMember)state.previewMemberId=savedMember.id;
  state.modal=null;
  if(state.liveWorkspace&&savedMember&&state.dbChitId){
   const chitId=state.dbChitId;
@@ -558,14 +507,12 @@ function exportCsv(){
  const blob=new Blob(["\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n")],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
  a.href=url;a.download="auction-chit-ledger-"+today()+".csv";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1300);toast(t("exportExcel"));
 }
-function resetDemo(){if(!window.confirm(t("resetConfirm")))return;const lang=state.lang;state=seedDemo();state.lang=lang;render();}
 root.addEventListener("click",function(e){
  const el=e.target.closest("[data-action],[data-page],[data-rule-cmd]");
  if(!el)return;
  if(el.hasAttribute("data-page")){state.page=el.getAttribute("data-page");state.modal=null;render();return;}
  const a=el.getAttribute("data-action");
  if(a==="toggle-lang"){state.lang=state.lang==="en"?"te":"en";render();return;}
- if(a==="reset-demo"){resetDemo();return;}
  if(a==="sign-in"){
   const backend=window.AuctionChitBackend;if(!backend||!backend.configured()){toast(t("backendSetupMissing"),true);return;}
   backend.signInGoogle().catch(error=>toast(error.message||String(error),true));return;
@@ -573,7 +520,7 @@ root.addEventListener("click",function(e){
  if(a==="sign-out"){
   const backend=window.AuctionChitBackend;
   if(!backend){state.authUser=null;state.liveWorkspace=false;state.dbChitId=null;render();return;}
-  backend.signOut().then(()=>{const lang=state.lang;state=seedDemo();state.lang=lang;state.backendConfigured=backend.configured();state.authUser=null;state.availableChits=[];state.dbChitId=null;state.liveWorkspace=false;render();}).catch(error=>toast(error.message||String(error),true));return;
+  backend.signOut().then(()=>{const lang=state.lang;state=blankState();state.lang=lang;state.backendConfigured=backend.configured();state.authUser=null;state.availableChits=[];state.dbChitId=null;state.liveWorkspace=false;render();}).catch(error=>toast(error.message||String(error),true));return;
  }
  if(a==="create-live-chit"){createLiveChit();return;}
  if(a==="invite-member"){
@@ -638,7 +585,15 @@ function tick(){
 }
 function selfCheck(){
  const original=state;
- const demo=seedDemo();state=demo;
+ const startDate=new Date(new Date().getFullYear(),new Date().getMonth()-3,1);
+ state={
+  lang:"en",role:"organizer",previewMemberId:"m5",page:"dashboard",
+  chit:{name:"",potPaise:5000000,memberCount:10,startingFloorPaise:3000000,maxDiscountPct:40,commissionPct:5,dividendRule:"allMembers",startDate:iso(startDate),auctionStartDay:1,auctionEndDay:10,dueDay:10,lateFinePerDayPaise:5000,upiId:""},
+  members:Array.from({length:10},(_,i)=>({id:"m"+(i+1),name:"Test Member "+(i+1),phone:"",email:"",status:"active",wonMonths:[]})),
+  cycles:[{monthNo:1,status:"open",winnerId:null,winningBidPaise:null,prizePaise:0,discountPaise:0,commissionPaise:0,dividendPerHeadPaise:0,dividendPoolPaise:0}],
+  bids:[{id:"test-bid",memberId:"m5",cycleNo:1,amountPaise:3750000,status:"approved",createdAt:new Date().toISOString()}],
+  payments:[],dividendHistory:[],rulesHtml:"",modal:null,toast:null,selectedMonth:1,selectedPaymentMonth:1
+ };
  console.assert(baseContribution()===500000,"Auction Chit Manager: ₹5,000 base contribution.");
  console.assert(floorPrice(1)===3000000,"Auction Chit Manager: month 1 starting floor should be ₹30,000.");
  console.assert(floorPrice(2)===3200000,"Auction Chit Manager: month 2 calculated floor should be ₹32,000.");
