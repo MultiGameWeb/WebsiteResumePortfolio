@@ -127,6 +127,7 @@ const templateInfo={
  birthday:{name:"Birthday / Event",palette:"rose",font:"Arial",headFont:"Trebuchet MS",bodyFont:"Arial",title:"Let's celebrate!",subtitle:"A special day for a special person",tag:"A MOMENT TO REMEMBER"}
 };
 let projects=[],deck=null,activeSlideId=null,selectedObjectId=null,dirty=false,saveTimer=null,history=[],historyIndex=-1,historyTimer=null,restoring=false,dragState=null,presenting=false,presenterMode=false,presenterStarted=0,presenterInterval=null,projectOpen=false;
+const historyAssets=new Map(),historyAssetRefs=new Map();
 const uid=function(prefix){return (prefix||"id")+"-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8)};
 const clone=function(x){return JSON.parse(JSON.stringify(x))};
 const escapeHtml=function(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")};
@@ -184,17 +185,49 @@ function seedDeck(key){
 }
 function selectedIndex(){return Math.max(0,deck?deck.slides.findIndex(s=>s.id===activeSlideId):0)}
 function setStatus(text){const el=$("#saveStatus");if(el)el.textContent=text}
+function compactHistorySnapshot(){
+ const snap=clone(deck);
+ const saveAsset=function(owner,key,refKey){
+  const data=owner[key];if(typeof data!=="string"||data.length<1000)return;
+  let ref=historyAssetRefs.get(data);
+  if(!ref){ref=uid("asset");historyAssetRefs.set(data,ref);historyAssets.set(ref,data)}
+  owner[refKey]=ref;delete owner[key];
+ };
+ (snap.slides||[]).forEach(s=>{
+  (s.elements||[]).forEach(e=>{if(e.type==="image")saveAsset(e,"src","srcRef")});
+  if(s.background&&s.background.type==="image")saveAsset(s.background,"image","imageRef");
+ });
+ return JSON.stringify(snap);
+}
+function hydrateHistorySnapshot(snap){
+ (snap.slides||[]).forEach(s=>{
+  (s.elements||[]).forEach(e=>{if(e.srcRef){e.src=historyAssets.get(e.srcRef)||"";delete e.srcRef}});
+  if(s.background&&s.background.imageRef){s.background.image=historyAssets.get(s.background.imageRef)||"";delete s.background.imageRef}
+ });
+ return snap;
+}
+function pruneHistoryAssets(){
+ const used=new Set();
+ history.forEach(raw=>{try{const snap=JSON.parse(raw);(snap.slides||[]).forEach(s=>{(s.elements||[]).forEach(e=>{if(e.srcRef)used.add(e.srcRef)});if(s.background&&s.background.imageRef)used.add(s.background.imageRef)})}catch(_){}});
+ historyAssets.forEach((data,ref)=>{if(!used.has(ref)){historyAssets.delete(ref);historyAssetRefs.delete(data)}});
+}
 function rememberHistory(force){
  if(!deck||restoring)return;
  clearTimeout(historyTimer);
- const capture=function(){if(!deck||restoring)return;const snap=JSON.stringify(deck);if(history[historyIndex]===snap)return;history=history.slice(0,historyIndex+1);history.push(snap);if(history.length>MAX_HISTORY)history.shift();historyIndex=history.length-1;updateUndoButtons()};
+ const capture=function(){
+  if(!deck||restoring)return;
+  const snap=compactHistorySnapshot();if(history[historyIndex]===snap)return;
+  history=history.slice(0,historyIndex+1);history.push(snap);
+  if(history.length>MAX_HISTORY)history.shift();
+  historyIndex=history.length-1;pruneHistoryAssets();updateUndoButtons();
+ };
  if(force)capture();else historyTimer=setTimeout(capture,450);
 }
-function resetHistory(){history=[];historyIndex=-1;rememberHistory(true)}
+function resetHistory(){history=[];historyIndex=-1;historyAssets.clear();historyAssetRefs.clear();rememberHistory(true)}
 function updateUndoButtons(){$("#pmUndoBtn").disabled=historyIndex<=0;$("#pmRedoBtn").disabled=historyIndex<0||historyIndex>=history.length-1}
 function applySnapshot(index){
  if(index<0||index>=history.length)return;
- historyIndex=index;restoring=true;deck=JSON.parse(history[index]);restoring=false;
+ historyIndex=index;restoring=true;deck=hydrateHistorySnapshot(JSON.parse(history[index]));restoring=false;
  activeSlideId=currentSlide()?.id||null;selectedObjectId=null;refreshWorkspace();updateUndoButtons();persist(true);
 }
 function undo(){if(historyIndex>0)applySnapshot(historyIndex-1)}
