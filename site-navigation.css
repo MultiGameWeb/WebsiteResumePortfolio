@@ -122,3 +122,9 @@ body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}h1,h2,h3,h4
  #sitecraftGlobalNav .sc-nav-right{order:2;margin-left:0}
  #sitecraftGlobalNav .sc-menu{order:3}
 }
+
+/* Dark landing surfaces for static discovery pages; document canvases remain untouched. */
+body:has(.groups),body:has(.benefits),body:has(.four-template-grid),body:has(.privacy){background:#100f17!important;color:#f8f6ff!important}
+body:has(.groups) main,body:has(.benefits) main,body:has(.four-template-grid) main,body:has(.privacy) main{color:#f8f6ff}
+body:has(.groups) .intro,body:has(.benefits) .hero,body:has(.four-template-grid) .intro{border-color:var(--sc-line)}
+body:has(.groups) .footer,body:has(.four-template-grid) .footer{background:rgba(255,255,255,.025);color:#b4aec5}
