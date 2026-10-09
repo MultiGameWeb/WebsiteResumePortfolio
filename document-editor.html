@@ -266,7 +266,7 @@ function runCommand(command,value=null){
  rememberSelection();
  hasManualEdits=true;queueSave();updateToolbarState();
 }
-$$("#.template").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.template)));
+$(".template").forEach(b=>b.addEventListener("click",()=>choose(b.dataset.template)));
 $("#blankBtn").addEventListener("click",function(){
  blankMode=true;values={};hasManualEdits=false;renderFields();
  $("#page").innerHTML="<p><br></p>";$("#docTitle").textContent="Blank Document";
@@ -276,11 +276,11 @@ $("#page").addEventListener("input",function(){if(!isRenderingDoc)hasManualEdits
 $("#page").addEventListener("keyup",function(){rememberSelection();updateToolbarState()});
 $("#page").addEventListener("mouseup",function(){rememberSelection();updateToolbarState()});
 document.addEventListener("selectionchange",function(){rememberSelection();updateToolbarState()});
-$$("#.toolbar button").forEach(button=>{
+$(".toolbar button").forEach(button=>{
  button.addEventListener("mousedown",function(event){rememberSelection();event.preventDefault()});
  button.addEventListener("click",function(){runCommand(button.dataset.cmd)});
 });
-$$("#.toolbar select").forEach(select=>{
+$(".toolbar select").forEach(select=>{
  select.addEventListener("mousedown",rememberSelection);select.addEventListener("focus",rememberSelection);
 });
 $("#fontSize").addEventListener("change",function(event){runCommand("fontSize",event.target.value)});
