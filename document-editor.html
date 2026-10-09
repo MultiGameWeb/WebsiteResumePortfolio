@@ -109,6 +109,7 @@
         <button type="button" data-table-action="delete-row">Delete row</button>
         <button type="button" data-table-action="delete-col">Delete column</button>
         <button type="button" data-table-action="delete-table">Delete table</button>
+        <button type="button" data-table-action="select-cells">Select cells</button>
         <button type="button" data-table-action="merge">Merge cells</button>
         <button type="button" data-table-action="split">Split cell</button>
         <button type="button" data-table-action="align-left">Left</button>
@@ -342,7 +343,7 @@ function runCommand(command,value=null){
 }
 
 /* Table insertion, formatting and cell navigation. Uses native DOM APIs only. */
-let activeCell=null,selectedCells=[];
+let activeCell=null,selectedCells=[],cellSelectionMode=false;
 const tableTools=$("#tableTools"),insertTableMenu=$("#insertTableMenu"),boxesMenu=$("#boxesMenu");
 function tableFromCell(cell){return cell&&cell.closest?cell.closest("table"):null}
 function wrapperFromTable(table){return table&&table.closest?table.closest(".table-scroll"):null}
@@ -396,6 +397,13 @@ function newCellForTable(table,rowIndex){const header=table.dataset.headerRow===
 function runTableAction(action,value){
  const cell=activeCell,table=activeTable();if(!cell||!table){showTableTools(false);return}
  const row=cell.parentElement,rows=Array.from(table.rows),rowIndex=rows.indexOf(row),cellIndex=cell.cellIndex,wrapper=wrapperFromTable(table);
+ if(action==="select-cells"){
+  cellSelectionMode=!cellSelectionMode;
+  const toggle=$('[data-table-action="select-cells"]');
+  if(toggle)toggle.textContent=cellSelectionMode?"Done selecting":"Select cells";
+  if(cellSelectionMode){selectedCells=[cell];refreshCellHighlights()}else{refreshCellHighlights()}
+  return;
+ }
  if(action==="row-above"||action==="row-below"){const newRow=document.createElement("tr"),count=Math.max(1,row.cells.length),header=table.dataset.headerRow==="true"&&action==="row-above"&&rowIndex===0;for(let i=0;i<count;i++)newRow.appendChild(makeEditableCell(header?"th":"td","",header));row.parentElement.insertBefore(newRow,action==="row-above"?row:row.nextSibling);activeCell=newRow.cells[Math.min(cellIndex,newRow.cells.length-1)];selectedCells=[activeCell]}
  else if(action==="col-left"||action==="col-right"){rows.forEach((r,ri)=>{const tag=table.dataset.headerRow==="true"&&ri===0?"th":"td",added=makeEditableCell(tag,"",tag==="th"),target=r.cells[Math.min(cellIndex,r.cells.length-1)];if(!target)r.appendChild(added);else if(action==="col-left")r.insertBefore(added,target);else if(target.nextSibling)r.insertBefore(added,target.nextSibling);else r.appendChild(added)});syncTableColumns(table);activeCell=rows[rowIndex].cells[Math.min(cellIndex+(action==="col-right"?1:0),rows[rowIndex].cells.length-1)];selectedCells=[activeCell]}
  else if(action==="delete-row"){if(rows.length===1){Array.from(row.cells).forEach(resetCellToBlank);activeCell=row.cells[Math.min(cellIndex,row.cells.length-1)];selectedCells=[activeCell]}else{const next=row.nextElementSibling||row.previousElementSibling;row.remove();activeCell=next&&next.cells[Math.min(cellIndex,next.cells.length-1)]||null;selectedCells=activeCell?[activeCell]:[]}}
@@ -406,7 +414,7 @@ function runTableAction(action,value){
  else if(action==="toggle-borders"){const hide=table.dataset.borders!=="off";table.dataset.borders=hide?"off":"on";Array.from(table.querySelectorAll("td,th")).forEach(c=>{c.style.borderStyle=hide?"hidden":"solid";if(!hide)c.style.borderColor="#bfc5ce"})}
  else if(action==="equal-widths"){syncTableColumns(table)}
  else if(action==="merge"){
-  const chosen=(selectedCells.length?selectedCells:[cell]).filter(c=>c&&c.isConnected);if(chosen.length<2){alert("Select two adjacent cells with Ctrl/Cmd-click, then choose Merge cells.");return}if(chosen.some(c=>tableFromCell(c)!==table)){alert("Select cells from the same table.");return}
+  const chosen=(selectedCells.length?selectedCells:[cell]).filter(c=>c&&c.isConnected);if(chosen.length<2){alert("Turn on Select cells, then tap or click two adjacent cells before choosing Merge cells.");return}if(chosen.some(c=>tableFromCell(c)!==table)){alert("Select cells from the same table.");return}
   const r0=rows.indexOf(chosen[0].parentElement),r1=rows.indexOf(chosen[1].parentElement),c0=chosen[0].cellIndex,c1=chosen[1].cellIndex;let main=null,other=null,spanType="";
   if(r0===r1&&Math.abs(c0-c1)===1){main=c0<c1?chosen[0]:chosen[1];other=main===chosen[0]?chosen[1]:chosen[0];spanType="colSpan"}else if(c0===c1&&Math.abs(r0-r1)===1){main=r0<r1?chosen[0]:chosen[1];other=main===chosen[0]?chosen[1]:chosen[0];spanType="rowSpan"}else{alert("Merge currently supports two adjacent cells in one row or one column.");return}
   main.appendChild(document.createElement("br"));while(other.firstChild)main.appendChild(other.firstChild);main[spanType]=Math.max(1,Number(main[spanType])||1)+Math.max(1,Number(other[spanType])||1);other.remove();activeCell=main;selectedCells=[main];syncTableColumns(table);
@@ -426,7 +434,7 @@ $("#tableTools").addEventListener("click",function(event){const button=event.tar
 $("#tableCellColor").addEventListener("change",function(event){runTableAction("cell-color",event.target.value)});
 document.addEventListener("mousedown",function(event){const control=event.target.closest("#tablePickerGrid button,#boxesMenu button,#insertTableBtn,#boxesBtn,#customTableInsert");if(control){rememberSelection();event.preventDefault()}});
 document.addEventListener("click",function(event){const inMenus=event.target.closest("#insertTableMenu,#boxesMenu,#insertTableBtn,#boxesBtn");if(!inMenus){insertTableMenu.hidden=true;boxesMenu.hidden=true;$("#insertTableBtn").setAttribute("aria-expanded","false");$("#boxesBtn").setAttribute("aria-expanded","false")}if(!event.target.closest("#tableTools")&&!event.target.closest("#page td")&&!event.target.closest("#page th")&&!event.target.closest("#insertTableMenu"))showTableTools(false)});
-$("#page").addEventListener("click",function(event){const cell=event.target.closest("td,th");if(cell&&$("#page").contains(cell)){selectActiveCell(cell,!!(event.ctrlKey||event.metaKey||event.shiftKey));rememberSelection()}else if(!cell){activeCell=null;selectedCells=[];refreshCellHighlights();showTableTools(false)}});
+$("#page").addEventListener("click",function(event){const cell=event.target.closest("td,th");if(cell&&$("#page").contains(cell)){selectActiveCell(cell,cellSelectionMode||!!(event.ctrlKey||event.metaKey||event.shiftKey));rememberSelection()}else if(!cell){activeCell=null;selectedCells=[];refreshCellHighlights();showTableTools(false)}});
 $("#page").addEventListener("focusin",function(event){const cell=event.target.closest("td,th");if(cell)selectActiveCell(cell,false)});
 document.addEventListener("selectionchange",function(){const sel=window.getSelection();if(!sel||!sel.rangeCount)return;const range=sel.getRangeAt(0);if(!rangeInsidePage(range))return;const node=range.commonAncestorContainer,el=node&&(node.nodeType===1?node:node.parentElement),cell=el&&el.closest?el.closest("td,th"):null;if(cell){activeCell=cell;showTableTools(true)}else if(!document.activeElement.closest||!document.activeElement.closest("#tableTools")){activeCell=null;selectedCells=[];refreshCellHighlights();showTableTools(false)}});
 $("#page").addEventListener("keydown",function(event){const cell=event.target.closest("td,th");if(!cell||event.key!=="Tab")return;const table=tableFromCell(cell),cells=Array.from(table.querySelectorAll("td,th")),index=cells.indexOf(cell),next=cells[index+(event.shiftKey?-1:1)];event.preventDefault();if(next){next.focus();const range=document.createRange();range.selectNodeContents(next);range.collapse(true);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);activeCell=next;selectedCells=[next];refreshCellHighlights();showTableTools(true);rememberSelection()}else if(!event.shiftKey){const lastRow=table.rows[table.rows.length-1],newRow=document.createElement("tr");for(let i=0;i<lastRow.cells.length;i++)newRow.appendChild(makeEditableCell("td","",false));lastRow.parentElement.appendChild(newRow);const last=newRow.cells[0];activeCell=last;selectedCells=[last];last.focus();const range=document.createRange();range.selectNodeContents(last);range.collapse(true);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);refreshCellHighlights();showTableTools(true);rememberSelection();hasManualEdits=true;queueSave()}});
