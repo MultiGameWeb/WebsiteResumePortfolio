@@ -546,7 +546,7 @@ async function exportPptx(){
      sl.addShape(types[e.shape]||pptx.ShapeType.rect,opts);
     }else if(e.type==="image"&&e.src)sl.addImage(Object.assign({},o,{data:e.src,sizingCrop:true}));
     else if(e.type==="table"){
-     const rows=e.rows||[];sl.addTable(rows,{...o,border:{type:"solid",color:(e.border||"BFC5CE").replace("#",""),pt:Math.max(.5,e.borderWidth||.5)},fill:(e.fill||"EEF0FF").replace("#",""),color:(e.color||"17181D").replace("#",""),fontFace:e.font||deck.font||"Arial",fontSize:e.fontSize||12,margin:.05,autoFit:false,breakLine:false});
+     const rows=(e.rows||[]).map((row,ri)=>row.map(cell=>({text:String(cell==null?"":cell),options:{fill:{color:(ri===0?(e.fill||"#EEF0FF"):"#FFFFFF").replace("#","")},color:(ri===0?(e.color||"#17181D"):"#343944").replace("#",""),bold:ri===0,fontFace:e.font||deck.font||"Arial",fontSize:e.fontSize||12}})));sl.addTable(rows,Object.assign({},o,{border:{type:"solid",color:(e.border||"BFC5CE").replace("#",""),pt:Math.max(.5,e.borderWidth||.5)},fill:{color:"FFFFFF"},color:(e.color||"17181D").replace("#",""),fontFace:e.font||deck.font||"Arial",fontSize:e.fontSize||12,margin:.05,autoFit:false,breakLine:false}));
     }else if(e.type==="chart"){
      const ct=e.chartType==="pie"?pptx.ChartType.pie:e.chartType==="line"?pptx.ChartType.line:pptx.ChartType.bar;
      const data=[{name:"Series 1",labels:e.labels||[],values:e.values||[]}];sl.addChart(ct,data,Object.assign({},o,{showTitle:false,showLegend:false,showValue:true,catAxisLabelFontFace:deck.font||"Arial",catAxisLabelFontSize:10,valAxisLabelFontSize:10,chartColors:[(e.color||"#6158e8").replace("#","")],showCatName:false,showValAxisTitle:false,showCatAxisTitle:false}));
@@ -556,7 +556,7 @@ async function exportPptx(){
   }
   await pptx.writeFile({fileName:(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+".pptx"});
   setStatus("PPTX downloaded");
-  alert("PPTX export note: gradient backgrounds are exported as a solid-color fallback. Some browser-specific text wrapping and transparency effects may look slightly different in PowerPoint; speaker notes are included when supported by the selected PptxGenJS build.");
+  alert("PPTX note: gradient backgrounds are exported as a solid-color fallback. Some text wrapping, highlight styling, shape opacity/rounded corners, or chart and table styling may look slightly different in PowerPoint. Speaker notes are included.");
  }catch(_){setStatus("PPTX export failed");alert("Could not export PPTX. Check your connection and try again.")}
 }
 async function exportPngs(){
@@ -573,14 +573,20 @@ async function exportPngs(){
 }
 function exportPdf(){
  if(!deck)return;
- const oldDeck=$("#pmPrintDeck");oldDeck.innerHTML="";
- deck.slides.forEach(function(s){
-  const slide=document.createElement("div");slide.className="pm-print-slide";slide.style.width=deck.ratio==="4:3"?"960px":"1280px";slide.style.height="720px";slide.style.aspectRatio=deck.ratio==="4:3"?"4 / 3":"16 / 9";oldDeck.appendChild(slide);renderSlideTo(slide,s,false)
- });
- document.body.classList.add("pm-printing");
+ const oldDeck=$("#pmPrintDeck");
  const reset=function(){document.body.classList.remove("pm-printing");oldDeck.innerHTML="";window.removeEventListener("afterprint",reset)};
- let rule=$("#pmPrintPageRule");if(!rule){rule=document.createElement("style");rule.id="pmPrintPageRule";document.head.appendChild(rule)}rule.textContent="@page{size:"+(deck.ratio==="4:3"?"10in 7.5in":"13.333in 7.5in")+";margin:0}";
- window.addEventListener("afterprint",reset);window.print();setTimeout(reset,2000);
+ try{
+  oldDeck.innerHTML="";
+  deck.slides.forEach(function(s){
+   const slide=document.createElement("div");slide.className="pm-print-slide";slide.style.width=deck.ratio==="4:3"?"960px":"1280px";slide.style.height="720px";slide.style.aspectRatio=deck.ratio==="4:3"?"4 / 3":"16 / 9";oldDeck.appendChild(slide);renderSlideTo(slide,s,false)
+  });
+  let rule=$("#pmPrintPageRule");if(!rule){rule=document.createElement("style");rule.id="pmPrintPageRule";document.head.appendChild(rule)}rule.textContent="@page{size:"+(deck.ratio==="4:3"?"10in 7.5in":"13.333in 7.5in")+";margin:0}";
+  document.body.classList.add("pm-printing");
+  window.addEventListener("afterprint",reset);window.print();setTimeout(reset,2000);
+ }catch(_){
+  reset();setStatus("PDF export failed");
+  alert("Could not prepare Print / Save PDF. Please try again or check your browser's print settings.");
+ }
 }
 function startPresent(presenter){
  if(!deck)return;presenting=true;presenterMode=!!presenter;presenterStarted=Date.now();$("#pmPresentOverlay").classList.remove("pm-hidden");$("#pmPresentOverlay").classList.add("open");$("#pmPresentOverlay").classList.toggle("presenter",presenterMode);drawPresent();
