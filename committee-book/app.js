@@ -99,6 +99,7 @@ function memberMath(member){
 }
 function dueFor(member,cycle){
   if(!cycle)return {base:0,paid:0,remaining:0,fine:0,payment:null};
+  if(member.status==="removed"&&!cycle.completed){const old=getPayment(member.id,cycle.no);return {base:0,paid:old.amountPaidPaise||0,remaining:0,fine:0,payment:old};}
   const math=cycle.completed?cycle:cycleMath(cycle);
   const due=cycle.completed?(math.paysByMember&&math.paysByMember[member.id]!=null?math.paysByMember[member.id]:contribution()):math.paysByMember[member.id]||contribution();
   const payment=getPayment(member.id,cycle.no),remaining=Math.max(0,due-(payment.amountPaidPaise||0));
@@ -151,7 +152,7 @@ function setupView(){
   const input=(key,label,value,type,disabled,help,attrs)=>'<div class="form-field"><label for="f-'+key+'">'+esc(label)+(disabled?lockTag:"")+'</label><input id="f-'+key+'" data-field="'+key+'" type="'+type+'" value="'+esc(value)+'" '+(disabled?'disabled title="'+esc(t("lockedHint"))+'"':"")+' '+(attrs||"")+'>'+ (help?'<div class="field-help">'+esc(help)+'</div>':"")+'</div>';
   const select=(key,label,value,opts,disabled)=>'<div class="form-field"><label for="f-'+key+'">'+esc(label)+(disabled?lockTag:"")+'</label><select id="f-'+key+'" data-field="'+key+'" '+(disabled?'disabled title="'+esc(t("lockedHint"))+'"':"")+'>'+opts.map(o=>'<option value="'+esc(o[0])+'" '+(o[0]===value?"selected":"")+'>'+esc(o[1])+'</option>').join("")+'</select></div>';
   const lockedHTML=locked?'<div class="lock-alert"><b>🔒</b><span><strong>'+esc(t("locked"))+'</strong><br>'+esc(t("lockedHint"))+'</span></div>':"";
-  const commissionBlock='<div class="form-field"><label>'+esc(t("leaderCommission"))+(locked?lockTag:"")+'</label><div class="field-row"><input type="checkbox" class="check-toggle" id="f-commissionEnabled" data-field="commissionEnabled" '+(c.commissionEnabled?"checked":"")+' '+(locked?"disabled":"")+' aria-label="'+esc(t("leaderCommission"))+'"><span class="subtle">'+esc(c.commissionEnabled?t("commissionOn"):t("commissionOff"))+'</span></div></div>';
+  const commissionBlock='<div class="form-field"><label>'+esc(t("leaderCommission"))+(locked?lockTag:"")+'</label><div class="field-row"><input type="checkbox" class="check-toggle" id="f-commissionEnabled" data-field="commissionEnabled" '+(c.commissionEnabled?"checked":"")+' '+(locked?"disabled":"")+' aria-label="'+esc(t("leaderCommission"))+'"><span class="subtle" id="commissionToggleLabel">'+esc(c.commissionEnabled?t("commissionOn"):t("commissionOff"))+'</span></div></div>';
   const percentBlock='<div class="form-field" id="commissionRateWrap" '+(!c.commissionEnabled?'hidden':"")+'><label for="f-commissionPct">'+esc(t("commissionPercent"))+'</label><input id="f-commissionPct" type="number" data-field="commissionPct" min="0" max="100" step="0.01" value="'+esc(c.commissionPct)+'" '+(locked?"disabled":"")+'></div>';
   const fields='<div class="form-grid">'+
     input("name",t("chitName"),c.name,"text",false)+
@@ -333,6 +334,7 @@ function pickWinner(){
 function completeCycle(){
   const c=currentCycle();if(!c){showToast(t("noEligibleWinner"),true);return;}
   let winner=memberById(state.selectedWinnerId);
+  if(state.chit.winnerMethod==="fixedOrder"){const first=selectEligibleForWinner().slice().sort((a,b)=>Number(a.id.replace(/\D/g,""))-Number(b.id.replace(/\D/g,"")))[0];if(first){winner=first;state.selectedWinnerId=first.id;}}
   if(!winner||winner.status==="removed"||(winner.wonMonths||[]).length){showToast(t("cannotComplete"),true);return;}
   if(!window.confirm(t("cycleCompleteConfirm")))return;
   c.winnerId=winner.id;c.completed=true;c.method=state.chit.winnerMethod;c.completionDate=todayISO();
@@ -417,7 +419,7 @@ root.addEventListener("change",function(e){
   if(el.getAttribute("data-action")==="winner-select"){state.selectedWinnerId=el.value;render();return;}
   if(el.getAttribute("data-action")==="payment-mode"){const c=currentCycle(),p=getPayment(el.getAttribute("data-id"),c.no);p.mode=el.value;render();return;}
   if(el.getAttribute("data-action")==="toggle-paid"){if(el.checked)payCurrent(el.getAttribute("data-id"),"paid");else reversePayment(el.getAttribute("data-id"));return;}
-  if(el.id==="f-commissionEnabled"){const wrap=document.getElementById("commissionRateWrap");if(wrap)wrap.hidden=!el.checked;return;}
+  if(el.id==="f-commissionEnabled"){const wrap=document.getElementById("commissionRateWrap");if(wrap)wrap.hidden=!el.checked;const label=document.getElementById("commissionToggleLabel");if(label)label.textContent=el.checked?t("commissionOn"):t("commissionOff");return;}
 });
 root.addEventListener("input",function(e){
   const el=e.target;
