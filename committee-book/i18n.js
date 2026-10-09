@@ -3,6 +3,8 @@
     en: {
       pageTitle:"Committee Book — Fixed Discount Chit Manager",
       brand:"Committee Book",
+      backToTemplates:"Home",
+      sitecraftHome:"SiteCraft Home",
       templateTag:"TEMPLATE 01",
       templateName:"Fixed Discount Chit Manager",
       subtitle:"A simple fixed-discount chit workspace. Demo data only — changes stay in this session.",
@@ -213,6 +215,8 @@
     te: {
       pageTitle:"కమిటీ బుక్ — ఫిక్స్‌డ్ డిస్కౌంట్ చిట్ మేనేజర్",
       brand:"కమిటీ బుక్",
+      backToTemplates:"హోమ్",
+      sitecraftHome:"SiteCraft హోమ్",
       templateTag:"టెంప్లేట్ 01",
       templateName:"ఫిక్స్‌డ్ డిస్కౌంట్ చిట్ మేనేజర్",
       subtitle:"నెలవారీ ఫిక్స్‌డ్ డిస్కౌంట్ చిట్ నిర్వహణ. డెమో డేటా మాత్రమే — మార్పులు ఈ సెషన్‌లోనే ఉంటాయి.",
