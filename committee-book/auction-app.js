@@ -120,6 +120,11 @@ function paymentFor(memberId,cycleNo){
  return p;
 }
 function currentBidFor(memberId,cycleNo){return state.bids.find(b=>b.memberId===memberId&&b.cycleNo===Number(cycleNo)&&b.status!=="rejected")||null;}
+function financialPosition(m){
+ const wins=state.cycles.filter(c=>c.status==="completed"&&c.winnerId===m.id).sort((a,b)=>a.monthNo-b.monthNo);
+ if(!wins.length)return t("notYetWon");
+ return wins[0].monthNo<=Math.ceil(state.chit.memberCount/2)?t("earlyBorrower"):t("lateInvestor");
+}
 function memberTotals(m){
  let paid=0,div=0,prize=0;
  state.payments.filter(p=>p.memberId===m.id).forEach(p=>{paid+=p.history.reduce((sum,h)=>sum+(h.type==="reversal"?-h.amountPaise:h.amountPaise),0);});
@@ -260,9 +265,9 @@ function rulesView(){
  return heading(t("ruleTitle"),t("editRules"),state.role==="organizer"?'<button class="btn primary" data-action="save-rules">'+esc(t("saveRules"))+'</button>':"")+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("rulesText"))+'</h2><p>'+esc(t("editRules"))+'</p></div></div><div class="panel-body">'+(state.role==="organizer"?rulesEditor():'<div class="rule-content">'+sanitizeRules(state.rulesHtml)+'</div>')+'</div></div><div class="panel"><div class="panel-head"><div><h2>'+esc(t("calcSummary"))+'</h2><p>'+esc(t("lowestRule"))+'</p></div></div><div class="panel-body"><div class="calc-grid">'+calcCard(t("baseContribution"),money(baseContribution()),t("potAmount")+" ÷ "+t("numberMembers"))+calcCard(t("floorPrice"),money(c?floorPrice(c.monthNo):0),t("floorLogic"))+calcCard(t("commission"),money(commissionAmount()),String(state.chit.commissionPct)+"%")+calcCard(t("dividendPool"),money(calc?calc.dividendPoolPaise:0),"")+calcCard(t("dividendPerHead"),money(calc?calc.dividendPerHeadPaise:0),t("eligibleMembers"))+calcCard(t("roundingLeftover"),money(calc?calc.leftoverPaise:0),t("toForeman"))+'</div><div class="info" style="margin-top:12px">'+esc(t("profitFormula"))+'</div></div></div>';
 }
 function reportsView(){
- const mrows=state.members.map(m=>{const v=memberTotals(m);return '<tr><td>'+memberCell(m)+'</td><td>'+badge(m.status)+'</td><td class="money">'+money(v.paid)+'</td><td class="money">'+money(v.dividend)+'</td><td class="money">'+money(v.prize)+'</td><td class="money">'+money(v.profitLoss)+'</td></tr>';}).join("");
+ const mrows=state.members.map(m=>{const v=memberTotals(m);return '<tr><td>'+memberCell(m)+'</td><td>'+badge(m.status)+'</td><td>'+esc(financialPosition(m))+'</td><td class="money">'+money(v.paid)+'</td><td class="money">'+money(v.dividend)+'</td><td class="money">'+money(v.prize)+'</td><td class="money">'+money(v.profitLoss)+'</td></tr>';}).join("");
  const rows=state.cycles.map(c=>state.members.map(m=>{const p=paymentFor(m.id,c.monthNo),v=memberTotals(m);const d=paymentDue(m,c);const div=state.dividendHistory.filter(h=>h.cycleNo===c.monthNo&&h.memberId===m.id).reduce((s,h)=>s+h.amountPaise,0);return '<tr><td>'+c.monthNo+'</td><td>'+esc(cycleName(c))+'</td><td>'+esc(m.name)+'</td><td class="money">'+money(d.paid)+'</td><td class="money">'+money(div)+'</td><td class="money">'+money(m.id===c.winnerId?c.prizePaise:0)+'</td><td class="money">'+money(v.profitLoss)+'</td><td>'+badge(c.status)+'</td></tr>';}).join("")).join("");
- return heading(t("reportsTitle"),t("reportsHelp"),'<button class="btn" data-action="export-csv">⇩ '+esc(t("exportExcel"))+'</button><button class="btn primary" data-action="print-pdf">▤ '+esc(t("printPdf"))+'</button>')+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("fullLedger"))+'</h2><p>'+esc(t("memberStatement"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("member"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("prizeReceived"))+'</th><th>'+esc(t("netPL"))+'</th></tr></thead><tbody>'+mrows+'</tbody></table></div></div></div><div class="panel"><div class="panel-head"><div><h2>'+esc(t("monthLedger"))+'</h2><p>'+esc(t("profitLoss"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("monthNo"))+'</th><th>'+esc(t("period"))+'</th><th>'+esc(t("member"))+'</th><th>'+esc(t("amountPaid"))+'</th><th>'+esc(t("dividend"))+'</th><th>'+esc(t("prizeReceived"))+'</th><th>'+esc(t("netPL"))+'</th><th>'+esc(t("status"))+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div></div><div class="info">'+esc(t("profitFormula"))+'</div>';
+ return heading(t("reportsTitle"),t("reportsHelp"),'<button class="btn" data-action="export-csv">⇩ '+esc(t("exportExcel"))+'</button><button class="btn primary" data-action="print-pdf">▤ '+esc(t("printPdf"))+'</button>')+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("fullLedger"))+'</h2><p>'+esc(t("memberStatement"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("member"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("financialPosition"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("prizeReceived"))+'</th><th>'+esc(t("netPL"))+'</th></tr></thead><tbody>'+mrows+'</tbody></table></div></div></div><div class="panel"><div class="panel-head"><div><h2>'+esc(t("monthLedger"))+'</h2><p>'+esc(t("profitLoss"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("monthNo"))+'</th><th>'+esc(t("period"))+'</th><th>'+esc(t("member"))+'</th><th>'+esc(t("amountPaid"))+'</th><th>'+esc(t("dividend"))+'</th><th>'+esc(t("prizeReceived"))+'</th><th>'+esc(t("netPL"))+'</th><th>'+esc(t("status"))+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div></div><div class="info">'+esc(t("profitFormula"))+'</div>';
 }
 function pageContent(){switch(state.page){case"setup":return setup();case"members":return membersView();case"auction":return auctionView();case"cycles":return cyclesView();case"payments":return paymentsView();case"rules":return rulesView();case"reports":return reportsView();default:return dashboard();}}
 function modalView(){
@@ -302,6 +307,7 @@ function saveSetup(){
  if(!name){toast(t("memberNameRequired"),true);return;}
  if(pot<=0){toast(t("validationPot"),true);return;}
  if(!Number.isInteger(members)||members<2){toast(t("validationMembers"),true);return;}
+ if(members<state.cycles.filter(c=>c.status==="completed").length){toast(t("memberCountBelowHistory"),true);return;}
  if(floor<=0||floor>pot){toast(t("validationFloor"),true);return;}
  if(!Number.isFinite(cap)||cap<0||cap>100){toast(t("validationDiscount"),true);return;}
  if(!Number.isFinite(commission)||commission<0||commission>100){toast(t("validationCommission"),true);return;}
@@ -311,6 +317,7 @@ function saveSetup(){
  const box=document.querySelector("[data-rule-content]");if(box)state.rulesHtml=sanitizeRules(box.innerHTML);
  if(members<oldCount)state.members.slice(members).forEach(m=>{m.status="removed";});
  while(state.members.length<members){const idx=state.members.length+1;state.members.push({id:"m"+idx,name:"Member "+String(idx).padStart(2,"0"),phone:"",email:"",status:"active",wonMonths:[]});}
+ syncDemoCycles();
  toast(t("saved"));
 }
 function openMember(id){state.modal={id:id||null};render();}
@@ -387,11 +394,11 @@ function generateQr(id){
 }
 function csvCell(v){let s=String(v==null?"":v);return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;}
 function exportCsv(){
- const rows=[[t("monthNo"),t("month"),t("member"),t("status"),t("bid"),t("prize"),t("discount"),t("commission"),t("dividend"),t("amountPaid"),t("profitLoss"),t("paidDate"),t("paymentMode")]];
+ const rows=[[t("monthNo"),t("month"),t("member"),t("status"),t("financialPosition"),t("bid"),t("prize"),t("discount"),t("commission"),t("dividend"),t("amountPaid"),t("profitLoss"),t("paidDate"),t("paymentMode")]];
  state.cycles.forEach(c=>state.members.forEach(m=>{
   const p=paymentFor(m.id,c.monthNo),tot=memberTotals(m),dv=state.dividendHistory.filter(h=>h.cycleNo===c.monthNo&&h.memberId===m.id).reduce((s,h)=>s+h.amountPaise,0);
   const b=state.bids.find(x=>x.cycleNo===c.monthNo&&x.memberId===m.id);
-  rows.push([c.monthNo,cycleName(c),m.name,sLabel(m.status),b?(b.amountPaise/100).toFixed(2):"",c.winnerId===m.id?(c.prizePaise/100).toFixed(2):"",c.status==="completed"?(c.discountPaise/100).toFixed(2):"",c.status==="completed"?(c.commissionPaise/100).toFixed(2):"", (dv/100).toFixed(2),(p.paidPaise/100).toFixed(2),(tot.profitLoss/100).toFixed(2),p.paidAt||"",p.mode]);
+  rows.push([c.monthNo,cycleName(c),m.name,sLabel(m.status),financialPosition(m),b?(b.amountPaise/100).toFixed(2):"",c.winnerId===m.id?(c.prizePaise/100).toFixed(2):"",c.status==="completed"?(c.discountPaise/100).toFixed(2):"",c.status==="completed"?(c.commissionPaise/100).toFixed(2):"", (dv/100).toFixed(2),(p.paidPaise/100).toFixed(2),(tot.profitLoss/100).toFixed(2),p.paidAt||"",p.mode]);
  }));
  const blob=new Blob(["\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n")],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
  a.href=url;a.download="auction-chit-ledger-"+today()+".csv";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1300);toast(t("exportExcel"));
