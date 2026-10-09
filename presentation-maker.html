@@ -147,20 +147,20 @@ function makeSlide(layout,title,subtitle,info,idx){
   add("text",{x:9,y:63,w:75,h:12,text:subtitle||"Your subtitle goes here",font:info.font,fontSize:cover?19:16,color:info.palette==="dark"?"#d1d5db":p.body,align:"left"});
   add("text",{x:9,y:85,w:78,h:6,text:"Your Name  ·  Organization Name",font:info.font,fontSize:12,color:info.palette==="dark"?"#d1d5db":p.body});
  }else if(layout==="columns"){
-  add("text",{x:7,y:7,w:86,h:12,text:title||"Two perspectives",font:info.font,fontSize:29,bold:true,color:p.dark});
+  add("text",{x:7,y:7,w:86,h:12,text:title||"Two perspectives",font:info.font,fontSize:29,bold:true,color:info.palette==="dark"?"#ffffff":p.dark});
   add("shape",{shape:"rect",x:7,y:23,w:40,h:57,fill:p.light,border:p.light,radius:4});
   add("shape",{shape:"rect",x:52,y:23,w:41,h:57,fill:info.palette==="dark"?"#292d37":"#f2f4f8",border:"transparent",radius:4});
-  add("text",{x:10,y:28,w:34,h:8,text:"First idea",font:info.font,fontSize:20,bold:true,color:p.dark});
+  add("text",{x:10,y:28,w:34,h:8,text:"First idea",font:info.font,fontSize:20,bold:true,color:info.palette==="dark"?"#ffffff":p.dark});
   add("text",{x:10,y:40,w:34,h:28,text:"Add supporting detail, an example, or a key takeaway here.",font:info.font,fontSize:13,color:p.body});
-  add("text",{x:55,y:28,w:34,h:8,text:"Second idea",font:info.font,fontSize:20,bold:true,color:p.dark});
+  add("text",{x:55,y:28,w:34,h:8,text:"Second idea",font:info.font,fontSize:20,bold:true,color:info.palette==="dark"?"#ffffff":p.dark});
   add("text",{x:55,y:40,w:34,h:28,text:"Keep this side concise so the two points are easy to compare.",font:info.font,fontSize:13,color:p.body});
  }else if(layout==="imageText"){
   add("shape",{shape:"rect",x:4,y:11,w:42,h:78,fill:p.light,border:p.light,radius:5});
-  add("text",{x:8,y:41,w:34,h:12,text:"Add an image",font:info.font,fontSize:17,bold:true,color:p.dark,align:"center"});
-  add("text",{x:53,y:17,w:42,h:8,text:title||"Image + text",font:info.font,fontSize:28,bold:true,color:p.dark});
+  add("text",{x:8,y:41,w:34,h:12,text:"Add an image",font:info.font,fontSize:17,bold:true,color:info.palette==="dark"?"#ffffff":p.dark,align:"center"});
+  add("text",{x:53,y:17,w:42,h:8,text:title||"Image + text",font:info.font,fontSize:28,bold:true,color:info.palette==="dark"?"#ffffff":p.dark});
   add("text",{x:53,y:31,w:40,h:42,text:subtitle||"Use a strong visual with a short explanation. Explain why this image matters and what the audience should remember.",font:info.font,fontSize:15,color:p.body});
  }else{
-  add("text",{x:6,y:6,w:88,h:12,text:title||"Your Title",font:info.font,fontSize:30,bold:true,color:p.dark});
+  add("text",{x:6,y:6,w:88,h:12,text:title||"Your Title",font:info.font,fontSize:30,bold:true,color:info.palette==="dark"?"#ffffff":p.dark});
   add("shape",{shape:"rect",x:6,y:20,w:10,h:1.1,fill:p.main,border:p.main,borderWidth:0});
   add("text",{x:6,y:25,w:86,h:6,text:info.tag||"KEY POINTS",font:info.font,fontSize:12,bold:true,color:p.main});
   add("text",{x:7,y:36,w:85,h:42,text:(subtitle||"Your main message goes here.")+"\n\n• First key point to remember\n• A helpful supporting detail\n• The next step to take",font:info.font,fontSize:17,color:p.body,lineSpacing:1.25});
@@ -414,8 +414,8 @@ function updateBg(){
 }
 function applyPalette(key){
  const prior=palette[deck.palette]||palette.classic,p=palette[key]||palette.classic;
- const recolor=function(c){if(c===prior.main)return p.main;if(c===prior.light)return p.light;if(c===prior.dark)return p.dark;if(c===prior.body)return p.body;if(c===prior.bg)return p.bg;return c};
- deck.slides.forEach(s=>{s.elements.forEach(e=>{["color","fill","border"].forEach(k=>{if(e[k])e[k]=recolor(e[k])});if(e.type==="chart"&&e.color)e.color=recolor(e.color)});if(!s.background||s.background.type==="color"){const current=(s.background&&s.background.color)||prior.bg;s.background={type:"color",color:current===prior.bg?p.bg:recolor(current)}}});
+ const recolor=function(c,property){if(c===prior.main)return p.main;if(c===prior.light)return p.light;if(c===prior.dark)return key==="dark"?"#f2f3f8":p.dark;if(c===prior.body)return p.body;if(c===prior.bg)return p.bg;if(c==="#ffffff"&&key==="dark")return "#f2f3f8";if(c==="#ffffff"&&deck.palette==="dark"&&property==="color")return p.dark;return c};
+ deck.slides.forEach(s=>{s.elements.forEach(e=>{["color","fill","border"].forEach(k=>{if(e[k])e[k]=recolor(e[k],k)});if(e.type==="chart"&&e.color)e.color=recolor(e.color,"color")});if(!s.background||s.background.type==="color"){const current=(s.background&&s.background.color)||prior.bg;s.background={type:"color",color:current===prior.bg?p.bg:recolor(current,"background")}}});
  deck.palette=key;$("#pmThemePalette").value=key;$("#pmQuickBg").value=p.bg;
  const s=currentSlide();if(s&&s.background&&s.background.type==="color")$("#pmBgColor").value=s.background.color;
  renderStage();markChanged(true)
