@@ -5,7 +5,7 @@ const pathParts=location.pathname.split("/").filter(Boolean);
 const lastPart=pathParts[pathParts.length-1]||"index.html";
 const leaf=(lastPart.indexOf(".")===-1?"index.html":lastPart).toLowerCase();
 const isHome=leaf==="index.html";
-const menuItems=[["Websites","templates.html","templates"],["Contact","index.html#contact","contact"]];
+const menuItems=[["Websites","templates.html","templates"],["Features","index.html#website-features","website-features"],["Contact","index.html#contact","contact"]];
 const freeToolItems=[["Resume Builder","resume-builder.html","resume"],["Portfolio Creator","portfolio-creator.html","portfolio"],["PDF Tools","pdf-tools.html","pdf"],["Document Editor","document-editor.html","document"],["Presentation Maker","presentation-maker.html","presentation"],["Committee Book","committee-book.html","committee"]];
 const committeePages=new Set(["committee-book.html","my-chits.html","auction-chit-manager.html","fixed-discount-chit-manager.html","fixed-rotation-bc-chit-manager.html","lottery-kuri-chit-manager.html"]);
 const templateFlow=new Set(["templates.html","features.html","builder.html","checkout.html","success.html","admin.html","ai-builder.html","ai-websites.html"]);
