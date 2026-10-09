@@ -438,6 +438,7 @@ function bidSubmit(){
  if(amount<floorPrice(c.monthNo)){toast(t("bidTooLow"),true);return;}
  if(amount>state.chit.potPaise){toast(t("bidTooHigh"),true);return;}
  const win=currentWindow(c);if(Date.now()<win.start.getTime()||Date.now()>win.end.getTime()){toast(t("cycleLocked"),true);return;}
+ if(state.liveWorkspace){const cycleId=c.dbId;persistAndReload(()=>window.AuctionChitBackend.placeBid(cycleId,amount));return;}
  let bid=currentBidFor(id,c.monthNo);
  if(bid){bid.amountPaise=amount;bid.status="submitted";bid.createdAt=nowISO();bid.approvedAt=null;}
  else{bid={id:"b"+(Math.max(0,...state.bids.map(b=>Number(b.id.replace(/\D/g,""))||0))+1),memberId:id,cycleNo:c.monthNo,amountPaise:amount,status:"submitted",createdAt:nowISO(),approvedAt:null};state.bids.push(bid);}
@@ -445,10 +446,12 @@ function bidSubmit(){
 }
 function approveBid(id,approve){
  const b=state.bids.find(x=>x.id===id);if(!b)return;
+ if(state.liveWorkspace){persistAndReload(()=>window.AuctionChitBackend.approveBid(b.dbId||b.id,approve));return;}
  b.status=approve?"approved":"rejected";b.approvedAt=approve?nowISO():null;toast(approve?t("bidApproved"):t("bidRejected"));
 }
 function finalizeWinner(manual){
  const c=currentCycle();if(!c){if(manual)toast(t("cycleLocked"),true);return false;}
+ if(state.liveWorkspace){if(state.role!=="organizer"){if(manual)toast(t("memberOnly"),true);return false;}if(timerData(c).status!=="closed"){if(manual)toast(t("cycleLocked"),true);return false;}const cycleId=c.dbId;persistAndReload(()=>window.AuctionChitBackend.declareWinner(cycleId));return true;}
  const b=lowestBid(c);if(!b){if(manual)toast(t("needApprovedBid"),true);return false;}
  if(manual&&!window.confirm(t("winnerConfirm")))return false;
  const m=mBy(b.memberId);if(!m){if(manual)toast(t("noRows"),true);return false;}
@@ -562,6 +565,7 @@ root.addEventListener("input",function(e){
 });
 function tick(){
  const c=currentCycle();if(!c)return;const d=timerData(c),el=document.getElementById("timerValue");if(el)el.textContent=d.text;
+ if(state.liveWorkspace){if(d.status==="closed"&&Date.now()-(state.lastBackendRefresh||0)>30000){state.lastBackendRefresh=Date.now();refreshLiveWorkspace(state.dbChitId);}return;}
  if(d.status==="closed"&&c.status!=="completed"&&lowestBid(c)){finalizeWinner(false);return;}
  const bar=document.getElementById("timerProgress");if(bar)bar.style.width=(d.status==="closed"?100:d.status==="upcoming"?0:Math.max(2,Math.min(100,((Date.now()-d.start)/(d.end-d.start))*100)))+"%";
 }
