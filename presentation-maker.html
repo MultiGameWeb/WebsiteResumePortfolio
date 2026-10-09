@@ -541,7 +541,7 @@ function resolvePptxHex(value,fallback){
  const fallbackHex=String(fallback||"#17181d").replace("#","").toUpperCase();
  let raw=String(value==null?"":value).trim();if(!raw||raw==="transparent")raw=fallback||"#17181d";
  const probe=document.createElement("span");probe.style.color=raw;if(!probe.style.color)probe.style.color=fallback||"#17181d";
- document.body.appendChild(probe);const computed=getComputedStyle(probe).color;probe.remove();
+ ($("#pmSlideCanvas")||document.body).appendChild(probe);const computed=getComputedStyle(probe).color;probe.remove();
  const rgb=computed.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
  if(rgb)return [rgb[1],rgb[2],rgb[3]].map(n=>Number(n).toString(16).padStart(2,"0")).join("").toUpperCase();
  if(/^#[0-9a-f]{3}$/i.test(raw))return raw.slice(1).split("").map(ch=>ch+ch).join("").toUpperCase();
@@ -634,13 +634,64 @@ function safePngBlob(canvas,slide){
 }
 
 async function exportPngs(){
- if(!deck)return;if(!window.html2canvas){alert("PNG export library is loading. Please try again.");return}
- const previous=activeSlideId,files=[],fallbackFiles=[];let failed=0;
- try{for(let i=0;i<deck.slides.length;i++){const slide=deck.slides[i];activeSlideId=slide.id;renderStage();try{await new Promise(r=>requestAnimationFrame(r));const canvas=await window.html2canvas($("#pmSlideCanvas"),{scale:2,useCORS:true,allowTaint:false,backgroundColor:null,logging:false,ignoreElements:el=>!!(el.classList&&el.classList.contains("pm-object-handle")),onclone:function(doc){const c=doc.querySelector(".pm-slide-canvas");if(c){c.querySelectorAll(".pm-object-handle").forEach(n=>n.remove());c.querySelectorAll(".pm-selected").forEach(n=>n.classList.remove("pm-selected"))}}});const result=await safePngBlob(canvas,slide),base=(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+"-slide-"+String(i+1).padStart(2,"0");if(result.sourceFallback){const ext=(result.mime.split("/")[1]||"bin").replace("jpeg","jpg").replace(/[^a-z0-9]/gi,"");fallbackFiles.push({name:base+"-source-image."+ext,blob:result.blob});failed++}else files.push({name:base+".png",blob:result.blob})}catch(error){const blob=await originalBlobForSlide(slide).catch(()=>null);if(blob){const ext=(blob.type.split("/")[1]||"bin").replace("jpeg","jpg").replace(/[^a-z0-9]/gi,"");fallbackFiles.push({name:"slide-"+String(i+1).padStart(2,"0")+"-source-image."+ext,blob});failed++}}}
- activeSlideId=previous;renderStage();if(!files.length&&!fallbackFiles.length)throw new Error("No slides could be encoded.");
- if(window.JSZip){const zip=new window.JSZip();files.concat(fallbackFiles).forEach(f=>zip.file(f.name,f.blob));const blob=await zip.generateAsync({type:"blob"});downloadBlob(blob,(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+"-slides.zip",60000)}else files.concat(fallbackFiles).forEach(f=>downloadBlob(f.blob,f.name,60000));
- setStatus(failed?"PNG export partial · source image fallback included":"PNG export ready")
- }catch(error){activeSlideId=previous;renderStage();setStatus("PNG export failed");alert("Could not export PNG slides. "+(error&&error.message||"Please try again."))}
+ if(!deck)return;
+ if(!window.html2canvas){alert("PNG export library is loading. Please try again.");return}
+ const previous=activeSlideId,files=[],fallbackFiles=[];
+ let failed=0;
+ try{
+  for(let i=0;i<deck.slides.length;i++){
+   const slide=deck.slides[i];
+   activeSlideId=slide.id;
+   renderStage();
+   try{
+    await new Promise(function(resolve){requestAnimationFrame(resolve)});
+    const canvas=await window.html2canvas($("#pmSlideCanvas"),{
+     scale:2,useCORS:true,allowTaint:false,backgroundColor:null,logging:false,
+     ignoreElements:function(el){return !!(el.classList&&el.classList.contains("pm-object-handle"))},
+     onclone:function(doc){
+      const c=doc.querySelector(".pm-slide-canvas");
+      if(c){
+       c.querySelectorAll(".pm-object-handle").forEach(function(n){n.remove()});
+       c.querySelectorAll(".pm-selected").forEach(function(n){n.classList.remove("pm-selected")});
+      }
+     }
+    });
+    const result=await safePngBlob(canvas,slide);
+    const base=(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+"-slide-"+String(i+1).padStart(2,"0");
+    if(result.sourceFallback){
+     const ext=(result.mime.split("/")[1]||"bin").replace("jpeg","jpg").replace(/[^a-z0-9]/gi,"");
+     fallbackFiles.push({name:base+"-source-image."+ext,blob:result.blob});
+     failed++;
+    }else{
+     files.push({name:base+".png",blob:result.blob});
+    }
+   }catch(error){
+    const blob=await originalBlobForSlide(slide).catch(function(){return null});
+    if(blob){
+     const ext=(blob.type.split("/")[1]||"bin").replace("jpeg","jpg").replace(/[^a-z0-9]/gi,"");
+     fallbackFiles.push({name:"slide-"+String(i+1).padStart(2,"0")+"-source-image."+ext,blob:blob});
+    }
+    failed++;
+   }
+  }
+  activeSlideId=previous;
+  renderStage();
+  if(!files.length&&!fallbackFiles.length)throw new Error("No slides could be encoded.");
+  if(window.JSZip){
+   const zip=new window.JSZip();
+   files.concat(fallbackFiles).forEach(function(file){zip.file(file.name,file.blob)});
+   const blob=await zip.generateAsync({type:"blob"});
+   downloadBlob(blob,(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+"-slides.zip",60000);
+  }else{
+   files.concat(fallbackFiles).forEach(function(file){downloadBlob(file.blob,file.name,60000)});
+  }
+  setStatus(failed?"PNG export partial · original-image fallback included":"PNG export ready");
+ }catch(error){
+  activeSlideId=previous;
+  renderStage();
+  setStatus("PNG export failed");
+  alert("Could not export PNG slides. "+(error&&error.message||"Please try again."));
+ }
 }
 
 function exportPdf(){
