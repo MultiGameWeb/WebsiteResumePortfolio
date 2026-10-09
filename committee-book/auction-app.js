@@ -402,12 +402,35 @@ function saveMember(){
  const get=k=>document.querySelector('[data-modal="'+k+'"]');
  const val=k=>get(k)?get(k).value.trim():"";
  const name=val("name");if(!name){toast(t("memberNameRequired"),true);return;}
- const phone=val("phone"),email=val("email");
- if(state.modal&&state.modal.id){const m=mBy(state.modal.id);if(m){m.name=name;m.phone=phone;m.email=email;}}
- else{if(state.members.filter(m=>m.status!=="removed").length>=state.chit.memberCount){toast(t("noSlots"),true);return;}const next=Math.max(0,...state.members.map(m=>Number(m.id.replace(/\D/g,""))||0))+1;state.members.push({id:"m"+next,name:name,phone:phone,email:email,status:"active",wonMonths:[]});}
- state.modal=null;toast(t("saved"));
+ const phone=val("phone"),email=val("email");let savedMember=null;
+ if(state.modal&&state.modal.id){
+  const m=mBy(state.modal.id);if(m){m.name=name;m.phone=phone;m.email=email;savedMember=m;}
+ }else{
+  if(state.liveWorkspace){toast(t("noSlots"),true);return;}
+  if(state.members.filter(m=>m.status!=="removed").length>=state.chit.memberCount){toast(t("noSlots"),true);return;}
+  const next=Math.max(0,...state.members.map(m=>Number(m.id.replace(/\D/g,""))||0))+1;
+  savedMember={id:"m"+next,name:name,phone:phone,email:email,status:"active",wonMonths:[]};
+  state.members.push(savedMember);
+ }
+ state.modal=null;
+ if(state.liveWorkspace&&savedMember&&state.dbChitId){
+  const chitId=state.dbChitId;
+  persistAndReload(async()=>{const id=await window.AuctionChitBackend.saveMember(chitId,savedMember);savedMember.dbId=id;savedMember.id=id;});
+  return;
+ }
+ toast(t("saved"));
 }
-function removeMember(id){const m=mBy(id);if(!m||m.status==="removed")return;if(!window.confirm(t("removeConfirm")))return;m.status="removed";toast(t("saved"));}
+function removeMember(id){
+ const m=mBy(id);if(!m||m.status==="removed")return;
+ if(!window.confirm(t("removeConfirm")))return;
+ m.status="removed";
+ if(state.liveWorkspace&&state.dbChitId){
+  const chitId=state.dbChitId;
+  persistAndReload(()=>window.AuctionChitBackend.saveMember(chitId,m));
+  return;
+ }
+ toast(t("saved"));
+}
 function bidSubmit(){
  const c=currentCycle();if(!c||c.status==="completed"){toast(t("cycleLocked"),true);return;}
  const id=state.previewMemberId,m=mBy(id);if(!m||m.status==="removed"||hasWon(id)){toast(t("winnerCannotBid"),true);return;}
