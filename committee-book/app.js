@@ -69,6 +69,9 @@ function buildDemoState(lang){
     const labelDate=nextDateForSeed(chit.startDate,n,10);
     seedStates[n-1].forEach((status,i)=>payments.push(seedPayment(members[i].id,n,status,amtByStatus[status],"upi",paidDates[n-1][i])));
   }
+  payments.push(seedPayment("m1",4,"paid",450000,"upi","2026-10-06"));
+  payments.push(seedPayment("m2",4,"paid",450000,"cash","2026-10-08"));
+  payments.push(seedPayment("m3",4,"partial",200000,"cash","2026-10-08"));
   const upcomingNo=4,upcoming={no:upcomingNo,winnerId:"m4",completed:false};
   const temporary={lang:lang||"en",chit:chit,members:members,cycles:cycles,payments:payments,page:"dashboard",selectedWinnerId:"m4",modal:null,toast:null};
   const original=state;state=temporary;
@@ -79,7 +82,7 @@ function buildDemoState(lang){
 function nextDateForSeed(start,n,due){
  const dt=new Date(start+"T00:00:00");dt.setMonth(dt.getMonth()+n-1);dt.setDate(Math.min(due,new Date(dt.getFullYear(),dt.getMonth()+1,0).getDate()));return dateISO(dt);
 }
-let state=buildDemoState("en");
+let state;state=buildDemoState("en");
 function getPayment(memberId,cycleNo){
   let p=state.payments.find(x=>x.memberId===memberId&&x.cycleNo===Number(cycleNo));
   if(!p){p={memberId:memberId,cycleNo:Number(cycleNo),status:"pending",amountPaidPaise:0,mode:"upi",paidDate:"",history:[]};state.payments.push(p);}
@@ -193,7 +196,7 @@ function membersView(){
   }).join("");
   const canAdd=activeCount()<state.chit.membersCount;
   return heading(t("members"),t("membersSubtitle"),'<button class="btn primary" data-action="add-member" '+(!canAdd?'disabled title="'+esc(t("noMemberSlots"))+'"':"")+'">＋ '+esc(t("addMember"))+'</button>')+
-    '<div class="panel"><div class="panel-header"><div><h2>'+esc(t("members"))+' · '+state.members.length+'</h2><p>'+esc(t("membersCountHint"))+'</p></div><div class="table-toolbar">'+search+'</div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>S.No</th><th>'+esc(t("memberName"))+'</th><th>'+esc(t("phone"))+'</th><th>'+esc(t("email"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("dueAmount"))+'</th><th>'+esc(t("documents"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+(rows||'<tr><td colspan="10" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div><div class="info-box">'+esc(t("removedNotice"))+'</div>';
+    '<div class="panel"><div class="panel-header"><div><h2>'+esc(t("members"))+' · '+state.members.length+'</h2><p>'+esc(t("membersCountHint"))+'</p></div><div class="table-toolbar">'+search+'</div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("serialNo"))+'</th><th>'+esc(t("memberName"))+'</th><th>'+esc(t("phone"))+'</th><th>'+esc(t("email"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("dueAmount"))+'</th><th>'+esc(t("documents"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+(rows||'<tr><td colspan="10" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div><div class="info-box">'+esc(t("removedNotice"))+'</div>';
 }
 function cyclesView(){
   const cur=currentCycle(),all=state.cycles;
@@ -229,7 +232,7 @@ function rulesView(){
     calcItem(t("dividendPool"),money(math.dividendPoolPaise),t("discountPool")+" − "+t("commission"))+
     calcItem(t("dividendPerHead"),money(math.dividendPerHeadPaise),t("eligibleMembers")+": "+math.eligibleIds.length)+
     calcItem(t("roundingLeftover"),money(math.leftoverPaise),t("leader"))+
-    '</div><div class="info-box" style="margin-top:13px">₹50,000 ÷ 10 = ₹5,000 contribution. Discount ₹5,000 and commission ₹0: All Members → ₹500 dividend, ₹4,500 due. Not Won Yet on month 1 with 1 winner excluded → ₹555.55 dividend across 9 members, ₹4,444.45 due, ₹0.05 rounding remainder to leader.</div></div></div>';
+    '</div><div class="info-box" style="margin-top:13px">'+esc(t("calcVerificationText"))+'</div></div></div>';
   return heading(t("rulesPageTitle"),t("editRules"))+demoBanner()+'<div class="panel"><div class="panel-header"><div><h2>'+esc(t("rulesText"))+'</h2><p>'+esc(t("editRules"))+'</p></div><button class="btn primary" data-action="save-rules">'+esc(t("saveRules"))+'</button></div><div class="panel-body">'+ruleEditor(false)+'</div></div>'+verification;
 }
 function reportsView(){
@@ -346,7 +349,7 @@ function payCurrent(id,kind){
   const d=dueFor(m,c),p=d.payment;let amount=0;
   if(kind==="paid")amount=d.remaining;
   else{
-    const answer=window.prompt(t("payAmount")+" ("+money(d.remaining)+")",String(Math.max(0,d.remaining/200)/100));
+    const answer=window.prompt(t("payAmount")+" ("+money(d.remaining)+")",String(Math.max(0,d.remaining/2/100).toFixed(2)));
     if(answer===null)return;amount=parseMoney(answer);
     if(amount<=0||amount>=d.remaining){showToast(t("invalidMember"),true);return;}
   }
