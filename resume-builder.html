@@ -18,6 +18,7 @@
 <meta name="twitter:description" content="Create and export an ATS-friendly resume with SiteCraft's free resume builder.">
 <meta name="twitter:image" content="https://multigameweb.github.io/WebsiteResumePortfolio/preview.svg">
 <title>Resume Builder — SiteCraft</title>
+<link rel="stylesheet" href="site-navigation.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lato:wght@400;700;900&family=Merriweather:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
@@ -985,7 +986,7 @@ function hexToRgba(hex,a){var h=String(hex||'#334155').replace('#','');if(h.leng
 function standaloneDocument(){
   var pages=paginateResume(state.template),fontUrl=googleFontUrl(),doc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(norm(state.sections.header.name)||'Your Name')+' - Resume</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="'+fontUrl+'"><style>'+exportCss()+'</style></head><body>';
   pages.forEach(function(p){doc+=p.replace('class="page-wrap"','class="page"')});
-  doc+='<scr'+'ipt src="site-navigation.js"></scr'+'ipt><aside class="sc-cross-sell sc-cross-sell--floating" aria-label="Website template cross-sell"><div><strong>Need a website for your business too?</strong><p>Start with a premium design made for businesses like yours.</p></div><a class="sc-cross-sell-btn" href="templates.html">Browse templates <span aria-hidden="true">↗</span></a></aside></body></html>';return doc
+  doc+='</body></html>';return doc
 }
 function downloadHtml(){flushTyping();var blob=new Blob([standaloneDocument()],{type:'text/html;charset=utf-8'});downloadBlob(blob,slug(state.sections.header.name||'resume')+'-resume.html');clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved');toast('Standalone HTML downloaded')}
 function downloadPdf(){flushTyping();buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved')}
@@ -1392,5 +1393,6 @@ function init(){
 init();
 })();
 </script>
+<aside class="sc-cross-sell sc-cross-sell--floating" aria-label="Website template cross-sell"><div><strong>Need a website for your business too?</strong><p>Start with a premium design made for businesses like yours.</p></div><a class="sc-cross-sell-btn" href="templates.html">Browse templates <span aria-hidden="true">↗</span></a></aside>
 </body>
 </html>
