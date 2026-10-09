@@ -252,8 +252,11 @@ begin
   end if;
   select member_count into v_expected from public.chits where id=p_chit_id for update;
   if v_expected is null then raise exception 'Chit not found'; end if;
-  select count(distinct x),count(*) into v_unique,v_updated from unnest(p_member_ids) x;
+  select count(distinct u.member_id),count(*) into v_unique,v_updated from unnest(p_member_ids) as u(member_id);
   if v_unique<>v_expected or v_updated<>v_expected then raise exception 'The order must contain every configured member exactly once'; end if;
+  if exists(select 1 from unnest(p_member_ids) as u(member_id) left join public.members m on m.id=u.member_id and m.chit_id=p_chit_id and m.status<>'removed' where m.id is null) then
+    raise exception 'The order includes a member that is not active in this chit';
+  end if;
   if exists(select 1 from public.members m where m.chit_id=p_chit_id and m.status<>'removed') and
      (select count(*) from public.members m where m.chit_id=p_chit_id and m.status<>'removed')<>v_expected then
     raise exception 'Active member count must match configured member count';
@@ -275,7 +278,7 @@ begin
   if not public.can_manage_chit(p_chit_id) then raise exception 'Only the organizer can start this chit'; end if;
   select member_count into v_expected from public.chits where id=p_chit_id for update;
   if v_expected is null then raise exception 'Chit not found'; end if;
-  select count(*) into v_count from public.members m
+  select count(distinct m.order_index) into v_count from public.members m
    where m.chit_id=p_chit_id and m.status<>'removed' and m.order_index between 1 and v_expected;
   if v_count<>v_expected then raise exception 'Set the full fixed order before starting'; end if;
   update public.chits set order_locked=true,status='active' where id=p_chit_id;
