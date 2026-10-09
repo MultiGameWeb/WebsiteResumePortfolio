@@ -73,7 +73,7 @@
     <div class="pm-control pm-hidden" id="pmGradientBox"><label for="pmGradient">Gradient preset</label><select id="pmGradient"><option value="linear-gradient(135deg,#ffffff,#e9edff)">Cloud blue</option><option value="linear-gradient(135deg,#fdf2f8,#e0e7ff)">Rose to violet</option><option value="linear-gradient(135deg,#0f172a,#334155)">Midnight</option><option value="linear-gradient(135deg,#ecfdf5,#d1fae5)">Mint</option><option value="linear-gradient(135deg,#fff7ed,#fed7aa)">Warm</option></select></div>
     <div class="pm-control pm-hidden" id="pmBgImageBox"><label for="pmBgImageFile">Background image</label><button class="pm-btn small" id="pmChooseBgImage">Choose image</button><input class="pm-hidden" type="file" id="pmBgImageFile" accept="image/*"></div>
     <div class="pm-control"><label for="pmThemePalette">Theme palette</label><select id="pmThemePalette"><option value="business">Business blue</option><option value="green">Fresh green</option><option value="warm">Warm earth</option><option value="dark">Dark contrast</option><option value="violet">Violet</option><option value="rose">Rose</option><option value="teal">Teal</option><option value="classic">Classic</option></select></div>
-    <div class="pm-control"><label for="pmFontPair">Font pair</label><select id="pmFontPair"><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Trebuchet MS">Trebuchet MS</option><option value="Verdana">Verdana</option><option value="Tahoma">Tahoma</option><option value="system-ui">System UI</option></select></div>
+    <div class="pm-control"><label for="pmFontPair">Font pair</label><select id="pmFontPair"><option value="Arial|Arial">Arial + Arial</option><option value="Trebuchet MS|Arial">Trebuchet MS + Arial</option><option value="Georgia|Arial">Georgia + Arial</option><option value="Trebuchet MS|Trebuchet MS">Trebuchet MS + Trebuchet MS</option><option value="Georgia|Trebuchet MS">Georgia + Trebuchet MS</option><option value="Verdana|Arial">Verdana + Arial</option><option value="Tahoma|Arial">Tahoma + Arial</option><option value="system-ui|system-ui">System UI + System UI</option></select></div>
    </div>
    <div id="pmObjectSettings" class="pm-hidden">
     <div class="pm-control"><label for="pmTextValue">Text content</label><textarea id="pmTextValue" placeholder="Your Title"></textarea></div>
@@ -117,14 +117,14 @@ const CURRENT_KEY="sitecraft-presentation-current-v1";
 const MAX_HISTORY=120;
 const palette={business:{main:"#3658c8",light:"#eaf0ff",dark:"#17234a",bg:"#ffffff",body:"#30394d"},green:{main:"#27815e",light:"#e8f6ee",dark:"#174932",bg:"#ffffff",body:"#344b40"},warm:{main:"#b77c25",light:"#fff3db",dark:"#513619",bg:"#fffdf8",body:"#514638"},dark:{main:"#a5a0ff",light:"#292d37",dark:"#17181d",bg:"#17181d",body:"#f2f3f8"},violet:{main:"#6158e8",light:"#eeedff",dark:"#312b94",bg:"#ffffff",body:"#36354c"},rose:{main:"#c94568",light:"#fff0f5",dark:"#63233a",bg:"#fffafd",body:"#573f48"},teal:{main:"#148b92",light:"#e2f8f7",dark:"#11545a",bg:"#ffffff",body:"#314c4e"},classic:{main:"#17181d",light:"#f0f1f4",dark:"#17181d",bg:"#ffffff",body:"#3e434c"}};
 const templateInfo={
- business:{name:"Business",palette:"business",font:"Arial",title:"Business overview",subtitle:"A clear view of the plan ahead",tag:"STRATEGY · 2026"},
- education:{name:"Education",palette:"green",font:"Trebuchet MS",title:"Learning objectives",subtitle:"A practical guide to today's lesson",tag:"LESSON NOTES"},
- minimal:{name:"Minimal",palette:"classic",font:"Georgia",title:"Your Title",subtitle:"A simple story, told clearly",tag:"IDEAS / NOTES"},
- dark:{name:"Dark",palette:"dark",font:"Arial",title:"Future in focus",subtitle:"A bold direction for what's next",tag:"STRATEGY BRIEF"},
- creative:{name:"Creative",palette:"rose",font:"Trebuchet MS",title:"Ideas in motion",subtitle:"Make room for new possibilities",tag:"CREATIVE DECK"},
- resume:{name:"Resume / About Me",palette:"teal",font:"Arial",title:"Your Name",subtitle:"Your role · Your strengths · Your story",tag:"ABOUT ME"},
- report:{name:"Project Report",palette:"warm",font:"Arial",title:"Project report",subtitle:"Progress, insights, and next steps",tag:"PROJECT UPDATE"},
- birthday:{name:"Birthday / Event",palette:"rose",font:"Trebuchet MS",title:"Let's celebrate!",subtitle:"A special day for a special person",tag:"A MOMENT TO REMEMBER"}
+ business:{name:"Business",palette:"business",font:"Arial",headFont:"Arial",bodyFont:"Arial",title:"Business overview",subtitle:"A clear view of the plan ahead",tag:"STRATEGY · 2026"},
+ education:{name:"Education",palette:"green",font:"Arial",headFont:"Trebuchet MS",bodyFont:"Arial",title:"Learning objectives",subtitle:"A practical guide to today's lesson",tag:"LESSON NOTES"},
+ minimal:{name:"Minimal",palette:"classic",font:"Arial",headFont:"Georgia",bodyFont:"Arial",title:"Your Title",subtitle:"A simple story, told clearly",tag:"IDEAS / NOTES"},
+ dark:{name:"Dark",palette:"dark",font:"Arial",headFont:"Arial",bodyFont:"Arial",title:"Future in focus",subtitle:"A bold direction for what's next",tag:"STRATEGY BRIEF"},
+ creative:{name:"Creative",palette:"rose",font:"Arial",headFont:"Trebuchet MS",bodyFont:"Arial",title:"Ideas in motion",subtitle:"Make room for new possibilities",tag:"CREATIVE DECK"},
+ resume:{name:"Resume / About Me",palette:"teal",font:"Arial",headFont:"Trebuchet MS",bodyFont:"Arial",title:"Your Name",subtitle:"Your role · Your strengths · Your story",tag:"ABOUT ME"},
+ report:{name:"Project Report",palette:"warm",font:"Arial",headFont:"Georgia",bodyFont:"Arial",title:"Project report",subtitle:"Progress, insights, and next steps",tag:"PROJECT UPDATE"},
+ birthday:{name:"Birthday / Event",palette:"rose",font:"Arial",headFont:"Trebuchet MS",bodyFont:"Arial",title:"Let's celebrate!",subtitle:"A special day for a special person",tag:"A MOMENT TO REMEMBER"}
 };
 let projects=[],deck=null,activeSlideId=null,selectedObjectId=null,dirty=false,saveTimer=null,history=[],historyIndex=-1,historyTimer=null,restoring=false,dragState=null,presenting=false,presenterMode=false,presenterStarted=0,presenterInterval=null,projectOpen=false;
 const uid=function(prefix){return (prefix||"id")+"-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8)};
@@ -133,10 +133,11 @@ const escapeHtml=function(s){return String(s==null?"":s).replace(/&/g,"&amp;").r
 const plain=function(s){return String(s||"").replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim()};
 const currentSlide=function(){return deck&&deck.slides.find(s=>s.id===activeSlideId)||deck&&deck.slides[0]||null};
 const currentObject=function(){const s=currentSlide();return s&&s.elements.find(e=>e.id===selectedObjectId)||null};
-const newEl=function(type,props){return Object.assign({id:uid("obj"),type:type,x:8,y:8,w:40,h:16,rotate:0,color:"#17181d",fill:"transparent",border:"#17181d",borderWidth:0,opacity:100,radius:0,font:"Arial",fontSize:28,bold:false,italic:false,underline:false,align:"left",lineSpacing:1.2,highlight:"transparent",text:"Your Title"},props||{})};
+const newEl=function(type,props){return Object.assign({id:uid("obj"),type:type,x:8,y:8,w:40,h:16,rotate:0,color:"#17181d",fill:"transparent",border:"#17181d",borderWidth:0,opacity:100,radius:0,font:"Arial",fontSize:28,bold:false,italic:false,underline:false,bullets:false,numbered:false,align:"left",lineSpacing:1.2,highlight:"transparent",text:"Your Title"},props||{})};
+function displayText(e){const t=String(e.text||"");if(e.bullets)return t.split("\n").map(v=>"• "+v).join("\n");if(e.numbered)return t.split("\n").map((v,i)=>(i+1)+". "+v).join("\n");return t}
 function makeSlide(layout,title,subtitle,info,idx){
  const p=palette[info.palette]||palette.business,base={id:uid("slide"),layout:layout||"content",notes:"",background:{type:"color",color:p.bg,gradient:"",image:""},elements:[]};
- const add=(type,props)=>base.elements.push(newEl(type,props));
+ const add=(type,props)=>{const v=Object.assign({},props||{});if(type==="text")v.font=Number(v.fontSize||18)>=24?(info.headFont||info.font):(info.bodyFont||info.font);base.elements.push(newEl(type,v))};
  const cover=layout==="title"||layout==="section";
  if(layout==="blank")return base;
  if(layout==="title"||layout==="section"){
@@ -172,14 +173,14 @@ function seedDeck(key){
  const slides=[makeSlide("title",info.title,info.subtitle,info,0),makeSlide("content","What matters most","A few useful points for your audience.",info,1),makeSlide("columns","Two ways to move forward","Compare options and choose your next step.",info,2)];
  if(key==="business"||key==="report"){
   slides[1].elements.push(newEl("chart",{x:53,y:31,w:38,h:40,chartType:"bar",labels:["Q1","Q2","Q3","Q4"],values:[35,52,45,76],color:th.main,fill:th.light,text:""}));
-  slides[2].elements.push(newEl("table",{x:8,y:64,w:84,h:22,rows:[["Milestone","Owner","Status"],["Planning","Your Name","In progress"],["Delivery","Organization Name","Next"]],fill:th.light,border:th.main,color:th.dark,font:info.font,fontSize:12}));
+  slides[2].elements.push(newEl("table",{x:8,y:64,w:84,h:22,rows:[["Milestone","Owner","Status"],["Planning","Your Name","In progress"],["Delivery","Organization Name","Next"]],fill:th.light,border:th.main,color:th.dark,font:info.bodyFont||info.font,fontSize:12}));
  }else if(key==="education"){
   slides[1].elements.push(newEl("shape",{shape:"star",x:76,y:63,w:12,h:18,fill:th.main,border:th.main}));
  }else if(key==="birthday"||key==="creative"){
   slides[0].elements.push(newEl("shape",{shape:"circle",x:76,y:8,w:18,h:18,fill:th.light,border:th.main,borderWidth:2}));
   slides[0].elements.push(newEl("shape",{shape:"star",x:82,y:12,w:7,h:7,fill:th.main,border:th.main}));
  }
- return {id:uid("presentation"),name:info.name+" presentation",template:key,ratio:"16:9",palette:info.palette,font:info.font,slides:slides,createdAt:Date.now(),updatedAt:Date.now()};
+ return {id:uid("presentation"),name:info.name+" presentation",template:key,ratio:"16:9",palette:info.palette,font:info.bodyFont||info.font,fontHead:info.headFont||info.font,fontBody:info.bodyFont||info.font,slides:slides,createdAt:Date.now(),updatedAt:Date.now()};
 }
 function selectedIndex(){return Math.max(0,deck?deck.slides.findIndex(s=>s.id===activeSlideId):0)}
 function setStatus(text){const el=$("#saveStatus");if(el)el.textContent=text}
@@ -231,7 +232,7 @@ function renderProjectList(){
  box.innerHTML=projects.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).map(p=>'<div class="pm-project-row"><div class="pm-project-info"><strong title="'+escapeHtml(p.name)+'">'+escapeHtml(p.name||"Untitled presentation")+'</strong><span>'+((p.slides||[]).length)+' slides · '+escapeHtml(formatDate(p.updatedAt||p.createdAt))+'</span></div><div class="pm-row-actions"><button class="pm-btn small" data-project-action="open" data-id="'+escapeHtml(p.id)+'" aria-label="Open '+escapeHtml(p.name)+'">Open</button><button class="pm-btn small" data-project-action="more" data-id="'+escapeHtml(p.id)+'" aria-label="More options for '+escapeHtml(p.name)+'" title="Rename, duplicate, or delete">⋯</button></div></div>').join("");
 }
 function showStart(){projectOpen=false;$("#pmStartIntro").classList.remove("pm-hidden");$("#pmStart").classList.remove("pm-hidden");$("#pmWorkspace").classList.add("pm-hidden");renderProjectList();window.scrollTo({top:0,behavior:"smooth"})}
-function openProject(p){deck=clone(p);if(!deck.slides||!deck.slides.length)deck.slides=[makeSlide("blank","Your Title","",templateInfo.minimal,0)];activeSlideId=deck.slides[0].id;selectedObjectId=null;projectOpen=true;$("#pmStartIntro").classList.add("pm-hidden");$("#pmStart").classList.add("pm-hidden");$("#pmWorkspace").classList.remove("pm-hidden");$("#pmProjectTitle").value=deck.name||"Untitled presentation";$("#pmRatio").value=deck.ratio||"16:9";$("#pmThemePalette").value=deck.palette||"classic";$("#pmFontPair").value=deck.font||"Arial";setStatus("Saved on this device");resetHistory();refreshWorkspace();persist(true);window.scrollTo({top:0,behavior:"smooth"})}
+function openProject(p){deck=clone(p);if(!deck.slides||!deck.slides.length)deck.slides=[makeSlide("blank","Your Title","",templateInfo.minimal,0)];activeSlideId=deck.slides[0].id;selectedObjectId=null;projectOpen=true;$("#pmStartIntro").classList.add("pm-hidden");$("#pmStart").classList.add("pm-hidden");$("#pmWorkspace").classList.remove("pm-hidden");$("#pmProjectTitle").value=deck.name||"Untitled presentation";$("#pmRatio").value=deck.ratio||"16:9";$("#pmThemePalette").value=deck.palette||"classic";$("#pmFontPair").value=(deck.fontHead||deck.font||"Arial")+"|"+(deck.fontBody||deck.font||"Arial");setStatus("Saved on this device");resetHistory();refreshWorkspace();persist(true);window.scrollTo({top:0,behavior:"smooth"})}
 function createProject(key){const p=key==="blank"?{id:uid("presentation"),name:"Untitled presentation",template:"blank",ratio:"16:9",palette:"classic",font:"Arial",slides:[makeSlide("blank","Your Title","",templateInfo.minimal,0)],createdAt:Date.now(),updatedAt:Date.now()}:seedDeck(key);openProject(p)}
 function activeSlide(){return currentSlide()}
 function setSlideBackground(slide){const canvas=$("#pmSlideCanvas");if(!canvas||!slide)return;const bg=slide.background||{type:"color",color:"#ffffff"};canvas.style.backgroundColor=bg.color||"#fff";canvas.style.backgroundImage=bg.type==="gradient"?bg.gradient:bg.type==="image"&&bg.image?'url("'+bg.image+'")':"none";canvas.style.backgroundSize="cover";canvas.style.backgroundPosition="center";canvas.style.aspectRatio=deck.ratio==="4:3"?"4 / 3":"16 / 9"}
@@ -261,7 +262,7 @@ function renderChart(e){
 function renderElement(e,container,editable){
  const node=document.createElement("div");node.className="pm-object"+(e.type==="shape"?" pm-shape":"");node.dataset.objectId=e.id;node.style.left=e.x+"%";node.style.top=e.y+"%";node.style.width=e.w+"%";node.style.height=e.h+"%";node.style.transform="rotate("+(e.rotate||0)+"deg)";node.style.opacity=Math.max(0.1,Math.min(1,(e.opacity||100)/100));node.style.zIndex=String(e.z||1);
  const body=document.createElement("div");body.className="pm-object-body";body.style.fontFamily=e.font||"Arial";body.style.fontSize="clamp(6px,"+Math.max(6,Math.min(120,e.fontSize||18))+"pt,100px)";body.style.lineHeight=String(e.lineSpacing||1.2);body.style.color=e.color||"#17181d";body.style.textAlign=e.align||"left";body.style.fontWeight=e.bold?"800":"400";body.style.fontStyle=e.italic?"italic":"normal";body.style.textDecoration=e.underline?"underline":"none";body.style.backgroundColor=e.highlight&&e.highlight!=="transparent"?e.highlight:"transparent";body.style.border=e.type==="shape"?(Math.max(0,e.borderWidth||0)+"px solid "+(e.border||"transparent")):"0";body.style.borderRadius=e.type==="shape"?(e.shape==="circle"?"50%":(e.radius||0)+"px"):"0";
- if(e.type==="text"){body.classList.add("pm-text-body");body.textContent=e.text||"";if(editable){body.contentEditable="true";body.spellcheck=true;body.setAttribute("aria-label","Edit slide text")}}
+ if(e.type==="text"){body.classList.add("pm-text-body");body.textContent=displayText(e);if(editable){body.contentEditable="true";body.spellcheck=true;body.setAttribute("aria-label","Edit slide text")}}
  else if(e.type==="shape"){
   body.style.background=e.shape==="line"?"transparent":(e.fill||"#6158e8");
   if(e.shape==="circle")body.style.borderRadius="50%";
@@ -292,7 +293,7 @@ function renderElement(e,container,editable){
   body.addEventListener("input",function(eve){
    const ob=currentObject();if(!ob||ob.id!==e.id)return;
    if(eve.target.matches("td,th")&&ob.type==="table"){const tr=eve.target.parentElement,ri=Array.from(tr.parentElement.children).indexOf(tr),ci=Array.from(tr.children).indexOf(eve.target);ob.rows[ri][ci]=eve.target.textContent}
-   else if(ob.type==="text")ob.text=body.textContent;
+   else if(ob.type==="text"){let value=body.innerText||body.textContent;if(ob.bullets)value=value.split("\n").map(v=>v.replace(/^\s*•\s?/,"")).join("\n");if(ob.numbered)value=value.split("\n").map(v=>v.replace(/^\s*\d+\.\s?/,"")).join("\n");ob.text=value}
    markChanged(false);scheduleThumbs();
   });
  }
@@ -351,7 +352,7 @@ function syncInspector(){
  const s=currentSlide(),obj=currentObject(),slideSettings=$("#pmSlideSettings"),objectSettings=$("#pmObjectSettings");
  slideSettings.classList.toggle("pm-hidden",!!obj);objectSettings.classList.toggle("pm-hidden",!obj);$("#pmInspectorTitle").textContent=obj?(obj.type==="text"?"Text styling":obj.type==="shape"?"Shape styling":obj.type==="image"?"Image styling":obj.type==="table"?"Table styling":"Chart styling"):"Slide styling";
  if(!obj){
-  const bg=s.background||{type:"color",color:"#fff"};$("#pmBgKind").value=bg.type||"color";$("#pmBgColor").value=bg.color||"#ffffff";$("#pmBgColorBox").classList.toggle("pm-hidden",bg.type!=="color");$("#pmGradientBox").classList.toggle("pm-hidden",bg.type!=="gradient");$("#pmBgImageBox").classList.toggle("pm-hidden",bg.type!=="image");$("#pmThemePalette").value=deck.palette||"classic";$("#pmFontPair").value=deck.font||"Arial";return;
+  const bg=s.background||{type:"color",color:"#fff"};$("#pmBgKind").value=bg.type||"color";$("#pmBgColor").value=bg.color||"#ffffff";$("#pmBgColorBox").classList.toggle("pm-hidden",bg.type!=="color");$("#pmGradientBox").classList.toggle("pm-hidden",bg.type!=="gradient");$("#pmBgImageBox").classList.toggle("pm-hidden",bg.type!=="image");$("#pmThemePalette").value=deck.palette||"classic";$("#pmFontPair").value=(deck.fontHead||deck.font||"Arial")+"|"+(deck.fontBody||deck.font||"Arial");return;
  }
  $("#pmTextValue").value=obj.type==="text"?obj.text||"":obj.type==="shape"?obj.text||"":obj.type==="table"?"Table content is edited directly in each cell.":obj.type==="chart"?"Chart data: "+(obj.labels||[]).join(", ")+" / "+(obj.values||[]).join(", "):"Image selected";
  $("#pmTextValue").disabled=obj.type==="image"||obj.type==="table"||obj.type==="chart";
@@ -361,7 +362,7 @@ function syncInspector(){
  $("#pmTableSettings").classList.toggle("pm-hidden",obj.type!=="table");
 }
 function toHex(c){if(/^#[0-9a-f]{6}$/i.test(c||""))return c;return "#ffffff"}
-function setObj(key,value){const obj=currentObject();if(!obj)return;obj[key]=value;const node=$('.pm-object[data-object-id="'+obj.id+'"]',$("#pmSlideCanvas"));if(node){node.style.left=obj.x+"%";node.style.top=obj.y+"%";node.style.width=obj.w+"%";node.style.height=obj.h+"%";node.style.transform="rotate("+(obj.rotate||0)+"deg)";node.style.opacity=(obj.opacity||100)/100;const body=$(".pm-object-body",node);if(body){if(key==="text"&&obj.type==="text")body.textContent=value;if(["color","font","fontSize","bold","italic","underline","align","lineSpacing","highlight"].includes(key)){body.style.color=obj.color||"#17181d";body.style.fontFamily=obj.font||"Arial";body.style.fontSize="clamp(6px,"+Math.max(6,Math.min(120,obj.fontSize||18))+"pt,100px)";body.style.fontWeight=obj.bold?"800":"400";body.style.fontStyle=obj.italic?"italic":"normal";body.style.textDecoration=obj.underline?"underline":"none";body.style.textAlign=obj.align||"left";body.style.lineHeight=String(obj.lineSpacing||1.2);body.style.backgroundColor=obj.highlight||"transparent"}if(key==="fill")body.style.background=obj.fill;if(key==="border")body.style.borderColor=obj.border;if(key==="borderWidth")body.style.borderWidth=value+"px";if(key==="radius")body.style.borderRadius=(obj.shape==="circle"?"50%":value+"px")}}
+function setObj(key,value){const obj=currentObject();if(!obj)return;obj[key]=value;const node=$('.pm-object[data-object-id="'+obj.id+'"]',$("#pmSlideCanvas"));if(node){node.style.left=obj.x+"%";node.style.top=obj.y+"%";node.style.width=obj.w+"%";node.style.height=obj.h+"%";node.style.transform="rotate("+(obj.rotate||0)+"deg)";node.style.opacity=(obj.opacity||100)/100;const body=$(".pm-object-body",node);if(body){if(key==="text"&&obj.type==="text")body.textContent=displayText(obj);if((key==="bullets"||key==="numbered")&&obj.type==="text")body.textContent=displayText(obj);if(["color","font","fontSize","bold","italic","underline","align","lineSpacing","highlight"].includes(key)){body.style.color=obj.color||"#17181d";body.style.fontFamily=obj.font||"Arial";body.style.fontSize="clamp(6px,"+Math.max(6,Math.min(120,obj.fontSize||18))+"pt,100px)";body.style.fontWeight=obj.bold?"800":"400";body.style.fontStyle=obj.italic?"italic":"normal";body.style.textDecoration=obj.underline?"underline":"none";body.style.textAlign=obj.align||"left";body.style.lineHeight=String(obj.lineSpacing||1.2);body.style.backgroundColor=obj.highlight||"transparent"}if(key==="fill")body.style.background=obj.fill;if(key==="border")body.style.borderColor=obj.border;if(key==="borderWidth")body.style.borderWidth=value+"px";if(key==="radius")body.style.borderRadius=(obj.shape==="circle"?"50%":value+"px")}}
  syncInspector();updateSelectionUI();markChanged(true);scheduleThumbs();
 }
 function insertObject(obj){
@@ -451,7 +452,7 @@ function bindEvents(){
  $("#pmGradient").addEventListener("change",function(){const s=currentSlide();if(!s)return;s.background={type:"gradient",gradient:this.value,color:(this.value.match(/#[0-9a-f]{6}/i)||[])[0]||"#ffffff"};renderStage();markChanged(true)});
  $("#pmChooseBgImage").addEventListener("click",function(){$("#pmBgImageFile").click()});
  $("#pmBgImageFile").addEventListener("change",async function(){const f=this.files&&this.files[0];if(!f)return;try{const src=await compressImage(f);const s=currentSlide();s.background={type:"image",image:src,color:"#ffffff"};renderStage();markChanged(true)}catch(_){alert("Could not use that background image.")}this.value=""});
- $("#pmThemePalette").addEventListener("change",function(){applyPalette(this.value)});$("#pmFontPair").addEventListener("change",function(){deck.font=this.value;const s=currentSlide();s.elements.forEach(e=>{if(e.type==="text")e.font=this.value});renderStage();markChanged(true)});
+ $("#pmThemePalette").addEventListener("change",function(){applyPalette(this.value)});$("#pmFontPair").addEventListener("change",function(){const pair=this.value.split("|"),head=pair[0]||"Arial",body=pair[1]||"Arial";deck.font=head===body?head:body;deck.fontHead=head;deck.fontBody=body;deck.slides.forEach(s=>s.elements.forEach(e=>{if(e.type==="text")e.font=Number(e.fontSize||18)>=24?head:body;else if(e.type==="table"||e.type==="chart")e.font=body}));renderStage();markChanged(true)});
  $("#pmNotes").addEventListener("input",function(){const s=currentSlide();if(!s)return;s.notes=this.value;markChanged(false)});
  $("#pmBackSlideBtn").addEventListener("click",function(){moveSlide(-1)});$("#pmNextSlideBtn").addEventListener("click",function(){moveSlide(1)});
  $("#pmUndoBtn").addEventListener("click",undo);$("#pmRedoBtn").addEventListener("click",redo);
@@ -528,7 +529,7 @@ async function exportPngs(){
  try{
   if(!window.html2canvas)throw new Error("PNG export library did not load.");
   const previous=activeSlideId,files=[];
-  for(let i=0;i<deck.slides.length;i++){activeSlideId=deck.slides[i].id;renderStage();await new Promise(r=>requestAnimationFrame(r));const canvas=await window.html2canvas($("#pmSlideCanvas"),{scale:2,useCORS:true,backgroundColor:null,logging:false});files.push({name:(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+"-slide-"+String(i+1).padStart(2,"0")+".png",blob:await new Promise((res,rej)=>canvas.toBlob(b=>b?res(b):rej(new Error("PNG encoding failed")),"image/png"))})}
+  for(let i=0;i<deck.slides.length;i++){activeSlideId=deck.slides[i].id;renderStage();await new Promise(r=>requestAnimationFrame(r));const canvas=await window.html2canvas($("#pmSlideCanvas"),{scale:2,useCORS:true,backgroundColor:null,logging:false,ignoreElements:function(el){return !!(el.classList&&el.classList.contains("pm-object-handle"))},onclone:function(doc){const c=doc.querySelector("#pmSlideCanvas");if(c){c.querySelectorAll(".pm-object-handle").forEach(n=>n.remove());c.querySelectorAll(".pm-selected").forEach(n=>n.classList.remove("pm-selected"))}}});files.push({name:(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+"-slide-"+String(i+1).padStart(2,"0")+".png",blob:await new Promise((res,rej)=>canvas.toBlob(b=>b?res(b):rej(new Error("PNG encoding failed")),"image/png"))})}
   activeSlideId=previous;renderStage();
   if(window.JSZip){const zip=new window.JSZip();files.forEach(f=>zip.file(f.name,f.blob));const blob=await zip.generateAsync({type:"blob"});downloadBlob(blob,(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+"-slides.zip")}
   else{for(const f of files)downloadBlob(f.blob,f.name)}
@@ -543,6 +544,7 @@ function exportPdf(){
  });
  document.body.classList.add("pm-printing");
  const reset=function(){document.body.classList.remove("pm-printing");oldDeck.innerHTML="";window.removeEventListener("afterprint",reset)};
+ let rule=$("#pmPrintPageRule");if(!rule){rule=document.createElement("style");rule.id="pmPrintPageRule";document.head.appendChild(rule)}rule.textContent="@page{size:"+(deck.ratio==="4:3"?"10in 7.5in":"13.333in 7.5in")+";margin:0}";
  window.addEventListener("afterprint",reset);window.print();setTimeout(reset,2000);
 }
 function startPresent(presenter){
