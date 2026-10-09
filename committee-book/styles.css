@@ -152,6 +152,6 @@ tbody tr:hover td{background:#fbfdfb}
 /* Navigation links added to the Fixed Discount template header */
 .back-link{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:11px;min-height:39px;padding:0 12px;font-weight:850;font-size:12px;display:inline-flex;justify-content:center;align-items:center;gap:7px;white-space:nowrap;transition:background .15s,border-color .15s}
 .back-link:hover{background:var(--surface-2,var(--bg));border-color:#b8d5c4}
-@media(max-width:800px){.header-inner{gap:10px}.header-actions{gap:5px;flex-wrap:wrap;justify-content:flex-end}.back-link{min-height:34px;padding:0 8px;font-size:10px}.sitecraft-link{display:none}}
+@media(max-width:800px){.header-inner{gap:10px;flex-wrap:wrap}.brand{flex:1 1 180px}.header-actions{flex:1 1 100%;gap:5px;flex-wrap:wrap;justify-content:space-between}.back-link{min-height:34px;padding:0 8px;font-size:10px}.sitecraft-link{display:inline-flex}}
 @media(max-width:420px){.back-link{font-size:9px;padding:0 6px}}
 @media print{.back-link{display:none!important}}
