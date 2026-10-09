@@ -409,6 +409,7 @@ root.addEventListener("change",function(e){
  if(a==="role-select"){state.role=el.value;render();return;}
  if(a==="preview-member"){state.previewMemberId=el.value;render();return;}
  if(a==="payment-mode"){const p=paymentFor(el.getAttribute("data-id"),currentCycle().monthNo);p.mode=el.value;render();return;}
+ if(a==="payment-toggle"){if(el.checked)markPayment(el.getAttribute("data-id"),"paid");else reversePayment(el.getAttribute("data-id"));return;}
 });
 root.addEventListener("input",function(e){
  const el=e.target;if(el.hasAttribute("data-rule-content"))state.rulesHtml=sanitizeRules(el.innerHTML);
