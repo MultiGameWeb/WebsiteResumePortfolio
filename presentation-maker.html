@@ -600,6 +600,39 @@ async function exportPptx(){
  }catch(error){setStatus("PPTX export failed");alert("Could not export PPTX. "+(error&&error.message||"Check your connection and try again."))}
 }
 
+function dataUrlToBlob(dataUrl){
+ const parts=String(dataUrl||"").split(","),header=parts[0]||"",mime=(header.match(/data:([^;]+)/)||[])[1]||"application/octet-stream",binary=atob(parts[1]||""),bytes=new Uint8Array(binary.length);
+ for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+ return new Blob([bytes],{type:mime});
+}
+async function originalBlobForSlide(slide){
+ const sources=[];
+ (slide.elements||[]).forEach(function(e){if(e.type==="image"&&e.src)sources.push(e.src)});
+ if(slide.background&&slide.background.type==="image"&&slide.background.image)sources.push(slide.background.image);
+ for(const src of sources){
+  const retained=originalImageBlobs.get(src);if(retained)return retained;
+  if(/^data:image\//i.test(src)){try{return dataUrlToBlob(src)}catch(_){}}
+  else if(/^https?:\/\//i.test(src)){try{const response=await fetch(src,{mode:"cors",credentials:"omit"});if(response.ok)return await response.blob()}catch(_){}}
+ }
+ return null;
+}
+function safePngBlob(canvas,slide){
+ return new Promise(function(resolve,reject){
+  const fallback=async function(error){
+   try{const blob=await originalBlobForSlide(slide);if(blob){resolve({blob:blob,sourceFallback:true,mime:blob.type||"application/octet-stream"});return}}catch(_){}
+   reject(error||new Error("PNG encoding failed"));
+  };
+  try{
+   canvas.toBlob(function(blob){
+    if(blob){resolve({blob:blob,sourceFallback:false,mime:"image/png"});return}
+    try{resolve({blob:dataUrlToBlob(canvas.toDataURL("image/png")),sourceFallback:false,mime:"image/png"})}catch(error){fallback(error)}
+   },"image/png");
+  }catch(error){
+   try{resolve({blob:dataUrlToBlob(canvas.toDataURL("image/png")),sourceFallback:false,mime:"image/png"})}catch(taintError){fallback(taintError)}
+  }
+ });
+}
+
 async function exportPngs(){
  if(!deck)return;if(!window.html2canvas){alert("PNG export library is loading. Please try again.");return}
  const previous=activeSlideId,files=[],fallbackFiles=[];let failed=0;
