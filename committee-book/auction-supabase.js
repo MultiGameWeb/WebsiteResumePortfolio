@@ -127,7 +127,8 @@ async function saveMemberDocument(chitId,memberId,path,documentType){
   const {error}=await c.from("members").update({kyc_doc_path:path}).eq("id",memberId).eq("chit_id",chitId);if(error)throw error;return path;
  }
  if(documentType==="agreement"){
-  const {error}=await c.from("member_documents").insert({chit_id:chitId,member_id:memberId,document_type:"agreement",storage_path:path});if(error)throw error;return path;
+  const {data:{user},error:userError}=await c.auth.getUser();if(userError)throw userError;if(!user)throw new Error("Sign in is required.");
+  const {error}=await c.from("member_documents").insert({chit_id:chitId,member_id:memberId,document_type:"agreement",storage_path:path,uploaded_by:user.id});if(error)throw error;return path;
  }
  throw new Error("Unsupported document type.");
 }
