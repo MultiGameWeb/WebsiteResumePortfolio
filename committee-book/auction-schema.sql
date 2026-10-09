@@ -271,18 +271,18 @@ using (bucket_id = 'chit-private-docs' and (
 drop policy if exists "chit_docs_insert_owner_or_self" on storage.objects;
 create policy "chit_docs_insert_owner_or_self" on storage.objects for insert to authenticated
 with check (bucket_id = 'chit-private-docs' and (
-  public.can_manage_chit(nullif(split_part(name, '/', 1), '')::uuid)
+  public.can_manage_chit_document(name)
   or public.is_own_chit_document(name)
 ));
 
 drop policy if exists "chit_docs_update_owner" on storage.objects;
 create policy "chit_docs_update_owner" on storage.objects for update to authenticated
-using (bucket_id = 'chit-private-docs' and public.can_manage_chit(nullif(split_part(name, '/', 1), '')::uuid))
-with check (bucket_id = 'chit-private-docs' and public.can_manage_chit(nullif(split_part(name, '/', 1), '')::uuid));
+using (bucket_id = 'chit-private-docs' and public.can_manage_chit_document(name))
+with check (bucket_id = 'chit-private-docs' and public.can_manage_chit_document(name));
 
 drop policy if exists "chit_docs_delete_owner" on storage.objects;
 create policy "chit_docs_delete_owner" on storage.objects for delete to authenticated
-using (bucket_id = 'chit-private-docs' and public.can_manage_chit(nullif(split_part(name, '/', 1), '')::uuid));
+using (bucket_id = 'chit-private-docs' and public.can_manage_chit_document(name));
 
 create or replace function public.initialize_chit_cycles(p_chit_id uuid)
 returns integer language plpgsql security definer set search_path = public as $$
@@ -332,6 +332,53 @@ begin
   return v_inserted;
 end;
 $$;
+
+-- Call after an organizer changes editable chit settings. Closed cycles remain immutable.
+create or replace function public.sync_open_auction_cycles(p_chit_id uuid)
+returns integer language plpgsql security definer set search_path = public as $
+declare
+  v_chit public.chits%rowtype;
+  v_cycle public.monthly_cycles%rowtype;
+  v_month_start date;
+  v_last_day integer;
+  v_start_date date;
+  v_end_date date;
+  v_due_date date;
+  v_remaining integer;
+  v_floor bigint;
+  v_updated integer := 0;
+begin
+  if not public.can_manage_chit(p_chit_id) then raise exception 'Only this chit organizer can sync cycle settings'; end if;
+  select * into v_chit from public.chits where id=p_chit_id for update;
+  if not found then raise exception 'Chit not found'; end if;
+  for v_cycle in select * from public.monthly_cycles where chit_id=p_chit_id and status in ('open','upcoming') for update loop
+    v_month_start := (date_trunc('month', v_chit.start_date::timestamp) + ((v_cycle.month_no - 1) * interval '1 month'))::date;
+    v_last_day := extract(day from (v_month_start + interval '1 month - 1 day'))::integer;
+    v_start_date := v_month_start + least(v_chit.auction_start_day,v_last_day) - 1;
+    v_end_date := v_month_start + least(v_chit.auction_end_day,v_last_day) - 1;
+    v_due_date := v_month_start + least(v_chit.due_day,v_last_day) - 1;
+    v_remaining := v_chit.member_count - v_cycle.month_no + 1;
+    v_floor := greatest(v_chit.starting_floor_paise,
+      v_chit.pot_paise - floor(v_chit.pot_paise::numeric * v_chit.max_discount_pct / 100 * greatest(1,v_remaining) / v_chit.member_count)::bigint);
+    update public.monthly_cycles set
+      status = case when (v_start_date::timestamp at time zone 'Asia/Kolkata') > now() then 'upcoming' else 'open' end,
+      auction_starts_at = (v_start_date::timestamp at time zone 'Asia/Kolkata'),
+      auction_ends_at = ((v_end_date::timestamp + time '23:59:59') at time zone 'Asia/Kolkata'),
+      due_date = v_due_date,
+      pot_paise = v_chit.pot_paise,
+      base_contribution_paise = floor(v_chit.pot_paise::numeric / v_chit.member_count)::bigint,
+      floor_price_paise = v_floor,
+      member_count = v_chit.member_count,
+      max_discount_pct = v_chit.max_discount_pct,
+      commission_pct = v_chit.commission_pct,
+      dividend_rule = v_chit.dividend_rule,
+      late_fine_per_day_paise = v_chit.late_fine_per_day_paise
+    where id=v_cycle.id;
+    v_updated := v_updated + 1;
+  end loop;
+  return v_updated;
+end;
+$;
 
 create or replace function public.place_auction_bid(p_cycle_id uuid, p_amount_paise bigint)
 returns uuid language plpgsql security definer set search_path = public as $$
@@ -627,6 +674,7 @@ end;
 $$;
 
 revoke all on function public.initialize_chit_cycles(uuid) from public, anon;
+revoke all on function public.sync_open_auction_cycles(uuid) from public, anon;
 revoke all on function public.place_auction_bid(uuid,bigint) from public, anon;
 revoke all on function public.approve_auction_bid(uuid,boolean) from public, anon;
 revoke all on function public.declare_auction_winner(uuid) from public, anon;
@@ -641,6 +689,7 @@ grant select on public.profiles, public.chits, public.members, public.monthly_cy
 grant insert, update on public.chits, public.members to authenticated;
 -- Auction cycles and bids are mutated through controlled RPCs, not direct browser writes.
 grant execute on function public.initialize_chit_cycles(uuid) to authenticated;
+grant execute on function public.sync_open_auction_cycles(uuid) to authenticated;
 grant execute on function public.place_auction_bid(uuid,bigint) to authenticated;
 grant execute on function public.approve_auction_bid(uuid,boolean) to authenticated;
 grant execute on function public.declare_auction_winner(uuid) to authenticated;
