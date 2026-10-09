@@ -4,6 +4,17 @@
 - Template 01: `fixed-discount-chit-manager.html`
 - Template 02: `auction-chit-manager.html`
 
+## Templates 03 and 04
+
+- `lottery-kuri-chit-manager.html` — Lottery Chit / Kuri Chit Manager, a pure-luck demo draw with a visible wheel, a confirm-before-record step, one-time winners, random seed/time log and CSV reports.
+- `fixed-rotation-bc-chit-manager.html` — Committee / BC Fixed Rotation Manager, an editable drag-and-drop order before start, a lock after start, timeline/turn tracking and an optional early-taker interest ledger.
+- `lottery-rotation-app.js` — shared responsive front-end app engine for both templates.
+- `lottery-rotation-i18n.js` — shared English/Telugu translation dictionaries.
+- `lottery-rotation.css` — lucky wheel, confetti, order editor and timeline styles.
+- `lottery-rotation-schema.sql` — additive Supabase schema/RPC scaffold for server-side lottery draws, fixed rotation order and interest ledger.
+
+Both templates currently run sample data in page memory. Refresh resets the sample. The draw wheel uses a locally generated demo seed and is **not a production fairness guarantee**. Do not record or use live financial events until the server-side RPCs, RLS, authenticated organizer roles, payment verification and compliance have been configured and tested.
+
 ## Auction Chit Manager files
 
 - `auction-app.js` — mobile-friendly organizer/member-preview UI, sample bids, lowest-approved-bid preview, floor-price calculation, month awards, payment demo controls and CSV export.
