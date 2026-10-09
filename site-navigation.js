@@ -66,7 +66,7 @@ function reportSaved(){dirty=false;saveFailed=false;clearTimeout(saveTimer)}
 function reportFailure(){dirty=true;saveFailed=true;clearTimeout(saveTimer)}
 function markDirty(){if(!guardPages.has(leaf))return;dirty=true;saveFailed=false;clearTimeout(saveTimer);if(autoSavePages.has(leaf))saveTimer=setTimeout(function(){if(!saveFailed)dirty=false},1700)}
 function statusText(){return ["#saveState","#savedStatus","#saveStatus","#saveIndicator"].map(s=>document.querySelector(s)?.textContent||"").join(" ").trim()}
-function syncStatus(){const t=statusText();if(/could not save|save failed|storage is unavailable|may not survive reload|export failed|not saved/i.test(t)){reportFailure();return}if(/saved just now|(?:auto-save on)|\bsaved\b|changes synced/i.test(t))reportSaved()}
+function syncStatus(){const t=statusText();if(/could not save|save failed|storage is unavailable|may not survive reload|export failed|not saved/i.test(t)){reportFailure();return}if(/unsaved changes|saving…|saving\.\.\./i.test(t)){dirty=true;saveFailed=false;return}if(/saved just now|(?:auto-save on)|\bsaved\b|changes synced/i.test(t))reportSaved()}
 ["#saveState","#savedStatus","#saveStatus","#saveIndicator"].forEach(sel=>{const n=document.querySelector(sel);if(n&&"MutationObserver"in window)new MutationObserver(syncStatus).observe(n,{childList:true,subtree:true,characterData:true})});
 if(guardPages.has(leaf)){
  document.addEventListener("input",function(e){if(!nav.contains(e.target))markDirty()},true);
