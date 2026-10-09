@@ -63,8 +63,15 @@
 @media(max-width:760px){.actions{gap:6px}.fields-panel-head{align-items:flex-start;flex-wrap:wrap}.floating{margin-bottom:24px}.page{transform:none;width:var(--paper-width-mm,210mm);min-height:var(--paper-height-mm,297mm);padding:var(--page-margin,20mm);zoom:var(--paper-scale,1);font-size:13px}.page-wrap{overflow:visible;justify-content:center;padding-top:22px}.table-move-handle,.table-resize-handle,.row-drag-handle,.col-drag-handle{opacity:1;min-width:16px;min-height:16px}}
 @media print{.table-move-handle,.table-resize-handle,.row-drag-handle,.col-drag-handle,.drop-indicator,[data-editor-ui]{display:none!important;visibility:hidden!important}.page{width:var(--paper-width-mm,210mm)!important;min-height:var(--paper-height-mm,297mm)!important;padding:var(--page-margin,20mm)!important;zoom:1!important}}
 
+/* Document color tools and theme styling */
+.actions{align-items:center}.color-popover{width:min(270px,calc(100vw - 24px));padding:12px}.color-palette{display:grid;grid-template-columns:repeat(6,minmax(26px,1fr));gap:6px;margin:8px 0 12px}.color-swatch{height:30px;min-width:0!important;padding:0;border:1px solid #bcc2ca!important;border-radius:6px;background:#fff;box-shadow:inset 0 0 0 1px #ffffff55}.color-swatch:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.color-swatch:hover{transform:scale(1.04)}.color-custom{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;font-size:11px;font-weight:800;color:var(--muted)}.color-custom input{width:38px;height:30px;padding:1px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}.color-no-color{width:100%;min-height:30px;padding:5px;border:1px solid var(--line)!important;border-radius:8px;background:var(--surface);font-size:11px;font-weight:900}
+.page h1,.page h2,.page h3{color:var(--doc-heading-color,#171b21)}.page hr{border-top-color:var(--doc-divider-color,#d9dde3)!important}.page .table-scroll td,.page .table-scroll th{border-color:var(--doc-table-border-color,#bfc5ce)!important}.page th,.page table[data-header-row="true"] tr:first-child td,.page table[data-header-row="true"] tr:first-child th{background-color:var(--doc-table-header-bg,#f2f3f7)!important;color:var(--doc-table-header-text,#171b21)!important}.page table[data-title-box="true"] tr:first-child td,.page table[data-title-box="true"] tr:first-child th{background-color:var(--doc-table-header-bg,#f2f3f7)!important;color:var(--doc-table-header-text,#171b21)!important}.page table[data-header-band="true"] td,.page table[data-header-band="true"] th{background-color:var(--doc-accent-color,#17181d)!important;color:#fff!important;border-color:var(--doc-accent-line-color,#17181d)!important}.page .document-header-band{box-sizing:border-box;width:100%;padding:12px 16px;margin:12px 0;background:var(--doc-accent-color,#17181d);border-bottom:3px solid var(--doc-accent-line-color,#17181d);color:#fff;font-weight:800;min-height:44px;outline:none}.page .document-header-band:empty:before{content:"Click to edit title";color:#ffffffbb}.page,.page *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+@media print{html,body,.page,.page *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.page{background-color:var(--doc-page-background,#fff)!important;border:var(--doc-page-border,0) solid var(--doc-accent-color,#17181d)!important}}
+@media(max-width:760px){.color-popover{left:0;transform:none}.color-swatch{height:34px}}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js" onerror="window.htmlDocxLoadFailed=true"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" onerror="window.html2canvasLoadFailed=true"></script>
 </head>
 <body>
 <header class="header"><div class="header-inner"><a class="logo" href="index.html"><span class="logo-mark">✦</span><span>SiteCraft</span></a><nav class="nav" aria-label="Primary"><a href="templates.html">Templates</a><a href="portfolio-creator.html">Portfolio Creator</a><a href="resume-builder.html">Resume Builder</a><a href="pdf-tools.html">PDF Tools</a><a href="document-editor.html">Document Editor</a></nav></div></header>
@@ -90,6 +97,11 @@
     <label class="action-control">Paper size <select id="paperSize" aria-label="Paper size"><option value="A3">A3</option><option value="A4" selected>A4</option><option value="A5">A5</option><option value="B5">B5</option><option value="Letter">Letter</option><option value="Legal">Legal</option><option value="Tabloid">Tabloid</option><option value="Custom">Custom</option></select></label>
     <button class="btn" id="orientationBtn" type="button" aria-pressed="false">Portrait</button>
     <label class="action-control">Margins <select id="paperMargins" aria-label="Page margins"><option value="normal">Normal</option><option value="narrow">Narrow</option><option value="wide">Wide</option></select></label>
+    <label class="action-control">Theme <select id="docTheme" aria-label="Document color theme"><option>Classic</option><option>Blue</option><option>Green</option><option>Maroon</option><option>Purple</option><option>Teal</option><option>Dark header</option></select></label>
+    <button class="btn" type="button" id="pageBorderBtn" aria-pressed="false">Page border: Off</button>
+    <label class="action-control">Page background <select id="pageBackground" aria-label="Page background color"><option value="#ffffff">White</option><option value="#f5f9ff">Soft blue</option><option value="#fffaf0">Soft cream</option><option value="#f4fbf5">Soft green</option><option value="#fff5f8">Soft pink</option><option value="#f5f6f8">Light gray</option></select></label>
+    <button class="btn" type="button" id="clearColorsBtn">Clear colors</button>
+    <button class="btn" type="button" id="imageBtn">Download Image (PNG)</button>
     <div class="paper-custom" id="paperCustom" hidden><label>Width (mm) <input id="customPaperWidth" type="number" min="50" max="1000" step="1" value="210"></label><label>Height (mm) <input id="customPaperHeight" type="number" min="50" max="1500" step="1" value="297"></label><button class="btn" id="applyCustomPaper" type="button">Apply size</button></div>
     <button class="btn" id="clearBtn">Reset</button>
   </div>
@@ -114,6 +126,8 @@
         <button type="button" data-cmd="insertUnorderedList" title="Bulleted list">• List</button>
         <button type="button" data-cmd="insertOrderedList" title="Numbered list">1. List</button>
         <button type="button" data-cmd="removeFormat" title="Clear formatting">Clear</button>
+        <button type="button" id="textColorBtn" aria-expanded="false" title="Text color">A ▾</button>
+        <button type="button" id="highlightBtn" aria-expanded="false" title="Highlight">▰ ▾</button>
         <span class="sep"></span>
         <button type="button" id="insertTableBtn" aria-expanded="false">▦ Insert Table ▾</button>
         <button type="button" id="boxesBtn" aria-expanded="false">▤ Boxes ▾</button>
@@ -160,7 +174,10 @@
         <button type="button" draggable="true" data-box-kind="signature">Signature block</button>
         <button type="button" draggable="true" data-box-kind="grid-3">3 × 3 blank grid</button>
         <button type="button" draggable="true" data-box-kind="grid-5">5 × 5 blank grid</button>
+        <button type="button" draggable="true" data-box-kind="header-band">Insert header band</button>
       </div>
+      <div class="toolbar-popover color-popover" id="textColorMenu" hidden><div class="popover-title">Text color</div><div class="color-palette" id="textColorPalette"></div><label class="color-custom">Custom color <input type="color" id="textColorCustom" value="#171b21"></label><button type="button" class="color-no-color" data-color-clear="text">No color</button></div>
+      <div class="toolbar-popover color-popover" id="highlightMenu" hidden><div class="popover-title">Highlight</div><div class="color-palette" id="highlightPalette"></div><label class="color-custom">Custom color <input type="color" id="highlightCustom" value="#fff2a8"></label><button type="button" class="color-no-color" data-color-clear="highlight">No color</button></div>
     </div>
     <div class="page-wrap"><article class="page" id="page" contenteditable="true" spellcheck="true"></article></div>
     <div class="drop-indicator" id="dropIndicator" aria-hidden="true" hidden></div>
@@ -215,7 +232,19 @@ const templates={
 let current="noc",values={},blankMode=false,hasManualEdits=false,isRenderingDoc=false,savedRange=null;
 
 const PAPER_PRESETS={A3:[297,420],A4:[210,297],A5:[148,210],B5:[176,250],Letter:[215.9,279.4],Legal:[215.9,355.6],Tabloid:[279.4,431.8]},PAPER_MARGINS={normal:25.4,narrow:12.7,wide:31.75},FIELDS_PANEL_KEY="sitecraft-document-fields-open-v1";
-let paperSettings={size:"A4",orientation:"portrait",customWidth:210,customHeight:297},fieldsPanelOpen=false,fieldsDirty=false,historyStates=[],historyIndex=-1,historyReady=false,isRestoringHistory=false,historyTimer=null;const MAX_HISTORY_STEPS=100;
+let paperSettings={size:"A4",orientation:"portrait",customWidth:210,customHeight:297},fieldsPanelOpen=false,fieldsDirty=false,historyStates=[],historyIndex=-1,historyReady=false,isRestoringHistory=false,historyTimer=null;
+const DOC_THEMES={
+ "Classic":{heading:"#171b21",accent:"#17181d",accentLine:"#17181d",header:"#f2f3f7",headerText:"#171b21",border:"#bfc5ce",divider:"#d9dde3"},
+ "Blue":{heading:"#1d4ed8",accent:"#2563eb",accentLine:"#1d4ed8",header:"#dbeafe",headerText:"#153e75",border:"#93c5fd",divider:"#bfdbfe"},
+ "Green":{heading:"#166534",accent:"#15803d",accentLine:"#16a34a",header:"#dcfce7",headerText:"#14532d",border:"#86efac",divider:"#bbf7d0"},
+ "Maroon":{heading:"#881337",accent:"#9f1239",accentLine:"#be123c",header:"#ffe4e6",headerText:"#881337",border:"#fda4af",divider:"#fecdd3"},
+ "Purple":{heading:"#6b21a8",accent:"#7e22ce",accentLine:"#9333ea",header:"#f3e8ff",headerText:"#581c87",border:"#d8b4fe",divider:"#e9d5ff"},
+ "Teal":{heading:"#115e59",accent:"#0f766e",accentLine:"#0d9488",header:"#ccfbf1",headerText:"#134e4a",border:"#5eead4",divider:"#99f6e4"},
+ "Dark header":{heading:"#243041",accent:"#334155",accentLine:"#475569",header:"#334155",headerText:"#ffffff",border:"#94a3b8",divider:"#64748b"}
+};
+const TEXT_COLOR_PRESETS=[["Black","#171b21"],["Dark red","#7f1d1d"],["Red","#dc2626"],["Orange","#c2410c"],["Gold","#a16207"],["Green","#15803d"],["Teal","#0f766e"],["Blue","#2563eb"],["Navy","#1e3a8a"],["Purple","#7e22ce"],["Brown","#854d0e"],["Gray","#6b7280"]];
+const HIGHLIGHT_PRESETS=[["Yellow","#fff2a8"],["Lemon","#fef9c3"],["Peach","#ffedd5"],["Pink","#fce7f3"],["Rose","#ffe4e6"],["Lavender","#f3e8ff"],["Lilac","#ede9fe"],["Blue","#dbeafe"],["Sky","#e0f2fe"],["Mint","#d1fae5"],["Green","#dcfce7"],["Gray","#e5e7eb"]];
+let themeName="Classic",pageBorder=false,pageBackground="#ffffff";const MAX_HISTORY_STEPS=100;
 function validNumber(v,min,max,fb){const n=Number(v);return Number.isFinite(n)?Math.max(min,Math.min(max,n)):fb}
 function currentPaperDimensions(){const p=PAPER_PRESETS[paperSettings.size]||[validNumber(paperSettings.customWidth,50,1000,210),validNumber(paperSettings.customHeight,50,1500,297)];let width=p[0],height=p[1];if(paperSettings.orientation==="landscape"){const t=width;width=height;height=t}return {width,height}}
 function paperSnapshot(){return {...paperSettings}}
