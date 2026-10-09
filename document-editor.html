@@ -69,6 +69,38 @@
 @media print{html,body,.page,.page *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.page{background-color:var(--doc-page-background,#fff)!important;border:var(--doc-page-border,0) solid var(--doc-accent-color,#17181d)!important}}
 @media(max-width:760px){.color-popover{left:0;transform:none}.color-swatch{height:34px}}
 
+
+/* Final accessibility and compact-screen quality pass */
+:where(button,input,select,textarea,a,[contenteditable="true"]):focus-visible{outline:3px solid #1d4ed8!important;outline-offset:2px!important}
+button:disabled{cursor:not-allowed}
+.toolbar button[aria-pressed="true"]{box-shadow:inset 0 0 0 1px currentColor}
+.toolbar-popover{box-sizing:border-box;max-width:calc(100vw - 24px)}
+.page .table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+@media(max-width:850px){
+ .app{grid-template-columns:1fr;min-width:0}
+ .sidebar{position:static;height:auto;max-height:none;overflow:visible;border-right:0;border-bottom:1px solid var(--line);padding:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .side-title,.help{grid-column:1/-1}
+ .main{min-width:0;padding:14px 10px}
+ .editor-shell,.floating,.page-wrap{min-width:0;max-width:100%;width:100%}
+ .floating{align-items:stretch;top:66px}
+ .toolbar,.table-tools{width:100%;max-width:100%;box-sizing:border-box;justify-content:flex-start;flex-wrap:wrap}
+ .toolbar button,.toolbar select{max-width:100%;flex:0 0 auto}
+ .toolbar-popover{left:0;right:auto;transform:none;width:min(370px,calc(100vw - 24px));max-height:min(70vh,560px)}
+ .page{transform:none!important;margin-bottom:0!important;box-sizing:border-box;zoom:var(--paper-scale,1)}
+ .page-wrap{overflow-x:auto;justify-content:center;padding-top:22px}
+ .page .table-scroll{width:100%;max-width:100%;overflow-x:auto}
+}
+@media(max-width:390px){
+ .main{padding:10px 6px}
+ .actions{gap:6px}
+ .action-control{max-width:100%;flex-wrap:wrap}
+ .toolbar{gap:4px;padding:6px}
+ .toolbar button,.toolbar select{font-size:11px}
+ .toolbar .sep{display:none}
+ .toolbar-popover{width:calc(100vw - 20px);max-width:calc(100vw - 20px)}
+ .page{padding:32px 20px!important}
+}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js" onerror="window.htmlDocxLoadFailed=true"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" onerror="window.html2canvasLoadFailed=true"></script>
@@ -93,15 +125,15 @@
 <main class="main">
   <div class="topbar"><div class="doc-title" id="docTitle">NOC Undertaking</div><div class="save-state" id="saveState">Auto-save on</div></div>
   <div class="actions" aria-label="Document actions">
-    <button class="btn primary" id="pdfBtn">Print / Save PDF</button><button class="btn" id="wordBtn">Download Word</button>
+    <button class="btn primary" id="pdfBtn" aria-label="Print document or save as PDF">Print / Save PDF</button><button class="btn" id="wordBtn" aria-label="Download document as Word file">Download Word</button>
     <label class="action-control">Paper size <select id="paperSize" aria-label="Paper size"><option value="A3">A3</option><option value="A4" selected>A4</option><option value="A5">A5</option><option value="B5">B5</option><option value="Letter">Letter</option><option value="Legal">Legal</option><option value="Tabloid">Tabloid</option><option value="Custom">Custom</option></select></label>
     <button class="btn" id="orientationBtn" type="button" aria-pressed="false">Portrait</button>
     <label class="action-control">Margins <select id="paperMargins" aria-label="Page margins"><option value="normal">Normal</option><option value="narrow">Narrow</option><option value="wide">Wide</option></select></label>
     <label class="action-control">Theme <select id="docTheme" aria-label="Document color theme"><option>Classic</option><option>Blue</option><option>Green</option><option>Maroon</option><option>Purple</option><option>Teal</option><option>Dark header</option></select></label>
     <button class="btn" type="button" id="pageBorderBtn" aria-pressed="false">Page border: Off</button>
     <label class="action-control">Page background <select id="pageBackground" aria-label="Page background color"><option value="#ffffff">White</option><option value="#f5f9ff">Soft blue</option><option value="#fffaf0">Soft cream</option><option value="#f4fbf5">Soft green</option><option value="#fff5f8">Soft pink</option><option value="#f5f6f8">Light gray</option></select></label>
-    <button class="btn" type="button" id="clearColorsBtn">Clear colors</button>
-    <button class="btn" type="button" id="imageBtn">Download Image (PNG)</button>
+    <button class="btn" type="button" id="clearColorsBtn" aria-label="Clear document colors and restore black and white">Clear colors</button>
+    <button class="btn" type="button" id="imageBtn" aria-label="Download document page as PNG image">Download Image (PNG)</button>
     <div class="paper-custom" id="paperCustom" hidden><label>Width (mm) <input id="customPaperWidth" type="number" min="50" max="1000" step="1" value="210"></label><label>Height (mm) <input id="customPaperHeight" type="number" min="50" max="1500" step="1" value="297"></label><button class="btn" id="applyCustomPaper" type="button">Apply size</button></div>
     <button class="btn" id="clearBtn">Reset</button>
   </div>
@@ -110,24 +142,24 @@
   <div class="editor-shell">
     <div class="floating">
       <div class="toolbar" aria-label="Formatting toolbar">
-        <button type="button" data-history="undo" title="Undo (Ctrl/Cmd+Z)" disabled>↶ Undo</button>
-        <button type="button" data-history="redo" title="Redo (Ctrl/Cmd+Y)" disabled>↷ Redo</button><span class="sep"></span>
-        <select id="blockFormat" title="Paragraph style"><option value="p">Normal</option><option value="h1">Title</option><option value="h2">Heading</option><option value="h3">Subheading</option></select>
-        <select id="fontSize" title="Font size"><option value="2">10</option><option value="3" selected>12</option><option value="4">14</option><option value="5">16</option><option value="6">18</option><option value="7">24</option></select>
+        <button type="button" data-history="undo" title="Undo (Ctrl/Cmd+Z)" aria-label="Undo last edit" disabled>↶ Undo</button>
+        <button type="button" data-history="redo" title="Redo (Ctrl/Cmd+Y)" aria-label="Redo last edit" disabled>↷ Redo</button><span class="sep"></span>
+        <select id="blockFormat" title="Paragraph style" aria-label="Paragraph style"><option value="p">Normal</option><option value="h1">Title</option><option value="h2">Heading</option><option value="h3">Subheading</option></select>
+        <select id="fontSize" title="Font size" aria-label="Font size"><option value="2">10</option><option value="3" selected>12</option><option value="4">14</option><option value="5">16</option><option value="6">18</option><option value="7">24</option></select>
         <span class="sep"></span>
-        <button type="button" data-cmd="bold" title="Bold">B</button>
-        <button type="button" data-cmd="italic" title="Italic"><i>I</i></button>
-        <button type="button" data-cmd="underline" title="Underline"><u>U</u></button>
+        <button type="button" data-cmd="bold" title="Bold" aria-label="Bold" aria-pressed="false">B</button>
+        <button type="button" data-cmd="italic" title="Italic" aria-label="Italic" aria-pressed="false"><i>I</i></button>
+        <button type="button" data-cmd="underline" title="Underline" aria-label="Underline" aria-pressed="false"><u>U</u></button>
         <span class="sep"></span>
-        <button type="button" data-cmd="justifyLeft" title="Align left">≡</button>
-        <button type="button" data-cmd="justifyCenter" title="Center">≣</button>
-        <button type="button" data-cmd="justifyRight" title="Align right">☷</button>
+        <button type="button" data-cmd="justifyLeft" title="Align left" aria-label="Align left">≡</button>
+        <button type="button" data-cmd="justifyCenter" title="Center" aria-label="Align center">≣</button>
+        <button type="button" data-cmd="justifyRight" title="Align right" aria-label="Align right">☷</button>
         <span class="sep"></span>
-        <button type="button" data-cmd="insertUnorderedList" title="Bulleted list">• List</button>
-        <button type="button" data-cmd="insertOrderedList" title="Numbered list">1. List</button>
-        <button type="button" data-cmd="removeFormat" title="Clear formatting">Clear</button>
-        <button type="button" id="textColorBtn" aria-expanded="false" title="Text color">A ▾</button>
-        <button type="button" id="highlightBtn" aria-expanded="false" title="Highlight">▰ ▾</button>
+        <button type="button" data-cmd="insertUnorderedList" title="Bulleted list" aria-label="Bulleted list">• List</button>
+        <button type="button" data-cmd="insertOrderedList" title="Numbered list" aria-label="Numbered list">1. List</button>
+        <button type="button" data-cmd="removeFormat" title="Clear formatting" aria-label="Clear text formatting">Clear</button>
+        <button type="button" id="textColorBtn" aria-expanded="false" aria-controls="textColorMenu" aria-label="Choose text color" title="Text color">A ▾</button>
+        <button type="button" id="highlightBtn" aria-expanded="false" aria-controls="highlightMenu" aria-label="Choose text highlight" title="Highlight">▰ ▾</button>
         <span class="sep"></span>
         <button type="button" id="insertTableBtn" aria-expanded="false">▦ Insert Table ▾</button>
         <button type="button" id="boxesBtn" aria-expanded="false">▤ Boxes ▾</button>
@@ -194,13 +226,13 @@ const templates={
  noc:{
   title:"NOC Undertaking",
   fields:[
-   ["name","Full name","Dr M Devendra"],["designation","Designation","Assistant Professor (Part-Time)"],["department","Department","Department of Telugu"],["institution","Institution","Veeranari Chakali Ilamma Women’s University"],["authority","Authority / office","The Director General, National Testing Agency"],["city","City","New Delhi"],["subject","Subject","Undertaking to furnish No Objection Certificate"],["date","Date",todayLong()]
+   ["name","Full name","Your Name"],["designation","Designation","Your Designation"],["department","Department","Your Department"],["institution","Institution","Organization Name"],["authority","Authority / office","The Concerned Authority"],["city","City","Your City"],["subject","Subject","Undertaking to furnish No Objection Certificate"],["date","Date",todayLong()]
   ],
   html:d=>`<h1>UNDERTAKING FOR NO OBJECTION CERTIFICATE (NOC)</h1><p>To,</p><p>${d.authority}<br>${d.city}</p><p class="subject">Subject: ${d.subject}</p><p>Sir/Madam,</p><p>I, <strong>${d.name}</strong>, ${d.designation}, ${d.department}, <strong>${d.institution}</strong>, hereby submit this undertaking in connection with my application. I undertake to furnish the required No Objection Certificate as applicable.</p><p>I declare that the information furnished by me is true and correct to the best of my knowledge and belief.</p><p>Thanking you,</p><p>Yours faithfully,</p><p><strong>${d.name}</strong><br>${d.designation}<br>${d.institution}<br>Date: ${d.date}</p>`
  },
  job:{
   title:"Job Application",
-  fields:[["name","Applicant name","Your Name"],["role","Position","Subject Matter Expert"],["company","Organization","Organization Name"],["address","Address","Organization Address"],["date","Date",todayLong()]],
+  fields:[["name","Applicant name","Your Name"],["role","Position","Position Title"],["company","Organization","Organization Name"],["address","Address","Organization Address"],["date","Date",todayLong()]],
   html:d=>`<p style="text-align:right">${d.date}</p><p>To,<br>${d.company}<br>${d.address}</p><p class="subject">Subject: Application for the position of ${d.role}</p><p>Sir/Madam,</p><p>I, <strong>${d.name}</strong>, wish to apply for the position of <strong>${d.role}</strong>. I believe my qualifications and experience make me a suitable candidate for the role.</p><p>I request you to kindly consider my application. I would be grateful for an opportunity to discuss my candidature further.</p><p>Thanking you,</p><p>Yours faithfully,<br><strong>${d.name}</strong></p>`
  },
  leave:{
@@ -220,7 +252,7 @@ const templates={
  },
  resume:{
   title:"Simple Resume",
-  fields:[["name","Full name","Your Name"],["email","Email","name@example.com"],["phone","Phone","+91 98765 43210"],["location","Location","Hyderabad, Telangana"],["summary","Professional summary","Write a short professional summary."],["skills","Skills","Communication, MS Office, Research"],["experience","Experience","Role — Organization — 2025 to Present"],["education","Education","Degree — Institution — Year"]],
+  fields:[["name","Full name","Your Name"],["email","Email","name@example.com"],["phone","Phone","Your Phone Number"],["location","Location","Your City, State"],["summary","Professional summary","Write a short professional summary."],["skills","Skills","Your skills"],["experience","Experience","Your Role — Organization Name — Dates"],["education","Education","Degree — Institution — Year"]],
   html:d=>`<h1 style="text-align:left">${d.name}</h1><p>${d.email} · ${d.phone} · ${d.location}</p><hr><h2>Professional Summary</h2><p>${d.summary}</p><h2>Experience</h2><p>${d.experience}</p><h2>Education</h2><p>${d.education}</p><h2>Skills</h2><p>${d.skills}</p>`
  },
  general:{
@@ -248,7 +280,7 @@ let themeName="Classic",pageBorder=false,pageBackground="#ffffff";const MAX_HIST
 function validNumber(v,min,max,fb){const n=Number(v);return Number.isFinite(n)?Math.max(min,Math.min(max,n)):fb}
 function currentPaperDimensions(){const p=PAPER_PRESETS[paperSettings.size]||[validNumber(paperSettings.customWidth,50,1000,210),validNumber(paperSettings.customHeight,50,1500,297)];let width=p[0],height=p[1];if(paperSettings.orientation==="landscape"){const t=width;width=height;height=t}return {width,height}}
 function paperSnapshot(){return {...paperSettings}}
-function setFieldsPanelOpen(open){fieldsPanelOpen=!!open;const panel=$("#fieldsPanel"),box=$("#fields"),button=$("#fieldsToggle");if(panel)panel.hidden=blankMode;if(box)box.hidden=blankMode||!fieldsPanelOpen;if(button){button.setAttribute("aria-expanded",String(fieldsPanelOpen));button.textContent=(fieldsPanelOpen?"− ":"＋ ")+"Template fields"}try{localStorage.setItem(FIELDS_PANEL_KEY,fieldsPanelOpen?"open":"closed")}catch(_){}}
+function setFieldsPanelOpen(open){fieldsPanelOpen=!!open;const panel=$("#fieldsPanel"),box=$("#fields"),button=$("#fieldsToggle");if(panel)panel.hidden=blankMode;if(box)box.hidden=blankMode||!fieldsPanelOpen;if(button){button.setAttribute("aria-expanded",String(fieldsPanelOpen));button.textContent=(fieldsPanelOpen?"− ":"＋ ")+"Template fields"}try{localStorage.setItem(FIELDS_PANEL_KEY,fieldsPanelOpen?"open":"closed")}catch(_){showSaveStatus("Could not save preferences on this device")}}
 function readFieldsPanelPreference(){try{return localStorage.getItem(FIELDS_PANEL_KEY)==="open"}catch(_){return false}}
 function serializablePageHTML(options){options=options||{};const clone=$("#page").cloneNode(true);clone.querySelectorAll("[data-editor-ui],#dropIndicator,.drop-indicator").forEach(n=>n.remove());clone.querySelectorAll(".table-cell-active,.table-cell-selected").forEach(n=>n.classList.remove("table-cell-active","table-cell-selected"));if(options.stripEditable)clone.querySelectorAll("[contenteditable]").forEach(n=>n.removeAttribute("contenteditable"));return clone.innerHTML}
 function updateStatusLine(){const status=$("#paperStatus");if(!status)return;const label=(paperSettings.size||"A4")+" · "+(paperSettings.orientation==="landscape"?"Landscape":"Portrait"),clone=document.createElement("div");clone.innerHTML=serializablePageHTML();const count=(clone.textContent||"").trim().split(/\s+/).filter(Boolean).length;status.textContent=label+" · "+count+" word"+(count===1?"":"s")}
@@ -389,12 +421,11 @@ function save(){
   showSaveStatus("Saved just now");
   setTimeout(()=>{if($("#saveState"))showSaveStatus("Auto-save on")},1200);
  }catch(error){
-  showSaveStatus("Could not save on this device");
-  console.warn("Document Editor: local storage write failed.",error);
+  showSaveStatus("Could not save on this device. Check browser storage settings or available space.");
  }
 }
-let saveTimer;
-function queueSave(){clearTimeout(saveTimer);saveTimer=setTimeout(save,400);scheduleHistorySnapshot();updateStatusLine()}
+let saveTimer,statusTimer;
+function queueSave(){clearTimeout(saveTimer);clearTimeout(statusTimer);saveTimer=setTimeout(save,400);statusTimer=setTimeout(updateStatusLine,250);scheduleHistorySnapshot()}
 function htmlHasContent(html){
  if(typeof html!=="string"||!html.trim())return false;
  const probe=document.createElement("div");
@@ -403,10 +434,10 @@ function htmlHasContent(html){
 }
 function loadSaved(){
  let stored;
- try{stored=localStorage.getItem(STORAGE_KEY)}catch(error){showSaveStatus("Local storage is unavailable");console.warn("Document Editor: local storage read failed.",error);return false}
+ try{stored=localStorage.getItem(STORAGE_KEY)}catch(_){showSaveStatus("Browser storage is unavailable. Changes may not survive reload.");return false}
  if(!stored)return false;
  let saved;
- try{saved=JSON.parse(stored)}catch(error){console.warn("Document Editor: saved data is invalid JSON.",error);return false}
+ try{saved=JSON.parse(stored)}catch(_){showSaveStatus("Saved document data could not be read; a new document will be opened.");return false}
  if(!saved||typeof saved!=="object")return false;
  if(saved.paper&&typeof saved.paper==="object")paperSettings={...paperSettings,...saved.paper};
  if(saved.documentStyle&&typeof saved.documentStyle==="object"){themeName=DOC_THEMES[saved.documentStyle.themeName]?saved.documentStyle.themeName:"Classic";pageBorder=!!saved.documentStyle.pageBorder;pageBackground=saved.documentStyle.pageBackground||"#ffffff"}
@@ -479,7 +510,7 @@ function updateToolbarState(){
 function runCommand(command,value=null){
  $("#page").focus();
  restoreSelection();
- try{document.execCommand(command,false,value)}catch(error){console.warn("Document Editor formatting command failed:",command,error)}
+ try{document.execCommand(command,false,value)}catch(_){showSaveStatus("This formatting command is not supported by this browser.")}
  rememberSelection();
  hasManualEdits=true;queueSave();updateToolbarState();
 }
@@ -570,9 +601,9 @@ function decorateTables(root=$("#page")){
  if(!root)return;
  root.querySelectorAll(".table-scroll").forEach(wrapper=>{
   wrapper.querySelectorAll("[data-editor-ui]").forEach(n=>n.remove());const table=wrapper.querySelector("table");if(!table)return;wrapper.style.position="relative";
-  const move=document.createElement("button");move.type="button";move.className="table-move-handle";move.textContent="↕";move.title="Drag to move table";move.draggable=true;move.contentEditable="false";move.setAttribute("data-editor-ui","true");move.dataset.dragKind="table";wrapper.appendChild(move);
-  const resize=document.createElement("button");resize.type="button";resize.className="table-resize-handle";resize.textContent="◢";resize.title="Resize table";resize.contentEditable="false";resize.setAttribute("data-editor-ui","true");wrapper.appendChild(resize);
-  Array.from(table.rows).forEach((row,ri)=>{if(row.cells[0]){const b=document.createElement("button");b.type="button";b.className="row-drag-handle";b.textContent="↕";b.title="Drag to reorder row";b.draggable=true;b.contentEditable="false";b.setAttribute("data-editor-ui","true");b.dataset.dragKind="row";row.cells[0].appendChild(b)}if(ri===0)Array.from(row.cells).forEach(cell=>{const b=document.createElement("button");b.type="button";b.className="col-drag-handle";b.textContent="↔";b.title="Drag to reorder column";b.draggable=true;b.contentEditable="false";b.setAttribute("data-editor-ui","true");b.dataset.dragKind="column";cell.appendChild(b)})});
+  const move=document.createElement("button");move.type="button";move.className="table-move-handle";move.textContent="↕";move.title="Drag to move table";move.setAttribute("aria-label","Drag to move table");move.draggable=true;move.contentEditable="false";move.setAttribute("data-editor-ui","true");move.dataset.dragKind="table";wrapper.appendChild(move);
+  const resize=document.createElement("button");resize.type="button";resize.className="table-resize-handle";resize.textContent="◢";resize.title="Resize table";resize.setAttribute("aria-label","Resize table");resize.contentEditable="false";resize.setAttribute("data-editor-ui","true");wrapper.appendChild(resize);
+  Array.from(table.rows).forEach((row,ri)=>{if(row.cells[0]){const b=document.createElement("button");b.type="button";b.className="row-drag-handle";b.textContent="↕";b.title="Drag to reorder row";b.setAttribute("aria-label","Drag to reorder row");b.draggable=true;b.contentEditable="false";b.setAttribute("data-editor-ui","true");b.dataset.dragKind="row";row.cells[0].appendChild(b)}if(ri===0)Array.from(row.cells).forEach(cell=>{const b=document.createElement("button");b.type="button";b.className="col-drag-handle";b.textContent="↔";b.title="Drag to reorder column";b.setAttribute("aria-label","Drag to reorder column");b.draggable=true;b.contentEditable="false";b.setAttribute("data-editor-ui","true");b.dataset.dragKind="column";cell.appendChild(b)})});
  });
 }
 let dragPayload=null,touchCandidate=null,touchDragging=false,suppressClickTarget=null,resizeSession=null;
@@ -638,21 +669,27 @@ $("#pageBorderBtn").addEventListener("click",function(){pageBorder=!pageBorder;a
 $("#pageBackground").addEventListener("change",function(){pageBackground=this.value||"#ffffff";applyDocumentTheme();queueSave();commitHistorySnapshot()});
 $("#clearColorsBtn").addEventListener("click",clearDocumentColors);
 $("#imageBtn").addEventListener("click",async function(){
- if(!window.html2canvas){alert("PNG export is unavailable because html2canvas failed to load. Check your internet connection and reload this page.");return}
  try{
+  save();
+  if(!window.html2canvas)throw new Error("The PNG rendering library could not be loaded.");
   const canvas=await window.html2canvas($("#page"),{scale:2,useCORS:true,allowTaint:false,backgroundColor:pageBackground||"#ffffff",logging:false,onclone:function(doc){
    const cloned=doc.querySelector("#page");
    if(cloned){cloned.querySelectorAll("[data-editor-ui],.table-cell-active,.table-cell-selected,.drop-indicator").forEach(n=>n.remove());cloned.style.outline="none";cloned.style.boxShadow="none"}
   }});
-  canvas.toBlob(function(blob){
-   if(!blob){alert("Could not create the PNG image. Please try again.");return}
-   const url=URL.createObjectURL(blob),a=document.createElement("a");
-   a.href=url;a.download=(blankMode?"document":(templates[current]?.title||"document")).replace(/\s+/g,"-").toLowerCase()+".png";
-   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
-  },"image/png");
- }catch(_){alert("PNG export failed. Please try again or use Print / Save PDF.")}
+  await new Promise((resolve,reject)=>{
+   try{
+    canvas.toBlob(function(blob){
+     try{
+      if(!blob)throw new Error("The browser could not encode the PNG image.");
+      const url=URL.createObjectURL(blob),a=document.createElement("a");
+      a.href=url;a.download=(blankMode?"document":(templates[current]?.title||"document")).replace(/\s+/g,"-").toLowerCase()+".png";
+      document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);resolve();
+     }catch(error){reject(error)}
+    },"image/png");
+   }catch(error){reject(error)}
+  });
+ }catch(_){showSaveStatus("PNG export failed. Check browser permissions and internet connection, then try again.");alert("PNG export failed. Please try again, or use Print / Save PDF.")}
 });
-
 $("#fieldsToggle").addEventListener("click",function(){setFieldsPanelOpen(!fieldsPanelOpen);queueSave()});
 $("#reapplyFields").addEventListener("click",applyFieldsToDocument);
 $("#paperSize").addEventListener("change",function(){paperSettings.size=this.value;if(paperSettings.size==="Custom"){paperSettings.customWidth=validNumber($("#customPaperWidth").value,50,1000,210);paperSettings.customHeight=validNumber($("#customPaperHeight").value,50,1500,297)}applyPaperSettings();queueSave();commitHistorySnapshot()});
@@ -692,29 +729,27 @@ $("#page").addEventListener("paste",function(event){
  hasManualEdits=true;rememberSelection();queueSave();updateToolbarState();
 });
 try{document.execCommand("defaultParagraphSeparator",false,"p")}catch(_){}
-$("#pdfBtn").addEventListener("click",function(){save();window.print()});
+$("#pdfBtn").addEventListener("click",function(){try{save();window.print()}catch(_){showSaveStatus("Could not open Print / Save PDF. Please try your browser print menu.");alert("Print / Save PDF could not be opened. Please use your browser’s Print command.")}});
 $("#wordBtn").addEventListener("click",function(){
- save();
- if(!window.htmlDocx||typeof window.htmlDocx.asBlob!=="function"){
-  alert("Word export is unavailable because the html-docx-js library failed to load. Check your internet connection and reload this page, or use Print / Save PDF.");
-  return;
- }
- const dims=currentPaperDimensions(),marginMm=PAPER_MARGINS[paperSettings.margin]||PAPER_MARGINS.normal,contentWidth=Math.max(10,dims.width-2*marginMm),contentHeight=Math.max(10,dims.height-2*marginMm),theme=currentTheme();
- const css="@page{size:"+dims.width+"mm "+dims.height+"mm;margin:"+marginMm+"mm}body{margin:0;color:#171b21;background-color:"+pageBackground+";font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6}.page{box-sizing:border-box;width:"+contentWidth+"mm;min-height:"+contentHeight+"mm;padding:0;color:#171b21;background-color:"+pageBackground+";border:"+(pageBorder?"1px solid "+theme.accent:"0 solid transparent")+";font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6}.page h1,.page h2,.page h3{color:"+theme.heading+"}.page h1{font-size:26px;text-align:center}.page h2{font-size:18px}.page p{margin:0 0 14px}.page hr{border-top-color:"+theme.divider+"}.page table{width:100%;min-width:0!important;table-layout:fixed;border-collapse:collapse;margin:12px 0}.page .table-scroll{width:100%;overflow:visible}.page th,.page td{border:1px solid "+theme.border+";padding:7px;vertical-align:top;break-inside:avoid}.page tr{break-inside:avoid}.page th,.page table[data-header-row='true'] tr:first-child td,.page table[data-header-row='true'] tr:first-child th,.page table[data-title-box='true'] tr:first-child td{background-color:"+theme.header+";color:"+theme.headerText+"}.page table[data-header-band='true'] td{background-color:"+theme.accent+";color:#ffffff}.page table[data-borders='off'] td,.page table[data-borders='off'] th{border-color:transparent}";
- const exportRoot=document.createElement("div");exportRoot.innerHTML=serializablePageHTML({stripEditable:true});prepareColorExport(exportRoot);
- const source="<html><head><meta charset='utf-8'><style>"+css+"</style></head><body bgcolor='"+pageBackground+"'><div class='page' style='background-color:"+pageBackground+";border:"+(pageBorder?"1px solid "+theme.accent:"0 solid transparent")+"'>"+exportRoot.innerHTML+"</div></body></html>";
  try{
+  save();
+  if(!window.htmlDocx||typeof window.htmlDocx.asBlob!=="function")throw new Error("The Word export library could not be loaded.");
+  const dims=currentPaperDimensions(),marginMm=PAPER_MARGINS[paperSettings.margin]||PAPER_MARGINS.normal,contentWidth=Math.max(10,dims.width-2*marginMm),theme=currentTheme();
+  const css="@page{size:"+dims.width+"mm "+dims.height+"mm;margin:"+marginMm+"mm}body{margin:0;color:#171b21;background-color:"+pageBackground+";font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6}.page{box-sizing:border-box;width:"+contentWidth+"mm;min-height:"+Math.max(10,dims.height-2*marginMm)+"mm;padding:0;color:#171b21;background-color:"+pageBackground+";border:"+(pageBorder?"1px solid "+theme.accent:"0 solid transparent")+";font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6}.page h1,.page h2,.page h3{color:"+theme.heading+"}.page h1{font-size:26px;text-align:center}.page h2{font-size:18px}.page p{margin:0 0 14px}.page hr{border-top-color:"+theme.divider+"}.page table{width:100%;min-width:0!important;table-layout:fixed;border-collapse:collapse;margin:12px 0}.page .table-scroll{width:100%;overflow:visible}.page th,.page td{border:1px solid "+theme.border+";padding:7px;vertical-align:top;break-inside:avoid}.page tr{break-inside:avoid}.page th,.page table[data-header-row='true'] tr:first-child td,.page table[data-header-row='true'] tr:first-child th,.page table[data-title-box='true'] tr:first-child td{background-color:"+theme.header+";color:"+theme.headerText+"}.page table[data-header-band='true'] td{background-color:"+theme.accent+";color:#ffffff}.page table[data-borders='off'] td,.page table[data-borders='off'] th{border-color:transparent}";
+  const exportRoot=document.createElement("div");exportRoot.innerHTML=serializablePageHTML({stripEditable:true});prepareColorExport(exportRoot);
+  const source="<html><head><meta charset='utf-8'><style>"+css+"</style></head><body bgcolor='"+pageBackground+"'><div class='page' style='background-color:"+pageBackground+";border:"+(pageBorder?"1px solid "+theme.accent:"0 solid transparent")+"'>"+exportRoot.innerHTML+"</div></body></html>";
   const marginTwips=Math.round(marginMm*1440/25.4);
-  const blob=window.htmlDocx.asBlob(source,{orientation:paperSettings.orientation==="landscape"?"landscape":"portrait",margins:{top:marginTwips,right:marginTwips,bottom:marginTwips,left:marginTwips}});if(!blob)throw new Error("The Word export library did not return a document.");
-  const url=URL.createObjectURL(blob),a=document.createElement("a");
-  a.href=url;a.download=(blankMode?"document":(templates[current]?.title||"document")).replace(/\s+/g,"-").toLowerCase()+".docx";
+  const blob=window.htmlDocx.asBlob(source,{orientation:paperSettings.orientation==="landscape"?"landscape":"portrait",margins:{top:marginTwips,right:marginTwips,bottom:marginTwips,left:marginTwips}});
+  if(!blob)throw new Error("The Word export library returned an empty document.");
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;
+  a.download=(blankMode?"document":(templates[current]?.title||"document")).replace(/\s+/g,"-").toLowerCase()+".docx";
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
-  alert("Word note: text colors, highlights and solid table fills are exported; page background and decorative page borders may render differently in Word.");
- }catch(_){alert("Word export failed. Please try again or use Print / Save PDF.")}
+  alert("Word note: text colors, highlights and solid table fills are exported; page backgrounds and decorative borders may render differently in Word.");
+ }catch(_){showSaveStatus("Word export failed. Check browser permissions and internet connection, then try again.");alert("Word export failed. Please try again or use Print / Save PDF.")}
 });
 $("#clearBtn").addEventListener("click",function(){
  if(!confirm("Reset this document to the template defaults?"))return;
- try{localStorage.removeItem(STORAGE_KEY)}catch(error){console.warn("Document Editor: could not clear local storage.",error)}
+ try{localStorage.removeItem(STORAGE_KEY)}catch(_){showSaveStatus("Could not clear the saved copy on this device.")}
  values={};hasManualEdits=false;fieldsDirty=false;
  if(blankMode){$("#page").innerHTML="<p><br></p>";renderFields();$("#docTitle").textContent="Blank Document";save()}
  else{renderFields();renderDoc(false);save()}
