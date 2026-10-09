@@ -108,3 +108,17 @@ body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}h1,h2,h3,h4
 .empty{padding:28px;border:1px dashed var(--sc-line);border-radius:18px;background:rgba(255,255,255,.025);color:#c9c1d7}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.grid{grid-template-columns:1fr}.grid>.card>img{height:240px}.card-body{padding:16px}.tools{align-items:stretch}.search{flex-basis:100%}}
+
+/* Final desktop/mobile order: logo, navigation, CTA; app navigation controls stay secondary. */
+#sitecraftGlobalNav .sc-actions{order:1;margin-left:0}
+#sitecraftGlobalNav .sc-menu{order:2;margin-left:auto}
+#sitecraftGlobalNav .sc-nav-right{order:3;margin-left:0}
+.success-share{margin-top:25px;padding-top:20px;border-top:1px solid var(--sc-line);text-align:center}
+.success-share>p{margin:0 0 14px;color:#c4bdd2;font-size:13px}
+.success-share .actions{justify-content:center}
+.success-share .btn{min-height:42px}
+@media(max-width:900px){
+ #sitecraftGlobalNav .sc-actions{order:1;margin-left:auto}
+ #sitecraftGlobalNav .sc-nav-right{order:2;margin-left:0}
+ #sitecraftGlobalNav .sc-menu{order:3}
+}
