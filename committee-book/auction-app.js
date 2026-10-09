@@ -181,7 +181,7 @@ function header(){
  const role=state.liveWorkspace?'<span class="badge blue">'+esc(state.role==="member"?t("memberMode"):t("organizerMode"))+'</span>':'<div class="role-preview"><label for="role-select" style="font-size:9px;font-weight:900;color:var(--muted)">'+esc(t("rolePreview"))+'</label><select id="role-select" data-action="role-select"><option value="organizer" '+(state.role==="organizer"?"selected":"")+'>'+esc(t("organizerMode"))+'</option><option value="member" '+(state.role==="member"?"selected":"")+'>'+esc(t("memberMode"))+'</option></select></div>';
  const switcher=state.liveWorkspace&&state.availableChits&&state.availableChits.length>1?'<select class="top-btn" aria-label="'+esc(t("switchChit"))+'" data-action="switch-chit">'+state.availableChits.map(c=>'<option value="'+esc(c.id)+'" '+(c.id===state.dbChitId?"selected":"")+'>'+esc(c.name)+'</option>').join("")+'</select>':"";
   const home='<a class="top-btn" href="committee-book.html">⌂ '+(state.lang==="te"?"హోమ్":"Home")+'</a>';
- const reset=state.liveWorkspace?"":'<button class="top-btn" data-action="reset-demo">↻ '+esc(t("resetDemo"))+'</button>';
+ const reset="";
  return '<header class="header"><div class="header-inner"><a class="brand" href="committee-book.html"><span class="brand-mark">C</span><span><span class="brand-name">'+esc(t("brand"))+'</span><span class="brand-sub">'+esc(t("templateTag"))+' · '+esc(t("templateName"))+'</span></span></a><div class="header-actions">'+switcher+role+'<button class="lang-btn" data-action="toggle-lang">文 A · '+esc(t("language"))+'</button>'+home+reset+'</div></div></header>';
 }
 function stat(label,value,foot,icon,cls){return '<article class="stat '+cls+'"><div class="stat-top"><span class="stat-label">'+esc(label)+'</span><span class="stat-icon">'+icon+'</span></div><div class="stat-value">'+esc(value)+'</div><div class="stat-foot">'+esc(foot||"")+'</div></article>';}
@@ -277,7 +277,7 @@ function membersView(){
  return heading(t("members"),t("membersHelp"),addButton)+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("membersTable"))+' · '+state.members.length+'</h2><p>'+esc(t("membersHelp"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("serialNo"))+'</th><th>'+esc(t("member"))+'</th><th>'+esc(t("phone"))+'</th><th>'+esc(t("email"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("netPL"))+'</th><th>'+esc(t("documents"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div></div><div class="info">'+esc(t("privacyNotice"))+'</div>';
 }
 function auctionView(){
- const c=currentCycle();if(!c)return heading(t("auction"),t("noHistory"));
+ const c=currentCycle();if(!c)return heading(t("auction"),t("noHistory"),'<button class="btn primary" data-page="setup">⚙ '+esc(t("setup"))+'</button>')+banner();
  const mine=currentBidFor(state.previewMemberId,c.monthNo),member=mBy(state.previewMemberId),eligible=activeMembers().filter(m=>!hasWon(m.id));
  const choices=eligible.map(m=>'<option value="'+m.id+'" '+(state.previewMemberId===m.id?"selected":"")+'>'+esc(m.name)+'</option>').join("");
  const bidEntry='<div class="bid-entry"><div class="field"><label for="memberBidAmount">'+esc(t("enterBid"))+'</label><input type="number" min="'+(floorPrice(c.monthNo)/100).toFixed(2)+'" max="'+(state.chit.potPaise/100).toFixed(2)+'" step="0.01" id="memberBidAmount" value="'+(mine?(mine.amountPaise/100).toFixed(2):(floorPrice(c.monthNo)/100).toFixed(2))+'"><div class="hint">'+esc(t("bidHint"))+'</div><div class="hint">'+esc(t("floorPrice"))+': '+money(floorPrice(c.monthNo))+' · '+esc(t("potAmount"))+': '+money(state.chit.potPaise)+'</div></div><button class="btn primary" data-action="submit-bid">'+esc(t("submitBid"))+'</button></div>';
@@ -295,7 +295,7 @@ function paymentsView(){
  const defaultCycle=currentCycle();
  const selectedNo=Number(state.selectedPaymentMonth)||(defaultCycle?defaultCycle.monthNo:1);
  const c=state.cycles.find(x=>x.monthNo===selectedNo)||defaultCycle;
- if(!c)return heading(t("payments"),t("noHistory"));
+ if(!c)return heading(t("payments"),t("noHistory"),'<button class="btn primary" data-page="setup">⚙ '+esc(t("setup"))+'</button>')+banner();
  const scope=state.role==="member"?activeMembers().filter(m=>m.id===state.previewMemberId):activeMembers();
  const rows=scope.map((m,i)=>{
   const d=paymentDue(m,c),p=d.payment;
