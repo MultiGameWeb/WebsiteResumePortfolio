@@ -489,6 +489,11 @@ function markPayment(id,kind){
  if(kind==="paid")amount=d.remaining;
  else{const answer=window.prompt(t("amountReceived")+" ("+money(d.remaining)+")",(d.remaining/100).toFixed(2));if(answer===null)return;amount=parseMoney(answer);if(amount<=0||amount>=d.remaining){toast(t("validationPot"),true);return;}}
  if(amount<=0){toast(t("saved"));return;}
+ if(state.liveWorkspace){
+  const cycleId=c.dbId,mode=p.mode||"cash";
+  persistAndReload(()=>window.AuctionChitBackend.recordPayment(cycleId,id,amount,mode));
+  return;
+ }
  p.paidPaise+=amount;p.status=p.paidPaise>=d.base?"paid":"partial";p.paidAt=nowISO();p.mode=p.mode||"upi";
  p.history.push({type:"payment",amountPaise:amount,date:p.paidAt,mode:p.mode,ref:"DEMO-"+c.monthNo+"-"+id+"-"+(p.history.length+1)});
  toast(t("paymentSaved"));
@@ -496,6 +501,12 @@ function markPayment(id,kind){
 function reversePayment(id){
  const c=currentCycle();if(!c)return;const p=paymentFor(id,c.monthNo);if(p.paidPaise<=0)return;
  if(!window.confirm(t("reverseConfirm")))return;
+ if(state.liveWorkspace){
+  const ids=(p.entries||[]).filter(entry=>entry.type==="payment"&&entry.status==="confirmed"&&!entry.alreadyReversed).map(entry=>entry.dbId);
+  if(!ids.length){toast(t("reverseConfirm"),true);return;}
+  persistAndReload(async()=>{for(const paymentId of ids)await window.AuctionChitBackend.reversePayment(paymentId);});
+  return;
+ }
  const amount=p.paidPaise;p.history.push({type:"reversal",amountPaise:amount,date:nowISO(),mode:p.mode,ref:"REV-"+c.monthNo+"-"+id+"-"+(p.history.length+1)});p.paidPaise=0;p.status="pending";p.paidAt="";
  toast(t("reversalSaved"));
 }
@@ -564,6 +575,7 @@ root.addEventListener("click",function(e){
  if(a==="mark-partial"){markPayment(el.getAttribute("data-id"),"partial");return;}
  if(a==="reverse-payment"){reversePayment(el.getAttribute("data-id"));return;}
  if(a==="show-qr"){generateQr(el.getAttribute("data-id"));return;}
+ if(a==="view-document"){openPrivateDocument(el.getAttribute("data-path"));return;}
  if(a==="export-csv"){exportCsv();return;}
  if(a==="print-pdf"){window.print();return;}
  if(a==="save-rules"){const box=document.querySelector("[data-rule-content]");if(box)state.rulesHtml=sanitizeRules(box.innerHTML);toast(t("rulesSaved"));return;}
@@ -575,6 +587,7 @@ root.addEventListener("change",function(e){
  if(a==="preview-member"){state.previewMemberId=el.value;render();return;}
  if(a==="payment-mode"){const p=paymentFor(el.getAttribute("data-id"),currentCycle().monthNo);p.mode=el.value;render();return;}
  if(a==="payment-toggle"){if(el.checked)markPayment(el.getAttribute("data-id"),"paid");else reversePayment(el.getAttribute("data-id"));return;}
+ if(a==="upload-document"){const file=el.files&&el.files[0];if(!file)return;if(!state.liveWorkspace||!state.dbChitId){toast(t("noKycUpload"),true);return;}const member=mBy(el.getAttribute("data-id")),type=el.getAttribute("data-doc-type");if(!member){toast(t("noRows"),true);return;}const chitId=state.dbChitId;persistAndReload(async()=>{const path=await window.AuctionChitBackend.uploadPrivateFile(chitId,member.id,file);await window.AuctionChitBackend.saveMemberDocument(chitId,member.id,path,type);});return;}
 });
 root.addEventListener("input",function(e){
  const el=e.target;if(el.hasAttribute("data-rule-content"))state.rulesHtml=sanitizeRules(el.innerHTML);
