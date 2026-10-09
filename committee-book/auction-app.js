@@ -55,7 +55,7 @@ function cycleCalc(cycle,bid){
  const due={};roster.forEach(m=>due[m.id]=Math.max(0,baseContribution()-(dividends[m.id]||0)));
  return {prizePaise:prize,discountPaise:discount,commissionPaise:commission,dividendPoolPaise:pool,dividendPerHeadPaise:per,eligibleIds:eligible.map(m=>m.id),dividends:dividends,due:due,leftoverPaise:leftover,monthlyCollectionPaise:baseContribution()*Number(state.chit.memberCount)};
 }
-function cycleName(c){const d=new Date(state.chit.startDate+"T00:00:00");d.setMonth(d.getMonth()+c.monthNo-1);return new Intl.DateTimeFormat(state.lang==="te"?"te-IN":"en-IN",{month:"short",year:"numeric"}).format(d);}
+function cycleName(c){const d=new Date((c.periodStartDate||(()=>{const x=new Date(state.chit.startDate+"T00:00:00");x.setMonth(x.getMonth()+c.monthNo-1);return iso(x);})())+"T00:00:00");return new Intl.DateTimeFormat(state.lang==="te"?"te-IN":"en-IN",{month:"short",year:"numeric"}).format(d);}
 function seedDemo(){
  const n=new Date(),start=new Date(n.getFullYear(),n.getMonth()-3,1);
  const chit={name:"Srinivasa Auction Chit",potPaise:5000000,memberCount:10,startingFloorPaise:3000000,maxDiscountPct:40,commissionPct:5,dividendRule:"allMembers",startDate:iso(start),auctionStartDay:1,auctionEndDay:10,dueDay:10,lateFinePerDayPaise:5000,upiId:""};
@@ -196,11 +196,11 @@ function bidRows(c,lb){
 }
 function setup(){
  const c=state.chit;
- const configurationLocked=state.cycles.some(cy=>cy.status==="completed");
- const field=(key,label,val,type,attrs,help,locked)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+(locked?' <span class="lock" title="'+esc(t("lockedFields"))+'">🔒 '+esc(t("locked"))+'</span>':"")+'</label><input id="f-'+key+'" data-field="'+key+'" type="'+type+'" value="'+esc(val==null?"":val)+'" '+(attrs||"")+(locked?' disabled title="'+esc(t("lockedFields"))+'"':"")+'>'+(help?'<div class="hint">'+esc(help)+'</div>':"")+'</div>';
- const select=(key,label,val,opts,locked)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+(locked?' <span class="lock" title="'+esc(t("lockedFields"))+'">🔒 '+esc(t("locked"))+'</span>':"")+'</label><select id="f-'+key+'" data-field="'+key+'" '+(locked?'disabled title="'+esc(t("lockedFields"))+'"':"")+'>'+opts.map(o=>'<option value="'+esc(o[0])+'" '+(o[0]===val?"selected":"")+'>'+esc(o[1])+'</option>').join("")+'</select></div>';
+ const configurationLocked=false;
+ const field=(key,label,val,type,attrs,help,locked)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+(locked?' <span class="lock" title="'+esc(t("editNotFormula"))+'">🔒 '+esc(t("locked"))+'</span>':"")+'</label><input id="f-'+key+'" data-field="'+key+'" type="'+type+'" value="'+esc(val==null?"":val)+'" '+(attrs||"")+(locked?' disabled title="'+esc(t("editNotFormula"))+'"':"")+'>'+(help?'<div class="hint">'+esc(help)+'</div>':"")+'</div>';
+ const select=(key,label,val,opts,locked)=>'<div class="field"><label for="f-'+key+'">'+esc(label)+(locked?' <span class="lock" title="'+esc(t("editNotFormula"))+'">🔒 '+esc(t("locked"))+'</span>':"")+'</label><select id="f-'+key+'" data-field="'+key+'" '+(locked?'disabled title="'+esc(t("editNotFormula"))+'"':"")+'>'+opts.map(o=>'<option value="'+esc(o[0])+'" '+(o[0]===val?"selected":"")+'>'+esc(o[1])+'</option>').join("")+'</select></div>';
  const calc=floorPrice(currentCycle()?currentCycle().monthNo:1);
- return heading(t("setup"),t("editNotFormula"))+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("chitSetup"))+'</h2><p>'+esc(t("lockedFields"))+'</p></div><span class="lock">⚙ '+esc(t("edit"))+'</span></div><div class="panel-body"><div class="form-grid">'+
+ return heading(t("setup"),t("editNotFormula"))+banner()+'<div class="panel"><div class="panel-head"><div><h2>'+esc(t("chitSetup"))+'</h2><p>'+esc(t("editNotFormula"))+'</p></div><span class="lock">⚙ '+esc(t("edit"))+'</span></div><div class="panel-body"><div class="form-grid">'+
  field("name",t("chitName"),c.name,"text","required")+
  field("pot",t("potAmount"),(c.potPaise/100).toFixed(2),"number",'min="1" step="0.01"',"",configurationLocked)+
  field("memberCount",t("numberMembers"),c.memberCount,"number",'min="2" step="1"',"",configurationLocked)+
@@ -217,7 +217,7 @@ function setup(){
  field("lateFine",t("lateFine"),(c.lateFinePerDayPaise/100).toFixed(2),"number",'min="0" step="0.01"')+
  field("upiId",t("upiId"),c.upiId,"text",'placeholder="organizer@upi"')+
  '<div class="field span2"><label>'+esc(t("rulesText"))+'</label>'+rulesEditor(false)+'</div>'+
- '</div><div class="form-actions"><span class="hint">'+esc(t("lockedFields"))+'</span><button class="btn primary" data-action="save-setup">✓ '+esc(t("saveChanges"))+'</button></div></div></div>'+
+ '</div><div class="form-actions"><span class="hint">'+esc(t("editNotFormula"))+'</span><button class="btn primary" data-action="save-setup">✓ '+esc(t("saveChanges"))+'</button></div></div></div>'+
  '<div class="panel"><div class="panel-head"><div><h2>'+esc(t("floorLogic"))+'</h2><p>'+esc(t("floorLogicHelp"))+'</p></div></div><div class="panel-body"><div class="calc-grid">'+calcCard(t("baseFloor"),money(c.startingFloorPaise),t("baseFloor"))+calcCard(t("maxDiscountCap"),String(c.maxDiscountPct)+"%",t("floorFormula"))+calcCard(t("autoFloor"),money(calc),t("floorMonth")+" "+(currentCycle()?currentCycle().monthNo:1))+'</div><div class="info" style="margin-top:12px">'+esc(t("floorFormula"))+'</div></div></div>';
 }
 function membersView(){
@@ -277,6 +277,24 @@ function render(){
  root.innerHTML=header()+'<div class="shell">'+nav()+'<main class="main">'+pageContent()+'<footer class="footer">'+esc(t("footer"))+' · '+esc(t("supabaseMissing"))+'</footer></main></div>'+modalView()+'<div class="toast-area" id="toast-area">'+(state.toast?'<div class="toast '+(state.toast.error?"error":"")+'">'+esc(state.toast.message)+'</div>':"")+'</div>';
 }
 function toast(message,error){state.toast={message:message,error:!!error};render();clearTimeout(state.toastTimer);state.toastTimer=setTimeout(()=>{state.toast=null;const el=document.getElementById("toast-area");if(el)el.innerHTML="";},2800);}
+function syncDemoCycles(){
+ const completed=state.cycles.filter(c=>c.status==="completed").length;
+ const existing=new Map(state.cycles.map(c=>[c.monthNo,c]));
+ const nextCycles=[];
+ for(let n=1;n<=state.chit.memberCount;n++){
+  let c=existing.get(n);
+  if(!c)c={monthNo:n,status:n===completed+1?"open":"upcoming",winnerId:null,winningBidPaise:null,prizePaise:0,discountPaise:0,commissionPaise:0,dividendPerHeadPaise:0,dividendPoolPaise:0,completedAt:null};
+  if(c.status!=="completed"){
+   c.status=n===completed+1?"open":"upcoming";
+   const start=new Date(state.chit.startDate+"T00:00:00");start.setMonth(start.getMonth()+n-1);
+   c.periodStartDate=iso(start);
+   const due=new Date(start);const last=new Date(due.getFullYear(),due.getMonth()+1,0).getDate();due.setDate(Math.min(state.chit.dueDay,last));
+   c.dueDate=iso(due);c.baseContributionPaise=baseContribution();c.dividendRule=state.chit.dividendRule;c.commissionPct=state.chit.commissionPct;c.lateFinePerDayPaise=state.chit.lateFinePerDayPaise;
+  }
+  nextCycles.push(c);
+ }
+ state.cycles=nextCycles;
+}
 function saveSetup(){
  const $=k=>document.querySelector('[data-field="'+k+'"]');
  const val=k=>$ (k)?$ (k).value:"";
