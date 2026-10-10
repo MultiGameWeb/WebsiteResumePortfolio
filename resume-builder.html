@@ -96,7 +96,7 @@ body.design-mode #editor .editor-head,body.design-mode #editor .tool-grid,body.d
 @media(max-width:390px){.topbar{padding-inline:5px;gap:3px}.topbar-right{gap:2px}.topbar .icon-btn{width:30px;min-width:30px}.more-btn{min-width:42px;padding-inline:5px}.brand-copy strong{max-width:63px;font-size:12px}.topbar-left .back-link{width:30px;min-width:30px}.editor-mode-tabs{padding:8px}.section-head{gap:5px}.section-main-toggle{min-width:0}.tag{gap:3px}.tag button{width:28px;min-width:28px;height:28px;min-height:28px;padding:0}}
 @media print{.editor-mode-tabs,.design-panel,.mobile-bottom-bar,.preview-page-indicator,#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}}
 </style>
-<link rel="stylesheet" href="site-navigation.css">
+
 </head>
 <body class="sc-workspace-page">
 <div class="app-shell" id="appShell">
@@ -1028,6 +1028,33 @@ function safeEach(selector,handler){
 function safeStep(name,fn){
   try{return fn()}catch(err){console.error('[Resume Builder] Setup step failed — '+name+':',err);return undefined}
 }
+function showDesignPanel(){
+  document.body.classList.remove('mobile-preview','edit-mode');
+  document.body.classList.add('design-mode');
+  var panel=$('#designPanel');if(panel)panel.hidden=false;
+  var edit=$('#editModeBtn'),design=$('#designModeBtn');
+  if(edit){edit.classList.remove('active');edit.setAttribute('aria-selected','false')}
+  if(design){design.classList.add('active');design.setAttribute('aria-selected','true')}
+  var editor=$('#editor');if(editor)editor.scrollTop=0;
+}
+function showEditPanel(){
+  document.body.classList.remove('design-mode','mobile-preview');
+  document.body.classList.add('edit-mode');
+  var panel=$('#designPanel');if(panel)panel.hidden=true;
+  var edit=$('#editModeBtn'),design=$('#designModeBtn');
+  if(edit){edit.classList.add('active');edit.setAttribute('aria-selected','true')}
+  if(design){design.classList.remove('active');design.setAttribute('aria-selected','false')}
+  var me=$('#mobileEditBtn'),mp=$('#mobilePreviewBtn');
+  if(me)me.classList.add('active');if(mp)mp.classList.remove('active');
+}
+function fitPreviewWidth(){
+  var scroll=$('#previewScroll'),select=$('#zoomSelect'),d=paperDims();
+  if(!scroll||!select)return;
+  var ratio=Math.round(Math.max(220,scroll.clientWidth-24)/d.w*100);
+  var options=Array.from(select.options).map(function(o){return Number(o.value)}).filter(function(v){return v>0});
+  var best=options.reduce(function(a,b){return Math.abs(b-ratio)<Math.abs(a-ratio)?b:a},options[0]||100);
+  select.value=String(best);applyPageVars();renderPreview();
+}
 function setMoreMenu(open,focusFirst){
   var menu=$('#moreMenu'),button=$('#moreBtn');
   if(!menu||!button)return false;
@@ -1072,6 +1099,20 @@ function setupEvents(){
     });
   });
 
+  safeStep('workspace tabs and mobile bottom bar',function(){
+    safeBind('#editModeBtn','click',showEditPanel);
+    safeBind('#designModeBtn','click',showDesignPanel);
+    safeBind('#mobileEditBtn','click',showEditPanel);
+    safeBind('#mobilePreviewBtn','click',function(){
+      document.body.classList.remove('design-mode','edit-mode');
+      var p=$('#designPanel');if(p)p.hidden=true;
+      document.body.classList.add('mobile-preview');
+      $('#mobilePreviewBtn').classList.add('active');$('#mobileEditBtn').classList.remove('active');
+      requestAnimationFrame(fitPreviewWidth);
+    });
+    safeBind('#mobileDownloadPdfBtn','click',downloadPdf);
+  });
+
   safeStep('mobile More menu',function(){
     safeBind('#moreBtn','click',function(e){e.stopPropagation();var menu=$('#moreMenu');setMoreMenu(!menu||menu.hidden,true)});
     safeBind('#moreMenu','click',function(e){
@@ -1086,6 +1127,7 @@ function setupEvents(){
       else if(a==='export')exportJson();
       else if(a==='portfolio')beginPortfolioImport();
       else if(a==='fit')fitToOnePage();
+      else if(a==='design')showDesignPanel();
       else if(a==='reset')showReplacementConfirm('reset',resetTargetPreset());
     });
     safeBind(document,'click',function(e){
@@ -1132,7 +1174,7 @@ function setupEvents(){
     safeBind('#photoToggle','click',function(){applySetting('photoEnabled',!state.photoEnabled)});
     safeBind('#zoomSelect','change',function(){applyPageVars();renderPreview()});
     safeStep('accent swatches',renderAccentSwatches);
-    safeBind('#fitWidthBtn','click',function(){var d=paperDims(),avail=Math.max(320,$('#previewScroll').clientWidth-44),z=Math.max(50,Math.min(150,Math.round(avail/d.w*100)));$('#zoomSelect').value=String(z);applyPageVars();renderPreview()});
+    safeBind('#fitWidthBtn','click',fitPreviewWidth);
     safeBind('#fitOnePageBtn','click',fitToOnePage);
     function cycleTemplate(delta){var themes=['classic','modern','compact','sidebar'],idx=themes.indexOf(state.template);if(idx<0)idx=0;var next=themes[(idx+delta+themes.length)%themes.length];applySetting('template',next);var card=$('[data-template="'+next+'"]');if(card)card.scrollIntoView({block:'nearest',inline:'center',behavior:reduced()?'auto':'smooth'})}
     safeBind('#themePrev','click',function(){cycleTemplate(-1)});
@@ -1394,6 +1436,7 @@ function init(){
   });
   safeStep('divider setup',setupDivider);
   safeStep('event setup',setupEvents);
+  requestAnimationFrame(function(){fitPreviewWidth();});
   safeStep('keyword helper setup',keywordHelper);
   safeStep('saved resume restore',function(){
     restoreSavedResume().then(function(result){
