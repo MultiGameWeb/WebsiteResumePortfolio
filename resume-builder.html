@@ -98,139 +98,6 @@ body.full-resume-preview .mobile-bottom-bar,body.welcome-mode .mobile-bottom-bar
 @media(max-width:390px){.topbar{padding-inline:5px;gap:3px}.topbar-right{gap:2px}.topbar .icon-btn{width:30px;min-width:30px}.more-btn{min-width:42px;padding-inline:5px}.brand-copy strong{max-width:63px;font-size:12px}.topbar-left .back-link{width:30px;min-width:30px}.editor-mode-tabs{padding:8px}.section-head{gap:5px}.section-main-toggle{min-width:0}.tag{gap:3px}.tag button{width:28px;min-width:28px;height:28px;min-height:28px;padding:0}}
 @media print{.editor-mode-tabs,.design-panel,.mobile-bottom-bar,.preview-page-indicator,#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}}
 
-/* Guided first-time journey */
-.guided-wizard{margin:12px 14px 16px;display:grid;gap:12px}
-.guided-wizard[hidden],[hidden].guided-step-panel,[hidden].guided-download-panel{display:none!important}
-.welcome-step,.guided-step-panel,.guided-download-panel,.guided-role-search{border:1px solid var(--line);border-radius:18px;background:#fff;padding:18px;box-shadow:0 4px 16px rgba(18,28,42,.035)}
-.wizard-kicker,.eyebrow{margin:0;color:#5b50b7;font-size:10px;font-weight:900;letter-spacing:.13em}
-.welcome-step h2,.guided-download-panel h2{margin:5px 0 7px;font-size:25px;line-height:1.15;letter-spacing:-.035em}
-.wizard-intro{margin:0 0 16px;color:var(--muted);font-size:13px}
-.welcome-step h3{font-size:14px;margin:0 0 10px}
-.choice-grid{display:grid;gap:8px;grid-template-columns:1fr}
-.profession-choice{display:grid;grid-template-columns:36px minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px;min-height:68px;color:var(--text)}
-.profession-choice .choice-icon{grid-row:1/3;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:#f0ecff;color:#5b50b7;font-size:18px}
-.profession-choice strong{font-size:13px;line-height:1.25}.profession-choice span:last-child{font-size:11px;font-weight:500;color:var(--muted)}
-.profession-choice.active{border-color:#8a7ee7;background:#f8f6ff;box-shadow:0 0 0 2px rgba(117,99,221,.1)}
-.ats-explainer{margin:14px 0 12px;color:var(--muted);font-size:11px;line-height:1.55}
-.wizard-start{width:100%;min-height:48px}
-.guided-role-search{display:grid;gap:8px}
-.guided-role-search label{display:grid;gap:3px;font-size:13px}
-.guided-role-search label .help{font-size:11px;font-weight:400}
-.guided-role-search input{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line2);border-radius:12px;background:#fff;color:var(--text);font-size:16px}
-.role-match-list,.role-suggestions{display:flex;flex-wrap:wrap;gap:7px}
-.role-match-list button,.suggestion-chip{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:#f8f8fb;color:var(--text);font-size:12px;font-weight:700}
-.role-match-list button[aria-pressed="true"]{border-color:#887be3;background:#f1eeff}
-.role-suggestions{align-items:flex-start}
-.suggestion-group{display:grid;gap:6px;width:100%}
-.suggestion-group strong{font-size:11px;color:var(--muted)}
-.suggestion-chip{min-height:38px;background:#fff}
-.suggestion-chip[data-suggest-bullet]{border-radius:10px;text-align:left;justify-content:flex-start;max-width:100%;white-space:normal}
-.text-button{border:0;background:transparent;color:#5347b7;font-size:12px;font-weight:800;text-align:left;min-height:40px;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
-.guided-progress-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.guided-progress-heading span{color:#6559bb;font-size:10px;font-weight:900;letter-spacing:.1em}
-.guided-progress-heading strong{font-size:17px}
-.guided-step-panel progress{display:block;width:100%;height:7px;margin:10px 0 12px;accent-color:#6559bb}
-.guided-step-help{margin:0 0 13px;color:var(--muted);font-size:12px;line-height:1.6}
-.guided-nav{display:grid;grid-template-columns:.7fr 1.3fr;gap:8px}
-.guided-nav button{min-height:46px}
-.advanced-toggle{min-height:42px;width:100%;border:1px dashed var(--line2);border-radius:12px;background:#f8f9fb;color:var(--muted);font-size:12px;font-weight:800}
-.advanced-note{margin:0;font-size:11px}
-.guided-download-panel{text-align:left}
-.guided-download-panel p{color:var(--muted);font-size:13px;line-height:1.65}
-.download-check{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#e8f7ef;color:#15804b;font-size:22px}
-body.welcome-mode #editor .editor-head,body.welcome-mode #editor .tool-grid,body.welcome-mode #editor #accordion{display:none!important}
-body.welcome-mode #editor #guidedRoleSearch{display:none!important}
-body.welcome-mode #editor #guidedStepPanel,body.welcome-mode #editor #guidedDownloadPanel{display:none!important}
-body.guided-running #editor #welcomeStep{display:none!important}
-body.guided-running #editor #guidedStepPanel[hidden],body.guided-running #editor #guidedDownloadPanel[hidden]{display:none!important}
-body.guided-running #editor .editor-head,body.guided-running #editor .tool-grid,body.guided-running #editor #accordion{display:block}
-body.guided-running #editor .tool-grid{display:none!important}
-body.design-mode #editor .guided-wizard{margin:8px 12px}
-body.design-mode #editor .guided-wizard #welcomeStep,body.design-mode #editor .guided-role-search{display:none!important}
-body.design-mode #editor #guidedStepPanel{display:block!important}
-@media(min-width:700px){.choice-grid{grid-template-columns:1fr}.welcome-step,.guided-step-panel,.guided-download-panel,.guided-role-search{padding:20px}.guided-wizard{margin:16px}}
-@media(max-width:899px){
- .guided-wizard{margin:10px 10px 14px}
- .welcome-step,.guided-step-panel,.guided-download-panel,.guided-role-search{padding:15px}
- .welcome-step h2,.guided-download-panel h2{font-size:23px}
- .profession-choice{min-height:68px}
- .role-match-list button,.suggestion-chip{min-height:44px;font-size:13px}
- .guided-step-panel,.guided-download-panel{margin-bottom:4px}
- body.design-mode #editor .guided-wizard{padding-bottom:6px}
-}
-
-
-.role-example{display:grid;gap:12px;border:1px solid #e0dcf8;border-radius:12px;background:#faf9ff;padding:12px}.role-example[hidden]{display:none!important}.role-example p{margin:5px 0;color:var(--muted);font-size:12px;line-height:1.6;overflow-wrap:anywhere}.role-example strong{font-size:12px}
-.guided-role-search select{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line2);border-radius:12px;background:#fff;color:var(--text);font-size:16px}
-
-
-/* First-run guidance, profession-neutral controls and small-screen field usability */
-body.welcome-mode #editor .editor-head,body.welcome-mode #editor .tool-grid,body.welcome-mode #editor #accordion{display:none!important}
-body.guided-running #editor .editor-head,body.guided-running #editor .tool-grid{display:none!important}
-body.guided-running.advanced-mode #editor .tool-grid{display:grid!important}
-body.advanced-mode #editor .tool-grid .health,body.advanced-mode #editor .tool-grid .keyword-box{display:block!important}
-body.advanced-mode #editor .more-sections-menu{display:block}
-.tool-grid>.surface-card:first-child{display:none!important}
-.section-card[hidden]{display:none!important}
-.more-sections-menu{margin:10px 0 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.7);overflow:hidden}
-.more-sections-menu>summary{display:flex;align-items:center;min-height:48px;padding:12px 14px;cursor:pointer;font-size:13px;font-weight:900;color:#5146ac;list-style:none}
-.more-sections-menu>summary::-webkit-details-marker{display:none}
-.more-sections-menu>summary:after{content:"+";margin-left:auto;font-size:20px}.more-sections-menu[open]>summary:after{content:"−"}
-.more-sections-menu>.help{padding:0 14px;margin:0 0 10px;font-size:11px}
-.more-sections-content{padding:0 9px 10px;display:grid;gap:9px}
-.section-options{position:relative;flex:0 0 auto}
-.section-options>summary{display:grid;place-items:center;width:38px;min-width:38px;height:38px;min-height:38px;padding:0;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-size:15px;font-weight:900;list-style:none}
-.section-options>summary::-webkit-details-marker{display:none}
-.section-options[open]>summary{background:#f1efff;border-color:#b6acef}
-.section-options>button,.section-options>.entry-btn,.section-options>.show-toggle{display:inline-flex;margin:4px}
-.section-actions{position:relative;display:flex;align-items:center;gap:4px}
-.section-actions>.section-options[open]{position:absolute;z-index:35;right:0;top:0;display:flex;align-items:center;gap:3px;max-width:min(84vw,320px);flex-wrap:wrap;justify-content:flex-end;padding:5px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 12px 28px rgba(10,20,35,.14)}
-.section-actions>.section-options[open]>summary{order:9}
-.section-actions>.section-options:not([open])>*:not(summary){display:none}
-textarea{min-height:100px;line-height:1.55;resize:vertical;overflow-wrap:anywhere}
-.bullet-row textarea{min-height:100px;width:100%;max-width:100%;font-size:15px}
-.tag-list{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px;max-width:100%}
-.tag{display:inline-flex;align-items:center;gap:8px;max-width:100%;min-width:0;padding:5px 7px 5px 10px;white-space:normal;overflow-wrap:anywhere}
-.tag button{display:grid;place-items:center;flex:0 0 36px;width:36px;min-width:36px;height:36px;min-height:36px;padding:0;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
-.section-main-toggle{min-width:0}.section-label{min-width:0}.section-label strong,.section-label span{overflow-wrap:anywhere}
-.step-note{margin:0 0 12px;padding:11px 12px;background:#f8f7ff;border:1px solid #e2def8;border-radius:12px;color:#615b73;font-size:12px;line-height:1.6}
-body.download-step #editor .editor-head,body.download-step #editor .tool-grid,body.download-step #editor #accordion{display:none!important}
-.resume-name{overflow-wrap:anywhere;word-break:normal;max-width:100%;min-width:0}
-.resume-header,.resume-header>div{min-width:0;max-width:100%}
-.template-classic .sidebar-layout{display:block!important;grid-template-columns:minmax(0,1fr)!important}
-.template-classic .sidebar-col{display:none!important}
-.template-classic .main-col{min-width:0;width:100%}
-@media(max-width:899px){
- html,body{width:100%;max-width:100%;overflow-x:hidden}
- .app-shell{min-width:0;width:100%}
- #editor{min-width:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
- #editor input,#editor select,#editor textarea,#guidedWizard input,#guidedWizard select{font-size:16px!important;max-width:100%}
- #editor button,#guidedWizard button{touch-action:manipulation}
- .section-head{display:flex;align-items:center;gap:8px;padding:10px}
- .section-main-toggle{flex:1 1 auto;min-width:0;padding:0}
- .section-actions{flex:0 0 auto}
- .section-actions>.section-options[open]{right:0;top:0}
- .section-options>summary{width:40px;height:40px;min-width:40px;min-height:40px}
- .tag button{flex-basis:40px;width:40px;min-width:40px;height:40px;min-height:40px}
- .bullet-row{grid-template-columns:minmax(0,1fr) auto;gap:7px}
- .bullet-row>div{min-width:0}
- .mobile-bottom-bar{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
- .guided-wizard{margin-inline:8px}
- .guided-role-search input,.guided-role-search select{min-height:48px}
- .more-sections-menu>summary{min-height:50px}
-}
-@media(max-width:390px){
- .topbar{overflow:hidden}
- .topbar-left{max-width:45%}
- .topbar-right{max-width:55%}
- .section-head{padding:8px;gap:5px}
- .section-icon{flex:0 0 30px;width:30px;height:30px}
- .section-label strong{font-size:12px}
- .section-label span{font-size:10px}
- .section-options>summary{width:38px;height:38px;min-width:38px;min-height:38px}
-}
-
-
 /* Validation refinements */
 body.design-mode #editor .guided-wizard #guidedStepPanel{display:block!important}
 body.download-step #editor .guided-download-panel{display:grid!important}
@@ -289,6 +156,11 @@ body.download-step #editor .guided-download-panel{display:grid!important}
 .design-more-options{border-top:1px solid var(--line);padding-top:7px}.design-more-options>summary{font-size:11px;font-weight:850;cursor:pointer;min-height:27px;list-style:none}.design-more-options[open]{display:grid;gap:8px}.compact-secondary{min-height:31px;border:1px solid var(--line);border-radius:7px;background:#fff;font-size:11px;font-weight:800}
 .compact-format-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-height:34vh;overflow:auto}.compact-format-grid label{display:grid;gap:3px;font-size:10px}.compact-format-grid select{min-height:29px}.format-scope{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:7px}.format-scope strong{font-size:11px}.format-scope span{font-size:10px;color:var(--muted)}#formatSectionTools{grid-column:1/-1;display:flex;align-items:center;gap:5px;flex-wrap:wrap}#formatSectionTools button{min-height:28px;padding:0 5px;border:1px solid var(--line);border-radius:6px;background:#fff;font-size:10px}
 @media(max-width:899px){.topbar .download-pdf-btn{display:none!important}.design-panel{position:absolute!important;top:0;left:0;width:100%;height:100%;bottom:auto;max-width:100%;z-index:100}.compact-design-content{gap:8px}.compact-design-grid{gap:5px}}
+
+
+body.design-mode #editor .template-design-row,body.design-mode #editor .editor-quiet-actions,body.design-mode #editor .tips-panel,body.design-mode #editor #accordion{display:none!important}
+body.edit-mode #editor .design-panel{display:none!important}
+@media(max-width:899px){#editor input,#editor select,#editor textarea{font-size:16px!important;max-width:100%}}
 
 </style>
 
@@ -424,30 +296,6 @@ var state=blankResumeState();
 var history=[],future=[],typingGroup=null,typingTimer=null,previewRenderTimer=null,dirty=false,leaveTarget='',dragSection='',pendingReplacement=null,autosaveTimer=null,autosaveReady=false,restoreInProgress=true,savedDbName='sitecraft-resume',savedDbVersion=1,savedDbKey='current',openSections={header:true,summary:false,experience:false,education:false,skills:false,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
 var currentPages=1,selectedFormatSection='';
 var selectedProfessionKey='',selectedJourney='',guidedStep=0,guideStarted=false,advancedMode=false,uiAddedSections={},groupSkillsMode=false;
-var GUIDE_STEPS=[
- {title:'Basics',section:'header',help:'Add your name and contact details so an employer can reach you.'},
- {title:'Summary',section:'summary',help:'Write 2–4 lines about what you do, what you know, and what role you want.'},
- {title:'Experience',section:'experience',help:'Add work, internships, training, volunteering or practical experience. If you are new, it is okay to leave this empty.'},
- {title:'Education',section:'education',help:'Add your school, college, course or relevant training.'},
- {title:'Skills',section:'skills',help:'Add skills you can use in this role. Tap a suggestion to add it.'},
- {title:'Choose design',section:'design',help:'Choose a clean layout and adjust the appearance. These choices do not change your saved resume data format.'},
- {title:'Download',section:'download',help:'Review the page and download your PDF when you are ready.'}
-];
-var ROLE_STARTERS={
- student_fresher:{label:'Student / Fresher',roles:['Student','Fresher','Graduate','Intern','Trainee','Diploma Holder','Graduate Trainee'],summary:'Student or fresher with a foundation in [subject or area]. Ready to learn, work with others and contribute to tasks with care and consistency.',hard:['MS Office','Research','Data entry','Presentation skills','Basic computer skills','Report writing'],soft:['Communication','Teamwork','Time management','Problem solving','Adaptability'],bullets:['Completed a [class project / practical assignment] on [topic] and presented the results to [audience].','Helped organise [event or activity] for [group], coordinating tasks and timelines.']},
- teacher_education:{label:'Teaching / Education',roles:['Teacher','Primary Teacher','Subject Teacher','Tutor','Teaching Assistant','Academic Coordinator','Special Educator'],summary:'Educator with knowledge of [subject or age group]. Focused on clear explanations, supportive learning environments and helping students build confidence.',hard:['Lesson planning','Classroom management','Student assessment','Subject knowledge','Learning materials','Parent communication'],soft:['Patience','Communication','Empathy','Organisation','Adaptability'],bullets:['Prepared learning activities for [class or subject] to make difficult topics easier to understand.','Tracked student progress and shared clear feedback with students or families.']},
- sales_marketing:{label:'Sales / Marketing',roles:['Sales Executive','Sales Representative','Marketing Executive','Digital Marketing Executive','Business Development Executive','Retail Sales Associate','Field Sales Executive'],summary:'Customer-focused sales or marketing professional with strengths in [product, service or market]. Comfortable explaining options, following up with customers and supporting team targets.',hard:['Lead generation','Customer relationship management','Product demonstrations','Market research','Social media marketing','Sales reporting'],soft:['Persuasion','Listening','Relationship building','Resilience','Goal setting'],bullets:['Followed up with [customer group] to understand needs and explain suitable products or services.','Supported a [campaign, promotion or event] and tracked enquiries, responses or sales.']},
- accounts_finance:{label:'Accounts / Finance / Banking',roles:['Accountant','Accounts Assistant','Finance Executive','Banking Associate','Bookkeeper','Audit Assistant','Cashier'],summary:'Careful accounts or finance professional trained in [accounts process or financial area]. Values accurate records, confidentiality and meeting reporting deadlines.',hard:['Bookkeeping','Invoice processing','Bank reconciliation','GST basics','Excel','Financial record keeping'],soft:['Attention to detail','Integrity','Numerical accuracy','Confidentiality','Time management'],bullets:['Checked [invoices, entries or statements] and resolved discrepancies with the relevant team.','Maintained organised financial records and supported routine reporting within agreed timelines.']},
- healthcare:{label:'Healthcare / Nursing / Lab / Pharmacy',roles:['Staff Nurse','Nurse','Lab Technician','Medical Lab Technician','Pharmacist','Pharmacy Assistant','Healthcare Assistant','Clinic Coordinator'],summary:'Healthcare professional or trainee with training in [care, laboratory, pharmacy or clinical support]. Committed to patient dignity, safe procedures and clear communication with colleagues.',hard:['Patient care','Vital signs','Medical records','Sample collection','Infection prevention','Medicine dispensing'],soft:['Empathy','Careful observation','Teamwork','Calm communication','Reliability'],bullets:['Supported [patient-care or laboratory task] while following the required safety and hygiene procedure.','Maintained accurate [patient, sample or pharmacy] records and communicated important updates to the team.']},
- customer_support:{label:'Customer Support / BPO',roles:['Customer Support Executive','Customer Care Executive','BPO Associate','Call Centre Executive','Helpdesk Support','Customer Service Representative','Technical Support Associate'],summary:'Customer support professional with strengths in listening, explaining information clearly and resolving requests. Comfortable working with service processes and keeping accurate notes.',hard:['Call handling','Ticketing systems','CRM records','Issue resolution','Email and chat support','Typing and data entry'],soft:['Active listening','Empathy','Clear communication','Patience','Conflict resolution'],bullets:['Handled [type of customer request] and explained the next steps in simple, polite language.','Recorded customer interactions accurately and followed up until the request was resolved or handed over.']},
- it_software:{label:'IT / Software',roles:['Software Developer','Web Developer','IT Support','QA Tester','Data Analyst','System Administrator','Technical Support Engineer'],summary:'IT professional or learner with a foundation in [technology or support area]. Interested in solving practical problems, documenting work and learning tools required by the team.',hard:['Programming fundamentals','SQL','Software testing','Git','Troubleshooting','Technical documentation'],soft:['Problem solving','Collaboration','Learning agility','Analytical thinking','Clear communication'],bullets:['Built, tested or maintained [application, report or system task] as part of a project or team assignment.','Investigated [issue or requirement], recorded findings and shared the next steps with the team.']},
- engineering:{label:'Engineering / Technical',roles:['Mechanical Engineer','Civil Engineer','Electrical Technician','Quality Engineer','Site Engineer','Maintenance Engineer','Draughtsman'],summary:'Engineering professional or trainee with a foundation in [discipline, equipment or process]. Focused on safe work, accurate measurements and practical problem solving.',hard:['Technical drawings','Quality inspection','Preventive maintenance','Safety procedures','CAD basics','Equipment troubleshooting'],soft:['Attention to detail','Team coordination','Planning','Safety awareness','Analytical thinking'],bullets:['Assisted with [inspection, installation, drawing or maintenance task] according to the specified procedure.','Recorded measurements or checks and reported issues to the responsible supervisor or team.']},
- office_admin_hr:{label:'Office / Admin / HR',roles:['Office Administrator','HR Assistant','HR Executive','Receptionist','Data Entry Operator','Admin Assistant','Office Coordinator'],summary:'Organised office or HR professional with strengths in coordination, record keeping and supporting everyday team operations. Careful with confidential information and deadlines.',hard:['Scheduling','MS Office','Record management','Recruitment coordination','Email handling','Payroll support'],soft:['Organisation','Discretion','Communication','Follow-through','Multitasking'],bullets:['Coordinated [meetings, records, onboarding or office tasks] and kept information up to date.','Responded to routine staff or visitor requests and directed questions to the appropriate person.']},
- retail_hospitality:{label:'Retail / Hospitality / Restaurant',roles:['Retail Associate','Store Assistant','Cashier','Hotel Front Desk','Restaurant Service Staff','Barista','Housekeeping Associate','Kitchen Assistant'],summary:'Service-focused professional with experience or training in [store, hotel, restaurant or customer service work]. Takes pride in welcoming customers, following procedures and supporting the team during busy periods.',hard:['POS billing','Inventory handling','Cash handling','Reservations','Food hygiene','Order preparation'],soft:['Customer service','Teamwork','Reliability','Calm under pressure','Attention to detail'],bullets:['Helped customers with [product, order or service request] and made sure information was clear and accurate.','Supported daily opening, closing, stock, cleaning or service tasks using the required checklist.']},
- skilled_trades_drivers:{label:'Skilled Trades / Drivers',roles:['Electrician','Plumber','Driver','Delivery Driver','Mechanic','Welder','AC Technician','Machine Operator','Field Technician'],summary:'Practical professional or trainee with skills in [trade, vehicle or equipment]. Values safety, reliability, careful checks and completing work to the required standard.',hard:['Equipment operation','Preventive maintenance','Electrical safety','Vehicle checks','Route planning','Tool handling'],soft:['Reliability','Safety awareness','Punctuality','Problem solving','Customer communication'],bullets:['Completed [repair, delivery, installation or maintenance task] while following the safety checklist.','Checked tools, vehicle or equipment before work and reported faults that needed attention.']},
- creative_freelance:{label:'Creative / Freelance',roles:['Graphic Designer','Photographer','Makeup Artist','Video Editor','Content Writer','Freelancer','Social Media Creator','Event Photographer'],summary:'Creative professional with experience or training in [creative service]. Works to understand briefs, communicate clearly with clients and deliver thoughtful work within agreed timelines.',hard:['Portfolio curation','Client briefs','Photo editing','Design tools','Content writing','Project estimates'],soft:['Creativity','Client communication','Time management','Flexibility','Attention to detail'],bullets:['Created [design, photo set, content or service] for [type of brief or client], based on the agreed requirements.','Coordinated feedback and revisions with the client to deliver work by the agreed deadline.']}
-};
-
 function defaultFormatState(){return{global:{fontFamily:'Inter',fontSize:'10.5',lineSpacing:'1.25',nameSize:26,headingSize:11.5,sectionGap:16,entryGap:12,headingGap:9,bulletGap:4},sections:{}}}
 function formatNumber(v,fallback,min,max,step){var n=parseFloat(v);if(!isFinite(n))n=fallback;if(min!=null)n=Math.max(min,n);if(max!=null)n=Math.min(max,n);if(step){var q=Math.round((n-min)/step);n=min+q*step;}return n}
 function bindFormatAliases(){if(!isRecord(state.format))state.format=defaultFormatState();var g=state.format.global||{};state.format.global=g;var legacyFont=state.font,legacySize=state.fontSize,legacyLine=state.lineSpacing;g.fontFamily=(g.fontFamily||legacyFont||'Inter');g.fontSize=String(g.fontSize!=null?g.fontSize:(legacySize!=null?legacySize:'10.5'));g.lineSpacing=String(g.lineSpacing!=null?g.lineSpacing:(legacyLine!=null?legacyLine:'1.25'));g.nameSize=formatNumber(g.nameSize,26,22,34,.5);g.headingSize=formatNumber(g.headingSize,11.5,10,16,.5);g.sectionGap=formatNumber(g.sectionGap,16,10,24,1);g.entryGap=formatNumber(g.entryGap,12,6,20,1);g.headingGap=formatNumber(g.headingGap,9,6,16,1);g.bulletGap=formatNumber(g.bulletGap,4,2,10,1);state.format.sections=isRecord(state.format.sections)?state.format.sections:{};delete state.font;delete state.fontSize;delete state.lineSpacing;Object.defineProperties(state,{font:{enumerable:false,configurable:true,get:function(){return state.format.global.fontFamily},set:function(v){state.format.global.fontFamily=v}},fontSize:{enumerable:false,configurable:true,get:function(){return state.format.global.fontSize},set:function(v){state.format.global.fontSize=String(v)}},lineSpacing:{enumerable:false,configurable:true,get:function(){return state.format.global.lineSpacing},set:function(v){state.format.global.lineSpacing=String(v)}}});}
@@ -532,80 +380,6 @@ function renderVolunteering(sec){return '<div class="entry-list">'+(sec.items||[
 function renderSectionBody(id,sec){if(id==='header')return renderHeader(sec);if(id==='summary')return renderSummary(sec);if(id==='experience')return renderExperience(sec);if(id==='education')return renderEducation(sec);if(id==='skills')return renderSkills(sec);if(id==='projects')return renderProjects(sec);if(id==='certifications')return simpleArray(sec,'certifications',[['name','Certification'],['issuer','Issuer'],['date','Date','date'],['link','Link','url','https://…']],'Certification','+ Add certification');if(id==='awards')return simpleArray(sec,'awards',[['name','Award'],['issuer','Issuer'],['date','Date','date'],['note','Notes']],'Award','+ Add award');if(id==='languages')return simpleArray(sec,'languages',[['name','Language'],['level','Level']],'Language','+ Add language');if(id==='volunteering')return renderVolunteering(sec);if(id==='publications')return simpleArray(sec,'publications',[['title','Title'],['venue','Venue'],['date','Date','date'],['link','Link','url','https://…']],'Publication','+ Add publication');if(id==='references')return '<div class="form-grid"><label class="check-row"><input type="checkbox" data-path="references.onRequest" '+(sec.onRequest?'checked':'')+'> <span>Show “Available on request”</span></label>'+simpleArray(sec,'references',[['name','Name'],['role','Relationship'],['email','Email'],['phone','Phone']],'Reference','+ Add reference')+'</div>';return renderCustomSection(id)}
 function renderCustomSection(id){var i=Number(id.split('-')[1])-1,x=state.custom[i]||{title:'Custom section',mode:'bullets',content:'',bullets:[],show:true};x.show=x.show!==false;return '<div class="form-grid">'+input('custom.'+i+'.title','Section title',x.title,{})+'<div class="field"><label for="custom-mode-'+i+'">Content type</label><select id="custom-mode-'+i+'" data-path="custom.'+i+'.mode"><option value="bullets" '+(x.mode==='bullets'?'selected':'')+'>Bullet list</option><option value="paragraph" '+(x.mode==='paragraph'?'selected':'')+'>Paragraph</option></select></div>'+(x.mode==='paragraph'?input('custom.'+i+'.content','Paragraph',x.content,{type:'textarea'}):'<div class="field"><strong>Bullets · max 8</strong><div class="bullet-list">'+(x.bullets||[]).map(function(b,j){return '<div class="bullet-row"><textarea data-custom-bullet data-index="'+i+'" data-bullet-index="'+j+'" maxlength="320">'+esc(b)+'</textarea><button class="entry-btn danger" type="button" data-remove-custom-bullet="'+i+'" data-bullet-index="'+j+'">×</button></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-custom-bullet="'+i+'" '+((x.bullets||[]).length>=8?'disabled':'')+'>+ Add bullet</button></div>')+'</div>'}
 
-function currentRoleStarter(){
-  var input=$('#roleSearch'),query=norm(input&&input.value).toLowerCase();
-  if(query){var keys=Object.keys(ROLE_STARTERS);for(var i=0;i<keys.length;i++){var entry=ROLE_STARTERS[keys[i]];if(entry.roles.some(function(role){return role.toLowerCase().indexOf(query)>=0})||entry.label.toLowerCase().indexOf(query)>=0)return entry}}
-  return ROLE_STARTERS[selectedProfessionKey]||null;
-}
-function updateRoleSuggestions(){
-  var input=$('#roleSearch'),category=$('#professionSelect'),matchBox=$('#roleMatchList'),suggestions=$('#roleSuggestions');
-  var query=norm(input&&input.value).toLowerCase(),matches=[];
-  Object.keys(ROLE_STARTERS).forEach(function(key){
-    var item=ROLE_STARTERS[key];
-    item.roles.forEach(function(title){if(!query||title.toLowerCase().indexOf(query)>=0)matches.push({key:key,title:title})});
-    if(query&&item.label.toLowerCase().indexOf(query)>=0&&!item.roles.some(function(title){return title.toLowerCase().indexOf(query)>=0}))matches.push({key:key,title:item.roles[0]});
-  });
-  if(query){matches=matches.filter(function(item){return item.title.toLowerCase().indexOf(query)>=0||ROLE_STARTERS[item.key].label.toLowerCase().indexOf(query)>=0})}
-  else if(selectedProfessionKey){matches=matches.filter(function(item){return item.key===selectedProfessionKey}).slice(0,4)}
-  else matches=[];
-  matches=matches.slice(0,7);
-  if(query&&matches.length)selectedProfessionKey=matches[0].key;
-  if(category)category.value=selectedProfessionKey||'';
-  matchBox.innerHTML=matches.length?matches.map(function(item){return '<button type="button" data-role-key="'+esc(item.key)+'" data-role-title="'+esc(item.title)+'" aria-pressed="'+String(item.key===selectedProfessionKey)+'">'+esc(item.title)+'</button>'}).join(''):'<span class="help">'+(query?'No exact role match. Try a shorter job title or choose a profession area.':'Choose a profession area or type a role to see suggestions.')+'</span>';
-  var starter=currentRoleStarter();
-  if(!starter){suggestions.innerHTML='<p class="help">Choose a profession area or select one of the matching roles above to see skill and achievement ideas.</p>';return}
-  var hardSkills=starter.hard.slice(0,5),softSkills=starter.soft.slice(0,4);
-  suggestions.innerHTML='<div class="suggestion-group"><strong>Role skills · tap to add</strong>'+hardSkills.map(function(skill){return '<button type="button" class="suggestion-chip" data-suggest-skill="'+esc(skill)+'">+ '+esc(skill)+'</button>'}).join('')+'</div><div class="suggestion-group"><strong>People skills · tap to add</strong>'+softSkills.map(function(skill){return '<button type="button" class="suggestion-chip" data-suggest-skill="'+esc(skill)+'">+ '+esc(skill)+'</button>'}).join('')+'</div><div class="suggestion-group"><strong>Achievement ideas · tap to add and edit</strong>'+starter.bullets.slice(0,2).map(function(bullet){return '<button type="button" class="suggestion-chip" data-suggest-bullet="'+esc(bullet)+'">+ '+esc(bullet)+'</button>'}).join('')+'</div>';
-  var ex=$('#roleExampleSummary'),eb=$('#roleExampleBullet');if(ex)ex.textContent=starter.summary;if(eb)eb.textContent=starter.bullets[0];
-}
-function chooseRoleSuggestion(key,title){
-  if(!ROLE_STARTERS[key])return;
-  selectedProfessionKey=key;
-  var category=$('#professionSelect'),input=$('#roleSearch');
-  if(category)category.value=key;if(input)input.value=title||ROLE_STARTERS[key].roles[0];
-  if(guideStarted&&!norm(state.sections.header.headline)){mutate(function(){state.sections.header.headline=input.value},true)}
-  updateRoleSuggestions();
-}
-function addRoleSkill(skill){
-  skill=norm(skill);if(!skill)return;
-  mutate(function(){
-    var section=state.sections.skills;if(!Array.isArray(section.groups))section.groups=[];
-    if(!section.groups.length)section.groups.push({name:'Key skills',items:[]});
-    var group=section.groups[0];if(!Array.isArray(group.items))group.items=[];
-    if(group.items.map(function(v){return norm(v).toLowerCase()}).indexOf(skill.toLowerCase())<0)group.items.push(skill);
-    if(!group.name||group.name==='Skills')group.name='Key skills';
-    openSections.skills=true;
-  },true);
-  updateRoleSuggestions();
-  toast('Added skill: '+skill);
-}
-function addRoleBullet(bullet){
-  bullet=norm(bullet);if(!bullet)return;
-  var starter=currentRoleStarter(),title=norm($('#roleSearch')&&$('#roleSearch').value);
-  mutate(function(){
-    var sec=state.sections.experience;if(!Array.isArray(sec.items))sec.items=[];
-    if(!sec.items.length)sec.items.push({company:'',role:title||(starter&&starter.roles[0])||'',location:'',start:'',end:'',currently:false,bullets:[]});
-    var entry=sec.items[0];if(!Array.isArray(entry.bullets))entry.bullets=[];
-    if(entry.bullets.length<8)entry.bullets.push(bullet);
-    openSections.experience=true;
-  },true);
-  toast('Added a bullet starter — edit it to match your experience');
-}
-function showRoleExample(){
-  var example=$('#roleExample'),status=$('#exampleStatus');
-  if(!currentRoleStarter()){if(status)status.textContent='Choose a profession area first.';return}
-  if(example)example.hidden=false;
-  if(status)status.textContent='This is sample wording, not your personal information. Edit it before downloading.';
-}
-function useRoleExampleSummary(){
-  var starter=currentRoleStarter();if(!starter)return;
-  mutate(function(){state.sections.summary.text=starter.summary;openSections.summary=true},true);
-  if($('#exampleStatus'))$('#exampleStatus').textContent='Example summary added. Replace the bracketed parts with your own details.';
-}
-function useRoleExampleBullet(){
-  var starter=currentRoleStarter();if(!starter)return;
-  addRoleBullet(starter.bullets[0]);
-}
 function wrapSectionActions(){
   $$('#accordion .section-actions').forEach(function(actions){
     if(actions.querySelector('.section-options'))return;
@@ -654,7 +428,7 @@ function syncCompactControls(){$$('[data-template]').forEach(function(b){b.class
 function renderQuietTips(){var host=$('#tipsContent');if(!host)return;var h=state.sections.header||{},all=allResumeText(),m=[];function add(msg,section,field){m.push({msg:msg,section:section,field:field})}if(!norm(h.name))add('Add your full name','header','f-header-name');if(!norm(h.phone))add('Add a phone number','header','f-header-phone');if(!norm(h.email))add('Add an email address','header','f-header-email');if(!norm(state.sections.summary.text))add('Add a short summary','summary','f-summary-text');if(!(state.sections.experience.items||[]).some(function(x){return norm(x.role)||norm(x.company)||(x.bullets||[]).some(function(v){return norm(v)})}))add('Add work experience, or skip if it does not apply','experience','');var bullets=[];(state.sections.experience.items||[]).forEach(function(x){bullets=bullets.concat(x.bullets||[])});(state.sections.projects.items||[]).forEach(function(x){bullets=bullets.concat(x.bullets||[])});if(bullets.some(function(x){return norm(x).length>180}))add('One bullet is very long. Consider shortening it','experience','');if(/\[[^\]]+\]|\b(lorem ipsum|replace this|your full name|sample@example\.com)\b/i.test(all))add('Remove leftover placeholder text','header','');host.innerHTML=m.length?m.map(function(x){return '<div class="tip-row"><span>'+esc(x.msg)+'</span><button type="button" data-tip-section="'+esc(x.section)+'" data-tip-field="'+esc(x.field)+'">Review</button></div>'}).join(''):'<p class="quiet-empty">Looking good so far. Keep adding details that are true for you.</p>'}
 function resumePlaceholderHits(){var t=allResumeText(),h=[];if(/\[[^\]]+\]/.test(t))h.push('bracketed placeholder');if(/\b(lorem ipsum|replace this|your full name|sample@example\.com|sample company|demonstration content only|sample resume)\b/i.test(t))h.push('sample or placeholder text');return h}
 function resumeHasUserContent(){return !!(norm(state.sections.header.name)||norm(state.sections.header.email)||norm(state.sections.header.phone)||norm(state.sections.summary.text)||(state.sections.experience.items||[]).some(function(x){return norm(x.role)||norm(x.company)||(x.bullets||[]).some(function(b){return norm(b)})})||(state.sections.education.items||[]).some(function(x){return norm(x.degree)||norm(x.institution)})||(state.sections.skills.groups||[]).some(function(g){return (g.items||[]).some(function(v){return norm(v)})}))}
-function renderEditor(){var html='',core={header:true,summary:true,experience:true,education:true,skills:true},shown={};state.order.forEach(function(id){var custom=/^custom-\d+$/.test(id),sec=custom?state.custom[Number(id.split('-')[1])-1]:state.sections[id];if(!sec)return;var main=!!core[id],has=sectionHasData(id,sec),added=!!uiAddedSections[id];if(!main&&!has&&!added)return;shown[id]=true;var title=custom?(sec.title||('Custom section '+Number(id.split('-')[1]))):sectionMeta(id),body=custom?renderCustomSection(id):renderSectionBody(id,sec),preview=sectionPreviewText(id,sec),open=openSections[id]===true;html+='<article class="section-card '+(open?'open':'')+'" data-editor-section="'+esc(id)+'"><div class="section-head"><button class="section-main-toggle" type="button" data-open-section="'+esc(id)+'" aria-expanded="'+String(open)+'"><span class="section-label"><strong>'+esc(title)+'</strong><span>'+esc(preview||'Add details')+'</span></span></button><div class="section-actions"><button class="drag-handle" type="button" draggable="true" data-drag-handle="'+esc(id)+'" aria-label="Drag to reorder '+esc(title)+'">⋮⋮</button><button class="entry-btn move-btn" type="button" data-move-section="'+esc(id)+'" data-dir="-1" aria-label="Move up">↑</button><button class="entry-btn move-btn" type="button" data-move-section="'+esc(id)+'" data-dir="1" aria-label="Move down">↓</button><button class="show-toggle '+(sec.show!==false?'on':'')+'" type="button" data-toggle-section="'+esc(id)+'" aria-pressed="'+(sec.show!==false)+'">'+(sec.show!==false?'Show':'Hide')+'</button>'+(custom?'<button class="entry-btn danger" type="button" data-remove-custom-section="'+(Number(id.split('-')[1])-1)+'">Remove</button>':'')+'</div></div><div class="section-body">'+body+'</div></article>'});var optional=[['projects','Projects'],['certifications','Certifications'],['languages','Languages'],['awards','Awards'],['volunteering','Volunteering'],['publications','Publications'],['references','References']];html+='<details class="add-section-picker" id="addSectionPicker"><summary>+ Add section</summary><div class="add-section-options">'+optional.map(function(it){return '<button type="button" data-add-section="'+it[0]+'" '+(shown[it[0]]?'disabled':'')+'>'+it[1]+'</button>'}).join('')+'<button type="button" data-add-section="custom" '+(state.custom.length>=6?'disabled':'')+'>Custom section</button></div></details>';$('#accordion').innerHTML=html;wrapSectionActions();autoGrowTextareas($('#accordion'));syncCompactControls();renderQuietTips()}
+function renderEditor(){var openFound=false;Object.keys(openSections).forEach(function(k){if(openSections[k]===true&&!openFound)openFound=true;else openSections[k]=false});if(!openFound)openSections.header=true;var html='',core={header:true,summary:true,experience:true,education:true,skills:true},shown={};state.order.forEach(function(id){var custom=/^custom-\d+$/.test(id),sec=custom?state.custom[Number(id.split('-')[1])-1]:state.sections[id];if(!sec)return;var main=!!core[id],has=sectionHasData(id,sec),added=!!uiAddedSections[id];if(!main&&!has&&!added)return;shown[id]=true;var title=custom?(sec.title||('Custom section '+Number(id.split('-')[1]))):sectionMeta(id),body=custom?renderCustomSection(id):renderSectionBody(id,sec),preview=sectionPreviewText(id,sec),open=openSections[id]===true;html+='<article class="section-card '+(open?'open':'')+'" data-editor-section="'+esc(id)+'"><div class="section-head"><button class="section-main-toggle" type="button" data-open-section="'+esc(id)+'" aria-expanded="'+String(open)+'"><span class="section-label"><strong>'+esc(title)+'</strong><span>'+esc(preview||'Add details')+'</span></span></button><div class="section-actions"><button class="drag-handle" type="button" draggable="true" data-drag-handle="'+esc(id)+'" aria-label="Drag to reorder '+esc(title)+'">⋮⋮</button><button class="entry-btn move-btn" type="button" data-move-section="'+esc(id)+'" data-dir="-1" aria-label="Move up">↑</button><button class="entry-btn move-btn" type="button" data-move-section="'+esc(id)+'" data-dir="1" aria-label="Move down">↓</button><button class="show-toggle '+(sec.show!==false?'on':'')+'" type="button" data-toggle-section="'+esc(id)+'" aria-pressed="'+(sec.show!==false)+'">'+(sec.show!==false?'Show':'Hide')+'</button>'+(custom?'<button class="entry-btn danger" type="button" data-remove-custom-section="'+(Number(id.split('-')[1])-1)+'">Remove</button>':'')+'</div></div><div class="section-body">'+body+'</div></article>'});var optional=[['projects','Projects'],['certifications','Certifications'],['languages','Languages'],['awards','Awards'],['volunteering','Volunteering'],['publications','Publications'],['references','References']];html+='<details class="add-section-picker" id="addSectionPicker"><summary>+ Add section</summary><div class="add-section-options">'+optional.map(function(it){return '<button type="button" data-add-section="'+it[0]+'" '+(shown[it[0]]?'disabled':'')+'>'+it[1]+'</button>'}).join('')+'<button type="button" data-add-section="custom" '+(state.custom.length>=6?'disabled':'')+'>Custom section</button></div></details>';$('#accordion').innerHTML=html;wrapSectionActions();autoGrowTextareas($('#accordion'));syncCompactControls();renderQuietTips()}
 
 function validateDateOrder(kind,index){var item=state.sections[kind]&&state.sections[kind].items&&state.sections[kind].items[index],error='';if(!item)return true;var start=norm(item.start),end=(item.currently||item.ongoing)?'':norm(item.end);if(start&&!dateIsValid(start))error='Start date is not a real calendar date.';else if(end&&!dateIsValid(end))error='End date is not a real calendar date.';else if(start&&end&&dateCompare(start,end)>0)error='End date cannot be before Start date.';var el=$('#'+kind+'-'+index+'-date-error');if(el){el.textContent=error;el.classList.toggle('show',!!error)}return !error}
 function validateSingleDatePath(path){var m=String(path).match(/^(certifications|awards|publications)\.(\d+)\.date$/);if(!m)return true;var v=state.sections[m[1]].items[Number(m[2])].date,el=$('[data-date-error="'+CSS.escape(path)+'"]');var error=v&&!dateIsValid(v)?'Date is not a real calendar date.':'';if(el){el.textContent=error;el.classList.toggle('show',!!error)}return !error}
