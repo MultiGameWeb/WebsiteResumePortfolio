@@ -222,64 +222,16 @@ var FONTS={
 var FONT_SIZE_DEFAULT=10.5;
 var SECTION_LABELS={header:'Header',summary:'Summary',experience:'Experience',education:'Education',skills:'Skills',projects:'Projects',certifications:'Certifications',awards:'Awards',languages:'Languages',volunteering:'Volunteering',publications:'Publications',references:'References'};
 
+function makeNeutralDemo(label){
+  var empty=blankResumeState();
+  empty.preset=label;
+  return {headline:label,preset:label,order:clone(empty.order),sections:clone(empty.sections)};
+}
 var DEMOS={
-  Fresher:{
-    headline:'Student / Software Developer',
-    preset:'Fresher',
-    order:['header','summary','education','projects','skills','experience','certifications','awards','languages','volunteering','publications','references'],
-    sections:{
-      header:{show:true,name:'Aarav Reddy',headline:'Computer Science Graduate',email:'aarav@example.com',phone:'+91 98765 43210',location:'Hyderabad, India',linkedin:'https://linkedin.com/in/aarav-reddy',github:'https://github.com/aarav-reddy',website:'https://example.com',customLinks:[],photo:''},
-      summary:{show:true,text:'Computer Science graduate building practical web applications with JavaScript, TypeScript and cloud services. Strong foundation in problem solving, collaboration and fast learning.',max:700},
-      experience:{show:true,items:[{company:'Campus Lab',role:'Student Developer',location:'Hyderabad, India',start:'Jun 2025',end:'Present',bullets:['Built a campus events portal used by 300+ students, reducing manual event updates by 60%.','Automated weekly attendance reporting with JavaScript and spreadsheets, saving 4 hours per week.']}]},
-      education:{show:true,items:[{institution:'ABC Institute of Technology',degree:'B.Tech',field:'Computer Science',start:'2022',end:'2026',score:'8.7/10',notes:'Relevant coursework: data structures, databases, web engineering.'}]},
-      skills:{show:true,groups:[{name:'Languages',items:['JavaScript','TypeScript','Python']},{name:'Web',items:['HTML','CSS','React','Node.js']},{name:'Tools',items:['Git','Firebase','Cloudflare']}],tags:[]},
-      projects:{show:true,items:[{name:'CampusConnect',link:'https://example.com',tech:['React','Firebase'],bullets:['Designed a responsive event discovery flow for student clubs.','Added search, RSVP and admin publishing tools.']},{name:'StudyFlow',link:'https://example.com',tech:['JavaScript','CSS'],bullets:['Created a lightweight study planner with local in-memory editing.','Improved mobile usability with keyboard-accessible controls.']}]},
-      certifications:{show:true,items:[{name:'Google UX Design',issuer:'Google',date:'2025',link:'https://example.com'}]},
-      awards:{show:false,items:[]},languages:{show:false,items:[]},volunteering:{show:false,items:[]},publications:{show:false,items:[]},
-      references:{show:true,onRequest:false,items:[]}
-    }
-  },
-  Experienced:{
-    headline:'Product Manager',
-    preset:'Experienced',
-    order:['header','summary','experience','skills','projects','education','certifications','awards','languages','volunteering','publications','references'],
-    sections:{
-      header:{show:true,name:'Arjun Mehta',headline:'Product Manager',email:'arjun@example.com',phone:'+91 90000 11111',location:'Bengaluru, India',linkedin:'https://linkedin.com/in/arjun-mehta',github:'',website:'https://example.com',customLinks:[],photo:''},
-      summary:{show:true,text:'Product manager with 6+ years of experience turning customer insight into measurable growth. Comfortable leading discovery, roadmaps and cross-functional launches across B2B SaaS and consumer workflows.',max:700},
-      experience:{show:true,items:[
-        {company:'Northstar Labs',role:'Senior Product Manager',location:'Bengaluru, India',start:'2023',end:'Present',bullets:['Owned roadmap for a multi-market SaaS product serving 50k+ monthly users, increasing activation by 18%.','Led discovery with 40+ customer interviews and shipped experiments that improved trial-to-paid conversion by 11%.','Partnered with design and engineering to reduce onboarding time from 12 minutes to 7 minutes.']},
-        {company:'Orbit Digital',role:'Product Manager',location:'Bengaluru, India',start:'2020',end:'2023',bullets:['Launched 12 customer-facing releases across web and mobile, coordinating design, engineering and GTM.','Built a KPI framework that cut weekly reporting effort by 6 hours and improved decision speed.']}
-      ]},
-      education:{show:true,items:[{institution:'Indian School of Business',degree:'PGP',field:'Management',start:'2018',end:'2020',score:'Top 15%',notes:''}]},
-      skills:{show:true,groups:[{name:'Product',items:['Product Strategy','Discovery','Roadmapping','Experimentation']},{name:'Analytics',items:['SQL','Amplitude','GA4','A/B Testing']},{name:'Leadership',items:['Stakeholder Management','Mentoring','GTM']}],tags:[]},
-      projects:{show:true,items:[{name:'Growth Dashboard',link:'https://example.com',tech:['Strategy','Analytics','SQL'],bullets:['Reframed fragmented reporting into a leadership dashboard with clear weekly decisions.']}]},
-      certifications:{show:true,items:[{name:'Product Analytics',issuer:'Example Academy',date:'2024',link:'https://example.com'}]},
-      awards:{show:true,items:[{name:'Impact Award',issuer:'Northstar Labs',date:'2025',note:'Recognized for measurable onboarding improvements.'}]},
-      languages:{show:true,items:[{name:'English',level:'Fluent'},{name:'Hindi',level:'Fluent'},{name:'Telugu',level:'Native'}]},
-      volunteering:{show:false,items:[]},publications:{show:false,items:[]},
-      references:{show:true,onRequest:false,items:[]}
-    }
-  },
-  'Career change':{
-    headline:'Operations Specialist → Product Operations',
-    preset:'Career change',
-    order:['header','summary','skills','experience','projects','education','certifications','awards','languages','volunteering','publications','references'],
-    sections:{
-      header:{show:true,name:'Neha Kapoor',headline:'Product Operations | Customer Experience',email:'neha@example.com',phone:'+91 88888 22222',location:'Pune, India',linkedin:'https://linkedin.com/in/neha-kapoor',github:'',website:'',customLinks:[],photo:''},
-      summary:{show:true,text:'Operations specialist transitioning into product operations, bringing 5 years of customer-facing process improvement, stakeholder coordination and data-informed decision making. Built repeatable systems that improved turnaround time and service quality.',max:700},
-      experience:{show:true,items:[
-        {company:'ServiceWorks',role:'Operations Lead',location:'Pune, India',start:'2021',end:'Present',bullets:['Redesigned intake workflows for 3 teams, reducing average turnaround time by 28%.','Built weekly dashboards and facilitated cross-functional reviews for 15+ stakeholders.']},
-        {company:'ClientFirst',role:'Customer Success Specialist',location:'Pune, India',start:'2019',end:'2021',bullets:['Improved renewal outreach process and raised response rates by 22%.','Partnered with product and support to turn recurring customer issues into prioritized improvement requests.']}
-      ]},
-      education:{show:true,items:[{institution:'University of Pune',degree:'B.Com',field:'Business Administration',start:'2016',end:'2019',score:'8.2/10',notes:''}]},
-      skills:{show:true,groups:[{name:'Product Ops',items:['Process Design','Prioritization','Stakeholder Management']},{name:'Analytics',items:['Excel','SQL Basics','Dashboards']},{name:'Customer',items:['Journey Mapping','VOC','Escalation Management']}],tags:[]},
-      projects:{show:true,items:[{name:'Support Insights',link:'https://example.com',tech:['SQL','Dashboards'],bullets:['Built a recurring issue taxonomy that helped product teams identify the highest-impact workflow gaps.']}]},
-      certifications:{show:false,items:[]},awards:{show:false,items:[]},languages:{show:true,items:[{name:'English',level:'Fluent'},{name:'Hindi',level:'Native'}]},volunteering:{show:false,items:[]},publications:{show:false,items:[]},
-      references:{show:true,onRequest:false,items:[]}
-    }
-  }
+  Fresher:makeNeutralDemo('Fresher'),
+  Experienced:makeNeutralDemo('Experienced'),
+  'Career change':makeNeutralDemo('Career change')
 };
-
 var state=blankResumeState();
 var history=[],future=[],typingGroup=null,typingTimer=null,previewRenderTimer=null,dirty=false,leaveTarget='',dragSection='',pendingReplacement=null,autosaveTimer=null,autosaveReady=false,restoreInProgress=true,savedDbName='sitecraft-resume',savedDbVersion=1,savedDbKey='current',openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
 var currentPages=1,selectedFormatSection='';
@@ -480,7 +432,7 @@ function blankResumeState(){
   empty.publications={show:true,items:[]};
   empty.references={show:true,onRequest:false,items:[]};
   return{
-    version:1,paper:'A4',template:'modern',goal:'one',margin:'normal',font:'Inter',fontSize:'10.5',lineSpacing:'1.25',
+    version:1,paper:'A4',template:'classic',goal:'one',margin:'normal',font:'Inter',fontSize:'10.5',lineSpacing:'1.25',
     format:defaultFormatState(),
     accent:'#334155',divider:'rule',dateFormat:'MMM YYYY',icons:true,photoEnabled:false,preset:'Empty',
     order:Object.keys(SECTION_LABELS),sections:empty,custom:[]
@@ -810,7 +762,7 @@ function normalizeResumeState(x){
   });
   var allowedPaper=['A4','Letter'],allowedTemplate=['classic','modern','compact','sidebar'],allowedGoal=['one','two'],allowedMargin=['narrow','normal','wide'],allowedFont=['Inter','Source Serif','Lato','Merriweather'],allowedDate=['MMM YYYY','MM/YYYY','YYYY','Mon YY'],allowedDivider=['rule','bold','none','box'];
   out.paper=allowedPaper.indexOf(out.paper)>=0?out.paper:'A4';
-  out.template=allowedTemplate.indexOf(out.template)>=0?out.template:'modern';
+  out.template=allowedTemplate.indexOf(out.template)>=0?out.template:'classic';
   out.goal=allowedGoal.indexOf(out.goal)>=0?out.goal:'one';
   out.margin=allowedMargin.indexOf(out.margin)>=0?out.margin:'normal';
   out.font=allowedFont.indexOf(out.font)>=0?out.font:'Inter';
