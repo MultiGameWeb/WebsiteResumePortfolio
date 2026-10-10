@@ -162,6 +162,13 @@ body.design-mode #editor .template-design-row,body.design-mode #editor .editor-q
 body.edit-mode #editor .design-panel{display:none!important}
 @media(max-width:899px){#editor input,#editor select,#editor textarea{font-size:16px!important;max-width:100%}}
 
+
+.section-actions{position:relative}
+.section-options[open]{position:absolute!important;right:0;top:100%;min-width:130px;padding:3px;background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 8px 24px #1112;z-index:80}
+.section-options[open]>summary{display:none}
+.section-options[open] button{min-height:31px!important;width:100%;padding:5px 8px!important;border:0!important;border-radius:6px!important;background:#fff!important;text-align:left!important;font-size:11px!important;white-space:nowrap}
+.section-options[open] button:hover{background:#f2f4f7!important}
+
 </style>
 
 </head>
@@ -177,7 +184,7 @@ body.edit-mode #editor .design-panel{display:none!important}
 <button type="button" class="quick-template" data-template="compact"><span class="mini-paper compact-mini"><i></i><b></b><em></em></span><span>Compact</span></button>
 <button type="button" class="quick-template" data-template="sidebar"><span class="mini-paper sidebar-mini"><i></i><b></b><em></em></span><span>Sidebar</span></button></div><button type="button" id="quickDesignBtn" class="design-open-btn">Design</button></div>
 <div class="editor-quiet-actions"><button type="button" class="quiet-link" id="tipsBtn" aria-controls="tipsPanel" aria-expanded="false">Tips</button><button type="button" class="quiet-link" id="sampleResumeBtn">Fill with a sample resume</button><button type="button" class="quiet-link" id="clearResumeBtn">Clear all</button></div>
-<details id="tipsPanel" class="tips-panel"><summary>Tips</summary><div id="tipsContent" class="tips-content"><p class="quiet-empty">Helpful checks will appear here as you edit.</p></div></details>
+<details id="tipsPanel" class="tips-panel"><summary>Resume checks</summary><div id="tipsContent" class="tips-content"><p class="quiet-empty">Helpful checks will appear here as you edit.</p></div></details>
 <section class="design-panel" id="designPanel" aria-label="Resume design settings" hidden>
 <div class="compact-design-header"><strong>Design</strong><button id="closeDesignBtn" type="button" aria-label="Close design">×</button></div>
 <div class="compact-design-content">
@@ -743,6 +750,7 @@ function renderPreview(){
   var title=(norm(state.sections.header.name)||'Resume Builder')+' - Resume';document.title=title;
   buildPrintHintStyle();
   updatePageCounter();
+  renderQuietTips();syncCompactControls();
 }
 function applyPreviewSelection(){var els=$$('[data-preview-section]');els.forEach(function(el){el.classList.toggle('format-selected',!!selectedFormatSection&&el.dataset.previewSection===selectedFormatSection)})}
 function formatScopeName(id){if(!id)return'All resume';if(id==='header')return'Header';if(/^custom-\d+$/.test(id)){var c=state.custom[Number(id.split('-')[1])-1];return c&&c.title?c.title:'Custom section'}return sectionMeta(id)}
