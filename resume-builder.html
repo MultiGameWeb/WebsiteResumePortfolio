@@ -198,6 +198,17 @@ body.edit-mode #editor .design-panel{display:none!important}
 .quick-template.active,.theme-card.active{border:2px solid #4f46e5!important;border-color:#4f46e5!important;box-shadow:0 0 0 2px #4f46e526,0 5px 12px #27245a1f!important;transform:translateY(-1px)}
 .quick-template.active:after,.theme-card.active:after{content:"✓";position:absolute;top:2px;right:2px;z-index:2;width:17px;height:17px;display:grid;place-items:center;border-radius:50%;background:#4f46e5;color:#fff;font-size:11px;line-height:1;font-weight:950;box-shadow:0 1px 3px #1113}
 .quick-template.active>span:last-child,.theme-card.active strong{font-weight:950;color:#3730a3}
+
+/* Single data-driven template dropdown */
+.template-design-row{grid-template-columns:minmax(0,1fr) auto!important;gap:8px!important}
+.template-picker{position:relative;min-width:0;z-index:90}
+.template-picker-trigger{display:flex;align-items:center;gap:8px;width:100%;min-width:0;min-height:38px;padding:5px 10px;border:1px solid #9ca3af;border-radius:10px;background:#fff;color:var(--text);font-size:12px;font-weight:850;text-align:left;cursor:pointer}
+.template-picker-trigger:focus-visible{outline:3px solid #818cf8;outline-offset:2px}.template-picker-current-name{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.template-picker-chevron{color:var(--muted);font-size:14px}
+.template-mini-icon{position:relative;display:grid;align-content:start;gap:3px;flex:0 0 auto;width:23px;height:30px;padding:4px;border:1px solid #cbd5e1;border-radius:3px;background:#fff;box-shadow:0 1px 2px #0001}.template-mini-icon i,.template-mini-icon b,.template-mini-icon em{display:block;height:2px;border-radius:2px;background:#94a3b8}.template-mini-icon i{width:78%;height:3px;background:#475569}.template-mini-icon b{width:100%;opacity:.8}.template-mini-icon em{width:70%;opacity:.6}.template-icon-modern i{height:4px;background:#7c3aed}.template-icon-compact{gap:2px;padding:3px}.template-icon-compact i,.template-icon-compact b,.template-icon-compact em{height:2px}.template-icon-sidebar:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;border-radius:2px 0 0 2px;background:#dbeafe}.template-icon-sidebar i{margin-left:5px}
+.template-picker-menu{position:absolute;top:calc(100% + 6px);left:0;width:min(430px,calc(100vw - 30px));max-height:min(65vh,460px);overflow:auto;padding:7px;border:1px solid #cbd5e1;border-radius:14px;background:#fff;box-shadow:0 18px 50px #1113;z-index:300;overscroll-behavior:contain}.template-picker-menu[hidden]{display:none!important}.template-picker-group+.template-picker-group{margin-top:7px;padding-top:7px;border-top:1px solid #e5e7eb}.template-picker-group-title{padding:4px 7px 6px;color:#64748b;font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.template-option{display:flex;align-items:center;gap:10px;width:100%;min-height:52px;padding:7px 8px;border:1px solid transparent;border-radius:9px;background:#fff;color:var(--text);text-align:left;cursor:pointer}.template-option:hover,.template-option:focus-visible{background:#f8fafc;border-color:#cbd5e1;outline:none}.template-option.active{border-color:#4f46e5;background:#eef2ff;box-shadow:inset 0 0 0 1px #4f46e5}.template-option-copy{display:grid;gap:3px;min-width:0;flex:1}.template-option-copy strong{font-size:12px;font-weight:900}.template-option-copy small{font-size:11px;line-height:1.35;color:#64748b;white-space:normal}.template-option-check{width:20px;flex:0 0 20px;color:#4338ca;font-size:15px;font-weight:950;text-align:center}
+/* The design drawer tracks the editor column, not a fixed 410px width. */
+#editor .design-panel{left:0!important;right:0!important;width:100%!important;max-width:none!important;box-sizing:border-box!important}
+@container (min-width:620px){#editor .design-panel .compact-design-content{grid-template-columns:repeat(2,minmax(0,1fr))}#editor .design-panel .compact-design-header{grid-column:1/-1}#editor .design-panel .compact-design-grid,#editor .design-panel .paper-color-block,#editor .design-panel .compact-toggles,#editor .design-panel .design-more-options{grid-column:1/-1}#editor .design-panel .compact-design-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 
 </head>
@@ -207,18 +218,19 @@ body.edit-mode #editor .design-panel{display:none!important}
 <div class="mobile-tabs" id="mobileTabs" role="tablist" aria-label="Resume workspace"><button id="mobileEditTab" class="active" type="button" role="tab" aria-selected="true">Edit</button><button id="mobilePreviewTab" type="button" role="tab" aria-selected="false">Preview</button></div>
 <aside class="editor" id="editor" aria-label="Resume editor">
 <div class="editor-mode-tabs" role="tablist" aria-label="Resume workspace"><button id="editModeBtn" type="button" role="tab" class="active" aria-selected="true">Build resume</button><button id="designModeBtn" type="button" role="tab" aria-selected="false">Design</button></div>
-<div class="template-design-row"><span class="template-row-label">Template</span><div class="quick-template-strip">
-<button type="button" class="quick-template" data-template="classic"><span class="mini-paper"><i></i><b></b><em></em></span><span>Classic</span></button>
-<button type="button" class="quick-template" data-template="modern"><span class="mini-paper modern-mini"><i></i><b></b><em></em></span><span>Modern</span></button>
-<button type="button" class="quick-template" data-template="compact"><span class="mini-paper compact-mini"><i></i><b></b><em></em></span><span>Compact</span></button>
-<button type="button" class="quick-template" data-template="sidebar"><span class="mini-paper sidebar-mini"><i></i><b></b><em></em></span><span>Sidebar</span></button></div><button type="button" id="quickDesignBtn" class="design-open-btn">Design</button></div>
+<div class="template-design-row">
+<div class="template-picker" id="templatePicker">
+<button type="button" class="template-picker-trigger" id="templatePickerTrigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="templatePickerMenu" aria-label="Resume template"><span class="template-picker-current-icon" id="templatePickerIcon" aria-hidden="true"></span><span class="template-picker-current-name" id="templatePickerName">Classic ATS</span><span class="template-picker-chevron" aria-hidden="true">▾</span></button>
+<div class="template-picker-menu" id="templatePickerMenu" role="listbox" aria-label="Choose resume template" hidden></div>
+</div>
+<button type="button" id="quickDesignBtn" class="design-open-btn">Design</button>
+</div>
 <div class="editor-quiet-actions"><button type="button" class="quiet-link" id="tipsBtn" aria-controls="tipsPanel" aria-expanded="false">Tips</button><button type="button" class="quiet-link" id="sampleResumeBtn">Fill with sample</button><button type="button" class="quiet-link" id="clearResumeBtn">Clear all</button></div>
 <details id="tipsPanel" class="tips-panel"><summary>Resume checks</summary><div id="tipsContent" class="tips-content"><p class="quiet-empty">Helpful checks will appear here as you edit.</p></div></details>
 <section class="design-panel" id="designPanel" aria-label="Resume design settings" hidden>
 <div class="compact-design-header"><strong>Design</strong><button id="closeDesignBtn" type="button" aria-label="Close design">×</button></div>
 <div class="compact-design-content">
-<div class="compact-design-block"><label>Template</label><div class="compact-template-strip" id="themeStrip">
-<button class="theme-card" data-template="classic" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Classic</strong></button><button class="theme-card" data-template="modern" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Modern</strong></button><button class="theme-card" data-template="compact" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Compact</strong></button><button class="theme-card" data-template="sidebar" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Sidebar</strong></button></div></div>
+
 <div class="compact-design-block"><label>Accent colour</label><div class="compact-accent-row"><input id="accentPicker" type="color" value="#334155" aria-label="Accent colour"><div id="accentSwatches" class="compact-swatches"></div></div></div>
 <div class="compact-design-grid">
 <label>Font<select id="fontSelect"><option>Inter</option><option>Source Serif</option><option>Lato</option><option>Merriweather</option></select></label>
@@ -318,6 +330,14 @@ var FONTS={
   'Merriweather':'Merriweather,Georgia,serif'
 };
 var FONT_SIZE_DEFAULT=10.5;
+var TEMPLATES=[
+ {id:'classic',name:'Classic ATS',group:'ATS-friendly',description:'Clean single-column layout for applicant tracking systems.',iconClass:'template-icon-classic'},
+ {id:'compact',name:'Compact',group:'ATS-friendly',description:'Space-saving layout for a concise one-page resume.',iconClass:'template-icon-compact'},
+ {id:'modern',name:'Modern',group:'Designed',description:'Contemporary headings with a confident accent colour.',iconClass:'template-icon-modern'},
+ {id:'sidebar',name:'Sidebar',group:'Designed',description:'Two-column layout with skills in a dedicated side column.',iconClass:'template-icon-sidebar'}
+];
+function templateById(id){return TEMPLATES.find(function(t){return t.id===id})||null}
+function isKnownTemplate(id){return !!templateById(id)}
 var SECTION_LABELS={header:'Personal details',summary:'Summary',experience:'Experience',education:'Education',skills:'Skills',projects:'Projects',certifications:'Certifications',awards:'Awards',languages:'Languages',volunteering:'Volunteering',publications:'Publications',references:'References'};
 
 function makeNeutralDemo(label){
@@ -474,7 +494,7 @@ function autoGrowTextareas(root){
 function collectSectionText(value,out){out=out||[];if(typeof value==='string'){var v=norm(value);if(v)out.push(v)}else if(Array.isArray(value))value.forEach(function(x){collectSectionText(x,out)});else if(value&&typeof value==='object')Object.keys(value).forEach(function(k){if(!/^(show|max|currently|ongoing|onRequest|photo|mode|preset|tags)$/i.test(k))collectSectionText(value[k],out)});return out}
 function sectionPreviewText(id,sec){if(!sec)return '';if(id==='header')return [sec.name,sec.headline,sec.email,sec.phone,sec.location].map(norm).filter(Boolean).join(' · ');if(id==='summary')return norm(sec.text);if(id==='experience')return (sec.items||[]).map(function(x){return [x.role,x.company,(x.bullets||[]).filter(Boolean)[0]].map(norm).filter(Boolean).join(' · ')}).filter(Boolean).join(' | ');if(id==='education')return (sec.items||[]).map(function(x){return [x.degree,x.institution,x.end].map(norm).filter(Boolean).join(' · ')}).filter(Boolean).join(' | ');if(id==='skills')return (sec.groups||[]).reduce(function(a,g){return a.concat(g.items||[])},[]).map(norm).filter(Boolean).join(', ');if(/^custom-\d+$/.test(id)){var c=state.custom[Number(id.split('-')[1])-1];return c?([c.content].concat(c.bullets||[]).map(norm).filter(Boolean).join(' · ')):''}return collectSectionText(sec,[]).join(' · ')}
 function sectionHasData(id,sec){return !!sectionPreviewText(id,sec)}
-function syncCompactControls(){$('[data-template]').forEach(function(b){var selected=b.dataset.template===state.template;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected))});$('[data-setting-key]').forEach(function(b){var k=b.dataset.settingKey,v=b.dataset.settingValue,now=k==='lineSpacing'?String(state.lineSpacing):String(state[k]);b.classList.toggle('active',v===now);b.setAttribute('aria-pressed',String(v===now))});$('[data-divider-value]').forEach(function(b){var a=b.dataset.dividerValue===state.divider;b.classList.toggle('active',a);b.setAttribute('aria-pressed',String(a))});$('[data-paper-color]').forEach(function(b){var active=b.dataset.paperColor===(state.paperColor||'white');b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});var p=$('#photoToggle'),ic=$('#iconsToggle');if(p){p.setAttribute('aria-pressed',String(!!state.photoEnabled));p.textContent='Show photo'}if(ic){ic.setAttribute('aria-pressed',String(!!state.icons));ic.textContent='Show icons'}}
+function syncCompactControls(){renderTemplatePicker();$('[data-setting-key]').forEach(function(b){var k=b.dataset.settingKey,v=b.dataset.settingValue,now=k==='lineSpacing'?String(state.lineSpacing):String(state[k]);b.classList.toggle('active',v===now);b.setAttribute('aria-pressed',String(v===now))});$('[data-divider-value]').forEach(function(b){var a=b.dataset.dividerValue===state.divider;b.classList.toggle('active',a);b.setAttribute('aria-pressed',String(a))});$('[data-paper-color]').forEach(function(b){var active=b.dataset.paperColor===(state.paperColor||'white');b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});var p=$('#photoToggle'),ic=$('#iconsToggle');if(p){p.setAttribute('aria-pressed',String(!!state.photoEnabled));p.textContent='Show photo'}if(ic){ic.setAttribute('aria-pressed',String(!!state.icons));ic.textContent='Show icons'}}
 function renderQuietTips(){var host=$('#tipsContent');if(!host)return;var h=state.sections.header||{},all=allResumeText(),m=[];function add(msg,section,field){m.push({msg:msg,section:section,field:field})}if(!norm(h.name))add('Add your full name','header','f-header-name');if(!norm(h.phone))add('Add a phone number','header','f-header-phone');if(!norm(h.email))add('Add an email address','header','f-header-email');if(!norm(state.sections.summary.text))add('Add a short summary','summary','f-summary-text');if(!(state.sections.experience.items||[]).some(function(x){return norm(x.role)||norm(x.company)||(x.bullets||[]).some(function(v){return norm(v)})}))add('Add work experience, or skip if it does not apply','experience','');var bullets=[];(state.sections.experience.items||[]).forEach(function(x){bullets=bullets.concat(x.bullets||[])});(state.sections.projects.items||[]).forEach(function(x){bullets=bullets.concat(x.bullets||[])});if(bullets.some(function(x){return norm(x).length>180}))add('One bullet is very long. Consider shortening it','experience','');if(/\[[^\]]+\]|\b(lorem ipsum|replace this|your full name|sample@example\.com)\b/i.test(all))add('Remove leftover placeholder text','header','');host.innerHTML=m.length?m.map(function(x){return '<div class="tip-row"><span>'+esc(x.msg)+'</span><button type="button" data-tip-section="'+esc(x.section)+'" data-tip-field="'+esc(x.field)+'">Review</button></div>'}).join(''):'<p class="quiet-empty">Looking good so far. Keep adding details that are true for you.</p>'}
 function resumePlaceholderHits(){var t=allResumeText(),h=[];if(/\[[^\]]+\]/.test(t))h.push('bracketed placeholder');if(/\b(lorem ipsum|replace this|your full name|sample@example\.com|sample company|demonstration content only|sample resume)\b/i.test(t))h.push('sample or placeholder text');return h}
 function resumeHasUserContent(){return !!(norm(state.sections.header.name)||norm(state.sections.header.email)||norm(state.sections.header.phone)||norm(state.sections.summary.text)||(state.sections.experience.items||[]).some(function(x){return norm(x.role)||norm(x.company)||(x.bullets||[]).some(function(b){return norm(b)})})||(state.sections.education.items||[]).some(function(x){return norm(x.degree)||norm(x.institution)})||(state.sections.skills.groups||[]).some(function(g){return (g.items||[]).some(function(v){return norm(v)})}))}
@@ -544,7 +564,26 @@ function exportStateClone(){
   delete out._editor;
   return out;
 }
-function renderTopTheme(){$('[data-template]').forEach(function(b){var selected=b.dataset.template===state.template;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected))});var active=$('[data-template="'+CSS.escape(state.template)+'"]');if(active)active.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'nearest',inline:'center'})}
+function renderTopTheme(){renderTemplatePicker()}
+function templateIconHtml(t){return '<span class="template-mini-icon '+esc(t.iconClass)+'" aria-hidden="true"><i></i><b></b><em></em></span>'}
+function renderTemplatePicker(){
+ var picker=$('#templatePicker'),trigger=$('#templatePickerTrigger'),menu=$('#templatePickerMenu'),label=$('#templatePickerName'),icon=$('#templatePickerIcon');if(!picker||!trigger||!menu)return;
+ var selected=templateById(state.template)||templateById('classic');
+ if(label)label.textContent=selected.name;if(icon)icon.innerHTML=templateIconHtml(selected);
+ menu.innerHTML=['ATS-friendly','Designed'].map(function(group){var list=TEMPLATES.filter(function(t){return t.group===group});return list.length?'<div class="template-picker-group" role="group" aria-label="'+esc(group)+'"><div class="template-picker-group-title">'+esc(group)+'</div>'+list.map(function(t){var active=t.id===selected.id;return '<button type="button" class="template-option'+(active?' active':'')+'" role="option" data-template-option="'+esc(t.id)+'" aria-selected="'+String(active)+'">'+templateIconHtml(t)+'<span class="template-option-copy"><strong>'+esc(t.name)+'</strong><small>'+esc(t.description)+'</small></span><span class="template-option-check" aria-hidden="true">'+(active?'✓':'')+'</span></button>'}).join('')+'</div>':''}).join('');
+ trigger.setAttribute('aria-label','Resume template: '+selected.name);trigger.title='Selected template: '+selected.name;
+}
+function setupTemplatePicker(){
+ var picker=$('#templatePicker'),trigger=$('#templatePickerTrigger'),menu=$('#templatePickerMenu');if(!picker||!trigger||!menu)return;
+ function close(restoreFocus){menu.hidden=true;trigger.setAttribute('aria-expanded','false');if(restoreFocus)trigger.focus()}
+ function open(){renderTemplatePicker();menu.hidden=false;trigger.setAttribute('aria-expanded','true');var selected=menu.querySelector('[data-template-option="'+CSS.escape(state.template)+'"]')||menu.querySelector('[data-template-option]');if(selected)selected.focus()}
+ trigger.addEventListener('click',function(){if(menu.hidden)open();else close(false)});
+ trigger.addEventListener('keydown',function(e){if(['ArrowDown','ArrowUp','Enter',' '].indexOf(e.key)>=0){e.preventDefault();open()}});
+ menu.addEventListener('click',function(e){var option=e.target.closest('[data-template-option]');if(!option)return;var id=option.dataset.templateOption;if(!isKnownTemplate(id))id='classic';close(false);applySetting('template',id);trigger.focus()});
+ menu.addEventListener('keydown',function(e){var items=Array.prototype.slice.call(menu.querySelectorAll('[data-template-option]')),index=items.indexOf(document.activeElement),next=index;if(e.key==='Escape'){e.preventDefault();close(true);return}if(e.key==='ArrowDown')next=(index+1)%items.length;else if(e.key==='ArrowUp')next=(index-1+items.length)%items.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=items.length-1;else return;e.preventDefault();if(items[next])items[next].focus()});
+ document.addEventListener('click',function(e){if(!picker.contains(e.target)&&!menu.hidden)close(false)});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!menu.hidden)close(true)});
+}
 function updateTopControls(){applyTemplateConstraints();document.body.dataset.resumeTemplate=state.template;renderTopTheme();$('#paperSelect').value=state.paper;$('#goalSelect').value=state.goal;$('#marginSelect').value=state.margin;$('#fontSelect').value=state.font;$('#fontSizeSelect').value=state.fontSize;$('#lineSelect').value=state.lineSpacing;$('#dateSelect').value=state.dateFormat;renderFormatToolbar();$('#linkDisplaySelect').value=state.linkDisplay||'full';$('#accentPicker').value=state.accent;$('#dividerSelect').value=state.divider;$('#iconsToggle').setAttribute('aria-pressed',String(state.icons));$('#iconsToggle').textContent='Show icons';$('#iconsToggle').disabled=false;$('#photoToggle').setAttribute('aria-pressed',String(state.photoEnabled));$('#photoToggle').textContent='Show photo';$('#photoToggle').disabled=false;var hint=$('#photoAtsHint');if(hint)hint.hidden=state.template!=='classic';$$('[data-preset]').forEach(function(b){b.classList.toggle('active',b.dataset.preset===state.preset)});$('#undoBtn').disabled=!history.length;$('#redoBtn').disabled=!future.length}
 function createCustom(){state.custom.push({title:'Custom section',mode:'bullets',content:'',bullets:[],show:true});state.order.push('custom-'+state.custom.length);openSections['custom-'+state.custom.length]=true}
 function selectedSection(id){if(id.indexOf('custom-')===0)return state.custom[Number(id.split('-')[1])-1];return state.sections[id]}
@@ -555,7 +594,7 @@ function photoCapable(){return ['classic','modern','compact','sidebar'].indexOf(
 function applyTemplateConstraints(){/* Photo display is an explicit, optional setting in every template. */}
 function ensureState(){
   ensureFormatState();
-  state.template=['classic','modern','compact','sidebar'].indexOf(state.template)>=0?state.template:'classic';state.paper=['A4','Letter','Legal','A5','B5','Executive'].indexOf(state.paper)>=0?state.paper:'A4';state.paperColor=['white','ivory','grey','blue','green','pink','yellow','lavender'].indexOf(state.paperColor)>=0?state.paperColor:'white';
+  state.template=isKnownTemplate(state.template)?state.template:'classic';state.paper=['A4','Letter','Legal','A5','B5','Executive'].indexOf(state.paper)>=0?state.paper:'A4';state.paperColor=['white','ivory','grey','blue','green','pink','yellow','lavender'].indexOf(state.paperColor)>=0?state.paperColor:'white';
   migrateLegacySectionRoots();
   Object.keys(DEMOS.Experienced.sections).forEach(function(k){if(!state.sections[k])state.sections[k]=clone(DEMOS.Experienced.sections[k])});
   normalizeDateSections();state.dateFormat=String(state.dateFormat||'MMM YYYY').trim();if(['DD MMM YYYY','MMM DD, YYYY','DD/MM/YYYY','MM/YYYY','MMM YYYY','YYYY'].indexOf(state.dateFormat)<0)state.dateFormat='MMM YYYY';state.linkDisplay=state.linkDisplay==='domain'?'domain':'full';
@@ -860,7 +899,7 @@ function paginateResume(template){
   return pages.length?pages:[''];
 }
 function renderPreview(){
-  var selectedTemplate=['classic','modern','compact','sidebar'].indexOf(state.template)>=0?state.template:'classic';state.template=selectedTemplate;document.body.dataset.resumeTemplate=selectedTemplate;
+  var selectedTemplate=isKnownTemplate(state.template)?state.template:'classic';state.template=selectedTemplate;document.body.dataset.resumeTemplate=selectedTemplate;
   applyPageVars();
   var pages=paginateResume(selectedTemplate);
   $('#previewPages').innerHTML=pages.join('');
@@ -1002,7 +1041,7 @@ function normalizeResumeState(x){
   var allowedPaper=['A4','Letter','Legal','A5','B5','Executive'],allowedTemplate=['classic','modern','compact','sidebar'],allowedGoal=['one','two'],allowedMargin=['narrow','normal','wide'],allowedFont=['Inter','Source Serif','Lato','Merriweather'],allowedDate=['MMM YYYY','MM/YYYY','YYYY','Mon YY'],allowedDivider=['rule','bold','none','box'];
   out.paper=allowedPaper.indexOf(out.paper)>=0?out.paper:'A4';
   out.paperColor=['white','ivory','grey','blue','green','pink','yellow','lavender'].indexOf(out.paperColor)>=0?out.paperColor:'white';
-  out.template=allowedTemplate.indexOf(out.template)>=0?out.template:'modern';
+  out.template=isKnownTemplate(out.template)?out.template:'classic';
   out.goal=allowedGoal.indexOf(out.goal)>=0?out.goal:'one';
   out.margin=allowedMargin.indexOf(out.margin)>=0?out.margin:'normal';
   out.font=allowedFont.indexOf(out.font)>=0?out.font:'Inter';
@@ -1398,10 +1437,7 @@ safeStep('mobile More menu',function(){
     safeStep('accent swatches',renderAccentSwatches);
     safeBind('#fitWidthBtn','click',fitPreviewWidth);
     safeBind('#fitOnePageBtn','click',fitToOnePage);
-    function cycleTemplate(delta){var themes=['classic','modern','compact','sidebar'],idx=themes.indexOf(state.template);if(idx<0)idx=0;var next=themes[(idx+delta+themes.length)%themes.length];applySetting('template',next);var card=$('[data-template="'+next+'"]');if(card)card.scrollIntoView({block:'nearest',inline:'center',behavior:reduced()?'auto':'smooth'})}
-    safeBind('#themePrev','click',function(){cycleTemplate(-1)});
-    safeBind('#themeNext','click',function(){cycleTemplate(1)});
-    safeEach('[data-template]',function(b){safeBind(b,'click',function(){applySetting('template',b.dataset.template)})});
+    setupTemplatePicker();
   });
 
   safeStep('file imports',function(){
