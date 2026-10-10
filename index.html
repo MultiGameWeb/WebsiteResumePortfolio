@@ -199,6 +199,68 @@ body.sc-home-page:after{content:"";position:fixed;inset:0;z-index:-1;pointer-eve
  .showcase-card,.showcase-shot img,.made-tile img{transition:none!important}
  .showcase-card:hover{transform:none}
 }
+
+/* Homepage navigation polish: keep the skip link accessible but hidden until focused. */
+.skip-link:not(:focus){
+  position:fixed!important;
+  left:-10000px!important;
+  top:0!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+  clip-path:inset(50%)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+.skip-link:focus{
+  position:fixed!important;
+  top:12px!important;
+  left:12px!important;
+  z-index:10020!important;
+  width:auto!important;
+  height:auto!important;
+  padding:11px 15px!important;
+  margin:0!important;
+  overflow:visible!important;
+  clip-path:none!important;
+  border:1px solid rgba(255,255,255,.2)!important;
+  border-radius:12px!important;
+  background:linear-gradient(110deg,#8b5cf6 0%,#ec4899 52%,#fb923c 100%)!important;
+  color:#fff!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.35)!important;
+  font-weight:800!important;
+}
+/* Force the shared top navigation to match the premium dark homepage even if cached shared CSS is older. */
+#sitecraftGlobalNav{
+  background:rgba(16,15,23,.94)!important;
+  color:#fbf9ff!important;
+  border-bottom:1px solid rgba(255,255,255,.13)!important;
+  box-shadow:0 8px 34px rgba(0,0,0,.24)!important;
+  backdrop-filter:blur(20px)!important;
+  -webkit-backdrop-filter:blur(20px)!important;
+}
+#sitecraftGlobalNav a{color:#ded7ec!important}
+#sitecraftGlobalNav .sc-brand{color:#fbf9ff!important}
+#sitecraftGlobalNav .sc-brand-mark{
+  background:linear-gradient(110deg,#8b5cf6 0%,#ec4899 52%,#fb923c 100%)!important;
+  color:#fff!important;
+  box-shadow:0 8px 26px rgba(236,72,153,.25)!important;
+}
+#sitecraftGlobalNav .sc-menu a:hover,
+#sitecraftGlobalNav .sc-menu a[aria-current="page"]{
+  background:rgba(255,255,255,.09)!important;
+  border-color:rgba(255,255,255,.11)!important;
+  color:#fff!important;
+}
+#sitecraftGlobalNav .sc-get-started,
+#sitecraftGlobalNav .top-cta,
+#sitecraftGlobalNav .nav-cta{
+  background:linear-gradient(110deg,#8b5cf6 0%,#ec4899 52%,#fb923c 100%)!important;
+  border-color:transparent!important;
+  color:#fff!important;
+}
 </style>
 </head>
 <body class="sc-home-page">
