@@ -676,8 +676,8 @@ function openPhotoCrop(file){
 function updatePhotoCropPreview(){
  var img=$('#photoCropPreview');if(!img)return;
  var zoom=Math.max(1,Math.min(3,Number($('#photoCropZoom').value)||1));
- img.style.objectPosition=(Number($('#photoCropX').value)||50)+'% '+(Number($('#photoCropY').value)||50)+'%';
- img.style.transform='scale('+zoom+')';
+ var px=parseFloat($('#photoCropX').value),py=parseFloat($('#photoCropY').value);if(!isFinite(px))px=50;if(!isFinite(py))py=50;
+ img.style.objectPosition=px+'% '+py+'%';img.style.transform='scale('+zoom+')';
 }
 function closePhotoCrop(){
  var modal=$('#photoCropModal');if(modal)modal.classList.remove('show');
@@ -692,8 +692,8 @@ function applyPhotoCrop(){
  var zoom=Math.max(1,Math.min(3,Number($('#photoCropZoom').value)||1));
  cropW=Math.max(1,cropW/zoom);cropH=Math.max(1,cropH/zoom);
  var xRange=Math.max(0,w-cropW),yRange=Math.max(0,h-cropH);
- var sx=xRange*(Math.max(0,Math.min(100,Number($('#photoCropX').value)||50))/100);
- var sy=yRange*(Math.max(0,Math.min(100,Number($('#photoCropY').value)||50))/100);
+ var px=parseFloat($('#photoCropX').value),py=parseFloat($('#photoCropY').value);if(!isFinite(px))px=50;if(!isFinite(py))py=50;
+ var sx=xRange*(Math.max(0,Math.min(100,px))/100),sy=yRange*(Math.max(0,Math.min(100,py))/100);
  var canvas=document.createElement('canvas');canvas.width=480;canvas.height=600;
  var ctx=canvas.getContext('2d');if(!ctx){toast('Photo cropping is not available in this browser.','error');return}
  ctx.drawImage(img,sx,sy,cropW,cropH,0,0,canvas.width,canvas.height);
