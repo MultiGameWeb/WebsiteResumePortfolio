@@ -1227,7 +1227,7 @@ function portfolioMonthToResume(v){
 function portfolioSkillGroups(skills){
   var groups=[],byName={};
   (Array.isArray(skills)?skills:[]).forEach(function(item){
-    var x=isRecord(item)?item:{name:item},name=norm(x.name),cat=norm(x.category)||'Skills',level=norm(x.level);
+    var x=isRecord(item)?item:{name:item},name=norm(x.name),cat=norm(x.category)||'Key skills',level=norm(x.level);
     if(!name)return;
     var key=cat.toLowerCase();
     if(!byName[key]){byName[key]={name:cat,items:[]};groups.push(byName[key]);}
