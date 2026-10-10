@@ -800,7 +800,7 @@ function applyEmptyState(){
 function applyImportedState(next,label){
   flushTyping();var before=snapshot();state=clone(next);ensureState();state.linkDisplay=state.linkDisplay==='domain'?'domain':'full';
   history.push(before);if(history.length>80)history.shift();future=[];
-  openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
+  openSections={header:true,summary:false,experience:false,education:false,skills:false,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
   setDirty(true);renderEditor();renderPreview();renderHealth();updateTopControls();toast(label||'Resume imported');
 }
 function preset(id){if(DEMOS[id])showReplacementConfirm('preset',id)}
@@ -828,7 +828,7 @@ function validateUrl(el){var good=!norm(el.value)||!!safeUrl(el.value);el.classL
 function updateCounters(){var c=$('[data-counter="summary.text"]'),t=norm(state.sections.summary.text||'');if(c)c.textContent=t.length+' / '+(state.sections.summary.max||700)}
 function swapIn(arr,i,j){if(i<0||j<0||i>=arr.length||j>=arr.length)return;var v=arr.splice(i,1)[0];arr.splice(j,0,v)}
 function arrayForKey(key){return state.sections[key]&&Array.isArray(state.sections[key].items)?state.sections[key].items:null}
-function defaultItem(key){return({experience:{company:'',role:'',location:'',start:'',end:'',currently:false,bullets:['']},education:{institution:'',degree:'',field:'',start:'',end:'',ongoing:false,score:'',notes:''},projects:{name:'',link:'',tech:[],bullets:['']},certifications:{name:'',issuer:'',date:'',link:''},awards:{name:'',issuer:'',date:'',note:''},languages:{name:'',level:''},volunteering:{org:'',role:'',start:'',end:'',ongoing:false,description:''},publications:{title:'',venue:'',date:'',link:''},references:{name:'',role:'',email:'',phone:''}})[key]||{}}
+function defaultItem(key){return({experience:{company:'',role:'',location:'',start:'',end:'',currently:false,bullets:[]},education:{institution:'',degree:'',field:'',start:'',end:'',ongoing:false,score:'',notes:''},projects:{name:'',link:'',tech:[],bullets:['']},certifications:{name:'',issuer:'',date:'',link:''},awards:{name:'',issuer:'',date:'',note:''},languages:{name:'',level:''},volunteering:{org:'',role:'',start:'',end:'',ongoing:false,description:''},publications:{title:'',venue:'',date:'',link:''},references:{name:'',role:'',email:'',phone:''}})[key]||{}}
 function arrayMutation(key,index,action){
   var arr=arrayForKey(key);if(!arr)return;var before=snapshot(),changed=false;
   if(action==='add'){arr.push(defaultItem(key));changed=true}
@@ -899,7 +899,7 @@ function customFlowUnits(i){
 
 function displayUrl(url){var u=safeUrl(url);if(!u)return '';if((state.linkDisplay||'full')==='domain'){try{return new URL(u).hostname.replace(/^www\./i,'')}catch(e){}}return u.replace(/^https?:\/\//i,'').replace(/\/$/,'')}
 function linkHtml(url){var u=safeUrl(url);return u?'<a class="link-inline" href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(displayUrl(u))+'</a>':''}
-function renderEntryHtml(type,x){if(type==='summary')return '<p class="summary-text">'+esc(x.text)+'</p>';if(type==='skills'){var groups=(x.data&&x.data.groups)||x.groups||[];return groups.map(function(g){var items=(g.items||[]).filter(function(v){return norm(v)});return items.length?'<div class="skill-line"><span class="skill-label">'+esc(g.name||'Skills')+'</span>: '+esc(items.join(', '))+'</div>':''}).join('')}var d=x.data||x;if(type==='experience')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.role||'Role')+'</div><div class="entry-sub">'+esc(d.company||'Company')+'</div><div class="entry-location">'+esc(d.location||'')+'</div></div><div class="entry-date">'+esc(datePair(d.start,d.currently?'Present':d.end))+'</div></div>'+bulletHtml(d.bullets)+'</div>';if(type==='education')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.degree||'Degree')+'</div><div class="entry-sub">'+esc([d.institution,d.field].filter(Boolean).join(' · '))+'</div>'+(norm(d.notes)?'<div class="entry-location">'+esc(d.notes)+'</div>':'')+'</div><div class="entry-date">'+esc(datePair(d.start,d.ongoing?'Present':d.end))+'</div></div>'+(norm(d.score)?'<div class="entry-location">Score: '+esc(d.score)+'</div>':'')+'</div>';if(type==='project')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.name||'Project')+'</div><div class="entry-sub">'+(Array.isArray(d.tech)&&d.tech.length?esc(d.tech.join(' · ')):'')+'</div><div class="entry-link">'+linkHtml(d.link)+'</div></div></div>'+bulletHtml(d.bullets)+'</div>';if(type==='certification')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.name||'Certification')+'</div><div class="entry-sub">'+esc(d.issuer||'')+'</div><div class="entry-link">'+linkHtml(d.link)+'</div></div><div class="entry-date">'+esc(formatDate(d.date))+'</div></div></div>';if(type==='award')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.name||'Award')+'</div><div class="entry-sub">'+esc(d.issuer||'')+'</div>'+(norm(d.note)?'<div class="entry-location">'+esc(d.note)+'</div>':'')+'</div><div class="entry-date">'+esc(formatDate(d.date))+'</div></div></div>';if(type==='language')return '<div class="entry-block"><div class="skill-line"><span class="skill-label">'+esc(d.name)+'</span> · '+esc(d.level||'')+'</div></div>';if(type==='volunteer')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.role||'Volunteer')+'</div><div class="entry-sub">'+esc(d.org||'')+'</div><div class="entry-location">'+esc(d.description||'')+'</div></div><div class="entry-date">'+esc(datePair(d.start,d.ongoing?'Present':d.end))+'</div></div></div>';if(type==='publication')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.title||'Publication')+'</div><div class="entry-sub">'+esc(d.venue||'')+'</div><div class="entry-link">'+linkHtml(d.link)+'</div></div><div class="entry-date">'+esc(formatDate(d.date))+'</div></div></div>';if(type==='reference')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.name)+'</div><div class="entry-sub">'+esc(d.role||'')+'</div></div><div class="entry-date">'+esc([d.email,d.phone].filter(Boolean).join(' · '))+'</div></div></div>';if(type==='references')return '<div class="entry-block">'+esc(x.text)+'</div>';return ''}
+function renderEntryHtml(type,x){if(type==='summary')return '<p class="summary-text">'+esc(x.text)+'</p>';if(type==='skills'){var groups=(x.data&&x.data.groups)||x.groups||[],items=[];groups.forEach(function(g){(g.items||[]).forEach(function(v){if(norm(v))items.push(norm(v))})});return items.length?'<div class="skill-line">'+esc(items.join(' · '))+'</div>':''}var d=x.data||x;if(type==='experience')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.role||'Role')+'</div><div class="entry-sub">'+esc(d.company||'Company')+'</div><div class="entry-location">'+esc(d.location||'')+'</div></div><div class="entry-date">'+esc(datePair(d.start,d.currently?'Present':d.end))+'</div></div>'+bulletHtml(d.bullets)+'</div>';if(type==='education')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.degree||'Degree')+'</div><div class="entry-sub">'+esc([d.institution,d.field].filter(Boolean).join(' · '))+'</div>'+(norm(d.notes)?'<div class="entry-location">'+esc(d.notes)+'</div>':'')+'</div><div class="entry-date">'+esc(datePair(d.start,d.ongoing?'Present':d.end))+'</div></div>'+(norm(d.score)?'<div class="entry-location">Score: '+esc(d.score)+'</div>':'')+'</div>';if(type==='project')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.name||'Project')+'</div><div class="entry-sub">'+(Array.isArray(d.tech)&&d.tech.length?esc(d.tech.join(' · ')):'')+'</div><div class="entry-link">'+linkHtml(d.link)+'</div></div></div>'+bulletHtml(d.bullets)+'</div>';if(type==='certification')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.name||'Certification')+'</div><div class="entry-sub">'+esc(d.issuer||'')+'</div><div class="entry-link">'+linkHtml(d.link)+'</div></div><div class="entry-date">'+esc(formatDate(d.date))+'</div></div></div>';if(type==='award')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.name||'Award')+'</div><div class="entry-sub">'+esc(d.issuer||'')+'</div>'+(norm(d.note)?'<div class="entry-location">'+esc(d.note)+'</div>':'')+'</div><div class="entry-date">'+esc(formatDate(d.date))+'</div></div></div>';if(type==='language')return '<div class="entry-block"><div class="skill-line"><span class="skill-label">'+esc(d.name)+'</span> · '+esc(d.level||'')+'</div></div>';if(type==='volunteer')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.role||'Volunteer')+'</div><div class="entry-sub">'+esc(d.org||'')+'</div><div class="entry-location">'+esc(d.description||'')+'</div></div><div class="entry-date">'+esc(datePair(d.start,d.ongoing?'Present':d.end))+'</div></div></div>';if(type==='publication')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.title||'Publication')+'</div><div class="entry-sub">'+esc(d.venue||'')+'</div><div class="entry-link">'+linkHtml(d.link)+'</div></div><div class="entry-date">'+esc(formatDate(d.date))+'</div></div></div>';if(type==='reference')return '<div class="entry-block"><div class="entry-head"><div><div class="entry-title">'+esc(d.name)+'</div><div class="entry-sub">'+esc(d.role||'')+'</div></div><div class="entry-date">'+esc([d.email,d.phone].filter(Boolean).join(' · '))+'</div></div></div>';if(type==='references')return '<div class="entry-block">'+esc(x.text)+'</div>';return ''}
 function bulletHtml(arr){var a=Array.isArray(arr)?arr.filter(function(x){return norm(x)}):[];return a.length?'<ul class="resume-bullets">'+a.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>':''}
 function sectionBlockHtml(id,sec){
   var items=textItemsForSection(id,sec);if(!items.length)return '';
@@ -1252,7 +1252,15 @@ function standaloneDocument(){
   doc+='</body></html>';return doc
 }
 function downloadHtml(){flushTyping();var blob=new Blob([standaloneDocument()],{type:'text/html;charset=utf-8'});downloadBlob(blob,slug(state.sections.header.name||'resume')+'-resume.html');clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved');toast('Standalone HTML downloaded')}
-function downloadPdf(){flushTyping();buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved')}
+function downloadPdf(){
+ flushTyping();var fullText=allResumeText(),hits=[];
+ if(/\[[^\]]+\]/.test(fullText))hits.push('bracketed placeholder');
+ if(/\b(lorem ipsum|replace this|your full name|sample@example\.com|sample company|demonstration content only|sample resume)\b/i.test(fullText))hits.push('sample or placeholder text');
+ var meaningful=!!(norm(state.sections.header.name)||norm(state.sections.header.email)||norm(state.sections.header.phone)||norm(state.sections.summary.text)||(state.sections.experience.items||[]).some(function(x){return norm(x.role)||norm(x.company)||(x.bullets||[]).some(function(b){return norm(b)})})||(state.sections.education.items||[]).some(function(x){return norm(x.degree)||norm(x.institution)})||(state.sections.skills.groups||[]).some(function(g){return (g.items||[]).some(function(v){return norm(v)})}));
+ if(!meaningful||hits.length){var msg=!meaningful?'This resume looks empty. Download it anyway?':'This resume contains sample or placeholder text ('+hits.join(', ')+'). Download it anyway?';if(!window.confirm(msg))return}
+ buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved');
+}
+
 function handleNav(target,e){if(target==='resume-builder.html')return;if(dirty){e.preventDefault();leaveTarget=target;$('#leaveModal').classList.add('show');$('#leaveStay').focus()}}
 function setupDivider(){
   var d=$('#divider');var dragging=false,raf=0,x=0,pid=null;
@@ -1396,64 +1404,20 @@ function setupEvents(){
     });
   });
 
-  safeStep('workspace tabs and mobile bottom bar',function(){
-    safeBind('#editModeBtn','click',function(){if(guideStarted&&guidedStep>=5)setGuidedStep(4);else showEditPanel()});
-    safeBind('#designModeBtn','click',function(){if(guideStarted&&guidedStep<5)setGuidedStep(5);else showDesignPanel()});
-    safeBind('#mobileEditBtn','click',function(){if(guideStarted&&guidedStep>=5)setGuidedStep(4);else showEditPanel()});
-    safeBind('#mobilePreviewBtn','click',function(){
-      document.body.classList.remove('design-mode','edit-mode');
-      var p=$('#designPanel');if(p)p.hidden=true;
-      document.body.classList.add('mobile-preview');
-      $('#mobilePreviewBtn').classList.add('active');$('#mobileEditBtn').classList.remove('active');
-      requestAnimationFrame(fitPreviewWidth);
-    });
+  
+  safeStep('simple workspace tabs and helpful actions',function(){
+    safeBind('#quickDesignBtn','click',showDesignPanel);safeBind('#closeDesignBtn','click',showEditPanel);
+    safeBind('#mobileEditTab','click',function(){document.body.classList.remove('mobile-preview');showEditPanel();$('#mobileEditTab').classList.add('active');$('#mobilePreviewTab').classList.remove('active');$('#mobileEditTab').setAttribute('aria-selected','true');$('#mobilePreviewTab').setAttribute('aria-selected','false')});
+    safeBind('#mobilePreviewTab','click',function(){document.body.classList.remove('design-mode','edit-mode');var dp=$('#designPanel');if(dp)dp.hidden=true;document.body.classList.add('mobile-preview');$('#mobilePreviewTab').classList.add('active');$('#mobileEditTab').classList.remove('active');$('#mobilePreviewTab').setAttribute('aria-selected','true');$('#mobileEditTab').setAttribute('aria-selected','false');requestAnimationFrame(fitPreviewWidth)});
     safeBind('#mobileDownloadPdfBtn','click',downloadPdf);
+    safeBind('#sampleResumeBtn','click',function(){mutate(function(){state=blankResumeState();state.sections.header=Object.assign(state.sections.header,{name:'SAMPLE RESUME — DEMONSTRATION ONLY',headline:'Customer Support Assistant',phone:'+91 90000 00000',email:'sample@example.com',location:'Hyderabad, Telangana'});state.sections.summary.text='Demonstration content only. Replace these details with your own real information.';state.sections.experience.items=[{role:'Customer Support Assistant',company:'Sample Company (Demo)',location:'Hyderabad',start:'2023',end:'2025',currently:false,bullets:['Answered customer questions and recorded requests in a service tracker.','Prepared weekly summaries to help the team follow up on open requests.']}];state.sections.education.items=[{degree:'Bachelor degree (Demo)',institution:'Sample College (Demo)',field:'',start:'2020',end:'2023',score:'',notes:'',ongoing:false}];state.sections.skills.groups=[{name:'',items:['Communication','Customer service','Record keeping']}];openSections={header:true,summary:false,experience:false,education:false,skills:false};uiAddedSections={}},true);toast('Marked sample loaded. Replace its demo details before using it.')});
+    safeBind('#clearResumeBtn','click',function(){var emptyState=blankResumeState();mutate(function(){state=clone(emptyState);ensureState();openSections={header:true,summary:false,experience:false,education:false,skills:false};uiAddedSections={};groupSkillsMode=false},true);toast('All resume details cleared')});
+    safeBind('#tipsBtn','click',function(){var p=$('#tipsPanel');p.open=!p.open;$('#tipsBtn').setAttribute('aria-expanded',String(p.open));renderQuietTips()});
+    safeBind('#tipsContent','click',function(e){var b=e.target.closest('[data-tip-section]');if(!b)return;var sid=b.dataset.tipSection||'header',fid=b.dataset.tipField||'';Object.keys(openSections).forEach(function(k){openSections[k]=false});openSections[sid]=true;renderEditor();var card=$('[data-editor-section="'+CSS.escape(sid)+'"]');if(card)card.scrollIntoView({block:'nearest',behavior:reduced()?'auto':'smooth'});var field=fid?$('#'+fid):null;if(field)field.focus({preventScroll:true})});
   });
+  safeStep('removed guided wizard',function(){});
 
-  safeStep('guided first-time flow',function(){
-    safeBind('#startResumeBtn','click',function(){startGuidedResume(false)});
-    safeEach('[data-start-profession]',function(btn){safeBind(btn,'click',function(){
-      selectedJourney=btn.dataset.startProfession;
-      selectedProfessionKey=selectedJourney==='student_fresher'?'student_fresher':'';
-      $$('.profession-choice').forEach(function(choice){choice.classList.toggle('active',choice===btn)});
-      var category=$('#professionSelect');if(category)category.value=selectedProfessionKey;
-      updateRoleSuggestions();
-    })});
-    safeBind('#professionSelect','change',function(e){selectedProfessionKey=e.target.value||'';var role=$('#roleSearch');if(role)role.value='';updateRoleSuggestions()});
-    safeBind('#roleSearch','input',updateRoleSuggestions);
-    safeBind('#seeExampleBtn','click',showRoleExample);
-    safeBind('#useExampleSummaryBtn','click',useRoleExampleSummary);
-    safeBind('#addExampleBulletBtn','click',useRoleExampleBullet);
-    safeBind('#wizardBackBtn','click',function(){if(guidedStep>0)setGuidedStep(guidedStep-1)});
-    safeBind('#wizardNextBtn','click',function(){
-      if(guidedStep===0){
-        var name=norm(state.sections.header.name),email=norm(state.sections.header.email);
-        if(!name||!email){
-          toast(!name&&!email?'Add your name and email first.':(!name?'Add your name first.':'Add your email first.'));
-          var target=!name?$('#f-header-name'):$('#f-header-email');
-          if(target&&target.focus)target.focus();
-          return;
-        }
-      }
-      if(guidedStep<6)setGuidedStep(guidedStep+1);
-    });
-    safeBind('#backToSkillsBtn','click',function(){setGuidedStep(4)});
-    safeBind('#downloadFromGuideBtn','click',downloadPdf);
-    safeBind('#advancedToggleBtn','click',function(){
-      advancedMode=!advancedMode;document.body.classList.toggle('advanced-mode',advancedMode);
-      applyGuidedEditorView();
-      toast(advancedMode?'Advanced options shown':'Advanced options hidden');
-    });
-    safeBind('#guidedWizard','click',function(e){
-      var b=e.target.closest('button');if(!b)return;
-      if(b.dataset.roleKey&&b.dataset.roleTitle){chooseRoleSuggestion(b.dataset.roleKey,b.dataset.roleTitle);return}
-      if(b.dataset.suggestSkill){addRoleSkill(b.dataset.suggestSkill);return}
-      if(b.dataset.suggestBullet){addRoleBullet(b.dataset.suggestBullet);return}
-    });
-    updateRoleSuggestions();
-  });
-
-  safeStep('mobile More menu',function(){
+safeStep('mobile More menu',function(){
     safeBind('#moreBtn','click',function(e){e.stopPropagation();var menu=$('#moreMenu');setMoreMenu(!menu||menu.hidden,true)});
     safeBind('#moreMenu','click',function(e){
       var b=e.target.closest('[data-more-action]');if(!b)return;
@@ -1467,7 +1431,7 @@ function setupEvents(){
       else if(a==='export')exportJson();
       else if(a==='portfolio')beginPortfolioImport();
       else if(a==='fit')fitToOnePage();
-      else if(a==='design'){if(guideStarted&&guidedStep<5)setGuidedStep(5);else showDesignPanel();}
+      else if(a==='design'){showDesignPanel();}
       else if(a==='fullPreview')toggleFullPreview();
       else if(a==='reset')showReplacementConfirm('reset',resetTargetPreset());
     });
@@ -1553,15 +1517,18 @@ function setupEvents(){
 
   safeStep('editor input and focus',function(){
     safeBind('#editor','input',function(e){
-      var el=e.target;if(el.matches('textarea'))autoGrowTextarea(el);if(el.matches('[data-path]')){updateSectionField(el);if(el.dataset.path.indexOf('custom.')!==0&&el.dataset.path.indexOf('references.')!==0){return}}
-      if(el.matches('[data-bullet]')){var i=Number(el.dataset.index),j=Number(el.dataset.bulletIndex);var before=snapshot();state.sections.experience.items[i].bullets[j]=el.value;queueTyping(before);setDirty(true);queuePreviewRender();renderHealth()}
+      var el=e.target;if(el.matches('textarea')&&!el.matches('[data-experience-bullets]'))autoGrowTextarea(el);if(el.matches('[data-path]')){updateSectionField(el);if(el.dataset.path.indexOf('custom.')!==0&&el.dataset.path.indexOf('references.')!==0){return}}
+      if(el.matches('[data-experience-bullets]')){var ei=Number(el.dataset.index),beforeExp=snapshot();state.sections.experience.items[ei].bullets=el.value.split(/\r?\n/).slice(0,8);queueTyping(beforeExp);setDirty(true);queuePreviewRender();renderHealth();return}
+       if(el.matches('[data-bullet]')){var i=Number(el.dataset.index),j=Number(el.dataset.bulletIndex);var before=snapshot();state.sections.experience.items[i].bullets[j]=el.value;queueTyping(before);setDirty(true);queuePreviewRender();renderHealth()}
       if(el.matches('[data-project-bullet]')){var i2=Number(el.dataset.index),j2=Number(el.dataset.bulletIndex),before2=snapshot();state.sections.projects.items[i2].bullets[j2]=el.value;queueTyping(before2);setDirty(true);queuePreviewRender();renderHealth()}
       if(el.matches('[data-custom-bullet]')){var i3=Number(el.dataset.index),j3=Number(el.dataset.bulletIndex);var before3=snapshot();state.custom[i3].bullets[j3]=el.value;queueTyping(before3);setDirty(true);queuePreviewRender();renderHealth()}
       if(el.matches('[data-custom-link-name],[data-custom-link-url]'))syncCustomLink(el);
     });
     safeBind('#editor','blur',function(e){if(e.target.matches('[data-path]')){if(e.target.dataset.path==='header.email')validateEmail(e.target);if(e.target.type==='url')validateUrl(e.target);flushTyping()}},{capture:true});
     safeBind('#editor','keydown',function(e){
-      if(e.target.matches('[data-skill-tag-input]')&&e.key==='Enter'){e.preventDefault();var i=Number(e.target.dataset.skillTagInput),v=norm(e.target.value);if(v){mutate(function(){state.sections.skills.groups[i].items.push(v)},true)}}
+      if(e.target.matches('[data-flat-skill-input]')&&e.key==='Enter'){e.preventDefault();var newSkill=norm(e.target.value);if(newSkill){mutate(function(){var gs=state.sections.skills.groups;if(!Array.isArray(gs)||!gs.length){gs=[{name:'',items:[]}];state.sections.skills.groups=gs}var all=gs.reduce(function(a,g){return a.concat(g.items||[])},[]);if(!all.some(function(v){return norm(v).toLowerCase()===newSkill.toLowerCase()}))gs[0].items.push(newSkill)},true)}}
+       else if(e.target.matches('[data-flat-skill-input]')&&e.key==='Backspace'&&!e.target.value){var gs2=state.sections.skills.groups||[],gix=-1,tix=-1;for(var gx=gs2.length-1;gx>=0&&gix<0;gx--){for(var tx=(gs2[gx].items||[]).length-1;tx>=0;tx--){if(norm(gs2[gx].items[tx])){gix=gx;tix=tx;break}}}if(gix>=0){e.preventDefault();mutate(function(){gs2[gix].items.splice(tix,1)},true)}}
+       else if(e.target.matches('[data-skill-tag-input]')&&e.key==='Enter'){e.preventDefault();var i=Number(e.target.dataset.skillTagInput),v=norm(e.target.value);if(v){mutate(function(){state.sections.skills.groups[i].items.push(v)},true)}}
       if(e.target.matches('[data-project-tag-input]')&&e.key==='Enter'){e.preventDefault();var pi=Number(e.target.dataset.projectTagInput),v2=norm(e.target.value);if(v2){mutate(function(){state.sections.projects.items[pi].tech.push(v2)},true)}}
     });
   });
@@ -1569,8 +1536,10 @@ function setupEvents(){
   safeStep('editor click handlers',function(){
     safeBind('#editor','click',function(e){
       var b=e.target.closest('button');if(!b)return;
-      if(b.dataset.openSection){var id=b.dataset.openSection;openSections[id]=!openSections[id];renderEditor();restoreFocus({section:id})}
+      if(b.dataset.openSection){var id=b.dataset.openSection,was=openSections[id]===true;Object.keys(openSections).forEach(function(k){openSections[k]=false});if(!was)openSections[id]=true;renderEditor();var cardOpen=$('[data-editor-section="'+CSS.escape(id)+'"]');if(cardOpen)cardOpen.scrollIntoView({block:'nearest',behavior:reduced()?'auto':'smooth'})}
       else if(b.dataset.toggleSection){var id2=b.dataset.toggleSection;var sec=selectedSection(id2);if(sec){sec.show=sec.show===false?true:false;setDirty(true);renderEditor();renderPreview();renderHealth();}}
+       else if(b.dataset.addSection){var idAdd=b.dataset.addSection;if(idAdd==='custom'){mutate(function(){createCustom();var cid='custom-'+state.custom.length;uiAddedSections[cid]=true;Object.keys(openSections).forEach(function(k){openSections[k]=false});openSections[cid]=true},true)}else{uiAddedSections[idAdd]=true;Object.keys(openSections).forEach(function(k){openSections[k]=false});openSections[idAdd]=true;renderEditor();renderPreview();var addedCard=$('[data-editor-section="'+CSS.escape(idAdd)+'"]');if(addedCard)addedCard.scrollIntoView({block:'nearest',behavior:reduced()?'auto':'smooth'})}}
+       else if(b.hasAttribute('data-group-skills')){groupSkillsMode=!groupSkillsMode;renderEditor()}
       else if(b.dataset.moveSection)handleMoveSection(b.dataset.moveSection,b.dataset.dir);
       else if(b.dataset.moveArray)arrayMutation(b.dataset.moveArray,Number(b.dataset.index),Number(b.dataset.dir)===0?'':(Number(b.dataset.dir)>0?'down':'up'));
       else if(b.dataset.removeArray)arrayMutation(b.dataset.removeArray,Number(b.dataset.index),'remove');
@@ -1582,7 +1551,7 @@ function setupEvents(){
       else if(b.dataset.addProjectBullet){var pi2=Number(b.dataset.addProjectBullet);var before=snapshot();if((state.sections.projects.items[pi2].bullets||[]).length<8)state.sections.projects.items[pi2].bullets.push('');pushHistory(before);setDirty(true);renderEditor();renderPreview();renderHealth();}
       else if(b.dataset.removeProjectTag){mutate(function(){state.sections.projects.items[Number(b.dataset.removeProjectTag)].tech.splice(Number(b.dataset.tagIndex),1)},true)}
       else if(b.dataset.removeSkillGroup){mutate(function(){state.sections.skills.groups.splice(Number(b.dataset.removeSkillGroup),1)},true)}
-      else if(b.hasAttribute('data-add-skill-group')){mutate(function(){state.sections.skills.groups.push({name:'Tools and software',items:[]})},true)}
+      else if(b.hasAttribute('data-add-skill-group')){mutate(function(){state.sections.skills.groups.push({name:'',items:[]});groupSkillsMode=true},true)}
       else if(b.dataset.removeSkillTag){mutate(function(){state.sections.skills.groups[Number(b.dataset.removeSkillTag)].items.splice(Number(b.dataset.tagIndex),1)},true)}
       else if(b.id==='addCustomSection'){mutate(function(){createCustom()},true)}
       else if(b.dataset.removeCustomSection){mutate(function(){removeCustom(Number(b.dataset.removeCustomSection))},true)}
@@ -1636,7 +1605,7 @@ function runResumeBuilderClickAudit(){
     ['experience','education','projects','certifications','awards','languages','volunteering','publications','references'].forEach(function(k){var items=state.sections[k].items||[];items.forEach(function(item,idx){item.__audit=k+':'+idx;if(Array.isArray(item.bullets))item.bullets=item.bullets.map(function(v,bidx){return 'AUDIT-'+k+'-'+idx+'-'+bidx})})});
     if(state.sections.skills&&Array.isArray(state.sections.skills.groups))state.sections.skills.groups.forEach(function(g,idx){g.__audit='skills:'+idx;});
     if(Array.isArray(state.custom))state.custom.forEach(function(c,idx){c.__audit='custom:'+idx;c.bullets=(c.bullets||[]).map(function(v,bidx){return 'AUDIT-custom-'+idx+'-'+bidx})});
-    openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
+    openSections={header:true,summary:false,experience:false,education:false,skills:false,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
     history=[];future=[];typingGroup=null;typingTimer=null;pendingReplacement=null;dirty=false;restoreInProgress=false;autosaveReady=false;closeReplacementConfirm();
     renderEditor();renderPreview();renderHealth();updateTopControls();
   }
