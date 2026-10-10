@@ -261,6 +261,30 @@ body.sc-home-page:after{content:"";position:fixed;inset:0;z-index:-1;pointer-eve
   border-color:transparent!important;
   color:#fff!important;
 }
+
+/* AI Chatbot service showcase */
+.chatbot-service-card{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:0;overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:26px;background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.02));box-shadow:0 24px 70px rgba(0,0,0,.26)}
+.chatbot-service-poster{position:relative;min-height:360px;overflow:hidden;background:#1e1a2c}
+.chatbot-service-poster>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.chatbot-service-poster:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,12,22,.05),rgba(14,12,22,.8))}
+.chatbot-poster-chip{position:absolute;z-index:2;left:18px;top:18px;padding:9px 12px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(20,17,29,.72);backdrop-filter:blur(12px);color:white;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.chatbot-poster-message{position:absolute;z-index:2;left:22px;right:22px;bottom:22px;padding:17px 18px;border:1px solid rgba(255,255,255,.17);border-radius:17px;background:rgba(20,17,29,.78);backdrop-filter:blur(16px)}
+.chatbot-poster-message small{display:block;color:#d8b4fe;font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.chatbot-poster-message strong{display:block;margin-top:7px;color:#fff;font:700 clamp(18px,2.1vw,27px)/1.12 Sora,Inter,sans-serif;letter-spacing:-.04em}
+.chatbot-poster-message span{display:block;margin-top:8px;color:#d2cadf;font-size:11px;line-height:1.55}
+.chatbot-service-copy{align-self:center;padding:clamp(24px,4vw,48px)}
+.chatbot-service-copy .service-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+.chatbot-service-copy .service-meta span{padding:7px 10px;border:1px solid var(--home-line);border-radius:999px;color:#ded3fa;background:rgba(139,92,246,.09);font-size:10px;font-weight:800}
+.chatbot-service-copy h3{margin:0;font:800 clamp(26px,3.2vw,38px)/1.08 Sora,Inter,sans-serif;letter-spacing:-.055em}
+.chatbot-service-copy p{margin:13px 0 18px;color:var(--home-muted);font-size:13px;line-height:1.8}
+.chatbot-service-list{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.chatbot-service-list span{padding:7px 9px;border:1px solid var(--home-line);border-radius:9px;background:rgba(255,255,255,.035);color:#e6dff2;font-size:10px;font-weight:700}
+.chatbot-service-actions{display:flex;gap:8px;flex-wrap:wrap}
+.chatbot-service-actions a{min-height:42px;padding:0 13px;font-size:11px;border-radius:11px}
+.chatbot-service-actions .btn-primary{box-shadow:none}
+@media(max-width:800px){.chatbot-service-card{grid-template-columns:minmax(0,1fr)}.chatbot-service-poster{min-height:300px}.chatbot-service-copy{padding:25px 22px 27px}.chatbot-service-copy h3{font-size:29px}}
+@media(max-width:520px){.chatbot-service-poster{min-height:255px}.chatbot-service-actions a{flex:1}.chatbot-service-copy{padding:22px 17px}}
+
 </style>
 </head>
 <body class="sc-home-page">
@@ -329,6 +353,28 @@ body.sc-home-page:after{content:"";position:fixed;inset:0;z-index:-1;pointer-eve
    <article class="soon-card" data-category="soon" hidden><span class="soon-icon" aria-hidden="true">✦</span><span class="section-kicker">EXPANDING THE LIBRARY</span><h3>Your industry could be next.</h3><p>More designs for cafés, salons, creators and local services are on the way.</p><a class="btn-primary" href="ai-websites.html">See what’s coming <span aria-hidden="true">→</span></a></article>
   </div>
   <div style="display:flex;justify-content:center;margin-top:30px"><a class="btn-ghost" href="templates.html">Explore all website templates <span aria-hidden="true">↗</span></a></div>
+ </div>
+</section>
+<section class="sc-section chatbot-home-section" id="ai-chatbot-solutions" aria-labelledby="chatbot-home-title" style="background:rgba(255,255,255,.018);border-block:1px solid var(--home-line)">
+ <div class="container">
+  <div class="section-heading reveal">
+   <div><span class="section-kicker">NEW SERVICE · AI CHATBOTS</span><h2 id="chatbot-home-title">Helpful conversations.<br>Smarter customer journeys.</h2></div>
+   <p>Explore 25 AI chatbot use cases—from 24/7 customer support and e-commerce to appointments, social media, internal knowledge and advanced workflows.</p>
+  </div>
+  <div class="chatbot-service-card reveal">
+   <div class="chatbot-service-poster">
+    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1100&q=85" width="1100" height="900" alt="Artificial intelligence and digital assistant concept" loading="lazy">
+    <span class="chatbot-poster-chip">SiteCraft · AI solutions</span>
+    <div class="chatbot-poster-message"><small>Built around your workflow</small><strong>One assistant.<br>Many ways to help.</strong><span>Website · WhatsApp · Social media · Email · Mobile apps</span></div>
+   </div>
+   <div class="chatbot-service-copy">
+    <div class="service-meta"><span>25 use cases</span><span>4 service tiers</span><span>Multi-channel</span></div>
+    <h3>AI chatbot solutions for businesses that want to respond faster.</h3>
+    <p>Start with the five most-used services, such as customer support, order tracking, lead qualification, cart recovery and appointment booking. Explore all 25 options and choose what fits your business.</p>
+    <div class="chatbot-service-list"><span>24/7 support</span><span>Order tracking</span><span>Lead generation</span><span>Appointments</span><span>Social replies</span><span>Voice & advanced bots</span></div>
+    <div class="chatbot-service-actions"><a class="btn-primary" href="ai-chatbots.html">Explore 25 chatbot services <span aria-hidden="true">↗</span></a><a class="btn-ghost" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%27m%20interested%20in%20AI%20Chatbot%20services." target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="btn-ghost" href="tel:+917981587505">Call</a></div>
+   </div>
+  </div>
  </div>
 </section>
 <section class="sc-section" id="website-features" aria-labelledby="website-features-title" style="background:rgba(255,255,255,.018);border-block:1px solid var(--home-line)">
