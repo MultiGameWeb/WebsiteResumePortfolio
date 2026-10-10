@@ -161,6 +161,73 @@ body.design-mode #editor #guidedStepPanel{display:block!important}
 .role-example{display:grid;gap:12px;border:1px solid #e0dcf8;border-radius:12px;background:#faf9ff;padding:12px}.role-example[hidden]{display:none!important}.role-example p{margin:5px 0;color:var(--muted);font-size:12px;line-height:1.6;overflow-wrap:anywhere}.role-example strong{font-size:12px}
 .guided-role-search select{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line2);border-radius:12px;background:#fff;color:var(--text);font-size:16px}
 
+
+/* First-run guidance, profession-neutral controls and small-screen field usability */
+body.welcome-mode #editor .editor-head,body.welcome-mode #editor .tool-grid,body.welcome-mode #editor #accordion{display:none!important}
+body.guided-running #editor .editor-head,body.guided-running #editor .tool-grid{display:none!important}
+body.guided-running.advanced-mode #editor .tool-grid{display:grid!important}
+body.advanced-mode #editor .tool-grid .health,body.advanced-mode #editor .tool-grid .keyword-box{display:block!important}
+body.advanced-mode #editor .more-sections-menu{display:block}
+.tool-grid>.surface-card:first-child{display:none!important}
+.section-card[hidden]{display:none!important}
+.more-sections-menu{margin:10px 0 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.7);overflow:hidden}
+.more-sections-menu>summary{display:flex;align-items:center;min-height:48px;padding:12px 14px;cursor:pointer;font-size:13px;font-weight:900;color:#5146ac;list-style:none}
+.more-sections-menu>summary::-webkit-details-marker{display:none}
+.more-sections-menu>summary:after{content:"+";margin-left:auto;font-size:20px}.more-sections-menu[open]>summary:after{content:"−"}
+.more-sections-menu>.help{padding:0 14px;margin:0 0 10px;font-size:11px}
+.more-sections-content{padding:0 9px 10px;display:grid;gap:9px}
+.section-options{position:relative;flex:0 0 auto}
+.section-options>summary{display:grid;place-items:center;width:38px;min-width:38px;height:38px;min-height:38px;padding:0;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-size:15px;font-weight:900;list-style:none}
+.section-options>summary::-webkit-details-marker{display:none}
+.section-options[open]>summary{background:#f1efff;border-color:#b6acef}
+.section-options>button,.section-options>.entry-btn,.section-options>.show-toggle{display:inline-flex;margin:4px}
+.section-actions{position:relative;display:flex;align-items:center;gap:4px}
+.section-actions>.section-options[open]{position:absolute;z-index:35;right:0;top:0;display:flex;align-items:center;gap:3px;max-width:min(84vw,320px);flex-wrap:wrap;justify-content:flex-end;padding:5px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 12px 28px rgba(10,20,35,.14)}
+.section-actions>.section-options[open]>summary{order:9}
+.section-actions>.section-options:not([open])>*:not(summary){display:none}
+textarea{min-height:100px;line-height:1.55;resize:vertical;overflow-wrap:anywhere}
+.bullet-row textarea{min-height:100px;width:100%;max-width:100%;font-size:15px}
+.tag-list{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px;max-width:100%}
+.tag{display:inline-flex;align-items:center;gap:8px;max-width:100%;min-width:0;padding:5px 7px 5px 10px;white-space:normal;overflow-wrap:anywhere}
+.tag button{display:grid;place-items:center;flex:0 0 36px;width:36px;min-width:36px;height:36px;min-height:36px;padding:0;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
+.section-main-toggle{min-width:0}.section-label{min-width:0}.section-label strong,.section-label span{overflow-wrap:anywhere}
+.step-note{margin:0 0 12px;padding:11px 12px;background:#f8f7ff;border:1px solid #e2def8;border-radius:12px;color:#615b73;font-size:12px;line-height:1.6}
+body.download-step #editor .editor-head,body.download-step #editor .tool-grid,body.download-step #editor #accordion{display:none!important}
+.resume-name{overflow-wrap:anywhere;word-break:normal;max-width:100%;min-width:0}
+.resume-header,.resume-header>div{min-width:0;max-width:100%}
+.template-classic .sidebar-layout{display:block!important;grid-template-columns:minmax(0,1fr)!important}
+.template-classic .sidebar-col{display:none!important}
+.template-classic .main-col{min-width:0;width:100%}
+@media(max-width:899px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden}
+ .app-shell{min-width:0;width:100%}
+ #editor{min-width:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+ #editor input,#editor select,#editor textarea,#guidedWizard input,#guidedWizard select{font-size:16px!important;max-width:100%}
+ #editor button,#guidedWizard button{touch-action:manipulation}
+ .section-head{display:flex;align-items:center;gap:8px;padding:10px}
+ .section-main-toggle{flex:1 1 auto;min-width:0;padding:0}
+ .section-actions{flex:0 0 auto}
+ .section-actions>.section-options[open]{right:0;top:0}
+ .section-options>summary{width:40px;height:40px;min-width:40px;min-height:40px}
+ .tag button{flex-basis:40px;width:40px;min-width:40px;height:40px;min-height:40px}
+ .bullet-row{grid-template-columns:minmax(0,1fr) auto;gap:7px}
+ .bullet-row>div{min-width:0}
+ .mobile-bottom-bar{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+ .guided-wizard{margin-inline:8px}
+ .guided-role-search input,.guided-role-search select{min-height:48px}
+ .more-sections-menu>summary{min-height:50px}
+}
+@media(max-width:390px){
+ .topbar{overflow:hidden}
+ .topbar-left{max-width:45%}
+ .topbar-right{max-width:55%}
+ .section-head{padding:8px;gap:5px}
+ .section-icon{flex:0 0 30px;width:30px;height:30px}
+ .section-label strong{font-size:12px}
+ .section-label span{font-size:10px}
+ .section-options>summary{width:38px;height:38px;min-width:38px;min-height:38px}
+}
+
 </style>
 
 </head>
@@ -1361,6 +1428,38 @@ function setupEvents(){
     safeBind('#mobileDownloadPdfBtn','click',downloadPdf);
   });
 
+  safeStep('guided first-time flow',function(){
+    safeBind('#startResumeBtn','click',function(){startGuidedResume(false)});
+    safeEach('[data-start-profession]',function(btn){safeBind(btn,'click',function(){
+      selectedJourney=btn.dataset.startProfession;
+      selectedProfessionKey=selectedJourney==='student_fresher'?'student_fresher':'';
+      $('.profession-choice').forEach(function(choice){choice.classList.toggle('active',choice===btn)});
+      var category=$('#professionSelect');if(category)category.value=selectedProfessionKey;
+      updateRoleSuggestions();
+    })});
+    safeBind('#professionSelect','change',function(e){selectedProfessionKey=e.target.value||'';updateRoleSuggestions()});
+    safeBind('#roleSearch','input',updateRoleSuggestions);
+    safeBind('#seeExampleBtn','click',showRoleExample);
+    safeBind('#useExampleSummaryBtn','click',useRoleExampleSummary);
+    safeBind('#addExampleBulletBtn','click',useRoleExampleBullet);
+    safeBind('#wizardBackBtn','click',function(){if(guidedStep>0)setGuidedStep(guidedStep-1)});
+    safeBind('#wizardNextBtn','click',function(){if(guidedStep<6)setGuidedStep(guidedStep+1)});
+    safeBind('#backToSkillsBtn','click',function(){setGuidedStep(4)});
+    safeBind('#downloadFromGuideBtn','click',downloadPdf);
+    safeBind('#advancedToggleBtn','click',function(){
+      advancedMode=!advancedMode;document.body.classList.toggle('advanced-mode',advancedMode);
+      applyGuidedEditorView();
+      toast(advancedMode?'Advanced options shown':'Advanced options hidden');
+    });
+    safeBind('#guidedWizard','click',function(e){
+      var b=e.target.closest('button');if(!b)return;
+      if(b.dataset.roleKey&&b.dataset.roleTitle){chooseRoleSuggestion(b.dataset.roleKey,b.dataset.roleTitle);return}
+      if(b.dataset.suggestSkill){addRoleSkill(b.dataset.suggestSkill);return}
+      if(b.dataset.suggestBullet){addRoleBullet(b.dataset.suggestBullet);return}
+    });
+    updateRoleSuggestions();
+  });
+
   safeStep('mobile More menu',function(){
     safeBind('#moreBtn','click',function(e){e.stopPropagation();var menu=$('#moreMenu');setMoreMenu(!menu||menu.hidden,true)});
     safeBind('#moreMenu','click',function(e){
@@ -1460,7 +1559,7 @@ function setupEvents(){
 
   safeStep('editor input and focus',function(){
     safeBind('#editor','input',function(e){
-      var el=e.target;if(el.matches('[data-path]')){updateSectionField(el);if(el.dataset.path.indexOf('custom.')!==0&&el.dataset.path.indexOf('references.')!==0){return}}
+      var el=e.target;if(el.matches('textarea'))autoGrowTextarea(el);if(el.matches('[data-path]')){updateSectionField(el);if(el.dataset.path.indexOf('custom.')!==0&&el.dataset.path.indexOf('references.')!==0){return}}
       if(el.matches('[data-bullet]')){var i=Number(el.dataset.index),j=Number(el.dataset.bulletIndex);var before=snapshot();state.sections.experience.items[i].bullets[j]=el.value;queueTyping(before);setDirty(true);queuePreviewRender();renderHealth()}
       if(el.matches('[data-project-bullet]')){var i2=Number(el.dataset.index),j2=Number(el.dataset.bulletIndex),before2=snapshot();state.sections.projects.items[i2].bullets[j2]=el.value;queueTyping(before2);setDirty(true);queuePreviewRender();renderHealth()}
       if(el.matches('[data-custom-bullet]')){var i3=Number(el.dataset.index),j3=Number(el.dataset.bulletIndex);var before3=snapshot();state.custom[i3].bullets[j3]=el.value;queueTyping(before3);setDirty(true);queuePreviewRender();renderHealth()}
@@ -1689,7 +1788,7 @@ function init(){
   safeStep('saved resume restore',function(){
     restoreSavedResume().then(function(result){
       safeStep('apply restored resume',function(){
-        if(result.found){renderEditor();renderPreview();renderHealth();updateTopControls();dirty=false;setSaveStatus('Saved');toast('Saved resume restored')}
+        if(result.found){renderEditor();renderPreview();renderHealth();updateTopControls();dirty=false;setSaveStatus('Saved');startGuidedResume(true);toast('Saved resume restored')}
         else if(result.corrupt){dirty=false;setSaveStatus('Not saved — Export JSON','error');toast('Saved resume was corrupted; a backup was kept and the app started safely.','error')}
         else setSaveStatus('Saved');
         restoreInProgress=false;autosaveReady=!!window.indexedDB;
