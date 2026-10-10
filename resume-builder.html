@@ -192,7 +192,7 @@ body.edit-mode #editor .design-panel{display:none!important}
 #previewPages .section-block.preview-drop-before:before,#previewPages .section-block.preview-drop-after:after{content:"";position:absolute;left:0;right:0;height:4px;border-radius:99px;background:#4f46e5;z-index:6;pointer-events:none}
 #previewPages .section-block.preview-drop-before:before{top:-4px}#previewPages .section-block.preview-drop-after:after{bottom:-4px}
 .preview-section-dragging{user-select:none!important}.section-card[data-editor-section="header"] .drag-handle,.section-card[data-editor-section="header"] .move-btn{display:none!important}
-@media print{.preview-drag-handle,#previewPages .preview-drop-before:before,#previewPages .preview-drop-after:after,#previewPages .preview-dragging-source{display:none!important}}
+@media print{.preview-drag-handle,#previewPages .preview-drop-before:before,#previewPages .preview-drop-after:after{display:none!important}#previewPages .preview-dragging-source{opacity:1!important;outline:none!important}}
 
 .quick-template,.theme-card{position:relative;transition:border-color .14s ease,box-shadow .14s ease,transform .14s ease}
 .quick-template.active,.theme-card.active{border:2px solid #4f46e5!important;border-color:#4f46e5!important;box-shadow:0 0 0 2px #4f46e526,0 5px 12px #27245a1f!important;transform:translateY(-1px)}
