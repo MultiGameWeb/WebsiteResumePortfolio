@@ -18,7 +18,6 @@
 <meta name="twitter:description" content="Create and export an ATS-friendly resume with SiteCraft's free resume builder.">
 <meta name="twitter:image" content="https://multigameweb.github.io/WebsiteResumePortfolio/preview.svg">
 <title>Resume Builder — SiteCraft</title>
-<link rel="stylesheet" href="site-navigation.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lato:wght@400;700;900&family=Merriweather:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
@@ -31,6 +30,7 @@
 }
 *{box-sizing:border-box}
 html,body{width:100%;height:100%;margin:0;overflow:hidden}
+#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}
 body{font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg)}
 button,input,textarea,select{font:inherit}
 a{color:inherit}
@@ -53,7 +53,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 @container (max-width:700px){.live-title span{display:none}.toolbar-right .btn{padding:0 9px}.theme-card{flex-basis:94px}}
 @container (max-width:559px){.preview-row.two{grid-template-columns:minmax(0,1fr) auto}.theme-nav{display:none}.theme-select{display:block}.theme-strip{padding-inline:4px}}
 @media(max-width:1599px) and (min-width:1101px){.shortcut{display:none}.topbar-right{gap:6px}.topbar-right .btn{padding:0 9px}}
-@media(max-width:1400px) and (min-width:1101px){.nav-links a{padding-left:8px;padding-right:8px}}\n@media(max-width:1100px) and (min-width:801px){.shortcut,.saved{display:none}.topbar-right .btn{padding:0 9px}}
+@media(max-width:1400px) and (min-width:1101px){.nav-links a{padding-left:8px;padding-right:8px}}
+@media(max-width:1100px) and (min-width:801px){.shortcut,.saved{display:none}.topbar-right .btn{padding:0 9px}}
 @media(max-width:899px){html,body{width:100%;max-width:100%;overflow-x:hidden}.app-shell{grid-template-columns:1fr;grid-template-rows:68px 52px minmax(0,1fr)}.topbar{grid-column:1}.nav-links a{display:none}.topbar-left{flex:1;min-width:0}.brand-copy{min-width:0}.brand-copy strong{white-space:nowrap}.topbar-right{gap:5px}.topbar-right .btn:not(#moreBtn),.topbar-right .shortcut{display:none}.more-btn{display:inline-flex!important}.mobile-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:6px;border-bottom:1px solid var(--line);background:var(--surface);grid-column:1;grid-row:2}.mobile-tabs button{border:0;background:transparent;color:var(--muted);border-radius:9px;font-weight:900;min-height:44px}.mobile-tabs button.active{background:#171b21;color:#fff}.editor{grid-column:1;grid-row:3}.preview-area{display:none;grid-column:1;grid-row:3}.mobile-preview .editor{display:none}.mobile-preview .preview-area{display:grid}.divider{display:none}.brand-copy span{display:none}.back-link{font-size:0;width:44px;padding:0}.back-link:first-letter{font-size:18px}.topbar-left .brand{margin-left:0}.preview-scroll{padding:10px;overflow-x:hidden}.preview-pages{gap:10px;width:100%}.resume-page{box-shadow:0 8px 25px rgba(23,27,33,.18)}.page-counter{font-size:12px}.tag button,.entry-btn,.drag-handle,.theme-nav,.zoom-box select,.preset-btn,.swatch,.more-menu button{min-width:44px;min-height:44px}.swatch{width:44px!important;height:44px!important}.more-menu{position:fixed;right:12px;top:58px}}
 @media(max-width:560px){.grid2,.link-row{grid-template-columns:1fr}.resume-name{font-size:22pt}.sidebar-layout{grid-template-columns:160px 1fr;gap:14px}.sidebar-col{padding:12px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.toast{transition:none}}
@@ -74,7 +75,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   @page{size:A4;margin:0}
   html,body{width:auto;height:auto;overflow:visible;background:#fff!important}
   body{margin:0}
-  .topbar,.mobile-tabs,.editor,.divider,.preview-toolbar,.preview-meta,.toast,.modal,.print-hint{display:none!important}
+  .topbar,.mobile-tabs,.mobile-bottom-bar,.editor,.editor-mode-tabs,.design-panel,.divider,.preview-toolbar,.preview-meta,.preview-page-indicator,.toast,.modal,.print-hint,#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}
   .app-shell{display:block!important;height:auto!important;overflow:visible!important}
   .preview-area{display:block!important;grid-column:auto!important;grid-row:auto!important;overflow:visible!important;background:#fff!important}
   .preview-scroll{display:block!important;overflow:visible!important;padding:0!important}
@@ -83,56 +84,264 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   .resume-page{transform:none!important;box-shadow:none!important;width:210mm!important;height:297mm!important;margin:0!important;overflow:hidden!important;page-break-after:always;break-after:page}
   .resume-page:last-child{page-break-after:auto;break-after:auto}
   .format-selected{outline:none!important}
-}</style>
-<link rel="stylesheet" href="site-navigation.css">
+}/* Isolated resume workspace */
+.editor-mode-tabs{position:sticky;top:0;z-index:25;display:flex;gap:6px;padding:10px 14px;background:rgba(238,241,245,.97);border-bottom:1px solid var(--line)}.editor-mode-tabs button{flex:1;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--muted);font-weight:800;min-height:44px}.editor-mode-tabs button.active{background:#171b21;color:#fff;border-color:#171b21}
+.design-panel{padding:12px;display:grid;gap:12px;overflow-y:auto;min-height:0}.design-panel[hidden]{display:none!important}.design-panel-heading{padding:7px 4px 0}.design-panel-heading h2{font-size:22px;line-height:1.2;margin:3px 0 5px}.design-panel-heading p{margin:0}
+.design-template-card .preview-row.two{display:block}.design-template-card .theme-strip-wrap{display:flex;align-items:center;gap:6px}.design-template-card .theme-strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 1px;flex:1}.design-template-card .theme-card{flex:0 0 118px;min-height:90px;scroll-snap-align:start}.design-template-card .theme-strip-wrap .theme-strip-wrap{flex:1;min-width:0}.design-template-card .fade-edge{display:none}.design-template-card .theme-nav{flex:0 0 40px}
+.zoom-settings-card .zoom-box{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.zoom-settings-card .zoom-label{font-weight:700;font-size:12px}.zoom-settings-card .zoom-label span{font-weight:400;color:var(--muted)}.zoom-settings-card .warning{display:inline-flex;margin-top:8px}.format-settings-panel{margin:0!important}
+.preview-area{position:relative;display:grid;grid-template-rows:minmax(0,1fr) 24px!important;min-width:0;min-height:0;overflow:hidden}.preview-scroll{grid-row:1;min-height:0;overflow:auto;scroll-behavior:smooth;overscroll-behavior:contain;scrollbar-gutter:stable;padding:12px 12px 6px}.preview-pages{min-height:100%;align-content:start}.preview-page-indicator{grid-row:2;display:flex;justify-content:flex-end;align-items:center;padding:0 14px 4px;pointer-events:none}.preview-page-indicator .page-counter{font-size:10px;line-height:1;padding:5px 8px;border-radius:999px;background:rgba(238,241,245,.92);color:#5d6672;border:1px solid rgba(200,208,216,.8)}
+body.design-mode #editor .editor-head,body.design-mode #editor .tool-grid,body.design-mode #editor #accordion{display:none!important}body.design-mode #editor .design-panel{display:grid!important}body.edit-mode #editor .design-panel{display:none!important}
+.topbar{grid-column:1/4;white-space:nowrap;flex-wrap:nowrap;min-width:0;overflow:visible}.topbar-left,.topbar-right{flex-wrap:nowrap;min-width:0;white-space:nowrap}.topbar-left{flex:1 1 auto}.topbar-right{flex:0 0 auto;gap:6px}.brand-copy strong,.brand-copy span{white-space:nowrap}.more-wrap{position:relative;flex:0 0 auto}.more-btn{display:inline-flex!important}.topbar .icon-btn{width:42px;min-width:42px;padding:0;font-size:20px}.download-pdf-btn{min-width:135px}.more-menu{z-index:999;max-height:min(70vh,500px);overflow:auto}#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}.mobile-bottom-bar{display:none}
+@media(max-width:1100px) and (min-width:900px){.brand-copy span{display:none}.download-pdf-btn{min-width:100px}.download-pdf-btn span{font-size:11px}.topbar-right{gap:4px}}
+@media(max-width:899px){.app-shell{grid-template-columns:minmax(0,1fr);grid-template-rows:60px minmax(0,1fr) 78px!important}.topbar{grid-column:1;grid-row:1;height:60px;padding:6px 8px;gap:5px}.topbar-left{flex:1 1 auto;gap:5px;overflow:hidden}.back-link{width:38px;min-width:38px;min-height:40px;padding:0;font-size:20px;border:0;background:transparent}.brand{gap:6px;margin-left:0;min-width:0}.brand-mark{width:36px;height:36px;border-radius:11px}.brand-copy strong{font-size:13px;max-width:75px;overflow:hidden;text-overflow:ellipsis}.brand-copy span{display:none}.topbar-right{gap:3px}.topbar .saved{font-size:0;gap:0;flex:0 0 auto}.topbar .saved i{width:8px;height:8px}.topbar .icon-btn{width:34px;min-width:34px;min-height:38px;font-size:18px}.download-pdf-btn{min-width:42px;width:42px;min-height:40px;padding:0;font-size:0}.download-pdf-btn span{display:none}.download-pdf-btn:before{content:"PDF";font-size:11px}.more-btn{min-width:47px;min-height:40px;padding:0 7px;font-size:11px}.editor{grid-column:1;grid-row:2;min-height:0;padding-bottom:78px}.preview-area{display:none;grid-column:1;grid-row:2;min-height:0}body.mobile-preview .editor{display:none!important}body.mobile-preview .preview-area{display:grid!important}body.mobile-preview .preview-scroll{padding:4px;overflow:auto}.divider{display:none}.editor-mode-tabs{top:0}.design-panel{padding:10px 10px 90px}.mobile-bottom-bar{position:fixed;z-index:1000;left:0;right:0;bottom:0;padding:8px max(10px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:.8fr .8fr 1.5fr;gap:8px;background:rgba(255,255,255,.96);border-top:1px solid var(--line);box-shadow:0 -8px 25px rgba(0,0,0,.08);backdrop-filter:blur(14px)}.mobile-bottom-bar button{min-width:0;min-height:46px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;padding:0 8px}.mobile-bottom-bar button.active{background:#171b21;color:#fff;border-color:#171b21}.mobile-bottom-bar #mobileDownloadPdfBtn{background:#171b21;color:#fff;border-color:#171b21}.app-shell.full-preview-mode{grid-template-rows:60px minmax(0,1fr)!important}.app-shell.full-preview-mode .preview-area{grid-row:2!important}.app-shell.full-preview-mode~.mobile-bottom-bar{display:none}}
+body.full-resume-preview .mobile-bottom-bar,body.welcome-mode .mobile-bottom-bar,body.download-step .mobile-bottom-bar{display:none!important}
+@media(max-width:390px){.topbar{padding-inline:5px;gap:3px}.topbar-right{gap:2px}.topbar .icon-btn{width:30px;min-width:30px}.more-btn{min-width:42px;padding-inline:5px}.brand-copy strong{max-width:63px;font-size:12px}.topbar-left .back-link{width:30px;min-width:30px}.editor-mode-tabs{padding:8px}.section-head{gap:5px}.section-main-toggle{min-width:0}.tag{gap:3px}.tag button{width:28px;min-width:28px;height:28px;min-height:28px;padding:0}}
+@media print{.editor-mode-tabs,.design-panel,.mobile-bottom-bar,.preview-page-indicator,#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}}
+
+/* Guided first-time journey */
+.guided-wizard{margin:12px 14px 16px;display:grid;gap:12px}
+.guided-wizard[hidden],[hidden].guided-step-panel,[hidden].guided-download-panel{display:none!important}
+.welcome-step,.guided-step-panel,.guided-download-panel,.guided-role-search{border:1px solid var(--line);border-radius:18px;background:#fff;padding:18px;box-shadow:0 4px 16px rgba(18,28,42,.035)}
+.wizard-kicker,.eyebrow{margin:0;color:#5b50b7;font-size:10px;font-weight:900;letter-spacing:.13em}
+.welcome-step h2,.guided-download-panel h2{margin:5px 0 7px;font-size:25px;line-height:1.15;letter-spacing:-.035em}
+.wizard-intro{margin:0 0 16px;color:var(--muted);font-size:13px}
+.welcome-step h3{font-size:14px;margin:0 0 10px}
+.choice-grid{display:grid;gap:8px;grid-template-columns:1fr}
+.profession-choice{display:grid;grid-template-columns:36px minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px;min-height:68px;color:var(--text)}
+.profession-choice .choice-icon{grid-row:1/3;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:#f0ecff;color:#5b50b7;font-size:18px}
+.profession-choice strong{font-size:13px;line-height:1.25}.profession-choice span:last-child{font-size:11px;font-weight:500;color:var(--muted)}
+.profession-choice.active{border-color:#8a7ee7;background:#f8f6ff;box-shadow:0 0 0 2px rgba(117,99,221,.1)}
+.ats-explainer{margin:14px 0 12px;color:var(--muted);font-size:11px;line-height:1.55}
+.wizard-start{width:100%;min-height:48px}
+.guided-role-search{display:grid;gap:8px}
+.guided-role-search label{display:grid;gap:3px;font-size:13px}
+.guided-role-search label .help{font-size:11px;font-weight:400}
+.guided-role-search input{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line2);border-radius:12px;background:#fff;color:var(--text);font-size:16px}
+.role-match-list,.role-suggestions{display:flex;flex-wrap:wrap;gap:7px}
+.role-match-list button,.suggestion-chip{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:#f8f8fb;color:var(--text);font-size:12px;font-weight:700}
+.role-match-list button[aria-pressed="true"]{border-color:#887be3;background:#f1eeff}
+.role-suggestions{align-items:flex-start}
+.suggestion-group{display:grid;gap:6px;width:100%}
+.suggestion-group strong{font-size:11px;color:var(--muted)}
+.suggestion-chip{min-height:38px;background:#fff}
+.suggestion-chip[data-suggest-bullet]{border-radius:10px;text-align:left;justify-content:flex-start;max-width:100%;white-space:normal}
+.text-button{border:0;background:transparent;color:#5347b7;font-size:12px;font-weight:800;text-align:left;min-height:40px;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
+.guided-progress-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.guided-progress-heading span{color:#6559bb;font-size:10px;font-weight:900;letter-spacing:.1em}
+.guided-progress-heading strong{font-size:17px}
+.guided-step-panel progress{display:block;width:100%;height:7px;margin:10px 0 12px;accent-color:#6559bb}
+.guided-step-help{margin:0 0 13px;color:var(--muted);font-size:12px;line-height:1.6}
+.guided-nav{display:grid;grid-template-columns:.7fr 1.3fr;gap:8px}
+.guided-nav button{min-height:46px}
+.advanced-toggle{min-height:42px;width:100%;border:1px dashed var(--line2);border-radius:12px;background:#f8f9fb;color:var(--muted);font-size:12px;font-weight:800}
+.advanced-note{margin:0;font-size:11px}
+.guided-download-panel{text-align:left}
+.guided-download-panel p{color:var(--muted);font-size:13px;line-height:1.65}
+.download-check{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#e8f7ef;color:#15804b;font-size:22px}
+body.welcome-mode #editor .editor-head,body.welcome-mode #editor .tool-grid,body.welcome-mode #editor #accordion{display:none!important}
+body.welcome-mode #editor #guidedRoleSearch{display:none!important}
+body.welcome-mode #editor #guidedStepPanel,body.welcome-mode #editor #guidedDownloadPanel{display:none!important}
+body.guided-running #editor #welcomeStep{display:none!important}
+body.guided-running #editor #guidedStepPanel[hidden],body.guided-running #editor #guidedDownloadPanel[hidden]{display:none!important}
+body.guided-running #editor .editor-head,body.guided-running #editor .tool-grid,body.guided-running #editor #accordion{display:block}
+body.guided-running #editor .tool-grid{display:none!important}
+body.design-mode #editor .guided-wizard{margin:8px 12px}
+body.design-mode #editor .guided-wizard #welcomeStep,body.design-mode #editor .guided-role-search{display:none!important}
+body.design-mode #editor #guidedStepPanel{display:block!important}
+@media(min-width:700px){.choice-grid{grid-template-columns:1fr}.welcome-step,.guided-step-panel,.guided-download-panel,.guided-role-search{padding:20px}.guided-wizard{margin:16px}}
+@media(max-width:899px){
+ .guided-wizard{margin:10px 10px 14px}
+ .welcome-step,.guided-step-panel,.guided-download-panel,.guided-role-search{padding:15px}
+ .welcome-step h2,.guided-download-panel h2{font-size:23px}
+ .profession-choice{min-height:68px}
+ .role-match-list button,.suggestion-chip{min-height:44px;font-size:13px}
+ .guided-step-panel,.guided-download-panel{margin-bottom:4px}
+ body.design-mode #editor .guided-wizard{padding-bottom:6px}
+}
+
+
+.role-example{display:grid;gap:12px;border:1px solid #e0dcf8;border-radius:12px;background:#faf9ff;padding:12px}.role-example[hidden]{display:none!important}.role-example p{margin:5px 0;color:var(--muted);font-size:12px;line-height:1.6;overflow-wrap:anywhere}.role-example strong{font-size:12px}
+.guided-role-search select{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line2);border-radius:12px;background:#fff;color:var(--text);font-size:16px}
+
+
+/* First-run guidance, profession-neutral controls and small-screen field usability */
+body.welcome-mode #editor .editor-head,body.welcome-mode #editor .tool-grid,body.welcome-mode #editor #accordion{display:none!important}
+body.guided-running #editor .editor-head,body.guided-running #editor .tool-grid{display:none!important}
+body.guided-running.advanced-mode #editor .tool-grid{display:grid!important}
+body.advanced-mode #editor .tool-grid .health,body.advanced-mode #editor .tool-grid .keyword-box{display:block!important}
+body.advanced-mode #editor .more-sections-menu{display:block}
+.tool-grid>.surface-card:first-child{display:none!important}
+.section-card[hidden]{display:none!important}
+.more-sections-menu{margin:10px 0 14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.7);overflow:hidden}
+.more-sections-menu>summary{display:flex;align-items:center;min-height:48px;padding:12px 14px;cursor:pointer;font-size:13px;font-weight:900;color:#5146ac;list-style:none}
+.more-sections-menu>summary::-webkit-details-marker{display:none}
+.more-sections-menu>summary:after{content:"+";margin-left:auto;font-size:20px}.more-sections-menu[open]>summary:after{content:"−"}
+.more-sections-menu>.help{padding:0 14px;margin:0 0 10px;font-size:11px}
+.more-sections-content{padding:0 9px 10px;display:grid;gap:9px}
+.section-options{position:relative;flex:0 0 auto}
+.section-options>summary{display:grid;place-items:center;width:38px;min-width:38px;height:38px;min-height:38px;padding:0;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-size:15px;font-weight:900;list-style:none}
+.section-options>summary::-webkit-details-marker{display:none}
+.section-options[open]>summary{background:#f1efff;border-color:#b6acef}
+.section-options>button,.section-options>.entry-btn,.section-options>.show-toggle{display:inline-flex;margin:4px}
+.section-actions{position:relative;display:flex;align-items:center;gap:4px}
+.section-actions>.section-options[open]{position:absolute;z-index:35;right:0;top:0;display:flex;align-items:center;gap:3px;max-width:min(84vw,320px);flex-wrap:wrap;justify-content:flex-end;padding:5px;border:1px solid var(--line);border-radius:12px;background:#fff;box-shadow:0 12px 28px rgba(10,20,35,.14)}
+.section-actions>.section-options[open]>summary{order:9}
+.section-actions>.section-options:not([open])>*:not(summary){display:none}
+textarea{min-height:100px;line-height:1.55;resize:vertical;overflow-wrap:anywhere}
+.bullet-row textarea{min-height:100px;width:100%;max-width:100%;font-size:15px}
+.tag-list{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px;max-width:100%}
+.tag{display:inline-flex;align-items:center;gap:8px;max-width:100%;min-width:0;padding:5px 7px 5px 10px;white-space:normal;overflow-wrap:anywhere}
+.tag button{display:grid;place-items:center;flex:0 0 36px;width:36px;min-width:36px;height:36px;min-height:36px;padding:0;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--text)}
+.section-main-toggle{min-width:0}.section-label{min-width:0}.section-label strong,.section-label span{overflow-wrap:anywhere}
+.step-note{margin:0 0 12px;padding:11px 12px;background:#f8f7ff;border:1px solid #e2def8;border-radius:12px;color:#615b73;font-size:12px;line-height:1.6}
+body.download-step #editor .editor-head,body.download-step #editor .tool-grid,body.download-step #editor #accordion{display:none!important}
+.resume-name{overflow-wrap:anywhere;word-break:normal;max-width:100%;min-width:0}
+.resume-header,.resume-header>div{min-width:0;max-width:100%}
+.template-classic .sidebar-layout{display:block!important;grid-template-columns:minmax(0,1fr)!important}
+.template-classic .sidebar-col{display:none!important}
+.template-classic .main-col{min-width:0;width:100%}
+@media(max-width:899px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden}
+ .app-shell{min-width:0;width:100%}
+ #editor{min-width:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain}
+ #editor input,#editor select,#editor textarea,#guidedWizard input,#guidedWizard select{font-size:16px!important;max-width:100%}
+ #editor button,#guidedWizard button{touch-action:manipulation}
+ .section-head{display:flex;align-items:center;gap:8px;padding:10px}
+ .section-main-toggle{flex:1 1 auto;min-width:0;padding:0}
+ .section-actions{flex:0 0 auto}
+ .section-actions>.section-options[open]{right:0;top:0}
+ .section-options>summary{width:40px;height:40px;min-width:40px;min-height:40px}
+ .tag button{flex-basis:40px;width:40px;min-width:40px;height:40px;min-height:40px}
+ .bullet-row{grid-template-columns:minmax(0,1fr) auto;gap:7px}
+ .bullet-row>div{min-width:0}
+ .mobile-bottom-bar{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+ .guided-wizard{margin-inline:8px}
+ .guided-role-search input,.guided-role-search select{min-height:48px}
+ .more-sections-menu>summary{min-height:50px}
+}
+@media(max-width:390px){
+ .topbar{overflow:hidden}
+ .topbar-left{max-width:45%}
+ .topbar-right{max-width:55%}
+ .section-head{padding:8px;gap:5px}
+ .section-icon{flex:0 0 30px;width:30px;height:30px}
+ .section-label strong{font-size:12px}
+ .section-label span{font-size:10px}
+ .section-options>summary{width:38px;height:38px;min-width:38px;min-height:38px}
+}
+
+
+/* Validation refinements */
+body.design-mode #editor .guided-wizard #guidedStepPanel{display:block!important}
+body.download-step #editor .guided-download-panel{display:grid!important}
+.role-match-list .help{display:block;width:100%;padding:4px 0}
+
+
+/* Tap-safe removable skill chips and one writing tip per section */
+.tag-list{display:flex;align-items:flex-start;flex-wrap:wrap;gap:8px;max-width:100%;min-width:0}
+.tag{display:inline-flex;align-items:center;gap:8px;max-width:100%;min-width:0;padding:5px 7px 5px 10px;white-space:normal;overflow-wrap:anywhere}
+.tag button{display:grid;place-items:center;flex:0 0 44px!important;width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important;padding:0;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text)}
+@media(max-width:390px){.tag button{flex-basis:44px!important;width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important}}
+
+
+@media(max-width:899px){
+ .design-template-card .theme-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;overflow:visible}
+ .design-template-card .theme-card{width:100%;min-width:0;min-height:82px}
+ .design-template-card .theme-strip-wrap>.theme-nav{display:none}
+ .design-template-card .theme-strip-wrap>.theme-strip-wrap{width:100%;min-width:0}
+ .design-template-card .fade-edge{display:none}
+}
+
+
+.optional-fields{margin-top:10px;border:1px solid var(--line);border-radius:12px;background:#fbfcfe;overflow:hidden}
+.optional-fields>summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:10px 12px;cursor:pointer;color:#5146ac;font-size:12px;font-weight:800;list-style:none}
+.optional-fields>summary::-webkit-details-marker{display:none}
+.optional-fields>summary:after{content:"+";margin-left:auto;font-size:18px}.optional-fields[open]>summary:after{content:"−"}
+.optional-fields-content{padding:10px 12px 12px;display:grid;gap:9px}
+
+@media(max-width:899px){body.welcome-mode .app-shell,body.download-step .app-shell{grid-template-rows:60px minmax(0,1fr)!important}}
+</style>
+
 </head>
-<body class="sc-workspace-page">
+<body class="sc-workspace-page edit-mode welcome-mode">
 <div class="app-shell" id="appShell">
-<header class="topbar">
-  <div class="topbar-left">
-    <a class="back-link" href="index.html" data-nav="index.html" aria-label="Back to Home">← <span>Back to Home</span></a>
-    <a class="brand" href="resume-builder.html" aria-label="Resume Builder Home"><span class="brand-mark">▤</span><span class="brand-copy"><strong>Resume Builder</strong><span>ATS-friendly resumes, built in your browser</span></span></a>
-    <nav class="nav-links" aria-label="Primary"><a href="templates.html" data-nav="templates.html">Templates</a><a href="portfolio-creator.html" data-nav="portfolio-creator.html">Portfolio Creator</a></nav>
-  </div>
-  <div class="topbar-right">
-    <div class="more-wrap">
-      <button class="btn soft more-btn" id="moreBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="moreMenu">More</button>
-      <div class="more-menu" id="moreMenu" role="menu" hidden>
-        <button type="button" role="menuitem" data-more-action="undo">Undo</button>
-        <button type="button" role="menuitem" data-more-action="redo">Redo</button>
-        <button type="button" role="menuitem" data-more-action="pdf">Download PDF</button>
-        <button type="button" role="menuitem" data-more-action="html">Download HTML</button>
-        <button type="button" role="menuitem" data-more-action="import">Import JSON</button>
-        <button type="button" role="menuitem" data-more-action="export">Export JSON</button>
-        <button type="button" role="menuitem" data-more-action="portfolio">Import from Portfolio</button>
-        <button type="button" role="menuitem" data-more-action="fit">Fit to 1 page</button>
-        <button type="button" role="menuitem" data-more-action="reset">Reset</button>
-      </div>
-    </div>
-    <button class="btn soft full-preview-btn" id="fullPreviewBtn" type="button" aria-pressed="false" title="Expand the resume preview">⛶ Full Preview</button>
-    <div class="saved" id="savedStatus"><i></i><span>Saved</span></div>
-    <span class="shortcut"><span class="kbd">Ctrl+S</span> HTML</span>
-    <button class="btn soft" id="undoBtn" type="button">↶ Undo</button>
-    <button class="btn soft" id="redoBtn" type="button">↷ Redo</button>
-    <button class="btn soft" id="downloadPdfBtn" type="button">↓ Download PDF</button>
-    <button class="btn primary" id="downloadHtmlBtn" type="button">↓ Download HTML</button>
-    <label class="btn soft">↥ Import JSON<input id="importJson" type="file" accept="application/json" hidden></label>
-    <button class="btn soft" id="exportJsonBtn" type="button">↗ Export JSON</button>
-    <button class="btn soft" id="importPortfolioBtn" type="button">↟ Import from Portfolio</button>
-    <input id="portfolioImportJson" type="file" accept="application/json" hidden>
-    <button class="btn danger" id="resetBtn" type="button">Reset</button>
-  </div>
-</header>
-<div class="mobile-tabs" id="mobileTabs" role="tablist"><button id="editTab" class="active" type="button" role="tab">Edit</button><button id="previewTab" type="button" role="tab">Preview</button></div>
+<header class="topbar" aria-label="Resume builder controls"><div class="topbar-left"><a class="back-link" href="index.html" data-nav="index.html" aria-label="Back to home"><span aria-hidden="true">←</span></a><a class="brand" href="resume-builder.html" aria-label="Resume Builder home"><span class="brand-mark" aria-hidden="true">▤</span><span class="brand-copy"><strong>Resume Builder</strong><span>Create a professional resume</span></span></a></div><div class="topbar-right"><div class="saved" id="savedStatus"><i></i><span>Saved</span></div><button class="btn soft icon-btn" id="undoBtn" type="button" aria-label="Undo" title="Undo">↶</button><button class="btn soft icon-btn" id="redoBtn" type="button" aria-label="Redo" title="Redo">↷</button><button class="btn primary download-pdf-btn" id="downloadPdfBtn" type="button" aria-label="Download PDF">↓ <span>Download PDF</span></button><div class="more-wrap"><button class="btn soft more-btn" id="moreBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="moreMenu">More <span aria-hidden="true">⌄</span></button><div class="more-menu" id="moreMenu" role="menu" hidden><button id="fullPreviewBtn" type="button" role="menuitem" data-more-action="fullPreview" aria-pressed="false">⛶ Full preview</button><button type="button" role="menuitem" data-more-action="design">Design settings</button><button type="button" role="menuitem" data-more-action="html">Download HTML</button><button type="button" role="menuitem" data-more-action="import">Import JSON</button><button type="button" role="menuitem" data-more-action="export">Export JSON</button><button type="button" role="menuitem" data-more-action="portfolio">Import from Portfolio</button><button type="button" role="menuitem" data-more-action="reset">Reset resume</button></div></div><button class="btn soft" id="downloadHtmlBtn" type="button" hidden>Download HTML</button><input id="importJson" type="file" accept="application/json" hidden><button id="exportJsonBtn" type="button" hidden>Export JSON</button><button id="importPortfolioBtn" type="button" hidden>Import from Portfolio</button><input id="portfolioImportJson" type="file" accept="application/json" hidden><button class="btn danger" id="resetBtn" type="button" hidden>Reset</button></div></header>
+
 
 <aside class="editor" id="editor" aria-label="Resume editor">
-  <div class="editor-head">
-    <div><div class="help">SITECRAFT · RESUME STUDIO</div><h1>Build an ATS-friendly resume</h1><p>Your resume is autosaved locally when browser storage is available.</p></div>
-    
-  </div>
+<div class="editor-mode-tabs" role="tablist" aria-label="Resume workspace"><button id="editModeBtn" type="button" role="tab" class="active" aria-selected="true">Build resume</button><button id="designModeBtn" type="button" role="tab" aria-selected="false">Design</button></div>
+<section class="guided-wizard" id="guidedWizard" aria-label="Guided resume builder">
+  <section id="welcomeStep" class="welcome-step">
+    <p class="wizard-kicker">FREE RESUME BUILDER · ABOUT 5 MINUTES</p>
+    <h2>Let’s make your resume</h2>
+    <p class="wizard-intro">We’ll take this one step at a time. You can change anything later.</p>
+    <h3>What best describes you?</h3>
+    <div class="choice-grid">
+      <button type="button" data-start-profession="student_fresher" class="profession-choice active"><span class="choice-icon">✦</span><strong>Student / Fresher</strong><span>No full-time experience yet</span></button>
+      <button type="button" data-start-profession="experienced" class="profession-choice"><span class="choice-icon">↗</span><strong>Experienced professional</strong><span>Show the work you’ve done</span></button>
+      <button type="button" data-start-profession="career_change" class="profession-choice"><span class="choice-icon">◎</span><strong>Changing careers</strong><span>Highlight transferable skills</span></button>
+    </div>
+    <p class="ats-explainer"><strong>ATS-friendly</strong> means easy for hiring systems to read. We’ll start with a clean, simple layout.</p>
+    <button type="button" class="btn primary wizard-start" id="startResumeBtn">Start my resume <span aria-hidden="true">→</span></button>
+  </section>
+  <div class="guided-role-search" id="guidedRoleSearch">
+    <label for="professionSelect"><strong>Profession area</strong> <span class="help">Choose the closest match</span></label>
+    <select id="professionSelect">
+      <option value="">Choose a profession area</option><option value="student_fresher">Student / Fresher · any stream</option><option value="teacher_education">Teaching / Education</option><option value="sales_marketing">Sales / Marketing</option><option value="accounts_finance">Accounts / Finance / Banking</option><option value="healthcare">Healthcare / Nursing / Lab / Pharmacy</option><option value="customer_support">Customer Support / BPO</option><option value="it_software">IT / Software</option><option value="engineering">Engineering / Technical</option><option value="office_admin_hr">Office / Admin / HR</option><option value="retail_hospitality">Retail / Hospitality / Restaurant</option><option value="skilled_trades_drivers">Skilled Trades / Drivers</option><option value="creative_freelance">Creative / Freelance</option>
+    </select>
+    <label for="roleSearch"><strong>Your role</strong> <span class="help">Optional — get matching skill ideas</span></label>
+    <input id="roleSearch" type="search" autocomplete="off" placeholder="e.g. primary teacher, accountant, electrician">
 
-  <div class="surface-card format-settings-panel">
-    <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><strong>Resume formatting</strong><span class="help">Font, spacing &amp; header alignment</span></div>
+    <div class="role-match-list" id="roleMatchList" aria-live="polite"></div>
+    <div class="role-suggestions" id="roleSuggestions" aria-label="Suggested skills and bullet starters"></div>
+    <button type="button" id="seeExampleBtn" class="text-button">See an example for this role</button>
+    <span class="help" id="exampleStatus" aria-live="polite"></span>
+    <div class="role-example" id="roleExample" hidden>
+      <div><strong>Example summary</strong><p id="roleExampleSummary"></p><button type="button" id="useExampleSummaryBtn" class="text-button">Use this summary</button></div>
+      <div><strong>Example achievement</strong><p id="roleExampleBullet"></p><button type="button" id="addExampleBulletBtn" class="text-button">Add this bullet</button></div>
+    </div>
+  </div>
+  <section class="guided-step-panel" id="guidedStepPanel" hidden>
+    <div class="guided-progress-heading"><span id="guidedStepCount">STEP 1 OF 7</span><strong id="guidedStepTitle">Basics</strong></div>
+    <progress id="guidedProgress" max="7" value="1">1 of 7</progress>
+    <p class="guided-step-help" id="guidedStepHelp">Start with your name and the best way for an employer to contact you.</p>
+    <div class="guided-nav">
+      <button type="button" id="wizardBackBtn" class="btn soft" disabled>← Back</button>
+      <button type="button" id="wizardNextBtn" class="btn primary">Next: Summary →</button>
+    </div>
+    <button type="button" id="advancedToggleBtn" class="advanced-toggle" aria-expanded="false">Advanced options</button>
+    <p class="help advanced-note" id="advancedNote" hidden>Advanced options show every section, resume health and keyword tools.</p>
+  </section>
+  <section class="guided-download-panel" id="guidedDownloadPanel" hidden>
+    <span class="download-check" aria-hidden="true">✓</span>
+    <h2>Your resume is ready to review</h2>
+    <p>Check the page on the right, then download a PDF. You can come back to any step to make changes.</p>
+    <button type="button" id="downloadFromGuideBtn" class="btn primary">↓ Download PDF</button>
+    <button type="button" id="backToSkillsBtn" class="text-button">← Back to Skills</button>
+  </section>
+</section>
+<section class="design-panel" id="designPanel" aria-label="Resume design settings" hidden><div class="design-panel-heading"><p class="eyebrow">MAKE IT YOURS</p><h2>Choose your design</h2><p class="help">Pick a layout, then adjust the details below.</p></div><div class="surface-card design-template-card"><div class="subhead"><strong>Resume layout</strong><span class="help">Choose one</span></div><div class="preview-row two"><div class="theme-strip-wrap"><button class="theme-nav" id="themePrev" type="button" aria-label="Previous template">‹</button><div class="theme-strip-wrap"><span class="fade-edge left"></span><div class="theme-strip" id="themeStrip" role="group" aria-label="Resume templates"><button class="theme-card active" data-template="classic" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Classic ATS</strong></button><button class="theme-card" data-template="modern" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Modern</strong></button><button class="theme-card" data-template="compact" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Compact</strong></button><button class="theme-card" data-template="sidebar" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Sidebar</strong></button></div><span class="fade-edge right"></span></div><button class="theme-nav" id="themeNext" type="button" aria-label="Next template">›</button></div></div></div><div class="surface-card">
+      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Page settings</strong><span class="help">Paper &amp; layout</span></div>
+      <div class="setting-grid" style="margin-top:10px">
+        <div class="field"><label for="paperSelect">Paper</label><select id="paperSelect"><option value="A4">A4</option><option value="Letter">US Letter</option></select></div>
+        <div class="field"><label for="goalSelect">Page goal</label><select id="goalSelect"><option value="one">1 page</option><option value="two">2+ pages okay</option></select></div>
+        <div class="field"><label for="marginSelect">Margins</label><select id="marginSelect"><option value="narrow">Narrow</option><option value="normal">Normal</option><option value="wide">Wide</option></select></div>
+      </div>
+      <div class="setting-grid" style="margin-top:10px">
+        <div class="field"><label for="fontSelect">Font</label><select id="fontSelect"><option>Inter</option><option>Source Serif</option><option>Lato</option><option>Merriweather</option></select></div>
+        <div class="field"><label for="fontSizeSelect">Base size</label><select id="fontSizeSelect"><option value="8">8 pt</option><option value="8.5">8.5 pt</option><option value="9">9 pt</option><option value="9.5">9.5 pt</option><option value="10">10 pt</option><option value="10.5">10.5 pt</option><option value="11">11 pt</option><option value="11.5">11.5 pt</option><option value="12">12 pt</option><option value="12.5">12.5 pt</option><option value="13">13 pt</option><option value="13.5">13.5 pt</option><option value="14">14 pt</option></select></div>
+        <div class="field"><label for="lineSelect">Line spacing</label><select id="lineSelect"><option value="1.15">Tight</option><option value="1.25">Normal</option><option value="1.4">Relaxed</option></select></div>
+        <div class="field"><label for="dateSelect">Date format</label><select id="dateSelect"><option value="DD MMM YYYY">15 Jan 2026</option><option value="MMM DD, YYYY">Jan 15, 2026</option><option value="DD/MM/YYYY">15/01/2026</option><option value="MM/YYYY">01/2026</option><option value="MMM YYYY">Jan 2026</option><option value="YYYY">2026</option></select></div><div class="field"><label for="linkDisplaySelect">Link display</label><select id="linkDisplaySelect"><option value="full">Full URL</option><option value="domain">Domain only</option></select></div>
+      </div>
+      <div class="setting-grid" style="margin-top:10px">
+        <div class="field"><label>Accent</label><div style="display:flex;align-items:center;gap:8px"><input id="accentPicker" type="color" value="#334155" aria-label="Custom accent color" style="width:44px;padding:2px"><div id="accentSwatches" style="display:flex;gap:6px;flex-wrap:wrap"></div></div></div>
+        <div class="field"><label for="dividerSelect">Section divider</label><select id="dividerSelect"><option value="rule">Thin rule</option><option value="bold">Bold rule</option><option value="none">No rule</option><option value="box">Soft box</option></select></div>
+        <div class="field"><label>Icons</label><button class="btn soft" id="iconsToggle" type="button" aria-pressed="true">Icons: On</button></div>
+        <div class="field"><label>Photo</label><button class="btn soft" id="photoToggle" type="button" aria-pressed="false">Photo: Off</button></div>
+      </div>
+      <div class="resume-note" style="margin-top:10px">Tip: many ATS systems parse text more reliably when a resume has no photo.</div>
+    </div><div class="surface-card format-settings-panel">
+    <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><strong>Resume formatting</strong><span class="help">Fonts, spacing and header alignment</span></div>
     <button class="btn soft format-toolbar-toggle" id="toggleFormatToolbar" type="button" aria-controls="formatToolbar" aria-expanded="false">Show formatting settings</button>
     <div class="format-toolbar" id="formatToolbar" aria-label="Preview formatting" hidden>
       <div class="format-scope"><strong id="formatScopeLabel">All resume</strong><span id="formatScopeHelp">Global print formatting</span></div>
@@ -153,39 +362,25 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
       </div>
       <button class="btn soft" id="formatResetAll" type="button">Reset formatting</button>
     </div>
+  </div><div class="surface-card zoom-settings-card"><div class="subhead"><strong>Preview size</strong><span class="help">Only affects your screen, not your PDF</span></div><div class="zoom-box"><span class="zoom-label">View zoom <span>(does not change print size)</span></span><select id="zoomSelect" aria-label="View zoom (does not change print size)"><option value="25">25%</option><option value="30">30%</option><option value="35">35%</option><option value="40">40%</option><option value="45">45%</option><option value="50">50%</option><option value="55">55%</option><option value="65">65%</option><option value="70">70%</option><option value="80">80%</option><option value="85">85%</option><option value="60">60%</option><option value="75">75%</option><option value="90">90%</option><option value="100" selected>100%</option><option value="110">110%</option><option value="125">125%</option><option value="150">150%</option></select><button class="btn soft" id="fitWidthBtn" type="button">Fit width</button><button class="btn soft" id="fitOnePageBtn" type="button">Fit to 1 page</button></div><span class="warning" id="onePageWarning">Content exceeds 1 page</span></div></section>
+  <div class="editor-head">
+    <div><div class="help">SITECRAFT · RESUME STUDIO</div><h1>Build your resume</h1><p>Your resume is autosaved locally when browser storage is available.</p></div>
+    
   </div>
+
+  
   <div class="tool-grid">
     <div class="surface-card">
-      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Experience preset</strong><span class="help">Sets section order + sample data</span></div>
+      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Experience preset</strong><span class="help">Suggests a section order. No sample personal data is added.</span></div>
       <div class="width-presets" id="presetGroup" style="margin-top:8px">
         <button class="preset-btn" data-preset="Fresher" type="button">Fresher</button>
         <button class="preset-btn active" data-preset="Experienced" type="button">Experienced</button>
         <button class="preset-btn" data-preset="Career change" type="button">Career change</button>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:9px"><button class="btn soft" id="startEmptyBtn" type="button">Start empty</button><span class="help" style="align-self:center">Demo data is a safe starting point; replace it with yours.</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:9px"><button class="btn soft" id="startEmptyBtn" type="button">Start empty</button><span class="help" style="align-self:center">Choose a section order, then add your own details.</span></div>
     </div>
 
-    <div class="surface-card">
-      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Page settings</strong><span class="help">Paper &amp; layout</span></div>
-      <div class="setting-grid" style="margin-top:10px">
-        <div class="field"><label for="paperSelect">Paper</label><select id="paperSelect"><option value="A4">A4</option><option value="Letter">US Letter</option></select></div>
-        <div class="field"><label for="goalSelect">Page goal</label><select id="goalSelect"><option value="one">1 page</option><option value="two">2+ pages okay</option></select></div>
-        <div class="field"><label for="marginSelect">Margins</label><select id="marginSelect"><option value="narrow">Narrow</option><option value="normal">Normal</option><option value="wide">Wide</option></select></div>
-      </div>
-      <div class="setting-grid" style="margin-top:10px">
-        <div class="field"><label for="fontSelect">Font</label><select id="fontSelect"><option>Inter</option><option>Source Serif</option><option>Lato</option><option>Merriweather</option></select></div>
-        <div class="field"><label for="fontSizeSelect">Base size</label><select id="fontSizeSelect"><option value="8">8 pt</option><option value="8.5">8.5 pt</option><option value="9">9 pt</option><option value="9.5">9.5 pt</option><option value="10">10 pt</option><option value="10.5">10.5 pt</option><option value="11">11 pt</option><option value="11.5">11.5 pt</option><option value="12">12 pt</option><option value="12.5">12.5 pt</option><option value="13">13 pt</option><option value="13.5">13.5 pt</option><option value="14">14 pt</option></select></div>
-        <div class="field"><label for="lineSelect">Line spacing</label><select id="lineSelect"><option value="1.15">Tight</option><option value="1.25">Normal</option><option value="1.4">Relaxed</option></select></div>
-        <div class="field"><label for="dateSelect">Date format</label><select id="dateSelect"><option value="DD MMM YYYY">15 Jan 2026</option><option value="MMM DD, YYYY">Jan 15, 2026</option><option value="DD/MM/YYYY">15/01/2026</option><option value="MM/YYYY">01/2026</option><option value="MMM YYYY">Jan 2026</option><option value="YYYY">2026</option></select></div><div class="field"><label for="linkDisplaySelect">Link display</label><select id="linkDisplaySelect"><option value="full">Full URL</option><option value="domain">Domain only</option></select></div>
-      </div>
-      <div class="setting-grid" style="margin-top:10px">
-        <div class="field"><label>Accent</label><div style="display:flex;align-items:center;gap:8px"><input id="accentPicker" type="color" value="#334155" aria-label="Custom accent color" style="width:44px;padding:2px"><div id="accentSwatches" style="display:flex;gap:6px;flex-wrap:wrap"></div></div></div>
-        <div class="field"><label for="dividerSelect">Section divider</label><select id="dividerSelect"><option value="rule">Thin rule</option><option value="bold">Bold rule</option><option value="none">No rule</option><option value="box">Soft box</option></select></div>
-        <div class="field"><label>Icons</label><button class="btn soft" id="iconsToggle" type="button" aria-pressed="true">Icons: On</button></div>
-        <div class="field"><label>Photo</label><button class="btn soft" id="photoToggle" type="button" aria-pressed="false">Photo: Off</button></div>
-      </div>
-      <div class="resume-note" style="margin-top:10px">Tip: many ATS systems parse text more reliably when a resume has no photo.</div>
-    </div>
+    
 
     <div class="surface-card health" id="healthPanel">
       <div class="health-score"><div><div class="help">Resume health</div><strong id="healthScore">0%</strong></div><span id="pageHealth" class="help">Page count —</span></div>
@@ -206,17 +401,11 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 
 <div class="divider" id="divider" role="separator" aria-orientation="vertical" aria-label="Resize editor and preview" tabindex="0" aria-valuemin="320" aria-valuemax="760" aria-valuenow="410"></div>
 
-<main class="preview-area" id="previewArea" aria-label="Live resume preview">
-  <div class="preview-toolbar">
-    <div class="preview-row one"><div class="live-title"><strong>Live preview</strong><span id="previewSubtitle">Your resume updates as you type.</span></div></div>
-    <div class="preview-row two"><div class="theme-strip-wrap"><button class="theme-nav" id="themePrev" type="button" aria-label="Previous template">‹</button><div class="theme-strip-wrap"><span class="fade-edge left"></span><div class="theme-strip" id="themeStrip" role="group" aria-label="Resume templates"><button class="theme-card active" data-template="classic" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Classic ATS</strong></button><button class="theme-card" data-template="modern" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Modern</strong></button><button class="theme-card" data-template="compact" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Compact</strong></button><button class="theme-card" data-template="sidebar" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Sidebar</strong></button></div><span class="fade-edge right"></span></div><button class="theme-nav" id="themeNext" type="button" aria-label="Next template">›</button></div><select class="theme-select" id="themeSelectCompact" aria-label="Template"><option value="classic">Classic ATS</option><option value="modern">Modern</option><option value="compact">Compact</option><option value="sidebar">Sidebar</option></select><div class="toolbar-right"><select class="select" id="previewTemplateSelect" aria-label="Preview template"><option value="classic">Classic ATS</option><option value="modern">Modern</option><option value="compact">Compact</option><option value="sidebar">Sidebar</option></select></div></div>
-    
-    <div class="preview-meta preview-meta-bar"><span class="page-counter" id="pageCounter">Page 1 of 1</span><div class="zoom-box"><span class="zoom-label">View zoom <span>(does not change print size)</span></span><select id="zoomSelect" aria-label="View zoom (does not change print size)"><option value="50">50%</option><option value="60">60%</option><option value="75">75%</option><option value="90">90%</option><option value="100" selected>100%</option><option value="110">110%</option><option value="125">125%</option><option value="150">150%</option></select><button class="btn soft" id="fitWidthBtn" type="button">Fit width</button><button class="btn soft" id="fitOnePageBtn" type="button">Fit to 1 page</button></div><span class="warning" id="onePageWarning">Content exceeds 1 page</span></div>
-  </div>
-  <div class="preview-scroll" id="previewScroll" tabindex="0"><div class="preview-pages" id="previewPages"></div></div>
-</main>
+<main class="preview-area" id="previewArea" aria-label="Live resume preview"><div class="preview-scroll" id="previewScroll" tabindex="0"><div class="preview-pages" id="previewPages"></div></div><div class="preview-page-indicator" id="previewPageIndicator" aria-live="polite"><span class="page-counter" id="pageCounter">Page 1 of 1</span></div></main>
 </div>
 
+<datalist id="indianLanguages"><option value="Telugu"></option><option value="Hindi"></option><option value="English"></option><option value="Tamil"></option><option value="Kannada"></option><option value="Malayalam"></option><option value="Marathi"></option><option value="Bengali"></option><option value="Gujarati"></option><option value="Punjabi"></option><option value="Urdu"></option><option value="Odia"></option><option value="Assamese"></option><option value="Konkani"></option></datalist>
+<div class="mobile-bottom-bar" id="mobileBottomBar" aria-label="Mobile resume actions"><button id="mobileEditBtn" type="button" class="active">Edit</button><button id="mobilePreviewBtn" type="button">Preview</button><button id="mobileDownloadPdfBtn" type="button">↓ Download PDF</button></div>
 <div class="print-hint" id="printHint">Choose <strong>Save as PDF</strong> in the browser print dialog. Margins: None/Default.</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -249,72 +438,43 @@ var FONTS={
 var FONT_SIZE_DEFAULT=10.5;
 var SECTION_LABELS={header:'Header',summary:'Summary',experience:'Experience',education:'Education',skills:'Skills',projects:'Projects',certifications:'Certifications',awards:'Awards',languages:'Languages',volunteering:'Volunteering',publications:'Publications',references:'References'};
 
+function makeNeutralDemo(label){
+  var empty=blankResumeState();
+  empty.preset=label;
+  return {headline:label,preset:label,order:clone(empty.order),sections:clone(empty.sections)};
+}
 var DEMOS={
-  Fresher:{
-    headline:'Student / Software Developer',
-    preset:'Fresher',
-    order:['header','summary','education','projects','skills','experience','certifications','awards','languages','volunteering','publications','references'],
-    sections:{
-      header:{show:true,name:'Aarav Reddy',headline:'Computer Science Graduate',email:'aarav@example.com',phone:'+91 98765 43210',location:'Hyderabad, India',linkedin:'https://linkedin.com/in/aarav-reddy',github:'https://github.com/aarav-reddy',website:'https://example.com',customLinks:[],photo:''},
-      summary:{show:true,text:'Computer Science graduate building practical web applications with JavaScript, TypeScript and cloud services. Strong foundation in problem solving, collaboration and fast learning.',max:700},
-      experience:{show:true,items:[{company:'Campus Lab',role:'Student Developer',location:'Hyderabad, India',start:'Jun 2025',end:'Present',bullets:['Built a campus events portal used by 300+ students, reducing manual event updates by 60%.','Automated weekly attendance reporting with JavaScript and spreadsheets, saving 4 hours per week.']}]},
-      education:{show:true,items:[{institution:'ABC Institute of Technology',degree:'B.Tech',field:'Computer Science',start:'2022',end:'2026',score:'8.7/10',notes:'Relevant coursework: data structures, databases, web engineering.'}]},
-      skills:{show:true,groups:[{name:'Languages',items:['JavaScript','TypeScript','Python']},{name:'Web',items:['HTML','CSS','React','Node.js']},{name:'Tools',items:['Git','Firebase','Cloudflare']}],tags:[]},
-      projects:{show:true,items:[{name:'CampusConnect',link:'https://example.com',tech:['React','Firebase'],bullets:['Designed a responsive event discovery flow for student clubs.','Added search, RSVP and admin publishing tools.']},{name:'StudyFlow',link:'https://example.com',tech:['JavaScript','CSS'],bullets:['Created a lightweight study planner with local in-memory editing.','Improved mobile usability with keyboard-accessible controls.']}]},
-      certifications:{show:true,items:[{name:'Google UX Design',issuer:'Google',date:'2025',link:'https://example.com'}]},
-      awards:{show:false,items:[]},languages:{show:false,items:[]},volunteering:{show:false,items:[]},publications:{show:false,items:[]},
-      references:{show:true,onRequest:false,items:[]}
-    }
-  },
-  Experienced:{
-    headline:'Product Manager',
-    preset:'Experienced',
-    order:['header','summary','experience','skills','projects','education','certifications','awards','languages','volunteering','publications','references'],
-    sections:{
-      header:{show:true,name:'Arjun Mehta',headline:'Product Manager',email:'arjun@example.com',phone:'+91 90000 11111',location:'Bengaluru, India',linkedin:'https://linkedin.com/in/arjun-mehta',github:'',website:'https://example.com',customLinks:[],photo:''},
-      summary:{show:true,text:'Product manager with 6+ years of experience turning customer insight into measurable growth. Comfortable leading discovery, roadmaps and cross-functional launches across B2B SaaS and consumer workflows.',max:700},
-      experience:{show:true,items:[
-        {company:'Northstar Labs',role:'Senior Product Manager',location:'Bengaluru, India',start:'2023',end:'Present',bullets:['Owned roadmap for a multi-market SaaS product serving 50k+ monthly users, increasing activation by 18%.','Led discovery with 40+ customer interviews and shipped experiments that improved trial-to-paid conversion by 11%.','Partnered with design and engineering to reduce onboarding time from 12 minutes to 7 minutes.']},
-        {company:'Orbit Digital',role:'Product Manager',location:'Bengaluru, India',start:'2020',end:'2023',bullets:['Launched 12 customer-facing releases across web and mobile, coordinating design, engineering and GTM.','Built a KPI framework that cut weekly reporting effort by 6 hours and improved decision speed.']}
-      ]},
-      education:{show:true,items:[{institution:'Indian School of Business',degree:'PGP',field:'Management',start:'2018',end:'2020',score:'Top 15%',notes:''}]},
-      skills:{show:true,groups:[{name:'Product',items:['Product Strategy','Discovery','Roadmapping','Experimentation']},{name:'Analytics',items:['SQL','Amplitude','GA4','A/B Testing']},{name:'Leadership',items:['Stakeholder Management','Mentoring','GTM']}],tags:[]},
-      projects:{show:true,items:[{name:'Growth Dashboard',link:'https://example.com',tech:['Strategy','Analytics','SQL'],bullets:['Reframed fragmented reporting into a leadership dashboard with clear weekly decisions.']}]},
-      certifications:{show:true,items:[{name:'Product Analytics',issuer:'Example Academy',date:'2024',link:'https://example.com'}]},
-      awards:{show:true,items:[{name:'Impact Award',issuer:'Northstar Labs',date:'2025',note:'Recognized for measurable onboarding improvements.'}]},
-      languages:{show:true,items:[{name:'English',level:'Fluent'},{name:'Hindi',level:'Fluent'},{name:'Telugu',level:'Native'}]},
-      volunteering:{show:false,items:[]},publications:{show:false,items:[]},
-      references:{show:true,onRequest:false,items:[]}
-    }
-  },
-  'Career change':{
-    headline:'Operations Specialist → Product Operations',
-    preset:'Career change',
-    order:['header','summary','skills','experience','projects','education','certifications','awards','languages','volunteering','publications','references'],
-    sections:{
-      header:{show:true,name:'Neha Kapoor',headline:'Product Operations | Customer Experience',email:'neha@example.com',phone:'+91 88888 22222',location:'Pune, India',linkedin:'https://linkedin.com/in/neha-kapoor',github:'',website:'',customLinks:[],photo:''},
-      summary:{show:true,text:'Operations specialist transitioning into product operations, bringing 5 years of customer-facing process improvement, stakeholder coordination and data-informed decision making. Built repeatable systems that improved turnaround time and service quality.',max:700},
-      experience:{show:true,items:[
-        {company:'ServiceWorks',role:'Operations Lead',location:'Pune, India',start:'2021',end:'Present',bullets:['Redesigned intake workflows for 3 teams, reducing average turnaround time by 28%.','Built weekly dashboards and facilitated cross-functional reviews for 15+ stakeholders.']},
-        {company:'ClientFirst',role:'Customer Success Specialist',location:'Pune, India',start:'2019',end:'2021',bullets:['Improved renewal outreach process and raised response rates by 22%.','Partnered with product and support to turn recurring customer issues into prioritized improvement requests.']}
-      ]},
-      education:{show:true,items:[{institution:'University of Pune',degree:'B.Com',field:'Business Administration',start:'2016',end:'2019',score:'8.2/10',notes:''}]},
-      skills:{show:true,groups:[{name:'Product Ops',items:['Process Design','Prioritization','Stakeholder Management']},{name:'Analytics',items:['Excel','SQL Basics','Dashboards']},{name:'Customer',items:['Journey Mapping','VOC','Escalation Management']}],tags:[]},
-      projects:{show:true,items:[{name:'Support Insights',link:'https://example.com',tech:['SQL','Dashboards'],bullets:['Built a recurring issue taxonomy that helped product teams identify the highest-impact workflow gaps.']}]},
-      certifications:{show:false,items:[]},awards:{show:false,items:[]},languages:{show:true,items:[{name:'English',level:'Fluent'},{name:'Hindi',level:'Native'}]},volunteering:{show:false,items:[]},publications:{show:false,items:[]},
-      references:{show:true,onRequest:false,items:[]}
-    }
-  }
+  Fresher:makeNeutralDemo('Fresher'),
+  Experienced:makeNeutralDemo('Experienced'),
+  'Career change':makeNeutralDemo('Career change')
 };
-
-var state={
-  version:1,paper:'A4',template:'modern',goal:'one',margin:'normal',font:'Inter',fontSize:'10.5',lineSpacing:'1.25',
-  accent:'#334155',divider:'rule',dateFormat:'MMM YYYY',linkDisplay:'full',icons:true,photoEnabled:false,preset:'Experienced',
-  format:{global:{fontFamily:'Inter',fontSize:'10.5',lineSpacing:'1.25',nameSize:26,headingSize:11.5,sectionGap:16,entryGap:12,headingGap:9,bulletGap:4},sections:{}},
-  order:clone(DEMOS.Experienced.order),sections:clone(DEMOS.Experienced.sections),custom:[]
-};
+var state=blankResumeState();
 var history=[],future=[],typingGroup=null,typingTimer=null,previewRenderTimer=null,dirty=false,leaveTarget='',dragSection='',pendingReplacement=null,autosaveTimer=null,autosaveReady=false,restoreInProgress=true,savedDbName='sitecraft-resume',savedDbVersion=1,savedDbKey='current',openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
 var currentPages=1,selectedFormatSection='';
+var selectedProfessionKey='student_fresher',selectedJourney='student',guidedStep=0,guideStarted=false,advancedMode=false;
+var GUIDE_STEPS=[
+ {title:'Basics',section:'header',help:'Add your name and contact details so an employer can reach you.'},
+ {title:'Summary',section:'summary',help:'Write 2–4 lines about what you do, what you know, and what role you want.'},
+ {title:'Experience',section:'experience',help:'Add work, internships, training, volunteering or practical experience. If you are new, it is okay to leave this empty.'},
+ {title:'Education',section:'education',help:'Add your school, college, course or relevant training.'},
+ {title:'Skills',section:'skills',help:'Add skills you can use in this role. Tap a suggestion to add it.'},
+ {title:'Choose design',section:'design',help:'Choose a clean layout and adjust the appearance. These choices do not change your saved resume data format.'},
+ {title:'Download',section:'download',help:'Review the page and download your PDF when you are ready.'}
+];
+var ROLE_STARTERS={
+ student_fresher:{label:'Student / Fresher',roles:['Student','Fresher','Graduate','Intern','Trainee','Diploma Holder','Graduate Trainee'],summary:'Student or fresher with a foundation in [subject or area]. Ready to learn, work with others and contribute to tasks with care and consistency.',hard:['MS Office','Research','Data entry','Presentation skills','Basic computer skills','Report writing'],soft:['Communication','Teamwork','Time management','Problem solving','Adaptability'],bullets:['Completed a [class project / practical assignment] on [topic] and presented the results to [audience].','Helped organise [event or activity] for [group], coordinating tasks and timelines.']},
+ teacher_education:{label:'Teaching / Education',roles:['Teacher','Primary Teacher','Subject Teacher','Tutor','Teaching Assistant','Academic Coordinator','Special Educator'],summary:'Educator with knowledge of [subject or age group]. Focused on clear explanations, supportive learning environments and helping students build confidence.',hard:['Lesson planning','Classroom management','Student assessment','Subject knowledge','Learning materials','Parent communication'],soft:['Patience','Communication','Empathy','Organisation','Adaptability'],bullets:['Prepared learning activities for [class or subject] to make difficult topics easier to understand.','Tracked student progress and shared clear feedback with students or families.']},
+ sales_marketing:{label:'Sales / Marketing',roles:['Sales Executive','Sales Representative','Marketing Executive','Digital Marketing Executive','Business Development Executive','Retail Sales Associate','Field Sales Executive'],summary:'Customer-focused sales or marketing professional with strengths in [product, service or market]. Comfortable explaining options, following up with customers and supporting team targets.',hard:['Lead generation','Customer relationship management','Product demonstrations','Market research','Social media marketing','Sales reporting'],soft:['Persuasion','Listening','Relationship building','Resilience','Goal setting'],bullets:['Followed up with [customer group] to understand needs and explain suitable products or services.','Supported a [campaign, promotion or event] and tracked enquiries, responses or sales.']},
+ accounts_finance:{label:'Accounts / Finance / Banking',roles:['Accountant','Accounts Assistant','Finance Executive','Banking Associate','Bookkeeper','Audit Assistant','Cashier'],summary:'Careful accounts or finance professional trained in [accounts process or financial area]. Values accurate records, confidentiality and meeting reporting deadlines.',hard:['Bookkeeping','Invoice processing','Bank reconciliation','GST basics','Excel','Financial record keeping'],soft:['Attention to detail','Integrity','Numerical accuracy','Confidentiality','Time management'],bullets:['Checked [invoices, entries or statements] and resolved discrepancies with the relevant team.','Maintained organised financial records and supported routine reporting within agreed timelines.']},
+ healthcare:{label:'Healthcare / Nursing / Lab / Pharmacy',roles:['Staff Nurse','Nurse','Lab Technician','Medical Lab Technician','Pharmacist','Pharmacy Assistant','Healthcare Assistant','Clinic Coordinator'],summary:'Healthcare professional or trainee with training in [care, laboratory, pharmacy or clinical support]. Committed to patient dignity, safe procedures and clear communication with colleagues.',hard:['Patient care','Vital signs','Medical records','Sample collection','Infection prevention','Medicine dispensing'],soft:['Empathy','Careful observation','Teamwork','Calm communication','Reliability'],bullets:['Supported [patient-care or laboratory task] while following the required safety and hygiene procedure.','Maintained accurate [patient, sample or pharmacy] records and communicated important updates to the team.']},
+ customer_support:{label:'Customer Support / BPO',roles:['Customer Support Executive','Customer Care Executive','BPO Associate','Call Centre Executive','Helpdesk Support','Customer Service Representative','Technical Support Associate'],summary:'Customer support professional with strengths in listening, explaining information clearly and resolving requests. Comfortable working with service processes and keeping accurate notes.',hard:['Call handling','Ticketing systems','CRM records','Issue resolution','Email and chat support','Typing and data entry'],soft:['Active listening','Empathy','Clear communication','Patience','Conflict resolution'],bullets:['Handled [type of customer request] and explained the next steps in simple, polite language.','Recorded customer interactions accurately and followed up until the request was resolved or handed over.']},
+ it_software:{label:'IT / Software',roles:['Software Developer','Web Developer','IT Support','QA Tester','Data Analyst','System Administrator','Technical Support Engineer'],summary:'IT professional or learner with a foundation in [technology or support area]. Interested in solving practical problems, documenting work and learning tools required by the team.',hard:['Programming fundamentals','SQL','Software testing','Git','Troubleshooting','Technical documentation'],soft:['Problem solving','Collaboration','Learning agility','Analytical thinking','Clear communication'],bullets:['Built, tested or maintained [application, report or system task] as part of a project or team assignment.','Investigated [issue or requirement], recorded findings and shared the next steps with the team.']},
+ engineering:{label:'Engineering / Technical',roles:['Mechanical Engineer','Civil Engineer','Electrical Technician','Quality Engineer','Site Engineer','Maintenance Engineer','Draughtsman'],summary:'Engineering professional or trainee with a foundation in [discipline, equipment or process]. Focused on safe work, accurate measurements and practical problem solving.',hard:['Technical drawings','Quality inspection','Preventive maintenance','Safety procedures','CAD basics','Equipment troubleshooting'],soft:['Attention to detail','Team coordination','Planning','Safety awareness','Analytical thinking'],bullets:['Assisted with [inspection, installation, drawing or maintenance task] according to the specified procedure.','Recorded measurements or checks and reported issues to the responsible supervisor or team.']},
+ office_admin_hr:{label:'Office / Admin / HR',roles:['Office Administrator','HR Assistant','HR Executive','Receptionist','Data Entry Operator','Admin Assistant','Office Coordinator'],summary:'Organised office or HR professional with strengths in coordination, record keeping and supporting everyday team operations. Careful with confidential information and deadlines.',hard:['Scheduling','MS Office','Record management','Recruitment coordination','Email handling','Payroll support'],soft:['Organisation','Discretion','Communication','Follow-through','Multitasking'],bullets:['Coordinated [meetings, records, onboarding or office tasks] and kept information up to date.','Responded to routine staff or visitor requests and directed questions to the appropriate person.']},
+ retail_hospitality:{label:'Retail / Hospitality / Restaurant',roles:['Retail Associate','Store Assistant','Cashier','Hotel Front Desk','Restaurant Service Staff','Barista','Housekeeping Associate','Kitchen Assistant'],summary:'Service-focused professional with experience or training in [store, hotel, restaurant or customer service work]. Takes pride in welcoming customers, following procedures and supporting the team during busy periods.',hard:['POS billing','Inventory handling','Cash handling','Reservations','Food hygiene','Order preparation'],soft:['Customer service','Teamwork','Reliability','Calm under pressure','Attention to detail'],bullets:['Helped customers with [product, order or service request] and made sure information was clear and accurate.','Supported daily opening, closing, stock, cleaning or service tasks using the required checklist.']},
+ skilled_trades_drivers:{label:'Skilled Trades / Drivers',roles:['Electrician','Plumber','Driver','Delivery Driver','Mechanic','Welder','AC Technician','Machine Operator','Field Technician'],summary:'Practical professional or trainee with skills in [trade, vehicle or equipment]. Values safety, reliability, careful checks and completing work to the required standard.',hard:['Equipment operation','Preventive maintenance','Electrical safety','Vehicle checks','Route planning','Tool handling'],soft:['Reliability','Safety awareness','Punctuality','Problem solving','Customer communication'],bullets:['Completed [repair, delivery, installation or maintenance task] while following the safety checklist.','Checked tools, vehicle or equipment before work and reported faults that needed attention.']},
+ creative_freelance:{label:'Creative / Freelance',roles:['Graphic Designer','Photographer','Makeup Artist','Video Editor','Content Writer','Freelancer','Social Media Creator','Event Photographer'],summary:'Creative professional with experience or training in [creative service]. Works to understand briefs, communicate clearly with clients and deliver thoughtful work within agreed timelines.',hard:['Portfolio curation','Client briefs','Photo editing','Design tools','Content writing','Project estimates'],soft:['Creativity','Client communication','Time management','Flexibility','Attention to detail'],bullets:['Created [design, photo set, content or service] for [type of brief or client], based on the agreed requirements.','Coordinated feedback and revisions with the client to deliver work by the agreed deadline.']}
+};
 
 function defaultFormatState(){return{global:{fontFamily:'Inter',fontSize:'10.5',lineSpacing:'1.25',nameSize:26,headingSize:11.5,sectionGap:16,entryGap:12,headingGap:9,bulletGap:4},sections:{}}}
 function formatNumber(v,fallback,min,max,step){var n=parseFloat(v);if(!isFinite(n))n=fallback;if(min!=null)n=Math.max(min,n);if(max!=null)n=Math.min(max,n);if(step){var q=Math.round((n-min)/step);n=min+q*step;}return n}
@@ -385,18 +545,214 @@ function textTokens(s){return norm(s).toLowerCase().split(/[^a-z0-9+#.-]+/).filt
 function allResumeText(){var a=[],add=function(v){if(typeof v==='string')a.push(v);else if(Array.isArray(v))v.forEach(add);else if(v&&typeof v==='object')Object.keys(v).forEach(function(k){if(k!=='photo')add(v[k])})};add(state.sections);state.custom.forEach(add);return a.join(' ')}
 function weakTip(v){var s=norm(v).toLowerCase();if(!s)return'';if(/\bresponsible for\b/.test(s))return'Consider: led, owned, managed, delivered + the measurable result.';if(/\bworked on\b/.test(s))return'Name the action and outcome: built, redesigned, launched, improved…';if(/\bhelped\b/.test(s))return'Try a stronger verb such as improved, accelerated, reduced or enabled.';return''}
 
-function input(path,label,value,opt){opt=opt||{};var type=opt.type||'text',id=opt.id||('f-'+path.replace(/[^a-zA-Z0-9_-]/g,'-')),attrs=' data-path="'+esc(path)+'"';if(opt.max!=null)attrs+=' maxlength="'+esc(opt.max)+'"';if(opt.minValue!=null)attrs+=' min="'+esc(opt.minValue)+'"';if(opt.maxValue!=null)attrs+=' max="'+esc(opt.maxValue)+'"';if(opt.required)attrs+=' required';if(opt.disabled)attrs+=' disabled';if(type==='textarea')return '<div class="field"><label for="'+id+'">'+esc(label)+(opt.required?' *':'')+'</label><textarea id="'+id+'"'+attrs+' placeholder="'+esc(opt.placeholder||'')+'">'+esc(value||'')+'</textarea><div class="error-text" id="'+id+'-err"></div></div>';return '<div class="field"><label for="'+id+'">'+esc(label)+(opt.required?' *':'')+'</label><input id="'+id+'" type="'+esc(type)+'"'+attrs+' value="'+esc(value||'')+'" placeholder="'+esc(opt.placeholder||'')+'"><div class="error-text" id="'+id+'-err"></div></div>'}
+function input(path,label,value,opt){opt=opt||{};var type=opt.type||'text',id=opt.id||('f-'+path.replace(/[^a-zA-Z0-9_-]/g,'-')),attrs=' data-path="'+esc(path)+'"';if(opt.max!=null)attrs+=' maxlength="'+esc(opt.max)+'"';if(opt.minValue!=null)attrs+=' min="'+esc(opt.minValue)+'"';if(opt.maxValue!=null)attrs+=' max="'+esc(opt.maxValue)+'"';if(opt.list)attrs+=' list="'+esc(opt.list)+'"';if(opt.required)attrs+=' required';if(opt.disabled)attrs+=' disabled';if(type==='textarea')return '<div class="field"><label for="'+id+'">'+esc(label)+(opt.required?' *':'')+'</label><textarea id="'+id+'"'+attrs+' placeholder="'+esc(opt.placeholder||'')+'">'+esc(value||'')+'</textarea><div class="error-text" id="'+id+'-err"></div></div>';return '<div class="field"><label for="'+id+'">'+esc(label)+(opt.required?' *':'')+'</label><input id="'+id+'" type="'+esc(type)+'"'+attrs+' value="'+esc(value||'')+'" placeholder="'+esc(opt.placeholder||'')+'"><div class="error-text" id="'+id+'-err"></div></div>'}
 function renderCustomLinks(sec){var arr=Array.isArray(sec.customLinks)?sec.customLinks:[];return '<div class="field"><strong>Custom links</strong><div class="entry-list">'+arr.map(function(x,i){return '<div class="custom-link"><input data-custom-link-name data-index="'+i+'" value="'+esc(x.name||'')+'" placeholder="Label"><input data-custom-link-url data-index="'+i+'" value="'+esc(x.url||'')+'" placeholder="https://example.com"><button class="entry-btn danger" type="button" data-remove-custom-link="'+i+'">Remove</button></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-custom-link style="margin-top:7px">+ Add custom link</button></div>'}
-function renderHeader(sec){return '<div class="form-grid"><div class="photo-box"><div class="photo-preview">'+(state.photoEnabled&&safeImage(sec.photo)?'<img src="'+esc(sec.photo)+'" alt="">':'No photo')+'</div><div><strong>Optional photo</strong><p class="help">ATS tip: keep Photo Off unless it is expected for the role or market.</p><label class="btn soft">Choose photo<input id="photoInput" type="file" accept="image/*" hidden></label>'+(safeImage(sec.photo)?' <button class="entry-btn danger" type="button" id="removePhoto">Remove</button>':'')+'</div></div><div class="grid2">'+input('header.name','Full name',sec.name,{required:true,placeholder:'Your name'})+input('header.headline','Headline',sec.headline,{placeholder:'Role / value proposition'})+'</div><div class="grid2">'+input('header.email','Email',sec.email,{type:'email',required:true,placeholder:'name@example.com'})+input('header.phone','Phone',sec.phone,{type:'tel',placeholder:'+91…'})+'</div><div class="grid2">'+input('header.location','Location',sec.location,{placeholder:'City, Country'})+input('header.linkedin','LinkedIn',sec.linkedin,{type:'url',placeholder:'https://linkedin.com/in/…'})+'</div><div class="grid2">'+input('header.github','GitHub',sec.github,{type:'url',placeholder:'https://github.com/…'})+input('header.website','Website',sec.website,{type:'url',placeholder:'https://…'})+'</div>'+renderCustomLinks(sec)+'</div>'}
-function renderSummary(sec){var max=sec.max||700;return '<div class="form-grid">'+input('summary.text','Summary',sec.text,{type:'textarea',max:max,placeholder:'2–4 lines focused on impact and strengths.'})+'<div class="counter" data-counter="summary.text">'+norm(sec.text).length+' / '+max+'</div><div class="tip">Tip: keep this concise. Focus on scope, strengths and the value you bring—not a generic objective statement.</div></div>'}
-function renderExperience(sec){return '<div class="form-grid">'+(sec.items||[]).map(function(x,i){return '<div class="entry"><div class="entry-top"><strong>Experience '+(i+1)+'</strong><div class="entry-actions"><button class="entry-btn" type="button" data-move-array="experience" data-index="'+i+'" data-dir="-1">↑</button><button class="entry-btn" type="button" data-move-array="experience" data-index="'+i+'" data-dir="1">↓</button><button class="entry-btn danger" type="button" data-remove-array="experience" data-index="'+i+'">Remove</button></div></div><div class="grid2">'+input('experience.'+i+'.company','Company',x.company,{})+input('experience.'+i+'.role','Role',x.role,{})+'</div><div class="grid2">'+input('experience.'+i+'.location','Location',x.location,{})+dateField('experience.'+i+'.start','Start date',x.start)+'</div><div class="grid2">'+dateField('experience.'+i+'.end','End date',x.end)+'<div></div></div><div class="field"><label class="check-row"><input type="checkbox" data-path="experience.'+i+'.currently" '+(x.currently===true?'checked':'')+'><span>Currently working here</span></label></div><div class="date-order-error" id="experience-'+i+'-date-error"></div><div class="field" style="margin-top:10px"><strong>Bullets · max 8</strong><div class="bullet-list">'+(x.bullets||[]).map(function(b,j){var tip=weakTip(b);return '<div class="bullet-row"><div><textarea data-bullet data-section="experience" data-index="'+i+'" data-bullet-index="'+j+'" maxlength="320" placeholder="Start with an action verb and add a number when possible.">'+esc(b)+'</textarea>'+(tip?'<div class="weak-tip">'+esc(tip)+'</div>':'<div class="tip">Writing tip: lead with an action verb and add scale, time saved, revenue, growth, users or another number.</div>')+'</div><div class="bullet-tools"><button class="entry-btn" type="button" data-move-bullet="experience" data-index="'+i+'" data-bullet-index="'+j+'" data-dir="-1">↑</button><button class="entry-btn" type="button" data-move-bullet="experience" data-index="'+i+'" data-bullet-index="'+j+'" data-dir="1">↓</button><button class="entry-btn danger" type="button" data-remove-bullet="experience" data-index="'+i+'" data-bullet-index="'+j+'">×</button></div></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-bullet="experience" data-index="'+i+'" '+((x.bullets||[]).length>=8?'disabled':'')+'>+ Add bullet</button></div></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-array="experience" style="margin-top:9px">+ Add Experience</button>'}
-function renderEducation(sec){return '<div class="entry-list">'+(sec.items||[]).map(function(x,i){return '<div class="entry"><div class="entry-top"><strong>Education '+(i+1)+'</strong><div class="entry-actions"><button class="entry-btn" type="button" data-move-array="education" data-index="'+i+'" data-dir="-1">↑</button><button class="entry-btn" type="button" data-move-array="education" data-index="'+i+'" data-dir="1">↓</button><button class="entry-btn danger" type="button" data-remove-array="education" data-index="'+i+'">Remove</button></div></div><div class="grid2">'+input('education.'+i+'.institution','Institution',x.institution,{})+input('education.'+i+'.degree','Degree',x.degree,{})+'</div><div class="grid2">'+input('education.'+i+'.field','Field',x.field,{})+dateField('education.'+i+'.start','Start date',x.start)+'</div><div class="grid2">'+dateField('education.'+i+'.end','End date',x.end)+input('education.'+i+'.score','GPA / Score',x.score,{})+'</div><div class="field"><label class="check-row"><input type="checkbox" data-path="education.'+i+'.ongoing" '+(x.ongoing===true?'checked':'')+'><span>Ongoing</span></label></div><div class="date-order-error" id="education-'+i+'-date-error"></div>'+input('education.'+i+'.notes','Notes',x.notes,{type:'textarea',placeholder:'Optional relevant coursework or notes.'})+'</div>'}).join('')+'</div><button class="btn soft" type="button" data-add-array="education" style="margin-top:9px">+ Add Education</button>'}
+function renderHeader(sec){
+  var photoBox='<div class="photo-box"><div class="photo-preview">'+(state.photoEnabled&&safeImage(sec.photo)?'<img src="'+esc(sec.photo)+'" alt="">':'No photo')+'</div><div><strong>Optional photo</strong><p class="help">A simple text-first resume is usually easiest for hiring software to read.</p><label class="btn soft">Choose photo<input id="photoInput" type="file" accept="image/*" hidden></label>'+(safeImage(sec.photo)?' <button class="entry-btn danger" type="button" id="removePhoto">Remove</button>':'')+'</div></div>';
+  return '<div class="form-grid">'+
+    '<div class="grid2">'+input('header.name','Full name',sec.name,{required:true,placeholder:'Your full name'})+input('header.headline','Role or headline',sec.headline,{placeholder:'e.g. Primary Teacher or Accounts Assistant'})+'</div>'+
+    '<div class="grid2">'+input('header.email','Email',sec.email,{type:'email',required:true,placeholder:'name@example.com'})+input('header.phone','Phone',sec.phone,{type:'tel',placeholder:'+91 98765 43210'})+'</div>'+
+    '<div class="field">'+input('header.location','City and state',sec.location,{placeholder:'e.g. Vijayawada, Andhra Pradesh'})+'</div>'+
+    '<details class="optional-fields"><summary>+ Add optional details (LinkedIn, website or photo)</summary><div class="optional-fields-content">'+
+      '<div class="grid2">'+input('header.linkedin','LinkedIn (optional)',sec.linkedin,{type:'url',placeholder:'https://linkedin.com/in/…'})+input('header.website','Website / portfolio (optional)',sec.website,{type:'url',placeholder:'https://…'})+'</div>'+
+      '<div class="field">'+input('header.github','GitHub (optional)',sec.github,{type:'url',placeholder:'https://github.com/…'})+'</div>'+
+      renderCustomLinks(sec)+photoBox+
+    '</div></details></div>';
+}
+
+function renderSummary(sec){var max=sec.max||700;return '<div class="form-grid">'+input('summary.text','Summary',sec.text,{type:'textarea',max:max,placeholder:'Example: I am a [role or student] with strengths in [two skills] and experience in [type of work].'})+'<div class="counter" data-counter="summary.text">'+norm(sec.text).length+' / '+max+'</div><div class="tip">Tip: say what you do, what you are good at and the kind of work you want.</div></div>'}
+function renderExperience(sec){
+  return '<div class="form-grid"><p class="step-note">Work, internships, apprenticeships, volunteering or practical experience all count. If you are new to work, you can leave this empty and continue.</p>'+
+  (sec.items||[]).map(function(x,i){
+    return '<div class="entry"><div class="entry-top"><strong>Experience '+(i+1)+'</strong><div class="entry-actions"><button class="entry-btn" type="button" data-move-array="experience" data-index="'+i+'" data-dir="-1" aria-label="Move experience up">↑</button><button class="entry-btn" type="button" data-move-array="experience" data-index="'+i+'" data-dir="1" aria-label="Move experience down">↓</button><button class="entry-btn danger" type="button" data-remove-array="experience" data-index="'+i+'">Remove</button></div></div>'+
+    '<div class="grid2">'+input('experience.'+i+'.role','Job title or role',x.role,{placeholder:'e.g. Sales Assistant, Nurse, Teacher'})+input('experience.'+i+'.company','Workplace or organisation',x.company,{placeholder:'e.g. Shop, school, clinic or company'})+'</div>'+
+    '<details class="optional-fields"><summary>Optional details (location and dates)</summary><div class="optional-fields-content"><div class="grid2">'+input('experience.'+i+'.location','Location',x.location,{placeholder:'City, State'})+dateField('experience.'+i+'.start','Start date',x.start)+'</div><div class="grid2">'+dateField('experience.'+i+'.end','End date',x.end)+'<div class="field"><label class="check-row"><input type="checkbox" data-path="experience.'+i+'.currently" '+(x.currently===true?'checked':'')+'><span>Currently working here</span></label></div></div><div class="date-order-error" id="experience-'+i+'-date-error"></div></div></details>'+
+    '<div class="field" style="margin-top:10px"><label>What did you do? <span class="help">Add duties, results or an achievement (up to 8)</span></label><div class="bullet-list">'+(x.bullets||[]).map(function(b,j){var tip=weakTip(b);return '<div class="bullet-row"><div><textarea data-bullet data-section="experience" data-index="'+i+'" data-bullet-index="'+j+'" maxlength="320" placeholder="Example: Helped customers find the right item and completed daily stock checks.">'+esc(b)+'</textarea>'+(i===0&&j===0&&tip?'<div class="weak-tip">'+esc(tip)+'</div>':(i===0&&j===0?'<div class="tip">Tip: say what you did and the result. Add a number if you know one.</div>':''))+'</div><div class="bullet-tools"><button class="entry-btn" type="button" data-move-bullet="experience" data-index="'+i+'" data-bullet-index="'+j+'" data-dir="-1" aria-label="Move bullet up">↑</button><button class="entry-btn" type="button" data-move-bullet="experience" data-index="'+i+'" data-bullet-index="'+j+'" data-dir="1" aria-label="Move bullet down">↓</button><button class="entry-btn danger" type="button" data-remove-bullet="experience" data-index="'+i+'" data-bullet-index="'+j+'" aria-label="Remove bullet">×</button></div></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-bullet="experience" data-index="'+i+'" '+((x.bullets||[]).length>=8?'disabled':'')+'>+ Add achievement</button></div></div>';
+  }).join('')+'</div><button class="btn soft" type="button" data-add-array="experience" style="margin-top:9px">+ Add experience</button>';
+}
+
+function renderEducation(sec){
+  return '<div class="entry-list">'+(sec.items||[]).map(function(x,i){
+    return '<div class="entry"><div class="entry-top"><strong>Education '+(i+1)+'</strong><div class="entry-actions"><button class="entry-btn" type="button" data-move-array="education" data-index="'+i+'" data-dir="-1" aria-label="Move education up">↑</button><button class="entry-btn" type="button" data-move-array="education" data-index="'+i+'" data-dir="1" aria-label="Move education down">↓</button><button class="entry-btn danger" type="button" data-remove-array="education" data-index="'+i+'">Remove</button></div></div>'+
+    '<div class="grid2">'+input('education.'+i+'.institution','School, college or institute',x.institution,{placeholder:'Name of your school, college or training centre'})+input('education.'+i+'.degree','Course or qualification',x.degree,{placeholder:'e.g. B.Com, Class 12, ITI, Diploma'})+'</div>'+
+    '<div class="field">'+input('education.'+i+'.field','Subject or stream (optional)',x.field,{placeholder:'e.g. Commerce, Biology, Mechanical'})+'</div>'+
+    '<details class="optional-fields"><summary>Optional details (dates, marks and notes)</summary><div class="optional-fields-content"><div class="grid2">'+dateField('education.'+i+'.start','Start date',x.start)+dateField('education.'+i+'.end','End date',x.end)+'</div><div class="grid2">'+input('education.'+i+'.score','Marks / percentage / GPA',x.score,{placeholder:'e.g. 78% or 8.2 / 10'})+'<div class="field"><label class="check-row"><input type="checkbox" data-path="education.'+i+'.ongoing" '+(x.ongoing===true?'checked':'')+'><span>Currently studying</span></label></div></div>'+input('education.'+i+'.notes','Notes (optional)',x.notes,{type:'textarea',placeholder:'Relevant coursework, training or achievements.'})+'<div class="date-order-error" id="education-'+i+'-date-error"></div></div></details></div>';
+  }).join('')+'</div><button class="btn soft" type="button" data-add-array="education" style="margin-top:9px">+ Add education</button>';
+}
+
 function renderSkills(sec){return '<div class="entry-list">'+(sec.groups||[]).map(function(x,i){return '<div class="entry"><div class="entry-top"><strong>'+esc(x.name||('Skill group '+(i+1)))+'</strong><button class="entry-btn danger" type="button" data-remove-skill-group="'+i+'">Remove</button></div><div class="grid2">'+input('skills.groups.'+i+'.name','Category',x.name,{})+'<div class="field"><label>Tags</label><div class="tag-list">'+(x.items||[]).map(function(t,j){return '<span class="tag">'+esc(t)+' <button type="button" data-remove-skill-tag="'+i+'" data-tag-index="'+j+'">×</button></span>'}).join('')+'</div><input data-skill-tag-input="'+i+'" placeholder="Type a skill and press Enter"></div></div></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-skill-group>+ Add skill group</button>'}
-function renderProjects(sec){return '<div class="entry-list">'+(sec.items||[]).map(function(x,i){return '<div class="entry"><div class="entry-top"><strong>Project '+(i+1)+'</strong><div class="entry-actions"><button class="entry-btn" type="button" data-move-array="projects" data-index="'+i+'" data-dir="-1">↑</button><button class="entry-btn" type="button" data-move-array="projects" data-index="'+i+'" data-dir="1">↓</button><button class="entry-btn danger" type="button" data-remove-array="projects" data-index="'+i+'">Remove</button></div></div>'+input('projects.'+i+'.name','Name',x.name,{})+input('projects.'+i+'.link','Link',x.link,{type:'url',placeholder:'https://…'})+'<div class="field"><label>Tech tags</label><div class="tag-list">'+(x.tech||[]).map(function(t,j){return '<span class="tag">'+esc(t)+' <button type="button" data-remove-project-tag="'+i+'" data-tag-index="'+j+'">×</button></span>'}).join('')+'</div><input data-project-tag-input="'+i+'" placeholder="Type a technology and press Enter"></div><div class="field" style="margin-top:8px"><label>Bullets</label><div class="bullet-list">'+(x.bullets||[]).slice(0,8).map(function(b,j){var tip=weakTip(b);return '<div class="bullet-row"><div><textarea data-project-bullet data-index="'+i+'" data-bullet-index="'+j+'" maxlength="320" placeholder="Action + result">'+esc(b)+'</textarea>'+(tip?'<div class="weak-tip">'+esc(tip)+'</div>':'<div class="tip">Writing tip: add a concrete outcome or number.</div>')+'</div><button class="entry-btn danger" type="button" data-remove-project-bullet="'+i+'" data-bullet-index="'+j+'">×</button></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-project-bullet="'+i+'" '+((x.bullets||[]).length>=8?'disabled':'')+'>+ Add bullet</button></div></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-array="projects" style="margin-top:9px">+ Add Project</button>'}
-function simpleArray(sec,key,fields,title,addLabel){return '<div class="entry-list">'+(sec.items||[]).map(function(x,i){return '<div class="entry"><div class="entry-top"><strong>'+esc(title)+' '+(i+1)+'</strong><div class="entry-actions"><button class="entry-btn" type="button" data-move-array="'+key+'" data-index="'+i+'" data-dir="-1">↑</button><button class="entry-btn" type="button" data-move-array="'+key+'" data-index="'+i+'" data-dir="1">↓</button><button class="entry-btn danger" type="button" data-remove-array="'+key+'" data-index="'+i+'">Remove</button></div></div><div class="grid2">'+fields.map(function(f){return f[2]==='date'?dateField(key+'.'+i+'.'+f[0],f[1],x[f[0]]):input(key+'.'+i+'.'+f[0],f[1],x[f[0]],{type:f[2]||'text',placeholder:f[3]||''})}).join('')+'</div></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-array="'+key+'" style="margin-top:9px">'+esc(addLabel)+'</button>'}
+function renderProjects(sec){return '<div class="entry-list"><p class="step-note">Optional: add a project, practical task, portfolio item or personal work that is relevant to this role. Skip it if it does not fit.</p>'+(sec.items||[]).map(function(x,i){return '<div class="entry"><div class="entry-top"><strong>Project '+(i+1)+'</strong><div class="entry-actions"><button class="entry-btn" type="button" data-move-array="projects" data-index="'+i+'" data-dir="-1">↑</button><button class="entry-btn" type="button" data-move-array="projects" data-index="'+i+'" data-dir="1">↓</button><button class="entry-btn danger" type="button" data-remove-array="projects" data-index="'+i+'">Remove</button></div></div>'+input('projects.'+i+'.name','Name',x.name,{})+input('projects.'+i+'.link','Link',x.link,{type:'url',placeholder:'https://…'})+'<div class="field"><label>Tools / skills used</label><div class="tag-list">'+(x.tech||[]).map(function(t,j){return '<span class="tag">'+esc(t)+' <button type="button" data-remove-project-tag="'+i+'" data-tag-index="'+j+'">×</button></span>'}).join('')+'</div><input data-project-tag-input="'+i+'" placeholder="Type a skill or tool and press Enter"></div><div class="field" style="margin-top:8px"><label>Bullets</label><div class="bullet-list">'+(x.bullets||[]).slice(0,8).map(function(b,j){var tip=weakTip(b);return '<div class="bullet-row"><div><textarea data-project-bullet data-index="'+i+'" data-bullet-index="'+j+'" maxlength="320" placeholder="Action + result">'+esc(b)+'</textarea>'+(i===0&&j===0&&tip?'<div class="weak-tip">'+esc(tip)+'</div>':(i===0&&j===0?'<div class="tip">Tip: describe what changed because of your work.</div>':''))+'</div><button class="entry-btn danger" type="button" data-remove-project-bullet="'+i+'" data-bullet-index="'+j+'">×</button></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-project-bullet="'+i+'" '+((x.bullets||[]).length>=8?'disabled':'')+'>+ Add bullet</button></div></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-array="projects" style="margin-top:9px">+ Add Project</button>'}
+function simpleArray(sec,key,fields,title,addLabel){return '<div class="entry-list">'+(sec.items||[]).map(function(x,i){return '<div class="entry"><div class="entry-top"><strong>'+esc(title)+' '+(i+1)+'</strong><div class="entry-actions"><button class="entry-btn" type="button" data-move-array="'+key+'" data-index="'+i+'" data-dir="-1">↑</button><button class="entry-btn" type="button" data-move-array="'+key+'" data-index="'+i+'" data-dir="1">↓</button><button class="entry-btn danger" type="button" data-remove-array="'+key+'" data-index="'+i+'">Remove</button></div></div><div class="grid2">'+fields.map(function(f){var opt={type:f[2]||'text',placeholder:f[3]||''};if(key==='languages'&&f[0]==='name')opt.list='indianLanguages';return f[2]==='date'?dateField(key+'.'+i+'.'+f[0],f[1],x[f[0]]):input(key+'.'+i+'.'+f[0],f[1],x[f[0]],opt)}).join('')+'</div></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-array="'+key+'" style="margin-top:9px">'+esc(addLabel)+'</button>'}
 function renderVolunteering(sec){return '<div class="entry-list">'+(sec.items||[]).map(function(x,i){return '<div class="entry"><div class="entry-top"><strong>Volunteering '+(i+1)+'</strong><div class="entry-actions"><button class="entry-btn" type="button" data-move-array="volunteering" data-index="'+i+'" data-dir="-1">↑</button><button class="entry-btn" type="button" data-move-array="volunteering" data-index="'+i+'" data-dir="1">↓</button><button class="entry-btn danger" type="button" data-remove-array="volunteering" data-index="'+i+'">Remove</button></div></div><div class="grid2">'+input('volunteering.'+i+'.org','Organization',x.org,{})+input('volunteering.'+i+'.role','Role',x.role,{})+'</div><div class="grid2">'+dateField('volunteering.'+i+'.start','Start date',x.start)+dateField('volunteering.'+i+'.end','End date',x.end)+'</div><div class="field"><label class="check-row"><input type="checkbox" data-path="volunteering.'+i+'.ongoing" '+(x.ongoing===true?'checked':'')+'><span>Ongoing</span></label></div><div class="date-order-error" id="volunteering-'+i+'-date-error"></div>'+input('volunteering.'+i+'.description','Description',x.description,{type:'textarea'})+'</div>'}).join('')+'</div><button class="btn soft" type="button" data-add-array="volunteering" style="margin-top:9px">+ Add volunteering</button>'}
 function renderSectionBody(id,sec){if(id==='header')return renderHeader(sec);if(id==='summary')return renderSummary(sec);if(id==='experience')return renderExperience(sec);if(id==='education')return renderEducation(sec);if(id==='skills')return renderSkills(sec);if(id==='projects')return renderProjects(sec);if(id==='certifications')return simpleArray(sec,'certifications',[['name','Certification'],['issuer','Issuer'],['date','Date','date'],['link','Link','url','https://…']],'Certification','+ Add certification');if(id==='awards')return simpleArray(sec,'awards',[['name','Award'],['issuer','Issuer'],['date','Date','date'],['note','Notes']],'Award','+ Add award');if(id==='languages')return simpleArray(sec,'languages',[['name','Language'],['level','Level']],'Language','+ Add language');if(id==='volunteering')return renderVolunteering(sec);if(id==='publications')return simpleArray(sec,'publications',[['title','Title'],['venue','Venue'],['date','Date','date'],['link','Link','url','https://…']],'Publication','+ Add publication');if(id==='references')return '<div class="form-grid"><label class="check-row"><input type="checkbox" data-path="references.onRequest" '+(sec.onRequest?'checked':'')+'> <span>Show “Available on request”</span></label>'+simpleArray(sec,'references',[['name','Name'],['role','Relationship'],['email','Email'],['phone','Phone']],'Reference','+ Add reference')+'</div>';return renderCustomSection(id)}
 function renderCustomSection(id){var i=Number(id.split('-')[1])-1,x=state.custom[i]||{title:'Custom section',mode:'bullets',content:'',bullets:[],show:true};x.show=x.show!==false;return '<div class="form-grid">'+input('custom.'+i+'.title','Section title',x.title,{})+'<div class="field"><label for="custom-mode-'+i+'">Content type</label><select id="custom-mode-'+i+'" data-path="custom.'+i+'.mode"><option value="bullets" '+(x.mode==='bullets'?'selected':'')+'>Bullet list</option><option value="paragraph" '+(x.mode==='paragraph'?'selected':'')+'>Paragraph</option></select></div>'+(x.mode==='paragraph'?input('custom.'+i+'.content','Paragraph',x.content,{type:'textarea'}):'<div class="field"><strong>Bullets · max 8</strong><div class="bullet-list">'+(x.bullets||[]).map(function(b,j){return '<div class="bullet-row"><textarea data-custom-bullet data-index="'+i+'" data-bullet-index="'+j+'" maxlength="320">'+esc(b)+'</textarea><button class="entry-btn danger" type="button" data-remove-custom-bullet="'+i+'" data-bullet-index="'+j+'">×</button></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-custom-bullet="'+i+'" '+((x.bullets||[]).length>=8?'disabled':'')+'>+ Add bullet</button></div>')+'</div>'}
+
+function currentRoleStarter(){
+  var input=$('#roleSearch'),query=norm(input&&input.value).toLowerCase();
+  if(query){var keys=Object.keys(ROLE_STARTERS);for(var i=0;i<keys.length;i++){var entry=ROLE_STARTERS[keys[i]];if(entry.roles.some(function(role){return role.toLowerCase().indexOf(query)>=0})||entry.label.toLowerCase().indexOf(query)>=0)return entry}}
+  return ROLE_STARTERS[selectedProfessionKey]||null;
+}
+function updateRoleSuggestions(){
+  var input=$('#roleSearch'),category=$('#professionSelect'),matchBox=$('#roleMatchList'),suggestions=$('#roleSuggestions');
+  var query=norm(input&&input.value).toLowerCase(),matches=[];
+  Object.keys(ROLE_STARTERS).forEach(function(key){
+    var item=ROLE_STARTERS[key];
+    item.roles.forEach(function(title){if(!query||title.toLowerCase().indexOf(query)>=0)matches.push({key:key,title:title})});
+    if(query&&item.label.toLowerCase().indexOf(query)>=0&&!item.roles.some(function(title){return title.toLowerCase().indexOf(query)>=0}))matches.push({key:key,title:item.roles[0]});
+  });
+  if(query){matches=matches.filter(function(item){return item.title.toLowerCase().indexOf(query)>=0||ROLE_STARTERS[item.key].label.toLowerCase().indexOf(query)>=0})}
+  else if(selectedProfessionKey){matches=matches.filter(function(item){return item.key===selectedProfessionKey}).slice(0,4)}
+  else matches=[];
+  matches=matches.slice(0,7);
+  if(query&&matches.length)selectedProfessionKey=matches[0].key;
+  if(category)category.value=selectedProfessionKey||'';
+  matchBox.innerHTML=matches.length?matches.map(function(item){return '<button type="button" data-role-key="'+esc(item.key)+'" data-role-title="'+esc(item.title)+'" aria-pressed="'+String(item.key===selectedProfessionKey)+'">'+esc(item.title)+'</button>'}).join(''):'<span class="help">'+(query?'No exact role match. Try a shorter job title or choose a profession area.':'Choose a profession area or type a role to see suggestions.')+'</span>';
+  var starter=currentRoleStarter();
+  if(!starter){suggestions.innerHTML='<p class="help">Choose a profession area or select one of the matching roles above to see skill and achievement ideas.</p>';return}
+  var hardSkills=starter.hard.slice(0,5),softSkills=starter.soft.slice(0,4);
+  suggestions.innerHTML='<div class="suggestion-group"><strong>Role skills · tap to add</strong>'+hardSkills.map(function(skill){return '<button type="button" class="suggestion-chip" data-suggest-skill="'+esc(skill)+'">+ '+esc(skill)+'</button>'}).join('')+'</div><div class="suggestion-group"><strong>People skills · tap to add</strong>'+softSkills.map(function(skill){return '<button type="button" class="suggestion-chip" data-suggest-skill="'+esc(skill)+'">+ '+esc(skill)+'</button>'}).join('')+'</div><div class="suggestion-group"><strong>Achievement ideas · tap to add and edit</strong>'+starter.bullets.slice(0,2).map(function(bullet){return '<button type="button" class="suggestion-chip" data-suggest-bullet="'+esc(bullet)+'">+ '+esc(bullet)+'</button>'}).join('')+'</div>';
+  var ex=$('#roleExampleSummary'),eb=$('#roleExampleBullet');if(ex)ex.textContent=starter.summary;if(eb)eb.textContent=starter.bullets[0];
+}
+function chooseRoleSuggestion(key,title){
+  if(!ROLE_STARTERS[key])return;
+  selectedProfessionKey=key;
+  var category=$('#professionSelect'),input=$('#roleSearch');
+  if(category)category.value=key;if(input)input.value=title||ROLE_STARTERS[key].roles[0];
+  if(guideStarted&&!norm(state.sections.header.headline)){mutate(function(){state.sections.header.headline=input.value},true)}
+  updateRoleSuggestions();
+}
+function addRoleSkill(skill){
+  skill=norm(skill);if(!skill)return;
+  mutate(function(){
+    var section=state.sections.skills;if(!Array.isArray(section.groups))section.groups=[];
+    if(!section.groups.length)section.groups.push({name:'Key skills',items:[]});
+    var group=section.groups[0];if(!Array.isArray(group.items))group.items=[];
+    if(group.items.map(function(v){return norm(v).toLowerCase()}).indexOf(skill.toLowerCase())<0)group.items.push(skill);
+    if(!group.name||group.name==='Skills')group.name='Key skills';
+    openSections.skills=true;
+  },true);
+  updateRoleSuggestions();
+  toast('Added skill: '+skill);
+}
+function addRoleBullet(bullet){
+  bullet=norm(bullet);if(!bullet)return;
+  var starter=currentRoleStarter(),title=norm($('#roleSearch')&&$('#roleSearch').value);
+  mutate(function(){
+    var sec=state.sections.experience;if(!Array.isArray(sec.items))sec.items=[];
+    if(!sec.items.length)sec.items.push({company:'',role:title||(starter&&starter.roles[0])||'',location:'',start:'',end:'',currently:false,bullets:[]});
+    var entry=sec.items[0];if(!Array.isArray(entry.bullets))entry.bullets=[];
+    if(entry.bullets.length<8)entry.bullets.push(bullet);
+    openSections.experience=true;
+  },true);
+  toast('Added a bullet starter — edit it to match your experience');
+}
+function showRoleExample(){
+  var example=$('#roleExample'),status=$('#exampleStatus');
+  if(!currentRoleStarter()){if(status)status.textContent='Choose a profession area first.';return}
+  if(example)example.hidden=false;
+  if(status)status.textContent='This is sample wording, not your personal information. Edit it before downloading.';
+}
+function useRoleExampleSummary(){
+  var starter=currentRoleStarter();if(!starter)return;
+  mutate(function(){state.sections.summary.text=starter.summary;openSections.summary=true},true);
+  if($('#exampleStatus'))$('#exampleStatus').textContent='Example summary added. Replace the bracketed parts with your own details.';
+}
+function useRoleExampleBullet(){
+  var starter=currentRoleStarter();if(!starter)return;
+  addRoleBullet(starter.bullets[0]);
+}
+function wrapSectionActions(){
+  $$('#accordion .section-actions').forEach(function(actions){
+    if(actions.querySelector('.section-options'))return;
+    var details=document.createElement('details');details.className='section-options';
+    var summary=document.createElement('summary');summary.textContent='•••';summary.setAttribute('aria-label','Section options');
+    details.appendChild(summary);
+    Array.prototype.slice.call(actions.children).forEach(function(button){details.appendChild(button)});
+    actions.appendChild(details);
+  });
+}
+function organizeMoreSections(){
+  var accordion=$('#accordion');if(!accordion)return;
+  var rare=new Set(['certifications','awards','languages','volunteering','publications','references']);
+  var details=document.createElement('details');details.className='more-sections-menu';
+  var summary=document.createElement('summary');summary.textContent='+ Add more sections';details.appendChild(summary);
+  var hint=document.createElement('p');hint.className='help';hint.textContent='Certifications, awards, languages, volunteering and other optional sections.';details.appendChild(hint);
+  var content=document.createElement('div');content.className='more-sections-content';details.appendChild(content);
+  $$('#accordion .section-card').forEach(function(card){
+    var id=card.dataset.editorSection||'';
+    if(rare.has(id)||/^custom-\d+$/.test(id))content.appendChild(card);
+  });
+  var addCustom=$('#addCustomSection',accordion);if(addCustom)content.appendChild(addCustom);
+  accordion.appendChild(details);
+  details.open=advancedMode;
+}
+function applyGuidedEditorView(){
+  var body=document.body,accordion=$('#accordion');
+  body.classList.toggle('advanced-mode',advancedMode);
+  body.classList.toggle('guided-running',guideStarted);
+  if(!accordion)return;
+  var current=GUIDE_STEPS[guidedStep]&&GUIDE_STEPS[guidedStep].section;
+  $$('.section-card',accordion).forEach(function(card){
+    var id=card.dataset.editorSection||'';
+    var optional=card.closest('.more-sections-content');
+    if(advancedMode){card.hidden=false;return}
+    if(optional){card.hidden=false;return}
+    var projectRelated=guideStarted&&guidedStep===4&&id==='projects'&&['student_fresher','it_software','engineering','creative_freelance'].indexOf(selectedProfessionKey)>=0;
+    card.hidden=!(guideStarted&&guidedStep<5&&(id===current||projectRelated));
+    if(!card.hidden){
+      if(projectRelated&&id!==current){card.classList.toggle('open',!!openSections[id])}
+      else{card.classList.add('open');openSections[id]=true}
+    }
+  });
+  var more=$('.more-sections-menu',accordion);if(more)more.open=advancedMode||more.open;
+  var toolGrid=$('.tool-grid');if(toolGrid)toolGrid.style.display=advancedMode?'grid':'none';
+  var wizardBack=$('#wizardBackBtn'),wizardNext=$('#wizardNextBtn'),download=$('#guidedDownloadPanel'),stepPanel=$('#guidedStepPanel');
+  if(stepPanel)stepPanel.hidden=!guideStarted;
+  if(download)download.hidden=!(guideStarted&&guidedStep===6);
+  if(wizardBack){wizardBack.disabled=guidedStep===0}
+  if(wizardNext){wizardNext.hidden=guidedStep===6;wizardNext.textContent=guidedStep===5?'Next: Download →':'Next: '+(GUIDE_STEPS[Math.min(6,guidedStep+1)]||GUIDE_STEPS[6]).title+' →'}
+  var advancedButton=$('#advancedToggleBtn'),advancedNote=$('#advancedNote');
+  if(advancedButton){advancedButton.hidden=guidedStep>=5;advancedButton.textContent=advancedMode?'Hide advanced options':'Advanced options';advancedButton.setAttribute('aria-expanded',String(advancedMode))}
+  if(advancedNote)advancedNote.hidden=!advancedMode;
+  autoGrowTextareas($('#editor'));
+}
+function setGuidedStep(next){
+  guidedStep=Math.max(0,Math.min(6,Number(next)||0));guideStarted=true;
+  document.body.classList.remove('welcome-mode','mobile-preview','download-step');
+  document.body.classList.add('guided-running');
+  var step=GUIDE_STEPS[guidedStep];
+  if(guidedStep===5){showDesignPanel()}else{showEditPanel();if(guidedStep===6)document.body.classList.add('download-step')}
+  if(guidedStep<5){openSections[step.section]=true}
+  var title=$('#guidedStepTitle'),count=$('#guidedStepCount'),progress=$('#guidedProgress'),help=$('#guidedStepHelp');
+  if(title)title.textContent=step.title;if(count)count.textContent='STEP '+(guidedStep+1)+' OF '+GUIDE_STEPS.length;
+  if(progress)progress.value=guidedStep+1;if(help)help.textContent=step.help;
+  var roleSearch=$('#guidedRoleSearch');if(roleSearch)roleSearch.hidden=guidedStep>=5;
+  var download=$('#guidedDownloadPanel');if(download)download.hidden=guidedStep!==6;
+  var stepPanel=$('#guidedStepPanel');if(stepPanel)stepPanel.hidden=false;
+  if(guidedStep===0)document.body.dataset.guidedSection='header';
+  renderEditor();renderPreview();renderHealth();updateTopControls();applyGuidedEditorView();
+  if(guidedStep===5)showDesignPanel();
+}
+function startGuidedResume(fromSaved){
+  guideStarted=true;advancedMode=false;
+  document.body.classList.remove('welcome-mode','advanced-mode','mobile-preview');
+  document.body.classList.add('guided-running');
+  if(!fromSaved){
+    if(selectedJourney==='student_fresher')selectedProfessionKey='student_fresher';
+    else if(selectedJourney==='experienced'||selectedJourney==='career_change')selectedProfessionKey='';
+  }
+  updateRoleSuggestions();
+  setGuidedStep(0);
+}
+function autoGrowTextarea(el){
+  if(!el||el.tagName!=='TEXTAREA')return;
+  el.style.height='auto';el.style.height=Math.max(el.scrollHeight,92)+'px';
+}
+function autoGrowTextareas(root){
+  if(!root)return;
+  var items=root.matches&&root.matches('textarea')?[root]:$$('textarea',root);
+  items.forEach(autoGrowTextarea);
+}
 
 function renderEditor(){
   var html='';
@@ -409,6 +765,7 @@ function renderEditor(){
   });
   html+='<button class="btn soft" type="button" id="addCustomSection" '+(state.custom.length>=6?'disabled':'')+'>+ Add custom section ('+state.custom.length+'/6)</button>';
   $('#accordion').innerHTML=html;
+  organizeMoreSections();wrapSectionActions();applyGuidedEditorView();
 }
 function validateDateOrder(kind,index){var item=state.sections[kind]&&state.sections[kind].items&&state.sections[kind].items[index],error='';if(!item)return true;var start=norm(item.start),end=(item.currently||item.ongoing)?'':norm(item.end);if(start&&!dateIsValid(start))error='Start date is not a real calendar date.';else if(end&&!dateIsValid(end))error='End date is not a real calendar date.';else if(start&&end&&dateCompare(start,end)>0)error='End date cannot be before Start date.';var el=$('#'+kind+'-'+index+'-date-error');if(el){el.textContent=error;el.classList.toggle('show',!!error)}return !error}
 function validateSingleDatePath(path){var m=String(path).match(/^(certifications|awards|publications)\.(\d+)\.date$/);if(!m)return true;var v=state.sections[m[1]].items[Number(m[2])].date,el=$('[data-date-error="'+CSS.escape(path)+'"]');var error=v&&!dateIsValid(v)?'Date is not a real calendar date.':'';if(el){el.textContent=error;el.classList.toggle('show',!!error)}return !error}
@@ -474,7 +831,7 @@ function exportStateClone(){
   delete out._editor;
   return out;
 }
-function renderTopTheme(){var cards=$('[data-template]');cards.forEach(function(b){b.classList.toggle('active',b.dataset.template===state.template)});var compact=$('#themeSelectCompact'),preview=$('#previewTemplateSelect');if(compact)compact.value=state.template;if(preview)preview.value=state.template;var active=$('[data-template="'+CSS.escape(state.template)+'"]');if(active)active.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'nearest',inline:'center'})}
+function renderTopTheme(){$$('[data-template]').forEach(function(b){b.classList.toggle('active',b.dataset.template===state.template)});var active=$('[data-template="'+CSS.escape(state.template)+'"]');if(active)active.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'nearest',inline:'center'})}
 function updateTopControls(){applyTemplateConstraints();document.body.dataset.resumeTemplate=state.template;renderTopTheme();$('#paperSelect').value=state.paper;$('#goalSelect').value=state.goal;$('#marginSelect').value=state.margin;$('#fontSelect').value=state.font;$('#fontSizeSelect').value=state.fontSize;$('#lineSelect').value=state.lineSpacing;$('#dateSelect').value=state.dateFormat;renderFormatToolbar();$('#linkDisplaySelect').value=state.linkDisplay||'full';$('#accentPicker').value=state.accent;$('#dividerSelect').value=state.divider;$('#iconsToggle').setAttribute('aria-pressed',String(state.icons));$('#iconsToggle').textContent='Icons: '+(state.icons?'On':'Off');$('#iconsToggle').disabled=state.template==='classic';$('#photoToggle').setAttribute('aria-pressed',String(state.photoEnabled));$('#photoToggle').textContent=state.photoEnabled?'Photo: On':'Photo: Off';$('#photoToggle').disabled=!photoCapable();var pf=$('#photoToggle').closest('.field');if(pf)pf.hidden=!photoCapable();$$('[data-preset]').forEach(function(b){b.classList.toggle('active',b.dataset.preset===state.preset)});$('#undoBtn').disabled=!history.length;$('#redoBtn').disabled=!future.length}
 function createCustom(){state.custom.push({title:'Custom section',mode:'bullets',content:'',bullets:[],show:true});state.order.push('custom-'+state.custom.length);openSections['custom-'+state.custom.length]=true}
 function selectedSection(id){if(id.indexOf('custom-')===0)return state.custom[Number(id.split('-')[1])-1];return state.sections[id]}
@@ -503,7 +860,7 @@ function blankResumeState(){
   empty.summary={show:true,text:'',max:700};
   empty.experience={show:true,items:[]};
   empty.education={show:true,items:[]};
-  empty.skills={show:true,groups:[{name:'Skills',items:[]}],tags:[]};
+  empty.skills={show:true,groups:[{name:'Key skills',items:[]}],tags:[]};
   empty.projects={show:true,items:[]};
   empty.certifications={show:true,items:[]};
   empty.awards={show:true,items:[]};
@@ -512,7 +869,7 @@ function blankResumeState(){
   empty.publications={show:true,items:[]};
   empty.references={show:true,onRequest:false,items:[]};
   return{
-    version:1,paper:'A4',template:'modern',goal:'one',margin:'normal',font:'Inter',fontSize:'10.5',lineSpacing:'1.25',
+    version:1,paper:'A4',template:'classic',goal:'one',margin:'normal',font:'Inter',fontSize:'10.5',lineSpacing:'1.25',
     format:defaultFormatState(),
     accent:'#334155',divider:'rule',dateFormat:'MMM YYYY',icons:true,photoEnabled:false,preset:'Empty',
     order:Object.keys(SECTION_LABELS),sections:empty,custom:[]
@@ -660,7 +1017,7 @@ function sectionBlockHtml(id,sec){
   var items=textItemsForSection(id,sec);if(!items.length)return '';
   var title=sectionMeta(id),cls=(state.divider==='box'?'section-box':'');return '<section class="section-block '+cls+'" data-preview-section="'+esc(id)+'" style="'+esc(formatSectionStyle(id))+'"><h2 class="'+esc(sectionHeadingClass(id,'section-title'))+'">'+esc(title)+'</h2>'+items.map(function(x){return renderEntryHtml(x.type,x)}).join('')+'</section>'
 }
-function headerHtml(sec,sidebar){var links=[];function push(label,url){var u=safeUrl(url);if(u)links.push('<span>'+(state.icons?label+' ':'')+linkHtml(u)+'</span>')}push('in',sec.linkedin);push('gh',sec.github);push('web',sec.website);(sec.customLinks||[]).forEach(function(x){push(x.name||'link',x.url)});var contact=['email','phone','location'].map(function(k){var v=norm(sec[k]);if(!v)return'';var lab=state.icons?({email:'✉',phone:'☎',location:'⌖'}[k]+' '):'';var content=k==='email'?'<a class="link-inline" href="mailto:'+esc(v)+'">'+esc(v)+'</a>':esc(v);return '<span>'+lab+content+'</span>'}).join('');var image=state.photoEnabled&&safeImage(sec.photo)?'<img class="resume-photo" src="'+esc(sec.photo)+'" alt="">':'';if(sidebar)return '<div class="resume-header" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div class="resume-name">'+esc(sec.name||'Your Name')+'</div><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact">'+contact+links.join('')+'</div></div>';return '<div class="resume-header two-line" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div><h1 class="resume-name">'+esc(sec.name||'Your Name')+'</h1><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact" style="margin-top:7px">'+contact+links.join('')+'</div></div>'+image+'</div>'}
+function headerHtml(sec,sidebar){var links=[];function push(label,url){var u=safeUrl(url);if(u)links.push('<span>'+(state.icons?label+' ':'')+linkHtml(u)+'</span>')}push('in',sec.linkedin);push('gh',sec.github);push('web',sec.website);(sec.customLinks||[]).forEach(function(x){push(x.name||'link',x.url)});var contact=['email','phone','location'].map(function(k){var v=norm(sec[k]);if(!v)return'';var lab=state.icons?({email:'✉',phone:'☎',location:'⌖'}[k]+' '):'';var content=k==='email'?'<a class="link-inline" href="mailto:'+esc(v)+'">'+esc(v)+'</a>':esc(v);return '<span>'+lab+content+'</span>'}).join('');var image=state.photoEnabled&&safeImage(sec.photo)?'<img class="resume-photo" src="'+esc(sec.photo)+'" alt="">':'';if(sidebar)return '<div class="resume-header" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div class="resume-name">'+esc(sec.name||'')+'</div><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact">'+contact+links.join('')+'</div></div>';return '<div class="resume-header two-line" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div><h1 class="resume-name">'+esc(sec.name||'')+'</h1><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact" style="margin-top:7px">'+contact+links.join('')+'</div></div>'+image+'</div>'}
 function sidebarBlocks(){
   var sec=state.sections,html=headerHtml(sec.header,true);
   ['skills','languages','certifications'].forEach(function(id){var b=sectionBlockHtml(id,sec[id]);if(b)html+=b});
@@ -732,7 +1089,7 @@ function renderPreview(){
   var warn=$('#onePageWarning');
   warn.classList.toggle('show',state.goal==='one'&&currentPages>1);
   $('#pageHealth').textContent='Page count '+currentPages;
-  var title=(norm(state.sections.header.name)||'Your Name')+' - Resume';document.title=title;
+  var title=(norm(state.sections.header.name)||'Resume Builder')+' - Resume';document.title=title;
   buildPrintHintStyle();
   updatePageCounter();
 }
@@ -879,7 +1236,7 @@ function portfolioSkillGroups(skills){
     var textValue=level&&level.toLowerCase()!==name.toLowerCase()?name+' — '+level:name;
     byName[key].items.push(textValue);
   });
-  return groups.length?groups:[{name:'Skills',items:[]}];
+  return groups.length?groups:[{name:'Key skills',items:[]}];
 }
 function portfolioToResume(x){
   if(!isRecord(x))throw new Error('Invalid portfolio data.');
@@ -1016,11 +1373,11 @@ function setupDivider(){
   function frame(){raf=0;if(dragging)setWidth(x)}
   d.addEventListener('pointerdown',function(e){if(innerWidth<=800)return;dragging=true;pid=e.pointerId;x=e.clientX;d.setPointerCapture?.(pid);document.body.classList.add('divider-dragging');if(!raf)raf=requestAnimationFrame(frame);e.preventDefault()});
   d.addEventListener('pointermove',function(e){if(!dragging)return;x=e.clientX;if(!raf)raf=requestAnimationFrame(frame);e.preventDefault()});
-  function end(){if(!dragging)return;dragging=false;document.body.classList.remove('divider-dragging');if(raf)cancelAnimationFrame(raf);raf=0;try{if(pid!=null)d.releasePointerCapture(pid)}catch(e){}pid=null}
+  function end(){if(!dragging)return;dragging=false;document.body.classList.remove('divider-dragging');if(raf)cancelAnimationFrame(raf);raf=0;try{if(pid!=null)d.releasePointerCapture(pid)}catch(e){}pid=null;requestAnimationFrame(fitPreviewWidth)}
   d.addEventListener('pointerup',end);d.addEventListener('pointercancel',end);d.addEventListener('lostpointercapture',end);
   d.addEventListener('dblclick',function(){setWidth(410)});
   d.addEventListener('keydown',function(e){if(innerWidth<=800)return;var b=bounds(),step=e.shiftKey?48:16;if(e.key==='ArrowLeft'){e.preventDefault();setWidth((state._editor||410)-step)}else if(e.key==='ArrowRight'){e.preventDefault();setWidth((state._editor||410)+step)}else if(e.key==='Home'){e.preventDefault();setWidth(b.min)}else if(e.key==='End'){e.preventDefault();setWidth(b.max)}});
-  window.addEventListener('resize',function(){if(innerWidth>800)setWidth(state._editor||410)});
+  window.addEventListener('resize',function(){if(innerWidth>800)setWidth(state._editor||410);requestAnimationFrame(fitPreviewWidth)});
   setWidth(state._editor||410)
 }
 function renderAccentSwatches(){
@@ -1060,6 +1417,53 @@ function safeEach(selector,handler){
 function safeStep(name,fn){
   try{return fn()}catch(err){console.error('[Resume Builder] Setup step failed — '+name+':',err);return undefined}
 }
+function toggleFullPreview(){
+  var shell=$('#appShell'),button=$('#fullPreviewBtn'),zoom=$('#zoomSelect');
+  if(!shell||!button)return;
+  var opening=!shell.classList.contains('full-preview-mode');
+  if(opening){
+    if(zoom)button.dataset.previousZoom=zoom.value||'100';
+    shell.classList.add('full-preview-mode');
+    document.body.classList.add('full-resume-preview');
+    button.textContent='✎ Return to editor';
+    button.setAttribute('aria-pressed','true');
+    requestAnimationFrame(function(){fitPreviewWidth();});
+  }else{
+    shell.classList.remove('full-preview-mode');
+    document.body.classList.remove('full-resume-preview');
+    button.textContent='⛶ Full preview';
+    button.setAttribute('aria-pressed','false');
+    if(zoom)zoom.value=button.dataset.previousZoom||'100';
+    requestAnimationFrame(function(){applyPageVars();renderPreview();});
+  }
+}
+function showDesignPanel(){
+  document.body.classList.remove('mobile-preview','edit-mode');
+  document.body.classList.add('design-mode');
+  var panel=$('#designPanel');if(panel)panel.hidden=false;
+  var edit=$('#editModeBtn'),design=$('#designModeBtn');
+  if(edit){edit.classList.remove('active');edit.setAttribute('aria-selected','false')}
+  if(design){design.classList.add('active');design.setAttribute('aria-selected','true')}
+  var editor=$('#editor');if(editor)editor.scrollTop=0;
+}
+function showEditPanel(){
+  document.body.classList.remove('design-mode','mobile-preview');
+  document.body.classList.add('edit-mode');
+  var panel=$('#designPanel');if(panel)panel.hidden=true;
+  var edit=$('#editModeBtn'),design=$('#designModeBtn');
+  if(edit){edit.classList.add('active');edit.setAttribute('aria-selected','true')}
+  if(design){design.classList.remove('active');design.setAttribute('aria-selected','false')}
+  var me=$('#mobileEditBtn'),mp=$('#mobilePreviewBtn');
+  if(me)me.classList.add('active');if(mp)mp.classList.remove('active');
+}
+function fitPreviewWidth(){
+  var scroll=$('#previewScroll'),select=$('#zoomSelect'),d=paperDims();
+  if(!scroll||!select)return;
+  var ratio=Math.round(Math.max(220,scroll.clientWidth-24)/d.w*100);
+  var options=Array.from(select.options).map(function(o){return Number(o.value)}).filter(function(v){return v>0});
+  var best=options.reduce(function(a,b){return Math.abs(b-ratio)<Math.abs(a-ratio)?b:a},options[0]||100);
+  select.value=String(best);applyPageVars();renderPreview();
+}
 function setMoreMenu(open,focusFirst){
   var menu=$('#moreMenu'),button=$('#moreBtn');
   if(!menu||!button)return false;
@@ -1092,7 +1496,7 @@ function setupEvents(){
         button.textContent='✎ Edit';
         button.title='Return to the editor';
         button.setAttribute('aria-pressed','true');
-        zoom.value='50';
+        zoom.value=previousZoom||'100';
       }else{
         shell.classList.remove('full-preview-mode');
         button.textContent='⛶ Full Preview';
@@ -1100,8 +1504,65 @@ function setupEvents(){
         button.setAttribute('aria-pressed','false');
         zoom.value=previousZoom||'100';
       }
-      requestAnimationFrame(function(){applyPageVars();renderPreview();});
+      requestAnimationFrame(function(){if(opening)fitPreviewWidth();else{applyPageVars();renderPreview();}});
     });
+  });
+
+  safeStep('workspace tabs and mobile bottom bar',function(){
+    safeBind('#editModeBtn','click',function(){if(guideStarted&&guidedStep>=5)setGuidedStep(4);else showEditPanel()});
+    safeBind('#designModeBtn','click',function(){if(guideStarted&&guidedStep<5)setGuidedStep(5);else showDesignPanel()});
+    safeBind('#mobileEditBtn','click',function(){if(guideStarted&&guidedStep>=5)setGuidedStep(4);else showEditPanel()});
+    safeBind('#mobilePreviewBtn','click',function(){
+      document.body.classList.remove('design-mode','edit-mode');
+      var p=$('#designPanel');if(p)p.hidden=true;
+      document.body.classList.add('mobile-preview');
+      $('#mobilePreviewBtn').classList.add('active');$('#mobileEditBtn').classList.remove('active');
+      requestAnimationFrame(fitPreviewWidth);
+    });
+    safeBind('#mobileDownloadPdfBtn','click',downloadPdf);
+  });
+
+  safeStep('guided first-time flow',function(){
+    safeBind('#startResumeBtn','click',function(){startGuidedResume(false)});
+    safeEach('[data-start-profession]',function(btn){safeBind(btn,'click',function(){
+      selectedJourney=btn.dataset.startProfession;
+      selectedProfessionKey=selectedJourney==='student_fresher'?'student_fresher':'';
+      $$('.profession-choice').forEach(function(choice){choice.classList.toggle('active',choice===btn)});
+      var category=$('#professionSelect');if(category)category.value=selectedProfessionKey;
+      updateRoleSuggestions();
+    })});
+    safeBind('#professionSelect','change',function(e){selectedProfessionKey=e.target.value||'';var role=$('#roleSearch');if(role)role.value='';updateRoleSuggestions()});
+    safeBind('#roleSearch','input',updateRoleSuggestions);
+    safeBind('#seeExampleBtn','click',showRoleExample);
+    safeBind('#useExampleSummaryBtn','click',useRoleExampleSummary);
+    safeBind('#addExampleBulletBtn','click',useRoleExampleBullet);
+    safeBind('#wizardBackBtn','click',function(){if(guidedStep>0)setGuidedStep(guidedStep-1)});
+    safeBind('#wizardNextBtn','click',function(){
+      if(guidedStep===0){
+        var name=norm(state.sections.header.name),email=norm(state.sections.header.email);
+        if(!name||!email){
+          toast(!name&&!email?'Add your name and email first.':(!name?'Add your name first.':'Add your email first.'));
+          var target=!name?$('#f-header-name'):$('#f-header-email');
+          if(target&&target.focus)target.focus();
+          return;
+        }
+      }
+      if(guidedStep<6)setGuidedStep(guidedStep+1);
+    });
+    safeBind('#backToSkillsBtn','click',function(){setGuidedStep(4)});
+    safeBind('#downloadFromGuideBtn','click',downloadPdf);
+    safeBind('#advancedToggleBtn','click',function(){
+      advancedMode=!advancedMode;document.body.classList.toggle('advanced-mode',advancedMode);
+      applyGuidedEditorView();
+      toast(advancedMode?'Advanced options shown':'Advanced options hidden');
+    });
+    safeBind('#guidedWizard','click',function(e){
+      var b=e.target.closest('button');if(!b)return;
+      if(b.dataset.roleKey&&b.dataset.roleTitle){chooseRoleSuggestion(b.dataset.roleKey,b.dataset.roleTitle);return}
+      if(b.dataset.suggestSkill){addRoleSkill(b.dataset.suggestSkill);return}
+      if(b.dataset.suggestBullet){addRoleBullet(b.dataset.suggestBullet);return}
+    });
+    updateRoleSuggestions();
   });
 
   safeStep('mobile More menu',function(){
@@ -1118,6 +1579,8 @@ function setupEvents(){
       else if(a==='export')exportJson();
       else if(a==='portfolio')beginPortfolioImport();
       else if(a==='fit')fitToOnePage();
+      else if(a==='design'){if(guideStarted&&guidedStep<5)setGuidedStep(5);else showDesignPanel();}
+      else if(a==='fullPreview')toggleFullPreview();
       else if(a==='reset')showReplacementConfirm('reset',resetTargetPreset());
     });
     safeBind(document,'click',function(e){
@@ -1132,9 +1595,7 @@ function setupEvents(){
     safeBind('#confirmReset','click',confirmReplacement);
     safeEach('[data-close-modal]',function(b){safeBind(b,'click',closeReplacementConfirm)});
     safeEach('[data-preset]',function(b){safeBind(b,'click',function(){if(state.preset!==b.dataset.preset)preset(b.dataset.preset)})});
-    safeBind('#themeSelectCompact','change',function(e){applySetting('template',e.target.value)});
-    safeBind('#previewTemplateSelect','change',function(e){applySetting('template',e.target.value)});
-    safeBind('#paperSelect','change',function(e){applySetting('paper',e.target.value)});
+    safeBind('#paperSelect','change',function(e){applySetting('paper',e.target.value);requestAnimationFrame(fitPreviewWidth)});
     safeBind('#goalSelect','change',function(e){applySetting('goal',e.target.value)});
     safeBind('#marginSelect','change',function(e){applySetting('margin',e.target.value)});
     safeBind('#fontSelect','change',function(e){applySetting('font',e.target.value)});
@@ -1166,7 +1627,7 @@ function setupEvents(){
     safeBind('#photoToggle','click',function(){applySetting('photoEnabled',!state.photoEnabled)});
     safeBind('#zoomSelect','change',function(){applyPageVars();renderPreview()});
     safeStep('accent swatches',renderAccentSwatches);
-    safeBind('#fitWidthBtn','click',function(){var d=paperDims(),avail=Math.max(320,$('#previewScroll').clientWidth-44),z=Math.max(50,Math.min(150,Math.round(avail/d.w*100)));$('#zoomSelect').value=String(z);applyPageVars();renderPreview()});
+    safeBind('#fitWidthBtn','click',fitPreviewWidth);
     safeBind('#fitOnePageBtn','click',fitToOnePage);
     function cycleTemplate(delta){var themes=['classic','modern','compact','sidebar'],idx=themes.indexOf(state.template);if(idx<0)idx=0;var next=themes[(idx+delta+themes.length)%themes.length];applySetting('template',next);var card=$('[data-template="'+next+'"]');if(card)card.scrollIntoView({block:'nearest',inline:'center',behavior:reduced()?'auto':'smooth'})}
     safeBind('#themePrev','click',function(){cycleTemplate(-1)});
@@ -1204,7 +1665,7 @@ function setupEvents(){
 
   safeStep('editor input and focus',function(){
     safeBind('#editor','input',function(e){
-      var el=e.target;if(el.matches('[data-path]')){updateSectionField(el);if(el.dataset.path.indexOf('custom.')!==0&&el.dataset.path.indexOf('references.')!==0){return}}
+      var el=e.target;if(el.matches('textarea'))autoGrowTextarea(el);if(el.matches('[data-path]')){updateSectionField(el);if(el.dataset.path.indexOf('custom.')!==0&&el.dataset.path.indexOf('references.')!==0){return}}
       if(el.matches('[data-bullet]')){var i=Number(el.dataset.index),j=Number(el.dataset.bulletIndex);var before=snapshot();state.sections.experience.items[i].bullets[j]=el.value;queueTyping(before);setDirty(true);queuePreviewRender();renderHealth()}
       if(el.matches('[data-project-bullet]')){var i2=Number(el.dataset.index),j2=Number(el.dataset.bulletIndex),before2=snapshot();state.sections.projects.items[i2].bullets[j2]=el.value;queueTyping(before2);setDirty(true);queuePreviewRender();renderHealth()}
       if(el.matches('[data-custom-bullet]')){var i3=Number(el.dataset.index),j3=Number(el.dataset.bulletIndex);var before3=snapshot();state.custom[i3].bullets[j3]=el.value;queueTyping(before3);setDirty(true);queuePreviewRender();renderHealth()}
@@ -1233,7 +1694,7 @@ function setupEvents(){
       else if(b.dataset.addProjectBullet){var pi2=Number(b.dataset.addProjectBullet);var before=snapshot();if((state.sections.projects.items[pi2].bullets||[]).length<8)state.sections.projects.items[pi2].bullets.push('');pushHistory(before);setDirty(true);renderEditor();renderPreview();renderHealth();}
       else if(b.dataset.removeProjectTag){mutate(function(){state.sections.projects.items[Number(b.dataset.removeProjectTag)].tech.splice(Number(b.dataset.tagIndex),1)},true)}
       else if(b.dataset.removeSkillGroup){mutate(function(){state.sections.skills.groups.splice(Number(b.dataset.removeSkillGroup),1)},true)}
-      else if(b.hasAttribute('data-add-skill-group')){mutate(function(){state.sections.skills.groups.push({name:'New skills',items:[]})},true)}
+      else if(b.hasAttribute('data-add-skill-group')){mutate(function(){state.sections.skills.groups.push({name:'Tools and software',items:[]})},true)}
       else if(b.dataset.removeSkillTag){mutate(function(){state.sections.skills.groups[Number(b.dataset.removeSkillTag)].items.splice(Number(b.dataset.tagIndex),1)},true)}
       else if(b.id==='addCustomSection'){mutate(function(){createCustom()},true)}
       else if(b.dataset.removeCustomSection){mutate(function(){removeCustom(Number(b.dataset.removeCustomSection))},true)}
@@ -1252,10 +1713,10 @@ function setupEvents(){
       if(e.target.id==='photoInput'){var f=e.target.files&&e.target.files[0];if(f)saveImage(f).then(function(src){mutate(function(){state.sections.header.photo=src},true);if(photoCapable())state.photoEnabled=true;updateTopControls()}).catch(function(err){toast(err.message,'error')})}
     });
     safeBind('#editor','dragstart',function(e){var h=e.target.closest('[data-drag-handle]');if(!h)return;dragSection=h.dataset.dragHandle||'';e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragSection)});
-    safeBind('#editor','dragover',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});card.classList.add('drag-over')});
+    safeBind('#editor','dragover',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();$$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});card.classList.add('drag-over')});
     safeBind('#editor','dragleave',function(e){var card=e.target.closest('[data-editor-section]');if(card)card.classList.remove('drag-over')});
-    safeBind('#editor','drop',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();var target=card.dataset.editorSection;if(target===dragSection)return;var before=snapshot(),a=state.order.indexOf(dragSection),b=state.order.indexOf(target);if(a<0||b<0)return;state.order.splice(a,1);state.order.splice(b,0,dragSection);pushHistory(before);setDirty(true);dragSection='';$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});renderEditor();renderPreview();renderHealth()});
-    safeBind('#editor','dragend',function(){dragSection='';$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});});
+    safeBind('#editor','drop',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();var target=card.dataset.editorSection;if(target===dragSection)return;var before=snapshot(),a=state.order.indexOf(dragSection),b=state.order.indexOf(target);if(a<0||b<0)return;state.order.splice(a,1);state.order.splice(b,0,dragSection);pushHistory(before);setDirty(true);dragSection='';$$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});renderEditor();renderPreview();renderHealth()});
+    safeBind('#editor','dragend',function(){dragSection='';$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});});
     safeBind('#photoInput','keydown',function(){});
   });
 
@@ -1428,11 +1889,12 @@ function init(){
   });
   safeStep('divider setup',setupDivider);
   safeStep('event setup',setupEvents);
+  requestAnimationFrame(function(){fitPreviewWidth();});
   safeStep('keyword helper setup',keywordHelper);
   safeStep('saved resume restore',function(){
     restoreSavedResume().then(function(result){
       safeStep('apply restored resume',function(){
-        if(result.found){renderEditor();renderPreview();renderHealth();updateTopControls();dirty=false;setSaveStatus('Saved');toast('Saved resume restored')}
+        if(result.found){renderEditor();renderPreview();renderHealth();updateTopControls();dirty=false;setSaveStatus('Saved');startGuidedResume(true);requestAnimationFrame(fitPreviewWidth);toast('Saved resume restored')}
         else if(result.corrupt){dirty=false;setSaveStatus('Not saved — Export JSON','error');toast('Saved resume was corrupted; a backup was kept and the app started safely.','error')}
         else setSaveStatus('Saved');
         restoreInProgress=false;autosaveReady=!!window.indexedDB;
