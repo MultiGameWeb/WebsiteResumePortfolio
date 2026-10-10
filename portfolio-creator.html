@@ -217,6 +217,18 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
  .crop-gesture-help{margin:4px 0 14px}.crop-canvas-wrap canvas{touch-action:none;cursor:grab}
  .device-switch{display:inline-flex;align-items:center;gap:3px;padding:3px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);flex:0 0 auto}.device-btn{display:flex;align-items:center;justify-content:center;gap:6px;min-height:32px;padding:0 9px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--muted);font-size:12px;font-weight:800;cursor:pointer}.device-btn.active{background:#171b21;color:#fff;border-color:#171b21}.device-icon{font-size:16px;line-height:1}
 @media(max-width:800px){.device-btn{width:32px;padding:0}.device-label{display:none}.device-switch{gap:1px;padding:2px}}
+/* Force the simulated mobile preview to use mobile layout even when the editor viewport is desktop-sized. */
+.preview-viewport.mobile #preview .portfolio-site .hero-grid{grid-template-columns:minmax(0,1fr)!important;gap:24px;max-width:100%}
+.preview-viewport.mobile #preview .portfolio-site .hero-copy{min-width:0;padding:32px 18px}
+.preview-viewport.mobile #preview .portfolio-site .hero-media{display:grid;position:relative;grid-template-columns:minmax(0,1fr);align-items:center;justify-items:center;gap:10px;width:100%;height:auto;min-height:240px;padding:8px 0 20px;overflow:visible}
+.preview-viewport.mobile #preview .portfolio-site .hero-media .cover{position:relative;inset:auto;grid-row:1;display:block;width:100%;max-width:100%;height:auto;max-height:280px;object-fit:contain;border-radius:16px;box-shadow:none}
+.preview-viewport.mobile #preview .portfolio-site .hero-media .profile{position:relative;left:auto;right:auto;bottom:auto;grid-row:2;display:block;width:min(150px,48%);height:auto;aspect-ratio:1/1;object-fit:cover;transform:none;margin-top:-34px;justify-self:center}
+.preview-viewport.mobile #preview .portfolio-site .hero-media .profile.shape-rounded{border-radius:24px!important}
+.preview-viewport.mobile #preview .portfolio-site .hero-media .profile.shape-none{display:none!important}
+.preview-viewport.mobile #preview .portfolio-site.photographer .hero-media{height:auto;min-height:0;overflow:visible}
+.preview-viewport.mobile #preview .portfolio-site.photographer .hero-media .cover{position:relative;inset:auto;grid-row:1;max-height:290px;object-fit:contain;background:var(--p-soft)}
+.preview-viewport.mobile #preview .portfolio-site.photographer .hero-media .profile{grid-row:2;width:min(145px,46%);height:auto;aspect-ratio:3/4;object-fit:contain;right:auto;bottom:auto;left:auto;transform:none;margin-top:-30px;border-radius:18px}
+.preview-viewport.mobile #preview .portfolio-site.minimal .hero-media{display:none}
 </style>
 </head>
 <body>
