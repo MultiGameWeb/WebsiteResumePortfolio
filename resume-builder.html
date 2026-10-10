@@ -241,6 +241,15 @@ body.download-step #editor .guided-download-panel{display:grid!important}
 .tag button{display:grid;place-items:center;flex:0 0 44px!important;width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important;padding:0;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text)}
 @media(max-width:390px){.tag button{flex-basis:44px!important;width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important}}
 
+
+@media(max-width:899px){
+ .design-template-card .theme-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;overflow:visible}
+ .design-template-card .theme-card{width:100%;min-width:0;min-height:82px}
+ .design-template-card .theme-strip-wrap>.theme-nav{display:none}
+ .design-template-card .theme-strip-wrap>.theme-strip-wrap{width:100%;min-width:0}
+ .design-template-card .fade-edge{display:none}
+}
+
 </style>
 
 </head>
@@ -322,7 +331,7 @@ body.download-step #editor .guided-download-panel{display:grid!important}
       </div>
       <div class="resume-note" style="margin-top:10px">Tip: many ATS systems parse text more reliably when a resume has no photo.</div>
     </div><div class="surface-card format-settings-panel">
-    <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><strong>Resume formatting</strong><span class="help">Font, spacing &amp; header alignment</span></div>
+    <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><strong>Resume formatting</strong><span class="help">Fonts, spacing and header alignment</span></div>
     <button class="btn soft format-toolbar-toggle" id="toggleFormatToolbar" type="button" aria-controls="formatToolbar" aria-expanded="false">Show formatting settings</button>
     <div class="format-toolbar" id="formatToolbar" aria-label="Preview formatting" hidden>
       <div class="format-scope"><strong id="formatScopeLabel">All resume</strong><span id="formatScopeHelp">Global print formatting</span></div>
@@ -345,14 +354,14 @@ body.download-step #editor .guided-download-panel{display:grid!important}
     </div>
   </div><div class="surface-card zoom-settings-card"><div class="subhead"><strong>Preview size</strong><span class="help">Only affects your screen, not your PDF</span></div><div class="zoom-box"><span class="zoom-label">View zoom <span>(does not change print size)</span></span><select id="zoomSelect" aria-label="View zoom (does not change print size)"><option value="25">25%</option><option value="30">30%</option><option value="35">35%</option><option value="40">40%</option><option value="45">45%</option><option value="50">50%</option><option value="55">55%</option><option value="65">65%</option><option value="70">70%</option><option value="80">80%</option><option value="85">85%</option><option value="60">60%</option><option value="75">75%</option><option value="90">90%</option><option value="100" selected>100%</option><option value="110">110%</option><option value="125">125%</option><option value="150">150%</option></select><button class="btn soft" id="fitWidthBtn" type="button">Fit width</button><button class="btn soft" id="fitOnePageBtn" type="button">Fit to 1 page</button></div><span class="warning" id="onePageWarning">Content exceeds 1 page</span></div></section>
   <div class="editor-head">
-    <div><div class="help">SITECRAFT · RESUME STUDIO</div><h1>Build an ATS-friendly resume</h1><p>Your resume is autosaved locally when browser storage is available.</p></div>
+    <div><div class="help">SITECRAFT · RESUME STUDIO</div><h1>Build your resume</h1><p>Your resume is autosaved locally when browser storage is available.</p></div>
     
   </div>
 
   
   <div class="tool-grid">
     <div class="surface-card">
-      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Experience preset</strong><span class="help">Sets section order + sample data</span></div>
+      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Experience preset</strong><span class="help">Suggests a section order. No sample personal data is added.</span></div>
       <div class="width-presets" id="presetGroup" style="margin-top:8px">
         <button class="preset-btn" data-preset="Fresher" type="button">Fresher</button>
         <button class="preset-btn active" data-preset="Experienced" type="button">Experienced</button>
@@ -685,7 +694,11 @@ function startGuidedResume(fromSaved){
   guideStarted=true;advancedMode=false;
   document.body.classList.remove('welcome-mode','advanced-mode','mobile-preview');
   document.body.classList.add('guided-running');
-  if(!fromSaved){selectedProfessionKey=selectedProfessionKey||'student_fresher';}
+  if(!fromSaved){
+    if(selectedJourney==='student_fresher')selectedProfessionKey='student_fresher';
+    else if(selectedJourney==='experienced'||selectedJourney==='career_change')selectedProfessionKey='';
+  }
+  updateRoleSuggestions();
   setGuidedStep(0);
 }
 function autoGrowTextarea(el){
