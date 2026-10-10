@@ -95,16 +95,119 @@ body.design-mode #editor .editor-head,body.design-mode #editor .tool-grid,body.d
 @media(max-width:899px){.app-shell{grid-template-columns:minmax(0,1fr);grid-template-rows:60px minmax(0,1fr)!important}.topbar{grid-column:1;grid-row:1;height:60px;padding:6px 8px;gap:5px}.topbar-left{flex:1 1 auto;gap:5px;overflow:hidden}.back-link{width:38px;min-width:38px;min-height:40px;padding:0;font-size:20px;border:0;background:transparent}.brand{gap:6px;margin-left:0;min-width:0}.brand-mark{width:36px;height:36px;border-radius:11px}.brand-copy strong{font-size:13px;max-width:75px;overflow:hidden;text-overflow:ellipsis}.brand-copy span{display:none}.topbar-right{gap:3px}.topbar .saved{font-size:0;gap:0;flex:0 0 auto}.topbar .saved i{width:8px;height:8px}.topbar .icon-btn{width:34px;min-width:34px;min-height:38px;font-size:18px}.download-pdf-btn{min-width:42px;width:42px;min-height:40px;padding:0;font-size:0}.download-pdf-btn span{display:none}.download-pdf-btn:before{content:"PDF";font-size:11px}.more-btn{min-width:47px;min-height:40px;padding:0 7px;font-size:11px}.editor{grid-column:1;grid-row:2;min-height:0;padding-bottom:78px}.preview-area{display:none;grid-column:1;grid-row:2;min-height:0}body.mobile-preview .editor{display:none!important}body.mobile-preview .preview-area{display:grid!important}body.mobile-preview .preview-scroll{padding:4px;overflow:auto}.divider{display:none}.editor-mode-tabs{top:0}.design-panel{padding:10px 10px 90px}.mobile-bottom-bar{position:fixed;z-index:1000;left:0;right:0;bottom:0;padding:8px max(10px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:.8fr .8fr 1.5fr;gap:8px;background:rgba(255,255,255,.96);border-top:1px solid var(--line);box-shadow:0 -8px 25px rgba(0,0,0,.08);backdrop-filter:blur(14px)}.mobile-bottom-bar button{min-width:0;min-height:46px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;padding:0 8px}.mobile-bottom-bar button.active{background:#171b21;color:#fff;border-color:#171b21}.mobile-bottom-bar #mobileDownloadPdfBtn{background:#171b21;color:#fff;border-color:#171b21}.app-shell.full-preview-mode{grid-template-rows:60px minmax(0,1fr)!important}.app-shell.full-preview-mode .preview-area{grid-row:2!important}.app-shell.full-preview-mode~.mobile-bottom-bar{display:none}}
 @media(max-width:390px){.topbar{padding-inline:5px;gap:3px}.topbar-right{gap:2px}.topbar .icon-btn{width:30px;min-width:30px}.more-btn{min-width:42px;padding-inline:5px}.brand-copy strong{max-width:63px;font-size:12px}.topbar-left .back-link{width:30px;min-width:30px}.editor-mode-tabs{padding:8px}.section-head{gap:5px}.section-main-toggle{min-width:0}.tag{gap:3px}.tag button{width:28px;min-width:28px;height:28px;min-height:28px;padding:0}}
 @media print{.editor-mode-tabs,.design-panel,.mobile-bottom-bar,.preview-page-indicator,#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}}
+
+/* Guided first-time journey */
+.guided-wizard{margin:12px 14px 16px;display:grid;gap:12px}
+.guided-wizard[hidden],[hidden].guided-step-panel,[hidden].guided-download-panel{display:none!important}
+.welcome-step,.guided-step-panel,.guided-download-panel,.guided-role-search{border:1px solid var(--line);border-radius:18px;background:#fff;padding:18px;box-shadow:0 4px 16px rgba(18,28,42,.035)}
+.wizard-kicker,.eyebrow{margin:0;color:#5b50b7;font-size:10px;font-weight:900;letter-spacing:.13em}
+.welcome-step h2,.guided-download-panel h2{margin:5px 0 7px;font-size:25px;line-height:1.15;letter-spacing:-.035em}
+.wizard-intro{margin:0 0 16px;color:var(--muted);font-size:13px}
+.welcome-step h3{font-size:14px;margin:0 0 10px}
+.choice-grid{display:grid;gap:8px;grid-template-columns:1fr}
+.profession-choice{display:grid;grid-template-columns:36px minmax(0,1fr);grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:14px;background:#fff;padding:11px;min-height:68px;color:var(--text)}
+.profession-choice .choice-icon{grid-row:1/3;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:#f0ecff;color:#5b50b7;font-size:18px}
+.profession-choice strong{font-size:13px;line-height:1.25}.profession-choice span:last-child{font-size:11px;font-weight:500;color:var(--muted)}
+.profession-choice.active{border-color:#8a7ee7;background:#f8f6ff;box-shadow:0 0 0 2px rgba(117,99,221,.1)}
+.ats-explainer{margin:14px 0 12px;color:var(--muted);font-size:11px;line-height:1.55}
+.wizard-start{width:100%;min-height:48px}
+.guided-role-search{display:grid;gap:8px}
+.guided-role-search label{display:grid;gap:3px;font-size:13px}
+.guided-role-search label .help{font-size:11px;font-weight:400}
+.guided-role-search input{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line2);border-radius:12px;background:#fff;color:var(--text);font-size:16px}
+.role-match-list,.role-suggestions{display:flex;flex-wrap:wrap;gap:7px}
+.role-match-list button,.suggestion-chip{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:#f8f8fb;color:var(--text);font-size:12px;font-weight:700}
+.role-match-list button[aria-pressed="true"]{border-color:#887be3;background:#f1eeff}
+.role-suggestions{align-items:flex-start}
+.suggestion-group{display:grid;gap:6px;width:100%}
+.suggestion-group strong{font-size:11px;color:var(--muted)}
+.suggestion-chip{min-height:38px;background:#fff}
+.suggestion-chip[data-suggest-bullet]{border-radius:10px;text-align:left;justify-content:flex-start;max-width:100%;white-space:normal}
+.text-button{border:0;background:transparent;color:#5347b7;font-size:12px;font-weight:800;text-align:left;min-height:40px;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
+.guided-progress-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.guided-progress-heading span{color:#6559bb;font-size:10px;font-weight:900;letter-spacing:.1em}
+.guided-progress-heading strong{font-size:17px}
+.guided-step-panel progress{display:block;width:100%;height:7px;margin:10px 0 12px;accent-color:#6559bb}
+.guided-step-help{margin:0 0 13px;color:var(--muted);font-size:12px;line-height:1.6}
+.guided-nav{display:grid;grid-template-columns:.7fr 1.3fr;gap:8px}
+.guided-nav button{min-height:46px}
+.advanced-toggle{min-height:42px;width:100%;border:1px dashed var(--line2);border-radius:12px;background:#f8f9fb;color:var(--muted);font-size:12px;font-weight:800}
+.advanced-note{margin:0;font-size:11px}
+.guided-download-panel{text-align:left}
+.guided-download-panel p{color:var(--muted);font-size:13px;line-height:1.65}
+.download-check{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#e8f7ef;color:#15804b;font-size:22px}
+body.welcome-mode #editor .editor-head,body.welcome-mode #editor .tool-grid,body.welcome-mode #editor #accordion{display:none!important}
+body.welcome-mode #editor #guidedRoleSearch{display:none!important}
+body.welcome-mode #editor #guidedStepPanel,body.welcome-mode #editor #guidedDownloadPanel{display:none!important}
+body.guided-running #editor #welcomeStep{display:none!important}
+body.guided-running #editor #guidedStepPanel[hidden],body.guided-running #editor #guidedDownloadPanel[hidden]{display:none!important}
+body.guided-running #editor .editor-head,body.guided-running #editor .tool-grid,body.guided-running #editor #accordion{display:block}
+body.guided-running #editor .tool-grid{display:none!important}
+body.design-mode #editor .guided-wizard{margin:8px 12px}
+body.design-mode #editor .guided-wizard #welcomeStep,body.design-mode #editor .guided-role-search{display:none!important}
+body.design-mode #editor #guidedStepPanel{display:block!important}
+@media(min-width:700px){.choice-grid{grid-template-columns:1fr}.welcome-step,.guided-step-panel,.guided-download-panel,.guided-role-search{padding:20px}.guided-wizard{margin:16px}}
+@media(max-width:899px){
+ .guided-wizard{margin:10px 10px 14px}
+ .welcome-step,.guided-step-panel,.guided-download-panel,.guided-role-search{padding:15px}
+ .welcome-step h2,.guided-download-panel h2{font-size:23px}
+ .profession-choice{min-height:68px}
+ .role-match-list button,.suggestion-chip{min-height:44px;font-size:13px}
+ .guided-step-panel,.guided-download-panel{margin-bottom:4px}
+ body.design-mode #editor .guided-wizard{padding-bottom:6px}
+}
+
 </style>
 
 </head>
-<body class="sc-workspace-page">
+<body class="sc-workspace-page edit-mode welcome-mode">
 <div class="app-shell" id="appShell">
 <header class="topbar" aria-label="Resume builder controls"><div class="topbar-left"><a class="back-link" href="index.html" data-nav="index.html" aria-label="Back to home"><span aria-hidden="true">←</span></a><a class="brand" href="resume-builder.html" aria-label="Resume Builder home"><span class="brand-mark" aria-hidden="true">▤</span><span class="brand-copy"><strong>Resume Builder</strong><span>Create a professional resume</span></span></a></div><div class="topbar-right"><div class="saved" id="savedStatus"><i></i><span>Saved</span></div><button class="btn soft icon-btn" id="undoBtn" type="button" aria-label="Undo" title="Undo">↶</button><button class="btn soft icon-btn" id="redoBtn" type="button" aria-label="Redo" title="Redo">↷</button><button class="btn primary download-pdf-btn" id="downloadPdfBtn" type="button" aria-label="Download PDF">↓ <span>Download PDF</span></button><div class="more-wrap"><button class="btn soft more-btn" id="moreBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="moreMenu">More <span aria-hidden="true">⌄</span></button><div class="more-menu" id="moreMenu" role="menu" hidden><button id="fullPreviewBtn" type="button" role="menuitem" data-more-action="fullPreview" aria-pressed="false">⛶ Full preview</button><button type="button" role="menuitem" data-more-action="design">Design settings</button><button type="button" role="menuitem" data-more-action="html">Download HTML</button><button type="button" role="menuitem" data-more-action="import">Import JSON</button><button type="button" role="menuitem" data-more-action="export">Export JSON</button><button type="button" role="menuitem" data-more-action="portfolio">Import from Portfolio</button><button type="button" role="menuitem" data-more-action="reset">Reset resume</button></div></div><button class="btn soft" id="downloadHtmlBtn" type="button" hidden>Download HTML</button><input id="importJson" type="file" accept="application/json" hidden><button id="exportJsonBtn" type="button" hidden>Export JSON</button><button id="importPortfolioBtn" type="button" hidden>Import from Portfolio</button><input id="portfolioImportJson" type="file" accept="application/json" hidden><button class="btn danger" id="resetBtn" type="button" hidden>Reset</button></div></header>
 
 
 <aside class="editor" id="editor" aria-label="Resume editor">
 <div class="editor-mode-tabs" role="tablist" aria-label="Resume workspace"><button id="editModeBtn" type="button" role="tab" class="active" aria-selected="true">Build resume</button><button id="designModeBtn" type="button" role="tab" aria-selected="false">Design</button></div>
+<section class="guided-wizard" id="guidedWizard" aria-label="Guided resume builder">
+  <section id="welcomeStep" class="welcome-step">
+    <p class="wizard-kicker">FREE RESUME BUILDER · ABOUT 5 MINUTES</p>
+    <h2>Let’s make your resume</h2>
+    <p class="wizard-intro">We’ll take this one step at a time. You can change anything later.</p>
+    <h3>What best describes you?</h3>
+    <div class="choice-grid">
+      <button type="button" data-start-profession="student_fresher" class="profession-choice active"><span class="choice-icon">✦</span><strong>Student / Fresher</strong><span>No full-time experience yet</span></button>
+      <button type="button" data-start-profession="experienced" class="profession-choice"><span class="choice-icon">↗</span><strong>Experienced professional</strong><span>Show the work you’ve done</span></button>
+      <button type="button" data-start-profession="career_change" class="profession-choice"><span class="choice-icon">◎</span><strong>Changing careers</strong><span>Highlight transferable skills</span></button>
+    </div>
+    <p class="ats-explainer"><strong>ATS-friendly</strong> means easy for hiring systems to read. We’ll start with a clean, simple layout.</p>
+    <button type="button" class="btn primary wizard-start" id="startResumeBtn">Start my resume <span aria-hidden="true">→</span></button>
+  </section>
+  <div class="guided-role-search" id="guidedRoleSearch">
+    <label for="roleSearch"><strong>Your role</strong> <span class="help">Optional — helps suggest skills and examples</span></label>
+    <input id="roleSearch" type="search" autocomplete="off" placeholder="e.g. teacher, accountant, electrician, sales executive">
+    <div class="role-match-list" id="roleMatchList" aria-live="polite"></div>
+    <div class="role-suggestions" id="roleSuggestions" aria-label="Suggested skills and bullet starters"></div>
+    <button type="button" id="seeExampleBtn" class="text-button">See an example for this role</button>
+    <span class="help" id="exampleStatus" aria-live="polite"></span>
+  </div>
+  <section class="guided-step-panel" id="guidedStepPanel" hidden>
+    <div class="guided-progress-heading"><span id="guidedStepCount">STEP 1 OF 7</span><strong id="guidedStepTitle">Basics</strong></div>
+    <progress id="guidedProgress" max="7" value="1">1 of 7</progress>
+    <p class="guided-step-help" id="guidedStepHelp">Start with your name and the best way for an employer to contact you.</p>
+    <div class="guided-nav">
+      <button type="button" id="wizardBackBtn" class="btn soft" disabled>← Back</button>
+      <button type="button" id="wizardNextBtn" class="btn primary">Next: Summary →</button>
+    </div>
+    <button type="button" id="advancedToggleBtn" class="advanced-toggle" aria-expanded="false">Advanced options</button>
+    <p class="help advanced-note" id="advancedNote" hidden>Advanced options show every section, resume health and keyword tools.</p>
+  </section>
+  <section class="guided-download-panel" id="guidedDownloadPanel" hidden>
+    <span class="download-check" aria-hidden="true">✓</span>
+    <h2>Your resume is ready to review</h2>
+    <p>Check the page on the right, then download a PDF. You can come back to any step to make changes.</p>
+    <button type="button" id="downloadFromGuideBtn" class="btn primary">↓ Download PDF</button>
+    <button type="button" id="backToSkillsBtn" class="text-button">← Back to Skills</button>
+  </section>
+</section>
 <section class="design-panel" id="designPanel" aria-label="Resume design settings" hidden><div class="design-panel-heading"><p class="eyebrow">MAKE IT YOURS</p><h2>Choose your design</h2><p class="help">Pick a layout, then adjust the details below.</p></div><div class="surface-card design-template-card"><div class="subhead"><strong>Resume layout</strong><span class="help">Choose one</span></div><div class="preview-row two"><div class="theme-strip-wrap"><button class="theme-nav" id="themePrev" type="button" aria-label="Previous template">‹</button><div class="theme-strip-wrap"><span class="fade-edge left"></span><div class="theme-strip" id="themeStrip" role="group" aria-label="Resume templates"><button class="theme-card active" data-template="classic" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Classic ATS</strong></button><button class="theme-card" data-template="modern" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Modern</strong></button><button class="theme-card" data-template="compact" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Compact</strong></button><button class="theme-card" data-template="sidebar" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Sidebar</strong></button></div><span class="fade-edge right"></span></div><button class="theme-nav" id="themeNext" type="button" aria-label="Next template">›</button></div></div></div><div class="surface-card">
       <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Page settings</strong><span class="help">Paper &amp; layout</span></div>
       <div class="setting-grid" style="margin-top:10px">
