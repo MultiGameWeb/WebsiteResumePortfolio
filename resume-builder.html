@@ -18,7 +18,6 @@
 <meta name="twitter:description" content="Create and export an ATS-friendly resume with SiteCraft's free resume builder.">
 <meta name="twitter:image" content="https://multigameweb.github.io/WebsiteResumePortfolio/preview.svg">
 <title>Resume Builder — SiteCraft</title>
-<link rel="stylesheet" href="site-navigation.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lato:wght@400;700;900&family=Merriweather:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
@@ -31,6 +30,7 @@
 }
 *{box-sizing:border-box}
 html,body{width:100%;height:100%;margin:0;overflow:hidden}
+#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}
 body{font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg)}
 button,input,textarea,select{font:inherit}
 a{color:inherit}
@@ -74,7 +74,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   @page{size:A4;margin:0}
   html,body{width:auto;height:auto;overflow:visible;background:#fff!important}
   body{margin:0}
-  .topbar,.mobile-tabs,.editor,.divider,.preview-toolbar,.preview-meta,.toast,.modal,.print-hint{display:none!important}
+  .topbar,.mobile-tabs,.mobile-bottom-bar,.editor,.editor-mode-tabs,.design-panel,.divider,.preview-toolbar,.preview-meta,.preview-page-indicator,.toast,.modal,.print-hint,#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}
   .app-shell{display:block!important;height:auto!important;overflow:visible!important}
   .preview-area{display:block!important;grid-column:auto!important;grid-row:auto!important;overflow:visible!important;background:#fff!important}
   .preview-scroll{display:block!important;overflow:visible!important;padding:0!important}
@@ -83,55 +83,49 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   .resume-page{transform:none!important;box-shadow:none!important;width:210mm!important;height:297mm!important;margin:0!important;overflow:hidden!important;page-break-after:always;break-after:page}
   .resume-page:last-child{page-break-after:auto;break-after:auto}
   .format-selected{outline:none!important}
-}</style>
+}/* Isolated resume workspace */
+.editor-mode-tabs{position:sticky;top:0;z-index:25;display:flex;gap:6px;padding:10px 14px;background:rgba(238,241,245,.97);border-bottom:1px solid var(--line)}.editor-mode-tabs button{flex:1;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--muted);font-weight:800;min-height:44px}.editor-mode-tabs button.active{background:#171b21;color:#fff;border-color:#171b21}
+.design-panel{padding:12px;display:grid;gap:12px;overflow-y:auto;min-height:0}.design-panel[hidden]{display:none!important}.design-panel-heading{padding:7px 4px 0}.design-panel-heading h2{font-size:22px;line-height:1.2;margin:3px 0 5px}.design-panel-heading p{margin:0}
+.design-template-card .preview-row.two{display:block}.design-template-card .theme-strip-wrap{display:flex;align-items:center;gap:6px}.design-template-card .theme-strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 1px;flex:1}.design-template-card .theme-card{flex:0 0 118px;min-height:90px;scroll-snap-align:start}.design-template-card .theme-strip-wrap .theme-strip-wrap{flex:1;min-width:0}.design-template-card .fade-edge{display:none}.design-template-card .theme-nav{flex:0 0 40px}
+.zoom-settings-card .zoom-box{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.zoom-settings-card .zoom-label{font-weight:700;font-size:12px}.zoom-settings-card .zoom-label span{font-weight:400;color:var(--muted)}.zoom-settings-card .warning{display:inline-flex;margin-top:8px}.format-settings-panel{margin:0!important}
+.preview-area{position:relative;display:grid;grid-template-rows:minmax(0,1fr) 24px!important;min-width:0;min-height:0;overflow:hidden}.preview-scroll{grid-row:1;min-height:0;overflow:auto;scroll-behavior:smooth;overscroll-behavior:contain;scrollbar-gutter:stable;padding:12px 12px 6px}.preview-pages{min-height:100%;align-content:start}.preview-page-indicator{grid-row:2;display:flex;justify-content:flex-end;align-items:center;padding:0 14px 4px;pointer-events:none}.preview-page-indicator .page-counter{font-size:10px;line-height:1;padding:5px 8px;border-radius:999px;background:rgba(238,241,245,.92);color:#5d6672;border:1px solid rgba(200,208,216,.8)}
+body.design-mode #editor .editor-head,body.design-mode #editor .tool-grid,body.design-mode #editor #accordion{display:none!important}body.design-mode #editor .design-panel{display:grid!important}body.edit-mode #editor .design-panel{display:none!important}
+.topbar{grid-column:1/4;white-space:nowrap;flex-wrap:nowrap;min-width:0;overflow:visible}.topbar-left,.topbar-right{flex-wrap:nowrap;min-width:0;white-space:nowrap}.topbar-left{flex:1 1 auto}.topbar-right{flex:0 0 auto;gap:6px}.brand-copy strong,.brand-copy span{white-space:nowrap}.more-wrap{position:relative;flex:0 0 auto}.more-btn{display:inline-flex!important}.topbar .icon-btn{width:42px;min-width:42px;padding:0;font-size:20px}.download-pdf-btn{min-width:135px}.more-menu{z-index:999;max-height:min(70vh,500px);overflow:auto}#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}.mobile-bottom-bar{display:none}
+@media(max-width:1100px) and (min-width:900px){.brand-copy span{display:none}.download-pdf-btn{min-width:100px}.download-pdf-btn span{font-size:11px}.topbar-right{gap:4px}}
+@media(max-width:899px){.app-shell{grid-template-columns:minmax(0,1fr);grid-template-rows:60px minmax(0,1fr)!important}.topbar{grid-column:1;grid-row:1;height:60px;padding:6px 8px;gap:5px}.topbar-left{flex:1 1 auto;gap:5px;overflow:hidden}.back-link{width:38px;min-width:38px;min-height:40px;padding:0;font-size:20px;border:0;background:transparent}.brand{gap:6px;margin-left:0;min-width:0}.brand-mark{width:36px;height:36px;border-radius:11px}.brand-copy strong{font-size:13px;max-width:75px;overflow:hidden;text-overflow:ellipsis}.brand-copy span{display:none}.topbar-right{gap:3px}.topbar .saved{font-size:0;gap:0;flex:0 0 auto}.topbar .saved i{width:8px;height:8px}.topbar .icon-btn{width:34px;min-width:34px;min-height:38px;font-size:18px}.download-pdf-btn{min-width:42px;width:42px;min-height:40px;padding:0;font-size:0}.download-pdf-btn span{display:none}.download-pdf-btn:before{content:"PDF";font-size:11px}.more-btn{min-width:47px;min-height:40px;padding:0 7px;font-size:11px}.editor{grid-column:1;grid-row:2;min-height:0;padding-bottom:78px}.preview-area{display:none;grid-column:1;grid-row:2;min-height:0}body.mobile-preview .editor{display:none!important}body.mobile-preview .preview-area{display:grid!important}body.mobile-preview .preview-scroll{padding:4px;overflow:auto}.divider{display:none}.editor-mode-tabs{top:0}.design-panel{padding:10px 10px 90px}.mobile-bottom-bar{position:fixed;z-index:1000;left:0;right:0;bottom:0;padding:8px max(10px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:.8fr .8fr 1.5fr;gap:8px;background:rgba(255,255,255,.96);border-top:1px solid var(--line);box-shadow:0 -8px 25px rgba(0,0,0,.08);backdrop-filter:blur(14px)}.mobile-bottom-bar button{min-width:0;min-height:46px;border:1px solid var(--line);border-radius:12px;background:#fff;font-weight:800;padding:0 8px}.mobile-bottom-bar button.active{background:#171b21;color:#fff;border-color:#171b21}.mobile-bottom-bar #mobileDownloadPdfBtn{background:#171b21;color:#fff;border-color:#171b21}.app-shell.full-preview-mode{grid-template-rows:60px minmax(0,1fr)!important}.app-shell.full-preview-mode .preview-area{grid-row:2!important}.app-shell.full-preview-mode~.mobile-bottom-bar{display:none}}
+@media(max-width:390px){.topbar{padding-inline:5px;gap:3px}.topbar-right{gap:2px}.topbar .icon-btn{width:30px;min-width:30px}.more-btn{min-width:42px;padding-inline:5px}.brand-copy strong{max-width:63px;font-size:12px}.topbar-left .back-link{width:30px;min-width:30px}.editor-mode-tabs{padding:8px}.section-head{gap:5px}.section-main-toggle{min-width:0}.tag{gap:3px}.tag button{width:28px;min-width:28px;height:28px;min-height:28px;padding:0}}
+@media print{.editor-mode-tabs,.design-panel,.mobile-bottom-bar,.preview-page-indicator,#sitecraftGlobalNav,.sc-cross-sell,.sc-cross-sell--floating{display:none!important}}
+</style>
 <link rel="stylesheet" href="site-navigation.css">
 </head>
 <body class="sc-workspace-page">
 <div class="app-shell" id="appShell">
-<header class="topbar">
-  <div class="topbar-left">
-    <a class="back-link" href="index.html" data-nav="index.html" aria-label="Back to Home">← <span>Back to Home</span></a>
-    <a class="brand" href="resume-builder.html" aria-label="Resume Builder Home"><span class="brand-mark">▤</span><span class="brand-copy"><strong>Resume Builder</strong><span>ATS-friendly resumes, built in your browser</span></span></a>
-    <nav class="nav-links" aria-label="Primary"><a href="templates.html" data-nav="templates.html">Templates</a><a href="portfolio-creator.html" data-nav="portfolio-creator.html">Portfolio Creator</a></nav>
-  </div>
-  <div class="topbar-right">
-    <div class="more-wrap">
-      <button class="btn soft more-btn" id="moreBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="moreMenu">More</button>
-      <div class="more-menu" id="moreMenu" role="menu" hidden>
-        <button type="button" role="menuitem" data-more-action="undo">Undo</button>
-        <button type="button" role="menuitem" data-more-action="redo">Redo</button>
-        <button type="button" role="menuitem" data-more-action="pdf">Download PDF</button>
-        <button type="button" role="menuitem" data-more-action="html">Download HTML</button>
-        <button type="button" role="menuitem" data-more-action="import">Import JSON</button>
-        <button type="button" role="menuitem" data-more-action="export">Export JSON</button>
-        <button type="button" role="menuitem" data-more-action="portfolio">Import from Portfolio</button>
-        <button type="button" role="menuitem" data-more-action="fit">Fit to 1 page</button>
-        <button type="button" role="menuitem" data-more-action="reset">Reset</button>
-      </div>
-    </div>
-    <button class="btn soft full-preview-btn" id="fullPreviewBtn" type="button" aria-pressed="false" title="Expand the resume preview">⛶ Full Preview</button>
-    <div class="saved" id="savedStatus"><i></i><span>Saved</span></div>
-    <span class="shortcut"><span class="kbd">Ctrl+S</span> HTML</span>
-    <button class="btn soft" id="undoBtn" type="button">↶ Undo</button>
-    <button class="btn soft" id="redoBtn" type="button">↷ Redo</button>
-    <button class="btn soft" id="downloadPdfBtn" type="button">↓ Download PDF</button>
-    <button class="btn primary" id="downloadHtmlBtn" type="button">↓ Download HTML</button>
-    <label class="btn soft">↥ Import JSON<input id="importJson" type="file" accept="application/json" hidden></label>
-    <button class="btn soft" id="exportJsonBtn" type="button">↗ Export JSON</button>
-    <button class="btn soft" id="importPortfolioBtn" type="button">↟ Import from Portfolio</button>
-    <input id="portfolioImportJson" type="file" accept="application/json" hidden>
-    <button class="btn danger" id="resetBtn" type="button">Reset</button>
-  </div>
-</header>
-<div class="mobile-tabs" id="mobileTabs" role="tablist"><button id="editTab" class="active" type="button" role="tab">Edit</button><button id="previewTab" type="button" role="tab">Preview</button></div>
+<header class="topbar" aria-label="Resume builder controls"><div class="topbar-left"><a class="back-link" href="index.html" data-nav="index.html" aria-label="Back to home"><span aria-hidden="true">←</span></a><a class="brand" href="resume-builder.html" aria-label="Resume Builder home"><span class="brand-mark" aria-hidden="true">▤</span><span class="brand-copy"><strong>Resume Builder</strong><span>Create a professional resume</span></span></a></div><div class="topbar-right"><div class="saved" id="savedStatus"><i></i><span>Saved</span></div><button class="btn soft icon-btn" id="undoBtn" type="button" aria-label="Undo" title="Undo">↶</button><button class="btn soft icon-btn" id="redoBtn" type="button" aria-label="Redo" title="Redo">↷</button><button class="btn primary download-pdf-btn" id="downloadPdfBtn" type="button" aria-label="Download PDF">↓ <span>Download PDF</span></button><div class="more-wrap"><button class="btn soft more-btn" id="moreBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="moreMenu">More <span aria-hidden="true">⌄</span></button><div class="more-menu" id="moreMenu" role="menu" hidden><button id="fullPreviewBtn" type="button" role="menuitem" data-more-action="fullPreview" aria-pressed="false">⛶ Full preview</button><button type="button" role="menuitem" data-more-action="design">Design settings</button><button type="button" role="menuitem" data-more-action="html">Download HTML</button><button type="button" role="menuitem" data-more-action="import">Import JSON</button><button type="button" role="menuitem" data-more-action="export">Export JSON</button><button type="button" role="menuitem" data-more-action="portfolio">Import from Portfolio</button><button type="button" role="menuitem" data-more-action="reset">Reset resume</button></div></div><button class="btn soft" id="downloadHtmlBtn" type="button" hidden>Download HTML</button><input id="importJson" type="file" accept="application/json" hidden><button id="exportJsonBtn" type="button" hidden>Export JSON</button><button id="importPortfolioBtn" type="button" hidden>Import from Portfolio</button><input id="portfolioImportJson" type="file" accept="application/json" hidden><button class="btn danger" id="resetBtn" type="button" hidden>Reset</button></div></header>
+
 
 <aside class="editor" id="editor" aria-label="Resume editor">
-  <div class="editor-head">
-    <div><div class="help">SITECRAFT · RESUME STUDIO</div><h1>Build an ATS-friendly resume</h1><p>Your resume is autosaved locally when browser storage is available.</p></div>
-    
-  </div>
-
-  <div class="surface-card format-settings-panel">
+<div class="editor-mode-tabs" role="tablist" aria-label="Resume workspace"><button id="editModeBtn" type="button" role="tab" class="active" aria-selected="true">Build resume</button><button id="designModeBtn" type="button" role="tab" aria-selected="false">Design</button></div>
+<section class="design-panel" id="designPanel" aria-label="Resume design settings" hidden><div class="design-panel-heading"><p class="eyebrow">MAKE IT YOURS</p><h2>Choose your design</h2><p class="help">Pick a layout, then adjust the details below.</p></div><div class="surface-card design-template-card"><div class="subhead"><strong>Resume layout</strong><span class="help">Choose one</span></div><div class="preview-row two"><div class="theme-strip-wrap"><button class="theme-nav" id="themePrev" type="button" aria-label="Previous template">‹</button><div class="theme-strip-wrap"><span class="fade-edge left"></span><div class="theme-strip" id="themeStrip" role="group" aria-label="Resume templates"><button class="theme-card active" data-template="classic" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Classic ATS</strong></button><button class="theme-card" data-template="modern" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Modern</strong></button><button class="theme-card" data-template="compact" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Compact</strong></button><button class="theme-card" data-template="sidebar" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Sidebar</strong></button></div><span class="fade-edge right"></span></div><button class="theme-nav" id="themeNext" type="button" aria-label="Next template">›</button></div></div></div><div class="surface-card">
+      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Page settings</strong><span class="help">Paper &amp; layout</span></div>
+      <div class="setting-grid" style="margin-top:10px">
+        <div class="field"><label for="paperSelect">Paper</label><select id="paperSelect"><option value="A4">A4</option><option value="Letter">US Letter</option></select></div>
+        <div class="field"><label for="goalSelect">Page goal</label><select id="goalSelect"><option value="one">1 page</option><option value="two">2+ pages okay</option></select></div>
+        <div class="field"><label for="marginSelect">Margins</label><select id="marginSelect"><option value="narrow">Narrow</option><option value="normal">Normal</option><option value="wide">Wide</option></select></div>
+      </div>
+      <div class="setting-grid" style="margin-top:10px">
+        <div class="field"><label for="fontSelect">Font</label><select id="fontSelect"><option>Inter</option><option>Source Serif</option><option>Lato</option><option>Merriweather</option></select></div>
+        <div class="field"><label for="fontSizeSelect">Base size</label><select id="fontSizeSelect"><option value="8">8 pt</option><option value="8.5">8.5 pt</option><option value="9">9 pt</option><option value="9.5">9.5 pt</option><option value="10">10 pt</option><option value="10.5">10.5 pt</option><option value="11">11 pt</option><option value="11.5">11.5 pt</option><option value="12">12 pt</option><option value="12.5">12.5 pt</option><option value="13">13 pt</option><option value="13.5">13.5 pt</option><option value="14">14 pt</option></select></div>
+        <div class="field"><label for="lineSelect">Line spacing</label><select id="lineSelect"><option value="1.15">Tight</option><option value="1.25">Normal</option><option value="1.4">Relaxed</option></select></div>
+        <div class="field"><label for="dateSelect">Date format</label><select id="dateSelect"><option value="DD MMM YYYY">15 Jan 2026</option><option value="MMM DD, YYYY">Jan 15, 2026</option><option value="DD/MM/YYYY">15/01/2026</option><option value="MM/YYYY">01/2026</option><option value="MMM YYYY">Jan 2026</option><option value="YYYY">2026</option></select></div><div class="field"><label for="linkDisplaySelect">Link display</label><select id="linkDisplaySelect"><option value="full">Full URL</option><option value="domain">Domain only</option></select></div>
+      </div>
+      <div class="setting-grid" style="margin-top:10px">
+        <div class="field"><label>Accent</label><div style="display:flex;align-items:center;gap:8px"><input id="accentPicker" type="color" value="#334155" aria-label="Custom accent color" style="width:44px;padding:2px"><div id="accentSwatches" style="display:flex;gap:6px;flex-wrap:wrap"></div></div></div>
+        <div class="field"><label for="dividerSelect">Section divider</label><select id="dividerSelect"><option value="rule">Thin rule</option><option value="bold">Bold rule</option><option value="none">No rule</option><option value="box">Soft box</option></select></div>
+        <div class="field"><label>Icons</label><button class="btn soft" id="iconsToggle" type="button" aria-pressed="true">Icons: On</button></div>
+        <div class="field"><label>Photo</label><button class="btn soft" id="photoToggle" type="button" aria-pressed="false">Photo: Off</button></div>
+      </div>
+      <div class="resume-note" style="margin-top:10px">Tip: many ATS systems parse text more reliably when a resume has no photo.</div>
+    </div><div class="surface-card format-settings-panel">
     <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><strong>Resume formatting</strong><span class="help">Font, spacing &amp; header alignment</span></div>
     <button class="btn soft format-toolbar-toggle" id="toggleFormatToolbar" type="button" aria-controls="formatToolbar" aria-expanded="false">Show formatting settings</button>
     <div class="format-toolbar" id="formatToolbar" aria-label="Preview formatting" hidden>
@@ -153,7 +147,13 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
       </div>
       <button class="btn soft" id="formatResetAll" type="button">Reset formatting</button>
     </div>
+  </div><div class="surface-card zoom-settings-card"><div class="subhead"><strong>Preview size</strong><span class="help">Only affects your screen, not your PDF</span></div><div class="zoom-box"><span class="zoom-label">View zoom <span>(does not change print size)</span></span><select id="zoomSelect" aria-label="View zoom (does not change print size)"><option value="25">25%</option><option value="30">30%</option><option value="35">35%</option><option value="40">40%</option><option value="45">45%</option><option value="50">50%</option><option value="55">55%</option><option value="65">65%</option><option value="70">70%</option><option value="80">80%</option><option value="85">85%</option><option value="60">60%</option><option value="75">75%</option><option value="90">90%</option><option value="100" selected>100%</option><option value="110">110%</option><option value="125">125%</option><option value="150">150%</option></select><button class="btn soft" id="fitWidthBtn" type="button">Fit width</button><button class="btn soft" id="fitOnePageBtn" type="button">Fit to 1 page</button></div><span class="warning" id="onePageWarning">Content exceeds 1 page</span></div></section>
+  <div class="editor-head">
+    <div><div class="help">SITECRAFT · RESUME STUDIO</div><h1>Build an ATS-friendly resume</h1><p>Your resume is autosaved locally when browser storage is available.</p></div>
+    
   </div>
+
+  
   <div class="tool-grid">
     <div class="surface-card">
       <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Experience preset</strong><span class="help">Sets section order + sample data</span></div>
@@ -165,27 +165,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:9px"><button class="btn soft" id="startEmptyBtn" type="button">Start empty</button><span class="help" style="align-self:center">Demo data is a safe starting point; replace it with yours.</span></div>
     </div>
 
-    <div class="surface-card">
-      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Page settings</strong><span class="help">Paper &amp; layout</span></div>
-      <div class="setting-grid" style="margin-top:10px">
-        <div class="field"><label for="paperSelect">Paper</label><select id="paperSelect"><option value="A4">A4</option><option value="Letter">US Letter</option></select></div>
-        <div class="field"><label for="goalSelect">Page goal</label><select id="goalSelect"><option value="one">1 page</option><option value="two">2+ pages okay</option></select></div>
-        <div class="field"><label for="marginSelect">Margins</label><select id="marginSelect"><option value="narrow">Narrow</option><option value="normal">Normal</option><option value="wide">Wide</option></select></div>
-      </div>
-      <div class="setting-grid" style="margin-top:10px">
-        <div class="field"><label for="fontSelect">Font</label><select id="fontSelect"><option>Inter</option><option>Source Serif</option><option>Lato</option><option>Merriweather</option></select></div>
-        <div class="field"><label for="fontSizeSelect">Base size</label><select id="fontSizeSelect"><option value="8">8 pt</option><option value="8.5">8.5 pt</option><option value="9">9 pt</option><option value="9.5">9.5 pt</option><option value="10">10 pt</option><option value="10.5">10.5 pt</option><option value="11">11 pt</option><option value="11.5">11.5 pt</option><option value="12">12 pt</option><option value="12.5">12.5 pt</option><option value="13">13 pt</option><option value="13.5">13.5 pt</option><option value="14">14 pt</option></select></div>
-        <div class="field"><label for="lineSelect">Line spacing</label><select id="lineSelect"><option value="1.15">Tight</option><option value="1.25">Normal</option><option value="1.4">Relaxed</option></select></div>
-        <div class="field"><label for="dateSelect">Date format</label><select id="dateSelect"><option value="DD MMM YYYY">15 Jan 2026</option><option value="MMM DD, YYYY">Jan 15, 2026</option><option value="DD/MM/YYYY">15/01/2026</option><option value="MM/YYYY">01/2026</option><option value="MMM YYYY">Jan 2026</option><option value="YYYY">2026</option></select></div><div class="field"><label for="linkDisplaySelect">Link display</label><select id="linkDisplaySelect"><option value="full">Full URL</option><option value="domain">Domain only</option></select></div>
-      </div>
-      <div class="setting-grid" style="margin-top:10px">
-        <div class="field"><label>Accent</label><div style="display:flex;align-items:center;gap:8px"><input id="accentPicker" type="color" value="#334155" aria-label="Custom accent color" style="width:44px;padding:2px"><div id="accentSwatches" style="display:flex;gap:6px;flex-wrap:wrap"></div></div></div>
-        <div class="field"><label for="dividerSelect">Section divider</label><select id="dividerSelect"><option value="rule">Thin rule</option><option value="bold">Bold rule</option><option value="none">No rule</option><option value="box">Soft box</option></select></div>
-        <div class="field"><label>Icons</label><button class="btn soft" id="iconsToggle" type="button" aria-pressed="true">Icons: On</button></div>
-        <div class="field"><label>Photo</label><button class="btn soft" id="photoToggle" type="button" aria-pressed="false">Photo: Off</button></div>
-      </div>
-      <div class="resume-note" style="margin-top:10px">Tip: many ATS systems parse text more reliably when a resume has no photo.</div>
-    </div>
+    
 
     <div class="surface-card health" id="healthPanel">
       <div class="health-score"><div><div class="help">Resume health</div><strong id="healthScore">0%</strong></div><span id="pageHealth" class="help">Page count —</span></div>
@@ -206,17 +186,10 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 
 <div class="divider" id="divider" role="separator" aria-orientation="vertical" aria-label="Resize editor and preview" tabindex="0" aria-valuemin="320" aria-valuemax="760" aria-valuenow="410"></div>
 
-<main class="preview-area" id="previewArea" aria-label="Live resume preview">
-  <div class="preview-toolbar">
-    <div class="preview-row one"><div class="live-title"><strong>Live preview</strong><span id="previewSubtitle">Your resume updates as you type.</span></div></div>
-    <div class="preview-row two"><div class="theme-strip-wrap"><button class="theme-nav" id="themePrev" type="button" aria-label="Previous template">‹</button><div class="theme-strip-wrap"><span class="fade-edge left"></span><div class="theme-strip" id="themeStrip" role="group" aria-label="Resume templates"><button class="theme-card active" data-template="classic" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Classic ATS</strong></button><button class="theme-card" data-template="modern" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Modern</strong></button><button class="theme-card" data-template="compact" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Compact</strong></button><button class="theme-card" data-template="sidebar" type="button"><span class="theme-mini"><i></i><b></b></span><strong>Sidebar</strong></button></div><span class="fade-edge right"></span></div><button class="theme-nav" id="themeNext" type="button" aria-label="Next template">›</button></div><select class="theme-select" id="themeSelectCompact" aria-label="Template"><option value="classic">Classic ATS</option><option value="modern">Modern</option><option value="compact">Compact</option><option value="sidebar">Sidebar</option></select><div class="toolbar-right"><select class="select" id="previewTemplateSelect" aria-label="Preview template"><option value="classic">Classic ATS</option><option value="modern">Modern</option><option value="compact">Compact</option><option value="sidebar">Sidebar</option></select></div></div>
-    
-    <div class="preview-meta preview-meta-bar"><span class="page-counter" id="pageCounter">Page 1 of 1</span><div class="zoom-box"><span class="zoom-label">View zoom <span>(does not change print size)</span></span><select id="zoomSelect" aria-label="View zoom (does not change print size)"><option value="50">50%</option><option value="60">60%</option><option value="75">75%</option><option value="90">90%</option><option value="100" selected>100%</option><option value="110">110%</option><option value="125">125%</option><option value="150">150%</option></select><button class="btn soft" id="fitWidthBtn" type="button">Fit width</button><button class="btn soft" id="fitOnePageBtn" type="button">Fit to 1 page</button></div><span class="warning" id="onePageWarning">Content exceeds 1 page</span></div>
-  </div>
-  <div class="preview-scroll" id="previewScroll" tabindex="0"><div class="preview-pages" id="previewPages"></div></div>
-</main>
+<main class="preview-area" id="previewArea" aria-label="Live resume preview"><div class="preview-scroll" id="previewScroll" tabindex="0"><div class="preview-pages" id="previewPages"></div></div><div class="preview-page-indicator" id="previewPageIndicator" aria-live="polite"><span class="page-counter" id="pageCounter">Page 1 of 1</span></div></main>
 </div>
 
+<div class="mobile-bottom-bar" id="mobileBottomBar" aria-label="Mobile resume actions"><button id="mobileEditBtn" type="button" class="active">Edit</button><button id="mobilePreviewBtn" type="button">Preview</button><button id="mobileDownloadPdfBtn" type="button">↓ Download PDF</button></div>
 <div class="print-hint" id="printHint">Choose <strong>Save as PDF</strong> in the browser print dialog. Margins: None/Default.</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -307,12 +280,7 @@ var DEMOS={
   }
 };
 
-var state={
-  version:1,paper:'A4',template:'modern',goal:'one',margin:'normal',font:'Inter',fontSize:'10.5',lineSpacing:'1.25',
-  accent:'#334155',divider:'rule',dateFormat:'MMM YYYY',linkDisplay:'full',icons:true,photoEnabled:false,preset:'Experienced',
-  format:{global:{fontFamily:'Inter',fontSize:'10.5',lineSpacing:'1.25',nameSize:26,headingSize:11.5,sectionGap:16,entryGap:12,headingGap:9,bulletGap:4},sections:{}},
-  order:clone(DEMOS.Experienced.order),sections:clone(DEMOS.Experienced.sections),custom:[]
-};
+var state=blankResumeState();
 var history=[],future=[],typingGroup=null,typingTimer=null,previewRenderTimer=null,dirty=false,leaveTarget='',dragSection='',pendingReplacement=null,autosaveTimer=null,autosaveReady=false,restoreInProgress=true,savedDbName='sitecraft-resume',savedDbVersion=1,savedDbKey='current',openSections={header:true,summary:true,experience:true,education:false,skills:true,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
 var currentPages=1,selectedFormatSection='';
 
@@ -503,7 +471,7 @@ function blankResumeState(){
   empty.summary={show:true,text:'',max:700};
   empty.experience={show:true,items:[]};
   empty.education={show:true,items:[]};
-  empty.skills={show:true,groups:[{name:'Skills',items:[]}],tags:[]};
+  empty.skills={show:true,groups:[{name:'Key skills',items:[]}],tags:[]};
   empty.projects={show:true,items:[]};
   empty.certifications={show:true,items:[]};
   empty.awards={show:true,items:[]};
@@ -1132,8 +1100,6 @@ function setupEvents(){
     safeBind('#confirmReset','click',confirmReplacement);
     safeEach('[data-close-modal]',function(b){safeBind(b,'click',closeReplacementConfirm)});
     safeEach('[data-preset]',function(b){safeBind(b,'click',function(){if(state.preset!==b.dataset.preset)preset(b.dataset.preset)})});
-    safeBind('#themeSelectCompact','change',function(e){applySetting('template',e.target.value)});
-    safeBind('#previewTemplateSelect','change',function(e){applySetting('template',e.target.value)});
     safeBind('#paperSelect','change',function(e){applySetting('paper',e.target.value)});
     safeBind('#goalSelect','change',function(e){applySetting('goal',e.target.value)});
     safeBind('#marginSelect','change',function(e){applySetting('margin',e.target.value)});
