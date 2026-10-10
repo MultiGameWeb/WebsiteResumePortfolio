@@ -1371,11 +1371,11 @@ function setupDivider(){
   function frame(){raf=0;if(dragging)setWidth(x)}
   d.addEventListener('pointerdown',function(e){if(innerWidth<=800)return;dragging=true;pid=e.pointerId;x=e.clientX;d.setPointerCapture?.(pid);document.body.classList.add('divider-dragging');if(!raf)raf=requestAnimationFrame(frame);e.preventDefault()});
   d.addEventListener('pointermove',function(e){if(!dragging)return;x=e.clientX;if(!raf)raf=requestAnimationFrame(frame);e.preventDefault()});
-  function end(){if(!dragging)return;dragging=false;document.body.classList.remove('divider-dragging');if(raf)cancelAnimationFrame(raf);raf=0;try{if(pid!=null)d.releasePointerCapture(pid)}catch(e){}pid=null}
+  function end(){if(!dragging)return;dragging=false;document.body.classList.remove('divider-dragging');if(raf)cancelAnimationFrame(raf);raf=0;try{if(pid!=null)d.releasePointerCapture(pid)}catch(e){}pid=null;requestAnimationFrame(fitPreviewWidth)}
   d.addEventListener('pointerup',end);d.addEventListener('pointercancel',end);d.addEventListener('lostpointercapture',end);
   d.addEventListener('dblclick',function(){setWidth(410)});
   d.addEventListener('keydown',function(e){if(innerWidth<=800)return;var b=bounds(),step=e.shiftKey?48:16;if(e.key==='ArrowLeft'){e.preventDefault();setWidth((state._editor||410)-step)}else if(e.key==='ArrowRight'){e.preventDefault();setWidth((state._editor||410)+step)}else if(e.key==='Home'){e.preventDefault();setWidth(b.min)}else if(e.key==='End'){e.preventDefault();setWidth(b.max)}});
-  window.addEventListener('resize',function(){if(innerWidth>800)setWidth(state._editor||410)});
+  window.addEventListener('resize',function(){if(innerWidth>800)setWidth(state._editor||410);requestAnimationFrame(fitPreviewWidth)});
   setWidth(state._editor||410)
 }
 function renderAccentSwatches(){
@@ -1561,7 +1561,7 @@ function setupEvents(){
     safeBind('#confirmReset','click',confirmReplacement);
     safeEach('[data-close-modal]',function(b){safeBind(b,'click',closeReplacementConfirm)});
     safeEach('[data-preset]',function(b){safeBind(b,'click',function(){if(state.preset!==b.dataset.preset)preset(b.dataset.preset)})});
-    safeBind('#paperSelect','change',function(e){applySetting('paper',e.target.value)});
+    safeBind('#paperSelect','change',function(e){applySetting('paper',e.target.value);requestAnimationFrame(fitPreviewWidth)});
     safeBind('#goalSelect','change',function(e){applySetting('goal',e.target.value)});
     safeBind('#marginSelect','change',function(e){applySetting('margin',e.target.value)});
     safeBind('#fontSelect','change',function(e){applySetting('font',e.target.value)});
@@ -1860,7 +1860,7 @@ function init(){
   safeStep('saved resume restore',function(){
     restoreSavedResume().then(function(result){
       safeStep('apply restored resume',function(){
-        if(result.found){renderEditor();renderPreview();renderHealth();updateTopControls();dirty=false;setSaveStatus('Saved');startGuidedResume(true);toast('Saved resume restored')}
+        if(result.found){renderEditor();renderPreview();renderHealth();updateTopControls();dirty=false;setSaveStatus('Saved');startGuidedResume(true);requestAnimationFrame(fitPreviewWidth);toast('Saved resume restored')}
         else if(result.corrupt){dirty=false;setSaveStatus('Not saved — Export JSON','error');toast('Saved resume was corrupted; a backup was kept and the app started safely.','error')}
         else setSaveStatus('Saved');
         restoreInProgress=false;autosaveReady=!!window.indexedDB;
