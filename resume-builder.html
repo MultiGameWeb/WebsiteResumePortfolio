@@ -356,7 +356,7 @@ function dateField(path,label,value){var p=dateParts(value),months=['Jan','Feb',
 function marginPx(){return {narrow:36,normal:54,wide:72}[state.margin]||54}
 function paperDims(){return state.paper==='Letter'?{w:816,h:1056}:{w:794,h:1123}}
 function applyPageVars(){
-  var d=paperDims(),scroll=$('#previewScroll'),mobile=window.innerWidth<=899,available=Math.max(220,(scroll?scroll.clientWidth:window.innerWidth)-20),zoom=mobile?Math.min(1,available/d.w):Math.max(.5,Math.min(1.5,(Number($('#zoomSelect')?.value)||100)/100));
+  var d=paperDims(),scroll=$('#previewScroll'),mobile=window.innerWidth<=899,available=Math.max(220,(scroll?scroll.clientWidth:window.innerWidth)-24),zoom=mobile?Math.min(1,available/d.w):Math.max(.25,Math.min(1.5,(Number($('#zoomSelect')?.value)||100)/100));
   if($('#zoomSelect')){$('#zoomSelect').disabled=mobile;if(mobile)$('#zoomSelect').value=String(Math.max(25,Math.round(zoom*100)));}
   document.documentElement.style.setProperty('--page-w',d.w+'px');document.documentElement.style.setProperty('--page-h',d.h+'px');document.documentElement.style.setProperty('--margin-x',marginPx()+'px');document.documentElement.style.setProperty('--margin-y',marginPx()+'px');document.documentElement.style.setProperty('--zoom',String(zoom));document.documentElement.style.setProperty('--base-size',String(Number(state.fontSize)||10.5)+'pt');document.documentElement.style.setProperty('--line-height',String(Number(state.lineSpacing)||1.25));document.documentElement.style.setProperty('--resume-accent',state.accent);document.documentElement.style.setProperty('--font-stack',FONTS[state.font]||FONTS.Inter);
 }
@@ -1140,10 +1140,10 @@ function showEditPanel(){
 function fitPreviewWidth(){
   var scroll=$('#previewScroll'),select=$('#zoomSelect'),d=paperDims();
   if(!scroll||!select)return;
-  var ratio=Math.round(Math.max(220,scroll.clientWidth-24)/d.w*100);
-  var options=Array.from(select.options).map(function(o){return Number(o.value)}).filter(function(v){return v>0});
-  var best=options.reduce(function(a,b){return Math.abs(b-ratio)<Math.abs(a-ratio)?b:a},options[0]||100);
-  select.value=String(best);applyPageVars();renderPreview();
+  var ratio=Math.max(25,Math.min(150,Math.floor(Math.max(220,scroll.clientWidth-24)/d.w*100)));
+  var option=Array.prototype.find.call(select.options,function(o){return Number(o.value)===ratio});
+  if(!option){option=document.createElement('option');option.value=String(ratio);option.textContent=ratio+'%';select.appendChild(option)}
+  select.value=String(ratio);applyPageVars();renderPreview();
 }
 function setMoreMenu(open,focusFirst){
   var menu=$('#moreMenu'),button=$('#moreBtn');
