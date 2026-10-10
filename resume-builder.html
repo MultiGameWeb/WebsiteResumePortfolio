@@ -1504,7 +1504,7 @@ function setupEvents(){
       var category=$('#professionSelect');if(category)category.value=selectedProfessionKey;
       updateRoleSuggestions();
     })});
-    safeBind('#professionSelect','change',function(e){selectedProfessionKey=e.target.value||'';updateRoleSuggestions()});
+    safeBind('#professionSelect','change',function(e){selectedProfessionKey=e.target.value||'';var role=$('#roleSearch');if(role)role.value='';updateRoleSuggestions()});
     safeBind('#roleSearch','input',updateRoleSuggestions);
     safeBind('#seeExampleBtn','click',showRoleExample);
     safeBind('#useExampleSummaryBtn','click',useRoleExampleSummary);
@@ -1541,7 +1541,7 @@ function setupEvents(){
       else if(a==='export')exportJson();
       else if(a==='portfolio')beginPortfolioImport();
       else if(a==='fit')fitToOnePage();
-      else if(a==='design')showDesignPanel();
+      else if(a==='design'){if(guideStarted&&guidedStep<5)setGuidedStep(5);else showDesignPanel();}
       else if(a==='reset')showReplacementConfirm('reset',resetTargetPreset());
     });
     safeBind(document,'click',function(e){
