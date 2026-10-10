@@ -1168,7 +1168,7 @@ function sanitizeSection(id,sec,def){
   if(id==='header')out.customLinks=Array.isArray(out.customLinks)?out.customLinks.filter(isRecord).slice(0,8):[];
   if(id==='skills'){
     out.groups=Array.isArray(out.groups)?out.groups.filter(isRecord).map(function(g){return{name:norm(g.name),items:Array.isArray(g.items)?g.items.map(function(v){return norm(v)}).filter(Boolean).slice(0,40):[]}}):[];
-    if(!out.groups.length)out.groups=[{name:'Skills',items:[]}];
+    if(!out.groups.length)out.groups=[{name:'Key skills',items:[]}];
     out.tags=Array.isArray(out.tags)?out.tags.map(norm).filter(Boolean).slice(0,40):[];
   }else if(Object.prototype.hasOwnProperty.call(out,'items')){
     out.items=Array.isArray(out.items)?out.items.filter(isRecord).slice(0,40):[];
@@ -1192,7 +1192,7 @@ function normalizeResumeState(x){
   });
   var allowedPaper=['A4','Letter'],allowedTemplate=['classic','modern','compact','sidebar'],allowedGoal=['one','two'],allowedMargin=['narrow','normal','wide'],allowedFont=['Inter','Source Serif','Lato','Merriweather'],allowedDate=['MMM YYYY','MM/YYYY','YYYY','Mon YY'],allowedDivider=['rule','bold','none','box'];
   out.paper=allowedPaper.indexOf(out.paper)>=0?out.paper:'A4';
-  out.template=allowedTemplate.indexOf(out.template)>=0?out.template:'classic';
+  out.template=allowedTemplate.indexOf(out.template)>=0?out.template:'modern';
   out.goal=allowedGoal.indexOf(out.goal)>=0?out.goal:'one';
   out.margin=allowedMargin.indexOf(out.margin)>=0?out.margin:'normal';
   out.font=allowedFont.indexOf(out.font)>=0?out.font:'Inter';
@@ -1352,7 +1352,7 @@ function sizeForPaper(paper){return paper==='Letter'?'Letter':'A4'}
 
 function hexToRgba(hex,a){var h=String(hex||'#334155').replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c}).join('');var n=parseInt(h,16);if(isNaN(n))return 'rgba(51,65,85,'+a+')';return'rgba('+(n>>16)+','+((n>>8)&255)+','+(n&255)+','+a+')'}
 function standaloneDocument(){
-  var pages=paginateResume(state.template),fontUrl=googleFontUrl(),doc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(norm(state.sections.header.name)||'Your Name')+' - Resume</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="'+fontUrl+'"><style>'+exportCss()+'</style></head><body>';
+  var pages=paginateResume(state.template),fontUrl=googleFontUrl(),doc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(norm(state.sections.header.name)||'Resume Builder')+' - Resume</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="'+fontUrl+'"><style>'+exportCss()+'</style></head><body>';
   pages.forEach(function(p){doc+=p.replace('class="page-wrap"','class="page"')});
   doc+='</body></html>';return doc
 }
