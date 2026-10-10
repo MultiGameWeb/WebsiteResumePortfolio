@@ -829,7 +829,7 @@ function exportStateClone(){
   delete out._editor;
   return out;
 }
-function renderTopTheme(){var cards=$('[data-template]');cards.forEach(function(b){b.classList.toggle('active',b.dataset.template===state.template)});var compact=$('#themeSelectCompact'),preview=$('#previewTemplateSelect');if(compact)compact.value=state.template;if(preview)preview.value=state.template;var active=$('[data-template="'+CSS.escape(state.template)+'"]');if(active)active.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'nearest',inline:'center'})}
+function renderTopTheme(){$$('[data-template]').forEach(function(b){b.classList.toggle('active',b.dataset.template===state.template)});var active=$('[data-template="'+CSS.escape(state.template)+'"]');if(active)active.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'nearest',inline:'center'})}
 function updateTopControls(){applyTemplateConstraints();document.body.dataset.resumeTemplate=state.template;renderTopTheme();$('#paperSelect').value=state.paper;$('#goalSelect').value=state.goal;$('#marginSelect').value=state.margin;$('#fontSelect').value=state.font;$('#fontSizeSelect').value=state.fontSize;$('#lineSelect').value=state.lineSpacing;$('#dateSelect').value=state.dateFormat;renderFormatToolbar();$('#linkDisplaySelect').value=state.linkDisplay||'full';$('#accentPicker').value=state.accent;$('#dividerSelect').value=state.divider;$('#iconsToggle').setAttribute('aria-pressed',String(state.icons));$('#iconsToggle').textContent='Icons: '+(state.icons?'On':'Off');$('#iconsToggle').disabled=state.template==='classic';$('#photoToggle').setAttribute('aria-pressed',String(state.photoEnabled));$('#photoToggle').textContent=state.photoEnabled?'Photo: On':'Photo: Off';$('#photoToggle').disabled=!photoCapable();var pf=$('#photoToggle').closest('.field');if(pf)pf.hidden=!photoCapable();$$('[data-preset]').forEach(function(b){b.classList.toggle('active',b.dataset.preset===state.preset)});$('#undoBtn').disabled=!history.length;$('#redoBtn').disabled=!future.length}
 function createCustom(){state.custom.push({title:'Custom section',mode:'bullets',content:'',bullets:[],show:true});state.order.push('custom-'+state.custom.length);openSections['custom-'+state.custom.length]=true}
 function selectedSection(id){if(id.indexOf('custom-')===0)return state.custom[Number(id.split('-')[1])-1];return state.sections[id]}
@@ -1415,6 +1415,24 @@ function safeEach(selector,handler){
 function safeStep(name,fn){
   try{return fn()}catch(err){console.error('[Resume Builder] Setup step failed — '+name+':',err);return undefined}
 }
+function toggleFullPreview(){
+  var shell=$('#appShell'),button=$('#fullPreviewBtn'),zoom=$('#zoomSelect');
+  if(!shell||!button)return;
+  var opening=!shell.classList.contains('full-preview-mode');
+  if(opening){
+    if(zoom)button.dataset.previousZoom=zoom.value||'100';
+    shell.classList.add('full-preview-mode');
+    button.textContent='✎ Return to editor';
+    button.setAttribute('aria-pressed','true');
+    requestAnimationFrame(function(){fitPreviewWidth();});
+  }else{
+    shell.classList.remove('full-preview-mode');
+    button.textContent='⛶ Full preview';
+    button.setAttribute('aria-pressed','false');
+    if(zoom)zoom.value=button.dataset.previousZoom||'100';
+    requestAnimationFrame(function(){applyPageVars();renderPreview();});
+  }
+}
 function showDesignPanel(){
   document.body.classList.remove('mobile-preview','edit-mode');
   document.body.classList.add('design-mode');
@@ -1547,6 +1565,7 @@ function setupEvents(){
       else if(a==='portfolio')beginPortfolioImport();
       else if(a==='fit')fitToOnePage();
       else if(a==='design'){if(guideStarted&&guidedStep<5)setGuidedStep(5);else showDesignPanel();}
+      else if(a==='fullPreview')toggleFullPreview();
       else if(a==='reset')showReplacementConfirm('reset',resetTargetPreset());
     });
     safeBind(document,'click',function(e){
