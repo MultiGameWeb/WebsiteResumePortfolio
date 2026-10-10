@@ -706,7 +706,7 @@ function applyGuidedEditorView(){
   if(wizardBack){wizardBack.disabled=guidedStep===0}
   if(wizardNext){wizardNext.hidden=guidedStep===6;wizardNext.textContent=guidedStep===5?'Next: Download →':'Next: '+(GUIDE_STEPS[Math.min(6,guidedStep+1)]||GUIDE_STEPS[6]).title+' →'}
   var advancedButton=$('#advancedToggleBtn'),advancedNote=$('#advancedNote');
-  if(advancedButton){advancedButton.textContent=advancedMode?'Hide advanced options':'Advanced options';advancedButton.setAttribute('aria-expanded',String(advancedMode))}
+  if(advancedButton){advancedButton.hidden=guidedStep>=5;advancedButton.textContent=advancedMode?'Hide advanced options':'Advanced options';advancedButton.setAttribute('aria-expanded',String(advancedMode))}
   if(advancedNote)advancedNote.hidden=!advancedMode;
   autoGrowTextareas($('#editor'));
 }
@@ -1483,9 +1483,9 @@ function setupEvents(){
   });
 
   safeStep('workspace tabs and mobile bottom bar',function(){
-    safeBind('#editModeBtn','click',function(){if(guideStarted&&guidedStep===5)setGuidedStep(4);else showEditPanel()});
+    safeBind('#editModeBtn','click',function(){if(guideStarted&&guidedStep>=5)setGuidedStep(4);else showEditPanel()});
     safeBind('#designModeBtn','click',function(){if(guideStarted&&guidedStep<5)setGuidedStep(5);else showDesignPanel()});
-    safeBind('#mobileEditBtn','click',function(){if(guideStarted&&guidedStep===5)setGuidedStep(4);else showEditPanel()});
+    safeBind('#mobileEditBtn','click',function(){if(guideStarted&&guidedStep>=5)setGuidedStep(4);else showEditPanel()});
     safeBind('#mobilePreviewBtn','click',function(){
       document.body.classList.remove('design-mode','edit-mode');
       var p=$('#designPanel');if(p)p.hidden=true;
