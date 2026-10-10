@@ -173,6 +173,17 @@ body.edit-mode #editor .design-panel{display:none!important}
 .brand-copy span{display:none!important}
 .skill-groups-editor{gap:8px}.skill-group-entry{display:grid;gap:7px}.skill-group-entry .entry-top{align-items:end}.skill-group-name{flex:1}.skill-group-name input{min-width:0}.skill-group-entry>.flat-skill-input{font-size:14px}
 
+
+.photo-crop-modal{z-index:180!important}
+.photo-crop-card{width:min(440px,calc(100vw - 28px));max-height:calc(100dvh - 28px);overflow:auto;padding:18px}
+.photo-crop-card h2{font-size:21px;margin:3px 0 7px}.photo-crop-card>p{font-size:12px;margin:0 0 12px}
+.photo-crop-viewport{width:min(220px,70vw);aspect-ratio:4/5;margin:0 auto 14px;border-radius:12px;overflow:hidden;background:#e6eaf0;border:1px solid var(--line2)}
+.photo-crop-viewport img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform-origin:center;max-width:none}
+.photo-crop-controls{display:grid;gap:9px}.photo-crop-controls label{display:grid;grid-template-columns:90px 1fr;gap:10px;align-items:center;font-size:12px;font-weight:800}
+.photo-crop-controls input{width:100%;min-height:24px;accent-color:#334155}
+@media(max-width:899px){.photo-crop-card{padding:14px}.photo-crop-viewport{width:min(190px,62vw)}}
+@media print{.photo-crop-modal{display:none!important}}
+
 </style>
 
 </head>
@@ -258,6 +269,19 @@ body.edit-mode #editor .design-panel{display:none!important}
 <div class="modal" id="leaveModal" role="dialog" aria-modal="true" aria-labelledby="leaveTitle">
   <div class="modal-card"><div class="help">SAVE STATUS</div><h2 id="leaveTitle">Leave this page?</h2><p>Your latest changes may still be saving. You can stay here while autosave finishes.</p><div class="modal-actions"><button class="btn soft" id="leaveStay" type="button">Stay</button><button class="btn danger" id="leaveAnyway" type="button">Leave anyway</button><button class="btn primary" id="leaveDownload" type="button">Download first</button></div></div>
 </div>
+<div class="modal photo-crop-modal" id="photoCropModal" role="dialog" aria-modal="true" aria-labelledby="photoCropTitle">
+  <div class="modal-card photo-crop-card">
+    <div class="help">OPTIONAL PHOTO</div><h2 id="photoCropTitle">Adjust your photo</h2>
+    <p>Move and zoom the image inside the frame, then use it in your resume.</p>
+    <div class="photo-crop-viewport"><img id="photoCropPreview" alt="Photo crop preview"></div>
+    <div class="photo-crop-controls">
+      <label>Zoom<input id="photoCropZoom" type="range" min="1" max="3" step="0.05" value="1"></label>
+      <label>Horizontal<input id="photoCropX" type="range" min="0" max="100" step="1" value="50"></label>
+      <label>Vertical<input id="photoCropY" type="range" min="0" max="100" step="1" value="50"></label>
+    </div>
+    <div class="modal-actions"><button class="btn soft" id="cancelPhotoCrop" type="button">Cancel</button><button class="btn primary" id="confirmPhotoCrop" type="button">Use photo</button></div>
+  </div>
+</div>
 
 <script>
 (function(){
@@ -293,7 +317,7 @@ var DEMOS={
 };
 var state=blankResumeState();
 var history=[],future=[],typingGroup=null,typingTimer=null,previewRenderTimer=null,dirty=false,leaveTarget='',dragSection='',pendingReplacement=null,autosaveTimer=null,autosaveReady=false,restoreInProgress=true,savedDbName='sitecraft-resume',savedDbVersion=1,savedDbKey='current',openSections={header:true,summary:false,experience:false,education:false,skills:false,projects:false,certifications:false,awards:false,languages:false,volunteering:false,publications:false,references:false};
-var currentPages=1,selectedFormatSection='';
+var currentPages=1,selectedFormatSection='',pendingCropImage=null;
 var selectedProfessionKey='',selectedJourney='',guidedStep=0,guideStarted=false,advancedMode=false,uiAddedSections={},groupSkillsMode=false;
 function defaultFormatState(){return{global:{fontFamily:'Inter',fontSize:'10.5',lineSpacing:'1.25',nameSize:26,headingSize:11.5,sectionGap:16,entryGap:12,headingGap:9,bulletGap:4},sections:{}}}
 function formatNumber(v,fallback,min,max,step){var n=parseFloat(v);if(!isFinite(n))n=fallback;if(min!=null)n=Math.max(min,n);if(max!=null)n=Math.min(max,n);if(step){var q=Math.round((n-min)/step);n=min+q*step;}return n}
@@ -637,6 +661,47 @@ function removeCustom(i){var before=snapshot(),id='custom-'+(i+1);state.custom.s
 function syncCustomLink(el){var i=Number(el.dataset.index);var arr=state.sections.header.customLinks;var before=snapshot();if(el.hasAttribute('data-custom-link-name'))arr[i].name=el.value;else arr[i].url=el.value;queueTyping(before);setDirty(true);queuePreviewRender();renderHealth()}
 function addOrRemoveCustomLink(action,index){var before=snapshot();var arr=state.sections.header.customLinks;if(action==='add')arr.push({name:'',url:''});else arr.splice(index,1);pushHistory(before);setDirty(true);renderEditor();renderPreview();renderHealth()}
 function saveImage(file){return new Promise(function(resolve,reject){if(!file||!file.type||file.type.indexOf('image/')!==0)return reject(new Error('Please choose an image file.'));var rd=new FileReader();rd.onerror=function(){reject(new Error('Could not read the image.'))};rd.onload=function(){var img=new Image();img.onerror=function(){reject(new Error('Could not decode the image.'))};img.onload=function(){var w=img.naturalWidth||img.width,h=img.naturalHeight||img.height;if(!w||!h)return reject(new Error('Image has no usable dimensions.'));var scale=Math.min(1,1200/Math.max(w,h)),cw=Math.max(1,Math.round(w*scale)),ch=Math.max(1,Math.round(h*scale)),canvas=document.createElement('canvas');canvas.width=cw;canvas.height=ch;var ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,cw,ch);resolve(canvas.toDataURL('image/jpeg',.82))};img.src=String(rd.result||'')};rd.readAsDataURL(file)})}
+function openPhotoCrop(file){
+ if(!file||!file.type||file.type.indexOf('image/')!==0){toast('Please choose an image file.','error');return}
+ var reader=new FileReader();
+ reader.onerror=function(){toast('Could not read the image.','error')};
+ reader.onload=function(){
+  var img=new Image();
+  img.onerror=function(){toast('Could not open the selected image.','error')};
+  img.onload=function(){pendingCropImage=img;$('#photoCropPreview').src=String(reader.result||'');$('#photoCropZoom').value='1';$('#photoCropX').value='50';$('#photoCropY').value='50';updatePhotoCropPreview();$('#photoCropModal').classList.add('show');$('#confirmPhotoCrop').focus()};
+  img.src=String(reader.result||'');
+ };
+ reader.readAsDataURL(file);
+}
+function updatePhotoCropPreview(){
+ var img=$('#photoCropPreview');if(!img)return;
+ var zoom=Math.max(1,Math.min(3,Number($('#photoCropZoom').value)||1));
+ img.style.objectPosition=(Number($('#photoCropX').value)||50)+'% '+(Number($('#photoCropY').value)||50)+'%';
+ img.style.transform='scale('+zoom+')';
+}
+function closePhotoCrop(){
+ var modal=$('#photoCropModal');if(modal)modal.classList.remove('show');
+ pendingCropImage=null;var input=$('#photoInput');if(input)input.value='';
+}
+function applyPhotoCrop(){
+ var img=pendingCropImage;if(!img)return;
+ var w=img.naturalWidth||img.width,h=img.naturalHeight||img.height;
+ if(!w||!h){toast('This image has no usable dimensions.','error');closePhotoCrop();return}
+ var aspect=4/5,cropW=w,cropH=h;
+ if(cropW/cropH>aspect)cropW=cropH*aspect;else cropH=cropW/aspect;
+ var zoom=Math.max(1,Math.min(3,Number($('#photoCropZoom').value)||1));
+ cropW=Math.max(1,cropW/zoom);cropH=Math.max(1,cropH/zoom);
+ var xRange=Math.max(0,w-cropW),yRange=Math.max(0,h-cropH);
+ var sx=xRange*(Math.max(0,Math.min(100,Number($('#photoCropX').value)||50))/100);
+ var sy=yRange*(Math.max(0,Math.min(100,Number($('#photoCropY').value)||50))/100);
+ var canvas=document.createElement('canvas');canvas.width=480;canvas.height=600;
+ var ctx=canvas.getContext('2d');if(!ctx){toast('Photo cropping is not available in this browser.','error');return}
+ ctx.drawImage(img,sx,sy,cropW,cropH,0,0,canvas.width,canvas.height);
+ var src=canvas.toDataURL('image/jpeg',.86);
+ mutate(function(){state.sections.header.photo=src;if(photoCapable())state.photoEnabled=true},true);
+ closePhotoCrop();updateTopControls();toast('Photo added');
+}
+
 function valueHasContent(v){
   if(typeof v==='string')return !!norm(v);
   if(Array.isArray(v))return v.some(valueHasContent);
@@ -1353,7 +1418,7 @@ safeStep('mobile More menu',function(){
     safeBind('#editor','change',function(e){
       if(e.target.matches('[data-date-part]')){updateDatePart._before=snapshot();updateDatePart(e.target);}
       if(e.target.matches('[data-path]'))updateSectionField(e.target);
-      if(e.target.id==='photoInput'){var f=e.target.files&&e.target.files[0];if(f)saveImage(f).then(function(src){mutate(function(){state.sections.header.photo=src},true);if(photoCapable())state.photoEnabled=true;updateTopControls()}).catch(function(err){toast(err.message,'error')})}
+      if(e.target.id==='photoInput'){var f=e.target.files&&e.target.files[0];if(f)openPhotoCrop(f)}
     });
     safeBind('#editor','dragstart',function(e){var h=e.target.closest('[data-drag-handle]');if(!h)return;dragSection=h.dataset.dragHandle||'';e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragSection)});
     safeBind('#editor','dragover',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();$$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});card.classList.add('drag-over')});
@@ -1361,6 +1426,9 @@ safeStep('mobile More menu',function(){
     safeBind('#editor','drop',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();var target=card.dataset.editorSection;if(target===dragSection)return;var before=snapshot(),a=state.order.indexOf(dragSection),b=state.order.indexOf(target);if(a<0||b<0)return;state.order.splice(a,1);state.order.splice(b,0,dragSection);pushHistory(before);setDirty(true);dragSection='';$$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});renderEditor();renderPreview();renderHealth()});
     safeBind('#editor','dragend',function(){dragSection='';$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});});
     safeBind('#photoInput','keydown',function(){});
+    safeBind('#cancelPhotoCrop','click',closePhotoCrop);
+    safeBind('#confirmPhotoCrop','click',applyPhotoCrop);
+    ['#photoCropZoom','#photoCropX','#photoCropY'].forEach(function(sel){safeBind(sel,'input',updatePhotoCropPreview);safeBind(sel,'change',updatePhotoCropPreview)});
   });
 
   safeStep('document and responsive handlers',function(){
@@ -1369,6 +1437,7 @@ safeStep('mobile More menu',function(){
       if(e.key==='Escape'&&more&&!more.hidden){e.preventDefault();setMoreMenu(false,false);var mb=$('#moreBtn');if(mb)mb.focus();return}
       var mod=e.ctrlKey||e.metaKey;
       if($('#resetModal').classList.contains('show')||$('#leaveModal').classList.contains('show'))return;
+      if($('#photoCropModal')&&$('#photoCropModal').classList.contains('show')){if(e.key==='Escape'){e.preventDefault();closePhotoCrop()}return}
       if(mod&&e.key.toLowerCase()==='s'){e.preventDefault();downloadHtml()}
       else if(mod&&e.key.toLowerCase()==='p'){e.preventDefault();downloadPdf()}
       else if(mod&&e.key.toLowerCase()==='z'&&!e.shiftKey){e.preventDefault();undo()}
