@@ -4,6 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#17181d">
+<meta name="description" content="Create slide decks in your browser and export presentations with SiteCraft.">
+<link rel="canonical" href="https://multigameweb.github.io/WebsiteResumePortfolio/presentation-maker.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SiteCraft">
+<meta property="og:title" content="Free Presentation Maker — SiteCraft">
+<meta property="og:description" content="Create slide decks in your browser and export presentations with SiteCraft.">
+<meta property="og:url" content="https://multigameweb.github.io/WebsiteResumePortfolio/presentation-maker.html">
+<meta property="og:image" content="https://multigameweb.github.io/WebsiteResumePortfolio/preview.svg">
+<meta property="og:image:alt" content="SiteCraft website preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Free Presentation Maker — SiteCraft">
+<meta name="twitter:description" content="Create slide decks in your browser and export presentations with SiteCraft.">
+<meta name="twitter:image" content="https://multigameweb.github.io/WebsiteResumePortfolio/preview.svg">
 <title>Presentation Maker — SiteCraft</title>
 <link rel="stylesheet" href="site-navigation.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
@@ -12,6 +25,8 @@
 :root{--pm-ink:#17181d;--pm-muted:#667080;--pm-line:#e1e5eb;--pm-soft:#f5f6f8;--pm-paper:#fff;--pm-purple:#6158e8;--pm-shadow:0 16px 44px rgba(23,24,29,.08)}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;background:#f5f6f8;color:var(--pm-ink)}body{font-size:14px;line-height:1.5}button,input,select,textarea{font:inherit}button,a,input,select,textarea,[contenteditable="true"]{outline-offset:2px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[contenteditable="true"]:focus-visible{outline:3px solid #2563eb;outline-offset:2px}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}a{color:inherit}
 .pm-app{width:min(1600px,100%);padding:22px clamp(10px,2vw,28px) 36px;margin:auto}
+.pm-page-nav{display:flex;align-items:center;gap:8px;margin:0 0 14px}
+.pm-page-nav .pm-btn{min-width:86px}
 .pm-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin:2px 0 22px}.pm-eyebrow{font-size:11px;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--pm-purple)}.pm-intro h1{font-size:clamp(30px,4vw,45px);line-height:1.04;letter-spacing:-.05em;margin:7px 0}.pm-intro p{color:var(--pm-muted);margin:0;max-width:680px}.pm-intro-actions{display:flex;flex-wrap:wrap;gap:8px}
 .pm-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:8px 13px;border-radius:11px;border:1px solid #d8dde5;background:#fff;color:#242833;font-weight:800;font-size:12px;text-decoration:none;white-space:nowrap;transition:background .15s,border-color .15s,transform .15s}.pm-btn:hover{background:#f0f1f4;border-color:#b7bfca}.pm-btn.primary{background:#17181d;border-color:#17181d;color:#fff}.pm-btn.primary:hover{background:#34363d}.pm-btn.soft{background:#eeedff;border-color:#dedbff;color:#37318b}.pm-btn.danger{color:#a52636}.pm-btn.icon{width:38px;padding:0;font-size:17px}.pm-btn.small{min-height:31px;padding:6px 9px;font-size:11px}
 .pm-card{background:#fff;border:1px solid var(--pm-line);border-radius:20px;box-shadow:var(--pm-shadow)}.pm-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}.pm-section-head h2{font-size:17px;margin:0;letter-spacing:-.025em}.pm-muted{color:var(--pm-muted)}
@@ -32,6 +47,10 @@
 </head>
 <body>
 <main class="pm-app" id="pmApp">
+<nav class="pm-page-nav" aria-label="Page navigation">
+ <button class="pm-btn" id="pmBackBtn" type="button">← Back</button>
+ <a class="pm-btn" href="index.html">⌂ Home</a>
+</nav>
 <section class="pm-intro" id="pmStartIntro">
  <div><div class="pm-eyebrow">Free · Browser-based · No login</div><h1>Make your next slide deck.</h1><p>Create presentations right here in your browser. Add slides, style your story, present full-screen, and export when you're ready. Your work is saved on this device.</p></div>
  <div class="pm-intro-actions"><button class="pm-btn primary" id="newBlankBtn">＋ New blank presentation</button><button class="pm-btn" id="importProjectBtn">Import project .json</button><input type="file" id="importProjectFile" accept=".json,application/json" class="pm-hidden"></div>
@@ -734,6 +753,12 @@ function nextTour(){if(tourIndex>=3){endTour();return}tourIndex++;showTour()}
 function endTour(){$("#pmTourOverlay").classList.add("pm-hidden");$("#pmTourOverlay").classList.remove("open");try{safeStorageSetItem("sitecraft-presentation-tour-seen","1")}catch(_){}}
 function init(){
  safeLoadStored();renderProjectList();bindEvents();
+ const backButton=$("#pmBackBtn");
+ if(backButton)backButton.addEventListener("click",function(){
+  let sameOriginReferrer=false;
+  try{sameOriginReferrer=!!document.referrer&&new URL(document.referrer).origin===location.origin}catch(_){}
+  if(history.length>1&&sameOriginReferrer)history.back();else location.href="index.html";
+ });
  $("#pmAddSlideBtn").addEventListener("contextmenu",function(e){e.preventDefault();addSlide()});
  const seen=(function(){try{return localStorage.getItem("sitecraft-presentation-tour-seen")}catch(_){return "1"}})();
  if(!seen)setTimeout(startTour,450);
@@ -751,5 +776,6 @@ if(savedId){const p=projects.find(x=>x.id===savedId);if(p)openProject(p)}
 })();
 </script>
 <script src="site-navigation.js"></script>
+<aside class="sc-cross-sell sc-cross-sell--floating" aria-label="Website template cross-sell"><div><strong>Need a website for your business too?</strong><p>Start with a premium design made for businesses like yours.</p></div><a class="sc-cross-sell-btn" href="templates.html">Browse templates <span aria-hidden="true">↗</span></a></aside>
 </body>
 </html>
