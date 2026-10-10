@@ -226,6 +226,19 @@ body.preview-section-dragging{user-select:none!important;cursor:grabbing!importa
 #previewPages .section-block.preview-drop-before:before{top:-4px}#previewPages .section-block.preview-drop-after:after{bottom:-4px}
 @media(max-width:899px){#previewReorderToggle{top:5px;right:8px;min-height:32px}#previewScroll{padding-top:43px!important}}
 @media print{#previewReorderToggle,.preview-drag-handle,#previewPages .preview-drop-before:before,#previewPages .preview-drop-after:after{display:none!important}#previewScroll{padding:0!important}body.preview-reorder-mode #previewPages .section-block[data-preview-section]:not([data-preview-section="header"]){outline:none!important}#previewPages .preview-dragging-source{opacity:1!important;outline:none!important}}
+
+/* Design-panel controls: one text-size select and one labelled zoom selector. */
+#editor .design-panel{overflow-x:hidden!important}
+#editor .design-panel .compact-design-content{grid-template-columns:minmax(0,1fr)}
+#editor .design-panel .compact-design-content>*{min-width:0;max-width:100%}
+#editor .design-panel .compact-design-grid{grid-template-columns:minmax(0,1fr)!important}
+#editor .design-panel .compact-design-grid>label{min-width:0}
+@container (min-width:620px){#editor .design-panel .compact-design-content{grid-template-columns:repeat(2,minmax(0,1fr))}#editor .design-panel .compact-design-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+#editor .design-panel .compact-toggles{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+#editor .design-panel .photo-toggle-wrap{flex:0 1 auto;min-width:0}
+#editor .design-panel .compact-switch{flex:0 0 auto;min-height:29px;height:29px;padding:0 10px;border-radius:999px;font-size:10px;white-space:nowrap}
+#editor .design-panel .fit-one-page-compact{display:inline-flex;align-items:center;justify-content:center;width:auto;min-width:0;min-height:30px;height:30px;padding:0 10px;justify-self:start;border-radius:8px;font-size:10px}
+#editor .design-panel #onePageWarning{justify-self:start;font-size:10px}
 </style>
 
 </head>
@@ -251,7 +264,7 @@ body.preview-section-dragging{user-select:none!important;cursor:grabbing!importa
 <div class="compact-design-block"><label>Accent colour</label><div class="compact-accent-row"><input id="accentPicker" type="color" value="#334155" aria-label="Accent colour"><div id="accentSwatches" class="compact-swatches"></div></div></div>
 <div class="compact-design-grid">
 <label>Font<select id="fontSelect"><option>Inter</option><option>Source Serif</option><option>Lato</option><option>Merriweather</option></select></label>
-<div><label>Text size</label><div class="compact-stepper"><button id="formatFontMinus" type="button" aria-label="Decrease text size">A−</button><strong id="formatFontSizeValue">10.5 pt</strong><button id="formatFontPlus" type="button" aria-label="Increase text size">A+</button></div><select id="fontSizeSelect" class="hidden-control" aria-label="Text size"><option value="8">8</option><option value="8.5">8.5</option><option value="9">9</option><option value="9.5">9.5</option><option value="10">10</option><option value="10.5" selected>10.5</option><option value="11">11</option><option value="11.5">11.5</option><option value="12">12</option><option value="12.5">12.5</option><option value="13">13</option><option value="13.5">13.5</option><option value="14">14</option></select></div>
+<label>Text size<select id="fontSizeSelect" aria-label="Text size"><option value="8">8 pt</option><option value="8.5">8.5 pt</option><option value="9">9 pt</option><option value="9.5">9.5 pt</option><option value="10">10 pt</option><option value="10.5" selected>10.5 pt</option><option value="11">11 pt</option><option value="11.5">11.5 pt</option><option value="12">12 pt</option><option value="12.5">12.5 pt</option><option value="13">13 pt</option><option value="13.5">13.5 pt</option><option value="14">14 pt</option></select></label>
 <div><label>Spacing</label><div class="compact-segment"><button data-setting-key="lineSpacing" data-setting-value="1.15" type="button">Tight</button><button data-setting-key="lineSpacing" data-setting-value="1.25" type="button">Normal</button><button data-setting-key="lineSpacing" data-setting-value="1.4" type="button">Relaxed</button></div></div>
 <div><label>Margins</label><div class="compact-segment"><button data-setting-key="margin" data-setting-value="narrow" type="button">Narrow</button><button data-setting-key="margin" data-setting-value="normal" type="button">Normal</button><button data-setting-key="margin" data-setting-value="wide" type="button">Wide</button></div></div>
 <label>Paper<select id="paperSelect"><option value="A4">A4</option><option value="Letter">Letter</option><option value="Legal">Legal</option><option value="A5">A5</option><option value="B5">B5</option><option value="Executive">Executive</option></select><small>A4 is the standard in India.</small></label><label>Preview zoom<select id="designZoomSelect"><option value="fit" selected>Fit width</option><option value="50">50%</option><option value="75">75%</option><option value="90">90%</option><option value="100">100%</option><option value="110">110%</option><option value="125">125%</option><option value="150">150%</option></select></label>
@@ -270,9 +283,7 @@ body.preview-section-dragging{user-select:none!important;cursor:grabbing!importa
 <label>Section gap<select id="formatSectionGapSelect"><option value="10">10</option><option value="12">12</option><option value="14">14</option><option value="16">16</option><option value="18">18</option><option value="20">20</option><option value="22">22</option><option value="24">24</option></select></label><label>Entry gap<select id="formatEntryGapSelect"><option value="6">6</option><option value="8">8</option><option value="10">10</option><option value="12">12</option><option value="14">14</option><option value="16">16</option><option value="18">18</option><option value="20">20</option></select></label><label>Line spacing<select id="formatLineSelect"><option value="1.15">1.15</option><option value="1.25">1.25</option><option value="1.4">1.4</option></select></label>
 <div id="formatSectionTools" hidden><strong id="formatSectionLabel">Selected section</strong><span id="formatSectionSizeValue">10.5</span><span id="formatSectionSpacingValue">+0</span><button id="formatSectionMinus" type="button">A−</button><button id="formatSectionPlus" type="button">A+</button><button id="formatSectionSpacingMinus" type="button">−</button><button id="formatSectionSpacingPlus" type="button">+</button><button id="formatHeadingToggle" type="button">Heading: On</button><div id="formatHeaderAlignTools" hidden><button id="formatAlignLeft" type="button">Left</button><button id="formatAlignCenter" type="button">Center</button></div><button id="formatResetSection" type="button">Reset section</button></div><button id="formatResetAll" type="button">Reset formatting</button></div>
 </details></div>
-<select id="zoomSelect" class="hidden-control" aria-label="Preview zoom"><option value="25">25</option><option value="35">35</option><option value="45">45</option><option value="50">50</option><option value="60">60</option><option value="70">70</option><option value="75">75</option><option value="80">80</option><option value="90">90</option><option value="100" selected>100</option><option value="110">110</option><option value="125">125</option><option value="150">150</option></select>
-<button id="fitWidthBtn" class="hidden-control" type="button">Fit width</button>
-</section>
+remove unlabeled legacy zoom dropdown and Fit width button</section>
 <div class="editor-head">
     <div><div class="help">SITECRAFT · RESUME STUDIO</div><h1>Build your resume</h1><p>Your resume is autosaved locally when browser storage is available.</p></div>
     
@@ -434,8 +445,7 @@ function paperDims(){var sizes={A4:{w:210/25.4*96,h:297/25.4*96},Letter:{w:8.5*9
 function paperPhysical(paper){return ({A4:{w:'210mm',h:'297mm'},Letter:{w:'8.5in',h:'11in'},Legal:{w:'8.5in',h:'14in'},A5:{w:'148mm',h:'210mm'},B5:{w:'176mm',h:'250mm'},Executive:{w:'7.25in',h:'10.5in'}})[paper]||{w:'210mm',h:'297mm'}}
 function paperColorHex(color){return({white:'#ffffff',ivory:'#fff8e7',grey:'#f1f3f5',blue:'#edf6ff',green:'#effaf0',pink:'#fff0f5',yellow:'#fffce8',lavender:'#f4efff'})[color]||'#ffffff'}
 function applyPageVars(){
-  var d=paperDims(),scroll=$('#previewScroll'),mobile=window.innerWidth<=899,available=Math.max(220,(scroll?scroll.clientWidth:window.innerWidth)-24),zoom=mobile?Math.min(1,available/d.w):Math.max(.25,Math.min(1.5,(Number($('#zoomSelect')?.value)||100)/100));
-  if($('#zoomSelect')){$('#zoomSelect').disabled=mobile;if(mobile)$('#zoomSelect').value=String(Math.max(25,Math.round(zoom*100)));}
+  var d=paperDims(),scroll=$('#previewScroll'),mobile=window.innerWidth<=899,zoomControl=$('#designZoomSelect'),available=Math.max(220,(scroll?scroll.clientWidth:window.innerWidth)-36),zoomValue=zoomControl&&zoomControl.value!=='fit'?Number(zoomControl.value)/100:available/d.w,zoom=Math.max(.25,Math.min(mobile?1:1.5,zoomValue));
   document.documentElement.style.setProperty('--page-w',d.w+'px');document.documentElement.style.setProperty('--page-h',d.h+'px');document.documentElement.style.setProperty('--margin-x',marginPx()+'px');document.documentElement.style.setProperty('--margin-y',marginPx()+'px');document.documentElement.style.setProperty('--zoom',String(zoom));document.documentElement.style.setProperty('--base-size',String(Number(state.fontSize)||10.5)+'pt');document.documentElement.style.setProperty('--line-height',String(Number(state.lineSpacing)||1.25));document.documentElement.style.setProperty('--resume-accent',state.accent);document.documentElement.style.setProperty('--resume-paper-color',paperColorHex(state.paperColor));document.documentElement.style.setProperty('--font-stack',FONTS[state.font]||FONTS.Inter);
 }
 function textTokens(s){return norm(s).toLowerCase().split(/[^a-z0-9+#.-]+/).filter(function(t){return t.length>=2||t==='r'||t==='c'})}
@@ -992,7 +1002,7 @@ function setupPreviewSectionReordering(){
 }
 function applyPreviewSelection(){$$('[data-preview-section]').forEach(function(el){el.classList.toggle('format-selected',!!selectedFormatSection&&el.dataset.previewSection===selectedFormatSection)})}
 function formatScopeName(id){if(!id)return'All resume';if(id==='header')return'Header';if(/^custom-\d+$/.test(id)){var c=state.custom[Number(id.split('-')[1])-1];return c&&c.title?c.title:'Custom section'}return sectionMeta(id)}
-function renderFormatToolbar(){var g=state.format.global;var fs=$('#formatFontSelect');if(!fs)return;fs.value=g.fontFamily;$('#formatFontSizeValue').textContent=Number(g.fontSize).toFixed(1).replace('.0','')+' pt';$('#formatNameSizeSelect').value=String(g.nameSize);$('#formatHeadingSizeSelect').value=String(g.headingSize);$('#formatLineSelect').value=g.lineSpacing;$('#formatSectionGapSelect').value=String(g.sectionGap);$('#formatEntryGapSelect').value=String(g.entryGap);var selected=!!selectedFormatSection,f=selected?sectionFormat(selectedFormatSection):null;$('#formatScopeLabel').textContent=selected?formatScopeName(selectedFormatSection):'All resume';$('#formatScopeHelp').textContent=selected?'Section-specific overrides':'Global print formatting';$('#formatSectionTools').hidden=!selected;if(selected&&f){var eff=f.fontSize!=null?f.fontSize:parseFloat(g.fontSize);$('#formatSectionLabel').textContent=formatScopeName(selectedFormatSection);$('#formatSectionSizeValue').textContent=Number(eff).toFixed(1).replace('.0','')+' pt';$('#formatSectionSpacingValue').textContent=(f.spacing>0?'+':'')+String(f.spacing||0)+' px';$('#formatHeadingToggle').textContent='Heading: '+(f.headingVisible===false?'Off':'On');var ah=$('#formatHeaderAlignTools');ah.hidden=selectedFormatSection!=='header';if(selectedFormatSection==='header'){var centered=f.headerAlign==='center';$('#formatAlignLeft').setAttribute('aria-pressed',String(!centered));$('#formatAlignCenter').setAttribute('aria-pressed',String(centered))}}}
+function renderFormatToolbar(){var g=state.format.global;var fs=$('#formatFontSelect');if(!fs)return;fs.value=g.fontFamily;$('#formatNameSizeSelect').value=String(g.nameSize);$('#formatHeadingSizeSelect').value=String(g.headingSize);$('#formatLineSelect').value=g.lineSpacing;$('#formatSectionGapSelect').value=String(g.sectionGap);$('#formatEntryGapSelect').value=String(g.entryGap);var selected=!!selectedFormatSection,f=selected?sectionFormat(selectedFormatSection):null;$('#formatScopeLabel').textContent=selected?formatScopeName(selectedFormatSection):'All resume';$('#formatScopeHelp').textContent=selected?'Section-specific overrides':'Global print formatting';$('#formatSectionTools').hidden=!selected;if(selected&&f){var eff=f.fontSize!=null?f.fontSize:parseFloat(g.fontSize);$('#formatSectionLabel').textContent=formatScopeName(selectedFormatSection);$('#formatSectionSizeValue').textContent=Number(eff).toFixed(1).replace('.0','')+' pt';$('#formatSectionSpacingValue').textContent=(f.spacing>0?'+':'')+String(f.spacing||0)+' px';$('#formatHeadingToggle').textContent='Heading: '+(f.headingVisible===false?'Off':'On');var ah=$('#formatHeaderAlignTools');ah.hidden=selectedFormatSection!=='header';if(selectedFormatSection==='header'){var centered=f.headerAlign==='center';$('#formatAlignLeft').setAttribute('aria-pressed',String(!centered));$('#formatAlignCenter').setAttribute('aria-pressed',String(centered))}}}
 function pushFormatChange(fn){flushTyping();var before=snapshot();fn();ensureFormatState();pushHistory(before);setDirty(true);renderPreview();renderHealth();updateTopControls()}
 function adjustGlobalFormat(key,delta,min,max,step){pushFormatChange(function(){var g=state.format.global;g[key]=formatNumber(g[key],key==='fontSize'?10.5:key==='nameSize'?26:key==='headingSize'?11.5:key==='sectionGap'?16:12,min,max,step);g[key]=formatNumber(g[key]+delta,g[key],min,max,step);if(key==='fontSize')g.fontSize=String(g[key])})}
 function adjustSectionFormat(key,delta){if(!selectedFormatSection)return;pushFormatChange(function(){var g=state.format.global,f=ensureSectionFormat(selectedFormatSection);if(key==='fontSize'){var base=f.fontSize!=null?f.fontSize:parseFloat(g.fontSize)||10.5;f.fontSize=formatNumber(base+delta,base,8,14,.5)}else{f.spacing=formatNumber((f.spacing||0)+delta,0,-6,12,2)}})}
@@ -1326,7 +1336,7 @@ function safeStep(name,fn){
   try{return fn()}catch(err){console.error('[Resume Builder] Setup step failed — '+name+':',err);return undefined}
 }
 function toggleFullPreview(){
-  var shell=$('#appShell'),button=$('#fullPreviewBtn'),zoom=$('#zoomSelect');
+  var shell=$('#appShell'),button=$('#fullPreviewBtn'),zoom=$('#designZoomSelect');
   if(!shell||!button)return;
   var opening=!shell.classList.contains('full-preview-mode');
   if(opening){
@@ -1365,12 +1375,8 @@ function showEditPanel(){
   if(me)me.classList.add('active');if(mp)mp.classList.remove('active');
 }
 function fitPreviewWidth(render){
-  var scroll=$('#previewScroll'),select=$('#zoomSelect'),d=paperDims();
-  if(!scroll||!select)return;
-  var ratio=Math.max(25,Math.min(150,Math.floor(Math.max(180,scroll.clientWidth-36)/d.w*100)));
-  var option=Array.prototype.find.call(select.options,function(o){return Number(o.value)===ratio});
-  if(!option){option=document.createElement('option');option.value=String(ratio);option.textContent=ratio+'%';select.appendChild(option)}
-  select.value=String(ratio);var designZoom=$('#designZoomSelect');if(designZoom)designZoom.value='fit';applyPageVars();if(render!==false)renderPreview();else updatePageCounter();
+  if(!$('#designZoomSelect'))return;
+  applyPageVars();if(render!==false)renderPreview();else updatePageCounter();
 }
 function setMoreMenu(open,focusFirst){
   var menu=$('#moreMenu'),button=$('#moreBtn');
@@ -1392,7 +1398,7 @@ function setupEvents(){
   });
 
   safeStep('full preview mode',function(){
-    var shell=$('#appShell'),button=$('#fullPreviewBtn'),zoom=$('#zoomSelect'),previousZoom=null;
+    var shell=$('#appShell'),button=$('#fullPreviewBtn'),zoom=$('#designZoomSelect'),previousZoom=null;
     if(!shell||!button||!zoom)return;
     safeBind(button,'click',function(){
       var opening=!shell.classList.contains('full-preview-mode');
@@ -1465,8 +1471,6 @@ safeStep('mobile More menu',function(){
     safeBind('#lineSelect','change',function(e){applySetting('lineSpacing',e.target.value)});
     safeBind('#dateSelect','change',function(e){applySetting('dateFormat',e.target.value)});
     safeBind('#formatFontSelect','change',function(e){pushFormatChange(function(){state.format.global.fontFamily=e.target.value})});
-    safeBind('#formatFontMinus','click',function(){adjustGlobalFormat('fontSize',-.5,8,14,.5)});
-    safeBind('#formatFontPlus','click',function(){adjustGlobalFormat('fontSize',.5,8,14,.5)});
     safeBind('#formatNameSizeSelect','change',function(e){pushFormatChange(function(){state.format.global.nameSize=formatNumber(e.target.value,26,22,34,.5)})});
     safeBind('#formatHeadingSizeSelect','change',function(e){pushFormatChange(function(){state.format.global.headingSize=formatNumber(e.target.value,11.5,10,16,.5)})});
     safeBind('#formatLineSelect','change',function(e){applySetting('lineSpacing',e.target.value)});
@@ -1488,10 +1492,8 @@ safeStep('mobile More menu',function(){
     safeBind('#accentPicker','input',function(e){var before=snapshot();state.accent=e.target.value;queueTyping(before);setDirty(true);queuePreviewRender();renderHealth()});
     safeBind('#iconsToggle','click',function(){applySetting('icons',!state.icons)});
     safeBind('#photoToggle','click',function(){applySetting('photoEnabled',!state.photoEnabled)});
-    safeBind('#zoomSelect','change',function(){applyPageVars();renderPreview();var dz=$('#designZoomSelect');if(dz)dz.value=String($('#zoomSelect').value)});
-     safeBind('#designZoomSelect','change',function(e){if(e.target.value==='fit'){fitPreviewWidth();return}var z=$('#zoomSelect'),v=String(e.target.value);if(z){if(!Array.prototype.some.call(z.options,function(o){return o.value===v})){var o=document.createElement('option');o.value=v;o.textContent=v+'%';z.appendChild(o)}z.value=v}applyPageVars();renderPreview()});
+    safeBind('#designZoomSelect','change',function(e){if(e.target.value==='fit'){fitPreviewWidth();return}applyPageVars();renderPreview()});
     safeStep('accent swatches',renderAccentSwatches);
-    safeBind('#fitWidthBtn','click',fitPreviewWidth);
     safeBind('#fitOnePageBtn','click',fitToOnePage);
     setupTemplatePicker();
   });
