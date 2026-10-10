@@ -606,7 +606,7 @@ function useRoleExampleBullet(){
   addRoleBullet(starter.bullets[0]);
 }
 function wrapSectionActions(){
-  $('#accordion .section-actions').forEach(function(actions){
+  $$('#accordion .section-actions').forEach(function(actions){
     if(actions.querySelector('.section-options'))return;
     var details=document.createElement('details');details.className='section-options';
     var summary=document.createElement('summary');summary.textContent='•••';summary.setAttribute('aria-label','Section options');
@@ -622,7 +622,7 @@ function organizeMoreSections(){
   var summary=document.createElement('summary');summary.textContent='+ Add more sections';details.appendChild(summary);
   var hint=document.createElement('p');hint.className='help';hint.textContent='Projects, languages, certificates and other optional sections.';details.appendChild(hint);
   var content=document.createElement('div');content.className='more-sections-content';details.appendChild(content);
-  $('#accordion .section-card').forEach(function(card){
+  $$('#accordion .section-card').forEach(function(card){
     var id=card.dataset.editorSection||'';
     if(rare.has(id)||/^custom-\d+$/.test(id))content.appendChild(card);
   });
@@ -686,7 +686,7 @@ function autoGrowTextarea(el){
 }
 function autoGrowTextareas(root){
   if(!root)return;
-  var items=root.matches&&root.matches('textarea')?[root]:$('textarea',root);
+  var items=root.matches&&root.matches('textarea')?[root]:$$('textarea',root);
   items.forEach(autoGrowTextarea);
 }
 
@@ -953,7 +953,7 @@ function sectionBlockHtml(id,sec){
   var items=textItemsForSection(id,sec);if(!items.length)return '';
   var title=sectionMeta(id),cls=(state.divider==='box'?'section-box':'');return '<section class="section-block '+cls+'" data-preview-section="'+esc(id)+'" style="'+esc(formatSectionStyle(id))+'"><h2 class="'+esc(sectionHeadingClass(id,'section-title'))+'">'+esc(title)+'</h2>'+items.map(function(x){return renderEntryHtml(x.type,x)}).join('')+'</section>'
 }
-function headerHtml(sec,sidebar){var links=[];function push(label,url){var u=safeUrl(url);if(u)links.push('<span>'+(state.icons?label+' ':'')+linkHtml(u)+'</span>')}push('in',sec.linkedin);push('gh',sec.github);push('web',sec.website);(sec.customLinks||[]).forEach(function(x){push(x.name||'link',x.url)});var contact=['email','phone','location'].map(function(k){var v=norm(sec[k]);if(!v)return'';var lab=state.icons?({email:'✉',phone:'☎',location:'⌖'}[k]+' '):'';var content=k==='email'?'<a class="link-inline" href="mailto:'+esc(v)+'">'+esc(v)+'</a>':esc(v);return '<span>'+lab+content+'</span>'}).join('');var image=state.photoEnabled&&safeImage(sec.photo)?'<img class="resume-photo" src="'+esc(sec.photo)+'" alt="">':'';if(sidebar)return '<div class="resume-header" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div class="resume-name">'+esc(sec.name||'')+'</div><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact">'+contact+links.join('')+'</div></div>';return '<div class="resume-header two-line" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div><h1 class="resume-name">'+esc(sec.name||'Your Name')+'</h1><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact" style="margin-top:7px">'+contact+links.join('')+'</div></div>'+image+'</div>'}
+function headerHtml(sec,sidebar){var links=[];function push(label,url){var u=safeUrl(url);if(u)links.push('<span>'+(state.icons?label+' ':'')+linkHtml(u)+'</span>')}push('in',sec.linkedin);push('gh',sec.github);push('web',sec.website);(sec.customLinks||[]).forEach(function(x){push(x.name||'link',x.url)});var contact=['email','phone','location'].map(function(k){var v=norm(sec[k]);if(!v)return'';var lab=state.icons?({email:'✉',phone:'☎',location:'⌖'}[k]+' '):'';var content=k==='email'?'<a class="link-inline" href="mailto:'+esc(v)+'">'+esc(v)+'</a>':esc(v);return '<span>'+lab+content+'</span>'}).join('');var image=state.photoEnabled&&safeImage(sec.photo)?'<img class="resume-photo" src="'+esc(sec.photo)+'" alt="">':'';if(sidebar)return '<div class="resume-header" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div class="resume-name">'+esc(sec.name||'')+'</div><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact">'+contact+links.join('')+'</div></div>';return '<div class="resume-header two-line" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div><h1 class="resume-name">'+esc(sec.name||'')+'</h1><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact" style="margin-top:7px">'+contact+links.join('')+'</div></div>'+image+'</div>'}
 function sidebarBlocks(){
   var sec=state.sections,html=headerHtml(sec.header,true);
   ['skills','languages','certifications'].forEach(function(id){var b=sectionBlockHtml(id,sec[id]);if(b)html+=b});
@@ -1443,7 +1443,7 @@ function setupEvents(){
     safeEach('[data-start-profession]',function(btn){safeBind(btn,'click',function(){
       selectedJourney=btn.dataset.startProfession;
       selectedProfessionKey=selectedJourney==='student_fresher'?'student_fresher':'';
-      $('.profession-choice').forEach(function(choice){choice.classList.toggle('active',choice===btn)});
+      $$('.profession-choice').forEach(function(choice){choice.classList.toggle('active',choice===btn)});
       var category=$('#professionSelect');if(category)category.value=selectedProfessionKey;
       updateRoleSuggestions();
     })});
