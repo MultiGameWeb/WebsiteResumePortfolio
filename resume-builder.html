@@ -213,19 +213,7 @@ body.edit-mode #editor .design-panel{display:none!important}
   </div>
 
   
-  <div class="tool-grid">
-    <div class="surface-card">
-      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Experience preset</strong><span class="help">Suggests a section order. No sample personal data is added.</span></div>
-      <div class="width-presets" id="presetGroup" style="margin-top:8px">
-        <button class="preset-btn" data-preset="Fresher" type="button">Fresher</button>
-        <button class="preset-btn active" data-preset="Experienced" type="button">Experienced</button>
-        <button class="preset-btn" data-preset="Career change" type="button">Career change</button>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:9px"><button class="btn soft" id="startEmptyBtn" type="button">Start empty</button><span class="help" style="align-self:center">Choose a section order, then add your own details.</span></div>
-    </div>
-
-    
-
+  <div class="tool-grid" hidden>
     <div class="surface-card health" id="healthPanel">
       <div class="health-score"><div><div class="help">Resume health</div><strong id="healthScore">0%</strong></div><span id="pageHealth" class="help">Page count —</span></div>
       <div class="score-track"><i id="healthBar"></i></div>
