@@ -644,7 +644,7 @@ function applyGuidedEditorView(){
   body.classList.toggle('guided-running',guideStarted);
   if(!accordion)return;
   var current=GUIDE_STEPS[guidedStep]&&GUIDE_STEPS[guidedStep].section;
-  $('.section-card',accordion).forEach(function(card){
+  $$('.section-card',accordion).forEach(function(card){
     var id=card.dataset.editorSection||'';
     var optional=card.closest('.more-sections-content');
     if(advancedMode){card.hidden=false;return}
@@ -1625,10 +1625,10 @@ function setupEvents(){
       if(e.target.id==='photoInput'){var f=e.target.files&&e.target.files[0];if(f)saveImage(f).then(function(src){mutate(function(){state.sections.header.photo=src},true);if(photoCapable())state.photoEnabled=true;updateTopControls()}).catch(function(err){toast(err.message,'error')})}
     });
     safeBind('#editor','dragstart',function(e){var h=e.target.closest('[data-drag-handle]');if(!h)return;dragSection=h.dataset.dragHandle||'';e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragSection)});
-    safeBind('#editor','dragover',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});card.classList.add('drag-over')});
+    safeBind('#editor','dragover',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();$$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});card.classList.add('drag-over')});
     safeBind('#editor','dragleave',function(e){var card=e.target.closest('[data-editor-section]');if(card)card.classList.remove('drag-over')});
-    safeBind('#editor','drop',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();var target=card.dataset.editorSection;if(target===dragSection)return;var before=snapshot(),a=state.order.indexOf(dragSection),b=state.order.indexOf(target);if(a<0||b<0)return;state.order.splice(a,1);state.order.splice(b,0,dragSection);pushHistory(before);setDirty(true);dragSection='';$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});renderEditor();renderPreview();renderHealth()});
-    safeBind('#editor','dragend',function(){dragSection='';$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});});
+    safeBind('#editor','drop',function(e){var card=e.target.closest('[data-editor-section]');if(!card||!dragSection)return;e.preventDefault();var target=card.dataset.editorSection;if(target===dragSection)return;var before=snapshot(),a=state.order.indexOf(dragSection),b=state.order.indexOf(target);if(a<0||b<0)return;state.order.splice(a,1);state.order.splice(b,0,dragSection);pushHistory(before);setDirty(true);dragSection='';$$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});renderEditor();renderPreview();renderHealth()});
+    safeBind('#editor','dragend',function(){dragSection='';$$('[data-editor-section]').forEach(function(c){c.classList.remove('drag-over')});});
     safeBind('#photoInput','keydown',function(){});
   });
 
