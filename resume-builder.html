@@ -157,6 +157,10 @@ body.design-mode #editor #guidedStepPanel{display:block!important}
  body.design-mode #editor .guided-wizard{padding-bottom:6px}
 }
 
+
+.role-example{display:grid;gap:12px;border:1px solid #e0dcf8;border-radius:12px;background:#faf9ff;padding:12px}.role-example[hidden]{display:none!important}.role-example p{margin:5px 0;color:var(--muted);font-size:12px;line-height:1.6;overflow-wrap:anywhere}.role-example strong{font-size:12px}
+.guided-role-search select{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line2);border-radius:12px;background:#fff;color:var(--text);font-size:16px}
+
 </style>
 
 </head>
@@ -182,12 +186,21 @@ body.design-mode #editor #guidedStepPanel{display:block!important}
     <button type="button" class="btn primary wizard-start" id="startResumeBtn">Start my resume <span aria-hidden="true">→</span></button>
   </section>
   <div class="guided-role-search" id="guidedRoleSearch">
-    <label for="roleSearch"><strong>Your role</strong> <span class="help">Optional — helps suggest skills and examples</span></label>
-    <input id="roleSearch" type="search" autocomplete="off" placeholder="e.g. teacher, accountant, electrician, sales executive">
+    <label for="professionSelect"><strong>Profession area</strong> <span class="help">Choose the closest match</span></label>
+    <select id="professionSelect">
+      <option value="student_fresher">Student / Fresher · any stream</option><option value="teacher_education">Teaching / Education</option><option value="sales_marketing">Sales / Marketing</option><option value="accounts_finance">Accounts / Finance / Banking</option><option value="healthcare">Healthcare / Nursing / Lab / Pharmacy</option><option value="customer_support">Customer Support / BPO</option><option value="it_software">IT / Software</option><option value="engineering">Engineering / Technical</option><option value="office_admin_hr">Office / Admin / HR</option><option value="retail_hospitality">Retail / Hospitality / Restaurant</option><option value="skilled_trades_drivers">Skilled Trades / Drivers</option><option value="creative_freelance">Creative / Freelance</option>
+    </select>
+    <label for="roleSearch"><strong>Your role</strong> <span class="help">Optional — get matching skill ideas</span></label>
+    <input id="roleSearch" type="search" autocomplete="off" placeholder="e.g. primary teacher, accountant, electrician">
+
     <div class="role-match-list" id="roleMatchList" aria-live="polite"></div>
     <div class="role-suggestions" id="roleSuggestions" aria-label="Suggested skills and bullet starters"></div>
     <button type="button" id="seeExampleBtn" class="text-button">See an example for this role</button>
     <span class="help" id="exampleStatus" aria-live="polite"></span>
+    <div class="role-example" id="roleExample" hidden>
+      <div><strong>Example summary</strong><p id="roleExampleSummary"></p><button type="button" id="useExampleSummaryBtn" class="text-button">Use this summary</button></div>
+      <div><strong>Example achievement</strong><p id="roleExampleBullet"></p><button type="button" id="addExampleBulletBtn" class="text-button">Add this bullet</button></div>
+    </div>
   </div>
   <section class="guided-step-panel" id="guidedStepPanel" hidden>
     <div class="guided-progress-heading"><span id="guidedStepCount">STEP 1 OF 7</span><strong id="guidedStepTitle">Basics</strong></div>
