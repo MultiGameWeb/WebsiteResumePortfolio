@@ -228,6 +228,12 @@ body.download-step #editor .editor-head,body.download-step #editor .tool-grid,bo
  .section-options>summary{width:38px;height:38px;min-width:38px;min-height:38px}
 }
 
+
+/* Validation refinements */
+body.design-mode #editor .guided-wizard #guidedStepPanel{display:block!important}
+body.download-step #editor .guided-download-panel{display:grid!important}
+.role-match-list .help{display:block;width:100%;padding:4px 0}
+
 </style>
 
 </head>
@@ -526,7 +532,11 @@ function renderVolunteering(sec){return '<div class="entry-list">'+(sec.items||[
 function renderSectionBody(id,sec){if(id==='header')return renderHeader(sec);if(id==='summary')return renderSummary(sec);if(id==='experience')return renderExperience(sec);if(id==='education')return renderEducation(sec);if(id==='skills')return renderSkills(sec);if(id==='projects')return renderProjects(sec);if(id==='certifications')return simpleArray(sec,'certifications',[['name','Certification'],['issuer','Issuer'],['date','Date','date'],['link','Link','url','https://…']],'Certification','+ Add certification');if(id==='awards')return simpleArray(sec,'awards',[['name','Award'],['issuer','Issuer'],['date','Date','date'],['note','Notes']],'Award','+ Add award');if(id==='languages')return simpleArray(sec,'languages',[['name','Language'],['level','Level']],'Language','+ Add language');if(id==='volunteering')return renderVolunteering(sec);if(id==='publications')return simpleArray(sec,'publications',[['title','Title'],['venue','Venue'],['date','Date','date'],['link','Link','url','https://…']],'Publication','+ Add publication');if(id==='references')return '<div class="form-grid"><label class="check-row"><input type="checkbox" data-path="references.onRequest" '+(sec.onRequest?'checked':'')+'> <span>Show “Available on request”</span></label>'+simpleArray(sec,'references',[['name','Name'],['role','Relationship'],['email','Email'],['phone','Phone']],'Reference','+ Add reference')+'</div>';return renderCustomSection(id)}
 function renderCustomSection(id){var i=Number(id.split('-')[1])-1,x=state.custom[i]||{title:'Custom section',mode:'bullets',content:'',bullets:[],show:true};x.show=x.show!==false;return '<div class="form-grid">'+input('custom.'+i+'.title','Section title',x.title,{})+'<div class="field"><label for="custom-mode-'+i+'">Content type</label><select id="custom-mode-'+i+'" data-path="custom.'+i+'.mode"><option value="bullets" '+(x.mode==='bullets'?'selected':'')+'>Bullet list</option><option value="paragraph" '+(x.mode==='paragraph'?'selected':'')+'>Paragraph</option></select></div>'+(x.mode==='paragraph'?input('custom.'+i+'.content','Paragraph',x.content,{type:'textarea'}):'<div class="field"><strong>Bullets · max 8</strong><div class="bullet-list">'+(x.bullets||[]).map(function(b,j){return '<div class="bullet-row"><textarea data-custom-bullet data-index="'+i+'" data-bullet-index="'+j+'" maxlength="320">'+esc(b)+'</textarea><button class="entry-btn danger" type="button" data-remove-custom-bullet="'+i+'" data-bullet-index="'+j+'">×</button></div>'}).join('')+'</div><button class="btn soft" type="button" data-add-custom-bullet="'+i+'" '+((x.bullets||[]).length>=8?'disabled':'')+'>+ Add bullet</button></div>')+'</div>'}
 
-function currentRoleStarter(){return ROLE_STARTERS[selectedProfessionKey]||null}
+function currentRoleStarter(){
+  var input=$('#roleSearch'),query=norm(input&&input.value).toLowerCase();
+  if(query){var keys=Object.keys(ROLE_STARTERS);for(var i=0;i<keys.length;i++){var entry=ROLE_STARTERS[keys[i]];if(entry.roles.some(function(role){return role.toLowerCase().indexOf(query)>=0})||entry.label.toLowerCase().indexOf(query)>=0)return entry}}
+  return ROLE_STARTERS[selectedProfessionKey]||null;
+}
 function updateRoleSuggestions(){
   var input=$('#roleSearch'),category=$('#professionSelect'),matchBox=$('#roleMatchList'),suggestions=$('#roleSuggestions');
   if(category)category.value=selectedProfessionKey||'';
@@ -543,8 +553,8 @@ function updateRoleSuggestions(){
   matchBox.innerHTML=matches.length?matches.map(function(item){return '<button type="button" data-role-key="'+esc(item.key)+'" data-role-title="'+esc(item.title)+'" aria-pressed="'+String(item.key===selectedProfessionKey)+'">'+esc(item.title)+'</button>'}).join(''):'<span class="help">'+(query?'No exact role match. Try a shorter job title or choose a profession area.':'Choose a profession area or type a role to see suggestions.')+'</span>';
   var starter=currentRoleStarter();
   if(!starter){suggestions.innerHTML='<p class="help">Choose a profession area or select one of the matching roles above to see skill and achievement ideas.</p>';return}
-  var skills=starter.hard.slice(0,5).concat(starter.soft.slice(0,3));
-  suggestions.innerHTML='<div class="suggestion-group"><strong>Suggested skills · tap to add</strong>'+skills.map(function(skill){return '<button type="button" class="suggestion-chip" data-suggest-skill="'+esc(skill)+'">+ '+esc(skill)+'</button>'}).join('')+'</div><div class="suggestion-group"><strong>Achievement ideas · tap to add and edit</strong>'+starter.bullets.slice(0,2).map(function(bullet){return '<button type="button" class="suggestion-chip" data-suggest-bullet="'+esc(bullet)+'">+ '+esc(bullet)+'</button>'}).join('')+'</div>';
+  var hardSkills=starter.hard.slice(0,5),softSkills=starter.soft.slice(0,4);
+  suggestions.innerHTML='<div class="suggestion-group"><strong>Role skills · tap to add</strong>'+hardSkills.map(function(skill){return '<button type="button" class="suggestion-chip" data-suggest-skill="'+esc(skill)+'">+ '+esc(skill)+'</button>'}).join('')+'</div><div class="suggestion-group"><strong>People skills · tap to add</strong>'+softSkills.map(function(skill){return '<button type="button" class="suggestion-chip" data-suggest-skill="'+esc(skill)+'">+ '+esc(skill)+'</button>'}).join('')+'</div><div class="suggestion-group"><strong>Achievement ideas · tap to add and edit</strong>'+starter.bullets.slice(0,2).map(function(bullet){return '<button type="button" class="suggestion-chip" data-suggest-bullet="'+esc(bullet)+'">+ '+esc(bullet)+'</button>'}).join('')+'</div>';
   var ex=$('#roleExampleSummary'),eb=$('#roleExampleBullet');if(ex)ex.textContent=starter.summary;if(eb)eb.textContent=starter.bullets[0];
 }
 function chooseRoleSuggestion(key,title){
@@ -943,7 +953,7 @@ function sectionBlockHtml(id,sec){
   var items=textItemsForSection(id,sec);if(!items.length)return '';
   var title=sectionMeta(id),cls=(state.divider==='box'?'section-box':'');return '<section class="section-block '+cls+'" data-preview-section="'+esc(id)+'" style="'+esc(formatSectionStyle(id))+'"><h2 class="'+esc(sectionHeadingClass(id,'section-title'))+'">'+esc(title)+'</h2>'+items.map(function(x){return renderEntryHtml(x.type,x)}).join('')+'</section>'
 }
-function headerHtml(sec,sidebar){var links=[];function push(label,url){var u=safeUrl(url);if(u)links.push('<span>'+(state.icons?label+' ':'')+linkHtml(u)+'</span>')}push('in',sec.linkedin);push('gh',sec.github);push('web',sec.website);(sec.customLinks||[]).forEach(function(x){push(x.name||'link',x.url)});var contact=['email','phone','location'].map(function(k){var v=norm(sec[k]);if(!v)return'';var lab=state.icons?({email:'✉',phone:'☎',location:'⌖'}[k]+' '):'';var content=k==='email'?'<a class="link-inline" href="mailto:'+esc(v)+'">'+esc(v)+'</a>':esc(v);return '<span>'+lab+content+'</span>'}).join('');var image=state.photoEnabled&&safeImage(sec.photo)?'<img class="resume-photo" src="'+esc(sec.photo)+'" alt="">':'';if(sidebar)return '<div class="resume-header" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div class="resume-name">'+esc(sec.name||'Your Name')+'</div><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact">'+contact+links.join('')+'</div></div>';return '<div class="resume-header two-line" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div><h1 class="resume-name">'+esc(sec.name||'Your Name')+'</h1><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact" style="margin-top:7px">'+contact+links.join('')+'</div></div>'+image+'</div>'}
+function headerHtml(sec,sidebar){var links=[];function push(label,url){var u=safeUrl(url);if(u)links.push('<span>'+(state.icons?label+' ':'')+linkHtml(u)+'</span>')}push('in',sec.linkedin);push('gh',sec.github);push('web',sec.website);(sec.customLinks||[]).forEach(function(x){push(x.name||'link',x.url)});var contact=['email','phone','location'].map(function(k){var v=norm(sec[k]);if(!v)return'';var lab=state.icons?({email:'✉',phone:'☎',location:'⌖'}[k]+' '):'';var content=k==='email'?'<a class="link-inline" href="mailto:'+esc(v)+'">'+esc(v)+'</a>':esc(v);return '<span>'+lab+content+'</span>'}).join('');var image=state.photoEnabled&&safeImage(sec.photo)?'<img class="resume-photo" src="'+esc(sec.photo)+'" alt="">':'';if(sidebar)return '<div class="resume-header" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div class="resume-name">'+esc(sec.name||'')+'</div><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact">'+contact+links.join('')+'</div></div>';return '<div class="resume-header two-line" data-preview-section="header" style="'+esc(formatSectionStyle('header'))+'"><div><h1 class="resume-name">'+esc(sec.name||'Your Name')+'</h1><div class="resume-headline">'+esc(sec.headline||'')+'</div><div class="resume-contact" style="margin-top:7px">'+contact+links.join('')+'</div></div>'+image+'</div>'}
 function sidebarBlocks(){
   var sec=state.sections,html=headerHtml(sec.header,true);
   ['skills','languages','certifications'].forEach(function(id){var b=sectionBlockHtml(id,sec[id]);if(b)html+=b});
@@ -1015,7 +1025,7 @@ function renderPreview(){
   var warn=$('#onePageWarning');
   warn.classList.toggle('show',state.goal==='one'&&currentPages>1);
   $('#pageHealth').textContent='Page count '+currentPages;
-  var title=(norm(state.sections.header.name)||'Your Name')+' - Resume';document.title=title;
+  var title=(norm(state.sections.header.name)||'Resume Builder')+' - Resume';document.title=title;
   buildPrintHintStyle();
   updatePageCounter();
 }
@@ -1415,9 +1425,9 @@ function setupEvents(){
   });
 
   safeStep('workspace tabs and mobile bottom bar',function(){
-    safeBind('#editModeBtn','click',showEditPanel);
-    safeBind('#designModeBtn','click',showDesignPanel);
-    safeBind('#mobileEditBtn','click',showEditPanel);
+    safeBind('#editModeBtn','click',function(){if(guideStarted&&guidedStep===5)setGuidedStep(4);else showEditPanel()});
+    safeBind('#designModeBtn','click',function(){if(guideStarted&&guidedStep<5)setGuidedStep(5);else showDesignPanel()});
+    safeBind('#mobileEditBtn','click',function(){if(guideStarted&&guidedStep===5)setGuidedStep(4);else showEditPanel()});
     safeBind('#mobilePreviewBtn','click',function(){
       document.body.classList.remove('design-mode','edit-mode');
       var p=$('#designPanel');if(p)p.hidden=true;
