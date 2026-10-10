@@ -57,6 +57,19 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 @media(max-width:899px){html,body{width:100%;max-width:100%;overflow-x:hidden}.app-shell{grid-template-columns:1fr;grid-template-rows:68px 52px minmax(0,1fr)}.topbar{grid-column:1}.nav-links a{display:none}.topbar-left{flex:1;min-width:0}.brand-copy{min-width:0}.brand-copy strong{white-space:nowrap}.topbar-right{gap:5px}.topbar-right .btn:not(#moreBtn),.topbar-right .shortcut{display:none}.more-btn{display:inline-flex!important}.mobile-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:6px;border-bottom:1px solid var(--line);background:var(--surface);grid-column:1;grid-row:2}.mobile-tabs button{border:0;background:transparent;color:var(--muted);border-radius:9px;font-weight:900;min-height:44px}.mobile-tabs button.active{background:#171b21;color:#fff}.editor{grid-column:1;grid-row:3}.preview-area{display:none;grid-column:1;grid-row:3}.mobile-preview .editor{display:none}.mobile-preview .preview-area{display:grid}.divider{display:none}.brand-copy span{display:none}.back-link{font-size:0;width:44px;padding:0}.back-link:first-letter{font-size:18px}.topbar-left .brand{margin-left:0}.preview-scroll{padding:10px;overflow-x:hidden}.preview-pages{gap:10px;width:100%}.resume-page{box-shadow:0 8px 25px rgba(23,27,33,.18)}.page-counter{font-size:12px}.tag button,.entry-btn,.drag-handle,.theme-nav,.zoom-box select,.preset-btn,.swatch,.more-menu button{min-width:44px;min-height:44px}.swatch{width:44px!important;height:44px!important}.more-menu{position:fixed;right:12px;top:58px}}
 @media(max-width:560px){.grid2,.link-row{grid-template-columns:1fr}.resume-name{font-size:22pt}.sidebar-layout{grid-template-columns:160px 1fr;gap:14px}.sidebar-col{padding:12px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.toast{transition:none}}
+.app-shell.full-preview-mode{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:72px minmax(0,1fr)!important}
+.app-shell.full-preview-mode .topbar{grid-column:1!important;grid-row:1!important}
+.app-shell.full-preview-mode .editor,.app-shell.full-preview-mode .divider,.app-shell.full-preview-mode .mobile-tabs{display:none!important}
+.app-shell.full-preview-mode .preview-area{display:grid!important;grid-column:1!important;grid-row:2!important;min-width:0;width:100%}
+.full-preview-btn{flex:0 0 auto;min-width:104px}
+@media(max-width:1100px) and (min-width:900px){.full-preview-btn{font-size:11px;padding:0 8px;min-width:95px}}
+@media(max-width:899px){
+ .topbar-right .btn:not(#moreBtn):not(#fullPreviewBtn),.topbar-right .shortcut{display:none}
+ .full-preview-btn{display:inline-flex!important;min-width:78px;padding:0 8px;font-size:11px}
+ .app-shell.full-preview-mode{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:68px minmax(0,1fr)!important}
+ .app-shell.full-preview-mode .topbar{grid-column:1!important;grid-row:1!important}
+ .app-shell.full-preview-mode .preview-area{grid-column:1!important;grid-row:2!important}
+}
 @media print{
   @page{size:A4;margin:0}
   html,body{width:auto;height:auto;overflow:visible;background:#fff!important}
@@ -96,6 +109,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
         <button type="button" role="menuitem" data-more-action="reset">Reset</button>
       </div>
     </div>
+    <button class="btn soft full-preview-btn" id="fullPreviewBtn" type="button" aria-pressed="false" title="Expand the resume preview">⛶ Full Preview</button>
     <div class="saved" id="savedStatus"><i></i><span>Saved</span></div>
     <span class="shortcut"><span class="kbd">Ctrl+S</span> HTML</span>
     <button class="btn soft" id="undoBtn" type="button">↶ Undo</button>
@@ -152,9 +166,8 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
     </div>
 
     <div class="surface-card">
-      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Template & page</strong><span class="help">Live preview</span></div>
+      <div class="subhead" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><strong>Page settings</strong><span class="help">Paper &amp; layout</span></div>
       <div class="setting-grid" style="margin-top:10px">
-        <div class="field"><label for="templateSelect">Template</label><select id="templateSelect"><option value="classic">Classic ATS</option><option value="modern">Modern</option><option value="compact">Compact</option><option value="sidebar">Sidebar — not ATS-safe, columns</option></select></div>
         <div class="field"><label for="paperSelect">Paper</label><select id="paperSelect"><option value="A4">A4</option><option value="Letter">US Letter</option></select></div>
         <div class="field"><label for="goalSelect">Page goal</label><select id="goalSelect"><option value="one">1 page</option><option value="two">2+ pages okay</option></select></div>
         <div class="field"><label for="marginSelect">Margins</label><select id="marginSelect"><option value="narrow">Narrow</option><option value="normal">Normal</option><option value="wide">Wide</option></select></div>
@@ -461,7 +474,7 @@ function exportStateClone(){
   delete out._editor;
   return out;
 }
-function renderTopTheme(){var cards=$$('[data-template]');cards.forEach(function(b){b.classList.toggle('active',b.dataset.template===state.template)});$('#templateSelect').value=state.template;$('#themeSelectCompact').value=state.template;$('#previewTemplateSelect').value=state.template;var active=$('[data-template="'+CSS.escape(state.template)+'"]');if(active)active.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'nearest',inline:'center'})}
+function renderTopTheme(){var cards=$('[data-template]');cards.forEach(function(b){b.classList.toggle('active',b.dataset.template===state.template)});var compact=$('#themeSelectCompact'),preview=$('#previewTemplateSelect');if(compact)compact.value=state.template;if(preview)preview.value=state.template;var active=$('[data-template="'+CSS.escape(state.template)+'"]');if(active)active.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'nearest',inline:'center'})}
 function updateTopControls(){applyTemplateConstraints();document.body.dataset.resumeTemplate=state.template;renderTopTheme();$('#paperSelect').value=state.paper;$('#goalSelect').value=state.goal;$('#marginSelect').value=state.margin;$('#fontSelect').value=state.font;$('#fontSizeSelect').value=state.fontSize;$('#lineSelect').value=state.lineSpacing;$('#dateSelect').value=state.dateFormat;renderFormatToolbar();$('#linkDisplaySelect').value=state.linkDisplay||'full';$('#accentPicker').value=state.accent;$('#dividerSelect').value=state.divider;$('#iconsToggle').setAttribute('aria-pressed',String(state.icons));$('#iconsToggle').textContent='Icons: '+(state.icons?'On':'Off');$('#iconsToggle').disabled=state.template==='classic';$('#photoToggle').setAttribute('aria-pressed',String(state.photoEnabled));$('#photoToggle').textContent=state.photoEnabled?'Photo: On':'Photo: Off';$('#photoToggle').disabled=!photoCapable();var pf=$('#photoToggle').closest('.field');if(pf)pf.hidden=!photoCapable();$$('[data-preset]').forEach(function(b){b.classList.toggle('active',b.dataset.preset===state.preset)});$('#undoBtn').disabled=!history.length;$('#redoBtn').disabled=!future.length}
 function createCustom(){state.custom.push({title:'Custom section',mode:'bullets',content:'',bullets:[],show:true});state.order.push('custom-'+state.custom.length);openSections['custom-'+state.custom.length]=true}
 function selectedSection(id){if(id.indexOf('custom-')===0)return state.custom[Number(id.split('-')[1])-1];return state.sections[id]}
@@ -1068,6 +1081,29 @@ function setupEvents(){
     safeBind('#resetBtn','click',function(){showReplacementConfirm('reset',resetTargetPreset())});
   });
 
+  safeStep('full preview mode',function(){
+    var shell=$('#appShell'),button=$('#fullPreviewBtn'),zoom=$('#zoomSelect'),previousZoom=null;
+    if(!shell||!button||!zoom)return;
+    safeBind(button,'click',function(){
+      var opening=!shell.classList.contains('full-preview-mode');
+      if(opening){
+        previousZoom=zoom.value||'100';
+        shell.classList.add('full-preview-mode');
+        button.textContent='✎ Edit';
+        button.title='Return to the editor';
+        button.setAttribute('aria-pressed','true');
+        zoom.value='50';
+      }else{
+        shell.classList.remove('full-preview-mode');
+        button.textContent='⛶ Full Preview';
+        button.title='Expand the resume preview';
+        button.setAttribute('aria-pressed','false');
+        zoom.value=previousZoom||'100';
+      }
+      requestAnimationFrame(function(){applyPageVars();renderPreview();});
+    });
+  });
+
   safeStep('mobile More menu',function(){
     safeBind('#moreBtn','click',function(e){e.stopPropagation();var menu=$('#moreMenu');setMoreMenu(!menu||menu.hidden,true)});
     safeBind('#moreMenu','click',function(e){
@@ -1096,7 +1132,6 @@ function setupEvents(){
     safeBind('#confirmReset','click',confirmReplacement);
     safeEach('[data-close-modal]',function(b){safeBind(b,'click',closeReplacementConfirm)});
     safeEach('[data-preset]',function(b){safeBind(b,'click',function(){if(state.preset!==b.dataset.preset)preset(b.dataset.preset)})});
-    safeBind('#templateSelect','change',function(e){applySetting('template',e.target.value)});
     safeBind('#themeSelectCompact','change',function(e){applySetting('template',e.target.value)});
     safeBind('#previewTemplateSelect','change',function(e){applySetting('template',e.target.value)});
     safeBind('#paperSelect','change',function(e){applySetting('paper',e.target.value)});
