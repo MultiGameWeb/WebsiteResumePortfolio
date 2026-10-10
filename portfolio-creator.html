@@ -229,6 +229,29 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
 .preview-viewport.mobile #preview .portfolio-site.photographer .hero-media .cover{position:relative;inset:auto;grid-row:1;max-height:290px;object-fit:contain;background:var(--p-soft)}
 .preview-viewport.mobile #preview .portfolio-site.photographer .hero-media .profile{grid-row:2;width:min(145px,46%);height:auto;aspect-ratio:3/4;object-fit:contain;right:auto;bottom:auto;left:auto;transform:none;margin-top:-30px;border-radius:18px}
 .preview-viewport.mobile #preview .portfolio-site.minimal .hero-media{display:none}
+/* Image-first layout: any uploaded banner/profile photo is placed before the portfolio text. */
+.preview-viewport #preview .portfolio-site .hero-grid.hero-has-media{grid-template-columns:minmax(0,1fr)!important;max-width:1120px;gap:0!important}
+.preview-viewport #preview .portfolio-site .hero-grid.hero-has-media .hero-media{grid-column:1;grid-row:1;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:18px;width:100%;height:auto;min-height:0;min-width:0;padding:28px clamp(18px,4vw,48px) 10px;position:relative;overflow:visible}
+.preview-viewport #preview .portfolio-site .hero-grid.hero-has-media .hero-copy{grid-column:1;grid-row:2;width:100%;min-width:0;position:relative;padding:36px clamp(18px,5vw,70px) 48px}
+.preview-viewport #preview .portfolio-site .hero-grid.hero-has-media .hero-media .cover{position:relative!important;inset:auto!important;display:block;width:100%;max-width:1120px;height:auto;max-height:clamp(220px,50vh,500px);object-fit:contain;object-position:center;border-radius:20px;box-shadow:none;background:var(--p-soft)}
+.preview-viewport #preview .portfolio-site .hero-grid.hero-has-media .hero-media .profile{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important;display:block!important;width:clamp(150px,21vw,245px);height:auto;aspect-ratio:3/4;max-height:320px;object-fit:contain;object-position:center;margin:0 auto;border-radius:20px!important}
+.preview-viewport #preview .portfolio-site .hero-grid.hero-has-media .hero-media .profile.shape-none{display:none!important}
+.preview-viewport #preview .portfolio-site.photographer .hero-grid.hero-has-media .hero-media{height:auto;min-height:0;overflow:visible}
+.preview-viewport #preview .portfolio-site.photographer .hero-grid.hero-has-media .hero-media .cover{position:relative!important;inset:auto!important;height:auto;max-height:clamp(220px,50vh,500px);object-fit:contain}
+/* Special Actor template: uploaded personal media becomes a top stack; copy follows below. */
+.preview-viewport #preview .actor-hero.actor-hero-has-images{display:flex!important;flex-direction:column;align-items:stretch;height:auto;min-height:0!important;overflow:visible!important}
+.preview-viewport #preview .actor-hero.actor-hero-has-images .actor-hero-media{position:relative!important;inset:auto!important;display:flex;flex-direction:column;align-items:center;gap:18px;height:auto;padding:28px clamp(18px,4vw,48px);background:#050505}
+.preview-viewport #preview .actor-hero.actor-hero-has-images .actor-hero-overlay{display:none!important}
+.preview-viewport #preview .actor-hero.actor-hero-has-images .actor-hero-image,.preview-viewport #preview .actor-hero.actor-hero-has-images .actor-hero-video{position:relative!important;inset:auto!important;width:100%;max-width:1120px;height:auto;max-height:clamp(220px,50vh,500px);object-fit:contain;object-position:center;filter:none}
+.preview-viewport #preview .actor-hero.actor-hero-has-images .actor-profile-image{display:block;width:min(260px,65%);height:auto;max-height:340px;aspect-ratio:3/4;object-fit:contain;position:relative;background:#090909;border:2px solid #d4af37;border-radius:18px;box-shadow:0 18px 48px rgba(0,0,0,.24)}
+.preview-viewport #preview .actor-hero.actor-hero-has-images .actor-hero-copy{position:relative;z-index:2;min-height:0!important;display:flex;flex-direction:column;justify-content:flex-start;padding:38px clamp(18px,5vw,70px) 52px!important}
+/* Special Assistant Director template: stack any uploaded cover and profile before the copy. */
+.preview-viewport #preview .ad-hero.ad-hero-has-images{display:flex!important;flex-direction:column;align-items:stretch;min-height:0!important;height:auto;overflow:visible!important}
+.preview-viewport #preview .ad-hero.ad-hero-has-images .ad-hero-media{position:relative!important;inset:auto!important;display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px clamp(18px,4vw,48px);height:auto;background:#060707}
+.preview-viewport #preview .ad-hero.ad-hero-has-images .ad-hero-overlay{display:none!important}
+.preview-viewport #preview .ad-hero.ad-hero-has-images .ad-top-banner{position:relative!important;inset:auto!important;display:block;width:100%;max-width:1120px;height:auto;max-height:clamp(220px,50vh,500px);object-fit:contain;object-position:center;filter:none}
+.preview-viewport #preview .ad-hero.ad-hero-has-images .ad-profile-image{position:relative!important;inset:auto!important;display:block;width:min(260px,65%);height:auto;max-height:340px;aspect-ratio:3/4;object-fit:contain;background:#080909;border:2px solid #d4af37;border-radius:18px;box-shadow:0 18px 48px rgba(0,0,0,.24)}
+.preview-viewport #preview .ad-hero.ad-hero-has-images .ad-hero-copy{position:relative;width:100%;max-width:1120px;min-height:0;padding:40px clamp(18px,5vw,70px) 54px;margin:0 auto}
 </style>
 </head>
 <body>
