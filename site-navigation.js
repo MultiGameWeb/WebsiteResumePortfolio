@@ -9,6 +9,7 @@ const workspacePages=new Set(["portfolio-creator.html","resume-builder.html","pr
 if(workspacePages.has(leaf))document.body.classList.add("sc-workspace-page");
 const menuItems=[
  ["Websites","templates.html","templates"],
+ ["AI Chatbots","ai-chatbots.html","chatbots"],
  ["Portfolio","portfolio-creator.html","portfolio"],
  ["Resume","resume-builder.html","resume"],
  ["PDF Tools","pdf-tools.html","pdf"],
@@ -20,7 +21,7 @@ const menuItems=[
 ];
 const committeePages=new Set(["committee-book.html","my-chits.html","auction-chit-manager.html","fixed-discount-chit-manager.html","fixed-rotation-bc-chit-manager.html","lottery-kuri-chit-manager.html"]);
 const templateFlow=new Set(["templates.html","features.html","builder.html","checkout.html","success.html","admin.html","ai-builder.html","ai-websites.html"]);
-const currentKey=isHome?"home":committeePages.has(leaf)?"committee":templateFlow.has(leaf)?"templates":({"portfolio-creator.html":"portfolio","resume-builder.html":"resume","pdf-tools.html":"pdf","document-editor.html":"document","presentation-maker.html":"presentation"})[leaf]||"";
+const currentKey=isHome?"home":committeePages.has(leaf)?"committee":templateFlow.has(leaf)?"templates":({"ai-chatbots.html":"chatbots","portfolio-creator.html":"portfolio","resume-builder.html":"resume","pdf-tools.html":"pdf","document-editor.html":"document","presentation-maker.html":"presentation"})[leaf]||"";
 const nav=document.createElement("header");
 nav.id="sitecraftGlobalNav";nav.setAttribute("aria-label","SiteCraft site navigation");
 nav.innerHTML='<div class="sc-nav-inner"><a class="sc-brand" href="index.html" aria-label="SiteCraft home"><span class="sc-brand-mark" aria-hidden="true">✦</span><span>SiteCraft</span></a><div class="sc-nav-right"><a class="sc-get-started" href="templates.html">Get a Website <span aria-hidden="true">↗</span></a><button type="button" class="sc-menu-toggle" aria-label="Open site menu" aria-controls="scSiteMenu" aria-expanded="false"><span aria-hidden="true">☰</span></button></div><nav class="sc-menu" id="scSiteMenu" aria-label="Main menu"></nav></div>';
