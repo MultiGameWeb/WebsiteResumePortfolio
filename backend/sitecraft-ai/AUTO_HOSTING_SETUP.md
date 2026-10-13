@@ -19,9 +19,10 @@ The route checks the account's current Pages projects before creating the test p
 
 Create an API token limited to the required Cloudflare account and **Cloudflare Pages: Edit** permission. Do not put this token in frontend HTML/JavaScript, GitHub, or chat.
 
-From `backend/sitecraft-ai`, apply the D1 migration:
+From `backend/sitecraft-ai`, install the Worker dependency, then apply the D1 migration:
 
 ```sh
+npm install
 npx wrangler d1 migrations apply sitecraft-db --remote
 ```
 
@@ -39,7 +40,7 @@ Optionally configure the main Pages project name in `wrangler.toml` under `[vars
 SITECRAFT_MAIN_PROJECT_NAME = "sitecraft-main"
 ```
 
-Deploy the Worker using the existing project workflow.
+Deploy the Worker using the existing project workflow, or from this directory run `npx wrangler deploy` after the account, D1 migration, and secrets are configured.
 
 ## Private test endpoint
 
