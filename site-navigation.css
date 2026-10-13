@@ -139,3 +139,16 @@ body:has(.benefits) .bar{background:rgba(255,255,255,.1)!important}
 body:has(.benefits) .notify-form input{background:rgba(255,255,255,.055)!important;color:#f8f6ff!important;border-color:var(--sc-line)!important}
 body:has(.benefits) .message{color:#c1bbd0!important}
 body:has(.groups) .footer,body:has(.four-template-grid) .footer{background:rgba(255,255,255,.025);color:#b4aec5}
+
+
+/* Extra navigation item: keep the shared menu usable as the menu grows. */
+@media(max-width:1190px) and (min-width:901px){
+ #sitecraftGlobalNav .sc-nav-inner{position:relative;width:calc(100% - 28px);min-height:68px;gap:10px;flex-wrap:wrap}
+ #sitecraftGlobalNav .sc-brand{font-size:17px}
+ #sitecraftGlobalNav .sc-menu-toggle{display:inline-flex;flex:0 0 42px;margin-left:auto}
+ #sitecraftGlobalNav .sc-nav-right{order:3;margin-left:0}
+ #sitecraftGlobalNav .sc-get-started{display:none}
+ #sitecraftGlobalNav .sc-menu{display:none;position:absolute;top:100%;left:0;right:0;z-index:9999;align-items:stretch;justify-content:flex-start;flex-direction:column;gap:4px;padding:12px 16px 16px;margin:0;border:1px solid var(--sc-line);border-top:0;border-radius:0 0 18px 18px;background:rgba(16,15,23,.97);box-shadow:0 20px 36px rgba(0,0,0,.25)}
+ #sitecraftGlobalNav .sc-menu.sc-open{display:flex}
+ #sitecraftGlobalNav .sc-menu>a{width:100%;justify-content:flex-start;min-height:44px;padding-inline:13px}
+}
