@@ -224,7 +224,7 @@ async function uploadAssets(projectName, files, env) {
     const uploadBody = batch.map(file => ({
       base64: true,
       key: file.hash,
-      metadata: { content_type: file.mime },
+      metadata: { contentType: file.mime },
       value: toBase64(file.bytes)
     }));
 
