@@ -1,4 +1,5 @@
 import { handleAiBuilderRoute } from "./ai-builder.js";
+import { handlePagesHostingRoute } from "./pages-hosting.js";
 const MODEL = "gemini-3.8-flash";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 const corsHeaders = {
@@ -121,6 +122,9 @@ export default {
     }
 
     const url = new URL(request.url);
+
+    const pagesHostingResponse = await handlePagesHostingRoute(request, env, url);
+    if (pagesHostingResponse) return pagesHostingResponse;
 
     const aiBuilderResponse = await handleAiBuilderRoute(request, env, url);
     if (aiBuilderResponse) return aiBuilderResponse;
