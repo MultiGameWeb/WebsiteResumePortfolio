@@ -114,7 +114,7 @@ async function cloudflareRequest(env, path, options) {
 
   const opts = options || {};
   const headers = new Headers(opts.headers || {});
-  headers.set("Authorization", "Bearer " + token);
+  if (!headers.has("Authorization")) headers.set("Authorization", "Bearer " + token);
 
   if (opts.body && !(opts.body instanceof FormData) && !headers.has("Content-Type")) {
     headers.set("Content-Type", "application/json");
