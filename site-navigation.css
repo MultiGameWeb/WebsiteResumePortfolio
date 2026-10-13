@@ -142,7 +142,7 @@ body:has(.groups) .footer,body:has(.four-template-grid) .footer{background:rgba(
 
 
 /* Keep the full menu on wide desktops; collapse it before the service links get clipped. */
-@media(max-width:1390px) and (min-width:901px){
+@media(max-width:1279px) and (min-width:901px){
  #sitecraftGlobalNav .sc-nav-inner{position:relative;width:calc(100% - 28px);min-height:68px;gap:10px;flex-wrap:wrap}
  #sitecraftGlobalNav .sc-brand{font-size:17px}
  #sitecraftGlobalNav .sc-menu-toggle{display:inline-flex;flex:0 0 42px;margin-left:auto}
@@ -155,7 +155,7 @@ body:has(.groups) .footer,body:has(.four-template-grid) .footer{background:rgba(
 
 
 /* Ensure the AI Ad Videos link remains visible in the primary desktop bar. */
-@media(min-width:1391px){
+@media(min-width:1280px){
  #sitecraftGlobalNav .sc-nav-inner{width:min(1440px,calc(100% - 36px));gap:14px}
  #sitecraftGlobalNav .sc-menu{gap:1px}
  #sitecraftGlobalNav .sc-menu a{padding-inline:7px;font-size:11.5px}
