@@ -141,8 +141,8 @@ body:has(.benefits) .message{color:#c1bbd0!important}
 body:has(.groups) .footer,body:has(.four-template-grid) .footer{background:rgba(255,255,255,.025);color:#b4aec5}
 
 
-/* Extra navigation item: keep the shared menu usable as the menu grows. */
-@media(max-width:1190px) and (min-width:901px){
+/* Keep the full menu on wide desktops; collapse it before the service links get clipped. */
+@media(max-width:1390px) and (min-width:901px){
  #sitecraftGlobalNav .sc-nav-inner{position:relative;width:calc(100% - 28px);min-height:68px;gap:10px;flex-wrap:wrap}
  #sitecraftGlobalNav .sc-brand{font-size:17px}
  #sitecraftGlobalNav .sc-menu-toggle{display:inline-flex;flex:0 0 42px;margin-left:auto}
@@ -151,4 +151,13 @@ body:has(.groups) .footer,body:has(.four-template-grid) .footer{background:rgba(
  #sitecraftGlobalNav .sc-menu{display:none;position:absolute;top:100%;left:0;right:0;z-index:9999;align-items:stretch;justify-content:flex-start;flex-direction:column;gap:4px;padding:12px 16px 16px;margin:0;border:1px solid var(--sc-line);border-top:0;border-radius:0 0 18px 18px;background:rgba(16,15,23,.97);box-shadow:0 20px 36px rgba(0,0,0,.25)}
  #sitecraftGlobalNav .sc-menu.sc-open{display:flex}
  #sitecraftGlobalNav .sc-menu>a{width:100%;justify-content:flex-start;min-height:44px;padding-inline:13px}
+}
+
+
+/* Ensure the AI Ad Videos link remains visible in the primary desktop bar. */
+@media(min-width:1391px){
+ #sitecraftGlobalNav .sc-nav-inner{width:min(1440px,calc(100% - 36px));gap:14px}
+ #sitecraftGlobalNav .sc-menu{gap:1px}
+ #sitecraftGlobalNav .sc-menu a{padding-inline:7px;font-size:11.5px}
+ #sitecraftGlobalNav .sc-menu a[data-menu-key="ad-videos"]{color:#f5c8ff!important;background:rgba(236,72,153,.10);border-color:rgba(236,72,153,.25)}
 }
