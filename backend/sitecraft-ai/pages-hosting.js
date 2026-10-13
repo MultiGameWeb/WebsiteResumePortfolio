@@ -1,3 +1,5 @@
+import { blake3 } from "@noble/hashes/blake3.js";
+
 const API_ROOT = "https://api.cloudflare.com/client/v4";
 const PROJECT_LIMIT = 100;
 const MAX_REQUEST_BYTES = 24 * 1024 * 1024;
@@ -162,9 +164,20 @@ async function listProjects(env) {
   return all;
 }
 
-async function sha256Hex(bytes) {
-  const digest = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(digest)).map(value => value.toString(16).padStart(2, "0")).join("");
+function extensionForPageHash(path) {
+  const baseName = path.split("/").pop() || "";
+  const dot = baseName.lastIndexOf(".");
+  return dot <= 0 ? "" : baseName.slice(dot + 1);
+}
+
+function pagesAssetHash(bytes, path) {
+  // Cloudflare Pages direct-upload asset keys use BLAKE3(base64(contents) + extension),
+  // truncated to 32 hexadecimal characters. This matches the Pages deploy helper format.
+  const encoded = toBase64(bytes);
+  const input = new TextEncoder().encode(encoded + extensionForPageHash(path));
+  return Array.from(blake3(input).subarray(0, 16))
+    .map(value => value.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 function toBase64(bytes) {
@@ -185,7 +198,7 @@ async function uploadAssets(projectName, files, env) {
   const assetToken = tokenResponse.result && tokenResponse.result.jwt;
   if (!assetToken) throw new HostingError("Cloudflare did not return a Pages upload token.", 502);
 
-  for (const file of files) file.hash = await sha256Hex(file.bytes);
+  for (const file of files) file.hash = pagesAssetHash(file.bytes, file.path);
 
   const missingResponse = await cloudflareRequest(env, "/pages/assets/check-missing", {
     method: "POST",
