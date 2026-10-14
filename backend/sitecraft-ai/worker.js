@@ -1,4 +1,5 @@
 import { handleAiBuilderRoute } from "./ai-builder.js";
+import { handleWebsiteChatbotRoute } from "./website-chatbot.js";
 const MODEL = "gemini-3.8-flash";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 const corsHeaders = {
@@ -121,6 +122,9 @@ export default {
     }
 
     const url = new URL(request.url);
+
+    const websiteChatbotResponse = await handleWebsiteChatbotRoute(request, env, url);
+    if (websiteChatbotResponse) return websiteChatbotResponse;
 
     const aiBuilderResponse = await handleAiBuilderRoute(request, env, url);
     if (aiBuilderResponse) return aiBuilderResponse;
