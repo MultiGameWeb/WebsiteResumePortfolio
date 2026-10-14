@@ -35,13 +35,10 @@ async function reserveDailyMessage(env, siteId, day, limit) {
   await env.DB.prepare(
     "INSERT OR IGNORE INTO website_chatbot_usage (site_id, usage_day, message_count) VALUES (?, ?, 0)"
   ).bind(siteId, day).run();
-  await env.DB.prepare(
+  const updated = await env.DB.prepare(
     "UPDATE website_chatbot_usage SET message_count = message_count + 1 WHERE site_id = ? AND usage_day = ? AND message_count < ?"
   ).bind(siteId, day, limit).run();
-  const row = await env.DB.prepare(
-    "SELECT message_count FROM website_chatbot_usage WHERE site_id = ? AND usage_day = ?"
-  ).bind(siteId, day).first();
-  return Number(row?.message_count || 0) <= limit;
+  return Number(updated?.meta?.changes || 0) > 0;
 }
 
 export async function handleWebsiteChatbotRoute(request, env, url) {
