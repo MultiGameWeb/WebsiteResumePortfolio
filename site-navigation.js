@@ -29,6 +29,7 @@ nav.innerHTML='<div class="sc-nav-inner"><a class="sc-brand" href="index.html" a
 const navMenu=nav.querySelector("#scSiteMenu");
 function makeNavLink(item){const a=document.createElement("a");a.href=item[1];a.textContent=item[0];a.dataset.menuKey=item[2];if(item[2]===currentKey)a.setAttribute("aria-current","page");return a}
 menuItems.forEach(item=>navMenu.appendChild(makeNavLink(item)));
+if(isHome)nav.querySelector(".sc-actions")?.remove();
 document.body.insertBefore(nav,document.body.firstChild);
 const toggle=nav.querySelector(".sc-menu-toggle");
 toggle.addEventListener("click",function(){const open=toggle.getAttribute("aria-expanded")!=="true";toggle.setAttribute("aria-expanded",String(open));toggle.setAttribute("aria-label",open?"Close site menu":"Open site menu");toggle.firstElementChild.textContent=open?"×":"☰";navMenu.classList.toggle("sc-open",open)});
