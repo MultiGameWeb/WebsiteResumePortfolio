@@ -79,7 +79,7 @@ body:not(:has(.app)):not(:has(.app-shell)):not(:has(.pm-app)) :where(.search,inp
  .sc-cross-sell{align-items:flex-start;flex-direction:column}.sc-cross-sell .sc-cross-sell-btn{width:100%}
  .sc-cross-sell--floating{flex-direction:row;align-items:center}.sc-cross-sell--floating .sc-cross-sell-btn{width:auto}
 }
-@media(max-width:520px){#sitecraftGlobalNav .sc-nav-inner{width:calc(100% - 22px)}#sitecraftGlobalNav .sc-brand-mark{width:35px;height:35px}#sitecraftGlobalNav .sc-actions .sc-action{width:36px;overflow:hidden;padding:0;font-size:0;justify-content:center}.sc-cross-sell--floating{right:10px;bottom:10px;width:calc(100vw - 20px)}}
+@media(max-width:520px){#sitecraftGlobalNav .sc-nav-inner{width:calc(100% - 22px)}#sitecraftGlobalNav .sc-brand-mark{width:35px;height:35px}#sitecraftGlobalNav .sc-actions .sc-action{width:36px;min-width:36px;overflow:hidden;padding:0;font-size:0;justify-content:center}#sitecraftGlobalNav .sc-actions .sc-back::before{content:"←";font-size:17px}#sitecraftGlobalNav .sc-actions .sc-home::before{content:"⌂";font-size:18px}#sitecraftGlobalNav .sc-actions .sc-home{background:var(--sc-gradient);border-color:transparent;color:#fff!important}.sc-cross-sell--floating{right:10px;bottom:10px;width:calc(100vw - 20px)}}
 @media(max-width:1080px) and (min-width:901px){
  #sitecraftGlobalNav .sc-nav-inner{gap:12px}
  #sitecraftGlobalNav .sc-brand{font-size:16px}
