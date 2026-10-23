@@ -57,8 +57,9 @@ Do not seed real reply credits for a customer until the payment is confirmed by 
 
 ## Gemini key and cost notes
 
-- Start with one server-side runtime key and explicit backend task modules. Five keys from the same Google AI Studio project **do not multiply the project's RPM/TPM/RPD quotas**; rate limits are applied per project. See [Google's rate-limit documentation](https://ai.google.dev/gemini-api/docs/rate-limits).
-- Separate keys can help operational separation/revocation but should not be designed as a quota-bypass strategy.
+- The planned five task roles are: (1) classify and normalize business intake; (2) extract FAQs and searchable knowledge; (3) assemble assistant instructions and tone; (4) test a set of business-specific questions and flag unsupported answers; (5) answer live website visitors. These are future task modules; this branch currently implements only the runtime-reply route and local UI preview.
+- Use one server-side key for the runtime prototype first. Later, separate keys may be assigned to roles 1–5 for access isolation, cost attribution or revocation, but five keys in the same Google AI Studio project **do not multiply the project's RPM/TPM/RPD quotas**; rate limits are applied per project. See [Google's rate-limit documentation](https://ai.google.dev/gemini-api/docs/rate-limits).
+- Do not put any API key in the customer download. Separate keys should not be designed as a quota-bypass strategy.
 - Use a cost-efficient supported model for short business FAQ answers and measure actual input/output token usage, error rates and context size before publishing any reply-pack pricing. The current official pricing page lists Gemini 2.5 Flash-Lite at $0.10 per million input text tokens and $0.40 per million output tokens on the paid tier; confirm the live model availability and rate card before launch.
 - Free-tier content may be used to improve Google's products, while the paid tier states that prompts and responses are not used for that purpose. Do not enter real customer-confidential business data in free-tier testing without reviewing Google's current terms and obtaining the required customer permission. See [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing) and [additional terms](https://ai.google.dev/gemini-api/terms).
 
