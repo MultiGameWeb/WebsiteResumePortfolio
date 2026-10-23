@@ -353,3 +353,18 @@ button:disabled { cursor: not-allowed; opacity: .42; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
+
+/* Embedded mode: let BotCraft fill the existing SiteCraft chatbot feature area. */
+html.botcraft-embedded body {
+  display: block !important;
+  padding: 0 !important;
+  place-items: initial !important;
+}
+html.botcraft-embedded .botcraft-app {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}

@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#100f17">
-<meta name="description" content="Build a self-service website-only AI chatbot profile with SiteCraft. Beta preview: real AI, payments and production embed are not active yet.">
-<title>SiteCraft AI Chatbot Software — Beta Preview</title>
+<meta name="description" content="BotCraft — build your business chatbot through a guided conversation on SiteCraft.">
+<title>BotCraft · SiteCraft AI Chatbot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -181,6 +181,37 @@ $("downloadProfile").addEventListener("click",()=>{
 $("copyEmbed").addEventListener("click",()=>{});
 })();
 </script>
+
+<style>
+  /* BotCraft integration: preserve SiteCraft navigation, and show the new chat UI within this existing feature URL. */
+  body.scb-page #main-content { display: none !important; }
+  #botcraftEmbedShell { width: 100%; height: calc(100dvh - 84px); min-height: 420px; overflow: hidden; background: #f7f8fc; }
+  #botcraftEmbedFrame { display: block; width: 100%; height: 100%; border: 0; background: #f7f8fc; }
+  @media (max-width: 620px) { #botcraftEmbedShell { min-height: 0; height: calc(100dvh - 70px); } }
+</style>
+<div id="botcraftEmbedShell" aria-label="BotCraft chat screen">
+  <iframe id="botcraftEmbedFrame" src="chatbot-builder/index.html?embed=1" title="BotCraft chat screen" loading="eager"></iframe>
+</div>
+<script>
+(function () {
+  "use strict";
+  function sizeBotCraftFrame() {
+    var shell = document.getElementById("botcraftEmbedShell");
+    var frame = document.getElementById("botcraftEmbedFrame");
+    var siteNav = document.getElementById("sitecraftGlobalNav");
+    if (!shell || !frame) return;
+    var navHeight = siteNav ? Math.ceil(siteNav.getBoundingClientRect().height) : 0;
+    var available = Math.max(420, window.innerHeight - navHeight);
+    shell.style.height = available + "px";
+    frame.style.height = available + "px";
+  }
+  window.addEventListener("DOMContentLoaded", sizeBotCraftFrame, { once: true });
+  window.addEventListener("resize", sizeBotCraftFrame);
+  window.addEventListener("orientationchange", sizeBotCraftFrame);
+  window.setTimeout(sizeBotCraftFrame, 0);
+})();
+</script>
+
 <script src="site-navigation.js"></script>
 </body>
 </html>
