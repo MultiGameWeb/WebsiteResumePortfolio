@@ -1,8 +1,10 @@
-# Website Chatbot MVP (website-only)
+# SiteCraft Website Chatbot MVP
 
-This is an initial, controlled API prototype. It does not integrate WhatsApp, Meta, Instagram, Facebook, SMS, email or mobile apps.
+The product direction is a self-service **website-only chatbot builder**. A customer enters business information, configures an assistant, tests a local preview, pays for activation, and receives a website embed package. This branch is still a prototype: the builder UI does not yet save profiles to the backend, accept payments, or create production downloads.
 
-## Endpoint
+No WhatsApp, Meta, Instagram, Facebook, SMS, email, or mobile-app integration is in scope for this phase.
+
+## Existing prototype endpoint
 
 `POST /api/website-chatbot/chat`
 
@@ -18,35 +20,66 @@ JSON body:
 }
 ```
 
-The browser must send the real `Origin` header. The site's exact allowed origin must match the `allowed_origin` row in D1. The API key remains a Cloudflare Worker secret and is never sent to the browser.
+The browser must send the real `Origin` header. The origin must exactly match the site's `allowed_origin` in D1. Origin/CORS checks are not authentication; production must include stronger abuse protection because browser headers can be spoofed by non-browser clients.
 
-## Setup
+The Gemini API key remains a Cloudflare Worker secret and is never placed in the downloaded widget or browser code.
 
-1. Deploy the Worker only after checking the existing production routes and configured secrets.
-2. Apply `migrations/0002_website_chatbot.sql` to the same D1 database.
-3. Set `GEMINI_API_KEY` as a Worker secret. Set `GEMINI_MODEL` to a model ID currently available to the Google AI Studio project.
-4. Add a demo site row manually for a controlled test, replacing the origin with the exact deployed demo website origin:
+## D1 setup for a controlled demo
+
+1. Deploy only after reviewing existing Worker routes and configured secrets.
+2. Apply `migrations/0002_website_chatbot.sql` to the configured D1 database.
+3. Set `GEMINI_API_KEY` as a Worker secret. Set `GEMINI_MODEL` to a model ID enabled for the Google AI Studio project.
+4. Insert a demo site using a real controlled HTTPS origin and dummy/non-confidential business information.
+
+Example only; replace the origin and details, and only use a profile you have permission to test:
 
 ```sql
 INSERT INTO website_chatbot_sites
-  (site_id, allowed_origin, business_name, system_instructions, daily_message_limit, enabled, created_at, updated_at)
+  (site_id, owner_id, allowed_origin, business_name, business_profile_json,
+   system_instructions, daily_message_limit, reply_credits_remaining,
+   enabled, created_at, updated_at)
 VALUES
-  ('demo-shop', 'https://example.com', 'Demo Shop',
-   'Use only these facts: Opening hours 9 AM to 6 PM. For orders, tell visitors to call the shop.',
-   100, 1, datetime('now'), datetime('now'));
+  ('demo-shop', NULL, 'https://example.com', 'Demo Shop',
+   '{"business":{"description":"A demo shop open 9 AM to 6 PM","services":"Demo product A: sample item","policies":"Orders require confirmation by phone","faqs":[{"q":"What time do you open?","a":"We open at 9 AM."}]},"assistant":{"language":"Match the visitor language","tone":"Friendly and helpful"}}',
+   'Use only the verified business information. Escalate unknown requests to the business.',
+   100, 20000, 1, datetime('now'), datetime('now'));
 ```
 
-Do not use the placeholder origin above in production.
+Do not seed real reply credits for a customer until the payment is confirmed by a server-side payment webhook. The example row is for a controlled test only.
 
-## MVP protections and limits
+## Reply counting
 
-- Exact origin allowlist (CORS is not authentication by itself).
-- Maximum request body of 16 KB and message size of 1,000 characters.
-- At most 8 history entries are sent to the model.
-- Per-site/per-IP hashed request throttling: 12 messages per minute.
-- Per-site daily message cap, tracked in D1. This first prototype counts messages, not billable conversations.
-- Safe fallback when the model cannot answer; the prompt tells the assistant not to invent missing business facts.
+- One successfully returned AI answer consumes one reply credit.
+- A request reserves a credit before calling Gemini. A successful answer consumes it; a failed API request or empty answer releases the reservation.
+- Daily message limit and per-minute rate limit are abuse controls, not the paid reply balance.
+- Purchased recharge credits must be added only after verified payment-webhook confirmation. Payment verification and customer account ownership are not implemented yet.
+- The current builder UI uses a local rule-based simulation and downloads a draft JSON profile only. It does not call this endpoint or produce a live widget.
 
-## Not production-ready yet
+## Gemini key and cost notes
 
-Before selling plans or embedding on arbitrary customer domains, add owner/admin authentication, customer self-service setup, abuse monitoring, robust atomic quota enforcement under concurrent traffic, privacy/retention controls, billing/webhook verification, cost monitoring, and browser-tested widget UX. Do not advertise a paid conversation quota based on this prototype's message counter. Test with a controlled demo site first.
+- Start with one server-side runtime key and explicit backend task modules. Five keys from the same Google AI Studio project **do not multiply the project's RPM/TPM/RPD quotas**; rate limits are applied per project. See [Google's rate-limit documentation](https://ai.google.dev/gemini-api/docs/rate-limits).
+- Separate keys can help operational separation/revocation but should not be designed as a quota-bypass strategy.
+- Use a low-cost supported model for short business FAQ answers and measure actual input/output token usage, error rates and context size before publishing any reply-pack pricing.
+- Free-tier content may be used to improve Google's products, while the paid tier states that prompts and responses are not used for that purpose. Do not enter real customer-confidential business data in free-tier testing without reviewing Google's current terms and obtaining the required customer permission. See [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing) and [additional terms](https://ai.google.dev/gemini-api/terms).
+
+## Current protections in the endpoint
+
+- Request body capped at 16 KB; visitor message capped at 1,000 characters.
+- Up to 6 history turns/entries sent to Gemini, each clipped to 700 characters.
+- Per-site/per-IP hashed throttle: 12 requests per minute.
+- Daily message cap recorded in D1.
+- Exact origin allowlist, with site disabled and zero reply credits by default.
+- Business facts are retrieved from the stored profile using simple keyword matching and included as reference data. This is a prototype retrieval method, not a production document-search pipeline.
+
+## Required before customers can buy/download
+
+- Customer login and authenticated ownership/admin endpoints.
+- Secure onboarding endpoint that validates website URL and writes a business profile only for the authenticated owner.
+- File upload/text extraction, document size limits, data retention/deletion, and per-customer data isolation.
+- Better retrieval for large business documents, prompt-injection evaluation, and answer-quality test set.
+- Cloudflare Turnstile or equivalent abuse checks, robust cost budgets and alerts.
+- Verified payment webhooks for first package and recharges; atomic reply-credit accounting and an audit ledger.
+- Actual embeddable widget/ZIP, versioning, usage reporting, customer support, and browser/mobile QA.
+- Confirm the selected Gemini plan/model's data handling and current pricing before production use.
+
+Do not advertise this branch as production-ready or charge customers based only on the local demo.
