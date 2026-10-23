@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100f17">
+<meta name="description" content="Configure and preview a website-only AI chatbot for your business with SiteCraft.">
+<title>AI Chatbot Builder — SiteCraft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="global.css">
+<link rel="stylesheet" href="site-navigation.css">
+<style>
+:root{color-scheme:dark;--scb-bg:#100f17;--scb-panel:#191823;--scb-panel2:#211e30;--scb-line:rgba(255,255,255,.12);--scb-text:#fbf9ff;--scb-muted:#bdb6cc;--scb-purple:#a78bfa;--scb-pink:#f0abfc;--scb-grad:linear-gradient(115deg,#8b5cf6,#d946ef 55%,#fb923c)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body.scb-page{margin:0;background:var(--scb-bg);color:var(--scb-text);font:14px/1.55 "DM Sans",system-ui,sans-serif;overflow-x:hidden}body.scb-page:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 12% 2%,rgba(139,92,246,.19),transparent 30%),radial-gradient(ellipse at 90% 23%,rgba(217,70,239,.1),transparent 29%)}a{color:inherit}.scb-wrap{width:min(1240px,calc(100% - 38px));margin:auto}.scb-hero{padding:54px 0 28px}.scb-eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#d8b4fe}.scb-eyebrow:before{content:"";width:22px;height:1px;background:var(--scb-grad)}h1,h2,h3,p{margin-top:0}.scb-hero h1{margin:15px 0 13px;max-width:850px;font:800 clamp(36px,5.6vw,62px)/1.01 Sora,sans-serif;letter-spacing:-.065em}.scb-gradient{background:var(--scb-grad);-webkit-background-clip:text;background-clip:text;color:transparent}.scb-hero p{max-width:750px;color:var(--scb-muted);line-height:1.8;margin-bottom:20px}.scb-toplinks{display:flex;gap:10px;flex-wrap:wrap}.scb-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;padding:0 15px;border:1px solid var(--scb-line);border-radius:12px;background:rgba(255,255,255,.04);color:var(--scb-text);font-size:11px;font-weight:800;text-decoration:none;cursor:pointer}.scb-btn.primary{border-color:transparent;background:var(--scb-grad);color:#fff}.scb-btn:disabled{opacity:.45;cursor:not-allowed}.scb-btn:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #c4b5fd;outline-offset:2px}
+.scb-notice{display:flex;align-items:flex-start;gap:11px;padding:14px 16px;border:1px solid rgba(251,191,36,.26);border-radius:14px;background:rgba(251,191,36,.06);color:#f9e7b2;font-size:11px;line-height:1.65}.scb-notice strong{display:block;color:#fff0c2;margin-bottom:3px}.scb-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:18px;align-items:start;padding-bottom:70px}.scb-maincol,.scb-sidecol{display:grid;gap:16px;min-width:0}.scb-card{min-width:0;border:1px solid var(--scb-line);border-radius:21px;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));padding:clamp(17px,2.6vw,25px);box-shadow:0 16px 55px rgba(0,0,0,.12)}.scb-cardhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:20px}.scb-step{display:grid;place-items:center;flex:0 0 36px;height:36px;border-radius:11px;background:rgba(139,92,246,.16);color:#e9d5ff;font:800 11px Sora,sans-serif}.scb-cardhead h2{font:700 19px/1.25 Sora,sans-serif;letter-spacing:-.035em;margin:0 0 5px}.scb-cardhead p{font-size:11px;color:var(--scb-muted);line-height:1.6;margin:0}.scb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.scb-field{display:flex;flex-direction:column;gap:7px;min-width:0}.scb-field.full{grid-column:1/-1}.scb-field label{font-size:11px;font-weight:800;color:#f2edf9}.scb-field .helper{color:#948ca7;font-size:10px;line-height:1.55}.scb-field input,.scb-field select,.scb-field textarea,.scb-chatinput{width:100%;min-width:0;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:#12111b;color:#fff;padding:12px 13px;font:12px/1.55 "DM Sans",sans-serif}.scb-field textarea{resize:vertical;min-height:93px}.scb-field textarea.tall{min-height:125px}.scb-field input::placeholder,.scb-field textarea::placeholder{color:#726b82}.scb-field select option{background:#191823}.scb-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.scb-mini{font-size:10px;color:#a39bb4;line-height:1.65}.scb-state{display:none;margin-top:13px;padding:10px 12px;border-radius:11px;background:rgba(134,239,172,.08);border:1px solid rgba(134,239,172,.2);color:#bbf7d0;font-size:11px}.scb-state.show{display:block}
+.scb-previewcard{position:sticky;top:90px}.scb-previewtop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.scb-previewtop h2{font:700 18px Sora,sans-serif;margin:0}.scb-tag{white-space:nowrap;border:1px solid rgba(196,181,253,.22);border-radius:999px;padding:6px 9px;color:#d8b4fe;background:rgba(139,92,246,.1);font-size:9px;font-weight:800;letter-spacing:.06em}.scb-business{padding:14px;border:1px solid var(--scb-line);border-radius:15px;background:rgba(255,255,255,.025);margin-bottom:13px}.scb-businessline{display:flex;align-items:center;gap:11px}.scb-avatar{display:grid;place-items:center;width:42px;height:42px;flex:0 0 auto;border-radius:13px;background:var(--scb-grad);font:800 16px Sora,sans-serif;color:#fff}.scb-business h3{font:700 14px Sora,sans-serif;margin:0 0 3px;overflow-wrap:anywhere}.scb-business p{color:var(--scb-muted);font-size:10px;margin:0;overflow-wrap:anywhere}.scb-chatbox{height:360px;max-height:48vh;min-height:280px;display:flex;flex-direction:column;gap:10px;padding:13px;border:1px solid rgba(255,255,255,.1);border-radius:15px;background:#111019;overflow:auto}.scb-msg{max-width:92%;padding:10px 12px;border-radius:13px;background:#242132;color:#f3eefb;font-size:11px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}.scb-msg.bot{align-self:flex-start;border-bottom-left-radius:4px}.scb-msg.user{align-self:flex-end;background:linear-gradient(135deg,#6845be,#9147a6);border-bottom-right-radius:4px;color:white}.scb-compose{display:flex;gap:7px;margin-top:10px}.scb-chatinput{flex:1;min-width:0}.scb-send{width:44px;flex:0 0 44px;border:0;border-radius:11px;background:var(--scb-grad);color:white;font-size:17px;font-weight:800;cursor:pointer}.scb-send:disabled{opacity:.4;cursor:not-allowed}.scb-preview-foot{font-size:9px;line-height:1.6;color:#928aa4;margin:9px 1px 0}.scb-pricing{display:grid;gap:10px}.scb-pricecard{padding:15px;border:1px solid var(--scb-line);border-radius:15px;background:rgba(255,255,255,.025)}.scb-pricecard.featured{border-color:rgba(196,181,253,.36);background:linear-gradient(130deg,rgba(139,92,246,.12),rgba(255,255,255,.02))}.scb-price-label{color:#d8b4fe;font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.scb-price{font:800 27px/1.15 Sora,sans-serif;letter-spacing:-.04em;margin:7px 0}.scb-price small{font:500 10px "DM Sans",sans-serif;color:var(--scb-muted);letter-spacing:0}.scb-pricecard p{font-size:10px;color:var(--scb-muted);line-height:1.65;margin:0}.scb-checks{display:grid;gap:8px;margin:13px 0 0;padding:0;list-style:none}.scb-checks li{font-size:10px;line-height:1.5;color:#e6deef}.scb-checks li:before{content:"✓";color:#c4b5fd;font-weight:900;margin-right:8px}.scb-export{display:grid;gap:9px}.scb-export button{width:100%}.scb-export pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:220px;overflow:auto;margin:0;padding:12px;border:1px solid var(--scb-line);border-radius:11px;background:#100f17;color:#beb6d1;font:10px/1.6 ui-monospace,monospace}.scb-locked{display:flex;gap:10px;align-items:flex-start;color:#a7a0b5;font-size:10px;line-height:1.6}.scb-locked .lock{font-size:17px;color:#c4b5fd}.scb-footer{padding:0 0 32px;color:#797188;font-size:10px;text-align:center}
+@media(max-width:900px){.scb-layout{grid-template-columns:minmax(0,1fr)}.scb-sidecol{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.scb-previewcard{position:static}.scb-sidecol .scb-card:first-child{grid-column:1/-1}.scb-chatbox{max-height:none}}
+@media(max-width:620px){.scb-wrap{width:calc(100% - 26px)}.scb-hero{padding-top:39px}.scb-hero h1{font-size:clamp(35px,10vw,48px)}.scb-layout{gap:12px}.scb-card{border-radius:17px;padding:16px}.scb-grid{grid-template-columns:minmax(0,1fr)}.scb-field.full{grid-column:auto}.scb-sidecol{grid-template-columns:minmax(0,1fr)}.scb-sidecol .scb-card:first-child{grid-column:auto}.scb-chatbox{height:330px;max-height:none}.scb-toplinks .scb-btn{flex:1}.scb-actions .scb-btn{flex:1}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body class="scb-page">
+<main id="main-content">
+<section class="scb-hero">
+ <div class="scb-wrap">
+  <span class="scb-eyebrow">SITECRAFT · WEBSITE CHATBOT BUILDER</span>
+  <h1>Build a chatbot that <span class="scb-gradient">knows your business.</span></h1>
+  <p>Enter your business details, products, policies and FAQs. Configure a website-only AI assistant, try a local preview, and prepare its setup package—all in one workspace.</p>
+  <div class="scb-toplinks"><a class="scb-btn" href="ai-chatbots.html">← Chatbot use cases</a><a class="scb-btn" href="index.html#contact">Contact SiteCraft ↗</a></div>
+ </div>
+</section>
+<div class="scb-wrap">
+ <div class="scb-notice" role="note"><span aria-hidden="true">⚠</span><div><strong>Prototype workspace — not accepting payments yet</strong>This page currently previews the builder experience in your browser. Gemini integration, customer sign-in, paid activation and production downloads will be enabled only after backend and security testing. Do not enter confidential customer information in this demo.</div></div>
+</div>
+<section class="scb-wrap scb-layout" aria-label="Chatbot builder workspace">
+ <div class="scb-maincol">
+  <form id="botForm" class="scb-card">
+   <div class="scb-cardhead"><span class="scb-step">01</span><div><h2>Business profile</h2><p>Tell the assistant who you are and where it will appear.</p></div></div>
+   <div class="scb-grid">
+    <div class="scb-field"><label for="businessName">Business name *</label><input id="businessName" name="businessName" required maxlength="120" placeholder="e.g. Ramesh Biryani House"></div>
+    <div class="scb-field"><label for="businessType">Business category *</label><select id="businessType" name="businessType" required><option value="">Choose a category</option><option>Restaurant / food</option><option>Retail / e-commerce</option><option>Salon / beauty</option><option>Education / coaching</option><option>Healthcare / clinic</option><option>Real estate</option><option>Travel / hospitality</option><option>Professional services</option><option>Local service business</option><option>Other</option></select></div>
+    <div class="scb-field full"><label for="websiteUrl">Website URL *</label><input id="websiteUrl" name="websiteUrl" type="url" required placeholder="https://your-business.com"><span class="helper">The production chatbot will be restricted to the approved website origin. A real public HTTPS URL is needed before activation.</span></div>
+    <div class="scb-field full"><label for="businessDescription">What does your business do? *</label><textarea id="businessDescription" name="businessDescription" required maxlength="2500" placeholder="Describe your business, customers, locations, opening hours, delivery areas and what makes your service different."></textarea></div>
+    <div class="scb-field"><label for="replyLanguage">Reply language</label><select id="replyLanguage" name="replyLanguage"><option>Match the visitor's language</option><option>English</option><option>Telugu</option><option>Hindi</option><option>English and Telugu</option><option>English and Hindi</option></select></div>
+    <div class="scb-field"><label for="replyTone">Assistant tone</label><select id="replyTone" name="replyTone"><option>Friendly and helpful</option><option>Professional</option><option>Short and direct</option><option>Warm and conversational</option></select></div>
+    <div class="scb-field"><label for="supportPhone">Business contact number</label><input id="supportPhone" name="supportPhone" type="tel" maxlength="30" placeholder="+91 ..."></div>
+    <div class="scb-field"><label for="handoffRule">When should it contact a human?</label><select id="handoffRule" name="handoffRule"><option>When it does not know the answer</option><option>When a customer asks for a person</option><option>For complaints and refunds</option><option>Always offer a human contact option</option></select></div>
+   </div>
+   <div class="scb-state" id="profileState" role="status"></div>
+  </form>
+  <section class="scb-card" aria-labelledby="knowledge-title">
+   <div class="scb-cardhead"><span class="scb-step">02</span><div><h2 id="knowledge-title">Business knowledge</h2><p>Supply the verified information the bot should use. More document formats can be added after the MVP.</p></div></div>
+   <div class="scb-grid">
+    <div class="scb-field full"><label for="servicesInfo">Products and services *</label><textarea id="servicesInfo" class="tall" maxlength="6000" required placeholder="List product/service names, descriptions, prices, sizes, delivery or booking options. Only include details you can verify."></textarea><span class="helper">For this prototype, paste plain text. File upload, website crawling and PDF/Word ingestion are planned for a later step.</span></div>
+    <div class="scb-field full"><label for="policiesInfo">Policies and important facts</label><textarea id="policiesInfo" maxlength="5000" placeholder="Opening hours, address, service areas, cancellations, returns, payment options, warranty, booking policy and other approved facts."></textarea></div>
+    <div class="scb-field full"><label for="faqInfo">Frequently asked questions</label><textarea id="faqInfo" class="tall" maxlength="8000" placeholder="One per line, in this format: Question | Verified answer&#10;What time do you open? | We open at 9 AM.&#10;Do you deliver? | Delivery is available in ..."></textarea><span class="helper">Use the “Question | Answer” format for the local preview.</span></div>
+    <div class="scb-field full"><label for="specialInstructions">Extra instructions (optional)</label><textarea id="specialInstructions" maxlength="2000" placeholder="What must the assistant never promise? Which language or terms should it use? When must it ask a person for help?"></textarea></div>
+   </div>
+   <div class="scb-actions"><button class="scb-btn primary" id="buildPreview" type="button">Create chatbot preview ↗</button><button class="scb-btn" id="resetDemo" type="button">Reset demo</button></div>
+   <p class="scb-mini" style="margin:12px 0 0">Preview creation happens locally in this browser. It does not call Gemini or save the profile to SiteCraft's backend.</p>
+   <div class="scb-state" id="knowledgeState" role="status"></div>
+  </section>
+ </div>
+ <aside class="scb-sidecol" aria-label="Preview and package pricing">
+  <section class="scb-card scb-previewcard">
+   <div class="scb-previewtop"><h2>Live preview</h2><span class="scb-tag">LOCAL DEMO</span></div>
+   <div class="scb-business"><div class="scb-businessline"><div class="scb-avatar" id="botAvatar">S</div><div><h3 id="previewBusinessName">Your Business Assistant</h3><p id="previewCategory">Your approved business information</p></div></div></div>
+   <div class="scb-chatbox" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions">
+    <div class="scb-msg bot">Hi! I’m your chatbot preview. Fill in the business profile and knowledge, then select “Create chatbot preview” to try it.</div>
+   </div>
+   <form class="scb-compose" id="chatForm"><input class="scb-chatinput" id="chatQuestion" maxlength="500" placeholder="Ask a sample question…" aria-label="Ask your preview chatbot" autocomplete="off"><button class="scb-send" id="chatSend" type="submit" aria-label="Send question" disabled>↑</button></form>
+   <p class="scb-preview-foot">This is a rule-based local simulation for testing the setup flow—not an AI answer and not a production chatbot. Unknown answers should be reviewed by a human.</p>
+  </section>
+  <section class="scb-card">
+   <div class="scb-cardhead" style="margin-bottom:13px"><span class="scb-step">03</span><div><h2>Draft launch package</h2><p>Proposed pricing to validate before selling.</p></div></div>
+   <div class="scb-pricing">
+    <article class="scb-pricecard featured"><span class="scb-price-label">First chatbot · Draft price</span><div class="scb-price">₹2,999 <small>one-time launch package</small></div><p>Includes bot setup and 20,000 successful AI replies after activation. Final price depends on verified inference costs and scope.</p><ul class="scb-checks"><li>One website chatbot</li><li>Business information configuration</li><li>Website embed package after activation</li><li>20,000 successful assistant replies</li></ul></article>
+    <article class="scb-pricecard"><span class="scb-price-label">Reply top-up · Draft price</span><div class="scb-price">₹599 <small>/ 10,000 replies</small></div><p>Proposed prepaid top-up. Replies should count only after a successful assistant answer; failed requests and retries should not consume a reply credit.</p></article>
+   </div>
+   <p class="scb-mini" style="margin:12px 0 0">Draft pricing only. Payments, recharge, quota enforcement and production downloads are not active. Token usage must be measured before these prices are final.</p>
+  </section>
+  <section class="scb-card">
+   <div class="scb-cardhead" style="margin-bottom:13px"><span class="scb-step">↧</span><div><h2>Export & next steps</h2><p>Make a local setup brief. Production embed files unlock after backend and payment implementation.</p></div></div>
+   <div class="scb-export">
+    <button type="button" class="scb-btn primary" id="downloadProfile">Download bot profile JSON</button>
+    <button type="button" class="scb-btn" id="copyEmbed" disabled>Copy production embed code — locked</button>
+    <div class="scb-locked"><span class="lock" aria-hidden="true">⌑</span><span>The JSON file is only a draft configuration export. It is not a runnable bot and contains no API keys. We will generate the real embed widget after hosted chat, customer login, reply credit accounting and payments are connected.</span></div>
+    <pre id="exportPreview">Your bot profile JSON will appear here after you create a preview.</pre>
+   </div>
+  </section>
+ </aside>
+</section>
+<p class="scb-footer scb-wrap">SiteCraft AI Chatbot Builder · Website-only MVP · No Meta or social integrations in this phase.</p>
+</main>
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+const fieldIds=["businessName","businessType","websiteUrl","businessDescription","replyLanguage","replyTone","supportPhone","handoffRule","servicesInfo","policiesInfo","faqInfo","specialInstructions"];
+let profile=null;
+function val(id){return $(id).value.trim()}
+function showState(id,msg){const el=$(id);el.textContent=msg;el.classList.add("show")}
+function escapeText(s){return String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function addMessage(text,who){const el=document.createElement("div");el.className="scb-msg "+who;el.textContent=text;$("chatMessages").appendChild(el);$("chatMessages").scrollTop=$("chatMessages").scrollHeight}
+function parseFAQs(text){return String(text||"").split(/\r?\n/).map(line=>{const i=line.indexOf("|");return i<0?null:{q:line.slice(0,i).trim(),a:line.slice(i+1).trim()}}).filter(x=>x&&x.q&&x.a)}
+function validHttpsUrl(value){try{const u=new URL(value);return u.protocol==="https:"&&!!u.hostname}catch{return false}}
+function buildProfile(){
+ const missing=[];
+ if(!val("businessName"))missing.push("business name");
+ if(!val("businessType"))missing.push("business category");
+ if(!validHttpsUrl(val("websiteUrl")))missing.push("valid HTTPS website URL");
+ if(!val("businessDescription"))missing.push("business description");
+ if(!val("servicesInfo"))missing.push("products and services");
+ if(missing.length){showState("knowledgeState","Please provide: "+missing.join(", ")+". The website address must start with https://.");return false}
+ profile={
+  schemaVersion:1,
+  mode:"website-only-chatbot",
+  business:{name:val("businessName"),category:val("businessType"),websiteUrl:new URL(val("websiteUrl")).href,allowedOrigin:new URL(val("websiteUrl")).origin,description:val("businessDescription"),contact:val("supportPhone"),services:val("servicesInfo"),policies:val("policiesInfo"),faqs:parseFAQs(val("faqInfo"))},
+  assistant:{language:val("replyLanguage"),tone:val("replyTone"),humanHandoff:val("handoffRule"),instructions:val("specialInstructions")},
+  commercial:{launchPriceInr:2999,includedSuccessfulReplies:20000,topUpPriceInr:599,topUpReplies:10000,pricingStatus:"draft-not-for-sale"},
+  security:{apiKeyIncluded:false,requiresHostedBackend:true,productionEnabled:false},
+  createdAt:new Date().toISOString()
+ };
+ $("previewBusinessName").textContent=profile.business.name+" Assistant";
+ $("previewCategory").textContent=profile.business.category+" · Website assistant";
+ $("botAvatar").textContent=(profile.business.name.trim()[0]||"S").toUpperCase();
+ $("chatMessages").innerHTML="";
+ addMessage("Hi! I’m the local preview for "+profile.business.name+". Ask me about products, services, policies or opening details you added.", "bot");
+ $("chatSend").disabled=false;
+ $("exportPreview").textContent=JSON.stringify(profile,null,2);
+ showState("knowledgeState","Local preview created. This setup is not saved to SiteCraft and no AI request has been sent.");
+ return true;
+}
+function replyForQuestion(question){
+ if(!profile)return "First create your chatbot preview using the business profile and knowledge form.";
+ const q=question.toLowerCase();
+ const searchable=[profile.business.description,profile.business.services,profile.business.policies].join("\n");
+ const faqs=profile.business.faqs||[];
+ const tokens=q.split(/[^a-z0-9\u0C00-\u0C7F]+/i).filter(x=>x.length>2);
+ let best=null,bestScore=0;
+ faqs.forEach(f=>{const pool=(f.q+" "+f.a).toLowerCase();let score=0;tokens.forEach(t=>{if(pool.includes(t))score++});if(score>bestScore){best=f;bestScore=score}});
+ if(best&&bestScore>0)return best.a;
+ if(/(phone|call|contact|number|వాట్సాప్|ఫోన్)/i.test(q)&&profile.business.contact)return "You can contact "+profile.business.name+" at "+profile.business.contact+".";
+ const terms=tokens.filter(t=>searchable.toLowerCase().includes(t));
+ if(terms.length){
+  const lines=searchable.split(/\r?\n|[.!?]\s+/).map(s=>s.trim()).filter(Boolean);
+  const match=lines.find(line=>terms.some(t=>line.toLowerCase().includes(t)));
+  if(match)return "Based on the business information you entered: "+match;
+ }
+ const lang=profile.assistant.language;
+ const suffix=profile.business.contact?" Please contact the business directly at "+profile.business.contact+" to confirm.":" Please contact the business team to confirm.";
+ return "I couldn't find a verified answer to that in the information provided. I won't guess. "+suffix+(lang==="Telugu"?" (తెలుగులో సమాధానం ఇవ్వడానికి production AI అవసరం.)":"");
+}
+$("botForm").addEventListener("input",()=>{if(profile){showState("profileState","Your form changed. Create the preview again to use the latest information.");}});
+$("buildPreview").addEventListener("click",buildProfile);
+$("chatForm").addEventListener("submit",e=>{
+ e.preventDefault();const q=$("chatQuestion").value.trim();if(!q||!profile)return;
+ addMessage(q,"user");$("chatQuestion").value="";
+ const reply=replyForQuestion(q);
+ window.setTimeout(()=>addMessage(reply,"bot"),120);
+});
+$("resetDemo").addEventListener("click",()=>{
+ $("botForm").reset();profile=null;$("previewBusinessName").textContent="Your Business Assistant";$("previewCategory").textContent="Your approved business information";$("botAvatar").textContent="S";$("chatMessages").innerHTML="";addMessage("Hi! I’m your chatbot preview. Fill in the business profile and knowledge, then select “Create chatbot preview” to try it.","bot");$("chatSend").disabled=true;$("exportPreview").textContent="Your bot profile JSON will appear here after you create a preview.";$("knowledgeState").classList.remove("show");$("profileState").classList.remove("show");
+});
+$("downloadProfile").addEventListener("click",()=>{
+ if(!profile&&!buildProfile())return;
+ const blob=new Blob([JSON.stringify(profile,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(profile.business.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"sitecraft")+'-bot-profile.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
+});
+$("copyEmbed").addEventListener("click",()=>{});
+})();
+</script>
+<script src="site-navigation.js"></script>
+</body>
+</html>
