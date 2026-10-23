@@ -64,7 +64,11 @@ for (const task of TASKS) {
       },
     });
     assert.equal(result.keySlot, expectedSlot);
-    assert.equal(seenKey, env[`GEMINI_KEY_${expectedSlot}` as "GEMINI_KEY_1"]);
+    const expectedKeys: Record<KeySlot, string | undefined> = {
+      1: env.GEMINI_KEY_1, 2: env.GEMINI_KEY_2, 3: env.GEMINI_KEY_3,
+      4: env.GEMINI_KEY_4, 5: env.GEMINI_KEY_5,
+    };
+    assert.equal(seenKey, expectedKeys[expectedSlot]);
     assert.ok(seenUrl.includes(expectedModels[task]));
     assert.equal(result.text, "నమస్కారం!");
     assert.equal(result.tokensIn, 7);
