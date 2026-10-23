@@ -28,7 +28,7 @@ The Gemini API key remains a Cloudflare Worker secret and is never placed in the
 
 1. Deploy only after reviewing existing Worker routes and configured secrets.
 2. Apply `migrations/0002_website_chatbot.sql` to the configured D1 database.
-3. Set `GEMINI_API_KEY` as a Worker secret. Set `GEMINI_MODEL` to a model ID enabled for the Google AI Studio project.
+3. Set `CHATBOT_GEMINI_API_KEY` as a separate Worker secret for cost monitoring and access isolation (the current code falls back to `GEMINI_API_KEY` for development only). Set `CHATBOT_GEMINI_MODEL` to an enabled model; the default in this prototype is `gemini-2.5-flash-lite`, chosen as a cost-efficient starting point for short FAQ replies.
 4. Insert a demo site using a real controlled HTTPS origin and dummy/non-confidential business information.
 
 Example only; replace the origin and details, and only use a profile you have permission to test:
@@ -59,7 +59,7 @@ Do not seed real reply credits for a customer until the payment is confirmed by 
 
 - Start with one server-side runtime key and explicit backend task modules. Five keys from the same Google AI Studio project **do not multiply the project's RPM/TPM/RPD quotas**; rate limits are applied per project. See [Google's rate-limit documentation](https://ai.google.dev/gemini-api/docs/rate-limits).
 - Separate keys can help operational separation/revocation but should not be designed as a quota-bypass strategy.
-- Use a low-cost supported model for short business FAQ answers and measure actual input/output token usage, error rates and context size before publishing any reply-pack pricing.
+- Use a cost-efficient supported model for short business FAQ answers and measure actual input/output token usage, error rates and context size before publishing any reply-pack pricing. The current official pricing page lists Gemini 2.5 Flash-Lite at $0.10 per million input text tokens and $0.40 per million output tokens on the paid tier; confirm the live model availability and rate card before launch.
 - Free-tier content may be used to improve Google's products, while the paid tier states that prompts and responses are not used for that purpose. Do not enter real customer-confidential business data in free-tier testing without reviewing Google's current terms and obtaining the required customer permission. See [Gemini API pricing](https://ai.google.dev/gemini-api/docs/pricing) and [additional terms](https://ai.google.dev/gemini-api/terms).
 
 ## Current protections in the endpoint
