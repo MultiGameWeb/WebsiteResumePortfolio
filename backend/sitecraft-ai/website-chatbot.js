@@ -110,7 +110,8 @@ export async function handleWebsiteChatbotRoute(request, env, url) {
     return response({ ok: false, error: "Method not allowed." }, 405, null);
   }
   if (!env.DB) return response({ ok: false, error: "Database is not configured." }, 503, null);
-  if (!env.GEMINI_API_KEY) return response({ ok: false, error: "AI service is not configured." }, 503, null);
+  const geminiApiKey = env.CHATBOT_GEMINI_API_KEY || env.GEMINI_API_KEY;
+  if (!geminiApiKey) return response({ ok: false, error: "AI service is not configured." }, 503, null);
 
   const origin = request.headers.get("Origin") || "";
   let body;
@@ -188,7 +189,7 @@ export async function handleWebsiteChatbotRoute(request, env, url) {
     role: item?.role === "model" ? "model" : "user",
     parts: [{ text: String(item?.text || "").slice(0, 700) }]
   })).filter(item => item.parts[0].text) : [];
-  const model = env.GEMINI_MODEL || "gemini-3.8-flash";
+  const model = env.CHATBOT_GEMINI_MODEL || "gemini-2.5-flash-lite";
   const endpoint = "https://generativelanguage.googleapis.com/v1beta/models/" +
     encodeURIComponent(model) + ":generateContent";
 
@@ -196,7 +197,7 @@ export async function handleWebsiteChatbotRoute(request, env, url) {
   try {
     geminiResponse = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+      headers: { "Content-Type": "application/json", "x-goog-api-key": geminiApiKey },
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: systemInstruction }] },
         contents: [...history, { role: "user", parts: [{ text: message }] }],
