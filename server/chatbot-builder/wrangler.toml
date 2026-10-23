@@ -1,0 +1,13 @@
+name = "botcraft-gemini-router"
+main = "worker.ts"
+compatibility_date = "2026-10-20"
+
+# Create a dedicated KV namespace in Cloudflare and replace this placeholder ID.
+[[kv_namespaces]]
+binding = "CB_KEY_COOLDOWNS"
+id = "REPLACE_WITH_BOTCRAFT_KV_NAMESPACE_ID"
+
+[vars]
+CB_ALLOWED_ORIGINS = "https://multigameweb.github.io,http://localhost:8000,http://127.0.0.1:8000"
+CB_ENABLE_ADMIN_TEST = "false"
+CB_OWNER_DAILY_LIMIT = "200"

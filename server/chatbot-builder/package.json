@@ -1,0 +1,19 @@
+{
+  "name": "botcraft-gemini-router",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": { "node": ">=22.6.0" },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "test": "npm run build && node --test dist/tests/router.test.js",
+    "dev": "wrangler dev --config wrangler.toml",
+    "deploy": "wrangler deploy --config wrangler.toml"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.45.0"
+  }
+}
