@@ -43,7 +43,7 @@ routing; project-level quotas still apply.
   prices, opening times, availability, allergies, offers or policies.
 - Usage logs are asynchronous and never contain prompts, file contents or keys.
 - Admin live test is disabled by default, requires isAdmin and explicit
-  confirmation, and performs five real billable test calls when enabled.
+  confirmation, has a 60-second KV cooldown, and performs five real billable test calls when enabled.
 
 Rate-limit reservations count attempts even when the model call fails; this
 prevents repeated failure retries from bypassing limits. Cloudflare KV is

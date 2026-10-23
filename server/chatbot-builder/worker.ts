@@ -120,6 +120,15 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
     if (!body || typeof body !== "object" || (body as Record<string, unknown>).confirm !== true) {
       return jsonResponse({ error: { code: "EXPLICIT_CONFIRMATION_REQUIRED", message: "Send { confirm: true } to run five live Gemini test requests." } }, 400);
     }
+    // A full smoke test is five real, potentially billable provider requests.
+    try {
+      if (await env.CB_KEY_COOLDOWNS.get("cb:admin-test:cooldown")) {
+        return jsonResponse({ error: { code: "ADMIN_TEST_COOLDOWN", message: "A live router test was run recently. Wait at least 60 seconds before running it again." } }, 429);
+      }
+      await env.CB_KEY_COOLDOWNS.put("cb:admin-test:cooldown", String(Date.now()), { expirationTtl: 60 });
+    } catch {
+      return jsonResponse({ error: { code: "ADMIN_TEST_GUARD_UNAVAILABLE", message: "The test guard is unavailable; no live test was run." } }, 503);
+    }
     return runAdminSmokeTest(env, ctx);
   }
 
