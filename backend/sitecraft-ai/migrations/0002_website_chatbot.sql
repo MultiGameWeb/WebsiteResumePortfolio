@@ -2,10 +2,15 @@ PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS website_chatbot_sites (
   site_id TEXT PRIMARY KEY,
+  owner_id TEXT,
   allowed_origin TEXT NOT NULL,
   business_name TEXT NOT NULL DEFAULT '',
+  business_profile_json TEXT NOT NULL DEFAULT '{}',
   system_instructions TEXT NOT NULL DEFAULT '',
   daily_message_limit INTEGER NOT NULL DEFAULT 100,
+  reply_credits_remaining INTEGER NOT NULL DEFAULT 0,
+  reserved_replies INTEGER NOT NULL DEFAULT 0,
+  reply_count_total INTEGER NOT NULL DEFAULT 0,
   enabled INTEGER NOT NULL DEFAULT 0 CHECK (enabled IN (0, 1)),
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
@@ -29,3 +34,5 @@ CREATE TABLE IF NOT EXISTS website_chatbot_rate_limits (
 
 CREATE INDEX IF NOT EXISTS idx_website_chatbot_usage_day
   ON website_chatbot_usage(usage_day);
+CREATE INDEX IF NOT EXISTS idx_website_chatbot_owner
+  ON website_chatbot_sites(owner_id);
