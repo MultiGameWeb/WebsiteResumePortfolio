@@ -153,7 +153,16 @@ function replyForQuestion(question){
  const suffix=profile.business.contact?" Please contact the business directly at "+profile.business.contact+" to confirm.":" Please contact the business team to confirm.";
  return "I couldn't find a verified answer to that in the information provided. I won't guess. "+suffix+(lang==="Telugu"?" (తెలుగులో సమాధానం ఇవ్వడానికి production AI అవసరం.)":"");
 }
-$("botForm").addEventListener("input",()=>{if(profile){showState("profileState","Your form changed. Create the preview again to use the latest information.");}});
+function invalidatePreview(){
+ if(!profile)return;
+ profile=null;
+ $("chatSend").disabled=true;
+ $("chatQuestion").value="";
+ $("exportPreview").textContent="Your details changed. Recreate the preview before downloading an updated profile.";
+ showState("profileState","Your form changed. The previous preview is disabled until you recreate it.");
+}
+$("botForm").addEventListener("input",invalidatePreview);
+$("knowledge-title").closest(".scb-card").addEventListener("input",invalidatePreview);
 $("buildPreview").addEventListener("click",buildProfile);
 $("chatForm").addEventListener("submit",e=>{
  e.preventDefault();const q=$("chatQuestion").value.trim();if(!q||!profile)return;
