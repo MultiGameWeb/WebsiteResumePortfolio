@@ -15,3 +15,9 @@ crons = ["17 0 * * *"]
 CB_ALLOWED_ORIGINS = "https://multigameweb.github.io,http://localhost:8000,http://127.0.0.1:8000"
 CB_ENABLE_ADMIN_TEST = "false"
 CB_OWNER_DAILY_LIMIT = "200"
+
+# OIDC verification settings are intentionally blank until a login provider is configured.
+AUTH_ISSUER = ""
+AUTH_JWKS_URL = ""
+AUTH_AUDIENCE = ""
+AUTH_ADMIN_SUBJECTS = ""
