@@ -36,7 +36,7 @@ The Worker independently verifies the JWT signature, issuer, audience, subject, 
 - Attachments are converted in memory and sent only for supported JPG/JPEG, PNG, WEBP, HEIC/HEIF, PDF, TXT, and CSV files, within the Worker limits.
 - The attachment picker currently offers only the supported image, PDF, TXT, and CSV formats. Office documents are intentionally not offered until a trusted conversion/extraction stage is implemented.
 - Gemini keys are never sent to the browser. No mock fallback runs after an API/auth/configuration error.
-- A separate owner-authenticated business API client now exposes workspace listing/creation, source saving/extraction, owner-answer saving, and coverage recalculation. It is covered by API-client tests, but these methods are not yet wired into guided-chat screens. This commit does not claim that business answers are persisted through the chat UI.
+- The owner-authenticated business workflow panel now supports workspace creation, pasted-source saving, fact extraction, coverage summary, and the next owner-confirmation question. It uses the separate business API client and never guesses the server-owned knowledge key. The panel is still behind the same unconfigured sign-in and Worker prerequisites; this is not yet end-to-end tested against a deployed Worker.
 
 ## Required release gates
 
@@ -44,5 +44,5 @@ The Worker independently verifies the JWT signature, issuer, audience, subject, 
 2. Configure the real Worker URL and verify GitHub Pages origin allowlisting.
 3. Review and apply the additive BotCraft D1 migrations only after the migration review.
 4. Test successful and failed auth, rate limits, supported attachments, and actual Gemini responses in a controlled non-production environment.
-5. Wire the separate business-workflow endpoints and owner-confirmation/coverage screens.
+5. End-to-end test the business-workflow panel against a controlled Worker, including workspace creation, source extraction, owner confirmation, coverage refresh, and failure/retry paths.
 6. Do not deploy to production or enable customer traffic merely because the frontend API adapter exists.
