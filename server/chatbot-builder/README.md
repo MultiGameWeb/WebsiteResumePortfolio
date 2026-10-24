@@ -49,6 +49,23 @@ Five keys in one Google project do not multiply project-level quota.
   test post-failure failover. Running it spends API quota. Failover is covered
   separately by automated tests.
 
+## Question-bank core (initial module)
+
+`question-bank.ts` defines 35 curated question intents and produces 560 stable,
+category-scoped patterns across 16 business categories. Each pattern has a
+stable ID, canonical wording, paraphrase variants, knowledge keys, answer type,
+and mandatory/optional launch requirement. Multi-category selection collapses
+repeat intents. The bank currently uses English canonical wording; multilingual
+owner interviews and customer-test phrasing are a later integration task.
+
+`knowledge-coverage.ts` is a deterministic, provider-independent coverage
+engine. It links patterns to explicitly keyed facts and reports answerable,
+missing, conflicting, unverified, and owner-marked not-applicable questions.
+Missing/conflicting/unverified items are returned for owner follow-up. Launch
+readiness is a pure calculation, not a payment or production release decision.
+These modules are not yet connected to the database or frontend, and should not
+be described as a complete question-bank experience until that integration lands.
+
 ## Database and migration
 
 The `wrangler.toml` D1 binding points to the existing `sitecraft-db` database;
