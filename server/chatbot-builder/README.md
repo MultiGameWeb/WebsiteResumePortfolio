@@ -44,7 +44,10 @@ Five keys in one Google project do not multiply project-level quota.
 - Usage logging is asynchronous and excludes prompts, files and keys.
 - A daily scheduled cleanup removes rate-counter rows older than 3 days and expired key cooldowns; it does not delete usage logs or reservations.
 - Admin live tests are disabled by default and require admin authorization,
-  explicit confirmation and a cooldown. Running a live test spends API quota.
+  explicit confirmation and a cooldown. A confirmed test is capped at one
+  provider attempt per task (up to five provider attempts total); it does not
+  test post-failure failover. Running it spends API quota. Failover is covered
+  separately by automated tests.
 
 ## Database and migration
 
@@ -92,13 +95,15 @@ advertise this backend as production-ready yet.
 
 ## Endpoints in this slice
 
-- `GET /health` — configuration status only.
+- `GET /health` — liveness status only; does not disclose configured key
+  counts or database configuration.
 - `POST /api/chatbot/ai` — reserved for authenticated owner tasks; denied until
   trusted identity and D1 migration are in place.
 - `GET /api/chatbot/admin/key-status` — admin-only, denied until the admin
   adapter is connected.
-- `POST /api/chatbot/admin/router-test` — off by default; uses five real,
-  potentially billable Gemini calls when explicitly enabled and authorized.
+- `POST /api/chatbot/admin/router-test` — off by default; when explicitly
+  enabled and authorized, makes up to five real, potentially billable Gemini
+  provider attempts (one per task).
 
 ## Rollback
 
