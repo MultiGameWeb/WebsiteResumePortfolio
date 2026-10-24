@@ -132,9 +132,9 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
     if (!(await isAdmin(request))) return jsonResponse({ error: { code: "FORBIDDEN", message: "Admin access is required." } }, 403);
     const body = await readJsonLimited(request);
     if (!body || typeof body !== "object" || (body as Record<string, unknown>).confirm !== true) {
-      return jsonResponse({ error: { code: "EXPLICIT_CONFIRMATION_REQUIRED", message: "Send { confirm: true } to run up to five live Gemini provider attempts (one per task)." } }, 400);
+      return jsonResponse({ error: { code: "EXPLICIT_CONFIRMATION_REQUIRED", message: "Send { confirm: true } to run up to six live Gemini provider attempts (one per task)." } }, 400);
     }
-    // Bound a confirmed live smoke test to at most one provider attempt per task (five total).
+    // Bound a confirmed live smoke test to at most one provider attempt per task (six total).
     const db = getD1(env);
     if (!db) return jsonResponse({ error: { code: "D1_NOT_CONFIGURED", message: "The existing SiteCraft D1 database binding is not configured." } }, 503);
     try {
