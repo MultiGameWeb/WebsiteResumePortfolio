@@ -1,4 +1,4 @@
-import { sendChatAction } from './mockChat.js';
+import { sendChatAction } from './api-client.js';
 import {
   ImageLightbox,
   InputBar,
@@ -217,13 +217,13 @@ async function handleSend({ text = '', option = null, attachments = null, retryM
     state.inputError = '';
     const actionType = option ? 'quick-option' : (outgoingAttachments.length && !cleanText ? 'attachment' : 'message');
     render({ forceBottom: true });
-    await runMockAction({ type: actionType, text: cleanText, option: option ?? undefined, attachments: outgoingAttachments }, userMessage);
+    await runMockAction({ type: actionType, text: cleanText, option: option ?? undefined, attachments: outgoingAttachments, history: state.messages.map((item) => ({ role: item.role, text: item.text })).filter((item) => item.role === 'assistant' || item.role === 'user').slice(-29) }, userMessage);
   } else {
     retryMessage.status = 'sending';
     retryMessage.error = '';
     render({ forceBottom: true });
     const actionType = retryMessage.attachments?.length && !retryMessage.text ? 'attachment' : 'retry';
-    await runMockAction({ type: actionType, text: retryMessage.text, attachments: retryMessage.attachments ?? [] }, retryMessage);
+    await runMockAction({ type: actionType, text: retryMessage.text, attachments: retryMessage.attachments ?? [], history: state.messages.map((item) => ({ role: item.role, text: item.text })).filter((item) => item.role === 'assistant' || item.role === 'user').slice(-29) }, retryMessage);
   }
 }
 
