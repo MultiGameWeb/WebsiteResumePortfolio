@@ -141,6 +141,11 @@ export async function callGemini(
     try {
       payload = await response.json() as typeof payload;
     } catch {
+      recordUsage(env, ctx, {
+        requestId: input.requestId, ownerId: input.ownerId, task, keySlot: slot, model,
+        tokensIn: 0, tokensOut: 0, status: "error", errorCode: "GEMINI_INVALID_RESPONSE",
+        durationMs: Date.now() - startedAt,
+      });
       throw new GeminiRouterError(502, "GEMINI_INVALID_RESPONSE", "Gemini returned an unreadable response.");
     }
     const text = payload.candidates?.[0]?.content?.parts?.map(part => part.text ?? "").join("").trim() ?? "";
