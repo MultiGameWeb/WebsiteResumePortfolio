@@ -50,7 +50,7 @@ grant usage, select on sequence public.cb_ai_usage_log_id_seq to service_role;
 create or replace function public.cb_take_rate_limit(
   p_bucket_key text, p_limit integer, p_window_seconds integer
 ) returns boolean
-language plpgsql security definer set search_path = public, pg_temp
+language plpgsql security definer set search_path = pg_catalog, public, pg_temp
 as $$
 declare v_window_started_at timestamptz; v_request_count integer;
 begin
@@ -80,7 +80,7 @@ create or replace function public.cb_reserve_ai_request(
   p_ip_limit integer default 20, p_session_limit integer default 40,
   p_owner_daily_limit integer default 200, p_task_daily_limit integer default 80
 ) returns table(allowed boolean, reason text, reservation_id uuid)
-language plpgsql security definer set search_path = public, pg_temp
+language plpgsql security definer set search_path = pg_catalog, public, pg_temp
 as $$
 declare
   v_reservation_id uuid;
@@ -112,7 +112,7 @@ $$;
 
 create or replace function public.cb_finalize_ai_request(p_reservation_id uuid, p_success boolean)
 returns boolean
-language plpgsql security definer set search_path = public, pg_temp
+language plpgsql security definer set search_path = pg_catalog, public, pg_temp
 as $$
 begin
   update public.cb_ai_reservations
@@ -123,7 +123,7 @@ end;
 $$;
 
 create or replace function public.cb_cleanup_old_rate_counters() returns integer
-language plpgsql security definer set search_path = public, pg_temp
+language plpgsql security definer set search_path = pg_catalog, public, pg_temp
 as $$
 declare v_deleted integer;
 begin

@@ -25,6 +25,7 @@ async function keyStatus(env: Env, supabase: NonNullable<ReturnType<typeof getSu
     const result = await supabase.from("cb_ai_usage_log")
       .select("key_slot,task,status,tokens_in,tokens_out,created_at")
       .gte("created_at", since)
+      .order("created_at", { ascending: false })
       .limit(5000);
     if (result.error) usageWarning = "Recent usage stats are unavailable.";
     else usageData = (result.data ?? []) as Record<string, unknown>[];
