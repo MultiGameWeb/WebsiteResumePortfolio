@@ -25,6 +25,14 @@ export interface Env {
   CB_ALLOWED_ORIGINS?: string;
   CB_ENABLE_ADMIN_TEST?: string;
   CB_OWNER_DAILY_LIMIT?: string;
+  /** OIDC issuer, e.g. https://accounts.google.com. */
+  AUTH_ISSUER?: string;
+  /** HTTPS JWKS URL from the configured identity provider. */
+  AUTH_JWKS_URL?: string;
+  /** OIDC client/application audience identifier. */
+  AUTH_AUDIENCE?: string;
+  /** Comma-separated immutable OIDC subject IDs with admin access; never use email addresses here. */
+  AUTH_ADMIN_SUBJECTS?: string;
 }
 export interface ExecutionContextLike { waitUntil(promise: Promise<unknown>): void; }
 export interface GeminiFile { mimeType: string; data: string; name?: string; }
