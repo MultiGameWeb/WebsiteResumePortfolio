@@ -6,7 +6,7 @@ import {
 } from "./knowledge-coverage.js";
 import { buildOwnerInterviewQueue } from "./owner-interview.js";
 import { getQuestionBank, QUESTION_BANK_VERSION, type BusinessCategoryId } from "./question-bank.js";
-import type { D1DatabaseLike, D1PreparedStatementLike, D1Result } from "./types.js";
+import type { D1DatabaseLike, D1PreparedStatementLike } from "./types.js";
 
 const CATEGORIES: readonly BusinessCategoryId[] = [
   "restaurant", "hotel", "retail", "ecommerce", "salon", "education",
@@ -127,7 +127,7 @@ async function checkedAll<T>(statement: D1PreparedStatementLike): Promise<T[]> {
 async function checkedBatch(db: D1DatabaseLike, statements: D1PreparedStatementLike[]): Promise<void> {
   if (statements.length === 0) return;
   const result = await db.batch(statements);
-  if (result.some((item: D1Result) => item.success === false || item.error)) {
+  if (result.some(item => item.success === false || item.error)) {
     throw new BusinessWorkflowError("STORAGE_WRITE_FAILED", "Business information could not be saved safely.", 503);
   }
 }
