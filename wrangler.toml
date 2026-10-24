@@ -1,0 +1,14 @@
+name = "botcraft-gemini-router"
+main = "worker.ts"
+compatibility_date = "2026-10-20"
+
+# Reuse the existing SiteCraft D1 database. BotCraft adds only cb_* tables.
+[[d1_databases]]
+binding = "DB"
+database_name = "sitecraft-db"
+database_id = "4b639752-7dd1-4543-b9e7-9d0f0eb4afe9"
+
+[vars]
+CB_ALLOWED_ORIGINS = "https://multigameweb.github.io,http://localhost:8000,http://127.0.0.1:8000"
+CB_ENABLE_ADMIN_TEST = "false"
+CB_OWNER_DAILY_LIMIT = "200"
