@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS cb_business_sources (
   business_id TEXT NOT NULL,
   owner_id TEXT NOT NULL,
   source_type TEXT NOT NULL CHECK (source_type IN (
-    'owner_conversation', 'pasted_text', 'pdf', 'image', 'docx', 'xlsx', 'csv', 'website_url'
+    'owner_conversation', 'pasted_text', 'text_file', 'pdf', 'image', 'docx', 'xlsx', 'csv', 'website_url'
   )),
   original_name TEXT,
   mime_type TEXT,
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS cb_knowledge_facts (
   FOREIGN KEY (knowledge_version_id, business_id, owner_id)
     REFERENCES cb_knowledge_versions (knowledge_version_id, business_id, owner_id) ON DELETE CASCADE,
   FOREIGN KEY (source_id, business_id, owner_id)
-    REFERENCES cb_business_sources (source_id, business_id, owner_id) ON DELETE SET NULL,
+    REFERENCES cb_business_sources (source_id, business_id, owner_id) ON DELETE RESTRICT,
   CHECK (evidence_text IS NULL OR length(evidence_text) <= 4000)
 );
 CREATE INDEX IF NOT EXISTS cb_knowledge_facts_lookup_idx
