@@ -9,6 +9,7 @@ on:
   pull_request:
     paths:
       - "server/chatbot-builder/**"
+      - "chatbot-builder/**"
       - ".github/workflows/botcraft-tests.yml"
 
 permissions:
@@ -34,3 +35,11 @@ jobs:
         run: npm run typecheck
       - name: Unit tests
         run: npm test
+
+      - name: Browser JavaScript syntax checks
+        working-directory: .
+        run: |
+          node --check chatbot-builder/api-client.js
+          node --check chatbot-builder/botcraft-config.js
+          node --check chatbot-builder/chat-screen.js
+          node --check chatbot-builder/components.js
