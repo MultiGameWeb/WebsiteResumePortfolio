@@ -17,6 +17,8 @@ export class GeminiRouterError extends Error {
 export interface RouterDependencies {
   fetchImpl?: typeof fetch;
   sleep?: (ms: number) => Promise<void>;
+  /** Hard cap for callers such as the billable admin smoke test. Never exceeds MAX_ATTEMPTS. */
+  maxAttempts?: number;
 }
 function sleep(ms: number): Promise<void> { return new Promise(resolve => setTimeout(resolve, ms)); }
 function defer(ctx: ExecutionContextLike, promise: Promise<unknown>): void {
@@ -91,13 +93,17 @@ export async function callGemini(
 
   const fetchImpl = dependencies.fetchImpl ?? fetch;
   const wait = dependencies.sleep ?? sleep;
+  const requestedAttemptLimit = dependencies.maxAttempts;
+  const attemptLimit = Number.isInteger(requestedAttemptLimit)
+    ? Math.min(MAX_ATTEMPTS, Math.max(1, requestedAttemptLimit as number))
+    : MAX_ATTEMPTS;
   const startedAt = Date.now();
   let attempts = 0;
   let lastStatus = 0;
   let anyConfigured = false;
   let anyNotCooling = false;
 
-  for (let index = 0; index < config.candidates.length && attempts < MAX_ATTEMPTS; index++) {
+  for (let index = 0; index < config.candidates.length && attempts < attemptLimit; index++) {
     const slot = config.candidates[index];
     const key = getKey(env, slot);
     if (!key) continue;
@@ -124,7 +130,7 @@ export async function callGemini(
         tokensIn: 0, tokensOut: 0, status: "error", errorCode: "NETWORK_ERROR",
         durationMs: Date.now() - startedAt,
       });
-      if (attempts < MAX_ATTEMPTS && index < config.candidates.length - 1) {
+      if (attempts < attemptLimit && index < config.candidates.length - 1) {
         await wait(Math.min(200 * (2 ** (attempts - 1)), 800));
         continue;
       }
@@ -142,7 +148,7 @@ export async function callGemini(
         throw new GeminiRouterError(502, "GEMINI_REQUEST_REJECTED", `Gemini rejected the ${task} request. Check the configured model and input format.`);
       }
       await markCooldown(env, slot);
-      if (attempts < MAX_ATTEMPTS && index < config.candidates.length - 1) {
+      if (attempts < attemptLimit && index < config.candidates.length - 1) {
         await wait(Math.min(200 * (2 ** (attempts - 1)), 800));
       }
       continue;
