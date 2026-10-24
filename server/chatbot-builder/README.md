@@ -85,6 +85,23 @@ not call Gemini, require API secrets, apply D1 migrations, or deploy a Worker.
 A passing test suite is necessary but does not by itself make the product
 production-ready.
 
+## Extraction and owner interview core (pure logic)
+
+`knowledge-extraction.ts` validates structured model output, binds every
+extracted fact to a server-supplied source ID, checks whether its evidence
+excerpt can be found in the supplied source text, ignores model-supplied
+verification statuses, and flags conflicting values for owner review.
+Evidence matching only confirms that text is present; it does not prove that
+the fact is true.
+
+`owner-interview.ts` builds a deterministic follow-up queue from coverage
+results, prioritizes mandatory unresolved details, and returns one question at
+a time. Optional questions can be skipped; mandatory items require an explicit
+owner response or an owner-confirmed not-applicable decision.
+
+These modules are tested domain logic, not yet connected to a real file parser,
+the database, Gemini calls, or the guided-chat frontend.
+
 ## Business workflow persistence schema (draft migration)
 
 `migrations/0002_cb_business_workflow.sql` defines additive tables for business
