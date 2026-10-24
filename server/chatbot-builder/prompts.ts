@@ -57,7 +57,8 @@ const TASK_POLICY: Record<Task, string> = {
   ].join("\n")
 };
 export function buildRestrictedPrompt(task: Task, ownerPrompt: string): string {
-  const supplied = ownerPrompt.trim().slice(0, 8000);
+  // Reserve room for non-overridable policy text inside the router's 8k prompt budget.
+  const supplied = ownerPrompt.trim().slice(0, 5000);
   return [
     supplied || "Perform the requested BotCraft task using the supplied messages and files.",
     "",
