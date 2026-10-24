@@ -36,7 +36,7 @@ The Worker independently verifies the JWT signature, issuer, audience, subject, 
 - Attachments are converted in memory and sent only for supported JPG/JPEG, PNG, WEBP, HEIC/HEIF, PDF, TXT, and CSV files, within the Worker limits.
 - The attachment picker currently offers only the supported image, PDF, TXT, and CSV formats. Office documents are intentionally not offered until a trusted conversion/extraction stage is implemented.
 - Gemini keys are never sent to the browser. No mock fallback runs after an API/auth/configuration error.
-- The business workspace/source/extraction/coverage API is a separate workflow and is not yet wired into the conversation UI. This commit does not claim that business answers are persisted.
+- A separate owner-authenticated business API client now exposes workspace listing/creation, source saving/extraction, owner-answer saving, and coverage recalculation. It is covered by API-client tests, but these methods are not yet wired into guided-chat screens. This commit does not claim that business answers are persisted through the chat UI.
 
 ## Required release gates
 
