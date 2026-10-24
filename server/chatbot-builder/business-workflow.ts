@@ -509,7 +509,7 @@ export interface BusinessCoverageResult extends CoverageReport {
   businessId: string;
   knowledgeVersion: number;
   coverageRunId: string;
-  nextOwnerQuestion: ReturnType<typeof buildOwnerInterviewQueue>[number] | null;
+  nextOwnerQuestion: (ReturnType<typeof buildOwnerInterviewQueue>[number] & { knowledgeKey: string | null }) | null;
 }
 
 export async function recalculateBusinessCoverage(
