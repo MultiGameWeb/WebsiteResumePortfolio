@@ -65,6 +65,12 @@ test("coverage blocks launch on conflicting facts or unverified mandatory inform
   assert.equal(unverified.launchReady, false);
 });
 
+test("empty coverage cannot be considered launch-ready", () => {
+  const report = assessQuestionCoverage([], []);
+  assert.equal(report.total, 0);
+  assert.equal(report.launchReady, false);
+});
+
 test("owner-confirmed not-applicable entries count as resolved without inventing an answer", () => {
   const pattern = getQuestionBank("ecommerce").find(item => item.intent === "location");
   assert.ok(pattern);
