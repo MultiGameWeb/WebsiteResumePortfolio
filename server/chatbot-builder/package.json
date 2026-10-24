@@ -9,7 +9,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "test": "npm run build && node --test dist/tests/router.test.js dist/tests/knowledge-core.test.js dist/tests/migrations.test.js dist/tests/workflow-core.test.js",
+    "test": "npm run build && node --test dist/tests/router.test.js dist/tests/knowledge-core.test.js dist/tests/migrations.test.js dist/tests/workflow-core.test.js dist/tests/auth.test.js",
     "dev": "wrangler dev --config wrangler.toml",
     "deploy": "wrangler deploy --config wrangler.toml"
   },
@@ -18,4 +18,4 @@
     "typescript": "^5.9.3",
     "wrangler": "^4.45.0"
   }
-}
+}\n
