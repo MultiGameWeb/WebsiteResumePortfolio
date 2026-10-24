@@ -372,6 +372,68 @@ export async function savePastedTextSource(
   return { sourceId, businessId: business.business_id, status: "pending" };
 }
 
+
+export async function getSourceTextForExtraction(
+  db: D1DatabaseLike,
+  ownerId: string,
+  businessId: string,
+  sourceId: string,
+): Promise<string> {
+  const business = await getOwnedBusiness(db, ownerId, businessId);
+  const id = requiredText(sourceId, "Source ID", 200);
+  const source = await checkedFirst<{ source_id: string; source_text: string | null }>(db.prepare(
+    "SELECT source_id, source_text FROM cb_business_sources " +
+    "WHERE source_id = ? AND business_id = ? AND owner_id = ?"
+  ).bind(id, business.business_id, business.owner_id));
+  if (!source || typeof source.source_text !== "string") {
+    throw new BusinessWorkflowError("SOURCE_NOT_FOUND", "Source text was not found for this business owner.", 404);
+  }
+  return source.source_text;
+}
+
+
+export interface OwnerBusinessSummary {
+  businessId: string;
+  businessName: string;
+  category: BusinessCategoryId;
+  websiteOrigin: string | null;
+  preferredLanguage: string;
+  status: string;
+  currentKnowledgeVersion: number;
+  updatedAt: string;
+}
+
+/** List only the current owner's workspaces; the owner ID must come from verified server auth. */
+export async function listOwnerBusinesses(
+  db: D1DatabaseLike,
+  ownerId: string,
+): Promise<OwnerBusinessSummary[]> {
+  const owner = requiredText(ownerId, "Verified owner ID", 512);
+  const rows = await checkedAll<{
+    business_id: string;
+    business_name: string;
+    business_category: BusinessCategoryId;
+    website_origin: string | null;
+    preferred_language: string;
+    status: string;
+    current_knowledge_version: number;
+    updated_at: string;
+  }>(db.prepare(
+    "SELECT business_id, business_name, business_category, website_origin, preferred_language, status, current_knowledge_version, updated_at " +
+    "FROM cb_business_workspaces WHERE owner_id = ? ORDER BY updated_at DESC LIMIT 50"
+  ).bind(owner));
+  return rows.map(row => ({
+    businessId: row.business_id,
+    businessName: row.business_name,
+    category: row.business_category,
+    websiteOrigin: row.website_origin,
+    preferredLanguage: row.preferred_language,
+    status: row.status,
+    currentKnowledgeVersion: row.current_knowledge_version,
+    updatedAt: row.updated_at,
+  }));
+}
+
 export interface ProcessExtractionInput {
   ownerId: string;
   businessId: string;
