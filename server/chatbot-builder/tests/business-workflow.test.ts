@@ -232,7 +232,9 @@ test("owner answer resolves a disputed key in a new version while preserving old
     }
 
     const phonePattern = getQuestionBank("restaurant").find(item => item.intent === "phone_contact");
-    assert.ok(phonePattern?.knowledgeKeys.includes("business.phone"));
+    if (!phonePattern || !phonePattern.knowledgeKeys.includes("business.phone")) {
+      throw new Error("Expected phone-contact question to include the business.phone key.");
+    }
     const result = await saveOwnerAnswer(db, {
       ownerId: "owner-1",
       businessId: created.businessId,
