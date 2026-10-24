@@ -85,6 +85,21 @@ not call Gemini, require API secrets, apply D1 migrations, or deploy a Worker.
 A passing test suite is necessary but does not by itself make the product
 production-ready.
 
+## Business workflow persistence schema (draft migration)
+
+`migrations/0002_cb_business_workflow.sql` defines additive tables for business
+workspaces, source-document metadata, versioned knowledge facts with evidence,
+question coverage runs/items, owner interview messages, bot versions, test runs,
+and staged releases. It stores source text only within explicit size limits;
+uploaded file bytes should use private object storage rather than D1. Owner and
+business identifiers are included in ownership relationships to prevent
+cross-business record linking.
+
+This migration has automated in-memory SQLite coverage, but it has **not** been
+applied to the remote D1 database. Review it and check Cloudflare D1 compatibility
+before any production migration. Payment ledger and reply-credit accounting are
+reserved for a later provider-specific migration.
+
 ## Database and migration
 
 The `wrangler.toml` D1 binding points to the existing `sitecraft-db` database;
