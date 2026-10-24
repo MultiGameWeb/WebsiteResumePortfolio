@@ -309,7 +309,7 @@ export function InputBar(attachments = [], error = '', micActive = false) {
   textarea.id = 'messageInput';
   textarea.rows = 1;
   textarea.placeholder = 'Reply to BotCraft…';
-  textarea.maxLength = 6000;
+  textarea.maxLength = 4000;
   textarea.setAttribute('aria-label', 'Write your answer');
   textarea.setAttribute('aria-describedby', 'composerHint composerError');
   textareaWrap.append(textarea);

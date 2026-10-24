@@ -1,4 +1,4 @@
-import { sendChatAction } from './mockChat.js';
+import { sendChatAction } from './api-client.js';
 import {
   ImageLightbox,
   InputBar,
@@ -30,19 +30,14 @@ window.addEventListener('resize', syncVisualViewport, { passive: true });
 const MAX_ATTACHMENTS = 5;
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
 const ALLOWED_EXTENSIONS = new Set([
-  'jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'heic', 'heif', 'avif', 'tif', 'tiff', 'apng',
-  'pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'txt',
+  'jpg', 'jpeg', 'png', 'webp', 'heic', 'heif', 'pdf', 'csv', 'txt',
 ]);
-const IMAGE_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'heic', 'heif', 'avif', 'tif', 'tiff', 'apng']);
+const IMAGE_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp', 'heic', 'heif']);
 const MIME_BY_EXTENSION = {
-  jpg: ['image/jpeg'], jpeg: ['image/jpeg'], png: ['image/png'], gif: ['image/gif'],
-  webp: ['image/webp'], bmp: ['image/bmp', 'image/x-ms-bmp'], tif: ['image/tiff'], tiff: ['image/tiff'], apng: ['image/apng', 'image/png'], heic: ['image/heic', 'image/heif'],
-  heif: ['image/heif', 'image/heic'], avif: ['image/avif'], pdf: ['application/pdf'],
-  doc: ['application/msword'],
-  docx: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-  xls: ['application/vnd.ms-excel', 'application/x-msexcel'],
-  xlsx: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
-  csv: ['text/csv', 'application/csv', 'text/plain', 'application/vnd.ms-excel'],
+  jpg: ['image/jpeg'], jpeg: ['image/jpeg'], png: ['image/png'],
+  webp: ['image/webp'], heic: ['image/heic', 'image/heif'],
+  heif: ['image/heif', 'image/heic'], pdf: ['application/pdf'],
+  csv: ['text/csv', 'application/csv', 'text/plain'],
   txt: ['text/plain'],
 };
 
@@ -138,7 +133,7 @@ function getExtension(name) {
 function validateFile(file) {
   const extension = getExtension(file.name);
   if (!ALLOWED_EXTENSIONS.has(extension)) {
-    return `${file.name}: This file type isn’t supported. Choose an image, PDF, DOC/DOCX, XLS/XLSX, CSV, or TXT file.`;
+    return `${file.name}: This file type isn’t supported. Choose JPG, PNG, WEBP, HEIC/HEIF, PDF, CSV, or TXT.`;
   }
   if (file.size > MAX_FILE_BYTES) {
     return `${file.name}: The file is larger than 10 MB. Choose a smaller file.`;
@@ -217,17 +212,17 @@ async function handleSend({ text = '', option = null, attachments = null, retryM
     state.inputError = '';
     const actionType = option ? 'quick-option' : (outgoingAttachments.length && !cleanText ? 'attachment' : 'message');
     render({ forceBottom: true });
-    await runMockAction({ type: actionType, text: cleanText, option: option ?? undefined, attachments: outgoingAttachments }, userMessage);
+    await runApiAction({ type: actionType, text: cleanText, option: option ?? undefined, attachments: outgoingAttachments, history: state.messages.map((item) => ({ role: item.role, text: item.text })).filter((item) => item.role === 'assistant' || item.role === 'user').slice(-29) }, userMessage);
   } else {
     retryMessage.status = 'sending';
     retryMessage.error = '';
     render({ forceBottom: true });
     const actionType = retryMessage.attachments?.length && !retryMessage.text ? 'attachment' : 'retry';
-    await runMockAction({ type: actionType, text: retryMessage.text, attachments: retryMessage.attachments ?? [] }, retryMessage);
+    await runApiAction({ type: actionType, text: retryMessage.text, attachments: retryMessage.attachments ?? [], history: state.messages.map((item) => ({ role: item.role, text: item.text })).filter((item) => item.role === 'assistant' || item.role === 'user').slice(-29) }, retryMessage);
   }
 }
 
-async function runMockAction(action, userMessage) {
+async function runApiAction(action, userMessage) {
   state.pendingCount += 1;
   render({ forceBottom: true });
   try {

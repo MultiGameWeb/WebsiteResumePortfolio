@@ -509,7 +509,7 @@ export interface BusinessCoverageResult extends CoverageReport {
   businessId: string;
   knowledgeVersion: number;
   coverageRunId: string;
-  nextOwnerQuestion: ReturnType<typeof buildOwnerInterviewQueue>[number] | null;
+  nextOwnerQuestion: (ReturnType<typeof buildOwnerInterviewQueue>[number] & { knowledgeKey: string | null }) | null;
 }
 
 export async function recalculateBusinessCoverage(
@@ -582,12 +582,19 @@ export async function recalculateBusinessCoverage(
   ]);
 
   const queue = buildOwnerInterviewQueue(report);
+  const nextQuestion = queue[0] ?? null;
+  const nextPattern = nextQuestion ? patterns.find(pattern => pattern.id === nextQuestion.questionId) : undefined;
   return {
     ...report,
     businessId: business.business_id,
     knowledgeVersion: version.version_number,
     coverageRunId: runId,
-    nextOwnerQuestion: queue[0] ?? null,
+    // Return the server-owned knowledge key with the next question so the UI
+    // never has to guess a storage key from user-visible question text.
+    nextOwnerQuestion: nextQuestion ? {
+      ...nextQuestion,
+      knowledgeKey: nextPattern?.knowledgeKeys[0] ?? null,
+    } : null,
   };
 }
 
