@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { getCurrentUserId, isAdmin, verifyOidcBearerToken } from "../adapters.js";
 import worker from "../worker.js";
-import type { Env } from "../types.js";
+import type { D1DatabaseLike, D1PreparedStatementLike, D1Result, Env } from "../types.js";
 
 const TEST_NOW = 1_800_000_000;
 const ISSUER = "https://accounts.example.test";
@@ -137,15 +137,19 @@ test("admin authorization matches immutable subject IDs, never email addresses",
 });
 
 test("protected routes deny access when OIDC is not configured", async () => {
-  const env: Env = { DB: {
-    prepare: () => ({
-      bind: () => ({ first: async () => null, all: async () => ({ success: true, results: [] }), run: async () => ({ success: true }) }),
-      first: async () => null,
-      all: async () => ({ success: true, results: [] }),
-      run: async () => ({ success: true }),
-    }),
-    batch: async () => [],
-  } };
+  class FakeAuthDb implements D1DatabaseLike {
+    prepare(_query: string): D1PreparedStatementLike {
+      const statement: D1PreparedStatementLike = {
+        bind(..._values: unknown[]) { return statement; },
+        async first<T = Record<string, unknown>>(): Promise<T | null> { return null; },
+        async all<T = Record<string, unknown>>(): Promise<D1Result<T>> { return { success: true, results: [] }; },
+        async run<T = unknown>(): Promise<D1Result<T>> { return { success: true }; },
+      };
+      return statement;
+    }
+    async batch<T = unknown>(_statements: D1PreparedStatementLike[]): Promise<D1Result<T>[]> { return []; }
+  }
+  const env: Env = { DB: new FakeAuthDb() };
   const ctx = { waitUntil: (_promise: Promise<unknown>) => undefined };
   const adminResponse = await worker.fetch(
     new Request("https://botcraft.example/api/chatbot/admin/key-status"),
