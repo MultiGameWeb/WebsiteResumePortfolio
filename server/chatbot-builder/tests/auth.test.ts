@@ -168,6 +168,23 @@ test("protected routes deny access when OIDC is not configured", async () => {
     ctx,
   );
   assert.equal(ownerResponse.status, 401);
+
+  const businessResponse = await worker.fetch(
+    new Request("https://botcraft.example/api/botcraft/businesses", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ownerId: "attacker-controlled-owner-id",
+        businessName: "Private Hotel",
+        category: "hotel",
+      }),
+    }),
+    env,
+    ctx,
+  );
+  assert.equal(businessResponse.status, 401);
+  const businessPayload = await businessResponse.json() as { error?: { code?: string } };
+  assert.equal(businessPayload.error?.code, "AUTH_REQUIRED");
 });
 
 test("non-HTTPS identity-provider URLs fail closed", async () => {
