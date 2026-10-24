@@ -1,0 +1,36 @@
+name: BotCraft Core Tests
+
+on:
+  push:
+    branches:
+      - "fix/botcraft-*"
+      - "feat/botcraft-*"
+      - "ci/botcraft-*"
+  pull_request:
+    paths:
+      - "server/chatbot-builder/**"
+      - ".github/workflows/botcraft-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Typecheck and unit tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server/chatbot-builder
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: TypeScript typecheck
+        run: npm run typecheck
+      - name: Unit tests
+        run: npm test

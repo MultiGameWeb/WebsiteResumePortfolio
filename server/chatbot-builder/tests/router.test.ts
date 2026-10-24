@@ -43,9 +43,10 @@ function makeEnv(): Env {
     GEMINI_KEY_5: "test-secret-key-slot-five-0005",
     GEMINI_MODEL_INTERVIEW: "test-model-interview",
     GEMINI_MODEL_EXTRACT: "test-model-extract",
+    GEMINI_MODEL_QUESTIONS: "test-model-questions",
+    GEMINI_MODEL_BUILD: "test-model-build",
     GEMINI_MODEL_TEST: "test-model-test",
     GEMINI_MODEL_CHAT: "test-model-chat",
-    GEMINI_MODEL_VOICE: "test-model-voice",
     DB: new FakeD1(),
   };
 }
@@ -56,9 +57,10 @@ const messages = [{ role: "user" as const, content: "Say hello in Telugu" }];
 const expectedModels: Record<Task, string> = {
   interview: "test-model-interview",
   extract: "test-model-extract",
+  questions: "test-model-questions",
+  build: "test-model-build",
   test: "test-model-test",
   chat: "test-model-chat",
-  voice: "test-model-voice",
 };
 function successResponse(text = "నమస్కారం!") {
   return Response.json({
@@ -67,9 +69,12 @@ function successResponse(text = "నమస్కారం!") {
   });
 }
 
-test("primary key mapping is correct for all five tasks", () => {
-  const expected: Record<Task, KeySlot> = { interview: 1, extract: 2, test: 3, chat: 4, voice: 5 };
+test("four primary key roles are mapped correctly and key 5 is reserve-only", () => {
+  const expected: Record<Task, KeySlot> = {
+    interview: 1, extract: 2, questions: 3, build: 4, test: 4, chat: 4,
+  };
   for (const task of TASKS) assert.equal(taskPrimarySlot(task), expected[task]);
+  assert.ok(TASKS.every(task => taskPrimarySlot(task) !== 5));
 });
 
 for (const task of TASKS) {
@@ -99,6 +104,21 @@ for (const task of TASKS) {
   });
 }
 
+test("build task uses key 4 with structured JSON and a larger output budget", async () => {
+  const env = makeEnv();
+  let requestBody: Record<string, unknown> = {};
+  const result = await callGemini(env, ctx, { task: "build", systemPrompt: prompt, messages }, {
+    fetchImpl: async (_url, init) => {
+      requestBody = JSON.parse(String(init?.body)) as Record<string, unknown>;
+      return successResponse('{"schemaVersion":1,"ready":false}');
+    },
+  });
+  assert.equal(result.keySlot, 4);
+  const generationConfig = requestBody.generationConfig as Record<string, unknown>;
+  assert.equal(generationConfig.responseMimeType, "application/json");
+  assert.equal(generationConfig.maxOutputTokens, 8192);
+});
+
 test("chat fails over from key 4 to key 5 after a simulated 429", async () => {
   const env = makeEnv();
   const seenKeys: string[] = [];
@@ -117,18 +137,18 @@ test("chat fails over from key 4 to key 5 after a simulated 429", async () => {
   assert.equal((env.DB as FakeD1).cooldowns.has("gemini:4"), true);
 });
 
-test("build tasks can use key 4 and key 5 as last-resort backups", async () => {
+test("interview fails over directly to the dedicated key 5 reserve", async () => {
   const env = makeEnv();
   const used: string[] = [];
   const result = await callGemini(env, ctx, { task: "interview", systemPrompt: prompt, messages }, {
     sleep: async () => undefined,
     fetchImpl: async (_url, init) => {
       used.push(new Headers(init?.headers).get("x-goog-api-key") ?? "");
-      if (used.length <= 2) return new Response("temporarily unavailable", { status: 503 });
+      if (used.length === 1) return new Response("temporarily unavailable", { status: 503 });
       return successResponse();
     },
   });
-  assert.deepEqual(used, [env.GEMINI_KEY_1, env.GEMINI_KEY_4, env.GEMINI_KEY_5]);
+  assert.deepEqual(used, [env.GEMINI_KEY_1, env.GEMINI_KEY_5]);
   assert.equal(result.keySlot, 5);
 });
 

@@ -1,4 +1,4 @@
-export type Task = "interview" | "extract" | "test" | "chat" | "voice";
+export type Task = "interview" | "extract" | "questions" | "build" | "test" | "chat";
 export type KeySlot = 1 | 2 | 3 | 4 | 5;
 export type MessageRole = "user" | "model";
 
@@ -21,7 +21,7 @@ export interface D1DatabaseLike {
 export interface Env {
   DB?: D1DatabaseLike;
   GEMINI_KEY_1?: string; GEMINI_KEY_2?: string; GEMINI_KEY_3?: string; GEMINI_KEY_4?: string; GEMINI_KEY_5?: string;
-  GEMINI_MODEL_INTERVIEW?: string; GEMINI_MODEL_EXTRACT?: string; GEMINI_MODEL_TEST?: string; GEMINI_MODEL_CHAT?: string; GEMINI_MODEL_VOICE?: string;
+  GEMINI_MODEL_INTERVIEW?: string; GEMINI_MODEL_EXTRACT?: string; GEMINI_MODEL_QUESTIONS?: string; GEMINI_MODEL_BUILD?: string; GEMINI_MODEL_TEST?: string; GEMINI_MODEL_CHAT?: string;
   CB_ALLOWED_ORIGINS?: string;
   CB_ENABLE_ADMIN_TEST?: string;
   CB_OWNER_DAILY_LIMIT?: string;

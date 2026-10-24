@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS cb_ai_usage_log (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   request_id TEXT,
   owner_id TEXT,
-  task TEXT NOT NULL CHECK (task IN ('interview', 'extract', 'test', 'chat', 'voice')),
+  task TEXT NOT NULL CHECK (task IN ('interview', 'extract', 'questions', 'build', 'test', 'chat')),
   key_slot INTEGER NOT NULL CHECK (key_slot BETWEEN 1 AND 5),
   model_name TEXT NOT NULL,
   tokens_in INTEGER NOT NULL DEFAULT 0 CHECK (tokens_in >= 0),
@@ -39,7 +39,7 @@ CREATE INDEX IF NOT EXISTS cb_key_cooldowns_expiry_idx ON cb_key_cooldowns (cool
 CREATE TABLE IF NOT EXISTS cb_ai_reservations (
   id TEXT PRIMARY KEY,
   owner_id TEXT NOT NULL,
-  task TEXT NOT NULL CHECK (task IN ('interview', 'extract', 'test', 'chat', 'voice')),
+  task TEXT NOT NULL CHECK (task IN ('interview', 'extract', 'questions', 'build', 'test', 'chat')),
   status TEXT NOT NULL DEFAULT 'reserved' CHECK (status IN ('reserved', 'success', 'failed')),
   created_at TEXT NOT NULL,
   completed_at TEXT
