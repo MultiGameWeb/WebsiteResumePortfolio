@@ -84,8 +84,13 @@ screen remains mock-only in this step.
 2. Run npm install inside this folder.
 3. Create a dedicated Cloudflare KV namespace and replace the placeholder ID in
    wrangler.toml.
-4. Copy .env.example to .dev.vars, enter development-only keys, models and
-   Supabase values, and never commit .dev.vars.
+4. On Windows, run `powershell -ExecutionPolicy Bypass -File .\\setup-secrets.ps1`
+   from this folder. The script asks for each of the five Gemini keys with
+   hidden input and writes them to the ignored local `.dev.vars` file. It sets
+   `gemini-3.8-flash` as the initial model for all five tasks. You can change
+   model IDs in `.dev.vars` later. This file is plaintext on your computer,
+   so do not share it, upload it, or commit it. The script only prepares local
+   variables; it does not deploy the Worker or set Cloudflare production secrets.
 5. For deployed Worker, set model names as non-secret Variables in Cloudflare.
    Put the five Gemini keys, SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY into
    Secrets, never plaintext variables or browser JavaScript.
