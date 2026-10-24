@@ -195,3 +195,18 @@ advertise this backend as production-ready yet.
 Stop/delete only the dedicated BotCraft Worker after verifying no dependencies.
 Drop only the `cb_*` tables after confirming their data is no longer needed.
 Removing this folder does not require modifying any other SiteCraft route/page.
+
+
+## Business knowledge workflow service (not yet exposed as routes)
+
+`business-workflow.ts` provides owner-scoped persistence primitives for the BotCraft guided setup:
+
+1. Create a business workspace and its first draft knowledge version.
+2. Save owner-pasted text as a private, size-limited source record.
+3. Validate model extraction against the source text loaded from D1, pin facts to the server-selected source ID, and keep extracted facts unverified until an owner confirms them.
+4. Flag conflicting values rather than selecting one automatically; an explicit owner answer resolves the disputed key in a new knowledge version while the older conflict remains auditable.
+5. Recalculate the category-specific question coverage, persist the full coverage run, and return the next unresolved owner question.
+
+Every service operation takes the verified owner ID as a server-side argument and scopes business lookups by both business ID and owner ID. The service is intentionally **not wired to HTTP routes yet**. The actual OIDC provider/login flow must be configured and tested before exposing these operations through the worker. The additive migration `0002_cb_business_workflow.sql` must also be reviewed and applied to the intended D1 database separately; it is not run automatically by the app or CI.
+
+For local verification, `npm test` applies both migrations to an in-memory SQLite database and exercises ownership boundaries, source evidence, conflict versioning, owner answers, and persisted question coverage. This test-only migration does not touch Cloudflare.
