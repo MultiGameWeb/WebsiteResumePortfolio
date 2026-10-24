@@ -43,3 +43,7 @@ jobs:
           node --check chatbot-builder/botcraft-config.js
           node --check chatbot-builder/chat-screen.js
           node --check chatbot-builder/components.js
+
+      - name: Browser API adapter tests
+        working-directory: .
+        run: node --test chatbot-builder/api-client.test.mjs
