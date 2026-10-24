@@ -8,6 +8,9 @@ binding = "DB"
 database_name = "sitecraft-db"
 database_id = "4b639752-7dd1-4543-b9e7-9d0f0eb4afe9"
 
+[triggers]
+crons = ["17 0 * * *"]
+
 [vars]
 CB_ALLOWED_ORIGINS = "https://multigameweb.github.io,http://localhost:8000,http://127.0.0.1:8000"
 CB_ENABLE_ADMIN_TEST = "false"

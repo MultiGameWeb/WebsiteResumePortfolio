@@ -190,6 +190,19 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
 }
 
 export default {
+  async scheduled(_controller: unknown, env: Env, ctx: ExecutionContextLike): Promise<void> {
+    const db = getD1(env);
+    if (!db) return;
+    const now = Date.now();
+    // Delete only disposable limiter/cooldown state. Keep AI usage logs and reservations for audit.
+    ctx.waitUntil(Promise.all([
+      db.prepare("DELETE FROM cb_rate_counters WHERE updated_at < ?")
+        .bind(now - 3 * 24 * 60 * 60 * 1000).run(),
+      db.prepare("DELETE FROM cb_key_cooldowns WHERE cooldown_until_ms <= ?")
+        .bind(now).run(),
+    ]).then(() => undefined).catch(() => undefined));
+  },
+
   async fetch(request: Request, env: Env, ctx: ExecutionContextLike): Promise<Response> {
     let response: Response;
     try {

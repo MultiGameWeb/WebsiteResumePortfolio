@@ -42,6 +42,7 @@ Five keys in one Google project do not multiply project-level quota.
   constrained to 2–4 short lines and must not invent prices, hours, availability,
   allergies, offers or policies.
 - Usage logging is asynchronous and excludes prompts, files and keys.
+- A daily scheduled cleanup removes rate-counter rows older than 3 days and expired key cooldowns; it does not delete usage logs or reservations.
 - Admin live tests are disabled by default and require admin authorization,
   explicit confirmation and a cooldown. Running a live test spends API quota.
 
