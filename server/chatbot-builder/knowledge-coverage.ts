@@ -95,7 +95,8 @@ export function assessQuestionCoverage(
     conflicting,
     needsReview,
     notApplicable,
-    launchReady: items.every(item =>
+    // An empty/invalid selection is not evidence of sufficient business coverage.
+    launchReady: items.length > 0 && items.every(item =>
       item.status === "answerable" || item.status === "not_applicable" ||
       (item.status === "missing" && item.requirement === "optional")
     ),
