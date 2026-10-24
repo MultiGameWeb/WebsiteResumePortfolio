@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { callGemini, taskPrimarySlot } from "../gemini-router.js";
+import worker from "../worker.js";
 import { TASKS } from "../config.js";
 import { HttpError, validateGenerateRequest } from "../security.js";
 import type { D1DatabaseLike, D1PreparedStatementLike, D1Result, Env, KeySlot, Task } from "../types.js";
@@ -142,6 +143,32 @@ test("does not expose key values in an unconfigured-model error", async () => {
       return true;
     },
   );
+});
+
+test("one-attempt budget prevents cascading to backup keys", async () => {
+  const env = makeEnv();
+  const seenKeys: string[] = [];
+  await assert.rejects(
+    () => callGemini(env, ctx, { task: "chat", systemPrompt: prompt, messages }, {
+      maxAttempts: 1,
+      sleep: async () => undefined,
+      fetchImpl: async (_url, init) => {
+        seenKeys.push(new Headers(init?.headers).get("x-goog-api-key") ?? "");
+        return new Response("simulated temporary provider failure", { status: 503 });
+      },
+    }),
+    /temporarily unavailable after 1 attempt/,
+  );
+  assert.deepEqual(seenKeys, [env.GEMINI_KEY_4]);
+});
+
+test("public health response does not disclose key-slot or database configuration", async () => {
+  const response = await worker.fetch(new Request("https://botcraft.example/health"), makeEnv(), ctx);
+  assert.equal(response.status, 200);
+  const body = await response.json() as Record<string, unknown>;
+  assert.equal(body.ok, true);
+  assert.equal("configuredKeySlots" in body, false);
+  assert.equal("d1Configured" in body, false);
 });
 
 test("request validation rejects over-limit messages and unknown file types", () => {
