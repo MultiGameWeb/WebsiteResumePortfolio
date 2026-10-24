@@ -210,3 +210,21 @@ Removing this folder does not require modifying any other SiteCraft route/page.
 Every service operation takes the verified owner ID as a server-side argument and scopes business lookups by both business ID and owner ID. The service is intentionally **not wired to HTTP routes yet**. The actual OIDC provider/login flow must be configured and tested before exposing these operations through the worker. The additive migration `0002_cb_business_workflow.sql` must also be reviewed and applied to the intended D1 database separately; it is not run automatically by the app or CI.
 
 For local verification, `npm test` applies both migrations to an in-memory SQLite database and exercises ownership boundaries, source evidence, conflict versioning, owner answers, and persisted question coverage. This test-only migration does not touch Cloudflare.
+
+
+## Guided business setup API (protected; not production-ready yet)
+
+The Worker now has a server-side API surface for the guided business setup flow. Every route first requires a verified OIDC bearer token; owner IDs in request bodies are ignored. Because the OIDC variables are blank by default, these routes return `401 AUTH_REQUIRED` until the identity provider is deliberately configured and end-to-end tested.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/botcraft/businesses` | List the signed-in owner's workspaces |
+| POST | `/api/botcraft/businesses` | Create a workspace and initial question-coverage report |
+| POST | `/api/botcraft/businesses/:businessId/sources` | Save owner-pasted source text |
+| POST | `/api/botcraft/businesses/:businessId/sources/:sourceId/extract` | Extract facts from source text, store provenance, and refresh coverage |
+| POST | `/api/botcraft/businesses/:businessId/answers` | Save one owner-confirmed answer or mark a key not applicable |
+| POST | `/api/botcraft/businesses/:businessId/coverage/recalculate` | Recalculate and persist coverage, returning the next unresolved owner question |
+
+Business creation accepts `businessName`, `category`, and optional `websiteOrigin` / `preferredLanguage`. The client does not supply the trusted owner ID. Source saving accepts `text` and optional `name`. Extraction currently accepts a single source of up to 30,000 characters; larger saved notes must be split into smaller sections. Extraction is subject to the existing per-IP, per-session, per-owner, and per-task limits and is finalized through the D1 usage reservation. Source text is sent to the configured Gemini task under the restricted BotCraft prompt and only fact JSON plus evidence is persisted; extracted facts remain unverified until an owner confirms them.
+
+The endpoints are not connected to the public SiteCraft mock UI in this change. Before real use, configure and test the identity provider, review/apply the additive D1 migrations to the intended Cloudflare database, wire the UI, and perform a controlled end-to-end test. No production deployment or remote migration is performed by these commits.
