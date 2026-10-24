@@ -9,11 +9,12 @@ are altered. No real API keys are included in GitHub.
 
 | Task | Primary key | Fallback order | Model variable |
 |---|---:|---|---|
-| interview | 1 | 4, then 5 | GEMINI_MODEL_INTERVIEW |
-| extract | 2 | 4, then 5 | GEMINI_MODEL_EXTRACT |
-| test | 3 | 4, then 5 | GEMINI_MODEL_TEST |
+| interview | 1 | 5 | GEMINI_MODEL_INTERVIEW |
+| extract | 2 | 5 | GEMINI_MODEL_EXTRACT |
+| questions | 3 | 5 | GEMINI_MODEL_QUESTIONS |
+| build | 4 | 5 | GEMINI_MODEL_BUILD |
+| test | 4 | 5 | GEMINI_MODEL_TEST |
 | chat | 4 | 5 | GEMINI_MODEL_CHAT |
-| voice | 5 | 4 | GEMINI_MODEL_VOICE |
 
 Model IDs are configuration, not embedded in router logic. The initial model is
 `gemini-3.8-flash`. Only HTTP 429, 500 and 503 trigger provider failover and
@@ -30,7 +31,9 @@ Five keys in one Google project do not multiply project-level quota.
 - The identity/admin adapters default-deny until connected to a trusted
   server-side identity check. A client-supplied ID or localStorage flag is not
   trusted.
-- Only five known tasks are accepted.
+- Six task types are accepted, but only four primary key slots exist: Key 1
+  interview, Key 2 extraction, Key 3 question intelligence, and Key 4 build,
+  test, and live chat. Key 5 is a reserve-only fallback and is never primary.
 - Maximum 30 messages, 4,000 characters per message, 45,000 total text
   characters, 8,000 system-prompt characters, 5 attachments, 10 MB per file,
   20 MB total attachments and 30 MB total JSON body.
@@ -38,14 +41,14 @@ Five keys in one Google project do not multiply project-level quota.
   formats need a later extraction/conversion stage.
 - D1-backed limits: 20 requests per IP/minute, 40 per session/24 hours,
   200 requests per owner/day by default and a separate daily limit per task.
-- Task-specific output limits and restricted prompts. Chat/voice answers are
-  constrained to 2–4 short lines and must not invent prices, hours, availability,
-  allergies, offers or policies.
+- Task-specific output limits and restricted prompts. Customer-chat answers
+  are constrained to 2–4 short lines and must not invent prices, hours,
+  availability, allergies, offers or policies. Build output is structured JSON.
 - Usage logging is asynchronous and excludes prompts, files and keys.
 - A daily scheduled cleanup removes rate-counter rows older than 3 days and expired key cooldowns; it does not delete usage logs or reservations.
 - Admin live tests are disabled by default and require admin authorization,
   explicit confirmation and a cooldown. A confirmed test is capped at one
-  provider attempt per task (up to five provider attempts total); it does not
+  provider attempt per task (up to six provider attempts total); it does not
   test post-failure failover. Running it spends API quota. Failover is covered
   separately by automated tests.
 
@@ -119,7 +122,7 @@ advertise this backend as production-ready yet.
 - `GET /api/chatbot/admin/key-status` — admin-only, denied until the admin
   adapter is connected.
 - `POST /api/chatbot/admin/router-test` — off by default; when explicitly
-  enabled and authorized, makes up to five real, potentially billable Gemini
+  enabled and authorized, makes up to six real, potentially billable Gemini
   provider attempts (one per task).
 
 ## Rollback
