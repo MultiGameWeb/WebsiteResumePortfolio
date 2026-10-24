@@ -378,3 +378,54 @@ html.botcraft-embedded .botcraft-app {
   border-radius: 0;
   box-shadow: none;
 }
+
+
+/* Guided business knowledge setup panel */
+.business-workspace-card {
+  width: min(100% - 32px, 880px);
+  margin: 16px auto 0;
+  padding: clamp(16px, 3vw, 24px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface, #fff);
+  color: var(--text, #20232d);
+  box-shadow: 0 8px 32px rgb(25 30 50 / 5%);
+}
+.business-workspace-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.business-eyebrow { margin: 0 0 7px; font-size: 10px; font-weight: 700; letter-spacing: .12em; color: var(--accent, #6558d3); }
+.business-workspace-heading h2 { margin: 0; font-size: clamp(19px, 3vw, 24px); line-height: 1.25; }
+.business-description, .business-help { color: var(--muted, #6b7280); font-size: 13px; line-height: 1.55; }
+.business-description { max-width: 620px; margin: 8px 0 0; }
+.business-workspace-step { flex: 0 0 auto; padding: 7px 10px; border-radius: 999px; background: var(--surface-soft, #f1f0ff); color: var(--accent, #6558d3); font-size: 11px; font-weight: 650; }
+.business-status { margin: 16px 0; padding: 10px 12px; border-radius: 10px; background: var(--surface-soft, #f5f5fb); font-size: 12px; line-height: 1.5; }
+.business-status.is-error { color: #b42318; background: #fff0ef; }
+.business-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; margin-top: 16px; }
+.business-form[hidden], .business-coverage[hidden], .owner-question[hidden] { display: none !important; }
+.business-form label { display: grid; align-content: start; gap: 7px; font-size: 12px; font-weight: 650; }
+.business-form input:not([type="checkbox"]), .business-form select, .business-form textarea {
+  width: 100%; min-width: 0; border: 1px solid var(--border, #d9dce7); border-radius: 10px;
+  padding: 11px 12px; color: inherit; background: var(--input-bg, #fff); font: inherit; font-weight: 400;
+}
+.business-form textarea { resize: vertical; line-height: 1.5; }
+.business-form input:focus-visible, .business-form select:focus-visible, .business-form textarea:focus-visible { outline: 2px solid var(--accent, #6558d3); outline-offset: 2px; }
+.business-optional { font-weight: 400; color: var(--muted, #6b7280); }
+.business-primary { min-height: 42px; border: 0; border-radius: 11px; padding: 10px 16px; color: #fff; background: var(--accent, #6558d3); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.business-primary:disabled { opacity: .55; cursor: wait; }
+.business-form > .business-primary, .business-form > .business-help { grid-column: 1 / -1; }
+.business-coverage { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border, #e4e6ef); }
+.business-coverage h3 { margin: 0 0 12px; font-size: 16px; }
+.business-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
+.business-metric { display: grid; gap: 4px; padding: 12px; border-radius: 12px; background: var(--surface-soft, #f5f5fb); }
+.business-metric strong { font-size: 22px; line-height: 1.1; }
+.business-metric span { color: var(--muted, #6b7280); font-size: 10px; line-height: 1.4; }
+.owner-question { margin-top: 16px; padding: 16px; border: 1px solid var(--border, #e4e6ef); border-radius: 14px; }
+.owner-question h4 { margin: 0; font-size: 16px; line-height: 1.4; }
+.business-checkbox { display: flex !important; align-items: center; gap: 8px !important; }
+.business-checkbox input { width: 16px; height: 16px; }
+@media (max-width: 560px) {
+  .business-workspace-card { width: calc(100% - 20px); margin-top: 10px; padding: 15px; border-radius: 16px; }
+  .business-workspace-heading { flex-direction: column; gap: 10px; }
+  .business-form { grid-template-columns: minmax(0, 1fr); }
+  .business-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .business-metric strong { font-size: 20px; }
+}
