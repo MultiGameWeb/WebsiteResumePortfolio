@@ -75,6 +75,35 @@ test('rejects non-HTTPS production API URLs without sending a request', async ()
   assert.equal(fetchCalled, false);
 });
 
+
+test('maps expired authentication to a clear sign-in error', async () => {
+  const { sendChatAction } = await import('./api-client.js');
+  configure({
+    apiBaseUrl: 'https://botcraft.example.workers.dev',
+    auth: { async getAccessToken() { return 'expired-test-token'; } },
+  });
+  globalThis.fetch = async () => new Response(JSON.stringify({
+    error: { code: 'AUTH_REQUIRED', message: 'Sign in required.' },
+  }), { status: 401, headers: { 'Content-Type': 'application/json' } });
+  const result = await sendChatAction({ text: 'hello' });
+  assert.equal(result.ok, false);
+  assert.match(result.error, /sign-in is missing or expired/i);
+});
+
+test('rejects API URLs containing query parameters without sending a request', async () => {
+  const { sendChatAction } = await import('./api-client.js');
+  let fetchCalled = false;
+  configure({
+    apiBaseUrl: 'https://botcraft.example.workers.dev/?token=not-allowed',
+    auth: { async getAccessToken() { return 'short-lived-test-token'; } },
+  });
+  globalThis.fetch = async () => { fetchCalled = true; throw new Error('unexpected network'); };
+  const result = await sendChatAction({ text: 'hello' });
+  assert.equal(result.ok, false);
+  assert.match(result.error, /without credentials or query parameters/i);
+  assert.equal(fetchCalled, false);
+});
+
 test.after(() => {
   if (originalWindow === undefined) delete globalThis.window;
   else globalThis.window = originalWindow;
