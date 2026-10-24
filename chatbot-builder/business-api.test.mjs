@@ -74,8 +74,8 @@ test('validates owner answers before sending a request', async () => {
     apiBaseUrl: 'https://botcraft.example.workers.dev',
     auth: { async getAccessToken() { return 'short-lived-test-token'; } },
   });
-  await assert.rejects(
-    api.saveBusinessAnswer('biz-1', { questionId: 'q1', knowledgeKey: 'business.hours' }),
+  assert.throws(
+    () => api.saveBusinessAnswer('biz-1', { questionId: 'q1', knowledgeKey: 'business.hours' }),
     /Provide an answer or mark this question not applicable/,
   );
   assert.equal(calls, 0);
