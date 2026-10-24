@@ -4,7 +4,7 @@ import { getCurrentUserId, isAdmin, verifyOidcBearerToken } from "../adapters.js
 import worker from "../worker.js";
 import type { D1DatabaseLike, D1PreparedStatementLike, D1Result, Env } from "../types.js";
 
-const TEST_NOW = 1_800_000_000;
+const TEST_NOW = Math.floor(Date.now() / 1000);
 const ISSUER = "https://accounts.example.test";
 const AUDIENCE = "botcraft-web-client";
 
