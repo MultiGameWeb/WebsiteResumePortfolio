@@ -45,6 +45,15 @@ test("different extracted values for the same key become conflicting instead of 
   assert.ok(result.facts.every(f => f.status === "conflicting"));
 });
 
+test("currency and punctuation differences remain conflicts instead of being normalized away", () => {
+  const result = parseKnowledgeExtraction(JSON.stringify({ facts: [
+    { key: "offerings.prices", value: "₹100", evidence: "Item A costs ₹100" },
+    { key: "offerings.prices", value: "$100", evidence: "Item B costs $100" },
+  ] }), "source-1", "Item A costs ₹100. Item B costs $100.");
+  assert.equal(result.facts.length, 2);
+  assert.ok(result.facts.every(f => f.status === "conflicting"));
+});
+
 test("duplicate same-key values from a source collapse without losing the first evidence", () => {
   const result = parseKnowledgeExtraction(JSON.stringify({ facts: [
     { key: "business.hours", value: "9 AM to 9 PM", evidence: "Open 9 AM to 9 PM" },
