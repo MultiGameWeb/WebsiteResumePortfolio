@@ -228,3 +228,46 @@ The Worker now has a server-side API surface for the guided business setup flow.
 Business creation accepts `businessName`, `category`, and optional `websiteOrigin` / `preferredLanguage`. The client does not supply the trusted owner ID. Source saving accepts `text` and optional `name`. Extraction currently accepts a single source of up to 30,000 characters; larger saved notes must be split into smaller sections. Extraction is subject to the existing per-IP, per-session, per-owner, and per-task limits and is finalized through the D1 usage reservation. Source text is sent to the configured Gemini task under the restricted BotCraft prompt and only fact JSON plus evidence is persisted; extracted facts remain unverified until an owner confirms them.
 
 The endpoints are not connected to the public SiteCraft mock UI in this change. Before real use, configure and test the identity provider, review/apply the additive D1 migrations to the intended Cloudflare database, wire the UI, and perform a controlled end-to-end test. No production deployment or remote migration is performed by these commits.
+
+## Phase 2 — protected sign-in and Worker readiness
+
+The static BotCraft page now contains an opt-in Google Identity Services sign-in
+integration. It remains deliberately disabled until `googleClientId` is set
+in `chatbot-builder/botcraft-config.js`. The callback's Google ID token is held
+in memory only and supplied as a bearer token to the Worker; it is not saved
+in localStorage/sessionStorage. The Worker must use the matching configuration:
+
+- `AUTH_ISSUER=https://accounts.google.com`
+- `AUTH_JWKS_URL=https://www.googleapis.com/oauth2/v3/certs`
+- `AUTH_AUDIENCE=<the exact Google OAuth web client ID>`
+- `AUTH_ADMIN_SUBJECTS=<comma-separated immutable Google subject IDs for admins>`
+
+Do not use an email address as an admin subject. Obtain the stable subject ID
+from a verified token or trusted server-side login process, then explicitly
+allowlist it. Do not guess it. Set the Google OAuth client's authorized
+JavaScript origins to the actual deployed SiteCraft origin. Keep the Worker
+URL and Google client ID public configuration only; Gemini API keys must remain
+Worker secrets.
+
+### Required before live use
+
+1. Create/configure a Google OAuth web client and set its exact client ID in
+   the public config and Worker audience. The sign-in UI stays disabled while
+   the ID is blank.
+2. Configure the Worker URL in `apiBaseUrl` only after the Worker is deployed
+   and its route, CORS origins, and auth verifier have been checked.
+3. Review and apply migrations `0001_cb_ai_usage_and_limits.sql` then
+   `0002_cb_business_workflow.sql` to the intended D1 database, after a
+   confirmed backup/restore plan and explicit approval. CI uses in-memory
+   SQLite and does not apply production migrations.
+4. Set all five `GEMINI_KEY_1` … `GEMINI_KEY_5` as Cloudflare Worker secrets
+   (or use the hidden local setup script for local development). Never paste
+   secret values into GitHub, chat, browser config, or screenshots.
+5. Configure model variables, run typecheck/tests, deploy only to a reviewed
+   staging Worker, then test sign-in, owner isolation, quota/rate limits,
+   key failover and admin routes before production.
+
+Google sign-in in the static page is not an end-to-end authentication test.
+The Worker is still fail-closed while the OAuth audience/JWKS/issuer and admin
+subject allowlist are blank. No OAuth client ID, Gemini key, D1 migration,
+or Worker deployment is provided by this repository change.
