@@ -49,7 +49,7 @@ function confidenceValue(value: unknown): number | null {
 function valueSignature(value: string): string {
   // Unlike evidence matching, conflict detection must preserve meaningful
   // currency symbols, decimals, separators, units, and punctuation.
-  return value.normalize("NFKC").toLocaleLowerCase("en").replace(/\\s+/g, " ").trim();
+  return value.normalize("NFKC").toLocaleLowerCase("en").replace(/\s+/g, " ").trim();
 }
 
 /**
