@@ -131,6 +131,16 @@ button:disabled { cursor: not-allowed; opacity: .42; }
 .theme-toggle { width: 40px; height: 40px; border-color: var(--border); background: var(--surface-soft); font-size: 20px; }
 .theme-toggle svg { display: none; }
 
+.connection-notice {
+  flex: 0 0 auto;
+  padding: 8px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--text-soft);
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.45;
+}
 .conversation-shell { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; background: var(--page); }
 .message-list {
   position: absolute; inset: 0;
