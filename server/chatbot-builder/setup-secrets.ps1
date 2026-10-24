@@ -71,7 +71,7 @@ try {
         "CB_ENABLE_ADMIN_TEST=false"
         "CB_OWNER_DAILY_LIMIT=200"
     )
-    $encoding = New-Object System.Text.UTF8Encoding($false)
+    $encoding = New-Object System.Text.UTF8Encoding -ArgumentList $false
     [System.IO.File]::WriteAllText($varsPath, (($lines -join [Environment]::NewLine) + [Environment]::NewLine), $encoding)
 
     Write-Host ""
