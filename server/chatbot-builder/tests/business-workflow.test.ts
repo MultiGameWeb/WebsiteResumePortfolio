@@ -264,3 +264,44 @@ test("owner answer resolves a disputed key in a new version while preserving old
     db.close();
   }
 });
+
+
+test("an explicit owner correction replaces a single stale value without deleting its old provenance", async () => {
+  const db = new SQLiteD1();
+  try {
+    const created = await makeBusiness(db);
+    const source = await addSource(db, created.businessId, "Call +91 11111 11111.");
+    await processSourceExtraction(db, {
+      ownerId: "owner-1", businessId: created.businessId, sourceId: source.sourceId,
+      rawJson: extraction("+91 11111 11111", "Call +91 11111 11111"),
+    });
+    const phonePattern = getQuestionBank("restaurant").find(item => item.intent === "phone_contact");
+    assert.ok(phonePattern);
+
+    const result = await saveOwnerAnswer(db, {
+      ownerId: "owner-1",
+      businessId: created.businessId,
+      questionId: phonePattern.id,
+      knowledgeKey: "business.phone",
+      answer: "+91 44444 44444",
+    });
+    assert.equal(result.knowledgeVersion, 2);
+
+    const version2 = db.native.prepare(
+      "SELECT knowledge_version_id FROM cb_knowledge_versions WHERE business_id = ? AND version_number = 2"
+    ).get(created.businessId) as { knowledge_version_id: string };
+    const current = db.native.prepare(
+      "SELECT status, value_json FROM cb_knowledge_facts WHERE knowledge_version_id = ? AND knowledge_key = 'business.phone'"
+    ).get(version2.knowledge_version_id) as { status: string; value_json: string };
+    assert.equal(current.status, "owner_confirmed");
+    assert.equal(JSON.parse(current.value_json), "+91 44444 44444");
+
+    const old = db.native.prepare(
+      "SELECT status, value_json FROM cb_knowledge_facts WHERE knowledge_version_id = ? AND knowledge_key = 'business.phone'"
+    ).get(created.knowledgeVersionId) as { status: string; value_json: string };
+    assert.equal(old.status, "unverified");
+    assert.equal(JSON.parse(old.value_json), "+91 11111 11111");
+  } finally {
+    db.close();
+  }
+});
