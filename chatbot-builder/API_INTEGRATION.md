@@ -34,7 +34,7 @@ The Worker independently verifies the JWT signature, issuer, audience, subject, 
 - Text messages and quick replies use the protected `POST /api/chatbot/ai` endpoint with the `interview` task.
 - Conversation history is kept in page memory and sent with each request; it is not persisted by the browser.
 - Attachments are converted in memory and sent only for supported JPG/JPEG, PNG, WEBP, HEIC/HEIF, PDF, TXT, and CSV files, within the Worker limits.
-- Office documents may still appear in the attachment picker but are rejected by the API adapter until a trusted conversion/extraction stage is implemented.
+- The attachment picker currently offers only the supported image, PDF, TXT, and CSV formats. Office documents are intentionally not offered until a trusted conversion/extraction stage is implemented.
 - Gemini keys are never sent to the browser. No mock fallback runs after an API/auth/configuration error.
 - The business workspace/source/extraction/coverage API is a separate workflow and is not yet wired into the conversation UI. This commit does not claim that business answers are persisted.
 
