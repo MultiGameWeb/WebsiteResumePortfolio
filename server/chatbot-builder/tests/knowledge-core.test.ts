@@ -22,7 +22,9 @@ test("multi-category selection removes repeat intents", () => {
 
 test("deduplicator removes duplicate normalized questions but preserves distinct questions", () => {
   const selected = getQuestionBank("restaurant").slice(0, 3);
-  const deduped = deduplicateQuestionPatterns([...selected, selected[0], {
+  const hotelIdentity = getQuestionBank("hotel").find(item => item.intent === "business_identity");
+  assert.ok(hotelIdentity);
+  const deduped = deduplicateQuestionPatterns([...selected, selected[0], hotelIdentity, {
     ...selected[1],
     id: "restaurant.duplicate-wording",
     question: "  "+selected[1].question.toUpperCase().replace("?", " ? ")+" ",
