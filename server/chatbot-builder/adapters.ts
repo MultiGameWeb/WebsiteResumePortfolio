@@ -13,8 +13,9 @@ interface JwtClaims {
   iss?: unknown; sub?: unknown; aud?: unknown; exp?: unknown;
   nbf?: unknown; iat?: unknown; azp?: unknown;
 }
-interface JwksDocument { keys?: JsonWebKey[]; }
-interface CachedJwks { keys: JsonWebKey[]; expiresAt: number; }
+interface OidcJwk extends JsonWebKey { kid?: string; use?: string; alg?: string; }
+interface JwksDocument { keys?: OidcJwk[]; }
+interface CachedJwks { keys: OidcJwk[]; expiresAt: number; }
 
 const JWKS_TTL_MS = 5 * 60 * 1000;
 const JWKS_MAX_BYTES = 256_000;
@@ -69,7 +70,7 @@ function sameAudience(claim: unknown, expected: string): boolean {
     claim.every(item => typeof item === "string") && claim.includes(expected);
 }
 
-async function loadJwks(url: string, fetchImpl: typeof fetch, forceRefresh = false): Promise<JsonWebKey[] | null> {
+async function loadJwks(url: string, fetchImpl: typeof fetch, forceRefresh = false): Promise<OidcJwk[] | null> {
   const now = Date.now();
   const cached = jwksCache.get(url);
   if (!forceRefresh && cached && cached.expiresAt > now) return cached.keys;
@@ -85,7 +86,7 @@ async function loadJwks(url: string, fetchImpl: typeof fetch, forceRefresh = fal
     if (text.length > JWKS_MAX_BYTES) return null;
     const parsed = record(JSON.parse(text)) as JwksDocument | null;
     if (!parsed || !Array.isArray(parsed.keys) || parsed.keys.length < 1 || parsed.keys.length > 100) return null;
-    const keys = parsed.keys.filter((key): key is JsonWebKey =>
+    const keys = parsed.keys.filter((key): key is OidcJwk =>
       !!key && typeof key === "object" && !Array.isArray(key) &&
       typeof key.kid === "string" && key.kid.length <= 256 &&
       key.kty === "RSA" && (!key.use || key.use === "sig") &&
@@ -158,8 +159,10 @@ export async function verifyOidcBearerToken(
       "jwk", jwk, { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" }, false, ["verify"],
     );
     const signingInput = new TextEncoder().encode(`${parts[0]}.${parts[1]}`);
+    // Copy the decoded signature into an ArrayBuffer-backed view for WebCrypto's BufferSource type.
+    const signatureBuffer = new Uint8Array(signature).buffer as ArrayBuffer;
     const valid = await crypto.subtle.verify(
-      { name: "RSASSA-PKCS1-v1_5" }, publicKey, signature, signingInput,
+      { name: "RSASSA-PKCS1-v1_5" }, publicKey, signatureBuffer, signingInput,
     );
     if (!valid) return null;
   } catch {
