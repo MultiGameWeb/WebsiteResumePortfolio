@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS cb_business_sources (
   updated_at TEXT NOT NULL,
   FOREIGN KEY (business_id, owner_id)
     REFERENCES cb_business_workspaces (business_id, owner_id) ON DELETE CASCADE,
-  CHECK (source_text IS NULL OR length(source_text) <= 500000)
+  CHECK (source_text IS NULL OR length(source_text) <= 500000),
+  UNIQUE (source_id, business_id, owner_id)
 );
 CREATE INDEX IF NOT EXISTS cb_business_sources_owner_business_idx
   ON cb_business_sources (owner_id, business_id, created_at DESC);
