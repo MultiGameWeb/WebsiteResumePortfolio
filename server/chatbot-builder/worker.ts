@@ -120,7 +120,7 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
 
   if (url.pathname === "/api/chatbot/admin/key-status") {
     if (request.method !== "GET") return jsonResponse({ error: { code: "METHOD_NOT_ALLOWED", message: "Use GET for this endpoint." } }, 405);
-    if (!(await isAdmin(request))) return jsonResponse({ error: { code: "FORBIDDEN", message: "Admin access is required." } }, 403);
+    if (!(await isAdmin(request, env))) return jsonResponse({ error: { code: "FORBIDDEN", message: "Admin access is required." } }, 403);
     const db = getD1(env);
     if (!db) return jsonResponse({ error: { code: "D1_NOT_CONFIGURED", message: "The existing SiteCraft D1 database binding is not configured." } }, 503);
     return keyStatus(env, db);
@@ -129,7 +129,7 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
   if (url.pathname === "/api/chatbot/admin/router-test") {
     if (request.method !== "POST") return jsonResponse({ error: { code: "METHOD_NOT_ALLOWED", message: "Use POST for this endpoint." } }, 405);
     if (env.CB_ENABLE_ADMIN_TEST !== "true") return jsonResponse({ error: { code: "NOT_FOUND", message: "Not found." } }, 404);
-    if (!(await isAdmin(request))) return jsonResponse({ error: { code: "FORBIDDEN", message: "Admin access is required." } }, 403);
+    if (!(await isAdmin(request, env))) return jsonResponse({ error: { code: "FORBIDDEN", message: "Admin access is required." } }, 403);
     const body = await readJsonLimited(request);
     if (!body || typeof body !== "object" || (body as Record<string, unknown>).confirm !== true) {
       return jsonResponse({ error: { code: "EXPLICIT_CONFIRMATION_REQUIRED", message: "Send { confirm: true } to run up to six live Gemini provider attempts (one per task)." } }, 400);
@@ -151,7 +151,7 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
     if (request.method !== "POST") return jsonResponse({ error: { code: "METHOD_NOT_ALLOWED", message: "Use POST for this endpoint." } }, 405);
     const db = getD1(env);
     if (!db) return jsonResponse({ error: { code: "D1_NOT_CONFIGURED", message: "The existing SiteCraft D1 database binding is not configured." } }, 503);
-    const ownerId = await getCurrentUserId(request);
+    const ownerId = await getCurrentUserId(request, env);
     if (!ownerId) return jsonResponse({ error: { code: "AUTH_REQUIRED", message: "Sign in to use this BotCraft owner endpoint." } }, 401);
 
     const input = validateGenerateRequest(await readJsonLimited(request));

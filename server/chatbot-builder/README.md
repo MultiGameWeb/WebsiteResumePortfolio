@@ -52,6 +52,23 @@ Five keys in one Google project do not multiply project-level quota.
   test post-failure failover. Running it spends API quota. Failover is covered
   separately by automated tests.
 
+## OIDC authentication boundary (provider configuration still required)
+
+`adapters.ts` verifies RS256 bearer JWTs against the configured HTTPS JWKS
+URL, exact issuer and audience, signature, subject, expiry and time claims.
+It rejects token-supplied key URLs and does not accept identity from request
+JSON, query strings, arbitrary headers, or browser storage. Owner IDs derive
+from verified issuer + subject claims. Admin routes use an explicit allowlist
+of immutable OIDC subject IDs; email addresses are not accepted as admin IDs.
+Missing configuration or any verification failure denies access.
+
+The login screen/OIDC authorization-code flow is **not** implemented here.
+Before enabling this adapter, choose an identity provider, configure its exact
+issuer, JWKS URL and audience, implement the web login/session flow, and verify
+provider-specific token semantics. Keep `AUTH_ADMIN_SUBJECTS` empty until an
+administrator's stable OIDC subject is obtained from a trusted login. No
+secrets or identity-provider configuration are committed in source.
+
 ## Question-bank core (initial module)
 
 `question-bank.ts` defines 35 curated question intents and produces 560 stable,
