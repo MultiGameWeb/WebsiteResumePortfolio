@@ -43,14 +43,13 @@ export async function reserveAiRequest(
 ): Promise<Reservation> {
   const now = Date.now();
   const day = new Date(now).toISOString().slice(0, 10);
-  const minute = Math.floor(now / IP_WINDOW_MS);
-  const [sessionHash, ipHash] = await Promise.all([
+    const [sessionHash, ipHash] = await Promise.all([
     sha256Hex(input.sessionId), sha256Hex(input.ipAddress),
   ]);
 
   try {
     const checks: Array<{ key: string; limit: number; window: number; reason: string; message: string }> = [
-      { key: `ip:${ipHash}:${minute}`, limit: 20, window: IP_WINDOW_MS, reason: "ip_rate_limit",
+      { key: `ip:${ipHash}`, limit: 20, window: IP_WINDOW_MS, reason: "ip_rate_limit",
         message: "Too many requests from this network. Please wait a minute and try again." },
       { key: `session:${sessionHash}`, limit: 40, window: DAY_MS, reason: "session_limit",
         message: "This chat has reached its message limit. Start a new chat to continue." },
