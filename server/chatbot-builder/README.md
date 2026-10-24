@@ -84,7 +84,7 @@ screen remains mock-only in this step.
 2. Run npm install inside this folder.
 3. Create a dedicated Cloudflare KV namespace and replace the placeholder ID in
    wrangler.toml.
-4. On Windows, run `powershell -ExecutionPolicy Bypass -File .\\setup-secrets.ps1`
+4. On Windows, run `powershell -ExecutionPolicy Bypass -File .\setup-secrets.ps1`
    from this folder. The script asks for each of the five Gemini keys with
    hidden input and writes them to the ignored local `.dev.vars` file. It sets
    `gemini-3.8-flash` as the initial model for all five tasks. You can change
