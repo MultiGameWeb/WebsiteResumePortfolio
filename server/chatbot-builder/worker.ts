@@ -77,7 +77,7 @@ async function runAdminSmokeTest(env: Env, ctx: ExecutionContextLike): Promise<R
         systemPrompt: buildRestrictedPrompt(task, "This is an administrator smoke test. Reply to the test message briefly."),
         messages: [{ role: "user", content: "Say hello in Telugu" }],
         requestId: crypto.randomUUID(),
-      });
+      }, { maxAttempts: 1 });
       results.push({
         task, success: true, keySlot: result.keySlot, model: result.model,
         tokensIn: result.tokensIn, tokensOut: result.tokensOut, reply: result.text.slice(0, 240),
@@ -115,8 +115,6 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
     return jsonResponse({
       ok: true,
       service: "botcraft-gemini-router",
-      configuredKeySlots: ([1, 2, 3, 4, 5] as KeySlot[]).filter(slot => !!getKey(env, slot)).length,
-      d1Configured: !!getD1(env),
     });
   }
 
@@ -134,9 +132,9 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
     if (!(await isAdmin(request))) return jsonResponse({ error: { code: "FORBIDDEN", message: "Admin access is required." } }, 403);
     const body = await readJsonLimited(request);
     if (!body || typeof body !== "object" || (body as Record<string, unknown>).confirm !== true) {
-      return jsonResponse({ error: { code: "EXPLICIT_CONFIRMATION_REQUIRED", message: "Send { confirm: true } to run five live Gemini test requests." } }, 400);
+      return jsonResponse({ error: { code: "EXPLICIT_CONFIRMATION_REQUIRED", message: "Send { confirm: true } to run up to five live Gemini provider attempts (one per task)." } }, 400);
     }
-    // A full smoke test is five real, potentially billable provider requests.
+    // Bound a confirmed live smoke test to at most one provider attempt per task (five total).
     const db = getD1(env);
     if (!db) return jsonResponse({ error: { code: "D1_NOT_CONFIGURED", message: "The existing SiteCraft D1 database binding is not configured." } }, 503);
     try {

@@ -43,8 +43,8 @@ export async function reserveAiRequest(
 ): Promise<Reservation> {
   const now = Date.now();
   const day = new Date(now).toISOString().slice(0, 10);
-    const [sessionHash, ipHash] = await Promise.all([
-    sha256Hex(input.sessionId), sha256Hex(input.ipAddress),
+  const [sessionHash, ipHash] = await Promise.all([
+    sha256Hex(`${input.ownerId}:${input.sessionId}`), sha256Hex(input.ipAddress),
   ]);
 
   try {
