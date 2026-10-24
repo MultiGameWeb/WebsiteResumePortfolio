@@ -41,6 +41,7 @@ jobs:
         run: |
           node --check chatbot-builder/api-client.js
           node --check chatbot-builder/business-api.js
+          node --check chatbot-builder/business-workspace-panel.js
           node --check chatbot-builder/botcraft-config.js
           node --check chatbot-builder/chat-screen.js
           node --check chatbot-builder/components.js
