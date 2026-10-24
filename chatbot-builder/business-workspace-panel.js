@@ -148,16 +148,18 @@ createForm.addEventListener('submit', async event => {
 
 sourceForm.addEventListener('submit', async event => {
   event.preventDefault();
-  if (state.busy || !state.business || state.source) return;
+  if (state.busy || !state.business) return;
   const data = new FormData(sourceForm);
   setBusy(true);
   report('Saving your source and extracting evidence-backed facts…');
   try {
-    const saved = await saveBusinessSource(state.business.businessId, {
-      text: String(data.get('sourceText') || ''),
-      name: String(data.get('sourceName') || '').trim() || undefined,
-    });
-    state.source = saved.source;
+    if (!state.source) {
+      const saved = await saveBusinessSource(state.business.businessId, {
+        text: String(data.get('sourceText') || ''),
+        name: String(data.get('sourceName') || '').trim() || undefined,
+      });
+      state.source = saved.source;
+    }
     const extraction = await extractBusinessSource(state.business.businessId, state.source.sourceId);
     sourceForm.hidden = true;
     const result = extraction.coverage || (await recalculateBusinessCoverage(state.business.businessId)).coverage;
@@ -166,6 +168,7 @@ sourceForm.addEventListener('submit', async event => {
     report(`Source saved. Extracted ${summary.totalFacts ?? 0} facts; ${summary.evidenceNeedsReview ?? 0} need evidence review; ${summary.conflictingFacts ?? 0} are conflicting.`);
   } catch (error) {
     report(error instanceof Error ? error.message : 'Could not process this source. You can retry safely.', true);
+    if (state.source) sourceForm.querySelector('button[type="submit"]').textContent = 'Retry extraction';
   } finally { setBusy(false); }
 });
 
