@@ -169,14 +169,14 @@ export async function verifyOidcBearerToken(
 }
 
 /** Stable owner key derived only from verified issuer + subject claims. */
-export async function getCurrentUserId(request: Request, env: Env): Promise<string | null> {
-  const identity = await verifyOidcBearerToken(request, env);
+export async function getCurrentUserId(request: Request, env: Env, fetchImpl: typeof fetch = fetch): Promise<string | null> {
+  const identity = await verifyOidcBearerToken(request, env, fetchImpl);
   return identity ? `oidc:${identity.issuer}|${identity.subject}` : null;
 }
 
 /** Admin authorization uses an explicit allowlist of immutable OIDC subject IDs, never email. */
-export async function isAdmin(request: Request, env: Env): Promise<boolean> {
-  const identity = await verifyOidcBearerToken(request, env);
+export async function isAdmin(request: Request, env: Env, fetchImpl: typeof fetch = fetch): Promise<boolean> {
+  const identity = await verifyOidcBearerToken(request, env, fetchImpl);
   if (!identity) return false;
   const allowedSubjects = new Set(
     (env.AUTH_ADMIN_SUBJECTS ?? "").split(",").map(value => value.trim()).filter(Boolean),
