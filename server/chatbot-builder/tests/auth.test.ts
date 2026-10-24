@@ -27,7 +27,7 @@ function encodeJson(value: unknown): string {
 async function fixture(name: string) {
   const pair = await keyPairPromise;
   const jwksUrl = `https://keys.example.test/${name}/jwks`;
-  const publicJwk = await crypto.subtle.exportKey("jwk", pair.publicKey);
+  const publicJwk = await crypto.subtle.exportKey("jwk", pair.publicKey) as JsonWebKey & { kid?: string; use?: string; alg?: string };
   publicJwk.kid = "test-signing-key";
   publicJwk.use = "sig";
   publicJwk.alg = "RS256";
