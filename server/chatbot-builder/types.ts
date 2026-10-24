@@ -6,19 +6,30 @@ export interface KVNamespaceLike {
   get(key: string): Promise<string | null>;
   put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
 }
-export interface SupabaseClientLike {
-  from(table: string): any;
-  rpc(functionName: string, args?: Record<string, unknown>): Promise<{ data: unknown; error: { message: string } | null }>;
+export interface D1Result<T = Record<string, unknown>> {
+  results?: T[];
+  success?: boolean;
+  meta?: { changes?: number; duration?: number; last_row_id?: number; rows_read?: number; rows_written?: number };
+  error?: string;
+}
+export interface D1PreparedStatementLike {
+  bind(...values: unknown[]): D1PreparedStatementLike;
+  first<T = Record<string, unknown>>(colName?: string): Promise<T | null>;
+  all<T = Record<string, unknown>>(): Promise<D1Result<T>>;
+  run<T = unknown>(): Promise<D1Result<T>>;
+}
+export interface D1DatabaseLike {
+  prepare(query: string): D1PreparedStatementLike;
+  batch<T = unknown>(statements: D1PreparedStatementLike[]): Promise<D1Result<T>[]>;
 }
 export interface Env {
+  DB?: D1DatabaseLike;
   GEMINI_KEY_1?: string; GEMINI_KEY_2?: string; GEMINI_KEY_3?: string; GEMINI_KEY_4?: string; GEMINI_KEY_5?: string;
   GEMINI_MODEL_INTERVIEW?: string; GEMINI_MODEL_EXTRACT?: string; GEMINI_MODEL_TEST?: string; GEMINI_MODEL_CHAT?: string; GEMINI_MODEL_VOICE?: string;
   CB_KEY_COOLDOWNS: KVNamespaceLike;
   CB_ALLOWED_ORIGINS?: string;
   CB_ENABLE_ADMIN_TEST?: string;
   CB_OWNER_DAILY_LIMIT?: string;
-  SUPABASE_URL?: string;
-  SUPABASE_SERVICE_ROLE_KEY?: string;
 }
 export interface ExecutionContextLike { waitUntil(promise: Promise<unknown>): void; }
 export interface GeminiFile { mimeType: string; data: string; name?: string; }

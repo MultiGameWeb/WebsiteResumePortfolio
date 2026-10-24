@@ -1,4 +1,4 @@
-import { getCurrentUserId, getSupabase, isAdmin } from "./adapters.js";
+import { getCurrentUserId, getD1, isAdmin } from "./adapters.js";
 import { getConfiguredModel, getKey, maskedKey, TASK_CONFIG, TASKS } from "./config.js";
 import { callGemini, GeminiRouterError } from "./gemini-router.js";
 import { finalizeAiRequest, LimitError, reserveAiRequest } from "./limits.js";
@@ -17,18 +17,16 @@ function defer(ctx: ExecutionContextLike, promise: Promise<unknown>): void {
   ctx.waitUntil(promise.catch(() => undefined));
 }
 
-async function keyStatus(env: Env, supabase: NonNullable<ReturnType<typeof getSupabase>>): Promise<Response> {
+async function keyStatus(env: Env, db: NonNullable<ReturnType<typeof getD1>>): Promise<Response> {
   const since = new Date(Date.now() - WINDOW_MS).toISOString();
   let usageData: Record<string, unknown>[] = [];
   let usageWarning: string | undefined;
   try {
-    const result = await supabase.from("cb_ai_usage_log")
-      .select("key_slot,task,status,tokens_in,tokens_out,created_at")
-      .gte("created_at", since)
-      .order("created_at", { ascending: false })
-      .limit(5000);
-    if (result.error) usageWarning = "Recent usage stats are unavailable.";
-    else usageData = (result.data ?? []) as Record<string, unknown>[];
+    const result = await db.prepare(
+      "SELECT key_slot, task, status, tokens_in, tokens_out, created_at FROM cb_ai_usage_log WHERE created_at >= ? ORDER BY created_at DESC LIMIT 5000"
+    ).bind(since).all<Record<string, unknown>>();
+    if (result.success === false || result.error) usageWarning = "Recent usage stats are unavailable.";
+    else usageData = result.results ?? [];
   } catch {
     usageWarning = "Recent usage stats are unavailable.";
   }
@@ -101,16 +99,16 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
       ok: true,
       service: "botcraft-gemini-router",
       configuredKeySlots: ([1, 2, 3, 4, 5] as KeySlot[]).filter(slot => !!getKey(env, slot)).length,
-      adaptersConnected: !!getSupabase(env),
+      d1Configured: !!getD1(env),
     });
   }
 
   if (url.pathname === "/api/chatbot/admin/key-status") {
     if (request.method !== "GET") return jsonResponse({ error: { code: "METHOD_NOT_ALLOWED", message: "Use GET for this endpoint." } }, 405);
     if (!(await isAdmin(request))) return jsonResponse({ error: { code: "FORBIDDEN", message: "Admin access is required." } }, 403);
-    const supabase = getSupabase(env);
-    if (!supabase) return jsonResponse({ error: { code: "ADAPTER_NOT_CONFIGURED", message: "Connect the existing Supabase adapter before reading usage logs." } }, 503);
-    return keyStatus(env, supabase);
+    const db = getD1(env);
+    if (!db) return jsonResponse({ error: { code: "D1_NOT_CONFIGURED", message: "The existing SiteCraft D1 database binding is not configured." } }, 503);
+    return keyStatus(env, db);
   }
 
   if (url.pathname === "/api/chatbot/admin/router-test") {
@@ -135,8 +133,8 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
 
   if (url.pathname === "/api/chatbot/ai") {
     if (request.method !== "POST") return jsonResponse({ error: { code: "METHOD_NOT_ALLOWED", message: "Use POST for this endpoint." } }, 405);
-    const supabase = getSupabase(env);
-    if (!supabase) return jsonResponse({ error: { code: "ADAPTER_NOT_CONFIGURED", message: "Connect the existing Supabase adapter before using BotCraft AI." } }, 503);
+    const db = getD1(env);
+    if (!db) return jsonResponse({ error: { code: "D1_NOT_CONFIGURED", message: "The existing SiteCraft D1 database binding is not configured." } }, 503);
     const ownerId = await getCurrentUserId(request);
     if (!ownerId) return jsonResponse({ error: { code: "AUTH_REQUIRED", message: "Sign in to use this BotCraft owner endpoint." } }, 401);
 
@@ -144,7 +142,7 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
     const requestId = crypto.randomUUID();
     let reservation: { id: string };
     try {
-      reservation = await reserveAiRequest(supabase, {
+      reservation = await reserveAiRequest(db, {
         ownerId, task: input.task, sessionId: input.sessionId, ipAddress: getClientIp(request),
         ownerDailyLimit: envNumber(env.CB_OWNER_DAILY_LIMIT, DEFAULT_OWNER_DAILY_LIMIT, 1, 5000),
       });
@@ -167,7 +165,7 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
       if (error instanceof HttpError) return jsonResponse({ error: { code: error.code, message: error.message }, requestId }, error.status);
       return jsonResponse({ error: { code: "BOTCRAFT_REQUEST_FAILED", message: "BotCraft could not complete the request. Please retry shortly." }, requestId }, 502);
     } finally {
-      defer(ctx, finalizeAiRequest(supabase, reservation.id, succeeded));
+      defer(ctx, finalizeAiRequest(db, reservation.id, succeeded));
     }
   }
 

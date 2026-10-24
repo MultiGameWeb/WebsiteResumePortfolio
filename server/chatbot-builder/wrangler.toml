@@ -2,7 +2,13 @@ name = "botcraft-gemini-router"
 main = "worker.ts"
 compatibility_date = "2026-10-20"
 
-# Create a dedicated KV namespace in Cloudflare and replace this placeholder ID.
+# Reuse the existing SiteCraft D1 database. BotCraft adds only cb_* tables.
+[[d1_databases]]
+binding = "DB"
+database_name = "sitecraft-db"
+database_id = "4b639752-7dd1-4543-b9e7-9d0f0eb4afe9"
+
+# Create a dedicated KV namespace for BotCraft key cooldowns and replace this ID.
 [[kv_namespaces]]
 binding = "CB_KEY_COOLDOWNS"
 id = "REPLACE_WITH_BOTCRAFT_KV_NAMESPACE_ID"

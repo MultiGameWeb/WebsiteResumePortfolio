@@ -1,22 +1,21 @@
-import type { Env, SupabaseClientLike } from "./types.js";
+import type { D1DatabaseLike, Env } from "./types.js";
 
 /**
- * These are the only three integration points with the existing SiteCraft app.
- * Stubs intentionally fail closed until the existing auth, Supabase client,
- * and isAdmin() implementation are connected.
+ * BotCraft reuses SiteCraft's existing Cloudflare D1 database binding (DB).
+ * This module is the only database/auth adapter boundary.
+ *
+ * The current static SiteCraft frontend has no trusted server-verified owner
+ * identity API exposed to this separate Worker. Auth therefore defaults to deny.
+ * Never trust a client-supplied user ID or a localStorage admin flag.
  */
-export async function getCurrentUserId(_request: Request): Promise<string | null> {
-  // TODO: Connect to SiteCraft's existing current-user authentication.
-  // Never trust a user ID supplied in the request body.
-  return null;
+export function getD1(env: Env): D1DatabaseLike | null {
+  return env.DB ?? null;
 }
-export function getSupabase(_env: Env): SupabaseClientLike | null {
-  // TODO: Return the existing server-side Supabase client/project.
-  // Do not create a second database or client/auth system.
+export async function getCurrentUserId(_request: Request): Promise<string | null> {
+  // TODO: Connect a real server-verified SiteCraft identity before enabling AI calls.
   return null;
 }
 export async function isAdmin(_request: Request): Promise<boolean> {
-  // TODO: Connect to SiteCraft's existing isAdmin() authorization check.
-  // Default-deny until connected.
+  // TODO: Connect a real server-verified admin check before enabling admin routes.
   return false;
 }
