@@ -67,6 +67,7 @@ test("knowledge facts must belong to the same owner/business/version and retain 
     assert.equal(fact.status, "verified");
     assert.equal(fact.source_id, "source-1");
     assert.equal(fact.evidence_text, "Hours: 9 AM–9 PM");
+    assert.throws(() => db.prepare("DELETE FROM cb_business_sources WHERE source_id = ?").run("source-1"));
     assert.deepEqual(db.prepare("PRAGMA foreign_key_check").all(), []);
   } finally {
     db.close();
