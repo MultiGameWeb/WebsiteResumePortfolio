@@ -69,6 +69,22 @@ readiness is a pure calculation, not a payment or production release decision.
 These modules are not yet connected to the database or frontend, and should not
 be described as a complete question-bank experience until that integration lands.
 
+## Local and automated validation
+
+From `server/chatbot-builder/` run:
+
+```powershell
+npm install
+npm run typecheck
+npm test
+```
+
+The BotCraft-specific GitHub Actions workflow runs the typecheck and unit tests
+on BotCraft feature-branch pushes and relevant pull requests. These checks do
+not call Gemini, require API secrets, apply D1 migrations, or deploy a Worker.
+A passing test suite is necessary but does not by itself make the product
+production-ready.
+
 ## Database and migration
 
 The `wrangler.toml` D1 binding points to the existing `sitecraft-db` database;
