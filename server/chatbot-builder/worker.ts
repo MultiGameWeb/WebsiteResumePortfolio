@@ -1,4 +1,5 @@
 import { getCurrentUserId, getD1, isAdmin } from "./adapters.js";
+import { handleBusinessWorkflowRequest } from "./business-routes.js";
 import { getConfiguredModel, getKey, maskedKey, TASK_CONFIG, TASKS } from "./config.js";
 import { callGemini, GeminiRouterError } from "./gemini-router.js";
 import { finalizeAiRequest, LimitError, reserveAiRequest } from "./limits.js";
@@ -116,6 +117,11 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
       ok: true,
       service: "botcraft-gemini-router",
     });
+  }
+
+  if (url.pathname.startsWith("/api/botcraft/")) {
+    const response = await handleBusinessWorkflowRequest(request, env, ctx);
+    if (response) return response;
   }
 
   if (url.pathname === "/api/chatbot/admin/key-status") {
