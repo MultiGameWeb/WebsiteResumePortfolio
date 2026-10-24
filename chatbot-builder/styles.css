@@ -429,3 +429,12 @@ html.botcraft-embedded .botcraft-app {
   .business-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .business-metric strong { font-size: 20px; }
 }
+
+/* Phase 2: secure sign-in status and Google Identity Services button */
+.botcraft-auth-card { width: min(100% - 32px, 980px); margin: 14px auto 0; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid var(--border, #e4e6ef); border-radius: 16px; background: var(--surface, #fff); }
+.botcraft-auth-card h2 { margin: 0 0 5px; font-size: 15px; }
+.botcraft-auth-card p { margin: 0; color: var(--muted, #6b7280); font-size: 12px; line-height: 1.5; }
+#botcraftAuthStatus[data-state="error"] { color: #b42318; }
+.botcraft-google-button { min-width: 220px; min-height: 42px; display: flex; align-items: center; justify-content: flex-end; }
+.botcraft-google-button button:disabled { opacity: .65; }
+@media (max-width: 560px) { .botcraft-auth-card { width: calc(100% - 20px); margin-top: 10px; padding: 14px; flex-direction: column; align-items: stretch; } .botcraft-google-button { justify-content: flex-start; } }

@@ -15,7 +15,14 @@
 <body>
   <main id="botcraftApp" class="botcraft-app" aria-label="BotCraft business chatbot builder">
     <header id="progressHeader" class="app-header"></header>
-    <div class="connection-notice" role="status">Secure API integration is in progress. No messages are sent to the local demo; sign-in and Worker configuration are required before live use.</div>
+    <section class="botcraft-auth-card" aria-labelledby="botcraftAuthHeading">
+      <div>
+        <h2 id="botcraftAuthHeading">Secure sign-in</h2>
+        <p id="botcraftAuthStatus" role="status" aria-live="polite">Checking Google sign-in configuration…</p>
+      </div>
+      <div id="botcraftGoogleButton" class="botcraft-google-button"></div>
+    </section>
+    <div class="connection-notice" role="status">BotCraft sends owner data only to its configured protected Worker. Live use requires Google OAuth and Worker configuration.</div>
     <div id="businessWorkspace"></div>
     <section class="conversation-shell" aria-label="Chat with BotCraft">
       <div id="messageList" class="message-list" role="log" aria-live="polite" aria-relevant="additions text"></div>
@@ -31,6 +38,7 @@
   </main>
   <dialog id="imageLightbox" class="image-lightbox" aria-label="Image preview"></dialog>
   <script src="./botcraft-config.js"></script>
+  <script src="./google-auth.js"></script>
   <script type="module" src="./business-workspace-panel.js"></script>
   <script type="module" src="./chat-screen.js"></script>
 </body>
