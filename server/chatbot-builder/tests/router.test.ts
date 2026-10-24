@@ -3,12 +3,34 @@ import assert from "node:assert/strict";
 import { callGemini, taskPrimarySlot } from "../gemini-router.js";
 import { TASKS } from "../config.js";
 import { HttpError, validateGenerateRequest } from "../security.js";
-import type { Env, KeySlot, Task } from "../types.js";
+import type { D1DatabaseLike, D1PreparedStatementLike, D1Result, Env, KeySlot, Task } from "../types.js";
 
-class FakeKV {
-  values = new Map<string, string>();
-  async get(key: string) { return this.values.get(key) ?? null; }
-  async put(key: string, value: string) { this.values.set(key, value); }
+class FakeD1 implements D1DatabaseLike {
+  cooldowns = new Map<string, { cooldown_until_ms: number; updated_at: number }>();
+
+  prepare(query: string): D1PreparedStatementLike {
+    const db = this;
+    let values: unknown[] = [];
+    const statement: D1PreparedStatementLike = {
+      bind(...args: unknown[]) { values = args; return statement; },
+      async first<T = Record<string, unknown>>(): Promise<T | null> {
+        if (query.includes("SELECT cooldown_until_ms FROM cb_key_cooldowns")) {
+          return (db.cooldowns.get(String(values[0])) ?? null) as T | null;
+        }
+        return null;
+      },
+      async all<T = Record<string, unknown>>(): Promise<D1Result<T>> { return { success: true, results: [] }; },
+      async run<T = unknown>(): Promise<D1Result<T>> {
+        if (query.includes("INSERT INTO cb_key_cooldowns")) {
+          const key = String(values[0]);
+          db.cooldowns.set(key, { cooldown_until_ms: Number(values[1]), updated_at: Number(values[2]) });
+        }
+        return { success: true, meta: { changes: 1 } };
+      },
+    };
+    return statement;
+  }
+  async batch<T = unknown>(_statements: D1PreparedStatementLike[]): Promise<D1Result<T>[]> { return []; }
 }
 
 function makeEnv(): Env {
@@ -23,7 +45,7 @@ function makeEnv(): Env {
     GEMINI_MODEL_TEST: "test-model-test",
     GEMINI_MODEL_CHAT: "test-model-chat",
     GEMINI_MODEL_VOICE: "test-model-voice",
-    CB_KEY_COOLDOWNS: new FakeKV(),
+    DB: new FakeD1(),
   };
 }
 
@@ -91,7 +113,7 @@ test("chat fails over from key 4 to key 5 after a simulated 429", async () => {
   assert.deepEqual(seenKeys, [env.GEMINI_KEY_4, env.GEMINI_KEY_5]);
   assert.equal(result.keySlot, 5);
   assert.equal(result.text, "నమస్కారం!");
-  assert.equal((env.CB_KEY_COOLDOWNS as FakeKV).values.has("cb:gemini:cooldown:4"), true);
+  assert.equal((env.DB as FakeD1).cooldowns.has("gemini:4"), true);
 });
 
 test("build tasks can use key 4 and key 5 as last-resort backups", async () => {

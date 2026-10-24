@@ -1,105 +1,30 @@
-# BotCraft Gemini key router — isolated backend
+# SiteCraft Generic Builder v1
 
-BotCraft runs as a separate Cloudflare Worker and reuses the existing SiteCraft
-Cloudflare D1 database through its own `DB` binding. Only new `cb_*` tables
-and indexes are added by this module. No existing SiteCraft routes or tables
-are altered. No real API keys are included in GitHub.
+This package establishes the one-time architecture for many website templates.
 
-## Key-to-task policy
+## Flow
 
-| Task | Primary key | Fallback order | Model variable |
-|---|---:|---|---|
-| interview | 1 | 4, then 5 | GEMINI_MODEL_INTERVIEW |
-| extract | 2 | 4, then 5 | GEMINI_MODEL_EXTRACT |
-| test | 3 | 4, then 5 | GEMINI_MODEL_TEST |
-| chat | 4 | 5 | GEMINI_MODEL_CHAT |
-| voice | 5 | 4 | GEMINI_MODEL_VOICE |
+**1. Templates → 2. Features → 3. Details + live preview → 4. Checkout → 5. Done**\n\nThe customer opens directly on the template marketplace. Current order: Restaurants first, then Photography as one category containing two designs (Editorial and Cinematic). Checkout asks for domain and customer online-payment requirements. When online payments are selected, the UI shows: “Our executive will call you in 10 min. You can continue payment and download your website now.” Payment is still a demo simulation in this prototype.
 
-Model IDs are configuration, not embedded in router logic. The initial model is
-`gemini-3.8-flash`. Only HTTP 429, 500 and 503 trigger provider failover and
-cooldown. At most three calls are made per request. A failed key slot enters a
-60-second D1-backed cooldown. If the cooldown store fails, the router fails
-closed. Non-retryable 4xx responses do not burn backup keys.
+## Important architecture
 
-Five keys in one Google project do not multiply project-level quota.
+The builder/checkout/success code is generic. Each template provides only:
 
-## Safety and limits in this slice
+- `template.json` — metadata, features, fields and demo data
+- `template.js` — `render(data, selectedFeatures)` and `renderFullHtml(data, selectedFeatures)`
+- `style.css` — template-specific styling
+- `assets/` — template-specific images/assets if needed
 
-- Gemini keys are Worker secrets only; never returned or logged.
-- Admin key status shows only masked key endings.
-- The identity/admin adapters default-deny until connected to a trusted
-  server-side identity check. A client-supplied ID or localStorage flag is not
-  trusted.
-- Only five known tasks are accepted.
-- Maximum 30 messages, 4,000 characters per message, 45,000 total text
-  characters, 8,000 system-prompt characters, 5 attachments, 10 MB per file,
-  20 MB total attachments and 30 MB total JSON body.
-- Supported inline files: JPG/PNG/WEBP/HEIC/HEIF, PDF, TXT and CSV. Office
-  formats need a later extraction/conversion stage.
-- D1-backed limits: 20 requests per IP/minute, 40 per session/24 hours,
-  200 requests per owner/day by default and a separate daily limit per task.
-- Task-specific output limits and restricted prompts. Chat/voice answers are
-  constrained to 2–4 short lines and must not invent prices, hours, availability,
-  allergies, offers or policies.
-- Usage logging is asynchronous and excludes prompts, files and keys.
-- Admin live tests are disabled by default and require admin authorization,
-  explicit confirmation and a cooldown. Running a live test spends API quota.
+To add Template 03, create a new folder under `templates/`, add its manifest/module/styles, then add one registry object to `core/registry.js`.
 
-## Database and migration
+No new builder, payment or success flow should be written for a new template.
 
-The `wrangler.toml` D1 binding points to the existing `sitecraft-db` database;
-its ID matches `backend/sitecraft-ai/wrangler.toml`. The migration
-`migrations/0001_cb_ai_usage_and_limits.sql` uses D1/SQLite syntax—not
-Supabase or Postgres—and creates only `cb_*` objects.
+## GitHub Pages
 
-After reviewing the migration, apply it to the existing remote database from
-the repository root using Wrangler:
+This is plain HTML/CSS/JS. It can run as a static site. The builder uses browser localStorage for the prototype state and uses dynamic ES modules for template modules. Serve over HTTP (GitHub Pages, Cloudflare Pages, or a local HTTP server); do not open `builder.html` as a `file://` URL because fetch/import requests are blocked by browser security.
 
-```powershell
-npx wrangler d1 execute sitecraft-db --remote --file=server/chatbot-builder/migrations/0001_cb_ai_usage_and_limits.sql
-```
+## Production
 
-Do not run this command until the SQL has been reviewed: it creates new BotCraft
-tables and indexes in the shared production D1 database, although it does not
-overwrite existing SiteCraft tables.
-
-## Remaining integration gate
-
-The current static SiteCraft UI has no server-verified owner/admin identity
-adapter exposed to this separate Worker. These functions intentionally deny
-access until implemented and reviewed: `getCurrentUserId(request)` and
-`isAdmin(request)`. This prevents the AI endpoint from being exposed without
-authorization. The public customer chatbot endpoint, trusted business-knowledge
-lookup, FAQ fast-path, lead capture, unanswered-question dashboard, transcription
-and plan-expiry handoff are not implemented in this router step. The front-end
-BotCraft screen remains a mock and is not connected to this Worker. Do not
-advertise this backend as production-ready yet.
-
-## Local setup
-
-1. Install Node.js 22.6+ and npm.
-2. From this folder, run `npm install`.
-3. On Windows, run
-   `powershell -ExecutionPolicy Bypass -File .\setup-secrets.ps1` from this
-   folder. It asks for five Gemini keys using hidden terminal prompts and writes
-   the ignored local `.dev.vars` file. That file is plaintext on your computer;
-   do not share, upload or commit it.
-4. Set model names and other non-secret settings as Cloudflare Worker Variables.
-   Set all five `GEMINI_KEY_*` values as Worker Secrets.
-5. Run `npm run typecheck` and `npm test`, then `npm run dev`.
-
-## Endpoints in this slice
-
-- `GET /health` — configuration status only.
-- `POST /api/chatbot/ai` — reserved for authenticated owner tasks; denied until
-  trusted identity and D1 migration are in place.
-- `GET /api/chatbot/admin/key-status` — admin-only, denied until the admin
-  adapter is connected.
-- `POST /api/chatbot/admin/router-test` — off by default; uses five real,
-  potentially billable Gemini calls when explicitly enabled and authorized.
-
-## Rollback
-
-Stop/delete only the dedicated BotCraft Worker after verifying no dependencies.
-Drop only the `cb_*` tables after confirming their data is no longer needed.
-Removing this folder does not require modifying any other SiteCraft route/page.
+For real customers, replace localStorage with a backend, authenticated admin, cloud media storage, real payment gateway and domain provisioning.
+\n## Current templates\n\n- Restaurants → Restaurant — Signature\n- Photography → Editorial, Cinematic\n
+- Restaurants → Color Pop (online ordering + WhatsApp table booking)

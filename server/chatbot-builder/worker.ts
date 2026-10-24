@@ -4,7 +4,7 @@ import { callGemini, GeminiRouterError } from "./gemini-router.js";
 import { finalizeAiRequest, LimitError, reserveAiRequest } from "./limits.js";
 import { buildRestrictedPrompt } from "./prompts.js";
 import { getClientIp, HttpError, jsonResponse, originAllowed, readJsonLimited, validateGenerateRequest, withCors } from "./security.js";
-import type { Env, ExecutionContextLike, KeySlot } from "./types.js";
+import type { D1DatabaseLike, Env, ExecutionContextLike, KeySlot } from "./types.js";
 
 const DEFAULT_OWNER_DAILY_LIMIT = 200;
 const WINDOW_MS = 24 * 60 * 60 * 1000;
@@ -34,9 +34,12 @@ async function keyStatus(env: Env, db: NonNullable<ReturnType<typeof getD1>>): P
   const keys = await Promise.all(([1, 2, 3, 4, 5] as KeySlot[]).map(async slot => {
     let coolingDown = false;
     try {
-      coolingDown = (await env.CB_KEY_COOLDOWNS.get(`cb:gemini:cooldown:${slot}`)) !== null;
+      const cooldown = await db.prepare(
+        "SELECT cooldown_until_ms FROM cb_key_cooldowns WHERE cooldown_key = ?"
+      ).bind(`gemini:${slot}`).first<{ cooldown_until_ms: number }>();
+      coolingDown = Number(cooldown?.cooldown_until_ms ?? 0) > Date.now();
     } catch {
-      usageWarning = "The cooldown store is unavailable.";
+      usageWarning = "The D1 cooldown store is unavailable.";
     }
     const key = getKey(env, slot);
     const taskAssignments = TASKS.flatMap(task => {
@@ -87,6 +90,20 @@ async function runAdminSmokeTest(env: Env, ctx: ExecutionContextLike): Promise<R
   return jsonResponse({ tested: results.length, results });
 }
 
+async function acquireAdminTestCooldown(db: D1DatabaseLike): Promise<boolean> {
+  const now = Date.now();
+  const result = await db.prepare(`
+    INSERT INTO cb_key_cooldowns (cooldown_key, cooldown_until_ms, updated_at)
+    VALUES ('admin-test', ?, ?)
+    ON CONFLICT(cooldown_key) DO UPDATE SET
+      cooldown_until_ms = excluded.cooldown_until_ms,
+      updated_at = excluded.updated_at
+    WHERE cb_key_cooldowns.cooldown_until_ms <= ?
+    RETURNING cooldown_key
+  `).bind(now + 60_000, now, now).first<{ cooldown_key: string }>();
+  return result !== null;
+}
+
 async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLike): Promise<Response> {
   const url = new URL(request.url);
   if (!originAllowed(request, env)) {
@@ -120,13 +137,14 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
       return jsonResponse({ error: { code: "EXPLICIT_CONFIRMATION_REQUIRED", message: "Send { confirm: true } to run five live Gemini test requests." } }, 400);
     }
     // A full smoke test is five real, potentially billable provider requests.
+    const db = getD1(env);
+    if (!db) return jsonResponse({ error: { code: "D1_NOT_CONFIGURED", message: "The existing SiteCraft D1 database binding is not configured." } }, 503);
     try {
-      if (await env.CB_KEY_COOLDOWNS.get("cb:admin-test:cooldown")) {
+      if (!(await acquireAdminTestCooldown(db))) {
         return jsonResponse({ error: { code: "ADMIN_TEST_COOLDOWN", message: "A live router test was run recently. Wait at least 60 seconds before running it again." } }, 429);
       }
-      await env.CB_KEY_COOLDOWNS.put("cb:admin-test:cooldown", String(Date.now()), { expirationTtl: 60 });
     } catch {
-      return jsonResponse({ error: { code: "ADMIN_TEST_GUARD_UNAVAILABLE", message: "The test guard is unavailable; no live test was run." } }, 503);
+      return jsonResponse({ error: { code: "ADMIN_TEST_GUARD_UNAVAILABLE", message: "The D1 test guard is unavailable; no live test was run." } }, 503);
     }
     return runAdminSmokeTest(env, ctx);
   }
@@ -158,7 +176,6 @@ async function handleRequest(request: Request, env: Env, ctx: ExecutionContextLi
         messages: input.messages, files: input.files, jsonMode: input.jsonMode, ownerId, requestId,
       });
       succeeded = true;
-      // Do not disclose which API key served this ordinary owner request.
       return jsonResponse({ text: result.text, requestId, usage: { tokensIn: result.tokensIn, tokensOut: result.tokensOut } });
     } catch (error) {
       if (error instanceof GeminiRouterError) return jsonResponse({ error: { code: error.code, message: error.message }, requestId }, error.status);

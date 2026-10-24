@@ -2,10 +2,6 @@ export type Task = "interview" | "extract" | "test" | "chat" | "voice";
 export type KeySlot = 1 | 2 | 3 | 4 | 5;
 export type MessageRole = "user" | "model";
 
-export interface KVNamespaceLike {
-  get(key: string): Promise<string | null>;
-  put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
-}
 export interface D1Result<T = Record<string, unknown>> {
   results?: T[];
   success?: boolean;
@@ -26,7 +22,6 @@ export interface Env {
   DB?: D1DatabaseLike;
   GEMINI_KEY_1?: string; GEMINI_KEY_2?: string; GEMINI_KEY_3?: string; GEMINI_KEY_4?: string; GEMINI_KEY_5?: string;
   GEMINI_MODEL_INTERVIEW?: string; GEMINI_MODEL_EXTRACT?: string; GEMINI_MODEL_TEST?: string; GEMINI_MODEL_CHAT?: string; GEMINI_MODEL_VOICE?: string;
-  CB_KEY_COOLDOWNS: KVNamespaceLike;
   CB_ALLOWED_ORIGINS?: string;
   CB_ENABLE_ADMIN_TEST?: string;
   CB_OWNER_DAILY_LIMIT?: string;

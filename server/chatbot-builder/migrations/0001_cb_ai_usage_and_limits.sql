@@ -29,6 +29,13 @@ CREATE TABLE IF NOT EXISTS cb_rate_counters (
 );
 CREATE INDEX IF NOT EXISTS cb_rate_counters_updated_at_idx ON cb_rate_counters (updated_at);
 
+CREATE TABLE IF NOT EXISTS cb_key_cooldowns (
+  cooldown_key TEXT PRIMARY KEY,
+  cooldown_until_ms INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS cb_key_cooldowns_expiry_idx ON cb_key_cooldowns (cooldown_until_ms);
+
 CREATE TABLE IF NOT EXISTS cb_ai_reservations (
   id TEXT PRIMARY KEY,
   owner_id TEXT NOT NULL,

@@ -1,4 +1,5 @@
 import { getConfiguredModel, getKey, TASK_CONFIG } from "./config.js";
+import { getD1 } from "./adapters.js";
 import { logUsage } from "./usage-log.js";
 import type { CallGeminiInput, CallGeminiResult, Env, ExecutionContextLike, KeySlot, Task } from "./types.js";
 
@@ -22,17 +23,30 @@ function defer(ctx: ExecutionContextLike, promise: Promise<unknown>): void {
   ctx.waitUntil(promise.catch(() => undefined));
 }
 async function coolingDown(env: Env, slot: KeySlot): Promise<boolean> {
+  const db = getD1(env);
+  if (!db) throw new GeminiRouterError(503, "D1_UNAVAILABLE", "BotCraft key protection is temporarily unavailable.");
   try {
-    return (await env.CB_KEY_COOLDOWNS.get(`cb:gemini:cooldown:${slot}`)) !== null;
+    const row = await db.prepare(
+      "SELECT cooldown_until_ms FROM cb_key_cooldowns WHERE cooldown_key = ?"
+    ).bind(`gemini:${slot}`).first<{ cooldown_until_ms: number }>();
+    return Number(row?.cooldown_until_ms ?? 0) > Date.now();
   } catch {
     throw new GeminiRouterError(503, "COOLDOWN_STORE_UNAVAILABLE", "BotCraft key protection is temporarily unavailable.");
   }
 }
 async function markCooldown(env: Env, slot: KeySlot): Promise<void> {
+  const db = getD1(env);
+  if (!db) throw new GeminiRouterError(503, "D1_UNAVAILABLE", "BotCraft key protection is temporarily unavailable.");
   try {
-    await env.CB_KEY_COOLDOWNS.put(`cb:gemini:cooldown:${slot}`, String(Date.now()), {
-      expirationTtl: COOLDOWN_SECONDS,
-    });
+    const now = Date.now();
+    const result = await db.prepare(`
+      INSERT INTO cb_key_cooldowns (cooldown_key, cooldown_until_ms, updated_at)
+      VALUES (?, ?, ?)
+      ON CONFLICT(cooldown_key) DO UPDATE SET
+        cooldown_until_ms = excluded.cooldown_until_ms,
+        updated_at = excluded.updated_at
+    `).bind(`gemini:${slot}`, now + COOLDOWN_SECONDS * 1000, now).run();
+    if (result.success === false || result.error) throw new Error("Cooldown write failed");
   } catch {
     throw new GeminiRouterError(503, "COOLDOWN_STORE_UNAVAILABLE", "BotCraft key protection is temporarily unavailable.");
   }

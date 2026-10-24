@@ -18,7 +18,7 @@ are altered. No real API keys are included in GitHub.
 Model IDs are configuration, not embedded in router logic. The initial model is
 `gemini-3.8-flash`. Only HTTP 429, 500 and 503 trigger provider failover and
 cooldown. At most three calls are made per request. A failed key slot enters a
-60-second Cloudflare KV cooldown. If the cooldown store fails, the router fails
+60-second D1-backed cooldown. If the cooldown store fails, the router fails
 closed. Non-retryable 4xx responses do not burn backup keys.
 
 Five keys in one Google project do not multiply project-level quota.
@@ -49,8 +49,8 @@ Five keys in one Google project do not multiply project-level quota.
 
 The `wrangler.toml` D1 binding points to the existing `sitecraft-db` database;
 its ID matches `backend/sitecraft-ai/wrangler.toml`. The migration
-`migrations/0001_cb_ai_usage_and_limits.sql` uses D1/SQLite syntax—not
-Supabase or Postgres—and creates only `cb_*` objects.
+`migrations/0001_cb_ai_usage_and_limits.sql` uses D1/SQLite syntax and creates
+only `cb_*` objects.
 
 After reviewing the migration, apply it to the existing remote database from
 the repository root using Wrangler:
@@ -79,8 +79,7 @@ advertise this backend as production-ready yet.
 
 1. Install Node.js 22.6+ and npm.
 2. From this folder, run `npm install`.
-3. Create a dedicated Cloudflare KV namespace for `CB_KEY_COOLDOWNS` and
-   replace the placeholder ID in `wrangler.toml`.
+3. The existing `sitecraft-db` D1 binding is already configured in `wrangler.toml`.
 4. On Windows, run
    `powershell -ExecutionPolicy Bypass -File .\setup-secrets.ps1` from this
    folder. It asks for five Gemini keys using hidden terminal prompts and writes
