@@ -567,9 +567,13 @@ export async function saveOwnerAnswer(
 
   const existingFacts = await currentFacts(db, version.knowledge_version_id);
   const keyed = existingingFactsForKey(existingFacts, knowledgeKey);
-  const signatures = new Set(keyed.filter(row => row.status !== "missing" && row.status !== "not_applicable").map(row => valueSignature(storedValue(row))));
-  if (signatures.size > 1 || keyed.some(row => row.status === "conflicting")) {
-    // Keep the disputed facts in the old version as an audit trail. The new draft
+  const priorActive = keyed.filter(row => row.status !== "missing" && row.status !== "not_applicable");
+  const signatures = new Set(priorActive.map(row => valueSignature(storedValue(row))));
+  const answerDisagrees = notApplicable
+    ? priorActive.length > 0
+    : signatures.size > 1 || (signatures.size === 1 && !signatures.has(valueSignature(answer)));
+  if (answerDisagrees || keyed.some(row => row.status === "conflicting")) {
+    // Keep disputed or corrected facts in the old version as an audit trail. The new draft
     // copies unaffected facts and intentionally omits the key the owner is resolving.
     version = await createDraftVersion(db, business, version, [knowledgeKey]);
   } else {
