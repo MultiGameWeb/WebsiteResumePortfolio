@@ -30,19 +30,14 @@ window.addEventListener('resize', syncVisualViewport, { passive: true });
 const MAX_ATTACHMENTS = 5;
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
 const ALLOWED_EXTENSIONS = new Set([
-  'jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'heic', 'heif', 'avif', 'tif', 'tiff', 'apng',
-  'pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'txt',
+  'jpg', 'jpeg', 'png', 'webp', 'heic', 'heif', 'pdf', 'csv', 'txt',
 ]);
-const IMAGE_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'heic', 'heif', 'avif', 'tif', 'tiff', 'apng']);
+const IMAGE_EXTENSIONS = new Set(['jpg', 'jpeg', 'png', 'webp', 'heic', 'heif']);
 const MIME_BY_EXTENSION = {
-  jpg: ['image/jpeg'], jpeg: ['image/jpeg'], png: ['image/png'], gif: ['image/gif'],
-  webp: ['image/webp'], bmp: ['image/bmp', 'image/x-ms-bmp'], tif: ['image/tiff'], tiff: ['image/tiff'], apng: ['image/apng', 'image/png'], heic: ['image/heic', 'image/heif'],
-  heif: ['image/heif', 'image/heic'], avif: ['image/avif'], pdf: ['application/pdf'],
-  doc: ['application/msword'],
-  docx: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-  xls: ['application/vnd.ms-excel', 'application/x-msexcel'],
-  xlsx: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
-  csv: ['text/csv', 'application/csv', 'text/plain', 'application/vnd.ms-excel'],
+  jpg: ['image/jpeg'], jpeg: ['image/jpeg'], png: ['image/png'],
+  webp: ['image/webp'], heic: ['image/heic', 'image/heif'],
+  heif: ['image/heif', 'image/heic'], pdf: ['application/pdf'],
+  csv: ['text/csv', 'application/csv', 'text/plain'],
   txt: ['text/plain'],
 };
 
@@ -138,7 +133,7 @@ function getExtension(name) {
 function validateFile(file) {
   const extension = getExtension(file.name);
   if (!ALLOWED_EXTENSIONS.has(extension)) {
-    return `${file.name}: This file type isn’t supported. Choose an image, PDF, DOC/DOCX, XLS/XLSX, CSV, or TXT file.`;
+    return `${file.name}: This file type isn’t supported. Choose JPG, PNG, WEBP, HEIC/HEIF, PDF, CSV, or TXT.`;
   }
   if (file.size > MAX_FILE_BYTES) {
     return `${file.name}: The file is larger than 10 MB. Choose a smaller file.`;
