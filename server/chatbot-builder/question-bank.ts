@@ -103,6 +103,7 @@ const INTENTS: readonly IntentDefinition[] = [
   { id: "invoice_receipt", answerType: "process", knowledgeKeys: ["payments.invoice_policy"], question: c => `How can customers receive an invoice, receipt, or payment confirmation?`, variants: () => [`Do you provide receipts or invoices?`, `What proof of payment can a customer request?`] },
   { id: "online_support", answerType: "boolean", knowledgeKeys: ["fulfillment.online_options", "support.online_channels"], question: c => `Which ${c.offeringsLabel} or support services can customers access online or remotely?`, variants: () => [`Can customers complete the process online?`, `Which online channels do you officially support?`] },
   { id: "privacy", answerType: "policy", knowledgeKeys: ["policies.privacy", "policies.data_handling"], question: c => `What approved privacy and personal-data information should the chatbot share with customers?`, variants: () => [`How is customer information handled?`, `What privacy policy or data-use notice should be linked?`] },
+  { id: "language_support", answerType: "list", knowledgeKeys: ["assistant.supported_languages", "assistant.language_policy"], question: c => `Which languages should your ${c.businessLabel} chatbot support for customers?`, variants: () => [`Should the chatbot answer in English, Telugu, Hindi, or other languages?`, `Are there languages the chatbot should recognize or hand off to a person?`] },
   { id: "special_requests", answerType: "process", knowledgeKeys: ["policies.special_requests"], question: c => `Can customers make special requests, and how are they reviewed or approved?`, variants: () => [`How should a customer ask for an exception?`, `Which special requests must be confirmed by a person?`] },
   { id: "next_steps", answerType: "process", knowledgeKeys: ["business.next_steps"], question: c => `What should a customer do next if they want to proceed with your ${c.offeringsLabel}?`, variants: c => [`How can an interested customer get started?`, `What is the next step after getting the required information?`] },
 ];
@@ -135,7 +136,9 @@ export function getQuestionBank(category?: BusinessCategoryId): QuestionPattern[
 
 /** Select relevant patterns and collapse repeat intents when a business has multiple category tags. */
 export function selectQuestionPatterns(categories: readonly BusinessCategoryId[]): QuestionPattern[] {
-  const selected = QUESTION_BANK.filter(pattern => categories.includes(pattern.category));
+  const selected = categories.flatMap(category =>
+    QUESTION_BANK.filter(pattern => pattern.category === category)
+  );
   const seenIntents = new Set<string>();
   const seenQuestions = new Set<string>();
   const result: QuestionPattern[] = [];
@@ -155,12 +158,14 @@ export function normalizeQuestionText(value: string): string {
 
 export function deduplicateQuestionPatterns(patterns: readonly QuestionPattern[]): QuestionPattern[] {
   const seenIds = new Set<string>();
+  const seenIntents = new Set<string>();
   const seenQuestions = new Set<string>();
   const result: QuestionPattern[] = [];
   for (const pattern of patterns) {
     const normalized = normalizeQuestionText(pattern.question);
-    if (seenIds.has(pattern.id) || !normalized || seenQuestions.has(normalized)) continue;
+    if (seenIds.has(pattern.id) || seenIntents.has(pattern.intent) || !normalized || seenQuestions.has(normalized)) continue;
     seenIds.add(pattern.id);
+    seenIntents.add(pattern.intent);
     seenQuestions.add(normalized);
     result.push({ ...pattern, variants: [...pattern.variants], knowledgeKeys: [...pattern.knowledgeKeys] });
   }
