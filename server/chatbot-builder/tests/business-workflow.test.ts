@@ -276,7 +276,7 @@ test("an explicit owner correction replaces a single stale value without deletin
       rawJson: extraction("+91 11111 11111", "Call +91 11111 11111"),
     });
     const phonePattern = getQuestionBank("restaurant").find(item => item.intent === "phone_contact");
-    assert.ok(phonePattern);
+    if (!phonePattern) throw new Error("Expected phone-contact question pattern in restaurant question bank.");
 
     const result = await saveOwnerAnswer(db, {
       ownerId: "owner-1",
