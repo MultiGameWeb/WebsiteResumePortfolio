@@ -11,6 +11,28 @@ const MODELS = ["gemini-3.8-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"]
 const PARALLEL_REQUESTS = 4;
 const MIN_QUESTIONS = 200;
 const MAX_QUESTIONS = 260;
+// Generate extra so the bank stays above MIN_QUESTIONS after the review pass.
+const TARGET_BEFORE_REVIEW = 245;
+const MAX_MANDATORY_EXTRA = 10;
+
+// Asked of every shop, whatever its type; generated questions must not repeat them.
+const CORE_QUESTIONS = [
+  ["What is your shop's name?", "What is the shop name?", "text", []],
+  ["What is your shop's full address, with a nearby landmark?", "Where is your shop?", "text", []],
+  ["What are your shop's opening and closing times?", "What time do you open?", "text", []],
+  ["Which day is your shop closed every week?", "Are you open on Sunday?", "options", ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Open all days"]],
+  ["Which phone number should customers call for your shop?", "What is your contact number?", "text", []],
+  ["What are the main types of items you sell?", "What do you sell?", "list", []],
+  ["Which payment methods do you accept?", "Can I pay by UPI or card?", "list", []]
+].map(([owner_question, customer_question, answer_type, options]) => ({
+  category: "Shop basics",
+  customer_question,
+  owner_question,
+  priority: "mandatory",
+  answer_type,
+  options,
+  why_customers_ask: "Every customer needs these basics."
+}));
 
 const PRIORITIES = new Set(["mandatory", "important", "optional"]);
 const ANSWER_TYPES = new Set(["text", "options", "yes_no", "number", "price", "image", "list"]);
@@ -21,11 +43,14 @@ Your questions are asked to the SHOP OWNER, one at a time, to collect that infor
 
 Rules:
 - Cover what real customers of this kind of shop ask before buying: products and range, pricing and charges, quality and certification, policies (exchange, return, warranty, repair), payment and offers, services, timings and location, trust, and shop-type-specific topics.
+- Assume a small or medium local shop run by its owner, not a large showroom chain.
+- Ask only about facts of the shop. Never ask about chatbot features, settings or how the bot should behave.
+- Do not ask the basics that are always collected separately: shop name, address, opening times, weekly holiday, contact number, main items sold and payment methods.
 - Shop-level questions only. Individual item prices and photos come from item cards the owner uploads, so ask about ranges, rules and policies instead of single items.
 - One piece of information per question. Short, simple English that a small shop owner understands. No jargon.
 - No duplicates or near-duplicates.
 - Never ask for customer personal data, passwords, bank details, or anything illegal or unsafe.
-- priority: "mandatory" only for facts the bot cannot work without (about 10%); "important" for facts most customers ask (about 40%); everything else "optional".
+- priority: "mandatory" only for the few facts the bot cannot work without (at most 5 per category); "important" for facts most customers ask (about 40%); everything else "optional".
 - answer_type: "yes_no", "options" (give 2-6 options), "number", "price", "list", "image" (owner sends a photo) or "text".
 - Use Indian context: rupees, GST, UPI, local units and customs where relevant.`;
 
@@ -97,7 +122,7 @@ function normalizeQuestions(raw, seen) {
       owner_question: ownerQuestion,
       priority: PRIORITIES.has(q?.priority) ? q.priority : "optional",
       answer_type: answerType === "options" && options.length < 2 ? "text" : answerType,
-      options: answerType === "options" || answerType === "yes_no" ? options : [],
+      options: answerType === "options" ? options : answerType === "yes_no" ? ["Yes", "No"] : [],
       why_customers_ask: cleanText(q?.why_customers_ask, 240)
     });
   }
@@ -132,6 +157,37 @@ async function runLimited(tasks, limit) {
   return results;
 }
 
+const REVIEW_SCHEMA = {
+  type: "OBJECT",
+  properties: {
+    duplicate_ids: { type: "ARRAY", items: { type: "INTEGER" }, description: "later questions that ask for the same fact as an earlier one" },
+    off_topic_ids: { type: "ARRAY", items: { type: "INTEGER" }, description: "questions about chatbot features, or unsuitable for a small local shop" },
+    mandatory_ids: { type: "ARRAY", items: { type: "INTEGER" }, description: `at most ${MAX_MANDATORY_EXTRA} questions the bot truly cannot work without` }
+  },
+  required: ["duplicate_ids", "off_topic_ids", "mandatory_ids"]
+};
+
+// One pass over the whole bank: per-category generation cannot see the
+// other categories, so the same fact (e.g. GST) can be asked several times.
+async function reviewBank(env, shop, questions, log) {
+  const list = questions.map((q, i) => `${i}. [${q.category}] ${q.owner_question}`).join("\n");
+  const { result } = await callWithFallback(env, {
+    system: RULES,
+    prompt: `Shop type: ${shop}\n\nReview this owner interview. The shop basics (name, address, timings, holiday, phone, items sold, payment methods) are already asked separately.\n\n${list}\n\nReturn the ids of duplicates (keep the first, list the later ones), off-topic questions, and at most ${MAX_MANDATORY_EXTRA} truly mandatory questions.`,
+    schema: REVIEW_SCHEMA,
+    temperature: 0.1,
+    log
+  });
+  const ids = key => new Set((result?.[key] || []).filter(Number.isInteger));
+  const drop = new Set([...ids("duplicate_ids"), ...ids("off_topic_ids")]);
+  const mandatory = new Set([...ids("mandatory_ids")].filter(i => !drop.has(i)).slice(0, MAX_MANDATORY_EXTRA));
+  log(`review: dropped ${drop.size}, mandatory ${mandatory.size}`);
+  return questions.flatMap((q, i) => drop.has(i) ? [] : [{
+    ...q,
+    priority: mandatory.has(i) ? "mandatory" : q.priority === "mandatory" ? "important" : q.priority
+  }]);
+}
+
 function categoryPrompt(shop, place, category, count, existing) {
   return `Shop type: ${shop}\nLocation: ${place}\n\nTopic category: ${category.name}\nWhat customers ask about: ${category.customer_concerns}\n\nWrite ${count} owner interview questions for this category only. Set "category" to "${category.name}".${existing.length ? `\n\nThese questions already exist; do not repeat them:\n${existing.map(q => `- ${q}`).join("\n")}` : ""}`;
 }
@@ -146,7 +202,7 @@ export async function generateQuestionBank(env, { shopType, city = "", log = () 
   const useSearch = env?.BOTCRAFT_SEARCH_GROUNDING === "on";
   const { result: research } = await callWithFallback(env, {
     system: RULES,
-    prompt: `Shop type: ${shopDescription}\nLocation: ${place}\n\n${useSearch ? "Search the web for" : "Using your knowledge, work out"} what customers of this kind of shop in ${place} commonly ask, worry about and compare before buying. Then list 12-18 topic categories for the owner interview, with how many questions each needs so the total is about 230.`,
+    prompt: `Shop type: ${shopDescription}\nLocation: ${place}\n\n${useSearch ? "Search the web for" : "Using your knowledge, work out"} what customers of this kind of shop in ${place} commonly ask, worry about and compare before buying. Then list 12-18 topic categories for the owner interview, with how many questions each needs so the total is about 250.`,
     schema: CATEGORY_SCHEMA,
     tools: useSearch ? [{ google_search: {} }] : undefined,
     log,
@@ -163,42 +219,63 @@ export async function generateQuestionBank(env, { shopType, city = "", log = () 
   if (!categories.length) throw new Error("Research returned no categories.");
   log(`research: ${categories.length} categories`);
 
-  // Step 2: write each category's questions in parallel, then top up the
-  // categories that came back short.
-  const seen = new Set();
+  // Step 2: write each category's questions in parallel, topping up the
+  // categories that come back short.
+  const seen = new Set(CORE_QUESTIONS.map(q => questionKey(q.owner_question)));
   const byCategory = categories.map(() => []);
   const models = new Set();
-  for (let round = 0; round < 3; round += 1) {
-    const total = byCategory.reduce((n, list) => n + list.length, 0);
-    if (total >= MIN_QUESTIONS) break;
-    const tasks = categories
-      .map((category, i) => ({ category, i, missing: category.question_count - byCategory[i].length }))
-      .filter(t => round === 0 || t.missing > 0)
-      .map(({ category, i, missing }) => async () => {
-        const count = round === 0 ? category.question_count : Math.max(3, missing);
-        const existing = byCategory[i].map(q => q.owner_question);
-        const { model, result } = await callWithFallback(env, {
-          system: RULES,
-          prompt: categoryPrompt(shopDescription, place, category, count, existing),
-          schema: QUESTION_SCHEMA,
-          temperature: 0.5,
-          maxOutputTokens: 12000,
-          log
+  async function fill(target) {
+    for (let round = 0; round < 3; round += 1) {
+      const total = byCategory.reduce((n, list) => n + list.length, 0);
+      if (total >= target) return;
+      // Spread the shortfall over the categories with the fewest questions.
+      const tasks = categories
+        .map((category, i) => ({ category, i, missing: category.question_count - byCategory[i].length }))
+        .filter(t => t.missing > 0 || (total > 0 && round > 0))
+        .map(({ category, i, missing }) => async () => {
+          const count = Math.max(3, missing);
+          const existing = byCategory[i].map(q => q.owner_question);
+          const { model, result } = await callWithFallback(env, {
+            system: RULES,
+            prompt: categoryPrompt(shopDescription, place, category, count, existing),
+            schema: QUESTION_SCHEMA,
+            temperature: 0.5,
+            maxOutputTokens: 12000,
+            log
+          });
+          models.add(model);
+          log(`${category.name}: +${result?.questions?.length || 0} (${model})`);
+          return { i, questions: result?.questions };
         });
-        models.add(model);
-        log(`round ${round + 1}: ${category.name} done (${model})`);
-        return { i, questions: result?.questions };
-      });
-    if (!tasks.length) {
-      // Every category is full but the total is short: ask for extras everywhere.
-      categories.forEach(c => { c.question_count += 3; });
-      continue;
-    }
-    for (const done of await runLimited(tasks, PARALLEL_REQUESTS)) {
-      if (done) byCategory[done.i].push(...normalizeQuestions(done.questions, seen).map(q => ({ ...q, category: categories[done.i].name })));
+      if (!tasks.length) {
+        categories.forEach(c => { c.question_count += 3; });
+        continue;
+      }
+      for (const done of await runLimited(tasks, PARALLEL_REQUESTS)) {
+        if (done) byCategory[done.i].push(...normalizeQuestions(done.questions, seen).map(q => ({ ...q, category: categories[done.i].name })));
+      }
     }
   }
-  const questions = byCategory.flat();
+
+  await fill(TARGET_BEFORE_REVIEW);
+
+  // Step 3: remove duplicates and off-topic questions across categories and
+  // choose the few truly mandatory ones. Top up once if the review cut too much.
+  let generated = byCategory.flat();
+  try {
+    generated = await reviewBank(env, shopDescription, generated, log);
+  } catch (error) {
+    log(`review skipped: ${error.message.slice(0, 120)}`);
+  }
+  if (CORE_QUESTIONS.length + generated.length < MIN_QUESTIONS) {
+    categories.forEach((c, i) => { byCategory[i] = generated.filter(q => q.category === c.name); });
+    const before = generated.length;
+    categories.forEach((c, i) => { c.question_count = byCategory[i].length + 3; });
+    await fill(MIN_QUESTIONS - CORE_QUESTIONS.length + 5);
+    generated = byCategory.flat();
+    log(`top-up after review: ${before} -> ${generated.length}`);
+  }
+  const questions = [...CORE_QUESTIONS, ...generated];
   if (questions.length < MIN_QUESTIONS) {
     throw new Error(`Only ${questions.length} questions were generated; try again.`);
   }
