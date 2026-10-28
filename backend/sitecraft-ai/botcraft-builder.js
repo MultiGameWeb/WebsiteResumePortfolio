@@ -188,7 +188,12 @@ const CATEGORY_NEEDS = {
   "Finance & loans": facts => /^yes/i.test(String(facts.emi || "").trim())
 };
 
+// Questions marked city_only (things small-town shops rarely know) are asked
+// only to shops in a district headquarters or city.
+const CITY_AREA = /district|city/i;
+
 function bankApplies(q, facts) {
+  if (q.city_only && !CITY_AREA.test(String(facts.shop_area || ""))) return false;
   return !CATEGORY_NEEDS[q.category] || CATEGORY_NEEDS[q.category](facts);
 }
 

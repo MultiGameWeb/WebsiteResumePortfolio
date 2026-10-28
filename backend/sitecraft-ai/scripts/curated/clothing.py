@@ -6,6 +6,8 @@
 # Tags: S = saree & textile showroom, G = readymade garments / family fashion store,
 #       B = boutique & designer wear, K = kids wear shop.
 # Each owner is asked only the questions tagged for their business.
+# A * in the tags marks a city-only question, asked only to shops in a district
+# headquarters or city (local shops rarely know these).
 # Core questions (name, address, map, parking, timings, holiday, phone,
 # WhatsApp, main items, return/exchange, home delivery, EMI, offers, photos)
 # are asked separately, so they are not repeated here.
@@ -35,6 +37,9 @@ Q = [
  ("Products & collections", "O", "text", "Which latest trending styles do you have right now?", "Do you have the latest trend?", [], "GBK"),
  ("Products & collections", "O", "yes_no", "Do you have return-gift sarees or clothes in bulk for functions?", "Do you have sarees for return gifts?", YN, "S"),
  ("Products & collections", "O", "yes_no", "Do you sell groom combos (sherwani with matching pagdi, mojari and dupatta)?", "Do you have a full groom set?", YN, "GB"),
+ ("Products & collections", "O", "yes_no", "Do you have iron-free / crease-resistant shirts?", "Do you have non-iron shirts?", YN, "G*"),
+ ("Products & collections", "O", "list", "Which size systems do your clothes follow?", "Is this UK size?", ["Indian sizes", "UK sizes", "US sizes", "Mixed (depends on the brand)"], "G*"),
+ ("Products & collections", "O", "yes_no", "Do you have jeans in different lengths (short, regular, long) for the same waist size?", "Do you have this jeans in a longer length?", YN, "G*"),
  ("Products & collections", "O", "yes_no", "Do you have different fits (slim, regular, comfort)?", "Do you have a regular fit shirt?", YN, "G"),
  ("Products & collections", "O", "yes_no", "Do you have loose / broader fits for healthier kids?", "Do you have a loose fit for my chubby son?", YN, "K"),
  ("Products & collections", "O", "yes_no", "Do you have a seconds section (small defects at lower prices)?", "Do you sell seconds?", YN, "SGK"),
@@ -54,6 +59,8 @@ Q = [
  ("Fabric & quality", "O", "yes_no", "Do your kids' clothes avoid sharp buttons, hard zips and loose beads?", "Will the beads come off in my baby's mouth?", YN, "K"),
  ("Fabric & quality", "I", "text", "If a customer finds a defect at home (tear, loose threads, missing button, stain), do you replace it or give another colour? Within how many days?", "There's a hole in the shirt, will you change it?", [], "SGK"),
  ("Fabric & quality", "O", "yes_no", "Do you give a free saree cover / bag with silk sarees?", "Will I get a saree cover?", YN, "S"),
+ ("Fabric & quality", "O", "text", "How do you check the quality of non-branded clothes before selling them?", "Is this non-branded shirt good quality?", [], "SGK*"),
+ ("Fabric & quality", "O", "yes_no", "Do you sell eco-friendly fabrics (organic cotton, natural dyes, recycled fabric)?", "Do you have eco-friendly clothes?", YN, "SGBK*"),
  ("Fabric & quality", "O", "text", "Do you give any colour guarantee (replace if the colour fades or bleeds)?", "What if the colour fades?", [], "SGK"),
  ("Fabric & quality", "O", "text", "Which clothes need dry cleaning only, and how should customers wash, iron (zari, heavy work) and care for the rest?", "Can I wash this at home?", [], "SGBK"),
  ("Fabric & quality", "O", "options", "Do your sarees come with a blouse piece?", "Is the blouse piece included?", ["Yes, all sarees", "Most sarees", "No"], "S"),
@@ -139,10 +146,11 @@ for key, name, tag in TYPES:
     assert len({q[3] for q in chosen}) == len(chosen), f"duplicate question in {key}"
     rows = sorted(enumerate(chosen), key=lambda x: (order[x[1][1]], x[0]))
     questions = []
-    for n, (_, (cat, pri, typ, owner, customer, opts, _tags)) in enumerate(rows, 1):
+    for n, (_, (cat, pri, typ, owner, customer, opts, tags)) in enumerate(rows, 1):
         q = {"id": f"{key}-{n:03d}", "category": cat, "owner_question": owner, "customer_question": customer,
              "priority": PRI[pri], "answer_type": typ}
         if opts: q["options"] = opts
+        if "*" in tags: q["city_only"] = True
         questions.append(q)
     out = os.path.join(here, "..", "..", "botcraft-banks", f"{key}.json")
     json.dump({"shop_type_key": key, "name": name, "version": 2, "model": "curated",
