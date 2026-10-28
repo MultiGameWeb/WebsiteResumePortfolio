@@ -205,9 +205,10 @@ function markOptionUsed(optionId) {
 async function handleSend({ text = '', option = null, attachments = null, retryMessage = null } = {}) {
   const cleanText = String(text).trim();
   const outgoingAttachments = attachments ?? [...state.stagedAttachments];
-  if (!cleanText && outgoingAttachments.length === 0) return;
 
   if (!retryMessage) {
+    // A retry resends its own message; only new sends need content.
+    if (!cleanText && outgoingAttachments.length === 0) return;
     if (option?.id) markOptionUsed(option.id);
     const userMessage = {
       id: makeId('message'), role: 'user', text: cleanText,
@@ -301,23 +302,33 @@ function showToast(message) {
   announce(message);
 }
 
-function copyMessage(messageId) {
-  const message = state.messages.find((item) => item.id === messageId);
-  if (!message?.text) return;
-  if (navigator.clipboard?.writeText) {
-    navigator.clipboard.writeText(message.text).then(
-      () => showToast('Message copied.'),
-      () => fallbackCopy(message.text),
-    );
-  } else fallbackCopy(message.text);
+// Shows "Copied" on the button itself for a moment.
+function markCopied(button) {
+  if (!button) return;
+  const original = button.innerHTML;
+  button.classList.add('is-copied');
+  button.textContent = '✓ Copied';
+  window.setTimeout(() => {
+    button.classList.remove('is-copied');
+    button.innerHTML = original;
+  }, 1500);
 }
 
-function fallbackCopy(text) {
+function copyMessage(messageId, button) {
+  const message = state.messages.find((item) => item.id === messageId);
+  if (!message?.text) return;
+  const copied = () => { showToast('Message copied.'); markCopied(button); };
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(message.text).then(copied, () => fallbackCopy(message.text, copied));
+  } else fallbackCopy(message.text, copied);
+}
+
+function fallbackCopy(text, onCopied) {
   const helper = document.createElement('textarea');
   helper.value = text;
   helper.style.position = 'fixed'; helper.style.opacity = '0';
   document.body.append(helper); helper.select();
-  try { document.execCommand('copy'); showToast('Message copied.'); }
+  try { document.execCommand('copy'); onCopied(); }
   catch { showToast('Could not copy automatically. Select the message text to copy it.'); }
   helper.remove();
 }
@@ -351,7 +362,7 @@ app.addEventListener('click', (event) => {
     handleSend({ text: button.dataset.value, option });
     return;
   }
-  if (action === 'copy-message') { copyMessage(button.dataset.messageId); return; }
+  if (action === 'copy-message') { copyMessage(button.dataset.messageId, button); return; }
   if (action === 'retry-message') {
     const message = state.messages.find((item) => item.id === button.dataset.messageId);
     if (message) handleSend({ retryMessage: message });

@@ -200,7 +200,8 @@ export function MessageBubble(message) {
   copy.dataset.messageId = message.id;
   if (message.text) actions.append(copy);
   if (message.status === 'failed') {
-    const retry = iconButton('retry', 'Retry sending this message', 'retry-button', 'retry-message');
+    const retry = iconButton('retry', 'Retry sending this message', 'retry-button has-label', 'retry-message');
+    retry.append(makeElement('span', 'button-label', 'Retry'));
     retry.dataset.messageId = message.id;
     actions.append(retry);
   }
