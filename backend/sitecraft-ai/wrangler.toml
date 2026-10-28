@@ -18,5 +18,10 @@ database_id = "53b8dd82-40ff-424a-bbf1-29a51a1f9cf2"
 [placement]
 region = "gcp:us-central1"
 
+[[r2_buckets]]
+binding = "MEDIA_BUCKET"
+bucket_name = "sitecraft-media"
+
 [vars]
+ENABLE_DEMO_PUBLISH = "false"
 GEMINI_MODEL = "gemini-3.8-flash"
