@@ -1,11 +1,14 @@
 import { CORE_QUESTIONS, callWithFallback } from "./botcraft-question-bank.js";
 import { SHOP_TYPES } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
+import { loadShop, saveTurn, storeAvailable } from "./botcraft-store.js";
 
 // POST /api/botcraft/chat — BotCraft's conversation with a shop owner.
-// Stateless for now: the browser sends the recent conversation, the core facts
-// and the answers to its shop type's question bank, and gets back a reply plus
-// whatever was newly learned. Saving to D1 comes with owner accounts.
+// GET /api/botcraft/shop?id=<shopId> — the saved conversation, to restore the page.
+//
+// The browser keeps a random shop id. When the BOTCRAFT_DB binding exists, the
+// shop's facts, answers, items and messages are loaded from and saved to D1
+// (botcraft-store.js); otherwise the browser sends that state with each message.
 //
 // Flow: shop type -> core questions -> the ready-made question bank for that
 // shop type (botcraft-banks/), mandatory first, then important, then optional.
@@ -86,7 +89,7 @@ function corsHeaders(origin) {
     "Cache-Control": "no-store",
     "Vary": "Origin",
     "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type"
   };
 }
@@ -109,6 +112,7 @@ function throttled(clientKey, now) {
 }
 
 const clip = (value, max) => String(value ?? "").trim().slice(0, max);
+const SHOP_ID_PATTERN = /^[A-Za-z0-9-]{16,64}$/;
 
 function cleanFacts(raw) {
   const facts = {};
@@ -220,7 +224,7 @@ function base64Size(data) {
 
 export async function handleBotcraftRoute(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
-  if (path !== "/api/botcraft/chat") return null;
+  if (path !== "/api/botcraft/chat" && path !== "/api/botcraft/shop") return null;
 
   const origin = request.headers.get("Origin") || "";
   if (!allowedOrigins(env).has(origin)) {
@@ -230,6 +234,17 @@ export async function handleBotcraftRoute(request, env, url) {
     });
   }
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders(origin) });
+
+  if (path === "/api/botcraft/shop") {
+    if (request.method !== "GET") return reply({ ok: false, error: "Use GET." }, 405, origin);
+    const shopId = url.searchParams.get("id") || "";
+    if (!SHOP_ID_PATTERN.test(shopId) || !storeAvailable(env)) return reply({ ok: true, messages: [] }, 200, origin);
+    const saved = await loadShop(env, shopId, 200);
+    if (!saved) return reply({ ok: true, messages: [] }, 200, origin);
+    const answers = cleanAnswers(saved.answers, bankFor(saved.facts));
+    return reply({ ok: true, messages: saved.messages, progress: progress(cleanFacts(saved.facts), answers) }, 200, origin);
+  }
+
   if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
   if (!env?.BOTCRAFT_GEMINI_API_KEY) return reply({ ok: false, error: "BotCraft AI is not configured yet." }, 503, origin);
 
@@ -248,8 +263,18 @@ export async function handleBotcraftRoute(request, env, url) {
     return reply({ ok: false, error: "Request body must be JSON." }, 400, origin);
   }
 
-  const facts = cleanFacts(body?.facts);
-  const answers = cleanAnswers(body?.answers, bankFor(facts));
+  const shopId = SHOP_ID_PATTERN.test(String(body?.shopId || "")) ? body.shopId : null;
+  let saved = null;
+  if (shopId && storeAvailable(env)) {
+    try {
+      saved = (await loadShop(env, shopId, MAX_HISTORY)) || { facts: {}, notes: [], answers: {}, messages: [] };
+    } catch (error) {
+      console.error("BotCraft load failed", error);
+    }
+  }
+  // Saved state wins over what the browser sends.
+  const facts = cleanFacts(saved ? saved.facts : body?.facts);
+  const answers = cleanAnswers(saved ? saved.answers : body?.answers, bankFor(facts));
   const text = clip(body?.text, MAX_TEXT);
   const images = (Array.isArray(body?.images) ? body.images : [])
     .filter(img => IMAGE_TYPES.has(img?.mimeType) && typeof img?.data === "string" && base64Size(img.data) <= MAX_IMAGE_BYTES)
@@ -257,7 +282,7 @@ export async function handleBotcraftRoute(request, env, url) {
   const skippedFiles = (Array.isArray(body?.otherFiles) ? body.otherFiles : []).map(f => clip(f, 120)).filter(Boolean).slice(0, 5);
   if (!text && !images.length && !skippedFiles.length) return reply({ ok: false, error: "Message is empty." }, 400, origin);
 
-  const history = (Array.isArray(body?.history) ? body.history : [])
+  const history = (saved ? saved.messages : Array.isArray(body?.history) ? body.history : [])
     .slice(-MAX_HISTORY)
     .map(m => ({ role: m?.role === "botcraft" ? "model" : "user", parts: [{ text: clip(m?.text, MAX_TEXT) || "(sent files)" }] }));
   const parts = [];
@@ -329,9 +354,35 @@ export async function handleBotcraftRoute(request, env, url) {
   const nextQuestion = pendingCore(merged)[0] || pendingBank(bankFor(merged), mergedAnswers)[0];
   const allowSkip = !nextQuestion || nextQuestion.priority !== "mandatory";
 
+  const botText = clip(result?.reply, 1500) || "Sorry, please say that again.";
+  const notes = (Array.isArray(result?.notes) ? result.notes : []).map(n => clip(n, 300)).filter(Boolean).slice(0, 20);
+  const items = (Array.isArray(result?.items) ? result.items : []).slice(0, 30).map(item => ({
+    name: clip(item?.name, 120),
+    price_text: clip(item?.price_text, 80),
+    details: clip(item?.details, 400)
+  })).filter(item => item.name);
+
+  if (saved) {
+    const fileCount = images.length + skippedFiles.length;
+    try {
+      await saveTurn(env, shopId, {
+        facts: merged,
+        notes: [...(saved.notes || []), ...notes],
+        answers: sameBank ? newAnswers : {},
+        resetAnswers: !sameBank,
+        items,
+        ownerText: [text, fileCount ? `(sent ${fileCount} file${fileCount === 1 ? "" : "s"})` : ""].filter(Boolean).join(" "),
+        botText
+      });
+    } catch (error) {
+      console.error("BotCraft save failed", error);
+    }
+  }
+
   return reply({
     ok: true,
-    reply: clip(result?.reply, 1500) || "Sorry, please say that again.",
+    saved: Boolean(saved),
+    reply: botText,
     options: (Array.isArray(result?.options) ? result.options : [])
       .map(o => clip(o, 60))
       .filter(o => o && (allowSkip || !(/^skip/i.test(o) || o === FINISH_OPTION)))
@@ -339,12 +390,8 @@ export async function handleBotcraftRoute(request, env, url) {
     facts: learned,
     answers: sameBank ? newAnswers : {},
     resetAnswers: !sameBank,
-    notes: (Array.isArray(result?.notes) ? result.notes : []).map(n => clip(n, 300)).filter(Boolean).slice(0, 20),
-    items: (Array.isArray(result?.items) ? result.items : []).slice(0, 30).map(item => ({
-      name: clip(item?.name, 120),
-      price_text: clip(item?.price_text, 80),
-      details: clip(item?.details, 400)
-    })).filter(item => item.name),
+    notes,
+    items,
     progress: progress(merged, mergedAnswers)
   }, 200, origin);
 }

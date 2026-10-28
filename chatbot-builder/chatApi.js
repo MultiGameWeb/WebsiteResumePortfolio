@@ -12,7 +12,21 @@ const MAX_IMAGE_SIDE = 1600;
 const MAX_RAW_IMAGE_BYTES = 4 * 1024 * 1024;
 const HISTORY_LIMIT = 30;
 
-// Conversation and collected facts live only in this page for now.
+// The shop id ties this browser to its saved setup on the Worker. Until owner
+// login exists it is kept in localStorage; history, facts and answers below
+// are also sent so the chat still works when the Worker has no database.
+const SHOP_ID_KEY = 'botcraft:shopId';
+const shopId = (() => {
+  try {
+    const existing = localStorage.getItem(SHOP_ID_KEY);
+    if (existing) return existing;
+    const created = crypto.randomUUID();
+    localStorage.setItem(SHOP_ID_KEY, created);
+    return created;
+  } catch {
+    return crypto.randomUUID();
+  }
+})();
 const history = [];
 let facts = {};
 // Answers to the shop type's question bank, by question id.
@@ -60,7 +74,23 @@ async function buildPayload(action) {
     if (image) images.push(image);
     else otherFiles.push(attachment.name);
   }
-  return { text, images, otherFiles, history: history.slice(-HISTORY_LIMIT), facts, answers };
+  return { shopId, text, images, otherFiles, history: history.slice(-HISTORY_LIMIT), facts, answers };
+}
+
+/**
+ * The saved conversation for this browser's shop, or null if there is none.
+ * @returns {Promise<{ messages: { role: string, text: string, created_at: string }[], progress?: { answered: number, total: number } } | null>}
+ */
+export async function loadSavedConversation() {
+  try {
+    const response = await fetch(`${API_BASE}/api/botcraft/shop?id=${encodeURIComponent(shopId)}`);
+    const data = await response.json();
+    if (!response.ok || !data?.ok || !data.messages?.length) return null;
+    for (const message of data.messages) history.push({ role: message.role, text: message.text });
+    return data;
+  } catch {
+    return null;
+  }
 }
 
 /**

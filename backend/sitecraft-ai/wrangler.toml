@@ -7,5 +7,11 @@ binding = "DB"
 database_name = "sitecraft-db"
 database_id = "4b639752-7dd1-4543-b9e7-9d0f0eb4afe9"
 
+# BotCraft's own database, separate from the website templates' sitecraft-db.
+[[d1_databases]]
+binding = "BOTCRAFT_DB"
+database_name = "botcraft-db"
+database_id = "53b8dd82-40ff-424a-bbf1-29a51a1f9cf2"
+
 [vars]
 GEMINI_MODEL = "gemini-3.8-flash"

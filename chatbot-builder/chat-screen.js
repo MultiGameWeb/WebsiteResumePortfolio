@@ -1,4 +1,4 @@
-import { sendChatAction } from './chatApi.js';
+import { loadSavedConversation, sendChatAction } from './chatApi.js';
 import {
   ImageLightbox,
   InputBar,
@@ -464,3 +464,21 @@ window.addEventListener('pagehide', () => {
 });
 
 render({ forceBottom: true });
+
+// Continue a setup started earlier in this browser.
+loadSavedConversation().then((saved) => {
+  if (!saved) return;
+  const restored = saved.messages.map((message) => ({
+    id: makeId('message'),
+    role: message.role === 'owner' ? 'user' : 'assistant',
+    text: message.text,
+    time: new Date(message.created_at),
+    status: 'sent',
+  }));
+  state.messages = [{ ...state.messages[0], optionsUsed: true }, ...restored];
+  if (saved.progress) {
+    state.answered = saved.progress.answered;
+    state.total = saved.progress.total;
+  }
+  render({ forceBottom: true });
+});
