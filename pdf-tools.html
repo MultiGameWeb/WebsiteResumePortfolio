@@ -52,7 +52,7 @@ main{max-width:1200px;margin:auto;padding:46px 20px 72px}.hero{display:grid;grid
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/docx@9.9.0/dist/index.umd.cjs"></script>
 <script type="module">
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const $=s=>document.getElementById(s)||document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
 const state={tool:null,file:null,files:[],bytes:null};
 const MAX_FILE_BYTES=50*1024*1024,MAX_TOTAL_BYTES=100*1024*1024,MAX_FILES=30;
