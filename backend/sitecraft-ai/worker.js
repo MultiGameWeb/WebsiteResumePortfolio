@@ -1,6 +1,7 @@
 import { handleAiBuilderRoute } from "./ai-builder.js";
 import { handleWebsiteChatbotRoute } from "./website-chatbot.js";
 import { handleBotcraftRoute } from "./botcraft-builder.js";
+import { handleHostingRoute } from "./hosting.js";
 const MODEL = "gemini-3.8-flash";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 const corsHeaders = {
@@ -119,6 +120,10 @@ async function getStorageAsset(env, siteId, assetId) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    // Shared customer hosting routes run before the general preflight handler so PUT is allowed.
+    const hostingResponse = await handleHostingRoute(request, env, url);
+    if (hostingResponse) return hostingResponse;
 
     // BotCraft checks the origin itself, including on preflight.
     const botcraftResponse = await handleBotcraftRoute(request, env, url);

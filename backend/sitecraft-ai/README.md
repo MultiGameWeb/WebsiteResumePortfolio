@@ -95,3 +95,30 @@ The current catalog contains 50+ configurable features and can be edited without
 The code is pushed as the backend architecture and remains safe to deploy without API keys, but the Worker will report missing Gemini/D1 bindings until the Cloudflare secrets and D1 migration are configured.
 
 The existing template marketplace remains a separate path in the frontend. Do not replace its template registry or rendering engine with this AI workflow.
+
+## Cloudflare customer website hosting (in-progress branch)
+
+The shared hosting prototype lives in `hosting.js` and uses the existing `sitecraft-db` D1 database plus an R2 bucket named `sitecraft-media`.
+
+### Test architecture
+
+- A successful current checkout demo sends the selected template, selected features and customer-entered data to `POST /api/sites/publish`.
+- The Worker creates a unique site slug and owner token, moves uploaded image data URLs into R2, stores the normalized site configuration in D1, and returns a URL under `/s/:slug`.
+- Public site content is served at `GET /s/:slug`. Uploaded image assets use `GET /api/public/assets/:assetId`.
+- The hosted customer admin is served at `/s/:slug/admin`. Its existing UI files are proxied from the repository; save operations go through an owner-token-protected API and persist the content to D1/R2.
+- The downloadable ZIP remains a separate option. The current ZIP admin remains local/browser storage; use the hosted admin link for the cloud-synced prototype.
+- This currently uses a shared Worker origin and path-based URLs, not customer-owned custom domains.
+
+### Cloudflare setup required before testing
+
+1. Create an R2 bucket named `sitecraft-media` in the same Cloudflare account as the `sitecraft-ai` Worker.
+2. Apply migrations `0001_site_data.sql`, the existing AI/chatbot migrations used by the deployed database, and then `0004_customer_site_hosting.sql` to the same `sitecraft-db` D1 database. Do not re-run migrations already applied.
+3. Deploy the Worker with the `MEDIA_BUCKET` R2 binding.
+4. Temporarily set the Worker variable `ENABLE_DEMO_PUBLISH=true` only for controlled testing. Its default is `false`; the public demo publishing endpoint must stay disabled except during tests.
+5. Test text-only and uploaded-image sites, then edit the hosted site through its private admin link and refresh from another tab to verify persistence.
+
+### Important prototype boundary
+
+The current checkout flag is still a browser-side demo simulation. It is not proof of payment. The auto-publish endpoint is intentionally behind `ENABLE_DEMO_PUBLISH`; do not enable public publishing for a real customer launch until server-side payment verification, abuse protection/rate limits, secure customer authentication, backups, expiry handling, and production authorization are in place. Never treat the local `paid` flag as verified payment.
+
+**Tenant-isolation warning:** the initial test URLs use one Worker origin with path-based site slugs. That is convenient for controlled tests, but it is not the final production isolation boundary for untrusted customer content. Before real customer data is used, move live sites to customer-specific subdomains/origins (or isolated per-customer Workers through Workers for Platforms), and keep owner credentials out of shared-origin local storage. Do not launch publicly with only the test path routing.
