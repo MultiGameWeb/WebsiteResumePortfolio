@@ -19,7 +19,7 @@ Q = [
  ("Products & collections", "I", "list", "Which traditional sarees do you have?", "Do you have Kanchi pattu?", ["Kanchipuram", "Dharmavaram", "Gadwal", "Pochampally / ikkat", "Uppada", "Venkatagiri", "Mangalagiri", "Narayanpet", "Banarasi", "Paithani"], "S"),
  ("Products & collections", "I", "list", "What else do you sell besides sarees?", "Do you have dress materials?", ["Dress materials", "Shirting & suiting", "Dhotis / pancha & kanduva", "Lehengas & half-sarees", "Blouse pieces & lining cloth", "Readymade blouses", "Bed sheets & towels", "Readymade garments"], "S"),
  ("Products & collections", "M", "list", "Whose clothes do you sell?", "Do you have men's wear?", ["Men", "Women", "Kids", "Teens", "Plus size"], "G"),
- ("Products & collections", "M", "list", "Which clothes do you sell?", "Do you have kurtis?", ["Shirts & T-shirts", "Jeans & trousers", "Ethnic wear (kurtas, sherwanis)", "Kurtis & sets", "Western wear (tops, dresses)", "Nightwear & innerwear", "Sportswear", "Winter wear"], "G"),
+ ("Products & collections", "M", "list", "Which clothes do you sell?", "Do you have kurtis?", ["Shirts & T-shirts", "Jeans & trousers", "Formals / office wear", "Ethnic wear (kurtas, sherwanis)", "Indo-western / fusion", "Kurtis & sets", "Western wear (tops, dresses)", "Nightwear & innerwear", "Sportswear", "Winter & rain wear (jackets)"], "G"),
  ("Products & collections", "M", "list", "What do you make or sell?", "Do you make bridal blouses?", ["Designer blouses", "Bridal lehengas & half-sarees", "Designer dresses / gowns", "Kurtis & salwar suits", "Kids' designer wear", "Men's ethnic (sherwani, kurta)", "Indo-western", "Readymade designer collection"], "B"),
  ("Products & collections", "M", "list", "Which age groups do you have clothes for?", "Do you have clothes for a 1-year-old?", ["Newborn (0–6 months)", "Babies (6–24 months)", "2–5 years", "6–10 years", "11–15 years"], "K"),
  ("Products & collections", "M", "list", "Which kids' clothes do you sell?", "Do you have pattu langa for girls?", ["Daily wear", "Party wear & frocks", "Ethnic (pattu langa, kurta-pyjama, dhoti sets)", "Night suits", "Baby essentials (jablas, nappies, wrappers)", "School wear", "Winter wear", "Fancy dress costumes"], "K"),
@@ -114,6 +114,8 @@ Q = [
  ("Stock & orders", "O", "yes_no", "Do you take custom weaving orders (name or design woven into the saree)?", "Can you weave our names in the saree?", YN, "S"),
  ("Stock & orders", "O", "yes_no", "Do you rent bridal lehengas, sherwanis or costumes?", "Can I rent a lehenga?", YN, "BK"),
 
+ ("Shop & service", "O", "options", "Are carry bags free, or charged on the bill?", "Do I have to pay for the bag?", ["Free paper / cloth bag", "Free plastic bag", "Charged (₹5–10)"], "SGBK"),
+ ("Shop & service", "O", "yes_no", "Do you send the bill on WhatsApp or SMS?", "Can you send the bill on WhatsApp?", YN, "SGBK"),
  ("Shop & service", "O", "yes_no", "Do you do gift wrapping or gift box packing?", "Can you gift-pack it?", YN, "SGBK"),
  ("Shop & service", "O", "yes_no", "Do you have seating for families and a kids' play area?", "Is there a place to sit?", YN, "SGK"),
  ("Shop & service", "O", "text", "What are your busy hours, and how long is the wait for trial rooms then?", "Is there a long queue for trial rooms?", [], "GK"),

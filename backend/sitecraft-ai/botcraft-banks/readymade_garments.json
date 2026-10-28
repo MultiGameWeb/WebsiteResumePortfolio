@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 62,
+ "question_count": 64,
  "questions": [
   {
    "id": "readymade_garments-001",
@@ -31,12 +31,14 @@
    "options": [
     "Shirts & T-shirts",
     "Jeans & trousers",
+    "Formals / office wear",
     "Ethnic wear (kurtas, sherwanis)",
+    "Indo-western / fusion",
     "Kurtis & sets",
     "Western wear (tops, dresses)",
     "Nightwear & innerwear",
     "Sportswear",
-    "Winter wear"
+    "Winter & rain wear (jackets)"
    ]
   },
   {
@@ -594,6 +596,31 @@
   {
    "id": "readymade_garments-053",
    "category": "Shop & service",
+   "owner_question": "Are carry bags free, or charged on the bill?",
+   "customer_question": "Do I have to pay for the bag?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Free paper / cloth bag",
+    "Free plastic bag",
+    "Charged (₹5–10)"
+   ]
+  },
+  {
+   "id": "readymade_garments-054",
+   "category": "Shop & service",
+   "owner_question": "Do you send the bill on WhatsApp or SMS?",
+   "customer_question": "Can you send the bill on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "readymade_garments-055",
+   "category": "Shop & service",
    "owner_question": "Do you do gift wrapping or gift box packing?",
    "customer_question": "Can you gift-pack it?",
    "priority": "optional",
@@ -604,7 +631,7 @@
    ]
   },
   {
-   "id": "readymade_garments-054",
+   "id": "readymade_garments-056",
    "category": "Shop & service",
    "owner_question": "Do you have seating for families and a kids' play area?",
    "customer_question": "Is there a place to sit?",
@@ -616,7 +643,7 @@
    ]
   },
   {
-   "id": "readymade_garments-055",
+   "id": "readymade_garments-057",
    "category": "Shop & service",
    "owner_question": "What are your busy hours, and how long is the wait for trial rooms then?",
    "customer_question": "Is there a long queue for trial rooms?",
@@ -624,7 +651,7 @@
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-056",
+   "id": "readymade_garments-058",
    "category": "Shop & service",
    "owner_question": "Do you have a private room or bridal lounge for bride and groom shopping?",
    "customer_question": "Is there a private room for bridal shopping?",
@@ -636,7 +663,7 @@
    ]
   },
   {
-   "id": "readymade_garments-057",
+   "id": "readymade_garments-059",
    "category": "Shop & service",
    "owner_question": "Do you give loyalty points, and can they be used on the next bill?",
    "customer_question": "Do I get points?",
@@ -644,7 +671,7 @@
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-058",
+   "id": "readymade_garments-060",
    "category": "Shop & service",
    "owner_question": "Does a sales assistant help each customer with selection?",
    "customer_question": "Can someone help me choose?",
@@ -656,7 +683,7 @@
    ]
   },
   {
-   "id": "readymade_garments-059",
+   "id": "readymade_garments-061",
    "category": "Shop & service",
    "owner_question": "If customers have a complaint (staff behaviour, billing delay), whom can they talk to?",
    "customer_question": "Can I talk to the manager?",
@@ -664,7 +691,7 @@
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-060",
+   "id": "readymade_garments-062",
    "category": "Shop & service",
    "owner_question": "If customers forget a bag or item in the trial room, do you keep it safe for them?",
    "customer_question": "I left my bag in the trial room, do you have it?",
@@ -676,7 +703,7 @@
    ]
   },
   {
-   "id": "readymade_garments-061",
+   "id": "readymade_garments-063",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -692,7 +719,7 @@
    ]
   },
   {
-   "id": "readymade_garments-062",
+   "id": "readymade_garments-064",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
