@@ -1,0 +1,230 @@
+{
+ "shop_type_key": "imitation_jewellery",
+ "name": "One-gram gold & imitation jewellery shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-28",
+ "question_count": 19,
+ "questions": [
+  {
+   "id": "imitation_jewellery-001",
+   "category": "Products & purity",
+   "owner_question": "Which jewellery do you sell?",
+   "customer_question": "Do you have one gram gold?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "One-gram gold",
+    "Imitation / fashion",
+    "Oxidised",
+    "Kundan / polki (imitation)",
+    "American diamond (AD / CZ)",
+    "Beads & pearls",
+    "Bangles",
+    "Bridal sets"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-002",
+   "category": "Products & purity",
+   "owner_question": "Which collections do you have?",
+   "customer_question": "Do you have temple jewellery?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Bridal",
+    "Daily wear",
+    "Temple",
+    "Antique",
+    "Light weight",
+    "Kids",
+    "Men's",
+    "Office wear"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-003",
+   "category": "Products & purity",
+   "owner_question": "What is the price range of your jewellery?",
+   "customer_question": "Necklace sets price?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "imitation_jewellery-004",
+   "category": "Products & purity",
+   "owner_question": "Do you have matching sets for sarees or custom colours?",
+   "customer_question": "Do you have a set to match my red saree?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-005",
+   "category": "Rates & charges",
+   "owner_question": "Is GST (3%) included in the price or added on the bill?",
+   "customer_question": "Is GST extra?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-006",
+   "category": "Quality & guarantee",
+   "owner_question": "How long does the gold polish / colour usually last?",
+   "customer_question": "Will the colour fade?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "imitation_jewellery-007",
+   "category": "Quality & guarantee",
+   "owner_question": "Do you give a guarantee on colour or polish? How long?",
+   "customer_question": "Is there a colour guarantee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "imitation_jewellery-008",
+   "category": "Quality & guarantee",
+   "owner_question": "Is your jewellery skin-friendly (nickel-free / anti-allergic)?",
+   "customer_question": "Will it cause skin allergy?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-009",
+   "category": "Buying & payment",
+   "owner_question": "Do you show designs on a WhatsApp video call and take orders?",
+   "customer_question": "Can you show me designs on video call?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-010",
+   "category": "Buying & payment",
+   "owner_question": "Do you sell in wholesale to resellers?",
+   "customer_question": "Do you give wholesale rates?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-011",
+   "category": "Custom orders & services",
+   "owner_question": "Do you re-polish or re-plate old one-gram jewellery? Charge?",
+   "customer_question": "Can you re-polish my old set?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "imitation_jewellery-012",
+   "category": "Quality & guarantee",
+   "owner_question": "What care tips do you give (keep away from water, perfume, etc.)?",
+   "customer_question": "How do I keep it shining?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "imitation_jewellery-013",
+   "category": "Buying & payment",
+   "owner_question": "Which ways to pay do you accept?",
+   "customer_question": "Can I pay by card?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Cash (within legal limit)",
+    "UPI",
+    "Debit / credit card",
+    "Bank transfer",
+    "Cheque / DD"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-014",
+   "category": "Buying & payment",
+   "owner_question": "Can customers exchange a piece bought from you for another design? Any deduction?",
+   "customer_question": "Can I change this design later?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "imitation_jewellery-015",
+   "category": "Buying & payment",
+   "owner_question": "Do you send jewellery by insured courier to other cities?",
+   "customer_question": "Can you courier it to Bangalore?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-016",
+   "category": "Buying & payment",
+   "owner_question": "Do you rent jewellery for weddings and functions?",
+   "customer_question": "Can I rent a bridal set?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-017",
+   "category": "Buying & payment",
+   "owner_question": "Do you give gift boxes or gift wrapping?",
+   "customer_question": "Can you gift-wrap it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-018",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada",
+    "Marwari"
+   ]
+  },
+  {
+   "id": "imitation_jewellery-019",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
