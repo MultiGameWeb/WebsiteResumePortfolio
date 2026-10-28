@@ -30,9 +30,9 @@ export const CORE_QUESTIONS = [
   { key: "call_number", q: "Which phone number should customers call for your shop?", c: "What is your contact number?" },
   { key: "whatsapp_number", q: "Which WhatsApp number should customers message?", c: "What is your WhatsApp number?", type: "options", options: ["Same as the call number", "A different number"] },
   { key: "main_items", q: "What are the main types of items you sell?", c: "What do you sell?", type: "list" },
-  { key: "return_exchange", q: "What is your return and exchange policy? One or two lines is enough.", c: "Can I exchange this if it doesn't fit?" },
+  { key: "return_exchange", only_for: "shops selling products customers take home (not restaurants, food stalls, salons or other services)", q: "What is your return and exchange policy? One or two lines is enough.", c: "Can I exchange this if it doesn't fit?" },
   { key: "home_delivery", q: "Do you offer home delivery?", c: "Can you deliver to my home?", type: "options", options: ["No home delivery", "Yes, within the city", "Yes, anywhere in India"] },
-  { key: "emi", q: "Do you offer EMI (pay in monthly instalments)?", c: "Can I buy this on EMI?", type: "options", options: ["Yes, on all items", "Yes, on some items", "No EMI"] },
+  { key: "emi", only_for: "shops selling costly items such as jewellery, mobiles, electronics, appliances, furniture or vehicles", q: "Do you offer EMI (pay in monthly instalments)?", c: "Can I buy this on EMI?", type: "options", options: ["Yes, on all items", "Yes, on some items", "No EMI"] },
   { key: "emi_items", q: "Which items or price ranges can customers buy on EMI?", c: "Is EMI available on this item?", ask_if: { key: "emi", equals: ["Yes, on some items"] } },
   { key: "emi_options", q: "Which EMI options do you offer?", c: "Which cards or finance companies do you accept for EMI?", type: "list", options: ["Credit card EMI", "Debit card EMI", "Bajaj Finserv EMI card", "TVS Credit", "HDB Financial Services", "Home Credit", "No-cost EMI", "Shop's own instalment plan"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
   { key: "emi_documents", q: "What does a customer need to bring to buy on EMI?", c: "What documents do I need for EMI?", type: "list", options: ["Aadhaar card", "PAN card", "Credit or debit card", "Bank account / cancelled cheque", "Passport-size photo", "Minimum down payment"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
@@ -46,7 +46,9 @@ export const CORE_QUESTIONS = [
   answer_type: item.type || "text",
   options: item.options || [],
   why_customers_ask: "Customers of every shop ask this.",
-  ask_if: item.ask_if || null
+  ask_if: item.ask_if || null,
+  // Shop types the question makes sense for; elsewhere it is marked not applicable.
+  only_for: item.only_for || null
 }));
 const CORE_TOPICS = "shop name, owner name and photo, shop front photo, address, map location, parking, timings, weekly holiday, call and WhatsApp numbers, main items sold, return and exchange policy, home delivery, EMI (which items, EMI options, documents) and current offers";
 
