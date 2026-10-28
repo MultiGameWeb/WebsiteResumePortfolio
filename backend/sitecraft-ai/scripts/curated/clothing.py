@@ -1,0 +1,129 @@
+# Hand-written (curated) question banks for clothing businesses: saree &
+# textile showroom, readymade garments store, boutique & designer wear, and
+# kids wear shop.
+# Run: python3 scripts/curated/clothing.py  -> writes botcraft-banks/<type>.json
+# Priorities: M = mandatory, I = important, O = optional.
+# Tags: S = saree & textile showroom, G = readymade garments / family fashion store,
+#       B = boutique & designer wear, K = kids wear shop.
+# Each owner is asked only the questions tagged for their business.
+# Core questions (name, address, map, parking, timings, holiday, phone,
+# WhatsApp, main items, return/exchange, home delivery, EMI, offers, photos)
+# are asked separately, so they are not repeated here.
+import json, os, datetime
+
+YN = ["Yes", "No"]
+SIZES = ["XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL and above"]
+Q = [
+ # category, priority, answer_type, owner question, how a customer asks, options, tags
+ ("Products & collections", "M", "list", "Which sarees do you sell?", "Do you have pattu sarees?", ["Pattu / silk", "Cotton", "Handloom", "Fancy / georgette / chiffon", "Designer / party wear", "Bridal", "Daily wear", "Kora / organza"], "S"),
+ ("Products & collections", "I", "list", "Which traditional sarees do you have?", "Do you have Kanchi pattu?", ["Kanchipuram", "Dharmavaram", "Gadwal", "Pochampally / ikkat", "Uppada", "Venkatagiri", "Mangalagiri", "Narayanpet", "Banarasi", "Paithani"], "S"),
+ ("Products & collections", "I", "list", "What else do you sell besides sarees?", "Do you have dress materials?", ["Dress materials", "Shirting & suiting", "Dhotis / pancha & kanduva", "Lehengas & half-sarees", "Blouse pieces & lining cloth", "Readymade blouses", "Bed sheets & towels", "Readymade garments"], "S"),
+ ("Products & collections", "M", "list", "Whose clothes do you sell?", "Do you have men's wear?", ["Men", "Women", "Kids", "Teens", "Plus size"], "G"),
+ ("Products & collections", "M", "list", "Which clothes do you sell?", "Do you have kurtis?", ["Shirts & T-shirts", "Jeans & trousers", "Ethnic wear (kurtas, sherwanis)", "Kurtis & sets", "Western wear (tops, dresses)", "Nightwear & innerwear", "Sportswear", "Winter wear"], "G"),
+ ("Products & collections", "M", "list", "What do you make or sell?", "Do you make bridal blouses?", ["Designer blouses", "Bridal lehengas & half-sarees", "Designer dresses / gowns", "Kurtis & salwar suits", "Kids' designer wear", "Men's ethnic (sherwani, kurta)", "Indo-western", "Readymade designer collection"], "B"),
+ ("Products & collections", "M", "list", "Which age groups do you have clothes for?", "Do you have clothes for a 1-year-old?", ["Newborn (0–6 months)", "Babies (6–24 months)", "2–5 years", "6–10 years", "11–15 years"], "K"),
+ ("Products & collections", "M", "list", "Which kids' clothes do you sell?", "Do you have pattu langa for girls?", ["Daily wear", "Party wear & frocks", "Ethnic (pattu langa, kurta-pyjama, dhoti sets)", "Night suits", "Baby essentials (jablas, nappies, wrappers)", "School wear", "Winter wear", "Fancy dress costumes"], "K"),
+ ("Products & collections", "I", "text", "Which brands do you sell?", "Do you have Peter England?", [], "GK"),
+ ("Products & collections", "I", "options", "Are your clothes branded, your own label, or non-branded?", "Is this a branded shirt?", ["Branded", "Our own label", "Non-branded", "Mix of all"], "GK"),
+ ("Products & collections", "I", "list", "Which collections do you have?", "Do you have office wear?", ["Daily wear", "Office wear", "Party wear", "Festival wear", "Wedding wear", "Casual / college wear"], "SGB"),
+ ("Products & collections", "I", "text", "What is the price range of your sarees (lowest to highest)?", "Do you have sarees under ₹1,000?", [], "S"),
+ ("Products & collections", "I", "text", "What is the price range of your clothes?", "Shirts start from how much?", [], "GK"),
+ ("Products & collections", "I", "text", "What is the starting price for a designer blouse and for a bridal lehenga?", "How much for a bridal blouse?", [], "B"),
+ ("Products & collections", "O", "yes_no", "Do you have a separate bridal / wedding section?", "Where are the bridal sarees?", YN, "SB"),
+ ("Products & collections", "O", "yes_no", "Do you sell matching sets for the whole family (same colour for couple, kids, family)?", "Do you have matching dresses for the family?", YN, "SGBK"),
+ ("Products & collections", "O", "yes_no", "Do you have return-gift sarees or clothes in bulk for functions?", "Do you have sarees for return gifts?", YN, "S"),
+ ("Products & collections", "O", "yes_no", "Do you have cotton / breathable clothes for summer?", "Any cotton clothes for summer?", YN, "GK"),
+ ("Products & collections", "O", "yes_no", "Do you sell maternity and feeding wear?", "Do you have feeding kurtis?", YN, "G"),
+ ("Products & collections", "O", "yes_no", "Do you sell school uniforms?", "Do you have uniforms for my child's school?", YN, "GK"),
+ ("Products & collections", "O", "yes_no", "Do you sell innerwear and socks?", "Do you have innerwear?", YN, "GK"),
+ ("Products & collections", "O", "yes_no", "Do you sell accessories (dupattas, belts, caps, hair accessories, handbags)?", "Do you have a matching dupatta?", YN, "SGBK"),
+
+ ("Fabric & quality", "I", "yes_no", "Are your pure silk sarees Silk Mark certified?", "Is this pure silk?", YN, "S"),
+ ("Fabric & quality", "I", "options", "What zari do your silk sarees have?", "Is this real zari?", ["Pure (silver with gold coating)", "Half-fine / tested zari", "Imitation zari", "All types, clearly told"], "S"),
+ ("Fabric & quality", "O", "text", "How can customers check if a saree is pure silk or handloom?", "How do I know it's real handloom?", [], "S"),
+ ("Fabric & quality", "I", "yes_no", "Is the fabric (cotton, silk, polyester, rayon) written on the tag or told to customers?", "Is this pure cotton?", YN, "SGBK"),
+ ("Fabric & quality", "O", "yes_no", "Will the colour run in the first wash for some clothes? Do you tell customers?", "Will the colour come out in washing?", YN, "SGK"),
+ ("Fabric & quality", "O", "yes_no", "Will cotton clothes shrink after washing? Do you tell customers?", "Will it shrink?", YN, "SGK"),
+ ("Fabric & quality", "I", "yes_no", "Are your baby clothes made of soft, skin-friendly cotton?", "Is it soft for my baby's skin?", YN, "K"),
+ ("Fabric & quality", "O", "yes_no", "Do your kids' clothes avoid sharp buttons, hard zips and loose beads?", "Will the beads come off in my baby's mouth?", YN, "K"),
+ ("Fabric & quality", "O", "text", "How should customers wash and care for silk sarees and heavy work clothes (dry clean, storage)?", "Can I wash this saree at home?", [], "SB"),
+ ("Fabric & quality", "O", "options", "Do your sarees come with a blouse piece?", "Is the blouse piece included?", ["Yes, all sarees", "Most sarees", "No"], "S"),
+ ("Fabric & quality", "O", "text", "What is the usual length of your sarees (with and without blouse piece)?", "How many metres is this saree?", [], "S"),
+ ("Fabric & quality", "O", "text", "Do your dress materials come with a dupatta and bottom cloth? How many metres each?", "Is the dupatta included?", [], "S"),
+
+ ("Sizes & fit", "M", "list", "Which sizes do you stock?", "Do you have XXL?", SIZES, "G"),
+ ("Sizes & fit", "I", "yes_no", "Do you have plus sizes (3XL and above)?", "Do you have 5XL?", YN, "GB"),
+ ("Sizes & fit", "I", "yes_no", "Do you have a trial room?", "Can I try this on?", YN, "GBK"),
+ ("Sizes & fit", "O", "yes_no", "Do you have a size chart (by age, height or measurements)?", "Which size for a 5-year-old?", YN, "GK"),
+ ("Sizes & fit", "O", "yes_no", "Do you have a full mirror and good lighting to see saree colours properly?", "Can I see the saree in daylight?", YN, "S"),
+ ("Sizes & fit", "O", "text", "If a size is not available, can you get it? How many days?", "Can you get this in M size?", [], "GK"),
+
+ ("Stitching & alterations", "I", "yes_no", "Do you do fall and pico for sarees bought here?", "Will you do fall and pico?", YN, "S"),
+ ("Stitching & alterations", "I", "text", "What is the charge for fall and pico, and how many days does it take?", "How much for fall pico?", [], "S"),
+ ("Stitching & alterations", "I", "yes_no", "Do you stitch blouses and dresses?", "Do you stitch blouses?", YN, "SB"),
+ ("Stitching & alterations", "I", "text", "What are your stitching charges (simple blouse, designer blouse, salwar, lehenga)?", "Blouse stitching charge?", [], "SB"),
+ ("Stitching & alterations", "I", "text", "How many days does stitching take, and is urgent (express) stitching available? Extra charge?", "Can I get the blouse in 2 days?", [], "SB"),
+ ("Stitching & alterations", "I", "list", "Which work do you do?", "Do you do maggam work?", ["Maggam / aari work", "Embroidery (machine)", "Zardosi", "Stone / bead work", "Hand painting", "Tassels / latkans"], "B"),
+ ("Stitching & alterations", "O", "text", "How are maggam / aari work charges decided (design, area, days)?", "How much for maggam work on a blouse?", [], "B"),
+ ("Stitching & alterations", "I", "text", "How much advance do you take for stitching orders?", "How much advance should I pay?", [], "B"),
+ ("Stitching & alterations", "I", "options", "How do you take measurements?", "Should I bring a sample blouse?", ["At the shop", "From a sample garment", "Customer sends measurements", "Both"], "SB"),
+ ("Stitching & alterations", "O", "yes_no", "Do you have women tailors / staff to take measurements for ladies?", "Is there a lady to take measurements?", YN, "SB"),
+ ("Stitching & alterations", "I", "text", "How many trial fittings do you give, and are corrections after delivery free?", "If the fitting is wrong, will you correct it?", [], "B"),
+ ("Stitching & alterations", "O", "yes_no", "Can customers bring their own cloth for stitching?", "Can I bring my own cloth?", YN, "B"),
+ ("Stitching & alterations", "O", "yes_no", "Can you make a design from a photo the customer shows?", "Can you make this design from Instagram?", YN, "B"),
+ ("Stitching & alterations", "O", "text", "During the wedding season, how early should customers order?", "How early should I give my bridal blouse?", [], "B"),
+ ("Stitching & alterations", "I", "options", "Do you alter clothes bought from you (length, waist, sleeves)?", "Can you shorten the pant?", ["Free alteration", "Paid alteration", "No alteration"], "GK"),
+ ("Stitching & alterations", "O", "text", "How long do alterations take?", "When will the alteration be ready?", [], "GK"),
+ ("Stitching & alterations", "O", "yes_no", "Do you stitch dhoti / pancha kattu or pre-stitched sarees?", "Can you make a ready-to-wear saree?", YN, "SB"),
+ ("Stitching & alterations", "O", "yes_no", "Do you do saree pre-pleating or box folding for functions?", "Can you pleat my saree?", YN, "SB"),
+
+ ("Prices & billing", "I", "options", "Are your prices fixed, or can customers bargain?", "Is there any discount on this price?", ["Fixed price", "Small discount possible", "Bargaining allowed"], "SGBK"),
+ ("Prices & billing", "I", "yes_no", "Is the price (MRP) printed on the tag of every item?", "Where is the price tag?", YN, "SGK"),
+ ("Prices & billing", "O", "options", "Is GST included in the price or added on the bill?", "Is GST extra?", ["Included", "Added on the bill"], "SGBK"),
+ ("Prices & billing", "O", "text", "Do you give extra discount on bulk wedding purchases (for example 10+ sarees or family clothes)?", "Any discount if we buy for the whole wedding?", [], "SG"),
+ ("Prices & billing", "O", "text", "When do you have your sales (Sankranti, Dasara, Diwali, end of season, Aadi)?", "When is your sale?", [], "SGK"),
+ ("Prices & billing", "O", "yes_no", "Do you sell to resellers or small shops at wholesale rates?", "Do you give wholesale rates?", YN, "SGK"),
+ ("Prices & billing", "O", "text", "Do you give discounts for corporate, school or group orders (uniforms, T-shirts)?", "Can you do 100 T-shirts for our office?", [], "GK"),
+
+ ("Exchange details", "O", "text", "Can a saree be exchanged after fall and pico or blouse cutting is done?", "Can I exchange it after fall pico?", [], "S"),
+ ("Exchange details", "O", "text", "Are sale or discount items exchangeable?", "Can I exchange a sale item?", [], "SGK"),
+ ("Exchange details", "O", "text", "What if a stitched dress doesn't fit or the customer doesn't like it? Refund, redo or correction?", "What if I don't like the stitched dress?", [], "B"),
+ ("Exchange details", "O", "yes_no", "If a gift doesn't fit, can it be exchanged without the bill (with the tag)?", "It's a gift, can I exchange without the bill?", YN, "GK"),
+
+ ("Stock & orders", "I", "yes_no", "Can customers see new designs on WhatsApp (photos or video call) and order?", "Can you send me photos of new sarees?", YN, "SGBK"),
+ ("Stock & orders", "O", "text", "How often does new stock come in?", "When does the new collection come?", [], "SGK"),
+ ("Stock & orders", "O", "yes_no", "Can customers reserve a piece for a few days by paying an advance?", "Can you keep this aside for me?", YN, "SGBK"),
+ ("Stock & orders", "O", "yes_no", "Can you get the same design in another colour?", "Do you have this in green?", YN, "SGK"),
+ ("Stock & orders", "O", "yes_no", "Do you send sarees / clothes for selection to the customer's home (for weddings or elders)?", "Can you bring sarees to our house for selection?", YN, "SB"),
+ ("Stock & orders", "O", "yes_no", "Do you courier to other cities and abroad?", "Can you send it to the USA?", YN, "SGBK"),
+ ("Stock & orders", "O", "yes_no", "Do you take custom weaving orders (name or design woven into the saree)?", "Can you weave our names in the saree?", YN, "S"),
+ ("Stock & orders", "O", "yes_no", "Do you rent bridal lehengas, sherwanis or costumes?", "Can I rent a lehenga?", YN, "BK"),
+
+ ("Shop & service", "O", "yes_no", "Do you have seating for families and a kids' play area?", "Is there a place to sit?", YN, "SGK"),
+ ("Shop & service", "O", "yes_no", "Do you have a separate room for bridal shopping?", "Is there a private room for bridal shopping?", YN, "SB"),
+ ("Shop & service", "O", "yes_no", "Do you take appointments for bridal or designer consultation?", "Can I book an appointment?", YN, "SB"),
+ ("Shop & service", "O", "yes_no", "Do you have a loyalty card or points for regular customers?", "Do I get points?", YN, "SGBK"),
+ ("Shop & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "SGBK"),
+ ("Shop & service", "O", "text", "Please share your Instagram page and Google reviews link, if you have them.", "Do you have Instagram?", [], "SGBK"),
+]
+
+TYPES = [("saree_textiles", "Saree & textile showroom", "S"), ("readymade_garments", "Readymade garments / family fashion store", "G"),
+         ("boutique", "Boutique & designer wear", "B"), ("kids_wear", "Kids wear shop", "K")]
+PRI = {"M": "mandatory", "I": "important", "O": "optional"}
+order = {"M": 0, "I": 1, "O": 2}
+here = os.path.dirname(os.path.abspath(__file__))
+for key, name, tag in TYPES:
+    chosen = [q for q in Q if tag in q[6]]
+    assert len({q[3] for q in chosen}) == len(chosen), f"duplicate question in {key}"
+    rows = sorted(enumerate(chosen), key=lambda x: (order[x[1][1]], x[0]))
+    questions = []
+    for n, (_, (cat, pri, typ, owner, customer, opts, _tags)) in enumerate(rows, 1):
+        q = {"id": f"{key}-{n:03d}", "category": cat, "owner_question": owner, "customer_question": customer,
+             "priority": PRI[pri], "answer_type": typ}
+        if opts: q["options"] = opts
+        questions.append(q)
+    out = os.path.join(here, "..", "..", "botcraft-banks", f"{key}.json")
+    json.dump({"shop_type_key": key, "name": name, "version": 2, "model": "curated",
+               "generated_at": datetime.date.today().isoformat(), "question_count": len(questions), "questions": questions},
+              open(out, "w"), indent=1, ensure_ascii=False)
+    print(f"{key}: {len(questions)} questions", {p: sum(q["priority"] == p for q in questions) for p in PRI.values()})
