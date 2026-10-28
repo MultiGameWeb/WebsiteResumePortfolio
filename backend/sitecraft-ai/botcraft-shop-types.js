@@ -4,7 +4,10 @@
 // To add a type: add it here, then run scripts/generate-botcraft-banks.mjs.
 
 export const SHOP_TYPES = [
-  { key: "restaurant", name: "Restaurant", aliases: ["hotel (food)", "dhaba", "family restaurant", "biryani point", "mess", "cafe", "fast food", "tiffin centre"], description: "restaurant serving dine-in, takeaway and parcels" },
+  { key: "restaurant", name: "Restaurant", aliases: ["hotel (food)", "dhaba", "family restaurant", "biryani point", "mess", "meals hotel", "cafe", "bar and restaurant"], description: "restaurant serving dine-in, takeaway and parcels" },
+  { key: "fast_food", name: "Fast food centre", aliases: ["fast food", "burger shop", "pizza shop", "chinese fast food", "momos stall", "shawarma", "rolls and frankies", "food truck", "snacks corner"], description: "fast food centre selling burgers, pizza, rolls, momos and Indo-Chinese" },
+  { key: "tiffin_centre", name: "Tiffin centre", aliases: ["tiffin hotel", "tiffins", "idli dosa centre", "breakfast centre", "tiffin bandi", "darshini", "udupi hotel"], description: "tiffin centre serving idli, dosa, vada and other South Indian tiffins" },
+  { key: "catering", name: "Catering service", aliases: ["caterers", "wedding catering", "event catering", "function catering", "outdoor catering", "home catering", "cloud kitchen for events"], description: "catering service cooking for weddings, functions and events" },
   { key: "jewellery", name: "Jewellery shop", aliases: ["jewellers", "gold shop", "silver shop", "diamond shop"], description: "jewellery shop selling gold, silver and diamond jewellery" },
   { key: "clothing", name: "Clothing / saree shop", aliases: ["textiles", "saree shop", "garments", "readymade", "boutique", "fashion store", "kids wear"], description: "clothing and textile shop selling sarees, dress materials and readymade garments" },
   { key: "footwear", name: "Footwear shop", aliases: ["shoe shop", "chappal shop", "sandals", "slippers", "sports shoes"], description: "footwear shop selling shoes, sandals and chappals for men, women and kids" },
