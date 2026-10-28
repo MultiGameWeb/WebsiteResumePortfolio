@@ -35,6 +35,7 @@ export const CORE_QUESTIONS = [
   { key: "emi", only_for: "shops selling costly items such as jewellery, mobiles, electronics, appliances, furniture or vehicles", q: "Do you offer EMI (pay in monthly instalments)?", c: "Can I buy this on EMI?", type: "options", options: ["Yes, on all items", "Yes, on some items", "No EMI"] },
   { key: "emi_items", q: "Which items or price ranges can customers buy on EMI?", c: "Is EMI available on this item?", ask_if: { key: "emi", equals: ["Yes, on some items"] } },
   { key: "emi_options", q: "Which EMI options do you offer?", c: "Which cards or finance companies do you accept for EMI?", type: "list", options: ["Credit card EMI", "Debit card EMI", "Bajaj Finserv EMI card", "TVS Credit", "HDB Financial Services", "Home Credit", "No-cost EMI", "Shop's own instalment plan"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
+  { key: "emi_zero_down", q: "Do you have zero down payment schemes (for example pay just ₹1 and take the product home)?", c: "Can I buy with zero down payment?", type: "options", options: ["Yes", "No", "On some products"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
   { key: "emi_documents", q: "What does a customer need to bring to buy on EMI?", c: "What documents do I need for EMI?", type: "list", options: ["Aadhaar card", "PAN card", "Credit or debit card", "Bank account / cancelled cheque", "Passport-size photo", "Minimum down payment"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
   { key: "offers", q: "Are there any offers running right now? You can change them anytime with Update.", c: "Any offers today?", type: "options", options: ["No offers right now", "Yes, I'll describe them"] }
 ].map(item => ({
@@ -50,7 +51,7 @@ export const CORE_QUESTIONS = [
   // Shop types the question makes sense for; elsewhere it is marked not applicable.
   only_for: item.only_for || null
 }));
-const CORE_TOPICS = "shop name, owner name and photo, shop front photo, address, map location, parking, timings, weekly holiday, call and WhatsApp numbers, main items sold, return and exchange policy, home delivery, EMI (which items, EMI options, documents) and current offers";
+const CORE_TOPICS = "shop name, owner name and photo, shop front photo, address, map location, parking, timings, weekly holiday, call and WhatsApp numbers, main items sold, return and exchange policy, home delivery, EMI (which items, EMI options, zero down payment, documents) and current offers";
 
 const PRIORITIES = new Set(["mandatory", "important", "optional"]);
 const ANSWER_TYPES = new Set(["text", "options", "yes_no", "number", "price", "image", "list"]);

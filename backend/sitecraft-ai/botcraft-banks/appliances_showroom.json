@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 49,
+ "question_count": 62,
  "questions": [
   {
    "id": "appliances_showroom-001",
@@ -146,6 +146,21 @@
   {
    "id": "appliances_showroom-011",
    "category": "Products & brands",
+   "owner_question": "Which TV display types do you sell?",
+   "customer_question": "Do you have OLED TVs?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "LED",
+    "QLED",
+    "OLED",
+    "Smart TVs",
+    "Android / Google TV"
+   ]
+  },
+  {
+   "id": "appliances_showroom-012",
+   "category": "Products & brands",
    "owner_question": "Which refrigerator types do you sell?",
    "customer_question": "Do you have double-door fridges?",
    "priority": "important",
@@ -158,7 +173,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-012",
+   "id": "appliances_showroom-013",
    "category": "Products & brands",
    "owner_question": "Which washing machine types do you sell?",
    "customer_question": "Do you have front load machines?",
@@ -171,7 +186,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-013",
+   "id": "appliances_showroom-014",
    "category": "Products & brands",
    "owner_question": "Which AC types do you sell?",
    "customer_question": "Do you have window ACs?",
@@ -185,7 +200,19 @@
    ]
   },
   {
-   "id": "appliances_showroom-014",
+   "id": "appliances_showroom-015",
+   "category": "Prices & bills",
+   "owner_question": "Is GST included in the price on the tag?",
+   "customer_question": "Is GST extra?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in the tag price",
+    "Added at billing"
+   ]
+  },
+  {
+   "id": "appliances_showroom-016",
    "category": "Prices & bills",
    "owner_question": "Are your prices fixed, or can customers get a discount?",
    "customer_question": "Can you reduce the price?",
@@ -198,7 +225,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-015",
+   "id": "appliances_showroom-017",
    "category": "Prices & bills",
    "owner_question": "Do you match online prices (Amazon, Flipkart)?",
    "customer_question": "It's cheaper on Amazon, can you match?",
@@ -211,7 +238,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-016",
+   "id": "appliances_showroom-018",
    "category": "Prices & bills",
    "owner_question": "Do you take an old product in exchange when buying a new one? How is its value decided?",
    "customer_question": "How much will you give for my old phone?",
@@ -219,7 +246,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-017",
+   "id": "appliances_showroom-019",
    "category": "Buying & checking",
    "owner_question": "Do you have demo pieces customers can try before buying?",
    "customer_question": "Can I try the phone first?",
@@ -231,7 +258,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-018",
+   "id": "appliances_showroom-020",
    "category": "Buying & checking",
    "owner_question": "Do you open and check the product in front of the customer before billing?",
    "customer_question": "Will you open the box and check?",
@@ -243,7 +270,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-019",
+   "id": "appliances_showroom-021",
    "category": "Delivery & installation",
    "owner_question": "Is installation free? For which products is it charged?",
    "customer_question": "Is AC installation free?",
@@ -251,7 +278,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-020",
+   "id": "appliances_showroom-022",
    "category": "Delivery & installation",
    "owner_question": "For AC installation, are copper pipe, stand and extra piping charged extra? How much?",
    "customer_question": "Is extra pipe charged?",
@@ -259,7 +286,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-021",
+   "id": "appliances_showroom-023",
    "category": "Delivery & installation",
    "owner_question": "How many days after purchase are delivery and installation done?",
    "customer_question": "When will you install it?",
@@ -267,7 +294,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-022",
+   "id": "appliances_showroom-024",
    "category": "Delivery & installation",
    "owner_question": "Is delivery of big appliances free, and do you carry them up to upper floors?",
    "customer_question": "Will you carry the fridge to the 3rd floor?",
@@ -279,7 +306,36 @@
    ]
   },
   {
-   "id": "appliances_showroom-023",
+   "id": "appliances_showroom-025",
+   "category": "Warranty & service",
+   "owner_question": "Within how many days of purchase can a defective product be replaced?",
+   "customer_question": "Can I replace it after 3 days?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-026",
+   "category": "Warranty & service",
+   "owner_question": "How many years of company warranty do your main products have (for example TV panel, fridge compressor, phone)?",
+   "customer_question": "How many years warranty on this fridge?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-027",
+   "category": "Warranty & service",
+   "owner_question": "During warranty, does the customer bring the product to you, or does the company technician visit the home?",
+   "customer_question": "Will the technician come home for warranty repair?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Technician visits home",
+    "Bring it to the shop / service centre",
+    "Depends on the product"
+   ]
+  },
+  {
+   "id": "appliances_showroom-028",
    "category": "Warranty & service",
    "owner_question": "Do you help customers with warranty claims and service centre visits?",
    "customer_question": "Will you help with the warranty claim?",
@@ -291,7 +347,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-024",
+   "id": "appliances_showroom-029",
    "category": "Warranty & service",
    "owner_question": "Do you sell extended warranty or protection plans? Price?",
    "customer_question": "Can I get extra warranty?",
@@ -299,7 +355,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-025",
+   "id": "appliances_showroom-030",
    "category": "Warranty & service",
    "owner_question": "Do you do AC servicing and gas refilling?",
    "customer_question": "Can you service my AC?",
@@ -311,7 +367,15 @@
    ]
   },
   {
-   "id": "appliances_showroom-026",
+   "id": "appliances_showroom-031",
+   "category": "Products & brands",
+   "owner_question": "On which day of the week does new stock usually arrive?",
+   "customer_question": "When will new models come?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-032",
    "category": "Products & brands",
    "owner_question": "Can customers reserve a product by paying an advance?",
    "customer_question": "Can you keep one aside for me?",
@@ -323,7 +387,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-027",
+   "id": "appliances_showroom-033",
    "category": "Products & brands",
    "owner_question": "Do you sell energy-saving (5-star, inverter) models?",
    "customer_question": "Do you have inverter AC?",
@@ -335,7 +399,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-028",
+   "id": "appliances_showroom-034",
    "category": "Products & brands",
    "owner_question": "Do you sell voltage stabilisers for ACs, fridges and TVs?",
    "customer_question": "Do I need a stabiliser?",
@@ -347,7 +411,28 @@
    ]
   },
   {
-   "id": "appliances_showroom-029",
+   "id": "appliances_showroom-035",
+   "category": "Products & brands",
+   "owner_question": "Is a stabiliser given free with an AC?",
+   "customer_question": "Will you give a stabiliser with the AC?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Free with AC",
+    "Paid",
+    "Not needed for inverter ACs"
+   ]
+  },
+  {
+   "id": "appliances_showroom-036",
+   "category": "Products & brands",
+   "owner_question": "With a smart TV, do you activate any free OTT subscriptions (Netflix, Prime, Hotstar)?",
+   "customer_question": "Will Netflix be free with the TV?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-037",
    "category": "Products & brands",
    "owner_question": "Do you sell kitchen chimneys and hobs, with installation?",
    "customer_question": "Do you install chimneys?",
@@ -359,7 +444,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-030",
+   "id": "appliances_showroom-038",
    "category": "Products & brands",
    "owner_question": "Do you sell inverters and batteries for power backup?",
    "customer_question": "Do you have inverter batteries?",
@@ -371,7 +456,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-031",
+   "id": "appliances_showroom-039",
    "category": "Products & brands",
    "owner_question": "Do you sell display or open-box pieces at a lower price?",
    "customer_question": "Do you have any display piece for less?",
@@ -383,7 +468,47 @@
    ]
   },
   {
-   "id": "appliances_showroom-032",
+   "id": "appliances_showroom-040",
+   "category": "Prices & bills",
+   "owner_question": "Do you give a B2B GST invoice so business customers can claim input tax credit?",
+   "customer_question": "Can I get a GST invoice with my company GSTIN?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-041",
+   "category": "Prices & bills",
+   "owner_question": "Do you have cashback or bank card offers right now? (Change them any time with Update.)",
+   "customer_question": "Any HDFC card offer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-042",
+   "category": "Prices & bills",
+   "owner_question": "Do you give combo deals when buying two products together (for example TV + sound bar)?",
+   "customer_question": "Any offer if I buy a fridge and washing machine?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-043",
+   "category": "Prices & bills",
+   "owner_question": "Do you take old products in exchange even if they are not working?",
+   "customer_question": "My old TV is dead, will you still exchange it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-044",
    "category": "Prices & bills",
    "owner_question": "Which ways to pay do you accept?",
    "customer_question": "Can I pay by credit card?",
@@ -397,7 +522,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-033",
+   "id": "appliances_showroom-045",
    "category": "Prices & bills",
    "owner_question": "Do you add any extra charge for card payments?",
    "customer_question": "Is there extra charge on card?",
@@ -409,7 +534,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-034",
+   "id": "appliances_showroom-046",
    "category": "Prices & bills",
    "owner_question": "Do you give free gifts or accessories with purchases?",
    "customer_question": "Any free gift with this TV?",
@@ -417,7 +542,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-035",
+   "id": "appliances_showroom-047",
    "category": "Prices & bills",
    "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
    "customer_question": "Any discount for 10 laptops?",
@@ -425,7 +550,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-036",
+   "id": "appliances_showroom-048",
    "category": "Buying & checking",
    "owner_question": "Do you have a demo area to watch TVs and listen to sound systems?",
    "customer_question": "Can I see the TV picture quality?",
@@ -437,7 +562,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-037",
+   "id": "appliances_showroom-049",
    "category": "Delivery & installation",
    "owner_question": "Do you take away the old appliance when delivering the new one?",
    "customer_question": "Will you take my old fridge?",
@@ -449,7 +574,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-038",
+   "id": "appliances_showroom-050",
    "category": "Delivery & installation",
    "owner_question": "Do you provide a TV wall mount and fitting? Price?",
    "customer_question": "Is wall mounting free?",
@@ -457,7 +582,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-039",
+   "id": "appliances_showroom-051",
    "category": "Delivery & installation",
    "owner_question": "Do you show how to use the appliance at installation?",
    "customer_question": "Will you show how to use it?",
@@ -469,7 +594,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-040",
+   "id": "appliances_showroom-052",
    "category": "Warranty & service",
    "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
    "customer_question": "Where is the Samsung service centre?",
@@ -477,7 +602,19 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-041",
+   "id": "appliances_showroom-053",
+   "category": "Warranty & service",
+   "owner_question": "Do you sell insurance for theft or accidental damage?",
+   "customer_question": "Is there screen damage insurance?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-054",
    "category": "Warranty & service",
    "owner_question": "Do you repair or service appliances, or only through the brand's service?",
    "customer_question": "Can you repair my washing machine?",
@@ -490,7 +627,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-042",
+   "id": "appliances_showroom-055",
    "category": "Warranty & service",
    "owner_question": "Do you offer yearly service plans for ACs and water purifiers?",
    "customer_question": "Is there an AC service plan?",
@@ -502,7 +639,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-043",
+   "id": "appliances_showroom-056",
    "category": "Shop & service",
    "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
    "customer_question": "Can I give my old phone for recycling?",
@@ -514,7 +651,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-044",
+   "id": "appliances_showroom-057",
    "category": "Shop & service",
    "owner_question": "Do you have an online store or a WhatsApp catalogue?",
    "customer_question": "Can I see your products online?",
@@ -526,7 +663,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-045",
+   "id": "appliances_showroom-058",
    "category": "Shop & service",
    "owner_question": "Do you send a copy of the bill on WhatsApp?",
    "customer_question": "Can you send the bill on WhatsApp?",
@@ -538,7 +675,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-046",
+   "id": "appliances_showroom-059",
    "category": "Shop & service",
    "owner_question": "Do you bring products home for a demo before buying?",
    "customer_question": "Can you show the TV at my home?",
@@ -550,7 +687,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-047",
+   "id": "appliances_showroom-060",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty or points programme for regular customers?",
    "customer_question": "Do I get points?",
@@ -562,7 +699,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-048",
+   "id": "appliances_showroom-061",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -578,7 +715,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-049",
+   "id": "appliances_showroom-062",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
