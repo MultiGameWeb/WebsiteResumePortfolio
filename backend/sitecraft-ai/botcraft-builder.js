@@ -7,6 +7,7 @@ import { CORE_QUESTIONS, callWithFallback } from "./botcraft-question-bank.js";
 
 const DEFAULT_ALLOWED_ORIGINS = [
   "https://multigameweb.github.io",
+  "https://websiteresumeportfolio.kammarivinaykumar216.workers.dev",
   "http://localhost:8000",
   "http://127.0.0.1:8000"
 ];
