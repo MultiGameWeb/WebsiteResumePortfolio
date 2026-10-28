@@ -42,7 +42,9 @@ export async function callGemini(env, keySlot, {
   maxOutputTokens,
   model: modelOverride,
   tools,
-  timeoutMs = 90000
+  timeoutMs = 90000,
+  contents,
+  maxAttempts = 4
 }) {
   // keySlot is a numbered slot (1-5) or the name of a Worker secret.
   const envName = KEY_ENV[keySlot] || keySlot;
@@ -56,7 +58,8 @@ export async function callGemini(env, keySlot, {
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
   const body = {
     systemInstruction: { parts: [{ text: system }] },
-    contents: [{ role: "user", parts: [{ text: prompt }] }],
+    // `contents` carries a multi-turn or multimodal conversation; `prompt` is a single text turn.
+    contents: contents || [{ role: "user", parts: [{ text: prompt }] }],
     generationConfig: {
       responseMimeType: "application/json",
       responseSchema: schema,
@@ -69,7 +72,7 @@ export async function callGemini(env, keySlot, {
 
   let lastError = null;
 
-  for (let attempt = 0; attempt < 4; attempt += 1) {
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -110,7 +113,7 @@ export async function callGemini(env, keySlot, {
     const detail = await readError(response);
     lastError = new Error(`Gemini HTTP ${response.status}: ${detail}`);
 
-    if (!RETRYABLE_STATUS.has(response.status) || attempt === 3) {
+    if (!RETRYABLE_STATUS.has(response.status) || attempt === maxAttempts - 1) {
       throw lastError;
     }
 

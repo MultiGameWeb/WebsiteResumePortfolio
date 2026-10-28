@@ -17,7 +17,7 @@ const MAX_MANDATORY_EXTRA = 10;
 
 // Asked of every shop, whatever its type; generated questions must not repeat them.
 // `ask_if` makes a question depend on the answer to another core question.
-const CORE_QUESTIONS = [
+export const CORE_QUESTIONS = [
   { key: "shop_name", q: "What is your shop's name?", c: "What is the shop name?" },
   { key: "owner_name", q: "What is the owner's name?", c: "Who is the owner?" },
   { key: "owner_photo", q: "Would you like to add a photo of yourself (the owner)?", c: "Who should I ask for at the counter?", type: "image", priority: "optional" },
@@ -148,7 +148,7 @@ function normalizeQuestions(raw, seen) {
   return out;
 }
 
-async function callWithFallback(env, request) {
+export async function callWithFallback(env, request) {
   let lastError;
   for (const model of MODELS) {
     try {

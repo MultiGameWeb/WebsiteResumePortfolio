@@ -1,5 +1,6 @@
 import { handleAiBuilderRoute } from "./ai-builder.js";
 import { handleWebsiteChatbotRoute } from "./website-chatbot.js";
+import { handleBotcraftRoute } from "./botcraft-builder.js";
 const MODEL = "gemini-3.8-flash";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 const corsHeaders = {
@@ -117,11 +118,15 @@ async function getStorageAsset(env, siteId, assetId) {
 
 export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+
+    // BotCraft checks the origin itself, including on preflight.
+    const botcraftResponse = await handleBotcraftRoute(request, env, url);
+    if (botcraftResponse) return botcraftResponse;
+
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders });
     }
-
-    const url = new URL(request.url);
 
     const websiteChatbotResponse = await handleWebsiteChatbotRoute(request, env, url);
     if (websiteChatbotResponse) return websiteChatbotResponse;

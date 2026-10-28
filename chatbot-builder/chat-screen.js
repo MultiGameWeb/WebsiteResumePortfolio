@@ -1,4 +1,4 @@
-import { sendChatAction } from './mockChat.js';
+import { sendChatAction } from './chatApi.js';
 import {
   ImageLightbox,
   InputBar,
@@ -232,12 +232,15 @@ async function runMockAction(action, userMessage) {
   state.pendingCount += 1;
   render({ forceBottom: true });
   try {
-    // The only placeholder boundary for outgoing messages and attachment sends.
+    // The single boundary for outgoing messages and attachment sends.
     const result = await sendChatAction(action);
     if (!result?.ok) throw new Error(result?.error || 'Could not send. Please try again.');
     userMessage.status = 'sent';
     userMessage.error = '';
-    if (state.total > 0) state.answered = Math.min(state.total, state.answered + 1);
+    if (result.progress) {
+      state.answered = result.progress.answered;
+      state.total = result.progress.total;
+    }
     state.messages.push({
       id: result.message.id || makeId('message'), role: 'assistant',
       text: result.message.text, options: result.message.options ?? [],
