@@ -8,9 +8,10 @@ compatibility_date = "2026-10-01"
 # database_name = "sitecraft"
 # database_id = "REPLACE_WITH_D1_DATABASE_ID"
 
-# [[r2_buckets]]
-# binding = "MEDIA_BUCKET"
-# bucket_name = "sitecraft-media"
+[[r2_buckets]]
+binding = "MEDIA_BUCKET"
+bucket_name = "sitecraft-media"
 
 [vars]
+ENABLE_DEMO_PUBLISH = "false"
 GEMINI_MODEL = "gemini-2.5-flash"
