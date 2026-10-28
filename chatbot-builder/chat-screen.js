@@ -202,7 +202,7 @@ function markOptionUsed(optionId) {
   return null;
 }
 
-async function handleSend({ text = '', option = null, attachments = null, retryMessage = null } = {}) {
+async function handleSend({ text = '', option = null, attachments = null, retryMessage = null, formAnswers = null } = {}) {
   const cleanText = String(text).trim();
   const outgoingAttachments = attachments ?? [...state.stagedAttachments];
 
@@ -213,19 +213,20 @@ async function handleSend({ text = '', option = null, attachments = null, retryM
     const userMessage = {
       id: makeId('message'), role: 'user', text: cleanText,
       time: new Date(), status: 'sending', attachments: outgoingAttachments,
+      formAnswers: formAnswers ?? undefined,
     };
     state.messages.push(userMessage);
     state.stagedAttachments = [];
     state.inputError = '';
     const actionType = option ? 'quick-option' : (outgoingAttachments.length && !cleanText ? 'attachment' : 'message');
     render({ forceBottom: true });
-    await runMockAction({ type: actionType, text: cleanText, option: option ?? undefined, attachments: outgoingAttachments }, userMessage);
+    await runMockAction({ type: actionType, text: cleanText, option: option ?? undefined, attachments: outgoingAttachments, formAnswers: formAnswers ?? undefined }, userMessage);
   } else {
     retryMessage.status = 'sending';
     retryMessage.error = '';
     render({ forceBottom: true });
     const actionType = retryMessage.attachments?.length && !retryMessage.text ? 'attachment' : 'retry';
-    await runMockAction({ type: actionType, text: retryMessage.text, attachments: retryMessage.attachments ?? [] }, retryMessage);
+    await runMockAction({ type: actionType, text: retryMessage.text, attachments: retryMessage.attachments ?? [], formAnswers: retryMessage.formAnswers }, retryMessage);
   }
 }
 
@@ -245,6 +246,7 @@ async function runMockAction(action, userMessage) {
     state.messages.push({
       id: result.message.id || makeId('message'), role: 'assistant',
       text: result.message.text, options: result.message.options ?? [],
+      questions: result.message.questions ?? [], form: {},
       time: result.message.time instanceof Date ? result.message.time : new Date(result.message.time ?? Date.now()),
     });
     if (result.bankStatus === 'missing') {
@@ -285,6 +287,62 @@ async function prepareBankForShop(typeName) {
       text: `${bank.error} Tap "Try again" when you are ready.`,
       options: [makeOption('Try again', 'Prepare my questions again', 'answer')],
     });
+}
+
+function formAnswer(message, questionId) {
+  message.form ??= {};
+  message.form[questionId] ??= { selected: [], text: '' };
+  return message.form[questionId];
+}
+
+// Options are single choice, except "list" questions, which take several.
+// "Skip" clears the other choices and the written answer.
+function chooseFormOption(button) {
+  const message = state.messages.find((item) => item.id === button.dataset.messageId);
+  const question = message?.questions?.find((item) => item.id === button.dataset.questionId);
+  if (!question || message.formSent) return;
+  const answer = formAnswer(message, question.id);
+  const value = button.dataset.value;
+  if (answer.selected.includes(value)) answer.selected = answer.selected.filter((item) => item !== value);
+  else if (value === 'skipped') { answer.selected = ['skipped']; answer.text = ''; }
+  else if (question.type === 'list') answer.selected = [...answer.selected.filter((item) => item !== 'skipped'), value];
+  else answer.selected = [value];
+  // Update the chips in place: a full render would replay every message's fade-in.
+  for (const chip of button.closest('.question-field').querySelectorAll('.question-choice')) {
+    chip.setAttribute('aria-pressed', String(answer.selected.includes(chip.dataset.value)));
+  }
+  if (value === 'skipped') button.closest('.question-field').querySelector('.question-input').value = '';
+  if (message.formError) {
+    message.formError = '';
+    button.closest('.question-form').querySelector('.message-error')?.remove();
+  }
+}
+
+function submitForm(messageId) {
+  const message = state.messages.find((item) => item.id === messageId);
+  if (!message?.questions?.length || message.formSent || state.pendingCount > 0) return;
+  const formAnswers = [];
+  const lines = [];
+  for (const [index, question] of message.questions.entries()) {
+    const answer = formAnswer(message, question.id);
+    const text = answer.text.trim();
+    const chosen = question.options.filter((option) => answer.selected.includes(option.value));
+    const skipped = answer.selected.includes('skipped');
+    if (!chosen.length && !text && !skipped && question.mandatory) {
+      message.formError = 'Please answer the questions marked *.';
+      render();
+      return;
+    }
+    // Unanswered optional questions count as skipped, so they are not asked again.
+    const value = [...chosen.map((option) => option.value), text].filter(Boolean).join(', ') || 'skipped';
+    const shown = [...chosen.map((option) => option.label), text].filter(Boolean).join(', ') || 'Skip';
+    formAnswers.push({ id: question.id, value });
+    lines.push(`${index + 1}. ${question.question} — ${shown}`);
+  }
+  message.formSent = true;
+  message.formError = '';
+  if (message.options?.length) message.optionsUsed = true;
+  handleSend({ text: lines.join('\n'), formAnswers });
 }
 
 function autosizeTextarea(textarea) {
@@ -392,6 +450,8 @@ app.addEventListener('click', (event) => {
     handleSend({ text: button.dataset.value, option });
     return;
   }
+  if (action === 'form-choice') { chooseFormOption(button); return; }
+  if (action === 'submit-form') { submitForm(button.dataset.messageId); return; }
   if (action === 'copy-message') { copyMessage(button.dataset.messageId, button); return; }
   if (action === 'retry-message') {
     const message = state.messages.find((item) => item.id === button.dataset.messageId);
@@ -403,6 +463,18 @@ app.addEventListener('click', (event) => {
 });
 
 app.addEventListener('input', (event) => {
+  if (event.target.matches('.question-input')) {
+    const message = state.messages.find((item) => item.id === event.target.dataset.messageId);
+    if (message && !message.formSent) {
+      const answer = formAnswer(message, event.target.dataset.questionId);
+      answer.text = event.target.value;
+      if (answer.text.trim() && answer.selected.includes('skipped')) {
+        answer.selected = answer.selected.filter((item) => item !== 'skipped');
+        event.target.closest('.question-field')?.querySelector('[data-value="skipped"]')?.setAttribute('aria-pressed', 'false');
+      }
+    }
+    return;
+  }
   if (event.target.matches('#messageInput')) {
     autosizeTextarea(event.target);
     syncComposerControls();
