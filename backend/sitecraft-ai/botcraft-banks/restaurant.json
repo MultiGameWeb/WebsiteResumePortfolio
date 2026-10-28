@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 121,
+ "question_count": 131,
  "questions": [
   {
    "id": "restaurant-001",
@@ -374,6 +374,30 @@
   },
   {
    "id": "restaurant-033",
+   "category": "Timings & service time",
+   "owner_question": "Does the kitchen close for a break between lunch and dinner? At what time?",
+   "customer_question": "Is the kitchen open at 4 pm?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-034",
+   "category": "Timings & service time",
+   "owner_question": "Until what time do you take the last order at night?",
+   "customer_question": "What time is last order?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-035",
+   "category": "Timings & service time",
+   "owner_question": "On average, how long does food take to reach the table after ordering?",
+   "customer_question": "How long will the food take?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-036",
    "category": "Spice & customisation",
    "owner_question": "Can customers ask for less spicy or extra spicy?",
    "customer_question": "Can you make it less spicy?",
@@ -385,7 +409,7 @@
    ]
   },
   {
-   "id": "restaurant-034",
+   "id": "restaurant-037",
    "category": "Spice & customisation",
    "owner_question": "Can customers customise dishes (no coriander, extra gravy, boneless, etc.)?",
    "customer_question": "Can I get it without coriander?",
@@ -397,7 +421,7 @@
    ]
   },
   {
-   "id": "restaurant-035",
+   "id": "restaurant-038",
    "category": "Portions & prices",
    "owner_question": "Do you offer half and full portions?",
    "customer_question": "Can I order a half plate?",
@@ -410,7 +434,7 @@
    ]
   },
   {
-   "id": "restaurant-036",
+   "id": "restaurant-039",
    "category": "Portions & prices",
    "owner_question": "How many people does one full biryani or one curry serve?",
    "customer_question": "Is one biryani enough for two?",
@@ -418,7 +442,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-037",
+   "id": "restaurant-040",
    "category": "Portions & prices",
    "owner_question": "What is the price range for starters, main course and biryani?",
    "customer_question": "How much is a biryani?",
@@ -426,7 +450,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-038",
+   "id": "restaurant-041",
    "category": "Portions & prices",
    "owner_question": "Do you have combo meals or family packs?",
    "customer_question": "Any family pack?",
@@ -438,7 +462,7 @@
    ]
   },
   {
-   "id": "restaurant-039",
+   "id": "restaurant-042",
    "category": "Portions & prices",
    "owner_question": "Do rotis and rice come with curries, or are they ordered separately?",
    "customer_question": "Does the curry come with roti?",
@@ -451,7 +475,7 @@
    ]
   },
   {
-   "id": "restaurant-040",
+   "id": "restaurant-043",
    "category": "Taxes & charges",
    "owner_question": "Do you add a service charge to the bill?",
    "customer_question": "Is there a service charge?",
@@ -464,7 +488,7 @@
    ]
   },
   {
-   "id": "restaurant-041",
+   "id": "restaurant-044",
    "category": "Taxes & charges",
    "owner_question": "Do you charge for parcel packaging?",
    "customer_question": "Is there a packing charge?",
@@ -477,7 +501,7 @@
    ]
   },
   {
-   "id": "restaurant-042",
+   "id": "restaurant-045",
    "category": "Seating",
    "owner_question": "Do you have AC seating?",
    "customer_question": "Is it AC?",
@@ -490,7 +514,7 @@
    ]
   },
   {
-   "id": "restaurant-043",
+   "id": "restaurant-046",
    "category": "Seating",
    "owner_question": "Do you have a family section?",
    "customer_question": "Is there family seating?",
@@ -502,7 +526,7 @@
    ]
   },
   {
-   "id": "restaurant-044",
+   "id": "restaurant-047",
    "category": "Seating",
    "owner_question": "Is it table service, or self-service at the counter?",
    "customer_question": "Do I order at the counter?",
@@ -515,7 +539,7 @@
    ]
   },
   {
-   "id": "restaurant-045",
+   "id": "restaurant-048",
    "category": "Seating",
    "owner_question": "How long is the usual waiting time on weekends or at rush hours?",
    "customer_question": "How long is the wait right now?",
@@ -523,7 +547,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-046",
+   "id": "restaurant-049",
    "category": "Seating",
    "owner_question": "Do you serve alcohol?",
    "customer_question": "Do you serve beer?",
@@ -535,7 +559,7 @@
    ]
   },
   {
-   "id": "restaurant-047",
+   "id": "restaurant-050",
    "category": "Reservations & parties",
    "owner_question": "How early should customers book a table for a group?",
    "customer_question": "Should I book for 10 people on Sunday?",
@@ -543,7 +567,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-048",
+   "id": "restaurant-051",
    "category": "Reservations & parties",
    "owner_question": "Do you host birthday parties or small celebrations?",
    "customer_question": "Can we have a birthday party here?",
@@ -555,7 +579,7 @@
    ]
   },
   {
-   "id": "restaurant-049",
+   "id": "restaurant-052",
    "category": "Reservations & parties",
    "owner_question": "What is the largest group you can host at once?",
    "customer_question": "Can you host 50 people?",
@@ -563,7 +587,7 @@
    "answer_type": "number"
   },
   {
-   "id": "restaurant-050",
+   "id": "restaurant-053",
    "category": "Reservations & parties",
    "owner_question": "Do you need an advance payment for party bookings? How much?",
    "customer_question": "Is advance needed for a party?",
@@ -571,7 +595,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-051",
+   "id": "restaurant-054",
    "category": "Takeaway & apps",
    "owner_question": "How long does a parcel order usually take to be ready?",
    "customer_question": "How long for a parcel?",
@@ -579,7 +603,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-052",
+   "id": "restaurant-055",
    "category": "Takeaway & apps",
    "owner_question": "Can customers order a parcel in advance by phone or WhatsApp and pick it up?",
    "customer_question": "Can I order now and pick up later?",
@@ -591,7 +615,7 @@
    ]
   },
   {
-   "id": "restaurant-053",
+   "id": "restaurant-056",
    "category": "Takeaway & apps",
    "owner_question": "Are you on Swiggy or Zomato?",
    "customer_question": "Are you on Swiggy?",
@@ -605,7 +629,7 @@
    ]
   },
   {
-   "id": "restaurant-054",
+   "id": "restaurant-057",
    "category": "Delivery",
    "owner_question": "Is home delivery done by your own staff, or only through Swiggy / Zomato?",
    "customer_question": "Do you deliver yourselves?",
@@ -619,7 +643,7 @@
    ]
   },
   {
-   "id": "restaurant-055",
+   "id": "restaurant-058",
    "category": "Delivery",
    "owner_question": "Up to how many kilometres do you deliver?",
    "customer_question": "Do you deliver to Kukatpally?",
@@ -627,7 +651,7 @@
    "answer_type": "number"
   },
   {
-   "id": "restaurant-056",
+   "id": "restaurant-059",
    "category": "Delivery",
    "owner_question": "How much do you charge for delivery? Does it change with distance?",
    "customer_question": "What is the delivery charge?",
@@ -635,7 +659,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-057",
+   "id": "restaurant-060",
    "category": "Delivery",
    "owner_question": "Is there a minimum order amount for delivery? How much?",
    "customer_question": "Is there a minimum order?",
@@ -643,7 +667,7 @@
    "answer_type": "price"
   },
   {
-   "id": "restaurant-058",
+   "id": "restaurant-061",
    "category": "Catering & bulk orders",
    "owner_question": "Do you take bulk orders or outdoor catering?",
    "customer_question": "Do you do catering?",
@@ -655,7 +679,7 @@
    ]
   },
   {
-   "id": "restaurant-059",
+   "id": "restaurant-062",
    "category": "Hygiene & safety",
    "owner_question": "What drinking water do you serve?",
    "customer_question": "Is the water safe?",
@@ -668,7 +692,7 @@
    ]
   },
   {
-   "id": "restaurant-060",
+   "id": "restaurant-063",
    "category": "Hygiene & safety",
    "owner_question": "Is your food cooked fresh daily?",
    "customer_question": "Is the food fresh?",
@@ -680,7 +704,7 @@
    ]
   },
   {
-   "id": "restaurant-061",
+   "id": "restaurant-064",
    "category": "Hygiene & safety",
    "owner_question": "Do you buy vegetables and meat fresh every day?",
    "customer_question": "Is the chicken fresh today?",
@@ -692,7 +716,7 @@
    ]
   },
   {
-   "id": "restaurant-062",
+   "id": "restaurant-065",
    "category": "Hygiene & safety",
    "owner_question": "Is your seafood (fish, prawns) fresh daily or frozen?",
    "customer_question": "Is the fish fresh or frozen?",
@@ -706,7 +730,7 @@
    ]
   },
   {
-   "id": "restaurant-063",
+   "id": "restaurant-066",
    "category": "Drinks & desserts",
    "owner_question": "Which drinks do you serve (tea, coffee, juices, lassi, soft drinks, mocktails)?",
    "customer_question": "What drinks do you have?",
@@ -714,7 +738,7 @@
    "answer_type": "list"
   },
   {
-   "id": "restaurant-064",
+   "id": "restaurant-067",
    "category": "Drinks & desserts",
    "owner_question": "Which desserts or sweets do you serve?",
    "customer_question": "What desserts do you have?",
@@ -722,7 +746,7 @@
    "answer_type": "list"
   },
   {
-   "id": "restaurant-065",
+   "id": "restaurant-068",
    "category": "Service & feedback",
    "owner_question": "What can a customer do if a dish is not as expected?",
    "customer_question": "This dish is too salty, what can you do?",
@@ -730,7 +754,33 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-066",
+   "id": "restaurant-069",
+   "category": "Service & feedback",
+   "owner_question": "If there is a problem in the food (hair, insect, wrong dish), what do you do?",
+   "customer_question": "There is a hair in my food!",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Replace the dish",
+    "Remove it from the bill",
+    "Both",
+    "Manager decides"
+   ]
+  },
+  {
+   "id": "restaurant-070",
+   "category": "Service & feedback",
+   "owner_question": "Is a manager available in the restaurant to handle complaints right away?",
+   "customer_question": "Can I talk to the manager?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-071",
    "category": "Menu & cuisine",
    "owner_question": "Do you have separate menu cards for veg and non-veg?",
    "customer_question": "Is there a separate veg menu?",
@@ -742,7 +792,7 @@
    ]
   },
   {
-   "id": "restaurant-067",
+   "id": "restaurant-072",
    "category": "Menu & cuisine",
    "owner_question": "Do you have special pure-veg combos or thalis for vegetarians?",
    "customer_question": "Any veg combo?",
@@ -754,7 +804,7 @@
    ]
   },
   {
-   "id": "restaurant-068",
+   "id": "restaurant-073",
    "category": "Menu & cuisine",
    "owner_question": "At what time does the tandoor start in the evening?",
    "customer_question": "Is tandoor available now?",
@@ -762,7 +812,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-069",
+   "id": "restaurant-074",
    "category": "Menu & cuisine",
    "owner_question": "Do you have seasonal specials (for example haleem in Ramzan, mango dishes in summer)?",
    "customer_question": "Do you have haleem?",
@@ -770,7 +820,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-070",
+   "id": "restaurant-075",
    "category": "Menu & cuisine",
    "owner_question": "Do you have a kids' menu or dishes that are good for small children?",
    "customer_question": "What can my kids eat here?",
@@ -782,7 +832,7 @@
    ]
   },
   {
-   "id": "restaurant-071",
+   "id": "restaurant-076",
    "category": "Menu & cuisine",
    "owner_question": "Which items usually finish early in the day?",
    "customer_question": "Is mutton biryani still available?",
@@ -790,7 +840,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-072",
+   "id": "restaurant-077",
    "category": "Menu & cuisine",
    "owner_question": "Which dishes are most popular with families and groups?",
    "customer_question": "What's good for a family of five?",
@@ -798,7 +848,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-073",
+   "id": "restaurant-078",
    "category": "Veg / non-veg & diet",
    "owner_question": "Which dishes are made with pure ghee?",
    "customer_question": "Is the biryani made with ghee?",
@@ -806,7 +856,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-074",
+   "id": "restaurant-079",
    "category": "Veg / non-veg & diet",
    "owner_question": "Do you add artificial food colour to any dishes?",
    "customer_question": "Is there colour in the chicken 65?",
@@ -819,7 +869,7 @@
    ]
   },
   {
-   "id": "restaurant-075",
+   "id": "restaurant-080",
    "category": "Veg / non-veg & diet",
    "owner_question": "Which dishes contain nuts or cashew paste?",
    "customer_question": "Does the paneer curry have cashew?",
@@ -827,7 +877,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-076",
+   "id": "restaurant-081",
    "category": "Veg / non-veg & diet",
    "owner_question": "Do you have options for diabetics or low-sugar diets?",
    "customer_question": "Any sugar-free sweets?",
@@ -839,7 +889,7 @@
    ]
   },
   {
-   "id": "restaurant-077",
+   "id": "restaurant-082",
    "category": "Veg / non-veg & diet",
    "owner_question": "Do you have vegan dishes (no dairy)?",
    "customer_question": "Do you have vegan food?",
@@ -851,7 +901,7 @@
    ]
   },
   {
-   "id": "restaurant-078",
+   "id": "restaurant-083",
    "category": "Veg / non-veg & diet",
    "owner_question": "Do you have gluten-free options?",
    "customer_question": "Anything without wheat?",
@@ -863,7 +913,23 @@
    ]
   },
   {
-   "id": "restaurant-079",
+   "id": "restaurant-084",
+   "category": "Timings & service time",
+   "owner_question": "Do your timings change on festivals or special days?",
+   "customer_question": "Are you open on Diwali?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-085",
+   "category": "Timings & service time",
+   "owner_question": "Which dishes take longer to prepare (biryani, tandoor, baked items) and how long?",
+   "customer_question": "How long for tandoori chicken?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-086",
    "category": "Spice & customisation",
    "owner_question": "Do you have boneless options for chicken dishes?",
    "customer_question": "Is boneless chicken available?",
@@ -875,7 +941,7 @@
    ]
   },
   {
-   "id": "restaurant-080",
+   "id": "restaurant-087",
    "category": "Portions & prices",
    "owner_question": "Which combos or family packs do you have, and what are their prices?",
    "customer_question": "What's in the family pack?",
@@ -883,7 +949,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-081",
+   "id": "restaurant-088",
    "category": "Portions & prices",
    "owner_question": "Do you charge extra for extra gravy, raita or salad?",
    "customer_question": "Is raita free?",
@@ -896,7 +962,7 @@
    ]
   },
   {
-   "id": "restaurant-082",
+   "id": "restaurant-089",
    "category": "Taxes & charges",
    "owner_question": "How much is the parcel packing charge?",
    "customer_question": "How much is packing extra?",
@@ -904,7 +970,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-083",
+   "id": "restaurant-090",
    "category": "Taxes & charges",
    "owner_question": "Is GST the same for your AC and non-AC sections?",
    "customer_question": "Is GST more in the AC hall?",
@@ -917,7 +983,7 @@
    ]
   },
   {
-   "id": "restaurant-084",
+   "id": "restaurant-091",
    "category": "Taxes & charges",
    "owner_question": "Which ways to pay do you accept (cash, UPI, cards, Sodexo / meal vouchers)?",
    "customer_question": "Do you take Sodexo?",
@@ -931,7 +997,7 @@
    ]
   },
   {
-   "id": "restaurant-085",
+   "id": "restaurant-092",
    "category": "Taxes & charges",
    "owner_question": "Do you have bank card offers (for example 10% off with a bank card)?",
    "customer_question": "Any offer on HDFC card?",
@@ -939,7 +1005,19 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-086",
+   "id": "restaurant-093",
+   "category": "Taxes & charges",
+   "owner_question": "Do you add any extra charge for card payments?",
+   "customer_question": "Is there extra charge for card?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "No extra charge",
+    "Yes, a small percentage"
+   ]
+  },
+  {
+   "id": "restaurant-094",
    "category": "Taxes & charges",
    "owner_question": "Is drinking water free, or do you charge for water bottles?",
    "customer_question": "Is water free?",
@@ -952,7 +1030,7 @@
    ]
   },
   {
-   "id": "restaurant-087",
+   "id": "restaurant-095",
    "category": "Taxes & charges",
    "owner_question": "Do you give a printed GST bill?",
    "customer_question": "Will I get a GST bill?",
@@ -964,7 +1042,7 @@
    ]
   },
   {
-   "id": "restaurant-088",
+   "id": "restaurant-096",
    "category": "Seating",
    "owner_question": "What are your busiest days and times?",
    "customer_question": "When is it less crowded?",
@@ -972,7 +1050,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-089",
+   "id": "restaurant-097",
    "category": "Seating",
    "owner_question": "Do you have private rooms or cabins?",
    "customer_question": "Do you have a private cabin?",
@@ -984,7 +1062,7 @@
    ]
   },
   {
-   "id": "restaurant-090",
+   "id": "restaurant-098",
    "category": "Seating",
    "owner_question": "Do you have outdoor or rooftop seating?",
    "customer_question": "Is there rooftop seating?",
@@ -996,7 +1074,7 @@
    ]
   },
   {
-   "id": "restaurant-091",
+   "id": "restaurant-099",
    "category": "Seating",
    "owner_question": "Do you have high chairs for small children?",
    "customer_question": "Is there a baby chair?",
@@ -1008,19 +1086,21 @@
    ]
   },
   {
-   "id": "restaurant-092",
+   "id": "restaurant-100",
    "category": "Seating",
-   "owner_question": "Is the restaurant wheelchair accessible?",
-   "customer_question": "Can a wheelchair get in?",
+   "owner_question": "How easy is it for elderly people and wheelchair users to reach the seating?",
+   "customer_question": "Is there a lift for my grandmother?",
    "priority": "optional",
-   "answer_type": "yes_no",
+   "answer_type": "list",
    "options": [
-    "Yes",
-    "No"
+    "Ground floor seating",
+    "Ramp",
+    "Lift",
+    "Stairs only"
    ]
   },
   {
-   "id": "restaurant-093",
+   "id": "restaurant-101",
    "category": "Seating",
    "owner_question": "Do you have washrooms for customers?",
    "customer_question": "Is there a washroom?",
@@ -1032,7 +1112,7 @@
    ]
   },
   {
-   "id": "restaurant-094",
+   "id": "restaurant-102",
    "category": "Seating",
    "owner_question": "Do you have free Wi-Fi for customers?",
    "customer_question": "Is there Wi-Fi?",
@@ -1044,7 +1124,7 @@
    ]
   },
   {
-   "id": "restaurant-095",
+   "id": "restaurant-103",
    "category": "Seating",
    "owner_question": "Can customers watch TV or cricket matches here?",
    "customer_question": "Will the match be on TV?",
@@ -1056,7 +1136,7 @@
    ]
   },
   {
-   "id": "restaurant-096",
+   "id": "restaurant-104",
    "category": "Seating",
    "owner_question": "Do you have live music or special events on weekends?",
    "customer_question": "Any live music this weekend?",
@@ -1064,7 +1144,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-097",
+   "id": "restaurant-105",
    "category": "Seating",
    "owner_question": "Is smoking allowed anywhere on the premises?",
    "customer_question": "Can I smoke here?",
@@ -1076,7 +1156,7 @@
    ]
   },
   {
-   "id": "restaurant-098",
+   "id": "restaurant-106",
    "category": "Reservations & parties",
    "owner_question": "What is your cancellation policy for party or table bookings?",
    "customer_question": "Can I cancel my booking?",
@@ -1084,7 +1164,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-099",
+   "id": "restaurant-107",
    "category": "Reservations & parties",
    "owner_question": "Can you decorate the table or area for birthdays or anniversaries? Is there a charge?",
    "customer_question": "Can you decorate for a birthday?",
@@ -1092,7 +1172,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-100",
+   "id": "restaurant-108",
    "category": "Reservations & parties",
    "owner_question": "Can customers bring their own cake?",
    "customer_question": "Can I bring a cake?",
@@ -1105,7 +1185,7 @@
    ]
   },
   {
-   "id": "restaurant-101",
+   "id": "restaurant-109",
    "category": "Takeaway & apps",
    "owner_question": "Are your Swiggy/Zomato prices the same as in the restaurant?",
    "customer_question": "Is it cheaper in the restaurant?",
@@ -1118,7 +1198,7 @@
    ]
   },
   {
-   "id": "restaurant-102",
+   "id": "restaurant-110",
    "category": "Takeaway & apps",
    "owner_question": "What packaging do you use for parcels?",
    "customer_question": "Are the containers plastic?",
@@ -1132,7 +1212,7 @@
    ]
   },
   {
-   "id": "restaurant-103",
+   "id": "restaurant-111",
    "category": "Takeaway & apps",
    "owner_question": "Do you give spoons, tissues and onion/lemon with parcels?",
    "customer_question": "Will you give spoons?",
@@ -1144,7 +1224,7 @@
    ]
   },
   {
-   "id": "restaurant-104",
+   "id": "restaurant-112",
    "category": "Takeaway & apps",
    "owner_question": "Do you use leak-proof, sealed containers for curries and gravies?",
    "customer_question": "Will the curry leak in the parcel?",
@@ -1156,7 +1236,7 @@
    ]
   },
   {
-   "id": "restaurant-105",
+   "id": "restaurant-113",
    "category": "Delivery",
    "owner_question": "Do you give free delivery above a certain bill amount? Above how much?",
    "customer_question": "Is delivery free above 500?",
@@ -1164,7 +1244,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-106",
+   "id": "restaurant-114",
    "category": "Delivery",
    "owner_question": "Do you give a discount when customers order directly by phone or WhatsApp instead of through apps?",
    "customer_question": "Is it cheaper if I order directly?",
@@ -1172,7 +1252,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-107",
+   "id": "restaurant-115",
    "category": "Delivery",
    "owner_question": "If a customer cancels a phone or WhatsApp order, do you refund or charge a cancellation fee?",
    "customer_question": "Can I cancel my order?",
@@ -1180,7 +1260,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-108",
+   "id": "restaurant-116",
    "category": "Catering & bulk orders",
    "owner_question": "What is the minimum number of plates for a bulk or catering order?",
    "customer_question": "Minimum order for catering?",
@@ -1188,7 +1268,7 @@
    "answer_type": "number"
   },
   {
-   "id": "restaurant-109",
+   "id": "restaurant-117",
    "category": "Catering & bulk orders",
    "owner_question": "How many days in advance should bulk orders be placed?",
    "customer_question": "How early should I order for 100 people?",
@@ -1196,7 +1276,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-110",
+   "id": "restaurant-118",
    "category": "Catering & bulk orders",
    "owner_question": "What is the price per plate for catering (veg and non-veg)?",
    "customer_question": "Catering cost per plate?",
@@ -1204,7 +1284,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-111",
+   "id": "restaurant-119",
    "category": "Catering & bulk orders",
    "owner_question": "Do you provide serving staff and vessels for catering?",
    "customer_question": "Will you send serving staff?",
@@ -1216,7 +1296,7 @@
    ]
   },
   {
-   "id": "restaurant-112",
+   "id": "restaurant-120",
    "category": "Hygiene & safety",
    "owner_question": "Do your kitchen staff wear caps, gloves and aprons?",
    "customer_question": "Is the kitchen clean?",
@@ -1228,7 +1308,7 @@
    ]
   },
   {
-   "id": "restaurant-113",
+   "id": "restaurant-121",
    "category": "Hygiene & safety",
    "owner_question": "Can customers see the kitchen (open kitchen)?",
    "customer_question": "Can I see the kitchen?",
@@ -1240,7 +1320,7 @@
    ]
   },
   {
-   "id": "restaurant-114",
+   "id": "restaurant-122",
    "category": "Drinks & desserts",
    "owner_question": "Are your juices made fresh?",
    "customer_question": "Is the juice fresh?",
@@ -1252,7 +1332,7 @@
    ]
   },
   {
-   "id": "restaurant-115",
+   "id": "restaurant-123",
    "category": "Drinks & desserts",
    "owner_question": "Do you serve filter coffee?",
    "customer_question": "Do you have filter coffee?",
@@ -1264,7 +1344,7 @@
    ]
   },
   {
-   "id": "restaurant-116",
+   "id": "restaurant-124",
    "category": "Loyalty & discounts",
    "owner_question": "Do you have a loyalty card or points for regular customers?",
    "customer_question": "Do you have a loyalty card?",
@@ -1276,7 +1356,7 @@
    ]
   },
   {
-   "id": "restaurant-117",
+   "id": "restaurant-125",
    "category": "Loyalty & discounts",
    "owner_question": "Do you give discounts for students, seniors or corporate groups?",
    "customer_question": "Any student discount?",
@@ -1284,7 +1364,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-118",
+   "id": "restaurant-126",
    "category": "Loyalty & discounts",
    "owner_question": "Do you have weekday lunch deals or happy hours?",
    "customer_question": "Any lunch offer on weekdays?",
@@ -1292,7 +1372,33 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-119",
+   "id": "restaurant-127",
+   "category": "Service & feedback",
+   "owner_question": "Can customers bring outside food or drinks (other than baby food)?",
+   "customer_question": "Can I bring my own drinks?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Not allowed",
+    "Allowed",
+    "Allowed with a charge"
+   ]
+  },
+  {
+   "id": "restaurant-128",
+   "category": "Service & feedback",
+   "owner_question": "Do you pack leftover food for customers to take home?",
+   "customer_question": "Can you pack the leftovers?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Yes, free",
+    "Yes, with a container charge",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-129",
    "category": "Service & feedback",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -1308,7 +1414,7 @@
    ]
   },
   {
-   "id": "restaurant-120",
+   "id": "restaurant-130",
    "category": "Service & feedback",
    "owner_question": "How should customers give feedback or a complaint?",
    "customer_question": "Where can I give feedback?",
@@ -1316,7 +1422,7 @@
    "answer_type": "text"
   },
   {
-   "id": "restaurant-121",
+   "id": "restaurant-131",
    "category": "Service & feedback",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

@@ -48,6 +48,12 @@ Q = [
  ("Veg / non-veg & diet", "O", "yes_no", "Do you have vegan dishes (no dairy)?", "Do you have vegan food?", YN),
  ("Veg / non-veg & diet", "O", "yes_no", "Do you have gluten-free options?", "Anything without wheat?", YN),
 
+ ("Timings & service time", "I", "text", "Does the kitchen close for a break between lunch and dinner? At what time?", "Is the kitchen open at 4 pm?", []),
+ ("Timings & service time", "I", "text", "Until what time do you take the last order at night?", "What time is last order?", []),
+ ("Timings & service time", "O", "text", "Do your timings change on festivals or special days?", "Are you open on Diwali?", []),
+ ("Timings & service time", "I", "text", "On average, how long does food take to reach the table after ordering?", "How long will the food take?", []),
+ ("Timings & service time", "O", "text", "Which dishes take longer to prepare (biryani, tandoor, baked items) and how long?", "How long for tandoori chicken?", []),
+
  ("Spice & customisation", "M", "options", "How spicy is your food normally?", "Is the food very spicy?", ["Mild", "Medium", "Spicy (Andhra style)", "Depends on the dish"]),
  ("Spice & customisation", "I", "yes_no", "Can customers ask for less spicy or extra spicy?", "Can you make it less spicy?", YN),
  ("Spice & customisation", "I", "yes_no", "Can customers customise dishes (no coriander, extra gravy, boneless, etc.)?", "Can I get it without coriander?", YN),
@@ -69,6 +75,7 @@ Q = [
  ("Taxes & charges", "O", "options", "Is GST the same for your AC and non-AC sections?", "Is GST more in the AC hall?", ["Same GST", "Different GST", "Only one section"]),
  ("Taxes & charges", "O", "list", "Which ways to pay do you accept (cash, UPI, cards, Sodexo / meal vouchers)?", "Do you take Sodexo?", ["Cash", "UPI", "Debit / credit card", "Sodexo / meal vouchers"]),
  ("Taxes & charges", "O", "text", "Do you have bank card offers (for example 10% off with a bank card)?", "Any offer on HDFC card?", []),
+ ("Taxes & charges", "O", "options", "Do you add any extra charge for card payments?", "Is there extra charge for card?", ["No extra charge", "Yes, a small percentage"]),
  ("Taxes & charges", "O", "options", "Is drinking water free, or do you charge for water bottles?", "Is water free?", ["Free RO water", "Only paid bottles", "Both"]),
  ("Taxes & charges", "O", "yes_no", "Do you give a printed GST bill?", "Will I get a GST bill?", YN),
 
@@ -81,7 +88,7 @@ Q = [
  ("Seating", "O", "yes_no", "Do you have private rooms or cabins?", "Do you have a private cabin?", YN),
  ("Seating", "O", "yes_no", "Do you have outdoor or rooftop seating?", "Is there rooftop seating?", YN),
  ("Seating", "O", "yes_no", "Do you have high chairs for small children?", "Is there a baby chair?", YN),
- ("Seating", "O", "yes_no", "Is the restaurant wheelchair accessible?", "Can a wheelchair get in?", YN),
+ ("Seating", "O", "list", "How easy is it for elderly people and wheelchair users to reach the seating?", "Is there a lift for my grandmother?", ["Ground floor seating", "Ramp", "Lift", "Stairs only"]),
  ("Seating", "O", "yes_no", "Do you have washrooms for customers?", "Is there a washroom?", YN),
  ("Seating", "O", "yes_no", "Do you have free Wi-Fi for customers?", "Is there Wi-Fi?", YN),
  ("Seating", "O", "yes_no", "Can customers watch TV or cricket matches here?", "Will the match be on TV?", YN),
@@ -139,6 +146,10 @@ Q = [
  ("Loyalty & discounts", "O", "text", "Do you have weekday lunch deals or happy hours?", "Any lunch offer on weekdays?", []),
 
  ("Service & feedback", "I", "text", "What can a customer do if a dish is not as expected?", "This dish is too salty, what can you do?", []),
+ ("Service & feedback", "I", "options", "If there is a problem in the food (hair, insect, wrong dish), what do you do?", "There is a hair in my food!", ["Replace the dish", "Remove it from the bill", "Both", "Manager decides"]),
+ ("Service & feedback", "I", "yes_no", "Is a manager available in the restaurant to handle complaints right away?", "Can I talk to the manager?", YN),
+ ("Service & feedback", "O", "options", "Can customers bring outside food or drinks (other than baby food)?", "Can I bring my own drinks?", ["Not allowed", "Allowed", "Allowed with a charge"]),
+ ("Service & feedback", "O", "options", "Do you pack leftover food for customers to take home?", "Can you pack the leftovers?", ["Yes, free", "Yes, with a container charge", "No"]),
  ("Service & feedback", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"]),
  ("Service & feedback", "O", "text", "How should customers give feedback or a complaint?", "Where can I give feedback?", []),
  ("Service & feedback", "O", "text", "Please share your Google reviews link, if you have one.", "Where can I see your reviews?", []),
