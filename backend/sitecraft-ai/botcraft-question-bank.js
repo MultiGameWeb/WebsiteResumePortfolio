@@ -210,9 +210,10 @@ const MAX_REVIEW_DROP_SHARE = 0.25;
 
 // One pass over the whole bank: per-category generation cannot see the
 // other categories, so the same fact (e.g. GST) can be asked several times.
-async function reviewBank(env, shop, questions, log) {
+async function reviewBank(env, shop, questions, log, models) {
   const list = questions.map((q, i) => `${i}. [${q.category}] ${q.owner_question}`).join("\n");
   const { result } = await callWithFallback(env, {
+    models,
     system: RULES,
     prompt: `Shop type: ${shop}\n\nReview this owner interview. The shop basics (${CORE_TOPICS}) are already asked separately.\n\n${list}\n\nReturn: duplicates, each with the id of the later question and the earlier question it repeats (only exact same-fact repeats); off-topic question ids; and at most ${MAX_MANDATORY_EXTRA} truly mandatory question ids. Most questions are fine and should not be listed.`,
     schema: REVIEW_SCHEMA,
@@ -240,7 +241,7 @@ function categoryPrompt(shop, place, category, count, existing) {
   return `Shop type: ${shop}\nLocation: ${place}\n\nTopic category: ${category.name}\nWhat customers ask about: ${category.customer_concerns}\n\nWrite ${count} owner interview questions for this category only. Set "category" to "${category.name}".${existing.length ? `\n\nThese questions already exist; do not repeat them:\n${existing.map(q => `- ${q}`).join("\n")}` : ""}`;
 }
 
-export async function generateQuestionBank(env, { shopType, city = "", log = () => {} }) {
+export async function generateQuestionBank(env, { shopType, city = "", log = () => {}, models }) {
   const shopDescription = cleanText(shopType, 120);
   if (!shopDescription) throw new Error("shopType is required.");
   const place = cleanText(city, 80) || "India";
@@ -249,6 +250,7 @@ export async function generateQuestionBank(env, { shopType, city = "", log = () 
   // is not available on the free tier, so it is opt-in.
   const useSearch = env?.BOTCRAFT_SEARCH_GROUNDING === "on";
   const { result: research } = await callWithFallback(env, {
+    models,
     system: RULES,
     prompt: `Shop type: ${shopDescription}\nLocation: ${place}\n\n${useSearch ? "Search the web for" : "Using your knowledge, work out"} what customers of this kind of shop in ${place} commonly ask, worry about and compare before buying. Then list 12-18 topic categories for the owner interview, with how many questions each needs so the total is about 250.`,
     schema: CATEGORY_SCHEMA,
@@ -271,7 +273,7 @@ export async function generateQuestionBank(env, { shopType, city = "", log = () 
   // categories that come back short.
   const seen = new Set(CORE_QUESTIONS.map(q => questionKey(q.owner_question)));
   const byCategory = categories.map(() => []);
-  const models = new Set();
+  const usedModels = new Set();
   async function fill(target) {
     for (let round = 0; round < 3; round += 1) {
       const total = byCategory.reduce((n, list) => n + list.length, 0);
@@ -284,6 +286,7 @@ export async function generateQuestionBank(env, { shopType, city = "", log = () 
           const count = Math.max(3, missing);
           const existing = byCategory[i].map(q => q.owner_question);
           const { model, result } = await callWithFallback(env, {
+            models,
             system: RULES,
             prompt: categoryPrompt(shopDescription, place, category, count, existing),
             schema: QUESTION_SCHEMA,
@@ -291,7 +294,7 @@ export async function generateQuestionBank(env, { shopType, city = "", log = () 
             maxOutputTokens: 12000,
             log
           });
-          models.add(model);
+          usedModels.add(model);
           log(`${category.name}: +${result?.questions?.length || 0} (${model})`);
           return { i, questions: result?.questions };
         });
@@ -311,7 +314,7 @@ export async function generateQuestionBank(env, { shopType, city = "", log = () 
   // choose the few truly mandatory ones. Top up once if the review cut too much.
   let generated = byCategory.flat();
   try {
-    generated = await reviewBank(env, shopDescription, generated, log);
+    generated = await reviewBank(env, shopDescription, generated, log, models);
   } catch (error) {
     log(`review skipped: ${error.message.slice(0, 120)}`);
   }
@@ -337,9 +340,38 @@ export async function generateQuestionBank(env, { shopType, city = "", log = () 
   return {
     shop_type_key: cleanText(research.shop_type_key, 60).toLowerCase().replace(/[^a-z0-9_]+/g, "_") || "general",
     display_name: cleanText(research.display_name, 80) || shopDescription,
-    model: [...models].join(", "),
+    model: [...usedModels].join(", "),
     researched_with_search: useSearch,
     categories,
     questions: ordered
+  };
+}
+
+// Topics already covered by the core questions, or about the bot itself.
+// Generation is told to avoid them, but a few slip through.
+export const CORE_TOPIC_PATTERN = /\bemi\b|\bparking\b|chatbot|\bthe bot\b|payment method|^(do|does) (you|your shop) (offer|provide) (free )?home delivery\b/i;
+
+// The stored form of a bank: type-specific questions only (core questions live
+// in code), with stable ids.
+export function toBankRecord(key, name, bank) {
+  const questions = bank.questions
+    .filter(q => !q.key && !CORE_TOPIC_PATTERN.test(q.owner_question))
+    .map((q, i) => ({
+      id: `${key}-${String(i + 1).padStart(3, "0")}`,
+      category: q.category,
+      owner_question: q.owner_question,
+      customer_question: q.customer_question,
+      priority: q.priority,
+      answer_type: q.answer_type,
+      ...(q.options?.length ? { options: q.options } : {})
+    }));
+  return {
+    shop_type_key: key,
+    name,
+    version: 1,
+    model: bank.model,
+    generated_at: new Date().toISOString().slice(0, 10),
+    question_count: questions.length,
+    questions
   };
 }

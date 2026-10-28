@@ -136,5 +136,25 @@ export async function sendChatAction(action) {
       time: new Date(),
     },
     progress: data.progress,
+    bankStatus: data.bankStatus,
+    shopTypeName: data.shopTypeName,
   };
+}
+
+/**
+ * Asks the Worker to prepare the question bank for this shop's type (1-2 minutes).
+ * @returns {Promise<{ ok: true, name: string, question_count: number } | { ok: false, error: string }>}
+ */
+export async function prepareQuestionBank() {
+  try {
+    const response = await fetch(`${API_BASE}/api/botcraft/bank`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ shopId }),
+    });
+    const data = await response.json();
+    return response.ok && data?.ok ? data : { ok: false, error: data?.error || 'Could not prepare the questions.' };
+  } catch {
+    return { ok: false, error: 'Could not reach BotCraft. Please check your connection.' };
+  }
 }

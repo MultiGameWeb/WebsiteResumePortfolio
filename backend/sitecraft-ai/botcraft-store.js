@@ -39,7 +39,15 @@ const SCHEMA = [
     text TEXT NOT NULL,
     created_at TEXT NOT NULL
   )`,
-  `CREATE INDEX IF NOT EXISTS idx_botcraft_messages_shop ON botcraft_builder_messages(shop_id, message_id)`
+  `CREATE INDEX IF NOT EXISTS idx_botcraft_messages_shop ON botcraft_builder_messages(shop_id, message_id)`,
+  // Question banks generated on demand for shop types without a ready-made
+  // file in botcraft-banks/; shared by every shop of that type.
+  `CREATE TABLE IF NOT EXISTS botcraft_question_banks (
+    shop_type_key TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    bank_json TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  )`
 ];
 
 const MAX_NOTES = 200;
@@ -105,4 +113,20 @@ export async function saveTurn(env, shopId, { facts, notes, answers, resetAnswer
     db.prepare("INSERT INTO botcraft_builder_messages (shop_id, role, text, created_at) VALUES (?, 'botcraft', ?, ?)").bind(shopId, botText, now)
   );
   await db.batch(statements);
+}
+
+export async function loadStoredBank(env, key) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT bank_json FROM botcraft_question_banks WHERE shop_type_key = ?").bind(key).first();
+  return row ? JSON.parse(row.bank_json) : null;
+}
+
+export async function saveStoredBank(env, record) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare(
+    "INSERT INTO botcraft_question_banks (shop_type_key, name, bank_json, created_at) VALUES (?, ?, ?, ?) " +
+    "ON CONFLICT(shop_type_key) DO UPDATE SET name = excluded.name, bank_json = excluded.bank_json, created_at = excluded.created_at"
+  ).bind(record.shop_type_key, record.name, JSON.stringify(record), new Date().toISOString()).run();
 }

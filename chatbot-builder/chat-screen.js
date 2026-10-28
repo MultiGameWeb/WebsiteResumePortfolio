@@ -1,4 +1,4 @@
-import { loadSavedConversation, sendChatAction } from './chatApi.js';
+import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js';
 import {
   ImageLightbox,
   InputBar,
@@ -247,6 +247,10 @@ async function runMockAction(action, userMessage) {
       text: result.message.text, options: result.message.options ?? [],
       time: result.message.time instanceof Date ? result.message.time : new Date(result.message.time ?? Date.now()),
     });
+    if (result.bankStatus === 'missing') {
+      render({ forceBottom: true });
+      await prepareBankForShop(result.shopTypeName);
+    }
   } catch (error) {
     userMessage.status = 'failed';
     userMessage.error = error instanceof Error ? error.message : 'Message failed. Please try again.';
@@ -255,6 +259,32 @@ async function runMockAction(action, userMessage) {
     state.pendingCount = Math.max(0, state.pendingCount - 1);
     render({ forceBottom: true });
   }
+}
+
+// The shop type has no ready-made questions: prepare them, then let the owner continue.
+let preparingBank = false;
+async function prepareBankForShop(typeName) {
+  if (preparingBank) return;
+  preparingBank = true;
+  const label = typeName || 'your business';
+  state.messages.push({
+    id: makeId('message'), role: 'assistant', time: new Date(),
+    text: `Preparing the questions customers of ${label} usually ask… This takes 1–2 minutes. Please keep this page open.`,
+  });
+  render({ forceBottom: true });
+  const bank = await prepareQuestionBank();
+  preparingBank = false;
+  state.messages.push(bank.ok
+    ? {
+      id: makeId('message'), role: 'assistant', time: new Date(),
+      text: `Ready! I prepared ${bank.question_count} questions for ${bank.name || label}. Let's continue — I'll ask the important ones first.`,
+      options: [makeOption('Continue', 'Continue', 'answer')],
+    }
+    : {
+      id: makeId('message'), role: 'assistant', time: new Date(),
+      text: `${bank.error} Tap "Try again" when you are ready.`,
+      options: [makeOption('Try again', 'Prepare my questions again', 'answer')],
+    });
 }
 
 function autosizeTextarea(textarea) {
