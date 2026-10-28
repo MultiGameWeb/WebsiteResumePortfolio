@@ -24,7 +24,7 @@ export const CORE_QUESTIONS = [
   { key: "shop_front_photo", q: "Please send a photo of your shop front or signboard.", c: "How do I recognise the shop?", type: "image" },
   { key: "address", q: "What is your shop's full address, with a nearby landmark?", c: "Where is your shop?" },
   { key: "map_link", q: "Please share your shop's Google Maps location link.", c: "Send me the shop location." },
-  { key: "parking", q: "Is parking available for customers?", c: "Is there parking near the shop?", type: "options", options: ["Own parking for cars and bikes", "Bike parking only", "Street parking nearby", "No parking"] },
+  { key: "parking", q: "Is parking available for customers?", c: "Is there parking near the shop?", type: "options", options: ["Own parking for cars and bikes", "Valet parking", "Bike parking only", "Street parking nearby", "No parking"] },
   { key: "timings", q: "What are your shop's opening and closing times?", c: "What time do you open?" },
   { key: "weekly_holiday", q: "Which day is your shop closed every week?", c: "Are you open on Sunday?", type: "options", options: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Open all days"] },
   { key: "call_number", q: "Which phone number should customers call for your shop?", c: "What is your contact number?" },
