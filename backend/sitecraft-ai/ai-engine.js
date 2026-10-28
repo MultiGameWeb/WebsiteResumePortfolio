@@ -39,11 +39,15 @@ export async function callGemini(env, keySlot, {
   prompt,
   schema,
   temperature = 0.3,
-  maxOutputTokens
+  maxOutputTokens,
+  model: modelOverride,
+  tools,
+  timeoutMs = 90000
 }) {
-  const envName = KEY_ENV[keySlot];
+  // keySlot is a numbered slot (1-5) or the name of a Worker secret.
+  const envName = KEY_ENV[keySlot] || keySlot;
   const apiKey = env?.[envName];
-  const model = env?.GEMINI_MODEL || DEFAULT_MODEL;
+  const model = modelOverride || env?.GEMINI_MODEL || DEFAULT_MODEL;
 
   if (!apiKey) {
     throw new Error(`${envName} is not configured.`);
@@ -61,6 +65,7 @@ export async function callGemini(env, keySlot, {
   };
 
   if (maxOutputTokens) body.generationConfig.maxOutputTokens = maxOutputTokens;
+  if (tools) body.tools = tools;
 
   let lastError = null;
 
@@ -71,7 +76,8 @@ export async function callGemini(env, keySlot, {
         "Content-Type": "application/json",
         "x-goog-api-key": apiKey
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(timeoutMs)
     });
 
     if (response.ok) {
@@ -83,7 +89,11 @@ export async function callGemini(env, keySlot, {
         throw new Error("Gemini returned invalid JSON.");
       }
 
-      const text = payload?.candidates?.[0]?.content?.parts?.[0]?.text;
+      // Grounded responses can split the answer across several text parts.
+      const text = (payload?.candidates?.[0]?.content?.parts || [])
+        .filter(part => typeof part.text === "string" && !part.thought)
+        .map(part => part.text)
+        .join("");
       if (!text) {
         throw new Error(
           `Gemini returned no content (finishReason=${payload?.candidates?.[0]?.finishReason || "unknown"}).`

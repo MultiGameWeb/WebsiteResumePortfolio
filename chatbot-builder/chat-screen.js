@@ -51,8 +51,9 @@ const makeId = (prefix = 'item') => `${prefix}-${Date.now().toString(36)}-${(++n
 const makeOption = (label, value = label, kind = 'starter') => ({ id: makeId('option'), label, value, kind });
 
 const state = {
-  answered: 12,
-  total: 70,
+  // Real counts arrive once the question bank for the owner's shop type exists.
+  answered: 0,
+  total: 0,
   pendingCount: 0,
   stagedAttachments: [],
   inputError: '',
@@ -62,13 +63,13 @@ const state = {
   messages: [
     {
       id: makeId('message'), role: 'assistant',
-      text: 'Hi! I’m BotCraft 👋\nI’ll help you build a chatbot that understands your business and answers customers confidently. You don’t need to prepare a list of questions — I’ll guide you through it, one question at a time.',
+      text: 'Hi! I’m BotCraft 👋\nI’ll create an AI salesman for your shop. Your customers scan a QR poster in your shop and the bot shows them your items, photos, prices and details — in any language — even when you are busy.\n\nTell me about your shop to begin. What kind of shop do you have?',
       time: new Date(),
       options: [
-        makeOption('Create restaurant chatbot', 'Create restaurant chatbot'),
-        makeOption('Upload my menu', 'Upload my menu'),
-        makeOption('Set prices & timings', 'Set prices & timings'),
-        makeOption('I need help', 'I need help'),
+        makeOption('Jewellery shop'),
+        makeOption('Clothing / saree shop'),
+        makeOption('Mobile & electronics'),
+        makeOption('Other shop'),
       ],
     },
   ],
@@ -236,7 +237,7 @@ async function runMockAction(action, userMessage) {
     if (!result?.ok) throw new Error(result?.error || 'Could not send. Please try again.');
     userMessage.status = 'sent';
     userMessage.error = '';
-    state.answered = Math.min(state.total, state.answered + 1);
+    if (state.total > 0) state.answered = Math.min(state.total, state.answered + 1);
     state.messages.push({
       id: result.message.id || makeId('message'), role: 'assistant',
       text: result.message.text, options: result.message.options ?? [],

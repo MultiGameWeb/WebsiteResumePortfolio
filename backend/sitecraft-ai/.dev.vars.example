@@ -1,0 +1,12 @@
+# Copy this file to .dev.vars (same folder) for local testing with `wrangler dev`.
+# .dev.vars is in .gitignore, so your keys never go to GitHub.
+# In production, set the same names as Cloudflare Worker secrets instead.
+
+# Key 1: owner side (question bank, reading uploads, auto-fill, owner updates)
+BOTCRAFT_GEMINI_API_KEY=paste-key-1-here
+
+# Key 2: customer side (salesman bot replies)
+CHATBOT_GEMINI_API_KEY=paste-key-2-here
+
+# Google Search grounding needs a paid key. Set to "on" after upgrading.
+BOTCRAFT_SEARCH_GROUNDING=off
