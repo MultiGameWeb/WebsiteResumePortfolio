@@ -25,11 +25,12 @@ AI provider: **Gemini, paid API key**, used only on the server (Cloudflare Worke
 
 1. Vinay opens BotCraft and writes: *"Hi, I am Vinay. I need a chatbot for my jewellery shop."*
 2. BotCraft greets him: *"Hi sir, nice to meet you. Of course, we can build an AI chatbot for your jewellery shop."*
+2a. **Vinay pays the setup charge first.** Setup uses paid Gemini calls, so no setup starts before payment; an owner who stops before paying costs us nothing.
 3. **In the background**, Gemini prepares a **question bank of 200+ questions** that jewellery-shop customers ask (see §4).
 4. BotCraft asks: *"Please send your shop's full details."* Vinay sends photos, files (price lists, catalogues) and chat messages.
 5. The AI reads everything and **fills in every answer it can** from what Vinay sent.
 6. BotCraft asks Vinay **only the remaining questions**, one at a time, each with quick options, *Skip* (when allowed) or *Mandatory*.
-7. The bot is ready. Vinay tests it, pays, and **downloads the QR code poster**.
+7. The bot is ready. Vinay tests it and **downloads the QR code poster**. The monthly subscription starts when the bot goes live.
 8. When the shop is busy, Vinay says: *"Sir, please use my salesman bot."* The customer scans and chats.
 
 ## 4. Question bank — generated, never fixed
@@ -102,7 +103,9 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
 - One-time setup: ₹2,999 (draft)
 - Monthly subscription: ₹599 or ₹999, covering hosting, updates, storage and a reply allowance
 - Reports add-on: separate charge
-- Payments are built **last**.
+- **Payment comes before setup** (decided October 2026). The setup chat must not call paid Gemini models for an unpaid owner.
+- Cost estimates use paid-tier prices only; free-tier quota is treated as profit, not counted.
+- Payments are built **last**, but the setup chat must be gated behind payment before launch.
 
 ## 9. Build phases
 
