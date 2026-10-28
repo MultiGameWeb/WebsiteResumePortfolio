@@ -84,7 +84,8 @@ export async function sendChatAction(action) {
     return sendDemoAction(action);
   }
   if (!response.ok || !data?.ok) {
-    return { ok: false, error: data?.error || 'BotCraft could not reply. Please try again.' };
+    const detail = data?.detail ? ` [${data.detail}]` : '';
+    return { ok: false, error: (data?.error || 'BotCraft could not reply. Please try again.') + detail };
   }
 
   facts = { ...facts, ...data.facts };

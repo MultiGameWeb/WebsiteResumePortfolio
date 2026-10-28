@@ -207,6 +207,7 @@ export async function handleBotcraftRoute(request, env, url) {
     }, []);
 
   let result;
+  const modelErrors = [];
   try {
     ({ result } = await callWithFallback(env, {
       system: systemPrompt(facts),
@@ -216,11 +217,14 @@ export async function handleBotcraftRoute(request, env, url) {
       // Busy models fail in under a second, so a slow last model gets the time.
       timeoutMs: 40000,
       // In a live chat, move to the next model at once instead of retrying.
-      maxAttempts: 1
+      maxAttempts: 1,
+      log: message => modelErrors.push(message.slice(0, 160))
     }));
   } catch (error) {
-    console.error("BotCraft chat failed", error);
-    return reply({ ok: false, error: "BotCraft is busy right now. Please try again in a moment." }, 503, origin);
+    console.error("BotCraft chat failed", error, modelErrors);
+    // Beta: return Gemini's reason (never the key) so setup problems are visible.
+    const detail = (modelErrors.length ? modelErrors : [String(error?.message || error)]).join(" | ").slice(0, 600);
+    return reply({ ok: false, error: "BotCraft is busy right now. Please try again in a moment.", detail }, 503, origin);
   }
 
   const learned = {};
