@@ -105,6 +105,7 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
 - Reports add-on: separate charge
 - **Payment comes before setup** (decided October 2026). The setup chat must not call paid Gemini models for an unpaid owner.
 - Cost estimates use paid-tier prices only; free-tier quota is treated as profit, not counted.
+- Final prices are set at the end of the build, with a 40% profit margin over the maximum cost (Gemini, R2 photos, D1 text data, Workers plan share and payment gateway fees).
 - Payments are built **last**, but the setup chat must be gated behind payment before launch.
 
 ## 9. Build phases
