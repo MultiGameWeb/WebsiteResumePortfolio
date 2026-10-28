@@ -1,10 +1,13 @@
-import { CORE_QUESTIONS, callWithFallback } from "./botcraft-question-bank.js";
+import { CORE_QUESTIONS, callWithFallback, generateQuestionBank, toBankRecord } from "./botcraft-question-bank.js";
 import { SHOP_TYPES } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
-import { loadShop, saveTurn, storeAvailable } from "./botcraft-store.js";
+import { loadShop, loadStoredBank, saveStoredBank, saveTurn, storeAvailable } from "./botcraft-store.js";
 
 // POST /api/botcraft/chat — BotCraft's conversation with a shop owner.
 // GET /api/botcraft/shop?id=<shopId> — the saved conversation, to restore the page.
+// POST /api/botcraft/bank — prepares the question bank for a shop type that has
+// no ready-made file (takes 1-2 minutes) and stores it in D1 for every later
+// shop of that type.
 //
 // The browser keeps a random shop id. When the BOTCRAFT_DB binding exists, the
 // shop's facts, answers, items and messages are loaded from and saved to D1
@@ -35,6 +38,8 @@ const CHAT_MODELS = ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3
 const BANK_WINDOW = 6;
 const BULK_MESSAGE_CHARS = 300;
 const FINISH_OPTION = "Finish for now";
+// Cheapest models first for on-demand bank generation.
+const BANK_MODELS = ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3.8-flash"];
 
 // Best-effort throttle per Worker isolate; durable limits come with D1 accounts.
 const recentRequests = new Map();
@@ -138,8 +143,34 @@ function pendingCore(facts) {
   return CORE_QUESTIONS.filter(q => !facts[q.key] && conditionMet(q, facts));
 }
 
-function bankFor(facts) {
-  return QUESTION_BANKS[facts.shop_type] || null;
+// "other: banquet hall" -> "banquet_hall"; known keys stay as they are.
+function shopTypeKey(shopType) {
+  const type = String(shopType || "").trim();
+  if (QUESTION_BANKS[type]) return type;
+  return type.replace(/^other\s*:\s*/i, "").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "").slice(0, 60);
+}
+
+function shopTypeName(shopType) {
+  return String(shopType || "").replace(/^other\s*:\s*/i, "").trim().slice(0, 80);
+}
+
+// Banks generated on demand are cached per isolate after the first D1 read.
+const storedBankCache = new Map();
+
+async function resolveBank(env, facts) {
+  const key = shopTypeKey(facts.shop_type);
+  if (!key) return null;
+  if (QUESTION_BANKS[key]) return QUESTION_BANKS[key];
+  if (storedBankCache.has(key)) return storedBankCache.get(key);
+  if (!storeAvailable(env)) return null;
+  try {
+    const bank = await loadStoredBank(env, key);
+    if (bank) storedBankCache.set(key, bank);
+    return bank;
+  } catch (error) {
+    console.error("BotCraft bank load failed", error);
+    return null;
+  }
 }
 
 function cleanAnswers(raw, bank) {
@@ -158,9 +189,9 @@ function pendingBank(bank, answers) {
 
 // Progress covers the mandatory core questions and the bank's mandatory and
 // important questions; optional ones are extra.
-function progress(facts, answers) {
+function progress(facts, answers, bankRecord) {
   const core = CORE_QUESTIONS.filter(q => q.priority === "mandatory" && conditionMet(q, facts));
-  const bank = (bankFor(facts)?.questions || []).filter(q => q.priority !== "optional");
+  const bank = (bankRecord?.questions || []).filter(q => q.priority !== "optional");
   return {
     answered: core.filter(q => facts[q.key]).length + bank.filter(q => answers[q.id]).length,
     total: core.length + bank.length
@@ -173,9 +204,8 @@ function bankLines(questions) {
   return questions.map(q => `- ${q.id} [${q.priority}]: ${q.owner_question}${q.options?.length ? ` [options: ${q.options.join(" | ")}]` : ""}`).join("\n");
 }
 
-function systemPrompt(facts, answers, bankShown) {
+function systemPrompt(facts, answers, bankShown, bank) {
   const pending = pendingCore(facts);
-  const bank = bankFor(facts);
   const bankPending = pendingBank(bank, answers);
   const known = Object.entries(facts).map(([k, v]) => `- ${k}: ${v}`).join("\n") || "- (nothing yet)";
   const coreList = CORE_QUESTIONS.map(q => `- ${q.key}: ${q.owner_question}${q.options.length ? ` [options: ${q.options.join(" | ")}]` : ""}${q.priority === "optional" ? " (optional)" : ""}${q.only_for ? ` (only for ${q.only_for})` : ""}${q.ask_if ? ` (only if ${q.ask_if.key} is ${q.ask_if.equals.join(" or ")})` : ""}`).join("\n");
@@ -191,11 +221,11 @@ You are talking to the SHOP OWNER to set up their bot. Steps:
 5. When no core question is left:
    - If there are shop questions below, tell the owner the basics are complete (once), then ask the shop questions ONE at a time in the given order, with their options as quick-reply buttons. Mandatory shop questions never get "Skip"; for important and optional ones add the options "Skip" and "${FINISH_OPTION}".
    - Record each answer in "answers" with the question id. If the owner skips, record "skipped"; if it does not apply to their shop, record "not applicable". If they choose "${FINISH_OPTION}", thank them and say they can come back any time to answer more.
-   - If there are no shop questions for this shop type, tell the owner the basics are complete and that the detailed questions for their shop type are coming soon.
+   - If there are no shop questions for this shop type yet, tell the owner the basics are complete and that you are now preparing the detailed questions customers of their kind of business ask; it takes 1-2 minutes and you will continue right after.
 6. Whenever the owner sends details or files, also record answers to any shop questions listed below that their message answers, so those are never asked.
 
 Rules:
-- Reply in the language and script the owner writes in (Telugu, Hindi, English or a mix), short and warm, like a helpful person. At most about 60 words. If their language is unclear (for example just "Hi"), reply in simple English.
+- Reply in the language and script of the owner's latest message (Telugu, Hindi, English or a mix), short and warm, like a helpful person. At most about 60 words. If that message is in English, or its language is unclear (for example just "Hi" or a button label), reply in simple English. Never switch to a language the owner has not used.
 - If the owner asks who you are or what you can do, answer briefly, then continue the setup.
 - Use only what the owner said or sent. Never invent facts, prices or policies.
 - Never change a fact the owner already gave because of a photo or file. If a file seems to contradict it, ask the owner to confirm instead.
@@ -224,7 +254,7 @@ function base64Size(data) {
 
 export async function handleBotcraftRoute(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
-  if (path !== "/api/botcraft/chat" && path !== "/api/botcraft/shop") return null;
+  if (!["/api/botcraft/chat", "/api/botcraft/shop", "/api/botcraft/bank"].includes(path)) return null;
 
   const origin = request.headers.get("Origin") || "";
   if (!allowedOrigins(env).has(origin)) {
@@ -241,8 +271,39 @@ export async function handleBotcraftRoute(request, env, url) {
     if (!SHOP_ID_PATTERN.test(shopId) || !storeAvailable(env)) return reply({ ok: true, messages: [] }, 200, origin);
     const saved = await loadShop(env, shopId, 200);
     if (!saved) return reply({ ok: true, messages: [] }, 200, origin);
-    const answers = cleanAnswers(saved.answers, bankFor(saved.facts));
-    return reply({ ok: true, messages: saved.messages, progress: progress(cleanFacts(saved.facts), answers) }, 200, origin);
+    const savedFacts = cleanFacts(saved.facts);
+    const bank = await resolveBank(env, savedFacts);
+    const answers = cleanAnswers(saved.answers, bank);
+    return reply({ ok: true, messages: saved.messages, progress: progress(savedFacts, answers, bank) }, 200, origin);
+  }
+
+  if (path === "/api/botcraft/bank") {
+    if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
+    if (!storeAvailable(env) || !env?.BOTCRAFT_GEMINI_API_KEY) return reply({ ok: false, error: "BotCraft storage is not configured yet." }, 503, origin);
+    let body;
+    try { body = await request.json(); } catch { body = {}; }
+    const shopId = SHOP_ID_PATTERN.test(String(body?.shopId || "")) ? body.shopId : null;
+    const saved = shopId ? await loadShop(env, shopId, 1) : null;
+    const savedFacts = cleanFacts(saved?.facts);
+    const key = shopTypeKey(savedFacts.shop_type);
+    if (!key) return reply({ ok: false, error: "Tell BotCraft your shop type first." }, 400, origin);
+    const existing = await resolveBank(env, savedFacts);
+    if (existing) return reply({ ok: true, name: existing.name, question_count: existing.question_count }, 200, origin);
+    try {
+      const name = shopTypeName(savedFacts.shop_type) || key;
+      const generated = await generateQuestionBank(env, {
+        shopType: name,
+        city: String(savedFacts.address || "").split(",").slice(-2).join(",").trim(),
+        models: BANK_MODELS
+      });
+      const record = toBankRecord(key, name, generated);
+      await saveStoredBank(env, record);
+      storedBankCache.set(key, record);
+      return reply({ ok: true, name: record.name, question_count: record.question_count }, 200, origin);
+    } catch (error) {
+      console.error("BotCraft bank generation failed", error);
+      return reply({ ok: false, error: "Could not prepare the questions right now. Please try again in a few minutes.", detail: String(error?.message || error).slice(0, 300) }, 503, origin);
+    }
   }
 
   if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
@@ -274,7 +335,8 @@ export async function handleBotcraftRoute(request, env, url) {
   }
   // Saved state wins over what the browser sends.
   const facts = cleanFacts(saved ? saved.facts : body?.facts);
-  const answers = cleanAnswers(saved ? saved.answers : body?.answers, bankFor(facts));
+  const bank = await resolveBank(env, facts);
+  const answers = cleanAnswers(saved ? saved.answers : body?.answers, bank);
   const text = clip(body?.text, MAX_TEXT);
   const images = (Array.isArray(body?.images) ? body.images : [])
     .filter(img => IMAGE_TYPES.has(img?.mimeType) && typeof img?.data === "string" && base64Size(img.data) <= MAX_IMAGE_BYTES)
@@ -300,7 +362,7 @@ export async function handleBotcraftRoute(request, env, url) {
     }, []);
 
   // Show the whole remaining bank only when the owner sends a lot of detail.
-  const bankRemaining = pendingBank(bankFor(facts), answers);
+  const bankRemaining = pendingBank(bank, answers);
   const bulk = images.length > 0 || text.length >= BULK_MESSAGE_CHARS;
   const coreDone = pendingCore(facts).length === 0;
   const bankShown = bulk ? bankRemaining : coreDone ? bankRemaining.slice(0, BANK_WINDOW) : [];
@@ -309,7 +371,7 @@ export async function handleBotcraftRoute(request, env, url) {
   const modelErrors = [];
   try {
     ({ result } = await callWithFallback(env, {
-      system: systemPrompt(facts, answers, bankShown),
+      system: systemPrompt(facts, answers, bankShown, bank),
       contents,
       schema: REPLY_SCHEMA,
       // Flash-Lite answers a setup chat in 1-2 s and has the most free quota.
@@ -350,8 +412,9 @@ export async function handleBotcraftRoute(request, env, url) {
   // A new shop type means a different bank; earlier bank answers no longer apply.
   const sameBank = merged.shop_type === facts.shop_type;
   const mergedAnswers = sameBank ? { ...answers, ...newAnswers } : {};
+  const mergedBank = sameBank ? bank : await resolveBank(env, merged);
 
-  const nextQuestion = pendingCore(merged)[0] || pendingBank(bankFor(merged), mergedAnswers)[0];
+  const nextQuestion = pendingCore(merged)[0] || pendingBank(mergedBank, mergedAnswers)[0];
   const allowSkip = !nextQuestion || nextQuestion.priority !== "mandatory";
 
   const botText = clip(result?.reply, 1500) || "Sorry, please say that again.";
@@ -392,6 +455,10 @@ export async function handleBotcraftRoute(request, env, url) {
     resetAnswers: !sameBank,
     notes,
     items,
-    progress: progress(merged, mergedAnswers)
+    progress: progress(merged, mergedAnswers, mergedBank),
+    // "missing": basics are done but this shop type has no question bank yet,
+    // so the page asks /api/botcraft/bank to prepare one.
+    bankStatus: !merged.shop_type ? "none" : mergedBank ? "ready" : pendingCore(merged).length ? "later" : "missing",
+    shopTypeName: shopTypeName(merged.shop_type)
   }, 200, origin);
 }

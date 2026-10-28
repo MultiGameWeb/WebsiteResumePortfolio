@@ -8,39 +8,15 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { generateQuestionBank } from "../botcraft-question-bank.js";
+import { generateQuestionBank, toBankRecord } from "../botcraft-question-bank.js";
 import { SHOP_TYPES } from "../botcraft-shop-types.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const bankDir = join(root, "botcraft-banks");
 const args = process.argv.slice(2);
 
-// Topics already covered by the core questions, or about the bot itself.
-// Generation is told to avoid them, but a few slip through.
-export const CORE_TOPIC_PATTERN = /\bemi\b|\bparking\b|chatbot|\bthe bot\b|payment method|^(do|does) (you|your shop) (offer|provide) (free )?home delivery\b/i;
-
 function toBankFile(type, bank) {
-  // Core questions live in code (CORE_QUESTIONS), so the file holds only the type-specific ones.
-  const questions = bank.questions
-    .filter(q => !q.key && !CORE_TOPIC_PATTERN.test(q.owner_question))
-    .map((q, i) => ({
-      id: `${type.key}-${String(i + 1).padStart(3, "0")}`,
-      category: q.category,
-      owner_question: q.owner_question,
-      customer_question: q.customer_question,
-      priority: q.priority,
-      answer_type: q.answer_type,
-      ...(q.options?.length ? { options: q.options } : {})
-    }));
-  return {
-    shop_type_key: type.key,
-    name: type.name,
-    version: 1,
-    model: bank.model,
-    generated_at: new Date().toISOString().slice(0, 10),
-    question_count: questions.length,
-    questions
-  };
+  return toBankRecord(type.key, type.name, bank);
 }
 
 function writeIndex() {
