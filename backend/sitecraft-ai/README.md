@@ -120,3 +120,5 @@ The shared hosting prototype lives in `hosting.js` and uses the existing `sitecr
 ### Important prototype boundary
 
 The current checkout flag is still a browser-side demo simulation. It is not proof of payment. The auto-publish endpoint is intentionally behind `ENABLE_DEMO_PUBLISH`; do not enable public publishing for a real customer launch until server-side payment verification, abuse protection/rate limits, secure customer authentication, backups, expiry handling, and production authorization are in place. Never treat the local `paid` flag as verified payment.
+
+**Tenant-isolation warning:** the initial test URLs use one Worker origin with path-based site slugs. That is convenient for controlled tests, but it is not the final production isolation boundary for untrusted customer content. Before real customer data is used, move live sites to customer-specific subdomains/origins (or isolated per-customer Workers through Workers for Platforms), and keep owner credentials out of shared-origin local storage. Do not launch publicly with only the test path routing.
