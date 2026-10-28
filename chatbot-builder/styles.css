@@ -1,26 +1,26 @@
 :root {
   color-scheme: light;
-  --page: #f7f8fc;
+  --page: #ffffff;
   --surface: #ffffff;
-  --surface-soft: #f8f9fd;
-  --surface-hover: #f1f3fa;
-  --text: #1c2334;
-  --text-soft: #687188;
-  --text-faint: #9098aa;
-  --border: #e7eaf2;
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
-  --accent-soft: #eeedff;
+  --surface-soft: #f7f7f8;
+  --surface-hover: #ececec;
+  --text: #0d0d0d;
+  --text-soft: #5d5d5d;
+  --text-faint: #8e8e8e;
+  --border: #e5e5e5;
+  --accent: #0d0d0d;
+  --accent-hover: #2f2f2f;
+  --accent-soft: #f0f0f0;
   --accent-contrast: #ffffff;
-  --user-bubble: #4f46e5;
-  --user-text: #ffffff;
+  --user-bubble: #f0f0f0;
+  --user-text: #0d0d0d;
   --assistant-bubble: #ffffff;
-  --shadow: 0 16px 44px rgb(35 43 74 / 7%);
-  --shadow-soft: 0 3px 14px rgb(35 43 74 / 6%);
+  --shadow: 0 16px 44px rgb(0 0 0 / 6%);
+  --shadow-soft: 0 2px 10px rgb(0 0 0 / 5%);
   --danger: #b42335;
   --danger-bg: #fff0f1;
   --success: #16805d;
-  --focus: 0 0 0 3px rgb(79 70 229 / 23%);
+  --focus: 0 0 0 3px rgb(0 0 0 / 15%);
   font-family: Inter, "Noto Sans Telugu", "Noto Sans Devanagari", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,27 +30,27 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --page: #141721;
-  --surface: #1b1f2b;
-  --surface-soft: #202534;
-  --surface-hover: #282e40;
-  --text: #f1f3fa;
-  --text-soft: #abb3c7;
-  --text-faint: #818ba2;
-  --border: #31384b;
-  --accent: #8b83ff;
-  --accent-hover: #a7a1ff;
-  --accent-soft: #2d2b50;
-  --accent-contrast: #171728;
-  --user-bubble: #625bef;
-  --user-text: #ffffff;
-  --assistant-bubble: #1d2230;
-  --shadow: 0 16px 44px rgb(0 0 0 / 20%);
-  --shadow-soft: 0 3px 14px rgb(0 0 0 / 17%);
+  --page: #212121;
+  --surface: #212121;
+  --surface-soft: #2a2a2a;
+  --surface-hover: #303030;
+  --text: #ececec;
+  --text-soft: #b4b4b4;
+  --text-faint: #8e8e8e;
+  --border: #3a3a3a;
+  --accent: #ececec;
+  --accent-hover: #ffffff;
+  --accent-soft: #2f2f2f;
+  --accent-contrast: #0d0d0d;
+  --user-bubble: #303030;
+  --user-text: #ececec;
+  --assistant-bubble: #212121;
+  --shadow: 0 16px 44px rgb(0 0 0 / 25%);
+  --shadow-soft: 0 2px 10px rgb(0 0 0 / 20%);
   --danger: #ff9da8;
   --danger-bg: #3c242d;
   --success: #78d9b0;
-  --focus: 0 0 0 3px rgb(139 131 255 / 28%);
+  --focus: 0 0 0 3px rgb(255 255 255 / 20%);
 }
 
 * { box-sizing: border-box; }
@@ -168,11 +168,16 @@ button:disabled { cursor: not-allowed; opacity: .42; }
 .message-time { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .message-actions { display: flex; gap: 3px; opacity: 0; transition: opacity 140ms ease; }
 .message-row:hover .message-actions, .message-row:focus-within .message-actions { opacity: 1; }
+/* Failed messages always show Retry; touch screens have no hover. */
+.message-actions:has(.retry-button) { opacity: 1; }
+@media (hover: none) { .message-actions { opacity: 1; } }
 .message-actions .icon-button { width: 28px; height: 28px; border-radius: 8px; }
 .message-actions svg { width: 15px; height: 15px; }
 .user-bubble + .message-error, .message-error { color: var(--danger); font-size: 12px; margin-top: 8px; }
 .bubble-failed { border: 1px solid color-mix(in srgb, var(--danger) 60%, var(--border)); }
 .retry-button { color: var(--danger); }
+.icon-button.has-label { width: auto; gap: 5px; padding: 0 10px; font-size: 12px; font-weight: 600; }
+.icon-button.is-copied { width: auto; padding: 0 9px; font-size: 12px; font-weight: 600; color: var(--success); }
 .quick-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
 .quick-chip {
   border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
@@ -252,15 +257,15 @@ button:disabled { cursor: not-allowed; opacity: .42; }
 .message-input::placeholder { color: var(--text-faint); opacity: 1; }
 .mic-button { width: 38px; height: 40px; border-radius: 13px; }
 .mic-active { color: var(--danger); background: var(--danger-bg); border-color: color-mix(in srgb, var(--danger) 35%, transparent); animation: mic-pulse 1.1s ease-in-out infinite; }
-.send-button { width: 40px; height: 40px; border-radius: 13px; color: white; background: var(--accent); }
-.send-button:hover:not(:disabled) { color: white; background: var(--accent-hover); }
+.send-button { width: 40px; height: 40px; border-radius: 13px; color: var(--accent-contrast); background: var(--accent); }
+.send-button:hover:not(:disabled) { color: var(--accent-contrast); background: var(--accent-hover); }
 .send-button:disabled { background: var(--surface-hover); color: var(--text-faint); opacity: 1; }
 .composer-hint { max-width: 800px; margin: 8px auto 0; color: var(--text-faint); font-size: 10px; text-align: center; }
 
 .drop-overlay { position: absolute; z-index: 15; inset: 12px; border: 2px dashed var(--accent); border-radius: 24px; display: none; align-items: center; justify-content: center; background: color-mix(in srgb, var(--accent-soft) 86%, transparent); backdrop-filter: blur(3px); pointer-events: none; }
 .drop-overlay.is-visible { display: flex; }
 .drop-overlay-card { display: flex; flex-direction: column; align-items: center; gap: 9px; padding: 25px; border-radius: 18px; color: var(--text); text-align: center; }
-.drop-icon { display: grid; place-items: center; width: 53px; height: 53px; background: var(--accent); color: white; border-radius: 17px; font-size: 33px; font-weight: 300; }
+.drop-icon { display: grid; place-items: center; width: 53px; height: 53px; background: var(--accent); color: var(--accent-contrast); border-radius: 17px; font-size: 33px; font-weight: 300; }
 .drop-overlay-card strong { font-size: 16px; }
 .drop-overlay-card > span:last-child { color: var(--text-soft); font-size: 12px; }
 

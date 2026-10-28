@@ -13,5 +13,10 @@ binding = "BOTCRAFT_DB"
 database_name = "botcraft-db"
 database_id = "53b8dd82-40ff-424a-bbf1-29a51a1f9cf2"
 
+# Run the Worker in a US region. Gemini rejects requests from some
+# Cloudflare locations with "User location is not supported for the API use".
+[placement]
+region = "gcp:us-central1"
+
 [vars]
 GEMINI_MODEL = "gemini-3.8-flash"
