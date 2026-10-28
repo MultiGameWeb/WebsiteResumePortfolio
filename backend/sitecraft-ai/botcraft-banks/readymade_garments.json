@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 40,
+ "question_count": 49,
  "questions": [
   {
    "id": "readymade_garments-001",
@@ -192,6 +192,18 @@
   {
    "id": "readymade_garments-015",
    "category": "Products & collections",
+   "owner_question": "Do you have a separate wedding collection (bridal lehengas, pattu sarees, sherwanis)?",
+   "customer_question": "Where is the wedding collection?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "readymade_garments-016",
+   "category": "Products & collections",
    "owner_question": "Do you sell matching sets for the whole family (same colour for couple, kids, family)?",
    "customer_question": "Do you have matching dresses for the family?",
    "priority": "optional",
@@ -202,7 +214,27 @@
    ]
   },
   {
-   "id": "readymade_garments-016",
+   "id": "readymade_garments-017",
+   "category": "Products & collections",
+   "owner_question": "Do you also sell unstitched shirting & suiting cloth?",
+   "customer_question": "Do you have shirt cloth?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "readymade_garments-018",
+   "category": "Products & collections",
+   "owner_question": "Which latest trending styles do you have right now?",
+   "customer_question": "Do you have the latest trend?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "readymade_garments-019",
    "category": "Products & collections",
    "owner_question": "Do you have cotton / breathable clothes for summer?",
    "customer_question": "Any cotton clothes for summer?",
@@ -214,7 +246,7 @@
    ]
   },
   {
-   "id": "readymade_garments-017",
+   "id": "readymade_garments-020",
    "category": "Products & collections",
    "owner_question": "Do you sell maternity and feeding wear?",
    "customer_question": "Do you have feeding kurtis?",
@@ -226,7 +258,7 @@
    ]
   },
   {
-   "id": "readymade_garments-018",
+   "id": "readymade_garments-021",
    "category": "Products & collections",
    "owner_question": "Do you sell school uniforms?",
    "customer_question": "Do you have uniforms for my child's school?",
@@ -238,7 +270,7 @@
    ]
   },
   {
-   "id": "readymade_garments-019",
+   "id": "readymade_garments-022",
    "category": "Products & collections",
    "owner_question": "Do you sell innerwear and socks?",
    "customer_question": "Do you have innerwear?",
@@ -250,7 +282,7 @@
    ]
   },
   {
-   "id": "readymade_garments-020",
+   "id": "readymade_garments-023",
    "category": "Products & collections",
    "owner_question": "Do you sell accessories (dupattas, belts, caps, hair accessories, handbags)?",
    "customer_question": "Do you have a matching dupatta?",
@@ -262,7 +294,7 @@
    ]
   },
   {
-   "id": "readymade_garments-021",
+   "id": "readymade_garments-024",
    "category": "Fabric & quality",
    "owner_question": "Will the colour run in the first wash for some clothes? Do you tell customers?",
    "customer_question": "Will the colour come out in washing?",
@@ -274,7 +306,7 @@
    ]
   },
   {
-   "id": "readymade_garments-022",
+   "id": "readymade_garments-025",
    "category": "Fabric & quality",
    "owner_question": "Will cotton clothes shrink after washing? Do you tell customers?",
    "customer_question": "Will it shrink?",
@@ -286,7 +318,23 @@
    ]
   },
   {
-   "id": "readymade_garments-023",
+   "id": "readymade_garments-026",
+   "category": "Fabric & quality",
+   "owner_question": "Do you give any colour guarantee (replace if the colour fades or bleeds)?",
+   "customer_question": "What if the colour fades?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "readymade_garments-027",
+   "category": "Fabric & quality",
+   "owner_question": "Which clothes need dry cleaning only, and how should customers wash and care for the rest?",
+   "customer_question": "Can I wash this at home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "readymade_garments-028",
    "category": "Sizes & fit",
    "owner_question": "Do you have a size chart (by age, height or measurements)?",
    "customer_question": "Which size for a 5-year-old?",
@@ -298,7 +346,7 @@
    ]
   },
   {
-   "id": "readymade_garments-024",
+   "id": "readymade_garments-029",
    "category": "Sizes & fit",
    "owner_question": "If a size is not available, can you get it? How many days?",
    "customer_question": "Can you get this in M size?",
@@ -306,15 +354,15 @@
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-025",
+   "id": "readymade_garments-030",
    "category": "Stitching & alterations",
-   "owner_question": "How long do alterations take?",
+   "owner_question": "Is a tailor available at the shop, and how long do alterations take?",
    "customer_question": "When will the alteration be ready?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-026",
+   "id": "readymade_garments-031",
    "category": "Prices & billing",
    "owner_question": "Is GST included in the price or added on the bill?",
    "customer_question": "Is GST extra?",
@@ -326,7 +374,7 @@
    ]
   },
   {
-   "id": "readymade_garments-027",
+   "id": "readymade_garments-032",
    "category": "Prices & billing",
    "owner_question": "Do you give extra discount on bulk wedding purchases (for example 10+ sarees or family clothes)?",
    "customer_question": "Any discount if we buy for the whole wedding?",
@@ -334,7 +382,7 @@
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-028",
+   "id": "readymade_garments-033",
    "category": "Prices & billing",
    "owner_question": "When do you have your sales (Sankranti, Dasara, Diwali, end of season, Aadi)?",
    "customer_question": "When is your sale?",
@@ -342,7 +390,15 @@
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-029",
+   "id": "readymade_garments-034",
+   "category": "Prices & billing",
+   "owner_question": "Do you give special discounts for students (college ID) or corporate employees?",
+   "customer_question": "Any student discount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "readymade_garments-035",
    "category": "Prices & billing",
    "owner_question": "Do you sell to resellers or small shops at wholesale rates?",
    "customer_question": "Do you give wholesale rates?",
@@ -354,7 +410,7 @@
    ]
   },
   {
-   "id": "readymade_garments-030",
+   "id": "readymade_garments-036",
    "category": "Prices & billing",
    "owner_question": "Do you give discounts for corporate, school or group orders (uniforms, T-shirts)?",
    "customer_question": "Can you do 100 T-shirts for our office?",
@@ -362,7 +418,7 @@
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-031",
+   "id": "readymade_garments-037",
    "category": "Exchange details",
    "owner_question": "Are sale or discount items exchangeable?",
    "customer_question": "Can I exchange a sale item?",
@@ -370,10 +426,18 @@
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-032",
+   "id": "readymade_garments-038",
    "category": "Exchange details",
-   "owner_question": "If a gift doesn't fit, can it be exchanged without the bill (with the tag)?",
-   "customer_question": "It's a gift, can I exchange without the bill?",
+   "owner_question": "For exchange, are the original price tag and bill both needed? Can gifts be exchanged with only the tag?",
+   "customer_question": "Do I need the bill to exchange?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "readymade_garments-039",
+   "category": "Exchange details",
+   "owner_question": "Do you exchange clothes that are already washed or altered?",
+   "customer_question": "I washed it once, can I still exchange it?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -382,15 +446,28 @@
    ]
   },
   {
-   "id": "readymade_garments-033",
+   "id": "readymade_garments-040",
+   "category": "Exchange details",
+   "owner_question": "On returns, do you give money back or a store credit?",
+   "customer_question": "Will I get my money back?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Money back",
+    "Store credit / credit note",
+    "Exchange only"
+   ]
+  },
+  {
+   "id": "readymade_garments-041",
    "category": "Stock & orders",
-   "owner_question": "How often does new stock come in?",
+   "owner_question": "How often does new stock come in, and on which day usually?",
    "customer_question": "When does the new collection come?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "readymade_garments-034",
+   "id": "readymade_garments-042",
    "category": "Stock & orders",
    "owner_question": "Can customers reserve a piece for a few days by paying an advance?",
    "customer_question": "Can you keep this aside for me?",
@@ -402,7 +479,7 @@
    ]
   },
   {
-   "id": "readymade_garments-035",
+   "id": "readymade_garments-043",
    "category": "Stock & orders",
    "owner_question": "Can you get the same design in another colour?",
    "customer_question": "Do you have this in green?",
@@ -414,7 +491,7 @@
    ]
   },
   {
-   "id": "readymade_garments-036",
+   "id": "readymade_garments-044",
    "category": "Stock & orders",
    "owner_question": "Do you courier to other cities and abroad?",
    "customer_question": "Can you send it to the USA?",
@@ -426,7 +503,7 @@
    ]
   },
   {
-   "id": "readymade_garments-037",
+   "id": "readymade_garments-045",
    "category": "Shop & service",
    "owner_question": "Do you have seating for families and a kids' play area?",
    "customer_question": "Is there a place to sit?",
@@ -438,7 +515,15 @@
    ]
   },
   {
-   "id": "readymade_garments-038",
+   "id": "readymade_garments-046",
+   "category": "Shop & service",
+   "owner_question": "What are your busy hours, and how long is the wait for trial rooms then?",
+   "customer_question": "Is there a long queue for trial rooms?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "readymade_garments-047",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty card or points for regular customers?",
    "customer_question": "Do I get points?",
@@ -450,7 +535,7 @@
    ]
   },
   {
-   "id": "readymade_garments-039",
+   "id": "readymade_garments-048",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -466,7 +551,7 @@
    ]
   },
   {
-   "id": "readymade_garments-040",
+   "id": "readymade_garments-049",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
