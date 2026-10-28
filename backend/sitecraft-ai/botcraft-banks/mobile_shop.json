@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 79,
+ "question_count": 86,
  "questions": [
   {
    "id": "mobile_shop-001",
@@ -670,6 +670,62 @@
   },
   {
    "id": "mobile_shop-058",
+   "category": "Prices & bills",
+   "owner_question": "Do you give special discounts or commission for customers referred by builders or interior designers?",
+   "customer_question": "My interior designer sent me, any discount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-059",
+   "category": "Prices & bills",
+   "owner_question": "Can customers order online or on WhatsApp and collect from the shop (click and collect)?",
+   "customer_question": "Can I order now and pick up later?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-060",
+   "category": "Delivery & installation",
+   "owner_question": "Do you patiently show customers, including elderly people, how to use the product (in Telugu if needed)?",
+   "customer_question": "Can you teach my mother how to use it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-061",
+   "category": "Delivery & installation",
+   "owner_question": "Do you help set up smart devices on the customer's phone and connect them to Wi-Fi?",
+   "customer_question": "Can you connect it to my Wi-Fi?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-062",
+   "category": "Delivery & installation",
+   "owner_question": "Are user manuals available in Telugu, or only in English?",
+   "customer_question": "Is there a Telugu manual?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Telugu available",
+    "English only"
+   ]
+  },
+  {
+   "id": "mobile_shop-063",
    "category": "Returns & refunds",
    "owner_question": "Do you have a 7-day return policy like online stores?",
    "customer_question": "Is there a 7-day return?",
@@ -682,7 +738,7 @@
    ]
   },
   {
-   "id": "mobile_shop-059",
+   "id": "mobile_shop-064",
    "category": "Returns & refunds",
    "owner_question": "If the product doesn't fit the space at home, can customers change it for another size? Within how many days?",
    "customer_question": "The TV is too big for my wall, can I change it?",
@@ -690,7 +746,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-060",
+   "id": "mobile_shop-065",
    "category": "Warranty & service",
    "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
    "customer_question": "Where is the Samsung service centre?",
@@ -698,7 +754,33 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-061",
+   "id": "mobile_shop-066",
+   "category": "Warranty & service",
+   "owner_question": "Is your extended warranty from the brand itself, or from a third party (for example OneAssist, ResQ)?",
+   "customer_question": "Who gives the extended warranty?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "From the brand",
+    "Third party",
+    "Both available"
+   ]
+  },
+  {
+   "id": "mobile_shop-067",
+   "category": "Warranty & service",
+   "owner_question": "Does the extended warranty cover both parts and labour?",
+   "customer_question": "Do I pay labour in extended warranty?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Parts and labour free",
+    "Only parts",
+    "Only labour"
+   ]
+  },
+  {
+   "id": "mobile_shop-068",
    "category": "Warranty & service",
    "owner_question": "Which protection or insurance plans do you sell?",
    "customer_question": "Does the insurance cover water damage?",
@@ -713,7 +795,7 @@
    ]
   },
   {
-   "id": "mobile_shop-062",
+   "id": "mobile_shop-069",
    "category": "Warranty & service",
    "owner_question": "Can customers buy a protection plan later (a week or a month after purchase)?",
    "customer_question": "Can I take insurance next month?",
@@ -725,7 +807,7 @@
    ]
   },
   {
-   "id": "mobile_shop-063",
+   "id": "mobile_shop-070",
    "category": "Warranty & service",
    "owner_question": "If a customer needs to claim insurance, do you help, or do they deal with the insurance company directly?",
    "customer_question": "Will you help with my insurance claim?",
@@ -738,7 +820,7 @@
    ]
   },
   {
-   "id": "mobile_shop-064",
+   "id": "mobile_shop-071",
    "category": "Warranty & service",
    "owner_question": "How long does a common repair (screen, battery) usually take?",
    "customer_question": "How long to change the screen?",
@@ -746,7 +828,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-065",
+   "id": "mobile_shop-072",
    "category": "Warranty & service",
    "owner_question": "Do you pick up and drop devices for repair?",
    "customer_question": "Can you collect my laptop for repair?",
@@ -758,7 +840,7 @@
    ]
   },
   {
-   "id": "mobile_shop-066",
+   "id": "mobile_shop-073",
    "category": "Warranty & service",
    "owner_question": "Do you give a spare phone to use while the customer's phone is being repaired?",
    "customer_question": "Can I get a phone while mine is repaired?",
@@ -770,7 +852,7 @@
    ]
   },
   {
-   "id": "mobile_shop-067",
+   "id": "mobile_shop-074",
    "category": "Shop & service",
    "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
    "customer_question": "Can I give my old phone for recycling?",
@@ -782,7 +864,7 @@
    ]
   },
   {
-   "id": "mobile_shop-068",
+   "id": "mobile_shop-075",
    "category": "Shop & service",
    "owner_question": "Do you have an online store or a WhatsApp catalogue?",
    "customer_question": "Can I see your products online?",
@@ -794,7 +876,7 @@
    ]
   },
   {
-   "id": "mobile_shop-069",
+   "id": "mobile_shop-076",
    "category": "Shop & service",
    "owner_question": "Do you send a copy of the bill on WhatsApp?",
    "customer_question": "Can you send the bill on WhatsApp?",
@@ -806,7 +888,7 @@
    ]
   },
   {
-   "id": "mobile_shop-070",
+   "id": "mobile_shop-077",
    "category": "Shop & service",
    "owner_question": "Is there a separate number for complaints (product problems or late delivery)?",
    "customer_question": "Whom do I call to complain?",
@@ -814,7 +896,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-071",
+   "id": "mobile_shop-078",
    "category": "Shop & service",
    "owner_question": "Do you have other branches in the city? Can warranty service be done at any branch?",
    "customer_question": "Do you have a branch in Kukatpally?",
@@ -822,7 +904,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-072",
+   "id": "mobile_shop-079",
    "category": "Finance & loans",
    "owner_question": "Can customers without a credit or debit card get an instant consumer loan with just Aadhaar?",
    "customer_question": "I don't have a card, can I still get a loan?",
@@ -834,7 +916,7 @@
    ]
   },
   {
-   "id": "mobile_shop-073",
+   "id": "mobile_shop-080",
    "category": "Finance & loans",
    "owner_question": "What minimum CIBIL score do finance companies usually need?",
    "customer_question": "Will I get a loan with a low CIBIL score?",
@@ -842,7 +924,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-074",
+   "id": "mobile_shop-081",
    "category": "Finance & loans",
    "owner_question": "What income proof do self-employed people or farmers need for a loan?",
    "customer_question": "I'm a farmer, can I get a loan?",
@@ -850,7 +932,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-075",
+   "id": "mobile_shop-082",
    "category": "Finance & loans",
    "owner_question": "How long does loan approval usually take in the shop?",
    "customer_question": "How long will the loan approval take?",
@@ -858,7 +940,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-076",
+   "id": "mobile_shop-083",
    "category": "Finance & loans",
    "owner_question": "Is there a penalty for paying off the loan early (foreclosure)?",
    "customer_question": "Can I close the loan early?",
@@ -866,7 +948,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-077",
+   "id": "mobile_shop-084",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty or points programme for regular customers?",
    "customer_question": "Do I get points?",
@@ -878,7 +960,7 @@
    ]
   },
   {
-   "id": "mobile_shop-078",
+   "id": "mobile_shop-085",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -894,7 +976,7 @@
    ]
   },
   {
-   "id": "mobile_shop-079",
+   "id": "mobile_shop-086",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
