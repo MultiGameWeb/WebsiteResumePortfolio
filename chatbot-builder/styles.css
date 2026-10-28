@@ -233,7 +233,9 @@ button:disabled { cursor: not-allowed; opacity: .42; }
   border: 1px solid var(--border); border-radius: 19px; background: var(--surface-soft);
   padding: 6px; box-shadow: 0 1px 1px rgb(20 28 48 / 2%); transition: border-color 150ms ease, box-shadow 150ms ease;
 }
-.composer-row:focus-within { border-color: color-mix(in srgb, var(--accent) 50%, var(--border)); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 9%, transparent); }
+.composer-row:focus-within { border-color: color-mix(in srgb, var(--text) 28%, var(--border)); }
+/* The composer row already shows focus; no second ring on the text box. */
+.message-input:focus, .message-input:focus-visible { outline: none; box-shadow: none; }
 .attach-menu-wrap { position: relative; align-self: flex-end; flex: 0 0 auto; }
 .attach-trigger { color: var(--accent); background: var(--accent-soft); width: 40px; height: 40px; border-radius: 13px; }
 .attach-trigger:hover:not(:disabled) { background: var(--accent-soft); color: var(--accent); }

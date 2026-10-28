@@ -313,12 +313,11 @@ export function InputBar(attachments = [], error = '', micActive = false) {
   textarea.setAttribute('aria-label', 'Write your answer');
   textarea.setAttribute('aria-describedby', 'composerHint composerError');
   textareaWrap.append(textarea);
-  const mic = iconButton('mic', micActive ? 'Stop demo recording' : 'Start demo voice input', `mic-button ${micActive ? 'mic-active' : ''}`, 'toggle-mic');
-  mic.setAttribute('aria-pressed', String(micActive));
+  // Voice input is a later phase, so no mic button yet.
   const send = iconButton('send', 'Send message', 'send-button', 'send-message');
   send.type = 'submit';
   send.disabled = true;
-  row.append(attach, textareaWrap, mic, send);
+  row.append(attach, textareaWrap, send);
   form.append(row);
   dock.append(form);
   const hint = makeElement('div', 'composer-hint', 'Enter to send · Shift + Enter for a new line');

@@ -148,14 +148,24 @@ function normalizeQuestions(raw, seen) {
   return out;
 }
 
+// Models that hit a quota limit are skipped for a while instead of being
+// retried on every request (per Worker isolate).
+const MODEL_COOLDOWN_MS = 5 * 60 * 1000;
+const coolingUntil = new Map();
+
+// `request.models` overrides the default model order.
 export async function callWithFallback(env, request) {
+  const order = request.models || MODELS;
+  const now = Date.now();
+  const ready = order.filter(model => (coolingUntil.get(model) || 0) <= now);
   let lastError;
-  for (const model of MODELS) {
+  for (const model of ready.length ? ready : order) {
     try {
       return { model, result: await callGemini(env, BOTCRAFT_KEY_ENV, { ...request, model }) };
     } catch (error) {
       request.log?.(`${model} failed: ${error.message.slice(0, 120)}`);
       lastError = error;
+      if (/Gemini HTTP 429/.test(error.message)) coolingUntil.set(model, Date.now() + MODEL_COOLDOWN_MS);
       if (!/Gemini HTTP (429|500|503)|no content|not valid JSON|fetch failed|terminated|timed? ?out|aborted/i.test(error.message)) throw error;
     }
   }
