@@ -29,7 +29,7 @@ AI provider: **Gemini, paid API key**, used only on the server (Cloudflare Worke
 3. **In the background**, Gemini prepares a **question bank of 200+ questions** that jewellery-shop customers ask (see §4).
 4. BotCraft asks: *"Please send your shop's full details."* Vinay sends photos, files (price lists, catalogues) and chat messages.
 5. The AI reads everything and **fills in every answer it can** from what Vinay sent.
-6. BotCraft asks Vinay **only the remaining questions**, one at a time, each with quick options, *Skip* (when allowed) or *Mandatory*.
+6. BotCraft asks Vinay **only the remaining questions**, 3–5 at a time as a small form: each question has its options to pick and a box to write an answer, *Skip* for optional questions, and one *Send answers* button. Photo questions are asked one at a time.
 7. The bot is ready. Vinay tests it and **downloads the QR code poster**. The monthly subscription starts when the bot goes live.
 8. When the shop is busy, Vinay says: *"Sir, please use my salesman bot."* The customer scans and chats.
 

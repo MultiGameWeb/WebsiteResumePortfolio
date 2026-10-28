@@ -188,6 +188,29 @@ button:disabled { cursor: not-allowed; opacity: .42; }
 .quick-chip:hover:not(:disabled) { background: var(--accent-soft); border-color: var(--accent); }
 .quick-chip:active:not(:disabled) { transform: scale(.98); }
 .options-used-note { font-size: 11px; color: var(--text-faint); margin-top: 8px; }
+.question-form {
+  display: flex; flex-direction: column; gap: 14px; margin-top: 10px; padding: 14px;
+  border: 1px solid var(--border); border-radius: 16px; background: var(--surface-soft); max-width: 640px;
+}
+.question-field { display: flex; flex-direction: column; gap: 8px; }
+.question-label { font-size: 13px; font-weight: 600; line-height: 1.45; color: var(--text); }
+.question-required { color: var(--danger); }
+.question-choices { margin-top: 0; }
+.quick-chip.question-choice[aria-pressed="true"], .quick-chip.question-choice[aria-pressed="true"]:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
+.question-input {
+  width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px;
+  font: inherit; font-size: 13px; color: var(--text); background: var(--surface);
+}
+.question-input:focus-visible { outline: none; border-color: var(--accent); box-shadow: var(--focus); }
+.question-input::placeholder { color: var(--text-faint); opacity: 1; }
+.question-input:disabled, .quick-chip:disabled { opacity: .6; cursor: default; }
+.question-submit {
+  align-self: flex-start; border: 0; border-radius: 999px; padding: 10px 18px; min-height: 40px;
+  background: var(--accent); color: var(--accent-contrast); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.question-submit:hover:not(:disabled) { background: var(--accent-hover); }
+.question-submit:focus-visible { outline: none; box-shadow: var(--focus); }
+.question-submit:disabled { opacity: .55; cursor: default; }
 
 .message-attachments { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; min-width: 0; }
 .image-attachments { flex-direction: row; flex-wrap: wrap; align-items: start; }

@@ -1,5 +1,5 @@
 import { CORE_QUESTIONS, callWithFallback, generateQuestionBank, toBankRecord } from "./botcraft-question-bank.js";
-import { SHOP_TYPES } from "./botcraft-shop-types.js";
+import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import { loadShop, loadStoredBank, saveStoredBank, saveTurn, storeAvailable } from "./botcraft-store.js";
 
@@ -35,7 +35,10 @@ const REQUESTS_PER_MINUTE = 20;
 const CHAT_MODELS = ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3.8-flash"];
 // Bank questions shown to the model per turn; the whole bank is shown only
 // when the owner sends a long message or files, so answers can be extracted.
-const BANK_WINDOW = 6;
+const BANK_WINDOW = 8;
+// Questions are asked as a small form, a few at a time, so the owner answers
+// them together instead of waiting for one reply per question.
+const MAX_FORM_QUESTIONS = 5;
 const BULK_MESSAGE_CHARS = 300;
 const FINISH_OPTION = "Finish for now";
 // Cheapest models first for on-demand bank generation.
@@ -70,6 +73,19 @@ const REPLY_SCHEMA = {
         required: ["id", "value"]
       }
     },
+    questions: {
+      type: "ARRAY",
+      description: "the next 3-5 questions to ask together as a form (empty when not asking questions)",
+      items: {
+        type: "OBJECT",
+        properties: {
+          id: { type: "STRING", description: "core key or shop question id" },
+          question: { type: "STRING", description: "the question in the owner's language" },
+          options: { type: "ARRAY", items: { type: "STRING" }, description: "the question's options translated, same order and count" }
+        },
+        required: ["id", "question", "options"]
+      }
+    },
     notes: { type: "ARRAY", items: { type: "STRING" }, description: "other useful shop facts learned (not core)" },
     items: {
       type: "ARRAY",
@@ -85,7 +101,7 @@ const REPLY_SCHEMA = {
       }
     }
   },
-  required: ["reply", "options", "facts", "answers", "notes", "items"]
+  required: ["reply", "options", "facts", "answers", "questions", "notes", "items"]
 };
 
 function corsHeaders(origin) {
@@ -129,6 +145,10 @@ function cleanFacts(raw) {
 
 // A follow-up (ask_if) applies only once its parent answer matches.
 function conditionMet(q, facts) {
+  // Known shop types skip core questions that never fit them (EMI for clothing).
+  const type = String(facts.shop_type || "");
+  if (q.types && SHOP_TYPE_KEYS.has(type) && !q.types.includes(type)) return false;
+  if (q.not_types?.includes(type)) return false;
   if (!q.ask_if) return true;
   const answer = String(facts[q.ask_if.key] || "").trim().toLowerCase();
   if (!answer) return false;
@@ -182,6 +202,64 @@ function cleanAnswers(raw, bank) {
   return answers;
 }
 
+// Answers the owner gave in a question form, by core key or shop question id.
+function formAnswerValues(raw, facts, bank) {
+  const bankIds = new Set((bank?.questions || []).map(q => q.id));
+  const out = { facts: {}, answers: {} };
+  for (const item of (Array.isArray(raw) ? raw : []).slice(0, MAX_FORM_QUESTIONS * 2)) {
+    const id = String(item?.id || "");
+    const value = clip(item?.value, 600);
+    if (!value) continue;
+    if (id !== "shop_type" && CORE_KEYS.has(id)) out.facts[id] = value;
+    else if (bankIds.has(id)) out.answers[id] = value;
+  }
+  const callNumber = out.facts.call_number || facts.call_number;
+  if (/^same as/i.test(out.facts.whatsapp_number || "") && callNumber) out.facts.whatsapp_number = callNumber;
+  return out;
+}
+
+// What to ask next: the core questions as forms, then the core photos one at a
+// time, then the shop questions as forms.
+function nextStep(facts, answers, bank) {
+  const core = pendingCore(facts);
+  const coreForm = core.filter(q => q.answer_type !== "image");
+  if (coreForm.length) return { form: coreForm.slice(0, MAX_FORM_QUESTIONS) };
+  const photo = core.find(q => q.answer_type === "image");
+  if (photo) return { form: [], photo };
+  return { form: pendingBank(bank, answers, facts).slice(0, MAX_FORM_QUESTIONS) };
+}
+
+function planLines(step) {
+  if (step.photo) return `Next: ask for the photo "${step.photo.key}" (${step.photo.owner_question}) alone in "reply", with no form.${step.photo.priority === "optional" ? ` Offer the option "Skip"; if the owner skips, record ${step.photo.key} as "skipped".` : ""}`;
+  if (!step.form.length) return "Next form: none";
+  return "Next form (when asking questions, ask exactly these in this order; translate them; leave out only one that clearly does not fit this shop and record it as \"not applicable\"):\n" +
+    step.form.map(q => `- ${q.key || q.id}: ${q.owner_question}${q.options?.length ? ` [options: ${q.options.join(" | ")}]` : ""}${q.only_for ? ` (only for ${q.only_for})` : ""}`).join("\n");
+}
+
+// The form the model chose, limited to questions still pending. Options keep
+// their original values (follow-ups match on them) with translated labels.
+function formQuestions(raw, facts, answers, bank) {
+  const pending = new Map([...pendingCore(facts), ...pendingBank(bank, answers, facts)].map(q => [q.key || q.id, q]));
+  const questions = [];
+  for (const item of Array.isArray(raw) ? raw : []) {
+    const id = String(item?.id || "");
+    const q = pending.get(id);
+    if (!q || q.answer_type === "image") continue;
+    pending.delete(id);
+    const values = q.options || [];
+    const labels = Array.isArray(item?.options) && item.options.length === values.length ? item.options : values;
+    questions.push({
+      id,
+      question: clip(item?.question, 300) || q.owner_question,
+      type: q.answer_type,
+      mandatory: q.priority === "mandatory",
+      options: values.map((value, i) => ({ value, label: clip(labels[i], 80) || value }))
+    });
+    if (questions.length >= MAX_FORM_QUESTIONS) break;
+  }
+  return questions;
+}
+
 // Bank topics that only apply when a core answer allows them.
 const CATEGORY_NEEDS = {
   // Loan questions are only for shops that offer EMI.
@@ -219,7 +297,7 @@ function bankLines(questions) {
   return questions.map(q => `- ${q.id} [${q.priority}]: ${q.owner_question}${q.options?.length ? ` [options: ${q.options.join(" | ")}]` : ""}`).join("\n");
 }
 
-function systemPrompt(facts, answers, bankShown, bank) {
+function systemPrompt(facts, answers, bankShown, bank, step) {
   const pending = pendingCore(facts);
   const bankPending = pendingBank(bank, answers, facts);
   const known = Object.entries(facts).map(([k, v]) => `- ${k}: ${v}`).join("\n") || "- (nothing yet)";
@@ -230,17 +308,18 @@ You are talking to the SHOP OWNER to set up their bot. Steps:
 1. If shop_type is unknown, ask what kind of shop it is. Store it as the fact "shop_type" using one of the shop type keys below when it matches (for example "shoe shop" is footwear); otherwise store "other: <short description>".
 2. In the reply right after you learn shop_type, do not ask a core question yet: greet them, say you are preparing the questions customers of such shops ask, and ask them to send all their business details at once (shop name, address, timings, phone numbers, items and prices, policies, photos of items, menus or price lists) because that is fastest. Offer exactly the options "I'll send all details at once" and "Ask me one by one". If they choose one by one, start asking the core questions.
 3. Read everything they send. Record every core fact you can find in "facts" (use the exact keys below), other useful facts in "notes", and products you see in "items".
-4. Then ask the missing core questions ONE at a time, mandatory ones first, with the given options as quick-reply buttons. Never ask for something already known. Never offer "Skip" for a mandatory question; only optional questions may have a "Skip" option.
+4. Then ask the missing core questions as a form: put the next 3 to ${MAX_FORM_QUESTIONS} of them in "questions" (in order, mandatory first), each with its key as id, the question in the owner's language and its options translated (same order and count; none if it has no options). The page shows each question with its options and a box to write an answer, and the owner submits them together. Keep "reply" to one short line (for example "Please answer these:"); do not repeat the questions in it. Never ask for something already known. The page adds "Skip" for optional questions itself.
    Before asking a core question, check it makes sense for this shop_type. If a question is marked "only for" shops that do not include this shop_type, or clearly does not fit (for example EMI for a restaurant, or return/exchange for a salon), do not ask it: record that key with the value "not applicable" and ask the next one.
-   For a photo question (shop_front_photo, owner_photo): when the owner sends a photo, record that key with the value "photo received" and move on.
+   Photo questions (shop_front_photo, owner_photo) are never put in "questions": ask for the photo in "reply" (alone, with no form), and when the owner sends a photo, record that key with the value "photo received" and move on.
 5. When no core question is left:
-   - If there are shop questions below, tell the owner the basics are complete (once), then ask the shop questions ONE at a time in the given order, with their options as quick-reply buttons. Mandatory shop questions never get "Skip"; for important and optional ones add the options "Skip" and "${FINISH_OPTION}".
-   - Record each answer in "answers" with the question id. If the owner skips, record "skipped"; if it does not apply to their shop, record "not applicable". If they choose "${FINISH_OPTION}", thank them and say they can come back any time to answer more.
+   - If there are shop questions below, tell the owner the basics are complete (once), then ask the shop questions the same way, 3 to ${MAX_FORM_QUESTIONS} at a time in the given order, in "questions" with their ids. If a shop question clearly does not fit this shop, do not ask it: record it in "answers" as "not applicable". When the form has no mandatory question, set "options" to ["${FINISH_OPTION}"]; otherwise leave "options" empty.
+   - Record answers the owner writes in chat in "answers" with the question id. If they choose "${FINISH_OPTION}", thank them, leave "questions" empty, and say they can come back any time to answer more.
+   - Answers the owner submits in a form are already saved; do not ask those again, just ask the next form.
    - If there are no shop questions for this shop type yet, tell the owner the basics are complete and that you are now preparing the detailed questions customers of their kind of business ask; it takes 1-2 minutes and you will continue right after.
 6. Whenever the owner sends details or files, also record answers to any shop questions listed below that their message answers, so those are never asked.
 
 Rules:
-- Reply in the language and script of the owner's latest message (Telugu, Hindi, English or a mix), short and warm, like a helpful person. At most about 60 words. If that message is in English, or its language is unclear (for example just "Hi" or a button label), reply in simple English. Never switch to a language the owner has not used.
+- Reply, and write form questions, in the language and script the owner types in (Telugu, Hindi, English or a mix), short and warm, like a helpful person. At most about 60 words in "reply". Button labels and submitted form answers do not change the language: use the language of the owner's latest typed message. If the owner has typed nothing clear yet (for example just "Hi"), use simple English. Never switch to a language the owner has not used.
 - If the owner asks who you are or what you can do, answer briefly, then continue the setup.
 - Use only what the owner said or sent. Never invent facts, prices or policies.
 - Never change a fact the owner already gave because of a photo or file. If a file seems to contradict it, ask the owner to confirm instead.
@@ -256,6 +335,8 @@ Already known:
 ${known}
 
 Next core questions to ask (in order): ${pending.map(q => q.key).join(", ") || "none - basics complete"}
+
+${planLines(step)}
 
 Shop type keys:
 ${shopTypeList}
@@ -352,6 +433,10 @@ export async function handleBotcraftRoute(request, env, url) {
   const facts = cleanFacts(saved ? saved.facts : body?.facts);
   const bank = await resolveBank(env, facts);
   const answers = cleanAnswers(saved ? saved.answers : body?.answers, bank);
+  // A submitted form is saved as given, before the model sees the turn.
+  const form = formAnswerValues(body?.formAnswers, facts, bank);
+  Object.assign(facts, form.facts);
+  Object.assign(answers, form.answers);
   const text = clip(body?.text, MAX_TEXT);
   const images = (Array.isArray(body?.images) ? body.images : [])
     .filter(img => IMAGE_TYPES.has(img?.mimeType) && typeof img?.data === "string" && base64Size(img.data) <= MAX_IMAGE_BYTES)
@@ -378,15 +463,16 @@ export async function handleBotcraftRoute(request, env, url) {
 
   // Show the whole remaining bank only when the owner sends a lot of detail.
   const bankRemaining = pendingBank(bank, answers, facts);
-  const bulk = images.length > 0 || text.length >= BULK_MESSAGE_CHARS;
+  const bulk = images.length > 0 || (text.length >= BULK_MESSAGE_CHARS && !Object.keys(form.answers).length);
   const coreDone = pendingCore(facts).length === 0;
   const bankShown = bulk ? bankRemaining : coreDone ? bankRemaining.slice(0, BANK_WINDOW) : [];
 
+  const step = nextStep(facts, answers, bank);
   let result;
   const modelErrors = [];
   try {
     ({ result } = await callWithFallback(env, {
-      system: systemPrompt(facts, answers, bankShown, bank),
+      system: systemPrompt(facts, answers, bankShown, bank, step),
       contents,
       schema: REPLY_SCHEMA,
       // Flash-Lite answers a setup chat in 1-2 s and has the most free quota.
@@ -405,21 +491,22 @@ export async function handleBotcraftRoute(request, env, url) {
     return reply({ ok: false, error: "BotCraft is busy right now. Please try again in a moment.", detail }, 503, origin);
   }
 
-  const learned = {};
+  const learned = { ...form.facts };
   for (const fact of Array.isArray(result?.facts) ? result.facts : []) {
     const key = String(fact?.key || "");
     // Files alone may add facts but never overwrite what the owner typed.
     if (!text && facts[key]) continue;
+    if (form.facts[key]) continue;
     if (CORE_KEYS.has(key) && clip(fact?.value, 600)) learned[key] = clip(fact.value, 600);
   }
   // A photo sent while BotCraft is asking for one answers that question.
-  const askedNext = pendingCore(facts)[0];
+  const askedNext = step.photo;
   if (images.length && askedNext?.answer_type === "image" && !learned[askedNext.key]) learned[askedNext.key] = "photo received";
   const merged = { ...facts, ...learned };
 
   // Only answers to questions the model was shown are accepted.
   const shownIds = new Set(bankShown.map(q => q.id));
-  const newAnswers = {};
+  const newAnswers = { ...form.answers };
   for (const answer of Array.isArray(result?.answers) ? result.answers : []) {
     const id = String(answer?.id || "");
     if (shownIds.has(id) && clip(answer?.value, 600)) newAnswers[id] = clip(answer.value, 600);
@@ -430,7 +517,16 @@ export async function handleBotcraftRoute(request, env, url) {
   const mergedBank = sameBank ? bank : await resolveBank(env, merged);
 
   const nextQuestion = pendingCore(merged)[0] || pendingBank(mergedBank, mergedAnswers, merged)[0];
-  const allowSkip = !nextQuestion || nextQuestion.priority !== "mandatory";
+  const questions = formQuestions(result?.questions, merged, mergedAnswers, mergedBank);
+  // If the model asked fewer than planned, add the rest of the planned form.
+  if (questions.length && sameBank) {
+    const extra = step.form.map(q => ({ id: q.key || q.id, question: q.owner_question, options: q.options || [] }));
+    for (const q of formQuestions(extra, merged, mergedAnswers, mergedBank)) {
+      if (questions.length >= MAX_FORM_QUESTIONS) break;
+      if (!questions.some(asked => asked.id === q.id)) questions.push(q);
+    }
+  }
+  const allowSkip = questions.length ? questions.every(q => !q.mandatory) : !nextQuestion || nextQuestion.priority !== "mandatory";
 
   const botText = clip(result?.reply, 1500) || "Sorry, please say that again.";
   const notes = (Array.isArray(result?.notes) ? result.notes : []).map(n => clip(n, 300)).filter(Boolean).slice(0, 20);
@@ -464,7 +560,10 @@ export async function handleBotcraftRoute(request, env, url) {
     options: (Array.isArray(result?.options) ? result.options : [])
       .map(o => clip(o, 60))
       .filter(o => o && (allowSkip || !(/^skip/i.test(o) || o === FINISH_OPTION)))
+      // With a form, the only button under the message is "Finish for now".
+      .filter(o => !questions.length || o === FINISH_OPTION)
       .slice(0, 4),
+    questions,
     facts: learned,
     answers: sameBank ? newAnswers : {},
     resetAnswers: !sameBank,

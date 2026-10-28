@@ -109,6 +109,66 @@ export function QuickChips(options = [], disabled = false) {
   return group;
 }
 
+// The next few setup questions, answered together: pick options or write an answer.
+export function QuestionForm(message) {
+  const form = makeElement('div', 'question-form');
+  const locked = Boolean(message.formSent);
+  message.questions.forEach((question, index) => {
+    const answer = message.form?.[question.id] ?? { selected: [], text: '' };
+    const field = makeElement('div', 'question-field');
+    const label = makeElement('div', 'question-label', `${index + 1}. ${question.question}`);
+    label.id = `question-${message.id}-${question.id}`;
+    if (question.mandatory) {
+      const required = makeElement('span', 'question-required', ' *');
+      required.setAttribute('aria-label', 'required');
+      label.append(required);
+    }
+    field.append(label);
+    const choices = [...question.options];
+    if (!question.mandatory) choices.push({ value: 'skipped', label: 'Skip' });
+    if (choices.length) {
+      const group = makeElement('div', 'quick-chips question-choices');
+      group.setAttribute('role', 'group');
+      group.setAttribute('aria-labelledby', label.id);
+      for (const choice of choices) {
+        const button = makeElement('button', 'quick-chip question-choice', choice.label);
+        button.type = 'button';
+        button.dataset.action = 'form-choice';
+        button.dataset.messageId = message.id;
+        button.dataset.questionId = question.id;
+        button.dataset.value = choice.value;
+        button.setAttribute('aria-pressed', String(answer.selected.includes(choice.value)));
+        button.disabled = locked;
+        group.append(button);
+      }
+      field.append(group);
+    }
+    const input = makeElement('input', 'question-input');
+    input.type = 'text';
+    input.maxLength = 500;
+    input.value = answer.text;
+    input.placeholder = question.options.length ? 'Or write your answer' : 'Write your answer';
+    input.setAttribute('aria-labelledby', label.id);
+    input.dataset.messageId = message.id;
+    input.dataset.questionId = question.id;
+    input.disabled = locked;
+    field.append(input);
+    form.append(field);
+  });
+  if (message.formError) {
+    const error = makeElement('div', 'message-error', message.formError);
+    error.setAttribute('role', 'alert');
+    form.append(error);
+  }
+  const submit = makeElement('button', 'question-submit', locked ? 'Answers sent' : 'Send answers');
+  submit.type = 'button';
+  submit.dataset.action = 'submit-form';
+  submit.dataset.messageId = message.id;
+  submit.disabled = locked;
+  form.append(submit);
+  return form;
+}
+
 export function TypingIndicator() {
   const row = makeElement('div', 'typing-row');
   const avatar = makeElement('div', 'bot-avatar bot-avatar-small', 'b');
@@ -187,6 +247,8 @@ export function MessageBubble(message) {
     bubble.append(error);
   }
   column.append(bubble);
+
+  if (message.questions?.length) column.append(QuestionForm(message));
 
   if (message.options?.length) {
     column.append(QuickChips(message.options, Boolean(message.optionsUsed)));

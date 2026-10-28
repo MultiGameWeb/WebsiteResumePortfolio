@@ -74,7 +74,8 @@ async function buildPayload(action) {
     if (image) images.push(image);
     else otherFiles.push(attachment.name);
   }
-  return { shopId, text, images, otherFiles, history: history.slice(-HISTORY_LIMIT), facts, answers };
+  const formAnswers = action.formAnswers ?? [];
+  return { shopId, text, images, otherFiles, formAnswers, history: history.slice(-HISTORY_LIMIT), facts, answers };
 }
 
 /**
@@ -133,6 +134,7 @@ export async function sendChatAction(action) {
       id: `bot-${crypto.randomUUID?.() ?? Date.now()}`,
       text: data.reply,
       options: (data.options ?? []).map(toOption),
+      questions: data.questions ?? [],
       time: new Date(),
     },
     progress: data.progress,
