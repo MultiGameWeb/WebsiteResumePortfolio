@@ -18,6 +18,7 @@ const MAX_IMAGES = 4;
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 const IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]);
 const REQUESTS_PER_MINUTE = 20;
+const CHAT_MODELS = ["gemini-3.1-flash-lite", "gemini-3.5-flash", "gemini-3.8-flash"];
 
 // Best-effort throttle per Worker isolate; durable limits come with D1 accounts.
 const recentRequests = new Map();
@@ -124,15 +125,17 @@ function systemPrompt(facts) {
 
 You are talking to the SHOP OWNER to set up their bot. Steps:
 1. If shop_type is unknown, ask what kind of shop it is. Store it as the fact "shop_type".
-2. In the reply right after you learn shop_type, do not ask a core question yet: greet them, say you are preparing the questions customers of such shops ask, and ask them to send their full shop details: photos of items and price boards, price lists or catalogues, and anything in their own words. Offer the options "I'll type the details" and "Skip for now".
+2. In the reply right after you learn shop_type, do not ask a core question yet: greet them, say you are preparing the questions customers of such shops ask, and ask them to send all their business details at once (shop name, address, timings, phone numbers, items and prices, policies, photos of items, menus or price lists) because that is fastest. Offer exactly the options "I'll send all details at once" and "Ask me one by one". If they choose one by one, start asking the core questions.
 3. Read everything they send. Record every core fact you can find in "facts" (use the exact keys below), other useful facts in "notes", and products you see in "items".
-4. Then ask the missing core questions ONE at a time, mandatory ones first, with the given options as quick-reply buttons. Never ask for something already known.
+4. Then ask the missing core questions ONE at a time, mandatory ones first, with the given options as quick-reply buttons. Never ask for something already known. Never offer "Skip" for a mandatory question; only optional questions may have a "Skip" option.
+   For a photo question (shop_front_photo, owner_photo): when the owner sends a photo, record that key with the value "photo received" and move on.
 5. When no mandatory core question is left, tell the owner the basics are complete and that next BotCraft will prepare the detailed questions for their shop type and a preview of their salesman bot (this part is coming soon).
 
 Rules:
 - Reply in the language and script the owner writes in (Telugu, Hindi, English or a mix), short and warm, like a helpful person. At most about 60 words. If their language is unclear (for example just "Hi"), reply in simple English.
 - If the owner asks who you are or what you can do, answer briefly, then continue the setup.
 - Use only what the owner said or sent. Never invent facts, prices or policies.
+- Never change a fact the owner already gave because of a photo or file. If a file seems to contradict it, ask the owner to confirm instead.
 - "facts" only for shop_type and the core keys below, and only when the owner clearly gave that information. For whatsapp_number, store the actual number (if they say it is the same as the call number, copy that number).
 - Do not ask about payment methods. Do not collect customer personal data or any passwords or bank details.
 - Payments, QR posters and going live are not available yet; say so honestly if asked.
@@ -213,6 +216,8 @@ export async function handleBotcraftRoute(request, env, url) {
       system: systemPrompt(facts),
       contents,
       schema: REPLY_SCHEMA,
+      // Flash-Lite answers a setup chat in 1-2 s and has the most free quota.
+      models: CHAT_MODELS,
       temperature: 0.4,
       // Busy models fail in under a second, so a slow last model gets the time.
       timeoutMs: 40000,
@@ -230,14 +235,24 @@ export async function handleBotcraftRoute(request, env, url) {
   const learned = {};
   for (const fact of Array.isArray(result?.facts) ? result.facts : []) {
     const key = String(fact?.key || "");
+    // Files alone may add facts but never overwrite what the owner typed.
+    if (!text && facts[key]) continue;
     if (CORE_KEYS.has(key) && clip(fact?.value, 600)) learned[key] = clip(fact.value, 600);
   }
+  // A photo sent while BotCraft is asking for one answers that question.
+  const askedNext = pendingCore(facts)[0];
+  if (images.length && askedNext?.answer_type === "image" && !learned[askedNext.key]) learned[askedNext.key] = "photo received";
   const merged = { ...facts, ...learned };
+  const nextQuestion = pendingCore(merged)[0];
+  const allowSkip = !nextQuestion || nextQuestion.priority !== "mandatory";
 
   return reply({
     ok: true,
     reply: clip(result?.reply, 1500) || "Sorry, please say that again.",
-    options: (Array.isArray(result?.options) ? result.options : []).map(o => clip(o, 60)).filter(Boolean).slice(0, 4),
+    options: (Array.isArray(result?.options) ? result.options : [])
+      .map(o => clip(o, 60))
+      .filter(o => o && (allowSkip || !/^skip/i.test(o)))
+      .slice(0, 4),
     facts: learned,
     notes: (Array.isArray(result?.notes) ? result.notes : []).map(n => clip(n, 300)).filter(Boolean).slice(0, 20),
     items: (Array.isArray(result?.items) ? result.items : []).slice(0, 30).map(item => ({
