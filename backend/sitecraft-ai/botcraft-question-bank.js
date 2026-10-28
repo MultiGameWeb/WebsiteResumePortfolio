@@ -7,7 +7,7 @@ import { callGemini } from "./ai-engine.js";
 
 export const BOTCRAFT_KEY_ENV = "BOTCRAFT_GEMINI_API_KEY";
 // Tried in order; the next model is used when one is overloaded or out of quota.
-const MODELS = ["gemini-3.8-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
+const MODELS = ["gemini-3.8-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite"];
 const PARALLEL_REQUESTS = 4;
 const MIN_QUESTIONS = 200;
 const MAX_QUESTIONS = 260;
