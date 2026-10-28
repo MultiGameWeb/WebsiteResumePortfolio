@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 55,
+ "question_count": 60,
  "questions": [
   {
    "id": "mobile_shop-001",
@@ -507,13 +507,57 @@
   {
    "id": "mobile_shop-043",
    "category": "Prices & bills",
+   "owner_question": "Can customers pay part in cash and part by card or UPI?",
+   "customer_question": "Can I pay half cash, half card?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-044",
+   "category": "Prices & bills",
+   "owner_question": "If a customer loses the bill, can you print a duplicate using their mobile number or the serial number?",
+   "customer_question": "I lost my bill, can you give a copy?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-045",
+   "category": "Prices & bills",
+   "owner_question": "Do you sell gift vouchers or gift cards?",
+   "customer_question": "Can I buy a gift card?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-046",
+   "category": "Prices & bills",
+   "owner_question": "Do you run lucky draws or prize contests during festivals?",
+   "customer_question": "Is there a Diwali lucky draw?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-047",
+   "category": "Prices & bills",
    "owner_question": "Do you give free gifts or accessories with purchases?",
    "customer_question": "Any free gift with this TV?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-044",
+   "id": "mobile_shop-048",
    "category": "Prices & bills",
    "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
    "customer_question": "Any discount for 10 laptops?",
@@ -521,7 +565,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-045",
+   "id": "mobile_shop-049",
    "category": "Warranty & service",
    "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
    "customer_question": "Where is the Samsung service centre?",
@@ -529,7 +573,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-046",
+   "id": "mobile_shop-050",
    "category": "Warranty & service",
    "owner_question": "Do you sell insurance for theft or accidental damage?",
    "customer_question": "Is there screen damage insurance?",
@@ -541,7 +585,7 @@
    ]
   },
   {
-   "id": "mobile_shop-047",
+   "id": "mobile_shop-051",
    "category": "Warranty & service",
    "owner_question": "How long does a common repair (screen, battery) usually take?",
    "customer_question": "How long to change the screen?",
@@ -549,7 +593,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-048",
+   "id": "mobile_shop-052",
    "category": "Warranty & service",
    "owner_question": "Do you pick up and drop devices for repair?",
    "customer_question": "Can you collect my laptop for repair?",
@@ -561,7 +605,7 @@
    ]
   },
   {
-   "id": "mobile_shop-049",
+   "id": "mobile_shop-053",
    "category": "Warranty & service",
    "owner_question": "Do you give a spare phone to use while the customer's phone is being repaired?",
    "customer_question": "Can I get a phone while mine is repaired?",
@@ -573,7 +617,7 @@
    ]
   },
   {
-   "id": "mobile_shop-050",
+   "id": "mobile_shop-054",
    "category": "Shop & service",
    "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
    "customer_question": "Can I give my old phone for recycling?",
@@ -585,7 +629,7 @@
    ]
   },
   {
-   "id": "mobile_shop-051",
+   "id": "mobile_shop-055",
    "category": "Shop & service",
    "owner_question": "Do you have an online store or a WhatsApp catalogue?",
    "customer_question": "Can I see your products online?",
@@ -597,7 +641,7 @@
    ]
   },
   {
-   "id": "mobile_shop-052",
+   "id": "mobile_shop-056",
    "category": "Shop & service",
    "owner_question": "Do you send a copy of the bill on WhatsApp?",
    "customer_question": "Can you send the bill on WhatsApp?",
@@ -609,7 +653,15 @@
    ]
   },
   {
-   "id": "mobile_shop-053",
+   "id": "mobile_shop-057",
+   "category": "Shop & service",
+   "owner_question": "Is there a separate number for complaints (product problems or late delivery)?",
+   "customer_question": "Whom do I call to complain?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-058",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty or points programme for regular customers?",
    "customer_question": "Do I get points?",
@@ -621,7 +673,7 @@
    ]
   },
   {
-   "id": "mobile_shop-054",
+   "id": "mobile_shop-059",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -637,7 +689,7 @@
    ]
   },
   {
-   "id": "mobile_shop-055",
+   "id": "mobile_shop-060",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
