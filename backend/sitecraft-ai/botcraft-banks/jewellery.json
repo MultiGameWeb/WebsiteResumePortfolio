@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 50,
+ "question_count": 58,
  "questions": [
   {
    "id": "jewellery-001",
@@ -175,6 +175,14 @@
   {
    "id": "jewellery-014",
    "category": "Rates & charges",
+   "owner_question": "What wastage (VA) percentage do you charge, and does it change with the design?",
+   "customer_question": "How much wastage on this necklace?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-015",
+   "category": "Rates & charges",
    "owner_question": "Are stones charged separately from the gold weight?",
    "customer_question": "Is the stone weight counted as gold?",
    "priority": "important",
@@ -186,10 +194,10 @@
    ]
   },
   {
-   "id": "jewellery-015",
+   "id": "jewellery-016",
    "category": "Rates & charges",
-   "owner_question": "Does your bill show gold weight, purity, rate, making, stone charges and GST separately?",
-   "customer_question": "Will the bill show all details?",
+   "owner_question": "Does your bill show gross weight, net gold weight, stone weight, purity, rate, making, wastage and GST separately?",
+   "customer_question": "Will the bill show net and gross weight?",
    "priority": "important",
    "answer_type": "yes_no",
    "options": [
@@ -198,7 +206,19 @@
    ]
   },
   {
-   "id": "jewellery-016",
+   "id": "jewellery-017",
+   "category": "Rates & charges",
+   "owner_question": "Is the HUID number of each piece printed on the bill?",
+   "customer_question": "Will the HUID be on my bill?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-018",
    "category": "Rates & charges",
    "owner_question": "Is GST (3%) included in the price or added on the bill?",
    "customer_question": "Is GST extra?",
@@ -210,7 +230,7 @@
    ]
   },
   {
-   "id": "jewellery-017",
+   "id": "jewellery-019",
    "category": "Rates & charges",
    "owner_question": "Can customers book gold at today's rate by paying an advance (rate lock)? How much advance?",
    "customer_question": "Can I lock today's rate?",
@@ -218,7 +238,7 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-018",
+   "id": "jewellery-020",
    "category": "Old gold & buy-back",
    "owner_question": "Do you take old gold?",
    "customer_question": "Do you take old gold?",
@@ -232,15 +252,15 @@
    ]
   },
   {
-   "id": "jewellery-019",
+   "id": "jewellery-021",
    "category": "Old gold & buy-back",
-   "owner_question": "How do you test old gold purity (karatmeter, acid test, melting)? Can customers watch?",
+   "owner_question": "How do you test old gold purity (karatmeter, acid test, melting)? Can customers watch, and is there a charge for melting?",
    "customer_question": "How will you check my old gold?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "jewellery-020",
+   "id": "jewellery-022",
    "category": "Old gold & buy-back",
    "owner_question": "How much is deducted for old gold — for exchange, and for buying it for money?",
    "customer_question": "How much will you cut for old gold?",
@@ -248,7 +268,7 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-021",
+   "id": "jewellery-023",
    "category": "Old gold & buy-back",
    "owner_question": "Do you accept old gold bought from other shops?",
    "customer_question": "I bought it elsewhere, will you take it?",
@@ -261,7 +281,7 @@
    ]
   },
   {
-   "id": "jewellery-022",
+   "id": "jewellery-024",
    "category": "Old gold & buy-back",
    "owner_question": "What value do you give when your own jewellery is returned for exchange or buy-back?",
    "customer_question": "If I return this later, how much will I get?",
@@ -269,7 +289,7 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-023",
+   "id": "jewellery-025",
    "category": "Gold saving schemes",
    "owner_question": "Do you run a monthly gold saving scheme?",
    "customer_question": "Do you have a monthly scheme?",
@@ -281,7 +301,7 @@
    ]
   },
   {
-   "id": "jewellery-024",
+   "id": "jewellery-026",
    "category": "Gold saving schemes",
    "owner_question": "Scheme details: how many months, minimum monthly amount, and the benefit (for example one month free or making charge discount)?",
    "customer_question": "What do I get in the scheme?",
@@ -289,7 +309,7 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-025",
+   "id": "jewellery-027",
    "category": "Custom orders & services",
    "owner_question": "Do you make custom designs (from a customer's photo or a CAD design)?",
    "customer_question": "Can you make this design from a photo?",
@@ -301,7 +321,7 @@
    ]
   },
   {
-   "id": "jewellery-026",
+   "id": "jewellery-028",
    "category": "Custom orders & services",
    "owner_question": "How many days do custom orders take, and how much advance is needed?",
    "customer_question": "How long for a custom ring?",
@@ -309,7 +329,7 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-027",
+   "id": "jewellery-029",
    "category": "Custom orders & services",
    "owner_question": "Which services do you offer?",
    "customer_question": "Can you resize my ring?",
@@ -326,7 +346,7 @@
    ]
   },
   {
-   "id": "jewellery-028",
+   "id": "jewellery-030",
    "category": "Quality & guarantee",
    "owner_question": "Do you give a purity certificate or guarantee card with each piece?",
    "customer_question": "Will I get a certificate?",
@@ -338,7 +358,7 @@
    ]
   },
   {
-   "id": "jewellery-029",
+   "id": "jewellery-031",
    "category": "Buying & payment",
    "owner_question": "Which ID do customers need for big purchases (for example PAN above ₹2 lakh)?",
    "customer_question": "Do I need PAN card?",
@@ -346,7 +366,7 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-030",
+   "id": "jewellery-032",
    "category": "Buying & payment",
    "owner_question": "Do you show designs on a WhatsApp video call and take orders?",
    "customer_question": "Can you show me designs on video call?",
@@ -358,7 +378,27 @@
    ]
   },
   {
-   "id": "jewellery-031",
+   "id": "jewellery-033",
+   "category": "Products & purity",
+   "owner_question": "Do you give a card with the diamond's 4Cs (cut, clarity, colour, carat)?",
+   "customer_question": "What is the clarity of this diamond?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-034",
+   "category": "Products & purity",
+   "owner_question": "Do you sell rose gold or white gold jewellery? What purity?",
+   "customer_question": "Do you have white gold rings?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-035",
    "category": "Products & purity",
    "owner_question": "Do you sell navaratna / astrological gemstones with a lab certificate?",
    "customer_question": "Do you have a certified emerald?",
@@ -370,7 +410,7 @@
    ]
   },
   {
-   "id": "jewellery-032",
+   "id": "jewellery-036",
    "category": "Products & purity",
    "owner_question": "What is the usual weight and price range of your bridal sets?",
    "customer_question": "How much is a bridal necklace set?",
@@ -378,7 +418,44 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-033",
+   "id": "jewellery-037",
+   "category": "Rates & charges",
+   "owner_question": "Are making and wastage higher for antique, nakshi and temple designs?",
+   "customer_question": "Why is wastage more on temple jewellery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-038",
+   "category": "Rates & charges",
+   "owner_question": "Do you give a lower wastage on plain gold jewellery (without stones)?",
+   "customer_question": "Any less wastage on plain bangles?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-039",
+   "category": "Rates & charges",
+   "owner_question": "Is your rate the local board rate or a branded / corporate rate?",
+   "customer_question": "Is your rate the board rate?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Local board rate",
+    "Branded / corporate rate",
+    "Our own rate"
+   ]
+  },
+  {
+   "id": "jewellery-040",
    "category": "Rates & charges",
    "owner_question": "Do you have fixed-price items (no separate making charge)?",
    "customer_question": "Any fixed-price earrings?",
@@ -390,7 +467,7 @@
    ]
   },
   {
-   "id": "jewellery-034",
+   "id": "jewellery-041",
    "category": "Old gold & buy-back",
    "owner_question": "Do you exchange old silver?",
    "customer_question": "Do you take old silver?",
@@ -402,7 +479,7 @@
    ]
   },
   {
-   "id": "jewellery-035",
+   "id": "jewellery-042",
    "category": "Old gold & buy-back",
    "owner_question": "What is your diamond buy-back or upgrade policy (percentage of value)?",
    "customer_question": "Can I upgrade my diamond ring later?",
@@ -410,7 +487,15 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-036",
+   "id": "jewellery-043",
+   "category": "Old gold & buy-back",
+   "owner_question": "When jewellery with stones is sold back to you, do you give any value for the stones?",
+   "customer_question": "Will I get money for the stones too?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-044",
    "category": "Old gold & buy-back",
    "owner_question": "When you buy old gold, how do you pay the customer?",
    "customer_question": "Will you pay cash for my old gold?",
@@ -423,7 +508,7 @@
    ]
   },
   {
-   "id": "jewellery-037",
+   "id": "jewellery-045",
    "category": "Gold saving schemes",
    "owner_question": "What happens if a customer misses an instalment or stops the scheme?",
    "customer_question": "What if I miss a month?",
@@ -431,7 +516,7 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-038",
+   "id": "jewellery-046",
    "category": "Gold saving schemes",
    "owner_question": "Can scheme instalments be paid online / by UPI?",
    "customer_question": "Can I pay the scheme by GPay?",
@@ -443,7 +528,7 @@
    ]
   },
   {
-   "id": "jewellery-039",
+   "id": "jewellery-047",
    "category": "Custom orders & services",
    "owner_question": "What do you charge for polishing and repairs?",
    "customer_question": "How much to polish a chain?",
@@ -451,7 +536,7 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-040",
+   "id": "jewellery-048",
    "category": "Custom orders & services",
    "owner_question": "Do you give free polishing or maintenance for jewellery bought from you?",
    "customer_question": "Is polishing free for my bangles?",
@@ -463,7 +548,7 @@
    ]
   },
   {
-   "id": "jewellery-041",
+   "id": "jewellery-049",
    "category": "Quality & guarantee",
    "owner_question": "Can customers test purity on your karatmeter for free?",
    "customer_question": "Can I check the purity myself?",
@@ -475,7 +560,7 @@
    ]
   },
   {
-   "id": "jewellery-042",
+   "id": "jewellery-050",
    "category": "Quality & guarantee",
    "owner_question": "Do you offer insurance for jewellery bought from you?",
    "customer_question": "Can I insure this necklace?",
@@ -487,7 +572,7 @@
    ]
   },
   {
-   "id": "jewellery-043",
+   "id": "jewellery-051",
    "category": "Buying & payment",
    "owner_question": "Which ways to pay do you accept?",
    "customer_question": "Can I pay by card?",
@@ -502,7 +587,7 @@
    ]
   },
   {
-   "id": "jewellery-044",
+   "id": "jewellery-052",
    "category": "Buying & payment",
    "owner_question": "Can customers exchange a piece bought from you for another design? Any deduction?",
    "customer_question": "Can I change this design later?",
@@ -510,7 +595,7 @@
    "answer_type": "text"
   },
   {
-   "id": "jewellery-045",
+   "id": "jewellery-053",
    "category": "Buying & payment",
    "owner_question": "Do you send jewellery by insured courier to other cities?",
    "customer_question": "Can you courier it to Bangalore?",
@@ -522,7 +607,7 @@
    ]
   },
   {
-   "id": "jewellery-046",
+   "id": "jewellery-054",
    "category": "Buying & payment",
    "owner_question": "Do you rent jewellery for weddings and functions?",
    "customer_question": "Can I rent a bridal set?",
@@ -534,7 +619,7 @@
    ]
   },
   {
-   "id": "jewellery-047",
+   "id": "jewellery-055",
    "category": "Buying & payment",
    "owner_question": "Do you give gift boxes or gift wrapping?",
    "customer_question": "Can you gift-wrap it?",
@@ -546,7 +631,7 @@
    ]
   },
   {
-   "id": "jewellery-048",
+   "id": "jewellery-056",
    "category": "Shop & service",
    "owner_question": "Do you have a private room for bridal shopping?",
    "customer_question": "Is there a private room for bridal shopping?",
@@ -558,7 +643,7 @@
    ]
   },
   {
-   "id": "jewellery-049",
+   "id": "jewellery-057",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -575,7 +660,7 @@
    ]
   },
   {
-   "id": "jewellery-050",
+   "id": "jewellery-058",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
