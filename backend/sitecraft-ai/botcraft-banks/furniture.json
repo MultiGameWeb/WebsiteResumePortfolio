@@ -1,0 +1,2556 @@
+{
+ "shop_type_key": "furniture",
+ "name": "Furniture shop",
+ "version": 1,
+ "model": "gemini-3.1-flash-lite",
+ "generated_at": "2026-10-28",
+ "question_count": 225,
+ "questions": [
+  {
+   "id": "furniture-001",
+   "category": "Material Quality and Durability",
+   "owner_question": "What are the primary types of wood or materials used in your furniture items?",
+   "customer_question": "What kind of wood do you use for your furniture?",
+   "priority": "mandatory",
+   "answer_type": "list"
+  },
+  {
+   "id": "furniture-002",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you offer any termite-resistant treatment or warranty on your wood products?",
+   "customer_question": "Is your furniture termite-proof?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-003",
+   "category": "Material Quality and Durability",
+   "owner_question": "What types of upholstery fabrics do you typically use (e.g., velvet, cotton, leatherette)?",
+   "customer_question": "What kind of fabric do you use for sofas and chairs?",
+   "priority": "mandatory",
+   "answer_type": "list"
+  },
+  {
+   "id": "furniture-004",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you provide a written warranty against wood defects or manufacturing faults?",
+   "customer_question": "Can I get a warranty on the wood quality?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-005",
+   "category": "Manufacturing and Sourcing",
+   "owner_question": "What is the primary material used in your furniture frames (e.g., Solid Teak, Sheesham, Plywood, MDF)?",
+   "customer_question": "Do you use solid wood or engineered wood?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-006",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Do you offer a standard warranty on your furniture products?",
+   "customer_question": "Do your furniture items come with a warranty?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-007",
+   "category": "Warranty and After-Sales",
+   "owner_question": "What is the typical duration of the warranty you provide (in years)?",
+   "customer_question": "How long is the warranty period for my sofa?",
+   "priority": "mandatory",
+   "answer_type": "number"
+  },
+  {
+   "id": "furniture-008",
+   "category": "Delivery and Installation",
+   "owner_question": "Is delivery free for all furniture items, or do you charge based on distance or order size?",
+   "customer_question": "Do you offer free delivery for furniture?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Always free",
+    "Free above a certain amount",
+    "Always charged",
+    "Depends on distance"
+   ]
+  },
+  {
+   "id": "furniture-009",
+   "category": "Delivery and Installation",
+   "owner_question": "What is the typical delivery timeframe after an order is placed?",
+   "customer_question": "How long does it take to deliver the furniture?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-010",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Do you require an advance payment or token amount to start a custom order?",
+   "customer_question": "Is there a token amount required for custom orders?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-011",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you offer a standard durability guarantee or expected lifespan for your furniture products?",
+   "customer_question": "How long will this furniture last?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-012",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you clearly label or distinguish between solid wood and engineered wood products for customers?",
+   "customer_question": "Is the wood solid or engineered?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-013",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you use ISI-certified plywood for your cabinets and storage units?",
+   "customer_question": "Is the ply ISI marked?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-014",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you specify if the leather used is genuine, bonded, or synthetic (faux) leather?",
+   "customer_question": "Is the leather real or synthetic?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Genuine Leather",
+    "Faux Leather",
+    "PU Leather",
+    "Not Applicable"
+   ]
+  },
+  {
+   "id": "furniture-015",
+   "category": "Material Quality and Durability",
+   "owner_question": "Is the wood used in your furniture properly seasoned or kiln-dried to prevent warping?",
+   "customer_question": "Do you use seasoned wood?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-016",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you use toughened or tempered glass for your tables and cabinets?",
+   "customer_question": "Is the glass used in the furniture tempered?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-017",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you offer fabric color customization for your furniture items?",
+   "customer_question": "Can I choose a different fabric color for this sofa?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-018",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you provide options for different wood finishes or polish shades?",
+   "customer_question": "Can I request a different wood finish or polish shade?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-019",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you accept orders for custom furniture dimensions?",
+   "customer_question": "Can I get this table made in a custom size?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-020",
+   "category": "Customization and Tailoring",
+   "owner_question": "What is the typical delivery timeframe for a customized furniture piece?",
+   "customer_question": "How much extra time does a custom order take?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-021",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you charge a premium or extra fee for custom-sized furniture?",
+   "customer_question": "Do you charge extra for custom sizes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-022",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you provide custom stitching or tailoring services for curtains and drapes?",
+   "customer_question": "Do you offer custom designs for curtains or drapes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-023",
+   "category": "Customization and Tailoring",
+   "owner_question": "What percentage of the total price is required as an advance for custom orders?",
+   "customer_question": "Do you require an advance payment for custom orders?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "furniture-024",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you have physical samples of wood finishes or fabrics available in the shop for customers to see?",
+   "customer_question": "Can I see a sample of the wood or fabric before finalizing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-025",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you accept furniture orders based on customer-provided design photos?",
+   "customer_question": "Can you make furniture based on a photo I have?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-026",
+   "category": "Customization and Tailoring",
+   "owner_question": "What is your return policy for items that have been customized for a specific customer?",
+   "customer_question": "Are custom-made items eligible for return?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-027",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you provide a design sketch or 3D view for customer approval before starting custom work?",
+   "customer_question": "Do you provide a sketch or drawing before starting the custom work?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-028",
+   "category": "Manufacturing and Sourcing",
+   "owner_question": "Do you sell handmade furniture, factory-made furniture, or a mix of both?",
+   "customer_question": "Are these furniture pieces handmade or factory-made?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Handmade",
+    "Factory-made",
+    "Both"
+   ]
+  },
+  {
+   "id": "furniture-029",
+   "category": "Manufacturing and Sourcing",
+   "owner_question": "Is your furniture sourced locally, from other parts of India, or imported from abroad?",
+   "customer_question": "Is your furniture imported or made in India?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Locally sourced",
+    "From other parts of India",
+    "Imported",
+    "Mixed"
+   ]
+  },
+  {
+   "id": "furniture-030",
+   "category": "Manufacturing and Sourcing",
+   "owner_question": "Do you manufacture these items yourself, or do you source them from third-party manufacturers/wholesalers?",
+   "customer_question": "Who manufactures these items?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "I manufacture them myself",
+    "I source from wholesalers/manufacturers",
+    "Both"
+   ]
+  },
+  {
+   "id": "furniture-031",
+   "category": "Manufacturing and Sourcing",
+   "owner_question": "What is the typical lead time for sourcing or manufacturing an item that is currently out of stock?",
+   "customer_question": "How long does it take to source a piece if it's not in stock?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-032",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Does your warranty cover termite or pest infestation damage?",
+   "customer_question": "Does the warranty cover termite damage?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-033",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Is the fabric or upholstery material included in your warranty coverage?",
+   "customer_question": "Is the fabric or upholstery covered under warranty?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-034",
+   "category": "Warranty and After-Sales",
+   "owner_question": "What is the first step a customer should take to report a furniture issue?",
+   "customer_question": "What should I do if my furniture breaks?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-035",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Do you provide any free maintenance or servicing visits after the sale?",
+   "customer_question": "Do you offer free maintenance or servicing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-036",
+   "category": "Warranty and After-Sales",
+   "owner_question": "What documents (like invoice or warranty card) must a customer show to claim a warranty?",
+   "customer_question": "How do I claim my warranty?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-037",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Does the warranty remain valid if the customer moves the furniture to a new location?",
+   "customer_question": "Is the warranty valid if I move the furniture to another house?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-038",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Do you offer paid repair services for furniture after the warranty expires?",
+   "customer_question": "Do you provide repair services for furniture bought from you?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-039",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Does your warranty cover accidental damage caused by the customer?",
+   "customer_question": "Does the warranty cover accidental damage?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-040",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Under what conditions do you offer a replacement instead of a repair?",
+   "customer_question": "Do you provide a replacement if the furniture is defective?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-041",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Are furniture hardware components like hinges and drawer channels covered under your warranty?",
+   "customer_question": "Is the hardware (hinges, channels) covered under warranty?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-042",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Does the shop cover the transportation cost for picking up furniture for warranty repairs?",
+   "customer_question": "Who pays for the transportation during a warranty claim?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Shop covers cost",
+    "Customer covers cost",
+    "Shared cost"
+   ]
+  },
+  {
+   "id": "furniture-043",
+   "category": "Warranty and After-Sales",
+   "owner_question": "What are the common actions that void the furniture warranty (e.g., self-repair, water damage)?",
+   "customer_question": "What voids the warranty?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-044",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Do you charge a fee for visiting the customer's home to inspect a warranty claim?",
+   "customer_question": "Are there any service charges for warranty inspections?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-045",
+   "category": "Warranty and After-Sales",
+   "owner_question": "What is the preferred channel for customers to request after-sales support?",
+   "customer_question": "How do I contact you for after-sales support?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Phone call",
+    "WhatsApp",
+    "Visit shop",
+    "Email"
+   ]
+  },
+  {
+   "id": "furniture-046",
+   "category": "Delivery and Installation",
+   "owner_question": "What is the minimum order value required for a customer to qualify for free delivery?",
+   "customer_question": "What is the minimum order amount for free delivery?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "furniture-047",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you provide free delivery within a specific radius of your shop?",
+   "customer_question": "Do you charge for delivery if I live within 5 kilometers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-048",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you charge a flat delivery fee for areas outside your immediate vicinity?",
+   "customer_question": "How much do you charge for delivery outside the city?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "furniture-049",
+   "category": "Delivery and Installation",
+   "owner_question": "Is furniture installation included in the purchase price, or is it a separate paid service?",
+   "customer_question": "Is installation included in the price?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included for all items",
+    "Included for specific items",
+    "Always a paid service",
+    "Not provided"
+   ]
+  },
+  {
+   "id": "furniture-050",
+   "category": "Delivery and Installation",
+   "owner_question": "If installation is a paid service, what is the typical cost or how is it calculated?",
+   "customer_question": "How much do you charge for furniture assembly?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-051",
+   "category": "Delivery and Installation",
+   "owner_question": "Can customers request a specific time slot for delivery, or is it based on your route?",
+   "customer_question": "Can I choose a specific time for delivery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-052",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you offer delivery services on Sundays or public holidays?",
+   "customer_question": "Do you deliver on Sundays?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-053",
+   "category": "Delivery and Installation",
+   "owner_question": "Does your delivery service include moving the furniture to the specific room or floor inside the customer's house?",
+   "customer_question": "Will the delivery person help move the furniture inside my house?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-054",
+   "category": "Delivery and Installation",
+   "owner_question": "What is your policy if furniture is damaged during the transit or installation process?",
+   "customer_question": "What if the furniture gets damaged during delivery?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-055",
+   "category": "Delivery and Installation",
+   "owner_question": "Is installation typically performed on the same day as delivery, or is it scheduled for a later time?",
+   "customer_question": "Is the installation done on the same day as delivery?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Same day",
+    "Next day",
+    "As per customer convenience"
+   ]
+  },
+  {
+   "id": "furniture-056",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you offer special pricing or discounts for bulk furniture orders?",
+   "customer_question": "Do you provide discounts for bulk orders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-057",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "What is the minimum number of items or total order value required to qualify for a bulk discount?",
+   "customer_question": "What is the minimum quantity to qualify for a bulk discount?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-058",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Are you registered for GST and can you provide formal GST invoices for corporate clients?",
+   "customer_question": "Do you provide GST invoices for office purchases?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-059",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you offer full office furnishing packages or interior setup services?",
+   "customer_question": "Can you furnish an entire office space?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-060",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "What is the typical lead time you require to fulfill a large bulk order?",
+   "customer_question": "How long does it take to fulfill a large bulk order?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-061",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you provide professional installation services for bulk furniture deliveries?",
+   "customer_question": "Do you offer installation services for bulk orders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-062",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Is installation included in the price for bulk orders, or is it charged separately?",
+   "customer_question": "Is there an extra charge for installation?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in price",
+    "Charged separately",
+    "Depends on order size"
+   ]
+  },
+  {
+   "id": "furniture-063",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you provide written quotations or pro-forma invoices for corporate clients?",
+   "customer_question": "Can I get a quotation for my office requirement?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-064",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you accept advance payments and balance payments for large orders, or do you require full payment upfront?",
+   "customer_question": "What payment terms do you offer for large orders?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Full payment upfront",
+    "Advance + Balance on delivery",
+    "Credit terms available"
+   ]
+  },
+  {
+   "id": "furniture-065",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you have the capacity to handle bulk delivery and logistics for large orders?",
+   "customer_question": "Do you provide bulk delivery across the city?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-066",
+   "category": "Product Care and Maintenance",
+   "owner_question": "What is the recommended method for cleaning fabric spills in your shop?",
+   "customer_question": "How do I clean a fabric sofa if something spills on it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-067",
+   "category": "Product Care and Maintenance",
+   "owner_question": "How often do you recommend customers polish their wooden furniture?",
+   "customer_question": "Does the wooden furniture need regular polishing?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Every 6 months",
+    "Once a year",
+    "Only when it looks dull",
+    "Not required"
+   ]
+  },
+  {
+   "id": "furniture-068",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Is it safe to use water for cleaning your wooden furniture?",
+   "customer_question": "Can I use water to clean my wooden dining table?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-069",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Are the sofa covers or cushion covers sold here machine washable?",
+   "customer_question": "Are your sofa covers machine washable?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-070",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Do you provide or suggest any specific treatment to protect furniture from termites?",
+   "customer_question": "How do I protect my furniture from termites?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-071",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Does direct sunlight damage the finish or color of your furniture?",
+   "customer_question": "Can I keep this furniture in direct sunlight?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-072",
+   "category": "Product Care and Maintenance",
+   "owner_question": "What is the best way to clean stains from leather furniture?",
+   "customer_question": "How do I remove ink stains from a leather sofa?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-073",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Is the furniture sold in your shop water-resistant?",
+   "customer_question": "Is the furniture water-resistant?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-074",
+   "category": "Product Care and Maintenance",
+   "owner_question": "How often should the mattresses you sell be flipped or rotated?",
+   "customer_question": "How often should I flip the mattress?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Every 3 months",
+    "Every 6 months",
+    "Once a year",
+    "Not required"
+   ]
+  },
+  {
+   "id": "furniture-075",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Is it safe to use a vacuum cleaner on your upholstered furniture?",
+   "customer_question": "Can I use a vacuum cleaner on the sofa?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-076",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Do you provide any tips to prevent rusting on your metal furniture?",
+   "customer_question": "Does the metal furniture rust easily?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-077",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Do you keep most of your furniture items in ready stock, or are they mostly made-to-order?",
+   "customer_question": "Is this item ready for immediate pickup?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Mostly ready stock",
+    "Mostly made-to-order",
+    "Mix of both"
+   ]
+  },
+  {
+   "id": "furniture-078",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "What is the typical waiting time in days for a custom-made furniture piece?",
+   "customer_question": "How long does it take for a custom-made piece to be ready?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "furniture-079",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Do you allow customers to book or reserve items that are currently out of stock?",
+   "customer_question": "Can I reserve an item if it is currently out of stock?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-080",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "What is your process for informing customers when their order is ready for pickup or delivery?",
+   "customer_question": "How will I know when my custom order is ready?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "WhatsApp message",
+    "Phone call",
+    "SMS",
+    "Email"
+   ]
+  },
+  {
+   "id": "furniture-081",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Do you always have a sample or display piece available for the items you take orders for?",
+   "customer_question": "Do you have a display piece I can see before ordering?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-082",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "If a specific wood or fabric requested by a customer is out of stock, do you inform them before accepting the order?",
+   "customer_question": "Do you inform me if a specific material is out of stock?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-083",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Do you consider the delivery date you provide to be a firm commitment or an estimate?",
+   "customer_question": "Is the delivery date guaranteed?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Firm commitment",
+    "Rough estimate"
+   ]
+  },
+  {
+   "id": "furniture-084",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Do you guarantee the price at the time of booking, even if the delivery takes several weeks?",
+   "customer_question": "Is the price fixed even if delivery takes time?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-085",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Under what conditions can a customer cancel a custom order without losing their advance payment?",
+   "customer_question": "Can I cancel my order if it gets delayed?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-086",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Are there specific categories of furniture that you never keep in ready stock?",
+   "customer_question": "Are there any items that are 'made-to-order' only?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "furniture-087",
+   "category": "Trial and Display",
+   "owner_question": "Do you allow customers to test or sit on furniture items in your shop?",
+   "customer_question": "Can I sit on this sofa before buying?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-088",
+   "category": "Trial and Display",
+   "owner_question": "Do you sell the exact display piece or do you provide a fresh piece from your stock?",
+   "customer_question": "Is the piece on display the exact one I will get?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Always sell the display piece",
+    "Always provide a fresh piece from stock",
+    "Depends on the item"
+   ]
+  },
+  {
+   "id": "furniture-089",
+   "category": "Trial and Display",
+   "owner_question": "Do you keep color swatches or fabric samples in the shop to show customers?",
+   "customer_question": "Can I see different color options for this display model?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-090",
+   "category": "Trial and Display",
+   "owner_question": "Do you have a physical or digital catalog for items that are not currently on display?",
+   "customer_question": "Do you have a catalog to see more designs?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-091",
+   "category": "Trial and Display",
+   "owner_question": "Are customers allowed to open and inspect the storage compartments of furniture?",
+   "customer_question": "Can I check the storage capacity of this bed/wardrobe?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-092",
+   "category": "Trial and Display",
+   "owner_question": "Do you demonstrate the working mechanism of folding chairs or sofa beds to customers?",
+   "customer_question": "Can I see how the folding mechanism works?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-093",
+   "category": "Trial and Display",
+   "owner_question": "Do you have a dedicated area where customers can lie down and test mattresses?",
+   "customer_question": "Do you have a demo area for mattresses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-094",
+   "category": "Trial and Display",
+   "owner_question": "Is all your display furniture kept fully assembled for customers to see?",
+   "customer_question": "Are the display items assembled?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-095",
+   "category": "Trial and Display",
+   "owner_question": "Are your display drawers and doors kept in working condition for customers to test?",
+   "customer_question": "Can I see how the drawers slide?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-096",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Are the prices you list for your furniture inclusive of GST, or is GST added at the time of final billing?",
+   "customer_question": "Are the prices inclusive of GST?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in price",
+    "Added extra at billing"
+   ]
+  },
+  {
+   "id": "furniture-097",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Is all necessary hardware like screws, handles, and hinges included in the furniture price?",
+   "customer_question": "Are the screws, handles, and other hardware included in the price?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-098",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Do you provide specific discounts if a customer buys multiple furniture items at once?",
+   "customer_question": "Do you offer any discounts for bulk purchases?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-099",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Do you charge a fee for visiting a customer's home to take measurements for custom furniture?",
+   "customer_question": "Is there a charge for visiting my house to take measurements?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-100",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Do you charge extra if a customer requests a specific polish or color change on an existing furniture piece?",
+   "customer_question": "Do you charge extra for custom polish or color changes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-101",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "For dining or center tables, is the glass top included in the base price or sold separately?",
+   "customer_question": "Does the price include the glass top for the table?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in price",
+    "Sold separately"
+   ]
+  },
+  {
+   "id": "furniture-102",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Are cushions or mattresses included in the price of beds and sofas, or are they priced separately?",
+   "customer_question": "Are cushions or mattresses included with the bed or sofa?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Sold separately"
+   ]
+  },
+  {
+   "id": "furniture-103",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Are your prices fixed, or is there room for negotiation?",
+   "customer_question": "Is the price negotiable?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed prices",
+    "Negotiable"
+   ]
+  },
+  {
+   "id": "furniture-104",
+   "category": "Interior Consultation",
+   "owner_question": "Do you provide interior design or room layout advice to your customers?",
+   "customer_question": "Do you offer interior design suggestions for my home?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-105",
+   "category": "Interior Consultation",
+   "owner_question": "Do you charge a fee for your interior consultation services?",
+   "customer_question": "Is there a fee for interior consultation?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-106",
+   "category": "Interior Consultation",
+   "owner_question": "What is the fee or price range for your design consultation service?",
+   "customer_question": "How much do you charge for design consultation?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "furniture-107",
+   "category": "Interior Consultation",
+   "owner_question": "Do you offer specific styling advice for matching soft furnishings like curtains and cushions?",
+   "customer_question": "Do you help with matching curtains and cushions?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-108",
+   "category": "Interior Consultation",
+   "owner_question": "Is the consultation fee waived or adjusted if the customer purchases furniture from your shop?",
+   "customer_question": "Is the consultation fee adjusted if I buy furniture from you?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-109",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "What percentage of the total cost do you require as an advance payment for custom-made items?",
+   "customer_question": "How much advance payment do I need to pay for a custom furniture order?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "furniture-110",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "Is the remaining balance due before delivery or can it be paid upon receipt of the goods?",
+   "customer_question": "Do I have to pay the full amount before the custom furniture is delivered?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Before delivery",
+    "Upon delivery"
+   ]
+  },
+  {
+   "id": "furniture-111",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "Do you offer a milestone-based payment plan (e.g., booking, midway, and completion) for custom orders?",
+   "customer_question": "Can I pay for my custom order in installments?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-112",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "What is your policy regarding refunds for advance payments if a custom order is cancelled by the customer?",
+   "customer_question": "Is the advance payment refundable if I cancel my custom order?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-113",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "Do you apply a flat design fee or a percentage markup on custom-made furniture orders?",
+   "customer_question": "Do you charge extra for custom designs compared to ready-made items?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Flat design fee",
+    "Percentage markup",
+    "No extra charge"
+   ]
+  },
+  {
+   "id": "furniture-114",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "Are your custom quotes inclusive of all taxes and delivery charges, or are they added later?",
+   "customer_question": "Are there any hidden charges in the final quote for custom work?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "All-inclusive",
+    "Taxes/delivery extra"
+   ]
+  },
+  {
+   "id": "furniture-115",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "Is the price quoted for a custom order fixed, or can it change due to raw material fluctuations?",
+   "customer_question": "How do you handle price changes if the raw material cost increases during the custom build?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed price",
+    "Subject to material cost change"
+   ]
+  },
+  {
+   "id": "furniture-116",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "Do you offer an exchange or buy-back scheme for old furniture when a customer purchases new items?",
+   "customer_question": "Do you take back my old furniture if I buy new ones from you?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-117",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "What criteria do you use to value old furniture (e.g., condition, age, material)?",
+   "customer_question": "How do you decide the value of my old furniture for exchange?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-118",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "Do you accept exchange items regardless of where they were originally purchased?",
+   "customer_question": "Do you accept old furniture from any brand or only what I bought here?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-119",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "Do you provide a pickup service for old furniture being exchanged or sold?",
+   "customer_question": "Will you come to my house to pick up the old furniture?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-120",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "Do you charge a fee for picking up old furniture, or is it free?",
+   "customer_question": "Is there a fee for picking up my old furniture?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Paid",
+    "Depends on distance"
+   ]
+  },
+  {
+   "id": "furniture-121",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "Are there specific types or conditions of furniture you refuse to accept (e.g., broken, infested, specific materials)?",
+   "customer_question": "What types of furniture do you refuse to take back?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-122",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "Is the exchange value provided as a direct discount on the new purchase or as a cash payment?",
+   "customer_question": "Do you offer a discount on new furniture instead of cash for my old items?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Discount on new purchase",
+    "Cash payment",
+    "Both"
+   ]
+  },
+  {
+   "id": "furniture-123",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "Are you willing to assess old furniture for exchange via photos sent by the customer?",
+   "customer_question": "Can I send you a photo of my old furniture to check if you will take it?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-124",
+   "category": "Safety and Packaging",
+   "owner_question": "What materials do you use to pack furniture for transit (e.g., bubble wrap, cardboard, foam sheets)?",
+   "customer_question": "How will you pack my furniture for delivery?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-125",
+   "category": "Safety and Packaging",
+   "owner_question": "Do you deliver items in their original factory boxes or do you repack them yourself?",
+   "customer_question": "Is the furniture delivered in a box or just wrapped?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original factory boxes",
+    "Custom shop packaging",
+    "Both depending on the item"
+   ]
+  },
+  {
+   "id": "furniture-126",
+   "category": "Safety and Packaging",
+   "owner_question": "What is your policy if the customer finds damage upon delivery?",
+   "customer_question": "What if the furniture gets damaged during delivery?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-127",
+   "category": "Safety and Packaging",
+   "owner_question": "Do you perform a quality check or inspection before packing the item for delivery?",
+   "customer_question": "Do you check the furniture for defects before packing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-128",
+   "category": "Safety and Packaging",
+   "owner_question": "Do you require the customer to inspect the item and sign a delivery note before the delivery team leaves?",
+   "customer_question": "Should I inspect the furniture before the delivery team leaves?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-129",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you use any water-resistant coating or polish on your furniture surfaces?",
+   "customer_question": "Are your furniture pieces waterproof?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-130",
+   "category": "Material Quality and Durability",
+   "owner_question": "Are the fabrics used in your sofas or chairs color-fast or fade-resistant?",
+   "customer_question": "Does the fabric fade over time?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-131",
+   "category": "Material Quality and Durability",
+   "owner_question": "What density of foam do you typically use in your sofa cushions?",
+   "customer_question": "Do you use high-density foam for cushions?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Low Density",
+    "Medium Density",
+    "High Density (HR Foam)",
+    "Memory Foam"
+   ]
+  },
+  {
+   "id": "furniture-132",
+   "category": "Material Quality and Durability",
+   "owner_question": "What type of finish do you apply to your wooden furniture (e.g., PU polish, melamine, paint)?",
+   "customer_question": "Is the furniture polished or painted?",
+   "priority": "optional",
+   "answer_type": "list"
+  },
+  {
+   "id": "furniture-133",
+   "category": "Material Quality and Durability",
+   "owner_question": "How are the main joints of your furniture constructed (e.g., machine-pressed, hand-screwed, glued)?",
+   "customer_question": "Are the joints in the furniture glued or screwed?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Glue and Nails",
+    "Screws and Bolts",
+    "Mortise and Tenon (Traditional)",
+    "Cam-lock (Modular)"
+   ]
+  },
+  {
+   "id": "furniture-134",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you use powder-coated or rust-resistant metal for your furniture frames?",
+   "customer_question": "Is the metal used in your furniture rust-proof?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-135",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you source your wood or materials from certified sustainable or eco-friendly suppliers?",
+   "customer_question": "Do you use eco-friendly materials?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-136",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you provide a care and maintenance guide for the materials used in your products?",
+   "customer_question": "Does the furniture come with a care guide?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-137",
+   "category": "Material Quality and Durability",
+   "owner_question": "Are your furniture fabrics generally easy to clean or stain-resistant?",
+   "customer_question": "How do I clean the fabric if I spill something?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-138",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you use branded hardware (like hinges and drawer slides) for your furniture?",
+   "customer_question": "Are the hinges and hardware durable?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-139",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you use low-VOC or non-toxic paints and glues for your furniture?",
+   "customer_question": "Does the furniture have a smell?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-140",
+   "category": "Material Quality and Durability",
+   "owner_question": "Are your furniture structures tested for weight capacity?",
+   "customer_question": "Can the furniture hold heavy weight?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-141",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do your sofa sets feature removable and washable cushion covers?",
+   "customer_question": "Are the cushions removable?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-142",
+   "category": "Material Quality and Durability",
+   "owner_question": "Is your furniture handcrafted locally or is it factory-made/imported?",
+   "customer_question": "Is the furniture made locally or imported?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Handcrafted Locally",
+    "Factory-Made",
+    "Imported"
+   ]
+  },
+  {
+   "id": "furniture-143",
+   "category": "Material Quality and Durability",
+   "owner_question": "Do you apply any special anti-scratch or protective layers on your dining or center tables?",
+   "customer_question": "Do you offer anti-scratch coating on tables?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-144",
+   "category": "Customization and Tailoring",
+   "owner_question": "Can customers select the firmness level or foam quality for sofas and chairs?",
+   "customer_question": "Can I choose the type of foam or cushion firmness?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-145",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you allow customers to bring their own fabric for upholstery work?",
+   "customer_question": "Can I provide my own fabric for the upholstery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-146",
+   "category": "Customization and Tailoring",
+   "owner_question": "Are customers allowed to choose different hardware, like handles or knobs, for storage furniture?",
+   "customer_question": "Can I change the handle or hardware style on this cabinet?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-147",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you have a minimum order requirement for custom-made pieces?",
+   "customer_question": "Is there a minimum order quantity for custom furniture?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-148",
+   "category": "Customization and Tailoring",
+   "owner_question": "Can customers request custom designs or upholstery for bed headboards?",
+   "customer_question": "Do you offer custom bed headboard designs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-149",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you offer custom embroidery or personalization on cushions or furnishings?",
+   "customer_question": "Can I get custom embroidery on cushions?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-150",
+   "category": "Customization and Tailoring",
+   "owner_question": "Are you able to adjust the height of tables or desks to suit specific needs?",
+   "customer_question": "Can you adjust the height of the dining table?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-151",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you offer options to add extra storage or compartments to standard furniture?",
+   "customer_question": "Can I add storage compartments to this ottoman?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-152",
+   "category": "Customization and Tailoring",
+   "owner_question": "Are customers allowed to choose different leg styles or materials for sofas and chairs?",
+   "customer_question": "Can I change the leg style of the sofa?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-153",
+   "category": "Manufacturing and Sourcing",
+   "owner_question": "Do you source your upholstery fabrics from branded Indian mills or local suppliers?",
+   "customer_question": "Where does your fabric come from?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Branded Indian mills",
+    "Local suppliers",
+    "Both"
+   ]
+  },
+  {
+   "id": "furniture-154",
+   "category": "Manufacturing and Sourcing",
+   "owner_question": "Do you have any certifications for your materials, like ISO or quality standards for wood or foam?",
+   "customer_question": "Do you have any certifications for your materials?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-155",
+   "category": "Manufacturing and Sourcing",
+   "owner_question": "Are your furniture designs original or inspired by popular market trends?",
+   "customer_question": "Are your designs original?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Original designs",
+    "Inspired by market trends",
+    "Both"
+   ]
+  },
+  {
+   "id": "furniture-156",
+   "category": "Manufacturing and Sourcing",
+   "owner_question": "Do you allow customers to inspect the raw materials (like wood or fabric) before you begin a custom order?",
+   "customer_question": "Can I see the raw materials before you start making it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-157",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Do you have a fixed visiting charge for repair services?",
+   "customer_question": "How much do you charge for a repair visit?",
+   "priority": "optional",
+   "answer_type": "price"
+  },
+  {
+   "id": "furniture-158",
+   "category": "Warranty and After-Sales",
+   "owner_question": "What is the average turnaround time for completing a furniture repair?",
+   "customer_question": "How long does it take to repair a piece of furniture?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-159",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Do you provide a temporary replacement piece while the customer's item is being repaired?",
+   "customer_question": "Can I get a loaner piece while my furniture is being repaired?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-160",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Are polish or color-fading issues covered under your warranty?",
+   "customer_question": "Does the warranty cover color fading or polish issues?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-161",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Does your furniture warranty apply to items used in commercial spaces like offices or cafes?",
+   "customer_question": "Is the warranty valid for commercial use?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-162",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Is product registration required to activate the warranty?",
+   "customer_question": "Do I need to register my product for the warranty?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-163",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Do you offer an option to purchase an extended warranty for your furniture?",
+   "customer_question": "Do you offer an extended warranty?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-164",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Do you stock spare parts for the furniture you sell?",
+   "customer_question": "Do you provide spare parts for future repairs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-165",
+   "category": "Warranty and After-Sales",
+   "owner_question": "Does your warranty policy apply to second-hand or display pieces?",
+   "customer_question": "Can I claim warranty for second-hand furniture purchased from you?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-166",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you send your own shop staff for installation, or do you hire external carpenters?",
+   "customer_question": "Do you send your own staff for installation?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "In-house staff",
+    "External professional carpenters",
+    "Both"
+   ]
+  },
+  {
+   "id": "furniture-167",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you offer same-day delivery for items currently in stock?",
+   "customer_question": "Do you provide same-day delivery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-168",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you charge extra if the delivery involves carrying furniture up multiple floors without a lift?",
+   "customer_question": "Do you charge extra for delivery to higher floors?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-169",
+   "category": "Delivery and Installation",
+   "owner_question": "Is it mandatory for the customer to be present during the installation process?",
+   "customer_question": "Do I need to be present at home during installation?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-170",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you offer a service to remove or dispose of the customer's old furniture?",
+   "customer_question": "Do you take away the old furniture?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-171",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you use protective packaging (like bubble wrap or cardboard) for all furniture deliveries?",
+   "customer_question": "How do you pack the furniture for delivery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-172",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you provide customers with updates or a way to track their delivery status?",
+   "customer_question": "Can I track my delivery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-173",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you provide specialized installation services for complex items like modular kitchens or wardrobes?",
+   "customer_question": "Do you install modular kitchen cabinets?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-174",
+   "category": "Delivery and Installation",
+   "owner_question": "What is the maximum distance from your shop that you are willing to deliver?",
+   "customer_question": "Do you deliver in rural areas nearby?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "furniture-175",
+   "category": "Delivery and Installation",
+   "owner_question": "Must the delivery fee be paid in advance, or can it be paid at the time of delivery?",
+   "customer_question": "Do I have to pay the delivery fee in advance?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Advance only",
+    "At time of delivery",
+    "Either"
+   ]
+  },
+  {
+   "id": "furniture-176",
+   "category": "Delivery and Installation",
+   "owner_question": "Does your installation team provide a demo or explanation of how to use features like recliner mechanisms or storage beds?",
+   "customer_question": "Do you provide a demo of how to use the furniture features?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-177",
+   "category": "Delivery and Installation",
+   "owner_question": "Do you offer a consultation or measurement service to ensure the furniture fits the customer's space before delivery?",
+   "customer_question": "What if the furniture doesn't fit in my room?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-178",
+   "category": "Delivery and Installation",
+   "owner_question": "Do your delivery charges change during peak festival seasons?",
+   "customer_question": "Do you charge extra for delivery during festivals?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-179",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you have a separate catalog or brochure for office-specific furniture?",
+   "customer_question": "Do you have a catalog for office furniture?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-180",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you offer customization options for corporate orders, like specific colors or branding?",
+   "customer_question": "Can you customize furniture for our office branding?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-181",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you cater to commercial spaces like cafes, restaurants, or hotels?",
+   "customer_question": "Do you supply furniture for cafes or restaurants?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-182",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you provide maintenance or repair contracts for bulk furniture orders?",
+   "customer_question": "Do you offer after-sales maintenance for office furniture?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-183",
+   "category": "Bulk Orders and Corporate",
+   "owner_question": "Do you encourage corporate clients to visit the shop to see samples before placing a large order?",
+   "customer_question": "Can I visit the shop to see samples for a bulk order?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-184",
+   "category": "Product Care and Maintenance",
+   "owner_question": "What type of cloth or material do you suggest for dusting furniture?",
+   "customer_question": "What should I use to dust the furniture?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Dry cotton cloth",
+    "Microfiber cloth",
+    "Soft brush",
+    "Damp cloth"
+   ]
+  },
+  {
+   "id": "furniture-185",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Do you offer or recommend any professional cleaning services for the furniture you sell?",
+   "customer_question": "Do you offer professional cleaning services for the sofa?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-186",
+   "category": "Product Care and Maintenance",
+   "owner_question": "What is the simple fix for squeaky furniture joints?",
+   "customer_question": "What should I do if the furniture starts squeaking?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-187",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Are there any specific cleaning agents to avoid when cleaning glass surfaces on your furniture?",
+   "customer_question": "Can I use chemical cleaners on the glass tops?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-188",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Do you have any tips for storing cushions to keep them in good shape?",
+   "customer_question": "How do I store cushions when not in use?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-189",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Do you recommend using protective covers for sofas when not in use?",
+   "customer_question": "Should I use a cover for the sofa?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-190",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Do you have specific care instructions for velvet-upholstered furniture?",
+   "customer_question": "What is the best way to clean velvet fabric?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-191",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Is it okay for customers to tighten loose screws themselves, or should they call for service?",
+   "customer_question": "How do I fix a loose screw on the chair?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Yes, they can tighten it",
+    "No, call for service",
+    "Depends on the part"
+   ]
+  },
+  {
+   "id": "furniture-192",
+   "category": "Product Care and Maintenance",
+   "owner_question": "Do you recommend any specific type of oil or wax for wood maintenance?",
+   "customer_question": "Are there any specific oils I should use for the wood?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-193",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Is it possible for a customer to modify their custom order after it has been placed?",
+   "customer_question": "Can I change my order after it has been placed?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-194",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Do you experience longer lead times during specific festival seasons or holidays?",
+   "customer_question": "Are there any seasonal delays in manufacturing?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-195",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Do you offer a 'rush' or 'priority' service for faster delivery at an extra cost?",
+   "customer_question": "Can I get a rush order if I need it urgently?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-196",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "What is your policy if a custom order is not ready by the promised date?",
+   "customer_question": "What happens if my order is delayed beyond the promised date?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-197",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Do you provide status updates to customers while their furniture is being made?",
+   "customer_question": "Can I track my order status?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-198",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Does a bulk order (multiple items) take longer to prepare than a single item?",
+   "customer_question": "Are bulk orders handled differently in terms of time?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-199",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "If a customer orders multiple items, do you allow partial pickup as they become ready?",
+   "customer_question": "Can I pick up my order in parts?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-200",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "Are your custom items made in-house or sourced from outside manufacturers?",
+   "customer_question": "Do you source items from outside the city?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "In-house",
+    "Sourced from outside",
+    "Both"
+   ]
+  },
+  {
+   "id": "furniture-201",
+   "category": "Stock Availability and Lead Time",
+   "owner_question": "If an item is ready but the customer is not ready to receive it, do you offer free storage for a few days?",
+   "customer_question": "Do you offer storage if I am not ready for delivery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-202",
+   "category": "Trial and Display",
+   "owner_question": "Are the cushions or covers on your display furniture removable for cleaning or inspection?",
+   "customer_question": "Are the cushions on the sofa removable?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-203",
+   "category": "Trial and Display",
+   "owner_question": "Approximately what percentage of your total inventory is available to see in the shop?",
+   "customer_question": "Do you have a display model for every item listed?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "All items",
+    "Most items",
+    "Only best-sellers"
+   ]
+  },
+  {
+   "id": "furniture-204",
+   "category": "Trial and Display",
+   "owner_question": "Do you encourage customers to bring their own room measurements to the shop?",
+   "customer_question": "Can I bring my own measurements to check if it fits?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-205",
+   "category": "Trial and Display",
+   "owner_question": "Do you allow customers to inspect the internal materials or joints of the furniture?",
+   "customer_question": "Can I see the wood quality inside the drawers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-206",
+   "category": "Trial and Display",
+   "owner_question": "Is your shop lighting sufficient for customers to clearly see the finish and texture of the furniture?",
+   "customer_question": "Can I see the finish quality under different lighting?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-207",
+   "category": "Trial and Display",
+   "owner_question": "Do you allow customers to take photos of the display items?",
+   "customer_question": "Can I take a photo of the product to show my family?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-208",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Do you charge customers for the protective packaging materials used for delivery?",
+   "customer_question": "Do you charge for packaging materials?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-209",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Do you offer a discount if the customer arranges their own transport and picks up the item from the shop?",
+   "customer_question": "Is there a discount if I pick up the item myself?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-210",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "If a customer wants to see fabric or laminate samples at home, do you charge for this service?",
+   "customer_question": "Do you charge for fabric swatches or samples?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-211",
+   "category": "Pricing and Hidden Charges",
+   "owner_question": "Do you charge extra for specific custom carvings or detailed design work requested by the customer?",
+   "customer_question": "Are there any extra charges for customized carvings or designs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-212",
+   "category": "Interior Consultation",
+   "owner_question": "Do you provide 3D renders or digital layouts for your customers?",
+   "customer_question": "Do you provide 3D designs for my room?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-213",
+   "category": "Interior Consultation",
+   "owner_question": "What is the typical time required for a design consultation session?",
+   "customer_question": "How long does it take for a design consultation?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-214",
+   "category": "Interior Consultation",
+   "owner_question": "Do you have a portfolio or photos of past interior projects you have done?",
+   "customer_question": "Do you provide a catalog of your past interior work?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-215",
+   "category": "Interior Consultation",
+   "owner_question": "Do you provide color coordination advice for walls and furniture?",
+   "customer_question": "Can you help me choose colors for my walls?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-216",
+   "category": "Interior Consultation",
+   "owner_question": "Do you specialize in space-saving designs for small apartments or compact rooms?",
+   "customer_question": "Do you provide space planning for small apartments?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-217",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "Do you offer any discount or penalty deduction if the custom order delivery is delayed beyond the promised date?",
+   "customer_question": "What happens if the custom furniture is not ready on time?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-218",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "Do you allow design changes after the advance payment is made, and is there a fee for this?",
+   "customer_question": "Can I change the design after paying the advance?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-219",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "Do you charge a non-refundable design consultation fee before starting the actual production of custom furniture?",
+   "customer_question": "Do you require a token amount just to start the design process?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-220",
+   "category": "Payment Terms for Custom Orders",
+   "owner_question": "Do you offer a discount for customers who choose to pay the full amount in advance for custom orders?",
+   "customer_question": "Is there a discount if I pay the full amount upfront for a custom order?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-221",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "Are you willing to buy old furniture from customers who are not purchasing new items from your shop?",
+   "customer_question": "Do you buy old furniture even if I am not buying anything new?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-222",
+   "category": "Disposal and Old Furniture",
+   "owner_question": "Do you have any requirements for the customer regarding the state of the furniture before pickup (e.g., must be dismantled, cleaned)?",
+   "customer_question": "Do I need to clean or dismantle the old furniture before you pick it up?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-223",
+   "category": "Safety and Packaging",
+   "owner_question": "Do you offer wooden crating or extra reinforcement for fragile items?",
+   "customer_question": "Do you use wooden crates for fragile items like glass tables?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-224",
+   "category": "Safety and Packaging",
+   "owner_question": "Do your delivery staff use specialized equipment (like trolleys or straps) to move heavy furniture safely?",
+   "customer_question": "How do you handle heavy furniture to prevent damage while moving it into my house?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-225",
+   "category": "Safety and Packaging",
+   "owner_question": "Do you offer extra heavy-duty packaging options for long-distance deliveries?",
+   "customer_question": "Can I request special packaging if I live far away?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  }
+ ]
+}

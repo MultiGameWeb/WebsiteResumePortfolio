@@ -1,0 +1,2550 @@
+{
+ "shop_type_key": "optical",
+ "name": "Optical shop",
+ "version": 1,
+ "model": "gemini-3.1-flash-lite",
+ "generated_at": "2026-10-28",
+ "question_count": 223,
+ "questions": [
+  {
+   "id": "optical-001",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you have a qualified optometrist or eye specialist available at your shop?",
+   "customer_question": "Do you have an optometrist available for eye testing?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-002",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you charge a fee for eye testing, or is it free?",
+   "customer_question": "Do you charge for eye testing?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Charge a fee",
+    "Free only if glasses are purchased"
+   ]
+  },
+  {
+   "id": "optical-003",
+   "category": "Eye Testing Services",
+   "owner_question": "Do customers need to book an appointment for an eye test, or can they walk in?",
+   "customer_question": "Do I need to book an appointment for an eye test?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Walk-in only",
+    "Appointment preferred",
+    "Appointment mandatory"
+   ]
+  },
+  {
+   "id": "optical-004",
+   "category": "Lens Specifications",
+   "owner_question": "What is your average turnaround time for fitting lenses into frames?",
+   "customer_question": "How long does it take to get my glasses ready?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-005",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you sell original branded frames, first copies, or both?",
+   "customer_question": "Are your frames original branded products?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Only original brands",
+    "Only first copies",
+    "Both original and first copies"
+   ]
+  },
+  {
+   "id": "optical-006",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer a standard warranty period on spectacle frames, and if so, how many months?",
+   "customer_question": "Do you provide a warranty on the frame?",
+   "priority": "mandatory",
+   "answer_type": "number"
+  },
+  {
+   "id": "optical-007",
+   "category": "Contact Lenses",
+   "owner_question": "Do you sell contact lenses in your shop?",
+   "customer_question": "Do you keep contact lenses in stock?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-008",
+   "category": "Contact Lenses",
+   "owner_question": "Is a valid eye prescription mandatory for a customer to purchase contact lenses from your shop?",
+   "customer_question": "Do I need a prescription to buy lenses?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-009",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer a specific discount or package price when a customer purchases both a frame and lenses at the same time?",
+   "customer_question": "Do you offer a discount if I buy both the frame and the lenses together?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-010",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you provide GST-compliant bills for all purchases?",
+   "customer_question": "Do you provide GST bills for insurance claims?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-011",
+   "category": "Eye Testing Services",
+   "owner_question": "What is the standard price for an eye test?",
+   "customer_question": "How much does the eye test cost?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "optical-012",
+   "category": "Eye Testing Services",
+   "owner_question": "Approximately how many minutes does an eye test take?",
+   "customer_question": "How long does the eye test take?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "optical-013",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you provide eye testing services for children?",
+   "customer_question": "Do you test children's eyes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-014",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you offer contact lens trials or fitting services?",
+   "customer_question": "Can I get a contact lens trial or fitting?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-015",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you provide a printed prescription card to the customer after the test?",
+   "customer_question": "Will I get a printed prescription after the test?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-016",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you accept eye prescriptions from other doctors or hospitals?",
+   "customer_question": "Can I bring my own prescription from a doctor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-017",
+   "category": "Lens Specifications",
+   "owner_question": "Do you provide blue-cut or blue-light blocking lenses?",
+   "customer_question": "Do you offer blue-cut lenses for computer use?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-018",
+   "category": "Lens Specifications",
+   "owner_question": "Do you provide anti-glare (ARC) coating on lenses?",
+   "customer_question": "Do you have anti-glare or anti-reflective coating?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-019",
+   "category": "Lens Specifications",
+   "owner_question": "Do you provide progressive or bifocal lenses?",
+   "customer_question": "Can you make progressive or bifocal glasses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-020",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer photochromic (transition) lenses?",
+   "customer_question": "Do you have photochromic or transition lenses that change color in the sun?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-021",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer high-index lenses for customers with high power prescriptions?",
+   "customer_question": "Do you sell high-index lenses for high power?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-022",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer polarized lenses for sunglasses?",
+   "customer_question": "Do you provide polarized lenses for sunglasses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-023",
+   "category": "Lens Specifications",
+   "owner_question": "Do you accept customer-owned frames for lens fitting?",
+   "customer_question": "Can you put prescription lenses in my own frame?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-024",
+   "category": "Lens Specifications",
+   "owner_question": "Is scratch-resistant coating available as an option for your lenses?",
+   "customer_question": "Do you offer scratch-resistant coating?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-025",
+   "category": "Lens Specifications",
+   "owner_question": "Do your standard lenses come with UV protection?",
+   "customer_question": "Do you provide UV protection on your regular lenses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-026",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Please list the top 5-10 brands of frames you keep in your shop.",
+   "customer_question": "Which brands do you stock?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "optical-027",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock specifically marketed lightweight or ultra-light frames?",
+   "customer_question": "Do you have lightweight frames?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-028",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you carry frames made of flexible materials like TR90 or silicone?",
+   "customer_question": "Do you have flexible or unbreakable frames?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-029",
+   "category": "Frame Quality and Brands",
+   "owner_question": "What types of frame materials do you primarily stock?",
+   "customer_question": "Do you have metal or plastic frames?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "optical-030",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock a dedicated range of frames designed for children?",
+   "customer_question": "Do you have frames for kids?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-031",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock frames specifically recommended for high-power or thick lenses?",
+   "customer_question": "Do you have frames for high power lenses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-032",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock frames that come with magnetic clip-on sunglasses?",
+   "customer_question": "Do you have magnetic clip-on frames?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-033",
+   "category": "Warranty and Repairs",
+   "owner_question": "Is the anti-reflective or scratch-resistant coating on lenses covered under your warranty policy?",
+   "customer_question": "Does the warranty cover the lens coating?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-034",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide free frame adjustment services for customers who bought from your shop?",
+   "customer_question": "Can I get my spectacles adjusted for free?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-035",
+   "category": "Warranty and Repairs",
+   "owner_question": "Is the replacement of nose pads free of charge for your existing customers?",
+   "customer_question": "Do you replace nose pads for free?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-036",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide any accidental damage coverage or repair services for broken frames?",
+   "customer_question": "What happens if my frame breaks accidentally?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, free repair",
+    "Yes, paid repair",
+    "No, we do not repair"
+   ]
+  },
+  {
+   "id": "optical-037",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer free screw tightening or hinge repair for frames?",
+   "customer_question": "Do you repair hinges if they get loose?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-038",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer any buffing or repair services for scratched lenses, or is replacement the only option?",
+   "customer_question": "Can you fix a scratched lens?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Buffing available",
+    "Only replacement",
+    "No service"
+   ]
+  },
+  {
+   "id": "optical-039",
+   "category": "Warranty and Repairs",
+   "owner_question": "Is the original purchase receipt mandatory for claiming any warranty or repair service?",
+   "customer_question": "Do I need the bill to claim a warranty?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-040",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide free spare screws for frames purchased at your shop?",
+   "customer_question": "Do you provide spare screws if one falls out?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-041",
+   "category": "Warranty and Repairs",
+   "owner_question": "Is there a specific warranty period or replacement policy for spring hinges on your frames?",
+   "customer_question": "Do you offer a warranty on the frame's spring hinges?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-042",
+   "category": "Warranty and Repairs",
+   "owner_question": "When a frame is covered under warranty, is your policy to repair the existing frame or provide a brand new replacement?",
+   "customer_question": "If my frame breaks during the warranty period, do you provide a direct replacement or only repair?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Repair only",
+    "New replacement only",
+    "Depends on the damage"
+   ]
+  },
+  {
+   "id": "optical-043",
+   "category": "Contact Lenses",
+   "owner_question": "What are the brands of contact lenses you sell?",
+   "customer_question": "Which brands of contact lenses do you carry?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "optical-044",
+   "category": "Contact Lenses",
+   "owner_question": "Do you stock daily disposable contact lenses?",
+   "customer_question": "Do you have daily disposable lenses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-045",
+   "category": "Contact Lenses",
+   "owner_question": "Do you stock monthly disposable contact lenses?",
+   "customer_question": "Do you have monthly disposable lenses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-046",
+   "category": "Contact Lenses",
+   "owner_question": "Do you sell colored contact lenses?",
+   "customer_question": "Do you sell colored contact lenses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-047",
+   "category": "Contact Lenses",
+   "owner_question": "Do you sell cleaning solutions for contact lenses?",
+   "customer_question": "Do you sell contact lens solution?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-048",
+   "category": "Contact Lenses",
+   "owner_question": "Do you provide toric contact lenses for astigmatism?",
+   "customer_question": "Do you have toric lenses for astigmatism?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-049",
+   "category": "Contact Lenses",
+   "owner_question": "If a customer needs a specific power that is not in stock, how many days does it usually take to order it?",
+   "customer_question": "How long does it take to get my power lenses?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "optical-050",
+   "category": "Contact Lenses",
+   "owner_question": "Do you provide a demonstration or training on how to insert and remove contact lenses for new users?",
+   "customer_question": "Do you teach how to wear contact lenses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-051",
+   "category": "Contact Lenses",
+   "owner_question": "Are the brands of contact lenses you sell certified (e.g., FDA or ISO approved)?",
+   "customer_question": "Are your contact lenses FDA approved?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-052",
+   "category": "Contact Lenses",
+   "owner_question": "What is your policy on returning unopened contact lens packs?",
+   "customer_question": "Can I return an unopened lens pack?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-053",
+   "category": "Contact Lenses",
+   "owner_question": "Do you perform eye examinations or fittings specifically for contact lenses?",
+   "customer_question": "Do you provide eye checkups for contact lens fitting?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-054",
+   "category": "Contact Lenses",
+   "owner_question": "Do you allow customers to purchase a single contact lens if they lose one, or must they buy a full pack?",
+   "customer_question": "Can I buy a single lens if I lose one, or do I have to buy a full pack?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Full pack only",
+    "Single lens purchase allowed"
+   ]
+  },
+  {
+   "id": "optical-055",
+   "category": "Pricing and Discounts",
+   "owner_question": "What is the fixed discount or percentage reduction for a frame and lens combo purchase?",
+   "customer_question": "What is the discount amount for buying a frame and lens combo?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-056",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer any permanent discounts for specific groups like students or senior citizens?",
+   "customer_question": "Do you have any special offers for students or senior citizens?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-057",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you typically run seasonal or festival-based discounts throughout the year?",
+   "customer_question": "Are there any seasonal sales or festival discounts available?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-058",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer a discount if a customer buys more than one pair of spectacles at once?",
+   "customer_question": "Do you give discounts for bulk purchases or multiple pairs?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-059",
+   "category": "Pricing and Discounts",
+   "owner_question": "Are the prices you display in your shop inclusive of GST, or is it added at the time of billing?",
+   "customer_question": "Are the prices inclusive of GST?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Inclusive of GST",
+    "GST extra at billing"
+   ]
+  },
+  {
+   "id": "optical-060",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you charge a separate service fee for fitting lenses into frames, or is it included in the lens price?",
+   "customer_question": "Do you charge extra for fitting or assembly of lenses into frames?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in lens price",
+    "Charged separately"
+   ]
+  },
+  {
+   "id": "optical-061",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you currently run any 'buy one get one' offers on sunglasses or frames?",
+   "customer_question": "Do you have any 'buy one get one' offers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-062",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you categorize your lens pricing into slabs based on brand or quality (e.g., Economy, Premium, Luxury)?",
+   "customer_question": "Are there different price slabs for different brands of lenses?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "optical-063",
+   "category": "Pricing and Discounts",
+   "owner_question": "Are your prices fixed, or is there room for negotiation on specific products?",
+   "customer_question": "Are the prices negotiable or fixed?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed prices",
+    "Negotiable"
+   ]
+  },
+  {
+   "id": "optical-064",
+   "category": "Pricing and Discounts",
+   "owner_question": "What is the starting price range for your most affordable spectacles (frame + lens)?",
+   "customer_question": "Do you have a price range for budget-friendly spectacles?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "optical-065",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you charge extra for a case and cleaning cloth, or is it included with every spectacle purchase?",
+   "customer_question": "Are there any hidden charges like cleaning kit or case fees?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Charged extra"
+   ]
+  },
+  {
+   "id": "optical-066",
+   "category": "Pricing and Discounts",
+   "owner_question": "Are there any mandatory add-on items like lens cleaning solutions or specific sprays that customers must purchase alongside their spectacles?",
+   "customer_question": "Are there any hidden charges like cleaning solutions or anti-fog sprays that I need to pay for separately?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-067",
+   "category": "Prescription Handling",
+   "owner_question": "Do you have a lensometer or machine to check the power of an existing pair of glasses?",
+   "customer_question": "Can you check the power of my old glasses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-068",
+   "category": "Prescription Handling",
+   "owner_question": "What is the maximum age of a prescription (in months) that you will accept?",
+   "customer_question": "How old can my prescription be?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "optical-069",
+   "category": "Prescription Handling",
+   "owner_question": "Is an optometrist present at the shop during all working hours?",
+   "customer_question": "Do you have an optometrist available every day?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-070",
+   "category": "Prescription Handling",
+   "owner_question": "What is the consultation fee for an eye test if the customer does not purchase glasses?",
+   "customer_question": "Do you charge for eye testing if I don't buy glasses?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "optical-071",
+   "category": "Prescription Handling",
+   "owner_question": "What is the typical turnaround time for making glasses once the prescription is provided?",
+   "customer_question": "How long does it take to make glasses with a prescription?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-072",
+   "category": "Prescription Handling",
+   "owner_question": "Do you specialize or have the equipment to handle complex prescriptions like progressives or bifocals?",
+   "customer_question": "Can you handle complex prescriptions like bifocals or progressives?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-073",
+   "category": "Turnaround Time",
+   "owner_question": "What is your standard turnaround time for basic single-vision spectacles?",
+   "customer_question": "How long does it take to get my glasses ready?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-074",
+   "category": "Turnaround Time",
+   "owner_question": "Do you offer an express or one-hour delivery service for any types of lenses?",
+   "customer_question": "Do you offer one-hour delivery for glasses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-075",
+   "category": "Turnaround Time",
+   "owner_question": "How many days does it usually take to process progressive or multifocal lenses?",
+   "customer_question": "How long do progressive or multifocal lenses take?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-076",
+   "category": "Turnaround Time",
+   "owner_question": "Do special lens coatings like blue-cut or anti-glare add extra days to the delivery time?",
+   "customer_question": "Will my blue-cut or anti-reflective lenses take longer?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-077",
+   "category": "Turnaround Time",
+   "owner_question": "Do you send a message or call the customer once their glasses are ready for pickup?",
+   "customer_question": "Do you inform me when my glasses are ready?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-079",
+   "category": "Turnaround Time",
+   "owner_question": "Do you offer an expedited or 'tatkal' service for an additional fee?",
+   "customer_question": "Can I get my glasses faster if I pay an extra charge?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-080",
+   "category": "Turnaround Time",
+   "owner_question": "What is the typical waiting time when a frame needs to be ordered from your catalogue or supplier?",
+   "customer_question": "How long does it take if you don't have my frame in stock?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-081",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do all the sunglasses you stock come with UV protection certification?",
+   "customer_question": "Are your sunglasses UV protected?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-082",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you carry polarized sunglasses in your collection?",
+   "customer_question": "Are these sunglasses polarized?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-083",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell separate spectacle or sunglass cases?",
+   "customer_question": "Do you sell spectacle cases?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-084",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell lens cleaning solutions or sprays?",
+   "customer_question": "Do you sell lens cleaning spray?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-085",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell microfiber cleaning cloths separately?",
+   "customer_question": "Do you have microfiber cleaning cloths?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-086",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you stock contact lens cleaning or storage solutions?",
+   "customer_question": "Do you sell contact lens solution?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-087",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell replacement nose pads for frames?",
+   "customer_question": "Do you sell nose pads for frames?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-088",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "What are the main brands of sunglasses you carry?",
+   "customer_question": "What brands of sunglasses do you keep?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "optical-089",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you stock sunglasses specifically designed for children?",
+   "customer_question": "Do you have sunglasses for kids?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-090",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell branded sunglasses, unbranded/local ones, or both?",
+   "customer_question": "Are your sunglasses branded or local?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only Branded",
+    "Only Unbranded",
+    "Both"
+   ]
+  },
+  {
+   "id": "optical-091",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Are the lenses in your sunglasses typically scratch-resistant?",
+   "customer_question": "Are your sunglasses scratch-resistant?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-092",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you keep a stock of non-prescription blue light blocking glasses?",
+   "customer_question": "Do you sell blue light blocking glasses that are not prescription?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-093",
+   "category": "After-Sales Support",
+   "owner_question": "Do you have a fixed price list for common repairs, or is it decided on a case-by-case basis?",
+   "customer_question": "How much do you charge for frame repairs?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed price list",
+    "Case-by-case basis"
+   ]
+  },
+  {
+   "id": "optical-094",
+   "category": "After-Sales Support",
+   "owner_question": "Do you offer a specific warranty period for lenses against manufacturing defects?",
+   "customer_question": "What is your warranty policy on lenses?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-095",
+   "category": "After-Sales Support",
+   "owner_question": "Does your warranty cover accidental damage, or only manufacturing defects?",
+   "customer_question": "Does the warranty cover accidental damage?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only manufacturing defects",
+    "Accidental damage included"
+   ]
+  },
+  {
+   "id": "optical-096",
+   "category": "After-Sales Support",
+   "owner_question": "Do you offer a service to fit old lenses into a new frame if the customer buys the frame from you?",
+   "customer_question": "Can I get my old lenses fitted into a new frame?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-097",
+   "category": "After-Sales Support",
+   "owner_question": "Do you offer a free re-check of the eye power if the customer feels uncomfortable after a few days?",
+   "customer_question": "What if I am not comfortable with the new power after wearing them for a few days?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-098",
+   "category": "After-Sales Support",
+   "owner_question": "What is your policy for replacing lenses if the power provided does not match the prescription due to a shop error?",
+   "customer_question": "Will you replace the lenses if the power is wrong?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-099",
+   "category": "After-Sales Support",
+   "owner_question": "Do you offer free recurring eye checkups for customers who have previously purchased from you?",
+   "customer_question": "Do you provide free eye checkups for existing customers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-100",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you have a tie-up with any corporate health insurance providers for direct billing?",
+   "customer_question": "Do you accept corporate health insurance cards for direct billing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-101",
+   "category": "Insurance and Billing",
+   "owner_question": "Please list the names of the insurance companies or TPAs you are empanelled with.",
+   "customer_question": "Which insurance companies do you accept?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "optical-102",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you issue a detailed bill with your shop's GSTIN and the customer's name for reimbursement purposes?",
+   "customer_question": "Can I get a bill for my company reimbursement?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-103",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you accept Mediclaim cards for optical expenses?",
+   "customer_question": "Do you accept Mediclaim cards?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-104",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you require the customer to submit a physical copy of their doctor's prescription to generate an insurance-compliant bill?",
+   "customer_question": "Do you need a physical copy of my doctor's prescription to process the insurance bill?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-105",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you provide a formal shop seal or stamp on the final invoice for reimbursement purposes?",
+   "customer_question": "Can I get a stamped copy of my bill for my company's reimbursement?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-106",
+   "category": "Trust and Expertise",
+   "owner_question": "In which year did you open this shop?",
+   "customer_question": "How many years has your shop been in business?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "optical-107",
+   "category": "Trust and Expertise",
+   "owner_question": "Do you or your staff provide professional frame styling advice based on face shape?",
+   "customer_question": "Do you have trained staff to help me pick frames that suit my face shape?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-108",
+   "category": "Trust and Expertise",
+   "owner_question": "Do you or your staff hold any formal certifications or degrees in optometry?",
+   "customer_question": "Are your staff qualified opticians?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-109",
+   "category": "Trust and Expertise",
+   "owner_question": "Do you offer expert consultations to explain the differences between lens materials like polycarbonate or high-index?",
+   "customer_question": "Can you help me understand which lens material is best for my prescription?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-110",
+   "category": "Trust and Expertise",
+   "owner_question": "Do you primarily stock branded eyewear, local frames, or a mix of both?",
+   "customer_question": "Are your products branded or local?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only Branded",
+    "Mostly Branded",
+    "Mixed",
+    "Mostly Local"
+   ]
+  },
+  {
+   "id": "optical-111",
+   "category": "Trust and Expertise",
+   "owner_question": "Do you have experience handling high-power or complex multi-focal prescriptions?",
+   "customer_question": "Do you have experience with complex prescriptions?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-112",
+   "category": "Trust and Expertise",
+   "owner_question": "Do you maintain a digital or physical database of customer eye records for future reference?",
+   "customer_question": "Do you keep records of my previous prescriptions?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-113",
+   "category": "Trust and Expertise",
+   "owner_question": "Do you stock specific premium or international eyewear brands, or do you focus on affordable local/generic brands?",
+   "customer_question": "Do you have a wide variety of brands in stock?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only premium/international brands",
+    "Mostly premium with some local options",
+    "A mix of both",
+    "Mostly affordable/local options"
+   ]
+  },
+  {
+   "id": "optical-114",
+   "category": "Trust and Expertise",
+   "owner_question": "Do you offer a grace period or adjustment service if a customer experiences discomfort with their new prescription glasses?",
+   "customer_question": "Do you offer a satisfaction guarantee if I am not comfortable with my new glasses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-115",
+   "category": "Specialized Needs",
+   "owner_question": "Do you have the capability to fit high-power lenses (e.g., above -6.00 or +6.00)?",
+   "customer_question": "Can you handle high-power prescriptions?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-116",
+   "category": "Specialized Needs",
+   "owner_question": "Can you customize sunglasses with prescription lenses for customers?",
+   "customer_question": "Can you fit prescription lenses into sunglasses?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-117",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you use computerized or digital equipment for eye testing?",
+   "customer_question": "Do you provide a digital eye test?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-118",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you offer basic screening for conditions like glaucoma or cataracts?",
+   "customer_question": "Do you perform glaucoma or cataract screening?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-119",
+   "category": "Eye Testing Services",
+   "owner_question": "Who performs the eye test at your shop?",
+   "customer_question": "Is the eye test done by a doctor or an assistant?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-120",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you provide color blindness testing?",
+   "customer_question": "Do you have testing for color blindness?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-121",
+   "category": "Eye Testing Services",
+   "owner_question": "Are there any documents or previous glasses the customer should bring for the test?",
+   "customer_question": "What documents do I need for the eye test?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-122",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you provide eye testing at the customer's home?",
+   "customer_question": "Do you offer home eye testing services?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-123",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you offer any specialized eye health screenings, such as dry eye assessment or digital eye strain analysis?",
+   "customer_question": "Do you offer specialized tests like dryness or eye strain assessment?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-124",
+   "category": "Eye Testing Services",
+   "owner_question": "Do you provide complimentary services like lens cleaning or minor frame adjustments if a customer visits for an eye test?",
+   "customer_question": "Do you offer free lens cleaning or minor frame adjustments after the test?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-125",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer impact-resistant or polycarbonate lenses?",
+   "customer_question": "Do you have polycarbonate lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-126",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer custom tints for lenses?",
+   "customer_question": "Do you provide tinted lenses for fashion or light sensitivity?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-127",
+   "category": "Lens Specifications",
+   "owner_question": "Are you equipped to handle rimless or semi-rimless frame lens fittings?",
+   "customer_question": "Can you do rimless frame fittings?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-128",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer hydrophobic (water-repellent) lens coatings?",
+   "customer_question": "Do you offer hydrophobic or water-repellent coating?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-129",
+   "category": "Lens Specifications",
+   "owner_question": "Do you provide a complimentary lens cleaning kit with new glasses?",
+   "customer_question": "Do you offer free lens cleaning solution with the purchase?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-130",
+   "category": "Lens Specifications",
+   "owner_question": "Do you stock specific lenses for night driving enhancement?",
+   "customer_question": "Do you offer specialized lenses for night driving?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-131",
+   "category": "Lens Specifications",
+   "owner_question": "Which major lens brands or types do you carry?",
+   "customer_question": "What brands of lenses do you sell?",
+   "priority": "optional",
+   "answer_type": "list"
+  },
+  {
+   "id": "optical-132",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer digital or free-form lens technology for better clarity?",
+   "customer_question": "Do you offer digital or free-form lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-133",
+   "category": "Lens Specifications",
+   "owner_question": "Do you provide specialized lenses for computer vision syndrome?",
+   "customer_question": "Can you provide glasses for computer vision syndrome?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-134",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer anti-fog lens coatings or treatments?",
+   "customer_question": "Do you offer anti-fog lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-135",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer blue-cut lenses specifically for children's frames?",
+   "customer_question": "Do you have blue-cut lenses for kids?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-136",
+   "category": "Lens Specifications",
+   "owner_question": "Do you provide authenticity cards for premium branded lenses?",
+   "customer_question": "Do you provide a certificate of authenticity for branded lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-137",
+   "category": "Lens Specifications",
+   "owner_question": "Do you offer mirror-coated lenses for sunglasses?",
+   "customer_question": "Do you offer mirror-coated lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-138",
+   "category": "Lens Specifications",
+   "owner_question": "Do you handle lenses for astigmatism (cylindrical power)?",
+   "customer_question": "Do you have lenses for astigmatism?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-139",
+   "category": "Lens Specifications",
+   "owner_question": "Do you provide a high-quality microfiber cloth with every pair of glasses?",
+   "customer_question": "Do you provide a lens cleaning cloth with every pair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-140",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock frames specifically labeled as hypoallergenic or skin-friendly?",
+   "customer_question": "Are your frames hypoallergenic?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-141",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you carry a high-end or luxury segment of frames?",
+   "customer_question": "Do you have premium or luxury frames?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-142",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you provide frames with special coatings or high-durability finishes?",
+   "customer_question": "Are your frames scratch-resistant?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-143",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock frames in retro or vintage styles?",
+   "customer_question": "Do you have vintage or retro style frames?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-144",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock frames suitable for sports or active use?",
+   "customer_question": "Do you have sports-specific frames?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-145",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock trendy oversized or large-fit frames?",
+   "customer_question": "Do you have oversized frames?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-146",
+   "category": "Frame Quality and Brands",
+   "owner_question": "What is the origin of the frames you sell?",
+   "customer_question": "Are your frames Made in India or imported?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Mostly Imported",
+    "Mostly Made in India",
+    "A mix of both"
+   ]
+  },
+  {
+   "id": "optical-147",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock a wide variety of colors for your frames?",
+   "customer_question": "Do you have frames in specific colors?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-148",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock a range of small-fit or narrow-bridge frames?",
+   "customer_question": "Do you have frames for small faces?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-149",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock frames that feature adjustable nose pads?",
+   "customer_question": "Do you have frames with adjustable nose pads?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-150",
+   "category": "Frame Quality and Brands",
+   "owner_question": "Do you stock Asian-fit or low-bridge fit frames?",
+   "customer_question": "Do you have frames that fit low nose bridges?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-151",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer a specific warranty period for sunglasses separate from prescription frames?",
+   "customer_question": "Is there a warranty on sunglasses?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "optical-152",
+   "category": "Warranty and Repairs",
+   "owner_question": "What is the typical turnaround time for minor frame repairs in your shop?",
+   "customer_question": "How long does a repair usually take?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-153",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer repair services for frames purchased from other shops, and if so, do you charge for them?",
+   "customer_question": "Do you charge for minor repairs if I bought the frame elsewhere?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Paid",
+    "Not offered"
+   ]
+  },
+  {
+   "id": "optical-154",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide free replacement of temple tips (ear pieces) for your customers?",
+   "customer_question": "Are temple tips replaced for free?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-155",
+   "category": "Warranty and Repairs",
+   "owner_question": "Is the peeling or fading of frame color/paint covered under your warranty?",
+   "customer_question": "Does the warranty cover color fading on frames?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-156",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer any replacement warranty for contact lenses if they are found to be defective upon opening?",
+   "customer_question": "Is there a warranty on contact lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-157",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide free ultrasonic cleaning for glasses purchased from your shop?",
+   "customer_question": "Do you offer ultrasonic cleaning for my glasses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-158",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide a temporary 'loaner' pair of glasses while a customer's spectacles are being repaired?",
+   "customer_question": "Can I get a loaner pair while mine is being repaired?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-159",
+   "category": "Warranty and Repairs",
+   "owner_question": "What is your policy if a frame under warranty is discontinued and cannot be repaired?",
+   "customer_question": "What if the frame is discontinued and cannot be repaired?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Replace with similar model",
+    "Store credit",
+    "Refund",
+    "No policy"
+   ]
+  },
+  {
+   "id": "optical-160",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer soldering or welding services for broken metal frames?",
+   "customer_question": "Do you repair broken temples?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-161",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide a specific warranty period for special lens coatings like blue-cut or photochromic?",
+   "customer_question": "Is there a warranty on blue-cut or special coatings?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "optical-162",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide complimentary lens polishing services for minor surface scratches for your customers?",
+   "customer_question": "Do you offer free lens polishing if my glasses get minor surface scratches?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-163",
+   "category": "Contact Lenses",
+   "owner_question": "Do you provide multifocal contact lenses?",
+   "customer_question": "Do you have multifocal lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-164",
+   "category": "Contact Lenses",
+   "owner_question": "Do you offer trial pairs of contact lenses for new customers?",
+   "customer_question": "Can I get a trial pair of lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-165",
+   "category": "Contact Lenses",
+   "owner_question": "Do you sell contact lens storage cases?",
+   "customer_question": "Do you sell lens cases?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-166",
+   "category": "Contact Lenses",
+   "owner_question": "Do you offer any special discounts or combo deals if a customer buys multiple packs of lenses?",
+   "customer_question": "Do you offer discounts on buying bulk lens packs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-167",
+   "category": "Contact Lenses",
+   "owner_question": "Do you stock colored contact lenses that also correct vision (power lenses)?",
+   "customer_question": "Do you have colored lenses with power?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-168",
+   "category": "Contact Lenses",
+   "owner_question": "What is the typical expiry period for the contact lenses you keep in stock?",
+   "customer_question": "What is the shelf life of the lenses you sell?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-169",
+   "category": "Contact Lenses",
+   "owner_question": "Do you stock zero-power colored contact lenses for cosmetic use?",
+   "customer_question": "Do you sell colored lenses without power?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-170",
+   "category": "Contact Lenses",
+   "owner_question": "Do you sell contact lens accessories like cases, tweezers, or suction tools separately?",
+   "customer_question": "Do you sell contact lens cases or tweezers separately?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-171",
+   "category": "Contact Lenses",
+   "owner_question": "Do you sell lubricating eye drops or rewetting drops for contact lens wearers?",
+   "customer_question": "Do you offer eye drops for contact lens dryness?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-172",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you have a referral program where customers get a discount for bringing in friends or family?",
+   "customer_question": "Do you offer any referral discounts?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-173",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you have tie-ups with local companies or organizations that offer special discounts to their employees?",
+   "customer_question": "Do you offer any discounts for corporate employees or specific company tie-ups?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-174",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer a loyalty discount for returning customers?",
+   "customer_question": "Is there a discount for repeat customers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-175",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you occasionally offer promotional pricing or discounts on special lens coatings?",
+   "customer_question": "Do you offer any discount on premium lens coatings like blue-cut or anti-glare?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-176",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you accept any third-party discount coupons or vouchers?",
+   "customer_question": "Do you accept discount coupons from online platforms?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-177",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you provide special pricing or discounts for bulk orders made by companies or institutions?",
+   "customer_question": "Do you offer any special discounts for bulk corporate orders or bulk purchases?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-178",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer a discount to customers who pay the full amount upfront instead of paying a part-deposit?",
+   "customer_question": "Do you offer a discount if I pay the full amount in advance for my order?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-180",
+   "category": "Prescription Handling",
+   "owner_question": "Do you have restrictions on which frames can be used for high-power or progressive lenses?",
+   "customer_question": "Are there any frames that cannot be used for high-power lenses?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-181",
+   "category": "Prescription Handling",
+   "owner_question": "Do you order custom lenses from a lab if the power is not in stock?",
+   "customer_question": "What if my power is not available in stock lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-182",
+   "category": "Prescription Handling",
+   "owner_question": "Do you require the customer's old glasses for verification even if they have a valid prescription paper?",
+   "customer_question": "Do you need my old glasses to measure the power, or is the prescription paper enough?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-183",
+   "category": "Turnaround Time",
+   "owner_question": "How much extra time should a customer expect if they have a very high prescription?",
+   "customer_question": "How long for high-power or custom-made lenses?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-184",
+   "category": "Turnaround Time",
+   "owner_question": "If a frame needs to be ordered from your supplier, how many extra days does it take?",
+   "customer_question": "Is there a delay if the frame is not in stock?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "optical-185",
+   "category": "Turnaround Time",
+   "owner_question": "Do you have longer processing times during weekends or public holidays?",
+   "customer_question": "Are there delays during weekends or holidays?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-186",
+   "category": "Turnaround Time",
+   "owner_question": "Do you have a 'rush' service option for customers who need their glasses faster than the standard time?",
+   "customer_question": "What if I need my glasses urgently?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-187",
+   "category": "Turnaround Time",
+   "owner_question": "How many days does it typically take to procure specific contact lenses if not in stock?",
+   "customer_question": "How long does it take for contact lenses?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-188",
+   "category": "Turnaround Time",
+   "owner_question": "Does your optical lab operate on Sundays, or does that affect delivery timelines?",
+   "customer_question": "Does the lab work on Sundays?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-189",
+   "category": "Turnaround Time",
+   "owner_question": "Do transition or photochromic lenses require more time to prepare than standard clear lenses?",
+   "customer_question": "How long for photochromic or transition lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-190",
+   "category": "Turnaround Time",
+   "owner_question": "Is the processing time for prescription sunglasses different from regular spectacles?",
+   "customer_question": "Is the turnaround time the same for sunglasses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-191",
+   "category": "Turnaround Time",
+   "owner_question": "Does the delivery timeline differ significantly between branded frames and generic/local frames?",
+   "customer_question": "Do you have a different delivery timeline for branded frames versus local ones?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-192",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell individual contact lens storage cases?",
+   "customer_question": "Do you sell contact lens cases?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-193",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you offer anti-fog sprays for spectacles?",
+   "customer_question": "Do you sell anti-fog sprays?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-194",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell spectacle chains or cords for holding glasses?",
+   "customer_question": "Do you sell spectacle chains or cords?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-195",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you provide soft pouches for glasses?",
+   "customer_question": "Can I get a pouch for my glasses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-196",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell clip-on sunglasses for regular spectacles?",
+   "customer_question": "Do you sell clip-on sunglasses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-197",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you stock specialized sports sunglasses?",
+   "customer_question": "Do you have sports sunglasses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-198",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell side shields for safety or dust protection?",
+   "customer_question": "Do you sell side shields for glasses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-199",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you sell small DIY spectacle repair kits (screwdrivers, screws)?",
+   "customer_question": "Do you sell spectacle repair kits?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-200",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you stock larger cases for oversized frames?",
+   "customer_question": "Do you sell cases for oversized glasses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-201",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you stock 'fit-over' sunglasses designed to be worn over regular prescription glasses?",
+   "customer_question": "Do you have sunglasses that fit over my regular spectacles?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-202",
+   "category": "Sunglasses and Accessories",
+   "owner_question": "Do you carry sunglasses with mirrored lens finishes in your current stock?",
+   "customer_question": "Do you sell any sunglasses that have mirrored lenses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-203",
+   "category": "After-Sales Support",
+   "owner_question": "Do you offer any annual maintenance or service packages for your regular customers?",
+   "customer_question": "Do you offer any annual maintenance plans?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-204",
+   "category": "After-Sales Support",
+   "owner_question": "Do you have a 'broken pair' discount or offer for customers who need to replace their glasses quickly?",
+   "customer_question": "Do you offer a discount on a second pair if I break my first one?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-205",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you charge any extra fee for providing a GST bill?",
+   "customer_question": "Is there any extra charge for a GST bill?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-206",
+   "category": "Insurance and Billing",
+   "owner_question": "Can you include the doctor's prescription details on the final bill?",
+   "customer_question": "Do you provide a bill with the doctor's prescription details?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-207",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you allow partial payments where a portion is covered by insurance and the rest is paid by the customer?",
+   "customer_question": "Can I pay part of the amount through insurance?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-208",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you provide a physical shop stamp on the printed invoice?",
+   "customer_question": "Do you provide a stamped bill?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-209",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you accept government-issued health scheme cards (like CGHS or ECHS)?",
+   "customer_question": "Do you accept government health scheme cards?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-210",
+   "category": "Insurance and Billing",
+   "owner_question": "Is there a specific waiting time for generating an insurance-compliant bill?",
+   "customer_question": "How long does it take to process an insurance bill?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-211",
+   "category": "Insurance and Billing",
+   "owner_question": "Can you provide a formal price quotation on your letterhead for insurance pre-approval?",
+   "customer_question": "Do you provide a quotation for insurance approval?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-212",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you require the customer to leave a copy of their insurance ID or PAN card with you for billing?",
+   "customer_question": "Do you keep a copy of my insurance documents?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-213",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you include the brand and model name of the lenses on the invoice?",
+   "customer_question": "Does the bill mention the lens brand?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-214",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you provide bills for individual frames if lenses are not purchased?",
+   "customer_question": "Can I get a bill for a spare frame?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-215",
+   "category": "Insurance and Billing",
+   "owner_question": "Is your shop's GSTIN clearly printed on all your invoices?",
+   "customer_question": "Is the GST number printed on the bill?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-216",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you issue pro-forma invoices for customers who need to show them to their employer first?",
+   "customer_question": "Do you provide a pro-forma invoice?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-217",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you offer a 'cashless' facility for any insurance providers?",
+   "customer_question": "Do you accept cashless insurance?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-218",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you offer the option to email a digital copy of the GST invoice?",
+   "customer_question": "Can I get the bill emailed to me?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-219",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you provide a separate bill or include the eye test fee in the total invoice?",
+   "customer_question": "Do you provide a bill for eye testing services?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Separate bill",
+    "Included in total invoice",
+    "No bill for eye test"
+   ]
+  },
+  {
+   "id": "optical-220",
+   "category": "Insurance and Billing",
+   "owner_question": "Do you include the patient's eye power details on the final invoice?",
+   "customer_question": "Do you mention the eye power details on the invoice for insurance claims?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-221",
+   "category": "Trust and Expertise",
+   "owner_question": "What is the average expected life of the lenses you sell before they start showing scratches or wear?",
+   "customer_question": "What is the typical lifespan of the lenses you sell?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-222",
+   "category": "Trust and Expertise",
+   "owner_question": "Do the frames or lenses you sell carry any quality certifications like ISI or international standards?",
+   "customer_question": "Are your glasses ISI certified?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-223",
+   "category": "Trust and Expertise",
+   "owner_question": "Do you provide guidance to customers on choosing frame materials like titanium, acetate, or metal based on their daily activities?",
+   "customer_question": "Can you help me choose the right frame material for my lifestyle?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-224",
+   "category": "Specialized Needs",
+   "owner_question": "Do you carry specialized eyewear like sports glasses or safety goggles?",
+   "customer_question": "Do you stock specialized sports or safety eyewear?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-225",
+   "category": "Specialized Needs",
+   "owner_question": "Do you offer premium frame materials like titanium or flexible memory metal?",
+   "customer_question": "Do you have lightweight or titanium frames?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  }
+ ]
+}
