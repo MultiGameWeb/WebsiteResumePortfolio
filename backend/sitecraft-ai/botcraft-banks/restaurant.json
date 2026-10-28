@@ -1,0 +1,2595 @@
+{
+ "shop_type_key": "restaurant",
+ "name": "Restaurant",
+ "version": 1,
+ "model": "gemini-3.1-flash-lite",
+ "generated_at": "2026-10-28",
+ "question_count": 227,
+ "questions": [
+  {
+   "id": "restaurant-001",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you allow customers to request changes to spice levels (mild, medium, hot)?",
+   "customer_question": "Can I customize the spice level of my food?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-002",
+   "category": "Menu Specialties",
+   "owner_question": "Which 3 dishes are ordered most frequently by your customers?",
+   "customer_question": "What are your most popular dishes?",
+   "priority": "mandatory",
+   "answer_type": "list"
+  },
+  {
+   "id": "restaurant-003",
+   "category": "Menu Specialties",
+   "owner_question": "Does your menu focus on a specific regional cuisine (e.g., North Indian, South Indian, Mughlai)?",
+   "customer_question": "Do you have any regional specialties?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-004",
+   "category": "Portion Sizes",
+   "owner_question": "Do you offer 'half' or 'full' plate options for your main course curries?",
+   "customer_question": "Do you have half-plate options for main dishes?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-005",
+   "category": "Hygiene and Safety",
+   "owner_question": "Do you have an FSSAI license? If yes, please provide the registration number.",
+   "customer_question": "Do you have an FSSAI license?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-006",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you add a specific packaging charge to takeaway orders?",
+   "customer_question": "Do you charge extra for takeaway packaging?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-007",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you add a mandatory service charge to your dine-in bills?",
+   "customer_question": "Do you add a service charge to the bill?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-008",
+   "category": "Pricing and Taxes",
+   "owner_question": "Are the prices shown on your menu inclusive of GST, or is GST added separately at the time of billing?",
+   "customer_question": "Is GST extra on the food prices?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Inclusive of GST",
+    "GST added separately"
+   ]
+  },
+  {
+   "id": "restaurant-009",
+   "category": "Reservations",
+   "owner_question": "Do you accept table bookings for dine-in customers?",
+   "customer_question": "Do you take table reservations?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-010",
+   "category": "Staff and Service",
+   "owner_question": "Is your service style 'table service' (server comes to the table) or 'self-service' (order at the counter)?",
+   "customer_question": "Do you have a dedicated server for each table?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Table service",
+    "Self-service at counter"
+   ]
+  },
+  {
+   "id": "restaurant-011",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you source your vegetables and meat fresh daily, or do you use frozen supplies?",
+   "customer_question": "Do you use fresh ingredients for your dishes?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fresh daily",
+    "Mostly fresh, some frozen",
+    "Mix of fresh and frozen"
+   ]
+  },
+  {
+   "id": "restaurant-012",
+   "category": "Food Quality and Preparation",
+   "owner_question": "What type of cooking oil do you primarily use in your kitchen?",
+   "customer_question": "What kind of oil do you use for cooking?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-013",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you add MSG (Ajinomoto) to any of your dishes?",
+   "customer_question": "Do you use MSG or Ajinomoto in your food?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-014",
+   "category": "Food Quality and Preparation",
+   "owner_question": "What is the average preparation time for a typical order?",
+   "customer_question": "How long does it usually take for an order to be ready?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-015",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you use artificial food coloring in your preparations?",
+   "customer_question": "Do you use artificial colors in your gravies or snacks?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-016",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you have a policy against reusing cooking oil for deep frying?",
+   "customer_question": "Do you reuse cooking oil?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-017",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you have specific dishes prepared with less oil or healthy cooking methods?",
+   "customer_question": "Do you offer healthy or diet-friendly options?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-018",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you source your meat from certified local butchers?",
+   "customer_question": "Where do you source your meat from?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-019",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Is your food prepared fresh upon order, or do you use pre-cooked bases?",
+   "customer_question": "Is the food prepared fresh upon order?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fresh upon order",
+    "Pre-cooked bases used",
+    "Mix of both"
+   ]
+  },
+  {
+   "id": "restaurant-020",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do your kitchen staff wear gloves and hairnets while preparing food?",
+   "customer_question": "Do you maintain high hygiene standards in the kitchen?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-021",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you have a policy to discard leftover food at the end of the day?",
+   "customer_question": "How do you handle food leftovers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-022",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you use RO-purified water for cooking and drinking?",
+   "customer_question": "Do you use RO water for cooking?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-023",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you display your FSSAI license in the shop?",
+   "customer_question": "Is your kitchen FSSAI certified?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-024",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you use food-grade packaging for parcels?",
+   "customer_question": "Do you use plastic containers for parcels?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-025",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you add any artificial preservatives to your food items?",
+   "customer_question": "Are there any preservatives in your food?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-026",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you use insulated packaging to keep food hot?",
+   "customer_question": "How do you ensure the food stays hot for parcels?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-027",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you have a separate Jain menu or preparation area?",
+   "customer_question": "Do you serve Jain food?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-028",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you have specific gluten-free dishes on your menu?",
+   "customer_question": "Is your food gluten-free?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-029",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you have dishes that are completely free of dairy and animal products?",
+   "customer_question": "Do you offer vegan options?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-030",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you use nuts or peanut oil in your kitchen?",
+   "customer_question": "Do you use peanut oil or nuts in your food?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-031",
+   "category": "Dietary Preferences",
+   "owner_question": "Is the meat served in your restaurant Halal certified?",
+   "customer_question": "Do you serve Halal meat?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-032",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you have separate cooking utensils or areas for vegetarian and non-vegetarian food?",
+   "customer_question": "Are your vegetarian dishes cooked separately from non-veg?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-033",
+   "category": "Dietary Preferences",
+   "owner_question": "Can you prepare dishes without onion and garlic upon request?",
+   "customer_question": "Can I get food without onion and garlic?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-034",
+   "category": "Menu Specialties",
+   "owner_question": "Is there a specific dish you consider your 'chef's special'?",
+   "customer_question": "What do you recommend I try today?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-035",
+   "category": "Menu Specialties",
+   "owner_question": "Do you have any unique dishes that are not available in other nearby restaurants?",
+   "customer_question": "Do you have any signature dishes?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-036",
+   "category": "Menu Specialties",
+   "owner_question": "How would you describe the spice level of your signature dishes?",
+   "customer_question": "Is your food spicy?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Mild",
+    "Medium",
+    "Spicy",
+    "Very Spicy",
+    "Customizable"
+   ]
+  },
+  {
+   "id": "restaurant-037",
+   "category": "Menu Specialties",
+   "owner_question": "Are your best-selling dishes primarily vegetarian, non-vegetarian, or a mix?",
+   "customer_question": "Are your signature dishes vegetarian or non-vegetarian?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Pure Veg",
+    "Non-Veg",
+    "Both"
+   ]
+  },
+  {
+   "id": "restaurant-038",
+   "category": "Menu Specialties",
+   "owner_question": "Are your best-selling items prepared fresh to order?",
+   "customer_question": "Are your signature dishes prepared fresh daily?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-039",
+   "category": "Menu Specialties",
+   "owner_question": "Can customers request modifications to your signature dishes?",
+   "customer_question": "Can I customize your signature dishes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-040",
+   "category": "Menu Specialties",
+   "owner_question": "What is your most recommended dessert?",
+   "customer_question": "Do you have any signature desserts?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-041",
+   "category": "Menu Specialties",
+   "owner_question": "Are all your signature items available for takeaway and parcel?",
+   "customer_question": "Are your signature dishes available for takeaway?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-042",
+   "category": "Menu Specialties",
+   "owner_question": "Do your signature dishes require longer preparation time than standard menu items?",
+   "customer_question": "How long do your signature dishes take to prepare?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-043",
+   "category": "Portion Sizes",
+   "owner_question": "For your main course items, do you serve them as 'Single' or 'Double' portions?",
+   "customer_question": "Is one portion of your biryani enough for one person or two?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only single serving",
+    "Only family pack",
+    "Both single and family packs"
+   ]
+  },
+  {
+   "id": "restaurant-044",
+   "category": "Portion Sizes",
+   "owner_question": "For your starters, how many people would you say one plate serves on average?",
+   "customer_question": "How many people can eat from one full plate of your starter?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "1 person",
+    "1-2 people",
+    "2-3 people",
+    "3-4 people"
+   ]
+  },
+  {
+   "id": "restaurant-045",
+   "category": "Portion Sizes",
+   "owner_question": "For items like roti baskets or bread platters, how many pieces do you include per serving?",
+   "customer_question": "How many rotis come in one basket?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "restaurant-046",
+   "category": "Portion Sizes",
+   "owner_question": "Is the portion of rice in your thali or combo fixed, or do you provide unlimited refills?",
+   "customer_question": "Is the quantity of rice in your thali fixed?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed portion",
+    "Unlimited refills"
+   ]
+  },
+  {
+   "id": "restaurant-047",
+   "category": "Portion Sizes",
+   "owner_question": "For side dishes like dal or raita, do you offer different bowl sizes (e.g., small, medium, large)?",
+   "customer_question": "Are the dal portions enough for four people?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-048",
+   "category": "Portion Sizes",
+   "owner_question": "For dry chicken or paneer starters, do you serve them by weight (grams) or by piece count?",
+   "customer_question": "How many pieces of chicken are in the dry starter?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "By piece count",
+    "By weight (grams)"
+   ]
+  },
+  {
+   "id": "restaurant-049",
+   "category": "Portion Sizes",
+   "owner_question": "Do you have any 'Party Packs' or 'Combos' and how many people do they typically serve?",
+   "customer_question": "How many people does your party platter feed?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-050",
+   "category": "Hygiene and Safety",
+   "owner_question": "How often is your kitchen deep-cleaned?",
+   "customer_question": "How often do you clean your kitchen?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Daily",
+    "Weekly",
+    "Bi-weekly",
+    "Monthly"
+   ]
+  },
+  {
+   "id": "restaurant-051",
+   "category": "Hygiene and Safety",
+   "owner_question": "How often do you perform professional pest control in the kitchen and dining area?",
+   "customer_question": "Do you have a pest control routine?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Weekly",
+    "Monthly",
+    "Quarterly",
+    "Not applicable"
+   ]
+  },
+  {
+   "id": "restaurant-052",
+   "category": "Hygiene and Safety",
+   "owner_question": "What kind of water purification system do you use for drinking and cooking?",
+   "customer_question": "Is your drinking water filtered?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-053",
+   "category": "Hygiene and Safety",
+   "owner_question": "What is your process for cleaning raw ingredients like vegetables and meat before cooking?",
+   "customer_question": "Are your vegetables and meat washed properly?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-054",
+   "category": "Hygiene and Safety",
+   "owner_question": "How do you manage the quality of cooking oil used for frying?",
+   "customer_question": "Do you use fresh oil every day?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-055",
+   "category": "Hygiene and Safety",
+   "owner_question": "Do you use artificial food colors in your dishes?",
+   "customer_question": "Do you use artificial colors in your food?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-056",
+   "category": "Hygiene and Safety",
+   "owner_question": "Do you have dedicated refrigerators for storing raw meat, dairy, and vegetables separately?",
+   "customer_question": "How do you store your raw food?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-057",
+   "category": "Hygiene and Safety",
+   "owner_question": "What method do you use to sanitize plates and cutlery after washing?",
+   "customer_question": "Are your dishes sanitized?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-058",
+   "category": "Hygiene and Safety",
+   "owner_question": "What is your policy regarding leftovers at the end of the day?",
+   "customer_question": "How do you handle food leftovers?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-059",
+   "category": "Seating and Ambience",
+   "owner_question": "Is your dining area fully air-conditioned?",
+   "customer_question": "Is your restaurant air-conditioned?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-060",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you have a dedicated or preferred seating area for families?",
+   "customer_question": "Do you have a family-friendly seating area?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-061",
+   "category": "Seating and Ambience",
+   "owner_question": "What is the maximum number of guests you can seat at a single table?",
+   "customer_question": "What is the maximum number of people you can accommodate at one table?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "restaurant-062",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you provide high chairs for toddlers or infants?",
+   "customer_question": "Do you have high chairs for small children?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-063",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you offer any outdoor or open-air seating options?",
+   "customer_question": "Is there outdoor seating available?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-064",
+   "category": "Seating and Ambience",
+   "owner_question": "Is your restaurant entrance and seating area accessible for wheelchair users?",
+   "customer_question": "Is the restaurant wheelchair accessible?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-065",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you accept table bookings for large groups or parties?",
+   "customer_question": "Can I book a table for a large group gathering?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-066",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you have a clean, accessible washroom for your dine-in customers?",
+   "customer_question": "Do you have washroom facilities for customers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-067",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you allow customers to host small events like birthdays in your dining area?",
+   "customer_question": "Can I host a small birthday party at your place?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-068",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Are your takeaway containers spill-proof for liquid items like curries?",
+   "customer_question": "Do you use spill-proof containers for curries and gravies?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-069",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you use eco-friendly or plastic-free materials for your packaging?",
+   "customer_question": "Do you use eco-friendly or plastic-free packaging?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-070",
+   "category": "Takeaway and Packaging",
+   "owner_question": "What is the fixed packaging charge amount per order?",
+   "customer_question": "How much do you charge for packaging?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "restaurant-071",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Can your takeaway containers be safely used in a microwave?",
+   "customer_question": "Are the containers microwave-safe?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-072",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you provide disposable cutlery (spoons, forks) with takeaway orders?",
+   "customer_question": "Do you provide disposable cutlery with takeaway orders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-073",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Are chutneys, sauces, or accompaniments packed in separate small containers?",
+   "customer_question": "Do you pack chutneys and sauces separately?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-074",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Is your packaging designed to keep food secure during travel?",
+   "customer_question": "Is your packaging sturdy enough for long-distance travel?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-075",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Is your packaging material heat-resistant for hot food items?",
+   "customer_question": "Is the packaging heat-resistant for hot food?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-076",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you use partitioned containers to keep dry and wet items separate?",
+   "customer_question": "Do you provide separate containers for dry and wet items in a combo?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-077",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you use special leak-proof lids for soups or dals?",
+   "customer_question": "Do you use leak-proof lids for soup or dal?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-078",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you provide catering services for events or bulk orders?",
+   "customer_question": "Do you take orders for parties or large events?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-079",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "What is the minimum notice period required for a bulk order?",
+   "customer_question": "How many days in advance should I book for a large order?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "restaurant-080",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "What is the minimum headcount for a catering order?",
+   "customer_question": "What is the minimum number of people required for catering?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "restaurant-081",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you have a dedicated space or party hall for hosting events?",
+   "customer_question": "Do you have a party hall or space for events?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-082",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "What is the maximum seating capacity of your party hall?",
+   "customer_question": "What is the maximum capacity of your party hall?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "restaurant-083",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you offer off-site catering services?",
+   "customer_question": "Do you provide catering outside the restaurant?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-084",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you offer buffet-style service for catering orders?",
+   "customer_question": "Do you provide buffet service for events?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-085",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you require an advance deposit to confirm a bulk order?",
+   "customer_question": "Is there a deposit required for booking a bulk order?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-086",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you allow menu customization for bulk orders?",
+   "customer_question": "Can I customize the menu for a bulk order?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-087",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you offer discounted pricing for bulk or catering orders?",
+   "customer_question": "Do you offer special rates for bulk orders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-088",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you have different pricing or a surcharge for the air-conditioned seating area?",
+   "customer_question": "Is there a separate charge for sitting in the AC section?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-089",
+   "category": "Pricing and Taxes",
+   "owner_question": "Are there any other fixed charges (like a cover charge or music fee) that customers pay?",
+   "customer_question": "Are there any hidden costs I should know about?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-090",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you have a minimum bill amount for takeaway orders?",
+   "customer_question": "Is there a minimum order value for takeaway?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "restaurant-091",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you charge a flat delivery fee for home deliveries within your locality?",
+   "customer_question": "Do you charge a delivery fee?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "restaurant-092",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you offer half-portions for most dishes, and is the price exactly half of the full portion?",
+   "customer_question": "Is there a different price for half and full portions?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-093",
+   "category": "Pricing and Taxes",
+   "owner_question": "Are your menu prices identical for both dine-in and takeaway orders?",
+   "customer_question": "Are prices the same for dine-in and takeaway?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-094",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you offer a membership or loyalty program for your regular customers?",
+   "customer_question": "Do you have a membership program for regular customers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-095",
+   "category": "Loyalty and Discounts",
+   "owner_question": "How can a customer sign up for your loyalty program?",
+   "customer_question": "How do I join your loyalty program?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-096",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you provide any special discounts or freebies for birthdays or anniversaries?",
+   "customer_question": "Do you offer any discounts for birthdays or anniversaries?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-097",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you offer special pricing or discounts for large groups or bulk orders?",
+   "customer_question": "Are there any discounts for large groups or parties?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-098",
+   "category": "Loyalty and Discounts",
+   "owner_question": "What is the process for customers to redeem their earned loyalty points?",
+   "customer_question": "How do I redeem my loyalty points?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-099",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you have specific times of the day when you offer 'happy hour' discounts on food or drinks?",
+   "customer_question": "Do you offer any 'happy hour' discounts?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-100",
+   "category": "Reservations",
+   "owner_question": "What is the preferred method for customers to book a table (e.g., phone call, WhatsApp, or walk-in only)?",
+   "customer_question": "How can I book a table?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Phone call",
+    "WhatsApp message",
+    "In-person only",
+    "Online booking link"
+   ]
+  },
+  {
+   "id": "restaurant-101",
+   "category": "Reservations",
+   "owner_question": "Do you have a maximum time limit for reserved tables during busy hours?",
+   "customer_question": "Is there a time limit for my table reservation?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No limit",
+    "1 hour",
+    "1.5 hours",
+    "2 hours"
+   ]
+  },
+  {
+   "id": "restaurant-102",
+   "category": "Reservations",
+   "owner_question": "Do you require an advance payment or booking fee to confirm a table reservation?",
+   "customer_question": "Do you charge an advance or booking fee?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-103",
+   "category": "Reservations",
+   "owner_question": "What is your grace period for holding a reserved table if the customer is late?",
+   "customer_question": "How long will you hold my table if I am late?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "10 minutes",
+    "15 minutes",
+    "30 minutes",
+    "No grace period"
+   ]
+  },
+  {
+   "id": "restaurant-104",
+   "category": "Reservations",
+   "owner_question": "What is the maximum number of people you can accommodate in a single booking?",
+   "customer_question": "Can I book a table for a large group or party?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "restaurant-105",
+   "category": "Reservations",
+   "owner_question": "What is the average waiting time for walk-in customers on weekends?",
+   "customer_question": "What is the typical waiting time on weekends?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "15-30 minutes",
+    "30-60 minutes",
+    "Over 1 hour",
+    "Usually no wait"
+   ]
+  },
+  {
+   "id": "restaurant-106",
+   "category": "Reservations",
+   "owner_question": "What is your policy for cancelling or rescheduling a table booking?",
+   "customer_question": "Can I cancel or change my reservation?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-107",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you serve mocktails or cold beverages, and if yes, what are the main types?",
+   "customer_question": "Do you serve any cold drinks or mocktails?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "restaurant-108",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you offer desserts, and what are the popular ones?",
+   "customer_question": "Do you have any desserts on the menu?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "restaurant-109",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you provide extra sides like raita, salad, or extra chutney for purchase?",
+   "customer_question": "Can I get extra sides like raita, salad, or chutney?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-110",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Are your mocktails or juices made with fresh fruits or syrups?",
+   "customer_question": "Are your mocktails made with fresh fruit?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fresh fruit",
+    "Syrups and concentrates",
+    "Both"
+   ]
+  },
+  {
+   "id": "restaurant-111",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you sell branded bottled water or canned soft drinks?",
+   "customer_question": "Do you serve bottled water or soda?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-112",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you allow customers to add extra cheese or specific toppings to their dishes?",
+   "customer_question": "Can I get extra cheese or toppings on my food?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-113",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you serve hot beverages like tea or coffee?",
+   "customer_question": "Do you serve hot beverages like tea or coffee?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-114",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you charge for extra sauces or dips, or are they free?",
+   "customer_question": "Do you provide extra sauces or dips?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Chargeable"
+   ]
+  },
+  {
+   "id": "restaurant-115",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Can customers order extra rotis, naan, or bread as add-ons?",
+   "customer_question": "Can I get extra bread or rotis as an add-on?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-116",
+   "category": "Staff and Service",
+   "owner_question": "Which languages besides Hindi and your local regional language can your staff speak to assist customers?",
+   "customer_question": "Do you have staff who can speak English?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "restaurant-117",
+   "category": "Staff and Service",
+   "owner_question": "What is the average waiting time for a dine-in order during normal hours?",
+   "customer_question": "How long does it usually take for the food to arrive after ordering?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "10-15 minutes",
+    "15-20 minutes",
+    "20-30 minutes",
+    "30+ minutes"
+   ]
+  },
+  {
+   "id": "restaurant-118",
+   "category": "Staff and Service",
+   "owner_question": "Are your staff trained to inform customers about potential allergens like nuts, dairy, or gluten in your dishes?",
+   "customer_question": "Is the staff trained to handle food allergies?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-119",
+   "category": "Staff and Service",
+   "owner_question": "Is your staff happy to pack leftover food for customers?",
+   "customer_question": "Can I ask the staff to pack my leftovers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-120",
+   "category": "Staff and Service",
+   "owner_question": "Are your staff knowledgeable about the ingredients in your menu to help customers with dietary restrictions?",
+   "customer_question": "Can the staff help me with the menu if I have dietary restrictions?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-121",
+   "category": "Staff and Service",
+   "owner_question": "Is there a dedicated counter or staff member specifically for handling parcel/takeaway pickups?",
+   "customer_question": "Do you have a separate staff member for parcel management?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-122",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you use homemade spice blends or commercial store-bought masalas?",
+   "customer_question": "Are your spices homemade or store-bought?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Homemade blends",
+    "Store-bought brands",
+    "Both"
+   ]
+  },
+  {
+   "id": "restaurant-123",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Is your kitchen layout visible to customers or open for them to see cleanliness?",
+   "customer_question": "Is your kitchen open for inspection?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-124",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you use organic vegetables for your dishes?",
+   "customer_question": "Do you use organic vegetables?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-125",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you use branded dairy products or source them from local dairies?",
+   "customer_question": "Are your dairy products sourced locally?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Branded",
+    "Local dairy",
+    "Both"
+   ]
+  },
+  {
+   "id": "restaurant-126",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Is the dough for breads prepared fresh daily?",
+   "customer_question": "Do you use fresh dough for rotis/naans?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-127",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Do you use canned vegetables or fruits in your dishes?",
+   "customer_question": "Do you use canned items?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-128",
+   "category": "Food Quality and Preparation",
+   "owner_question": "Does your kitchen staff undergo regular food safety training?",
+   "customer_question": "Is the kitchen staff trained in food safety?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-129",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you offer any health-conscious or low-calorie menu items?",
+   "customer_question": "Do you have low-calorie or diet-friendly options?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-130",
+   "category": "Dietary Preferences",
+   "owner_question": "What type of cooking medium (oil, butter, ghee) do you primarily use?",
+   "customer_question": "Is your food cooked in refined oil or butter?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-131",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you use dairy products like cream or milk in most of your gravies?",
+   "customer_question": "Do you use fresh cream or milk in your curries?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-132",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you offer healthier grain alternatives like brown rice or millets?",
+   "customer_question": "Do you offer brown rice or millet options?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-133",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you prepare food fresh per order, or do you use pre-cooked bases?",
+   "customer_question": "Is the food prepared fresh or is it pre-cooked?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Fresh per order",
+    "Pre-cooked bases",
+    "Mix of both"
+   ]
+  },
+  {
+   "id": "restaurant-134",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you provide any sugar-free dessert or beverage options?",
+   "customer_question": "Do you have sugar-free dessert options?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-135",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you use artificial colors in your dishes?",
+   "customer_question": "Do you use artificial food coloring?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-136",
+   "category": "Dietary Preferences",
+   "owner_question": "Do you use cornflour or other thickeners in your soups and sauces?",
+   "customer_question": "Are your soups thickened with cornflour?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-137",
+   "category": "Menu Specialties",
+   "owner_question": "Do you have any signature dishes that are specifically child-friendly?",
+   "customer_question": "Are your signature dishes suitable for kids?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-138",
+   "category": "Menu Specialties",
+   "owner_question": "Do you offer any special dishes that are only available during certain seasons?",
+   "customer_question": "Do you serve any seasonal specialties?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-139",
+   "category": "Menu Specialties",
+   "owner_question": "Do you have any signature platters or large portions meant for groups?",
+   "customer_question": "Which of your dishes are best for sharing?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-140",
+   "category": "Menu Specialties",
+   "owner_question": "Do you have any signature dishes that are considered healthy or low-calorie?",
+   "customer_question": "Are your signature dishes healthy?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-141",
+   "category": "Menu Specialties",
+   "owner_question": "Do you have any signature beverages or drinks that pair well with your main dishes?",
+   "customer_question": "What is the best drink to pair with your signature dish?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-142",
+   "category": "Menu Specialties",
+   "owner_question": "Is there a special cooking technique or secret ingredient that makes your specialty dishes unique?",
+   "customer_question": "Do you use any secret ingredients?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-143",
+   "category": "Menu Specialties",
+   "owner_question": "Do you have any signature dishes that are gluten-free?",
+   "customer_question": "Are your signature dishes gluten-free?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-144",
+   "category": "Menu Specialties",
+   "owner_question": "Do you run out of your signature dishes quickly?",
+   "customer_question": "Are your signature dishes always available?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-145",
+   "category": "Menu Specialties",
+   "owner_question": "Do you have any special dishes that are only served during breakfast hours?",
+   "customer_question": "Do you have any signature breakfast items?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-146",
+   "category": "Portion Sizes",
+   "owner_question": "What is the size in inches for your small, medium, and large pizza or flatbread options?",
+   "customer_question": "How big is your large pizza?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-147",
+   "category": "Portion Sizes",
+   "owner_question": "Do you have a specific 'Kids Menu' with smaller portion sizes?",
+   "customer_question": "Do you serve small portions for kids?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-148",
+   "category": "Portion Sizes",
+   "owner_question": "What is the standard volume (in ml) for your beverages or juices?",
+   "customer_question": "Is the quantity of the drink enough for one person?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "restaurant-149",
+   "category": "Portion Sizes",
+   "owner_question": "Do you provide extra gravy or sides by default with your main course parcels?",
+   "customer_question": "Do you provide extra gravy with the parcel?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-150",
+   "category": "Portion Sizes",
+   "owner_question": "Are your desserts served as individual portions or as larger tubs for sharing?",
+   "customer_question": "Are your dessert portions big?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Individual serving",
+    "Sharing tub"
+   ]
+  },
+  {
+   "id": "restaurant-151",
+   "category": "Portion Sizes",
+   "owner_question": "Do you offer 'add-on' portions for sides like salad or papad?",
+   "customer_question": "Can I get a bigger portion of salad?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-152",
+   "category": "Portion Sizes",
+   "owner_question": "Are your soup servings standard bowl sizes or small cup sizes?",
+   "customer_question": "Is the quantity of the soup enough for a starter?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Small cup",
+    "Standard bowl"
+   ]
+  },
+  {
+   "id": "restaurant-153",
+   "category": "Hygiene and Safety",
+   "owner_question": "How often are the customer restrooms cleaned during the day?",
+   "customer_question": "Are your restrooms clean?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Every hour",
+    "Every 3 hours",
+    "Twice a day",
+    "Once a day"
+   ]
+  },
+  {
+   "id": "restaurant-154",
+   "category": "Hygiene and Safety",
+   "owner_question": "Does your staff receive any basic training on food handling and hygiene practices?",
+   "customer_question": "Is your staff trained in food safety?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-155",
+   "category": "Hygiene and Safety",
+   "owner_question": "Do you allow customers to take a look at the kitchen area if they request it?",
+   "customer_question": "Can I see your kitchen?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-156",
+   "category": "Hygiene and Safety",
+   "owner_question": "Do you have a proper system for daily disposal of kitchen waste?",
+   "customer_question": "Is your waste disposal managed properly?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-157",
+   "category": "Hygiene and Safety",
+   "owner_question": "Do you ensure your kitchen staff undergoes periodic health check-ups?",
+   "customer_question": "Is your staff health-checked regularly?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-158",
+   "category": "Hygiene and Safety",
+   "owner_question": "Are your kitchen cooking surfaces made of stainless steel for easy cleaning?",
+   "customer_question": "Are your kitchen surfaces stainless steel?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-159",
+   "category": "Hygiene and Safety",
+   "owner_question": "Do you provide hand sanitizer for customers at the entrance or dining tables?",
+   "customer_question": "Is there a hand sanitizer available for customers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-160",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you have a designated smoking area for customers?",
+   "customer_question": "Do you have a separate smoking area?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-161",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you offer private cabins or partitioned booths for extra privacy?",
+   "customer_question": "Do you have private cabins or booths?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-162",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you have small tables specifically for couples?",
+   "customer_question": "Is the seating arrangement suitable for couples?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-163",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you have a designated waiting area for customers when the restaurant is full?",
+   "customer_question": "Is there a waiting area if the restaurant is full?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-164",
+   "category": "Seating and Ambience",
+   "owner_question": "Do you offer any traditional floor-seating or special seating styles?",
+   "customer_question": "Do you have floor-seating or traditional seating options?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-165",
+   "category": "Seating and Ambience",
+   "owner_question": "How would you describe your restaurant's lighting (e.g., Bright, Dim/Romantic, Natural)?",
+   "customer_question": "How bright is the lighting in the dining area?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Bright",
+    "Dim/Romantic",
+    "Natural/Daylight"
+   ]
+  },
+  {
+   "id": "restaurant-166",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you include paper napkins or tissues with every takeaway order?",
+   "customer_question": "Do you provide paper napkins and tissues in the parcel?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-167",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you wrap breads like rotis or parathas in aluminium foil?",
+   "customer_question": "Do you use aluminium foil for wrapping rotis or parathas?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-168",
+   "category": "Takeaway and Packaging",
+   "owner_question": "What kind of outer bags do you use for parcels?",
+   "customer_question": "Do you use paper bags or plastic bags for parcels?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Paper bags",
+    "Plastic bags",
+    "Cloth bags",
+    "Both"
+   ]
+  },
+  {
+   "id": "restaurant-169",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you provide straws with takeaway cold beverages?",
+   "customer_question": "Do you provide straws for cold beverages?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-170",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you seal your takeaway containers with tape to prevent opening?",
+   "customer_question": "Do you seal the containers with tape?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-171",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you allow customers to bring their own containers for takeaway?",
+   "customer_question": "Can I bring my own containers for takeaway?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-172",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Is your packaging branded with your restaurant's name or logo?",
+   "customer_question": "Is the packaging branded with your shop logo?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-173",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Do you use cardboard boxes for items like pizza or burgers?",
+   "customer_question": "Do you use cardboard boxes for pizza or burgers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-174",
+   "category": "Takeaway and Packaging",
+   "owner_question": "Is your packaging designed to be easily stackable for large orders?",
+   "customer_question": "Is the packaging stackable?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-175",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you provide serving staff for off-site catering events?",
+   "customer_question": "Do you provide waiters for events?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-176",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you provide plates, spoons, and serving equipment for catering?",
+   "customer_question": "Do you provide crockery and cutlery for catering?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-177",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "What percentage of the total bill is required as an advance deposit?",
+   "customer_question": "What percentage of the total amount is the advance deposit?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "restaurant-178",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "What is your policy regarding cancellation of bulk orders?",
+   "customer_question": "What is your cancellation policy for bulk orders?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-179",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you provide hot-cases or food warmers for catering deliveries?",
+   "customer_question": "Do you provide food warmers for large deliveries?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-180",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you offer pure vegetarian catering options?",
+   "customer_question": "Can you handle pure vegetarian catering?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-181",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Are your catering quotes inclusive of GST?",
+   "customer_question": "Are your catering prices inclusive of GST?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-182",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you offer live cooking counters for events?",
+   "customer_question": "Do you provide live counters for events?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-183",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you charge a separate delivery fee for bulk or catering orders?",
+   "customer_question": "Do you charge extra for catering delivery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-184",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you offer food tasting sessions for bulk catering orders?",
+   "customer_question": "Can I taste the food before finalizing the catering order?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-185",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you provide Jain food options for bulk orders?",
+   "customer_question": "Do you provide Jain food options for catering?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-186",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "What is the minimum order value for catering services?",
+   "customer_question": "Is there a minimum order value for catering?",
+   "priority": "optional",
+   "answer_type": "price"
+  },
+  {
+   "id": "restaurant-187",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you provide beverage or drink services for events?",
+   "customer_question": "Do you provide beverage service for events?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-188",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you accept catering orders that extend beyond your normal closing hours?",
+   "customer_question": "Can you provide catering for late-night events?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-189",
+   "category": "Bulk Orders and Catering",
+   "owner_question": "Do you have fixed catering packages or do you allow item-by-item selection?",
+   "customer_question": "Do you have a fixed catering menu or can I choose items?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Fixed packages only",
+    "Item-by-item selection",
+    "Both"
+   ]
+  },
+  {
+   "id": "restaurant-190",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you charge for extra items like bottled water, tissues, or wet wipes?",
+   "customer_question": "Do you charge for water or tissues?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-191",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you provide a percentage discount for large group bookings or parties?",
+   "customer_question": "Do you offer discounts for large groups?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-192",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you have a loyalty program or a discount for regular customers?",
+   "customer_question": "Do you offer any loyalty discounts?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-193",
+   "category": "Pricing and Taxes",
+   "owner_question": "Are additional servings of chutneys, sauces, or sides chargeable?",
+   "customer_question": "Do you charge for extra chutneys or sauces?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-194",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you offer discounted pricing during specific off-peak hours?",
+   "customer_question": "Do you have a 'Happy Hour' price?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-195",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you charge a booking fee or advance deposit to reserve a table?",
+   "customer_question": "Is there a booking fee for reserving a table?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-196",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you provide any specific discounts for students or senior citizens?",
+   "customer_question": "Do you offer discounts for students or senior citizens?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-197",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you charge extra for customizing dishes (e.g., extra cheese, extra spice)?",
+   "customer_question": "Is there an extra charge for special requests or customizations?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-198",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you charge any local municipal taxes or cesses in addition to GST?",
+   "customer_question": "Are there any taxes on top of the menu price?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-199",
+   "category": "Pricing and Taxes",
+   "owner_question": "Do you offer any discount if the customer pays in cash instead of digital payment?",
+   "customer_question": "Do you offer a discount for paying in cash?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-200",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you offer any specific discounts for students?",
+   "customer_question": "Do you have any student discounts?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-201",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you offer any specific discounts for customers who pick up takeaway/parcel orders instead of dining in?",
+   "customer_question": "Do you give discounts for takeaway orders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-202",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you run any recurring 'Buy One Get One' (BOGO) offers on any items?",
+   "customer_question": "Do you have a 'buy one get one' offer?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-203",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you have any specific discount schemes valid only on weekdays?",
+   "customer_question": "Do you offer any discounts during weekdays?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-204",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you offer special discounts for employees of nearby companies or offices?",
+   "customer_question": "Are there any corporate discounts?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-205",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you currently have any tie-ups for cashback or wallet discounts (e.g., Paytm, PhonePe)?",
+   "customer_question": "Do you offer any cashback or wallet offers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-206",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do you have any special discount policies for senior citizens?",
+   "customer_question": "Do you offer any discounts for senior citizens?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-207",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Can loyalty points be redeemed on home delivery orders, or only for dine-in?",
+   "customer_question": "Can I use my loyalty points for home delivery orders?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Dine-in only",
+    "Both dine-in and delivery",
+    "Not applicable"
+   ]
+  },
+  {
+   "id": "restaurant-208",
+   "category": "Loyalty and Discounts",
+   "owner_question": "Do your loyalty points have an expiry date or validity period?",
+   "customer_question": "Do my loyalty points expire?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-209",
+   "category": "Reservations",
+   "owner_question": "Are reservations mandatory on weekdays, or are walk-ins welcome?",
+   "customer_question": "Do I need a reservation for weekdays?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Walk-ins welcome",
+    "Reservations recommended",
+    "Reservations required"
+   ]
+  },
+  {
+   "id": "restaurant-210",
+   "category": "Reservations",
+   "owner_question": "Do you allow customers to request specific seating areas (e.g., corner table, window seat) when booking?",
+   "customer_question": "Can I request a specific table or seating area?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-211",
+   "category": "Reservations",
+   "owner_question": "Do you have a dedicated space or private room for larger group bookings?",
+   "customer_question": "Do you have a separate area for private parties?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-212",
+   "category": "Reservations",
+   "owner_question": "Do you enforce a minimum bill amount for large group bookings?",
+   "customer_question": "Is there a minimum billing amount for group reservations?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-213",
+   "category": "Reservations",
+   "owner_question": "What is the minimum notice required for booking a table?",
+   "customer_question": "How far in advance should I book?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Same day",
+    "1 day in advance",
+    "2 days in advance",
+    "1 week in advance"
+   ]
+  },
+  {
+   "id": "restaurant-214",
+   "category": "Reservations",
+   "owner_question": "Do you offer basic decoration services for birthday or anniversary bookings?",
+   "customer_question": "Do you provide decor for birthday bookings?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-215",
+   "category": "Reservations",
+   "owner_question": "Do you allow customers to pre-order food to have it ready upon arrival?",
+   "customer_question": "Can I order food in advance when booking?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-216",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you have any sugar-free or healthy dessert options?",
+   "customer_question": "Do you have sugar-free dessert options?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-217",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you sell extra papad or pickles as add-ons?",
+   "customer_question": "Can I order extra papad or pickles?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-218",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Are your desserts prepared in-house or sourced from outside?",
+   "customer_question": "Are your desserts homemade?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Homemade/In-house",
+    "Sourced from outside"
+   ]
+  },
+  {
+   "id": "restaurant-219",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Are your cold beverages served with ice by default?",
+   "customer_question": "Are the mocktails served with ice?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-220",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Is there a minimum quantity or order requirement for purchasing extra sides?",
+   "customer_question": "Is there a minimum order for extra sides?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-221",
+   "category": "Beverages and Add-ons",
+   "owner_question": "Do you offer any seasonal drinks or desserts that change throughout the year?",
+   "customer_question": "Do you have seasonal drinks or desserts?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-222",
+   "category": "Staff and Service",
+   "owner_question": "Do you have a specific staff member or manager who handles bulk or party orders?",
+   "customer_question": "Do you have a dedicated person for taking large party orders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-223",
+   "category": "Staff and Service",
+   "owner_question": "Are your servers trained to recommend your 'best-selling' or 'chef's special' dishes?",
+   "customer_question": "Can I get a recommendation from the server?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-224",
+   "category": "Staff and Service",
+   "owner_question": "Does your staff assist customers with carrying heavy parcel orders to their vehicles?",
+   "customer_question": "Is the restaurant staff helpful with carrying heavy parcel bags to the car?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-225",
+   "category": "Staff and Service",
+   "owner_question": "Do you have a feedback book or a digital link for customers to share their experience?",
+   "customer_question": "How do I provide feedback on my meal or service?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "restaurant-226",
+   "category": "Staff and Service",
+   "owner_question": "Does your staff assist with small requests like bringing a cake or playing music for celebrations?",
+   "customer_question": "Can the staff help with birthday or anniversary celebrations?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "restaurant-227",
+   "category": "Staff and Service",
+   "owner_question": "What is the policy for clearing tables between customers?",
+   "customer_question": "Is the staff quick to clear tables?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
