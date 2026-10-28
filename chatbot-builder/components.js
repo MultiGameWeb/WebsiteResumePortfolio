@@ -59,7 +59,7 @@ export function formatTime(date) {
   return new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(d);
 }
 
-export function ProgressHeader({ answered = 12, total = 70 }) {
+export function ProgressHeader({ answered = 0, total = 0 }) {
   const header = makeElement('header', 'app-header-inner');
   const identity = makeElement('div', 'brand-lockup');
   const mark = makeElement('div', 'brand-mark');
@@ -67,24 +67,24 @@ export function ProgressHeader({ answered = 12, total = 70 }) {
   mark.innerHTML = '<svg viewBox="0 0 32 32" width="27" height="27" fill="none"><path d="M16 3.5 27 9.8v12.4L16 28.5 5 22.2V9.8L16 3.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 14.2c0-2.2 1.6-3.7 3.8-3.7 2.1 0 3.5 1.5 3.5 3.4 0 3-4.8 2.3-4.8 5.4M16 23.3v.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   const words = makeElement('div', 'brand-words');
   const title = makeElement('div', 'brand-name', 'BotCraft');
-  const subtitle = makeElement('div', 'brand-subtitle', 'Your business, in every conversation');
+  const subtitle = makeElement('div', 'brand-subtitle', 'Your shop’s AI salesman');
   words.append(title, subtitle);
   identity.append(mark, words);
 
   const progress = makeElement('div', 'progress-wrap');
   const progressText = makeElement('div', 'progress-meta');
   progressText.append(makeElement('span', 'progress-label', 'Setup progress'));
-  const count = makeElement('span', 'progress-count', `${answered} / ${total} answered`);
-  count.setAttribute('aria-label', `${answered} of ${total} questions answered`);
+  const count = makeElement('span', 'progress-count', total > 0 ? `${answered} / ${total} answered` : 'Starts after your shop type');
+  count.setAttribute('aria-label', total > 0 ? `${answered} of ${total} questions answered` : 'Questions are prepared after you share your shop type');
   progressText.append(count);
   const track = makeElement('div', 'progress-track');
   track.setAttribute('role', 'progressbar');
   track.setAttribute('aria-valuemin', '0');
-  track.setAttribute('aria-valuemax', String(total));
+  track.setAttribute('aria-valuemax', String(Math.max(total, 1)));
   track.setAttribute('aria-valuenow', String(answered));
   track.setAttribute('aria-label', 'Business setup progress');
   const fill = makeElement('div', 'progress-fill');
-  fill.style.width = `${Math.min(100, Math.max(0, (answered / total) * 100))}%`;
+  fill.style.width = `${total > 0 ? Math.min(100, Math.max(0, (answered / total) * 100)) : 0}%`;
   track.append(fill);
   progress.append(progressText, track);
 

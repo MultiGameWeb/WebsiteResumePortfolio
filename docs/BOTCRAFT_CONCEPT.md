@@ -113,9 +113,11 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
 
 | Component | Status |
 |---|---|
-| `chatbot-builder/` | BotCraft chat UI (mobile, attachments, Telugu/Hindi text). Replies are mocked in `mockChat.js` and the progress count is hard-coded. **Reuse the UI.** |
-| `backend/sitecraft-ai/website-chatbot.js` | Visitor chat endpoint with credits, rate limits and an origin check. It was designed for a website embed; it must be adapted for the QR bot page on our own domain. |
-| `ai-chatbot-builder.html` and the hidden form in `ai-chatbot-software.html` | Older form-based builders; to be retired. |
+| `ai-chatbots.html` and the homepage section | Updated to the QR AI-salesman concept |
+| `ai-chatbot-software.html` | The BotCraft page; shows the chat UI only |
+| `ai-chatbot-builder.html` | Old form builder removed; now redirects to BotCraft |
+| `chatbot-builder/` | BotCraft chat UI. Its opening flow follows this concept, but replies are still simulated in `mockChat.js`, and progress stays empty until a real question bank exists. Phase 1 replaces the mock. |
+| `backend/sitecraft-ai/website-chatbot.js` | Visitor chat endpoint with reply limits, rate limits and a server-side key. It was built for a website embed (origin check); Phase 1–2 will adapt it for the QR bot page. |
 
 ## 11. Open questions
 

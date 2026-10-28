@@ -1,5 +1,7 @@
 # SiteCraft Website Chatbot MVP
 
+> **Direction changed (October 2026).** BotCraft is now a QR-based AI salesman for shops, hosted on our own domain, not a widget embedded on the customer's website. See [`docs/BOTCRAFT_CONCEPT.md`](../../docs/BOTCRAFT_CONCEPT.md). The rate limits, reply limits and server-side Gemini key handling below will be reused. The `allowed_origin` website-embed model and the reply-credit pricing will be replaced in Phase 1–2.
+
 The product direction is a self-service **website-only chatbot builder**. A customer enters business information, configures an assistant, tests a local preview, pays for activation, and receives a website embed package. This branch is still a prototype: the builder UI does not yet save profiles to the backend, accept payments, or create production downloads.
 
 No WhatsApp, Meta, Instagram, Facebook, SMS, email, or mobile-app integration is in scope for this phase.

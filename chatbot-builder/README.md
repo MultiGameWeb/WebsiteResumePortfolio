@@ -1,4 +1,6 @@
-# BotCraft chat screen — frontend-only preview
+# BotCraft chat screen
+
+The chat UI where shop owners create their AI salesman bot (see `docs/BOTCRAFT_CONCEPT.md`). It is shown on `ai-chatbot-software.html`. Replies are still simulated in `mockChat.js` until Phase 1 connects Gemini.
 
 This is an isolated, no-build HTML/CSS/JavaScript prototype for the BotCraft conversation screen. It uses the current SiteCraft-style static frontend approach and adds no framework, dependency, backend, API key, or existing-site edits.
 
