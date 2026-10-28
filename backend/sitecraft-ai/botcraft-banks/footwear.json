@@ -1,0 +1,2420 @@
+{
+ "shop_type_key": "footwear",
+ "name": "Footwear shop",
+ "version": 1,
+ "model": "gemini-3.1-flash-lite",
+ "generated_at": "2026-10-28",
+ "question_count": 213,
+ "questions": [
+  {
+   "id": "footwear-001",
+   "category": "Sizing and Fit",
+   "owner_question": "What is the range of shoe sizes (e.g., UK 6 to 11) you typically stock for men?",
+   "customer_question": "Do you have shoes in my size?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-002",
+   "category": "Sizing and Fit",
+   "owner_question": "What is the starting and ending size range you carry for children's footwear?",
+   "customer_question": "Do you keep footwear for kids?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-003",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you use the standard Indian/UK sizing system, or do you use US/EU sizing labels?",
+   "customer_question": "Are your sizes in Indian or International standards?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Indian/UK",
+    "US",
+    "EU",
+    "Mixed"
+   ]
+  },
+  {
+   "id": "footwear-004",
+   "category": "Material and Comfort",
+   "owner_question": "What are the common sole materials used in your stock (e.g., TPR, EVA, Rubber, PVC)?",
+   "customer_question": "What material are the soles made of?",
+   "priority": "mandatory",
+   "answer_type": "list"
+  },
+  {
+   "id": "footwear-005",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer a standard warranty period on footwear sold in your shop?",
+   "customer_question": "Is there a warranty on these shoes?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-006",
+   "category": "Sizing and Fit",
+   "owner_question": "Do your brands generally follow standard sizing, or do they tend to run smaller or larger than usual?",
+   "customer_question": "Do your shoes run small or large?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Standard sizing",
+    "Runs smaller than usual",
+    "Runs larger than usual"
+   ]
+  },
+  {
+   "id": "footwear-007",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you stock half-size footwear (e.g., 7.5, 8.5)?",
+   "customer_question": "Do you offer half sizes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-008",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you carry specific wide-fit or extra-wide footwear models?",
+   "customer_question": "Do you have wide fit options?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-009",
+   "category": "Material and Comfort",
+   "owner_question": "Do you stock genuine leather footwear, or is everything synthetic/faux leather?",
+   "customer_question": "Is this shoe made of genuine leather or synthetic material?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only genuine leather",
+    "Only synthetic/PU",
+    "Both genuine and synthetic"
+   ]
+  },
+  {
+   "id": "footwear-010",
+   "category": "Material and Comfort",
+   "owner_question": "Do you sell any footwear that is specifically marketed as waterproof or rain-resistant?",
+   "customer_question": "Are these sandals waterproof?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-011",
+   "category": "Material and Comfort",
+   "owner_question": "Do you have specific collections that are marketed as 'orthopedic' or 'extra-cushioned' for long-duration wear?",
+   "customer_question": "Are these shoes comfortable for long walks?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-012",
+   "category": "Material and Comfort",
+   "owner_question": "Do you carry footwear with specialized anti-skid or rubber grip soles?",
+   "customer_question": "Are the soles anti-skid?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-013",
+   "category": "Material and Comfort",
+   "owner_question": "Do you carry any footwear that is explicitly machine-washable or easy to clean with water?",
+   "customer_question": "Are these shoes washable?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-014",
+   "category": "Material and Comfort",
+   "owner_question": "Do you carry footwear with built-in arch support or ergonomic insoles?",
+   "customer_question": "Do you have shoes with arch support?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-015",
+   "category": "Material and Comfort",
+   "owner_question": "Do you have formal footwear made of premium materials suitable for daily office use?",
+   "customer_question": "Are these shoes suitable for office wear?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-016",
+   "category": "Material and Comfort",
+   "owner_question": "Do you stock 'soft-touch' or 'comfort-insole' formal shoes?",
+   "customer_question": "Do you have formal shoes that don't hurt?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-017",
+   "category": "Durability and Maintenance",
+   "owner_question": "Are any of your footwear collections water-resistant or waterproof?",
+   "customer_question": "Are these shoes water-resistant?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-018",
+   "category": "Durability and Maintenance",
+   "owner_question": "What is the recommended way to clean the leather footwear you sell?",
+   "customer_question": "How should I clean my leather shoes?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-019",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you sell any shoe care accessories like polish, brushes, or cleaning kits?",
+   "customer_question": "Do you sell shoe polish or brushes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-020",
+   "category": "Durability and Maintenance",
+   "owner_question": "Is it safe to wash your canvas or fabric shoes in a washing machine?",
+   "customer_question": "Can I wash these canvas shoes in a machine?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-021",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you offer any repair services for soles that have come off?",
+   "customer_question": "What should I do if the sole comes off?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-022",
+   "category": "Durability and Maintenance",
+   "owner_question": "Which of your footwear lines are specifically recommended for rough or daily heavy-duty use?",
+   "customer_question": "Are these suitable for daily rough use?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-023",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you offer a formal warranty period for any of your footwear brands?",
+   "customer_question": "Do you provide a warranty against manufacturing defects?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-024",
+   "category": "Durability and Maintenance",
+   "owner_question": "What is the duration of the warranty you provide on your products?",
+   "customer_question": "How long is the warranty valid for?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-025",
+   "category": "Durability and Maintenance",
+   "owner_question": "What specific types of damages are covered under your shop's warranty policy?",
+   "customer_question": "Does the warranty cover sole damage?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "footwear-026",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you provide repair services for broken straps or buckles?",
+   "customer_question": "What happens if the strap breaks?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-027",
+   "category": "Durability and Maintenance",
+   "owner_question": "What is the best way to clean white sneakers to keep them bright?",
+   "customer_question": "How do I clean white sneakers?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-028",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock formal shoes for men or women?",
+   "customer_question": "Do you have shoes suitable for office or formal meetings?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-029",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock dedicated sports or athletic footwear?",
+   "customer_question": "Are these shoes good for running or gym workouts?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-030",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you keep a specific collection for weddings or festive parties?",
+   "customer_question": "Do you have any fancy footwear for weddings or parties?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-031",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock daily-wear or house-use slippers?",
+   "customer_question": "Are these chappals meant for daily home use?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-032",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you sell footwear specifically designed for the rainy season?",
+   "customer_question": "Are these sandals water-resistant for the monsoon?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-033",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock school shoes or uniform-compliant footwear?",
+   "customer_question": "Do you have school shoes for kids?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-034",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you carry orthopaedic or extra-cushioned footwear for long-standing comfort?",
+   "customer_question": "Are these shoes comfortable for long hours of standing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-035",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock traditional Indian footwear like Mojaris, Juttis, or Kolhapuris?",
+   "customer_question": "Do you have ethnic footwear like Mojaris or Kolhapuris?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-036",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock formal heels or pumps for women?",
+   "customer_question": "Do you have formal heels for women?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-037",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you have a collection of embellished sandals suitable for sarees or lehengas?",
+   "customer_question": "Do you have matching footwear for traditional sarees?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-038",
+   "category": "Brand Authenticity",
+   "owner_question": "Do you sell only authorized branded footwear, or do you also stock unbranded/local items?",
+   "customer_question": "Are these shoes original branded products?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only authorized branded items",
+    "Mix of branded and local items",
+    "Only unbranded or local items"
+   ]
+  },
+  {
+   "id": "footwear-039",
+   "category": "Brand Authenticity",
+   "owner_question": "Do you stock any international or imported footwear brands?",
+   "customer_question": "Do you have imported brands?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-040",
+   "category": "Brand Authenticity",
+   "owner_question": "Do you provide a brand-issued warranty card for the footwear you sell?",
+   "customer_question": "Can you show me the warranty card for these shoes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-041",
+   "category": "Brand Authenticity",
+   "owner_question": "Do you sell 'first copy' or replica footwear?",
+   "customer_question": "Are these first copy or original?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-042",
+   "category": "Brand Authenticity",
+   "owner_question": "Do you source your branded stock directly from company distributors or authorized wholesalers?",
+   "customer_question": "Are these shoes sourced directly from the company?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-043",
+   "category": "Brand Authenticity",
+   "owner_question": "Can you list the top 5-10 major brands you currently stock in your shop?",
+   "customer_question": "Do you have a list of all the brands you carry?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "footwear-044",
+   "category": "Brand Authenticity",
+   "owner_question": "Do you ever stock 'factory seconds' or 'B-grade' footwear?",
+   "customer_question": "Are these factory seconds?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-045",
+   "category": "Brand Authenticity",
+   "owner_question": "Do all your branded items come in their original company packaging?",
+   "customer_question": "Do you provide the original brand box with the shoes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-046",
+   "category": "Brand Authenticity",
+   "owner_question": "How do you verify the quality of the unbranded or local footwear you select for your shop?",
+   "customer_question": "Are these shoes durable?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-047",
+   "category": "Warranty and Repairs",
+   "owner_question": "What is the duration of the warranty (in days) you provide for your products?",
+   "customer_question": "How many days is the warranty valid for?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "footwear-048",
+   "category": "Warranty and Repairs",
+   "owner_question": "Does your warranty cover sole pasting or stitching issues?",
+   "customer_question": "Does the warranty cover the sole peeling off?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-049",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer free repair services for broken straps or buckles?",
+   "customer_question": "Do you repair broken straps for free?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-050",
+   "category": "Warranty and Repairs",
+   "owner_question": "Is the original bill or receipt mandatory for the customer to claim a warranty or repair?",
+   "customer_question": "What do I need to bring to claim a warranty?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-051",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide paid repair services for footwear even after the warranty period has ended?",
+   "customer_question": "Do you charge for repairs after the warranty expires?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-052",
+   "category": "Warranty and Repairs",
+   "owner_question": "Does your warranty policy exclude damage caused by water, rain, or rough usage?",
+   "customer_question": "Does the warranty cover damage caused by water or rain?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-053",
+   "category": "Warranty and Repairs",
+   "owner_question": "Are there any service charges or processing fees for warranty claims?",
+   "customer_question": "Are there any hidden charges for warranty claims?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-054",
+   "category": "Warranty and Repairs",
+   "owner_question": "Is the warranty policy applicable to items purchased during a sale or at a discount?",
+   "customer_question": "Do you provide a warranty on sale items?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-055",
+   "category": "Warranty and Repairs",
+   "owner_question": "Does the warranty for branded items follow the manufacturer's policy or your shop's policy?",
+   "customer_question": "Is the warranty valid for international brands sold here?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Manufacturer policy",
+    "Shop policy"
+   ]
+  },
+  {
+   "id": "footwear-056",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you have a fixed price policy, or are you open to negotiation with customers?",
+   "customer_question": "Are the prices fixed or can I bargain?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed prices only",
+    "Open to negotiation",
+    "Fixed for some items, negotiable for others"
+   ]
+  },
+  {
+   "id": "footwear-057",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you provide specific discounts for bulk or family purchases?",
+   "customer_question": "Do you offer any discounts if I buy multiple pairs for my family?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-058",
+   "category": "Pricing and Discounts",
+   "owner_question": "Are the prices displayed on your footwear inclusive of GST?",
+   "customer_question": "Is GST included in the price shown on the shoes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-059",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you usually run seasonal sales or have a dedicated clearance section for older stock?",
+   "customer_question": "Do you have any ongoing seasonal sales or clearance offers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-060",
+   "category": "Pricing and Discounts",
+   "owner_question": "What is the starting and maximum price range for your men's formal shoe collection?",
+   "customer_question": "What is the price range for men's formal shoes?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-061",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you frequently run 'Buy One Get One' or similar promotional bundle offers?",
+   "customer_question": "Do you have any 'Buy One Get One' offers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-062",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you sell products at the exact MRP, or do you provide a shop-level discount on the MRP?",
+   "customer_question": "Are your prices the same as the MRP on the box?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Always at MRP",
+    "Always at a discount on MRP",
+    "Depends on the brand"
+   ]
+  },
+  {
+   "id": "footwear-063",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you typically offer special discounts during major Indian festivals?",
+   "customer_question": "Do you offer discounts on festive occasions like Diwali or Eid?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-064",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you maintain a specific 'sale' or 'discounted' rack in your shop?",
+   "customer_question": "Do you have a 'sale' rack for discounted items?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-065",
+   "category": "Pricing and Discounts",
+   "owner_question": "Are there any service charges or additional fees added to the product price at the time of payment?",
+   "customer_question": "Do you have any hidden charges on top of the price?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-066",
+   "category": "Stock Availability",
+   "owner_question": "Do you keep multiple color variants for your popular footwear models?",
+   "customer_question": "Do you have this shoe in a different color?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-067",
+   "category": "Stock Availability",
+   "owner_question": "Do you offer a service to order specific sizes for customers if they are not in stock?",
+   "customer_question": "Can you order a size for me if it is currently out of stock?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-068",
+   "category": "Stock Availability",
+   "owner_question": "If you offer to order out-of-stock items, how many days does it typically take to arrive?",
+   "customer_question": "How long does it take to get a shoe that is out of stock?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "footwear-069",
+   "category": "Stock Availability",
+   "owner_question": "Do you allow customers to reserve or hold items over the phone or chat?",
+   "customer_question": "Can I reserve a pair of shoes before I come to the shop?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-070",
+   "category": "Stock Availability",
+   "owner_question": "Do you maintain a list of specific brands that you always keep in stock?",
+   "customer_question": "Can I check the stock of a particular brand you carry?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "footwear-071",
+   "category": "Stock Availability",
+   "owner_question": "Do you stock specialized footwear sizes like extra-large or extra-small?",
+   "customer_question": "Do you have extra-large or extra-small sizes available?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-072",
+   "category": "Stock Availability",
+   "owner_question": "Do you keep school footwear in stock all year round or only during the back-to-school season?",
+   "customer_question": "Do you have school footwear in stock throughout the year?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "All year round",
+    "Seasonal"
+   ]
+  },
+  {
+   "id": "footwear-073",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you offer gift wrapping services for footwear purchases?",
+   "customer_question": "Do you provide gift wrapping for shoes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-074",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you charge extra for gift wrapping, or is it free?",
+   "customer_question": "Is there an extra charge for gift wrapping?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Charge per item",
+    "Depends on size"
+   ]
+  },
+  {
+   "id": "footwear-075",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you sell gift vouchers or gift cards that customers can buy for others?",
+   "customer_question": "Do you sell gift vouchers or gift cards?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-076",
+   "category": "Gift and Occasion Services",
+   "owner_question": "How many months or days are your gift vouchers valid for?",
+   "customer_question": "How long are your gift vouchers valid?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-077",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Can customers purchase gift vouchers remotely, or must they visit the shop?",
+   "customer_question": "Can I buy a gift voucher online?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Must visit shop",
+    "Can buy via WhatsApp/Phone"
+   ]
+  },
+  {
+   "id": "footwear-078",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you have a specific exchange policy for items received as gifts?",
+   "customer_question": "Can I exchange a gift if the size is wrong?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-079",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you stock orthopedic footwear or shoes specifically designed for foot pain?",
+   "customer_question": "Do you have orthopedic footwear for people with foot pain?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-080",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you carry wide-fit or adjustable footwear for people with swollen feet?",
+   "customer_question": "Do you have wide-fit shoes for swollen feet?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-081",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you stock diabetic-friendly footwear that is seamless and pressure-free?",
+   "customer_question": "Do you have footwear suitable for diabetics?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-082",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you stock brands or models that specifically advertise arch support?",
+   "customer_question": "Do you have shoes with good arch support?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-083",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you carry slip-on shoes that don't require bending to put on?",
+   "customer_question": "Do you have slip-on shoes for people who cannot bend down?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-084",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you have a section of footwear specifically designed for daily walking or exercise?",
+   "customer_question": "Can you suggest footwear for daily walking?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-085",
+   "category": "Store Policies",
+   "owner_question": "How many days after purchase do you allow customers to exchange footwear?",
+   "customer_question": "How many days do I have to exchange a pair of shoes if they don't fit?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "footwear-086",
+   "category": "Store Policies",
+   "owner_question": "Is the original shoe box mandatory for an exchange or return?",
+   "customer_question": "Do I need to bring the original shoe box to exchange the pair?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-087",
+   "category": "Store Policies",
+   "owner_question": "Do you offer cash refunds, or only store credit/exchanges?",
+   "customer_question": "Can I get a refund if I don't like the shoes I bought?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Cash refund",
+    "Store credit only",
+    "Exchange only",
+    "No refunds or exchanges"
+   ]
+  },
+  {
+   "id": "footwear-088",
+   "category": "Store Policies",
+   "owner_question": "Is the physical or digital receipt required for all exchanges?",
+   "customer_question": "Do I need the receipt to exchange my footwear?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-089",
+   "category": "Store Policies",
+   "owner_question": "Do you accept exchanges for footwear that has been worn outside?",
+   "customer_question": "Can I exchange shoes if I have already worn them outside?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-090",
+   "category": "Store Policies",
+   "owner_question": "Do you offer a repair or replacement warranty on your footwear?",
+   "customer_question": "What if the sole comes off after a week?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-091",
+   "category": "Store Policies",
+   "owner_question": "Are sale items eligible for exchange or return?",
+   "customer_question": "Can I exchange items bought on sale?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-092",
+   "category": "Store Policies",
+   "owner_question": "How do you handle price differences during an exchange (e.g., pay the balance or store credit)?",
+   "customer_question": "What happens if the price of the new pair is different?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-093",
+   "category": "Store Policies",
+   "owner_question": "Are there any specific product categories (like socks or accessories) that are non-returnable?",
+   "customer_question": "Are there any items that cannot be returned at all?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "footwear-094",
+   "category": "Store Policies",
+   "owner_question": "What is the process for a customer to report a manufacturing defect?",
+   "customer_question": "If I find a defect, how do I report it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-095",
+   "category": "Store Policies",
+   "owner_question": "Do you allow exchanges if the customer has lost the bill but can prove purchase via UPI/bank record?",
+   "customer_question": "Can I return items if I have lost the bill?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-096",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you offer a loyalty or points program for frequent customers?",
+   "customer_question": "Do you have a loyalty program or points system for regular customers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-097",
+   "category": "Loyalty and Membership",
+   "owner_question": "What is the process for a customer to join your loyalty program?",
+   "customer_question": "How can I join your loyalty program?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-098",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you send notifications to customers when you get new footwear stock?",
+   "customer_question": "Do you notify regular customers about new stock arrivals?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-100",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you provide exclusive discounts or pricing for loyal customers?",
+   "customer_question": "Do you offer any special discounts for regular customers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-101",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you inform your loyal customers in advance about upcoming sales or clearance events?",
+   "customer_question": "Do you send updates about upcoming sales?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-102",
+   "category": "Loyalty and Membership",
+   "owner_question": "What is the process for a customer to redeem their loyalty points at the shop?",
+   "customer_question": "How do I redeem my points?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-103",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you stock any specialized footwear or orthopaedic-friendly designs for flat feet?",
+   "customer_question": "Are these shoes suitable for flat feet?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-104",
+   "category": "Sizing and Fit",
+   "owner_question": "For your leather or fabric footwear, do you advise customers that they will stretch slightly after regular use?",
+   "customer_question": "Do the shoes stretch over time?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-105",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you specifically stock 'comfort-fit' or 'cushioned' sandals for elderly customers?",
+   "customer_question": "Do you have comfort-fit sandals?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-106",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you stock any narrow or slim-fit footwear models?",
+   "customer_question": "Do you have slim-fit footwear?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-107",
+   "category": "Sizing and Fit",
+   "owner_question": "Are your kids' shoe sizes categorized primarily by age or by foot length (in cm/inches)?",
+   "customer_question": "Are the kids' sizes based on age or length?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "By age",
+    "By foot length",
+    "Standard shoe size numbers"
+   ]
+  },
+  {
+   "id": "footwear-108",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you stock sandals with adjustable Velcro or buckle straps to help with fit?",
+   "customer_question": "Do you have adjustable straps?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-109",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you offer formal shoes in different width fittings (e.g., standard vs. wide)?",
+   "customer_question": "Do you have formal shoes with different width options?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-110",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you stock slip-on footwear for kids that are easier to fit and wear?",
+   "customer_question": "Do you have slip-on shoes for kids?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-111",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you have a dedicated section or specific brands known for accommodating wider feet?",
+   "customer_question": "Do you have shoes for wide feet?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-112",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you carry any footwear specifically designed with high-arch support?",
+   "customer_question": "Do you have high-arch support footwear?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-113",
+   "category": "Material and Comfort",
+   "owner_question": "Do you stock mesh or canvas footwear specifically suitable for hot weather?",
+   "customer_question": "Do you have breathable material shoes for summer?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-114",
+   "category": "Material and Comfort",
+   "owner_question": "Do you stock footwear with padded or soft fabric inner linings?",
+   "customer_question": "Is the inner lining soft?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-115",
+   "category": "Material and Comfort",
+   "owner_question": "Do you label any of your products as 'ultra-lightweight'?",
+   "customer_question": "Do you have lightweight sandals?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-116",
+   "category": "Material and Comfort",
+   "owner_question": "Do you have a dedicated section or brand for vegan/cruelty-free footwear?",
+   "customer_question": "Are these shoes vegan?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-117",
+   "category": "Material and Comfort",
+   "owner_question": "Do you stock suede or velvet-finish footwear?",
+   "customer_question": "Do you have suede shoes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-118",
+   "category": "Material and Comfort",
+   "owner_question": "Do you stock block heels or wedges that are known for better stability than stilettos?",
+   "customer_question": "Are the heels stable?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-119",
+   "category": "Material and Comfort",
+   "owner_question": "Do you sell flexible-sole footwear, such as ballet flats or soft-sole loafers?",
+   "customer_question": "Are these shoes flexible?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-120",
+   "category": "Material and Comfort",
+   "owner_question": "Do you carry footwear with moisture-wicking or sweat-absorbent insoles?",
+   "customer_question": "Are these shoes sweat-absorbent?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-121",
+   "category": "Material and Comfort",
+   "owner_question": "Would you describe your general stock as lightweight or durable/heavy-duty?",
+   "customer_question": "Are these shoes heavy?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Mostly lightweight",
+    "Mostly heavy-duty/durable",
+    "Mix of both"
+   ]
+  },
+  {
+   "id": "footwear-122",
+   "category": "Material and Comfort",
+   "owner_question": "Do you stock canvas shoes (e.g., sneakers or slip-ons)?",
+   "customer_question": "Are these shoes made of canvas?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-123",
+   "category": "Material and Comfort",
+   "owner_question": "Do you stock rubber or EVA-based flip-flops/chappals?",
+   "customer_question": "Do you have rubber chappals?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-124",
+   "category": "Material and Comfort",
+   "owner_question": "Do you stock heavy-duty footwear designed for rough usage or outdoor terrain?",
+   "customer_question": "Are these shoes durable?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-125",
+   "category": "Material and Comfort",
+   "owner_question": "Do you use any natural materials like jute or cork in your footwear range?",
+   "customer_question": "Is the material synthetic or natural?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-126",
+   "category": "Material and Comfort",
+   "owner_question": "Do you carry sports or walking shoes with shock-absorbing heels?",
+   "customer_question": "Are these shoes shock-absorbing?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-127",
+   "category": "Durability and Maintenance",
+   "owner_question": "What is the expected average lifespan of your daily-wear sandals under normal usage?",
+   "customer_question": "How long do these sandals usually last?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-128",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you have any specific advice for storing your footwear to prevent mold or damage?",
+   "customer_question": "Do these shoes need special storage?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-129",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you provide a professional shoe polishing or cleaning service at your shop?",
+   "customer_question": "Can I get my shoes polished here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-130",
+   "category": "Durability and Maintenance",
+   "owner_question": "Are the materials used in your footwear resistant to sun-fading?",
+   "customer_question": "Will the color fade if I wear them in the sun?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-131",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you have any tips you share with customers to keep formal shoes looking shiny?",
+   "customer_question": "How do I maintain the shine on formal shoes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-132",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you keep spare shoelaces in stock for customers?",
+   "customer_question": "Do you sell spare laces?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-133",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you sell any hand-stitched or artisan-made footwear that requires special care?",
+   "customer_question": "Are these shoes hand-stitched?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-134",
+   "category": "Durability and Maintenance",
+   "owner_question": "Do you advise customers against using heat (like hair dryers) to dry their shoes?",
+   "customer_question": "Can I use a hair dryer to dry my wet shoes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-135",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock outdoor or trekking-specific footwear?",
+   "customer_question": "Are these shoes suitable for trekking or hiking?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-136",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock beach-friendly or open-toe water sandals?",
+   "customer_question": "Do you have sandals for beach wear?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-137",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock lightweight, flexible footwear ideal for driving?",
+   "customer_question": "Are these shoes safe for driving?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-138",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock a variety of slip-on or loafer-style footwear?",
+   "customer_question": "Do you have slip-on shoes for quick wear?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-139",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock specialized footwear for activities like dance?",
+   "customer_question": "Do you have shoes for dance or stage performances?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-140",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock closed-toe or warm-lined footwear for winter?",
+   "customer_question": "Are these shoes suitable for winter?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-141",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock platform-style sandals or wedges?",
+   "customer_question": "Do you have platform sandals?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-142",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock safety shoes with steel toes for industrial work?",
+   "customer_question": "Are these shoes suitable for heavy-duty construction work?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-143",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock premium or branded luxury footwear collections?",
+   "customer_question": "Are these shoes considered premium or luxury?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-144",
+   "category": "Occasion Suitability",
+   "owner_question": "Do you stock footwear with high-traction or anti-slip soles?",
+   "customer_question": "Do you have extra-grip shoes for slippery surfaces?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-145",
+   "category": "Brand Authenticity",
+   "owner_question": "If you offer discounts on branded items, how do you explain the price difference to customers?",
+   "customer_question": "Why are these prices lower than the official brand website?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-146",
+   "category": "Brand Authenticity",
+   "owner_question": "Do you provide any store-level certificate or bill that guarantees the authenticity of the brands?",
+   "customer_question": "Do you have a certificate of authenticity?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-147",
+   "category": "Brand Authenticity",
+   "owner_question": "Do your branded products come with verifiable security features like holograms or QR codes on the packaging?",
+   "customer_question": "Can I check the QR code or hologram on the box?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-148",
+   "category": "Brand Authenticity",
+   "owner_question": "How many years have you been an authorized retailer for the major brands you carry?",
+   "customer_question": "How long have you been selling these brands?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "footwear-149",
+   "category": "Brand Authenticity",
+   "owner_question": "Do you stock locally manufactured Indian brands or mostly imported ones?",
+   "customer_question": "Are these made in India or imported?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Mostly Indian brands",
+    "Mostly imported brands",
+    "Balanced mix"
+   ]
+  },
+  {
+   "id": "footwear-150",
+   "category": "Brand Authenticity",
+   "owner_question": "What is your policy if a customer questions the authenticity of a product they purchased?",
+   "customer_question": "What if I find the product is fake?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-151",
+   "category": "Warranty and Repairs",
+   "owner_question": "What is the typical turnaround time (in days) for a repair job?",
+   "customer_question": "How long does it take to get a shoe repaired?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "footwear-152",
+   "category": "Warranty and Repairs",
+   "owner_question": "Under what conditions do you offer a full replacement instead of a repair?",
+   "customer_question": "Can I get a replacement instead of a repair?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-153",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer repair services for footwear that was purchased elsewhere?",
+   "customer_question": "Do you repair footwear not bought from your shop?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-154",
+   "category": "Warranty and Repairs",
+   "owner_question": "Is there any warranty coverage for color fading or polish wear on the footwear?",
+   "customer_question": "Is there a warranty on the polish or colour fading?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-155",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you have an in-house cobbler or do you send items to a workshop for repairs?",
+   "customer_question": "Who does the repair work?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "In-house",
+    "External workshop",
+    "Both"
+   ]
+  },
+  {
+   "id": "footwear-157",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you offer a secondary repair or replacement if the first repair fails?",
+   "customer_question": "What if the repair doesn't fix the issue?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-158",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you provide temporary footwear while the customer's pair is undergoing repair?",
+   "customer_question": "Can I get a loaner pair while mine is being repaired?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-159",
+   "category": "Warranty and Repairs",
+   "owner_question": "If you have multiple branches, can a customer claim warranty at any of them?",
+   "customer_question": "Is the warranty valid across all your branches?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-160",
+   "category": "Warranty and Repairs",
+   "owner_question": "Do you require the customer to fill out a repair form or logbook when dropping off items?",
+   "customer_question": "Do you have a specific form to fill for repairs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-161",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you have a loyalty discount or special pricing for your regular customers?",
+   "customer_question": "Do you give extra discounts for regular customers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-162",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer any specific discounts for students or senior citizens?",
+   "customer_question": "Do you offer any student or senior citizen discounts?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-163",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer any price concessions for cash payments compared to digital payments?",
+   "customer_question": "Is there a discount if I pay in cash?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-164",
+   "category": "Pricing and Discounts",
+   "owner_question": "Is there a minimum bill amount required for a customer to be eligible for a discount?",
+   "customer_question": "Is there a minimum purchase amount to get a discount?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "footwear-165",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you issue gift vouchers or discount coupons that customers can redeem later?",
+   "customer_question": "Do you provide gift vouchers or discount coupons?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-166",
+   "category": "Pricing and Discounts",
+   "owner_question": "Does your pricing for kids' footwear vary significantly based on the age or size group?",
+   "customer_question": "Are there different prices for kids' footwear based on age?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-167",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you accept bulk orders for schools or events at a discounted rate?",
+   "customer_question": "Do you offer any discounts for bulk orders for schools or events?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-168",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you charge extra for packaging materials like shoe boxes or branded carry bags?",
+   "customer_question": "Do you charge extra for shoe boxes or carry bags?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-169",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you have a standard 'buy more save more' slab for items like chappals or sandals?",
+   "customer_question": "Can I get a discount if I buy 3 pairs of chappals?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-170",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you position your pricing to be competitive with major online e-commerce platforms?",
+   "customer_question": "Are your prices lower than online shopping sites?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Yes, we are competitive",
+    "No, our prices are standard",
+    "We don't compare with online"
+   ]
+  },
+  {
+   "id": "footwear-171",
+   "category": "Stock Availability",
+   "owner_question": "How often do you receive new stock shipments for your footwear collection?",
+   "customer_question": "Do you restock your inventory every week?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Weekly",
+    "Fortnightly",
+    "Monthly",
+    "On demand"
+   ]
+  },
+  {
+   "id": "footwear-172",
+   "category": "Stock Availability",
+   "owner_question": "What is the maximum time limit you allow for holding an item for a customer?",
+   "customer_question": "How long can you hold a pair of shoes for me?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-173",
+   "category": "Stock Availability",
+   "owner_question": "Do you cater to bulk or wholesale orders in addition to retail sales?",
+   "customer_question": "Do you sell footwear in bulk or wholesale?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-174",
+   "category": "Stock Availability",
+   "owner_question": "Is your footwear stock consistent throughout the year or does it change with seasons?",
+   "customer_question": "Are your items always in stock, or is it seasonal?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Consistent throughout the year",
+    "Changes with seasons/festivals"
+   ]
+  },
+  {
+   "id": "footwear-175",
+   "category": "Stock Availability",
+   "owner_question": "Do you have a system to inform regular customers when new stock or specific sizes arrive?",
+   "customer_question": "Do you notify customers when new stock arrives?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-176",
+   "category": "Stock Availability",
+   "owner_question": "Do you occasionally stock limited edition or exclusive footwear models?",
+   "customer_question": "Do you have limited edition collections?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-177",
+   "category": "Stock Availability",
+   "owner_question": "Do you stock shoe-care accessories like polish, brushes, or socks?",
+   "customer_question": "Do you have matching accessories like socks or polish?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-178",
+   "category": "Gift and Occasion Services",
+   "owner_question": "What is the minimum value for a gift voucher?",
+   "customer_question": "What is the minimum amount for a gift voucher?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "footwear-179",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Can customers use gift vouchers during discount or sale periods?",
+   "customer_question": "Can I use a gift voucher during a sale?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-180",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you offer the option to write a personalized note or message for gifts?",
+   "customer_question": "Can I get a personalized message written on the gift box?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-181",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you offer premium or special packaging for wedding or festive purchases?",
+   "customer_question": "Do you have special packaging for weddings?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-182",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Can a gift voucher be used across multiple visits, or must it be used at once?",
+   "customer_question": "Can a gift voucher be redeemed in parts?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Must be used at once",
+    "Can be used in parts"
+   ]
+  },
+  {
+   "id": "footwear-183",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Can the person who received the gift voucher give it to someone else to use?",
+   "customer_question": "Are gift vouchers transferable?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-184",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Can you provide a gift receipt that does not show the price of the shoes?",
+   "customer_question": "Do you provide a gift receipt without the price?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-185",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you offer special pricing for bulk orders meant for corporate gifting?",
+   "customer_question": "Do you offer bulk discounts for corporate gifting?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-186",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you use specific branded gift boxes or generic paper wrapping?",
+   "customer_question": "Is there a specific design for gift boxes?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Branded box",
+    "Generic paper",
+    "Both"
+   ]
+  },
+  {
+   "id": "footwear-187",
+   "category": "Foot Health and Advice",
+   "owner_question": "Are the insoles in your shoes removable so customers can use their own custom orthotics?",
+   "customer_question": "Can I use my own custom orthotic insoles in your shoes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-188",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you have a specific range of lightweight footwear for daily use?",
+   "customer_question": "Are your shoes lightweight?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-189",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you carry breathable footwear options for people who stand for long hours?",
+   "customer_question": "Do you have breathable footwear for long hours of wear?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-190",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you have footwear that is specifically recommended for monsoon or wet conditions?",
+   "customer_question": "Are your sandals water-resistant for monsoon use?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-191",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you have a collection of flat, stable footwear for customers with back or knee pain?",
+   "customer_question": "Do you have flat footwear for people with back pain?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-192",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you carry footwear made of natural materials like cotton or soft leather for sensitive skin?",
+   "customer_question": "What material is best for sensitive skin?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-193",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you have specific footwear recommendations for people with flat feet?",
+   "customer_question": "Do you have footwear for flat feet?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-194",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you stock shoes with shock-absorbing technology in the heel?",
+   "customer_question": "Are your shoes shock-absorbing?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-195",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you stock shoes with a wide-toe box to prevent bunions or toe crowding?",
+   "customer_question": "Do you have wide-toe box shoes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-196",
+   "category": "Foot Health and Advice",
+   "owner_question": "Do you stock open-toe sandals that are recommended for post-surgery or foot injury recovery?",
+   "customer_question": "Do you have open-toe sandals that are medically recommended?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-197",
+   "category": "Store Policies",
+   "owner_question": "Can customers exchange footwear for a different style, or must it be the same model?",
+   "customer_question": "Can I exchange a pair of sandals for a different model?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-198",
+   "category": "Store Policies",
+   "owner_question": "Do you provide specific warranty cards for branded footwear?",
+   "customer_question": "Do you provide a warranty card for branded shoes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-199",
+   "category": "Store Policies",
+   "owner_question": "Do you have a specific policy for gift exchanges (e.g., gift receipts)?",
+   "customer_question": "Can I exchange footwear I bought as a gift?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-200",
+   "category": "Store Policies",
+   "owner_question": "Do you charge any restocking or processing fees for returned items?",
+   "customer_question": "Do you charge any restocking fee for returns?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-201",
+   "category": "Store Policies",
+   "owner_question": "If you have multiple branches, can items be exchanged at any location?",
+   "customer_question": "Can I exchange my shoes at any of your branches?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-202",
+   "category": "Store Policies",
+   "owner_question": "What is the typical turnaround time for footwear repairs?",
+   "customer_question": "How long does the repair process take?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-203",
+   "category": "Store Policies",
+   "owner_question": "Do you offer any trial-at-home policy for regular customers?",
+   "customer_question": "Do you offer a trial period for new shoes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-204",
+   "category": "Store Policies",
+   "owner_question": "Do you accept returns if the color or shade of the footwear differs from the customer's expectation?",
+   "customer_question": "Can I exchange if the color looks different from the photo?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-205",
+   "category": "Store Policies",
+   "owner_question": "Are there specific hours when exchange requests are processed?",
+   "customer_question": "Is there a time of day when I can bring items for exchange?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-206",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you offer special discounts for customers on their birthdays or anniversaries?",
+   "customer_question": "Is there a birthday or anniversary discount?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-207",
+   "category": "Loyalty and Membership",
+   "owner_question": "How can a customer check their current loyalty points balance?",
+   "customer_question": "How do I check my loyalty points balance?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-208",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do the loyalty points earned by customers have an expiry date?",
+   "customer_question": "Do my loyalty points expire?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-209",
+   "category": "Loyalty and Membership",
+   "owner_question": "Is it possible for a customer to transfer their loyalty points to another person?",
+   "customer_question": "Can I transfer my loyalty points to someone else?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-210",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you have different tiers or levels of membership for your customers?",
+   "customer_question": "Do you have a VIP membership level?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-211",
+   "category": "Loyalty and Membership",
+   "owner_question": "Are there any items in the shop that cannot be purchased using loyalty points?",
+   "customer_question": "Can I use my loyalty points for any item in the shop?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-212",
+   "category": "Loyalty and Membership",
+   "owner_question": "Is there a minimum bill amount required for a customer to earn loyalty points?",
+   "customer_question": "Is there a minimum purchase amount to earn points?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "footwear-213",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do customers earn loyalty points when they buy discounted or sale items?",
+   "customer_question": "Do I get points for buying items on sale?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-214",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you offer any rewards if a customer refers a friend or family member to your shop?",
+   "customer_question": "Do you have a referral program?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-215",
+   "category": "Loyalty and Membership",
+   "owner_question": "What reward do you give to customers who refer someone else to your shop?",
+   "customer_question": "What is the referral reward?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

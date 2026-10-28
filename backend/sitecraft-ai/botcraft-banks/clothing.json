@@ -1,0 +1,2756 @@
+{
+ "shop_type_key": "clothing",
+ "name": "Clothing / saree shop",
+ "version": 1,
+ "model": "gemini-3.1-flash-lite, gemini-3.8-flash",
+ "generated_at": "2026-10-28",
+ "question_count": 240,
+ "questions": [
+  {
+   "id": "clothing-001",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you guarantee color fastness for your dyed fabrics?",
+   "customer_question": "Is the fabric color fast?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-002",
+   "category": "Saree Specifics",
+   "owner_question": "Do you offer in-house fall and pico stitching services for sarees?",
+   "customer_question": "Do you provide fall and pico stitching services?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-003",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you offer alteration services for readymade garments purchased at your shop?",
+   "customer_question": "Do you provide alteration services for readymade clothes?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-004",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you have a trial room facility in your shop?",
+   "customer_question": "Can I try on the clothes before buying?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-005",
+   "category": "Pricing and Discounts",
+   "owner_question": "Is your shop a 'Fixed Price' shop, or are you open to customers bargaining on the prices?",
+   "customer_question": "Are your prices fixed or can I bargain?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Fixed Price",
+    "Bargaining allowed"
+   ]
+  },
+  {
+   "id": "clothing-006",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do your fabrics require dry cleaning or can they be hand-washed at home?",
+   "customer_question": "Does this saree color bleed when washed?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Dry clean only",
+    "Hand wash only",
+    "Machine wash safe",
+    "No special care needed"
+   ]
+  },
+  {
+   "id": "clothing-007",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you recommend pre-washing or soaking your fabrics before stitching?",
+   "customer_question": "Will this dress material shrink after I stitch it?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-008",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you provide any authenticity certificates or tags for your silk products?",
+   "customer_question": "Is this silk pure or art silk?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-009",
+   "category": "Fabric Quality and Material",
+   "owner_question": "How do you describe the durability of the embroidery or zari work on your sarees?",
+   "customer_question": "Does the embroidery or zari work come off easily?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "High quality, machine-stitched",
+    "Hand-crafted, delicate",
+    "Standard quality"
+   ]
+  },
+  {
+   "id": "clothing-010",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do your dress materials usually require an inner lining to be worn comfortably?",
+   "customer_question": "Is the fabric transparent or does it need a lining?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-011",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you sell any region-specific textiles like Banarasi, Kanjeevaram, or Chanderi?",
+   "customer_question": "Is the fabric sourced from a specific region?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "clothing-012",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you clearly label your products as natural (cotton, silk, wool) or synthetic (polyester, rayon)?",
+   "customer_question": "Is the fabric synthetic or natural?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-013",
+   "category": "Fabric Quality and Material",
+   "owner_question": "How do you categorize your fabrics based on usage (e.g., daily wear, office wear, party wear)?",
+   "customer_question": "Is the material suitable for daily wear or party wear?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "clothing-014",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you stock hand-loomed or artisanal fabrics in your shop?",
+   "customer_question": "Is this fabric hand-loomed?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-015",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you advise your customers to expect any shrinkage in your cotton or linen fabrics after the first wash?",
+   "customer_question": "Will the fabric shrink after the first wash?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-016",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you have any specific fabrics or dark-colored prints in your collection that are prone to color bleeding?",
+   "customer_question": "Does the color bleed when washed?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-017",
+   "category": "Saree Specifics",
+   "owner_question": "Do most of your sarees come with a matching blouse piece attached?",
+   "customer_question": "Does this saree come with a blouse piece?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-018",
+   "category": "Saree Specifics",
+   "owner_question": "What is the standard charge for fall and pico stitching per saree?",
+   "customer_question": "How much do you charge for fall and pico?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "clothing-019",
+   "category": "Saree Specifics",
+   "owner_question": "How much time do you usually take to complete fall and pico work?",
+   "customer_question": "How long does it take to get fall and pico done?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-020",
+   "category": "Saree Specifics",
+   "owner_question": "Do you stock pure silk sarees with real gold/silver zari, or is it mostly imitation zari?",
+   "customer_question": "Is the zari on this saree pure or imitation?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Pure Zari",
+    "Imitation/Tested Zari",
+    "Both"
+   ]
+  },
+  {
+   "id": "clothing-021",
+   "category": "Saree Specifics",
+   "owner_question": "Do you recommend dry cleaning for most of your premium sarees?",
+   "customer_question": "How should I wash this saree?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-022",
+   "category": "Saree Specifics",
+   "owner_question": "Do you sell sarees that come with a Silk Mark certification?",
+   "customer_question": "Do you have silk mark certified sarees?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-023",
+   "category": "Saree Specifics",
+   "owner_question": "Do you primarily sell handloom sarees, powerloom sarees, or a mix of both?",
+   "customer_question": "Are these sarees handloom or powerloom?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Handloom",
+    "Powerloom",
+    "Both"
+   ]
+  },
+  {
+   "id": "clothing-024",
+   "category": "Saree Specifics",
+   "owner_question": "Do you provide blouse tailoring services or just sell the fabric?",
+   "customer_question": "Can I get a blouse stitched from you?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-025",
+   "category": "Saree Specifics",
+   "owner_question": "Do you keep a regular stock of daily-wear cotton sarees?",
+   "customer_question": "Do you have cotton sarees for daily wear?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-026",
+   "category": "Saree Specifics",
+   "owner_question": "Do you carry a collection of designer or party-wear sarees?",
+   "customer_question": "Do you sell designer sarees?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-027",
+   "category": "Saree Specifics",
+   "owner_question": "Do you maintain a dedicated section or collection for bridal and heavy wedding sarees?",
+   "customer_question": "Do you have sarees suitable for heavy wedding wear or bridal collections?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-028",
+   "category": "Saree Specifics",
+   "owner_question": "Do you categorize your saree stock based on usage like daily wear, office wear, or formal wear?",
+   "customer_question": "Do you keep sarees that are lightweight and easy to drape for daily office wear?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-029",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you have a standard size chart for your readymade garments?",
+   "customer_question": "Do you have a size chart I can check?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-030",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you charge a flat fee for alterations or does it depend on the work?",
+   "customer_question": "How much do you charge for alterations?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Flat fee",
+    "Depends on work",
+    "Free of cost"
+   ]
+  },
+  {
+   "id": "clothing-031",
+   "category": "Sizing and Fit",
+   "owner_question": "What is the typical turnaround time for an alteration request?",
+   "customer_question": "How long does it take to get an outfit altered?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-032",
+   "category": "Sizing and Fit",
+   "owner_question": "Up to what maximum size do you stock for readymade garments?",
+   "customer_question": "Do you have plus sizes available?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-033",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you inform customers if the dress materials are pre-shrunk or if they might shrink after washing?",
+   "customer_question": "Are your dress materials pre-shrunk?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-034",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you mention the standard length of your sarees (e.g., 5.5m or 6m) on the product tags?",
+   "customer_question": "Do you have standard measurements for your sarees?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-035",
+   "category": "Sizing and Fit",
+   "owner_question": "Do your readymade garments usually come with extra margins for future adjustments?",
+   "customer_question": "Do you keep extra margins in your readymade clothes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-036",
+   "category": "Sizing and Fit",
+   "owner_question": "Are your readymade garment sizes based on standard Indian sizing?",
+   "customer_question": "Are these sizes based on Indian standards?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-037",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you provide custom tailoring services for the dress materials you sell?",
+   "customer_question": "Can I get a custom fit for dress materials?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-038",
+   "category": "Sizing and Fit",
+   "owner_question": "Do the blouse pieces included with your sarees typically fit a standard adult size?",
+   "customer_question": "Are the blouse pieces in sarees standard size?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-039",
+   "category": "Sizing and Fit",
+   "owner_question": "Is changing a size allowed if the customer finds the fit is not right after trying it on?",
+   "customer_question": "Do you offer size exchanges if the item doesn't fit?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-040",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you specify the total length (in meters) of the dress materials on the product?",
+   "customer_question": "What is the length of the dress materials you sell?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-041",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you recommend machine washing for your sarees, or should they be hand-washed only?",
+   "customer_question": "Can I wash this saree in a washing machine?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Machine wash allowed",
+    "Hand wash only",
+    "Depends on the fabric type"
+   ]
+  },
+  {
+   "id": "clothing-042",
+   "category": "Washing and Maintenance",
+   "owner_question": "Are there specific items in your shop that strictly require professional dry cleaning?",
+   "customer_question": "Does this dress material require dry cleaning?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-043",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you explicitly advise against using bleach on your white or light-colored garments?",
+   "customer_question": "Can I use bleach on these white garments?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-044",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you recommend washing new clothes separately for the first few washes?",
+   "customer_question": "Should I wash these clothes separately?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-045",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you sell pre-shrunk fabrics, or should customers expect some shrinkage after the first wash?",
+   "customer_question": "Are these clothes pre-shrunk?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Pre-shrunk",
+    "Expect some shrinkage",
+    "No shrinkage"
+   ]
+  },
+  {
+   "id": "clothing-046",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you advise customers to use only cold water for washing your garments?",
+   "customer_question": "Can I use hot water to wash these?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-047",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you recommend using mild liquid detergents instead of harsh powder detergents for your clothes?",
+   "customer_question": "Is there a specific detergent I should use?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-048",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you advise customers to use room-temperature water versus warm water for your delicate fabrics?",
+   "customer_question": "Should I use a specific water temperature for my hand-washable items?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Room temperature",
+    "Warm water",
+    "Cold water"
+   ]
+  },
+  {
+   "id": "clothing-049",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you recommend flat-drying for your heavy embroidered garments to prevent stretching?",
+   "customer_question": "How should I dry heavy embroidered sarees after washing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-050",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you offer tailoring or stitching services to your customers?",
+   "customer_question": "Do you provide tailoring or stitching services at your shop?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-051",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you have an in-house tailor to alter readymade clothes like kurtis, pants, or dresses?",
+   "customer_question": "Can I get my readymade clothes altered here if the size does not fit?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-052",
+   "category": "Customization and Tailoring",
+   "owner_question": "Are basic alterations for readymade clothes bought at your shop free or chargeable?",
+   "customer_question": "Do you charge extra for altering readymade clothes bought from your shop?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free of cost",
+    "Chargeable",
+    "Free for minor alterations only"
+   ]
+  },
+  {
+   "id": "clothing-053",
+   "category": "Customization and Tailoring",
+   "owner_question": "What is the starting stitching charge for a basic saree blouse?",
+   "customer_question": "What is the starting price for stitching a simple saree blouse?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "clothing-054",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you stitch salwar suits, kurtis, and churidar sets from dress materials?",
+   "customer_question": "Do you stitch unstitched salwar suits and dress materials?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-055",
+   "category": "Customization and Tailoring",
+   "owner_question": "What is the starting stitching price for a standard salwar suit or kurti?",
+   "customer_question": "What is your basic stitching rate for a salwar suit or dress material?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "clothing-056",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you provide express or same-day stitching and alteration service?",
+   "customer_question": "Can I get emergency or same-day alteration or stitching if I am in a hurry?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, same-day available",
+    "Yes, within 24 hours with extra charge",
+    "No, standard time only"
+   ]
+  },
+  {
+   "id": "clothing-057",
+   "category": "Customization and Tailoring",
+   "owner_question": "Can customers give their body measurements at your shop, or must they bring a sample fitting garment?",
+   "customer_question": "Can your tailor take my body measurements directly at the shop?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Both measurements taken and sample garment accepted",
+    "Sample fitting garment required only",
+    "Measurements taken at shop only"
+   ]
+  },
+  {
+   "id": "clothing-058",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you accept custom design requests based on photos or patterns provided by the customer?",
+   "customer_question": "Can I get a blouse stitched with a specific pattern I saw online?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-059",
+   "category": "Pricing and Discounts",
+   "owner_question": "Are the prices you will list for your products inclusive of GST, or is GST added extra at the time of billing?",
+   "customer_question": "Are the prices inclusive of GST?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Prices include GST",
+    "GST is added extra"
+   ]
+  },
+  {
+   "id": "clothing-060",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer special discounts for bulk purchases (e.g., buying 5+ sarees)?",
+   "customer_question": "Do you offer discounts for bulk purchases?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-061",
+   "category": "Pricing and Discounts",
+   "owner_question": "What is the minimum number of items a customer must buy to qualify for a bulk discount?",
+   "customer_question": "What is the minimum quantity required to get a bulk discount?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-062",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you currently have any seasonal sales or recurring discount offers running in your shop?",
+   "customer_question": "Do you have any ongoing seasonal sales or offers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-063",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you maintain the same price in-store as you show on your social media or online catalogs?",
+   "customer_question": "Are the prices on your items the same as the prices on your social media pages?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-064",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you typically run special discount campaigns during major Indian festivals?",
+   "customer_question": "Do you offer discounts during festival seasons like Diwali or Eid?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-065",
+   "category": "Pricing and Discounts",
+   "owner_question": "For dress materials, do you price the fabric and the stitching service separately?",
+   "customer_question": "Are the prices of fabric and stitching separate?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-066",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you provide a specific percentage or flat discount for large-scale event orders like wedding return gifts?",
+   "customer_question": "Do you offer any discounts for bulk orders meant for wedding guests or return gifts?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-067",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you add any mandatory service fees or handling charges on top of the product price at the billing counter?",
+   "customer_question": "Are the prices marked on the tags final, or do you have hidden service charges?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-068",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you usually keep the same saree designs in multiple color options?",
+   "customer_question": "Do you have this saree in other colors?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-069",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you regularly restock popular dress materials once they are sold out?",
+   "customer_question": "Will you get more stock of this dress material soon?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-070",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "How frequently do you add fresh saree stock to your shop?",
+   "customer_question": "How often do you get new saree collections?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Weekly",
+    "Every 15 days",
+    "Monthly",
+    "Seasonally"
+   ]
+  },
+  {
+   "id": "clothing-071",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you store additional sizes or pieces of readymade garments in your storage area?",
+   "customer_question": "Do you keep extra stock of readymade garments in the back?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-072",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Are you willing to place special orders for customers if a specific color or size is missing?",
+   "customer_question": "Can you order a specific color for me if it is out of stock?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-073",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "If you accept a special order, how many days does it typically take to arrive at your shop?",
+   "customer_question": "How long does it take for out-of-stock items to arrive?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-074",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you maintain a consistent stock of matching blouse pieces for your sarees?",
+   "customer_question": "Do you stock matching blouses for all sarees?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-075",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you sell your dress materials as single pieces or only in full sets?",
+   "customer_question": "Are your dress materials available in full sets or single pieces?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Single pieces only",
+    "Full sets only",
+    "Both"
+   ]
+  },
+  {
+   "id": "clothing-076",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you stock special collections based on the Indian festive season or weather?",
+   "customer_question": "Do you keep seasonal collections like winter wear or festive wear?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-077",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you typically stock a full range of sizes (S, M, L, XL, XXL) for your readymade garments?",
+   "customer_question": "Is this readymade garment available in other sizes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-078",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Is a matching dupatta included with most of your dress materials?",
+   "customer_question": "Do you have matching dupattas for all dress materials?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-079",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Can you fulfill bulk orders for sarees or garments for family functions or events?",
+   "customer_question": "Can I request a bulk order for a family event?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-080",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "What is the minimum notice period you require for fulfilling a bulk order?",
+   "customer_question": "How far in advance should I place a bulk order?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-081",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Are customers allowed to try on sarees or unstitched dress materials?",
+   "customer_question": "Can I try on sarees in the shop?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-082",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Is there a limit on the number of items a customer can take into the trial room at one time?",
+   "customer_question": "How many items can I take into the trial room at once?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-083",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Are there any specific product categories (like innerwear or specific fabrics) that customers are not allowed to try on?",
+   "customer_question": "Are there any items that cannot be tried on?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-084",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Do customers need to request permission or get a token from a staff member before using the trial room?",
+   "customer_question": "Do I need to ask a staff member before using the trial room?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-085",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Is your trial room equipped with bright, clear lighting for customers to see the fabric colors and fit properly?",
+   "customer_question": "Is there adequate lighting inside the trial room?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-086",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you provide gift wrapping services for items purchased in your shop?",
+   "customer_question": "Do you offer gift wrapping services for sarees?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-087",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you charge extra for gift wrapping, or is it free?",
+   "customer_question": "Is there an extra charge for gift wrapping?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Charge extra"
+   ]
+  },
+  {
+   "id": "clothing-088",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "What is the standard price you charge for gift wrapping per item?",
+   "customer_question": "How much do you charge for gift wrapping?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "clothing-089",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you offer specialized, heavy-duty, or decorative packaging specifically for bridal or high-value wedding trousseau items?",
+   "customer_question": "Do you have specific packaging for wedding trousseau or bridal sarees?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-090",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you provide special pricing or discounts for wedding trousseau or bulk orders?",
+   "customer_question": "Do you offer special discounts for wedding bulk purchases?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-091",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "What is the minimum number of items or minimum bill amount required to qualify for bulk pricing?",
+   "customer_question": "What is the minimum quantity to qualify for a bulk order discount?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-092",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you have a specific catalog or collection for bulk wedding orders that you can share?",
+   "customer_question": "Can you show me a catalog for bulk wedding orders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-093",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you offer custom tailoring or alteration services specifically for bulk wedding orders?",
+   "customer_question": "Do you provide custom tailoring for bulk orders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-094",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "How many days in advance should a customer place a bulk order to ensure timely delivery?",
+   "customer_question": "How much advance notice do you need for a large bulk order?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-095",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Is delivery free for bulk wedding orders, or is there an additional charge?",
+   "customer_question": "Do you charge extra for bulk order delivery?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Chargeable",
+    "Depends on distance"
+   ]
+  },
+  {
+   "id": "clothing-096",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "What percentage of the total bill do you require as an advance payment for bulk orders?",
+   "customer_question": "What is the advance payment required for bulk orders?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-097",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you provide GST-compliant invoices for bulk orders?",
+   "customer_question": "Do you provide GST invoices for bulk purchases?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-098",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "What is your policy on returns or exchanges for items purchased in bulk?",
+   "customer_question": "Can I return items from a bulk order if they are unused?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-099",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you allow the balance payment for bulk orders to be paid upon delivery or pickup?",
+   "customer_question": "Can I pay the balance for a bulk order after delivery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-100",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you offer a flat percentage discount or a fixed price reduction for bulk orders?",
+   "customer_question": "Do you offer any special discounts if I buy a large quantity for a group, like for a family function or office event?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Percentage discount",
+    "Fixed price reduction",
+    "No discount, only wholesale rates",
+    "Negotiable on case-to-case basis"
+   ]
+  },
+  {
+   "id": "clothing-101",
+   "category": "Store Policies",
+   "owner_question": "How many days after purchase do you allow customers to exchange an item?",
+   "customer_question": "Can I exchange this saree if I don't like the color at home?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-102",
+   "category": "Store Policies",
+   "owner_question": "Do you offer cash refunds, or only store credit/exchange for returned items?",
+   "customer_question": "Do you give cash refunds for returned items?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Cash refund",
+    "Store credit only",
+    "Exchange only",
+    "No returns or refunds"
+   ]
+  },
+  {
+   "id": "clothing-103",
+   "category": "Store Policies",
+   "owner_question": "Is the original bill mandatory for processing an exchange or return?",
+   "customer_question": "Do I need the original bill for an exchange?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-104",
+   "category": "Store Policies",
+   "owner_question": "Do you accept returns or exchanges for dress materials or fabrics that have been cut?",
+   "customer_question": "Can I exchange a blouse piece that has already been cut?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-105",
+   "category": "Store Policies",
+   "owner_question": "What is your policy for handling manufacturing defects found after the customer leaves the shop?",
+   "customer_question": "What if I find a defect in the saree after opening it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-106",
+   "category": "Store Policies",
+   "owner_question": "Are items bought during a sale or at a discounted price eligible for exchange?",
+   "customer_question": "Can I exchange items bought on sale?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-107",
+   "category": "Store Policies",
+   "owner_question": "Is it mandatory for the original price tag to be attached for an exchange?",
+   "customer_question": "Can I exchange an item if the tag is removed?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-108",
+   "category": "Store Policies",
+   "owner_question": "Do you accept returns for garments that have been washed or used?",
+   "customer_question": "What if I don't like the fabric quality after washing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-109",
+   "category": "Store Policies",
+   "owner_question": "Is the original packaging or box mandatory for processing an exchange or return?",
+   "customer_question": "Can I exchange an item if I don't have the original packaging?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-110",
+   "category": "Store Policies",
+   "owner_question": "Do you allow exchanges for items purchased through other channels or different branches of your shop?",
+   "customer_question": "Can I exchange an item at your shop if I bought it from your online store or another branch?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-111",
+   "category": "Trust and Authenticity",
+   "owner_question": "In which year was your shop established?",
+   "customer_question": "How many years has this shop been in business?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-112",
+   "category": "Trust and Authenticity",
+   "owner_question": "Do you sell handloom products, machine-made products, or both?",
+   "customer_question": "Are your products handloom or machine-made?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only handloom",
+    "Only machine-made",
+    "Both"
+   ]
+  },
+  {
+   "id": "clothing-113",
+   "category": "Trust and Authenticity",
+   "owner_question": "Do you source any of your fabrics or sarees directly from the weavers?",
+   "customer_question": "Do you source your fabrics directly from weavers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-114",
+   "category": "Trust and Authenticity",
+   "owner_question": "Do you display any government certifications like Handloom Mark or Silk Mark in your shop?",
+   "customer_question": "Do you have any government certifications or quality marks for your textiles?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-115",
+   "category": "Trust and Authenticity",
+   "owner_question": "Do you offer any quality guarantee or 'check before you pay' policy for your readymade garments?",
+   "customer_question": "Can I trust the quality of the readymade garments you sell?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-116",
+   "category": "Trust and Authenticity",
+   "owner_question": "Is your shop a physical store where customers can walk in to inspect the quality?",
+   "customer_question": "Do you have a physical store I can visit to check the quality?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-117",
+   "category": "Trust and Authenticity",
+   "owner_question": "Do you provide a GST-compliant bill for all purchases?",
+   "customer_question": "Do you provide a GST invoice for purchases?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-118",
+   "category": "Trust and Authenticity",
+   "owner_question": "Do you sell well-known brands, local labels, or a mix of both?",
+   "customer_question": "Do you sell branded items or local labels?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only well-known brands",
+    "Only local labels",
+    "Both"
+   ]
+  },
+  {
+   "id": "clothing-119",
+   "category": "Trust and Authenticity",
+   "owner_question": "Which regions do you source your silk sarees from (e.g., Kanchipuram, Banaras, Mysore)?",
+   "customer_question": "What is the origin of your silk sarees?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "clothing-120",
+   "category": "Trust and Authenticity",
+   "owner_question": "How many years has your shop been serving this specific locality?",
+   "customer_question": "How long have you been serving this neighborhood?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-121",
+   "category": "Festive and Seasonal Collections",
+   "owner_question": "Do you stock special collections specifically for the wedding season?",
+   "customer_question": "Do you have any new collections for the upcoming wedding season?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-122",
+   "category": "Festive and Seasonal Collections",
+   "owner_question": "How many weeks before Diwali do you typically launch your festive stock?",
+   "customer_question": "When do you usually launch your Diwali collection?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-123",
+   "category": "Festive and Seasonal Collections",
+   "owner_question": "Do you curate specific collections for regional festivals like Pongal or Sankranti?",
+   "customer_question": "Do you keep special sarees for the festival of Pongal/Sankranti?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-124",
+   "category": "Festive and Seasonal Collections",
+   "owner_question": "Do you change your inventory based on summer and winter seasons?",
+   "customer_question": "Do you have any new arrivals for the summer season?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-125",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you stock organic or skin-friendly natural fabrics like pure cotton or linen?",
+   "customer_question": "Is the fabric skin-friendly for sensitive skin?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-126",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Which of your fabrics do you highlight as being most comfortable for summer wear?",
+   "customer_question": "Is this material breathable for summer?",
+   "priority": "optional",
+   "answer_type": "list"
+  },
+  {
+   "id": "clothing-127",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you sell any wrinkle-resistant fabrics or materials that are low-maintenance?",
+   "customer_question": "Does this fabric wrinkle easily?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-128",
+   "category": "Fabric Quality and Material",
+   "owner_question": "How would you classify the weight of your premium saree collection?",
+   "customer_question": "Is this a heavy or lightweight saree?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Lightweight",
+    "Medium weight",
+    "Heavy/Grand"
+   ]
+  },
+  {
+   "id": "clothing-129",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you have any specific maintenance tips to keep the fabric's shine intact?",
+   "customer_question": "Will the fabric lose its shine after a few washes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-130",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Are the fabrics you sell resistant to pilling or lint formation?",
+   "customer_question": "Does the fabric pill or form balls after use?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-131",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you offer small fabric swatches or samples for customers to check the quality?",
+   "customer_question": "Can I get a fabric sample before buying?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-132",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you stock any stretchable fabrics or materials with spandex/lycra content?",
+   "customer_question": "Is the fabric stretchy?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-133",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Are your fabrics treated or selected for being dust-resistant or easy-to-clean?",
+   "customer_question": "Does the fabric catch dust easily?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-134",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Do you offer a specific range of soft, baby-safe fabrics?",
+   "customer_question": "Is the fabric safe for infants or children?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-135",
+   "category": "Fabric Quality and Material",
+   "owner_question": "Which of your fabrics do you consider most breathable for long-duration wear in hot Indian weather?",
+   "customer_question": "Is this material breathable for long hours?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-136",
+   "category": "Saree Specifics",
+   "owner_question": "Do you guarantee color fastness for your cotton or printed sarees?",
+   "customer_question": "Is the color of this saree fast?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-137",
+   "category": "Saree Specifics",
+   "owner_question": "Besides silk and cotton, which other fabrics like chiffon, georgette, or crepe do you stock?",
+   "customer_question": "Do you have sarees in synthetic or chiffon fabrics?",
+   "priority": "optional",
+   "answer_type": "list"
+  },
+  {
+   "id": "clothing-138",
+   "category": "Saree Specifics",
+   "owner_question": "How often do you refresh your saree collection with new designs?",
+   "customer_question": "Can you show me the latest collection?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Weekly",
+    "Monthly",
+    "Seasonally"
+   ]
+  },
+  {
+   "id": "clothing-139",
+   "category": "Saree Specifics",
+   "owner_question": "Do you stock sarees with hand-embroidery or machine-embroidery work?",
+   "customer_question": "Do you have sarees with embroidery work?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Hand-embroidery",
+    "Machine-embroidery",
+    "Both"
+   ]
+  },
+  {
+   "id": "clothing-140",
+   "category": "Saree Specifics",
+   "owner_question": "Do all your sarees come in the standard 6-meter length including the blouse piece?",
+   "customer_question": "Is the saree length standard?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-141",
+   "category": "Saree Specifics",
+   "owner_question": "Do you keep a variety of printed sarees like block print, digital print, or screen print?",
+   "customer_question": "Do you have printed sarees?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-142",
+   "category": "Saree Specifics",
+   "owner_question": "Do you provide information about the stiffness or softness of the fabric for your sarees?",
+   "customer_question": "Are these sarees soft or stiff?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-143",
+   "category": "Saree Specifics",
+   "owner_question": "Do you specialize in any specific regional sarees like Banarasi, Kanjeevaram, or Bandhani?",
+   "customer_question": "Do you have traditional regional sarees?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-144",
+   "category": "Saree Specifics",
+   "owner_question": "Do you provide special gift packaging for sarees purchased as gifts?",
+   "customer_question": "Do you offer gift packing for sarees?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-145",
+   "category": "Saree Specifics",
+   "owner_question": "Do you stock or take orders for pre-stitched or ready-to-wear sarees?",
+   "customer_question": "Do you have sarees with pre-stitched pleats?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-146",
+   "category": "Saree Specifics",
+   "owner_question": "Do you generally provide matching blouse pieces or contrast blouse pieces with your sarees?",
+   "customer_question": "Is the blouse piece matching or contrast?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Matching",
+    "Contrast",
+    "Both"
+   ]
+  },
+  {
+   "id": "clothing-147",
+   "category": "Saree Specifics",
+   "owner_question": "Do you maintain a specific collection for festivals like Diwali or Durga Puja?",
+   "customer_question": "Do you have sarees for festive occasions?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-148",
+   "category": "Saree Specifics",
+   "owner_question": "Do you provide a saree box or bag with your premium saree purchases?",
+   "customer_question": "Do you provide a storage box for the saree?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-149",
+   "category": "Saree Specifics",
+   "owner_question": "Do you or your staff provide personalized styling advice or saree selection assistance to customers?",
+   "customer_question": "Can you help me choose a saree based on my height or body type?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-150",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you stock garments for all age groups (kids, teens, adults)?",
+   "customer_question": "Do you have small sizes for kids?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Kids only",
+    "Adults only",
+    "All age groups"
+   ]
+  },
+  {
+   "id": "clothing-151",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you usually stock dress materials in standard 44-inch or 54-inch widths?",
+   "customer_question": "Are your dress materials standard width?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "44 inch",
+    "54 inch",
+    "Both",
+    "Varies by material"
+   ]
+  },
+  {
+   "id": "clothing-152",
+   "category": "Sizing and Fit",
+   "owner_question": "If you don't offer alterations, can you recommend a trusted local tailor to your customers?",
+   "customer_question": "Can you recommend a tailor nearby if you don't do alterations?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-153",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you advise customers to check the actual fit rather than relying solely on the size label?",
+   "customer_question": "Is the size on the label accurate?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-154",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you carry a specific collection of maternity-friendly or adjustable clothing?",
+   "customer_question": "Do you have maternity wear?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-155",
+   "category": "Sizing and Fit",
+   "owner_question": "Do you stock smaller sizes (XS or S) for customers with a petite frame?",
+   "customer_question": "Do you have petite sizes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-156",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you advise customers to soak new clothes in salt water to prevent color bleeding?",
+   "customer_question": "Will the color bleed during the first wash?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-157",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you recommend storing silk sarees in muslin cloth or plastic covers?",
+   "customer_question": "How should I store my silk sarees to keep them new?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Muslin/Cotton cloth",
+    "Plastic covers",
+    "No specific recommendation"
+   ]
+  },
+  {
+   "id": "clothing-158",
+   "category": "Washing and Maintenance",
+   "owner_question": "Are there any garments that require steam ironing instead of regular ironing?",
+   "customer_question": "Can I iron these clothes at home?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-159",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you suggest starching for your cotton sarees to maintain their crisp look?",
+   "customer_question": "Do I need to starch this cotton saree?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-160",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you have a general advice for customers on how to handle accidental stains on your fabrics?",
+   "customer_question": "How do I remove stains from this fabric?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-161",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you warn customers against drying dark-colored clothes in direct sunlight?",
+   "customer_question": "Is it safe to dry these clothes in direct sunlight?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-162",
+   "category": "Washing and Maintenance",
+   "owner_question": "For heavy work sarees, do you suggest dry cleaning after every wear or only when soiled?",
+   "customer_question": "How often should I get my heavy work sarees dry cleaned?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "After every wear",
+    "Only when soiled",
+    "Once a year"
+   ]
+  },
+  {
+   "id": "clothing-163",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you advise against using fabric softeners on specific types of your dress materials?",
+   "customer_question": "Can I use fabric softener on these materials?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-164",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you recommend folding sarees in a specific way to avoid permanent creases?",
+   "customer_question": "Is there a special way to fold these sarees?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-165",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you offer any basic repair or maintenance tips for snagged embroidery?",
+   "customer_question": "What should I do if the embroidery gets snagged?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-166",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you have any specific tips for maintaining the shine of zari work on your sarees?",
+   "customer_question": "How do I keep the zari work shiny?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-167",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you recommend using a laundry bag when machine washing your delicate garments?",
+   "customer_question": "Should I use a laundry bag for these clothes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-168",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you suggest any methods like steaming or hanging to remove wrinkles without direct ironing?",
+   "customer_question": "How do I remove wrinkles without ironing?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-169",
+   "category": "Washing and Maintenance",
+   "owner_question": "Do you recommend that customers turn garments inside out before washing to protect embroidery or prints?",
+   "customer_question": "Do I need to turn my clothes inside out before washing them?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-170",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you stitch designer blouses with padding, custom neck designs, and latkans?",
+   "customer_question": "Do you stitch fancy designer blouses with pads, back designs, or latkans?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-171",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you supply the lining (cotton/terivoile) and borders, or must the customer bring them?",
+   "customer_question": "Do you provide lining fabric and aasan cloth, or do I need to bring my own?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Provided by shop (included or charged)",
+    "Customer must bring their own lining",
+    "Both options available"
+   ]
+  },
+  {
+   "id": "clothing-172",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you stitch garments using fabrics or sarees purchased from other stores?",
+   "customer_question": "Can I bring fabrics or dress materials bought from other shops for stitching?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-173",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you accept alteration work for clothes purchased from other shops?",
+   "customer_question": "Do you do alterations for clothes bought outside your shop?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-174",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you offer pre-pleating or 1-minute ready-to-wear saree stitching?",
+   "customer_question": "Can you convert regular sarees into ready-to-wear pre-pleated sarees?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-175",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you stitch semi-stitched lehengas, including waist adjustment and can-can attachment?",
+   "customer_question": "Do you stitch semi-stitched lehengas and do can-can fittings?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-176",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you provide free trial adjustments if the stitched clothes need fitting corrections?",
+   "customer_question": "What happens if the stitched cloth does not fit properly? Do you fix it for free?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-177",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you provide stitching services for men or kids, or is it strictly for women's wear?",
+   "customer_question": "Do you stitch men's or boys' ethnic wear like kurtas or pajamas?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Women's wear only",
+    "Women and kids only",
+    "Women, men, and kids"
+   ]
+  },
+  {
+   "id": "clothing-178",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you offer value-added services like manual embroidery, stone work, or lace attachment on garments?",
+   "customer_question": "Do you add embroidery or stone work to the sarees or blouses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-179",
+   "category": "Customization and Tailoring",
+   "owner_question": "Do you offer a pick-up and delivery service for stitching or alteration orders?",
+   "customer_question": "Do you provide home pick-up and drop-off for stitching orders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-180",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer a fixed loyalty discount for your repeat or regular customers?",
+   "customer_question": "Do you give discounts to regular customers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-181",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer special package pricing for wedding trousseau or bridal shopping?",
+   "customer_question": "Do you have any special discounts for wedding trousseau shopping?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-182",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you have any specific discount categories for students or senior citizens?",
+   "customer_question": "Do you offer discounts for students or senior citizens?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-183",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you run any specific discounts for payments made through certain UPI apps or digital wallets?",
+   "customer_question": "Do you offer any discount if I pay via a specific UPI app?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-184",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you keep a dedicated section or rack for clearance items with discounted prices?",
+   "customer_question": "Do you have a clearance sale section?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-185",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer a 'First-time buyer' discount for new customers?",
+   "customer_question": "Is there a discount on the first purchase?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-186",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer any discount for cash payments compared to digital payments?",
+   "customer_question": "Can I get a discount if I pay in cash?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-187",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you have a separate wholesale pricing structure for buyers who purchase in large quantities?",
+   "customer_question": "Are your prices negotiable for wholesale buyers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-188",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you offer any free gifts or complimentary items for purchases above a certain bill value?",
+   "customer_question": "Do you provide complimentary gifts with purchases above a certain amount?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-189",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you frequently run 'Buy One Get One' (BOGO) or similar bundle offers?",
+   "customer_question": "Do you have a 'Buy One Get One' offer?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-190",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you provide special pricing for corporate or bulk gifting orders?",
+   "customer_question": "Do you offer any discount for bulk corporate gifting?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-191",
+   "category": "Pricing and Discounts",
+   "owner_question": "Do you have specific periods in the year where your usual 'Fixed Price' policy changes to allow bargaining?",
+   "customer_question": "Are your prices negotiable during the festive season or only on regular days?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-192",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you have a specific day of the week when you display new arrivals?",
+   "customer_question": "Can I see what is new in the shop today?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-193",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you maintain a dedicated section or stock for wedding-related clothing?",
+   "customer_question": "Do you get new stock for weddings specifically?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-194",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you have a system to inform customers when a previously out-of-stock item arrives?",
+   "customer_question": "Can you notify me when a specific design is back in stock?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-195",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you carry exclusive or limited-edition stock that is not restocked once sold?",
+   "customer_question": "Do you have limited edition sarees?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-196",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you source your textiles primarily from established brands or local weavers?",
+   "customer_question": "Are your dress materials from specific brands or local weavers?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Branded",
+    "Local Weavers",
+    "Both"
+   ]
+  },
+  {
+   "id": "clothing-197",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you maintain a digital or physical catalog of designs that can be ordered?",
+   "customer_question": "Do you have a catalog I can look at for out-of-stock designs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-198",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you ensure your readymade garments are pre-shrunk or treated before stocking?",
+   "customer_question": "Are your readymade garments pre-shrunk?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-199",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you often carry the same visual design or pattern across different fabric qualities (e.g., silk vs. cotton versions of the same print)?",
+   "customer_question": "Do you offer the same saree design in different fabric qualities?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-200",
+   "category": "Stock Availability and Restocking",
+   "owner_question": "Do you keep extra quantities of dress materials specifically for customers who buy in bulk for tailoring or resale?",
+   "customer_question": "Do you keep extra stock of dress materials for tailors or boutique owners?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-201",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Is there a full-length mirror inside the trial room?",
+   "customer_question": "Is there a mirror inside the trial room?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-202",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Is the trial room area air-conditioned or equipped with a fan?",
+   "customer_question": "Is the trial room air-conditioned?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-203",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Do you provide staff assistance to help customers with draping or fitting inside the trial room?",
+   "customer_question": "Can I get help with draping or fitting inside?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-204",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Does your trial room have hooks or a shelf for customers to keep their bags or belongings?",
+   "customer_question": "Are there hooks or a shelf to keep my belongings in the trial room?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-205",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Do you have a specific policy or schedule for cleaning the trial room?",
+   "customer_question": "Is the trial room cleaned regularly?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-206",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Is your trial room wide enough for a wheelchair to enter comfortably?",
+   "customer_question": "Is the trial room wheelchair accessible?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-207",
+   "category": "Trial and Fitting Room",
+   "owner_question": "Do you provide chairs or a bench outside the trial room for people waiting?",
+   "customer_question": "Are there seating arrangements for people waiting outside the trial room?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-208",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you offer premium saree boxes or special packaging for gifting?",
+   "customer_question": "Do you have special boxes for sarees?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-209",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Are you able to include a handwritten note or gift tag with the package?",
+   "customer_question": "Can you add a personalized note to the gift?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-210",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you offer a choice of wrapping paper colors or designs?",
+   "customer_question": "Do you have different wrapping paper designs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-211",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Are there any items in your shop that cannot be gift-wrapped?",
+   "customer_question": "Is gift wrapping available for all items?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-212",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Approximately how many minutes does it take to wrap a gift?",
+   "customer_question": "How long does it take to wrap a gift?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "clothing-213",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you provide a separate carry bag for the wrapped gift to protect it?",
+   "customer_question": "Do you provide carry bags for the wrapped gift?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-215",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you include decorative ribbons or bows with your gift wrapping?",
+   "customer_question": "Do you use ribbons or bows for decoration?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-216",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you allow customers to provide their own wrapping material?",
+   "customer_question": "Can I bring my own wrapping paper?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-217",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Is gift wrapping free only if the purchase is above a certain amount?",
+   "customer_question": "Is there a minimum purchase for free gift wrapping?",
+   "priority": "optional",
+   "answer_type": "price"
+  },
+  {
+   "id": "clothing-218",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you offer special rates or services for bulk gift wrapping (e.g., for wedding favors)?",
+   "customer_question": "Do you offer bulk gift wrapping for wedding favors?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-219",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Could you provide a description or a photo of your standard gift wrapping style?",
+   "customer_question": "Can I see a sample of your gift wrapping?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-220",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you offer the option to remove price tags or include a gift receipt for items being wrapped as gifts?",
+   "customer_question": "Can I get a gift receipt inside the package without the price tag?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-221",
+   "category": "Gift Wrapping and Packaging",
+   "owner_question": "Do you offer seasonal or festival-specific gift wrapping themes (e.g., specific colors or accessories for Diwali, Rakhi, or weddings)?",
+   "customer_question": "Can I request a specific style of wrapping for festive occasions like Diwali or Rakhi?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-222",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you provide special gift wrapping or packaging for bulk wedding orders?",
+   "customer_question": "Do you offer gift packing for wedding orders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-223",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Is it possible for customers to request a sample piece before finalizing a large bulk order?",
+   "customer_question": "Can I get a sample before placing a large order?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-224",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Are you able to source specific colors or designs for a customer's wedding theme upon request?",
+   "customer_question": "Can you source specific colors or designs for my wedding theme?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-225",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Can customers mix different types of items to meet the bulk order criteria?",
+   "customer_question": "Can I mix and match different items to make a bulk order?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-226",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Are bulk discounts applicable to readymade garments, or only to sarees and dress materials?",
+   "customer_question": "Do you offer bulk discounts on readymade garments?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "All items",
+    "Only sarees",
+    "Only dress materials",
+    "Only readymade"
+   ]
+  },
+  {
+   "id": "clothing-227",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Is the bulk discount applied automatically, or does it require manual approval from the owner?",
+   "customer_question": "Is the bulk discount applied instantly at the counter?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Automatic",
+    "Owner approval required"
+   ]
+  },
+  {
+   "id": "clothing-228",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you have a dedicated space or appointment system for wedding shoppers?",
+   "customer_question": "Do you have a separate area for wedding shopping?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-229",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you provide fabric swatches or samples for bulk orders to help with selection?",
+   "customer_question": "Do you provide fabric swatches for bulk orders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-230",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you offer additional seasonal discounts on top of bulk pricing during wedding seasons?",
+   "customer_question": "Are there seasonal discounts for wedding bulk orders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-231",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you offer in-house embroidery or customization services for bulk wedding orders?",
+   "customer_question": "Do you offer embroidery services for bulk wedding orders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-232",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you provide a dedicated staff member or personal shopper for customers placing large wedding orders?",
+   "customer_question": "If I need a large order for a wedding, can I get a dedicated person to help me choose items?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-233",
+   "category": "Bulk and Wedding Orders",
+   "owner_question": "Do you provide shipping or courier services for bulk orders to locations outside your city?",
+   "customer_question": "Can I get a bulk order delivered to a different address than the shop?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-234",
+   "category": "Store Policies",
+   "owner_question": "If you offer store credit, how long is it valid for?",
+   "customer_question": "Can I get store credit if I return something?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-235",
+   "category": "Store Policies",
+   "owner_question": "Is the fall and pico service done instantly, or does it take time?",
+   "customer_question": "Is fall and pico done on the spot?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "On the spot",
+    "Same day",
+    "Next day"
+   ]
+  },
+  {
+   "id": "clothing-236",
+   "category": "Store Policies",
+   "owner_question": "Do you allow customers to reserve or 'hold' items for a few days?",
+   "customer_question": "Can I reserve an item if I don't have enough cash today?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-237",
+   "category": "Store Policies",
+   "owner_question": "Are exchanges allowed for a different color or pattern, or only for the same item?",
+   "customer_question": "Can I exchange an item for a different color?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Only for same item",
+    "Any item of equal value",
+    "Any item of higher value"
+   ]
+  },
+  {
+   "id": "clothing-238",
+   "category": "Store Policies",
+   "owner_question": "Do you provide any specific warranty period for the durability of embroidery, zari, or stone work on your sarees?",
+   "customer_question": "Do you offer any warranty on the embroidery or stone work on sarees?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clothing-239",
+   "category": "Trust and Authenticity",
+   "owner_question": "Do you have experienced staff who can assist customers with fabric selection and matching?",
+   "customer_question": "Are your staff trained to help me select the right material?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-240",
+   "category": "Trust and Authenticity",
+   "owner_question": "Do you provide care instructions or maintenance advice for the premium fabrics you sell?",
+   "customer_question": "Do you offer any post-purchase cleaning or maintenance advice?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clothing-241",
+   "category": "Trust and Authenticity",
+   "owner_question": "Has your shop received any local awards, community recognitions, or media mentions that you would like to highlight?",
+   "customer_question": "Do you have any awards or recognitions for your shop?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
