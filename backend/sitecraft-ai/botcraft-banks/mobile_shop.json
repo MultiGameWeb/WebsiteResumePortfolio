@@ -1,0 +1,559 @@
+{
+ "shop_type_key": "mobile_shop",
+ "name": "Mobile shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-28",
+ "question_count": 46,
+ "questions": [
+  {
+   "id": "mobile_shop-001",
+   "category": "Products & brands",
+   "owner_question": "Which phone brands do you sell?",
+   "customer_question": "Do you have Samsung phones?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Apple",
+    "Samsung",
+    "OnePlus",
+    "Vivo",
+    "Oppo",
+    "Realme",
+    "Redmi / Xiaomi",
+    "Motorola",
+    "Nothing",
+    "Google Pixel"
+   ]
+  },
+  {
+   "id": "mobile_shop-002",
+   "category": "Products & brands",
+   "owner_question": "Are your products brand new and original, with the company's official warranty?",
+   "customer_question": "Is this original with company warranty?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "All original with brand warranty",
+    "Some imported / without Indian warranty",
+    "We also sell refurbished"
+   ]
+  },
+  {
+   "id": "mobile_shop-003",
+   "category": "Prices & bills",
+   "owner_question": "Do you give a GST bill for every product (needed for warranty)?",
+   "customer_question": "Will I get a GST bill?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-004",
+   "category": "Warranty & service",
+   "owner_question": "What happens if a product is defective on the first day (dead on arrival)?",
+   "customer_question": "The phone is not working on day one!",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "We replace it",
+    "We send it to the company service centre",
+    "Depends on the brand"
+   ]
+  },
+  {
+   "id": "mobile_shop-005",
+   "category": "Products & brands",
+   "owner_question": "Do you sell refurbished or second-hand products?",
+   "customer_question": "Do you have second-hand phones?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No, only new",
+    "Refurbished",
+    "Second-hand",
+    "Both"
+   ]
+  },
+  {
+   "id": "mobile_shop-006",
+   "category": "Products & brands",
+   "owner_question": "If you sell second-hand or refurbished products, do they come with a bill and a warranty? How long?",
+   "customer_question": "Is there warranty on a used phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-007",
+   "category": "Products & brands",
+   "owner_question": "Do you sell iPhones, and are they from authorised Indian distribution?",
+   "customer_question": "Is the iPhone Indian warranty?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, Indian warranty",
+    "Some imported",
+    "We don't sell iPhones"
+   ]
+  },
+  {
+   "id": "mobile_shop-008",
+   "category": "Products & brands",
+   "owner_question": "Do you get new launches on the launch day, or can customers pre-book them?",
+   "customer_question": "Is the new Samsung available?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Available on launch day",
+    "Pre-booking available",
+    "Comes later"
+   ]
+  },
+  {
+   "id": "mobile_shop-009",
+   "category": "Products & brands",
+   "owner_question": "If a model is out of stock, how many days does it take to get it?",
+   "customer_question": "When will this model come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-010",
+   "category": "Products & brands",
+   "owner_question": "Which accessories do you sell?",
+   "customer_question": "Do you have a fast charger?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Covers & cases",
+    "Tempered glass",
+    "Chargers & cables",
+    "Earbuds / headphones",
+    "Smartwatches",
+    "Power banks",
+    "Memory cards & pen drives"
+   ]
+  },
+  {
+   "id": "mobile_shop-011",
+   "category": "Products & brands",
+   "owner_question": "Are your accessories original brand products, or compatible ones?",
+   "customer_question": "Is this charger original?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original brand",
+    "Compatible / local",
+    "Both, clearly marked"
+   ]
+  },
+  {
+   "id": "mobile_shop-012",
+   "category": "Products & brands",
+   "owner_question": "Which phone price ranges do you stock?",
+   "customer_question": "Any good phone under 15,000?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Under ₹10,000",
+    "₹10,000–20,000",
+    "₹20,000–30,000",
+    "₹30,000–50,000",
+    "Above ₹50,000"
+   ]
+  },
+  {
+   "id": "mobile_shop-013",
+   "category": "Prices & bills",
+   "owner_question": "Are your prices fixed, or can customers get a discount?",
+   "customer_question": "Can you reduce the price?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed price",
+    "Small discount possible",
+    "Negotiable"
+   ]
+  },
+  {
+   "id": "mobile_shop-014",
+   "category": "Prices & bills",
+   "owner_question": "Do you match online prices (Amazon, Flipkart)?",
+   "customer_question": "It's cheaper on Amazon, can you match?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, we match",
+    "Sometimes, depends on the model",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-015",
+   "category": "Prices & bills",
+   "owner_question": "Do you take an old product in exchange when buying a new one? How is its value decided?",
+   "customer_question": "How much will you give for my old phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-016",
+   "category": "Buying & checking",
+   "owner_question": "Do you have demo pieces customers can try before buying?",
+   "customer_question": "Can I try the phone first?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-017",
+   "category": "Buying & checking",
+   "owner_question": "Do you open and check the product in front of the customer before billing?",
+   "customer_question": "Will you open the box and check?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-018",
+   "category": "Buying & checking",
+   "owner_question": "Do you transfer data from the old phone and set up the new phone for free?",
+   "customer_question": "Will you move my WhatsApp and photos?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-019",
+   "category": "Buying & checking",
+   "owner_question": "Do you put on a tempered glass and cover when someone buys a phone?",
+   "customer_question": "Is screen guard free?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Paid",
+    "Not available"
+   ]
+  },
+  {
+   "id": "mobile_shop-020",
+   "category": "Warranty & service",
+   "owner_question": "Do you help customers with warranty claims and service centre visits?",
+   "customer_question": "Will you help with the warranty claim?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-021",
+   "category": "Warranty & service",
+   "owner_question": "Do you sell extended warranty or protection plans? Price?",
+   "customer_question": "Can I get extra warranty?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-022",
+   "category": "Warranty & service",
+   "owner_question": "Do you repair phones? Which repairs?",
+   "customer_question": "Can you change my phone screen?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Screen",
+    "Battery",
+    "Charging port",
+    "Speaker / mic",
+    "Water damage",
+    "Software / unlocking",
+    "No repairs"
+   ]
+  },
+  {
+   "id": "mobile_shop-023",
+   "category": "Warranty & service",
+   "owner_question": "For repairs, do you use original or compatible parts?",
+   "customer_question": "Is the new screen original?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original parts",
+    "Compatible parts",
+    "Customer's choice"
+   ]
+  },
+  {
+   "id": "mobile_shop-024",
+   "category": "Warranty & service",
+   "owner_question": "Do you give a warranty on repairs? How long?",
+   "customer_question": "Is there warranty on the repair?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-025",
+   "category": "Warranty & service",
+   "owner_question": "Is there a checking (diagnosis) charge if the customer decides not to repair?",
+   "customer_question": "Do you charge just to check it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-026",
+   "category": "Products & brands",
+   "owner_question": "Can customers reserve a product by paying an advance?",
+   "customer_question": "Can you keep one aside for me?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-027",
+   "category": "Products & brands",
+   "owner_question": "Do you sell SIM cards or do mobile recharges?",
+   "customer_question": "Can I get a new Jio SIM here?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Jio",
+    "Airtel",
+    "Vi",
+    "BSNL",
+    "None"
+   ]
+  },
+  {
+   "id": "mobile_shop-028",
+   "category": "Products & brands",
+   "owner_question": "Do you sell keypad (feature) phones?",
+   "customer_question": "Do you have a basic keypad phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-029",
+   "category": "Products & brands",
+   "owner_question": "Do you sell tablets / iPads?",
+   "customer_question": "Do you have iPads?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-030",
+   "category": "Products & brands",
+   "owner_question": "Do you sell gaming accessories (triggers, coolers, controllers)?",
+   "customer_question": "Do you have a phone cooler for gaming?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-031",
+   "category": "Products & brands",
+   "owner_question": "Do you sell display or open-box pieces at a lower price?",
+   "customer_question": "Do you have any display piece for less?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-032",
+   "category": "Prices & bills",
+   "owner_question": "Which ways to pay do you accept?",
+   "customer_question": "Can I pay by credit card?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Cash",
+    "UPI",
+    "Debit / credit card",
+    "Bank transfer"
+   ]
+  },
+  {
+   "id": "mobile_shop-033",
+   "category": "Prices & bills",
+   "owner_question": "Do you add any extra charge for card payments?",
+   "customer_question": "Is there extra charge on card?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "No extra charge",
+    "Yes, a small percentage"
+   ]
+  },
+  {
+   "id": "mobile_shop-034",
+   "category": "Prices & bills",
+   "owner_question": "Do you give free gifts or accessories with purchases?",
+   "customer_question": "Any free gift with this TV?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-035",
+   "category": "Prices & bills",
+   "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
+   "customer_question": "Any discount for 10 laptops?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-036",
+   "category": "Warranty & service",
+   "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
+   "customer_question": "Where is the Samsung service centre?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-037",
+   "category": "Warranty & service",
+   "owner_question": "Do you sell insurance for theft or accidental damage?",
+   "customer_question": "Is there screen damage insurance?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-038",
+   "category": "Warranty & service",
+   "owner_question": "How long does a common repair (screen, battery) usually take?",
+   "customer_question": "How long to change the screen?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-039",
+   "category": "Warranty & service",
+   "owner_question": "Do you pick up and drop devices for repair?",
+   "customer_question": "Can you collect my laptop for repair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-040",
+   "category": "Warranty & service",
+   "owner_question": "Do you give a spare phone to use while the customer's phone is being repaired?",
+   "customer_question": "Can I get a phone while mine is repaired?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-041",
+   "category": "Shop & service",
+   "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
+   "customer_question": "Can I give my old phone for recycling?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-042",
+   "category": "Shop & service",
+   "owner_question": "Do you have an online store or a WhatsApp catalogue?",
+   "customer_question": "Can I see your products online?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-043",
+   "category": "Shop & service",
+   "owner_question": "Do you send a copy of the bill on WhatsApp?",
+   "customer_question": "Can you send the bill on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-044",
+   "category": "Shop & service",
+   "owner_question": "Do you have a loyalty or points programme for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-045",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "mobile_shop-046",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

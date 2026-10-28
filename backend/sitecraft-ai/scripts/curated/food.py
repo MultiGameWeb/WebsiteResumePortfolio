@@ -1,6 +1,8 @@
-# Hand-written (curated) question bank for restaurants.
-# Run: python3 scripts/curated/restaurant.py  -> writes botcraft-banks/restaurant.json
+# Hand-written (curated) question banks for food businesses: restaurant,
+# fast food, tiffin centre and catering.
+# Run: python3 scripts/curated/food.py  -> writes botcraft-banks/<type>.json
 # Priorities: M = mandatory (bot cannot work without it), I = important, O = optional.
+# Each owner is asked only the questions that fit their business (see TAGS below).
 # Core questions (name, address, map, parking, timings, holiday, phone,
 # WhatsApp, main items, home delivery, offers, photos) are asked separately.
 import json, os, datetime
@@ -174,20 +176,151 @@ Q = [
  ("Service & feedback", "O", "text", "Please share your Google reviews link, if you have one.", "Where can I see your reviews?", []),
 ]
 
+
+# --- Questions only for one food business ------------------------------------
+EXTRA = [
+ # Fast food
+ ("Menu & cuisine", "M", "list", "Which fast food items do you sell?", "Do you have burgers?", ["Burgers", "Pizza", "Sandwiches", "Rolls / frankies", "Momos", "Fries", "Noodles / fried rice", "Manchurian", "Shawarma"], "F"),
+ ("Seating", "I", "options", "Is it a takeaway counter or stall, or do you have seating?", "Can we sit and eat there?", ["Takeaway counter only", "Standing tables", "Seating available"], "FT"),
+ ("Menu & cuisine", "I", "options", "Do you make patties, pizza bases and buns fresh, or use frozen ones?", "Is the burger patty fresh?", ["Made fresh", "Frozen / ready-made", "Some fresh, some frozen"], "F"),
+ ("Menu & cuisine", "O", "options", "Which cheese do you use?", "Is it real mozzarella?", ["Mozzarella", "Processed cheese", "Both", "No cheese items"], "F"),
+ ("Spice & customisation", "O", "yes_no", "Can customers choose their own toppings, sauces or fillings?", "Can I add extra cheese?", YN, "F"),
+ ("Hygiene & safety", "O", "yes_no", "Are fries and fried items fried fresh for each order?", "Are the fries fresh?", YN, "F"),
+
+ # Tiffin centre
+ ("Menu & cuisine", "M", "list", "Which tiffins do you serve?", "Is pesarattu available?", ["Idli", "Dosa varieties", "Vada", "Upma", "Pongal", "Puri", "Pesarattu", "Uttapam", "Bonda / bajji", "Chapati"], "T"),
+ ("Menu & cuisine", "I", "text", "Until what time are tiffins served in the morning? Do you serve evening tiffins too?", "Is dosa available in the evening?", [], "T"),
+ ("Menu & cuisine", "I", "text", "Which chutneys and sambar do you serve? Are refills unlimited?", "Can I get more chutney?", [], "T"),
+ ("Hygiene & safety", "I", "yes_no", "Is your idli and dosa batter made fresh in your own kitchen every day?", "Is the batter fresh?", YN, "T"),
+ ("Portions & prices", "I", "text", "What is the price range of your tiffins (idli, dosa, vada)?", "How much is a plate of idli?", [], "T"),
+ ("Menu & cuisine", "O", "text", "Do you make ghee, butter or karam podi versions (for example ghee karam dosa)? Extra charge?", "Is ghee dosa available?", [], "T"),
+
+ # Catering service
+ ("Catering service", "M", "list", "Which events do you cater for?", "Do you do wedding catering?", ["Weddings", "Birthdays", "House warming", "Corporate events", "Religious functions", "Small family functions"], "C"),
+ ("Catering service", "M", "text", "What is the minimum and maximum number of guests you can serve?", "Can you serve 500 guests?", [], "C"),
+ ("Catering service", "M", "text", "What is your price per plate range for veg and non-veg?", "What is the per-plate cost?", [], "C"),
+ ("Catering service", "M", "options", "Do you have fixed menu packages, or can customers make their own menu?", "Can we choose our own menu?", ["Fixed packages", "Customer makes own menu", "Both"], "C"),
+ ("Catering service", "I", "options", "Is GST included in your per-plate price?", "Is GST extra on the plate cost?", ["Included", "GST extra"], "C"),
+ ("Catering service", "I", "options", "Do you give a food tasting before booking?", "Can we taste the food first?", ["Yes, free", "Yes, paid", "No"], "C"),
+ ("Catering service", "I", "text", "How much advance is needed to confirm a booking, and when is the balance paid?", "How much advance do I pay?", [], "C"),
+ ("Catering service", "I", "text", "How many days before the event should customers book?", "Is it too late to book for next week?", [], "C"),
+ ("Catering service", "I", "list", "What is included in the price?", "Do you bring plates and servers?", ["Serving staff", "Plates and cutlery", "Buffet counters", "Vessels", "Drinking water", "Cleaning after the event"], "C"),
+ ("Catering service", "I", "options", "Do you serve buffet, banana-leaf meals, or both?", "Do you serve on banana leaves?", ["Buffet", "Banana-leaf meals", "Both"], "C"),
+ ("Catering service", "I", "options", "Do you cook at the venue, or bring food cooked in your kitchen?", "Will you cook at our place?", ["Cook at the venue", "Bring from our kitchen", "Either"], "C"),
+ ("Catering service", "I", "text", "Which areas do you serve, and is there a transport charge for far venues?", "Do you cater in Secunderabad?", [], "C"),
+ ("Catering service", "I", "list", "Which live counters can you set up?", "Can you put a live dosa counter?", ["Dosa", "Chaat", "Jalebi", "Barbecue", "Pasta", "Ice cream", "None"], "C"),
+ ("Catering service", "I", "number", "How many events can you handle on the same day?", "Are you free on that date?", [], "C"),
+ ("Catering service", "I", "text", "What is your cancellation and refund policy?", "What if we cancel the function?", [], "C"),
+ ("Catering service", "O", "text", "How many servers do you send per 100 guests? Are they in uniform?", "How many waiters will come?", [], "C"),
+ ("Catering service", "O", "options", "Do you use disposable plates or steel plates?", "Are the plates disposable?", ["Disposable", "Steel / ceramic", "Customer's choice"], "C"),
+ ("Catering service", "O", "list", "Can you also arrange these?", "Can you arrange a paan counter?", ["Welcome drinks", "Sweets", "Paan counter", "Decoration", "Tent / shamiana", "None"], "C"),
+ ("Catering service", "O", "yes_no", "Can you cook satvik / no onion-garlic food for religious functions?", "Can you do satvik food for the pooja?", YN, "C"),
+ ("Catering service", "O", "options", "What happens to leftover food after the event?", "Will you pack the leftover food?", ["Packed for the host", "Given to the host in vessels", "Disposed"], "C"),
+ ("Catering service", "O", "image", "Please send photos of food and setups from your past events.", "Can I see photos of your events?", [], "C"),
+]
+
+# --- Which business gets which question ---------------------------------------
+# R = restaurant, F = fast food, T = tiffin centre, C = catering.
+CATEGORY_TAGS = {
+ "Menu & cuisine": "RFT", "Veg / non-veg & diet": "RFTC", "Spice & customisation": "RFTC",
+ "Portions & prices": "RFT", "Taxes & charges": "RFT", "Seating": "RFT", "Reservations & parties": "R",
+ "Takeaway & apps": "RFT", "Delivery": "RFT", "Catering & bulk orders": "RFT", "Hygiene & safety": "RFTC",
+ "Timings & service time": "RFT", "Drinks & desserts": "RFT", "Loyalty & discounts": "RFT",
+ "Service & feedback": "RFT", "Catering service": "C",
+}
+QUESTION_TAGS = {
+ "Which cuisines do you serve?": "RC",
+ "Is your restaurant pure veg, or do you serve both veg and non-veg?": "RFTC",
+ "What are your top 5 signature or best-selling dishes?": "RFTC",
+ "Please send photos of your full menu card (all pages).": "RFTC",
+ "Do you serve breakfast?": "RF",
+ "At what times are breakfast, lunch and dinner served?": "RT",
+ "Do you serve meals / thali?": "RT",
+ "What comes in your meals / thali, and what is the price?": "RT",
+ "Which rice items do you serve (biryani, fried rice, pulao, curd rice, etc.)?": "RFC",
+ "Do you serve tandoor items (rotis, naan, kebabs, tikkas)?": "R",
+ "At what time does the tandoor start in the evening?": "R",
+ "Apart from chicken, mutton and seafood, do you serve special meats (natu kodi, duck, quail, crab, etc.)?": "RC",
+ "Do you have separate menu cards for veg and non-veg?": "R",
+ "Do you have special pure-veg combos or thalis for vegetarians?": "RF",
+ "Do you have a kids' menu or dishes that are good for small children?": "RF",
+ "Which are your best veg and non-veg starters?": "RFC",
+ "Which dishes are most popular with families and groups?": "R",
+ "Is your meat halal?": "RFC",
+ "Which dishes are made with pure ghee?": "RTC",
+ "Do you thicken soups or gravies with maida or cornflour?": "RFC",
+ "Do you have light or weight-loss friendly food?": "RF",
+ "Do you have boneless options for chicken dishes?": "RFC",
+ "Can you cook a simple dish that is not on the menu on request (for example khichdi or pappu annam for small kids)?": "RT",
+ "Can you warm baby milk or baby food that customers bring?": "RFT",
+ "Can customers customise dishes (no coriander, extra gravy, boneless, etc.)?": "RFTC",
+ "Do you offer half and full portions?": "RF",
+ "How many people does one full biryani or one curry serve?": "R",
+ "What is the price range for starters, main course and biryani?": "R",
+ "Do you have combo meals or family packs?": "RF",
+ "Which combos or family packs do you have, and what are their prices?": "RF",
+ "Do rotis and rice come with curries, or are they ordered separately?": "R",
+ "Do you charge extra for extra gravy, raita or salad?": "R",
+ "For dishes without a half option, can you make a smaller single-person portion on request?": "R",
+ "Is GST the same for your AC and non-AC sections?": "R",
+ "Do you have bank card offers (for example 10% off with a bank card)?": "RF",
+ "Do you give a printed GST bill?": "RFTC",
+ "Do you have a family section?": "R",
+ "Do you have a waiting area or chairs for customers when the restaurant is full?": "RF",
+ "Do you have private rooms or cabins?": "R",
+ "Do you have outdoor or rooftop seating?": "RF",
+ "Do you have high chairs for small children?": "RF",
+ "Do you have free Wi-Fi for customers?": "RF",
+ "Can customers watch cricket matches or live sports here?": "RF",
+ "Do you have charging points near tables, and is it fine to work on a laptop?": "RF",
+ "Do you have a photo spot or selfie corner with good lighting for photos and reels?": "RF",
+ "Do you have live music or special events on weekends?": "R",
+ "Do you serve alcohol?": "R",
+ "Do you host birthday parties or small celebrations?": "RF",
+ "Can you decorate the table or area for birthdays or anniversaries? Is there a charge?": "RF",
+ "Can customers bring their own cake?": "RF",
+ "Can customers see the kitchen?": "RFT",
+ "Is the ice in drinks and juices made from RO purified water?": "RF",
+ "Do your kitchen staff wear caps, gloves and aprons?": "RFTC",
+ "Does the kitchen close for a break between lunch and dinner? At what time?": "RT",
+ "Which dishes take longer to prepare (biryani, tandoor, baked items) and how long?": "R",
+ "Do your timings change on festivals or special days?": "RFT",
+ "Which desserts or sweets do you serve?": "RFC",
+ "Are your juices made fresh?": "RF",
+ "Do you serve filter coffee?": "RT",
+ "What do you give free after the meal?": "R",
+ "Do you give warm water to drink if a customer asks?": "RT",
+ "Is a manager available in the restaurant to handle complaints right away?": "RF",
+ "Can customers bring outside food or drinks (other than baby food)?": "RF",
+ "Do you pack leftover food for customers to take home?": "R",
+ "Is tipping the waiters expected?": "R",
+ "Can you split the bill between friends?": "RF",
+ "Which languages can your staff speak?": "RFTC",
+ "How should customers give feedback or a complaint?": "RFTC",
+ "Please share your Google reviews link, if you have one.": "RFTC",
+}
+
+TYPES = [("restaurant", "Restaurant", "R"), ("fast_food", "Fast food centre", "F"),
+         ("tiffin_centre", "Tiffin centre", "T"), ("catering", "Catering service", "C")]
 PRI = {"M": "mandatory", "I": "important", "O": "optional"}
 order = {"M": 0, "I": 1, "O": 2}
-rows = sorted(enumerate(Q), key=lambda x: (order[x[1][1]], x[0]))
-questions = []
-for n, (_, (cat, pri, typ, owner, customer, opts)) in enumerate(rows, 1):
-    q = {"id": f"restaurant-{n:03d}", "category": cat, "owner_question": owner, "customer_question": customer,
-         "priority": PRI[pri], "answer_type": typ}
-    if opts: q["options"] = opts
-    questions.append(q)
+ALL = [q + (QUESTION_TAGS.get(q[3], CATEGORY_TAGS[q[0]]),) for q in Q] + EXTRA
+unknown = set(QUESTION_TAGS) - {q[3] for q in Q}
+assert not unknown, f"tags for unknown questions: {unknown}"
+assert len({q[3] for q in ALL}) == len(ALL), "duplicate question"
 
-assert len({q["owner_question"] for q in questions}) == len(questions), "duplicate question"
 here = os.path.dirname(os.path.abspath(__file__))
-out = os.path.join(here, "..", "..", "botcraft-banks", "restaurant.json")
-json.dump({"shop_type_key": "restaurant", "name": "Restaurant", "version": 2, "model": "curated",
-           "generated_at": datetime.date.today().isoformat(), "question_count": len(questions), "questions": questions},
-          open(out, "w"), indent=1, ensure_ascii=False)
-print(len(questions), "questions:", {p: sum(q["priority"] == p for q in questions) for p in PRI.values()})
+for key, name, tag in TYPES:
+    chosen = [q for q in ALL if tag in q[6]]
+    rows = sorted(enumerate(chosen), key=lambda x: (order[x[1][1]], x[0]))
+    questions = []
+    for n, (_, (cat, pri, typ, owner, customer, opts, _tags)) in enumerate(rows, 1):
+        q = {"id": f"{key}-{n:03d}", "category": cat, "owner_question": owner, "customer_question": customer,
+             "priority": PRI[pri], "answer_type": typ}
+        if opts: q["options"] = opts
+        questions.append(q)
+    out = os.path.join(here, "..", "..", "botcraft-banks", f"{key}.json")
+    json.dump({"shop_type_key": key, "name": name, "version": 2, "model": "curated",
+               "generated_at": datetime.date.today().isoformat(), "question_count": len(questions), "questions": questions},
+              open(out, "w"), indent=1, ensure_ascii=False)
+    print(f"{key}: {len(questions)} questions", {p: sum(q["priority"] == p for q in questions) for p in PRI.values()})

@@ -1,0 +1,1123 @@
+{
+ "shop_type_key": "tiffin_centre",
+ "name": "Tiffin centre",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-28",
+ "question_count": 102,
+ "questions": [
+  {
+   "id": "tiffin_centre-001",
+   "category": "Menu & cuisine",
+   "owner_question": "Is your restaurant pure veg, or do you serve both veg and non-veg?",
+   "customer_question": "Is this a veg restaurant?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Pure veg",
+    "Veg and non-veg",
+    "Mostly non-veg"
+   ]
+  },
+  {
+   "id": "tiffin_centre-002",
+   "category": "Menu & cuisine",
+   "owner_question": "What are your top 5 signature or best-selling dishes?",
+   "customer_question": "What is your speciality?",
+   "priority": "mandatory",
+   "answer_type": "list"
+  },
+  {
+   "id": "tiffin_centre-003",
+   "category": "Menu & cuisine",
+   "owner_question": "Please send photos of your full menu card (all pages).",
+   "customer_question": "Can I see the menu?",
+   "priority": "mandatory",
+   "answer_type": "image"
+  },
+  {
+   "id": "tiffin_centre-004",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "If you serve non-veg, how do you keep veg food separate?",
+   "customer_question": "Is veg food cooked separately?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Separate kitchen",
+    "Separate utensils and cooking area",
+    "Same kitchen",
+    "Pure veg (not applicable)"
+   ]
+  },
+  {
+   "id": "tiffin_centre-005",
+   "category": "Spice & customisation",
+   "owner_question": "How spicy is your food normally?",
+   "customer_question": "Is the food very spicy?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Mild",
+    "Medium",
+    "Spicy (Andhra style)",
+    "Depends on the dish"
+   ]
+  },
+  {
+   "id": "tiffin_centre-006",
+   "category": "Portions & prices",
+   "owner_question": "What is the average cost for two people?",
+   "customer_question": "How much for two people?",
+   "priority": "mandatory",
+   "answer_type": "price"
+  },
+  {
+   "id": "tiffin_centre-007",
+   "category": "Taxes & charges",
+   "owner_question": "Are your menu prices inclusive of GST?",
+   "customer_question": "Is GST extra?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Inclusive of GST",
+    "GST added at billing"
+   ]
+  },
+  {
+   "id": "tiffin_centre-008",
+   "category": "Seating",
+   "owner_question": "How many people can you seat at one time?",
+   "customer_question": "Is there space for 20 people?",
+   "priority": "mandatory",
+   "answer_type": "number"
+  },
+  {
+   "id": "tiffin_centre-009",
+   "category": "Takeaway & apps",
+   "owner_question": "Do you give takeaway / parcel?",
+   "customer_question": "Can I take a parcel?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-010",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you have a valid FSSAI licence?",
+   "customer_question": "Is the restaurant FSSAI registered?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-011",
+   "category": "Menu & cuisine",
+   "owner_question": "Which tiffins do you serve?",
+   "customer_question": "Is pesarattu available?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Idli",
+    "Dosa varieties",
+    "Vada",
+    "Upma",
+    "Pongal",
+    "Puri",
+    "Pesarattu",
+    "Uttapam",
+    "Bonda / bajji",
+    "Chapati"
+   ]
+  },
+  {
+   "id": "tiffin_centre-012",
+   "category": "Menu & cuisine",
+   "owner_question": "Which dishes do you recommend for someone visiting for the first time?",
+   "customer_question": "What should I try first?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-013",
+   "category": "Menu & cuisine",
+   "owner_question": "What is today's special? (You can change it every day with Update.)",
+   "customer_question": "What is today's special?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-014",
+   "category": "Menu & cuisine",
+   "owner_question": "At what times are breakfast, lunch and dinner served?",
+   "customer_question": "What time does lunch start?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-015",
+   "category": "Menu & cuisine",
+   "owner_question": "Do you serve meals / thali?",
+   "customer_question": "Do you have meals?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, unlimited meals",
+    "Yes, limited meals",
+    "Both",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-016",
+   "category": "Menu & cuisine",
+   "owner_question": "What comes in your meals / thali, and what is the price?",
+   "customer_question": "What's in the thali and how much?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-017",
+   "category": "Menu & cuisine",
+   "owner_question": "Is the full menu available all day, or are some items only at certain times?",
+   "customer_question": "Can I get biryani in the morning?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Full menu all day",
+    "Some items only at certain times"
+   ]
+  },
+  {
+   "id": "tiffin_centre-018",
+   "category": "Menu & cuisine",
+   "owner_question": "Do you have dishes available only on certain days (for example Sunday special, Friday haleem)?",
+   "customer_question": "Any special dish today?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-019",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you serve egg dishes, and are they marked on the menu?",
+   "customer_question": "Does this dish have egg?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No egg dishes",
+    "Yes, marked on the menu",
+    "Yes, not marked"
+   ]
+  },
+  {
+   "id": "tiffin_centre-020",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you have Jain food, or can you cook without onion and garlic on request?",
+   "customer_question": "Can you make it without onion and garlic?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-021",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Can you reduce oil or salt in a dish on request?",
+   "customer_question": "Can you make it with less oil?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-022",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Which oil do you mainly cook with?",
+   "customer_question": "Which oil do you use?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Sunflower",
+    "Groundnut",
+    "Rice bran",
+    "Palm",
+    "Mixed"
+   ]
+  },
+  {
+   "id": "tiffin_centre-023",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you make your own masalas, or use ready-made / branded masalas?",
+   "customer_question": "Are the masalas homemade?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Homemade masalas",
+    "Branded masalas",
+    "Both"
+   ]
+  },
+  {
+   "id": "tiffin_centre-024",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you use dalda / vanaspati, or reuse frying oil?",
+   "customer_question": "Do you use dalda?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Neither",
+    "Dalda in some dishes",
+    "Frying oil is reused",
+    "Both"
+   ]
+  },
+  {
+   "id": "tiffin_centre-025",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you use Ajinomoto (MSG) in any dishes?",
+   "customer_question": "Do you add Ajinomoto?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No MSG at all",
+    "Only in Chinese dishes",
+    "Yes",
+    "Can skip on request"
+   ]
+  },
+  {
+   "id": "tiffin_centre-026",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Can you tell customers which dishes contain nuts, dairy or gluten?",
+   "customer_question": "I'm allergic to nuts, which dishes are safe?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-027",
+   "category": "Timings & service time",
+   "owner_question": "Does the kitchen close for a break between lunch and dinner? At what time?",
+   "customer_question": "Is the kitchen open at 4 pm?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-028",
+   "category": "Timings & service time",
+   "owner_question": "Until what time do you take the last order at night?",
+   "customer_question": "What time is last order?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-029",
+   "category": "Timings & service time",
+   "owner_question": "On average, how long does food take to reach the table after ordering?",
+   "customer_question": "How long will the food take?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-030",
+   "category": "Spice & customisation",
+   "owner_question": "Can customers ask for less spicy or extra spicy?",
+   "customer_question": "Can you make it less spicy?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-031",
+   "category": "Spice & customisation",
+   "owner_question": "Can customers customise dishes (no coriander, extra gravy, boneless, etc.)?",
+   "customer_question": "Can I get it without coriander?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-032",
+   "category": "Spice & customisation",
+   "owner_question": "Can you cook a simple dish that is not on the menu on request (for example khichdi or pappu annam for small kids)?",
+   "customer_question": "Can you make plain dal rice for my baby?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-033",
+   "category": "Taxes & charges",
+   "owner_question": "Do you add a service charge to the bill?",
+   "customer_question": "Is there a service charge?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No service charge",
+    "Yes, optional",
+    "Yes, fixed"
+   ]
+  },
+  {
+   "id": "tiffin_centre-034",
+   "category": "Taxes & charges",
+   "owner_question": "Do you charge for parcel packaging?",
+   "customer_question": "Is there a packing charge?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No charge",
+    "Yes, per item",
+    "Yes, per order"
+   ]
+  },
+  {
+   "id": "tiffin_centre-035",
+   "category": "Seating",
+   "owner_question": "Do you have AC seating?",
+   "customer_question": "Is it AC?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "AC only",
+    "Non-AC only",
+    "Both AC and non-AC"
+   ]
+  },
+  {
+   "id": "tiffin_centre-036",
+   "category": "Seating",
+   "owner_question": "Is it table service, or self-service at the counter?",
+   "customer_question": "Do I order at the counter?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Table service",
+    "Self-service",
+    "Both"
+   ]
+  },
+  {
+   "id": "tiffin_centre-037",
+   "category": "Seating",
+   "owner_question": "How long is the usual waiting time on weekends or at rush hours?",
+   "customer_question": "How long is the wait right now?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-038",
+   "category": "Takeaway & apps",
+   "owner_question": "How long does a parcel order usually take to be ready?",
+   "customer_question": "How long for a parcel?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-039",
+   "category": "Takeaway & apps",
+   "owner_question": "Can customers order a parcel in advance by phone or WhatsApp and pick it up?",
+   "customer_question": "Can I order now and pick up later?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-040",
+   "category": "Takeaway & apps",
+   "owner_question": "Are you on Swiggy or Zomato?",
+   "customer_question": "Are you on Swiggy?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Swiggy",
+    "Zomato",
+    "Both",
+    "Neither"
+   ]
+  },
+  {
+   "id": "tiffin_centre-041",
+   "category": "Delivery",
+   "owner_question": "Is home delivery done by your own staff, or only through Swiggy / Zomato?",
+   "customer_question": "Do you deliver yourselves?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Own delivery staff",
+    "Only Swiggy / Zomato",
+    "Both",
+    "No delivery"
+   ]
+  },
+  {
+   "id": "tiffin_centre-042",
+   "category": "Delivery",
+   "owner_question": "Up to how many kilometres do you deliver?",
+   "customer_question": "Do you deliver to Kukatpally?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "tiffin_centre-043",
+   "category": "Delivery",
+   "owner_question": "How much do you charge for delivery? Does it change with distance?",
+   "customer_question": "What is the delivery charge?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-044",
+   "category": "Delivery",
+   "owner_question": "Is there a minimum order amount for delivery? How much?",
+   "customer_question": "Is there a minimum order?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "tiffin_centre-045",
+   "category": "Catering & bulk orders",
+   "owner_question": "Do you take bulk orders or outdoor catering?",
+   "customer_question": "Do you do catering?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-046",
+   "category": "Hygiene & safety",
+   "owner_question": "What drinking water do you serve?",
+   "customer_question": "Is the water safe?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "RO purified water",
+    "Packaged bottles only",
+    "Both"
+   ]
+  },
+  {
+   "id": "tiffin_centre-047",
+   "category": "Hygiene & safety",
+   "owner_question": "Is your food cooked fresh daily?",
+   "customer_question": "Is the food fresh?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Cooked fresh every day",
+    "Some items prepared in advance"
+   ]
+  },
+  {
+   "id": "tiffin_centre-048",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you buy vegetables and meat fresh every day?",
+   "customer_question": "Is the chicken fresh today?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-049",
+   "category": "Hygiene & safety",
+   "owner_question": "Is your seafood (fish, prawns) fresh daily or frozen?",
+   "customer_question": "Is the fish fresh or frozen?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fresh daily",
+    "Frozen",
+    "Both",
+    "No seafood"
+   ]
+  },
+  {
+   "id": "tiffin_centre-050",
+   "category": "Drinks & desserts",
+   "owner_question": "Which drinks do you serve (tea, coffee, juices, lassi, soft drinks, mocktails)?",
+   "customer_question": "What drinks do you have?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "tiffin_centre-051",
+   "category": "Service & feedback",
+   "owner_question": "What can a customer do if a dish is not as expected?",
+   "customer_question": "This dish is too salty, what can you do?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-052",
+   "category": "Service & feedback",
+   "owner_question": "If there is a problem in the food (hair, insect, wrong dish), what do you do?",
+   "customer_question": "There is a hair in my food!",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Replace the dish",
+    "Remove it from the bill",
+    "Both",
+    "Manager decides"
+   ]
+  },
+  {
+   "id": "tiffin_centre-053",
+   "category": "Seating",
+   "owner_question": "Is it a takeaway counter or stall, or do you have seating?",
+   "customer_question": "Can we sit and eat there?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Takeaway counter only",
+    "Standing tables",
+    "Seating available"
+   ]
+  },
+  {
+   "id": "tiffin_centre-054",
+   "category": "Menu & cuisine",
+   "owner_question": "Until what time are tiffins served in the morning? Do you serve evening tiffins too?",
+   "customer_question": "Is dosa available in the evening?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-055",
+   "category": "Menu & cuisine",
+   "owner_question": "Which chutneys and sambar do you serve? Are refills unlimited?",
+   "customer_question": "Can I get more chutney?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-056",
+   "category": "Hygiene & safety",
+   "owner_question": "Is your idli and dosa batter made fresh in your own kitchen every day?",
+   "customer_question": "Is the batter fresh?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-057",
+   "category": "Portions & prices",
+   "owner_question": "What is the price range of your tiffins (idli, dosa, vada)?",
+   "customer_question": "How much is a plate of idli?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-058",
+   "category": "Menu & cuisine",
+   "owner_question": "Do you have seasonal specials (for example haleem in Ramzan, mango dishes in summer)?",
+   "customer_question": "Do you have haleem?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-059",
+   "category": "Menu & cuisine",
+   "owner_question": "Which items usually finish early in the day?",
+   "customer_question": "Is mutton biryani still available?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-060",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Which dishes are made with pure ghee?",
+   "customer_question": "Is the biryani made with ghee?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-061",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you add artificial food colour to any dishes?",
+   "customer_question": "Is there colour in the chicken 65?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "No artificial colour",
+    "Yes, in some dishes",
+    "Can skip on request"
+   ]
+  },
+  {
+   "id": "tiffin_centre-062",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Which dishes contain nuts or cashew paste?",
+   "customer_question": "Does the paneer curry have cashew?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-063",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you have options for diabetics or low-sugar diets?",
+   "customer_question": "Any sugar-free sweets?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-064",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you have vegan dishes (no dairy)?",
+   "customer_question": "Do you have vegan food?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-065",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you have gluten-free options?",
+   "customer_question": "Anything without wheat?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-066",
+   "category": "Timings & service time",
+   "owner_question": "Do your timings change on festivals or special days?",
+   "customer_question": "Are you open on Diwali?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-067",
+   "category": "Spice & customisation",
+   "owner_question": "Can you warm baby milk or baby food that customers bring?",
+   "customer_question": "Can you warm my baby's milk?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-068",
+   "category": "Portions & prices",
+   "owner_question": "Please send photos that show the portion size of popular dishes (so customers know how much they get).",
+   "customer_question": "How big is one plate?",
+   "priority": "optional",
+   "answer_type": "image"
+  },
+  {
+   "id": "tiffin_centre-069",
+   "category": "Taxes & charges",
+   "owner_question": "How much is the parcel packing charge?",
+   "customer_question": "How much is packing extra?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-070",
+   "category": "Taxes & charges",
+   "owner_question": "Which ways to pay do you accept (cash, UPI, cards, Sodexo / meal vouchers)?",
+   "customer_question": "Do you take Sodexo?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Cash",
+    "UPI",
+    "Debit / credit card",
+    "Sodexo / meal vouchers"
+   ]
+  },
+  {
+   "id": "tiffin_centre-071",
+   "category": "Taxes & charges",
+   "owner_question": "Do you add any extra charge for card payments?",
+   "customer_question": "Is there extra charge for card?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "No extra charge",
+    "Yes, a small percentage"
+   ]
+  },
+  {
+   "id": "tiffin_centre-072",
+   "category": "Taxes & charges",
+   "owner_question": "Is drinking water free, or do you charge for water bottles?",
+   "customer_question": "Is water free?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Free RO water",
+    "Only paid bottles",
+    "Both"
+   ]
+  },
+  {
+   "id": "tiffin_centre-073",
+   "category": "Taxes & charges",
+   "owner_question": "Do you give a printed GST bill?",
+   "customer_question": "Will I get a GST bill?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-074",
+   "category": "Seating",
+   "owner_question": "What are your busiest days and times?",
+   "customer_question": "When is it less crowded?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-075",
+   "category": "Seating",
+   "owner_question": "How easy is it for elderly people and wheelchair users to reach the seating?",
+   "customer_question": "Is there a lift for my grandmother?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Ground floor seating",
+    "Ramp",
+    "Lift",
+    "Stairs only"
+   ]
+  },
+  {
+   "id": "tiffin_centre-076",
+   "category": "Seating",
+   "owner_question": "What washrooms do you have for customers?",
+   "customer_question": "Is there a ladies washroom?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Separate for ladies and gents",
+    "One common washroom",
+    "No washroom"
+   ]
+  },
+  {
+   "id": "tiffin_centre-077",
+   "category": "Seating",
+   "owner_question": "Do you keep fire extinguishers and a first-aid kit in the restaurant?",
+   "customer_question": "Is there a first-aid kit?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-078",
+   "category": "Seating",
+   "owner_question": "Is smoking allowed anywhere on the premises?",
+   "customer_question": "Can I smoke here?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "No smoking",
+    "Separate smoking area"
+   ]
+  },
+  {
+   "id": "tiffin_centre-079",
+   "category": "Takeaway & apps",
+   "owner_question": "Are your Swiggy/Zomato prices the same as in the restaurant?",
+   "customer_question": "Is it cheaper in the restaurant?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Same price",
+    "Higher on apps",
+    "Not on apps"
+   ]
+  },
+  {
+   "id": "tiffin_centre-080",
+   "category": "Takeaway & apps",
+   "owner_question": "What packaging do you use for parcels?",
+   "customer_question": "Are the containers plastic?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Plastic containers",
+    "Eco-friendly / paper",
+    "Aluminium foil",
+    "Mixed"
+   ]
+  },
+  {
+   "id": "tiffin_centre-081",
+   "category": "Takeaway & apps",
+   "owner_question": "Do you give spoons, tissues and onion/lemon with parcels?",
+   "customer_question": "Will you give spoons?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-082",
+   "category": "Takeaway & apps",
+   "owner_question": "Do you use leak-proof or foil-sealed containers for curries, gravies and sambar?",
+   "customer_question": "Will the curry leak in the parcel?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-083",
+   "category": "Takeaway & apps",
+   "owner_question": "Are your parcel containers safe to heat in a microwave or oven?",
+   "customer_question": "Can I heat the box in the microwave?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-084",
+   "category": "Delivery",
+   "owner_question": "Do you give free delivery above a certain bill amount? Above how much?",
+   "customer_question": "Is delivery free above 500?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-085",
+   "category": "Delivery",
+   "owner_question": "Do you give a discount when customers order directly by phone or WhatsApp instead of through apps?",
+   "customer_question": "Is it cheaper if I order directly?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-086",
+   "category": "Delivery",
+   "owner_question": "If a customer cancels a phone or WhatsApp order, do you refund or charge a cancellation fee?",
+   "customer_question": "Can I cancel my order?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-087",
+   "category": "Catering & bulk orders",
+   "owner_question": "What is the minimum number of plates for a bulk or catering order?",
+   "customer_question": "Minimum order for catering?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "tiffin_centre-088",
+   "category": "Catering & bulk orders",
+   "owner_question": "How many days in advance should bulk orders be placed?",
+   "customer_question": "How early should I order for 100 people?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-089",
+   "category": "Catering & bulk orders",
+   "owner_question": "What is the price per plate for catering (veg and non-veg)?",
+   "customer_question": "Catering cost per plate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-090",
+   "category": "Catering & bulk orders",
+   "owner_question": "Do you provide serving staff and vessels for catering?",
+   "customer_question": "Will you send serving staff?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-091",
+   "category": "Hygiene & safety",
+   "owner_question": "Do your kitchen staff wear caps, gloves and aprons?",
+   "customer_question": "Is the kitchen clean?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-092",
+   "category": "Hygiene & safety",
+   "owner_question": "Can customers see the kitchen?",
+   "customer_question": "Can I see the kitchen?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Live / open kitchen",
+    "Through a glass window",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-093",
+   "category": "Drinks & desserts",
+   "owner_question": "Do you serve filter coffee?",
+   "customer_question": "Do you have filter coffee?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-094",
+   "category": "Drinks & desserts",
+   "owner_question": "Do you give warm water to drink if a customer asks?",
+   "customer_question": "Can I get warm water?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-095",
+   "category": "Loyalty & discounts",
+   "owner_question": "Do you have a loyalty card or points for regular customers?",
+   "customer_question": "Do you have a loyalty card?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-096",
+   "category": "Loyalty & discounts",
+   "owner_question": "Do you give discounts for students, seniors or corporate groups?",
+   "customer_question": "Any student discount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-097",
+   "category": "Loyalty & discounts",
+   "owner_question": "Do you have weekday lunch deals or happy hours?",
+   "customer_question": "Any lunch offer on weekdays?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-098",
+   "category": "Service & feedback",
+   "owner_question": "If a customer forgets a phone, wallet or bag, do you keep it safely until they collect it?",
+   "customer_question": "I left my phone at your restaurant!",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tiffin_centre-099",
+   "category": "Service & feedback",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "tiffin_centre-100",
+   "category": "Service & feedback",
+   "owner_question": "How should customers give feedback or a complaint?",
+   "customer_question": "Where can I give feedback?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-101",
+   "category": "Service & feedback",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tiffin_centre-102",
+   "category": "Menu & cuisine",
+   "owner_question": "Do you make ghee, butter or karam podi versions (for example ghee karam dosa)? Extra charge?",
+   "customer_question": "Is ghee dosa available?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

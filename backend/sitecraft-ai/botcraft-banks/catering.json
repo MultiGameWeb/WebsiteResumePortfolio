@@ -1,0 +1,716 @@
+{
+ "shop_type_key": "catering",
+ "name": "Catering service",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-28",
+ "question_count": 60,
+ "questions": [
+  {
+   "id": "catering-001",
+   "category": "Menu & cuisine",
+   "owner_question": "Which cuisines do you serve?",
+   "customer_question": "What kind of food do you have?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "South Indian",
+    "North Indian",
+    "Andhra",
+    "Hyderabadi",
+    "Chinese / Indo-Chinese",
+    "Tandoor",
+    "Fast food",
+    "Continental"
+   ]
+  },
+  {
+   "id": "catering-002",
+   "category": "Menu & cuisine",
+   "owner_question": "Is your restaurant pure veg, or do you serve both veg and non-veg?",
+   "customer_question": "Is this a veg restaurant?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Pure veg",
+    "Veg and non-veg",
+    "Mostly non-veg"
+   ]
+  },
+  {
+   "id": "catering-003",
+   "category": "Menu & cuisine",
+   "owner_question": "What are your top 5 signature or best-selling dishes?",
+   "customer_question": "What is your speciality?",
+   "priority": "mandatory",
+   "answer_type": "list"
+  },
+  {
+   "id": "catering-004",
+   "category": "Menu & cuisine",
+   "owner_question": "Please send photos of your full menu card (all pages).",
+   "customer_question": "Can I see the menu?",
+   "priority": "mandatory",
+   "answer_type": "image"
+  },
+  {
+   "id": "catering-005",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "If you serve non-veg, how do you keep veg food separate?",
+   "customer_question": "Is veg food cooked separately?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Separate kitchen",
+    "Separate utensils and cooking area",
+    "Same kitchen",
+    "Pure veg (not applicable)"
+   ]
+  },
+  {
+   "id": "catering-006",
+   "category": "Spice & customisation",
+   "owner_question": "How spicy is your food normally?",
+   "customer_question": "Is the food very spicy?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Mild",
+    "Medium",
+    "Spicy (Andhra style)",
+    "Depends on the dish"
+   ]
+  },
+  {
+   "id": "catering-007",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you have a valid FSSAI licence?",
+   "customer_question": "Is the restaurant FSSAI registered?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-008",
+   "category": "Catering service",
+   "owner_question": "Which events do you cater for?",
+   "customer_question": "Do you do wedding catering?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Weddings",
+    "Birthdays",
+    "House warming",
+    "Corporate events",
+    "Religious functions",
+    "Small family functions"
+   ]
+  },
+  {
+   "id": "catering-009",
+   "category": "Catering service",
+   "owner_question": "What is the minimum and maximum number of guests you can serve?",
+   "customer_question": "Can you serve 500 guests?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-010",
+   "category": "Catering service",
+   "owner_question": "What is your price per plate range for veg and non-veg?",
+   "customer_question": "What is the per-plate cost?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-011",
+   "category": "Catering service",
+   "owner_question": "Do you have fixed menu packages, or can customers make their own menu?",
+   "customer_question": "Can we choose our own menu?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Fixed packages",
+    "Customer makes own menu",
+    "Both"
+   ]
+  },
+  {
+   "id": "catering-012",
+   "category": "Menu & cuisine",
+   "owner_question": "Which are your best veg and non-veg starters?",
+   "customer_question": "Which veg starter is best here?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-013",
+   "category": "Menu & cuisine",
+   "owner_question": "Apart from chicken, mutton and seafood, do you serve special meats (natu kodi, duck, quail, crab, etc.)?",
+   "customer_question": "Do you have natu kodi?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Natu kodi (country chicken)",
+    "Duck",
+    "Quail (kamju)",
+    "Crab",
+    "Rabbit",
+    "None"
+   ]
+  },
+  {
+   "id": "catering-014",
+   "category": "Menu & cuisine",
+   "owner_question": "Which rice items do you serve (biryani, fried rice, pulao, curd rice, etc.)?",
+   "customer_question": "Which biryanis do you have?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "catering-015",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Is your meat halal?",
+   "customer_question": "Is the chicken halal?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, all halal",
+    "Some items",
+    "No",
+    "Pure veg (not applicable)"
+   ]
+  },
+  {
+   "id": "catering-016",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you serve egg dishes, and are they marked on the menu?",
+   "customer_question": "Does this dish have egg?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No egg dishes",
+    "Yes, marked on the menu",
+    "Yes, not marked"
+   ]
+  },
+  {
+   "id": "catering-017",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you have Jain food, or can you cook without onion and garlic on request?",
+   "customer_question": "Can you make it without onion and garlic?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-018",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Can you reduce oil or salt in a dish on request?",
+   "customer_question": "Can you make it with less oil?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-019",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Which oil do you mainly cook with?",
+   "customer_question": "Which oil do you use?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Sunflower",
+    "Groundnut",
+    "Rice bran",
+    "Palm",
+    "Mixed"
+   ]
+  },
+  {
+   "id": "catering-020",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you make your own masalas, or use ready-made / branded masalas?",
+   "customer_question": "Are the masalas homemade?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Homemade masalas",
+    "Branded masalas",
+    "Both"
+   ]
+  },
+  {
+   "id": "catering-021",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you use dalda / vanaspati, or reuse frying oil?",
+   "customer_question": "Do you use dalda?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Neither",
+    "Dalda in some dishes",
+    "Frying oil is reused",
+    "Both"
+   ]
+  },
+  {
+   "id": "catering-022",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you use Ajinomoto (MSG) in any dishes?",
+   "customer_question": "Do you add Ajinomoto?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No MSG at all",
+    "Only in Chinese dishes",
+    "Yes",
+    "Can skip on request"
+   ]
+  },
+  {
+   "id": "catering-023",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Can you tell customers which dishes contain nuts, dairy or gluten?",
+   "customer_question": "I'm allergic to nuts, which dishes are safe?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-024",
+   "category": "Spice & customisation",
+   "owner_question": "Can customers ask for less spicy or extra spicy?",
+   "customer_question": "Can you make it less spicy?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-025",
+   "category": "Spice & customisation",
+   "owner_question": "Can customers customise dishes (no coriander, extra gravy, boneless, etc.)?",
+   "customer_question": "Can I get it without coriander?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-026",
+   "category": "Hygiene & safety",
+   "owner_question": "What drinking water do you serve?",
+   "customer_question": "Is the water safe?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "RO purified water",
+    "Packaged bottles only",
+    "Both"
+   ]
+  },
+  {
+   "id": "catering-027",
+   "category": "Hygiene & safety",
+   "owner_question": "Is your food cooked fresh daily?",
+   "customer_question": "Is the food fresh?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Cooked fresh every day",
+    "Some items prepared in advance"
+   ]
+  },
+  {
+   "id": "catering-028",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you buy vegetables and meat fresh every day?",
+   "customer_question": "Is the chicken fresh today?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-029",
+   "category": "Hygiene & safety",
+   "owner_question": "Is your seafood (fish, prawns) fresh daily or frozen?",
+   "customer_question": "Is the fish fresh or frozen?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fresh daily",
+    "Frozen",
+    "Both",
+    "No seafood"
+   ]
+  },
+  {
+   "id": "catering-030",
+   "category": "Drinks & desserts",
+   "owner_question": "Which desserts or sweets do you serve?",
+   "customer_question": "What desserts do you have?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "catering-031",
+   "category": "Catering service",
+   "owner_question": "Is GST included in your per-plate price?",
+   "customer_question": "Is GST extra on the plate cost?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "GST extra"
+   ]
+  },
+  {
+   "id": "catering-032",
+   "category": "Catering service",
+   "owner_question": "Do you give a food tasting before booking?",
+   "customer_question": "Can we taste the food first?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, free",
+    "Yes, paid",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-033",
+   "category": "Catering service",
+   "owner_question": "How much advance is needed to confirm a booking, and when is the balance paid?",
+   "customer_question": "How much advance do I pay?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-034",
+   "category": "Catering service",
+   "owner_question": "How many days before the event should customers book?",
+   "customer_question": "Is it too late to book for next week?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-035",
+   "category": "Catering service",
+   "owner_question": "What is included in the price?",
+   "customer_question": "Do you bring plates and servers?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Serving staff",
+    "Plates and cutlery",
+    "Buffet counters",
+    "Vessels",
+    "Drinking water",
+    "Cleaning after the event"
+   ]
+  },
+  {
+   "id": "catering-036",
+   "category": "Catering service",
+   "owner_question": "Do you serve buffet, banana-leaf meals, or both?",
+   "customer_question": "Do you serve on banana leaves?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Buffet",
+    "Banana-leaf meals",
+    "Both"
+   ]
+  },
+  {
+   "id": "catering-037",
+   "category": "Catering service",
+   "owner_question": "Do you cook at the venue, or bring food cooked in your kitchen?",
+   "customer_question": "Will you cook at our place?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Cook at the venue",
+    "Bring from our kitchen",
+    "Either"
+   ]
+  },
+  {
+   "id": "catering-038",
+   "category": "Catering service",
+   "owner_question": "Which areas do you serve, and is there a transport charge for far venues?",
+   "customer_question": "Do you cater in Secunderabad?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-039",
+   "category": "Catering service",
+   "owner_question": "Which live counters can you set up?",
+   "customer_question": "Can you put a live dosa counter?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Dosa",
+    "Chaat",
+    "Jalebi",
+    "Barbecue",
+    "Pasta",
+    "Ice cream",
+    "None"
+   ]
+  },
+  {
+   "id": "catering-040",
+   "category": "Catering service",
+   "owner_question": "How many events can you handle on the same day?",
+   "customer_question": "Are you free on that date?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "catering-041",
+   "category": "Catering service",
+   "owner_question": "What is your cancellation and refund policy?",
+   "customer_question": "What if we cancel the function?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-042",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Which dishes are made with pure ghee?",
+   "customer_question": "Is the biryani made with ghee?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-043",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you thicken soups or gravies with maida or cornflour?",
+   "customer_question": "Is there maida in the gravy?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "No",
+    "A little, in some dishes",
+    "Yes"
+   ]
+  },
+  {
+   "id": "catering-044",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you add artificial food colour to any dishes?",
+   "customer_question": "Is there colour in the chicken 65?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "No artificial colour",
+    "Yes, in some dishes",
+    "Can skip on request"
+   ]
+  },
+  {
+   "id": "catering-045",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Which dishes contain nuts or cashew paste?",
+   "customer_question": "Does the paneer curry have cashew?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-046",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you have options for diabetics or low-sugar diets?",
+   "customer_question": "Any sugar-free sweets?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-047",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you have vegan dishes (no dairy)?",
+   "customer_question": "Do you have vegan food?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-048",
+   "category": "Veg / non-veg & diet",
+   "owner_question": "Do you have gluten-free options?",
+   "customer_question": "Anything without wheat?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-049",
+   "category": "Spice & customisation",
+   "owner_question": "Do you have boneless options for chicken dishes?",
+   "customer_question": "Is boneless chicken available?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-050",
+   "category": "Taxes & charges",
+   "owner_question": "Do you give a printed GST bill?",
+   "customer_question": "Will I get a GST bill?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-051",
+   "category": "Hygiene & safety",
+   "owner_question": "Do your kitchen staff wear caps, gloves and aprons?",
+   "customer_question": "Is the kitchen clean?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-052",
+   "category": "Service & feedback",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "catering-053",
+   "category": "Service & feedback",
+   "owner_question": "How should customers give feedback or a complaint?",
+   "customer_question": "Where can I give feedback?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-054",
+   "category": "Service & feedback",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-055",
+   "category": "Catering service",
+   "owner_question": "How many servers do you send per 100 guests? Are they in uniform?",
+   "customer_question": "How many waiters will come?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "catering-056",
+   "category": "Catering service",
+   "owner_question": "Do you use disposable plates or steel plates?",
+   "customer_question": "Are the plates disposable?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Disposable",
+    "Steel / ceramic",
+    "Customer's choice"
+   ]
+  },
+  {
+   "id": "catering-057",
+   "category": "Catering service",
+   "owner_question": "Can you also arrange these?",
+   "customer_question": "Can you arrange a paan counter?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Welcome drinks",
+    "Sweets",
+    "Paan counter",
+    "Decoration",
+    "Tent / shamiana",
+    "None"
+   ]
+  },
+  {
+   "id": "catering-058",
+   "category": "Catering service",
+   "owner_question": "Can you cook satvik / no onion-garlic food for religious functions?",
+   "customer_question": "Can you do satvik food for the pooja?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "catering-059",
+   "category": "Catering service",
+   "owner_question": "What happens to leftover food after the event?",
+   "customer_question": "Will you pack the leftover food?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Packed for the host",
+    "Given to the host in vessels",
+    "Disposed"
+   ]
+  },
+  {
+   "id": "catering-060",
+   "category": "Catering service",
+   "owner_question": "Please send photos of food and setups from your past events.",
+   "customer_question": "Can I see photos of your events?",
+   "priority": "optional",
+   "answer_type": "image"
+  }
+ ]
+}

@@ -1,0 +1,589 @@
+{
+ "shop_type_key": "appliances_showroom",
+ "name": "Electronics & home appliances showroom",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-28",
+ "question_count": 49,
+ "questions": [
+  {
+   "id": "appliances_showroom-001",
+   "category": "Products & brands",
+   "owner_question": "Which products do you sell?",
+   "customer_question": "Do you sell washing machines?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "TVs",
+    "Refrigerators",
+    "Washing machines",
+    "ACs",
+    "Microwaves / ovens",
+    "Water purifiers",
+    "Kitchen appliances",
+    "Fans & coolers",
+    "Geysers",
+    "Sound systems"
+   ]
+  },
+  {
+   "id": "appliances_showroom-002",
+   "category": "Products & brands",
+   "owner_question": "Which brands do you sell?",
+   "customer_question": "Do you have LG?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Samsung",
+    "LG",
+    "Sony",
+    "Whirlpool",
+    "Godrej",
+    "Haier",
+    "Voltas",
+    "Daikin",
+    "IFB",
+    "Bosch",
+    "Panasonic"
+   ]
+  },
+  {
+   "id": "appliances_showroom-003",
+   "category": "Products & brands",
+   "owner_question": "Are your products brand new and original, with the company's official warranty?",
+   "customer_question": "Is this original with company warranty?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "All original with brand warranty",
+    "Some imported / without Indian warranty",
+    "We also sell refurbished"
+   ]
+  },
+  {
+   "id": "appliances_showroom-004",
+   "category": "Prices & bills",
+   "owner_question": "Do you give a GST bill for every product (needed for warranty)?",
+   "customer_question": "Will I get a GST bill?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-005",
+   "category": "Warranty & service",
+   "owner_question": "What happens if a product is defective on the first day (dead on arrival)?",
+   "customer_question": "The phone is not working on day one!",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "We replace it",
+    "We send it to the company service centre",
+    "Depends on the brand"
+   ]
+  },
+  {
+   "id": "appliances_showroom-006",
+   "category": "Products & brands",
+   "owner_question": "Do you sell refurbished or second-hand products?",
+   "customer_question": "Do you have second-hand phones?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No, only new",
+    "Refurbished",
+    "Second-hand",
+    "Both"
+   ]
+  },
+  {
+   "id": "appliances_showroom-007",
+   "category": "Products & brands",
+   "owner_question": "If you sell second-hand or refurbished products, do they come with a bill and a warranty? How long?",
+   "customer_question": "Is there warranty on a used phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-008",
+   "category": "Products & brands",
+   "owner_question": "Do you get new launches on the launch day, or can customers pre-book them?",
+   "customer_question": "Is the new Samsung available?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Available on launch day",
+    "Pre-booking available",
+    "Comes later"
+   ]
+  },
+  {
+   "id": "appliances_showroom-009",
+   "category": "Products & brands",
+   "owner_question": "If a model is out of stock, how many days does it take to get it?",
+   "customer_question": "When will this model come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-010",
+   "category": "Products & brands",
+   "owner_question": "Which TV sizes do you stock?",
+   "customer_question": "Do you have a 55-inch TV?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "32 inch",
+    "43 inch",
+    "50 / 55 inch",
+    "65 inch",
+    "75 inch and above"
+   ]
+  },
+  {
+   "id": "appliances_showroom-011",
+   "category": "Products & brands",
+   "owner_question": "Which refrigerator types do you sell?",
+   "customer_question": "Do you have double-door fridges?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Single door",
+    "Double door",
+    "Side-by-side",
+    "Mini fridge"
+   ]
+  },
+  {
+   "id": "appliances_showroom-012",
+   "category": "Products & brands",
+   "owner_question": "Which washing machine types do you sell?",
+   "customer_question": "Do you have front load machines?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Semi-automatic",
+    "Top load",
+    "Front load"
+   ]
+  },
+  {
+   "id": "appliances_showroom-013",
+   "category": "Products & brands",
+   "owner_question": "Which AC types do you sell?",
+   "customer_question": "Do you have window ACs?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Split",
+    "Window",
+    "Inverter",
+    "Portable"
+   ]
+  },
+  {
+   "id": "appliances_showroom-014",
+   "category": "Prices & bills",
+   "owner_question": "Are your prices fixed, or can customers get a discount?",
+   "customer_question": "Can you reduce the price?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed price",
+    "Small discount possible",
+    "Negotiable"
+   ]
+  },
+  {
+   "id": "appliances_showroom-015",
+   "category": "Prices & bills",
+   "owner_question": "Do you match online prices (Amazon, Flipkart)?",
+   "customer_question": "It's cheaper on Amazon, can you match?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, we match",
+    "Sometimes, depends on the model",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-016",
+   "category": "Prices & bills",
+   "owner_question": "Do you take an old product in exchange when buying a new one? How is its value decided?",
+   "customer_question": "How much will you give for my old phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-017",
+   "category": "Buying & checking",
+   "owner_question": "Do you have demo pieces customers can try before buying?",
+   "customer_question": "Can I try the phone first?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-018",
+   "category": "Buying & checking",
+   "owner_question": "Do you open and check the product in front of the customer before billing?",
+   "customer_question": "Will you open the box and check?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-019",
+   "category": "Delivery & installation",
+   "owner_question": "Is installation free? For which products is it charged?",
+   "customer_question": "Is AC installation free?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-020",
+   "category": "Delivery & installation",
+   "owner_question": "For AC installation, are copper pipe, stand and extra piping charged extra? How much?",
+   "customer_question": "Is extra pipe charged?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-021",
+   "category": "Delivery & installation",
+   "owner_question": "How many days after purchase are delivery and installation done?",
+   "customer_question": "When will you install it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-022",
+   "category": "Delivery & installation",
+   "owner_question": "Is delivery of big appliances free, and do you carry them up to upper floors?",
+   "customer_question": "Will you carry the fridge to the 3rd floor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-023",
+   "category": "Warranty & service",
+   "owner_question": "Do you help customers with warranty claims and service centre visits?",
+   "customer_question": "Will you help with the warranty claim?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-024",
+   "category": "Warranty & service",
+   "owner_question": "Do you sell extended warranty or protection plans? Price?",
+   "customer_question": "Can I get extra warranty?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-025",
+   "category": "Warranty & service",
+   "owner_question": "Do you do AC servicing and gas refilling?",
+   "customer_question": "Can you service my AC?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-026",
+   "category": "Products & brands",
+   "owner_question": "Can customers reserve a product by paying an advance?",
+   "customer_question": "Can you keep one aside for me?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-027",
+   "category": "Products & brands",
+   "owner_question": "Do you sell energy-saving (5-star, inverter) models?",
+   "customer_question": "Do you have inverter AC?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-028",
+   "category": "Products & brands",
+   "owner_question": "Do you sell voltage stabilisers for ACs, fridges and TVs?",
+   "customer_question": "Do I need a stabiliser?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-029",
+   "category": "Products & brands",
+   "owner_question": "Do you sell kitchen chimneys and hobs, with installation?",
+   "customer_question": "Do you install chimneys?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-030",
+   "category": "Products & brands",
+   "owner_question": "Do you sell inverters and batteries for power backup?",
+   "customer_question": "Do you have inverter batteries?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-031",
+   "category": "Products & brands",
+   "owner_question": "Do you sell display or open-box pieces at a lower price?",
+   "customer_question": "Do you have any display piece for less?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-032",
+   "category": "Prices & bills",
+   "owner_question": "Which ways to pay do you accept?",
+   "customer_question": "Can I pay by credit card?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Cash",
+    "UPI",
+    "Debit / credit card",
+    "Bank transfer"
+   ]
+  },
+  {
+   "id": "appliances_showroom-033",
+   "category": "Prices & bills",
+   "owner_question": "Do you add any extra charge for card payments?",
+   "customer_question": "Is there extra charge on card?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "No extra charge",
+    "Yes, a small percentage"
+   ]
+  },
+  {
+   "id": "appliances_showroom-034",
+   "category": "Prices & bills",
+   "owner_question": "Do you give free gifts or accessories with purchases?",
+   "customer_question": "Any free gift with this TV?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-035",
+   "category": "Prices & bills",
+   "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
+   "customer_question": "Any discount for 10 laptops?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-036",
+   "category": "Buying & checking",
+   "owner_question": "Do you have a demo area to watch TVs and listen to sound systems?",
+   "customer_question": "Can I see the TV picture quality?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-037",
+   "category": "Delivery & installation",
+   "owner_question": "Do you take away the old appliance when delivering the new one?",
+   "customer_question": "Will you take my old fridge?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-038",
+   "category": "Delivery & installation",
+   "owner_question": "Do you provide a TV wall mount and fitting? Price?",
+   "customer_question": "Is wall mounting free?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-039",
+   "category": "Delivery & installation",
+   "owner_question": "Do you show how to use the appliance at installation?",
+   "customer_question": "Will you show how to use it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-040",
+   "category": "Warranty & service",
+   "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
+   "customer_question": "Where is the Samsung service centre?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-041",
+   "category": "Warranty & service",
+   "owner_question": "Do you repair or service appliances, or only through the brand's service?",
+   "customer_question": "Can you repair my washing machine?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "We repair",
+    "Only brand service",
+    "Both"
+   ]
+  },
+  {
+   "id": "appliances_showroom-042",
+   "category": "Warranty & service",
+   "owner_question": "Do you offer yearly service plans for ACs and water purifiers?",
+   "customer_question": "Is there an AC service plan?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-043",
+   "category": "Shop & service",
+   "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
+   "customer_question": "Can I give my old phone for recycling?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-044",
+   "category": "Shop & service",
+   "owner_question": "Do you have an online store or a WhatsApp catalogue?",
+   "customer_question": "Can I see your products online?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-045",
+   "category": "Shop & service",
+   "owner_question": "Do you send a copy of the bill on WhatsApp?",
+   "customer_question": "Can you send the bill on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-046",
+   "category": "Shop & service",
+   "owner_question": "Do you bring products home for a demo before buying?",
+   "customer_question": "Can you show the TV at my home?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-047",
+   "category": "Shop & service",
+   "owner_question": "Do you have a loyalty or points programme for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliances_showroom-048",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "appliances_showroom-049",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
