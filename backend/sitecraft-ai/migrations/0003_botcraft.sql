@@ -32,7 +32,8 @@ CREATE TABLE IF NOT EXISTS botcraft_questions (
   question_id TEXT PRIMARY KEY,
   bank_id TEXT NOT NULL,
   category TEXT NOT NULL DEFAULT '',
-  question_text TEXT NOT NULL,
+  question_text TEXT NOT NULL,          -- what BotCraft asks the owner
+  customer_question TEXT NOT NULL DEFAULT '', -- how a customer would ask the bot
   priority TEXT NOT NULL DEFAULT 'optional'
     CHECK (priority IN ('mandatory', 'important', 'optional')),
   answer_type TEXT NOT NULL DEFAULT 'text'
