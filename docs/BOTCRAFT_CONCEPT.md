@@ -47,6 +47,12 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
   - `why_customers_ask`
 - Rules: no duplicates, simple language, nothing illegal or unsafe, nothing that collects customer personal data.
 
+**Core questions (every shop, fixed, mandatory):** shop name, address with landmark, Google Maps location link, opening times, weekly holiday, call number, WhatsApp number, main items sold, payment methods. Generated questions never repeat these.
+
+**Never asked:**
+- A shop summary or description. BotCraft writes it from the items and answers.
+- Individual items, prices or photos. These come from the uploads, as item cards.
+
 **Cost saving:** store a generated bank per business type and reuse it for the next owner of the same type (refresh it periodically). Only shop-specific extras are generated per owner.
 
 **Auto-fill from owner uploads:**
@@ -69,6 +75,7 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
 - Answer **only from the shop's verified data.** Never invent prices, stock, offers or policies.
 - Out-of-stock items are shown as out of stock, with similar items suggested.
 - Daily-changing data (for example the gold rate) is shown with its "last updated" date.
+- Contact buttons for customers: **Call**, **WhatsApp** and **Directions** (Google Maps).
 - If the bot cannot answer after up to 3 attempts, or the customer wants a person: *"Please speak to the owner at the counter."* The shop is small, so the owner is always nearby.
 - **Buying (v1):** the bot helps the customer choose, then sends them to the counter, for example with a "Show this to the owner" summary of the chosen items. Online ordering and payment come later.
 

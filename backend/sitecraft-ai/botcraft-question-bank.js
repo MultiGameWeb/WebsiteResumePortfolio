@@ -19,9 +19,11 @@ const MAX_MANDATORY_EXTRA = 10;
 const CORE_QUESTIONS = [
   ["What is your shop's name?", "What is the shop name?", "text", []],
   ["What is your shop's full address, with a nearby landmark?", "Where is your shop?", "text", []],
+  ["Please share your shop's Google Maps location link.", "Send me the shop location.", "text", []],
   ["What are your shop's opening and closing times?", "What time do you open?", "text", []],
   ["Which day is your shop closed every week?", "Are you open on Sunday?", "options", ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Open all days"]],
   ["Which phone number should customers call for your shop?", "What is your contact number?", "text", []],
+  ["Which WhatsApp number should customers message?", "What is your WhatsApp number?", "options", ["Same as the call number", "A different number"]],
   ["What are the main types of items you sell?", "What do you sell?", "list", []],
   ["Which payment methods do you accept?", "Can I pay by UPI or card?", "list", []]
 ].map(([owner_question, customer_question, answer_type, options]) => ({
@@ -45,7 +47,9 @@ Rules:
 - Cover what real customers of this kind of shop ask before buying: products and range, pricing and charges, quality and certification, policies (exchange, return, warranty, repair), payment and offers, services, timings and location, trust, and shop-type-specific topics.
 - Assume a small or medium local shop run by its owner, not a large showroom chain.
 - Ask only about facts of the shop. Never ask about chatbot features, settings or how the bot should behave.
-- Do not ask the basics that are always collected separately: shop name, address, opening times, weekly holiday, contact number, main items sold and payment methods.
+- Do not ask the basics that are always collected separately: shop name, address, Google Maps location, opening times, weekly holiday, call number, WhatsApp number, main items sold and payment methods.
+- Never ask the owner to describe or summarise the shop; BotCraft writes the shop summary itself from the items and answers.
+- Never ask for individual items, their prices or photos; those come from the item photos and price lists the owner uploads.
 - Shop-level questions only. Individual item prices and photos come from item cards the owner uploads, so ask about ranges, rules and policies instead of single items.
 - One piece of information per question. Short, simple English that a small shop owner understands. No jargon.
 - No duplicates or near-duplicates.
@@ -173,7 +177,7 @@ async function reviewBank(env, shop, questions, log) {
   const list = questions.map((q, i) => `${i}. [${q.category}] ${q.owner_question}`).join("\n");
   const { result } = await callWithFallback(env, {
     system: RULES,
-    prompt: `Shop type: ${shop}\n\nReview this owner interview. The shop basics (name, address, timings, holiday, phone, items sold, payment methods) are already asked separately.\n\n${list}\n\nReturn the ids of duplicates (keep the first, list the later ones), off-topic questions, and at most ${MAX_MANDATORY_EXTRA} truly mandatory questions.`,
+    prompt: `Shop type: ${shop}\n\nReview this owner interview. The shop basics (name, address, map location, timings, holiday, call and WhatsApp numbers, items sold, payment methods) are already asked separately; treat questions repeating them as duplicates.\n\n${list}\n\nReturn the ids of duplicates (keep the first, list the later ones), off-topic questions, and at most ${MAX_MANDATORY_EXTRA} truly mandatory questions.`,
     schema: REVIEW_SCHEMA,
     temperature: 0.1,
     log
