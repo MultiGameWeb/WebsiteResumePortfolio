@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 45,
+ "question_count": 54,
  "questions": [
   {
    "id": "kids_wear-001",
@@ -84,7 +84,7 @@
   {
    "id": "kids_wear-007",
    "category": "Fabric & quality",
-   "owner_question": "Are your baby clothes made of soft, skin-friendly cotton?",
+   "owner_question": "Are your baby and newborn clothes made of soft, organic or anti-allergy cotton?",
    "customer_question": "Is it soft for my baby's skin?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -95,6 +95,14 @@
   },
   {
    "id": "kids_wear-008",
+   "category": "Fabric & quality",
+   "owner_question": "If a customer finds a defect at home (tear, loose threads, missing button, stain), do you replace it or give another colour? Within how many days?",
+   "customer_question": "There's a hole in the shirt, will you change it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "kids_wear-009",
    "category": "Sizes & fit",
    "owner_question": "Do you have a trial room?",
    "customer_question": "Can I try this on?",
@@ -106,7 +114,7 @@
    ]
   },
   {
-   "id": "kids_wear-009",
+   "id": "kids_wear-010",
    "category": "Stitching & alterations",
    "owner_question": "Do you alter clothes bought from you (length, waist, sleeves)?",
    "customer_question": "Can you shorten the pant?",
@@ -119,7 +127,7 @@
    ]
   },
   {
-   "id": "kids_wear-010",
+   "id": "kids_wear-011",
    "category": "Prices & billing",
    "owner_question": "Are your prices fixed, or can customers bargain?",
    "customer_question": "Is there any discount on this price?",
@@ -132,7 +140,7 @@
    ]
   },
   {
-   "id": "kids_wear-011",
+   "id": "kids_wear-012",
    "category": "Prices & billing",
    "owner_question": "Is the price (MRP) printed on the tag of every item?",
    "customer_question": "Where is the price tag?",
@@ -144,7 +152,7 @@
    ]
   },
   {
-   "id": "kids_wear-012",
+   "id": "kids_wear-013",
    "category": "Stock & orders",
    "owner_question": "Can customers see new designs on WhatsApp (photos or video call) and order?",
    "customer_question": "Can you send me photos of new sarees?",
@@ -156,7 +164,7 @@
    ]
   },
   {
-   "id": "kids_wear-013",
+   "id": "kids_wear-014",
    "category": "Products & collections",
    "owner_question": "Do you sell matching sets for the whole family (same colour for couple, kids, family)?",
    "customer_question": "Do you have matching dresses for the family?",
@@ -168,7 +176,7 @@
    ]
   },
   {
-   "id": "kids_wear-014",
+   "id": "kids_wear-015",
    "category": "Products & collections",
    "owner_question": "Which latest trending styles do you have right now?",
    "customer_question": "Do you have the latest trend?",
@@ -176,7 +184,31 @@
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-015",
+   "id": "kids_wear-016",
+   "category": "Products & collections",
+   "owner_question": "Do you have loose / broader fits for healthier kids?",
+   "customer_question": "Do you have a loose fit for my chubby son?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kids_wear-017",
+   "category": "Products & collections",
+   "owner_question": "Do you have a seconds section (small defects at lower prices)?",
+   "customer_question": "Do you sell seconds?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kids_wear-018",
    "category": "Products & collections",
    "owner_question": "Do you have cotton / breathable clothes for summer?",
    "customer_question": "Any cotton clothes for summer?",
@@ -188,7 +220,7 @@
    ]
   },
   {
-   "id": "kids_wear-016",
+   "id": "kids_wear-019",
    "category": "Products & collections",
    "owner_question": "Do you sell school uniforms?",
    "customer_question": "Do you have uniforms for my child's school?",
@@ -200,7 +232,7 @@
    ]
   },
   {
-   "id": "kids_wear-017",
+   "id": "kids_wear-020",
    "category": "Products & collections",
    "owner_question": "Do you sell innerwear and socks?",
    "customer_question": "Do you have innerwear?",
@@ -212,9 +244,9 @@
    ]
   },
   {
-   "id": "kids_wear-018",
+   "id": "kids_wear-021",
    "category": "Products & collections",
-   "owner_question": "Do you sell accessories (dupattas, belts, caps, hair accessories, handbags)?",
+   "owner_question": "Do you sell matching accessories (dupattas, belts, wallets, ties, handkerchiefs, caps, hair accessories, handbags)?",
    "customer_question": "Do you have a matching dupatta?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -224,7 +256,7 @@
    ]
   },
   {
-   "id": "kids_wear-019",
+   "id": "kids_wear-022",
    "category": "Fabric & quality",
    "owner_question": "Will the colour run in the first wash for some clothes? Do you tell customers?",
    "customer_question": "Will the colour come out in washing?",
@@ -236,7 +268,7 @@
    ]
   },
   {
-   "id": "kids_wear-020",
+   "id": "kids_wear-023",
    "category": "Fabric & quality",
    "owner_question": "Will cotton clothes shrink after washing? Do you tell customers?",
    "customer_question": "Will it shrink?",
@@ -248,7 +280,7 @@
    ]
   },
   {
-   "id": "kids_wear-021",
+   "id": "kids_wear-024",
    "category": "Fabric & quality",
    "owner_question": "Do your kids' clothes avoid sharp buttons, hard zips and loose beads?",
    "customer_question": "Will the beads come off in my baby's mouth?",
@@ -260,7 +292,7 @@
    ]
   },
   {
-   "id": "kids_wear-022",
+   "id": "kids_wear-025",
    "category": "Fabric & quality",
    "owner_question": "Do you give any colour guarantee (replace if the colour fades or bleeds)?",
    "customer_question": "What if the colour fades?",
@@ -268,15 +300,15 @@
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-023",
+   "id": "kids_wear-026",
    "category": "Fabric & quality",
-   "owner_question": "Which clothes need dry cleaning only, and how should customers wash and care for the rest?",
+   "owner_question": "Which clothes need dry cleaning only, and how should customers wash, iron (zari, heavy work) and care for the rest?",
    "customer_question": "Can I wash this at home?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-024",
+   "id": "kids_wear-027",
    "category": "Sizes & fit",
    "owner_question": "Do you have a size chart (by age, height or measurements)?",
    "customer_question": "Which size for a 5-year-old?",
@@ -288,7 +320,7 @@
    ]
   },
   {
-   "id": "kids_wear-025",
+   "id": "kids_wear-028",
    "category": "Sizes & fit",
    "owner_question": "If a size is not available, can you get it? How many days?",
    "customer_question": "Can you get this in M size?",
@@ -296,7 +328,7 @@
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-026",
+   "id": "kids_wear-029",
    "category": "Stitching & alterations",
    "owner_question": "Is a tailor available at the shop, and how long do alterations take?",
    "customer_question": "When will the alteration be ready?",
@@ -304,7 +336,7 @@
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-027",
+   "id": "kids_wear-030",
    "category": "Prices & billing",
    "owner_question": "Is GST included in the price or added on the bill?",
    "customer_question": "Is GST extra?",
@@ -316,15 +348,27 @@
    ]
   },
   {
-   "id": "kids_wear-028",
+   "id": "kids_wear-031",
    "category": "Prices & billing",
-   "owner_question": "When do you have your sales (Sankranti, Dasara, Diwali, end of season, Aadi)?",
+   "owner_question": "In which months do you have sales (Sankranti, Dasara, Diwali, end of season, stock clearance)?",
    "customer_question": "When is your sale?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-029",
+   "id": "kids_wear-032",
+   "category": "Prices & billing",
+   "owner_question": "Do you sell gift vouchers / gift cards?",
+   "customer_question": "Do you have a gift card?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kids_wear-033",
    "category": "Prices & billing",
    "owner_question": "Do you give special discounts for students (college ID) or corporate employees?",
    "customer_question": "Any student discount?",
@@ -332,7 +376,7 @@
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-030",
+   "id": "kids_wear-034",
    "category": "Prices & billing",
    "owner_question": "Do you sell to resellers or small shops at wholesale rates?",
    "customer_question": "Do you give wholesale rates?",
@@ -344,7 +388,7 @@
    ]
   },
   {
-   "id": "kids_wear-031",
+   "id": "kids_wear-035",
    "category": "Prices & billing",
    "owner_question": "Do you give discounts for corporate, school or group orders (uniforms, T-shirts)?",
    "customer_question": "Can you do 100 T-shirts for our office?",
@@ -352,15 +396,15 @@
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-032",
+   "id": "kids_wear-036",
    "category": "Exchange details",
-   "owner_question": "Are sale or discount items exchangeable?",
+   "owner_question": "Do exchange and alteration apply to sale or discount items too?",
    "customer_question": "Can I exchange a sale item?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-033",
+   "id": "kids_wear-037",
    "category": "Exchange details",
    "owner_question": "For exchange, are the original price tag and bill both needed? Can gifts be exchanged with only the tag?",
    "customer_question": "Do I need the bill to exchange?",
@@ -368,7 +412,7 @@
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-034",
+   "id": "kids_wear-038",
    "category": "Exchange details",
    "owner_question": "Do you exchange clothes that are already washed or altered?",
    "customer_question": "I washed it once, can I still exchange it?",
@@ -380,7 +424,7 @@
    ]
   },
   {
-   "id": "kids_wear-035",
+   "id": "kids_wear-039",
    "category": "Exchange details",
    "owner_question": "On returns, do you give money back or a store credit?",
    "customer_question": "Will I get my money back?",
@@ -393,7 +437,7 @@
    ]
   },
   {
-   "id": "kids_wear-036",
+   "id": "kids_wear-040",
    "category": "Stock & orders",
    "owner_question": "How often does new stock come in, and on which day usually?",
    "customer_question": "When does the new collection come?",
@@ -401,7 +445,7 @@
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-037",
+   "id": "kids_wear-041",
    "category": "Stock & orders",
    "owner_question": "Can customers reserve a piece for a few days by paying an advance?",
    "customer_question": "Can you keep this aside for me?",
@@ -413,7 +457,7 @@
    ]
   },
   {
-   "id": "kids_wear-038",
+   "id": "kids_wear-042",
    "category": "Stock & orders",
    "owner_question": "Can you get the same design in another colour?",
    "customer_question": "Do you have this in green?",
@@ -425,19 +469,28 @@
    ]
   },
   {
-   "id": "kids_wear-039",
+   "id": "kids_wear-043",
    "category": "Stock & orders",
-   "owner_question": "Do you courier to other cities and abroad?",
+   "owner_question": "Do you courier to other cities and abroad? What are the charges?",
    "customer_question": "Can you send it to the USA?",
    "priority": "optional",
-   "answer_type": "yes_no",
+   "answer_type": "text"
+  },
+  {
+   "id": "kids_wear-044",
+   "category": "Stock & orders",
+   "owner_question": "If a customer doesn't like clothes sent by courier, how do they return them?",
+   "customer_question": "Will you pick it up if I don't like it?",
+   "priority": "optional",
+   "answer_type": "options",
    "options": [
-    "Yes",
-    "No"
+    "We arrange return pickup",
+    "Customer sends it back",
+    "Exchange at the shop only"
    ]
   },
   {
-   "id": "kids_wear-040",
+   "id": "kids_wear-045",
    "category": "Stock & orders",
    "owner_question": "Do you rent bridal lehengas, sherwanis or costumes?",
    "customer_question": "Can I rent a lehenga?",
@@ -449,7 +502,19 @@
    ]
   },
   {
-   "id": "kids_wear-041",
+   "id": "kids_wear-046",
+   "category": "Shop & service",
+   "owner_question": "Do you do gift wrapping or gift box packing?",
+   "customer_question": "Can you gift-pack it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kids_wear-047",
    "category": "Shop & service",
    "owner_question": "Do you have seating for families and a kids' play area?",
    "customer_question": "Is there a place to sit?",
@@ -461,7 +526,7 @@
    ]
   },
   {
-   "id": "kids_wear-042",
+   "id": "kids_wear-048",
    "category": "Shop & service",
    "owner_question": "What are your busy hours, and how long is the wait for trial rooms then?",
    "customer_question": "Is there a long queue for trial rooms?",
@@ -469,10 +534,18 @@
    "answer_type": "text"
   },
   {
-   "id": "kids_wear-043",
+   "id": "kids_wear-049",
    "category": "Shop & service",
-   "owner_question": "Do you have a loyalty card or points for regular customers?",
+   "owner_question": "Do you give loyalty points, and can they be used on the next bill?",
    "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kids_wear-050",
+   "category": "Shop & service",
+   "owner_question": "Does a sales assistant help each customer with selection?",
+   "customer_question": "Can someone help me choose?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -481,7 +554,27 @@
    ]
   },
   {
-   "id": "kids_wear-044",
+   "id": "kids_wear-051",
+   "category": "Shop & service",
+   "owner_question": "If customers have a complaint (staff behaviour, billing delay), whom can they talk to?",
+   "customer_question": "Can I talk to the manager?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kids_wear-052",
+   "category": "Shop & service",
+   "owner_question": "If customers forget a bag or item in the trial room, do you keep it safe for them?",
+   "customer_question": "I left my bag in the trial room, do you have it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kids_wear-053",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -497,7 +590,7 @@
    ]
   },
   {
-   "id": "kids_wear-045",
+   "id": "kids_wear-054",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
