@@ -23,7 +23,10 @@ const MAX_IMAGES = 4;
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 const IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]);
 const REQUESTS_PER_MINUTE = 20;
-const CHAT_MODELS = ["gemini-3.1-flash-lite", "gemini-3.5-flash", "gemini-3.8-flash"];
+// Cheapest first: 3.1 Flash-Lite, then 3.5 Flash-Lite (fastest, its own free
+// quota), then 3.8 Flash only as a last resort. 3.5 Flash is left out: it
+// costs the most and the setup chat does not need it.
+const CHAT_MODELS = ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3.8-flash"];
 // Bank questions shown to the model per turn; the whole bank is shown only
 // when the owner sends a long message or files, so answers can be extracted.
 const BANK_WINDOW = 6;
