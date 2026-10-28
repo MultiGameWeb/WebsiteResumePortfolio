@@ -24,6 +24,11 @@ Q = [
  ("Products & purity", "O", "text", "What making charge and wastage do you take on silver, per gram?", "Making charge on silver anklets?", [], "J"),
  ("Products & purity", "O", "list", "Which silver items do you have for small children?", "Do you have silver gajjelu for my baby?", ["Gajjelu / anklets", "Molathadu (waist thread)", "Bowls & spoons", "Bangles", "None"], "J"),
  ("Products & purity", "O", "yes_no", "Do you give wholesale rates on bulk silver coins or gifts (for corporate events or functions)?", "Rate for 200 silver coins?", YN, "J"),
+ ("Products & purity", "O", "yes_no", "Do you have light-weight gold jewellery for babies and kids (black-bead bracelets, small rings, studs)?", "Do you have small gold rings for my baby?", YN, "J"),
+ ("Products & purity", "O", "yes_no", "Is your kids' jewellery made with smooth, rounded edges so it doesn't hurt the child?", "Will it poke my baby's skin?", YN, "JF"),
+ ("Products & purity", "O", "yes_no", "Do you have 2D / 3D temple and antique-finish designs?", "Do you have 3D temple necklaces?", YN, "J"),
+ ("Products & purity", "O", "yes_no", "Do you sell digital gold (buy online from ₹100) through your app or website?", "Can I buy gold online from you for ₹100?", YN, "J"),
+ ("Products & purity", "O", "text", "Can digital gold bought from you be converted into jewellery or coins at your shop? Any charges?", "Can I change my digital gold into a chain?", [], "J"),
  ("Products & purity", "I", "yes_no", "Do you have anti-tarnish / waterproof jewellery for daily wear?", "Will it change colour in water?", YN, "F"),
 
  ("Pearls & gemstones", "O", "options", "Which pearls do you sell?", "Are these real pearls?", ["Natural", "Cultured", "Basra", "Fresh-water", "We don't sell pearls"], "J"),
@@ -59,9 +64,11 @@ Q = [
  ("Rates & charges", "O", "yes_no", "Do you give a lower wastage on plain gold jewellery (without stones)?", "Any less wastage on plain bangles?", YN, "J"),
  ("Rates & charges", "O", "options", "Is your rate the local board rate or a branded / corporate rate?", "Is your rate the board rate?", ["Local board rate", "Branded / corporate rate", "Our own rate"], "J"),
  ("Rates & charges", "I", "options", "Are stones charged separately from the gold weight?", "Is the stone weight counted as gold?", ["Stone weight deducted, stones charged separately", "Stones included in the price", "Depends on the piece"], "J"),
- ("Rates & charges", "O", "yes_no", "Do you weigh threads, enamel and meenakari separately from the gold?", "Is the thread weight counted as gold?", YN, "J"),
+ ("Rates & charges", "O", "text", "Do you charge making or wastage on gold coins and bars?", "Is there wastage on a gold coin?", [], "J"),
+ ("Rates & charges", "O", "text", "On custom orders or remaking old gold, who bears the melting loss — the customer or the shop?", "Who pays for the gold lost in melting?", [], "J"),
+ ("Rates & charges", "O", "yes_no", "Do you weigh threads (dori, silk or leather cords), enamel and meenakari separately and deduct them from the gold weight?", "Is the thread weight counted as gold?", YN, "J"),
  ("Rates & charges", "O", "yes_no", "Is the weighing scale kept where customers can see it show zero before weighing?", "Can I see the weighing?", YN, "J"),
- ("Rates & charges", "I", "yes_no", "Does your bill show gross weight, net gold weight, stone weight, purity, rate, making, wastage and GST separately?", "Will the bill show net and gross weight?", YN, "J"),
+ ("Rates & charges", "I", "yes_no", "Do you give a computerised GST bill showing gross weight, net gold weight, stone weight, purity, rate, making, wastage and GST separately?", "Will the bill show net and gross weight?", YN, "J"),
  ("Rates & charges", "I", "yes_no", "Is the HUID number of each piece printed on the bill?", "Will the HUID be on my bill?", YN, "J"),
  ("Rates & charges", "I", "options", "Is GST (3%) included in the price or added on the bill?", "Is GST extra?", ["Included", "Added on the bill"], "JF"),
  ("Rates & charges", "O", "text", "Is the GST different for gold coins / bars and for jewellery?", "Is GST the same on coins?", [], "J"),
@@ -92,6 +99,8 @@ Q = [
  ("Custom orders & services", "I", "list", "Which services do you offer?", "Can you resize my ring?", ["Repair", "Polishing", "Resizing", "Rhodium plating", "Stone setting", "Name engraving", "Ear / nose piercing"], "J"),
  ("Custom orders & services", "O", "text", "What do you charge for polishing and repairs (for example replacing screws or locks)?", "How much to fix the lock of my chain?", [], "J"),
  ("Custom orders & services", "O", "yes_no", "Do you give free polishing or maintenance for jewellery bought from you?", "Is polishing free for my bangles?", YN, "J"),
+ ("Custom orders & services", "O", "text", "If you pierce ears or noses (including for babies), what do you charge? Is it free with studs bought from you?", "How much for my baby's ear piercing?", [], "J"),
+ ("Custom orders & services", "O", "yes_no", "If the antique polish on jewellery bought from you fades, do you redo it to the original colour?", "The antique colour faded, can you redo it?", YN, "J"),
  ("Custom orders & services", "O", "yes_no", "Do you clean silver that has turned black (cleaning service or liquid cleaner)?", "My silver turned black, can you clean it?", YN, "J"),
  ("Custom orders & services", "O", "text", "Do you re-polish or re-plate old one-gram jewellery? Charge?", "Can you re-polish my old set?", [], "F"),
 
@@ -106,6 +115,7 @@ Q = [
  ("Quality & guarantee", "O", "text", "What care tips do you give (keep away from water, perfume, etc.)?", "How do I keep it shining?", [], "F"),
  ("Quality & guarantee", "O", "yes_no", "Do you offer insurance for jewellery bought from you?", "Can I insure this necklace?", YN, "J"),
 
+ ("Buying & payment", "O", "yes_no", "For customers travelling abroad, do you give a bill or certificate to show at customs?", "I'm going to the US, will I have problems at customs?", YN, "J"),
  ("Buying & payment", "I", "text", "Which ID do customers need for big purchases (for example PAN above ₹2 lakh)?", "Do I need PAN card?", [], "J"),
  ("Buying & payment", "O", "text", "What is the maximum cash you accept on one bill?", "Can I pay 3 lakhs in cash?", [], "J"),
  ("Buying & payment", "O", "text", "Do you give special discounts to corporate employees (IT, bank, government)?", "Any discount for IT employees?", [], "JF"),
@@ -126,6 +136,7 @@ Q = [
  ("Shop & service", "O", "text", "Do you run scratch cards or lucky draws on festivals or your shop anniversary?", "Is there a lucky draw this Diwali?", [], "JF"),
  ("Shop & service", "O", "yes_no", "Do you have a privilege card or loyalty points for regular customers?", "Do I get loyalty points?", YN, "JF"),
  ("Shop & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada", "Marwari"], "JF"),
+ ("Shop & service", "O", "text", "If a customer has a quality problem later, whom should they contact (owner or customer care number)?", "Whom do I call if there's a problem later?", [], "JF"),
  ("Shop & service", "O", "text", "Please share your Google reviews link, if you have one.", "Where can I see your reviews?", [], "JF"),
 ]
 
