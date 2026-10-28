@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 50,
+ "question_count": 54,
  "questions": [
   {
    "id": "saree_textiles-001",
@@ -226,8 +226,8 @@
   {
    "id": "saree_textiles-018",
    "category": "Products & collections",
-   "owner_question": "Do you have a separate bridal / wedding section?",
-   "customer_question": "Where are the bridal sarees?",
+   "owner_question": "Do you have a separate wedding collection (bridal lehengas, pattu sarees, sherwanis)?",
+   "customer_question": "Where is the wedding collection?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -306,13 +306,21 @@
   {
    "id": "saree_textiles-025",
    "category": "Fabric & quality",
-   "owner_question": "How should customers wash and care for silk sarees and heavy work clothes (dry clean, storage)?",
-   "customer_question": "Can I wash this saree at home?",
+   "owner_question": "Do you give any colour guarantee (replace if the colour fades or bleeds)?",
+   "customer_question": "What if the colour fades?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
    "id": "saree_textiles-026",
+   "category": "Fabric & quality",
+   "owner_question": "Which clothes need dry cleaning only, and how should customers wash and care for the rest?",
+   "customer_question": "Can I wash this at home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "saree_textiles-027",
    "category": "Fabric & quality",
    "owner_question": "Do your sarees come with a blouse piece?",
    "customer_question": "Is the blouse piece included?",
@@ -325,7 +333,7 @@
    ]
   },
   {
-   "id": "saree_textiles-027",
+   "id": "saree_textiles-028",
    "category": "Fabric & quality",
    "owner_question": "What is the usual length of your sarees (with and without blouse piece)?",
    "customer_question": "How many metres is this saree?",
@@ -333,7 +341,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-028",
+   "id": "saree_textiles-029",
    "category": "Fabric & quality",
    "owner_question": "Do your dress materials come with a dupatta and bottom cloth? How many metres each?",
    "customer_question": "Is the dupatta included?",
@@ -341,7 +349,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-029",
+   "id": "saree_textiles-030",
    "category": "Sizes & fit",
    "owner_question": "Do you have a full mirror and good lighting to see saree colours properly?",
    "customer_question": "Can I see the saree in daylight?",
@@ -353,7 +361,7 @@
    ]
   },
   {
-   "id": "saree_textiles-030",
+   "id": "saree_textiles-031",
    "category": "Stitching & alterations",
    "owner_question": "Do you have women tailors / staff to take measurements for ladies?",
    "customer_question": "Is there a lady to take measurements?",
@@ -365,7 +373,7 @@
    ]
   },
   {
-   "id": "saree_textiles-031",
+   "id": "saree_textiles-032",
    "category": "Stitching & alterations",
    "owner_question": "Do you stitch dhoti / pancha kattu or pre-stitched sarees?",
    "customer_question": "Can you make a ready-to-wear saree?",
@@ -377,7 +385,7 @@
    ]
   },
   {
-   "id": "saree_textiles-032",
+   "id": "saree_textiles-033",
    "category": "Stitching & alterations",
    "owner_question": "Do you do saree pre-pleating or box folding for functions?",
    "customer_question": "Can you pleat my saree?",
@@ -389,7 +397,7 @@
    ]
   },
   {
-   "id": "saree_textiles-033",
+   "id": "saree_textiles-034",
    "category": "Prices & billing",
    "owner_question": "Is GST included in the price or added on the bill?",
    "customer_question": "Is GST extra?",
@@ -401,7 +409,7 @@
    ]
   },
   {
-   "id": "saree_textiles-034",
+   "id": "saree_textiles-035",
    "category": "Prices & billing",
    "owner_question": "Do you give extra discount on bulk wedding purchases (for example 10+ sarees or family clothes)?",
    "customer_question": "Any discount if we buy for the whole wedding?",
@@ -409,7 +417,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-035",
+   "id": "saree_textiles-036",
    "category": "Prices & billing",
    "owner_question": "When do you have your sales (Sankranti, Dasara, Diwali, end of season, Aadi)?",
    "customer_question": "When is your sale?",
@@ -417,7 +425,15 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-036",
+   "id": "saree_textiles-037",
+   "category": "Prices & billing",
+   "owner_question": "Do you give special discounts for students (college ID) or corporate employees?",
+   "customer_question": "Any student discount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "saree_textiles-038",
    "category": "Prices & billing",
    "owner_question": "Do you sell to resellers or small shops at wholesale rates?",
    "customer_question": "Do you give wholesale rates?",
@@ -429,7 +445,7 @@
    ]
   },
   {
-   "id": "saree_textiles-037",
+   "id": "saree_textiles-039",
    "category": "Exchange details",
    "owner_question": "Can a saree be exchanged after fall and pico or blouse cutting is done?",
    "customer_question": "Can I exchange it after fall pico?",
@@ -437,7 +453,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-038",
+   "id": "saree_textiles-040",
    "category": "Exchange details",
    "owner_question": "Are sale or discount items exchangeable?",
    "customer_question": "Can I exchange a sale item?",
@@ -445,15 +461,36 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-039",
+   "id": "saree_textiles-041",
+   "category": "Exchange details",
+   "owner_question": "For exchange, are the original price tag and bill both needed? Can gifts be exchanged with only the tag?",
+   "customer_question": "Do I need the bill to exchange?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "saree_textiles-042",
+   "category": "Exchange details",
+   "owner_question": "On returns, do you give money back or a store credit?",
+   "customer_question": "Will I get my money back?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Money back",
+    "Store credit / credit note",
+    "Exchange only"
+   ]
+  },
+  {
+   "id": "saree_textiles-043",
    "category": "Stock & orders",
-   "owner_question": "How often does new stock come in?",
+   "owner_question": "How often does new stock come in, and on which day usually?",
    "customer_question": "When does the new collection come?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-040",
+   "id": "saree_textiles-044",
    "category": "Stock & orders",
    "owner_question": "Can customers reserve a piece for a few days by paying an advance?",
    "customer_question": "Can you keep this aside for me?",
@@ -465,7 +502,7 @@
    ]
   },
   {
-   "id": "saree_textiles-041",
+   "id": "saree_textiles-045",
    "category": "Stock & orders",
    "owner_question": "Can you get the same design in another colour?",
    "customer_question": "Do you have this in green?",
@@ -477,7 +514,7 @@
    ]
   },
   {
-   "id": "saree_textiles-042",
+   "id": "saree_textiles-046",
    "category": "Stock & orders",
    "owner_question": "Do you send sarees / clothes for selection to the customer's home (for weddings or elders)?",
    "customer_question": "Can you bring sarees to our house for selection?",
@@ -489,7 +526,7 @@
    ]
   },
   {
-   "id": "saree_textiles-043",
+   "id": "saree_textiles-047",
    "category": "Stock & orders",
    "owner_question": "Do you courier to other cities and abroad?",
    "customer_question": "Can you send it to the USA?",
@@ -501,7 +538,7 @@
    ]
   },
   {
-   "id": "saree_textiles-044",
+   "id": "saree_textiles-048",
    "category": "Stock & orders",
    "owner_question": "Do you take custom weaving orders (name or design woven into the saree)?",
    "customer_question": "Can you weave our names in the saree?",
@@ -513,7 +550,7 @@
    ]
   },
   {
-   "id": "saree_textiles-045",
+   "id": "saree_textiles-049",
    "category": "Shop & service",
    "owner_question": "Do you have seating for families and a kids' play area?",
    "customer_question": "Is there a place to sit?",
@@ -525,7 +562,7 @@
    ]
   },
   {
-   "id": "saree_textiles-046",
+   "id": "saree_textiles-050",
    "category": "Shop & service",
    "owner_question": "Do you have a separate room for bridal shopping?",
    "customer_question": "Is there a private room for bridal shopping?",
@@ -537,7 +574,7 @@
    ]
   },
   {
-   "id": "saree_textiles-047",
+   "id": "saree_textiles-051",
    "category": "Shop & service",
    "owner_question": "Do you take appointments for bridal or designer consultation?",
    "customer_question": "Can I book an appointment?",
@@ -549,7 +586,7 @@
    ]
   },
   {
-   "id": "saree_textiles-048",
+   "id": "saree_textiles-052",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty card or points for regular customers?",
    "customer_question": "Do I get points?",
@@ -561,7 +598,7 @@
    ]
   },
   {
-   "id": "saree_textiles-049",
+   "id": "saree_textiles-053",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -577,7 +614,7 @@
    ]
   },
   {
-   "id": "saree_textiles-050",
+   "id": "saree_textiles-054",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
