@@ -16,24 +16,39 @@ const TARGET_BEFORE_REVIEW = 245;
 const MAX_MANDATORY_EXTRA = 10;
 
 // Asked of every shop, whatever its type; generated questions must not repeat them.
+// `ask_if` makes a question depend on the answer to another core question.
 const CORE_QUESTIONS = [
-  ["What is your shop's name?", "What is the shop name?", "text", []],
-  ["What is your shop's full address, with a nearby landmark?", "Where is your shop?", "text", []],
-  ["Please share your shop's Google Maps location link.", "Send me the shop location.", "text", []],
-  ["What are your shop's opening and closing times?", "What time do you open?", "text", []],
-  ["Which day is your shop closed every week?", "Are you open on Sunday?", "options", ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Open all days"]],
-  ["Which phone number should customers call for your shop?", "What is your contact number?", "text", []],
-  ["Which WhatsApp number should customers message?", "What is your WhatsApp number?", "options", ["Same as the call number", "A different number"]],
-  ["What are the main types of items you sell?", "What do you sell?", "list", []]
-].map(([owner_question, customer_question, answer_type, options]) => ({
+  { key: "shop_name", q: "What is your shop's name?", c: "What is the shop name?" },
+  { key: "owner_name", q: "What is the owner's name?", c: "Who is the owner?" },
+  { key: "owner_photo", q: "Would you like to add a photo of yourself (the owner)?", c: "Who should I ask for at the counter?", type: "image", priority: "optional" },
+  { key: "shop_front_photo", q: "Please send a photo of your shop front or signboard.", c: "How do I recognise the shop?", type: "image" },
+  { key: "address", q: "What is your shop's full address, with a nearby landmark?", c: "Where is your shop?" },
+  { key: "map_link", q: "Please share your shop's Google Maps location link.", c: "Send me the shop location." },
+  { key: "parking", q: "Is parking available for customers?", c: "Is there parking near the shop?", type: "options", options: ["Own parking for cars and bikes", "Bike parking only", "Street parking nearby", "No parking"] },
+  { key: "timings", q: "What are your shop's opening and closing times?", c: "What time do you open?" },
+  { key: "weekly_holiday", q: "Which day is your shop closed every week?", c: "Are you open on Sunday?", type: "options", options: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Open all days"] },
+  { key: "call_number", q: "Which phone number should customers call for your shop?", c: "What is your contact number?" },
+  { key: "whatsapp_number", q: "Which WhatsApp number should customers message?", c: "What is your WhatsApp number?", type: "options", options: ["Same as the call number", "A different number"] },
+  { key: "main_items", q: "What are the main types of items you sell?", c: "What do you sell?", type: "list" },
+  { key: "return_exchange", q: "What is your return and exchange policy? One or two lines is enough.", c: "Can I exchange this if it doesn't fit?" },
+  { key: "home_delivery", q: "Do you offer home delivery?", c: "Can you deliver to my home?", type: "options", options: ["No home delivery", "Yes, within the city", "Yes, anywhere in India"] },
+  { key: "emi", q: "Do you offer EMI (pay in monthly instalments)?", c: "Can I buy this on EMI?", type: "options", options: ["Yes, on all items", "Yes, on some items", "No EMI"] },
+  { key: "emi_items", q: "Which items or price ranges can customers buy on EMI?", c: "Is EMI available on this item?", ask_if: { key: "emi", equals: ["Yes, on some items"] } },
+  { key: "emi_options", q: "Which EMI options do you offer?", c: "Which cards or finance companies do you accept for EMI?", type: "list", options: ["Credit card EMI", "Debit card EMI", "Bajaj Finserv EMI card", "TVS Credit", "HDB Financial Services", "Home Credit", "No-cost EMI", "Shop's own instalment plan"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
+  { key: "emi_documents", q: "What does a customer need to bring to buy on EMI?", c: "What documents do I need for EMI?", type: "list", options: ["Aadhaar card", "PAN card", "Credit or debit card", "Bank account / cancelled cheque", "Passport-size photo", "Minimum down payment"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
+  { key: "offers", q: "Are there any offers running right now? You can change them anytime with Update.", c: "Any offers today?", type: "options", options: ["No offers right now", "Yes, I'll describe them"] }
+].map(item => ({
+  key: item.key,
   category: "Shop basics",
-  customer_question,
-  owner_question,
-  priority: "mandatory",
-  answer_type,
-  options,
-  why_customers_ask: "Every customer needs these basics."
+  customer_question: item.c,
+  owner_question: item.q,
+  priority: item.priority || "mandatory",
+  answer_type: item.type || "text",
+  options: item.options || [],
+  why_customers_ask: "Customers of every shop ask this.",
+  ask_if: item.ask_if || null
 }));
+const CORE_TOPICS = "shop name, owner name and photo, shop front photo, address, map location, parking, timings, weekly holiday, call and WhatsApp numbers, main items sold, return and exchange policy, home delivery, EMI (which items, EMI options, documents) and current offers";
 
 const PRIORITIES = new Set(["mandatory", "important", "optional"]);
 const ANSWER_TYPES = new Set(["text", "options", "yes_no", "number", "price", "image", "list"]);
@@ -46,8 +61,9 @@ Rules:
 - Cover what real customers of this kind of shop ask before buying: products and range, pricing and charges, quality and certification, policies (exchange, return, warranty, repair), payment and offers, services, timings and location, trust, and shop-type-specific topics.
 - Assume a small or medium local shop run by its owner, not a large showroom chain.
 - Ask only about facts of the shop. Never ask about chatbot features, settings or how the bot should behave.
-- Do not ask the basics that are always collected separately: shop name, address, Google Maps location, opening times, weekly holiday, call number, WhatsApp number and main items sold.
+- Do not ask the basics that are always collected separately: ${CORE_TOPICS}.
 - Never ask the owner to describe or summarise the shop; BotCraft writes the shop summary itself from the items and answers.
+- Do not ask which payment methods (cash, UPI, cards) the shop accepts.
 - Never ask for individual items, their prices or photos; those come from the item photos and price lists the owner uploads.
 - Shop-level questions only. Individual item prices and photos come from item cards the owner uploads, so ask about ranges, rules and policies instead of single items.
 - One piece of information per question. Short, simple English that a small shop owner understands. No jargon.
@@ -186,7 +202,7 @@ async function reviewBank(env, shop, questions, log) {
   const list = questions.map((q, i) => `${i}. [${q.category}] ${q.owner_question}`).join("\n");
   const { result } = await callWithFallback(env, {
     system: RULES,
-    prompt: `Shop type: ${shop}\n\nReview this owner interview. The shop basics (name, address, map location, timings, holiday, call and WhatsApp numbers, items sold) are already asked separately.\n\n${list}\n\nReturn: duplicates, each with the id of the later question and the earlier question it repeats (only exact same-fact repeats); off-topic question ids; and at most ${MAX_MANDATORY_EXTRA} truly mandatory question ids. Most questions are fine and should not be listed.`,
+    prompt: `Shop type: ${shop}\n\nReview this owner interview. The shop basics (${CORE_TOPICS}) are already asked separately.\n\n${list}\n\nReturn: duplicates, each with the id of the later question and the earlier question it repeats (only exact same-fact repeats); off-topic question ids; and at most ${MAX_MANDATORY_EXTRA} truly mandatory question ids. Most questions are fine and should not be listed.`,
     schema: REVIEW_SCHEMA,
     temperature: 0.1,
     log

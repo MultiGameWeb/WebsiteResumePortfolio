@@ -47,7 +47,7 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
   - `why_customers_ask`
 - Rules: no duplicates, simple language, nothing illegal or unsafe, nothing that collects customer personal data.
 
-**Core questions (every shop, fixed, mandatory):** shop name, address with landmark, Google Maps location link, opening times, weekly holiday, call number, WhatsApp number and main items sold. Generated questions never repeat these. As with every question, BotCraft first fills core answers from what the owner sent; it asks only the core questions still unanswered, and the bot cannot go live until all of them are answered.
+**Core questions (every shop, fixed, mandatory unless marked):** shop name, owner name, owner photo (optional), shop front photo, address with landmark, Google Maps location link, parking, opening times, weekly holiday, call number, WhatsApp number, main items sold, return/exchange policy, home delivery, EMI (if yes: which items, EMI options such as credit/debit card EMI, Bajaj Finserv, TVS Credit, HDB; documents needed) and current offers. Follow-up questions are asked only when the earlier answer needs them (no EMI → no EMI follow-ups). Payment methods are not asked. Generated questions never repeat these. As with every question, BotCraft first fills core answers from what the owner sent; it asks only the core questions still unanswered, and the bot cannot go live until all of them are answered.
 
 **Never asked:**
 - A shop summary or description. BotCraft writes it from the items and answers.

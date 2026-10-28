@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS botcraft_question_banks (
 CREATE TABLE IF NOT EXISTS botcraft_questions (
   question_id TEXT PRIMARY KEY,
   bank_id TEXT NOT NULL,
+  question_key TEXT,                    -- stable key for core questions, e.g. 'emi'
+  ask_if_json TEXT NOT NULL DEFAULT 'null', -- {"key":"emi","equals":[...]}: ask only after that answer
   category TEXT NOT NULL DEFAULT '',
   question_text TEXT NOT NULL,          -- what BotCraft asks the owner
   customer_question TEXT NOT NULL DEFAULT '', -- how a customer would ask the bot
