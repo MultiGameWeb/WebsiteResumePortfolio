@@ -15,6 +15,8 @@ const HISTORY_LIMIT = 30;
 // Conversation and collected facts live only in this page for now.
 const history = [];
 let facts = {};
+// Answers to the shop type's question bank, by question id.
+let answers = {};
 
 let nextOptionId = 0;
 const toOption = (label) => ({ id: `api-option-${++nextOptionId}`, label, value: label, kind: 'answer' });
@@ -58,7 +60,7 @@ async function buildPayload(action) {
     if (image) images.push(image);
     else otherFiles.push(attachment.name);
   }
-  return { text, images, otherFiles, history: history.slice(-HISTORY_LIMIT), facts };
+  return { text, images, otherFiles, history: history.slice(-HISTORY_LIMIT), facts, answers };
 }
 
 /**
@@ -89,6 +91,7 @@ export async function sendChatAction(action) {
   }
 
   facts = { ...facts, ...data.facts };
+  answers = data.resetAnswers ? {} : { ...answers, ...data.answers };
   const sentFiles = payload.images.length + payload.otherFiles.length;
   history.push(
     { role: 'owner', text: payload.text || `(sent ${sentFiles} file${sentFiles === 1 ? '' : 's'})` },

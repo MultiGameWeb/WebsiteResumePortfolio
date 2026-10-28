@@ -1,0 +1,2570 @@
+{
+ "shop_type_key": "jewellery",
+ "name": "Jewellery shop",
+ "version": 1,
+ "model": "gemini-3.1-flash-lite",
+ "generated_at": "2026-10-28",
+ "question_count": 230,
+ "questions": [
+  {
+   "id": "jewellery-001",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Is all the gold jewellery in your shop BIS hallmarked?",
+   "customer_question": "Is your gold BIS hallmarked?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-002",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "What karatage of gold do you primarily stock (e.g., 18k, 20k, 22k, 24k)?",
+   "customer_question": "Do you sell 22k gold?",
+   "priority": "mandatory",
+   "answer_type": "list"
+  },
+  {
+   "id": "jewellery-003",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Do you charge a fixed making charge per gram for gold jewellery, or does it vary by item type?",
+   "customer_question": "Do you charge a fixed making charge for gold jewellery?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Fixed rate per gram",
+    "Varies by item type",
+    "Percentage of gold value"
+   ]
+  },
+  {
+   "id": "jewellery-004",
+   "category": "Making Charges and Wastage",
+   "owner_question": "What is your standard wastage (or melting loss) percentage charged on gold items?",
+   "customer_question": "What is your standard wastage percentage on gold jewellery?",
+   "priority": "mandatory",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-005",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you offer an old gold exchange or buy-back service?",
+   "customer_question": "Do you buy back old gold jewellery?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-006",
+   "category": "Old Gold Exchange",
+   "owner_question": "Which government-issued identity documents do you require from customers when they exchange gold?",
+   "customer_question": "What documents do I need to bring to sell gold?",
+   "priority": "mandatory",
+   "answer_type": "list"
+  },
+  {
+   "id": "jewellery-007",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you provide certification for all your diamond jewellery?",
+   "customer_question": "Are your diamonds certified?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-008",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you offer custom jewellery design services for customers?",
+   "customer_question": "Can you make custom jewellery designs based on my own sketch or idea?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-009",
+   "category": "Documentation and Taxes",
+   "owner_question": "What is the minimum purchase amount in rupees for which a customer must provide their PAN card?",
+   "customer_question": "Do I need to show my PAN card for buying gold?",
+   "priority": "mandatory",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-010",
+   "category": "Documentation and Taxes",
+   "owner_question": "Do you provide a formal GST-compliant invoice for every customer purchase?",
+   "customer_question": "Do you provide a GST invoice for every purchase?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-011",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you offer a purity testing facility or machine (like a Karatmeter) in your shop for customers?",
+   "customer_question": "How can I verify the purity of the gold?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-012",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you provide a formal purity certificate or guarantee card for every purchase?",
+   "customer_question": "Do you provide a purity certificate with the jewellery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-013",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Does your hallmarked jewellery carry the unique HUID (Hallmark Unique Identification) number?",
+   "customer_question": "Is the gold hallmarked with the HUID?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-014",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "What is the standard purity for the gold coins you sell (e.g., 24k 999 purity)?",
+   "customer_question": "What is the purity of the gold coins you sell?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-015",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you provide third-party certification (like GIA or IGI) for the diamonds used in your jewellery?",
+   "customer_question": "Are your diamonds certified?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-016",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you specifically market your 22k gold as 916 gold?",
+   "customer_question": "Do you sell 916 gold?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-017",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you have a policy to compensate the customer if the gold purity is found to be lower than stated?",
+   "customer_question": "What if the gold purity is found to be lower than promised?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-018",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Are the gemstones used in your jewellery natural, or are they synthetic/lab-created?",
+   "customer_question": "Are the gemstones in the jewellery natural?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Natural",
+    "Synthetic",
+    "Both"
+   ]
+  },
+  {
+   "id": "jewellery-019",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you sell any gold-plated or gold-filled jewellery alongside solid gold?",
+   "customer_question": "Do you sell gold-plated jewellery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-020",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Is the gold purity consistent across all your jewellery designs?",
+   "customer_question": "Is the gold purity the same for all designs?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-021",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Is your buy-back price directly linked to the purity and weight of the gold?",
+   "customer_question": "Do you offer a buy-back guarantee based on purity?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-022",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Are your making charges negotiable, or are they fixed for all customers?",
+   "customer_question": "Are making charges negotiable?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-023",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Do you charge wastage on the weight of the stones in studded jewellery, or only on the gold weight?",
+   "customer_question": "Do you charge wastage on stone-studded jewellery?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only on gold weight",
+    "On total weight including stones"
+   ]
+  },
+  {
+   "id": "jewellery-024",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Are the making charges already included in the price tag shown on the jewellery, or are they added separately at billing?",
+   "customer_question": "Are making charges included in the price tag?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in tag",
+    "Added separately at billing"
+   ]
+  },
+  {
+   "id": "jewellery-025",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Do you apply wastage charges on silver jewellery or silverware?",
+   "customer_question": "Do you charge wastage on silver items?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-026",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Do you have a different wastage policy for custom-made or order-based jewellery?",
+   "customer_question": "How do you calculate wastage for custom-made jewellery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-027",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Is the GST applied to the total bill including making charges?",
+   "customer_question": "Is GST added on top of the making charges?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-028",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Are making charges for antique or handcrafted jewellery higher than machine-made items?",
+   "customer_question": "Do you have a fixed making charge for antique jewellery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-029",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Do you charge wastage or making charges on gold coins?",
+   "customer_question": "Do you charge wastage on gold coins?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-030",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Does the wastage percentage change depending on whether the gold is 18K, 20K, or 22K?",
+   "customer_question": "Is the wastage percentage fixed for all gold karats?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-031",
+   "category": "Making Charges and Wastage",
+   "owner_question": "If a customer brings their own gold to melt and remake, what is the melting loss or charge?",
+   "customer_question": "Do you charge for melting old gold?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-032",
+   "category": "Making Charges and Wastage",
+   "owner_question": "When a customer exchanges old jewellery, is the wastage deducted from the exchange value?",
+   "customer_question": "How is the wastage calculated if I exchange my old jewellery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-033",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Does your invoice show a clear breakdown of gold price, wastage, making charges, and GST?",
+   "customer_question": "Can I see a breakdown of the making charges on the invoice?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-034",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you accept gold jewellery purchased from other shops for exchange?",
+   "customer_question": "Do you accept gold bought from other shops?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-035",
+   "category": "Old Gold Exchange",
+   "owner_question": "What method do you use to test the purity of the gold brought in (e.g., acid test, digital karat meter)?",
+   "customer_question": "How do you check the purity of my gold?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-036",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you apply a standard percentage deduction for impurities, dust, or wax found in the jewellery?",
+   "customer_question": "Do you deduct anything for impurities or dirt?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-037",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you charge a fee for melting the old gold jewellery?",
+   "customer_question": "Is there a melting charge?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-038",
+   "category": "Old Gold Exchange",
+   "owner_question": "What is your policy regarding payment for old gold (Cash, UPI, Bank Transfer)?",
+   "customer_question": "Do you give cash or bank transfer for old gold?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Cash only",
+    "Bank transfer only",
+    "Both cash and bank transfer"
+   ]
+  },
+  {
+   "id": "jewellery-039",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you offer the current market rate for gold, or is there a percentage deduction applied to the market price?",
+   "customer_question": "Do I get full market value for my gold?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-040",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you accept broken or damaged gold jewellery for exchange?",
+   "customer_question": "Do you accept broken gold jewellery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-041",
+   "category": "Old Gold Exchange",
+   "owner_question": "Is the original purchase bill mandatory to exchange gold at your shop?",
+   "customer_question": "Do I need the original purchase bill to exchange gold?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-042",
+   "category": "Old Gold Exchange",
+   "owner_question": "How do you handle stones or pearls attached to gold jewellery during the valuation process?",
+   "customer_question": "Do you buy back gold with stones?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Weigh with stones",
+    "Remove stones and weigh gold only",
+    "Deduct stone weight by percentage"
+   ]
+  },
+  {
+   "id": "jewellery-043",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you only accept BIS Hallmarked gold, or do you accept non-hallmarked gold as well?",
+   "customer_question": "Do you accept Hallmark gold only?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only Hallmarked",
+    "Both Hallmarked and non-hallmarked"
+   ]
+  },
+  {
+   "id": "jewellery-044",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you provide a higher value or bonus if the customer chooses to exchange old gold for new jewellery instead of cash?",
+   "customer_question": "Do you offer better rates if I exchange for new jewellery instead of cash?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-045",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you require the customer to be at least 18 years of age for gold exchange?",
+   "customer_question": "Do I need to be 18+ to sell gold?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-046",
+   "category": "Old Gold Exchange",
+   "owner_question": "Is the gold valuation process performed in the presence of the customer?",
+   "customer_question": "Is the valuation done in front of me?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-047",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you provide price quotes for old gold over the phone, or must the customer visit in person?",
+   "customer_question": "Can I get a quote over the phone before coming?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Must visit in person",
+    "Can give rough estimate over phone"
+   ]
+  },
+  {
+   "id": "jewellery-048",
+   "category": "Old Gold Exchange",
+   "owner_question": "Is there a maximum limit on the amount of cash you provide for gold exchange?",
+   "customer_question": "What is the maximum cash limit for gold exchange?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-049",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you provide a formal receipt or voucher for every gold exchange transaction?",
+   "customer_question": "Do you provide a receipt for the gold I sell?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-050",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Which specific labs issue the certificates for your diamonds (e.g., GIA, IGI, HRD)?",
+   "customer_question": "Which laboratories certify your diamonds?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "jewellery-051",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you provide authenticity certificates for precious and semi-precious gemstones?",
+   "customer_question": "Do you provide a certificate for coloured gemstones?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-052",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you hand over the original certificate to the customer immediately after the purchase?",
+   "customer_question": "Is the certificate provided at the time of purchase?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-053",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Can the certificates you provide be verified online on the lab's official website?",
+   "customer_question": "Can I verify the diamond certificate online?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-054",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do your certificates include details like cut, color, clarity, and carat weight (the 4Cs)?",
+   "customer_question": "Does the certificate mention the diamond's clarity and color grade?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-055",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Is the cost of certification included in the price of the jewellery, or is it charged separately?",
+   "customer_question": "Do you charge extra for the certification?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Extra charge"
+   ]
+  },
+  {
+   "id": "jewellery-056",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you offer a shop-issued guarantee card or invoice that acts as a warranty for the purity of the metal and stones?",
+   "customer_question": "Do you provide a store guarantee along with the lab certificate?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-057",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you sell lab-grown diamonds, and are they clearly marked as such?",
+   "customer_question": "Do you sell lab-grown diamonds?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-058",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Does your certificate also verify the purity of the gold or platinum used in the setting?",
+   "customer_question": "Does the certificate cover the metal purity?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-059",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you disclose if the gemstones have undergone any heat or chemical treatments?",
+   "customer_question": "Are the gemstones treated or heated?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-060",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you offer a buy-back or exchange policy based on the certified diamond's value?",
+   "customer_question": "Do you provide a buy-back guarantee based on the certification?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-061",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Do you offer a monthly gold savings scheme for customers?",
+   "customer_question": "Do you offer any gold savings schemes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-062",
+   "category": "Gold Savings Schemes",
+   "owner_question": "What is the minimum monthly installment amount for your scheme?",
+   "customer_question": "What is the minimum monthly amount I need to deposit?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "jewellery-063",
+   "category": "Gold Savings Schemes",
+   "owner_question": "What is the total duration in months for your savings scheme?",
+   "customer_question": "How many months do I have to pay?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-064",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Do you offer a discount on making charges or a bonus amount upon scheme maturity?",
+   "customer_question": "Do you give any bonus or discount at the end?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-065",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Can customers pay their monthly installments online via UPI or bank transfer?",
+   "customer_question": "Can I pay the monthly amount online?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-066",
+   "category": "Gold Savings Schemes",
+   "owner_question": "What is your policy if a customer misses a monthly installment payment?",
+   "customer_question": "What happens if I miss a monthly payment?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-067",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Is early withdrawal allowed before the scheme maturity date?",
+   "customer_question": "Can I withdraw my money before the scheme ends?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-068",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Do customers receive gold jewellery or cash back at the end of the scheme?",
+   "customer_question": "Will I get gold or cash at the end?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Gold Jewellery",
+    "Cash",
+    "Both"
+   ]
+  },
+  {
+   "id": "jewellery-069",
+   "category": "Gold Savings Schemes",
+   "owner_question": "What documents do customers need to bring to enroll in your gold scheme?",
+   "customer_question": "Do I need to provide any documents to join the scheme?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "jewellery-070",
+   "category": "Customization and Repairs",
+   "owner_question": "What is the typical time frame in days for completing a custom jewellery order?",
+   "customer_question": "How long does it usually take to complete a custom-made jewellery order?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-071",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you offer ring resizing services in your shop?",
+   "customer_question": "Do you provide ring resizing services?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-072",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you provide professional cleaning or polishing services for jewellery?",
+   "customer_question": "Do you offer professional jewellery cleaning or polishing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-073",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you offer stone resetting or replacement services?",
+   "customer_question": "Can you reset a stone if it has fallen out of my ring?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-074",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you perform repairs on broken gold chains or bracelets?",
+   "customer_question": "Do you repair broken gold chains or bracelets?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-075",
+   "category": "Customization and Repairs",
+   "owner_question": "What is the minimum service charge for any repair work?",
+   "customer_question": "Is there a minimum charge for repair services?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "jewellery-076",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you offer a repair warranty for your services?",
+   "customer_question": "Do you provide a warranty on your repair work?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-077",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you accept jewellery for repair that was purchased from other shops?",
+   "customer_question": "Can I bring jewellery bought elsewhere for repairs?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-078",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you provide a written estimate for repair costs before starting the work?",
+   "customer_question": "Do you provide a receipt or estimate before starting a repair?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-079",
+   "category": "Customization and Repairs",
+   "owner_question": "What is your process for keeping customer jewellery safe while it is in for repair?",
+   "customer_question": "How do you ensure the safety of my jewellery while it is in your shop for repair?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-080",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you offer 'old gold to new design' conversion services?",
+   "customer_question": "Can you convert old jewellery into a new design?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-081",
+   "category": "Customization and Repairs",
+   "owner_question": "Which metals do you offer repair or customization services for?",
+   "customer_question": "Do you work with silver or other metals, or only gold?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "jewellery-082",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you issue a job card or reference number for items left for repair?",
+   "customer_question": "Do you provide a tracking number or reference for repairs?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-083",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you charge for the weight of stones separately from the gold weight?",
+   "customer_question": "Do you charge for the gold weight and the stone weight separately?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-084",
+   "category": "Pricing Transparency",
+   "owner_question": "How do you calculate making charges (wastage/labour)?",
+   "customer_question": "Do you charge a fixed making charge or a percentage?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed amount per gram",
+    "Percentage of gold value",
+    "Fixed price per piece"
+   ]
+  },
+  {
+   "id": "jewellery-085",
+   "category": "Pricing Transparency",
+   "owner_question": "Is the GST amount included in the price shown on your jewellery tags?",
+   "customer_question": "Is GST included in the price I see on the tag?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-086",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you charge an extra fee for BIS hallmarking, or is it included in the making charges?",
+   "customer_question": "Do you have a separate charge for hallmarking?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in making charges",
+    "Charged separately",
+    "Not applicable"
+   ]
+  },
+  {
+   "id": "jewellery-087",
+   "category": "Pricing Transparency",
+   "owner_question": "What is your policy for calculating the value of old gold brought for exchange?",
+   "customer_question": "How do you calculate the price if I exchange my old gold?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-088",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you update your gold rates daily based on the market?",
+   "customer_question": "Are your gold rates updated daily?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-089",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you charge different making charges for custom-made jewellery compared to ready-made stock?",
+   "customer_question": "Is there a difference in pricing for ready-made vs. custom-made jewellery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-090",
+   "category": "Pricing Transparency",
+   "owner_question": "Does your final bill show a clear break-up of gold weight, making charges, and GST?",
+   "customer_question": "Do you provide a detailed break-up of the price on the bill?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-091",
+   "category": "Pricing Transparency",
+   "owner_question": "Are there any standard additional charges (like insurance or processing fees) not mentioned in the gold price?",
+   "customer_question": "Are there any hidden charges I should know about?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-092",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you have different gold rates for different purities (e.g., 22k, 18k)?",
+   "customer_question": "Do you adjust the gold rate based on the purity (22k vs 18k)?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-093",
+   "category": "Pricing Transparency",
+   "owner_question": "Is stone setting cost included in the making charges or charged separately?",
+   "customer_question": "Do you charge for stone setting separately?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in making charges",
+    "Charged separately"
+   ]
+  },
+  {
+   "id": "jewellery-094",
+   "category": "Pricing Transparency",
+   "owner_question": "Is the making charge fixed, or is it negotiable depending on the item?",
+   "customer_question": "Is the making charge negotiable?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed",
+    "Negotiable"
+   ]
+  },
+  {
+   "id": "jewellery-095",
+   "category": "Insurance and Security",
+   "owner_question": "Do you provide transit insurance for jewellery purchased from your shop until it reaches the customer's home?",
+   "customer_question": "Is my jewellery insured if I buy it and take it home?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-096",
+   "category": "Insurance and Security",
+   "owner_question": "Do you have a private or secure area for customers to view and finalize high-value purchases?",
+   "customer_question": "Is the shop safe for high-value transactions?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-097",
+   "category": "Insurance and Security",
+   "owner_question": "Do you offer a replacement or repair policy for items damaged during shop-arranged delivery?",
+   "customer_question": "What happens if the jewellery gets damaged during transit?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Replacement",
+    "Repair",
+    "No policy",
+    "Depends on case"
+   ]
+  },
+  {
+   "id": "jewellery-098",
+   "category": "Insurance and Security",
+   "owner_question": "Do you require a PAN card or Aadhaar card for high-value purchases as per government regulations?",
+   "customer_question": "How do you verify the identity of people buying high-value gold?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-099",
+   "category": "Insurance and Security",
+   "owner_question": "Do you use tamper-proof packaging for all jewellery shipments?",
+   "customer_question": "What security measures do you take for online orders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-100",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you offer free or paid gift wrapping services for your jewellery?",
+   "customer_question": "Do you provide gift wrapping for jewellery items?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No",
+    "Yes, free",
+    "Yes, paid"
+   ]
+  },
+  {
+   "id": "jewellery-101",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Can you include a handwritten or printed note if a customer is gifting the jewellery?",
+   "customer_question": "Can you include a personalized message note with the gift?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-102",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you have special 'wedding-ready' packaging or thali arrangements for bridal jewellery?",
+   "customer_question": "Do you offer special packaging for weddings?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-103",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Can you provide a gift receipt that excludes the price for the recipient?",
+   "customer_question": "Do you provide a 'gift receipt' that hides the price?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-104",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you offer custom engraving services on jewellery items for special occasions?",
+   "customer_question": "Do you offer custom engraving for gifts?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-105",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you provide branded carry bags with every purchase?",
+   "customer_question": "Can you provide a carry bag for the gift?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-106",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you ensure the jewellery certificate is placed inside the gift box?",
+   "customer_question": "Do you provide a certificate of authenticity inside the gift box?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-107",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you have a formal loyalty or membership program for your customers?",
+   "customer_question": "Do you have a loyalty program for regular customers?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-108",
+   "category": "Loyalty and Membership",
+   "owner_question": "What is the process for a customer to join your membership program?",
+   "customer_question": "How can I become a member of your shop?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-109",
+   "category": "Loyalty and Membership",
+   "owner_question": "Is there any joining fee or annual subscription cost for your membership?",
+   "customer_question": "Is there a fee to join your loyalty program?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "jewellery-110",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you offer reward points for every purchase made?",
+   "customer_question": "Do I get points for every purchase I make?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-111",
+   "category": "Loyalty and Membership",
+   "owner_question": "What is the minimum points balance required to redeem a reward or discount?",
+   "customer_question": "How many points do I need to get a discount?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-112",
+   "category": "Loyalty and Membership",
+   "owner_question": "What specific benefits or discounts do members receive?",
+   "customer_question": "What kind of special discounts do members get?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-113",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do the loyalty points earned by customers have an expiry date?",
+   "customer_question": "Do my loyalty points expire?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-114",
+   "category": "Loyalty and Membership",
+   "owner_question": "Can members redeem their points on items that are already on sale?",
+   "customer_question": "Can I use my points during sales or on discounted items?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-115",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Do you accept orders for custom-made jewellery designs?",
+   "customer_question": "Can I place an order for a custom jewellery design?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-116",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "What is the typical number of days required to complete a custom jewellery order?",
+   "customer_question": "How many days does it take to get a custom piece made?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-117",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Are you willing to source or order specific jewellery designs from wholesalers if they are not currently in your shop?",
+   "customer_question": "Can you source a specific design if it is not in the shop?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-118",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Do you require an advance payment to start working on a custom jewellery piece?",
+   "customer_question": "Do I need to pay an advance for custom orders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-119",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "What percentage of the total estimated cost do you usually charge as an advance for custom orders?",
+   "customer_question": "What is the advance amount for custom orders?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-120",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Do you offer 'gold melting' or 'old gold exchange' services to create new custom jewellery?",
+   "customer_question": "Can I bring my own gold to make new jewellery?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-121",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Are you able to recreate a specific jewellery design based on a photo provided by the customer?",
+   "customer_question": "Can you copy a design if I show a photo?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-122",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Do you charge a separate 'making charge' or 'design fee' for custom-made jewellery compared to ready-made items?",
+   "customer_question": "Do you charge extra for custom design work?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-123",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Do you proactively call or message customers once their custom jewellery order is ready for pickup?",
+   "customer_question": "Do you inform me when my custom order is ready?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-124",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Is there a policy for cancelling a custom order once the advance has been paid?",
+   "customer_question": "Can I cancel a custom order?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-125",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Do you accept bulk or priority orders specifically for wedding seasons?",
+   "customer_question": "Can I order jewellery for specific wedding dates?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-126",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Do you provide free resizing services for custom-made rings or bangles?",
+   "customer_question": "Can you resize custom jewellery if it doesn't fit?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-127",
+   "category": "After-Sales Care",
+   "owner_question": "Do you charge a fee for polishing services after a certain period of time?",
+   "customer_question": "Is there a charge for polishing if I bought the item a long time ago?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-128",
+   "category": "After-Sales Care",
+   "owner_question": "What is your standard price range for a professional cleaning service if it is not free?",
+   "customer_question": "How much do you charge for professional jewellery cleaning?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "jewellery-129",
+   "category": "After-Sales Care",
+   "owner_question": "Do you provide free replacement or setting services for loose or lost stones?",
+   "customer_question": "What is the policy if a stone falls out of my ring?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-130",
+   "category": "After-Sales Care",
+   "owner_question": "What is the average turnaround time for standard jewellery repairs?",
+   "customer_question": "How long does a typical repair take?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-131",
+   "category": "After-Sales Care",
+   "owner_question": "Do customers need to bring the original invoice or warranty card to avail of repair services?",
+   "customer_question": "What documents do I need to bring for a repair?",
+   "priority": "important",
+   "answer_type": "list"
+  },
+  {
+   "id": "jewellery-132",
+   "category": "After-Sales Care",
+   "owner_question": "How do you notify customers once their repair work is completed?",
+   "customer_question": "How do I know when my repair is ready?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Phone Call",
+    "WhatsApp Message",
+    "SMS",
+    "Customer needs to check back"
+   ]
+  },
+  {
+   "id": "jewellery-133",
+   "category": "Documentation and Taxes",
+   "owner_question": "Are the prices you display for your jewellery items inclusive of GST or is GST added extra at checkout?",
+   "customer_question": "Are the prices shown inclusive of GST?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Prices are inclusive of GST",
+    "GST is added extra at checkout"
+   ]
+  },
+  {
+   "id": "jewellery-134",
+   "category": "Documentation and Taxes",
+   "owner_question": "Besides PAN, are there any other identity documents (like Aadhaar) that you require for large purchases?",
+   "customer_question": "What documents do I need to bring to buy jewellery here?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-135",
+   "category": "Documentation and Taxes",
+   "owner_question": "What is the GST percentage rate you apply specifically to the making charges of the jewellery?",
+   "customer_question": "Do you charge GST on the making charges?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-136",
+   "category": "Documentation and Taxes",
+   "owner_question": "Do you apply any additional tax or surcharge if a customer chooses to pay via credit card?",
+   "customer_question": "Is there any extra tax if I pay by card?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-137",
+   "category": "Documentation and Taxes",
+   "owner_question": "What is the current GST percentage rate that you apply to the total value of gold jewellery?",
+   "customer_question": "What is the GST rate on gold jewellery?",
+   "priority": "important",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-138",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you stock gold jewellery in variations like rose gold or white gold?",
+   "customer_question": "Do you sell rose gold or white gold?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-139",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you explain how different karatages (e.g., 18k vs 22k) impact the gold price per gram?",
+   "customer_question": "Does the gold purity affect the price?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-140",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you offer a service to test the purity of gold jewellery brought from other shops?",
+   "customer_question": "Can I get my old gold tested for purity here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-141",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Is the BIS hallmark stamp clearly visible on all your gold jewellery pieces?",
+   "customer_question": "Is the gold Hallmark stamp visible?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-142",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you stock antique jewellery that might have a lower purity than standard 22k?",
+   "customer_question": "Do you sell antique jewellery with different purity?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-143",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you have an in-house hallmarking facility or do you send items to an external BIS-approved center?",
+   "customer_question": "Is the gold hallmarking done in-house?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "In-house",
+    "External center"
+   ]
+  },
+  {
+   "id": "jewellery-144",
+   "category": "Gold Purity and Hallmarking",
+   "owner_question": "Do you provide a guide or explanation to customers on how to read the hallmark symbols?",
+   "customer_question": "How do I read the hallmark stamp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-145",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Do you have a minimum making charge amount for very light gold items?",
+   "customer_question": "Is there a minimum making charge for small gold items?",
+   "priority": "optional",
+   "answer_type": "price"
+  },
+  {
+   "id": "jewellery-146",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Do you offer discounts on making charges if a customer buys multiple items or a heavy set?",
+   "customer_question": "Do you offer lower making charges for bulk purchases?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-147",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Are there any additional charges like hallmarking charges or polishing fees added to the bill?",
+   "customer_question": "Are there any hidden charges other than making and wastage?",
+   "priority": "optional",
+   "answer_type": "list"
+  },
+  {
+   "id": "jewellery-148",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Do you have a loyalty program that offers reduced making charges for returning customers?",
+   "customer_question": "Do you offer a discount on making charges for regular customers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-149",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Are making charges for kids' jewellery different compared to adult jewellery?",
+   "customer_question": "Is the making charge different for kids' jewellery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-150",
+   "category": "Making Charges and Wastage",
+   "owner_question": "Do you have a standard repair fee or is it based on the work required?",
+   "customer_question": "Do you charge making fees for simple repairs?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Fixed repair fee",
+    "Based on work required"
+   ]
+  },
+  {
+   "id": "jewellery-151",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you accept gold coins or bars for exchange, or only jewellery?",
+   "customer_question": "Do you buy back gold coins as well?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Only jewellery",
+    "Jewellery and coins",
+    "Only coins"
+   ]
+  },
+  {
+   "id": "jewellery-152",
+   "category": "Old Gold Exchange",
+   "owner_question": "Is there a minimum weight (in grams) required for an gold exchange transaction?",
+   "customer_question": "Is there a minimum weight requirement to exchange gold?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-153",
+   "category": "Old Gold Exchange",
+   "owner_question": "On average, how much time does the entire valuation and exchange process take?",
+   "customer_question": "How long does the exchange process take?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-154",
+   "category": "Old Gold Exchange",
+   "owner_question": "Do you allow customers to exchange their old gold for silver jewellery or items?",
+   "customer_question": "Can I exchange gold for silver?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-155",
+   "category": "Old Gold Exchange",
+   "owner_question": "Is GST applicable on the old gold exchange transaction?",
+   "customer_question": "Do you charge GST on the exchange transaction?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-156",
+   "category": "Old Gold Exchange",
+   "owner_question": "Are there specific types of jewellery (e.g., chains, bangles, rings) that you do not accept for exchange?",
+   "customer_question": "Do you buy back gold chains?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-157",
+   "category": "Old Gold Exchange",
+   "owner_question": "How do you handle gold jewellery with enamel (meenakari) work during the exchange valuation?",
+   "customer_question": "Do you accept gold jewellery with enamel or meenakari work?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-158",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you follow ethical sourcing practices for your diamonds?",
+   "customer_question": "Are your diamonds conflict-free?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-159",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you have a diamond tester machine in the shop that customers can use to verify stones?",
+   "customer_question": "Do you test the diamonds in front of me?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-160",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you keep a digital record of issued certificates so a customer can request a copy if they lose the original?",
+   "customer_question": "What if the certificate is lost?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-161",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you provide authenticity reports for organic stones like pearls or coral?",
+   "customer_question": "Are the pearls or coral certified?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-162",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Are customers allowed to take the jewellery for an independent appraisal before finalizing the purchase?",
+   "customer_question": "Can I get an independent appraisal for my purchase?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-163",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Are your certificates accepted by insurance companies for jewellery insurance?",
+   "customer_question": "Is the certificate valid for insurance purposes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-164",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do your diamonds come with a laser inscription that matches the certificate number?",
+   "customer_question": "Are the diamonds laser-inscribed?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-165",
+   "category": "Diamond and Gemstone Certification",
+   "owner_question": "Do you provide a formal appraisal document for high-value items?",
+   "customer_question": "What is the difference between a certificate and an appraisal?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-166",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Is there a maximum monthly deposit limit for your scheme?",
+   "customer_question": "Is there a maximum limit on the monthly deposit?",
+   "priority": "optional",
+   "answer_type": "price"
+  },
+  {
+   "id": "jewellery-167",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Are customers allowed to change their monthly installment amount during the scheme?",
+   "customer_question": "Can I change my monthly installment amount halfway?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-168",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Do you provide any additional loyalty bonus for customers who never miss a payment?",
+   "customer_question": "Do I get any special benefit for paying all installments on time?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-169",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Are there any restrictions on the type of jewellery that can be purchased using the scheme funds?",
+   "customer_question": "Can I buy any gold item with the scheme amount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-170",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Is GST applicable on the monthly scheme installments?",
+   "customer_question": "Do I have to pay GST on the monthly installments?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-171",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Can a customer transfer their scheme account to a family member?",
+   "customer_question": "Can I transfer my scheme to someone else?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-172",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Do you charge any registration or processing fee to join the gold scheme?",
+   "customer_question": "Is there any registration fee to start the scheme?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-173",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Do you allow customers to pay multiple months of installments in advance?",
+   "customer_question": "Can I pay for multiple months in advance?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-174",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Do you provide a physical passbook or a digital record for scheme payments?",
+   "customer_question": "Will I get a passbook or digital record?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Physical Passbook",
+    "Digital Record",
+    "Both"
+   ]
+  },
+  {
+   "id": "jewellery-175",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Is the gold rate locked at the time of each payment or at the time of purchase?",
+   "customer_question": "Do I get the gold rate of the day I joined or the day I buy?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Rate at payment time",
+    "Rate at purchase time"
+   ]
+  },
+  {
+   "id": "jewellery-176",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Are there any hidden service charges or extra fees applied at the time of redemption?",
+   "customer_question": "Are there any extra charges when I finally buy the jewellery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-177",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Can the scheme maturity amount be used specifically to cover making charges?",
+   "customer_question": "Can I use the scheme amount for making charges only?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-178",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Do you send automated reminders to customers for their monthly installment due dates?",
+   "customer_question": "Do you send payment reminders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-179",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Is the gold scheme open for enrollment throughout the year?",
+   "customer_question": "Can I join the scheme at any time of the year?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-180",
+   "category": "Gold Savings Schemes",
+   "owner_question": "Is your gold savings scheme registered or compliant with local trade regulations?",
+   "customer_question": "Is the scheme registered or approved by any authority?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-181",
+   "category": "Gold Savings Schemes",
+   "owner_question": "What is your policy for customers who move or cannot visit the shop to redeem their scheme?",
+   "customer_question": "What happens if the shop is closed or I move to another city?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-182",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you provide gold plating or re-polishing services for jewellery?",
+   "customer_question": "Do you offer gold plating or re-polishing for imitation jewellery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-183",
+   "category": "Customization and Repairs",
+   "owner_question": "Is there a consultation fee for discussing custom jewellery designs?",
+   "customer_question": "Do you charge for the initial consultation for custom designs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-184",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you offer engraving services for jewellery?",
+   "customer_question": "Can you engrave names or dates on rings or pendants?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-185",
+   "category": "Customization and Repairs",
+   "owner_question": "Do you provide home pickup or delivery for jewellery repair services?",
+   "customer_question": "Do you offer home pickup or drop-off for repair services?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-186",
+   "category": "Customization and Repairs",
+   "owner_question": "How many hours or days does a simple task like jewellery cleaning usually take?",
+   "customer_question": "What is the typical turnaround time for simple repairs like cleaning?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-187",
+   "category": "Customization and Repairs",
+   "owner_question": "Are your repair technicians professionally trained or certified?",
+   "customer_question": "Are your repair technicians certified?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-188",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you offer any discounts for full cash payments?",
+   "customer_question": "Do you offer a discount if I pay in full cash?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-189",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you deduct the weight of non-gold materials like thread or dori from the total weight?",
+   "customer_question": "Do you charge for the weight of the thread or dori in necklaces?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-190",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you charge extra for premium packaging or gift boxes?",
+   "customer_question": "Do you charge for the packaging or jewellery boxes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-191",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you offer bulk purchase discounts for customers buying multiple items?",
+   "customer_question": "Can I get a discount if I buy multiple items?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-192",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you charge for polishing or cleaning services for jewellery bought from your shop?",
+   "customer_question": "Do you charge for polishing or cleaning?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Free for life",
+    "Free for a limited time",
+    "Always charged"
+   ]
+  },
+  {
+   "id": "jewellery-193",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you charge an additional fee for engraving services?",
+   "customer_question": "Do you charge extra for engraving names or dates?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-194",
+   "category": "Pricing Transparency",
+   "owner_question": "Do you offer any price protection if the gold market rate drops after a customer has booked an item?",
+   "customer_question": "What is your policy on price protection if gold rates drop?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-195",
+   "category": "Pricing Transparency",
+   "owner_question": "Is the weight of the clasp or lock mechanism included in the total gold weight of the item?",
+   "customer_question": "Do you charge for the weight of the clasp or lock mechanism?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-196",
+   "category": "Insurance and Security",
+   "owner_question": "Do you offer any tie-ups with insurance companies to help customers insure their jewellery?",
+   "customer_question": "Can I get the jewellery insured through your shop?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-197",
+   "category": "Insurance and Security",
+   "owner_question": "Do you provide a magnifying glass for customers to inspect the hallmark stamp on their jewellery?",
+   "customer_question": "Can I verify the hallmark stamp on the jewellery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-198",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you provide premium velvet or wooden boxes for special occasions?",
+   "customer_question": "What kind of gift boxes do you provide?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-199",
+   "category": "Gift and Occasion Services",
+   "owner_question": "What is the price range or fixed cost for special gift wrapping services?",
+   "customer_question": "Do you charge extra for gift wrapping?",
+   "priority": "optional",
+   "answer_type": "price"
+  },
+  {
+   "id": "jewellery-200",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you offer 'surprise' or anonymous delivery/packaging options for gifts?",
+   "customer_question": "Can you make the gift wrapping anonymous?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-201",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you offer festival-specific packaging (e.g., Diwali gift boxes)?",
+   "customer_question": "Do you have special packaging for festivals like Diwali or Akshaya Tritiya?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-202",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you provide decorative ribbons or bows for gift boxes?",
+   "customer_question": "Can you arrange for a ribbon or bow on the box?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-203",
+   "category": "Gift and Occasion Services",
+   "owner_question": "How much extra time do you need to prepare a special gift-wrapped order?",
+   "customer_question": "How long does it take to prepare a gift-wrapped order?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-204",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you provide special bulk packaging for wedding return gifts?",
+   "customer_question": "Do you offer bulk packaging for wedding return gifts?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-205",
+   "category": "Gift and Occasion Services",
+   "owner_question": "Do you offer a choice of colors or styles for your gift boxes?",
+   "customer_question": "Can I request a specific color for the gift box?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-206",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you offer any special gifts or discounts to members on their birthdays or anniversaries?",
+   "customer_question": "Do you have a special birthday or anniversary discount for members?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-207",
+   "category": "Loyalty and Membership",
+   "owner_question": "Are loyalty points transferable to other customers?",
+   "customer_question": "Can I transfer my points to a friend or family member?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-208",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you provide early access or previews of new collections to your members?",
+   "customer_question": "Do members get early access to new jewellery collections?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-209",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you issue a physical membership card, or is it digital?",
+   "customer_question": "Is there a physical membership card I need to carry?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Physical card",
+    "Digital/Phone number based",
+    "Both"
+   ]
+  },
+  {
+   "id": "jewellery-210",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you have different membership tiers (like Gold, Silver, Platinum) based on spending?",
+   "customer_question": "Are there different levels or tiers of membership?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-211",
+   "category": "Loyalty and Membership",
+   "owner_question": "How can a customer check their current loyalty points balance?",
+   "customer_question": "How do I check my current points balance?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-212",
+   "category": "Loyalty and Membership",
+   "owner_question": "Do you offer rewards to members for referring new customers to your shop?",
+   "customer_question": "Do you have a referral program for members?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-213",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Do you have a physical or digital catalog of designs that customers can browse for custom orders?",
+   "customer_question": "Do you have a catalog of designs I can choose from for custom orders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-214",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Is it possible for a customer to request changes to a custom order once the work has already begun?",
+   "customer_question": "Can I change the design after the work has started?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-215",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Can you procure certified diamonds or gemstones for custom jewellery orders?",
+   "customer_question": "Can you source certified diamonds for custom orders?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-216",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Do you offer a trial fitting session for complex custom jewellery pieces like necklaces or bangles?",
+   "customer_question": "Do you provide a trial fitting for custom jewellery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-217",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "What is your policy if a customer is unsatisfied with the final look of a custom-made piece?",
+   "customer_question": "What if I don't like the final custom design?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-218",
+   "category": "Stock Availability and Custom Orders",
+   "owner_question": "Is there a minimum weight (in grams) required to accept a custom jewellery order?",
+   "customer_question": "Do you have a minimum weight requirement for custom orders?",
+   "priority": "optional",
+   "answer_type": "number"
+  },
+  {
+   "id": "jewellery-219",
+   "category": "After-Sales Care",
+   "owner_question": "Do you offer any warranty period on the repair work performed by your shop?",
+   "customer_question": "Do you provide a warranty on repairs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-220",
+   "category": "After-Sales Care",
+   "owner_question": "Do you charge a fee for resizing rings, or is it complimentary?",
+   "customer_question": "Is there a cost for resizing a ring?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-221",
+   "category": "After-Sales Care",
+   "owner_question": "Do you use specialized cleaning methods like ultrasonic cleaners for jewellery?",
+   "customer_question": "Do you offer ultrasonic cleaning?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-222",
+   "category": "After-Sales Care",
+   "owner_question": "What is your policy regarding liability if an item is damaged while in your care for repair?",
+   "customer_question": "What if my jewellery gets damaged during repair?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-223",
+   "category": "After-Sales Care",
+   "owner_question": "Is there any insurance coverage for jewellery items while they are being repaired at your shop?",
+   "customer_question": "Do you provide insurance for items left for repair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-224",
+   "category": "Documentation and Taxes",
+   "owner_question": "Do you allow customers to request a GST invoice in their business or company name for tax input credit?",
+   "customer_question": "Can I get a tax invoice in my company's name?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-225",
+   "category": "Documentation and Taxes",
+   "owner_question": "How do you handle GST when a customer exchanges old gold for new jewellery?",
+   "customer_question": "Do I need to pay tax if I exchange my old gold?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "jewellery-226",
+   "category": "Documentation and Taxes",
+   "owner_question": "Do you issue a formal receipt for advance payments made for jewellery orders?",
+   "customer_question": "Will I get a receipt for the advance payment?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-227",
+   "category": "Documentation and Taxes",
+   "owner_question": "Do you inform customers about any TDS requirements for specific high-value cash transactions?",
+   "customer_question": "Is there any TDS applicable on my purchase?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-228",
+   "category": "Documentation and Taxes",
+   "owner_question": "Do you list the GST amount separately for the gold value and the making charges on your invoice?",
+   "customer_question": "Are the making charges taxed separately?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-229",
+   "category": "Documentation and Taxes",
+   "owner_question": "Do you physically verify the original identity documents provided by the customer at the time of purchase?",
+   "customer_question": "Do you verify my ID proof at the shop?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "jewellery-230",
+   "category": "Documentation and Taxes",
+   "owner_question": "Do you maintain a digital record of customer invoices so that copies can be provided if lost?",
+   "customer_question": "Can I get a copy of my invoice later if I lose it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  }
+ ]
+}
