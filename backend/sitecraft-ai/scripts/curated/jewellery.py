@@ -26,6 +26,11 @@ Q = [
  ("Products & purity", "I", "text", "Do your diamonds come with a certificate? Which labs (IGI, GIA, SGL)?", "Is the diamond certified?", [], "J"),
  ("Products & purity", "O", "yes_no", "Do you give a card with the diamond's 4Cs (cut, clarity, colour, carat)?", "What is the clarity of this diamond?", YN, "J"),
  ("Products & purity", "O", "text", "Do you sell rose gold or white gold jewellery? What purity?", "Do you have white gold rings?", [], "J"),
+ ("Products & purity", "O", "options", "For diamond jewellery, which gold do you use?", "Is the diamond ring in 18 carat?", ["18K", "22K", "Both"], "J"),
+ ("Products & purity", "O", "text", "If you sell platinum, how is its purity certified (for example Pt 950)?", "Is the platinum certified?", [], "J"),
+ ("Products & purity", "O", "options", "Is your jewellery hand-made or machine-made?", "Is this hand-made?", ["Mostly hand-made", "Mostly machine-made", "Both"], "J"),
+ ("Products & purity", "O", "yes_no", "Are making charges higher for hand-made jewellery than machine-made?", "Why is hand-made costlier?", YN, "J"),
+ ("Products & purity", "O", "yes_no", "Do you have experienced traditional goldsmiths (karigars) for hand-made custom orders?", "Do you have your own goldsmiths?", YN, "J"),
  ("Products & purity", "I", "options", "Do you sell lab-grown diamonds, and are they clearly marked?", "Is this a natural diamond?", ["Only natural diamonds", "Both, clearly marked", "Only lab-grown"], "J"),
  ("Products & purity", "O", "yes_no", "Do you sell navaratna / astrological gemstones with a lab certificate?", "Do you have a certified emerald?", YN, "J"),
  ("Products & purity", "O", "text", "What is the usual weight and price range of your bridal sets?", "How much is a bridal necklace set?", [], "J"),
@@ -44,6 +49,9 @@ Q = [
  ("Rates & charges", "I", "yes_no", "Does your bill show gross weight, net gold weight, stone weight, purity, rate, making, wastage and GST separately?", "Will the bill show net and gross weight?", YN, "J"),
  ("Rates & charges", "I", "yes_no", "Is the HUID number of each piece printed on the bill?", "Will the HUID be on my bill?", YN, "J"),
  ("Rates & charges", "I", "options", "Is GST (3%) included in the price or added on the bill?", "Is GST extra?", ["Included", "Added on the bill"], "JF"),
+ ("Rates & charges", "O", "text", "Is the GST different for gold coins / bars and for jewellery?", "Is GST the same on coins?", [], "J"),
+ ("Rates & charges", "O", "text", "When do you usually give zero making charge or zero wastage offers?", "When is zero wastage offer?", [], "J"),
+ ("Rates & charges", "O", "text", "Do you give an extra exchange bonus on old jewellery when buying new?", "Any exchange bonus?", [], "J"),
  ("Rates & charges", "I", "text", "Can customers book gold at today's rate by paying an advance (rate lock)? How much advance?", "Can I lock today's rate?", [], "J"),
  ("Rates & charges", "O", "yes_no", "Do you have fixed-price items (no separate making charge)?", "Any fixed-price earrings?", YN, "J"),
 
@@ -73,6 +81,9 @@ Q = [
 
  ("Quality & guarantee", "I", "yes_no", "Do you give a purity certificate or guarantee card with each piece?", "Will I get a certificate?", YN, "J"),
  ("Quality & guarantee", "O", "yes_no", "Can customers test purity on your karatmeter for free?", "Can I check the purity myself?", YN, "J"),
+ ("Quality & guarantee", "O", "yes_no", "Is your karatmeter regularly calibrated or certified?", "Is your testing machine certified?", YN, "J"),
+ ("Quality & guarantee", "I", "text", "If an outside lab finds lower purity in gold bought from you, what do you do (refund, replace, compensate)?", "What if the purity is less in another lab?", [], "J"),
+ ("Quality & guarantee", "O", "text", "Can you get old jewellery without a hallmark hallmarked now? What is the charge?", "Can you hallmark my old chain?", [], "J"),
  ("Quality & guarantee", "I", "text", "How long does the gold polish / colour usually last?", "Will the colour fade?", [], "F"),
  ("Quality & guarantee", "I", "text", "Do you give a guarantee on colour or polish? How long?", "Is there a colour guarantee?", [], "F"),
  ("Quality & guarantee", "I", "yes_no", "Is your jewellery skin-friendly (nickel-free / anti-allergic)?", "Will it cause skin allergy?", YN, "F"),
@@ -80,6 +91,8 @@ Q = [
  ("Quality & guarantee", "O", "yes_no", "Do you offer insurance for jewellery bought from you?", "Can I insure this necklace?", YN, "J"),
 
  ("Buying & payment", "I", "text", "Which ID do customers need for big purchases (for example PAN above ₹2 lakh)?", "Do I need PAN card?", [], "J"),
+ ("Buying & payment", "O", "text", "What is the maximum cash you accept on one bill?", "Can I pay 3 lakhs in cash?", [], "J"),
+ ("Buying & payment", "O", "text", "Do you give special discounts to corporate employees (IT, bank, government)?", "Any discount for IT employees?", [], "JF"),
  ("Buying & payment", "O", "list", "Which ways to pay do you accept?", "Can I pay by card?", ["Cash (within legal limit)", "UPI", "Debit / credit card", "Bank transfer", "Cheque / DD"], "JF"),
  ("Buying & payment", "O", "text", "Can customers exchange a piece bought from you for another design? Any deduction?", "Can I change this design later?", [], "JF"),
  ("Buying & payment", "I", "yes_no", "Do you show designs on a WhatsApp video call and take orders?", "Can you show me designs on video call?", YN, "JF"),
@@ -92,6 +105,7 @@ Q = [
 
  ("Shop & service", "O", "yes_no", "Do you have a private room for bridal shopping?", "Is there a private room for bridal shopping?", YN, "J"),
  ("Shop & service", "O", "yes_no", "Can customers keep purchased jewellery in your locker until the wedding?", "Can you keep the jewellery safe till the wedding?", YN, "J"),
+ ("Shop & service", "O", "list", "What security do you have for customers?", "Is it safe to carry big purchases?", ["24/7 CCTV inside and in parking", "Security guards", "Armed guards", "Staff escort to the vehicle"], "J"),
  ("Shop & service", "O", "text", "For big wedding purchases (for example 10–20 tolas), do you give free silver items or coins?", "Any free gift if I buy 15 tolas?", [], "J"),
  ("Shop & service", "O", "text", "Do you run scratch cards or lucky draws on festivals or your shop anniversary?", "Is there a lucky draw this Diwali?", [], "JF"),
  ("Shop & service", "O", "yes_no", "Do you have a privilege card or loyalty points for regular customers?", "Do I get loyalty points?", YN, "JF"),
