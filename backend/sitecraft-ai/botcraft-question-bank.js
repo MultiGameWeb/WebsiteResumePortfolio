@@ -24,8 +24,7 @@ const CORE_QUESTIONS = [
   ["Which day is your shop closed every week?", "Are you open on Sunday?", "options", ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Open all days"]],
   ["Which phone number should customers call for your shop?", "What is your contact number?", "text", []],
   ["Which WhatsApp number should customers message?", "What is your WhatsApp number?", "options", ["Same as the call number", "A different number"]],
-  ["What are the main types of items you sell?", "What do you sell?", "list", []],
-  ["Which payment methods do you accept?", "Can I pay by UPI or card?", "list", []]
+  ["What are the main types of items you sell?", "What do you sell?", "list", []]
 ].map(([owner_question, customer_question, answer_type, options]) => ({
   category: "Shop basics",
   customer_question,
@@ -47,7 +46,7 @@ Rules:
 - Cover what real customers of this kind of shop ask before buying: products and range, pricing and charges, quality and certification, policies (exchange, return, warranty, repair), payment and offers, services, timings and location, trust, and shop-type-specific topics.
 - Assume a small or medium local shop run by its owner, not a large showroom chain.
 - Ask only about facts of the shop. Never ask about chatbot features, settings or how the bot should behave.
-- Do not ask the basics that are always collected separately: shop name, address, Google Maps location, opening times, weekly holiday, call number, WhatsApp number, main items sold and payment methods.
+- Do not ask the basics that are always collected separately: shop name, address, Google Maps location, opening times, weekly holiday, call number, WhatsApp number and main items sold.
 - Never ask the owner to describe or summarise the shop; BotCraft writes the shop summary itself from the items and answers.
 - Never ask for individual items, their prices or photos; those come from the item photos and price lists the owner uploads.
 - Shop-level questions only. Individual item prices and photos come from item cards the owner uploads, so ask about ranges, rules and policies instead of single items.
@@ -164,12 +163,22 @@ async function runLimited(tasks, limit) {
 const REVIEW_SCHEMA = {
   type: "OBJECT",
   properties: {
-    duplicate_ids: { type: "ARRAY", items: { type: "INTEGER" }, description: "later questions that ask for the same fact as an earlier one" },
+    duplicates: {
+      type: "ARRAY",
+      description: "questions asking for the same fact as an earlier question",
+      items: {
+        type: "OBJECT",
+        properties: { id: { type: "INTEGER" }, same_as: { type: "INTEGER" } },
+        required: ["id", "same_as"]
+      }
+    },
     off_topic_ids: { type: "ARRAY", items: { type: "INTEGER" }, description: "questions about chatbot features, or unsuitable for a small local shop" },
     mandatory_ids: { type: "ARRAY", items: { type: "INTEGER" }, description: `at most ${MAX_MANDATORY_EXTRA} questions the bot truly cannot work without` }
   },
-  required: ["duplicate_ids", "off_topic_ids", "mandatory_ids"]
+  required: ["duplicates", "off_topic_ids", "mandatory_ids"]
 };
+// A review that wants to drop more than this share is treated as unreliable.
+const MAX_REVIEW_DROP_SHARE = 0.25;
 
 // One pass over the whole bank: per-category generation cannot see the
 // other categories, so the same fact (e.g. GST) can be asked several times.
@@ -177,14 +186,21 @@ async function reviewBank(env, shop, questions, log) {
   const list = questions.map((q, i) => `${i}. [${q.category}] ${q.owner_question}`).join("\n");
   const { result } = await callWithFallback(env, {
     system: RULES,
-    prompt: `Shop type: ${shop}\n\nReview this owner interview. The shop basics (name, address, map location, timings, holiday, call and WhatsApp numbers, items sold, payment methods) are already asked separately; treat questions repeating them as duplicates.\n\n${list}\n\nReturn the ids of duplicates (keep the first, list the later ones), off-topic questions, and at most ${MAX_MANDATORY_EXTRA} truly mandatory questions.`,
+    prompt: `Shop type: ${shop}\n\nReview this owner interview. The shop basics (name, address, map location, timings, holiday, call and WhatsApp numbers, items sold) are already asked separately.\n\n${list}\n\nReturn: duplicates, each with the id of the later question and the earlier question it repeats (only exact same-fact repeats); off-topic question ids; and at most ${MAX_MANDATORY_EXTRA} truly mandatory question ids. Most questions are fine and should not be listed.`,
     schema: REVIEW_SCHEMA,
     temperature: 0.1,
     log
   });
-  const ids = key => new Set((result?.[key] || []).filter(Number.isInteger));
-  const drop = new Set([...ids("duplicate_ids"), ...ids("off_topic_ids")]);
-  const mandatory = new Set([...ids("mandatory_ids")].filter(i => !drop.has(i)).slice(0, MAX_MANDATORY_EXTRA));
+  const valid = i => Number.isInteger(i) && i >= 0 && i < questions.length;
+  const drop = new Set([
+    ...(result?.duplicates || []).filter(d => valid(d?.id) && valid(d?.same_as) && d.id > d.same_as).map(d => d.id),
+    ...(result?.off_topic_ids || []).filter(valid)
+  ]);
+  if (drop.size > questions.length * MAX_REVIEW_DROP_SHARE) {
+    log(`review ignored: it wanted to drop ${drop.size} of ${questions.length}`);
+    drop.clear();
+  }
+  const mandatory = new Set((result?.mandatory_ids || []).filter(i => valid(i) && !drop.has(i)).slice(0, MAX_MANDATORY_EXTRA));
   log(`review: dropped ${drop.size}, mandatory ${mandatory.size}`);
   return questions.flatMap((q, i) => drop.has(i) ? [] : [{
     ...q,
