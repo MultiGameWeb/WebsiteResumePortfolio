@@ -182,16 +182,26 @@ function cleanAnswers(raw, bank) {
   return answers;
 }
 
+// Bank topics that only apply when a core answer allows them.
+const CATEGORY_NEEDS = {
+  // Loan questions are only for shops that offer EMI.
+  "Finance & loans": facts => /^yes/i.test(String(facts.emi || "").trim())
+};
+
+function bankApplies(q, facts) {
+  return !CATEGORY_NEEDS[q.category] || CATEGORY_NEEDS[q.category](facts);
+}
+
 // Bank questions still to ask; the bank files are already in priority order.
-function pendingBank(bank, answers) {
-  return (bank?.questions || []).filter(q => !answers[q.id]);
+function pendingBank(bank, answers, facts) {
+  return (bank?.questions || []).filter(q => !answers[q.id] && bankApplies(q, facts));
 }
 
 // Progress covers the mandatory core questions and the bank's mandatory and
 // important questions; optional ones are extra.
 function progress(facts, answers, bankRecord) {
   const core = CORE_QUESTIONS.filter(q => q.priority === "mandatory" && conditionMet(q, facts));
-  const bank = (bankRecord?.questions || []).filter(q => q.priority !== "optional");
+  const bank = (bankRecord?.questions || []).filter(q => q.priority !== "optional" && bankApplies(q, facts));
   return {
     answered: core.filter(q => facts[q.key]).length + bank.filter(q => answers[q.id]).length,
     total: core.length + bank.length
@@ -206,7 +216,7 @@ function bankLines(questions) {
 
 function systemPrompt(facts, answers, bankShown, bank) {
   const pending = pendingCore(facts);
-  const bankPending = pendingBank(bank, answers);
+  const bankPending = pendingBank(bank, answers, facts);
   const known = Object.entries(facts).map(([k, v]) => `- ${k}: ${v}`).join("\n") || "- (nothing yet)";
   const coreList = CORE_QUESTIONS.map(q => `- ${q.key}: ${q.owner_question}${q.options.length ? ` [options: ${q.options.join(" | ")}]` : ""}${q.priority === "optional" ? " (optional)" : ""}${q.only_for ? ` (only for ${q.only_for})` : ""}${q.ask_if ? ` (only if ${q.ask_if.key} is ${q.ask_if.equals.join(" or ")})` : ""}`).join("\n");
   return `You are BotCraft, the assistant on the SiteCraft website that creates an AI salesman chatbot for a shop owner's physical shop in India. Customers will scan a QR poster in the shop and chat with that salesman bot on their phone; it shows items with photos, prices and details in any language.
@@ -362,7 +372,7 @@ export async function handleBotcraftRoute(request, env, url) {
     }, []);
 
   // Show the whole remaining bank only when the owner sends a lot of detail.
-  const bankRemaining = pendingBank(bank, answers);
+  const bankRemaining = pendingBank(bank, answers, facts);
   const bulk = images.length > 0 || text.length >= BULK_MESSAGE_CHARS;
   const coreDone = pendingCore(facts).length === 0;
   const bankShown = bulk ? bankRemaining : coreDone ? bankRemaining.slice(0, BANK_WINDOW) : [];
@@ -414,7 +424,7 @@ export async function handleBotcraftRoute(request, env, url) {
   const mergedAnswers = sameBank ? { ...answers, ...newAnswers } : {};
   const mergedBank = sameBank ? bank : await resolveBank(env, merged);
 
-  const nextQuestion = pendingCore(merged)[0] || pendingBank(mergedBank, mergedAnswers)[0];
+  const nextQuestion = pendingCore(merged)[0] || pendingBank(mergedBank, mergedAnswers, merged)[0];
   const allowSkip = !nextQuestion || nextQuestion.priority !== "mandatory";
 
   const botText = clip(result?.reply, 1500) || "Sorry, please say that again.";

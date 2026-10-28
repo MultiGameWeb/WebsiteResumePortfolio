@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-28",
- "question_count": 66,
+ "question_count": 76,
  "questions": [
   {
    "id": "computer_shop-001",
@@ -19,6 +19,8 @@
     "Monitors",
     "Printers",
     "Accessories (keyboard, mouse, etc.)",
+    "Hard disks, SSDs & pen drives",
+    "PC parts (graphics cards, RAM, SSD)",
     "Routers & networking",
     "CCTV cameras",
     "Software"
@@ -133,8 +135,9 @@
     "Covers & cases",
     "Tempered glass",
     "Chargers & cables",
-    "Earbuds / headphones",
-    "Smartwatches",
+    "Earbuds / ANC headphones",
+    "Smartwatches (calling, health tracking)",
+    "Bluetooth speakers",
     "Power banks",
     "Memory cards & pen drives"
    ]
@@ -358,6 +361,30 @@
   },
   {
    "id": "computer_shop-030",
+   "category": "Finance & loans",
+   "owner_question": "What is the minimum bill amount for buying on a loan / finance?",
+   "customer_question": "Can I take a loan for a ₹6,000 phone?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "computer_shop-031",
+   "category": "Finance & loans",
+   "owner_question": "How much down payment is usually needed (percentage of the price)?",
+   "customer_question": "How much do I pay first?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "computer_shop-032",
+   "category": "Finance & loans",
+   "owner_question": "What processing fee or file charge do finance companies take?",
+   "customer_question": "Is there a processing fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "computer_shop-033",
    "category": "Products & brands",
    "owner_question": "On which day of the week does new stock usually arrive?",
    "customer_question": "When will new models come?",
@@ -365,7 +392,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-031",
+   "id": "computer_shop-034",
    "category": "Products & brands",
    "owner_question": "Can customers reserve a product by paying an advance?",
    "customer_question": "Can you keep one aside for me?",
@@ -377,7 +404,7 @@
    ]
   },
   {
-   "id": "computer_shop-032",
+   "id": "computer_shop-035",
    "category": "Products & brands",
    "owner_question": "Do you have budget laptops for students?",
    "customer_question": "Any laptop for college under 40,000?",
@@ -389,7 +416,7 @@
    ]
   },
   {
-   "id": "computer_shop-033",
+   "id": "computer_shop-036",
    "category": "Products & brands",
    "owner_question": "Do you sell tablets / iPads?",
    "customer_question": "Do you have iPads?",
@@ -401,7 +428,7 @@
    ]
   },
   {
-   "id": "computer_shop-034",
+   "id": "computer_shop-037",
    "category": "Products & brands",
    "owner_question": "Do you sell gaming accessories (triggers, coolers, controllers)?",
    "customer_question": "Do you have a phone cooler for gaming?",
@@ -413,7 +440,7 @@
    ]
   },
   {
-   "id": "computer_shop-035",
+   "id": "computer_shop-038",
    "category": "Products & brands",
    "owner_question": "Do you rent laptops or desktops?",
    "customer_question": "Can I rent a laptop for a month?",
@@ -425,7 +452,7 @@
    ]
   },
   {
-   "id": "computer_shop-036",
+   "id": "computer_shop-039",
    "category": "Products & brands",
    "owner_question": "Do you sell ink-tank printers?",
    "customer_question": "Do you have ink-tank printers?",
@@ -437,7 +464,7 @@
    ]
   },
   {
-   "id": "computer_shop-037",
+   "id": "computer_shop-040",
    "category": "Products & brands",
    "owner_question": "Do you sell display or open-box pieces at a lower price?",
    "customer_question": "Do you have any display piece for less?",
@@ -449,7 +476,23 @@
    ]
   },
   {
-   "id": "computer_shop-038",
+   "id": "computer_shop-041",
+   "category": "Products & brands",
+   "owner_question": "Do you sell smart home and security devices?",
+   "customer_question": "Do you have Alexa?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Smart bulbs & plugs",
+    "Alexa / Google Home",
+    "Wi-Fi smart cameras",
+    "Digital door locks",
+    "Video doorbells",
+    "None"
+   ]
+  },
+  {
+   "id": "computer_shop-042",
    "category": "Prices & bills",
    "owner_question": "Do you give a B2B GST invoice so business customers can claim input tax credit?",
    "customer_question": "Can I get a GST invoice with my company GSTIN?",
@@ -461,7 +504,7 @@
    ]
   },
   {
-   "id": "computer_shop-039",
+   "id": "computer_shop-043",
    "category": "Prices & bills",
    "owner_question": "Do you have cashback or bank card offers right now? (Change them any time with Update.)",
    "customer_question": "Any HDFC card offer?",
@@ -469,7 +512,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-040",
+   "id": "computer_shop-044",
    "category": "Prices & bills",
    "owner_question": "Do you give combo deals when buying two products together (for example TV + sound bar)?",
    "customer_question": "Any offer if I buy a fridge and washing machine?",
@@ -477,7 +520,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-041",
+   "id": "computer_shop-045",
    "category": "Prices & bills",
    "owner_question": "Do you take old products in exchange even if they are not working?",
    "customer_question": "My old TV is dead, will you still exchange it?",
@@ -489,7 +532,7 @@
    ]
   },
   {
-   "id": "computer_shop-042",
+   "id": "computer_shop-046",
    "category": "Prices & bills",
    "owner_question": "Which ways to pay do you accept?",
    "customer_question": "Can I pay by credit card?",
@@ -503,7 +546,7 @@
    ]
   },
   {
-   "id": "computer_shop-043",
+   "id": "computer_shop-047",
    "category": "Prices & bills",
    "owner_question": "Do you add any extra charge for card payments?",
    "customer_question": "Is there extra charge on card?",
@@ -515,7 +558,7 @@
    ]
   },
   {
-   "id": "computer_shop-044",
+   "id": "computer_shop-048",
    "category": "Prices & bills",
    "owner_question": "Can customers pay part in cash and part by card or UPI?",
    "customer_question": "Can I pay half cash, half card?",
@@ -527,7 +570,7 @@
    ]
   },
   {
-   "id": "computer_shop-045",
+   "id": "computer_shop-049",
    "category": "Prices & bills",
    "owner_question": "If a customer loses the bill, can you print a duplicate using their mobile number or the serial number?",
    "customer_question": "I lost my bill, can you give a copy?",
@@ -539,7 +582,7 @@
    ]
   },
   {
-   "id": "computer_shop-046",
+   "id": "computer_shop-050",
    "category": "Prices & bills",
    "owner_question": "Do you sell gift vouchers or gift cards?",
    "customer_question": "Can I buy a gift card?",
@@ -551,7 +594,7 @@
    ]
   },
   {
-   "id": "computer_shop-047",
+   "id": "computer_shop-051",
    "category": "Prices & bills",
    "owner_question": "Do you run lucky draws or prize contests during festivals?",
    "customer_question": "Is there a Diwali lucky draw?",
@@ -559,7 +602,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-048",
+   "id": "computer_shop-052",
    "category": "Prices & bills",
    "owner_question": "Do you give free gifts or accessories with purchases?",
    "customer_question": "Any free gift with this TV?",
@@ -567,7 +610,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-049",
+   "id": "computer_shop-053",
    "category": "Prices & bills",
    "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
    "customer_question": "Any discount for 10 laptops?",
@@ -575,19 +618,15 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-050",
+   "id": "computer_shop-054",
    "category": "Delivery & installation",
-   "owner_question": "Do you set up CCTV cameras and Wi-Fi networks at homes and offices?",
-   "customer_question": "Can you install CCTV at my shop?",
+   "owner_question": "Do you send a technician to install CCTV cameras and Wi-Fi networks at homes and offices? What is the charge?",
+   "customer_question": "Can you install CCTV at my house? How much?",
    "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "answer_type": "text"
   },
   {
-   "id": "computer_shop-051",
+   "id": "computer_shop-055",
    "category": "Warranty & service",
    "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
    "customer_question": "Where is the Samsung service centre?",
@@ -595,7 +634,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-052",
+   "id": "computer_shop-056",
    "category": "Warranty & service",
    "owner_question": "Do you sell insurance for theft or accidental damage?",
    "customer_question": "Is there screen damage insurance?",
@@ -607,7 +646,7 @@
    ]
   },
   {
-   "id": "computer_shop-053",
+   "id": "computer_shop-057",
    "category": "Warranty & service",
    "owner_question": "How long does a common repair (screen, battery) usually take?",
    "customer_question": "How long to change the screen?",
@@ -615,7 +654,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-054",
+   "id": "computer_shop-058",
    "category": "Warranty & service",
    "owner_question": "Do you pick up and drop devices for repair?",
    "customer_question": "Can you collect my laptop for repair?",
@@ -627,7 +666,7 @@
    ]
   },
   {
-   "id": "computer_shop-055",
+   "id": "computer_shop-059",
    "category": "Warranty & service",
    "owner_question": "Do you visit homes or offices for service? What is the visit charge?",
    "customer_question": "Can someone come to my office?",
@@ -635,7 +674,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-056",
+   "id": "computer_shop-060",
    "category": "Warranty & service",
    "owner_question": "Do you upgrade RAM and SSD?",
    "customer_question": "Can you add more RAM?",
@@ -647,7 +686,7 @@
    ]
   },
   {
-   "id": "computer_shop-057",
+   "id": "computer_shop-061",
    "category": "Warranty & service",
    "owner_question": "Do you assemble custom or gaming desktops?",
    "customer_question": "Can you build a gaming PC?",
@@ -659,7 +698,7 @@
    ]
   },
   {
-   "id": "computer_shop-058",
+   "id": "computer_shop-062",
    "category": "Warranty & service",
    "owner_question": "Do you sell and refill printer cartridges?",
    "customer_question": "Do you refill ink cartridges?",
@@ -671,7 +710,7 @@
    ]
   },
   {
-   "id": "computer_shop-059",
+   "id": "computer_shop-063",
    "category": "Warranty & service",
    "owner_question": "Do you offer annual maintenance (AMC) for offices?",
    "customer_question": "Do you do AMC for offices?",
@@ -683,7 +722,7 @@
    ]
   },
   {
-   "id": "computer_shop-060",
+   "id": "computer_shop-064",
    "category": "Shop & service",
    "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
    "customer_question": "Can I give my old phone for recycling?",
@@ -695,7 +734,7 @@
    ]
   },
   {
-   "id": "computer_shop-061",
+   "id": "computer_shop-065",
    "category": "Shop & service",
    "owner_question": "Do you have an online store or a WhatsApp catalogue?",
    "customer_question": "Can I see your products online?",
@@ -707,7 +746,7 @@
    ]
   },
   {
-   "id": "computer_shop-062",
+   "id": "computer_shop-066",
    "category": "Shop & service",
    "owner_question": "Do you send a copy of the bill on WhatsApp?",
    "customer_question": "Can you send the bill on WhatsApp?",
@@ -719,7 +758,7 @@
    ]
   },
   {
-   "id": "computer_shop-063",
+   "id": "computer_shop-067",
    "category": "Shop & service",
    "owner_question": "Is there a separate number for complaints (product problems or late delivery)?",
    "customer_question": "Whom do I call to complain?",
@@ -727,7 +766,59 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-064",
+   "id": "computer_shop-068",
+   "category": "Shop & service",
+   "owner_question": "Do you have other branches in the city? Can warranty service be done at any branch?",
+   "customer_question": "Do you have a branch in Kukatpally?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "computer_shop-069",
+   "category": "Finance & loans",
+   "owner_question": "Can customers without a credit or debit card get an instant consumer loan with just Aadhaar?",
+   "customer_question": "I don't have a card, can I still get a loan?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "computer_shop-070",
+   "category": "Finance & loans",
+   "owner_question": "What minimum CIBIL score do finance companies usually need?",
+   "customer_question": "Will I get a loan with a low CIBIL score?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "computer_shop-071",
+   "category": "Finance & loans",
+   "owner_question": "What income proof do self-employed people or farmers need for a loan?",
+   "customer_question": "I'm a farmer, can I get a loan?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "computer_shop-072",
+   "category": "Finance & loans",
+   "owner_question": "How long does loan approval usually take in the shop?",
+   "customer_question": "How long will the loan approval take?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "computer_shop-073",
+   "category": "Finance & loans",
+   "owner_question": "Is there a penalty for paying off the loan early (foreclosure)?",
+   "customer_question": "Can I close the loan early?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "computer_shop-074",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty or points programme for regular customers?",
    "customer_question": "Do I get points?",
@@ -739,7 +830,7 @@
    ]
   },
   {
-   "id": "computer_shop-065",
+   "id": "computer_shop-075",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -755,7 +846,7 @@
    ]
   },
   {
-   "id": "computer_shop-066",
+   "id": "computer_shop-076",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
