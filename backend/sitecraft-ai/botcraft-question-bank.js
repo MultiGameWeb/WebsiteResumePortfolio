@@ -23,6 +23,7 @@ export const CORE_QUESTIONS = [
   { key: "owner_photo", q: "Would you like to add a photo of yourself (the owner)?", c: "Who should I ask for at the counter?", type: "image", priority: "optional" },
   { key: "shop_front_photo", q: "Please send a photo of your shop front or signboard.", c: "How do I recognise the shop?", type: "image" },
   { key: "address", q: "What is your shop's full address, with a nearby landmark?", c: "Where is your shop?" },
+  { key: "shop_area", q: "Is your shop in a village, town, district headquarters or city?", c: "Is this shop in the city?", type: "options", options: ["Village", "Town / mandal", "District headquarters", "City"] },
   { key: "map_link", q: "Please share your shop's Google Maps location link.", c: "Send me the shop location." },
   { key: "parking", q: "Is parking available for customers?", c: "Is there parking near the shop?", type: "options", options: ["Own parking for cars and bikes", "Valet parking", "Bike parking only", "Street parking nearby", "No parking"] },
   { key: "timings", q: "What are your shop's opening and closing times?", c: "What time do you open?" },
@@ -51,7 +52,7 @@ export const CORE_QUESTIONS = [
   // Shop types the question makes sense for; elsewhere it is marked not applicable.
   only_for: item.only_for || null
 }));
-const CORE_TOPICS = "shop name, owner name and photo, shop front photo, address, map location, parking, timings, weekly holiday, call and WhatsApp numbers, main items sold, return and exchange policy, home delivery, EMI (which items, EMI options, zero down payment, documents) and current offers";
+const CORE_TOPICS = "shop name, owner name and photo, shop front photo, address, shop area (village, town, district headquarters or city), map location, parking, timings, weekly holiday, call and WhatsApp numbers, main items sold, return and exchange policy, home delivery, EMI (which items, EMI options, zero down payment, documents) and current offers";
 
 const PRIORITIES = new Set(["mandatory", "important", "optional"]);
 const ANSWER_TYPES = new Set(["text", "options", "yes_no", "number", "price", "image", "list"]);
