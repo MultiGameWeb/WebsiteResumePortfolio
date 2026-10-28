@@ -454,6 +454,19 @@ app.addEventListener('dragleave', (event) => {
   dragDepth = Math.max(0, dragDepth - 1);
   if (dragDepth === 0) hideDropOverlay();
 });
+// Pasted screenshots or copied images become attachments, like dropped files.
+app.addEventListener('paste', (event) => {
+  const files = Array.from(event.clipboardData?.items ?? [])
+    .filter((item) => item.kind === 'file')
+    .map((item) => item.getAsFile())
+    .filter(Boolean);
+  if (!files.length) return;
+  event.preventDefault();
+  addFiles(files.map((file, i) => (file.name && file.name !== 'image.png'
+    ? file
+    : new File([file], `pasted-image-${Date.now()}-${i + 1}.${(file.type.split('/')[1] || 'png').replace('jpeg', 'jpg')}`, { type: file.type }))));
+});
+
 app.addEventListener('drop', (event) => {
   if (!Array.from(event.dataTransfer?.types ?? []).includes('Files')) return;
   event.preventDefault();

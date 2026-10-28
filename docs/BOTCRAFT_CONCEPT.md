@@ -134,3 +134,12 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
 - Owner login method: phone OTP or email?
 - Monthly sales report: where does sales data come from? The owner entering sales in chat, or a billing/POS integration?
 - Is the "3 times" rule in §5 correct (the bot tries up to 3 times, then refers the customer to the owner)?
+
+## 12. Future idea: small business websites from the same setup
+
+The owner's idea (October 2026): the BotCraft engine (shop type → ready-made questions → owner answers, photos and items) could also build small business websites.
+
+- Scope: small sites with up to about 15 main features that every business needs, for example home, about, items/menu with prices and photos, offers, gallery, timings, location map, call and WhatsApp buttons, enquiry form and reviews.
+- Not for e-commerce: no carts, online payments or inventory systems.
+- The same saved data would feed both the salesman bot and the website, so the owner answers once.
+- This is not started; it comes after BotCraft's core phases.
