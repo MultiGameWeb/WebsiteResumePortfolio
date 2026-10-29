@@ -18,9 +18,9 @@ database_id = "53b8dd82-40ff-424a-bbf1-29a51a1f9cf2"
 [placement]
 region = "gcp:us-central1"
 
-[[r2_buckets]]
-binding = "MEDIA_BUCKET"
-bucket_name = "sitecraft-media"
+# R2 binding intentionally omitted while the subscription/bucket is pending.
+# This allows text-only D1 hosting tests. Image upload/save routes return a safe
+# R2_NOT_CONFIGURED response until MEDIA_BUCKET is added after bucket creation.
 
 [vars]
 ENABLE_DEMO_PUBLISH = "false"
