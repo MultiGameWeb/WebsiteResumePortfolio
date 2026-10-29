@@ -13,13 +13,20 @@ binding = "BOTCRAFT_DB"
 database_name = "botcraft-db"
 database_id = "53b8dd82-40ff-424a-bbf1-29a51a1f9cf2"
 
-# Run the Worker in a US region. Gemini rejects requests from some
-# Cloudflare locations with "User location is not supported for the API use".
+# Keep the existing Gemini location fallback configured from main.
 [placement]
 region = "gcp:us-central1"
 
+[[durable_objects.bindings]]
+name = "GEMINI_US_PROXY"
+class_name = "GeminiUsProxy"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["GeminiUsProxy"]
+
 # R2 binding intentionally omitted while the subscription/bucket is pending.
-# This allows text-only D1 hosting tests. Image upload/save routes return a safe
+# Text-only D1 hosting tests remain possible; image routes will return a safe
 # R2_NOT_CONFIGURED response until MEDIA_BUCKET is added after bucket creation.
 
 [vars]
