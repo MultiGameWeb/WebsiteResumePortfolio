@@ -1,0 +1,456 @@
+{
+ "shop_type_key": "supermarket",
+ "name": "Supermarket / departmental store",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-29",
+ "question_count": 38,
+ "questions": [
+  {
+   "id": "supermarket-001",
+   "category": "Products & brands",
+   "owner_question": "Which items do you sell?",
+   "customer_question": "Do you have rice and dal?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Rice, atta & grains",
+    "Dal & pulses",
+    "Oil & ghee",
+    "Spices & masalas",
+    "Tea, coffee & sugar",
+    "Snacks & biscuits",
+    "Soaps, shampoo & personal care",
+    "Cleaning items (detergent, floor cleaner)",
+    "Pooja items",
+    "Dry fruits"
+   ]
+  },
+  {
+   "id": "supermarket-002",
+   "category": "Products & brands",
+   "owner_question": "What else does your store have?",
+   "customer_question": "Do you sell vegetables too?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Vegetables & fruits",
+    "Dairy (milk, curd, paneer)",
+    "Bakery (bread, cakes)",
+    "Frozen foods & ice cream",
+    "Meat & eggs",
+    "Household & kitchenware",
+    "Stationery",
+    "Baby care",
+    "Pet food",
+    "Beverages & juices"
+   ]
+  },
+  {
+   "id": "supermarket-003",
+   "category": "Products & brands",
+   "owner_question": "Do you sell loose items (by weight) or only packed items?",
+   "customer_question": "Do you sell loose rice?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Loose and packed",
+    "Only packed",
+    "Mostly loose"
+   ]
+  },
+  {
+   "id": "supermarket-004",
+   "category": "Products & brands",
+   "owner_question": "Which rice varieties and brands do you keep (for example Sona Masoori, BPT, basmati)?",
+   "customer_question": "Do you have Sona Masoori?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-005",
+   "category": "Prices & billing",
+   "owner_question": "Do you sell at MRP or below MRP?",
+   "customer_question": "Do you give discount on MRP?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "At MRP",
+    "Below MRP on many items",
+    "Depends on the item"
+   ]
+  },
+  {
+   "id": "supermarket-006",
+   "category": "Prices & billing",
+   "owner_question": "Do you give a printed / computer bill?",
+   "customer_question": "Will I get a bill?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-007",
+   "category": "Freshness & quality",
+   "owner_question": "When does fresh stock (vegetables, fruits, milk, bread) arrive every day?",
+   "customer_question": "When do fresh vegetables come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-008",
+   "category": "Freshness & quality",
+   "owner_question": "Do you check expiry dates and remove expired items from the shelves?",
+   "customer_question": "Are these items fresh?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-009",
+   "category": "Ordering & delivery",
+   "owner_question": "How can customers order for home delivery?",
+   "customer_question": "Can I order on WhatsApp?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Call",
+    "WhatsApp (send list or photo)",
+    "Own app / website",
+    "Swiggy Instamart / Zepto / BigBasket / other apps",
+    "No home delivery"
+   ]
+  },
+  {
+   "id": "supermarket-010",
+   "category": "Ordering & delivery",
+   "owner_question": "What is the minimum order for free home delivery, and the delivery charge below it?",
+   "customer_question": "Is delivery free?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-011",
+   "category": "Ordering & delivery",
+   "owner_question": "How quickly do you deliver (for example within 1 hour, same day), and up to what distance?",
+   "customer_question": "How fast will you deliver?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-012",
+   "category": "Products & brands",
+   "owner_question": "Do you keep organic or natural products (organic dal, cold-pressed oil, millets)?",
+   "customer_question": "Do you have cold-pressed oil?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-013",
+   "category": "Products & brands",
+   "owner_question": "Do you sell millets (jowar, ragi, korralu) and millet products?",
+   "customer_question": "Do you have ragi?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-014",
+   "category": "Products & brands",
+   "owner_question": "Do you have your own store brand or home-made items (pickles, podis, papad)?",
+   "customer_question": "Do you have home-made pickles?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-015",
+   "category": "Products & brands",
+   "owner_question": "Do you sell items in bulk for functions and hotels (for example 25 kg rice bags, oil tins)?",
+   "customer_question": "Do you sell 25 kg rice bags?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-016",
+   "category": "Products & brands",
+   "owner_question": "Do you sell imported or premium brands?",
+   "customer_question": "Do you have imported chocolates?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "supermarket-017",
+   "category": "Products & brands",
+   "owner_question": "Do you sell fresh milk packets and curd every morning? From what time?",
+   "customer_question": "When does milk come?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-018",
+   "category": "Prices & billing",
+   "owner_question": "Do you give lower rates for bulk or wholesale buying? From what quantity?",
+   "customer_question": "Any wholesale rate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-019",
+   "category": "Prices & billing",
+   "owner_question": "Can customers order their monthly grocery list (sarukulu) at once and collect or get it delivered?",
+   "customer_question": "Can I give my monthly list?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-020",
+   "category": "Prices & billing",
+   "owner_question": "What is the price range for fruit baskets or gift hampers?",
+   "customer_question": "How much for a fruit basket?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-021",
+   "category": "Prices & billing",
+   "owner_question": "On which days do you have weekly offers (for example Wednesday vegetables, weekend sale)?",
+   "customer_question": "Which day is the offer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-022",
+   "category": "Prices & billing",
+   "owner_question": "Do you accept food coupons or company meal cards (Sodexo / Pluxee)?",
+   "customer_question": "Can I use Sodexo here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "supermarket-023",
+   "category": "Freshness & quality",
+   "owner_question": "If a customer gets a damaged, spoiled or expired item, what do you do?",
+   "customer_question": "The packet was expired, can I change it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-024",
+   "category": "Freshness & quality",
+   "owner_question": "Can customers pick and choose vegetables and fruits themselves?",
+   "customer_question": "Can I select the tomatoes myself?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-025",
+   "category": "Freshness & quality",
+   "owner_question": "Do you have cold storage or fridges for vegetables, dairy and frozen items?",
+   "customer_question": "Is the milk kept in the fridge?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-026",
+   "category": "Ordering & delivery",
+   "owner_question": "Can customers pay on delivery (cash or UPI)?",
+   "customer_question": "Can I pay when it comes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-027",
+   "category": "Ordering & delivery",
+   "owner_question": "Do you take daily or weekly fixed orders (for example milk and vegetables every morning)?",
+   "customer_question": "Can you send vegetables every morning?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-028",
+   "category": "Ordering & delivery",
+   "owner_question": "Do you supply to hotels, hostels, caterers or functions?",
+   "customer_question": "Do you supply for functions?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-029",
+   "category": "Ordering & delivery",
+   "owner_question": "Can customers call or WhatsApp to keep items packed and ready for pickup?",
+   "customer_question": "Can you pack my items, I'll collect?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-030",
+   "category": "Ordering & delivery",
+   "owner_question": "If an item is not available, will you get it within a day or two?",
+   "customer_question": "Can you get this for me tomorrow?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-031",
+   "category": "Shop & service",
+   "owner_question": "Do you have trolleys and baskets for customers?",
+   "customer_question": "Is there a trolley?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-032",
+   "category": "Shop & service",
+   "owner_question": "Are carry bags free, or charged on the bill?",
+   "customer_question": "Do I have to pay for the bag?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Free paper / cloth bag",
+    "Free plastic bag",
+    "Charged (₹5–10)",
+    "Bring your own bag"
+   ]
+  },
+  {
+   "id": "supermarket-033",
+   "category": "Shop & service",
+   "owner_question": "Is the store air-conditioned?",
+   "customer_question": "Is it AC?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-034",
+   "category": "Shop & service",
+   "owner_question": "How many billing counters do you have, and how long is the queue at busy times?",
+   "customer_question": "Is there a long queue in the evening?",
+   "priority": "optional",
+   "answer_type": "text",
+   "city_only": true
+  },
+  {
+   "id": "supermarket-035",
+   "category": "Shop & service",
+   "owner_question": "Do you have a loyalty card or points for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-036",
+   "category": "Shop & service",
+   "owner_question": "Do you sell gift vouchers or festival gift hampers?",
+   "customer_question": "Do you have Diwali hampers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-037",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "supermarket-038",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

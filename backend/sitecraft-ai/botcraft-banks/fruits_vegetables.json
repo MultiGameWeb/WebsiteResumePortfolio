@@ -1,0 +1,290 @@
+{
+ "shop_type_key": "fruits_vegetables",
+ "name": "Vegetables & fruits shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-29",
+ "question_count": 25,
+ "questions": [
+  {
+   "id": "fruits_vegetables-001",
+   "category": "Products & brands",
+   "owner_question": "What do you sell?",
+   "customer_question": "Do you have fruits?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Daily vegetables",
+    "Leafy greens (aaku kooralu)",
+    "Fruits",
+    "Exotic vegetables & fruits (broccoli, avocado…)",
+    "Coconuts",
+    "Flowers",
+    "Fruit gift baskets",
+    "Cut / cleaned vegetables"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-002",
+   "category": "Products & brands",
+   "owner_question": "Which fruits and vegetables come from local farms, and which come from outside (for example apples, kiwi)?",
+   "customer_question": "Are these local vegetables?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-003",
+   "category": "Prices & billing",
+   "owner_question": "How should customers get today's prices?",
+   "customer_question": "What is the rate of tomato today?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "I'll update prices with Update",
+    "Prices are on the board in the shop",
+    "Customers should call or WhatsApp"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-004",
+   "category": "Freshness & quality",
+   "owner_question": "When does fresh stock (vegetables, fruits, milk, bread) arrive every day?",
+   "customer_question": "When do fresh vegetables come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-005",
+   "category": "Ordering & delivery",
+   "owner_question": "How can customers order for home delivery?",
+   "customer_question": "Can I order on WhatsApp?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Call",
+    "WhatsApp (send list or photo)",
+    "Own app / website",
+    "Swiggy Instamart / Zepto / BigBasket / other apps",
+    "No home delivery"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-006",
+   "category": "Ordering & delivery",
+   "owner_question": "What is the minimum order for free home delivery, and the delivery charge below it?",
+   "customer_question": "Is delivery free?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-007",
+   "category": "Ordering & delivery",
+   "owner_question": "How quickly do you deliver (for example within 1 hour, same day), and up to what distance?",
+   "customer_question": "How fast will you deliver?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-008",
+   "category": "Products & brands",
+   "owner_question": "Do you sell organic vegetables and fruits?",
+   "customer_question": "Are these organic?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-009",
+   "category": "Prices & billing",
+   "owner_question": "Do you give lower rates for bulk or wholesale buying? From what quantity?",
+   "customer_question": "Any wholesale rate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-010",
+   "category": "Prices & billing",
+   "owner_question": "Do you allow monthly credit (khata / udhaar) for regular customers?",
+   "customer_question": "Can I pay at the end of the month?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-011",
+   "category": "Prices & billing",
+   "owner_question": "What is the price range for fruit baskets or gift hampers?",
+   "customer_question": "How much for a fruit basket?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-012",
+   "category": "Prices & billing",
+   "owner_question": "On which days do you have weekly offers (for example Wednesday vegetables, weekend sale)?",
+   "customer_question": "Which day is the offer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-013",
+   "category": "Freshness & quality",
+   "owner_question": "If a customer gets a damaged, spoiled or expired item, what do you do?",
+   "customer_question": "The packet was expired, can I change it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-014",
+   "category": "Freshness & quality",
+   "owner_question": "Can customers pick and choose vegetables and fruits themselves?",
+   "customer_question": "Can I select the tomatoes myself?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-015",
+   "category": "Freshness & quality",
+   "owner_question": "Are your fruits ripened naturally (no carbide)?",
+   "customer_question": "Are these mangoes naturally ripened?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-016",
+   "category": "Freshness & quality",
+   "owner_question": "Do you have cold storage or fridges for vegetables, dairy and frozen items?",
+   "customer_question": "Is the milk kept in the fridge?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-017",
+   "category": "Freshness & quality",
+   "owner_question": "Are your weighing scales electronic and checked (stamped) regularly?",
+   "customer_question": "Is your weighing machine correct?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-018",
+   "category": "Ordering & delivery",
+   "owner_question": "Can customers pay on delivery (cash or UPI)?",
+   "customer_question": "Can I pay when it comes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-019",
+   "category": "Ordering & delivery",
+   "owner_question": "Do you take daily or weekly fixed orders (for example milk and vegetables every morning)?",
+   "customer_question": "Can you send vegetables every morning?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-020",
+   "category": "Ordering & delivery",
+   "owner_question": "Do you supply to hotels, hostels, caterers or functions?",
+   "customer_question": "Do you supply for functions?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-021",
+   "category": "Ordering & delivery",
+   "owner_question": "Can customers call or WhatsApp to keep items packed and ready for pickup?",
+   "customer_question": "Can you pack my items, I'll collect?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-022",
+   "category": "Shop & service",
+   "owner_question": "Are carry bags free, or charged on the bill?",
+   "customer_question": "Do I have to pay for the bag?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Free paper / cloth bag",
+    "Free plastic bag",
+    "Charged (₹5–10)",
+    "Bring your own bag"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-023",
+   "category": "Shop & service",
+   "owner_question": "Do you have a loyalty card or points for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-024",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-025",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
