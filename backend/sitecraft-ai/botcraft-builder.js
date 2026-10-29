@@ -730,7 +730,7 @@ async function handleSalesbot(request, env, url, path, origin) {
   const modelErrors = [];
   try {
     const { result } = await callWithFallback(env, {
-      system: salesbotPrompt(profile, knowledge, product),
+      system: salesbotPrompt(profile, knowledge, product, facts.shop_type),
       contents,
       schema: SALESBOT_SCHEMA,
       models: CHAT_MODELS,

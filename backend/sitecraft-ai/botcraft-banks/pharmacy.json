@@ -1,55 +1,71 @@
 {
  "shop_type_key": "pharmacy",
  "name": "Pharmacy / medical store",
- "version": 1,
- "model": "gemini-3.1-flash-lite",
- "generated_at": "2026-10-28",
- "question_count": 221,
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-29",
+ "question_count": 47,
  "questions": [
   {
    "id": "pharmacy-001",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you require a doctor's prescription for all medicines or only for specific types?",
-   "customer_question": "Do I need a doctor's prescription to buy medicines here?",
+   "category": "Devices & surgical",
+   "owner_question": "Which health devices and surgical items do you sell?",
+   "customer_question": "Do you have a BP machine?",
    "priority": "mandatory",
-   "answer_type": "options",
+   "answer_type": "list",
    "options": [
-    "Required for all medicines",
-    "Required only for Schedule H/H1 drugs",
-    "Not required for any medicine"
+    "BP monitors & glucometers",
+    "Glucometer strips & lancets",
+    "Nebulizers & vaporizers",
+    "Thermometers & pulse oximeters",
+    "Knee caps, belts, collars & crepe bandages",
+    "Walkers, sticks, commode chairs & wheelchairs",
+    "Adult diapers, underpads & urine bags",
+    "Air / water beds",
+    "Hot water bags & heating pads",
+    "Dressing items (cotton, gauze, Betadine, gloves)",
+    "Abdominal belts & compression stockings"
    ]
   },
   {
    "id": "pharmacy-002",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you accept digital copies of prescriptions shown on a phone, or do you require the original physical paper?",
-   "customer_question": "Can I show a digital copy of the prescription on my phone?",
-   "priority": "mandatory",
-   "answer_type": "options",
+   "category": "Prescriptions & medicines",
+   "owner_question": "If a customer sends a doctor's prescription photo on WhatsApp, do you check which medicines are available?",
+   "customer_question": "Can I send my prescription on WhatsApp?",
+   "priority": "important",
+   "answer_type": "yes_no",
    "options": [
-    "Only physical paper",
-    "Digital copy is fine",
-    "Digital copy with store stamp"
+    "Yes",
+    "No"
    ]
   },
   {
    "id": "pharmacy-003",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you maintain a valid drug license displayed in your shop?",
-   "customer_question": "How can I be sure the medicine is safe?",
-   "priority": "mandatory",
-   "answer_type": "yes_no",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you give the exact brand on the prescription or a substitute with the same formula?",
+   "customer_question": "Will I get the same company medicine?",
+   "priority": "important",
+   "answer_type": "options",
    "options": [
-    "Yes",
-    "No"
+    "Exact brand only",
+    "Substitute only with the customer's OK",
+    "Both"
    ]
   },
   {
    "id": "pharmacy-004",
-   "category": "Medicine Authenticity",
-   "owner_question": "Is a qualified pharmacist present in the shop during all operating hours?",
-   "customer_question": "Do you have a pharmacist on duty?",
-   "priority": "mandatory",
+   "category": "Prescriptions & medicines",
+   "owner_question": "If a medicine is not in stock, how soon can you get it (same evening, next day)?",
+   "customer_question": "Can you get this medicine by tomorrow?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pharmacy-005",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you cut strips and give only the tablets needed (for example for 3 or 5 days)?",
+   "customer_question": "Can I take only 10 tablets?",
+   "priority": "important",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -57,11 +73,11 @@
    ]
   },
   {
-   "id": "pharmacy-005",
-   "category": "Stock Availability",
-   "owner_question": "Do you offer a service to order medicines for customers if they are not currently in stock?",
-   "customer_question": "Can you order medicines that are not currently in your shop?",
-   "priority": "mandatory",
+   "id": "pharmacy-006",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Are all your medicines genuine, bought from authorised distributors?",
+   "customer_question": "Are these original medicines?",
+   "priority": "important",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -70,10 +86,10 @@
   },
   {
    "id": "pharmacy-007",
-   "category": "Insurance and Billing",
-   "owner_question": "Do you provide a GST-compliant invoice for every purchase?",
-   "customer_question": "Can I get a GST invoice for my corporate reimbursement?",
-   "priority": "mandatory",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you sell generic medicines (lower price) along with branded ones?",
+   "customer_question": "Do you have generic medicines?",
+   "priority": "important",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -82,46 +98,8 @@
   },
   {
    "id": "pharmacy-008",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you retain the original prescription after dispensing the medicine?",
-   "customer_question": "Will you keep my prescription after I buy the medicine?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-009",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you have a policy regarding the age of a prescription (e.g., must be less than 3 months old)?",
-   "customer_question": "Can I use an old prescription to buy medicine again?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Any date is fine",
-    "Must be within 3 months",
-    "Must be within 6 months",
-    "Depends on the medicine type"
-   ]
-  },
-  {
-   "id": "pharmacy-010",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you require a prescription for health supplements, vitamins, or general wellness products?",
-   "customer_question": "Do you need a prescription for OTC (over-the-counter) health products?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-011",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you strictly follow the rule of not selling antibiotics without a valid prescription?",
+   "category": "Prescriptions & medicines",
+   "owner_question": "For prescription-only medicines (antibiotics, sleeping pills — Schedule H / H1), do you require a valid doctor's prescription?",
    "customer_question": "Can I buy antibiotics without a prescription?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -131,10 +109,42 @@
    ]
   },
   {
+   "id": "pharmacy-009",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you keep insulin, vaccines and other cold medicines in a fridge all day, with power backup?",
+   "customer_question": "Is the insulin kept cold?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pharmacy-010",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Is a registered pharmacist always at the shop to answer questions about medicines?",
+   "customer_question": "Is there a pharmacist?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pharmacy-011",
+   "category": "Prices & bills",
+   "owner_question": "What discount do you give on MRP (for example 10–20%)?",
+   "customer_question": "How much discount do you give?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
    "id": "pharmacy-012",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you accept prescriptions issued by online consultation platforms or apps?",
-   "customer_question": "Do you accept prescriptions from online doctors or apps?",
+   "category": "Prices & bills",
+   "owner_question": "Do you give an itemised computer bill with patient and doctor name, batch number, expiry and GST (for insurance or office claims)?",
+   "customer_question": "Can I get a bill for insurance?",
    "priority": "important",
    "answer_type": "yes_no",
    "options": [
@@ -144,54 +154,67 @@
   },
   {
    "id": "pharmacy-013",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you offer to order the medicine if the customer provides a valid prescription?",
-   "customer_question": "What if my prescription is for a medicine you don't have?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-014",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you require a prescription for insulin or diabetes testing strips?",
-   "customer_question": "Can I buy insulin or diabetic supplies without a prescription?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-015",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you allow a customer to purchase medicine on behalf of someone else if they have the original prescription?",
-   "customer_question": "Can I buy medicine for someone else if I have their prescription?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-016",
-   "category": "Prescription Requirements",
-   "owner_question": "What are the mandatory details you look for on a prescription (e.g., doctor's registration number, patient name)?",
-   "customer_question": "What details must be on the prescription for it to be valid?",
+   "category": "Delivery & timings",
+   "owner_question": "For home delivery: minimum bill, distance and how quickly you deliver (for example within 1 hour)?",
+   "customer_question": "How fast can you deliver medicines?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "pharmacy-017",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you source all your medicines directly from authorized company distributors or C&F agents?",
-   "customer_question": "Are these medicines genuine and original?",
+   "id": "pharmacy-014",
+   "category": "Delivery & timings",
+   "owner_question": "Do you have night or emergency service?",
+   "customer_question": "Are you open at midnight?",
    "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Open 24 hours",
+    "Open till late night",
+    "Emergency number at night",
+    "No night service"
+   ]
+  },
+  {
+   "id": "pharmacy-015",
+   "category": "Baby, nutrition & care",
+   "owner_question": "What else do you sell?",
+   "customer_question": "Do you have baby milk powder?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Baby milk powders (all stages)",
+    "Diapers, wipes & baby care",
+    "Protein & nutrition (Ensure, Protinex)",
+    "Women's care (pregnancy kits, pads, supplements)",
+    "Skin care (medicated sunscreen, acne creams)",
+    "Dental care (sensitive toothpaste, mouthwash)",
+    "Ayurvedic (Himalaya, Dabur, Baidyanath, Zandu)",
+    "ORS, glucose & probiotics",
+    "Fitness & supplements (multivitamins, omega-3)",
+    "Pet medicines (tick soap, deworming)",
+    "Contact lens solutions & eyeglass cleaners",
+    "First-aid kits",
+    "Travel & daily care (balms, inhalers, small sanitizers)"
+   ]
+  },
+  {
+   "id": "pharmacy-016",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you sell common over-the-counter items (for cold, headache, acidity) without a prescription?",
+   "customer_question": "Do you have something for a cold?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pharmacy-017",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you make sure medicines have a long expiry left (for example more than 6 months)?",
+   "customer_question": "How long until this expires?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -200,10 +223,10 @@
   },
   {
    "id": "pharmacy-018",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you have a regular process to check and remove expired medicines from your shelves?",
-   "customer_question": "Do you sell expired medicines?",
-   "priority": "important",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you mark on the cover when to take each medicine (morning / afternoon / night, before / after food), in Telugu for elders?",
+   "customer_question": "Can you write when to take it?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -212,10 +235,10 @@
   },
   {
    "id": "pharmacy-019",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you have a refrigerator for storing temperature-sensitive medicines like insulin?",
-   "customer_question": "Do you keep medicines in the right temperature?",
-   "priority": "important",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Does your pharmacist explain how to use medicines (mixing dry syrups, how long eye / ear drops last after opening)?",
+   "customer_question": "How do I mix this syrup?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -224,10 +247,10 @@
   },
   {
    "id": "pharmacy-020",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you only sell medicines that are approved by the CDSCO or relevant Indian health authorities?",
-   "customer_question": "Can I trust the quality of your medicines?",
-   "priority": "important",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you always keep tetanus (TT) injections and anti-rabies vaccine in stock?",
+   "customer_question": "Do you have rabies vaccine?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -236,10 +259,10 @@
   },
   {
    "id": "pharmacy-021",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you provide a computer-generated GST invoice for every purchase?",
-   "customer_question": "Do you provide a bill for my purchase?",
-   "priority": "important",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you keep sugar-free syrups for diabetics?",
+   "customer_question": "Do you have sugar-free cough syrup?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -248,10 +271,10 @@
   },
   {
    "id": "pharmacy-022",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you sell loose tablets, and if so, do you ensure the batch number and expiry date are visible on the strip?",
-   "customer_question": "Do you sell loose tablets?",
-   "priority": "important",
+   "category": "Prescriptions & medicines",
+   "owner_question": "Do you pack insulin or cold injections with ice gel packs for travel?",
+   "customer_question": "Can you pack insulin for travel?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -260,46 +283,34 @@
   },
   {
    "id": "pharmacy-023",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you clearly inform customers if a medicine is generic or branded?",
-   "customer_question": "Is this medicine a generic or branded one?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Prices & bills",
+   "owner_question": "Do you give extra discount on monthly medicines (BP, sugar, thyroid, heart) bought for the whole month?",
+   "customer_question": "Any discount for monthly medicines?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "pharmacy-024",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you allow customers to inspect the packaging and seals of medicines before payment?",
-   "customer_question": "Can I check the seal before buying?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Prices & bills",
+   "owner_question": "Do you take back unopened full strips with the bill if the doctor changes the medicine? Within how many days?",
+   "customer_question": "Doctor changed my tablet, can I return this?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "pharmacy-025",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you ensure all health supplements and vitamins are from reputable, certified brands?",
-   "customer_question": "Are your health supplements genuine?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Prices & bills",
+   "owner_question": "Which medicines can't be returned (for example fridge items, syrups, cut strips)?",
+   "customer_question": "Can I return this syrup?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "pharmacy-026",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you verify the age-appropriateness of medicines before selling them to customers?",
-   "customer_question": "Are these medicines safe for children?",
-   "priority": "important",
+   "category": "Prices & bills",
+   "owner_question": "If a customer loses a bill, can you print a duplicate using their phone number?",
+   "customer_question": "I lost my bill, can you print it again?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -308,10 +319,10 @@
   },
   {
    "id": "pharmacy-027",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you ensure all surgical or first-aid items are sold in their original, sealed, sterile packaging?",
-   "customer_question": "Are your surgical items sterilized?",
-   "priority": "important",
+   "category": "Prices & bills",
+   "owner_question": "Do you remind regular customers before their monthly medicines run out and keep them packed?",
+   "customer_question": "Can you remind me every month?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -320,42 +331,31 @@
   },
   {
    "id": "pharmacy-028",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you check for any physical damage or leakage in medicine bottles/strips before handing them to the customer?",
-   "customer_question": "Do you check for damaged packaging?",
-   "priority": "important",
-   "answer_type": "yes_no",
+   "category": "Prices & bills",
+   "owner_question": "If you have no change, what do you do?",
+   "customer_question": "Will you give Vicks instead of change?",
+   "priority": "optional",
+   "answer_type": "options",
    "options": [
-    "Yes",
-    "No"
+    "Take the exact amount by UPI",
+    "Give small items",
+    "Round off"
    ]
   },
   {
    "id": "pharmacy-029",
-   "category": "Stock Availability",
-   "owner_question": "Do you maintain a full stock of common medicines, or do you sometimes run out of basic items?",
-   "customer_question": "Do you keep stock of all common medicines?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-030",
-   "category": "Stock Availability",
-   "owner_question": "If you order a medicine for a customer, how many hours or days does it usually take to arrive?",
-   "customer_question": "How long does it take for you to get out-of-stock medicines?",
-   "priority": "important",
+   "category": "Prices & bills",
+   "owner_question": "Do you have membership points or cashback for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "pharmacy-031",
-   "category": "Stock Availability",
-   "owner_question": "Do you suggest or stock generic alternatives when the requested brand is out of stock?",
-   "customer_question": "Do you stock generic alternatives if the brand I want is unavailable?",
-   "priority": "important",
+   "id": "pharmacy-030",
+   "category": "Delivery & timings",
+   "owner_question": "Can elders pay on delivery (cash or UPI QR)?",
+   "customer_question": "Can my father pay when it comes?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -363,11 +363,19 @@
    ]
   },
   {
+   "id": "pharmacy-031",
+   "category": "Delivery & timings",
+   "owner_question": "If a wrong or damaged medicine is delivered, how quickly do you replace it?",
+   "customer_question": "You sent the wrong tablet, what now?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
    "id": "pharmacy-032",
-   "category": "Stock Availability",
-   "owner_question": "Do you keep a regular stock of surgical and first-aid items?",
-   "customer_question": "Do you keep stock of surgical items like bandages and syringes?",
-   "priority": "important",
+   "category": "Delivery & timings",
+   "owner_question": "Can customers pay online and get medicines delivered to their parents in another town?",
+   "customer_question": "Can you deliver to my parents in Guntur?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -376,34 +384,32 @@
   },
   {
    "id": "pharmacy-033",
-   "category": "Stock Availability",
-   "owner_question": "Do you allow customers to reserve medicines via chat before coming to the shop?",
-   "customer_question": "Can I reserve a medicine by messaging you?",
-   "priority": "important",
-   "answer_type": "yes_no",
+   "category": "Devices & surgical",
+   "owner_question": "Which checks can customers get at your shop?",
+   "customer_question": "Can I check my BP here?",
+   "priority": "optional",
+   "answer_type": "list",
    "options": [
-    "Yes",
-    "No"
+    "BP check",
+    "Sugar (GRBS) test",
+    "Weight",
+    "None"
    ]
   },
   {
    "id": "pharmacy-034",
-   "category": "Stock Availability",
-   "owner_question": "Do you maintain a dedicated stock for chronic disease medications like diabetes or blood pressure?",
-   "customer_question": "Do you keep specialized medicines for chronic illnesses like diabetes or BP?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Devices & surgical",
+   "owner_question": "Which brands of BP machines and glucometers do you sell (for example Omron, Accu-Chek, OneTouch), and with what warranty?",
+   "customer_question": "Is there a warranty on the BP machine?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "pharmacy-035",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you stock generic or 'Jan Aushadhi' versions of branded medicines?",
-   "customer_question": "Do you have cheaper alternatives for this medicine?",
-   "priority": "important",
+   "category": "Devices & surgical",
+   "owner_question": "Do you keep glucometer strips, lancets and insulin pen needles (4 / 6 mm) for all common brands?",
+   "customer_question": "Do you have insulin pen needles?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -412,10 +418,10 @@
   },
   {
    "id": "pharmacy-036",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you allow your staff to suggest generic alternatives for a specific prescription if the customer asks?",
-   "customer_question": "Can you suggest a generic brand for this prescription?",
-   "priority": "important",
+   "category": "Devices & surgical",
+   "owner_question": "Do you show customers how to use a BP machine or nebulizer at the shop?",
+   "customer_question": "Can you show me how to use it?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -424,10 +430,10 @@
   },
   {
    "id": "pharmacy-037",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you keep a list or database of generic equivalents for the most common branded medicines you sell?",
-   "customer_question": "Do you have the generic version of this specific tablet?",
-   "priority": "important",
+   "category": "Devices & surgical",
+   "owner_question": "Do you give bulk rates on adult diapers and underpads?",
+   "customer_question": "Any rate for a full pack of adult diapers?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -436,18 +442,22 @@
   },
   {
    "id": "pharmacy-038",
-   "category": "Generic vs Branded",
-   "owner_question": "For which categories of medicine do you primarily stock generic alternatives (e.g., chronic illness, antibiotics, vitamins)?",
-   "customer_question": "Do you stock generic versions of all types of medicines?",
-   "priority": "important",
-   "answer_type": "list"
+   "category": "Devices & surgical",
+   "owner_question": "Do you keep supports and stockings in all sizes?",
+   "customer_question": "Do you have an XL knee cap?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
   },
   {
    "id": "pharmacy-039",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you only stock generic medicines that are approved by the CDSCO or equivalent regulatory bodies?",
-   "customer_question": "Are generic medicines safe to use?",
-   "priority": "important",
+   "category": "Baby, nutrition & care",
+   "owner_question": "Do you keep fresh stock of baby milk powders in all stages?",
+   "customer_question": "Do you have Lactogen stage 2?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -456,22 +466,18 @@
   },
   {
    "id": "pharmacy-040",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you source your generic medicines from reputable and certified pharmaceutical companies?",
-   "customer_question": "Can I trust the generic brands you sell?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Baby, nutrition & care",
+   "owner_question": "Do you give discounts on diapers, wipes and baby care items?",
+   "customer_question": "Any discount on diapers?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "pharmacy-041",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you advise customers to consult their doctor before switching a prescribed medication to a generic alternative?",
-   "customer_question": "Will my doctor accept if I switch to a generic version?",
-   "priority": "important",
+   "category": "Shop & service",
+   "owner_question": "Is there a clinic, nurse, doctor or blood-test collection centre at or near your shop (for injections, drips or tests prescribed by a doctor)?",
+   "customer_question": "Can I get a blood test here?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -480,10 +486,10 @@
   },
   {
    "id": "pharmacy-042",
-   "category": "Generic vs Branded",
-   "owner_question": "Are generic options available for long-term chronic medications like those for diabetes or hypertension?",
-   "customer_question": "Do you keep generic versions of heart or diabetes medication?",
-   "priority": "important",
+   "category": "Shop & service",
+   "owner_question": "Do you pack sanitary pads and personal items discreetly (paper or dark cover)?",
+   "customer_question": "Can you pack this in a paper cover?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -492,10 +498,10 @@
   },
   {
    "id": "pharmacy-043",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you offer specific discounts on branded medicines to compete with generic pricing?",
-   "customer_question": "Can I get a discount on branded medicines if I don't want generic?",
-   "priority": "important",
+   "category": "Shop & service",
+   "owner_question": "Can you arrange medical equipment on rent (oxygen cylinder or concentrator, hospital bed)?",
+   "customer_question": "Can I rent an oxygen concentrator?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -504,2047 +510,51 @@
   },
   {
    "id": "pharmacy-044",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you maintain a consistent stock of generic alternatives, or are they subject to availability?",
-   "customer_question": "Are generic medicines always available in stock?",
-   "priority": "important",
-   "answer_type": "options",
+   "category": "Shop & service",
+   "owner_question": "Do you do gun-shot ear piercing?",
+   "customer_question": "Do you pierce ears?",
+   "priority": "optional",
+   "answer_type": "yes_no",
    "options": [
-    "Always in stock",
-    "Subject to availability",
-    "Order on request"
+    "Yes",
+    "No"
    ]
   },
   {
    "id": "pharmacy-045",
-   "category": "Generic vs Branded",
-   "owner_question": "What is your policy on substituting antibiotics with generic versions?",
-   "customer_question": "Do you have generic versions of antibiotics?",
-   "priority": "important",
-   "answer_type": "options",
+   "category": "Shop & service",
+   "owner_question": "Do you help customers dispose of expired medicines safely (advice or a drop box)?",
+   "customer_question": "Where do I throw old medicines?",
+   "priority": "optional",
+   "answer_type": "yes_no",
    "options": [
-    "Always allow",
-    "Only with doctor's note",
-    "Never substitute"
+    "Yes",
+    "No"
    ]
   },
   {
    "id": "pharmacy-046",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you encourage customers to check the salt composition on the strip to verify it matches their prescription?",
-   "customer_question": "Can I see the composition of the generic medicine?",
-   "priority": "important",
-   "answer_type": "yes_no",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
    "options": [
-    "Yes",
-    "No"
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
    ]
   },
   {
    "id": "pharmacy-047",
-   "category": "Storage and Handling",
-   "owner_question": "Do you use a digital thermometer or alarm system to monitor fridge temperature?",
-   "customer_question": "How do you ensure the fridge stays at the right temperature?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-048",
-   "category": "Storage and Handling",
-   "owner_question": "Do you have a power backup like a generator or UPS for your refrigerator?",
-   "customer_question": "What happens to my insulin if there is a power cut?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-049",
-   "category": "Storage and Handling",
-   "owner_question": "Do you offer ice packs or insulated bags for customers buying cold-chain medicines?",
-   "customer_question": "Do you provide ice packs for carrying insulin?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-050",
-   "category": "Storage and Handling",
-   "owner_question": "Are all your storage shelves located away from direct sunlight and heat sources?",
-   "customer_question": "Are your medicines kept away from direct sunlight?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-051",
-   "category": "Storage and Handling",
-   "owner_question": "Do you use air conditioning or specialized cooling to keep the shop environment stable?",
-   "customer_question": "How do you keep the shop cool during summer?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-052",
-   "category": "Storage and Handling",
-   "owner_question": "Do you store all medicine stock on elevated shelves or racks?",
-   "customer_question": "Do you store medicines on the floor?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-053",
-   "category": "Storage and Handling",
-   "owner_question": "Do you have a dedicated, marked area for expired medicines to prevent accidental sale?",
-   "customer_question": "Do you separate expired medicines from fresh stock?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-054",
-   "category": "Storage and Handling",
-   "owner_question": "How frequently do you perform a physical audit of expiry dates on your shelves?",
-   "customer_question": "How often do you check the expiry dates of your stock?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Monthly",
-    "Quarterly",
-    "Every 6 months"
-   ]
-  },
-  {
-   "id": "pharmacy-055",
-   "category": "Storage and Handling",
-   "owner_question": "Do you store external-use medicines (like ointments) separately from oral medications?",
-   "customer_question": "Do you keep toxic or external-use-only medicines separate?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-056",
-   "category": "Storage and Handling",
-   "owner_question": "Do you ensure all medicines are stored in their original manufacturer packaging until sale?",
-   "customer_question": "Are your medicines stored in their original packaging?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-057",
-   "category": "Storage and Handling",
-   "owner_question": "What is the standard temperature range maintained in your cold-chain storage?",
-   "customer_question": "What is the maximum temperature your fridge maintains?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-058",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you offer a fixed percentage discount for customers who buy their chronic/monthly medicines from you regularly?",
-   "customer_question": "Do you give any discount on monthly medicine refills?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-059",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you offer discounts for bulk purchases of non-prescription items like health supplements or baby products?",
-   "customer_question": "Is there a discount if I buy in bulk?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-060",
-   "category": "Discounts and Savings",
-   "owner_question": "Is there a minimum bill amount required for a customer to be eligible for a discount?",
-   "customer_question": "What is the minimum bill amount to get a discount?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "pharmacy-061",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you provide a special discount for senior citizens?",
-   "customer_question": "Do you offer discounts for senior citizens?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-062",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you provide specific discounts on generic medicine brands compared to branded ones?",
-   "customer_question": "Do you offer discounts on generic medicines?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-063",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you currently offer 'Buy One Get One' (BOGO) deals on any categories like supplements or toiletries?",
-   "customer_question": "Do you have any 'buy one get one' offers?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-064",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you provide any percentage discount on high-value medical equipment or surgical supplies?",
-   "customer_question": "Do you offer discounts on surgical or medical equipment?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-065",
-   "category": "Discounts and Savings",
-   "owner_question": "What is the standard flat discount percentage you provide on prescription medicines?",
-   "customer_question": "Do you offer discounts on prescription medicines?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "pharmacy-066",
-   "category": "Discounts and Savings",
-   "owner_question": "Are there any extra service or handling charges applied to items that are already discounted?",
-   "customer_question": "Are there any hidden charges on discounted items?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-067",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you sell basic surgical consumables like bandages, syringes, and cotton?",
-   "customer_question": "Do you keep surgical items like bandages and syringes in stock?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-068",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you offer medical equipment on a rental basis?",
-   "customer_question": "Do you rent out wheelchairs or oxygen concentrators?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-069",
-   "category": "Surgical and Equipment",
-   "owner_question": "Which specific medical equipment items do you provide for rent?",
-   "customer_question": "What equipment do you have available for rent?",
-   "priority": "important",
-   "answer_type": "list"
-  },
-  {
-   "id": "pharmacy-070",
-   "category": "Surgical and Equipment",
-   "owner_question": "What is the typical daily or weekly rental charge for your equipment?",
-   "customer_question": "How much is the daily rent for a wheelchair?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-071",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you require a security deposit for equipment rentals?",
-   "customer_question": "Do I need to pay a security deposit for renting equipment?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-072",
-   "category": "Surgical and Equipment",
-   "owner_question": "What documents (like Aadhaar card) do you require from the customer to rent out equipment?",
-   "customer_question": "What documents do you need to rent a machine?",
-   "priority": "important",
-   "answer_type": "list"
-  },
-  {
-   "id": "pharmacy-074",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you stock home-care items like adult diapers, orthopedic belts, or walking sticks?",
-   "customer_question": "Do you sell adult diapers or orthopedic supports?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-075",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you sell diagnostic devices like BP monitors, glucometers, or digital thermometers?",
-   "customer_question": "Do you have glucometers or BP machines for sale?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-076",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you offer a shop-level warranty or replacement for equipment purchased from you?",
-   "customer_question": "Do you provide a warranty on the medical equipment I buy?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-077",
-   "category": "Surgical and Equipment",
-   "owner_question": "What is your policy for faulty equipment returned by a customer?",
-   "customer_question": "Can I return the equipment if it is not working properly?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Immediate replacement",
-    "Repair service",
-    "Refund",
-    "No returns"
-   ]
-  },
-  {
-   "id": "pharmacy-078",
-   "category": "Health Supplements",
-   "owner_question": "Do you source your health supplements directly from authorized distributors or the company?",
-   "customer_question": "Are your protein powders and vitamins original and authentic?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-079",
-   "category": "Health Supplements",
-   "owner_question": "Do you stock imported health supplements or only Indian brands?",
-   "customer_question": "Do you keep supplements from international brands?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Only Indian brands",
-    "Mostly Indian, some imported",
-    "Mostly imported, some Indian",
-    "Only imported brands"
-   ]
-  },
-  {
-   "id": "pharmacy-080",
-   "category": "Health Supplements",
-   "owner_question": "Which specific health goals do your supplements cater to?",
-   "customer_question": "Do you have supplements for weight gain?",
-   "priority": "important",
-   "answer_type": "list"
-  },
-  {
-   "id": "pharmacy-081",
-   "category": "Health Supplements",
-   "owner_question": "Do you clearly label which supplements are vegetarian or vegan?",
-   "customer_question": "Do you sell vegetarian protein powders?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-082",
-   "category": "Health Supplements",
-   "owner_question": "Do you ensure all your supplement stocks have valid FSSAI certification marks?",
-   "customer_question": "Are these supplements FSSAI certified?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-083",
-   "category": "Health Supplements",
-   "owner_question": "Do you carry a specific range of supplements suitable for diabetic patients?",
-   "customer_question": "Do you have any sugar-free supplements for diabetics?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-084",
-   "category": "Health Supplements",
-   "owner_question": "Do you ensure all supplements sold have a minimum of 6 months expiry remaining?",
-   "customer_question": "What is the shelf life of the supplements you sell?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-085",
-   "category": "Health Supplements",
-   "owner_question": "Do you stock Ayurvedic or herbal health supplements alongside modern ones?",
-   "customer_question": "Do you keep Ayurvedic health supplements?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-086",
-   "category": "Health Supplements",
-   "owner_question": "Do you carry health supplements specifically formulated for children?",
-   "customer_question": "Do you have protein supplements for kids?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-087",
-   "category": "Health Supplements",
-   "owner_question": "Do you stock calcium or joint health supplements?",
-   "customer_question": "Do you have supplements for bone and joint health?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-088",
-   "category": "Health Supplements",
-   "owner_question": "Do you only keep brands that provide lab-test reports or quality assurance certificates?",
-   "customer_question": "Are these supplements lab-tested?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-089",
-   "category": "Health Supplements",
-   "owner_question": "Do you accept returns for health supplements if the seal is broken by the customer?",
-   "customer_question": "Can I return a supplement if the seal is broken?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-090",
-   "category": "Health Supplements",
-   "owner_question": "Do you stock Omega-3 or fish oil supplements?",
-   "customer_question": "Do you have fish oil capsules?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-091",
-   "category": "Health Supplements",
-   "owner_question": "Do you provide a formal GST invoice for all supplement purchases?",
-   "customer_question": "Do you provide GST bills for these supplements?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-092",
-   "category": "Health Supplements",
-   "owner_question": "Do you advise customers to consult their doctor before starting any new supplement?",
-   "customer_question": "Are these supplements safe for pregnant women?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-095",
-   "category": "Home Delivery Logistics",
-   "owner_question": "What is the minimum order amount required for free delivery?",
-   "customer_question": "What is the minimum order amount for free delivery?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "pharmacy-096",
-   "category": "Home Delivery Logistics",
-   "owner_question": "What is your standard delivery fee for orders below the free delivery threshold?",
-   "customer_question": "How much do you charge for delivery if the order is small?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "pharmacy-097",
-   "category": "Home Delivery Logistics",
-   "owner_question": "What is the typical time range (in minutes or hours) for a delivery to reach the customer?",
-   "customer_question": "How long does it usually take for the delivery to arrive?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-099",
-   "category": "Home Delivery Logistics",
-   "owner_question": "Do you offer an express or urgent delivery option for emergencies?",
-   "customer_question": "Can I get urgent delivery for emergency medicines?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-100",
-   "category": "Home Delivery Logistics",
-   "owner_question": "Do you deliver to specific nearby localities or pin codes?",
-   "customer_question": "Do you deliver to my area?",
-   "priority": "important",
-   "answer_type": "list"
-  },
-  {
-   "id": "pharmacy-103",
-   "category": "Home Delivery Logistics",
-   "owner_question": "Do you offer cash on delivery (COD) for home orders?",
-   "customer_question": "Do you accept cash on delivery?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-106",
-   "category": "Insurance and Billing",
-   "owner_question": "Do you accept health insurance cards or cashless medical insurance for medicine bills?",
-   "customer_question": "Do you accept health insurance cards for medicine purchases?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-107",
-   "category": "Insurance and Billing",
-   "owner_question": "Which specific insurance companies or TPA networks do you accept?",
-   "customer_question": "Which insurance companies do you have a tie-up with?",
-   "priority": "important",
-   "answer_type": "list"
-  },
-  {
-   "id": "pharmacy-108",
-   "category": "Insurance and Billing",
-   "owner_question": "What documents must a customer bring to use their insurance card at your shop?",
-   "customer_question": "What documents do I need to show to use my insurance?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-109",
-   "category": "Insurance and Billing",
-   "owner_question": "Are health supplements and non-prescription items covered under your insurance billing process?",
-   "customer_question": "Can I claim insurance for over-the-counter health products?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-110",
-   "category": "Insurance and Billing",
-   "owner_question": "Do your computer-generated bills clearly itemize each medicine with its batch number and expiry date for insurance purposes?",
-   "customer_question": "Do you provide itemized bills for insurance claims?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-111",
-   "category": "Insurance and Billing",
-   "owner_question": "Are you an authorized pharmacy for government health schemes like CGHS or ECHS?",
-   "customer_question": "Do you accept government health scheme cards (like CGHS or ECHS)?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-112",
-   "category": "Insurance and Billing",
-   "owner_question": "Does your printed bill clearly show the GST breakdown for each item?",
-   "customer_question": "Does the billing system show the tax breakdown?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-113",
-   "category": "Insurance and Billing",
-   "owner_question": "Are you able to stamp and sign the customer's prescription for insurance claim purposes?",
-   "customer_question": "Do you provide a stamped copy of the prescription for insurance?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-114",
-   "category": "Consultation Services",
-   "owner_question": "Do you offer blood pressure monitoring services in your shop?",
-   "customer_question": "Can I get my blood pressure checked at your shop?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-115",
-   "category": "Consultation Services",
-   "owner_question": "What is the fee for a blood pressure check, or is it free?",
-   "customer_question": "How much do you charge for a blood pressure check?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "pharmacy-116",
-   "category": "Consultation Services",
-   "owner_question": "Do you offer blood sugar (glucose) testing services?",
-   "customer_question": "Can you check my blood sugar levels here?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-117",
-   "category": "Consultation Services",
-   "owner_question": "What is the standard charge for a blood sugar test?",
-   "customer_question": "What is the cost for a blood sugar test?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "pharmacy-118",
-   "category": "Consultation Services",
-   "owner_question": "Do you provide free basic health advice or consultation to your customers?",
-   "customer_question": "Do you offer free health advice or consultations?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-119",
-   "category": "Consultation Services",
-   "owner_question": "Do you have a visiting doctor or a clinic attached to the shop?",
-   "customer_question": "Can I consult a doctor at your shop?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-120",
-   "category": "Consultation Services",
-   "owner_question": "What are the timings or days when the doctor is available at your shop?",
-   "customer_question": "When is the doctor available at your shop?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-121",
-   "category": "Consultation Services",
-   "owner_question": "Do you offer pulse oximeter readings for customers?",
-   "customer_question": "Do you provide oxygen level (SpO2) checks?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-122",
-   "category": "Consultation Services",
-   "owner_question": "Do you provide demonstrations on how to use medical devices like insulin pens or inhalers?",
-   "customer_question": "Can you help me understand how to use an insulin pen?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-123",
-   "category": "Consultation Services",
-   "owner_question": "Do you provide injection administration services at the shop?",
-   "customer_question": "Do you have a nurse available for injections?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-124",
-   "category": "Consultation Services",
-   "owner_question": "What is the standard charge for administering an injection?",
-   "customer_question": "How much do you charge for an injection?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "pharmacy-125",
-   "category": "Consultation Services",
-   "owner_question": "Do you provide wound dressing services?",
-   "customer_question": "Can I get my dressing changed at your shop?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-126",
-   "category": "Consultation Services",
-   "owner_question": "Do you have a nebulizer machine available for customer use at the shop?",
-   "customer_question": "Do you offer nebulizer services?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-127",
-   "category": "Consultation Services",
-   "owner_question": "Do customers need to book an appointment for tests like blood sugar or BP?",
-   "customer_question": "Do I need an appointment for health tests?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-128",
-   "category": "Consultation Services",
-   "owner_question": "Do you provide basic interpretation or explanation of lab reports for customers?",
-   "customer_question": "Can you help me read my lab report?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-129",
-   "category": "Emergency Services",
-   "owner_question": "Do you provide emergency medicine delivery or pickup after your official closing hours?",
-   "customer_question": "Can I get medicines if the shop is closed?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-130",
-   "category": "Emergency Services",
-   "owner_question": "Is there a specific mobile number that customers should call for emergency medical requests?",
-   "customer_question": "How can I contact you in a medical emergency?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-131",
-   "category": "Emergency Services",
-   "owner_question": "Do you maintain a dedicated stock of life-saving or critical care medicines that are available on priority?",
-   "customer_question": "Do you keep emergency stock for critical illnesses?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-132",
-   "category": "Emergency Services",
-   "owner_question": "Is there an extra charge for emergency medicine delivery services?",
-   "customer_question": "Do you provide emergency home delivery?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "pharmacy-133",
-   "category": "Emergency Services",
-   "owner_question": "What is the typical time frame for delivering medicines during an emergency request?",
-   "customer_question": "How fast can you deliver urgent medicines?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-135",
-   "category": "Emergency Services",
-   "owner_question": "Are you available to open the shop for emergency medicine requests if called?",
-   "customer_question": "Can I pick up an emergency order from your home?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-136",
-   "category": "Emergency Services",
-   "owner_question": "Do you remain open or available for emergency requests on public holidays?",
-   "customer_question": "Are you open on public holidays for emergencies?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-137",
-   "category": "Emergency Services",
-   "owner_question": "Do you have a process to source out-of-stock emergency medicines from other distributors quickly?",
-   "customer_question": "Can you arrange medicines that are not in stock urgently?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-138",
-   "category": "Emergency Services",
-   "owner_question": "What is the maximum distance (in kilometers) you cover for emergency medicine delivery?",
-   "customer_question": "How far do you provide emergency home delivery?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "pharmacy-139",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you require a prescription for specialized medical foods or baby nutrition products?",
-   "customer_question": "Can I buy baby formula or specialized food without a prescription?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-140",
-   "category": "Prescription Requirements",
-   "owner_question": "Are prescriptions required for surgical or first-aid items like bandages, cotton, or masks?",
-   "customer_question": "Do you need a prescription for surgical items like bandages or masks?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-141",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you accept handwritten prescriptions, or must they be computer-printed?",
-   "customer_question": "Do you accept handwritten prescriptions?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Only computer printed",
-    "Handwritten is fine",
-    "Must be legible"
-   ]
-  },
-  {
-   "id": "pharmacy-142",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you require a prescription for homeopathic medicines?",
-   "customer_question": "Can I buy homeopathic medicines without a prescription?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-143",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you require a prescription for medicated skincare or beauty products?",
-   "customer_question": "Do you need a prescription for beauty or skincare products?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-144",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you require a prescription for Ayurvedic products?",
-   "customer_question": "Can I buy Ayurvedic medicines without a prescription?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-145",
-   "category": "Prescription Requirements",
-   "owner_question": "Are prescriptions required for common pain relief sprays or balms?",
-   "customer_question": "Do you need a prescription for pain relief sprays or balms?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-146",
-   "category": "Prescription Requirements",
-   "owner_question": "Do you require a prescription for home testing kits (like pregnancy or blood sugar kits)?",
-   "customer_question": "Do you require a prescription for health checkup kits?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-147",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you keep a list of your authorized suppliers available for verification if needed?",
-   "customer_question": "Are your medicines sourced from reliable companies?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-148",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you offer discounts on medicines that are near their expiry date?",
-   "customer_question": "How do you handle medicines that are nearing expiry?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-149",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you explain to customers if a company has changed its packaging or branding?",
-   "customer_question": "What if the medicine looks different from my last purchase?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-150",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you sell any imported medicines, and do you ensure they have the required import documentation?",
-   "customer_question": "Do you sell imported medicines?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-151",
-   "category": "Medicine Authenticity",
-   "owner_question": "Do you follow specific storage instructions (like keeping away from sunlight) for liquid medicines?",
-   "customer_question": "How do you store sensitive liquids?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-152",
-   "category": "Stock Availability",
-   "owner_question": "Do you stock baby care products such as formula or diapers?",
-   "customer_question": "Do you have baby care products like formula or diapers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-153",
-   "category": "Stock Availability",
-   "owner_question": "Do you carry a range of Ayurvedic or herbal health products?",
-   "customer_question": "Do you stock Ayurvedic or herbal medicines?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-154",
-   "category": "Stock Availability",
-   "owner_question": "Do you stock imported health supplements or vitamins?",
-   "customer_question": "Do you stock imported health supplements?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-155",
-   "category": "Stock Availability",
-   "owner_question": "Do you sell medical equipment like BP monitors, thermometers, or nebulizers?",
-   "customer_question": "Do you keep stock of medical equipment like BP monitors or nebulizers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-156",
-   "category": "Stock Availability",
-   "owner_question": "Do you stock senior care items like adult diapers or walking aids?",
-   "customer_question": "Do you keep stock of adult diapers or senior care items?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-157",
-   "category": "Stock Availability",
-   "owner_question": "Do you stock protein powders or fitness supplements?",
-   "customer_question": "Do you keep stock of protein powders or gym supplements?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-158",
-   "category": "Stock Availability",
-   "owner_question": "Do you stock a variety of feminine hygiene products like sanitary pads or menstrual cups?",
-   "customer_question": "Do you keep stock of feminine hygiene products?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-159",
-   "category": "Stock Availability",
-   "owner_question": "Do you stock eye care products like lens solutions or lubricating eye drops?",
-   "customer_question": "Do you have stock of contact lens solutions or eye care drops?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-160",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you offer generic or store-brand alternatives for non-prescription health and wellness products?",
-   "customer_question": "Do you have generic options for skin care or health supplements?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-161",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you inform customers that generic packaging might look different from the branded ones?",
-   "customer_question": "Is there a difference in the packaging of generic medicines?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-162",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you have a printed price list or a digital catalog that compares the prices of branded vs generic medicines?",
-   "customer_question": "Do you have a price list for generic medicines?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-163",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you stock generic alternatives for pediatric syrups or medicines?",
-   "customer_question": "Do you have generic versions for children's medicines?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-164",
-   "category": "Generic vs Branded",
-   "owner_question": "Do you mark or label generic medicines in your shop for easy identification by customers?",
-   "customer_question": "How do I know if a medicine is generic?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-165",
-   "category": "Storage and Handling",
-   "owner_question": "Do you have a regular pest control schedule for your storage area?",
-   "customer_question": "How do you prevent pests in your medicine storage?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-166",
-   "category": "Storage and Handling",
-   "owner_question": "Do you use dehumidifiers or moisture-absorbing agents to keep the storage area dry?",
-   "customer_question": "Are your medicines kept in a dry area?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-167",
-   "category": "Storage and Handling",
-   "owner_question": "Do you stock any specialized products that require specific handling instructions for the customer?",
-   "customer_question": "Do you sell any medicines that require special handling?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-168",
-   "category": "Storage and Handling",
-   "owner_question": "Do you have specific safety protocols for storing and packing fragile glass medical items?",
-   "customer_question": "How do you handle fragile glass vials or bottles?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-169",
-   "category": "Storage and Handling",
-   "owner_question": "Do you perform daily cleaning of your storage shelves and display areas?",
-   "customer_question": "Is your shop clean and dust-free?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-170",
-   "category": "Storage and Handling",
-   "owner_question": "Do you maintain a digital or physical log of batch numbers for all incoming stock?",
-   "customer_question": "Do you have a system to track the batch numbers of medicines?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-171",
-   "category": "Storage and Handling",
-   "owner_question": "Are sterile items like syringes and needles stored in a protected, sealed area?",
-   "customer_question": "Do you keep syringes and needles in a safe place?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-172",
-   "category": "Storage and Handling",
-   "owner_question": "Do you have a standard procedure for cleaning up medicine spills or broken glass safely?",
-   "customer_question": "How do you handle medicine spills or breakages?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-173",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you run a loyalty program where customers earn points or rewards on their purchases?",
-   "customer_question": "Do you have a loyalty program or points system?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-174",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you accept any third-party discount coupons or pharmacy-specific vouchers?",
-   "customer_question": "Can I use my credit card rewards or coupons here?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-175",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you typically run special discount schemes during festive seasons or specific months?",
-   "customer_question": "Are there any festive season discounts?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-176",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you offer any special discounts for specific groups like students, medical staff, or frontline workers?",
-   "customer_question": "Is there a discount for students or healthcare workers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-177",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you send notifications or updates about new discounts to your regular customers?",
-   "customer_question": "How do I get to know about your latest offers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-178",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you have a specific discount slab for bulk orders of safety and hygiene products?",
-   "customer_question": "Do you offer discounts for bulk orders of surgical masks or sanitizers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-179",
-   "category": "Discounts and Savings",
-   "owner_question": "Is there any scope for price negotiation for very large or institutional orders?",
-   "customer_question": "Are your prices negotiable?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-180",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you offer a welcome discount for new customers visiting your pharmacy for the first time?",
-   "customer_question": "Do you have any discount for first-time customers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-181",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you run specific discount campaigns on baby care or mother-care products?",
-   "customer_question": "Do you offer discounts on baby care products?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-182",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you offer a discount if a customer purchases multiple first-aid kits or safety boxes?",
-   "customer_question": "Do you provide discounts on bulk purchase of first-aid kits?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-183",
-   "category": "Discounts and Savings",
-   "owner_question": "Do you participate in any cashback or discount programs offered by specific UPI or payment apps?",
-   "customer_question": "Can I get a discount if I pay via a specific payment app?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-184",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you charge a separate fee for delivery and pickup of rented equipment?",
-   "customer_question": "Is there an extra charge for delivery of rented items?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-185",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you provide a demonstration or training on how to use the equipment you rent or sell?",
-   "customer_question": "Do you provide training on how to use the oxygen concentrator?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-186",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you only sell branded or certified surgical and medical equipment?",
-   "customer_question": "Are your surgical products certified?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-187",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you carry respiratory equipment like nebulizers or steam inhalers?",
-   "customer_question": "Do you stock nebulizer machines?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-188",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you offer discounted rates for long-term equipment rentals?",
-   "customer_question": "Can I get a discount if I rent equipment for a long period?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-189",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you sell personal protective items like surgical masks and gloves?",
-   "customer_question": "Do you sell surgical gloves and masks?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-190",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you offer repair services for medical devices bought from your shop?",
-   "customer_question": "Do you provide repair services for medical equipment?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-191",
-   "category": "Surgical and Equipment",
-   "owner_question": "Do you stock specialized orthopedic aids like supports, braces, or special footwear?",
-   "customer_question": "Do you have specialized orthopedic shoes or insoles?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-192",
-   "category": "Surgical and Equipment",
-   "owner_question": "Can customers reserve or book medical equipment in advance?",
-   "customer_question": "Can I book the equipment in advance?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-193",
-   "category": "Health Supplements",
-   "owner_question": "Do you provide basic guidance or recommend popular brands for common needs like daily multivitamins?",
-   "customer_question": "Can you suggest a good multivitamin for daily use?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-194",
-   "category": "Health Supplements",
-   "owner_question": "Do you provide special discounts if a customer buys multiple units of a supplement?",
-   "customer_question": "Do you offer any discounts on bulk purchases of supplements?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-195",
-   "category": "Health Supplements",
-   "owner_question": "Do you stock beauty-focused supplements like collagen or biotin?",
-   "customer_question": "Do you have collagen supplements?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-196",
-   "category": "Health Supplements",
-   "owner_question": "Do you stock performance-enhancing supplements like pre-workout or energy boosters?",
-   "customer_question": "Do you have energy drinks or pre-workout supplements?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-197",
-   "category": "Health Supplements",
-   "owner_question": "Do you offer a service to order specific supplement brands for customers upon request?",
-   "customer_question": "Can you order a specific supplement brand if you don't have it?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-198",
-   "category": "Home Delivery Logistics",
-   "owner_question": "Do you send a confirmation message or call once a delivery order is accepted?",
-   "customer_question": "Will I get a confirmation after placing my delivery order?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-199",
-   "category": "Home Delivery Logistics",
-   "owner_question": "Do you provide live tracking or status updates for deliveries?",
-   "customer_question": "Can I track my medicine delivery?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-200",
-   "category": "Home Delivery Logistics",
-   "owner_question": "Are there any items you do not deliver due to size or weight constraints?",
-   "customer_question": "Do you deliver heavy items like adult diapers or bulk health drinks?",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
    "priority": "optional",
    "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-201",
-   "category": "Home Delivery Logistics",
-   "owner_question": "Do you allow customers to schedule deliveries for a specific time or date?",
-   "customer_question": "Can I schedule a delivery for a specific time?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-202",
-   "category": "Home Delivery Logistics",
-   "owner_question": "What is your policy if a delivery attempt fails because no one is home?",
-   "customer_question": "What if no one is home to receive the delivery?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-204",
-   "category": "Insurance and Billing",
-   "owner_question": "Do you have tie-ups with any corporate health plans or employee wellness programs?",
-   "customer_question": "Do you accept corporate health plans or employee health cards?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-205",
-   "category": "Insurance and Billing",
-   "owner_question": "Do you offer direct corporate billing for employees of specific companies?",
-   "customer_question": "Do you offer direct billing to my company?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-206",
-   "category": "Insurance and Billing",
-   "owner_question": "Is there a minimum purchase amount required to process an insurance claim?",
-   "customer_question": "Is there a minimum bill amount to use my insurance card?",
-   "priority": "optional",
-   "answer_type": "price"
-  },
-  {
-   "id": "pharmacy-207",
-   "category": "Insurance and Billing",
-   "owner_question": "Do you assist customers in filling out or stamping the forms required for their insurance claims?",
-   "customer_question": "Do you help with the paperwork for medical insurance claims?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-208",
-   "category": "Insurance and Billing",
-   "owner_question": "Do you verify the name on the insurance card against the patient's ID?",
-   "customer_question": "Can I use my health card for my family members?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-209",
-   "category": "Insurance and Billing",
-   "owner_question": "Do you charge any processing or service fee for insurance-based transactions?",
-   "customer_question": "Do you charge any extra fees for processing insurance bills?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-210",
-   "category": "Insurance and Billing",
-   "owner_question": "Can you provide a duplicate bill or reprint if a customer loses their original invoice for insurance?",
-   "customer_question": "Can I get a duplicate bill if I lose the original for my claim?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-211",
-   "category": "Insurance and Billing",
-   "owner_question": "Do you accept health savings account or medical spending account cards for payment?",
-   "customer_question": "Do you accept health savings account (HSA) cards?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-212",
-   "category": "Insurance and Billing",
-   "owner_question": "Do you allow split payments (part insurance, part cash/UPI) for a single transaction?",
-   "customer_question": "Can I pay part of the bill with insurance and the rest in cash?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-213",
-   "category": "Insurance and Billing",
-   "owner_question": "Approximately how long does it take to verify and process an insurance claim at your counter?",
-   "customer_question": "How long does the insurance verification process take at the counter?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-214",
-   "category": "Insurance and Billing",
-   "owner_question": "Is there a specific time of day when insurance billing is not available?",
-   "customer_question": "Are there any specific hours for insurance billing?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-215",
-   "category": "Consultation Services",
-   "owner_question": "Is there a weighing machine available for customers to use?",
-   "customer_question": "Do you provide weighing scale services?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-216",
-   "category": "Consultation Services",
-   "owner_question": "What is the specialization of the doctor who visits your shop?",
-   "customer_question": "What kind of doctor visits your shop?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "pharmacy-217",
-   "category": "Consultation Services",
-   "owner_question": "What is the fee for an oxygen level check?",
-   "customer_question": "Is there a charge for checking my oxygen level?",
-   "priority": "optional",
-   "answer_type": "price"
-  },
-  {
-   "id": "pharmacy-218",
-   "category": "Consultation Services",
-   "owner_question": "Do you facilitate home sample collection for diagnostic tests?",
-   "customer_question": "Do you provide home sample collection for lab tests?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-220",
-   "category": "Consultation Services",
-   "owner_question": "Do you offer any basic diet or nutrition counseling services?",
-   "customer_question": "Do you provide diet counseling?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-221",
-   "category": "Consultation Services",
-   "owner_question": "Do you provide first-aid assistance for minor injuries to walk-in customers?",
-   "customer_question": "Do you have a first-aid kit available for emergencies?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-222",
-   "category": "Consultation Services",
-   "owner_question": "Do you organize any health awareness camps or sessions at your shop?",
-   "customer_question": "Do you offer any health awareness sessions?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-223",
-   "category": "Emergency Services",
-   "owner_question": "Do you provide contact details for local doctors or clinics to customers in an emergency?",
-   "customer_question": "Do you have a list of emergency contacts for nearby doctors?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-224",
-   "category": "Emergency Services",
-   "owner_question": "Do you provide or facilitate oxygen cylinder refills in emergency situations?",
-   "customer_question": "Can you help with oxygen cylinder refills?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-225",
-   "category": "Emergency Services",
-   "owner_question": "Do you sell pre-packed emergency first-aid kits for home or travel?",
-   "customer_question": "Do you have first-aid kits ready for emergencies?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-226",
-   "category": "Emergency Services",
-   "owner_question": "Do you allow payment for emergency medicines to be made later for regular, trusted customers?",
-   "customer_question": "Can I get urgent medicines on credit?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-227",
-   "category": "Emergency Services",
-   "owner_question": "Do you keep a list of local ambulance services to share with customers in need?",
-   "customer_question": "Do you provide emergency ambulance contacts?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-228",
-   "category": "Emergency Services",
-   "owner_question": "Do you offer priority service for senior citizens during emergency medicine requests?",
-   "customer_question": "Do you provide emergency support for senior citizens?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-229",
-   "category": "Emergency Services",
-   "owner_question": "Is there a night bell or buzzer outside your shop for urgent late-night visits?",
-   "customer_question": "Do you have a night bell for emergencies?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-230",
-   "category": "Emergency Services",
-   "owner_question": "Do you stock emergency surgical supplies like bandages, gauze, and antiseptics for immediate use?",
-   "customer_question": "Can you help with emergency dressings?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-232",
-   "category": "Emergency Services",
-   "owner_question": "Do you provide emergency rental or sale of nebulizers for respiratory emergencies?",
-   "customer_question": "Can you help with emergency nebulizer support?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-233",
-   "category": "Emergency Services",
-   "owner_question": "Do you proactively call the customer if an emergency medicine is unavailable after they place an order?",
-   "customer_question": "Do you inform me if an emergency medicine is out of stock?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "pharmacy-234",
-   "category": "Emergency Services",
-   "owner_question": "Do you provide GST-compliant printed bills for all emergency medicine purchases?",
-   "customer_question": "Can you provide a bill for insurance claims for emergency orders?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
   }
  ]
 }
