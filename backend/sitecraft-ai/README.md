@@ -111,11 +111,13 @@ The shared hosting prototype lives in `hosting.js` and uses the existing `sitecr
 
 ### Cloudflare setup required before testing
 
-1. Create an R2 bucket named `sitecraft-media` in the same Cloudflare account as the `sitecraft-ai` Worker.
-2. Apply migrations `0001_site_data.sql`, the existing AI/chatbot migrations used by the deployed database, and then `0004_customer_site_hosting.sql` to the same `sitecraft-db` D1 database. Do not re-run migrations already applied.
-3. Deploy the Worker with the `MEDIA_BUCKET` R2 binding.
-4. Temporarily set the Worker variable `ENABLE_DEMO_PUBLISH=true` only for controlled testing. Its default is `false`; the public demo publishing endpoint must stay disabled except during tests.
-5. Test text-only and uploaded-image sites, then edit the hosted site through its private admin link and refresh from another tab to verify persistence.
+1. Create an R2 bucket named `sitecraft-media` in the same Cloudflare account as the `sitecraft-ai` Worker. R2 setup is currently pending; do not deploy the configuration containing the R2 binding until the bucket exists.
+2. For a fresh D1 database, apply `0001_site_data.sql`, the existing AI/chatbot migrations used by that database, and then `0004_customer_site_hosting.sql` exactly once.
+3. **Current `sitecraft-db` exception:** the customer-hosting columns and indexes in migration `0004` were added manually in the D1 Console during this setup. Do not execute the full `0004_customer_site_hosting.sql` file against this database; its `ALTER TABLE ... ADD COLUMN` statements would fail because those columns already exist. Do not run Wrangler's D1 migration apply flow on this database until its migration history is reconciled with these manual changes.
+4. Deploy the Worker with the `MEDIA_BUCKET` R2 binding only after the bucket exists. Keep `ENABLE_DEMO_PUBLISH=false` for now. It must not be enabled for a real customer launch; the browser checkout flag is not verified payment.
+5. Once the required resources and safety checks are ready, test text-only and uploaded-image sites, then edit the hosted site through its private admin link and refresh from another tab to verify persistence.
+
+The current D1 Console setup has these customer-hosting schema items applied: `sites.slug`, `sites.template_id`, `sites.selected_features_json`, `sites.site_data_json`, `sites.owner_token_hash`, `sites.published_at`, `assets.content_hash`, `idx_sites_slug`, `idx_sites_status`, and `idx_assets_site_content_hash`.
 
 ### Important prototype boundary
 
