@@ -29,7 +29,7 @@ export const SHOP_TYPES = [
   { key: "salon", name: "Hair salon / barber shop", aliases: ["salon", "barber shop", "hair cutting saloon", "men's salon", "unisex salon", "hair studio", "gents parlour"], description: "hair salon or barber shop for men and unisex customers" },
   { key: "beauty_parlour", name: "Ladies beauty parlour & bridal makeup", aliases: ["beauty parlour", "ladies parlour", "beauty salon", "bridal makeup studio", "makeup artist", "mehendi", "nail studio"], description: "ladies beauty parlour offering facials, waxing, hair and bridal makeup" },
   { key: "spa", name: "Spa & massage centre", aliases: ["spa", "massage centre", "wellness centre", "ayurvedic massage", "body massage", "thai spa", "foot reflexology"], description: "spa and massage centre offering body massages and wellness treatments" },
-  { key: "pharmacy", name: "Pharmacy / medical store", aliases: ["medical shop", "chemist", "medicine shop", "druggist"], description: "pharmacy and medical store selling medicines and health products" },
+  { key: "pharmacy", name: "Pharmacy / medical store", aliases: ["medical shop", "medical store", "chemist", "medicine shop", "druggist", "surgicals", "medicals"], description: "pharmacy and medical store selling medicines and health products" },
   { key: "optical", name: "Optical shop", aliases: ["opticals", "spectacles", "eye wear", "sunglasses", "contact lenses"], description: "optical shop selling spectacles, frames, lenses and sunglasses" }
 ];
 
