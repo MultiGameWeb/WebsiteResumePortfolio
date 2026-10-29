@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=1">
+  <link rel="stylesheet" href="./styles.css?v=2">
 </head>
 <body>
   <div class="app">
@@ -24,12 +24,13 @@
       </div>
       <nav class="contact-row" id="contactRow" aria-label="Contact the shop"></nav>
     </header>
+    <p class="offline-banner" id="offlineBanner" role="status" hidden>Offline — showing the shop's saved answers only.</p>
     <main class="chat" id="chat" aria-live="polite"></main>
     <form class="composer" id="composer" autocomplete="off">
       <input id="input" type="text" maxlength="1000" placeholder="Ask about items, prices, offers…" aria-label="Your question">
       <button id="send" type="submit" aria-label="Send">➤</button>
     </form>
   </div>
-  <script type="module" src="./app.js?v=1"></script>
+  <script type="module" src="./app.js?v=2"></script>
 </body>
 </html>

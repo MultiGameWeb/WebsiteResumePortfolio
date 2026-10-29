@@ -1,10 +1,10 @@
-import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261029c';
+import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261029e';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261029c';
+} from './components.js?v=20261029e';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -216,6 +216,8 @@ async function handleSend({ text = '', option = null, attachments = null, retryM
     // A retry resends its own message; only new sends need content.
     if (!cleanText && outgoingAttachments.length === 0) return;
     if (option?.id) markOptionUsed(option.id);
+    // Photo buttons belong to the latest question only.
+    for (const message of state.messages) if (message.photo) message.photoUsed = true;
     const userMessage = {
       id: makeId('message'), role: 'user', text: cleanText,
       time: new Date(), status: 'sending', attachments: outgoingAttachments,
@@ -252,7 +254,7 @@ async function runMockAction(action, userMessage) {
     state.messages.push({
       id: result.message.id || makeId('message'), role: 'assistant',
       text: result.message.text, options: result.message.options ?? [],
-      questions: result.message.questions ?? [], form: {},
+      questions: result.message.questions ?? [], form: {}, photo: result.photo ?? null,
       time: result.message.time instanceof Date ? result.message.time : new Date(result.message.time ?? Date.now()),
     });
     if (result.bot?.publicId) showBotReady(result.bot);
@@ -298,12 +300,14 @@ async function prepareBankForShop(typeName) {
 
 // The customer bot's link and QR poster, shown once the basics are complete.
 function showBotReady(bot) {
-  if (state.messages.some((message) => message.botCard)) return;
+  const existing = state.messages.find((message) => message.botCard);
+  // Keep the card's name and Wi-Fi current (the owner may add Wi-Fi later).
+  if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.wifi = bot.wifi || null; return; }
   const url = new URL(`../salesbot/?s=${encodeURIComponent(bot.publicId)}`, window.location.href).href;
   state.messages.push({
     id: makeId('message'), role: 'assistant', time: new Date(),
     text: 'Your salesman bot is ready! 🎉 Open the link to try it like a customer. Print the QR poster and keep it in your shop — customers scan it to chat with your bot. You can keep answering questions to make it smarter.',
-    botCard: { url, name: bot.name || '' },
+    botCard: { url, name: bot.name || '', wifi: bot.wifi || null },
   });
 }
 
@@ -315,28 +319,21 @@ function copyBotLink(messageId, button) {
   else fallbackCopy(message.botCard.url, copied);
 }
 
-// An A4-shaped poster: shop name, a large QR code and a short line.
-function downloadPoster(messageId) {
-  const message = state.messages.find((item) => item.id === messageId);
-  if (!message?.botCard || typeof window.qrcode !== 'function') { showToast('Could not make the QR poster. Please reload the page.'); return; }
+// Wi-Fi QR text (the format phone cameras understand); \ ; , : " are escaped.
+function wifiQrText(wifi) {
+  const escape = (value) => String(value).replace(/([\\;,:"])/g, '\\$1');
+  return wifi.password ? `WIFI:T:WPA;S:${escape(wifi.ssid)};P:${escape(wifi.password)};;` : `WIFI:T:nopass;S:${escape(wifi.ssid)};;`;
+}
+
+// Draws a QR code (with its white quiet zone) into a square of about `box` px.
+function drawQr(ctx, text, centerX, top, box) {
   const qr = window.qrcode(0, 'M');
-  qr.addData(message.botCard.url);
+  qr.addData(text);
   qr.make();
-  const canvas = document.createElement('canvas');
-  canvas.width = 1240; canvas.height = 1754;
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#0d0d0d'; ctx.textAlign = 'center';
-  ctx.font = '700 76px Inter, "Noto Sans Telugu", sans-serif';
-  ctx.fillText(message.botCard.name || 'Our shop', 620, 200, 1100);
-  ctx.font = '600 52px Inter, sans-serif';
-  ctx.fillText('Scan to chat with our AI salesman', 620, 310, 1100);
-  ctx.font = '400 38px Inter, sans-serif';
-  ctx.fillText('Items, prices, offers and timings — in your language', 620, 380, 1100);
   const count = qr.getModuleCount();
-  const cell = Math.floor(860 / (count + 8));
+  const cell = Math.floor(box / (count + 8));
   const size = cell * (count + 8);
-  const left = (canvas.width - size) / 2; const top = 470;
+  const left = Math.round(centerX - size / 2);
   ctx.fillStyle = '#ffffff'; ctx.fillRect(left, top, size, size);
   ctx.fillStyle = '#0d0d0d';
   for (let row = 0; row < count; row += 1) {
@@ -344,15 +341,56 @@ function downloadPoster(messageId) {
       if (qr.isDark(row, col)) ctx.fillRect(left + (col + 4) * cell, top + (row + 4) * cell, cell, cell);
     }
   }
-  ctx.font = '400 34px Inter, sans-serif';
-  ctx.fillText('Open your phone camera and point it at the code', 620, top + size + 90, 1100);
+  return size;
+}
+
+// An A4-shaped poster: shop name and the bot QR code, plus a Wi-Fi QR code
+// when the owner shared the shop's Wi-Fi.
+function downloadPoster(messageId) {
+  const message = state.messages.find((item) => item.id === messageId);
+  if (!message?.botCard || typeof window.qrcode !== 'function') { showToast('Could not make the QR poster. Please reload the page.'); return; }
+  const { url, name, wifi } = message.botCard;
+  const canvas = document.createElement('canvas');
+  canvas.width = 1240; canvas.height = 1754;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#0d0d0d'; ctx.textAlign = 'center';
+  ctx.font = '700 76px Inter, "Noto Sans Telugu", sans-serif';
+  ctx.fillText(name || 'Our shop', 620, 200, 1100);
+  if (wifi) {
+    ctx.font = '600 50px Inter, sans-serif';
+    ctx.fillText('Chat with our AI salesman', 620, 300, 1100);
+    ctx.font = '400 36px Inter, sans-serif';
+    ctx.fillText('Items, prices, offers and timings — in your language', 620, 365, 1100);
+    const top = 520;
+    ctx.font = '600 38px Inter, sans-serif';
+    ctx.fillText('① No mobile data?', 330, top - 70, 520);
+    ctx.fillText('② Chat with the salesman', 910, top - 70, 560);
+    ctx.font = '400 30px Inter, sans-serif';
+    ctx.fillText('Scan to join our free Wi-Fi', 330, top - 25, 520);
+    ctx.fillText('Scan to open the chat', 910, top - 25, 560);
+    const size = drawQr(ctx, wifiQrText(wifi), 330, top, 520);
+    drawQr(ctx, url, 910, top, 520);
+    ctx.fillStyle = '#0d0d0d'; ctx.font = '400 30px Inter, sans-serif';
+    ctx.fillText(`Wi-Fi: ${wifi.ssid}`, 330, top + size + 50, 520);
+    ctx.font = '400 34px Inter, sans-serif';
+    ctx.fillText('Open your phone camera and point it at a code', 620, top + size + 170, 1100);
+  } else {
+    ctx.font = '600 52px Inter, sans-serif';
+    ctx.fillText('Scan to chat with our AI salesman', 620, 310, 1100);
+    ctx.font = '400 38px Inter, sans-serif';
+    ctx.fillText('Items, prices, offers and timings — in your language', 620, 380, 1100);
+    const size = drawQr(ctx, url, 620, 470, 860);
+    ctx.fillStyle = '#0d0d0d'; ctx.font = '400 34px Inter, sans-serif';
+    ctx.fillText('Open your phone camera and point it at the code', 620, 470 + size + 90, 1100);
+  }
   ctx.fillStyle = '#5d5d5d'; ctx.font = '400 28px Inter, sans-serif';
   ctx.fillText('Powered by SiteCraft BotCraft', 620, 1680);
   canvas.toBlob((blob) => {
     if (!blob) return;
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `${(message.botCard.name || 'shop').replace(/[^\w-]+/g, '-').toLowerCase()}-qr-poster.png`;
+    link.download = `${(name || 'shop').replace(/[^\w-]+/g, '-').toLowerCase()}-qr-poster.png`;
     link.click();
     window.setTimeout(() => URL.revokeObjectURL(link.href), 2000);
   }, 'image/png');
@@ -517,6 +555,13 @@ app.addEventListener('click', (event) => {
   if (action === 'quick-option') {
     const option = markOptionUsed(button.dataset.optionId) ?? { id: button.dataset.optionId, value: button.dataset.value, label: button.textContent };
     handleSend({ text: button.dataset.value, option });
+    return;
+  }
+  if (action === 'photo-send') { openPicker('gallery'); return; }
+  if (action === 'photo-skip') {
+    const message = state.messages.find((item) => item.id === button.dataset.messageId);
+    if (message) message.photoUsed = true;
+    handleSend({ text: 'Skip', formAnswers: [{ id: button.dataset.key, value: 'skipped' }] });
     return;
   }
   if (action === 'copy-bot-link') { copyBotLink(button.dataset.messageId, button); return; }

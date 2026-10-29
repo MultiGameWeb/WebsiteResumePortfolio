@@ -38,6 +38,11 @@ export const CORE_QUESTIONS = [
   { key: "emi_options", q: "Which EMI options do you offer?", c: "Which cards or finance companies do you accept for EMI?", type: "list", options: ["Credit card EMI", "Debit card EMI", "Bajaj Finserv EMI card", "TVS Credit", "HDB Financial Services", "HDFC consumer loan", "IDFC First Bank", "Home Credit", "No-cost EMI", "Shop's own instalment plan"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
   { key: "emi_zero_down", q: "Do you have zero down payment schemes (for example pay just ₹1 and take the product home)?", c: "Can I buy with zero down payment?", type: "options", options: ["Yes", "No", "On some products"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
   { key: "emi_documents", q: "What does a customer need to bring to buy on EMI?", c: "What documents do I need for EMI?", type: "list", options: ["Aadhaar card", "PAN card", "Credit or debit card", "Bank account / cancelled cheque", "Passport-size photo", "Minimum down payment"], ask_if: { key: "emi", equals: ["Yes, on all items", "Yes, on some items"] } },
+  // Optional: printed as a Wi-Fi QR code on the poster for customers without mobile data.
+  // Never shown to the salesbot or on the public page.
+  { key: "shop_wifi", q: "Do you have free Wi-Fi for customers? If you share its name and password, your QR poster gets a Wi-Fi QR code so customers without mobile data can connect and chat with your bot.", c: "Is there Wi-Fi in the shop?", type: "options", options: ["No Wi-Fi for customers", "Yes, I'll share the name and password"], priority: "optional" },
+  { key: "wifi_name", q: "What is the Wi-Fi name (network name)?", c: "What is the Wi-Fi name?", priority: "optional", ask_if: { key: "shop_wifi", equals: ["Yes, I'll share the name and password"] } },
+  { key: "wifi_password", q: "What is the Wi-Fi password? It is only printed inside the QR code on your poster.", c: "What is the Wi-Fi password?", priority: "optional", ask_if: { key: "shop_wifi", equals: ["Yes, I'll share the name and password"] } },
   { key: "offers", q: "Are there any offers running right now? You can change them anytime with Update.", c: "Any offers today?", type: "options", options: ["No offers right now", "Yes, I'll describe them"] }
 ].map(item => ({
   key: item.key,

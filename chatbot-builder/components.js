@@ -302,6 +302,22 @@ export function MessageBubble(message) {
   }
   column.append(bubble);
 
+  if (message.photo && !message.photoUsed) {
+    const buttons = makeElement('div', 'quick-chips');
+    const sendPhoto = makeElement('button', 'quick-chip', '📷 Send photo');
+    sendPhoto.type = 'button';
+    sendPhoto.dataset.action = 'photo-send';
+    buttons.append(sendPhoto);
+    if (message.photo.optional) {
+      const skip = makeElement('button', 'quick-chip', 'Skip');
+      skip.type = 'button';
+      skip.dataset.action = 'photo-skip';
+      skip.dataset.key = message.photo.key;
+      skip.dataset.messageId = message.id;
+      buttons.append(skip);
+    }
+    column.append(buttons);
+  }
   if (message.botCard) column.append(BotReadyCard(message));
   if (message.questions?.length) column.append(QuestionForm(message));
 
