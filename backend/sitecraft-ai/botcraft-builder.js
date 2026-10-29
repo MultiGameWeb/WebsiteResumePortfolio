@@ -2,7 +2,8 @@ import { CORE_QUESTIONS, callWithFallback, generateQuestionBank, toBankRecord } 
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, deletePhoto, deleteProduct, ensurePublicId, listPhotos, listProducts, loadPhoto, loadPublicShop, loadShop,
+  GALLERY_LIMIT, answerCustomerQuestion, countOpenQuestions, deletePhoto, deleteProduct, dismissCustomerQuestion, ensurePublicId,
+  listCustomerQuestions, logUnanswered, listPhotos, listProducts, loadPhoto, loadPublicShop, loadShop,
   loadStoredBank, savePhoto, saveProduct, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts
 } from "./botcraft-store.js";
 import { SALESBOT_SCHEMA, botName, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
@@ -442,7 +443,7 @@ export async function handleBotcraftRoute(request, env, url) {
     const savedFacts = cleanFacts(saved.facts);
     const bank = await resolveBank(env, savedFacts);
     const answers = cleanAnswers(saved.answers, bank);
-    const bot = coreComplete(savedFacts) ? { publicId: await ensurePublicId(env, shopId), name: savedFacts.shop_name || "", botName: botName(savedFacts), wifi: posterWifi(savedFacts) } : null;
+    const bot = coreComplete(savedFacts) ? { publicId: await ensurePublicId(env, shopId), name: savedFacts.shop_name || "", botName: botName(savedFacts), wifi: posterWifi(savedFacts), openQuestions: await countOpenQuestions(env, shopId) } : null;
     return reply({ ok: true, messages: saved.messages, progress: progress(savedFacts, answers, bank), bot }, 200, origin);
   }
 
@@ -623,7 +624,7 @@ export async function handleBotcraftRoute(request, env, url) {
     if (added.length && target && target !== "English") await translateQuestions(env, added, target);
     questions.push(...added);
   }
-  const bot = saved && coreComplete(merged) ? { publicId: await ensurePublicId(env, shopId).catch(() => null), name: merged.shop_name || "", botName: botName(merged), wifi: posterWifi(merged) } : null;
+  const bot = saved && coreComplete(merged) ? { publicId: await ensurePublicId(env, shopId).catch(() => null), name: merged.shop_name || "", botName: botName(merged), wifi: posterWifi(merged), openQuestions: await countOpenQuestions(env, shopId).catch(() => 0) } : null;
   const nextPhoto = sameBank && text !== FINISH_OPTION ? nextStep(merged, mergedAnswers, mergedBank).photo : null;
   const allowSkip = questions.length ? questions.every(q => !q.mandatory) : !nextQuestion || nextQuestion.priority !== "mandatory";
 
@@ -738,6 +739,10 @@ async function handleSalesbot(request, env, url, path, origin) {
       maxAttempts: 1,
       log: message => modelErrors.push(message.slice(0, 160))
     });
+    // Questions the bot could not answer go to the owner page.
+    if (result?.answered === false) {
+      await logUnanswered(env, shop.shopId, text, product?.name || "").catch(error => console.error("BotCraft question log failed", error));
+    }
     return reply({
       ok: true,
       reply: clip(result?.reply, 1500) || "Sorry, please ask again.",
@@ -778,7 +783,9 @@ async function servePhoto(env, url) {
 async function ownerView(env, shopId) {
   const saved = await loadShop(env, shopId, 0);
   const facts = cleanFacts(saved?.facts);
-  const [products, photos] = await Promise.all([listProducts(env, shopId), listPhotos(env, shopId)]);
+  const [products, photos, questions, answeredQuestions] = await Promise.all([
+    listProducts(env, shopId), listPhotos(env, shopId), listCustomerQuestions(env, shopId, "open"), listCustomerQuestions(env, shopId, "answered")
+  ]);
   return {
     ok: true,
     shopName: facts.shop_name || "",
@@ -788,6 +795,8 @@ async function ownerView(env, shopId) {
     publicId: coreComplete(facts) ? await ensurePublicId(env, shopId) : null,
     products,
     photos,
+    questions,
+    answeredQuestions,
     galleryLimit: GALLERY_LIMIT
   };
 }
@@ -834,6 +843,12 @@ async function handleOwner(request, env, origin) {
   } else if (action === "delete_photo") {
     const photoId = String(body?.photoId || "");
     if (PHOTO_ID_PATTERN.test(photoId)) await deletePhoto(env, shopId, photoId);
+  } else if (action === "answer_question") {
+    const answer = clip(body?.answer, 600);
+    if (!answer) return reply({ ok: false, error: "Please write the answer." }, 400, origin);
+    await answerCustomerQuestion(env, shopId, clip(body?.qKey, 200), answer);
+  } else if (action === "dismiss_question") {
+    await dismissCustomerQuestion(env, shopId, clip(body?.qKey, 200));
   } else if (action === "set_bot_name") {
     await updateFacts(env, shopId, { bot_name: clip(body?.name, 40) });
   } else if (action !== "load") {

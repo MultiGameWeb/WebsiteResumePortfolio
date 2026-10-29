@@ -67,7 +67,22 @@ const SCHEMA = [
     data BLOB NOT NULL,
     created_at TEXT NOT NULL
   )`,
-  `CREATE INDEX IF NOT EXISTS idx_botcraft_photos_shop ON botcraft_photos(shop_id, kind)`
+  `CREATE INDEX IF NOT EXISTS idx_botcraft_photos_shop ON botcraft_photos(shop_id, kind)`,
+  // Customer questions the bot could not answer. The owner answers them on
+  // the owner page (status answered, and the bot uses the answer) or
+  // dismisses them. q_key groups the same question asked again.
+  `CREATE TABLE IF NOT EXISTS botcraft_customer_questions (
+    shop_id TEXT NOT NULL,
+    q_key TEXT NOT NULL,
+    question TEXT NOT NULL,
+    product TEXT NOT NULL DEFAULT '',
+    times INTEGER NOT NULL DEFAULT 1,
+    status TEXT NOT NULL DEFAULT 'open',
+    answer TEXT NOT NULL DEFAULT '',
+    first_at TEXT NOT NULL,
+    last_at TEXT NOT NULL,
+    PRIMARY KEY (shop_id, q_key)
+  )`
 ];
 
 export const GALLERY_LIMIT = 10;
@@ -173,8 +188,10 @@ export async function loadPublicShop(env, publicId) {
   if (!row) return null;
   const shop = await loadShop(env, row.shop_id, 0);
   if (!shop) return null;
-  const [products, photos] = await Promise.all([listProducts(env, row.shop_id), listPhotos(env, row.shop_id)]);
-  return { ...shop, products, photos };
+  const [products, photos, ownerAnswers] = await Promise.all([
+    listProducts(env, row.shop_id), listPhotos(env, row.shop_id), listCustomerQuestions(env, row.shop_id, "answered")
+  ]);
+  return { ...shop, shopId: row.shop_id, products, photos, ownerAnswers };
 }
 
 const nameKey = name => String(name).toLowerCase().replace(/\s+/g, " ").trim();
@@ -274,4 +291,49 @@ export async function loadPhoto(env, photoId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   return db.prepare("SELECT mime, data FROM botcraft_photos WHERE photo_id = ?").bind(photoId).first();
+}
+
+const questionKey = text => String(text).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim().slice(0, 200);
+
+// A customer question the bot could not answer; asking again counts it again
+// and reopens it if the owner had dismissed it.
+export async function logUnanswered(env, shopId, question, product = "") {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const key = questionKey(question);
+  if (!key) return;
+  const now = new Date().toISOString();
+  await db.prepare(
+    "INSERT INTO botcraft_customer_questions (shop_id, q_key, question, product, first_at, last_at) VALUES (?, ?, ?, ?, ?, ?) " +
+    "ON CONFLICT(shop_id, q_key) DO UPDATE SET times = times + 1, last_at = excluded.last_at, product = excluded.product, " +
+    "status = CASE WHEN botcraft_customer_questions.status = 'dismissed' THEN 'open' ELSE botcraft_customer_questions.status END"
+  ).bind(shopId, key, question, product, now, now).run();
+}
+
+export async function listCustomerQuestions(env, shopId, status) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const rows = await db.prepare(
+    "SELECT q_key, question, product, times, status, answer, last_at FROM botcraft_customer_questions WHERE shop_id = ? AND status = ? ORDER BY last_at DESC LIMIT 200"
+  ).bind(shopId, status).all();
+  return rows.results || [];
+}
+
+export async function countOpenQuestions(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT COUNT(*) AS n FROM botcraft_customer_questions WHERE shop_id = ? AND status = 'open'").bind(shopId).first();
+  return row?.n || 0;
+}
+
+export async function answerCustomerQuestion(env, shopId, key, answer) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("UPDATE botcraft_customer_questions SET status = 'answered', answer = ? WHERE shop_id = ? AND q_key = ?").bind(answer, shopId, key).run();
+}
+
+export async function dismissCustomerQuestion(env, shopId, key) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("UPDATE botcraft_customer_questions SET status = 'dismissed' WHERE shop_id = ? AND q_key = ?").bind(shopId, key).run();
 }

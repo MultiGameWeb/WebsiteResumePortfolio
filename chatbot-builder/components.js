@@ -222,7 +222,38 @@ export function BotReadyCard(message) {
   actions.append(open, copy, poster, manage);
   details.append(link, actions);
   card.append(details);
+  card.append(OwnerHelp(message.botCard.openQuestions || 0));
   return card;
+}
+
+const UPDATE_STEPS = [
+  'Tap "Manage my bot (photos, items)". This is your owner page — only you can open it, from this browser.',
+  'New item: Items → "+ Add item" → name, price, details and a photo → "Save item".',
+  'Price changed: find the item → "Edit" → change the price → "Save item".',
+  'Item finished: "Mark out of stock". When it is back, "Mark in stock".',
+  'Photos: add your main shop photo, your photo and up to 10 gallery photos.',
+  'Customer questions: answer the questions your bot could not answer. From then on the bot uses your answer.',
+  'Offers, timings or any other detail: just tell BotCraft here in this chat (for example "Sunday also open").',
+  'Your customers see every change straight away. No need to print the QR code again.',
+];
+
+// What the owner can update and how, under the bot card and on the owner page.
+export function OwnerHelp(openQuestions = 0) {
+  const help = makeElement('div', 'owner-help');
+  help.append(makeElement('p', 'owner-help-text', 'Update your bot any time from "Manage my bot". Every change shows in your customer bot right away.'));
+  if (openQuestions > 0) {
+    const alert = makeElement('a', 'owner-help-alert', `🔔 ${openQuestions} customer question${openQuestions === 1 ? '' : 's'} waiting for your answer — open Manage my bot`);
+    alert.href = './owner.html#questions';
+    help.append(alert);
+  }
+  const steps = makeElement('details', 'owner-help-steps');
+  steps.append(makeElement('summary', '', 'How do I update my bot?'));
+  const list = makeElement('ol');
+  for (const step of UPDATE_STEPS) list.append(makeElement('li', '', step));
+  steps.append(list);
+  help.append(steps);
+  help.append(makeElement('p', 'owner-help-note', '💡 The more detail you give (prices, sizes, materials, policies), the more detailed answers your customers get.'));
+  return help;
 }
 
 export function TypingIndicator() {

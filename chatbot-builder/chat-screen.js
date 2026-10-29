@@ -1,10 +1,10 @@
-import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261030a';
+import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261030b';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261030a';
+} from './components.js?v=20261030b';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -302,12 +302,12 @@ async function prepareBankForShop(typeName) {
 function showBotReady(bot) {
   const existing = state.messages.find((message) => message.botCard);
   // Keep the card's name and Wi-Fi current (the owner may add Wi-Fi later).
-  if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.botName = bot.botName || existing.botCard.botName; existing.botCard.wifi = bot.wifi || null; return; }
+  if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.botName = bot.botName || existing.botCard.botName; existing.botCard.wifi = bot.wifi || null; existing.botCard.openQuestions = bot.openQuestions || 0; return; }
   const url = new URL(`../salesbot/?s=${encodeURIComponent(bot.publicId)}`, window.location.href).href;
   state.messages.push({
     id: makeId('message'), role: 'assistant', time: new Date(),
     text: `Your shop assistant${bot.botName ? ` "${bot.botName}"` : ''} is ready! 🎉 Open the link to try it like a customer. Print the QR poster and keep it in your shop — customers scan it to chat. Add photos and items in "Manage my bot", and keep answering questions to make it smarter.`,
-    botCard: { url, name: bot.name || '', botName: bot.botName || '', wifi: bot.wifi || null },
+    botCard: { url, name: bot.name || '', botName: bot.botName || '', wifi: bot.wifi || null, openQuestions: bot.openQuestions || 0 },
   });
 }
 
