@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-29",
- "question_count": 38,
+ "question_count": 54,
  "questions": [
   {
    "id": "supermarket-001",
@@ -20,10 +20,13 @@
     "Spices & masalas",
     "Tea, coffee & sugar",
     "Snacks & biscuits",
-    "Soaps, shampoo & personal care",
+    "Soaps, shampoo & personal care (sanitary pads, shaving)",
     "Cleaning items (detergent, floor cleaner)",
     "Pooja items",
-    "Dry fruits"
+    "Dry fruits",
+    "Baby care (diapers, baby soap, baby food)",
+    "Household & kitchen items (brooms, buckets, containers, scrubbers)",
+    "Candles, matchboxes & batteries"
    ]
   },
   {
@@ -35,7 +38,7 @@
    "answer_type": "list",
    "options": [
     "Vegetables & fruits",
-    "Dairy (milk, curd, paneer)",
+    "Dairy (milk, curd, paneer, butter, cheese)",
     "Bakery (bread, cakes)",
     "Frozen foods & ice cream",
     "Meat & eggs",
@@ -62,7 +65,7 @@
   {
    "id": "supermarket-004",
    "category": "Products & brands",
-   "owner_question": "Which rice varieties and brands do you keep (for example Sona Masoori, BPT, basmati)?",
+   "owner_question": "Which rice varieties and brands, and which oil, ghee and dal brands do you keep (for example Sona Masoori, BPT, basmati, Freedom, Fortune)?",
    "customer_question": "Do you have Sona Masoori?",
    "priority": "important",
    "answer_type": "text"
@@ -95,7 +98,7 @@
   {
    "id": "supermarket-007",
    "category": "Freshness & quality",
-   "owner_question": "When does fresh stock (vegetables, fruits, milk, bread) arrive every day?",
+   "owner_question": "On which days and at what time does fresh stock (vegetables, fruits, milk, bread) arrive?",
    "customer_question": "When do fresh vegetables come?",
    "priority": "important",
    "answer_type": "text"
@@ -145,6 +148,14 @@
   },
   {
    "id": "supermarket-012",
+   "category": "Ordering & delivery",
+   "owner_question": "If a delivered item is missing, damaged or broken (for example a glass jar), do you replace it or refund?",
+   "customer_question": "The jam bottle came broken, will you replace it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-013",
    "category": "Products & brands",
    "owner_question": "Do you keep organic or natural products (organic dal, cold-pressed oil, millets)?",
    "customer_question": "Do you have cold-pressed oil?",
@@ -156,7 +167,7 @@
    ]
   },
   {
-   "id": "supermarket-013",
+   "id": "supermarket-014",
    "category": "Products & brands",
    "owner_question": "Do you sell millets (jowar, ragi, korralu) and millet products?",
    "customer_question": "Do you have ragi?",
@@ -168,7 +179,7 @@
    ]
   },
   {
-   "id": "supermarket-014",
+   "id": "supermarket-015",
    "category": "Products & brands",
    "owner_question": "Do you have your own store brand or home-made items (pickles, podis, papad)?",
    "customer_question": "Do you have home-made pickles?",
@@ -180,10 +191,10 @@
    ]
   },
   {
-   "id": "supermarket-015",
+   "id": "supermarket-016",
    "category": "Products & brands",
-   "owner_question": "Do you sell items in bulk for functions and hotels (for example 25 kg rice bags, oil tins)?",
-   "customer_question": "Do you sell 25 kg rice bags?",
+   "owner_question": "Do you sell items in bulk for functions and hotels (for example 25 kg rice bags, oil tins), at a lower rate than loose?",
+   "customer_question": "Is a 25 kg rice bag cheaper?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -192,7 +203,7 @@
    ]
   },
   {
-   "id": "supermarket-016",
+   "id": "supermarket-017",
    "category": "Products & brands",
    "owner_question": "Do you sell imported or premium brands?",
    "customer_question": "Do you have imported chocolates?",
@@ -205,7 +216,7 @@
    "city_only": true
   },
   {
-   "id": "supermarket-017",
+   "id": "supermarket-018",
    "category": "Products & brands",
    "owner_question": "Do you sell fresh milk packets and curd every morning? From what time?",
    "customer_question": "When does milk come?",
@@ -217,18 +228,10 @@
    ]
   },
   {
-   "id": "supermarket-018",
-   "category": "Prices & billing",
-   "owner_question": "Do you give lower rates for bulk or wholesale buying? From what quantity?",
-   "customer_question": "Any wholesale rate?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
    "id": "supermarket-019",
-   "category": "Prices & billing",
-   "owner_question": "Can customers order their monthly grocery list (sarukulu) at once and collect or get it delivered?",
-   "customer_question": "Can I give my monthly list?",
+   "category": "Products & brands",
+   "owner_question": "Do you keep health foods (oats, olive oil, green tea, brown rice, sugar-free and diabetic-friendly items)?",
+   "customer_question": "Do you have sugar-free biscuits?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -238,6 +241,103 @@
   },
   {
    "id": "supermarket-020",
+   "category": "Products & brands",
+   "owner_question": "Do you sell festival pooja kits (turmeric, kumkum, thoranalu, lamp oil)?",
+   "customer_question": "Do you have a Varalakshmi pooja kit?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-021",
+   "category": "Products & brands",
+   "owner_question": "Do you sell water bottles and 20-litre water cans?",
+   "customer_question": "Do you have a 20 litre can?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-022",
+   "category": "Products & brands",
+   "owner_question": "Do you sell ice cubes packets for parties?",
+   "customer_question": "Do you have ice cubes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-023",
+   "category": "Products & brands",
+   "owner_question": "Do you sell eggs? Do they come fresh daily, and do you replace a bad egg?",
+   "customer_question": "Are the eggs fresh?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-024",
+   "category": "Products & brands",
+   "owner_question": "Do you sell pet shampoos, belts and accessories?",
+   "customer_question": "Do you have dog belts?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "supermarket-025",
+   "category": "Products & brands",
+   "owner_question": "Which seasonal fruits do you sell in bulk (for example mangoes, watermelons, lemons in summer)?",
+   "customer_question": "Do you have mangoes in bulk?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-026",
+   "category": "Products & brands",
+   "owner_question": "Do you sell organic vegetables and fruits?",
+   "customer_question": "Are these organic?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-027",
+   "category": "Prices & billing",
+   "owner_question": "Do you give lower rates for bulk or wholesale buying? From what quantity?",
+   "customer_question": "Any wholesale rate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-028",
+   "category": "Prices & billing",
+   "owner_question": "Can customers order their monthly grocery list (sarukulu) at once and collect or get it delivered? Any extra discount on it?",
+   "customer_question": "Can I give my monthly list?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-029",
    "category": "Prices & billing",
    "owner_question": "What is the price range for fruit baskets or gift hampers?",
    "customer_question": "How much for a fruit basket?",
@@ -245,15 +345,49 @@
    "answer_type": "text"
   },
   {
-   "id": "supermarket-021",
+   "id": "supermarket-030",
    "category": "Prices & billing",
-   "owner_question": "On which days do you have weekly offers (for example Wednesday vegetables, weekend sale)?",
+   "owner_question": "On which days do you have weekly or festival offers and combo deals (for example Wednesday vegetables, weekend sale)?",
    "customer_question": "Which day is the offer?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "supermarket-022",
+   "id": "supermarket-031",
+   "category": "Prices & billing",
+   "owner_question": "Is GST included in your prices or added on the bill for some items?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on some items",
+    "No GST"
+   ]
+  },
+  {
+   "id": "supermarket-032",
+   "category": "Prices & billing",
+   "owner_question": "If you have no change, what do you do?",
+   "customer_question": "Will you give chocolates instead of change?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Take the exact amount by UPI",
+    "Give change later / note it",
+    "Give small items (chocolates)"
+   ]
+  },
+  {
+   "id": "supermarket-033",
+   "category": "Prices & billing",
+   "owner_question": "If there is a billing mistake (for example an item scanned twice), who corrects it and refunds at once?",
+   "customer_question": "I was billed twice, who do I tell?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "supermarket-034",
    "category": "Prices & billing",
    "owner_question": "Do you accept food coupons or company meal cards (Sodexo / Pluxee)?",
    "customer_question": "Can I use Sodexo here?",
@@ -266,17 +400,17 @@
    "city_only": true
   },
   {
-   "id": "supermarket-023",
+   "id": "supermarket-035",
    "category": "Freshness & quality",
-   "owner_question": "If a customer gets a damaged, spoiled or expired item, what do you do?",
-   "customer_question": "The packet was expired, can I change it?",
+   "owner_question": "If a customer gets a damaged, leaking, spoiled or expired item (or wrong MFG date), what do you do, and within how many days?",
+   "customer_question": "The packet was leaking, can I change it?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "supermarket-024",
+   "id": "supermarket-036",
    "category": "Freshness & quality",
-   "owner_question": "Can customers pick and choose vegetables and fruits themselves?",
+   "owner_question": "Can customers see and choose vegetables, fruits and loose grains themselves before packing?",
    "customer_question": "Can I select the tomatoes myself?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -286,7 +420,7 @@
    ]
   },
   {
-   "id": "supermarket-025",
+   "id": "supermarket-037",
    "category": "Freshness & quality",
    "owner_question": "Do you have cold storage or fridges for vegetables, dairy and frozen items?",
    "customer_question": "Is the milk kept in the fridge?",
@@ -298,7 +432,31 @@
    ]
   },
   {
-   "id": "supermarket-026",
+   "id": "supermarket-038",
+   "category": "Freshness & quality",
+   "owner_question": "When weighing loose items, do you deduct the weight of the cover or container?",
+   "customer_question": "Is the cover weight counted?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-039",
+   "category": "Ordering & delivery",
+   "owner_question": "Do your delivery staff bring items to the door (inside apartments)?",
+   "customer_question": "Will you deliver to my flat door?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-040",
    "category": "Ordering & delivery",
    "owner_question": "Can customers pay on delivery (cash or UPI)?",
    "customer_question": "Can I pay when it comes?",
@@ -310,7 +468,7 @@
    ]
   },
   {
-   "id": "supermarket-027",
+   "id": "supermarket-041",
    "category": "Ordering & delivery",
    "owner_question": "Do you take daily or weekly fixed orders (for example milk and vegetables every morning)?",
    "customer_question": "Can you send vegetables every morning?",
@@ -322,7 +480,7 @@
    ]
   },
   {
-   "id": "supermarket-028",
+   "id": "supermarket-042",
    "category": "Ordering & delivery",
    "owner_question": "Do you supply to hotels, hostels, caterers or functions?",
    "customer_question": "Do you supply for functions?",
@@ -334,7 +492,7 @@
    ]
   },
   {
-   "id": "supermarket-029",
+   "id": "supermarket-043",
    "category": "Ordering & delivery",
    "owner_question": "Can customers call or WhatsApp to keep items packed and ready for pickup?",
    "customer_question": "Can you pack my items, I'll collect?",
@@ -346,7 +504,7 @@
    ]
   },
   {
-   "id": "supermarket-030",
+   "id": "supermarket-044",
    "category": "Ordering & delivery",
    "owner_question": "If an item is not available, will you get it within a day or two?",
    "customer_question": "Can you get this for me tomorrow?",
@@ -358,7 +516,7 @@
    ]
   },
   {
-   "id": "supermarket-031",
+   "id": "supermarket-045",
    "category": "Shop & service",
    "owner_question": "Do you have trolleys and baskets for customers?",
    "customer_question": "Is there a trolley?",
@@ -370,9 +528,9 @@
    ]
   },
   {
-   "id": "supermarket-032",
+   "id": "supermarket-046",
    "category": "Shop & service",
-   "owner_question": "Are carry bags free, or charged on the bill?",
+   "owner_question": "Are carry bags free, or charged on the bill? Can customers bring their own bags?",
    "customer_question": "Do I have to pay for the bag?",
    "priority": "optional",
    "answer_type": "options",
@@ -384,7 +542,31 @@
    ]
   },
   {
-   "id": "supermarket-033",
+   "id": "supermarket-047",
+   "category": "Shop & service",
+   "owner_question": "Do you have boards showing which items are in which aisle?",
+   "customer_question": "Where is the oil section?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-048",
+   "category": "Shop & service",
+   "owner_question": "Do staff help elderly or pregnant customers, and carry bags or trolleys to their vehicle?",
+   "customer_question": "Can someone carry this to my auto?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "supermarket-049",
    "category": "Shop & service",
    "owner_question": "Is the store air-conditioned?",
    "customer_question": "Is it AC?",
@@ -396,31 +578,27 @@
    ]
   },
   {
-   "id": "supermarket-034",
+   "id": "supermarket-050",
    "category": "Shop & service",
-   "owner_question": "How many billing counters do you have, and how long is the queue at busy times?",
+   "owner_question": "How many billing counters do you have, do you open extra counters at busy times, and how long is the queue?",
    "customer_question": "Is there a long queue in the evening?",
    "priority": "optional",
    "answer_type": "text",
    "city_only": true
   },
   {
-   "id": "supermarket-035",
+   "id": "supermarket-051",
    "category": "Shop & service",
-   "owner_question": "Do you have a loyalty card or points for regular customers?",
+   "owner_question": "Do you have a loyalty card or points? Is joining free (with a mobile number), and can points be used on the next bill?",
    "customer_question": "Do I get points?",
    "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "answer_type": "text"
   },
   {
-   "id": "supermarket-036",
+   "id": "supermarket-052",
    "category": "Shop & service",
-   "owner_question": "Do you sell gift vouchers or festival gift hampers?",
-   "customer_question": "Do you have Diwali hampers?",
+   "owner_question": "Do you sell gift vouchers or festival gift boxes (dry fruits, chocolates)?",
+   "customer_question": "Do you have Diwali gift boxes?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -429,7 +607,7 @@
    ]
   },
   {
-   "id": "supermarket-037",
+   "id": "supermarket-053",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -445,7 +623,7 @@
    ]
   },
   {
-   "id": "supermarket-038",
+   "id": "supermarket-054",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
