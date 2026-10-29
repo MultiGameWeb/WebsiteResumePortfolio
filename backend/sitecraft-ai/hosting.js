@@ -250,7 +250,8 @@ async function handlePublish(request, env, url) {
   }
   if (!isAllowedOrigin(request)) return json({ ok: false, error: "ORIGIN_NOT_ALLOWED" }, 403);
   if (!env.DB) return json({ ok: false, error: "D1_NOT_CONFIGURED" }, 503);
-  if (!env.MEDIA_BUCKET) return json({ ok: false, error: "R2_NOT_CONFIGURED" }, 503);
+  // Text-only sites can be stored in D1 while R2 setup is pending. If the payload
+  // contains inline image data, replaceInlineImages() will fail safely with R2_NOT_CONFIGURED.
 
   let body;
   try { body = await readJson(request); }
@@ -376,7 +377,8 @@ async function cleanOrphanAssets(env, siteId, data) {
 
 async function updateSiteContent(request, env, slug, url) {
   if (!env.DB) return json({ ok: false, error: "D1_NOT_CONFIGURED" }, 503);
-  if (!env.MEDIA_BUCKET) return json({ ok: false, error: "R2_NOT_CONFIGURED" }, 503);
+  // Text-only edits can be saved in D1 while R2 is unavailable. Any inline image
+  // still requires R2 and is rejected safely by replaceInlineImages().
   const site = await getSiteBySlug(env, slug);
   if (!site || site.status !== "active") return json({ ok: false, error: "SITE_NOT_FOUND" }, 404);
   if (!(await authorizeSite(request, site))) return json({ ok: false, error: "UNAUTHORIZED" }, 401);
