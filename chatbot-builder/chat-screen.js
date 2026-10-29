@@ -1,10 +1,10 @@
-import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js';
+import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261029';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js';
+} from './components.js?v=20261029';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');

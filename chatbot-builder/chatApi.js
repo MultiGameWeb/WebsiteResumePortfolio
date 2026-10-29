@@ -4,7 +4,7 @@
  * stays on the Worker. If the Worker is unreachable or not configured yet,
  * the local demo in mockChat.js answers instead, so the page never breaks.
  */
-import { sendChatAction as sendDemoAction } from './mockChat.js';
+import { sendChatAction as sendDemoAction } from './mockChat.js?v=20261029';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SEND_AS_IMAGE = new Set(['image/jpeg', 'image/png', 'image/webp']);
@@ -75,7 +75,8 @@ async function buildPayload(action) {
     else otherFiles.push(attachment.name);
   }
   const formAnswers = action.formAnswers ?? [];
-  return { shopId, text, images, otherFiles, formAnswers, history: history.slice(-HISTORY_LIMIT), facts, answers };
+  // forms: this page shows question forms (older pages get the questions as text).
+  return { shopId, forms: true, text, images, otherFiles, formAnswers, history: history.slice(-HISTORY_LIMIT), facts, answers };
 }
 
 /**

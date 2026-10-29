@@ -314,7 +314,7 @@ You are talking to the SHOP OWNER to set up their bot. Steps:
 5. When no core question is left:
    - If there are shop questions below, tell the owner the basics are complete (once), then ask the shop questions the same way, 3 to ${MAX_FORM_QUESTIONS} at a time in the given order, in "questions" with their ids. If a shop question clearly does not fit this shop, do not ask it: record it in "answers" as "not applicable". When the form has no mandatory question, set "options" to ["${FINISH_OPTION}"]; otherwise leave "options" empty.
    - Record answers the owner writes in chat in "answers" with the question id. If they choose "${FINISH_OPTION}", thank them, leave "questions" empty, and say they can come back any time to answer more.
-   - Answers the owner submits in a form are already saved; do not ask those again, just ask the next form.
+   - Answers the owner submits in a form are already saved; do not ask those again. After a submitted form you must always send the next form in "questions" (unless nothing is left).
    - If there are no shop questions for this shop type yet, tell the owner the basics are complete and that you are now preparing the detailed questions customers of their kind of business ask; it takes 1-2 minutes and you will continue right after.
 6. Whenever the owner sends details or files, also record answers to any shop questions listed below that their message answers, so those are never asked.
 
@@ -518,8 +518,14 @@ export async function handleBotcraftRoute(request, env, url) {
 
   const nextQuestion = pendingCore(merged)[0] || pendingBank(mergedBank, mergedAnswers, merged)[0];
   const questions = formQuestions(result?.questions, merged, mergedAnswers, mergedBank);
-  // If the model asked fewer than planned, add the rest of the planned form.
-  if (questions.length && sameBank) {
+  // If the model asked fewer than planned (or gave ids that don't match), add
+  // the rest of the planned form.
+  // The model sometimes announces a form ("Next questions:") without sending it,
+  // or skips it after a submitted form; then the planned form is shown as is.
+  const modelAsked = (Array.isArray(result?.questions) && result.questions.length > 0)
+    || /[:：]\s*$/.test(clip(result?.reply, 1500));
+  const formSubmitted = Object.keys(form.facts).length + Object.keys(form.answers).length > 0;
+  if ((modelAsked || formSubmitted) && sameBank && text !== FINISH_OPTION) {
     const extra = step.form.map(q => ({ id: q.key || q.id, question: q.owner_question, options: q.options || [] }));
     for (const q of formQuestions(extra, merged, mergedAnswers, mergedBank)) {
       if (questions.length >= MAX_FORM_QUESTIONS) break;
@@ -528,7 +534,12 @@ export async function handleBotcraftRoute(request, env, url) {
   }
   const allowSkip = questions.length ? questions.every(q => !q.mandatory) : !nextQuestion || nextQuestion.priority !== "mandatory";
 
-  const botText = clip(result?.reply, 1500) || "Sorry, please say that again.";
+  let botText = clip(result?.reply, 1500) || "Sorry, please say that again.";
+  // A page that cannot show forms (an older cached copy) gets the questions as text.
+  if (questions.length && body?.forms !== true) {
+    botText += "\n\n" + questions.map((q, i) => `${i + 1}. ${q.question}${q.options.length ? ` (${q.options.map(o => o.label).join(" / ")})` : ""}`).join("\n");
+    questions.length = 0;
+  }
   const notes = (Array.isArray(result?.notes) ? result.notes : []).map(n => clip(n, 300)).filter(Boolean).slice(0, 20);
   const items = (Array.isArray(result?.items) ? result.items : []).slice(0, 30).map(item => ({
     name: clip(item?.name, 120),
