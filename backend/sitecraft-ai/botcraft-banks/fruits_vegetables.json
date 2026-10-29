@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-29",
- "question_count": 25,
+ "question_count": 29,
  "questions": [
   {
    "id": "fruits_vegetables-001",
@@ -48,7 +48,7 @@
   {
    "id": "fruits_vegetables-004",
    "category": "Freshness & quality",
-   "owner_question": "When does fresh stock (vegetables, fruits, milk, bread) arrive every day?",
+   "owner_question": "On which days and at what time does fresh stock (vegetables, fruits, milk, bread) arrive?",
    "customer_question": "When do fresh vegetables come?",
    "priority": "important",
    "answer_type": "text"
@@ -86,6 +86,22 @@
   },
   {
    "id": "fruits_vegetables-008",
+   "category": "Ordering & delivery",
+   "owner_question": "If a delivered item is missing, damaged or broken (for example a glass jar), do you replace it or refund?",
+   "customer_question": "The jam bottle came broken, will you replace it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-009",
+   "category": "Products & brands",
+   "owner_question": "Which seasonal fruits do you sell in bulk (for example mangoes, watermelons, lemons in summer)?",
+   "customer_question": "Do you have mangoes in bulk?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fruits_vegetables-010",
    "category": "Products & brands",
    "owner_question": "Do you sell organic vegetables and fruits?",
    "customer_question": "Are these organic?",
@@ -97,7 +113,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-009",
+   "id": "fruits_vegetables-011",
    "category": "Prices & billing",
    "owner_question": "Do you give lower rates for bulk or wholesale buying? From what quantity?",
    "customer_question": "Any wholesale rate?",
@@ -105,7 +121,7 @@
    "answer_type": "text"
   },
   {
-   "id": "fruits_vegetables-010",
+   "id": "fruits_vegetables-012",
    "category": "Prices & billing",
    "owner_question": "Do you allow monthly credit (khata / udhaar) for regular customers?",
    "customer_question": "Can I pay at the end of the month?",
@@ -117,7 +133,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-011",
+   "id": "fruits_vegetables-013",
    "category": "Prices & billing",
    "owner_question": "What is the price range for fruit baskets or gift hampers?",
    "customer_question": "How much for a fruit basket?",
@@ -125,25 +141,25 @@
    "answer_type": "text"
   },
   {
-   "id": "fruits_vegetables-012",
+   "id": "fruits_vegetables-014",
    "category": "Prices & billing",
-   "owner_question": "On which days do you have weekly offers (for example Wednesday vegetables, weekend sale)?",
+   "owner_question": "On which days do you have weekly or festival offers and combo deals (for example Wednesday vegetables, weekend sale)?",
    "customer_question": "Which day is the offer?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "fruits_vegetables-013",
+   "id": "fruits_vegetables-015",
    "category": "Freshness & quality",
-   "owner_question": "If a customer gets a damaged, spoiled or expired item, what do you do?",
-   "customer_question": "The packet was expired, can I change it?",
+   "owner_question": "If a customer gets a damaged, leaking, spoiled or expired item (or wrong MFG date), what do you do, and within how many days?",
+   "customer_question": "The packet was leaking, can I change it?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "fruits_vegetables-014",
+   "id": "fruits_vegetables-016",
    "category": "Freshness & quality",
-   "owner_question": "Can customers pick and choose vegetables and fruits themselves?",
+   "owner_question": "Can customers see and choose vegetables, fruits and loose grains themselves before packing?",
    "customer_question": "Can I select the tomatoes myself?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -153,7 +169,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-015",
+   "id": "fruits_vegetables-017",
    "category": "Freshness & quality",
    "owner_question": "Are your fruits ripened naturally (no carbide)?",
    "customer_question": "Are these mangoes naturally ripened?",
@@ -165,7 +181,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-016",
+   "id": "fruits_vegetables-018",
    "category": "Freshness & quality",
    "owner_question": "Do you have cold storage or fridges for vegetables, dairy and frozen items?",
    "customer_question": "Is the milk kept in the fridge?",
@@ -177,7 +193,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-017",
+   "id": "fruits_vegetables-019",
    "category": "Freshness & quality",
    "owner_question": "Are your weighing scales electronic and checked (stamped) regularly?",
    "customer_question": "Is your weighing machine correct?",
@@ -189,7 +205,31 @@
    ]
   },
   {
-   "id": "fruits_vegetables-018",
+   "id": "fruits_vegetables-020",
+   "category": "Freshness & quality",
+   "owner_question": "When weighing loose items, do you deduct the weight of the cover or container?",
+   "customer_question": "Is the cover weight counted?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-021",
+   "category": "Ordering & delivery",
+   "owner_question": "Do your delivery staff bring items to the door (inside apartments)?",
+   "customer_question": "Will you deliver to my flat door?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-022",
    "category": "Ordering & delivery",
    "owner_question": "Can customers pay on delivery (cash or UPI)?",
    "customer_question": "Can I pay when it comes?",
@@ -201,7 +241,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-019",
+   "id": "fruits_vegetables-023",
    "category": "Ordering & delivery",
    "owner_question": "Do you take daily or weekly fixed orders (for example milk and vegetables every morning)?",
    "customer_question": "Can you send vegetables every morning?",
@@ -213,7 +253,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-020",
+   "id": "fruits_vegetables-024",
    "category": "Ordering & delivery",
    "owner_question": "Do you supply to hotels, hostels, caterers or functions?",
    "customer_question": "Do you supply for functions?",
@@ -225,7 +265,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-021",
+   "id": "fruits_vegetables-025",
    "category": "Ordering & delivery",
    "owner_question": "Can customers call or WhatsApp to keep items packed and ready for pickup?",
    "customer_question": "Can you pack my items, I'll collect?",
@@ -237,9 +277,9 @@
    ]
   },
   {
-   "id": "fruits_vegetables-022",
+   "id": "fruits_vegetables-026",
    "category": "Shop & service",
-   "owner_question": "Are carry bags free, or charged on the bill?",
+   "owner_question": "Are carry bags free, or charged on the bill? Can customers bring their own bags?",
    "customer_question": "Do I have to pay for the bag?",
    "priority": "optional",
    "answer_type": "options",
@@ -251,19 +291,15 @@
    ]
   },
   {
-   "id": "fruits_vegetables-023",
+   "id": "fruits_vegetables-027",
    "category": "Shop & service",
-   "owner_question": "Do you have a loyalty card or points for regular customers?",
+   "owner_question": "Do you have a loyalty card or points? Is joining free (with a mobile number), and can points be used on the next bill?",
    "customer_question": "Do I get points?",
    "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "answer_type": "text"
   },
   {
-   "id": "fruits_vegetables-024",
+   "id": "fruits_vegetables-028",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -279,7 +315,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-025",
+   "id": "fruits_vegetables-029",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
