@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Shop salesman</title>
-  <meta name="description" content="Chat with the shop's AI salesman: items, prices, offers and timings in your language.">
+  <title>Shop assistant</title>
+  <meta name="description" content="Chat with the shop's AI assistant: items, prices, offers and timings in your language.">
   <meta name="theme-color" content="#0d0d0d">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
@@ -13,24 +13,48 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=2">
+  <link rel="stylesheet" href="./styles.css?v=4">
 </head>
 <body>
   <div class="app">
-    <header class="shop-header">
+    <img class="hero" id="heroPhoto" alt="" hidden>
+    <header class="shop-header" id="shopHeader">
       <div class="shop-title">
+        <p class="bot-name" id="botName"></p>
         <h1 id="shopName">Loading…</h1>
         <p id="shopMeta" class="shop-meta"></p>
       </div>
       <nav class="contact-row" id="contactRow" aria-label="Contact the shop"></nav>
     </header>
     <p class="offline-banner" id="offlineBanner" role="status" hidden>Offline — showing the shop's saved answers only.</p>
+    <nav class="tabs" id="tabs" role="tablist" hidden>
+      <button type="button" role="tab" data-tab="chat" aria-selected="true">Chat</button>
+      <button type="button" role="tab" data-tab="products" aria-selected="false">Products</button>
+      <button type="button" role="tab" data-tab="photos" aria-selected="false">Photos</button>
+    </nav>
+    <section class="panel products-panel" id="productsPanel" hidden>
+      <input class="product-search" id="productSearch" type="search" placeholder="Search products" aria-label="Search products">
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+    <section class="panel photos-panel" id="photosPanel" hidden>
+      <div class="photo-grid" id="photoGrid"></div>
+    </section>
     <main class="chat" id="chat" aria-live="polite"></main>
+    <dialog class="product-sheet" id="productSheet" aria-labelledby="sheetName">
+      <img id="sheetPhoto" alt="">
+      <h2 id="sheetName"></h2>
+      <p class="sheet-price" id="sheetPrice"></p>
+      <p class="sheet-details" id="sheetDetails"></p>
+      <div class="sheet-actions">
+        <button type="button" class="ask-this" id="askThis">Ask about this</button>
+        <button type="button" class="close-sheet" id="closeSheet">Close</button>
+      </div>
+    </dialog>
     <form class="composer" id="composer" autocomplete="off">
       <input id="input" type="text" maxlength="1000" placeholder="Ask about items, prices, offers…" aria-label="Your question">
       <button id="send" type="submit" aria-label="Send">➤</button>
     </form>
   </div>
-  <script type="module" src="./app.js?v=2"></script>
+  <script type="module" src="./app.js?v=4"></script>
 </body>
 </html>

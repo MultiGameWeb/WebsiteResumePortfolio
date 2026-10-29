@@ -203,7 +203,7 @@ button:disabled { cursor: not-allowed; opacity: .42; }
 .bot-ready-link { color: var(--text); font-size: 12.5px; word-break: break-all; }
 .bot-ready-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .bot-ready-actions .quick-chip { margin: 0; }
-.bot-ready-open { text-decoration: none; display: inline-flex; align-items: center; }
+.bot-ready-open, .bot-ready-manage { text-decoration: none; display: inline-flex; align-items: center; }
 .question-form {
   display: flex; flex-direction: column; gap: 14px; margin-top: 10px; padding: 14px;
   border: 1px solid var(--border); border-radius: 16px; background: var(--surface-soft); max-width: 640px;

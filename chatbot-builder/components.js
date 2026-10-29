@@ -74,7 +74,7 @@ export function ProgressHeader({ answered = 0, total = 0, language = 'auto' }) {
   mark.innerHTML = '<svg viewBox="0 0 32 32" width="27" height="27" fill="none"><path d="M16 3.5 27 9.8v12.4L16 28.5 5 22.2V9.8L16 3.5Z" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 14.2c0-2.2 1.6-3.7 3.8-3.7 2.1 0 3.5 1.5 3.5 3.4 0 3-4.8 2.3-4.8 5.4M16 23.3v.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   const words = makeElement('div', 'brand-words');
   const title = makeElement('div', 'brand-name', 'BotCraft');
-  const subtitle = makeElement('div', 'brand-subtitle', 'Your shop’s AI salesman');
+  const subtitle = makeElement('div', 'brand-subtitle', 'Your shop’s AI assistant');
   words.append(title, subtitle);
   identity.append(mark, words);
 
@@ -196,7 +196,7 @@ export function BotReadyCard(message) {
     qr.make();
     const image = makeElement('img', 'bot-ready-qr');
     image.src = qr.createDataURL(5, 2);
-    image.alt = 'QR code for your salesman bot';
+    image.alt = 'QR code for your shop assistant';
     card.append(image);
   }
   const details = makeElement('div', 'bot-ready-details');
@@ -217,7 +217,9 @@ export function BotReadyCard(message) {
   poster.type = 'button';
   poster.dataset.action = 'download-poster';
   poster.dataset.messageId = message.id;
-  actions.append(open, copy, poster);
+  const manage = makeElement('a', 'quick-chip bot-ready-manage', 'Manage my bot (photos, items)');
+  manage.href = './owner.html';
+  actions.append(open, copy, poster, manage);
   details.append(link, actions);
   card.append(details);
   return card;
