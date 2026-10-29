@@ -1,7 +1,6 @@
 -- Adds the data and routing fields required for Cloudflare-hosted customer websites.
 -- Run this migration once against the existing sitecraft-db D1 database.
 
-ALTER TABLE sites ADD COLUMN owner_token_hash TEXT;
 ALTER TABLE sites ADD COLUMN published_at TEXT;
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_sites_slug ON sites(slug);
