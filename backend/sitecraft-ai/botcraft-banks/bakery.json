@@ -1,0 +1,483 @@
+{
+ "shop_type_key": "bakery",
+ "name": "Bakery & cake shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-29",
+ "question_count": 42,
+ "questions": [
+  {
+   "id": "bakery-001",
+   "category": "Products",
+   "owner_question": "Which cakes and bakery items do you make?",
+   "customer_question": "Do you have pastries?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Cakes",
+    "Pastries",
+    "Bread & buns",
+    "Cookies & biscuits",
+    "Puffs, burgers & pizza",
+    "Cupcakes & brownies",
+    "Cheesecakes, donuts & macarons",
+    "Chocolates",
+    "Kids' candies & lollipops"
+   ]
+  },
+  {
+   "id": "bakery-002",
+   "category": "Products",
+   "owner_question": "Are your cakes eggless?",
+   "customer_question": "Is this cake eggless?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "All eggless",
+    "Eggless on order",
+    "Both, clearly marked",
+    "With egg only"
+   ]
+  },
+  {
+   "id": "bakery-003",
+   "category": "Products",
+   "owner_question": "Which cake flavours do you make (for example black forest, red velvet, butterscotch, fruit)?",
+   "customer_question": "Do you have red velvet?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-004",
+   "category": "Products",
+   "owner_question": "Are 1/2 kg and 1 kg ready-made birthday cakes always available at the counter without ordering?",
+   "customer_question": "Do you have a ready cake now?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-005",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you make customised theme or photo cakes from a customer's picture?",
+   "customer_question": "Can you make a Spider-Man cake?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-006",
+   "category": "Custom cakes & orders",
+   "owner_question": "How many hours or days before should customers order a birthday or custom cake?",
+   "customer_question": "How early should I order?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-007",
+   "category": "Custom cakes & orders",
+   "owner_question": "What is the minimum weight for fondant or theme cakes, and how is the price worked out?",
+   "customer_question": "Minimum how many kg for a fondant cake?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-008",
+   "category": "Custom cakes & orders",
+   "owner_question": "How much advance do you take for custom cakes or bulk orders, and what is the refund policy if it is cancelled or rescheduled?",
+   "customer_question": "How much advance should I pay?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-009",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you take bulk orders for weddings and functions (sweets, hot snacks)? Wholesale rates?",
+   "customer_question": "Can you supply sweets for 500 people?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-010",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you pack festival sweet gift boxes (Diwali, Dasara, Sankranti)?",
+   "customer_question": "Do you have Diwali gift boxes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-011",
+   "category": "Freshness & safety",
+   "owner_question": "Is your shop FSSAI-registered, with a clean kitchen and covered display (no flies)?",
+   "customer_question": "Is your kitchen clean?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-012",
+   "category": "Freshness & safety",
+   "owner_question": "Do you write the expiry / best-before date on boxes?",
+   "customer_question": "How many days will this keep?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-013",
+   "category": "Ordering & delivery",
+   "owner_question": "If a cake is damaged or loses shape in delivery, do you replace or refund?",
+   "customer_question": "The cake came damaged, what now?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-014",
+   "category": "Products",
+   "owner_question": "Do you bake your bread, buns and rusk in your own bakery?",
+   "customer_question": "Is the bread made here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-015",
+   "category": "Products",
+   "owner_question": "Do you have brown, multigrain or whole-wheat bread?",
+   "customer_question": "Do you have brown bread?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-016",
+   "category": "Products",
+   "owner_question": "Are puffs, burgers and pizzas served hot?",
+   "customer_question": "Are the puffs hot?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-017",
+   "category": "Products",
+   "owner_question": "Are the ketchup and chutneys you serve with snacks branded or made fresh?",
+   "customer_question": "Is the chutney fresh?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-018",
+   "category": "Products",
+   "owner_question": "Do you have trending cakes (bento, pinata, pull-me-up)?",
+   "customer_question": "Do you have a pinata cake?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "bakery-019",
+   "category": "Products",
+   "owner_question": "Do you have jaggery or millet sweets and biscuits for people who avoid white sugar?",
+   "customer_question": "Any jaggery sweets?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-020",
+   "category": "Products",
+   "owner_question": "Do you have sugar-free sweets or cakes for diabetics?",
+   "customer_question": "Do you have sugar-free sweets?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-021",
+   "category": "Products",
+   "owner_question": "Do you sell candles, name toppers, musical candles and party items?",
+   "customer_question": "Do you have number candles?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-022",
+   "category": "Products",
+   "owner_question": "Do you have home-made chocolates or cupcake boxes for return gifts?",
+   "customer_question": "Do you have return-gift chocolates?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-023",
+   "category": "Custom cakes & orders",
+   "owner_question": "Are the paper and ink for photo cakes edible?",
+   "customer_question": "Is the photo on the cake edible?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-024",
+   "category": "Custom cakes & orders",
+   "owner_question": "Can customers change the flavour of a design cake?",
+   "customer_question": "Can I have this design in chocolate?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-025",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you colour cream with natural or artificial colours?",
+   "customer_question": "Are the colours safe?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Natural colours",
+    "Food-grade artificial colours",
+    "Both"
+   ]
+  },
+  {
+   "id": "bakery-026",
+   "category": "Custom cakes & orders",
+   "owner_question": "Can you make nut-free or gluten-free cakes on order?",
+   "customer_question": "Do you have gluten-free cake?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "bakery-027",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you write names on a chocolate plaque? Any extra charge?",
+   "customer_question": "Can you write the name on chocolate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-028",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you make 2- or 3-tier wedding cakes and send a chef to assemble them at the venue?",
+   "customer_question": "Can you make a 3-tier cake?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "bakery-029",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you make a cake live in front of the customer in 10–15 minutes?",
+   "customer_question": "Can you make the cake now?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-030",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you give a free birthday kit (candles, caps, knife) with cakes?",
+   "customer_question": "Will I get candles with the cake?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-031",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you deliver bulk orders to the function hall on time? Free?",
+   "customer_question": "Can you deliver to the hall?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-032",
+   "category": "Freshness & safety",
+   "owner_question": "How long do dry cakes, tea cakes, cookies and sweets keep?",
+   "customer_question": "How long will the fruit cake last?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-033",
+   "category": "Freshness & safety",
+   "owner_question": "Do you use food-grade boxes and butter-paper lining for sweets and cakes?",
+   "customer_question": "Is the box food safe?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-034",
+   "category": "Freshness & safety",
+   "owner_question": "For long travel, do you pack cream cakes with ice gel packs, or suggest butter-cream cakes?",
+   "customer_question": "Will the cake melt on the way?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-035",
+   "category": "Ordering & delivery",
+   "owner_question": "Do you deliver cakes at midnight for birthdays and anniversaries? Extra charge?",
+   "customer_question": "Can you deliver at 12 midnight?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-036",
+   "category": "Ordering & delivery",
+   "owner_question": "Are you on Swiggy or Zomato?",
+   "customer_question": "Can I order on Swiggy?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "bakery-037",
+   "category": "Ordering & delivery",
+   "owner_question": "Do you use insulated bags so puffs and snacks stay hot in delivery?",
+   "customer_question": "Will the puffs be hot?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "bakery-038",
+   "category": "Shop & service",
+   "owner_question": "Do you have seating or a kids' area to eat in the shop?",
+   "customer_question": "Can we sit and eat here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery-039",
+   "category": "Shop & service",
+   "owner_question": "Is GST included in your prices or added on the bill?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill",
+    "No GST"
+   ]
+  },
+  {
+   "id": "bakery-040",
+   "category": "Shop & service",
+   "owner_question": "If you have no change, what do you do?",
+   "customer_question": "Will you give chocolates instead of change?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Take the exact amount by UPI",
+    "Give small items (chocolates)",
+    "Round off"
+   ]
+  },
+  {
+   "id": "bakery-041",
+   "category": "Shop & service",
+   "owner_question": "Do you have loyalty points, a membership discount or coupons for regular customers?",
+   "customer_question": "Any discount for regular customers?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery-042",
+   "category": "Shop & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

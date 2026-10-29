@@ -1,0 +1,325 @@
+{
+ "shop_type_key": "sweet_shop",
+ "name": "Sweet shop (mithai & savouries)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-29",
+ "question_count": 28,
+ "questions": [
+  {
+   "id": "sweet_shop-001",
+   "category": "Products",
+   "owner_question": "Which sweets and savouries do you make?",
+   "customer_question": "Do you have kaju katli?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Ghee sweets (laddu, mysore pak)",
+    "Kaju & dry-fruit sweets",
+    "Bengali sweets (rasgulla, rasmalai)",
+    "Milk sweets (kalakand, peda)",
+    "Traditional sweets (pootharekulu, ariselu, bobbatlu)",
+    "Savouries (mixture, chekkalu, murukulu)",
+    "Hot snacks (samosa, kachori)",
+    "Jaggery / millet sweets",
+    "Sugar-free sweets"
+   ]
+  },
+  {
+   "id": "sweet_shop-002",
+   "category": "Products",
+   "owner_question": "Are your sweets made fresh every day?",
+   "customer_question": "Are these sweets fresh?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-003",
+   "category": "Products",
+   "owner_question": "Which fat do you use in ghee sweets?",
+   "customer_question": "Is this pure ghee?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "100% pure ghee",
+    "Ghee and vanaspati",
+    "Depends on the sweet (we tell customers)"
+   ]
+  },
+  {
+   "id": "sweet_shop-004",
+   "category": "Custom cakes & orders",
+   "owner_question": "How much advance do you take for custom cakes or bulk orders, and what is the refund policy if it is cancelled or rescheduled?",
+   "customer_question": "How much advance should I pay?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "sweet_shop-005",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you take bulk orders for weddings and functions (sweets, hot snacks)? Wholesale rates?",
+   "customer_question": "Can you supply sweets for 500 people?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "sweet_shop-006",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you pack festival sweet gift boxes (Diwali, Dasara, Sankranti)?",
+   "customer_question": "Do you have Diwali gift boxes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-007",
+   "category": "Freshness & safety",
+   "owner_question": "Is your shop FSSAI-registered, with a clean kitchen and covered display (no flies)?",
+   "customer_question": "Is your kitchen clean?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-008",
+   "category": "Freshness & safety",
+   "owner_question": "Do you write the expiry / best-before date on boxes?",
+   "customer_question": "How many days will this keep?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-009",
+   "category": "Products",
+   "owner_question": "Are the ketchup and chutneys you serve with snacks branded or made fresh?",
+   "customer_question": "Is the chutney fresh?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "sweet_shop-010",
+   "category": "Products",
+   "owner_question": "Do you have jaggery or millet sweets and biscuits for people who avoid white sugar?",
+   "customer_question": "Any jaggery sweets?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-011",
+   "category": "Products",
+   "owner_question": "Do you have sugar-free sweets or cakes for diabetics?",
+   "customer_question": "Do you have sugar-free sweets?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-012",
+   "category": "Products",
+   "owner_question": "Is your chhena / paneer for Bengali sweets made from fresh milk?",
+   "customer_question": "Is the rasgulla made from fresh milk?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-013",
+   "category": "Products",
+   "owner_question": "Do you have sweets with silver varq? Is the varq pure and edible?",
+   "customer_question": "Is the silver on this sweet real?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-014",
+   "category": "Products",
+   "owner_question": "What grade of almonds, pistachios and cashews do you use in sweets?",
+   "customer_question": "Are the cashews good quality?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "sweet_shop-015",
+   "category": "Products",
+   "owner_question": "Which oil do you use for frying savouries (groundnut, sunflower, palm), and do you avoid reusing oil?",
+   "customer_question": "Which oil is this mixture fried in?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "sweet_shop-016",
+   "category": "Products",
+   "owner_question": "Do you make festival and vratham items on order (boondi, poornam boorelu, bobbatlu)?",
+   "customer_question": "Can you make bobbatlu for Ugadi?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-017",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you deliver bulk orders to the function hall on time? Free?",
+   "customer_question": "Can you deliver to the hall?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-018",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you pack traditional saare trays for gruhapravesam, engagement or seemantham?",
+   "customer_question": "Do you make saare trays?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-019",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you vacuum-pack sweets, podis and savouries for sending abroad (USA, UK, Australia)?",
+   "customer_question": "Can you pack sweets for the USA?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-020",
+   "category": "Freshness & safety",
+   "owner_question": "How long do dry cakes, tea cakes, cookies and sweets keep?",
+   "customer_question": "How long will the fruit cake last?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "sweet_shop-021",
+   "category": "Freshness & safety",
+   "owner_question": "Do you use food-grade boxes and butter-paper lining for sweets and cakes?",
+   "customer_question": "Is the box food safe?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-022",
+   "category": "Ordering & delivery",
+   "owner_question": "Are you on Swiggy or Zomato?",
+   "customer_question": "Can I order on Swiggy?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "sweet_shop-023",
+   "category": "Shop & service",
+   "owner_question": "Can customers taste a small sample before buying sweets?",
+   "customer_question": "Can I taste this?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-024",
+   "category": "Shop & service",
+   "owner_question": "Do you have seating or a kids' area to eat in the shop?",
+   "customer_question": "Can we sit and eat here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sweet_shop-025",
+   "category": "Shop & service",
+   "owner_question": "Is GST included in your prices or added on the bill?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill",
+    "No GST"
+   ]
+  },
+  {
+   "id": "sweet_shop-026",
+   "category": "Shop & service",
+   "owner_question": "If you have no change, what do you do?",
+   "customer_question": "Will you give chocolates instead of change?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Take the exact amount by UPI",
+    "Give small items (chocolates)",
+    "Round off"
+   ]
+  },
+  {
+   "id": "sweet_shop-027",
+   "category": "Shop & service",
+   "owner_question": "Do you have loyalty points, a membership discount or coupons for regular customers?",
+   "customer_question": "Any discount for regular customers?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "sweet_shop-028",
+   "category": "Shop & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

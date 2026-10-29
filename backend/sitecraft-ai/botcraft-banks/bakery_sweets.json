@@ -1,142 +1,157 @@
 {
  "shop_type_key": "bakery_sweets",
  "name": "Bakery & sweet shop",
- "version": 1,
- "model": "gemini-3.1-flash-lite",
- "generated_at": "2026-10-28",
- "question_count": 193,
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-29",
+ "question_count": 53,
  "questions": [
   {
    "id": "bakery_sweets-001",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you offer eggless options for all your cakes and sweets?",
-   "customer_question": "Are your cakes eggless?",
+   "category": "Products",
+   "owner_question": "Which cakes and bakery items do you make?",
+   "customer_question": "Do you have pastries?",
    "priority": "mandatory",
-   "answer_type": "yes_no",
+   "answer_type": "list",
    "options": [
-    "Yes",
-    "No"
+    "Cakes",
+    "Pastries",
+    "Bread & buns",
+    "Cookies & biscuits",
+    "Puffs, burgers & pizza",
+    "Cupcakes & brownies",
+    "Cheesecakes, donuts & macarons",
+    "Chocolates",
+    "Kids' candies & lollipops"
    ]
   },
   {
    "id": "bakery_sweets-002",
-   "category": "Ingredients and Quality",
-   "owner_question": "What type of oil or fat (e.g., Vanaspati, refined oil, ghee) do you use for frying snacks?",
-   "customer_question": "What kind of oil or fat do you use for frying snacks?",
+   "category": "Products",
+   "owner_question": "Which sweets and savouries do you make?",
+   "customer_question": "Do you have kaju katli?",
    "priority": "mandatory",
-   "answer_type": "text"
+   "answer_type": "list",
+   "options": [
+    "Ghee sweets (laddu, mysore pak)",
+    "Kaju & dry-fruit sweets",
+    "Bengali sweets (rasgulla, rasmalai)",
+    "Milk sweets (kalakand, peda)",
+    "Traditional sweets (pootharekulu, ariselu, bobbatlu)",
+    "Savouries (mixture, chekkalu, murukulu)",
+    "Hot snacks (samosa, kachori)",
+    "Jaggery / millet sweets",
+    "Sugar-free sweets"
+   ]
   },
   {
    "id": "bakery_sweets-003",
-   "category": "Ingredients and Quality",
-   "owner_question": "Is your shop FSSAI certified?",
-   "customer_question": "Are your products FSSAI certified?",
-   "priority": "mandatory",
-   "answer_type": "yes_no",
+   "category": "Products",
+   "owner_question": "Are your cakes eggless?",
+   "customer_question": "Is this cake eggless?",
+   "priority": "important",
+   "answer_type": "options",
    "options": [
-    "Yes",
-    "No"
+    "All eggless",
+    "Eggless on order",
+    "Both, clearly marked",
+    "With egg only"
    ]
   },
   {
    "id": "bakery_sweets-004",
-   "category": "Customization and Special Orders",
-   "owner_question": "What is the minimum notice period (in hours) required for custom cake orders?",
-   "customer_question": "How long before the event should I place a custom cake order?",
-   "priority": "mandatory",
-   "answer_type": "number"
-  },
-  {
-   "id": "bakery_sweets-005",
-   "category": "Customization and Special Orders",
-   "owner_question": "What percentage of the total amount do you require as an advance for custom orders?",
-   "customer_question": "Do you require an advance payment for custom orders?",
-   "priority": "mandatory",
-   "answer_type": "number"
-  },
-  {
-   "id": "bakery_sweets-006",
-   "category": "Ingredients and Quality",
-   "owner_question": "How often do you prepare your fresh sweets and bakery items?",
-   "customer_question": "Do you use fresh ingredients daily?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Daily",
-    "Every two days",
-    "Weekly",
-    "On order only"
-   ]
-  },
-  {
-   "id": "bakery_sweets-007",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you use artificial preservatives in your products?",
-   "customer_question": "Do your products contain preservatives?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-008",
-   "category": "Ingredients and Quality",
-   "owner_question": "What is the source of your dairy products (milk, paneer, butter)?",
-   "customer_question": "Where do you source your milk and dairy from?",
+   "category": "Products",
+   "owner_question": "Which cake flavours do you make (for example black forest, red velvet, butterscotch, fruit)?",
+   "customer_question": "Do you have red velvet?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "bakery_sweets-009",
-   "category": "Ingredients and Quality",
-   "owner_question": "Are all your products 100% vegetarian (lacto-vegetarian)?",
-   "customer_question": "Are your sweets 100% vegetarian?",
+   "id": "bakery_sweets-005",
+   "category": "Products",
+   "owner_question": "Are 1/2 kg and 1 kg ready-made birthday cakes always available at the counter without ordering?",
+   "customer_question": "Do you have a ready cake now?",
    "priority": "important",
    "answer_type": "yes_no",
    "options": [
     "Yes",
     "No"
    ]
+  },
+  {
+   "id": "bakery_sweets-006",
+   "category": "Products",
+   "owner_question": "Are your sweets made fresh every day?",
+   "customer_question": "Are these sweets fresh?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery_sweets-007",
+   "category": "Products",
+   "owner_question": "Which fat do you use in ghee sweets?",
+   "customer_question": "Is this pure ghee?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "100% pure ghee",
+    "Ghee and vanaspati",
+    "Depends on the sweet (we tell customers)"
+   ]
+  },
+  {
+   "id": "bakery_sweets-008",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you make customised theme or photo cakes from a customer's picture?",
+   "customer_question": "Can you make a Spider-Man cake?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "bakery_sweets-009",
+   "category": "Custom cakes & orders",
+   "owner_question": "How many hours or days before should customers order a birthday or custom cake?",
+   "customer_question": "How early should I order?",
+   "priority": "important",
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-010",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you use artificial colors in your preparations?",
-   "customer_question": "Do you use artificial colors in your sweets?",
+   "category": "Custom cakes & orders",
+   "owner_question": "What is the minimum weight for fondant or theme cakes, and how is the price worked out?",
+   "customer_question": "Minimum how many kg for a fondant cake?",
    "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-011",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you offer any sugar-free sweet options?",
-   "customer_question": "Are your sweets sugar-free?",
+   "category": "Custom cakes & orders",
+   "owner_question": "How much advance do you take for custom cakes or bulk orders, and what is the refund policy if it is cancelled or rescheduled?",
+   "customer_question": "How much advance should I pay?",
    "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-012",
-   "category": "Ingredients and Quality",
-   "owner_question": "What is the typical shelf life of your milk-based sweets?",
-   "customer_question": "How long can I store these sweets?",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you take bulk orders for weddings and functions (sweets, hot snacks)? Wholesale rates?",
+   "customer_question": "Can you supply sweets for 500 people?",
    "priority": "important",
-   "answer_type": "number"
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-013",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you clearly label or inform customers about the presence of nuts (allergens) in your sweets?",
-   "customer_question": "Do your sweets contain nuts?",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you pack festival sweet gift boxes (Diwali, Dasara, Sankranti)?",
+   "customer_question": "Do you have Diwali gift boxes?",
    "priority": "important",
    "answer_type": "yes_no",
    "options": [
@@ -146,9 +161,9 @@
   },
   {
    "id": "bakery_sweets-014",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you use pure desi ghee in your sweets?",
-   "customer_question": "Do you use pure desi ghee?",
+   "category": "Freshness & safety",
+   "owner_question": "Is your shop FSSAI-registered, with a clean kitchen and covered display (no flies)?",
+   "customer_question": "Is your kitchen clean?",
    "priority": "important",
    "answer_type": "yes_no",
    "options": [
@@ -158,9 +173,9 @@
   },
   {
    "id": "bakery_sweets-015",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you use artificial sweeteners (like aspartame) in your sugar-free items?",
-   "customer_question": "Do you use any artificial sweeteners?",
+   "category": "Freshness & safety",
+   "owner_question": "Do you write the expiry / best-before date on boxes?",
+   "customer_question": "How many days will this keep?",
    "priority": "important",
    "answer_type": "yes_no",
    "options": [
@@ -170,22 +185,18 @@
   },
   {
    "id": "bakery_sweets-016",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you accept custom cake designs from customers?",
-   "customer_question": "Can I order a custom-designed cake?",
+   "category": "Ordering & delivery",
+   "owner_question": "If a cake is damaged or loses shape in delivery, do you replace or refund?",
+   "customer_question": "The cake came damaged, what now?",
    "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-017",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you offer photo cakes where a customer can print an image on the cake?",
-   "customer_question": "Do you make photo cakes?",
-   "priority": "important",
+   "category": "Products",
+   "owner_question": "Do you bake your bread, buns and rusk in your own bakery?",
+   "customer_question": "Is the bread made here?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -194,10 +205,10 @@
   },
   {
    "id": "bakery_sweets-018",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you accept bulk orders for weddings or large events?",
-   "customer_question": "Can I order sweets in bulk for a wedding or event?",
-   "priority": "important",
+   "category": "Products",
+   "owner_question": "Do you have brown, multigrain or whole-wheat bread?",
+   "customer_question": "Do you have brown bread?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -206,10 +217,10 @@
   },
   {
    "id": "bakery_sweets-019",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you offer special pricing or discounts for bulk orders?",
-   "customer_question": "Is there a discount for bulk orders?",
-   "priority": "important",
+   "category": "Products",
+   "owner_question": "Are puffs, burgers and pizzas served hot?",
+   "customer_question": "Are the puffs hot?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -218,34 +229,31 @@
   },
   {
    "id": "bakery_sweets-020",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you offer eggless versions for all your custom cakes?",
-   "customer_question": "Do you provide eggless cake options?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Products",
+   "owner_question": "Are the ketchup and chutneys you serve with snacks branded or made fresh?",
+   "customer_question": "Is the chutney fresh?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-021",
-   "category": "Customization and Special Orders",
-   "owner_question": "Can customers choose their own flavor and filling combinations for custom cakes?",
-   "customer_question": "Can I choose the flavor and filling for my custom cake?",
-   "priority": "important",
+   "category": "Products",
+   "owner_question": "Do you have trending cakes (bento, pinata, pull-me-up)?",
+   "customer_question": "Do you have a pinata cake?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
     "No"
-   ]
+   ],
+   "city_only": true
   },
   {
    "id": "bakery_sweets-022",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you offer free message writing on cakes?",
-   "customer_question": "Can I get a message written on the cake?",
-   "priority": "important",
+   "category": "Products",
+   "owner_question": "Do you have jaggery or millet sweets and biscuits for people who avoid white sugar?",
+   "customer_question": "Any jaggery sweets?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -254,10 +262,10 @@
   },
   {
    "id": "bakery_sweets-023",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you offer special delivery services for large custom cakes or bulk orders?",
-   "customer_question": "Can you deliver a custom cake to my venue?",
-   "priority": "important",
+   "category": "Products",
+   "owner_question": "Do you have sugar-free sweets or cakes for diabetics?",
+   "customer_question": "Do you have sugar-free sweets?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -266,10 +274,10 @@
   },
   {
    "id": "bakery_sweets-024",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you charge an additional design fee for complex custom shapes or themes?",
-   "customer_question": "Do you charge extra for custom shapes or themes?",
-   "priority": "important",
+   "category": "Products",
+   "owner_question": "Is your chhena / paneer for Bengali sweets made from fresh milk?",
+   "customer_question": "Is the rasgulla made from fresh milk?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -278,10 +286,10 @@
   },
   {
    "id": "bakery_sweets-025",
-   "category": "Customization and Special Orders",
-   "owner_question": "Are customers allowed to share photos or references for the cake design they want?",
-   "customer_question": "Can I provide my own design reference?",
-   "priority": "important",
+   "category": "Products",
+   "owner_question": "Do you have sweets with silver varq? Is the varq pure and edible?",
+   "customer_question": "Is the silver on this sweet real?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -290,42 +298,50 @@
   },
   {
    "id": "bakery_sweets-026",
-   "category": "Customization and Special Orders",
-   "owner_question": "What is the minimum quantity (in kg or pieces) required to qualify as a bulk order?",
-   "customer_question": "What is the minimum quantity for a bulk order?",
-   "priority": "important",
-   "answer_type": "number"
+   "category": "Products",
+   "owner_question": "What grade of almonds, pistachios and cashews do you use in sweets?",
+   "customer_question": "Are the cashews good quality?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-027",
-   "category": "Customization and Special Orders",
-   "owner_question": "How many hours before the delivery/pickup time can a customer modify their custom order?",
-   "customer_question": "Can I change my custom order after placing it?",
-   "priority": "important",
-   "answer_type": "number"
+   "category": "Products",
+   "owner_question": "Which oil do you use for frying savouries (groundnut, sunflower, palm), and do you avoid reusing oil?",
+   "customer_question": "Which oil is this mixture fried in?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-028",
-   "category": "Dietary Restrictions",
-   "owner_question": "What specific sugar substitute (e.g., stevia, aspartame) do you use in your sugar-free products?",
-   "customer_question": "What kind of sugar substitute do you use in your sugar-free items?",
-   "priority": "important",
-   "answer_type": "text"
+   "category": "Products",
+   "owner_question": "Do you make festival and vratham items on order (boondi, poornam boorelu, bobbatlu)?",
+   "customer_question": "Can you make bobbatlu for Ugadi?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
   },
   {
    "id": "bakery_sweets-029",
-   "category": "Dietary Restrictions",
-   "owner_question": "Are your sugar-free items strictly sugar-free, or do they contain trace amounts of natural sugars?",
-   "customer_question": "Are your sugar-free sweets completely sugar-free or just low-sugar?",
-   "priority": "important",
-   "answer_type": "text"
+   "category": "Products",
+   "owner_question": "Do you sell candles, name toppers, musical candles and party items?",
+   "customer_question": "Do you have number candles?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
   },
   {
    "id": "bakery_sweets-030",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you sell any gluten-free products?",
-   "customer_question": "Do you have any gluten-free cakes or snacks?",
-   "priority": "important",
+   "category": "Products",
+   "owner_question": "Do you have home-made chocolates or cupcake boxes for return gifts?",
+   "customer_question": "Do you have return-gift chocolates?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -334,10 +350,10 @@
   },
   {
    "id": "bakery_sweets-031",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you maintain a separate area or equipment for preparing gluten-free items?",
-   "customer_question": "Are your gluten-free items prepared in a separate area to avoid cross-contamination?",
-   "priority": "important",
+   "category": "Custom cakes & orders",
+   "owner_question": "Are the paper and ink for photo cakes edible?",
+   "customer_question": "Is the photo on the cake edible?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -346,10 +362,10 @@
   },
   {
    "id": "bakery_sweets-032",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you use nuts (like almonds, cashews, or pistachios) in your kitchen?",
-   "customer_question": "Do any of your sweets contain nuts?",
-   "priority": "important",
+   "category": "Custom cakes & orders",
+   "owner_question": "Can customers change the flavour of a design cake?",
+   "customer_question": "Can I have this design in chocolate?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -358,67 +374,69 @@
   },
   {
    "id": "bakery_sweets-033",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you have a list or specific items that are guaranteed to be nut-free?",
-   "customer_question": "Can you tell me which items are nut-free?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-034",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you offer any vegan sweets or snacks (no dairy, no honey)?",
-   "customer_question": "Do you have any vegan options?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-035",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you provide ingredient labels or lists for your packaged snacks?",
-   "customer_question": "Can I see the ingredient list for your products?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-036",
-   "category": "Dietary Restrictions",
-   "owner_question": "Is there a risk of peanut cross-contamination in your kitchen?",
-   "customer_question": "Are your sweets prepared in a facility that also processes peanuts?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-037",
-   "category": "Dietary Restrictions",
-   "owner_question": "Are your snacks generally baked, fried, or do you offer both?",
-   "customer_question": "Are your snacks baked or fried?",
-   "priority": "important",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you colour cream with natural or artificial colours?",
+   "customer_question": "Are the colours safe?",
+   "priority": "optional",
    "answer_type": "options",
    "options": [
-    "Baked",
-    "Fried",
+    "Natural colours",
+    "Food-grade artificial colours",
     "Both"
    ]
   },
   {
+   "id": "bakery_sweets-034",
+   "category": "Custom cakes & orders",
+   "owner_question": "Can you make nut-free or gluten-free cakes on order?",
+   "customer_question": "Do you have gluten-free cake?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "bakery_sweets-035",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you write names on a chocolate plaque? Any extra charge?",
+   "customer_question": "Can you write the name on chocolate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "bakery_sweets-036",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you make 2- or 3-tier wedding cakes and send a chef to assemble them at the venue?",
+   "customer_question": "Can you make a 3-tier cake?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "bakery_sweets-037",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you make a cake live in front of the customer in 10–15 minutes?",
+   "customer_question": "Can you make the cake now?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
    "id": "bakery_sweets-038",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you accept custom orders to accommodate specific food allergies?",
-   "customer_question": "Can you customize a cake for a specific allergy?",
-   "priority": "important",
+   "category": "Custom cakes & orders",
+   "owner_question": "Do you give a free birthday kit (candles, caps, knife) with cakes?",
+   "customer_question": "Will I get candles with the cake?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -427,10 +445,10 @@
   },
   {
    "id": "bakery_sweets-039",
-   "category": "Packaging and Storage",
-   "owner_question": "Do your cakes require refrigeration, or can they be kept at room temperature?",
-   "customer_question": "Should I keep these cakes in the fridge?",
-   "priority": "important",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you deliver bulk orders to the function hall on time? Free?",
+   "customer_question": "Can you deliver to the hall?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -439,10 +457,10 @@
   },
   {
    "id": "bakery_sweets-040",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you offer special gift packaging or decorative boxes for sweets?",
-   "customer_question": "Do you provide gift boxes for sweets?",
-   "priority": "important",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you pack traditional saare trays for gruhapravesam, engagement or seemantham?",
+   "customer_question": "Do you make saare trays?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -451,10 +469,10 @@
   },
   {
    "id": "bakery_sweets-041",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you charge extra for gift boxes or premium packaging?",
-   "customer_question": "Is there an extra charge for gift wrapping?",
-   "priority": "important",
+   "category": "Bulk, functions & gifts",
+   "owner_question": "Do you vacuum-pack sweets, podis and savouries for sending abroad (USA, UK, Australia)?",
+   "customer_question": "Can you pack sweets for the USA?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -463,22 +481,18 @@
   },
   {
    "id": "bakery_sweets-042",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you provide vacuum packing or travel-friendly packaging for long-distance travel?",
-   "customer_question": "Can you pack these for travel?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Freshness & safety",
+   "owner_question": "How long do dry cakes, tea cakes, cookies and sweets keep?",
+   "customer_question": "How long will the fruit cake last?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-043",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you use sturdy cake boxes with bases to prevent damage during transport?",
-   "customer_question": "Are the cakes packed in a way that they won't get squashed?",
-   "priority": "important",
+   "category": "Freshness & safety",
+   "owner_question": "Do you use food-grade boxes and butter-paper lining for sweets and cakes?",
+   "customer_question": "Is the box food safe?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -487,22 +501,18 @@
   },
   {
    "id": "bakery_sweets-044",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you use certified food-grade containers for all your takeaway items?",
-   "customer_question": "Do you use food-grade plastic?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Freshness & safety",
+   "owner_question": "For long travel, do you pack cream cakes with ice gel packs, or suggest butter-cream cakes?",
+   "customer_question": "Will the cake melt on the way?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-045",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you provide ice packs or cooling gel packs for cakes during hot weather?",
-   "customer_question": "Do you provide cooling packs for cakes?",
-   "priority": "important",
+   "category": "Ordering & delivery",
+   "owner_question": "Do you deliver cakes at midnight for birthdays and anniversaries? Extra charge?",
+   "customer_question": "Can you deliver at 12 midnight?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -511,1633 +521,95 @@
   },
   {
    "id": "bakery_sweets-046",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you use leak-proof containers for syrup-based sweets like Gulab Jamun or Rasgulla?",
-   "customer_question": "Are the sweets packed in a way that they won't leak?",
-   "priority": "important",
+   "category": "Ordering & delivery",
+   "owner_question": "Are you on Swiggy or Zomato?",
+   "customer_question": "Can I order on Swiggy?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
     "No"
-   ]
+   ],
+   "city_only": true
   },
   {
    "id": "bakery_sweets-047",
-   "category": "Packaging and Storage",
-   "owner_question": "What sizes of gift boxes do you typically stock?",
-   "customer_question": "Do you have different sizes of gift boxes?",
-   "priority": "important",
-   "answer_type": "list"
+   "category": "Ordering & delivery",
+   "owner_question": "Do you use insulated bags so puffs and snacks stay hot in delivery?",
+   "customer_question": "Will the puffs be hot?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
   },
   {
    "id": "bakery_sweets-048",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Are the prices you set for your products inclusive of GST, or is GST added on top at the time of billing?",
-   "customer_question": "Are your prices inclusive of GST?",
-   "priority": "important",
-   "answer_type": "options",
+   "category": "Shop & service",
+   "owner_question": "Can customers taste a small sample before buying sweets?",
+   "customer_question": "Can I taste this?",
+   "priority": "optional",
+   "answer_type": "yes_no",
    "options": [
-    "Inclusive of GST",
-    "Plus GST extra"
+    "Yes",
+    "No"
    ]
   },
   {
    "id": "bakery_sweets-049",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you sell your sweets primarily by weight (per kg) or per piece?",
-   "customer_question": "Are your sweets sold by weight or per piece?",
-   "priority": "important",
-   "answer_type": "options",
+   "category": "Shop & service",
+   "owner_question": "Do you have seating or a kids' area to eat in the shop?",
+   "customer_question": "Can we sit and eat here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
    "options": [
-    "Per kg",
-    "Per piece",
-    "Both"
+    "Yes",
+    "No"
    ]
   },
   {
    "id": "bakery_sweets-050",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you have a standard price list for your snacks, or do prices vary based on packaging size?",
-   "customer_question": "Do you have a fixed price list for all snacks?",
-   "priority": "important",
-   "answer_type": "yes_no",
+   "category": "Shop & service",
+   "owner_question": "Is GST included in your prices or added on the bill?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
    "options": [
-    "Yes",
-    "No"
+    "Included",
+    "Added on the bill",
+    "No GST"
    ]
   },
   {
    "id": "bakery_sweets-051",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you run special pricing or discounts during festive seasons?",
-   "customer_question": "Do you offer seasonal discounts or festive offers?",
-   "priority": "important",
-   "answer_type": "yes_no",
+   "category": "Shop & service",
+   "owner_question": "If you have no change, what do you do?",
+   "customer_question": "Will you give chocolates instead of change?",
+   "priority": "optional",
+   "answer_type": "options",
    "options": [
-    "Yes",
-    "No"
+    "Take the exact amount by UPI",
+    "Give small items (chocolates)",
+    "Round off"
    ]
   },
   {
    "id": "bakery_sweets-052",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you charge an additional fee for gift packaging or special boxes for sweets?",
-   "customer_question": "Do you charge extra for special packaging or gift boxes?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Shop & service",
+   "owner_question": "Do you have loyalty points, a membership discount or coupons for regular customers?",
+   "customer_question": "Any discount for regular customers?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "bakery_sweets-053",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you have different price slabs for premium sweets versus regular sweets?",
-   "customer_question": "Are there different prices for different types of sweets?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-055",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Is your delivery charge a flat fee, or does it depend on the order value?",
-   "customer_question": "Do you charge for delivery separately?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Flat fee",
-    "Depends on distance",
-    "Free above a certain value"
-   ]
-  },
-  {
-   "id": "bakery_sweets-056",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "What is the specific delivery charge or the threshold for free delivery?",
-   "customer_question": "How much is the delivery charge?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-057",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Are your sugar-free sweets priced higher than regular sweets?",
-   "customer_question": "Are there separate prices for sugar-free sweets?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-058",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you have a standard price increase per half-kg for cakes?",
-   "customer_question": "Are there different prices for different cake sizes?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-059",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you charge an extra fee for custom cake designs or specific decorations?",
-   "customer_question": "Do you charge extra for custom cake designs?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-061",
-   "category": "Delivery and Logistics",
-   "owner_question": "What is the maximum distance in kilometers you deliver to from your shop?",
-   "customer_question": "What is the maximum distance you deliver to?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "bakery_sweets-062",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you charge a flat delivery fee or does it vary based on distance?",
-   "customer_question": "How much do you charge for delivery?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Flat fee",
-    "Varies by distance",
-    "Free delivery above a certain amount"
-   ]
-  },
-  {
-   "id": "bakery_sweets-063",
-   "category": "Delivery and Logistics",
-   "owner_question": "What is the minimum order amount for free delivery?",
-   "customer_question": "Is there a minimum order amount for free delivery?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "bakery_sweets-064",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you offer fixed-time delivery for cakes?",
-   "customer_question": "Can I get a cake delivered at a specific time?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-065",
-   "category": "Delivery and Logistics",
-   "owner_question": "What special packaging or transport methods do you use for delicate items like cakes?",
-   "customer_question": "How do you ensure the cake doesn't get damaged during delivery?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-066",
-   "category": "Delivery and Logistics",
-   "owner_question": "Are your delivery services available on Sundays or public holidays?",
-   "customer_question": "Do you deliver on Sundays or public holidays?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-067",
-   "category": "Delivery and Logistics",
-   "owner_question": "What is the average time required from receiving an order to delivery?",
-   "customer_question": "How much time do you need to prepare and deliver an order?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-068",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you provide midnight delivery services for cakes?",
-   "customer_question": "Do you offer midnight delivery for cakes?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-069",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you charge an additional fee for midnight deliveries?",
-   "customer_question": "Is there an extra charge for midnight delivery?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "bakery_sweets-070",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you allow customers to pick up their orders from the shop?",
-   "customer_question": "Can I pick up my order from the shop instead of getting it delivered?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-071",
-   "category": "Delivery and Logistics",
-   "owner_question": "What is your policy for damaged items during delivery?",
-   "customer_question": "What if my cake arrives damaged?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-072",
-   "category": "Hygiene and Certifications",
-   "owner_question": "What is your FSSAI license number?",
-   "customer_question": "Do you have an FSSAI license?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-073",
-   "category": "Hygiene and Certifications",
-   "owner_question": "Are your display counters temperature-controlled to keep sweets and cakes fresh?",
-   "customer_question": "Are the display counters refrigerated?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-074",
-   "category": "Hygiene and Certifications",
-   "owner_question": "Do you provide a 'best before' date or shelf-life information for your products?",
-   "customer_question": "What is the shelf life of your sweets?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-075",
-   "category": "Hygiene and Certifications",
-   "owner_question": "Can you upload a clear photo of your FSSAI registration certificate to be displayed to customers?",
-   "customer_question": "Can I see the FSSAI certificate?",
-   "priority": "important",
-   "answer_type": "image"
-  },
-  {
-   "id": "bakery_sweets-076",
-   "category": "Product Availability",
-   "owner_question": "Do you sell specific sweets only during certain seasons or festivals?",
-   "customer_question": "Do you have seasonal sweets like mango barfi or winter gajar halwa right now?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-077",
-   "category": "Product Availability",
-   "owner_question": "Please list the seasonal sweets you offer and the months they are available.",
-   "customer_question": "Which seasonal sweets are available in your shop currently?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-078",
-   "category": "Product Availability",
-   "owner_question": "Are your cakes and pastries baked fresh daily, or do you stock them for a few days?",
-   "customer_question": "Are your cakes baked fresh daily?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Baked fresh daily",
-    "Stocked for 1-2 days",
-    "Frozen/Pre-made"
-   ]
-  },
-  {
-   "id": "bakery_sweets-079",
-   "category": "Product Availability",
-   "owner_question": "At what time of the day do you typically put out your fresh batch of snacks?",
-   "customer_question": "What time of day is the fresh stock of snacks ready?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-080",
-   "category": "Product Availability",
-   "owner_question": "Do you accept pre-orders for cakes and sweets?",
-   "customer_question": "Can I pre-order a cake for tomorrow?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-081",
-   "category": "Product Availability",
-   "owner_question": "What is the minimum notice period required for placing a cake order?",
-   "customer_question": "How many hours in advance do I need to place a cake order?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-082",
-   "category": "Product Availability",
-   "owner_question": "Do you sell pre-packed gift hampers or assorted sweet boxes?",
-   "customer_question": "Do you have gift hampers or assorted sweet boxes?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-083",
-   "category": "Product Availability",
-   "owner_question": "Do you have a digital menu card or price list available for customers?",
-   "customer_question": "Do you have a menu card I can see?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-084",
-   "category": "Tasting and Samples",
-   "owner_question": "Is there a fee for providing tasting samples?",
-   "customer_question": "Do you charge for tasting samples?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-085",
-   "category": "Tasting and Samples",
-   "owner_question": "What is the price of a standard sample box for customers?",
-   "customer_question": "How much do you charge for a sample box?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "bakery_sweets-086",
-   "category": "Tasting and Samples",
-   "owner_question": "How many days notice do you require to prepare tasting samples?",
-   "customer_question": "How many days in advance do I need to request a tasting?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "bakery_sweets-087",
-   "category": "Tasting and Samples",
-   "owner_question": "Do you offer cake tasting sessions for wedding cakes?",
-   "customer_question": "Can I get a sample of your wedding cake?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-088",
-   "category": "Tasting and Samples",
-   "owner_question": "Do customers need to visit the shop in person for tasting, or is there another location?",
-   "customer_question": "Where can I come to taste the samples?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-089",
-   "category": "Tasting and Samples",
-   "owner_question": "Do you offer eggless options for your tasting samples?",
-   "customer_question": "Do you offer eggless samples?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-091",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you require an advance payment for custom cake orders?",
-   "customer_question": "Do I need to pay in advance for custom cake orders?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-092",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you allow customers to cancel their custom cake orders?",
-   "customer_question": "Can I cancel my cake order after paying the advance?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-093",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Is the advance payment refundable upon cancellation?",
-   "customer_question": "Will I get my advance back if I cancel the order?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-094",
-   "category": "Payment and Advance Policy",
-   "owner_question": "What is the minimum notice period required for a customer to cancel an order?",
-   "customer_question": "How many days before the delivery can I cancel my order?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "bakery_sweets-095",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you accept the balance payment at the time of delivery or pickup?",
-   "customer_question": "Can I pay the remaining balance at the time of delivery?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-096",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Are your prices inclusive of GST, or is it charged extra?",
-   "customer_question": "Do you charge extra for GST on cakes and sweets?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Prices include GST",
-    "GST is charged extra"
-   ]
-  },
-  {
-   "id": "bakery_sweets-097",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you accept advance payments via online transfer or UPI?",
-   "customer_question": "Can I pay for my order online?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-098",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you allow changes to order details (like flavor or design) after the advance is paid?",
-   "customer_question": "What happens if I change my order details after paying the advance?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-099",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Must the full balance be paid before the order is prepared?",
-   "customer_question": "Is there a deadline for paying the full balance for my order?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-100",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you provide a digital or physical receipt for advance payments?",
-   "customer_question": "Do you provide a formal receipt for the advance payment?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-101",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you allow customers to come to the shop to pay the advance in person?",
-   "customer_question": "Can I pay the advance in person at the shop?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-102",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Are all decoration charges included in the quote, or are there extra costs?",
-   "customer_question": "Are there any hidden charges for custom cake decorations?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "All included",
-    "Extra costs for special designs"
-   ]
-  },
-  {
-   "id": "bakery_sweets-103",
-   "category": "Payment and Advance Policy",
-   "owner_question": "What is your policy for cancellations made on the day of delivery?",
-   "customer_question": "What if I cancel my order on the day of delivery?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-104",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you stock birthday candles for cakes?",
-   "customer_question": "Do you sell birthday candles?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-105",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you sell cake toppers like 'Happy Birthday' signs or figurines?",
-   "customer_question": "Do you provide cake toppers?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-106",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you offer pre-made or custom gift hampers with your products?",
-   "customer_question": "Can you prepare a gift hamper for me?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-107",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you have fixed combo packs (e.g., sweets and namkeen) available for sale?",
-   "customer_question": "Do you have any special combos for sweets and snacks?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-108",
-   "category": "Add-ons and Combos",
-   "owner_question": "What is the starting price range for your gift hampers?",
-   "customer_question": "What is the price range of your gift hampers?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "bakery_sweets-109",
-   "category": "Add-ons and Combos",
-   "owner_question": "Are customers allowed to choose specific items to build their own custom hamper?",
-   "customer_question": "Can I customize the items inside a hamper?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-110",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you sell cold drinks or juices as add-ons to your snacks?",
-   "customer_question": "Can I add a cold drink or juice to my snack order?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-111",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you offer any price discounts for buying pre-made combos?",
-   "customer_question": "Are there any discounts if I buy a combo?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-112",
-   "category": "Add-ons and Combos",
-   "owner_question": "How much advance notice do you need to prepare a custom gift hamper?",
-   "customer_question": "How long does it take to prepare a custom hamper?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-113",
-   "category": "Store Policies",
-   "owner_question": "What is your policy for replacing a cake that gets damaged during transit by the customer?",
-   "customer_question": "What if the cake I bought is damaged when I reach home?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-114",
-   "category": "Store Policies",
-   "owner_question": "Do you offer a refund or replacement if a customer finds a product quality issue?",
-   "customer_question": "Can I get a refund if the sweets are not fresh?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Replacement only",
-    "Refund only",
-    "Both replacement and refund",
-    "No refund or replacement"
-   ]
-  },
-  {
-   "id": "bakery_sweets-115",
-   "category": "Store Policies",
-   "owner_question": "What is the preferred way for customers to share their feedback or complaints with you?",
-   "customer_question": "How can I share feedback about my experience or a product?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-116",
-   "category": "Local Reputation",
-   "owner_question": "In which year did you start this shop?",
-   "customer_question": "How long has this shop been open?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "bakery_sweets-117",
-   "category": "Local Reputation",
-   "owner_question": "Do you have any signature sweet or snack that you are locally famous for?",
-   "customer_question": "Are you famous for any specific local delicacy?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-118",
-   "category": "Local Reputation",
-   "owner_question": "Do you provide bulk catering services for weddings or local functions?",
-   "customer_question": "Do you supply sweets for big local events or weddings?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-119",
-   "category": "Local Reputation",
-   "owner_question": "Have you received any local awards or food safety certifications for your shop?",
-   "customer_question": "Do you have any awards or certificates for food quality?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-120",
-   "category": "Local Reputation",
-   "owner_question": "Do you prepare your sweets and snacks fresh in your shop every day?",
-   "customer_question": "Are your sweets made fresh daily?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-121",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you offer whole wheat (Atta) alternatives to Maida-based bakery products?",
-   "customer_question": "Do you use Maida or Atta in your bakery items?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-122",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you use any organic ingredients in your sweets or snacks?",
-   "customer_question": "Do you use organic ingredients?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-123",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you use real cocoa or compound chocolate for your cakes?",
-   "customer_question": "Is the chocolate you use compound or real cocoa?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Real cocoa",
-    "Compound chocolate",
-    "Both"
-   ]
-  },
-  {
-   "id": "bakery_sweets-124",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you offer baked snack alternatives to fried ones?",
-   "customer_question": "Are your snacks baked or fried?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-125",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you have any gluten-free snack options?",
-   "customer_question": "Are your dry snacks gluten-free?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-126",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you use fresh fruits or canned fruit fillings in your cakes?",
-   "customer_question": "Do you use fresh fruits in your cakes?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Fresh fruits",
-    "Canned fillings",
-    "Both"
-   ]
-  },
-  {
-   "id": "bakery_sweets-127",
-   "category": "Ingredients and Quality",
-   "owner_question": "Do you use any artificial flavor enhancers (like MSG) in your snacks?",
-   "customer_question": "Do you use any flavor enhancers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-128",
-   "category": "Ingredients and Quality",
-   "owner_question": "Are your sweets prepared in small batches to ensure quality?",
-   "customer_question": "Are your sweets made in small batches?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-129",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you provide or sell cake toppers for custom orders?",
-   "customer_question": "Do you provide cake toppers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-130",
-   "category": "Customization and Special Orders",
-   "owner_question": "What is the maximum weight limit (in kg) for a single-tier custom cake you can prepare?",
-   "customer_question": "What is the maximum weight of a single-tier custom cake?",
-   "priority": "optional",
-   "answer_type": "number"
-  },
-  {
-   "id": "bakery_sweets-131",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you have a digital catalog or gallery of previous custom cake designs to show customers?",
-   "customer_question": "Can I see a catalog of your previous custom designs?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-132",
-   "category": "Customization and Special Orders",
-   "owner_question": "Can customers request a lower sugar or 'less sweet' version for bulk orders?",
-   "customer_question": "Can I customize the sweetness level of the sweets?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-133",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you accept orders for theme-based cupcakes?",
-   "customer_question": "Can you make theme-based cupcakes?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-134",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you offer tasting samples for customers planning large bulk orders?",
-   "customer_question": "Do you provide tasting samples for bulk wedding orders?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-135",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you provide sugar-free options for custom sweets or cakes?",
-   "customer_question": "Do you offer sugar-free options for custom orders?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-136",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you offer premium or gift-wrapping packaging for bulk orders?",
-   "customer_question": "Do you provide decorative packaging for bulk gifts?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-137",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you offer vegan (no dairy/animal products) options for custom orders?",
-   "customer_question": "Can you make vegan cakes?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-138",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you prefer bulk order inquiries to be handled via a specific phone number or email?",
-   "customer_question": "Is there a separate contact for bulk orders?",
+   "category": "Shop & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
    "priority": "optional",
    "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-139",
-   "category": "Customization and Special Orders",
-   "owner_question": "Do you have a printed or digital menu list specifically for bulk sweets and snacks?",
-   "customer_question": "Do you provide printed menus for bulk sweets?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-140",
-   "category": "Dietary Restrictions",
-   "owner_question": "If you offer vegan products, what plant-based milk (e.g., almond, soy, oat) do you use?",
-   "customer_question": "What dairy-free milk do you use for your vegan products?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-141",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you use soy-based ingredients or soy lecithin in your baking?",
-   "customer_question": "Do you use any soy-based ingredients?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-142",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you offer any low-salt or low-sodium snack options?",
-   "customer_question": "Are your products suitable for people with high blood pressure (low salt)?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-143",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you sell any millet-based or healthy grain snacks?",
-   "customer_question": "Do you have any millet-based snacks?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-144",
-   "category": "Dietary Restrictions",
-   "owner_question": "Do you use honey as a sweetener in any of your products?",
-   "customer_question": "Do you use any honey in your sweets?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-145",
-   "category": "Packaging and Storage",
-   "owner_question": "What is the best way to store your dry snacks (like namkeen) to keep them crunchy?",
-   "customer_question": "How should I store these dry snacks?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-146",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you use eco-friendly or plastic-free packaging materials?",
-   "customer_question": "Are your boxes eco-friendly?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-147",
-   "category": "Packaging and Storage",
-   "owner_question": "What is the recommended storage duration for your dry fruit gift packs?",
-   "customer_question": "How long can I keep the dry fruits?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-148",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you provide paper bags or cloth bags for customers?",
-   "customer_question": "Do you provide bags for carrying?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-149",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you offer personalized notes or labels on gift boxes?",
-   "customer_question": "Can I get a message written on the box?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-150",
-   "category": "Packaging and Storage",
-   "owner_question": "What is the shelf life of your baked cookies when kept in an airtight container?",
-   "customer_question": "How long do the cookies stay fresh?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-151",
-   "category": "Packaging and Storage",
-   "owner_question": "Are your packaged snacks sealed using a nitrogen-flushed process?",
-   "customer_question": "Are your snacks packed in nitrogen-flushed packets?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-152",
-   "category": "Packaging and Storage",
-   "owner_question": "Are you able to provide items in smaller, individual-sized packets?",
-   "customer_question": "Can I request smaller portions packed separately?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-153",
-   "category": "Packaging and Storage",
-   "owner_question": "Do you allow customers to bring their own clean containers for takeaway?",
-   "customer_question": "Can I bring my own containers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-154",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Is the price per slice different from the price per kg for whole cakes?",
-   "customer_question": "Is there a discount for ordering a whole cake versus a slice?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-155",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you have any loyalty programs or discounts for repeat customers?",
-   "customer_question": "Do you offer any loyalty discounts for regular customers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-156",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you offer any small discount if a customer brings their own container for sweets?",
-   "customer_question": "Can I get a discount if I provide my own container?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-157",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you frequently run 'buy one get one' or similar promotional offers on specific items?",
-   "customer_question": "Do you have any 'buy one get one' offers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-158",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you have a specific discount structure for corporate or office orders?",
-   "customer_question": "Do you offer discounts for corporate orders?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-159",
-   "category": "Pricing and Bulk Discounts",
-   "owner_question": "Do you offer a discount or incentive for full advance payment on large orders?",
-   "customer_question": "Is there a discount if I pay in advance for a large order?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-160",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you use your own staff for delivery or a third-party service like Dunzo/Swiggy?",
-   "customer_question": "Who delivers the order? Your staff or a third party?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Own staff",
-    "Third-party service",
-    "Both"
-   ]
-  },
-  {
-   "id": "bakery_sweets-161",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you provide live tracking or status updates for deliveries?",
-   "customer_question": "Can I track my delivery?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-162",
-   "category": "Delivery and Logistics",
-   "owner_question": "Are there any specific locations (like hospitals or offices) where you do not deliver?",
-   "customer_question": "Do you deliver to hospitals or offices?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-163",
-   "category": "Delivery and Logistics",
-   "owner_question": "What is your policy on changing the delivery address after an order is placed?",
-   "customer_question": "Can I change the delivery address after placing the order?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-164",
-   "category": "Delivery and Logistics",
-   "owner_question": "What is your procedure if the customer is not available at the delivery address?",
-   "customer_question": "What happens if I am not at home when the delivery arrives?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-165",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you offer special delivery arrangements for bulk party orders?",
-   "customer_question": "Do you deliver bulk orders for parties?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-166",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you offer the option to include a personalized note with the delivery?",
-   "customer_question": "Can I include a personalized message with the delivery?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-167",
-   "category": "Delivery and Logistics",
-   "owner_question": "Do you have any restrictions on delivery during bad weather conditions?",
-   "customer_question": "How do you handle delivery during rainy season or bad weather?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-168",
-   "category": "Hygiene and Certifications",
-   "owner_question": "Do you hold any additional certifications like ISO or HACCP?",
-   "customer_question": "Do you have any other food safety certifications besides FSSAI?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-169",
-   "category": "Product Availability",
-   "owner_question": "Do you usually sell out of your popular items by the end of the day?",
-   "customer_question": "Do you run out of popular items by the evening?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-170",
-   "category": "Product Availability",
-   "owner_question": "Do you offer a 'hold' service for customers to reserve items over the phone?",
-   "customer_question": "Can you hold a box of sweets for me until I reach the shop?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-171",
-   "category": "Product Availability",
-   "owner_question": "Do you change the frying oil for your snacks daily?",
-   "customer_question": "Are your snacks fried in fresh oil daily?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-172",
-   "category": "Product Availability",
-   "owner_question": "Do you provide complimentary candles and cake knives with cake purchases?",
-   "customer_question": "Do you provide candles and knives with the cake?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-173",
-   "category": "Product Availability",
-   "owner_question": "Are your snacks and sweets prepared in your own kitchen or sourced from other vendors?",
-   "customer_question": "Are your snacks prepared in-house or sourced from outside?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "All in-house",
-    "Some in-house, some sourced",
-    "All sourced"
-   ]
-  },
-  {
-   "id": "bakery_sweets-174",
-   "category": "Tasting and Samples",
-   "owner_question": "Can customers customize the items included in their sample box?",
-   "customer_question": "Can I pick specific sweets for my sample box?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-176",
-   "category": "Tasting and Samples",
-   "owner_question": "Is there a minimum bulk order value that makes the tasting sample free?",
-   "customer_question": "Is there a minimum order value to get free samples?",
-   "priority": "optional",
-   "answer_type": "price"
-  },
-  {
-   "id": "bakery_sweets-177",
-   "category": "Tasting and Samples",
-   "owner_question": "Are all items available for tasting, or only a specific list?",
-   "customer_question": "Are samples available for all your sweets or only specific ones?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "All items",
-    "Only selected items"
-   ]
-  },
-  {
-   "id": "bakery_sweets-178",
-   "category": "Tasting and Samples",
-   "owner_question": "Is there a limit on the number of people allowed for a tasting session?",
-   "customer_question": "Can I bring my family for the tasting?",
-   "priority": "optional",
-   "answer_type": "number"
-  },
-  {
-   "id": "bakery_sweets-179",
-   "category": "Tasting and Samples",
-   "owner_question": "Are seasonal or festival-special sweets included in your tasting menu?",
-   "customer_question": "Do you provide samples for seasonal sweets?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-180",
-   "category": "Tasting and Samples",
-   "owner_question": "Do you adjust the cost of the sample box against the final bulk order?",
-   "customer_question": "Do you provide a discount on the final order if I take a sample?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-181",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you offer specific payment terms for large wedding or event orders?",
-   "customer_question": "Do you have any special payment plans for wedding sweet boxes?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "bakery_sweets-182",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you charge a separate booking fee to reserve a date for a custom cake?",
-   "customer_question": "Is there a booking fee for reserving a cake slot?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-183",
-   "category": "Payment and Advance Policy",
-   "owner_question": "Do you run regular festive or seasonal discount offers?",
-   "customer_question": "Do you offer seasonal discounts or festive offers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-184",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you sell greeting cards or tags to go with your cakes or hampers?",
-   "customer_question": "Can I get a greeting card with my cake?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-185",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you sell party supplies like poppers, balloons, or caps?",
-   "customer_question": "Do you sell party poppers or balloons?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-186",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you sell separate chocolate boxes that can be added to orders?",
-   "customer_question": "Do you offer chocolate boxes as add-ons?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-187",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you provide special gift wrapping or ribbon decoration for your items?",
-   "customer_question": "Do you provide decorative ribbons or wrapping for gifts?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-188",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you sell disposable cutlery or plates for parties?",
-   "customer_question": "Do you sell disposable plates or spoons?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-189",
-   "category": "Add-ons and Combos",
-   "owner_question": "Do you sell flowers or bouquets as an add-on?",
-   "customer_question": "Can I add a small bouquet to my order?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-190",
-   "category": "Local Reputation",
-   "owner_question": "Is your shop a family-run business passed down through generations?",
-   "customer_question": "Is your shop a family-run business?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-191",
-   "category": "Local Reputation",
-   "owner_question": "Do you follow traditional, authentic recipes for your sweets?",
-   "customer_question": "Do you use traditional recipes for your sweets?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-192",
-   "category": "Local Reputation",
-   "owner_question": "Do you use locally sourced ingredients to ensure quality and freshness?",
-   "customer_question": "Do you source your ingredients locally?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-193",
-   "category": "Local Reputation",
-   "owner_question": "Has your shop ever been mentioned or featured in local media or newspapers?",
-   "customer_question": "Have you been featured in any local newspapers or magazines?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-194",
-   "category": "Local Reputation",
-   "owner_question": "Do you have many regular customers who have been visiting for years?",
-   "customer_question": "Do you have a long-standing customer base in this area?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-195",
-   "category": "Local Reputation",
-   "owner_question": "Do you maintain an open-kitchen policy where customers can see the preparation?",
-   "customer_question": "Is your kitchen open for customers to see?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-196",
-   "category": "Local Reputation",
-   "owner_question": "Do you regularly participate in local food festivals or community events?",
-   "customer_question": "Do you participate in local food festivals?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "bakery_sweets-197",
-   "category": "Local Reputation",
-   "owner_question": "Do you have a seating area for customers to enjoy snacks inside your shop?",
-   "customer_question": "Do you have a seating area inside the shop?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
   }
  ]
 }

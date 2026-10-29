@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-29",
- "question_count": 44,
+ "question_count": 60,
  "questions": [
   {
    "id": "kirana-001",
@@ -26,7 +26,8 @@
     "Dry fruits",
     "Baby care (diapers, baby soap, baby food)",
     "Household & kitchen items (brooms, buckets, containers, scrubbers)",
-    "Candles, matchboxes & batteries"
+    "Candles, matchboxes & batteries",
+    "Disposables (plates, glasses, foil, cling wrap, garbage bags)"
    ]
   },
   {
@@ -66,7 +67,7 @@
   {
    "id": "kirana-005",
    "category": "Prices & billing",
-   "owner_question": "Do you give a printed / computer bill?",
+   "owner_question": "Do you give a printed / computer bill showing each item's MRP and your discount?",
    "customer_question": "Will I get a bill?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -129,8 +130,8 @@
   {
    "id": "kirana-011",
    "category": "Products & brands",
-   "owner_question": "Do you keep organic or natural products (organic dal, cold-pressed oil, millets)?",
-   "customer_question": "Do you have cold-pressed oil?",
+   "owner_question": "Do you keep organic or natural products (organic and unpolished dals, wood-pressed / ganuga groundnut, sesame and coconut oil, millets)?",
+   "customer_question": "Do you have ganuga oil?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -153,7 +154,7 @@
   {
    "id": "kirana-013",
    "category": "Products & brands",
-   "owner_question": "Do you have your own store brand or home-made items (pickles, podis, papad)?",
+   "owner_question": "Do you have your own store brand or home-made items (pickles, podis, mill-ground turmeric / chilli / coriander powder, appadalu, vadiyalu)?",
    "customer_question": "Do you have home-made pickles?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -213,7 +214,7 @@
   {
    "id": "kirana-018",
    "category": "Products & brands",
-   "owner_question": "Do you keep health foods (oats, olive oil, green tea, brown rice, sugar-free and diabetic-friendly items)?",
+   "owner_question": "Do you keep health foods (oats, olive oil, green tea, brown rice, flax / chia / pumpkin seeds, sugar-free and diabetic-friendly items)?",
    "customer_question": "Do you have sugar-free biscuits?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -225,7 +226,135 @@
   {
    "id": "kirana-019",
    "category": "Products & brands",
-   "owner_question": "Do you sell festival pooja kits (turmeric, kumkum, thoranalu, lamp oil)?",
+   "owner_question": "Do you keep old (aged) rice, for example 1-year-old Sona Masoori, HMT or Jai Sri Ram?",
+   "customer_question": "Is this old rice?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kirana-020",
+   "category": "Products & brands",
+   "owner_question": "Before a 25 kg rice bag, can customers take a 1 kg sample to check how it cooks?",
+   "customer_question": "Can I try 1 kg first?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-021",
+   "category": "Products & brands",
+   "owner_question": "If a rice bag cooks badly or has insects, do you exchange it?",
+   "customer_question": "The rice is sticky, can I change the bag?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kirana-022",
+   "category": "Products & brands",
+   "owner_question": "Are your dry fruits fresh and premium grade (not old stock)?",
+   "customer_question": "Are the cashews fresh?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-023",
+   "category": "Products & brands",
+   "owner_question": "Do you keep fresh batches of flours (idli rava, atta, besan, ragi, jowar)?",
+   "customer_question": "Is the ragi flour fresh?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-024",
+   "category": "Products & brands",
+   "owner_question": "Do you sell palm jaggery, organic jaggery powder and pink / rock salt?",
+   "customer_question": "Do you have palm jaggery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-025",
+   "category": "Products & brands",
+   "owner_question": "Do you sell baking supplies (cocoa, baking powder, essence, yeast, choco chips)?",
+   "customer_question": "Do you have baking powder?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-026",
+   "category": "Products & brands",
+   "owner_question": "Do you sell seedless new tamarind and old tamarind by the kg?",
+   "customer_question": "Do you have new tamarind?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-027",
+   "category": "Products & brands",
+   "owner_question": "In season, do you sell an avakaya (mango pickle) kit (rock salt, mustard and fenugreek powder, chilli powder, groundnut oil)?",
+   "customer_question": "Do you have an avakaya kit?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-028",
+   "category": "Products & brands",
+   "owner_question": "Do you bring seasonal items (Ramzan: haleem rava, semiya, dates; Sankranti: sesame, new jaggery)?",
+   "customer_question": "Do you have haleem rava?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kirana-029",
+   "category": "Products & brands",
+   "owner_question": "Is your honey and cow ghee pure? Which brands or farm-fresh options do you have?",
+   "customer_question": "Is this honey pure?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kirana-030",
+   "category": "Products & brands",
+   "owner_question": "Do you make ration kit boxes for charity or ashrams (for example ₹500 or ₹1,000)?",
+   "customer_question": "Can you make 50 ration kits?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-031",
+   "category": "Products & brands",
+   "owner_question": "Do you sell festival pooja kits or vratham / deeksha kits (turmeric, kumkum, thoranalu, lamp oil, Ayyappa irumudi items)?",
    "customer_question": "Do you have a Varalakshmi pooja kit?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -235,7 +364,7 @@
    ]
   },
   {
-   "id": "kirana-020",
+   "id": "kirana-032",
    "category": "Products & brands",
    "owner_question": "Do you sell water bottles and 20-litre water cans?",
    "customer_question": "Do you have a 20 litre can?",
@@ -247,7 +376,7 @@
    ]
   },
   {
-   "id": "kirana-021",
+   "id": "kirana-033",
    "category": "Products & brands",
    "owner_question": "Do you sell ice cubes packets for parties?",
    "customer_question": "Do you have ice cubes?",
@@ -259,23 +388,23 @@
    ]
   },
   {
-   "id": "kirana-022",
+   "id": "kirana-034",
    "category": "Products & brands",
-   "owner_question": "Do you sell eggs? Do they come fresh daily, and do you replace a bad egg?",
+   "owner_question": "Do you sell eggs (normal, brown, country / natu kodi)? Fresh daily? A tray of 30 at a lower rate? Do you replace a bad egg?",
    "customer_question": "Are the eggs fresh?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "kirana-023",
+   "id": "kirana-035",
    "category": "Prices & billing",
-   "owner_question": "Do you give lower rates for bulk or wholesale buying? From what quantity?",
+   "owner_question": "Do you give lower rates for bulk or wholesale buying, or when apartment families order together? From what quantity?",
    "customer_question": "Any wholesale rate?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "kirana-024",
+   "id": "kirana-036",
    "category": "Prices & billing",
    "owner_question": "Do you allow monthly credit (khata / udhaar) for regular customers?",
    "customer_question": "Can I pay at the end of the month?",
@@ -287,7 +416,7 @@
    ]
   },
   {
-   "id": "kirana-025",
+   "id": "kirana-037",
    "category": "Prices & billing",
    "owner_question": "Can customers order their monthly grocery list (sarukulu) at once and collect or get it delivered? Any extra discount on it?",
    "customer_question": "Can I give my monthly list?",
@@ -299,7 +428,7 @@
    ]
   },
   {
-   "id": "kirana-026",
+   "id": "kirana-038",
    "category": "Prices & billing",
    "owner_question": "On which days do you have weekly or festival offers and combo deals (for example Wednesday vegetables, weekend sale)?",
    "customer_question": "Which day is the offer?",
@@ -307,7 +436,7 @@
    "answer_type": "text"
   },
   {
-   "id": "kirana-027",
+   "id": "kirana-039",
    "category": "Prices & billing",
    "owner_question": "Is GST included in your prices or added on the bill for some items?",
    "customer_question": "Is GST extra?",
@@ -320,7 +449,7 @@
    ]
   },
   {
-   "id": "kirana-028",
+   "id": "kirana-040",
    "category": "Prices & billing",
    "owner_question": "If you have no change, what do you do?",
    "customer_question": "Will you give chocolates instead of change?",
@@ -333,7 +462,7 @@
    ]
   },
   {
-   "id": "kirana-029",
+   "id": "kirana-041",
    "category": "Freshness & quality",
    "owner_question": "If a customer gets a damaged, leaking, spoiled or expired item (or wrong MFG date), what do you do, and within how many days?",
    "customer_question": "The packet was leaking, can I change it?",
@@ -341,7 +470,7 @@
    "answer_type": "text"
   },
   {
-   "id": "kirana-030",
+   "id": "kirana-042",
    "category": "Freshness & quality",
    "owner_question": "Can customers see and choose vegetables, fruits and loose grains themselves before packing?",
    "customer_question": "Can I select the tomatoes myself?",
@@ -353,7 +482,7 @@
    ]
   },
   {
-   "id": "kirana-031",
+   "id": "kirana-043",
    "category": "Freshness & quality",
    "owner_question": "Are your weighing scales electronic and checked (stamped) regularly?",
    "customer_question": "Is your weighing machine correct?",
@@ -365,7 +494,7 @@
    ]
   },
   {
-   "id": "kirana-032",
+   "id": "kirana-044",
    "category": "Freshness & quality",
    "owner_question": "When weighing loose items, do you deduct the weight of the cover or container?",
    "customer_question": "Is the cover weight counted?",
@@ -377,9 +506,17 @@
    ]
   },
   {
-   "id": "kirana-033",
+   "id": "kirana-045",
    "category": "Freshness & quality",
-   "owner_question": "Do you clean and grade rice, dal and grains before selling?",
+   "owner_question": "How do you keep stock safe from moisture, rats and insects (storage, pest control)?",
+   "customer_question": "Will the sugar get wet in the rain?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kirana-046",
+   "category": "Freshness & quality",
+   "owner_question": "Do you sell cleaned (sortex) rice, dal and sugar without dust and stones?",
    "customer_question": "Is this dal cleaned?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -389,7 +526,39 @@
    ]
   },
   {
-   "id": "kirana-034",
+   "id": "kirana-047",
+   "category": "Ordering & delivery",
+   "owner_question": "After a function, do you take back unused sealed items (oil tins, rice bags) and refund?",
+   "customer_question": "Can I return unused oil tins?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kirana-048",
+   "category": "Ordering & delivery",
+   "owner_question": "If customers shop in the store, can you send the heavy items to their home?",
+   "customer_question": "Can you send these bags home?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-049",
+   "category": "Ordering & delivery",
+   "owner_question": "Can customers bring dry chillies or coriander to get them ground at a mill through you?",
+   "customer_question": "Can you get my chillies ground?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kirana-050",
    "category": "Ordering & delivery",
    "owner_question": "Do your delivery staff bring items to the door (inside apartments)?",
    "customer_question": "Will you deliver to my flat door?",
@@ -401,7 +570,7 @@
    ]
   },
   {
-   "id": "kirana-035",
+   "id": "kirana-051",
    "category": "Ordering & delivery",
    "owner_question": "Can customers pay on delivery (cash or UPI)?",
    "customer_question": "Can I pay when it comes?",
@@ -413,9 +582,9 @@
    ]
   },
   {
-   "id": "kirana-036",
+   "id": "kirana-052",
    "category": "Ordering & delivery",
-   "owner_question": "Do you supply to hotels, hostels, caterers or functions?",
+   "owner_question": "Do you supply to hotels, tiffin centres, hostels, caterers or functions, with wholesale rates, GST bills and free transport?",
    "customer_question": "Do you supply for functions?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -425,7 +594,7 @@
    ]
   },
   {
-   "id": "kirana-037",
+   "id": "kirana-053",
    "category": "Ordering & delivery",
    "owner_question": "Can customers call or WhatsApp to keep items packed and ready for pickup?",
    "customer_question": "Can you pack my items, I'll collect?",
@@ -437,7 +606,7 @@
    ]
   },
   {
-   "id": "kirana-038",
+   "id": "kirana-054",
    "category": "Ordering & delivery",
    "owner_question": "If an item is not available, will you get it within a day or two?",
    "customer_question": "Can you get this for me tomorrow?",
@@ -449,21 +618,21 @@
    ]
   },
   {
-   "id": "kirana-039",
+   "id": "kirana-055",
    "category": "Shop & service",
    "owner_question": "Are carry bags free, or charged on the bill? Can customers bring their own bags?",
    "customer_question": "Do I have to pay for the bag?",
    "priority": "optional",
    "answer_type": "options",
    "options": [
-    "Free paper / cloth bag",
+    "Free paper / cloth bag or carton",
     "Free plastic bag",
     "Charged (₹5–10)",
     "Bring your own bag"
    ]
   },
   {
-   "id": "kirana-040",
+   "id": "kirana-056",
    "category": "Shop & service",
    "owner_question": "Do staff help elderly or pregnant customers, and carry bags or trolleys to their vehicle?",
    "customer_question": "Can someone carry this to my auto?",
@@ -475,7 +644,7 @@
    ]
   },
   {
-   "id": "kirana-041",
+   "id": "kirana-057",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty card or points? Is joining free (with a mobile number), and can points be used on the next bill?",
    "customer_question": "Do I get points?",
@@ -483,7 +652,7 @@
    "answer_type": "text"
   },
   {
-   "id": "kirana-042",
+   "id": "kirana-058",
    "category": "Shop & service",
    "owner_question": "Do you sell gift vouchers or festival gift boxes (dry fruits, chocolates)?",
    "customer_question": "Do you have Diwali gift boxes?",
@@ -495,7 +664,7 @@
    ]
   },
   {
-   "id": "kirana-043",
+   "id": "kirana-059",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -511,7 +680,7 @@
    ]
   },
   {
-   "id": "kirana-044",
+   "id": "kirana-060",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
