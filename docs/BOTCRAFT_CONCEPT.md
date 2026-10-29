@@ -133,6 +133,14 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
 | `salesbot/` + `botcraft-salesbot.js` | Phase 2 first version: once the core questions are done, the owner gets a bot link (`salesbot/?s=<publicId>`), a QR code and a printable QR poster. The customer page is an installable PWA with Call / WhatsApp / Directions buttons; it answers only from the owner's saved answers and items (no item photos yet). Owners may optionally share the shop's Wi-Fi; the poster then gets a Wi-Fi QR code (the password is never sent to the public page or the salesbot). The page keeps a copy of the answers and items, so without internet, or when the AI is busy, it still answers basics (items & prices, timings, address, offers, saved answers) by plain search, without AI. A Listen button reads answers aloud with the phone's voice. The public id is separate from the owner's private shop id. |
 | `backend/sitecraft-ai/website-chatbot.js` | Visitor chat endpoint with reply limits, rate limits and a server-side key. It was built for a website embed (origin check); Phase 1–2 will adapt it for the QR bot page. |
 
+## 10a. Decisions (October 2026)
+
+- **Unanswered questions → owner notifications.** Customer questions the bot could not answer are sent to the owner page as notifications. The owner answers them there, and the answer is added to the bot.
+- **No sales guarantees.** The bot helps customers choose and gives correct shop information. We never promise it will close every sale or "lock" customers: not in marketing, not in the bot's own words.
+- **All updates from the owner page.** Products, prices, photos, offers and answers are changed only from the owner's page (Update mode). Never from the customer side, and never by contacting SiteCraft.
+- **Photos.** Owner photo (optional), one main business photo (header/background), a business gallery (about 10 for venues like banquet halls) and product photos (many for shops like electronics and clothing). Needs R2 storage.
+- **Products tab in the customer bot.** Customers see a product grid (photo, name, price, search) without asking. Tapping a product → "Ask about this" sends that product with the question, so the bot answers about the item the customer is looking at.
+
 ## 11. Open questions
 
 - Owner login method: phone OTP or email?
