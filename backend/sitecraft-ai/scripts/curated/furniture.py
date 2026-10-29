@@ -13,7 +13,7 @@ import json, os, datetime
 YN = ["Yes", "No"]
 Q = [
  # category, priority, answer_type, owner question, how a customer asks, options, tags
- ("Products & materials", "M", "list", "Which furniture do you sell?", "Do you have dining tables?", ["Cots & beds", "Sofas", "Dining tables", "Wardrobes / almirahs (beeruva)", "Mattresses", "Office chairs, tables & reception counters", "TV units", "Dressing tables", "Kids' furniture (bunk beds, study tables)", "Outdoor & plastic furniture", "Swings (jhula)", "Steel furniture", "Recliners", "Centre tables / teapoy", "Shoe racks / cabinets", "Pooja mandirs", "Crockery units & bookshelves", "Diwan cots & bolsters", "Bar stools", "Baby cradles (thottela)", "Home decor"], "F"),
+ ("Products & materials", "M", "list", "Which furniture do you sell?", "Do you have dining tables?", ["Cots & beds", "Sofas", "Dining tables", "Wardrobes / almirahs (beeruva)", "Mattresses", "Office chairs, tables & reception counters", "TV units", "Dressing tables", "Kids' furniture (bunk beds, study tables)", "Outdoor & plastic furniture", "Swings (jhula)", "Steel furniture", "Recliners", "Centre tables / teapoy", "Shoe racks / cabinets", "Pooja mandirs", "Crockery units & bookshelves", "Diwan cots & bolsters", "Bar stools", "Baby cradles (thottela)", "Folding tape cots & easy / rocking chairs", "Rugs, sofa covers & cushions", "Home decor"], "F"),
  ("Products & materials", "M", "list", "Which materials do you use?", "Is this pure teak?", ["Teak wood", "Sheesham / rosewood", "Other solid wood", "Plywood", "MDF / particle board", "Steel / metal", "Cane / rattan", "Plastic"], "F"),
  ("Products & materials", "I", "yes_no", "Do you make custom furniture to the customer's room size and design?", "Can you make a cot to my room size?", YN, "F"),
  ("Products & materials", "I", "text", "What price ranges do you have for cots, sofas, dining sets and wardrobes?", "How much is a 3+2 sofa?", [], "F"),
@@ -37,6 +37,12 @@ Q = [
  ("Products & materials", "O", "text", "Which polish do you use on wooden furniture (PU, melamine, matte or glossy), and does it resist water marks?", "Will water leave white marks?", [], "F"),
  ("Products & materials", "O", "options", "Do you make the furniture yourselves or buy it?", "Is this made in your own factory?", ["Our own factory / workshop", "Bought from manufacturers", "Both"], "F"),
  ("Products & materials", "O", "yes_no", "Do you have dressing tables with LED mirror lights and a cushion stool?", "Do you have a dressing table with lights?", YN, "F*"),
+ ("Products & materials", "O", "yes_no", "Can sofas be made with high legs (5–6 inch gap) so a mop or robot vacuum can clean under them?", "Can a robot vacuum go under this sofa?", YN, "F"),
+ ("Products & materials", "O", "yes_no", "Do you fit cots with strong bolts and rubber pads so they don't creak?", "Will the cot make noise?", YN, "F"),
+ ("Products & materials", "O", "yes_no", "Can you make a custom cushioned (tufted) headboard for cots?", "Can I get a soft headboard?", YN, "F"),
+ ("Products & materials", "O", "yes_no", "Do you have dining sets with chairs and a bench (for example 4 chairs + 1 bench)?", "Do you have a dining set with a bench?", YN, "F"),
+ ("Products & materials", "O", "yes_no", "Can steel almirahs be painted in a colour of the customer's choice or with a printed door?", "Can I get the almirah in blue?", YN, "F"),
+ ("Products & materials", "O", "yes_no", "Do you do interior woodwork at the customer's home (bedroom cupboards, modular kitchen) after taking measurements?", "Can you do our modular kitchen?", YN, "F"),
  ("Products & materials", "O", "yes_no", "Do you sell bean bags and bean refills?", "Do you have bean bag refills?", YN, "F"),
  ("Products & materials", "O", "yes_no", "Do you sell cloth drying stands and ironing boards?", "Do you have an ironing board?", YN, "F"),
  ("Products & materials", "O", "yes_no", "Do you sell branded furniture (for example Godrej, Nilkamal, Durian) along with local-made?", "Do you have Godrej almirahs?", YN, "F"),
@@ -44,6 +50,7 @@ Q = [
  ("Delivery & fitting", "I", "text", "How many days does delivery take for ready stock and for made-to-order furniture?", "When will it be delivered?", [], "F"),
  ("Delivery & fitting", "I", "yes_no", "Is fitting / installation by your carpenter free (including wall-mounting TV units)?", "Will you fix the cot at home?", YN, "F"),
  ("Delivery & fitting", "O", "yes_no", "Can customers book now and get delivery on a later date (for example gruhapravesam muhurtham), with the furniture kept safely in your godown?", "Can you deliver on our gruhapravesam day?", YN, "F"),
+ ("Delivery & fitting", "O", "yes_no", "Can you deliver on Sundays or after 7 pm for working customers?", "Can you deliver on Sunday?", YN, "F"),
  ("Delivery & fitting", "O", "yes_no", "Do you deliver to other towns and villages (outstation)?", "Can you send it to our village?", YN, "F"),
  ("Delivery & fitting", "O", "yes_no", "When customers shift house, do you send a carpenter to dismantle and refit furniture (paid)?", "Can you refit my cot in the new house?", YN, "F"),
  ("Delivery & fitting", "O", "options", "Who pays for carrying furniture upstairs when there is no lift?", "Is there a charge for the 3rd floor?", ["We pay", "Customer pays loading charges", "Free up to some floors"], "F"),
@@ -51,6 +58,7 @@ Q = [
 
  ("Prices & offers", "I", "yes_no", "Do you take old furniture in exchange for new?", "Will you take my old sofa?", YN, "F"),
  ("Prices & offers", "I", "text", "How much advance do you take for custom orders, and can the balance be paid on delivery?", "How much advance should I pay?", [], "F"),
+ ("Prices & offers", "O", "text", "Do you buy back furniture bought from you after 1–2 years (for bachelors or transferred employees)? At what value?", "Will you buy it back when I move?", [], "F"),
  ("Prices & offers", "O", "yes_no", "Do you give mattress, pillows and a waterproof protector as a combo with king (6x6) or queen (5x6) cots?", "Any mattress offer with the cot?", YN, "F"),
  ("Prices & offers", "O", "yes_no", "Can you give a GST invoice with the customer's company name and GSTIN (for example for a work-from-home claim)?", "Can you put my company's GST on the bill?", YN, "F"),
  ("Prices & offers", "O", "text", "Do you have wedding combo packages (cot, mattress, almirah, dressing table, sofa) at a special price?", "Any marriage furniture package?", [], "F"),

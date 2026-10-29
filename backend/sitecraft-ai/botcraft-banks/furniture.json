@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-29",
- "question_count": 50,
+ "question_count": 58,
  "questions": [
   {
    "id": "furniture-001",
@@ -34,6 +34,8 @@
     "Diwan cots & bolsters",
     "Bar stools",
     "Baby cradles (thottela)",
+    "Folding tape cots & easy / rocking chairs",
+    "Rugs, sofa covers & cushions",
     "Home decor"
    ]
   },
@@ -337,6 +339,78 @@
   {
    "id": "furniture-030",
    "category": "Products & materials",
+   "owner_question": "Can sofas be made with high legs (5–6 inch gap) so a mop or robot vacuum can clean under them?",
+   "customer_question": "Can a robot vacuum go under this sofa?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-031",
+   "category": "Products & materials",
+   "owner_question": "Do you fit cots with strong bolts and rubber pads so they don't creak?",
+   "customer_question": "Will the cot make noise?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-032",
+   "category": "Products & materials",
+   "owner_question": "Can you make a custom cushioned (tufted) headboard for cots?",
+   "customer_question": "Can I get a soft headboard?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-033",
+   "category": "Products & materials",
+   "owner_question": "Do you have dining sets with chairs and a bench (for example 4 chairs + 1 bench)?",
+   "customer_question": "Do you have a dining set with a bench?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-034",
+   "category": "Products & materials",
+   "owner_question": "Can steel almirahs be painted in a colour of the customer's choice or with a printed door?",
+   "customer_question": "Can I get the almirah in blue?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-035",
+   "category": "Products & materials",
+   "owner_question": "Do you do interior woodwork at the customer's home (bedroom cupboards, modular kitchen) after taking measurements?",
+   "customer_question": "Can you do our modular kitchen?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-036",
+   "category": "Products & materials",
    "owner_question": "Do you sell bean bags and bean refills?",
    "customer_question": "Do you have bean bag refills?",
    "priority": "optional",
@@ -347,7 +421,7 @@
    ]
   },
   {
-   "id": "furniture-031",
+   "id": "furniture-037",
    "category": "Products & materials",
    "owner_question": "Do you sell cloth drying stands and ironing boards?",
    "customer_question": "Do you have an ironing board?",
@@ -359,7 +433,7 @@
    ]
   },
   {
-   "id": "furniture-032",
+   "id": "furniture-038",
    "category": "Products & materials",
    "owner_question": "Do you sell branded furniture (for example Godrej, Nilkamal, Durian) along with local-made?",
    "customer_question": "Do you have Godrej almirahs?",
@@ -371,7 +445,7 @@
    ]
   },
   {
-   "id": "furniture-033",
+   "id": "furniture-039",
    "category": "Delivery & fitting",
    "owner_question": "Can customers book now and get delivery on a later date (for example gruhapravesam muhurtham), with the furniture kept safely in your godown?",
    "customer_question": "Can you deliver on our gruhapravesam day?",
@@ -383,7 +457,19 @@
    ]
   },
   {
-   "id": "furniture-034",
+   "id": "furniture-040",
+   "category": "Delivery & fitting",
+   "owner_question": "Can you deliver on Sundays or after 7 pm for working customers?",
+   "customer_question": "Can you deliver on Sunday?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-041",
    "category": "Delivery & fitting",
    "owner_question": "Do you deliver to other towns and villages (outstation)?",
    "customer_question": "Can you send it to our village?",
@@ -395,7 +481,7 @@
    ]
   },
   {
-   "id": "furniture-035",
+   "id": "furniture-042",
    "category": "Delivery & fitting",
    "owner_question": "When customers shift house, do you send a carpenter to dismantle and refit furniture (paid)?",
    "customer_question": "Can you refit my cot in the new house?",
@@ -407,7 +493,7 @@
    ]
   },
   {
-   "id": "furniture-036",
+   "id": "furniture-043",
    "category": "Delivery & fitting",
    "owner_question": "Who pays for carrying furniture upstairs when there is no lift?",
    "customer_question": "Is there a charge for the 3rd floor?",
@@ -420,7 +506,7 @@
    ]
   },
   {
-   "id": "furniture-037",
+   "id": "furniture-044",
    "category": "Delivery & fitting",
    "owner_question": "If furniture is scratched or damaged in delivery, do you replace it or repair / polish it free?",
    "customer_question": "There is a scratch, what will you do?",
@@ -428,7 +514,15 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-038",
+   "id": "furniture-045",
+   "category": "Prices & offers",
+   "owner_question": "Do you buy back furniture bought from you after 1–2 years (for bachelors or transferred employees)? At what value?",
+   "customer_question": "Will you buy it back when I move?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-046",
    "category": "Prices & offers",
    "owner_question": "Do you give mattress, pillows and a waterproof protector as a combo with king (6x6) or queen (5x6) cots?",
    "customer_question": "Any mattress offer with the cot?",
@@ -440,7 +534,7 @@
    ]
   },
   {
-   "id": "furniture-039",
+   "id": "furniture-047",
    "category": "Prices & offers",
    "owner_question": "Can you give a GST invoice with the customer's company name and GSTIN (for example for a work-from-home claim)?",
    "customer_question": "Can you put my company's GST on the bill?",
@@ -452,7 +546,7 @@
    ]
   },
   {
-   "id": "furniture-040",
+   "id": "furniture-048",
    "category": "Prices & offers",
    "owner_question": "Do you have wedding combo packages (cot, mattress, almirah, dressing table, sofa) at a special price?",
    "customer_question": "Any marriage furniture package?",
@@ -460,7 +554,7 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-041",
+   "id": "furniture-049",
    "category": "Prices & offers",
    "owner_question": "Do you supply in bulk to offices, schools and hostels with wholesale prices and GST invoices?",
    "customer_question": "Can you supply 50 chairs for our school?",
@@ -468,7 +562,7 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-042",
+   "id": "furniture-050",
    "category": "Prices & offers",
    "owner_question": "Is GST included in your prices or added on the bill?",
    "customer_question": "Is GST extra?",
@@ -480,7 +574,7 @@
    ]
   },
   {
-   "id": "furniture-043",
+   "id": "furniture-051",
    "category": "Warranty & service",
    "owner_question": "Do you repair office chairs (gas lift, wheels, base) and fit spare parts?",
    "customer_question": "My chair's wheel broke, can you fix it?",
@@ -492,7 +586,7 @@
    ]
   },
   {
-   "id": "furniture-044",
+   "id": "furniture-052",
    "category": "Warranty & service",
    "owner_question": "Do you make custom-size mattresses for old cots?",
    "customer_question": "Can you make a mattress for my old cot size?",
@@ -504,7 +598,7 @@
    ]
   },
   {
-   "id": "furniture-045",
+   "id": "furniture-053",
    "category": "Warranty & service",
    "owner_question": "If a mattress feels too hard or soft at home, can it be exchanged within some days (cover not torn)?",
    "customer_question": "Can I change the mattress if it's too hard?",
@@ -512,7 +606,7 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-046",
+   "id": "furniture-054",
    "category": "Warranty & service",
    "owner_question": "Do you do paid re-polishing, sofa re-upholstery or cushion changes later?",
    "customer_question": "Can you redo my old sofa?",
@@ -524,7 +618,7 @@
    ]
   },
   {
-   "id": "furniture-047",
+   "id": "furniture-055",
    "category": "Shop & service",
    "owner_question": "Can customers see and sit on the furniture in your showroom?",
    "customer_question": "Can I try the sofa in the shop?",
@@ -536,7 +630,7 @@
    ]
   },
   {
-   "id": "furniture-048",
+   "id": "furniture-056",
    "category": "Shop & service",
    "owner_question": "Can you send photos or a video call to show designs before buying?",
    "customer_question": "Can you send me sofa photos?",
@@ -548,7 +642,7 @@
    ]
   },
   {
-   "id": "furniture-049",
+   "id": "furniture-057",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -564,7 +658,7 @@
    ]
   },
   {
-   "id": "furniture-050",
+   "id": "furniture-058",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
