@@ -148,6 +148,13 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
 - **Photos are stored in D1** (`botcraft_photos`) for now, because R2 needs a card. Only `botcraft-store.js` touches them, so moving to R2 later changes nothing else. Photos sent for the shop front / owner photo in the setup chat are saved too.
 - **Customer page:** main photo at the top, Chat / Products / Photos tabs, product search, product sheet with **Ask about this** (the question carries the product, so "idhi" means that item).
 
+## 10c. Owner guidance and customer-question notifications (built October 2026)
+
+- When the bot is ready, the bot card tells the owner that "Manage my bot" is their owner page and every change shows in the customer bot right away, with a "How do I update my bot?" dropdown (step by step) and the note: the more detail you give, the more detailed answers customers get. The owner page shows the same help.
+- When the assistant cannot answer a customer's question about the shop, the question is saved (grouped if asked again) and shown on the owner page under **Customer questions** with a count badge; the setup chat's bot card also shows "🔔 N customer questions waiting". The owner writes the answer once (the bot uses it from then on, also offline) or dismisses it. The owner page refreshes every minute while open.
+- The assistant never invents a "no": if the information is missing it says it is not sure and points to the counter.
+- Phone push notifications (when the page is closed) come later, with sign-in.
+
 ## 11. Open questions
 
 - Owner login method: phone OTP or email?

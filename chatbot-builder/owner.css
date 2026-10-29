@@ -52,3 +52,14 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visib
 .badge { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 999px; padding: 2px 8px; margin-left: 6px; background: var(--danger); color: #fff; vertical-align: middle; }
 .item-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .empty { color: var(--soft); font-size: 13px; }
+.help-card p { margin: 0 0 8px; font-size: 13.5px; line-height: 1.5; }
+.help-card summary, .answered summary { cursor: pointer; font-weight: 600; font-size: 13.5px; margin-bottom: 6px; }
+.help-card ol { margin: 6px 0 10px; padding-left: 20px; display: grid; gap: 5px; font-size: 13px; line-height: 1.5; }
+.count-badge { display: inline-block; min-width: 22px; text-align: center; font-size: 12px; font-weight: 700; border-radius: 999px; padding: 2px 8px; background: var(--danger); color: #fff; vertical-align: middle; }
+.count-badge[hidden] { display: none; }
+.questions { display: grid; gap: 10px; margin-bottom: 10px; }
+.question { border: 1px solid var(--border); border-radius: 14px; padding: 12px; display: grid; gap: 8px; }
+.question-text { font-weight: 600; font-size: 14px; }
+.question-meta { font-size: 12px; color: var(--soft); }
+.question .row textarea { flex: 1 1 240px; min-width: 0; }
+.question-answer { font-size: 13px; }

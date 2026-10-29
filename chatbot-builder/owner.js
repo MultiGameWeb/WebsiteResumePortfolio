@@ -30,7 +30,7 @@ function element(tag, className, text) {
 }
 
 async function call(action, data = {}) {
-  showStatus('Saving…');
+  if (action !== 'load') showStatus('Saving…');
   try {
     const response = await fetch(`${API_BASE}/api/botcraft/owner`, {
       method: 'POST',
@@ -163,6 +163,46 @@ function renderItems() {
   }));
 }
 
+function questionCard(question, answered) {
+  const card = element('article', 'question');
+  card.append(element('div', 'question-text', `“${question.question}”`));
+  const meta = [`Asked ${question.times} time${question.times === 1 ? '' : 's'}`, question.product && `about ${question.product}`, new Date(question.last_at).toLocaleDateString()].filter(Boolean).join(' · ');
+  card.append(element('div', 'question-meta', meta));
+  if (answered) {
+    card.append(element('div', 'question-answer', `Your answer: ${question.answer}`));
+    return card;
+  }
+  const row = element('div', 'row');
+  const answer = element('textarea');
+  answer.rows = 2;
+  answer.maxLength = 600;
+  answer.placeholder = 'Write the answer for your customers';
+  answer.setAttribute('aria-label', `Answer for: ${question.question}`);
+  const save = element('button', 'btn', 'Save answer');
+  save.type = 'button';
+  save.addEventListener('click', () => {
+    if (answer.value.trim()) call('answer_question', { qKey: question.q_key, answer: answer.value.trim() });
+  });
+  const dismiss = element('button', 'btn btn-light', 'Dismiss');
+  dismiss.type = 'button';
+  dismiss.addEventListener('click', () => call('dismiss_question', { qKey: question.q_key }));
+  row.append(answer, save, dismiss);
+  card.append(row);
+  return card;
+}
+
+function renderQuestions() {
+  const open = view.questions || [];
+  const badge = $('#questionCount');
+  badge.hidden = !open.length;
+  badge.textContent = String(open.length);
+  document.title = open.length ? `(${open.length}) Manage my bot · BotCraft` : 'Manage my bot · BotCraft';
+  $('#questionList').replaceChildren(...(open.length ? open.map((q) => questionCard(q, false)) : [element('p', 'empty', 'No new questions. 🎉')]));
+  const answered = view.answeredQuestions || [];
+  $('#answeredCount').textContent = String(answered.length);
+  $('#answeredList').replaceChildren(...answered.map((q) => questionCard(q, true)));
+}
+
 function render() {
   $('#sections').hidden = false;
   $('#shopName').textContent = view.shopName || 'Your shop';
@@ -172,6 +212,7 @@ function render() {
   const openBot = $('#openBot');
   openBot.hidden = !view.publicId;
   if (view.publicId) openBot.href = new URL(`../salesbot/?s=${encodeURIComponent(view.publicId)}`, window.location.href).href;
+  renderQuestions();
   renderPhotos();
   renderItems();
 }
@@ -217,4 +258,11 @@ $('#botNameForm').addEventListener('submit', (event) => {
 });
 
 if (!shopId) showStatus('No bot found in this browser. Create your bot in the setup chat first.');
-else call('load');
+else {
+  call('load');
+  // New customer questions show up while the page is open, unless the owner is typing.
+  window.setInterval(() => {
+    const typing = document.activeElement?.matches('input, textarea') || !$('#itemForm').hidden;
+    if (!document.hidden && !typing) call('load');
+  }, 60000);
+}

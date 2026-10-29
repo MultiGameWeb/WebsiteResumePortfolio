@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./owner.css?v=1">
+  <link rel="stylesheet" href="./owner.css?v=2">
 </head>
 <body>
   <div class="owner-app">
@@ -25,6 +25,32 @@
     </header>
     <p class="status" id="status" role="status" hidden></p>
     <main id="sections" hidden>
+      <section class="card help-card">
+        <p><strong>This is your owner page.</strong> Every change you make here shows in your customer bot right away — no need to print the QR code again.</p>
+        <details>
+          <summary>How do I update my bot?</summary>
+          <ol>
+            <li>New item: Items → "+ Add item" → name, price, details and a photo → "Save item".</li>
+            <li>Price changed: find the item → "Edit" → change the price → "Save item".</li>
+            <li>Item finished: "Mark out of stock". When it is back, "Mark in stock".</li>
+            <li>Photos: add your main shop photo, your photo and up to 10 gallery photos.</li>
+            <li>Customer questions: answer the questions your bot could not answer. From then on the bot uses your answer.</li>
+            <li>Offers, timings or any other detail: tell BotCraft in the setup chat (for example "Sunday also open").</li>
+          </ol>
+        </details>
+        <p class="muted">💡 The more detail you give (prices, sizes, materials, policies), the more detailed answers your customers get.</p>
+      </section>
+
+      <section class="card" id="questions">
+        <h2>Customer questions <span class="count-badge" id="questionCount" hidden></span></h2>
+        <p class="muted">Questions your bot could not answer. Write the answer once and the bot uses it from then on.</p>
+        <div class="questions" id="questionList"></div>
+        <details class="answered">
+          <summary>Answered questions (<span id="answeredCount">0</span>)</summary>
+          <div class="questions" id="answeredList"></div>
+        </details>
+      </section>
+
       <section class="card">
         <h2>Bot name</h2>
         <p class="muted">Customers see this name. Leave it empty to use <strong id="defaultName"></strong>.</p>
@@ -75,6 +101,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=2"></script>
+  <script type="module" src="./owner.js?v=3"></script>
 </body>
 </html>
