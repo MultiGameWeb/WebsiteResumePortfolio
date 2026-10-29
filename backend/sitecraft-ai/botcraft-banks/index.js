@@ -8,11 +8,12 @@ import bank_computer_shop from "./computer_shop.json" with { type: "json" };
 import bank_electrical_hardware from "./electrical_hardware.json" with { type: "json" };
 import bank_fast_food from "./fast_food.json" with { type: "json" };
 import bank_footwear from "./footwear.json" with { type: "json" };
+import bank_fruits_vegetables from "./fruits_vegetables.json" with { type: "json" };
 import bank_furniture from "./furniture.json" with { type: "json" };
-import bank_grocery from "./grocery.json" with { type: "json" };
 import bank_imitation_jewellery from "./imitation_jewellery.json" with { type: "json" };
 import bank_jewellery from "./jewellery.json" with { type: "json" };
 import bank_kids_wear from "./kids_wear.json" with { type: "json" };
+import bank_kirana from "./kirana.json" with { type: "json" };
 import bank_mobile_shop from "./mobile_shop.json" with { type: "json" };
 import bank_optical from "./optical.json" with { type: "json" };
 import bank_pharmacy from "./pharmacy.json" with { type: "json" };
@@ -21,6 +22,7 @@ import bank_restaurant from "./restaurant.json" with { type: "json" };
 import bank_salon from "./salon.json" with { type: "json" };
 import bank_saree_textiles from "./saree_textiles.json" with { type: "json" };
 import bank_spa from "./spa.json" with { type: "json" };
+import bank_supermarket from "./supermarket.json" with { type: "json" };
 import bank_tiffin_centre from "./tiffin_centre.json" with { type: "json" };
 
 export const QUESTION_BANKS = {
@@ -33,11 +35,12 @@ export const QUESTION_BANKS = {
   "electrical_hardware": bank_electrical_hardware,
   "fast_food": bank_fast_food,
   "footwear": bank_footwear,
+  "fruits_vegetables": bank_fruits_vegetables,
   "furniture": bank_furniture,
-  "grocery": bank_grocery,
   "imitation_jewellery": bank_imitation_jewellery,
   "jewellery": bank_jewellery,
   "kids_wear": bank_kids_wear,
+  "kirana": bank_kirana,
   "mobile_shop": bank_mobile_shop,
   "optical": bank_optical,
   "pharmacy": bank_pharmacy,
@@ -46,5 +49,6 @@ export const QUESTION_BANKS = {
   "salon": bank_salon,
   "saree_textiles": bank_saree_textiles,
   "spa": bank_spa,
+  "supermarket": bank_supermarket,
   "tiffin_centre": bank_tiffin_centre
 };
