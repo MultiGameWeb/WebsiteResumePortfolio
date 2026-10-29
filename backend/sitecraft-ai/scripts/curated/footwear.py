@@ -23,23 +23,27 @@ Q = [
  ("Products & brands", "O", "text", "Which of your footwear is single-moulded (PU) and which is pasted, and which lasts longer?", "Is this sole pasted?", [], "F"),
  ("Products & brands", "O", "yes_no", "Do you have new trending models (white sneakers, loafers, Korean ankle boots, chunky sneakers)?", "Do you have white sneakers?", YN, "F*"),
 
- ("Comfort & health", "I", "list", "Which comfort / doctor footwear do you have?", "Do you have diabetic chappals?", ["Diabetic (MCR / MCP)", "Heel-pain ortho slippers", "Arch support (flat foot)", "Memory foam", "Slip-on / velcro for elders", "Comfort sandals for pregnancy", "Ultra-light (EVA)", "Wide-fit (broad feet, bunions)", "Fancy-looking doctor sandals"], "F"),
+ ("Comfort & health", "I", "list", "Which comfort / doctor footwear do you have?", "Do you have diabetic chappals?", ["Diabetic (MCR / MCP)", "Heel-pain ortho slippers", "Arch support (flat foot)", "Memory foam", "Slip-on / velcro for elders", "Comfort sandals for pregnancy", "Ultra-light (EVA)", "Wide-fit (broad feet, bunions)", "Fancy-looking doctor sandals", "Cross-strap chappals (no toe-post)"], "F"),
  ("Comfort & health", "O", "yes_no", "Do you sell or fit extra insoles and silicone heel cups (for loose shoes or heel pain)?", "Do you have heel pads?", YN, "F"),
 
  ("Ladies & bridal", "I", "list", "Which ladies' footwear do you have?", "Do you have block heels?", ["Bridal heels & wedges (stones, pearls)", "Block / platform heels", "Flats & ballerinas", "Punjabi juttis", "Cut shoes & soft sneakers", "Metallic party colours (gold, silver, rose gold, copper)", "Jelly bellies & waterproof sandals"], "F"),
+ ("Ladies & bridal", "O", "text", "Do gold / silver party-wear colours fade quickly? Any guarantee?", "Will the gold colour fade?", [], "F"),
  ("Ladies & bridal", "O", "yes_no", "Are stones and work on fancy footwear fixed firmly so they don't fall off?", "Will the stones come off?", YN, "F"),
- ("Ladies & bridal", "O", "yes_no", "Do you tighten back straps or punch extra buckle holes at the shop?", "Can you make the strap tighter?", YN, "F"),
+ ("Ladies & bridal", "O", "yes_no", "Do you tighten back straps, punch extra buckle holes or replace worn heel tips at the shop?", "Can you change my heel tip?", YN, "F"),
 
- ("Kids & school", "I", "list", "Which kids' footwear do you have?", "Do you have school shoes?", ["Black school shoes (all sizes)", "White canvas / sports school shoes", "Velcro school shoes", "Squeaky & LED shoes for toddlers", "Back-strap sandals & clogs"], "F"),
+ ("Kids & school", "I", "list", "Which kids' footwear do you have?", "Do you have school shoes?", ["Black school shoes (all sizes)", "White canvas / sports school shoes", "Velcro school shoes", "Squeaky & LED shoes for toddlers", "Back-strap sandals & clogs", "Dance shoes & gajjela chappals", "Roller / inline skates & safety gear"], "F"),
  ("Kids & school", "O", "yes_no", "If a child can't come, can customers bring an old shoe as the size reference?", "Can I bring his old shoe for size?", YN, "F"),
 
  ("Warranty & repairs", "I", "text", "If a sole comes unpasted or stitching breaks within a few months (or leather cracks), do you repair or replace it free? For how long?", "The sole came off in 2 months, what now?", [], "F"),
  ("Warranty & repairs", "O", "yes_no", "Do you add side stitching to leather footwear so the sole lasts longer?", "Can you stitch the sole?", YN, "F"),
 
- ("Accessories", "O", "list", "Which accessories do you sell?", "Do you have shoe polish?", ["Socks (cotton, ankle, formal, school)", "Shoe polish, whitener & brushes", "Sneaker cleaner & shoe deodorant", "Shoe laces", "Shoe horns", "Belts, wallets & handbags"], "F"),
+ ("Accessories", "O", "list", "Which accessories do you sell?", "Do you have shoe polish?", ["Socks (cotton, ankle, formal, school)", "Shoe polish, whitener & brushes", "Sneaker cleaner, shoe deodorant, anti-fungal powder & odour balls", "Suede / nubuck brushes & protector spray", "Shoe laces", "Shoe horns", "Belts, wallets & handbags"], "F"),
 
  ("Prices & service", "I", "options", "Do you sell at MRP or give a discount on MRP?", "Any discount on MRP?", ["At MRP", "Flat discount on MRP", "Depends on the brand"], "F"),
  ("Prices & service", "I", "yes_no", "If a customer tells their size on WhatsApp (for example UK 7), do you send photos of models in that size?", "Can you send size 8 models on WhatsApp?", YN, "F"),
+ ("Prices & service", "O", "yes_no", "Do you check UK vs Euro sizes for each brand so the customer gets the right fit?", "Is size 7 the same as 41?", YN, "F"),
+ ("Prices & service", "O", "yes_no", "Do you give a wholesale rate for 20–50 pairs at once (for example vayanam gifts)?", "Any rate for 30 pairs?", YN, "F"),
+ ("Prices & service", "O", "text", "Which sole lasts longest for daily walking (EVA, rubber, TPR)?", "Which sole is best for walking?", [], "F"),
  ("Prices & service", "O", "options", "Are your prices fixed, or can customers bargain?", "Can you reduce the price?", ["Fixed price", "Bargaining allowed", "Fixed on branded, bargain on local"], "F"),
  ("Prices & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "F"),
  ("Prices & service", "O", "text", "Please share your Instagram page and Google reviews link, if you have them.", "Do you have Instagram?", [], "F"),

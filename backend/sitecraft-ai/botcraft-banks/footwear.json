@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-29",
- "question_count": 26,
+ "question_count": 30,
  "questions": [
   {
    "id": "footwear-001",
@@ -108,7 +108,8 @@
     "Comfort sandals for pregnancy",
     "Ultra-light (EVA)",
     "Wide-fit (broad feet, bunions)",
-    "Fancy-looking doctor sandals"
+    "Fancy-looking doctor sandals",
+    "Cross-strap chappals (no toe-post)"
    ]
   },
   {
@@ -140,7 +141,9 @@
     "White canvas / sports school shoes",
     "Velcro school shoes",
     "Squeaky & LED shoes for toddlers",
-    "Back-strap sandals & clogs"
+    "Back-strap sandals & clogs",
+    "Dance shoes & gajjela chappals",
+    "Roller / inline skates & safety gear"
    ]
   },
   {
@@ -236,6 +239,14 @@
   {
    "id": "footwear-019",
    "category": "Ladies & bridal",
+   "owner_question": "Do gold / silver party-wear colours fade quickly? Any guarantee?",
+   "customer_question": "Will the gold colour fade?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-020",
+   "category": "Ladies & bridal",
    "owner_question": "Are stones and work on fancy footwear fixed firmly so they don't fall off?",
    "customer_question": "Will the stones come off?",
    "priority": "optional",
@@ -246,10 +257,10 @@
    ]
   },
   {
-   "id": "footwear-020",
+   "id": "footwear-021",
    "category": "Ladies & bridal",
-   "owner_question": "Do you tighten back straps or punch extra buckle holes at the shop?",
-   "customer_question": "Can you make the strap tighter?",
+   "owner_question": "Do you tighten back straps, punch extra buckle holes or replace worn heel tips at the shop?",
+   "customer_question": "Can you change my heel tip?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -258,7 +269,7 @@
    ]
   },
   {
-   "id": "footwear-021",
+   "id": "footwear-022",
    "category": "Kids & school",
    "owner_question": "If a child can't come, can customers bring an old shoe as the size reference?",
    "customer_question": "Can I bring his old shoe for size?",
@@ -270,7 +281,7 @@
    ]
   },
   {
-   "id": "footwear-022",
+   "id": "footwear-023",
    "category": "Warranty & repairs",
    "owner_question": "Do you add side stitching to leather footwear so the sole lasts longer?",
    "customer_question": "Can you stitch the sole?",
@@ -282,7 +293,7 @@
    ]
   },
   {
-   "id": "footwear-023",
+   "id": "footwear-024",
    "category": "Accessories",
    "owner_question": "Which accessories do you sell?",
    "customer_question": "Do you have shoe polish?",
@@ -291,14 +302,47 @@
    "options": [
     "Socks (cotton, ankle, formal, school)",
     "Shoe polish, whitener & brushes",
-    "Sneaker cleaner & shoe deodorant",
+    "Sneaker cleaner, shoe deodorant, anti-fungal powder & odour balls",
+    "Suede / nubuck brushes & protector spray",
     "Shoe laces",
     "Shoe horns",
     "Belts, wallets & handbags"
    ]
   },
   {
-   "id": "footwear-024",
+   "id": "footwear-025",
+   "category": "Prices & service",
+   "owner_question": "Do you check UK vs Euro sizes for each brand so the customer gets the right fit?",
+   "customer_question": "Is size 7 the same as 41?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-026",
+   "category": "Prices & service",
+   "owner_question": "Do you give a wholesale rate for 20–50 pairs at once (for example vayanam gifts)?",
+   "customer_question": "Any rate for 30 pairs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "footwear-027",
+   "category": "Prices & service",
+   "owner_question": "Which sole lasts longest for daily walking (EVA, rubber, TPR)?",
+   "customer_question": "Which sole is best for walking?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "footwear-028",
    "category": "Prices & service",
    "owner_question": "Are your prices fixed, or can customers bargain?",
    "customer_question": "Can you reduce the price?",
@@ -311,7 +355,7 @@
    ]
   },
   {
-   "id": "footwear-025",
+   "id": "footwear-029",
    "category": "Prices & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -327,7 +371,7 @@
    ]
   },
   {
-   "id": "footwear-026",
+   "id": "footwear-030",
    "category": "Prices & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
