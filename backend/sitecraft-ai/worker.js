@@ -116,6 +116,8 @@ async function getStorageAsset(env, siteId, assetId) {
   ).bind(assetId, siteId).first();
 }
 
+export { GeminiUsProxy } from "./gemini-proxy.js";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);

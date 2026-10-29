@@ -17,7 +17,7 @@
  *   attachments?: ChatAttachment[], error?: string }} ChatMessage
  * @typedef {{ type: 'message' | 'quick-option' | 'attachment' | 'retry',
  *   text?: string, option?: QuickOption, attachments?: ChatAttachment[],
- *   formAnswers?: { id: string, value: string }[],
+ *   formAnswers?: { id: string, value: string }[], language?: string,
  *   retryOf?: string }} ChatAction
  */
 export {};

@@ -18,5 +18,16 @@ database_id = "53b8dd82-40ff-424a-bbf1-29a51a1f9cf2"
 [placement]
 region = "gcp:us-central1"
 
+# The placement hint is not guaranteed, so Gemini requests that still get the
+# location error are retried through a Durable Object pinned to the US
+# (gemini-proxy.js). SQLite-backed, so it works on the Workers Free plan.
+[[durable_objects.bindings]]
+name = "GEMINI_US_PROXY"
+class_name = "GeminiUsProxy"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["GeminiUsProxy"]
+
 [vars]
 GEMINI_MODEL = "gemini-3.8-flash"

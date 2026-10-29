@@ -1,3 +1,5 @@
+import { geminiUsProxy } from "./gemini-proxy.js";
+
 const DEFAULT_MODEL = "gemini-3.8-flash";
 const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504]);
 
@@ -8,6 +10,12 @@ const KEY_ENV = {
   4: "GEMINI_API_KEY_4",
   5: "GEMINI_API_KEY_5"
 };
+
+// After Gemini rejects this Worker's location, send requests through the US
+// proxy for a while instead of failing first every time (per isolate).
+const LOCATION_ERROR = /location is not supported/i;
+const PROXY_FOR_MS = 10 * 60 * 1000;
+let proxyUntil = 0;
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -71,17 +79,22 @@ export async function callGemini(env, keySlot, {
   if (tools) body.tools = tools;
 
   let lastError = null;
+  const proxy = geminiUsProxy(env);
+  let triedProxy = false;
 
   for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
-    const response = await fetch(endpoint, {
+    const viaProxy = Boolean(proxy) && (triedProxy || Date.now() < proxyUntil);
+    const init = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "x-goog-api-key": apiKey
       },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(timeoutMs)
-    });
+      body: JSON.stringify(body)
+    };
+    const response = viaProxy
+      ? await proxy.fetch(endpoint, init)
+      : await fetch(endpoint, { ...init, signal: AbortSignal.timeout(timeoutMs) });
 
     if (response.ok) {
       const raw = await response.text();
@@ -112,6 +125,14 @@ export async function callGemini(env, keySlot, {
 
     const detail = await readError(response);
     lastError = new Error(`Gemini HTTP ${response.status}: ${detail}`);
+
+    // Wrong Cloudflare location: retry once at once through the US proxy.
+    if (response.status === 400 && LOCATION_ERROR.test(detail) && proxy && !viaProxy && !triedProxy) {
+      triedProxy = true;
+      proxyUntil = Date.now() + PROXY_FOR_MS;
+      attempt -= 1;
+      continue;
+    }
 
     if (!RETRYABLE_STATUS.has(response.status) || attempt === maxAttempts - 1) {
       throw lastError;
