@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-29",
- "question_count": 28,
+ "question_count": 50,
  "questions": [
   {
    "id": "furniture-001",
@@ -19,12 +19,21 @@
     "Dining tables",
     "Wardrobes / almirahs (beeruva)",
     "Mattresses",
-    "Office chairs & tables",
+    "Office chairs, tables & reception counters",
     "TV units",
     "Dressing tables",
-    "Kids' furniture",
+    "Kids' furniture (bunk beds, study tables)",
     "Outdoor & plastic furniture",
+    "Swings (jhula)",
     "Steel furniture",
+    "Recliners",
+    "Centre tables / teapoy",
+    "Shoe racks / cabinets",
+    "Pooja mandirs",
+    "Crockery units & bookshelves",
+    "Diwan cots & bolsters",
+    "Bar stools",
+    "Baby cradles (thottela)",
     "Home decor"
    ]
   },
@@ -109,7 +118,7 @@
   {
    "id": "furniture-009",
    "category": "Delivery & fitting",
-   "owner_question": "Is fitting / installation by your carpenter free?",
+   "owner_question": "Is fitting / installation by your carpenter free (including wall-mounting TV units)?",
    "customer_question": "Will you fix the cot at home?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -132,6 +141,14 @@
   },
   {
    "id": "furniture-011",
+   "category": "Prices & offers",
+   "owner_question": "How much advance do you take for custom orders, and can the balance be paid on delivery?",
+   "customer_question": "How much advance should I pay?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-012",
    "category": "Warranty & service",
    "owner_question": "What warranty do you give on furniture (frame, wood, foam, fittings)?",
    "customer_question": "Is there a warranty?",
@@ -139,7 +156,7 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-012",
+   "id": "furniture-013",
    "category": "Products & materials",
    "owner_question": "Which orthopaedic or memory-foam mattress brands do you have for back pain?",
    "customer_question": "Which mattress is good for back pain?",
@@ -147,7 +164,7 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-013",
+   "id": "furniture-014",
    "category": "Products & materials",
    "owner_question": "Do your cots have storage (hydraulic lift or box)? Is there a warranty on the hydraulic pumps?",
    "customer_question": "Does this cot have storage?",
@@ -159,9 +176,9 @@
    ]
   },
   {
-   "id": "furniture-014",
+   "id": "furniture-015",
    "category": "Products & materials",
-   "owner_question": "Do you have ergonomic office chairs and computer tables for long sitting / work from home?",
+   "owner_question": "Do you have ergonomic office chairs and computer tables (cable holes, lockable drawers) for long sitting / work from home? From what price?",
    "customer_question": "Do you have a chair for back support?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -171,7 +188,7 @@
    ]
   },
   {
-   "id": "furniture-015",
+   "id": "furniture-016",
    "category": "Products & materials",
    "owner_question": "Which brands of locks, hinges and drawer channels do you use in wardrobes, and do you service them?",
    "customer_question": "Are the hinges good quality?",
@@ -179,7 +196,7 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-016",
+   "id": "furniture-017",
    "category": "Products & materials",
    "owner_question": "Which dining-table tops do you offer (marble, onyx, toughened glass, wood), and which lasts longest?",
    "customer_question": "Is a glass top strong?",
@@ -187,9 +204,9 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-017",
+   "id": "furniture-018",
    "category": "Products & materials",
-   "owner_question": "Do you have space-saving furniture (sofa-cum-bed, folding dining table, bunk beds)?",
+   "owner_question": "Do you have space-saving furniture (sofa-cum-bed, folding cots and study tables, folding dining table, bunk beds)? From what price?",
    "customer_question": "Do you have a sofa-cum-bed?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -199,7 +216,150 @@
    ]
   },
   {
-   "id": "furniture-018",
+   "id": "furniture-019",
+   "category": "Products & materials",
+   "owner_question": "What wood is used inside sofa frames (neem, pine, teak)? Can you show frame photos?",
+   "customer_question": "What is inside this sofa?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-020",
+   "category": "Products & materials",
+   "owner_question": "What is under your sofa seats?",
+   "customer_question": "Does this sofa have springs?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Pocket / zig-zag springs",
+    "Webbing belts",
+    "Both, by model"
+   ]
+  },
+  {
+   "id": "furniture-021",
+   "category": "Products & materials",
+   "owner_question": "What is the bed base made of (for example 18 mm plywood or thin MDF)? Is it strong if children jump on it?",
+   "customer_question": "Will the cot break if kids jump?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-022",
+   "category": "Products & materials",
+   "owner_question": "Do you have easy-clean or water-resistant sofa fabric, and removable zip covers that can be washed?",
+   "customer_question": "Can I wash the sofa covers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-023",
+   "category": "Products & materials",
+   "owner_question": "Can L-shape sofas be set for a left or right corner (interchangeable lounger)?",
+   "customer_question": "Can the L-shape go on the left?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-024",
+   "category": "Products & materials",
+   "owner_question": "Are your dining chairs sturdy (strong joints for heavy people), and can the cushions be replaced?",
+   "customer_question": "Will the chairs wobble?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-025",
+   "category": "Products & materials",
+   "owner_question": "Which wardrobes do you have: steel almirahs (Godrej, Triveni), wooden sliding wardrobes, with internal locker and full-length mirror?",
+   "customer_question": "Do you have an almirah with a locker?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-026",
+   "category": "Products & materials",
+   "owner_question": "Are your beds and wardrobes knock-down (bolt fitting), easy to open and refit when shifting house?",
+   "customer_question": "Can I take this apart when I shift?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-027",
+   "category": "Products & materials",
+   "owner_question": "Which polish do you use on wooden furniture (PU, melamine, matte or glossy), and does it resist water marks?",
+   "customer_question": "Will water leave white marks?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-028",
+   "category": "Products & materials",
+   "owner_question": "Do you make the furniture yourselves or buy it?",
+   "customer_question": "Is this made in your own factory?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Our own factory / workshop",
+    "Bought from manufacturers",
+    "Both"
+   ]
+  },
+  {
+   "id": "furniture-029",
+   "category": "Products & materials",
+   "owner_question": "Do you have dressing tables with LED mirror lights and a cushion stool?",
+   "customer_question": "Do you have a dressing table with lights?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "furniture-030",
+   "category": "Products & materials",
+   "owner_question": "Do you sell bean bags and bean refills?",
+   "customer_question": "Do you have bean bag refills?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-031",
+   "category": "Products & materials",
+   "owner_question": "Do you sell cloth drying stands and ironing boards?",
+   "customer_question": "Do you have an ironing board?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-032",
    "category": "Products & materials",
    "owner_question": "Do you sell branded furniture (for example Godrej, Nilkamal, Durian) along with local-made?",
    "customer_question": "Do you have Godrej almirahs?",
@@ -211,7 +371,43 @@
    ]
   },
   {
-   "id": "furniture-019",
+   "id": "furniture-033",
+   "category": "Delivery & fitting",
+   "owner_question": "Can customers book now and get delivery on a later date (for example gruhapravesam muhurtham), with the furniture kept safely in your godown?",
+   "customer_question": "Can you deliver on our gruhapravesam day?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-034",
+   "category": "Delivery & fitting",
+   "owner_question": "Do you deliver to other towns and villages (outstation)?",
+   "customer_question": "Can you send it to our village?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-035",
+   "category": "Delivery & fitting",
+   "owner_question": "When customers shift house, do you send a carpenter to dismantle and refit furniture (paid)?",
+   "customer_question": "Can you refit my cot in the new house?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-036",
    "category": "Delivery & fitting",
    "owner_question": "Who pays for carrying furniture upstairs when there is no lift?",
    "customer_question": "Is there a charge for the 3rd floor?",
@@ -224,7 +420,7 @@
    ]
   },
   {
-   "id": "furniture-020",
+   "id": "furniture-037",
    "category": "Delivery & fitting",
    "owner_question": "If furniture is scratched or damaged in delivery, do you replace it or repair / polish it free?",
    "customer_question": "There is a scratch, what will you do?",
@@ -232,7 +428,31 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-021",
+   "id": "furniture-038",
+   "category": "Prices & offers",
+   "owner_question": "Do you give mattress, pillows and a waterproof protector as a combo with king (6x6) or queen (5x6) cots?",
+   "customer_question": "Any mattress offer with the cot?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-039",
+   "category": "Prices & offers",
+   "owner_question": "Can you give a GST invoice with the customer's company name and GSTIN (for example for a work-from-home claim)?",
+   "customer_question": "Can you put my company's GST on the bill?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-040",
    "category": "Prices & offers",
    "owner_question": "Do you have wedding combo packages (cot, mattress, almirah, dressing table, sofa) at a special price?",
    "customer_question": "Any marriage furniture package?",
@@ -240,7 +460,7 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-022",
+   "id": "furniture-041",
    "category": "Prices & offers",
    "owner_question": "Do you supply in bulk to offices, schools and hostels with wholesale prices and GST invoices?",
    "customer_question": "Can you supply 50 chairs for our school?",
@@ -248,7 +468,7 @@
    "answer_type": "text"
   },
   {
-   "id": "furniture-023",
+   "id": "furniture-042",
    "category": "Prices & offers",
    "owner_question": "Is GST included in your prices or added on the bill?",
    "customer_question": "Is GST extra?",
@@ -260,7 +480,39 @@
    ]
   },
   {
-   "id": "furniture-024",
+   "id": "furniture-043",
+   "category": "Warranty & service",
+   "owner_question": "Do you repair office chairs (gas lift, wheels, base) and fit spare parts?",
+   "customer_question": "My chair's wheel broke, can you fix it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-044",
+   "category": "Warranty & service",
+   "owner_question": "Do you make custom-size mattresses for old cots?",
+   "customer_question": "Can you make a mattress for my old cot size?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "furniture-045",
+   "category": "Warranty & service",
+   "owner_question": "If a mattress feels too hard or soft at home, can it be exchanged within some days (cover not torn)?",
+   "customer_question": "Can I change the mattress if it's too hard?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "furniture-046",
    "category": "Warranty & service",
    "owner_question": "Do you do paid re-polishing, sofa re-upholstery or cushion changes later?",
    "customer_question": "Can you redo my old sofa?",
@@ -272,7 +524,7 @@
    ]
   },
   {
-   "id": "furniture-025",
+   "id": "furniture-047",
    "category": "Shop & service",
    "owner_question": "Can customers see and sit on the furniture in your showroom?",
    "customer_question": "Can I try the sofa in the shop?",
@@ -284,7 +536,7 @@
    ]
   },
   {
-   "id": "furniture-026",
+   "id": "furniture-048",
    "category": "Shop & service",
    "owner_question": "Can you send photos or a video call to show designs before buying?",
    "customer_question": "Can you send me sofa photos?",
@@ -296,7 +548,7 @@
    ]
   },
   {
-   "id": "furniture-027",
+   "id": "furniture-049",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -312,7 +564,7 @@
    ]
   },
   {
-   "id": "furniture-028",
+   "id": "furniture-050",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
