@@ -55,7 +55,7 @@ export async function sendChatAction(action) {
     shopTypeKnown = true;
     return {
       ok: true,
-      message: response(`Nice to meet you! Of course — we can build an AI salesman for your shop. I am preparing the questions your customers usually ask.\n\n${askDetails}`, [option('I’ll type the details'), option('Skip for now')]),
+      message: response(`Nice to meet you! Of course — we can build an AI shop assistant for your shop. I am preparing the questions your customers usually ask.\n\n${askDetails}`, [option('I’ll type the details'), option('Skip for now')]),
     };
   }
 

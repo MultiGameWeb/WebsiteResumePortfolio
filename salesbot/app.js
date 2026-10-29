@@ -1,4 +1,4 @@
-// The customer side of BotCraft: the shop's AI salesman, opened from the QR
+// The customer side of BotCraft: the shop's AI assistant, opened from the QR
 // poster. ?s=<publicId> picks the shop; the last shop is remembered so the
 // installed app (PWA) opens it again.
 //
@@ -99,9 +99,15 @@ function whatsappNumber(digits) {
   return plain.length === 10 ? `91${plain}` : plain;
 }
 
+const photoUrl = (photoId) => `${API_BASE}/api/botcraft/photo?id=${encodeURIComponent(photoId)}`;
+
 function showShop(shop) {
-  document.title = `${shop.name} · AI salesman`;
+  document.title = `${shop.botName || shop.name} · ${shop.name}`;
   document.querySelector('#shopName').textContent = shop.name;
+  document.querySelector('#botName').textContent = shop.botName || '';
+  const hero = document.querySelector('#heroPhoto');
+  hero.hidden = !shop.mainPhoto;
+  if (shop.mainPhoto) { hero.src = photoUrl(shop.mainPhoto); hero.alt = shop.name; }
   document.querySelector('#shopMeta').textContent = [shop.type, shop.timings, shop.weeklyHoliday && `Holiday: ${shop.weeklyHoliday}`].filter(Boolean).join(' · ');
   const contacts = document.querySelector('#contactRow');
   contacts.replaceChildren();
@@ -122,22 +128,108 @@ function notFound(message) {
 
 async function loadShop() {
   updateBanner();
-  if (!shopId) { notFound('Please scan the QR code in the shop again to open its salesman.'); return; }
+  if (!shopId) { notFound('Please scan the QR code in the shop again to open its assistant.'); return; }
   try {
     const response = await fetch(`${API_BASE}/api/botcraft/public?s=${encodeURIComponent(shopId)}`);
     const data = await response.json();
-    if (response.status === 404) { notFound('Sorry, this shop’s salesman was not found. Please scan the QR code again or ask at the counter.'); return; }
+    if (response.status === 404) { notFound('Sorry, this shop’s assistant was not found. Please scan the QR code again or ask at the counter.'); return; }
     if (!response.ok || !data.ok) throw new Error(data.error || 'Unavailable');
     saved = { shop: data.shop, offline: data.offline };
     writeStore(DATA_KEY_PREFIX + shopId, JSON.stringify(saved));
   } catch {
     // No internet or server trouble: use the copy from the last visit.
-    if (!saved) { notFound('Please connect to the internet (or the shop’s Wi-Fi) to open the salesman.'); return; }
+    if (!saved) { notFound('Please connect to the internet (or the shop’s Wi-Fi) to open the assistant.'); return; }
   }
   showShop(saved.shop);
-  addMessage('bot', `Hi! I'm the AI salesman of ${saved.shop.name}. Ask me about items, prices, offers or timings — in any language.`,
+  setupTabs();
+  addMessage('bot', `Hi! I'm ${saved.shop.botName || `the assistant of ${saved.shop.name}`}. Ask me about items, prices, offers or timings — in any language.`,
     navigator.onLine ? ['What do you sell?', 'Any offers today?', 'What are your timings?'] : OFFLINE_CHIPS);
 }
+
+// ---- Products and photos tabs ----
+
+const tabs = document.querySelector('#tabs');
+const panels = { products: document.querySelector('#productsPanel'), photos: document.querySelector('#photosPanel') };
+const sheet = document.querySelector('#productSheet');
+let sheetProduct = null;
+
+function selectTab(name) {
+  for (const button of tabs.querySelectorAll('[data-tab]')) button.setAttribute('aria-selected', String(button.dataset.tab === name));
+  panels.products.hidden = name !== 'products';
+  panels.photos.hidden = name !== 'photos';
+  chat.hidden = name !== 'chat';
+  form.hidden = name !== 'chat';
+  if (name === 'chat') input.focus();
+}
+
+function renderProducts() {
+  const query = document.querySelector('#productSearch').value.trim().toLowerCase();
+  const items = (saved.offline?.items || []).filter((item) => !query || `${item.name} ${item.details} ${item.price}`.toLowerCase().includes(query));
+  const grid = document.querySelector('#productGrid');
+  if (!items.length) { grid.replaceChildren(element('p', 'empty', 'No products found.')); return; }
+  grid.replaceChildren(...items.map((item) => {
+    const card = element('button', 'product-card');
+    card.type = 'button';
+    if (item.photo) {
+      const image = element('img');
+      image.src = photoUrl(item.photo);
+      image.alt = '';
+      image.loading = 'lazy';
+      card.append(image);
+    } else card.append(element('span', 'product-no-photo', item.name.slice(0, 1).toUpperCase()));
+    card.append(element('span', 'product-name', item.name));
+    if (item.price) card.append(element('span', 'product-price', item.price));
+    if (item.out) card.append(element('span', 'product-out', 'Out of stock'));
+    card.addEventListener('click', () => openSheet(item));
+    return card;
+  }));
+}
+
+function openSheet(item) {
+  sheetProduct = item;
+  const image = document.querySelector('#sheetPhoto');
+  image.hidden = !item.photo;
+  if (item.photo) image.src = photoUrl(item.photo);
+  document.querySelector('#sheetName').textContent = item.name;
+  document.querySelector('#sheetPrice').textContent = [item.price, item.out ? 'Out of stock' : ''].filter(Boolean).join(' · ');
+  document.querySelector('#sheetDetails').textContent = item.details || '';
+  sheet.showModal();
+}
+
+function setupTabs() {
+  const items = saved.offline?.items || [];
+  const gallery = saved.shop.gallery || [];
+  tabs.querySelector('[data-tab="products"]').hidden = !items.length;
+  tabs.querySelector('[data-tab="photos"]').hidden = !gallery.length;
+  tabs.hidden = !items.length && !gallery.length;
+  if (items.length) renderProducts();
+  document.querySelector('#photoGrid').replaceChildren(...gallery.map((photoId) => {
+    const link = element('a', 'gallery-photo');
+    link.href = photoUrl(photoId);
+    link.target = '_blank';
+    link.rel = 'noopener';
+    const image = element('img');
+    image.src = photoUrl(photoId);
+    image.alt = `${saved.shop.name} photo`;
+    image.loading = 'lazy';
+    link.append(image);
+    return link;
+  }));
+}
+
+tabs.addEventListener('click', (event) => {
+  const button = event.target.closest('[data-tab]');
+  if (button) selectTab(button.dataset.tab);
+});
+document.querySelector('#productSearch').addEventListener('input', () => saved && renderProducts());
+document.querySelector('#closeSheet').addEventListener('click', () => sheet.close());
+sheet.addEventListener('click', (event) => { if (event.target === sheet) sheet.close(); });
+document.querySelector('#askThis').addEventListener('click', () => {
+  const item = sheetProduct;
+  sheet.close();
+  selectTab('chat');
+  if (item) ask(`Tell me about ${item.name}`, item);
+});
 
 // ---- Offline answers: plain text search over the saved copy, no AI. ----
 
@@ -171,7 +263,7 @@ function offlineAnswer(question) {
   return [...itemHits, ...faqHits].join('\n\n');
 }
 
-async function ask(text) {
+async function ask(text, product = null) {
   const question = String(text || '').trim();
   if (!question || busy) return;
   addMessage('customer', question);
@@ -188,7 +280,7 @@ async function ask(text) {
     const response = await fetch(`${API_BASE}/api/botcraft/ask`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ s: shopId, text: question, history: history.slice(-HISTORY_LIMIT) }),
+      body: JSON.stringify({ s: shopId, text: question, history: history.slice(-HISTORY_LIMIT), product: product?.key || undefined }),
     });
     const data = await response.json();
     typing.remove();

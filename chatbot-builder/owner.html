@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Manage my bot · BotCraft</title>
+  <meta name="theme-color" content="#f7f8fc">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
+  <link rel="stylesheet" href="./owner.css?v=1">
+</head>
+<body>
+  <div class="owner-app">
+    <header class="owner-header">
+      <div>
+        <h1>Manage my bot</h1>
+        <p class="muted" id="shopName"></p>
+      </div>
+      <nav class="header-links">
+        <a href="./index.html" class="pill">← Setup chat</a>
+        <a id="openBot" class="pill pill-dark" target="_blank" rel="noopener" hidden>Open my bot</a>
+      </nav>
+    </header>
+    <p class="status" id="status" role="status" hidden></p>
+    <main id="sections" hidden>
+      <section class="card">
+        <h2>Bot name</h2>
+        <p class="muted">Customers see this name. Leave it empty to use <strong id="defaultName"></strong>.</p>
+        <form class="row" id="botNameForm">
+          <input id="botNameInput" maxlength="40" placeholder="For example Lakshmi or Sri Sai Assistant" aria-label="Bot name">
+          <button class="btn" type="submit">Save</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Photos</h2>
+        <div class="photo-slots">
+          <div class="slot" data-kind="main">
+            <h3>Main business photo</h3>
+            <p class="muted">Shown at the top of your bot (shop front, hall, signboard).</p>
+            <div class="slot-body"></div>
+          </div>
+          <div class="slot" data-kind="owner">
+            <h3>Owner photo <span class="muted">(optional)</span></h3>
+            <p class="muted">So customers know whom to ask at the counter.</p>
+            <div class="slot-body"></div>
+          </div>
+        </div>
+        <h3 class="gallery-title">Business gallery <span class="muted" id="galleryCount"></span></h3>
+        <p class="muted">More photos of your shop, hall, decoration or work.</p>
+        <div class="gallery" id="gallery"></div>
+      </section>
+
+      <section class="card">
+        <div class="items-head">
+          <h2>Items <span class="muted" id="itemCount"></span></h2>
+          <button class="btn" type="button" id="addItem">+ Add item</button>
+        </div>
+        <input class="search" id="itemSearch" type="search" placeholder="Search items" aria-label="Search items">
+        <form class="item-form" id="itemForm" hidden>
+          <h3 id="itemFormTitle">Add item</h3>
+          <label>Name <input name="name" maxlength="120" required></label>
+          <label>Price <input name="price_text" maxlength="80" placeholder="For example ₹799 or ₹499–₹999"></label>
+          <label>Details <textarea name="details" maxlength="600" rows="3" placeholder="Size, colour, material, warranty…"></textarea></label>
+          <label class="check"><input type="checkbox" name="out"> Out of stock</label>
+          <label>Photo <input type="file" name="photo" accept="image/*"></label>
+          <div class="row">
+            <button class="btn" type="submit">Save item</button>
+            <button class="btn btn-light" type="button" id="cancelItem">Cancel</button>
+          </div>
+        </form>
+        <div class="items" id="items"></div>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="./owner.js?v=2"></script>
+</body>
+</html>

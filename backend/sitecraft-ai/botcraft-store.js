@@ -54,8 +54,24 @@ const SCHEMA = [
     public_id TEXT PRIMARY KEY,
     shop_id TEXT NOT NULL UNIQUE,
     created_at TEXT NOT NULL
-  )`
+  )`,
+  // Photos live in D1 for now (no R2 yet); only this file reads or writes them,
+  // so moving them to R2 later changes nothing else. kind: main (shop front /
+  // business photo), owner, gallery, product (product_key = products.name_key).
+  `CREATE TABLE IF NOT EXISTS botcraft_photos (
+    photo_id TEXT PRIMARY KEY,
+    shop_id TEXT NOT NULL,
+    kind TEXT NOT NULL,
+    product_key TEXT NOT NULL DEFAULT '',
+    mime TEXT NOT NULL,
+    data BLOB NOT NULL,
+    created_at TEXT NOT NULL
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_botcraft_photos_shop ON botcraft_photos(shop_id, kind)`
 ];
+
+export const GALLERY_LIMIT = 10;
+const SHOP_PHOTO_LIMIT = 500;
 
 const MAX_NOTES = 200;
 let schemaReady = null;
@@ -157,6 +173,105 @@ export async function loadPublicShop(env, publicId) {
   if (!row) return null;
   const shop = await loadShop(env, row.shop_id, 0);
   if (!shop) return null;
-  const products = await db.prepare("SELECT name, price_text, details, stock_status FROM botcraft_products WHERE shop_id = ? ORDER BY updated_at DESC LIMIT 200").bind(row.shop_id).all();
-  return { ...shop, products: products.results || [] };
+  const [products, photos] = await Promise.all([listProducts(env, row.shop_id), listPhotos(env, row.shop_id)]);
+  return { ...shop, products, photos };
+}
+
+const nameKey = name => String(name).toLowerCase().replace(/\s+/g, " ").trim();
+
+export async function shopExists(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  return Boolean(await db.prepare("SELECT 1 FROM botcraft_shops WHERE shop_id = ?").bind(shopId).first());
+}
+
+// Merges owner edits into the saved core facts (for example bot_name).
+export async function updateFacts(env, shopId, patch) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT facts_json FROM botcraft_shops WHERE shop_id = ?").bind(shopId).first();
+  if (!row) return null;
+  const facts = { ...JSON.parse(row.facts_json || "{}"), ...patch };
+  await db.prepare("UPDATE botcraft_shops SET facts_json = ?, updated_at = ? WHERE shop_id = ?")
+    .bind(JSON.stringify(facts), new Date().toISOString(), shopId).run();
+  return facts;
+}
+
+export async function listProducts(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const rows = await db.prepare(
+    "SELECT p.name_key, p.name, p.price_text, p.details, p.stock_status, " +
+    "(SELECT photo_id FROM botcraft_photos f WHERE f.shop_id = p.shop_id AND f.kind = 'product' AND f.product_key = p.name_key LIMIT 1) AS photo_id " +
+    "FROM botcraft_products p WHERE p.shop_id = ? ORDER BY p.updated_at DESC LIMIT 500"
+  ).bind(shopId).all();
+  return rows.results || [];
+}
+
+// Adds or edits a product. Renaming moves its photo to the new name.
+export async function saveProduct(env, shopId, { key, name, price_text, details, stock_status }) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const now = new Date().toISOString();
+  const newKey = nameKey(name);
+  const statements = [];
+  if (key && key !== newKey) {
+    statements.push(
+      db.prepare("DELETE FROM botcraft_products WHERE shop_id = ? AND name_key = ?").bind(shopId, key),
+      db.prepare("UPDATE botcraft_photos SET product_key = ? WHERE shop_id = ? AND kind = 'product' AND product_key = ?").bind(newKey, shopId, key)
+    );
+  }
+  statements.push(db.prepare(
+    "INSERT INTO botcraft_products (shop_id, name_key, name, price_text, details, stock_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+    "ON CONFLICT(shop_id, name_key) DO UPDATE SET name = excluded.name, price_text = excluded.price_text, details = excluded.details, stock_status = excluded.stock_status, updated_at = excluded.updated_at"
+  ).bind(shopId, newKey, name, price_text, details, stock_status, now, now));
+  await db.batch(statements);
+  return newKey;
+}
+
+export async function deleteProduct(env, shopId, key) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.batch([
+    db.prepare("DELETE FROM botcraft_products WHERE shop_id = ? AND name_key = ?").bind(shopId, key),
+    db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'product' AND product_key = ?").bind(shopId, key)
+  ]);
+}
+
+export async function listPhotos(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const rows = await db.prepare("SELECT photo_id, kind, product_key FROM botcraft_photos WHERE shop_id = ? ORDER BY created_at").bind(shopId).all();
+  return rows.results || [];
+}
+
+// Saves a photo. main and owner keep one photo, a product keeps one photo,
+// the gallery keeps up to GALLERY_LIMIT. Returns the photo id, or an error.
+export async function savePhoto(env, shopId, { kind, productKey = "", mime, bytes }) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const count = await db.prepare("SELECT COUNT(*) AS n, SUM(kind = 'gallery') AS g FROM botcraft_photos WHERE shop_id = ?").bind(shopId).first();
+  if (kind === "gallery" && (count?.g || 0) >= GALLERY_LIMIT) return { error: `The gallery holds up to ${GALLERY_LIMIT} photos. Remove one first.` };
+  if ((count?.n || 0) >= SHOP_PHOTO_LIMIT) return { error: "This shop has reached its photo limit." };
+  const photoId = crypto.randomUUID().replace(/-/g, "");
+  const statements = [];
+  if (kind !== "gallery") {
+    statements.push(db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = ? AND product_key = ?").bind(shopId, kind, productKey));
+  }
+  statements.push(db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
+    .bind(photoId, shopId, kind, productKey, mime, bytes, new Date().toISOString()));
+  await db.batch(statements);
+  return { photoId };
+}
+
+export async function deletePhoto(env, shopId, photoId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, photoId).run();
+}
+
+export async function loadPhoto(env, photoId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  return db.prepare("SELECT mime, data FROM botcraft_photos WHERE photo_id = ?").bind(photoId).first();
 }

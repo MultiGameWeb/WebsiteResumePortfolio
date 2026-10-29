@@ -1,10 +1,10 @@
-import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261029e';
+import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261030a';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261029e';
+} from './components.js?v=20261030a';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -69,7 +69,7 @@ const state = {
   messages: [
     {
       id: makeId('message'), role: 'assistant',
-      text: 'Hi! I’m BotCraft 👋\nI’ll create an AI salesman for your shop. Your customers scan a QR poster in your shop and the bot shows them your items, photos, prices and details — in any language — even when you are busy.\n\nTell me about your shop to begin. What kind of shop do you have?',
+      text: 'Hi! I’m BotCraft 👋\nI’ll create an AI shop assistant for your shop. Your customers scan a QR poster in your shop and the bot shows them your items, photos, prices and details — in any language — even when you are busy.\n\nTell me about your shop to begin. What kind of shop do you have?',
       time: new Date(),
       options: [
         makeOption('Jewellery shop'),
@@ -302,12 +302,12 @@ async function prepareBankForShop(typeName) {
 function showBotReady(bot) {
   const existing = state.messages.find((message) => message.botCard);
   // Keep the card's name and Wi-Fi current (the owner may add Wi-Fi later).
-  if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.wifi = bot.wifi || null; return; }
+  if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.botName = bot.botName || existing.botCard.botName; existing.botCard.wifi = bot.wifi || null; return; }
   const url = new URL(`../salesbot/?s=${encodeURIComponent(bot.publicId)}`, window.location.href).href;
   state.messages.push({
     id: makeId('message'), role: 'assistant', time: new Date(),
-    text: 'Your salesman bot is ready! 🎉 Open the link to try it like a customer. Print the QR poster and keep it in your shop — customers scan it to chat with your bot. You can keep answering questions to make it smarter.',
-    botCard: { url, name: bot.name || '', wifi: bot.wifi || null },
+    text: `Your shop assistant${bot.botName ? ` "${bot.botName}"` : ''} is ready! 🎉 Open the link to try it like a customer. Print the QR poster and keep it in your shop — customers scan it to chat. Add photos and items in "Manage my bot", and keep answering questions to make it smarter.`,
+    botCard: { url, name: bot.name || '', botName: bot.botName || '', wifi: bot.wifi || null },
   });
 }
 
@@ -350,6 +350,7 @@ function downloadPoster(messageId) {
   const message = state.messages.find((item) => item.id === messageId);
   if (!message?.botCard || typeof window.qrcode !== 'function') { showToast('Could not make the QR poster. Please reload the page.'); return; }
   const { url, name, wifi } = message.botCard;
+  const assistant = message.botCard.botName || 'our shop assistant';
   const canvas = document.createElement('canvas');
   canvas.width = 1240; canvas.height = 1754;
   const ctx = canvas.getContext('2d');
@@ -359,13 +360,13 @@ function downloadPoster(messageId) {
   ctx.fillText(name || 'Our shop', 620, 200, 1100);
   if (wifi) {
     ctx.font = '600 50px Inter, sans-serif';
-    ctx.fillText('Chat with our AI salesman', 620, 300, 1100);
+    ctx.fillText(`Chat with ${assistant}`, 620, 300, 1100);
     ctx.font = '400 36px Inter, sans-serif';
     ctx.fillText('Items, prices, offers and timings — in your language', 620, 365, 1100);
     const top = 520;
     ctx.font = '600 38px Inter, sans-serif';
     ctx.fillText('① No mobile data?', 330, top - 70, 520);
-    ctx.fillText('② Chat with the salesman', 910, top - 70, 560);
+    ctx.fillText('② Chat with us', 910, top - 70, 560);
     ctx.font = '400 30px Inter, sans-serif';
     ctx.fillText('Scan to join our free Wi-Fi', 330, top - 25, 520);
     ctx.fillText('Scan to open the chat', 910, top - 25, 560);
@@ -377,7 +378,7 @@ function downloadPoster(messageId) {
     ctx.fillText('Open your phone camera and point it at a code', 620, top + size + 170, 1100);
   } else {
     ctx.font = '600 52px Inter, sans-serif';
-    ctx.fillText('Scan to chat with our AI salesman', 620, 310, 1100);
+    ctx.fillText(`Scan to chat with ${assistant}`, 620, 310, 1100);
     ctx.font = '400 38px Inter, sans-serif';
     ctx.fillText('Items, prices, offers and timings — in your language', 620, 380, 1100);
     const size = drawQr(ctx, url, 620, 470, 860);

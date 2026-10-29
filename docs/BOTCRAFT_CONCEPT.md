@@ -141,6 +141,13 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
 - **Photos.** Owner photo (optional), one main business photo (header/background), a business gallery (about 10 for venues like banquet halls) and product photos (many for shops like electronics and clothing). Needs R2 storage.
 - **Products tab in the customer bot.** Customers see a product grid (photo, name, price, search) without asking. Tapping a product → "Ask about this" sends that product with the question, so the bot answers about the item the customer is looking at.
 
+## 10b. Shop assistant name, owner page and photos (built October 2026)
+
+- **Name:** the customer bot is a *shop assistant*, never a "salesman". Default name "[shop name] Assistant" (business words dropped: "Sri Sai Garments" → "Sri Sai Assistant"); the owner can set their own name on the owner page.
+- **Owner page** (`chatbot-builder/owner.html`, "Manage my bot"): bot name, main business photo, owner photo, business gallery (up to 10), items (add, edit, delete, in/out of stock, one photo each). The private shop id in the owner's browser is the key until sign-in.
+- **Photos are stored in D1** (`botcraft_photos`) for now, because R2 needs a card. Only `botcraft-store.js` touches them, so moving to R2 later changes nothing else. Photos sent for the shop front / owner photo in the setup chat are saved too.
+- **Customer page:** main photo at the top, Chat / Products / Photos tabs, product search, product sheet with **Ask about this** (the question carries the product, so "idhi" means that item).
+
 ## 11. Open questions
 
 - Owner login method: phone OTP or email?
