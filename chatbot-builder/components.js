@@ -59,7 +59,14 @@ export function formatTime(date) {
   return new Intl.DateTimeFormat(undefined, { hour: 'numeric', minute: '2-digit' }).format(d);
 }
 
-export function ProgressHeader({ answered = 0, total = 0 }) {
+// The owner's reply language; "auto" follows the language they type in.
+export const LANGUAGE_CHOICES = [
+  ['auto', 'Auto language'], ['English', 'English'], ['Telugu', 'తెలుగు'], ['Hindi', 'हिन्दी'],
+  ['Tamil', 'தமிழ்'], ['Kannada', 'ಕನ್ನಡ'], ['Malayalam', 'മലയാളം'], ['Marathi', 'मराठी'],
+  ['Bengali', 'বাংলা'], ['Gujarati', 'ગુજરાતી'], ['Odia', 'ଓଡ଼ିଆ'], ['Punjabi', 'ਪੰਜਾਬੀ'], ['Urdu', 'اردو'],
+];
+
+export function ProgressHeader({ answered = 0, total = 0, language = 'auto' }) {
   const header = makeElement('header', 'app-header-inner');
   const identity = makeElement('div', 'brand-lockup');
   const mark = makeElement('div', 'brand-mark');
@@ -88,8 +95,19 @@ export function ProgressHeader({ answered = 0, total = 0 }) {
   track.append(fill);
   progress.append(progressText, track);
 
+  const tools = makeElement('div', 'header-tools');
+  const select = makeElement('select', 'language-select');
+  select.setAttribute('aria-label', 'BotCraft language');
+  select.title = 'BotCraft language';
+  for (const [value, label] of LANGUAGE_CHOICES) {
+    const option = makeElement('option', '', label);
+    option.value = value;
+    option.selected = value === language;
+    select.append(option);
+  }
   const theme = iconButton('moon', 'Switch to dark mode', 'theme-toggle', 'theme-toggle');
-  header.append(identity, progress, theme);
+  tools.append(select, theme);
+  header.append(identity, progress, tools);
   return header;
 }
 

@@ -1,10 +1,10 @@
-import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261029';
+import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261029b';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261029';
+} from './components.js?v=20261029b';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -50,6 +50,11 @@ let nextId = 0;
 const makeId = (prefix = 'item') => `${prefix}-${Date.now().toString(36)}-${(++nextId).toString(36)}`;
 const makeOption = (label, value = label, kind = 'starter') => ({ id: makeId('option'), label, value, kind });
 
+const LANGUAGE_KEY = 'botcraft:language';
+function savedLanguage() {
+  try { return localStorage.getItem(LANGUAGE_KEY) || 'auto'; } catch { return 'auto'; }
+}
+
 const state = {
   // Real counts arrive once the question bank for the owner's shop type exists.
   answered: 0,
@@ -60,6 +65,7 @@ const state = {
   micActive: false,
   theme: window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
   isDragging: false,
+  language: savedLanguage(),
   messages: [
     {
       id: makeId('message'), role: 'assistant',
@@ -82,7 +88,7 @@ function announce(text) {
 
 function render({ forceBottom = false } = {}) {
   const shouldStick = forceBottom || isNearBottom();
-  headerHost.replaceChildren(ProgressHeader({ answered: state.answered, total: state.total }));
+  headerHost.replaceChildren(ProgressHeader({ answered: state.answered, total: state.total, language: state.language }));
   const list = MessageList(state.messages, state.pendingCount > 0);
   messageHost.replaceChildren(list);
   inputHost.replaceChildren(InputBar(state.stagedAttachments, state.inputError, state.micActive));
@@ -235,7 +241,7 @@ async function runMockAction(action, userMessage) {
   render({ forceBottom: true });
   try {
     // The single boundary for outgoing messages and attachment sends.
-    const result = await sendChatAction(action);
+    const result = await sendChatAction({ ...action, language: state.language === 'auto' ? undefined : state.language });
     if (!result?.ok) throw new Error(result?.error || 'Could not send. Please try again.');
     userMessage.status = 'sent';
     userMessage.error = '';
@@ -497,6 +503,12 @@ app.addEventListener('keydown', (event) => {
 });
 
 app.addEventListener('change', (event) => {
+  if (event.target.matches('.language-select')) {
+    state.language = event.target.value;
+    try { localStorage.setItem(LANGUAGE_KEY, state.language); } catch {}
+    announce(state.language === 'auto' ? 'BotCraft will reply in the language you type in.' : `BotCraft will reply in ${state.language}.`);
+    return;
+  }
   if (event.target.matches('input[type="file"][data-picker-input]')) {
     addFiles(event.target.files);
     event.target.value = '';

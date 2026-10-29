@@ -41,6 +41,8 @@ const BANK_WINDOW = 8;
 const MAX_FORM_QUESTIONS = 5;
 const BULK_MESSAGE_CHARS = 300;
 const FINISH_OPTION = "Finish for now";
+// Languages the owner can pick at the top of the page ("Auto" sends none).
+const LANGUAGES = new Set(["English", "Telugu", "Hindi", "Tamil", "Kannada", "Malayalam", "Marathi", "Bengali", "Gujarati", "Odia", "Punjabi", "Urdu"]);
 // Cheapest models first for on-demand bank generation.
 const BANK_MODELS = ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3.8-flash"];
 
@@ -86,6 +88,7 @@ const REPLY_SCHEMA = {
         required: ["id", "question", "options"]
       }
     },
+    language: { type: "STRING", description: "the language you wrote the reply in, for example Telugu" },
     notes: { type: "ARRAY", items: { type: "STRING" }, description: "other useful shop facts learned (not core)" },
     items: {
       type: "ARRAY",
@@ -260,6 +263,47 @@ function formQuestions(raw, facts, answers, bank) {
   return questions;
 }
 
+const TRANSLATION_SCHEMA = {
+  type: "OBJECT",
+  properties: {
+    questions: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: { id: { type: "STRING" }, question: { type: "STRING" }, options: { type: "ARRAY", items: { type: "STRING" } } },
+        required: ["id", "question", "options"]
+      }
+    }
+  },
+  required: ["questions"]
+};
+
+// Form questions the server added itself are still in English; translate them
+// so one form never mixes languages. On failure they stay in English.
+async function translateQuestions(env, questions, language) {
+  try {
+    const { result } = await callWithFallback(env, {
+      system: `Translate these shop setup questions and their options into simple ${language}, written in its own script. Return every id, with the options in the same order and count.`,
+      prompt: JSON.stringify(questions.map(q => ({ id: q.id, question: q.question, options: q.options.map(o => o.label) }))),
+      schema: TRANSLATION_SCHEMA,
+      models: CHAT_MODELS,
+      temperature: 0.2,
+      timeoutMs: 20000,
+      maxAttempts: 1
+    });
+    for (const translated of Array.isArray(result?.questions) ? result.questions : []) {
+      const q = questions.find(item => item.id === translated?.id);
+      if (!q) continue;
+      q.question = clip(translated.question, 300) || q.question;
+      if (Array.isArray(translated.options) && translated.options.length === q.options.length) {
+        q.options.forEach((option, i) => { option.label = clip(translated.options[i], 80) || option.label; });
+      }
+    }
+  } catch (error) {
+    console.error("BotCraft question translation failed", error);
+  }
+}
+
 // Bank topics that only apply when a core answer allows them.
 const CATEGORY_NEEDS = {
   // Loan questions are only for shops that offer EMI.
@@ -297,7 +341,7 @@ function bankLines(questions) {
   return questions.map(q => `- ${q.id} [${q.priority}]: ${q.owner_question}${q.options?.length ? ` [options: ${q.options.join(" | ")}]` : ""}`).join("\n");
 }
 
-function systemPrompt(facts, answers, bankShown, bank, step) {
+function systemPrompt(facts, answers, bankShown, bank, step, language) {
   const pending = pendingCore(facts);
   const bankPending = pendingBank(bank, answers, facts);
   const known = Object.entries(facts).map(([k, v]) => `- ${k}: ${v}`).join("\n") || "- (nothing yet)";
@@ -319,7 +363,9 @@ You are talking to the SHOP OWNER to set up their bot. Steps:
 6. Whenever the owner sends details or files, also record answers to any shop questions listed below that their message answers, so those are never asked.
 
 Rules:
-- Reply, and write form questions, in the language and script the owner types in (Telugu, Hindi, English or a mix), short and warm, like a helpful person. At most about 60 words in "reply". Button labels and submitted form answers do not change the language: use the language of the owner's latest typed message. If the owner has typed nothing clear yet (for example just "Hi"), use simple English. Never switch to a language the owner has not used.
+${language
+    ? `- The owner chose ${language}: always write "reply", the form questions and their options in ${language}, in its own script, even when the owner types in another language. Keep "reply" short and warm, like a helpful person, at most about 60 words.`
+    : `- Reply, and write form questions, in the language and script the owner types in (Telugu, Hindi, English or a mix), short and warm, like a helpful person. At most about 60 words in "reply". Button labels and submitted form answers do not change the language: use the language of the owner's latest typed message. If the owner has typed nothing clear yet (for example just "Hi"), use simple English. Never switch to a language the owner has not used.`}
 - If the owner asks who you are or what you can do, answer briefly, then continue the setup.
 - Use only what the owner said or sent. Never invent facts, prices or policies.
 - Never change a fact the owner already gave because of a photo or file. If a file seems to contradict it, ask the owner to confirm instead.
@@ -438,6 +484,7 @@ export async function handleBotcraftRoute(request, env, url) {
   Object.assign(facts, form.facts);
   Object.assign(answers, form.answers);
   const text = clip(body?.text, MAX_TEXT);
+  const language = LANGUAGES.has(body?.language) ? body.language : null;
   const images = (Array.isArray(body?.images) ? body.images : [])
     .filter(img => IMAGE_TYPES.has(img?.mimeType) && typeof img?.data === "string" && base64Size(img.data) <= MAX_IMAGE_BYTES)
     .slice(0, MAX_IMAGES);
@@ -472,7 +519,7 @@ export async function handleBotcraftRoute(request, env, url) {
   const modelErrors = [];
   try {
     ({ result } = await callWithFallback(env, {
-      system: systemPrompt(facts, answers, bankShown, bank, step),
+      system: systemPrompt(facts, answers, bankShown, bank, step, language),
       contents,
       schema: REPLY_SCHEMA,
       // Flash-Lite answers a setup chat in 1-2 s and has the most free quota.
@@ -527,10 +574,14 @@ export async function handleBotcraftRoute(request, env, url) {
   const formSubmitted = Object.keys(form.facts).length + Object.keys(form.answers).length > 0;
   if ((modelAsked || formSubmitted) && sameBank && text !== FINISH_OPTION) {
     const extra = step.form.map(q => ({ id: q.key || q.id, question: q.owner_question, options: q.options || [] }));
+    const added = [];
     for (const q of formQuestions(extra, merged, mergedAnswers, mergedBank)) {
-      if (questions.length >= MAX_FORM_QUESTIONS) break;
-      if (!questions.some(asked => asked.id === q.id)) questions.push(q);
+      if (questions.length + added.length >= MAX_FORM_QUESTIONS) break;
+      if (!questions.some(asked => asked.id === q.id)) added.push(q);
     }
+    const target = language || (LANGUAGES.has(result?.language) ? result.language : null);
+    if (added.length && target && target !== "English") await translateQuestions(env, added, target);
+    questions.push(...added);
   }
   const allowSkip = questions.length ? questions.every(q => !q.mandatory) : !nextQuestion || nextQuestion.priority !== "mandatory";
 
