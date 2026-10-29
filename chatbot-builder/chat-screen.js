@@ -1,10 +1,10 @@
-import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261029b';
+import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261029c';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261029b';
+} from './components.js?v=20261029c';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -255,6 +255,7 @@ async function runMockAction(action, userMessage) {
       questions: result.message.questions ?? [], form: {},
       time: result.message.time instanceof Date ? result.message.time : new Date(result.message.time ?? Date.now()),
     });
+    if (result.bot?.publicId) showBotReady(result.bot);
     if (result.bankStatus === 'missing') {
       render({ forceBottom: true });
       await prepareBankForShop(result.shopTypeName);
@@ -293,6 +294,68 @@ async function prepareBankForShop(typeName) {
       text: `${bank.error} Tap "Try again" when you are ready.`,
       options: [makeOption('Try again', 'Prepare my questions again', 'answer')],
     });
+}
+
+// The customer bot's link and QR poster, shown once the basics are complete.
+function showBotReady(bot) {
+  if (state.messages.some((message) => message.botCard)) return;
+  const url = new URL(`../salesbot/?s=${encodeURIComponent(bot.publicId)}`, window.location.href).href;
+  state.messages.push({
+    id: makeId('message'), role: 'assistant', time: new Date(),
+    text: 'Your salesman bot is ready! 🎉 Open the link to try it like a customer. Print the QR poster and keep it in your shop — customers scan it to chat with your bot. You can keep answering questions to make it smarter.',
+    botCard: { url, name: bot.name || '' },
+  });
+}
+
+function copyBotLink(messageId, button) {
+  const message = state.messages.find((item) => item.id === messageId);
+  if (!message?.botCard) return;
+  const copied = () => { showToast('Bot link copied.'); markCopied(button); };
+  if (navigator.clipboard?.writeText) navigator.clipboard.writeText(message.botCard.url).then(copied, () => fallbackCopy(message.botCard.url, copied));
+  else fallbackCopy(message.botCard.url, copied);
+}
+
+// An A4-shaped poster: shop name, a large QR code and a short line.
+function downloadPoster(messageId) {
+  const message = state.messages.find((item) => item.id === messageId);
+  if (!message?.botCard || typeof window.qrcode !== 'function') { showToast('Could not make the QR poster. Please reload the page.'); return; }
+  const qr = window.qrcode(0, 'M');
+  qr.addData(message.botCard.url);
+  qr.make();
+  const canvas = document.createElement('canvas');
+  canvas.width = 1240; canvas.height = 1754;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#0d0d0d'; ctx.textAlign = 'center';
+  ctx.font = '700 76px Inter, "Noto Sans Telugu", sans-serif';
+  ctx.fillText(message.botCard.name || 'Our shop', 620, 200, 1100);
+  ctx.font = '600 52px Inter, sans-serif';
+  ctx.fillText('Scan to chat with our AI salesman', 620, 310, 1100);
+  ctx.font = '400 38px Inter, sans-serif';
+  ctx.fillText('Items, prices, offers and timings — in your language', 620, 380, 1100);
+  const count = qr.getModuleCount();
+  const cell = Math.floor(860 / (count + 8));
+  const size = cell * (count + 8);
+  const left = (canvas.width - size) / 2; const top = 470;
+  ctx.fillStyle = '#ffffff'; ctx.fillRect(left, top, size, size);
+  ctx.fillStyle = '#0d0d0d';
+  for (let row = 0; row < count; row += 1) {
+    for (let col = 0; col < count; col += 1) {
+      if (qr.isDark(row, col)) ctx.fillRect(left + (col + 4) * cell, top + (row + 4) * cell, cell, cell);
+    }
+  }
+  ctx.font = '400 34px Inter, sans-serif';
+  ctx.fillText('Open your phone camera and point it at the code', 620, top + size + 90, 1100);
+  ctx.fillStyle = '#5d5d5d'; ctx.font = '400 28px Inter, sans-serif';
+  ctx.fillText('Powered by SiteCraft BotCraft', 620, 1680);
+  canvas.toBlob((blob) => {
+    if (!blob) return;
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `${(message.botCard.name || 'shop').replace(/[^\w-]+/g, '-').toLowerCase()}-qr-poster.png`;
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(link.href), 2000);
+  }, 'image/png');
 }
 
 function formAnswer(message, questionId) {
@@ -456,6 +519,8 @@ app.addEventListener('click', (event) => {
     handleSend({ text: button.dataset.value, option });
     return;
   }
+  if (action === 'copy-bot-link') { copyBotLink(button.dataset.messageId, button); return; }
+  if (action === 'download-poster') { downloadPoster(button.dataset.messageId); return; }
   if (action === 'form-choice') { chooseFormOption(button); return; }
   if (action === 'submit-form') { submitForm(button.dataset.messageId); return; }
   if (action === 'copy-message') { copyMessage(button.dataset.messageId, button); return; }
@@ -618,5 +683,6 @@ loadSavedConversation().then((saved) => {
     state.answered = saved.progress.answered;
     state.total = saved.progress.total;
   }
+  if (saved.bot?.publicId) showBotReady(saved.bot);
   render({ forceBottom: true });
 });

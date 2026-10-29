@@ -130,6 +130,7 @@ We do **not** hard-code questions. Gemini generates them, following rules we giv
 | `ai-chatbot-software.html` | The BotCraft page; shows the chat UI only |
 | `ai-chatbot-builder.html` | Old form builder removed; now redirects to BotCraft |
 | `chatbot-builder/` | BotCraft chat UI. Its opening flow follows this concept, but replies are still simulated in `mockChat.js`, and progress stays empty until a real question bank exists. Phase 1 replaces the mock. |
+| `salesbot/` + `botcraft-salesbot.js` | Phase 2 first version: once the core questions are done, the owner gets a bot link (`salesbot/?s=<publicId>`), a QR code and a printable QR poster. The customer page is an installable PWA with Call / WhatsApp / Directions buttons; it answers only from the owner's saved answers and items (no item photos yet). The public id is separate from the owner's private shop id. |
 | `backend/sitecraft-ai/website-chatbot.js` | Visitor chat endpoint with reply limits, rate limits and a server-side key. It was built for a website embed (origin check); Phase 1–2 will adapt it for the QR bot page. |
 
 ## 11. Open questions

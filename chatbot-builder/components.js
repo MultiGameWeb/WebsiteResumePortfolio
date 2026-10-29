@@ -187,6 +187,42 @@ export function QuestionForm(message) {
   return form;
 }
 
+// Link, QR code and poster download for the shop's customer bot.
+export function BotReadyCard(message) {
+  const card = makeElement('div', 'bot-ready-card');
+  if (typeof window.qrcode === 'function') {
+    const qr = window.qrcode(0, 'M');
+    qr.addData(message.botCard.url);
+    qr.make();
+    const image = makeElement('img', 'bot-ready-qr');
+    image.src = qr.createDataURL(5, 2);
+    image.alt = 'QR code for your salesman bot';
+    card.append(image);
+  }
+  const details = makeElement('div', 'bot-ready-details');
+  const link = makeElement('a', 'bot-ready-link', message.botCard.url);
+  link.href = message.botCard.url;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  const actions = makeElement('div', 'bot-ready-actions');
+  const open = makeElement('a', 'question-submit bot-ready-open', 'Open my bot');
+  open.href = message.botCard.url;
+  open.target = '_blank';
+  open.rel = 'noopener';
+  const copy = makeElement('button', 'quick-chip', 'Copy link');
+  copy.type = 'button';
+  copy.dataset.action = 'copy-bot-link';
+  copy.dataset.messageId = message.id;
+  const poster = makeElement('button', 'quick-chip', 'Download QR poster');
+  poster.type = 'button';
+  poster.dataset.action = 'download-poster';
+  poster.dataset.messageId = message.id;
+  actions.append(open, copy, poster);
+  details.append(link, actions);
+  card.append(details);
+  return card;
+}
+
 export function TypingIndicator() {
   const row = makeElement('div', 'typing-row');
   const avatar = makeElement('div', 'bot-avatar bot-avatar-small', 'b');
@@ -266,6 +302,7 @@ export function MessageBubble(message) {
   }
   column.append(bubble);
 
+  if (message.botCard) column.append(BotReadyCard(message));
   if (message.questions?.length) column.append(QuestionForm(message));
 
   if (message.options?.length) {

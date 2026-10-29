@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Shop salesman</title>
+  <meta name="description" content="Chat with the shop's AI salesman: items, prices, offers and timings in your language.">
+  <meta name="theme-color" content="#0d0d0d">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
+  <link rel="stylesheet" href="./styles.css?v=1">
+</head>
+<body>
+  <div class="app">
+    <header class="shop-header">
+      <div class="shop-title">
+        <h1 id="shopName">Loading…</h1>
+        <p id="shopMeta" class="shop-meta"></p>
+      </div>
+      <nav class="contact-row" id="contactRow" aria-label="Contact the shop"></nav>
+    </header>
+    <main class="chat" id="chat" aria-live="polite"></main>
+    <form class="composer" id="composer" autocomplete="off">
+      <input id="input" type="text" maxlength="1000" placeholder="Ask about items, prices, offers…" aria-label="Your question">
+      <button id="send" type="submit" aria-label="Send">➤</button>
+    </form>
+  </div>
+  <script type="module" src="./app.js?v=1"></script>
+</body>
+</html>

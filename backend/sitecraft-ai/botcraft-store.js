@@ -47,6 +47,13 @@ const SCHEMA = [
     name TEXT NOT NULL,
     bank_json TEXT NOT NULL,
     created_at TEXT NOT NULL
+  )`,
+  // The id in the customer bot link and QR code. It is separate from shop_id,
+  // which lets the owner's browser edit the setup and must stay private.
+  `CREATE TABLE IF NOT EXISTS botcraft_public (
+    public_id TEXT PRIMARY KEY,
+    shop_id TEXT NOT NULL UNIQUE,
+    created_at TEXT NOT NULL
   )`
 ];
 
@@ -129,4 +136,27 @@ export async function saveStoredBank(env, record) {
     "INSERT INTO botcraft_question_banks (shop_type_key, name, bank_json, created_at) VALUES (?, ?, ?, ?) " +
     "ON CONFLICT(shop_type_key) DO UPDATE SET name = excluded.name, bank_json = excluded.bank_json, created_at = excluded.created_at"
   ).bind(record.shop_type_key, record.name, JSON.stringify(record), new Date().toISOString()).run();
+}
+
+// The shop's public bot id, created the first time it is needed.
+export async function ensurePublicId(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const publicId = crypto.randomUUID().replace(/-/g, "").slice(0, 16);
+  await db.prepare("INSERT OR IGNORE INTO botcraft_public (public_id, shop_id, created_at) VALUES (?, ?, ?)")
+    .bind(publicId, shopId, new Date().toISOString()).run();
+  const row = await db.prepare("SELECT public_id FROM botcraft_public WHERE shop_id = ?").bind(shopId).first();
+  return row?.public_id || null;
+}
+
+// What the customer bot answers from: facts, bank answers, notes and products.
+export async function loadPublicShop(env, publicId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT shop_id FROM botcraft_public WHERE public_id = ?").bind(publicId).first();
+  if (!row) return null;
+  const shop = await loadShop(env, row.shop_id, 0);
+  if (!shop) return null;
+  const products = await db.prepare("SELECT name, price_text, details, stock_status FROM botcraft_products WHERE shop_id = ? ORDER BY updated_at DESC LIMIT 200").bind(row.shop_id).all();
+  return { ...shop, products: products.results || [] };
 }
