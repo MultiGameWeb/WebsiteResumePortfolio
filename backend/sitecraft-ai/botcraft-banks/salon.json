@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-29",
- "question_count": 39,
+ "question_count": 42,
  "questions": [
   {
    "id": "salon-001",
@@ -69,7 +69,7 @@
    "options": [
     "Fixed for everyone",
     "Depends on hair length",
-    "Depends on the stylist (senior / junior)",
+    "Depends on the stylist (junior / senior / master)",
     "Depends on both"
    ]
   },
@@ -100,7 +100,7 @@
   {
    "id": "salon-008",
    "category": "Products & hygiene",
-   "owner_question": "Are combs, scissors and tools cleaned or sterilised after every customer?",
+   "owner_question": "Are combs, scissors and manicure / pedicure tools cleaned or sterilised (for example UV sterilizer) after every customer?",
    "customer_question": "Are your tools clean?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -124,7 +124,7 @@
   {
    "id": "salon-010",
    "category": "Products & hygiene",
-   "owner_question": "Which product brands do you use (for example L'Oréal, Lakme, VLCC, O3+), or do you make your own packs?",
+   "owner_question": "Which product brands do you use for facials, bleach and hair (for example O3+, L'Oréal, Lotus, Cheryl's, VLCC), or do you make your own packs?",
    "customer_question": "Which brand facial do you use?",
    "priority": "important",
    "answer_type": "text"
@@ -221,6 +221,38 @@
   {
    "id": "salon-019",
    "category": "Services & prices",
+   "owner_question": "Do you have kids' chairs (for example car-shaped) so small children sit happily for a haircut?",
+   "customer_question": "Will my child sit for a haircut?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-020",
+   "category": "Services & prices",
+   "owner_question": "Do you give a free hair and skin consultation before colour, treatments or makeup?",
+   "customer_question": "Can you suggest a colour for me?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-021",
+   "category": "Services & prices",
+   "owner_question": "How long does hair straightening, smoothening or keratin last, and do you give any guarantee?",
+   "customer_question": "How long will smoothening last?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-022",
+   "category": "Services & prices",
    "owner_question": "Do you do hair treatments for dandruff or hair fall?",
    "customer_question": "Anything for dandruff?",
    "priority": "optional",
@@ -231,7 +263,7 @@
    ]
   },
   {
-   "id": "salon-020",
+   "id": "salon-023",
    "category": "Services & prices",
    "owner_question": "Do you do groom makeup and grooming packages for weddings?",
    "customer_question": "Do you have a groom package?",
@@ -243,7 +275,7 @@
    ]
   },
   {
-   "id": "salon-021",
+   "id": "salon-024",
    "category": "Products & hygiene",
    "owner_question": "Do you have options for sensitive skin or allergies (for example ammonia-free colour)?",
    "customer_question": "I have sensitive skin, is that okay?",
@@ -255,7 +287,7 @@
    ]
   },
   {
-   "id": "salon-022",
+   "id": "salon-025",
    "category": "Products & hygiene",
    "owner_question": "Do you do a patch test before colour, chemical treatments or a new massage oil?",
    "customer_question": "Will you do a patch test?",
@@ -267,7 +299,7 @@
    ]
   },
   {
-   "id": "salon-023",
+   "id": "salon-026",
    "category": "Products & hygiene",
    "owner_question": "Do you sell hair and skin products at the shop?",
    "customer_question": "Can I buy the shampoo here?",
@@ -279,7 +311,7 @@
    ]
   },
   {
-   "id": "salon-024",
+   "id": "salon-027",
    "category": "Booking & waiting",
    "owner_question": "Do you take advance booking for festivals and the wedding season?",
    "customer_question": "Can I book for Diwali morning?",
@@ -291,7 +323,7 @@
    ]
   },
   {
-   "id": "salon-025",
+   "id": "salon-028",
    "category": "Booking & waiting",
    "owner_question": "Do you have a waiting area with seating, AC or TV?",
    "customer_question": "Is there a place to wait?",
@@ -303,7 +335,7 @@
    ]
   },
   {
-   "id": "salon-026",
+   "id": "salon-029",
    "category": "Staff & privacy",
    "owner_question": "Can customers choose a particular stylist or therapist?",
    "customer_question": "Can I ask for the same stylist?",
@@ -315,7 +347,7 @@
    ]
   },
   {
-   "id": "salon-027",
+   "id": "salon-030",
    "category": "Staff & privacy",
    "owner_question": "How many years of experience do your senior stylists or beauticians have?",
    "customer_question": "Are the stylists experienced?",
@@ -323,7 +355,7 @@
    "answer_type": "text"
   },
   {
-   "id": "salon-028",
+   "id": "salon-031",
    "category": "Staff & privacy",
    "owner_question": "Do you have a separate section for men and women?",
    "customer_question": "Is there a separate ladies section?",
@@ -335,7 +367,7 @@
    ]
   },
   {
-   "id": "salon-029",
+   "id": "salon-032",
    "category": "Packages & membership",
    "owner_question": "Do you have a monthly membership or prepaid card? What are the benefits?",
    "customer_question": "Is there a membership card?",
@@ -343,7 +375,7 @@
    "answer_type": "text"
   },
   {
-   "id": "salon-030",
+   "id": "salon-033",
    "category": "Packages & membership",
    "owner_question": "Do you give special gifts or discounts on birthdays or anniversaries?",
    "customer_question": "Any birthday offer?",
@@ -351,7 +383,7 @@
    "answer_type": "text"
   },
   {
-   "id": "salon-031",
+   "id": "salon-034",
    "category": "Packages & membership",
    "owner_question": "Do you give special prices for students, seniors, corporate employees or groups (for example a bridal party or 4–5 friends)?",
    "customer_question": "Any group discount?",
@@ -359,7 +391,7 @@
    "answer_type": "text"
   },
   {
-   "id": "salon-032",
+   "id": "salon-035",
    "category": "Home service",
    "owner_question": "Which areas do you cover for home service, and is there an extra charge?",
    "customer_question": "Is there extra charge for home service?",
@@ -367,7 +399,7 @@
    "answer_type": "text"
   },
   {
-   "id": "salon-033",
+   "id": "salon-036",
    "category": "Shop & service",
    "owner_question": "Is the shop air-conditioned?",
    "customer_question": "Is it AC?",
@@ -379,7 +411,7 @@
    ]
   },
   {
-   "id": "salon-034",
+   "id": "salon-037",
    "category": "Shop & service",
    "owner_question": "Are tips for therapists expected?",
    "customer_question": "Should I give a tip?",
@@ -392,7 +424,7 @@
    ]
   },
   {
-   "id": "salon-035",
+   "id": "salon-038",
    "category": "Shop & service",
    "owner_question": "How can customers give feedback after a service (Google review, feedback form or tablet)?",
    "customer_question": "Where can I give feedback?",
@@ -400,7 +432,7 @@
    "answer_type": "text"
   },
   {
-   "id": "salon-036",
+   "id": "salon-039",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty card or points for regular customers?",
    "customer_question": "Do I get points?",
@@ -412,7 +444,7 @@
    ]
   },
   {
-   "id": "salon-037",
+   "id": "salon-040",
    "category": "Shop & service",
    "owner_question": "If a customer is not happy with a haircut, massage or service, what do you do (redo, another therapist, discount)?",
    "customer_question": "What if I don't like the service?",
@@ -420,7 +452,7 @@
    "answer_type": "text"
   },
   {
-   "id": "salon-038",
+   "id": "salon-041",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -436,7 +468,7 @@
    ]
   },
   {
-   "id": "salon-039",
+   "id": "salon-042",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
