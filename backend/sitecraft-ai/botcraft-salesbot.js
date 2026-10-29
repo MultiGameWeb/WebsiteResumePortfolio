@@ -14,6 +14,8 @@ export const SALESBOT_SCHEMA = {
 };
 
 const EMPTY_ANSWER = /^(skipped|not applicable|photo received|)$/i;
+// Only for the owner's poster; never given to the salesbot or the public page.
+const PRIVATE_KEYS = new Set(["wifi_name", "wifi_password"]);
 
 const usable = value => !EMPTY_ANSWER.test(String(value ?? "").trim());
 
@@ -47,8 +49,9 @@ export function shopKnowledge(shop, bank, typeName) {
   const lines = [`- Shop type: ${typeName || shop.facts.shop_type || "shop"}`];
   for (const q of CORE_QUESTIONS) {
     const value = shop.facts[q.key];
-    if (usable(value)) lines.push(`- ${q.customer_question} ${value}`);
+    if (usable(value) && !PRIVATE_KEYS.has(q.key)) lines.push(`- ${q.customer_question} ${value}`);
   }
+  if (/^yes/i.test(String(shop.facts.shop_wifi || ""))) lines.push("- Wi-Fi name and password: scan the Wi-Fi QR code on the shop's poster to connect.");
   for (const q of bank?.questions || []) {
     const value = shop.answers[q.id];
     if (usable(value)) lines.push(`- ${q.owner_question} ${value}`);
@@ -57,6 +60,24 @@ export function shopKnowledge(shop, bank, typeName) {
   const products = (shop.products || []).map(p =>
     `- ${p.name}${p.price_text ? ` — ${p.price_text}` : ""}${p.details ? ` — ${p.details}` : ""}${p.stock_status === "out_of_stock" ? " (out of stock)" : ""}`);
   return `Shop information:\n${lines.join("\n")}\n\nItems:\n${products.join("\n") || "- (no item list yet)"}`;
+}
+
+// A copy of the answers for the page's offline mode (no AI): questions with
+// answers, and the item list.
+export function offlineData(shop, bank) {
+  const faqs = [];
+  for (const q of CORE_QUESTIONS) {
+    const value = shop.facts[q.key];
+    if (usable(value) && !PRIVATE_KEYS.has(q.key) && q.key !== "shop_wifi") faqs.push({ q: q.customer_question, a: String(value) });
+  }
+  for (const q of bank?.questions || []) {
+    const value = shop.answers[q.id];
+    if (usable(value)) faqs.push({ q: q.customer_question || q.owner_question, a: String(value) });
+  }
+  const items = (shop.products || []).slice(0, 200).map(p => ({
+    name: p.name, price: p.price_text || "", details: p.details || "", out: p.stock_status === "out_of_stock"
+  }));
+  return { faqs: faqs.slice(0, 300), items, savedAt: new Date().toISOString() };
 }
 
 export function salesbotPrompt(profile, knowledge) {

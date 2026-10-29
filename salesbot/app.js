@@ -1,29 +1,38 @@
 // The customer side of BotCraft: the shop's AI salesman, opened from the QR
 // poster. ?s=<publicId> picks the shop; the last shop is remembered so the
 // installed app (PWA) opens it again.
+//
+// Online, every question goes to the AI. The page also keeps a copy of the
+// shop's answers and items, so without internet (or when the AI is busy) it
+// still answers the basics from that copy, without AI.
 const API_BASE = window.SALESBOT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const LAST_SHOP_KEY = 'salesbot:lastShop';
+const DATA_KEY_PREFIX = 'salesbot:data:';
 const HISTORY_LIMIT = 12;
+const OFFLINE_CHIPS = ['Items & prices', 'Timings', 'Address', 'Offers'];
 
 const chat = document.querySelector('#chat');
 const form = document.querySelector('#composer');
 const input = document.querySelector('#input');
 const send = document.querySelector('#send');
+const banner = document.querySelector('#offlineBanner');
 
-function storage(action, value) {
-  try {
-    if (action === 'get') return localStorage.getItem(LAST_SHOP_KEY);
-    localStorage.setItem(LAST_SHOP_KEY, value);
-  } catch {}
-  return null;
+function readStore(key) {
+  try { return localStorage.getItem(key); } catch { return null; }
+}
+function writeStore(key, value) {
+  try { localStorage.setItem(key, value); } catch {}
 }
 
 const params = new URLSearchParams(window.location.search);
-const shopId = params.get('s') || storage('get') || '';
-if (params.get('s')) storage('set', shopId);
+const shopId = params.get('s') || readStore(LAST_SHOP_KEY) || '';
+if (params.get('s')) writeStore(LAST_SHOP_KEY, shopId);
 
 const history = [];
 let busy = false;
+// { shop, offline: { faqs, items, savedAt } } from the last time we were online.
+let saved = null;
+try { saved = JSON.parse(readStore(DATA_KEY_PREFIX + shopId) || 'null'); } catch {}
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -32,9 +41,36 @@ function element(tag, className, text) {
   return node;
 }
 
+// Telugu, Devanagari, Tamil… scripts pick the matching phone voice.
+function speechLang(text) {
+  const scripts = [[/[ఀ-౿]/, 'te-IN'], [/[ऀ-ॿ]/, 'hi-IN'], [/[஀-௿]/, 'ta-IN'], [/[ಀ-೿]/, 'kn-IN'],
+    [/[ഀ-ൿ]/, 'ml-IN'], [/[ঀ-৿]/, 'bn-IN'], [/[઀-૿]/, 'gu-IN'], [/[਀-੿]/, 'pa-IN'], [/[؀-ۿ]/, 'ur-IN']];
+  return scripts.find(([pattern]) => pattern.test(text))?.[1] || 'en-IN';
+}
+
+function speak(text, button) {
+  const synth = window.speechSynthesis;
+  if (!synth) return;
+  if (synth.speaking) { synth.cancel(); button.textContent = '🔊 Listen'; return; }
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = speechLang(text);
+  const voice = synth.getVoices().find((item) => item.lang.replace('_', '-').startsWith(utterance.lang.slice(0, 2)));
+  if (voice) utterance.voice = voice;
+  utterance.onend = () => { button.textContent = '🔊 Listen'; };
+  button.textContent = '■ Stop';
+  synth.speak(utterance);
+}
+
 function addMessage(role, text, suggestions = []) {
   const row = element('div', `msg msg-${role}`);
   row.append(element('p', 'bubble', text));
+  if (role === 'bot' && text !== '…' && window.speechSynthesis) {
+    const listen = element('button', 'listen', '🔊 Listen');
+    listen.type = 'button';
+    listen.setAttribute('aria-label', 'Read this answer aloud');
+    listen.addEventListener('click', () => speak(text, listen));
+    row.append(listen);
+  }
   if (suggestions.length) {
     const chips = element('div', 'chips');
     for (const suggestion of suggestions) {
@@ -63,41 +99,89 @@ function whatsappNumber(digits) {
   return plain.length === 10 ? `91${plain}` : plain;
 }
 
+function showShop(shop) {
+  document.title = `${shop.name} · AI salesman`;
+  document.querySelector('#shopName').textContent = shop.name;
+  document.querySelector('#shopMeta').textContent = [shop.type, shop.timings, shop.weeklyHoliday && `Holiday: ${shop.weeklyHoliday}`].filter(Boolean).join(' · ');
+  const contacts = document.querySelector('#contactRow');
+  contacts.replaceChildren();
+  if (shop.call) contacts.append(contactLink('Call', `tel:${shop.call}`));
+  if (shop.whatsapp) contacts.append(contactLink('WhatsApp', `https://wa.me/${whatsappNumber(shop.whatsapp)}`, true));
+  if (shop.mapLink) contacts.append(contactLink('Directions', shop.mapLink, true));
+}
+
+function updateBanner() {
+  banner.hidden = navigator.onLine;
+}
+
+function notFound(message) {
+  document.querySelector('#shopName').textContent = 'Shop not found';
+  addMessage('bot', message);
+  form.hidden = true;
+}
+
 async function loadShop() {
-  if (!shopId) {
-    document.querySelector('#shopName').textContent = 'Shop not found';
-    addMessage('bot', 'Please scan the QR code in the shop again to open its salesman.');
-    form.hidden = true;
-    return;
-  }
+  updateBanner();
+  if (!shopId) { notFound('Please scan the QR code in the shop again to open its salesman.'); return; }
   try {
     const response = await fetch(`${API_BASE}/api/botcraft/public?s=${encodeURIComponent(shopId)}`);
     const data = await response.json();
-    if (!response.ok || !data.ok) throw new Error(data.error || 'Not found');
-    const shop = data.shop;
-    document.title = `${shop.name} · AI salesman`;
-    document.querySelector('#shopName').textContent = shop.name;
-    document.querySelector('#shopMeta').textContent = [shop.type, shop.timings, shop.weeklyHoliday && `Holiday: ${shop.weeklyHoliday}`].filter(Boolean).join(' · ');
-    const contacts = document.querySelector('#contactRow');
-    if (shop.call) contacts.append(contactLink('Call', `tel:${shop.call}`));
-    if (shop.whatsapp) contacts.append(contactLink('WhatsApp', `https://wa.me/${whatsappNumber(shop.whatsapp)}`, true));
-    if (shop.mapLink) contacts.append(contactLink('Directions', shop.mapLink, true));
-    addMessage('bot', `Hi! I'm the AI salesman of ${shop.name}. Ask me about items, prices, offers or timings — in any language.`,
-      ['What do you sell?', 'Any offers today?', 'What are your timings?']);
+    if (response.status === 404) { notFound('Sorry, this shop’s salesman was not found. Please scan the QR code again or ask at the counter.'); return; }
+    if (!response.ok || !data.ok) throw new Error(data.error || 'Unavailable');
+    saved = { shop: data.shop, offline: data.offline };
+    writeStore(DATA_KEY_PREFIX + shopId, JSON.stringify(saved));
   } catch {
-    document.querySelector('#shopName').textContent = 'Shop not found';
-    addMessage('bot', 'Sorry, this shop’s salesman could not be opened. Please scan the QR code again or ask at the counter.');
-    form.hidden = true;
+    // No internet or server trouble: use the copy from the last visit.
+    if (!saved) { notFound('Please connect to the internet (or the shop’s Wi-Fi) to open the salesman.'); return; }
   }
+  showShop(saved.shop);
+  addMessage('bot', `Hi! I'm the AI salesman of ${saved.shop.name}. Ask me about items, prices, offers or timings — in any language.`,
+    navigator.onLine ? ['What do you sell?', 'Any offers today?', 'What are your timings?'] : OFFLINE_CHIPS);
+}
+
+// ---- Offline answers: plain text search over the saved copy, no AI. ----
+
+const words = (text) => String(text).toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').split(/\s+/).filter((word) => word.length > 2);
+
+function itemLine(item) {
+  return `• ${item.name}${item.price ? ` — ${item.price}` : ''}${item.out ? ' (out of stock)' : ''}`;
+}
+
+function offlineAnswer(question) {
+  if (!saved) return 'I need the internet to answer. Please connect, or ask at the counter.';
+  const shop = saved.shop;
+  const { faqs = [], items = [] } = saved.offline || {};
+  if (question === 'Items & prices') {
+    return items.length ? `Items:\n${items.slice(0, 30).map(itemLine).join('\n')}` : 'The item list is not saved yet. Please ask at the counter.';
+  }
+  if (question === 'Timings') return [shop.timings && `Timings: ${shop.timings}`, shop.weeklyHoliday && `Weekly holiday: ${shop.weeklyHoliday}`].filter(Boolean).join('\n') || 'Please ask at the counter.';
+  if (question === 'Address') return shop.address || 'Please ask at the counter.';
+  const asked = words(question === 'Offers' ? 'offers offer discount' : question);
+  const score = (text) => {
+    const target = words(text);
+    return asked.filter((word) => target.some((other) => other.includes(word) || word.includes(other))).length;
+  };
+  const itemHits = items.map((item) => ({ item, s: score(`${item.name} ${item.details}`) })).filter((hit) => hit.s > 0)
+    .sort((a, b) => b.s - a.s).slice(0, 8).map((hit) => itemLine(hit.item));
+  const faqHits = faqs.map((faq) => ({ faq, s: score(faq.q) * 2 + score(faq.a) })).filter((hit) => hit.s > 0)
+    .sort((a, b) => b.s - a.s).slice(0, 2).map((hit) => `${hit.faq.q}\n→ ${hit.faq.a}`);
+  if (!itemHits.length && !faqHits.length) {
+    return 'I could not find that in the saved answers. Please ask at the counter, or try again with internet.';
+  }
+  return [...itemHits, ...faqHits].join('\n\n');
 }
 
 async function ask(text) {
   const question = String(text || '').trim();
   if (!question || busy) return;
+  addMessage('customer', question);
+  input.value = '';
+  if (!navigator.onLine) {
+    addMessage('bot', offlineAnswer(question), OFFLINE_CHIPS);
+    return;
+  }
   busy = true;
   send.disabled = true;
-  input.value = '';
-  addMessage('customer', question);
   const typing = addMessage('bot', '…');
   typing.classList.add('typing');
   try {
@@ -111,9 +195,10 @@ async function ask(text) {
     if (!response.ok || !data.ok) throw new Error(data.error);
     history.push({ role: 'customer', text: question }, { role: 'bot', text: data.reply });
     addMessage('bot', data.reply, data.suggestions || []);
-  } catch (error) {
+  } catch {
+    // No connection or the AI is busy: answer from the saved copy.
     typing.remove();
-    addMessage('bot', error?.message || 'Sorry, I could not answer right now. Please try again or ask at the counter.');
+    addMessage('bot', `(Basic answer — AI not available right now)\n${offlineAnswer(question)}`, OFFLINE_CHIPS);
   } finally {
     busy = false;
     send.disabled = false;
@@ -125,6 +210,10 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
   ask(input.value);
 });
+window.addEventListener('online', updateBanner);
+window.addEventListener('offline', updateBanner);
+// Some phones load their voices late.
+window.speechSynthesis?.addEventListener?.('voiceschanged', () => {});
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
