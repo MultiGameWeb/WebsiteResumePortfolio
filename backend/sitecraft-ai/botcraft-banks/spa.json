@@ -1,0 +1,330 @@
+{
+ "shop_type_key": "spa",
+ "name": "Spa & massage centre",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-29",
+ "question_count": 28,
+ "questions": [
+  {
+   "id": "spa-001",
+   "category": "Services & prices",
+   "owner_question": "Who do you serve?",
+   "customer_question": "Is this salon for ladies too?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Men",
+    "Women",
+    "Kids",
+    "Unisex (all)"
+   ]
+  },
+  {
+   "id": "spa-002",
+   "category": "Services & prices",
+   "owner_question": "Which spa services do you offer?",
+   "customer_question": "Do you have a full body massage?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Full body massage",
+    "Head, neck & shoulder massage",
+    "Foot reflexology",
+    "Aromatherapy",
+    "Deep tissue",
+    "Thai massage",
+    "Abhyanga / Ayurvedic",
+    "Body scrub / polish",
+    "Steam / sauna",
+    "Couple massage"
+   ]
+  },
+  {
+   "id": "spa-003",
+   "category": "Services & prices",
+   "owner_question": "What are the prices of your main services (for example haircut, beard, facial, massage)?",
+   "customer_question": "How much for a haircut?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "spa-004",
+   "category": "Booking & waiting",
+   "owner_question": "Do customers need an appointment, or can they walk in?",
+   "customer_question": "Do I need an appointment?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Walk-in only",
+    "Appointment only",
+    "Both"
+   ]
+  },
+  {
+   "id": "spa-005",
+   "category": "Services & prices",
+   "owner_question": "How long does each massage take (for example 60 / 90 minutes), and what is the price for each?",
+   "customer_question": "How much for a 60-minute massage?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "spa-006",
+   "category": "Services & prices",
+   "owner_question": "Is a price list shown in the shop?",
+   "customer_question": "Do you have a rate card?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-007",
+   "category": "Products & hygiene",
+   "owner_question": "Are combs, scissors and tools cleaned or sterilised after every customer?",
+   "customer_question": "Are your tools clean?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-008",
+   "category": "Products & hygiene",
+   "owner_question": "Do you use fresh, disposable or washed towels and sheets for every customer?",
+   "customer_question": "Are the towels fresh?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-009",
+   "category": "Booking & waiting",
+   "owner_question": "How can customers book an appointment?",
+   "customer_question": "How do I book?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Call",
+    "WhatsApp",
+    "Online / app",
+    "At the shop"
+   ]
+  },
+  {
+   "id": "spa-010",
+   "category": "Staff & privacy",
+   "owner_question": "Who does the services for women?",
+   "customer_question": "Is there a lady staff?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only women staff",
+    "Women staff on request",
+    "Men and women staff"
+   ]
+  },
+  {
+   "id": "spa-011",
+   "category": "Staff & privacy",
+   "owner_question": "Who gives massages?",
+   "customer_question": "Can a lady therapist give the massage?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Same-gender therapist",
+    "Customer can choose",
+    "Only women therapists",
+    "Only men therapists"
+   ]
+  },
+  {
+   "id": "spa-012",
+   "category": "Staff & privacy",
+   "owner_question": "Do you have private rooms or cabins for facials, waxing and massages?",
+   "customer_question": "Is there a private room?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-013",
+   "category": "Staff & privacy",
+   "owner_question": "Are your therapists trained or certified?",
+   "customer_question": "Are your therapists trained?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-014",
+   "category": "Packages & membership",
+   "owner_question": "Do you have spa packages or couple packages? What do they include?",
+   "customer_question": "Do you have a couple package?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "spa-015",
+   "category": "Products & hygiene",
+   "owner_question": "Which oils and products do you use for massages?",
+   "customer_question": "Which oil do you use?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "spa-016",
+   "category": "Products & hygiene",
+   "owner_question": "Do you sell hair and skin products at the shop?",
+   "customer_question": "Can I buy the shampoo here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-017",
+   "category": "Booking & waiting",
+   "owner_question": "What happens if a customer is late or cancels an appointment? Any charge?",
+   "customer_question": "What if I come late?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "spa-018",
+   "category": "Booking & waiting",
+   "owner_question": "Do you have a waiting area with seating, AC or TV?",
+   "customer_question": "Is there a place to wait?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-019",
+   "category": "Staff & privacy",
+   "owner_question": "Can customers choose a particular stylist or therapist?",
+   "customer_question": "Can I ask for the same stylist?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-020",
+   "category": "Staff & privacy",
+   "owner_question": "Are lockers available for customers' belongings?",
+   "customer_question": "Where do I keep my things?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-021",
+   "category": "Staff & privacy",
+   "owner_question": "Do you have shower and changing rooms?",
+   "customer_question": "Is there a shower after the massage?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-022",
+   "category": "Staff & privacy",
+   "owner_question": "Are there any health conditions for which you don't give massages (for example pregnancy, BP, recent surgery)?",
+   "customer_question": "Can I get a massage during pregnancy?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "spa-023",
+   "category": "Packages & membership",
+   "owner_question": "Do you have a monthly membership or prepaid card? What are the benefits?",
+   "customer_question": "Is there a membership card?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "spa-024",
+   "category": "Packages & membership",
+   "owner_question": "Do you sell gift vouchers?",
+   "customer_question": "Can I gift a spa voucher?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-025",
+   "category": "Packages & membership",
+   "owner_question": "Do you give special prices for students, seniors or groups (for example a bridal party)?",
+   "customer_question": "Any student discount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "spa-026",
+   "category": "Shop & service",
+   "owner_question": "Do you have a loyalty card or points for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "spa-027",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "spa-028",
+   "category": "Shop & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

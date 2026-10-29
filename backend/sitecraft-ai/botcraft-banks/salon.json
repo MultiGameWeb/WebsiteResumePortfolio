@@ -1,0 +1,405 @@
+{
+ "shop_type_key": "salon",
+ "name": "Hair salon / barber shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-29",
+ "question_count": 35,
+ "questions": [
+  {
+   "id": "salon-001",
+   "category": "Services & prices",
+   "owner_question": "Who do you serve?",
+   "customer_question": "Is this salon for ladies too?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Men",
+    "Women",
+    "Kids",
+    "Unisex (all)"
+   ]
+  },
+  {
+   "id": "salon-002",
+   "category": "Services & prices",
+   "owner_question": "Which hair services do you offer?",
+   "customer_question": "Do you do hair colouring?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Haircut",
+    "Beard trim / shave",
+    "Hair wash",
+    "Hair colour / dye",
+    "Hair spa",
+    "Straightening / smoothening",
+    "Keratin",
+    "Head massage"
+   ]
+  },
+  {
+   "id": "salon-003",
+   "category": "Services & prices",
+   "owner_question": "What are the prices of your main services (for example haircut, beard, facial, massage)?",
+   "customer_question": "How much for a haircut?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-004",
+   "category": "Booking & waiting",
+   "owner_question": "Do customers need an appointment, or can they walk in?",
+   "customer_question": "Do I need an appointment?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Walk-in only",
+    "Appointment only",
+    "Both"
+   ]
+  },
+  {
+   "id": "salon-005",
+   "category": "Services & prices",
+   "owner_question": "Are your prices fixed for everyone, or do they change with hair length or the stylist?",
+   "customer_question": "Is the price same for long hair?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed for everyone",
+    "Depends on hair length",
+    "Depends on the stylist (senior / junior)",
+    "Depends on both"
+   ]
+  },
+  {
+   "id": "salon-006",
+   "category": "Services & prices",
+   "owner_question": "Is a price list shown in the shop?",
+   "customer_question": "Do you have a rate card?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-007",
+   "category": "Products & hygiene",
+   "owner_question": "Do you use a new blade for every customer?",
+   "customer_question": "Will you use a new blade?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-008",
+   "category": "Products & hygiene",
+   "owner_question": "Are combs, scissors and tools cleaned or sterilised after every customer?",
+   "customer_question": "Are your tools clean?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-009",
+   "category": "Products & hygiene",
+   "owner_question": "Do you use fresh, disposable or washed towels and sheets for every customer?",
+   "customer_question": "Are the towels fresh?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-010",
+   "category": "Products & hygiene",
+   "owner_question": "Which product brands do you use (for example L'Oréal, Lakme, VLCC, O3+)?",
+   "customer_question": "Which brand facial do you use?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-011",
+   "category": "Booking & waiting",
+   "owner_question": "How can customers book an appointment?",
+   "customer_question": "How do I book?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Call",
+    "WhatsApp",
+    "Online / app",
+    "At the shop"
+   ]
+  },
+  {
+   "id": "salon-012",
+   "category": "Booking & waiting",
+   "owner_question": "What are your busy times (for example Sunday, evenings), and how long is the usual wait then?",
+   "customer_question": "When is it less crowded?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-013",
+   "category": "Staff & privacy",
+   "owner_question": "Who does the services for women?",
+   "customer_question": "Is there a lady staff?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Only women staff",
+    "Women staff on request",
+    "Men and women staff"
+   ]
+  },
+  {
+   "id": "salon-014",
+   "category": "Packages & membership",
+   "owner_question": "Which combo packages do you have (for example haircut + beard + facial) and prices?",
+   "customer_question": "Any combo offer?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-015",
+   "category": "Home service",
+   "owner_question": "Do you provide home service?",
+   "customer_question": "Can you come home for a facial?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No home service",
+    "Yes, some services",
+    "Yes, all services"
+   ]
+  },
+  {
+   "id": "salon-016",
+   "category": "Services & prices",
+   "owner_question": "How much time does each main service usually take (haircut, facial, hair colour)?",
+   "customer_question": "How long will a facial take?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-017",
+   "category": "Services & prices",
+   "owner_question": "Do you give kids' haircuts? Is there a separate price?",
+   "customer_question": "Do you cut kids' hair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-018",
+   "category": "Services & prices",
+   "owner_question": "Do you do hair treatments for dandruff or hair fall?",
+   "customer_question": "Anything for dandruff?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-019",
+   "category": "Services & prices",
+   "owner_question": "Do you do groom makeup and grooming packages for weddings?",
+   "customer_question": "Do you have a groom package?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-020",
+   "category": "Products & hygiene",
+   "owner_question": "Do you have options for sensitive skin or allergies (for example ammonia-free colour)?",
+   "customer_question": "I have sensitive skin, is that okay?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-021",
+   "category": "Products & hygiene",
+   "owner_question": "Do you do a patch test before colour or chemical treatments?",
+   "customer_question": "Will you do a patch test?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-022",
+   "category": "Products & hygiene",
+   "owner_question": "Do you sell hair and skin products at the shop?",
+   "customer_question": "Can I buy the shampoo here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-023",
+   "category": "Booking & waiting",
+   "owner_question": "Do you take advance booking for festivals and the wedding season?",
+   "customer_question": "Can I book for Diwali morning?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-024",
+   "category": "Booking & waiting",
+   "owner_question": "Do you have a waiting area with seating, AC or TV?",
+   "customer_question": "Is there a place to wait?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-025",
+   "category": "Staff & privacy",
+   "owner_question": "Can customers choose a particular stylist or therapist?",
+   "customer_question": "Can I ask for the same stylist?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-026",
+   "category": "Staff & privacy",
+   "owner_question": "How many years of experience do your senior stylists or beauticians have?",
+   "customer_question": "Are the stylists experienced?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-027",
+   "category": "Staff & privacy",
+   "owner_question": "Do you have a separate section for men and women?",
+   "customer_question": "Is there a separate ladies section?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-028",
+   "category": "Packages & membership",
+   "owner_question": "Do you have a monthly membership or prepaid card? What are the benefits?",
+   "customer_question": "Is there a membership card?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-029",
+   "category": "Packages & membership",
+   "owner_question": "Do you give special prices for students, seniors or groups (for example a bridal party)?",
+   "customer_question": "Any student discount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-030",
+   "category": "Home service",
+   "owner_question": "Which areas do you cover for home service, and is there an extra charge?",
+   "customer_question": "Is there extra charge for home service?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-031",
+   "category": "Shop & service",
+   "owner_question": "Is the shop air-conditioned?",
+   "customer_question": "Is it AC?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-032",
+   "category": "Shop & service",
+   "owner_question": "Do you have a loyalty card or points for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "salon-033",
+   "category": "Shop & service",
+   "owner_question": "If a customer is not happy with a haircut or service, what do you do (redo, correction)?",
+   "customer_question": "What if I don't like my haircut?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "salon-034",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "salon-035",
+   "category": "Shop & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
