@@ -1,8 +1,9 @@
 # Hand-written (curated) question banks for electrical shops, hardware &
-# plumbing stores, and shops that are both.
+# plumbing stores, shops that are both, and cement, steel & tiles shops.
 # Run: python3 scripts/curated/electrical_hardware.py  -> writes botcraft-banks/<type>.json
 # Priorities: M = mandatory, I = important, O = optional.
-# Tags: E = electrical shop, H = hardware, plumbing & paints store. The combined
+# Tags: E = electrical shop, H = hardware, plumbing & paints store,
+# B = cement, steel & tiles (building materials) shop. The combined
 # electrical & hardware shop gets every question tagged E or H.
 # A * in the tags marks a city-only question, asked only to shops in a district
 # headquarters or city (local shops rarely know these).
@@ -31,10 +32,29 @@ Q = [
  ("Hardware & plumbing items", "I", "text", "Which pipe and tap brands do you sell (for example Ashirvad, Astral, Finolex, Supreme, Jaquar, Hindware, Cera, Parryware, Prayag)?", "Do you have Jaquar taps?", [], "H"),
  ("Hardware & plumbing items", "I", "text", "Which lock brands do you sell (for example Godrej, Europa, Yale, Harrison), and from what price?", "How much is a Godrej main door lock?", [], "H"),
  ("Hardware & plumbing items", "O", "text", "What is the starting price for a bathroom set (wall mixer, overhead shower, health faucet)?", "How much for a bathroom set?", [], "H"),
+ ("Hardware & plumbing items", "O", "text", "What warranty do taps and sanitaryware carry, and which taps do you suggest for hard (salty) bore water?", "Will this tap rust with bore water?", [], "H"),
  ("Hardware & plumbing items", "O", "yes_no", "Do you sell tap spares separately (washers, spindles, cartridges)?", "My tap is dripping, do you have the spindle?", YN, "H"),
  ("Hardware & plumbing items", "O", "yes_no", "Do you have washing machine taps and long inlet / outlet pipes?", "Do you have a washing machine tap?", YN, "H"),
  ("Hardware & plumbing items", "O", "yes_no", "Do you cut curtain rods to size?", "Can you cut the rod to 5 feet?", YN, "H"),
  ("Hardware & plumbing items", "O", "yes_no", "Do you fit ceiling cloth-dryer hangers at home?", "Can you fit the dryer hanger?", YN, "H"),
+
+ ("Paints", "I", "text", "Which paint and putty brands do you sell (for example Asian Paints, Berger, Nerolac, Birla Opus, JK or Birla putty)?", "Do you have Asian Paints?", [], "H"),
+ ("Paints", "I", "yes_no", "Do you have a computer colour-mixing (tinting) machine to make any shade from the shade card?", "Can you make this colour from the shade card?", YN, "H"),
+ ("Paints", "O", "yes_no", "Do you help work out how much putty, primer and paint a house needs (for example a 2BHK, two coats)?", "How many buckets for a 2BHK?", YN, "H"),
+ ("Paints", "O", "text", "Do you take back unopened paint buckets? What about tinted (colour-mixed) paint?", "Can I return 2 unopened buckets?", [], "H"),
+ ("Paints", "O", "yes_no", "Can you suggest trusted painters?", "Do you know a good painter?", YN, "H"),
+
+ ("Building materials", "M", "list", "Which building materials do you sell?", "Do you have cement?", ["Cement", "TMT steel bars", "Bricks & blocks (red, fly-ash, AAC)", "Sand & aggregates (river sand, M-sand, jelly)", "Floor tiles (vitrified, ceramic)", "Wall & bathroom tiles (anti-skid)", "Parking & outdoor tiles", "Granite & marble", "Tile adhesive & epoxy grout", "Waterproofing chemicals", "Binding wire & nails", "Roofing sheets"], "B"),
+ ("Building materials", "I", "text", "Which cement brands do you sell (for example UltraTech, Maha, Ramco, Nagarjuna), and how should customers get today's bag rate?", "What is the cement bag rate today?", [], "B"),
+ ("Building materials", "I", "text", "Which TMT steel brands and sizes do you sell (for example Vizag Steel, Tata Tiscon, Kamdhenu; 8–16 mm), and how is the rate given (per ton or per kg)?", "What is the 12 mm steel rate per ton?", [], "B"),
+ ("Building materials", "O", "yes_no", "Is your cement fresh stock (recent manufacturing date, no lumps)?", "Is the cement fresh?", YN, "B"),
+ ("Building materials", "I", "text", "For bulk orders (for example 50 bags or more), are transport and loading / unloading (hamali) free or charged?", "Is transport free for 50 bags?", [], "B"),
+ ("Tiles & granite", "I", "text", "Which tile brands do you sell (for example Kajaria, Somany, Johnson, Nitco), and what is the price range per sq ft (floor, wall, bathroom, parking)?", "How much are 2x2 vitrified tiles per sq ft?", [], "B"),
+ ("Tiles & granite", "O", "yes_no", "Do you work out how many tile boxes are needed (with wastage) from the room size?", "How many boxes for a 12x12 room?", YN, "B"),
+ ("Tiles & granite", "O", "yes_no", "Do you give all boxes of one design from the same batch (same shade)?", "Will all boxes be the same shade?", YN, "B"),
+ ("Tiles & granite", "O", "yes_no", "If customers need a few more boxes later, can you get the same design and batch?", "Can I get 2 more boxes later?", YN, "B"),
+ ("Tiles & granite", "O", "text", "If tiles arrive broken, do you replace them? How soon must customers tell you?", "Some tiles came broken, will you replace them?", [], "B"),
+ ("Tiles & granite", "O", "text", "Do you take back unused full boxes or bags? Any deduction?", "Can I return 3 extra boxes?", [], "B"),
 
  ("Buying advice", "O", "text", "How do you advise wire sizes (for example 2.5 vs 4 sq mm for AC, geyser and main line) and FR vs FRLS / ZHFR wires?", "Which wire for the AC?", [], "E"),
  ("Buying advice", "O", "text", "For an old flickering tube light, do you suggest a new choke / starter or a 20 W LED tube?", "Repair the tube light or buy LED?", [], "E"),
@@ -45,12 +65,12 @@ Q = [
  ("Prices & service", "I", "yes_no", "Do you deliver heavy items (pipes, tanks, wire bundles) to the site by auto?", "Can you send the tank to my site?", YN, "EH"),
  ("Prices & service", "O", "text", "Do you take back unused leftover material (wire, switches, fittings) with the bill and refund?", "Can I return the extra wire?", [], "EH"),
  ("Prices & service", "O", "yes_no", "Can you send a trusted electrician or plumber for repairs and fitting?", "Do you know a good electrician?", YN, "EH"),
- ("Prices & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "EH"),
- ("Prices & service", "O", "text", "Please share your Google reviews link, if you have one.", "Where can I see your reviews?", [], "EH"),
+ ("Prices & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "EHB"),
+ ("Prices & service", "O", "text", "Please share your Google reviews link, if you have one.", "Where can I see your reviews?", [], "EHB"),
 ]
 
 TYPES = [("electrical_shop", "Electrical shop", "E"), ("hardware_store", "Hardware, plumbing & paints store", "H"),
-         ("electrical_hardware", "Electrical & hardware shop", "EH")]
+         ("electrical_hardware", "Electrical & hardware shop", "EH"), ("building_materials", "Cement, steel & tiles shop", "B")]
 PRI = {"M": "mandatory", "I": "important", "O": "optional"}
 order = {"M": 0, "I": 1, "O": 2}
 here = os.path.dirname(os.path.abspath(__file__))

@@ -12,7 +12,7 @@ import json, os, datetime
 YN = ["Yes", "No"]
 Q = [
  # category, priority, answer_type, owner question, how a customer asks, options, tags
- ("Prescriptions & medicines", "I", "yes_no", "If a customer sends a doctor's prescription photo on WhatsApp, do you check which medicines are available?", "Can I send my prescription on WhatsApp?", YN, "P"),
+ ("Prescriptions & medicines", "I", "yes_no", "If a customer sends a doctor's prescription photo (on WhatsApp or from the bot), do you check which medicines are available and tell the total bill?", "Can I send my prescription photo?", YN, "P"),
  ("Prescriptions & medicines", "I", "options", "Do you give the exact brand on the prescription or a substitute with the same formula?", "Will I get the same company medicine?", ["Exact brand only", "Substitute only with the customer's OK", "Both"], "P"),
  ("Prescriptions & medicines", "I", "text", "If a medicine is not in stock, how soon can you get it (same evening, next day)?", "Can you get this medicine by tomorrow?", [], "P"),
  ("Prescriptions & medicines", "I", "yes_no", "Do you cut strips and give only the tablets needed (for example for 3 or 5 days)?", "Can I take only 10 tablets?", YN, "P"),
@@ -29,9 +29,10 @@ Q = [
  ("Prescriptions & medicines", "O", "yes_no", "Do you keep sugar-free syrups for diabetics?", "Do you have sugar-free cough syrup?", YN, "P"),
  ("Prescriptions & medicines", "O", "yes_no", "Do you pack insulin or cold injections with ice gel packs for travel?", "Can you pack insulin for travel?", YN, "P"),
 
- ("Prices & bills", "I", "text", "What discount do you give on MRP (for example 10–20%)?", "How much discount do you give?", [], "P"),
+ ("Prices & bills", "I", "text", "What discount do you give on MRP — on medicines (for example 10–20%), and on other items (ayurvedic, protein powders, baby food, soaps)?", "How much discount do you give?", [], "P"),
  ("Prices & bills", "I", "yes_no", "Do you give an itemised computer bill with patient and doctor name, batch number, expiry and GST (for insurance or office claims)?", "Can I get a bill for insurance?", YN, "P"),
  ("Prices & bills", "O", "text", "Do you give extra discount on monthly medicines (BP, sugar, thyroid, heart) bought for the whole month?", "Any discount for monthly medicines?", [], "P"),
+ ("Prices & bills", "O", "text", "Online pharmacies sometimes give bigger discounts. Do you match them for regular monthly customers?", "1mg gives 25% off, can you match it?", [], "P"),
  ("Prices & bills", "O", "text", "Do you take back unopened full strips with the bill if the doctor changes the medicine? Within how many days?", "Doctor changed my tablet, can I return this?", [], "P"),
  ("Prices & bills", "O", "text", "Which medicines can't be returned (for example fridge items, syrups, cut strips)?", "Can I return this syrup?", [], "P"),
  ("Prices & bills", "O", "yes_no", "If a customer loses a bill, can you print a duplicate using their phone number?", "I lost my bill, can you print it again?", YN, "P"),
@@ -53,13 +54,13 @@ Q = [
  ("Devices & surgical", "O", "yes_no", "Do you give bulk rates on adult diapers and underpads?", "Any rate for a full pack of adult diapers?", YN, "P"),
  ("Devices & surgical", "O", "yes_no", "Do you keep supports and stockings in all sizes?", "Do you have an XL knee cap?", YN, "P"),
 
- ("Baby, nutrition & care", "I", "list", "What else do you sell?", "Do you have baby milk powder?", ["Baby milk powders (all stages)", "Diapers, wipes & baby care", "Protein & nutrition (Ensure, Protinex)", "Women's care (pregnancy kits, pads, supplements)", "Skin care (medicated sunscreen, acne creams)", "Dental care (sensitive toothpaste, mouthwash)", "Ayurvedic (Himalaya, Dabur, Baidyanath, Zandu)", "ORS, glucose & probiotics", "Fitness & supplements (multivitamins, omega-3)", "Pet medicines (tick soap, deworming)", "Contact lens solutions & eyeglass cleaners", "First-aid kits", "Travel & daily care (balms, inhalers, small sanitizers)"], "P"),
+ ("Baby, nutrition & care", "I", "list", "What else do you sell?", "Do you have baby milk powder?", ["Baby milk powders (all stages)", "Diapers, wipes, feeding bottles, breast pumps & baby care", "Protein & nutrition (Ensure, Protinex)", "Women's care (pregnancy kits, pads, supplements)", "Skin care (medicated sunscreen, acne creams)", "Dental care (sensitive toothpaste, mouthwash)", "Ayurvedic (Himalaya, Dabur, Baidyanath, Zandu)", "ORS, glucose & probiotics", "Fitness & supplements (multivitamins, omega-3)", "Pet medicines (tick soap, deworming)", "Contact lens solutions & eyeglass cleaners", "First-aid kits", "Travel & daily care (balms, inhalers, small sanitizers)"], "P"),
  ("Baby, nutrition & care", "O", "yes_no", "Do you keep fresh stock of baby milk powders in all stages?", "Do you have Lactogen stage 2?", YN, "P"),
  ("Baby, nutrition & care", "O", "text", "Do you give discounts on diapers, wipes and baby care items?", "Any discount on diapers?", [], "P"),
 
  ("Shop & service", "O", "yes_no", "Is there a clinic, nurse, doctor or blood-test collection centre at or near your shop (for injections, drips or tests prescribed by a doctor)?", "Can I get a blood test here?", YN, "P"),
- ("Shop & service", "O", "yes_no", "Do you pack sanitary pads and personal items discreetly (paper or dark cover)?", "Can you pack this in a paper cover?", YN, "P"),
- ("Shop & service", "O", "yes_no", "Can you arrange medical equipment on rent (oxygen cylinder or concentrator, hospital bed)?", "Can I rent an oxygen concentrator?", YN, "P"),
+ ("Shop & service", "O", "yes_no", "Do you pack sanitary pads, condoms, pregnancy kits and other personal items discreetly (paper or dark cover)?", "Can you pack this in a paper cover?", YN, "P"),
+ ("Shop & service", "O", "yes_no", "Can you arrange medical equipment on rent (oxygen cylinder or concentrator, hospital bed, wheelchair, walker, commode chair, air bed)?", "Can I rent an oxygen concentrator?", YN, "P"),
  ("Shop & service", "O", "yes_no", "Do you do gun-shot ear piercing?", "Do you pierce ears?", YN, "P"),
  ("Shop & service", "O", "yes_no", "Do you help customers dispose of expired medicines safely (advice or a drop box)?", "Where do I throw old medicines?", YN, "P"),
  ("Shop & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "P"),

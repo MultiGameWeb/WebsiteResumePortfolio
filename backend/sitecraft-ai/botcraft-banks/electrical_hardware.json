@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 30,
+ "question_count": 36,
  "questions": [
   {
    "id": "electrical_hardware-001",
@@ -100,6 +100,26 @@
   },
   {
    "id": "electrical_hardware-007",
+   "category": "Paints",
+   "owner_question": "Which paint and putty brands do you sell (for example Asian Paints, Berger, Nerolac, Birla Opus, JK or Birla putty)?",
+   "customer_question": "Do you have Asian Paints?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_hardware-008",
+   "category": "Paints",
+   "owner_question": "Do you have a computer colour-mixing (tinting) machine to make any shade from the shade card?",
+   "customer_question": "Can you make this colour from the shade card?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_hardware-009",
    "category": "Prices & service",
    "owner_question": "For a full house-wiring or plumbing list, what discount do you give on the company price list? Do customers who come without an electrician get the electrician's commission as a discount?",
    "customer_question": "What discount on the full list?",
@@ -107,7 +127,7 @@
    "answer_type": "text"
   },
   {
-   "id": "electrical_hardware-008",
+   "id": "electrical_hardware-010",
    "category": "Prices & service",
    "owner_question": "If customers send their electrician's or plumber's list on WhatsApp, do you send a price estimate?",
    "customer_question": "Can you send a quotation for this list?",
@@ -119,7 +139,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-009",
+   "id": "electrical_hardware-011",
    "category": "Prices & service",
    "owner_question": "Do you deliver heavy items (pipes, tanks, wire bundles) to the site by auto?",
    "customer_question": "Can you send the tank to my site?",
@@ -131,7 +151,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-010",
+   "id": "electrical_hardware-012",
    "category": "Electrical items",
    "owner_question": "How many years of warranty do switches and sockets have?",
    "customer_question": "Is there a warranty on switches?",
@@ -139,7 +159,7 @@
    "answer_type": "text"
   },
   {
-   "id": "electrical_hardware-011",
+   "id": "electrical_hardware-013",
    "category": "Electrical items",
    "owner_question": "Do you have USB / Type-C charging sockets, 2-way switches and small hum-free step regulators?",
    "customer_question": "Do you have a USB socket?",
@@ -151,7 +171,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-012",
+   "id": "electrical_hardware-014",
    "category": "Electrical items",
    "owner_question": "Do you keep heavy-gauge conduit pipes and boxes that don't break?",
    "customer_question": "Are these pipes strong?",
@@ -163,7 +183,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-013",
+   "id": "electrical_hardware-015",
    "category": "Electrical items",
    "owner_question": "Do you cut wire by the metre (for example 5 or 10 m) instead of a full 90 m coil?",
    "customer_question": "Can I take 10 metres?",
@@ -175,7 +195,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-014",
+   "id": "electrical_hardware-016",
    "category": "Electrical items",
    "owner_question": "What warranty do LED bulbs and tubes have? Do you mark the date on them, and replace them without a bill within warranty?",
    "customer_question": "My bulb fused in 6 months, will you change it?",
@@ -183,7 +203,7 @@
    "answer_type": "text"
   },
   {
-   "id": "electrical_hardware-015",
+   "id": "electrical_hardware-017",
    "category": "Electrical items",
    "owner_question": "Do you give wholesale rates on false-ceiling lights (COB, spot, profile, rope lights)?",
    "customer_question": "Rate for 40 ceiling lights?",
@@ -195,7 +215,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-016",
+   "id": "electrical_hardware-018",
    "category": "Electrical items",
    "owner_question": "Do you have motion-sensor lights, foot / step lights and adjustable panel lights?",
    "customer_question": "Do you have a sensor light?",
@@ -208,7 +228,7 @@
    "city_only": true
   },
   {
-   "id": "electrical_hardware-017",
+   "id": "electrical_hardware-019",
    "category": "Electrical items",
    "owner_question": "Do you make ready-made switch boards (for example 4 sockets + 4 switches for the kitchen) and sell weatherproof switch covers?",
    "customer_question": "Can you make a kitchen board?",
@@ -220,7 +240,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-018",
+   "id": "electrical_hardware-020",
    "category": "Electrical items",
    "owner_question": "Which spare parts do you keep?",
    "customer_question": "Do you have a fan capacitor?",
@@ -239,7 +259,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-019",
+   "id": "electrical_hardware-021",
    "category": "Hardware & plumbing items",
    "owner_question": "What is the starting price for a bathroom set (wall mixer, overhead shower, health faucet)?",
    "customer_question": "How much for a bathroom set?",
@@ -247,7 +267,15 @@
    "answer_type": "text"
   },
   {
-   "id": "electrical_hardware-020",
+   "id": "electrical_hardware-022",
+   "category": "Hardware & plumbing items",
+   "owner_question": "What warranty do taps and sanitaryware carry, and which taps do you suggest for hard (salty) bore water?",
+   "customer_question": "Will this tap rust with bore water?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_hardware-023",
    "category": "Hardware & plumbing items",
    "owner_question": "Do you sell tap spares separately (washers, spindles, cartridges)?",
    "customer_question": "My tap is dripping, do you have the spindle?",
@@ -259,7 +287,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-021",
+   "id": "electrical_hardware-024",
    "category": "Hardware & plumbing items",
    "owner_question": "Do you have washing machine taps and long inlet / outlet pipes?",
    "customer_question": "Do you have a washing machine tap?",
@@ -271,7 +299,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-022",
+   "id": "electrical_hardware-025",
    "category": "Hardware & plumbing items",
    "owner_question": "Do you cut curtain rods to size?",
    "customer_question": "Can you cut the rod to 5 feet?",
@@ -283,7 +311,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-023",
+   "id": "electrical_hardware-026",
    "category": "Hardware & plumbing items",
    "owner_question": "Do you fit ceiling cloth-dryer hangers at home?",
    "customer_question": "Can you fit the dryer hanger?",
@@ -295,7 +323,39 @@
    ]
   },
   {
-   "id": "electrical_hardware-024",
+   "id": "electrical_hardware-027",
+   "category": "Paints",
+   "owner_question": "Do you help work out how much putty, primer and paint a house needs (for example a 2BHK, two coats)?",
+   "customer_question": "How many buckets for a 2BHK?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_hardware-028",
+   "category": "Paints",
+   "owner_question": "Do you take back unopened paint buckets? What about tinted (colour-mixed) paint?",
+   "customer_question": "Can I return 2 unopened buckets?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_hardware-029",
+   "category": "Paints",
+   "owner_question": "Can you suggest trusted painters?",
+   "customer_question": "Do you know a good painter?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_hardware-030",
    "category": "Buying advice",
    "owner_question": "How do you advise wire sizes (for example 2.5 vs 4 sq mm for AC, geyser and main line) and FR vs FRLS / ZHFR wires?",
    "customer_question": "Which wire for the AC?",
@@ -303,7 +363,7 @@
    "answer_type": "text"
   },
   {
-   "id": "electrical_hardware-025",
+   "id": "electrical_hardware-031",
    "category": "Buying advice",
    "owner_question": "For an old flickering tube light, do you suggest a new choke / starter or a 20 W LED tube?",
    "customer_question": "Repair the tube light or buy LED?",
@@ -311,7 +371,7 @@
    "answer_type": "text"
   },
   {
-   "id": "electrical_hardware-026",
+   "id": "electrical_hardware-032",
    "category": "Buying advice",
    "owner_question": "How do you advise water motors (0.5 vs 1 HP, monoblock vs submersible) and tanks (3- or 4-layer)?",
    "customer_question": "Which motor for my sump?",
@@ -319,7 +379,7 @@
    "answer_type": "text"
   },
   {
-   "id": "electrical_hardware-027",
+   "id": "electrical_hardware-033",
    "category": "Prices & service",
    "owner_question": "Do you take back unused leftover material (wire, switches, fittings) with the bill and refund?",
    "customer_question": "Can I return the extra wire?",
@@ -327,7 +387,7 @@
    "answer_type": "text"
   },
   {
-   "id": "electrical_hardware-028",
+   "id": "electrical_hardware-034",
    "category": "Prices & service",
    "owner_question": "Can you send a trusted electrician or plumber for repairs and fitting?",
    "customer_question": "Do you know a good electrician?",
@@ -339,7 +399,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-029",
+   "id": "electrical_hardware-035",
    "category": "Prices & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -355,7 +415,7 @@
    ]
   },
   {
-   "id": "electrical_hardware-030",
+   "id": "electrical_hardware-036",
    "category": "Prices & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
