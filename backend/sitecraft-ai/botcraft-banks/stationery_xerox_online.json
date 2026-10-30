@@ -1,0 +1,309 @@
+{
+ "shop_type_key": "stationery_xerox_online",
+ "name": "Stationery, xerox & online centre",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 24,
+ "questions": [
+  {
+   "id": "stationery_xerox_online-001",
+   "category": "Stationery",
+   "owner_question": "Which stationery items do you sell?",
+   "customer_question": "Do you have record books?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Notebooks & long books",
+    "Record books",
+    "Pens, pencils & markers",
+    "Drawing books, colour pencils & crayons",
+    "Chart, graph & project sheets",
+    "Exam pads & clipboards",
+    "Geometry boxes & calculators",
+    "School bags, bottles & lunch boxes",
+    "Office stationery (files, registers, staplers)",
+    "Guides & study material",
+    "File covers & document folders"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-002",
+   "category": "Xerox & printing",
+   "owner_question": "Which print and document services do you offer?",
+   "customer_question": "Do you do colour xerox?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Black & white xerox",
+    "Colour xerox",
+    "A3 printing",
+    "Both-side printing",
+    "ID card front & back on one page",
+    "Print from WhatsApp / email / pen drive",
+    "Colour photo prints",
+    "Passport-size photos",
+    "Scan to PDF (and old photo scanning)",
+    "Lamination (small & large)",
+    "Spiral binding",
+    "Hard binding (thesis)",
+    "Typing (Telugu & English)",
+    "Resume / biodata",
+    "Photo resize for applications"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-003",
+   "category": "MeeSeva & certificates",
+   "owner_question": "Which certificate services do you offer?",
+   "customer_question": "Can I apply for an income certificate here?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Income",
+    "Caste",
+    "Residence",
+    "Birth",
+    "Death",
+    "Family member",
+    "EWS",
+    "Land records (pahani / adangal / 1-B)",
+    "Encumbrance certificate (EC)"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-004",
+   "category": "Online applications",
+   "owner_question": "Which online applications do you help with?",
+   "customer_question": "Can you fill my job application?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Government job applications",
+    "Hall tickets & results",
+    "Scholarships",
+    "College admissions",
+    "Government schemes",
+    "Pensions",
+    "Ration card",
+    "Passport",
+    "PAN card",
+    "Voter ID",
+    "Driving licence services",
+    "Aadhaar update"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-005",
+   "category": "Stationery",
+   "owner_question": "If parents give the school book list, do you pack the full set (or a ready set for a particular school)?",
+   "customer_question": "Can you give the full 5th class set for our school?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-006",
+   "category": "Stationery",
+   "owner_question": "Do you give discounts for bulk buying (full book lists, schools, offices)?",
+   "customer_question": "Any discount for the full list?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_xerox_online-007",
+   "category": "Xerox & printing",
+   "owner_question": "What are your rates: black & white and colour per page (A4, A3), bulk rate, lamination, binding and passport photos?",
+   "customer_question": "How much per page for xerox?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_xerox_online-008",
+   "category": "Xerox & printing",
+   "owner_question": "Do you delete customers' files from your computer and phone after printing or scanning, and send scans only to the customer?",
+   "customer_question": "Will you delete my Aadhaar file after printing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-009",
+   "category": "MeeSeva & certificates",
+   "owner_question": "What kind of centre are you?",
+   "customer_question": "Is this an official MeeSeva?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Authorised MeeSeva centre",
+    "CSC (Common Service Centre)",
+    "Aadhaar update centre",
+    "Private online centre (help with applications)"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-010",
+   "category": "MeeSeva & certificates",
+   "owner_question": "For each certificate, which documents should customers bring, and what is the government fee plus your service charge?",
+   "customer_question": "What documents for a caste certificate?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_xerox_online-011",
+   "category": "MeeSeva & certificates",
+   "owner_question": "How many days do certificates usually take, and can you check the application status?",
+   "customer_question": "When will my income certificate come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_xerox_online-012",
+   "category": "Online applications",
+   "owner_question": "Before submitting, do you show the filled form to the customer to check, and give a printed copy or receipt?",
+   "customer_question": "Can I check the form before you submit?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-013",
+   "category": "Stationery",
+   "owner_question": "Can customers send their list or photos on WhatsApp and collect the packed order later?",
+   "customer_question": "Can I send the list on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-014",
+   "category": "Stationery",
+   "owner_question": "Are prices printed (MRP) or shown on a price list?",
+   "customer_question": "Is there a price list?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-015",
+   "category": "Xerox & printing",
+   "owner_question": "Can you copy selected pages of a book without removing its binding?",
+   "customer_question": "Can you copy only page 45 without opening the book?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-016",
+   "category": "Xerox & printing",
+   "owner_question": "For bulk jobs (100+ pages, project reports, thesis binding), how long does it take?",
+   "customer_question": "When will my project binding be ready?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_xerox_online-017",
+   "category": "Xerox & printing",
+   "owner_question": "Do you type from handwriting, letters or forms, and correct mistakes and reprint? What is the charge?",
+   "customer_question": "Can you type my handwritten letter?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_xerox_online-018",
+   "category": "Online applications",
+   "owner_question": "Do you tell customers when job notifications or scheme last dates come?",
+   "customer_question": "Will you tell me when the police notification comes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-019",
+   "category": "Online applications",
+   "owner_question": "Can application fees be paid at your centre, and is there an extra charge?",
+   "customer_question": "Can I pay the exam fee here?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_xerox_online-020",
+   "category": "Online applications",
+   "owner_question": "Does the applicant need to come in person for OTP or fingerprint (Aadhaar, PAN), and do you ask for OTPs only in person, never on call or chat?",
+   "customer_question": "Do I have to come for the OTP?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-021",
+   "category": "Online applications",
+   "owner_question": "Which tickets do you book?",
+   "customer_question": "Can you book a train ticket?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Train",
+    "Bus",
+    "Flight",
+    "None"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-022",
+   "category": "Online applications",
+   "owner_question": "On busy days (last dates), how long is the wait, and do you give tokens?",
+   "customer_question": "Is it crowded on the last date?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_xerox_online-023",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-024",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

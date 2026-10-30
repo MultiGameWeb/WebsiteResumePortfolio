@@ -1,0 +1,99 @@
+{
+ "shop_type_key": "stationery_shop",
+ "name": "Stationery shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 7,
+ "questions": [
+  {
+   "id": "stationery_shop-001",
+   "category": "Stationery",
+   "owner_question": "Which stationery items do you sell?",
+   "customer_question": "Do you have record books?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Notebooks & long books",
+    "Record books",
+    "Pens, pencils & markers",
+    "Drawing books, colour pencils & crayons",
+    "Chart, graph & project sheets",
+    "Exam pads & clipboards",
+    "Geometry boxes & calculators",
+    "School bags, bottles & lunch boxes",
+    "Office stationery (files, registers, staplers)",
+    "Guides & study material",
+    "File covers & document folders"
+   ]
+  },
+  {
+   "id": "stationery_shop-002",
+   "category": "Stationery",
+   "owner_question": "If parents give the school book list, do you pack the full set (or a ready set for a particular school)?",
+   "customer_question": "Can you give the full 5th class set for our school?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_shop-003",
+   "category": "Stationery",
+   "owner_question": "Do you give discounts for bulk buying (full book lists, schools, offices)?",
+   "customer_question": "Any discount for the full list?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_shop-004",
+   "category": "Stationery",
+   "owner_question": "Can customers send their list or photos on WhatsApp and collect the packed order later?",
+   "customer_question": "Can I send the list on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_shop-005",
+   "category": "Stationery",
+   "owner_question": "Are prices printed (MRP) or shown on a price list?",
+   "customer_question": "Is there a price list?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "stationery_shop-006",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "stationery_shop-007",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
