@@ -1,0 +1,576 @@
+{
+ "shop_type_key": "hotel_stay",
+ "name": "Hotel, lodge & resort (rooms)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 53,
+ "questions": [
+  {
+   "id": "hotel_stay-001",
+   "category": "Rooms & rates",
+   "owner_question": "What are your room types and rent per day (single, double, deluxe, suite, AC, non-AC)?",
+   "customer_question": "How much is a room for one day?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-002",
+   "category": "Check-in & booking",
+   "owner_question": "What is your check-in / check-out system?",
+   "customer_question": "What is the check-out time?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "24-hour check-out",
+    "Fixed time (for example 12 noon check-out)"
+   ]
+  },
+  {
+   "id": "hotel_stay-003",
+   "category": "ID & rules",
+   "owner_question": "Which ID proofs do you accept (Aadhaar, driving licence, voter ID, passport), and do all guests need to show one? Is DigiLocker accepted?",
+   "customer_question": "Is PAN card enough?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-004",
+   "category": "Rooms & rates",
+   "owner_question": "Is GST included in the room rate?",
+   "customer_question": "Is GST extra?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in the rate",
+    "Added on the bill",
+    "No GST (small lodge)"
+   ]
+  },
+  {
+   "id": "hotel_stay-005",
+   "category": "Rooms & rates",
+   "owner_question": "How much is an extra person or extra bed, and are children charged (up to what age is it free)?",
+   "customer_question": "How much for a third person?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-006",
+   "category": "Rooms & rates",
+   "owner_question": "Do walk-in guests get the same rate as online sites (MakeMyTrip, Goibibo, Booking.com)?",
+   "customer_question": "It's cheaper on MakeMyTrip, will you match it?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Same or better than online",
+    "Close to online",
+    "Online offers are only on the app"
+   ]
+  },
+  {
+   "id": "hotel_stay-007",
+   "category": "Rooms & rates",
+   "owner_question": "Are mini-bar items, snacks and water bottles in the room free or charged? At what price?",
+   "customer_question": "Is the water bottle in the room free?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-008",
+   "category": "Check-in & booking",
+   "owner_question": "Do you allow early check-in and late check-out? Is there an extra charge?",
+   "customer_question": "Our train comes at 5 am, can we check in?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-009",
+   "category": "Check-in & booking",
+   "owner_question": "How do guests book a room, how much advance is needed, and can they pay at the hotel?",
+   "customer_question": "How do I book a room?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-010",
+   "category": "Check-in & booking",
+   "owner_question": "What is your cancellation and refund policy (how many days before for a full refund)?",
+   "customer_question": "Will I get my advance back if I cancel?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-011",
+   "category": "ID & rules",
+   "owner_question": "Do you give rooms to unmarried couples (both adults with valid ID)?",
+   "customer_question": "Do you allow unmarried couples?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, with valid ID for both",
+    "Married couples only",
+    "Depends (ask at the reception)"
+   ]
+  },
+  {
+   "id": "hotel_stay-012",
+   "category": "ID & rules",
+   "owner_question": "Do you give rooms to guests with a local ID (same city)?",
+   "customer_question": "I'm from this city, will you give me a room?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes",
+    "No local IDs",
+    "Depends"
+   ]
+  },
+  {
+   "id": "hotel_stay-013",
+   "category": "Room amenities",
+   "owner_question": "What is in your rooms?",
+   "customer_question": "Is there hot water?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "AC",
+    "24-hour hot water",
+    "Western toilet",
+    "Bathtub",
+    "Free Wi-Fi",
+    "Work desk & chair",
+    "TV with Telugu / English channels",
+    "OTT (Netflix, YouTube)",
+    "Kettle with tea / coffee",
+    "Free water bottles",
+    "Mini fridge",
+    "Iron box",
+    "Hair dryer",
+    "Safe locker",
+    "Balcony"
+   ]
+  },
+  {
+   "id": "hotel_stay-014",
+   "category": "Room amenities",
+   "owner_question": "Do you have full power backup that runs the AC in a power cut?",
+   "customer_question": "Will the AC work if the power goes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-015",
+   "category": "Family & access",
+   "owner_question": "Do you have a lift, or ground-floor rooms for elders?",
+   "customer_question": "Is there a lift?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-016",
+   "category": "Food & room service",
+   "owner_question": "Is breakfast included in the rent? Buffet or fixed menu, and at what time?",
+   "customer_question": "Is breakfast free?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-017",
+   "category": "Food & room service",
+   "owner_question": "Do you have an in-house restaurant?",
+   "customer_question": "Is there a restaurant in the hotel?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Pure veg",
+    "Veg & non-veg",
+    "No restaurant"
+   ]
+  },
+  {
+   "id": "hotel_stay-018",
+   "category": "Location & travel",
+   "owner_question": "How far is the hotel from the railway station, bus stand, airport and main temple or tourist spots? What do autos charge?",
+   "customer_question": "How far is the railway station?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-019",
+   "category": "Facilities",
+   "owner_question": "Which facilities do you have?",
+   "customer_question": "Is there a swimming pool?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Swimming pool",
+    "Gym",
+    "Spa / massage",
+    "Bar",
+    "Kids' play area",
+    "Laundry",
+    "Banquet / conference hall",
+    "Garden / lawn"
+   ]
+  },
+  {
+   "id": "hotel_stay-020",
+   "category": "Hygiene & safety",
+   "owner_question": "Are bed sheets, blankets and pillow covers changed for every guest, and rooms kept free of pests (with mosquito repellent)?",
+   "customer_question": "Are the bedsheets fresh?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-021",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you have CCTV in common areas and a 24-hour security guard / reception (safe for solo women travellers)?",
+   "customer_question": "Is it safe for a woman travelling alone?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-022",
+   "category": "Rooms & rates",
+   "owner_question": "Do you give long-stay (weekly / monthly) package rates?",
+   "customer_question": "Any rate for a one-month stay?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-023",
+   "category": "Rooms & rates",
+   "owner_question": "What discount do you give on bulk bookings (weddings, meetings) and for corporate tie-ups?",
+   "customer_question": "Any discount for 20 rooms?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-024",
+   "category": "Rooms & rates",
+   "owner_question": "Do you give rooms for a few hours (short stay to freshen up)? What is the charge?",
+   "customer_question": "Can I take a room for 4 hours?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-025",
+   "category": "Rooms & rates",
+   "owner_question": "Do you give a GST invoice with the company name for office claims?",
+   "customer_question": "Can I get a GST bill?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-026",
+   "category": "Check-in & booking",
+   "owner_question": "Can guests leave luggage at the reception after check-out (cloakroom)?",
+   "customer_question": "Can I keep my bags till evening?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-027",
+   "category": "Check-in & booking",
+   "owner_question": "Can guests see the room before booking?",
+   "customer_question": "Can I see the room first?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-028",
+   "category": "ID & rules",
+   "owner_question": "Can visitors come to the room, or only meet in the lobby? Until what time?",
+   "customer_question": "Can my friends come to my room?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-029",
+   "category": "ID & rules",
+   "owner_question": "Is there a time by which guests must come back at night (gate closing time)?",
+   "customer_question": "Will the gate close at night?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-030",
+   "category": "ID & rules",
+   "owner_question": "Are smoking and alcohol allowed in the rooms? Do you have smoking rooms?",
+   "customer_question": "Can I smoke in the room?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-031",
+   "category": "ID & rules",
+   "owner_question": "Are pets allowed?",
+   "customer_question": "Can I bring my dog?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-032",
+   "category": "Room amenities",
+   "owner_question": "Which bed types do you have?",
+   "customer_question": "Is it one big bed or two beds?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "King / queen double bed",
+    "Twin beds",
+    "Family rooms (4–6 beds)",
+    "Interconnecting rooms"
+   ]
+  },
+  {
+   "id": "hotel_stay-033",
+   "category": "Room amenities",
+   "owner_question": "Do you give free towels and toiletries (soap, shampoo, toothbrush, paste)?",
+   "customer_question": "Will you give soap and shampoo?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-034",
+   "category": "Room amenities",
+   "owner_question": "Which rooms have a view (beach, hill, temple, city), and is it extra?",
+   "customer_question": "Is there a sea view room?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-035",
+   "category": "Room amenities",
+   "owner_question": "How fast is the Wi-Fi for office work?",
+   "customer_question": "Is the Wi-Fi good for work calls?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-036",
+   "category": "Family & access",
+   "owner_question": "Do you have a wheelchair for guests who need one?",
+   "customer_question": "Is there a wheelchair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-037",
+   "category": "Family & access",
+   "owner_question": "Do you have a drivers' dormitory? Is it free or charged?",
+   "customer_question": "Where will my driver sleep?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-038",
+   "category": "Family & access",
+   "owner_question": "Will the kitchen warm milk or food for small children?",
+   "customer_question": "Can you warm milk for my baby?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-039",
+   "category": "Family & access",
+   "owner_question": "Do you have rooms or service apartments with a kitchen?",
+   "customer_question": "Is there a room with a kitchen?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-040",
+   "category": "Food & room service",
+   "owner_question": "Do you have room service? Until what time can guests order food?",
+   "customer_question": "Can I get food in the room at night?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-041",
+   "category": "Food & room service",
+   "owner_question": "Can guests bring outside food or order from Swiggy / Zomato to the room?",
+   "customer_question": "Can I order from Zomato?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-042",
+   "category": "Location & travel",
+   "owner_question": "Do you arrange pick-up and drop from the station or airport? Is it free?",
+   "customer_question": "Can you pick us up from the station?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-043",
+   "category": "Location & travel",
+   "owner_question": "Do you have a travel desk for local sightseeing cabs, and bike or car rentals?",
+   "customer_question": "Can you arrange a cab for sightseeing?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-044",
+   "category": "Location & travel",
+   "owner_question": "Is there space for buses, and an EV charging point?",
+   "customer_question": "Can our bus park inside?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-045",
+   "category": "Facilities",
+   "owner_question": "What are the pool timings and rules (swimwear)?",
+   "customer_question": "Do I need a costume for the pool?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-046",
+   "category": "Facilities",
+   "owner_question": "Is laundry same-day? How is it charged?",
+   "customer_question": "Can you wash my clothes by evening?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-047",
+   "category": "Facilities",
+   "owner_question": "Do you decorate rooms for honeymoons, anniversaries or birthdays (flowers, cake)? What does it cost?",
+   "customer_question": "Can you decorate the room for our anniversary?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-048",
+   "category": "Facilities",
+   "owner_question": "What are the hall charges for a small party or meeting, and how many people does it hold?",
+   "customer_question": "How much is the conference hall?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-049",
+   "category": "Hygiene & safety",
+   "owner_question": "Does housekeeping enter the room only with the guest's permission?",
+   "customer_question": "Will housekeeping enter when I'm out?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-050",
+   "category": "Hygiene & safety",
+   "owner_question": "If something doesn't work (AC, drainage, noise), do you change the room right away?",
+   "customer_question": "The AC isn't cooling, can you change my room?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-051",
+   "category": "Hygiene & safety",
+   "owner_question": "Can you call a doctor at night if a guest falls sick?",
+   "customer_question": "Can you call a doctor?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-052",
+   "category": "Hotel & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "hotel_stay-053",
+   "category": "Hotel & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
