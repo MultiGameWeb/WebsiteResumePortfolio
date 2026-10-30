@@ -57,7 +57,13 @@ export const SHOP_TYPES = [
   { key: "bike_service", name: "Bike & scooter service", aliases: ["bike mechanic", "two-wheeler service", "scooty repair", "bullet mechanic", "bike repair shop", "EV scooter repair"], description: "bike and scooter service and repair shop" },
   { key: "car_bike_service", name: "Car & bike service garage", aliases: ["car and bike garage", "auto garage", "automobile service centre", "mechanic shed"], description: "garage servicing both cars and two-wheelers" },
   { key: "car_wash_detailing", name: "Car wash & detailing studio", aliases: ["car wash", "bike wash", "car spa", "detailing studio", "ceramic coating", "PPF studio"], description: "car and bike wash, cleaning, polishing and coatings" },
-  { key: "heavy_vehicle_service", name: "Lorry, auto & tractor service", aliases: ["lorry mechanic", "truck service", "auto rickshaw mechanic", "tractor mechanic", "heavy vehicle garage"], description: "service and repair of lorries, autos and tractors" }
+  { key: "heavy_vehicle_service", name: "Lorry, auto & tractor service", aliases: ["lorry mechanic", "truck service", "auto rickshaw mechanic", "tractor mechanic", "heavy vehicle garage"], description: "service and repair of lorries, autos and tractors" },
+  { key: "clinic", name: "Clinic (doctor)", aliases: ["clinic", "doctor's clinic", "polyclinic", "child specialist", "gynaecologist", "ortho clinic", "ENT clinic", "eye clinic", "diabetes clinic"], description: "doctor's clinic, general or specialist" },
+  { key: "dental_clinic", name: "Dental clinic", aliases: ["dentist", "dental hospital", "orthodontist", "teeth clinic"], description: "dental clinic" },
+  { key: "skin_hair_clinic", name: "Skin & hair clinic", aliases: ["skin clinic", "dermatologist", "hair clinic", "cosmetology clinic", "laser clinic", "hair transplant"], description: "skin, hair and cosmetology clinic" },
+  { key: "physiotherapy", name: "Physiotherapy centre", aliases: ["physiotherapy", "physio clinic", "rehab centre"], description: "physiotherapy and rehabilitation centre" },
+  { key: "ayush_clinic", name: "Ayurveda / homeopathy clinic", aliases: ["ayurveda", "ayurvedic clinic", "homeopathy", "homeo clinic", "siddha", "unani", "naturopathy", "panchakarma"], description: "Ayurveda, homeopathy or other AYUSH clinic" },
+  { key: "diagnostic_lab", name: "Diagnostic lab & scan centre", aliases: ["diagnostic centre", "blood test lab", "pathology lab", "scan centre", "X-ray centre", "ultrasound centre", "MRI centre", "diagnostics"], description: "diagnostic lab doing blood tests and scans" }
 ];
 
 export const SHOP_TYPE_KEYS = new Set(SHOP_TYPES.map(t => t.key));

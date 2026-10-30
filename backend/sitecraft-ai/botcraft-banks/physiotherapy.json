@@ -1,0 +1,190 @@
+{
+ "shop_type_key": "physiotherapy",
+ "name": "Physiotherapy centre",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 18,
+ "questions": [
+  {
+   "id": "physiotherapy-001",
+   "category": "Fees & appointments",
+   "owner_question": "What is the consultation fee, for how many days is the follow-up free, and is there a fee just to show reports?",
+   "customer_question": "How much is the doctor's fee?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-002",
+   "category": "Physiotherapy",
+   "owner_question": "What is the fee per session, and for packages of 10–15 sessions?",
+   "customer_question": "How much per physio session?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-003",
+   "category": "Doctors & services",
+   "owner_question": "Who are the doctors, their qualifications and medical council registration numbers?",
+   "customer_question": "Is the doctor an MD?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-004",
+   "category": "Doctors & services",
+   "owner_question": "Does the senior doctor see every patient personally?",
+   "customer_question": "Will the main doctor see me?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "physiotherapy-005",
+   "category": "Doctors & services",
+   "owner_question": "Is there a lady doctor, or a lady staff member present when a male doctor examines women?",
+   "customer_question": "Is there a lady doctor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "physiotherapy-006",
+   "category": "Fees & appointments",
+   "owner_question": "Do patients need an appointment, or can they walk in? Do you give tokens by phone or WhatsApp?",
+   "customer_question": "Can I book a token on the phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-007",
+   "category": "Pharmacy & tests",
+   "owner_question": "Does the doctor accept recent reports from other labs instead of repeating the tests?",
+   "customer_question": "I already did tests outside, will you see them?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "physiotherapy-008",
+   "category": "Physiotherapy",
+   "owner_question": "Which conditions do you treat?",
+   "customer_question": "Do you treat back pain?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Back & neck pain",
+    "Stroke / paralysis rehab",
+    "Sports injuries",
+    "After surgery",
+    "Arthritis & knee pain",
+    "Children's therapy"
+   ]
+  },
+  {
+   "id": "physiotherapy-009",
+   "category": "Physiotherapy",
+   "owner_question": "Do you give physiotherapy at home? At what fee?",
+   "customer_question": "Can the physio come home?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-010",
+   "category": "Privacy & service",
+   "owner_question": "Do you keep every patient's tests and reports confidential, sending reports only to the patient?",
+   "customer_question": "Will my report be kept private?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "physiotherapy-011",
+   "category": "Fees & appointments",
+   "owner_question": "What time does the doctor usually start, and how long is the usual wait?",
+   "customer_question": "How long will I wait?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-012",
+   "category": "Fees & appointments",
+   "owner_question": "Is the clinic open on festival days?",
+   "customer_question": "Is the clinic open on Sankranti?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-013",
+   "category": "Fees & appointments",
+   "owner_question": "Do you offer video consultations or home visits? At what fee?",
+   "customer_question": "Can the doctor come home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-014",
+   "category": "Fees & appointments",
+   "owner_question": "If a patient has a doubt or reaction after the visit, how can they reach the clinic?",
+   "customer_question": "Whom do I call if the medicine doesn't suit me?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-015",
+   "category": "Certificates & bills",
+   "owner_question": "Which certificates do you issue (sick leave, fitness, Form 1A for driving licence), and what is the charge?",
+   "customer_question": "Can I get a fitness certificate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-016",
+   "category": "Certificates & bills",
+   "owner_question": "Do you give stamped prescriptions and GST bills for insurance or office reimbursement?",
+   "customer_question": "Can I get bills for my insurance claim?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "physiotherapy-017",
+   "category": "Privacy & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "physiotherapy-018",
+   "category": "Privacy & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
