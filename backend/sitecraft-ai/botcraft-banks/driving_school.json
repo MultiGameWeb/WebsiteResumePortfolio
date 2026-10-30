@@ -1,0 +1,186 @@
+{
+ "shop_type_key": "driving_school",
+ "name": "Driving school",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 16,
+ "questions": [
+  {
+   "id": "driving_school-001",
+   "category": "Driving classes",
+   "owner_question": "Which vehicles do you teach?",
+   "customer_question": "Do you teach scooty?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Car (manual)",
+    "Car (automatic)",
+    "Two-wheeler (geared)",
+    "Scooty / gearless",
+    "Auto rickshaw",
+    "Heavy vehicles (lorry, bus)",
+    "Tractor"
+   ]
+  },
+  {
+   "id": "driving_school-002",
+   "category": "Driving classes",
+   "owner_question": "What are your course fees and duration (number of days, minutes per day), and what is included (theory, LLR help, licence test vehicle)?",
+   "customer_question": "How much for car driving classes?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "driving_school-003",
+   "category": "Driving classes",
+   "owner_question": "Who are your trainers?",
+   "customer_question": "Is there a lady trainer?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Male trainers",
+    "Female trainers",
+    "Trainers who speak Telugu, Hindi & English"
+   ]
+  },
+  {
+   "id": "driving_school-004",
+   "category": "Driving classes",
+   "owner_question": "Do your training cars have dual controls (brake for the trainer)?",
+   "customer_question": "Is there a brake for the trainer?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "driving_school-005",
+   "category": "Driving classes",
+   "owner_question": "Which batch timings do you have (early morning, evening, Sundays), and do you pick up learners from home?",
+   "customer_question": "Is there a 6 am batch?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "driving_school-006",
+   "category": "Licence & RTO help",
+   "owner_question": "Do you help with LLR and licence test slot booking for learners?",
+   "customer_question": "Will you book my LLR slot?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "driving_school-007",
+   "category": "Licence & RTO help",
+   "owner_question": "Which documents and ages are needed (for example LLR, licence, RC transfer, NOC), and does the applicant need to come for photo, signature or test?",
+   "customer_question": "What documents for a licence?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "driving_school-008",
+   "category": "Driving classes",
+   "owner_question": "What do you train in?",
+   "customer_question": "Will you teach reverse parking?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Traffic driving",
+    "Highway driving",
+    "Night driving",
+    "Parking & reversing",
+    "Hill / slope starts",
+    "Licence test track (8 / H track)",
+    "Road signs & rules (theory)",
+    "Simulator"
+   ]
+  },
+  {
+   "id": "driving_school-009",
+   "category": "Driving classes",
+   "owner_question": "Which car models do learners train on?",
+   "customer_question": "Which car do you use for training?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "driving_school-010",
+   "category": "Driving classes",
+   "owner_question": "Do you have refresher classes for licence holders who have not driven for years or are nervous drivers?",
+   "customer_question": "I have a licence but I'm scared to drive, can you help?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "driving_school-011",
+   "category": "Driving classes",
+   "owner_question": "Can learners book extra classes if not confident, and can missed classes be rescheduled? What is the charge?",
+   "customer_question": "Can I take 5 more days?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "driving_school-012",
+   "category": "Driving classes",
+   "owner_question": "If a learner fails the licence test, do you give extra practice and help rebook the test? Any charge?",
+   "customer_question": "What if I fail the test?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "driving_school-013",
+   "category": "Driving classes",
+   "owner_question": "If there is an accident during a class, who pays for damage (is the training vehicle insured)?",
+   "customer_question": "What if I hit something during class?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "driving_school-014",
+   "category": "Driving classes",
+   "owner_question": "Are you an accredited driver training centre that gives the training certificate (Form 5) needed for transport / heavy licences?",
+   "customer_question": "Do you give Form 5 for a heavy licence?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "driving_school-015",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "driving_school-016",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

@@ -1,0 +1,105 @@
+{
+ "shop_type_key": "rto_agent",
+ "name": "RTO agent (licence & vehicle papers)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 8,
+ "questions": [
+  {
+   "id": "rto_agent-001",
+   "category": "Licence & RTO help",
+   "owner_question": "Which RTO services do you help with?",
+   "customer_question": "Can you help with RC transfer?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Learner's licence (LLR)",
+    "Driving licence (new)",
+    "Licence renewal & duplicate",
+    "Address or details change in licence",
+    "International driving permit",
+    "New vehicle registration",
+    "Ownership transfer",
+    "Loan / hypothecation removal",
+    "NOC for another state",
+    "Re-registration of other-state vehicles",
+    "Fitness certificate",
+    "Permits (taxi, goods)",
+    "Road tax",
+    "Fancy number booking",
+    "Insurance renewal",
+    "Pollution (PUC) certificate",
+    "Challan check & payment"
+   ]
+  },
+  {
+   "id": "rto_agent-002",
+   "category": "Licence & RTO help",
+   "owner_question": "For each service, what is the government fee and your service charge?",
+   "customer_question": "How much for ownership transfer?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "rto_agent-003",
+   "category": "Licence & RTO help",
+   "owner_question": "Which documents and ages are needed (for example LLR, licence, RC transfer, NOC), and does the applicant need to come for photo, signature or test?",
+   "customer_question": "What documents for a licence?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "rto_agent-004",
+   "category": "Licence & RTO help",
+   "owner_question": "How long does each service usually take, and how do you update customers on status?",
+   "customer_question": "How many days for RC transfer?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "rto_agent-005",
+   "category": "Licence & RTO help",
+   "owner_question": "Do you help get the licence and RC on DigiLocker / mParivahan?",
+   "customer_question": "Can I keep my licence on the phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "rto_agent-006",
+   "category": "Licence & RTO help",
+   "owner_question": "For insurance renewal, which companies do you compare, and do you help with claims?",
+   "customer_question": "Can you renew my bike insurance?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "rto_agent-007",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "rto_agent-008",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

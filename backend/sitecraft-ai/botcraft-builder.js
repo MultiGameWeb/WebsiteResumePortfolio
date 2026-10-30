@@ -822,7 +822,7 @@ async function handleSalesbot(request, env, url, path, origin) {
 const PREORDER_TYPES = new Set(["restaurant", "fast_food", "tiffin_centre", "catering", "bakery", "sweet_shop", "bakery_sweets",
   "kirana", "supermarket", "fruits_vegetables", "chicken_shop", "mutton_shop", "fish_shop", "meat_shop", "agri_inputs", "pharmacy", "pet_shop",
   "vet_cattle_feed", "poultry_needs", "aqua_needs", "vet_poultry_aqua"]);
-const ORDER_STATUS_TYPES = new Set(["flex_printing", "printing_press", "printing_flex", "interior_designer", "upvc_windows", "tailor_shop", "boutique", "mobile_repair", "mobile_shop_repair", "appliance_repair", "computer_shop",
+const ORDER_STATUS_TYPES = new Set(["rto_agent", "driving_school_rto", "flex_printing", "printing_press", "printing_flex", "interior_designer", "upvc_windows", "tailor_shop", "boutique", "mobile_repair", "mobile_shop_repair", "appliance_repair", "computer_shop",
   "car_service", "bike_service", "car_bike_service", "car_wash_detailing", "heavy_vehicle_service", "optical", "photography",
   "jewellery", "furniture", "catering", "bakery", "bakery_sweets"]);
 const FEATURE_KEYS = ["photo", "preorder", "orderStatus"];
