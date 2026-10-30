@@ -1,0 +1,609 @@
+{
+ "shop_type_key": "function_hall",
+ "name": "Function hall / banquet hall / lawn",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 60,
+ "questions": [
+  {
+   "id": "function_hall-001",
+   "category": "Venues & rent",
+   "owner_question": "Which venues do you have?",
+   "customer_question": "Do you have an AC hall?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "AC banquet hall",
+    "Non-AC function hall",
+    "Kalyana mandapam",
+    "Open lawn",
+    "Mini hall (birthdays, small functions)",
+    "Conference hall",
+    "Rooftop / terrace"
+   ]
+  },
+  {
+   "id": "function_hall-002",
+   "category": "Venues & rent",
+   "owner_question": "What is the rent for a full day (24 hours) and for one session (half day)?",
+   "customer_question": "How much is the hall for one day?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-003",
+   "category": "Capacity & rooms",
+   "owner_question": "How many people can sit in the main hall, and how many can the dining hall serve per batch? Which floor is the dining hall on?",
+   "customer_question": "How many people fit in the hall?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-004",
+   "category": "Kitchen rental",
+   "owner_question": "Do you rent only the kitchen (per day for bulk cooking, or monthly for a cloud kitchen)? At what rent?",
+   "customer_question": "Can I rent only the kitchen?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-005",
+   "category": "Venues & rent",
+   "owner_question": "How do you charge for the banquet hall?",
+   "customer_question": "Is the hall free if we take your food?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Rent only",
+    "Per plate (food with hall)",
+    "Both options"
+   ]
+  },
+  {
+   "id": "function_hall-006",
+   "category": "Venues & rent",
+   "owner_question": "For per-plate bookings, what is the minimum guarantee, what if fewer guests come, and what is the rate for extra plates?",
+   "customer_question": "What if only 150 come instead of 200?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-007",
+   "category": "Venues & rent",
+   "owner_question": "What is included in the rent, and what is charged extra (cleaning, water, garbage, chair covers, AC hours, generator, gas)? Please give a full list.",
+   "customer_question": "Are there any extra charges after the function?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-008",
+   "category": "Venues & rent",
+   "owner_question": "Is GST included in the rent?",
+   "customer_question": "Is GST extra?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill",
+    "No GST"
+   ]
+  },
+  {
+   "id": "function_hall-009",
+   "category": "Power, AC & generator",
+   "owner_question": "Is electricity included in the rent, or charged by meter reading (rate per unit)? Can customers photograph the meter before and after?",
+   "customer_question": "Is the current bill extra?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-010",
+   "category": "Power, AC & generator",
+   "owner_question": "How long is the AC on (whole function or only muhurtham hours), and what does an extra AC hour cost?",
+   "customer_question": "Will the AC be on the whole time?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-011",
+   "category": "Power, AC & generator",
+   "owner_question": "Is there a generator, does it run the ACs too, and how is diesel charged?",
+   "customer_question": "Will the AC run on the generator?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-012",
+   "category": "Timings & booking",
+   "owner_question": "At what time is the hall handed over and when must it be vacated? Can decorators and cooks start the night before (any charge)?",
+   "customer_question": "Can the decorators come the night before?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-013",
+   "category": "Timings & booking",
+   "owner_question": "How much advance blocks the date, when is the balance paid, and how much is the caution deposit (refunded when)?",
+   "customer_question": "How much advance to book?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-014",
+   "category": "Timings & booking",
+   "owner_question": "If the function is cancelled or the muhurtham changes, do you refund or move the advance?",
+   "customer_question": "Will you refund if the wedding is cancelled?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-015",
+   "category": "Capacity & rooms",
+   "owner_question": "Do you have a passenger lift, a goods lift and a wheelchair ramp?",
+   "customer_question": "Is there a lift for elders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-016",
+   "category": "Capacity & rooms",
+   "owner_question": "How many AC rooms come free for the bride and groom, are there extra guest rooms, and do they have attached bathrooms, hot water and bedding?",
+   "customer_question": "Is there a room for the bride?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-017",
+   "category": "Decoration & sound",
+   "owner_question": "Must decoration, lighting and sound be taken from you, or can customers bring outside vendors? Is there a royalty charge?",
+   "customer_question": "Can we bring our own decorator?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-018",
+   "category": "Decoration & sound",
+   "owner_question": "Are DJ and loud music allowed, until what time, and who takes the police permission and music licences (PPL / IPRS)?",
+   "customer_question": "Till what time can we play the DJ?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-019",
+   "category": "Kitchen & catering",
+   "owner_question": "Can customers bring their own cook or caterer?",
+   "customer_question": "Can we bring our own cook?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, cook in your kitchen",
+    "Only food cooked outside",
+    "Only our in-house catering"
+   ]
+  },
+  {
+   "id": "function_hall-020",
+   "category": "Kitchen & catering",
+   "owner_question": "What is the kitchen usage charge for outside caterers?",
+   "customer_question": "How much to use the kitchen?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-021",
+   "category": "Kitchen & catering",
+   "owner_question": "What does your kitchen have?",
+   "customer_question": "Do you have big vessels?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Big vessels (degchis, kadais, ladles)",
+    "Wet grinders & vegetable cutters",
+    "Serving buckets & basins",
+    "High-pressure burners / bhatti",
+    "Commercial gas cylinders",
+    "Deep freezer / cold storage",
+    "Dishwashing area & staff",
+    "Outside space for firewood / tandoor",
+    "24-hour sweet water",
+    "Exhaust hood & grease trap",
+    "3-phase power",
+    "Fire safety NOC"
+   ]
+  },
+  {
+   "id": "function_hall-022",
+   "category": "Kitchen & catering",
+   "owner_question": "Is non-veg allowed?",
+   "customer_question": "Can we serve chicken biryani?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Veg and non-veg allowed",
+    "Pure veg only",
+    "Non-veg in a separate area"
+   ]
+  },
+  {
+   "id": "function_hall-023",
+   "category": "In-house food",
+   "owner_question": "Do you offer free food tasting before booking, with the same ingredients on the function day?",
+   "customer_question": "Can we taste the food before booking?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-024",
+   "category": "In-house food",
+   "owner_question": "Is your kitchen FSSAI-licensed? Which oil do you use, and do you avoid reusing oil?",
+   "customer_question": "Is your kitchen FSSAI licensed?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-025",
+   "category": "Parking & safety",
+   "owner_question": "How many cars and bikes can park inside, and do you provide valet drivers and security for traffic?",
+   "customer_question": "How many cars can park?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-026",
+   "category": "Parking & safety",
+   "owner_question": "Do you have working CCTV, especially near the bride's room and gift counter?",
+   "customer_question": "Is there CCTV near the gift counter?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-027",
+   "category": "Venues & rent",
+   "owner_question": "Do you reduce rent on non-muhurtham days or for small functions (birthday, seemantham, vratham)?",
+   "customer_question": "Any discount for a small function?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-028",
+   "category": "Timings & booking",
+   "owner_question": "What is the grace time or charge if the function runs late, and do you book another function the same day?",
+   "customer_question": "What if we vacate 2 hours late?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-029",
+   "category": "Capacity & rooms",
+   "owner_question": "How many chairs, tables and sofas come free, and are chair covers and table cloths charged?",
+   "customer_question": "Are chair covers free?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-030",
+   "category": "Capacity & rooms",
+   "owner_question": "What is the stage size and ceiling height?",
+   "customer_question": "How big is the stage?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-031",
+   "category": "Capacity & rooms",
+   "owner_question": "Are the main doors wide enough for a palanquin, and is there a place at the entrance for the nadaswaram players?",
+   "customer_question": "Can the bride come in a palanquin?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-032",
+   "category": "Decoration & sound",
+   "owner_question": "What are the decoration rules (no nails, tape allowed, ceiling hooks / truss), and are mandapam, maharaja chairs and red carpet free?",
+   "customer_question": "Can we fix things on the walls?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-033",
+   "category": "Decoration & sound",
+   "owner_question": "Are cold pyros, dry-ice fog and confetti allowed (smoke detectors)? Can the homam be done inside, with exhaust fans?",
+   "customer_question": "Can we do the homam inside the hall?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-034",
+   "category": "Decoration & sound",
+   "owner_question": "Are firecrackers, a horse or a band allowed at the gate for the baraat?",
+   "customer_question": "Can we burst crackers at the gate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-035",
+   "category": "Decoration & sound",
+   "owner_question": "Can a cow and calf be brought inside or on the stage for rituals?",
+   "customer_question": "Can we bring a cow for the puja?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-036",
+   "category": "Decoration & sound",
+   "owner_question": "Do you charge for talambralu rice, flower petals or akshintalu on the carpet?",
+   "customer_question": "Will you fine us for rice on the carpet?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-037",
+   "category": "Kitchen & catering",
+   "owner_question": "Are kitchen vessels free or rented per item, and what is charged for missing items?",
+   "customer_question": "Are the vessels free?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-038",
+   "category": "Kitchen & catering",
+   "owner_question": "How are gas cylinders charged, or can customers bring their own?",
+   "customer_question": "Do we bring our own gas?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-039",
+   "category": "Kitchen & catering",
+   "owner_question": "For pure-veg functions, do you have a separate veg kitchen and vessels?",
+   "customer_question": "Are the vessels used for non-veg?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-040",
+   "category": "Kitchen & catering",
+   "owner_question": "Do you provide RO drinking water, buffet counters with warmers, wash basins and hand wash, or should customers bring them?",
+   "customer_question": "Is drinking water provided?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-041",
+   "category": "Kitchen & catering",
+   "owner_question": "Who clears the kitchen waste and leaf plates?",
+   "customer_question": "Who will clean the kitchen?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-042",
+   "category": "In-house food",
+   "owner_question": "Which live counters do you offer (dosa, chaat, jalebi, rotis), and how many cooks and tawas so there are no long queues?",
+   "customer_question": "Do you have a live dosa counter?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-043",
+   "category": "In-house food",
+   "owner_question": "How do you count plates (tokens, a person from our side), and what do staff, drivers and photographers' meals cost?",
+   "customer_question": "How will you count the plates?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-044",
+   "category": "In-house food",
+   "owner_question": "Can customers take leftover food home?",
+   "customer_question": "Can we pack the leftover food?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-045",
+   "category": "In-house food",
+   "owner_question": "If guests fall sick after the food, how do you handle it?",
+   "customer_question": "What if someone gets food poisoning?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-046",
+   "category": "Alcohol & parties",
+   "owner_question": "Is alcohol allowed at receptions, who arranges the one-day excise permit, and is there a separate bar area with counter, glasses and ice?",
+   "customer_question": "Can we serve drinks at the reception?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-047",
+   "category": "Community needs",
+   "owner_question": "For nikah and walima, do you arrange a full purdah partition and lady stewards for the ladies' side?",
+   "customer_question": "Do you have a purdah system?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-048",
+   "category": "Community needs",
+   "owner_question": "Can you arrange thaal / dastarkhwan seating, and is there a prayer room with wazu facility?",
+   "customer_question": "Is there a place for namaz?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-049",
+   "category": "Community needs",
+   "owner_question": "Is there open space for Kashi yatra, edurukolu, oonjal and other rituals?",
+   "customer_question": "Is there space for Kashi yatra?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-050",
+   "category": "Community needs",
+   "owner_question": "Do you allow sit-down banana-leaf meals (pankti bhojanam)?",
+   "customer_question": "Can we serve on banana leaves sitting on the floor?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-051",
+   "category": "Community needs",
+   "owner_question": "For Christian receptions, do you provide a cake table, toast glasses and a wooden dance floor?",
+   "customer_question": "Is there a dance floor?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-052",
+   "category": "Corporate & exhibitions",
+   "owner_question": "What do you have for corporate events?",
+   "customer_question": "Do you have a projector?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Classroom / U-shape / cluster seating",
+    "Projector & screen",
+    "Podium & lapel mics",
+    "Whiteboard",
+    "High-speed Wi-Fi",
+    "High-tea & working lunch packages"
+   ]
+  },
+  {
+   "id": "function_hall-053",
+   "category": "Corporate & exhibitions",
+   "owner_question": "Do you rent the hall for exhibitions and sales (saree, jewellery, books) for several days, with stalls?",
+   "customer_question": "Can we hold a saree exhibition?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-054",
+   "category": "Parking & safety",
+   "owner_question": "If something goes missing, will your staff cooperate with checking and CCTV?",
+   "customer_question": "Our bag went missing, will you help?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-055",
+   "category": "Parking & safety",
+   "owner_question": "For lawns, what is the rain backup (indoor hall or waterproof tent)?",
+   "customer_question": "What if it rains on the lawn?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-056",
+   "category": "Parking & safety",
+   "owner_question": "Are sweepers on duty to keep washrooms clean during the function, and do you do fogging before the event?",
+   "customer_question": "Will the toilets be cleaned during the function?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "function_hall-057",
+   "category": "Parking & safety",
+   "owner_question": "Is there a lift big enough for a stretcher, and which hospital is nearest?",
+   "customer_question": "Which hospital is near?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-058",
+   "category": "Parking & safety",
+   "owner_question": "Do your staff ask guests for tips after the function? How do you control it?",
+   "customer_question": "Will your staff demand tips?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "function_hall-059",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "function_hall-060",
+   "category": "Service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see photos of the hall?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

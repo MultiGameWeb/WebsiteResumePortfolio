@@ -1,0 +1,1 @@
+This folder contains the built output assets for the worker "sitecraft-ai" generated at 2026-10-30T04:32:27.272Z.

@@ -50,7 +50,9 @@ export const SHOP_TYPES = [
   { key: "gold_loan", name: "Gold loan / pawn shop", aliases: ["gold loan", "pawn broker", "pawn shop", "takattu shop", "gold finance"], description: "gives loans against gold jewellery" },
   { key: "finance_gold", name: "Finance & gold loans", aliases: ["finance and gold loans", "gold loans and finance"], description: "finance office giving both gold loans and other loans" },
   { key: "chit_fund", name: "Chit fund company", aliases: ["chit fund", "chits", "chitti", "chit company"], description: "registered chit fund company running chit groups" },
-  { key: "insurance_investment", name: "Insurance & investment advisor", aliases: ["insurance agent", "LIC agent", "insurance office", "mutual fund advisor", "financial advisor", "SIP advisor"], description: "insurance agent or mutual fund distributor" }
+  { key: "insurance_investment", name: "Insurance & investment advisor", aliases: ["insurance agent", "LIC agent", "insurance office", "mutual fund advisor", "financial advisor", "SIP advisor"], description: "insurance agent or mutual fund distributor" },
+  { key: "function_hall", name: "Function hall / banquet hall / lawn", aliases: ["function hall", "banquet hall", "kalyana mandapam", "marriage hall", "convention hall", "party hall", "open lawn", "wedding venue"], description: "function hall, banquet hall, kalyana mandapam or lawn rented for weddings and events" },
+  { key: "kitchen_rental", name: "Commercial & cloud kitchen rental", aliases: ["kitchen for rent", "cloud kitchen space", "commercial kitchen", "dark kitchen"], description: "rents a commercial kitchen by the day or month" }
 ];
 
 export const SHOP_TYPE_KEYS = new Set(SHOP_TYPES.map(t => t.key));
