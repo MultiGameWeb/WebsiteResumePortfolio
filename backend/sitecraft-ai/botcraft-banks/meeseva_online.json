@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 14,
+ "question_count": 16,
  "questions": [
   {
    "id": "meeseva_online-001",
@@ -41,10 +41,18 @@
     "Pensions",
     "Ration card",
     "Passport",
-    "PAN card",
-    "Voter ID",
+    "PAN card (new, corrections, PAN–Aadhaar link)",
+    "Voter ID (new, voter list search, e-EPIC download)",
     "Driving licence services",
-    "Aadhaar update"
+    "Aadhaar update (address, name, mobile link check)",
+    "Aadhaar download & PVC card",
+    "University exam fees, memos & duplicate certificates",
+    "Entrance exam & counselling registration",
+    "Private job applications & job portal accounts",
+    "Udyam (MSME) registration",
+    "GST registration",
+    "Trade licence & shop registration",
+    "FSSAI food licence"
    ]
   },
   {
@@ -76,7 +84,7 @@
   {
    "id": "meeseva_online-005",
    "category": "MeeSeva & certificates",
-   "owner_question": "For each certificate, which documents should customers bring, and what is the government fee plus your service charge?",
+   "owner_question": "For each certificate or service, which documents should customers bring, and what is the government fee plus your service charge?",
    "customer_question": "What documents for a caste certificate?",
    "priority": "important",
    "answer_type": "text"
@@ -104,6 +112,32 @@
   {
    "id": "meeseva_online-008",
    "category": "Online applications",
+   "owner_question": "If an application has a mistake, is rejected, is pending, or its number is lost, do you help correct it, find the reason, re-apply, recover the number and follow up? Whom should customers contact for long delays?",
+   "customer_question": "My application was rejected, can you check why?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "meeseva_online-009",
+   "category": "Online applications",
+   "owner_question": "Which banking help do you give?",
+   "customer_question": "Can you download my bank statement?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Bank account opening (online)",
+    "KYC document upload",
+    "Statement download & print",
+    "Bank complaints",
+    "Failed or double UPI payment complaints",
+    "Aadhaar–bank link (DBT) check",
+    "Government fee payment & receipts",
+    "None"
+   ]
+  },
+  {
+   "id": "meeseva_online-010",
+   "category": "Online applications",
    "owner_question": "Do you tell customers when job notifications or scheme last dates come?",
    "customer_question": "Will you tell me when the police notification comes?",
    "priority": "optional",
@@ -114,7 +148,7 @@
    ]
   },
   {
-   "id": "meeseva_online-009",
+   "id": "meeseva_online-011",
    "category": "Online applications",
    "owner_question": "Can application fees be paid at your centre, and is there an extra charge?",
    "customer_question": "Can I pay the exam fee here?",
@@ -122,7 +156,7 @@
    "answer_type": "text"
   },
   {
-   "id": "meeseva_online-010",
+   "id": "meeseva_online-012",
    "category": "Online applications",
    "owner_question": "Does the applicant need to come in person for OTP or fingerprint (Aadhaar, PAN), and do you ask for OTPs only in person, never on call or chat?",
    "customer_question": "Do I have to come for the OTP?",
@@ -134,7 +168,7 @@
    ]
   },
   {
-   "id": "meeseva_online-011",
+   "id": "meeseva_online-013",
    "category": "Online applications",
    "owner_question": "Which tickets do you book?",
    "customer_question": "Can you book a train ticket?",
@@ -148,7 +182,7 @@
    ]
   },
   {
-   "id": "meeseva_online-012",
+   "id": "meeseva_online-014",
    "category": "Online applications",
    "owner_question": "On busy days (last dates), how long is the wait, and do you give tokens?",
    "customer_question": "Is it crowded on the last date?",
@@ -156,7 +190,7 @@
    "answer_type": "text"
   },
   {
-   "id": "meeseva_online-013",
+   "id": "meeseva_online-015",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -172,7 +206,7 @@
    ]
   },
   {
-   "id": "meeseva_online-014",
+   "id": "meeseva_online-016",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

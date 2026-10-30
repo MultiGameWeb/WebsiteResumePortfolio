@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 24,
+ "question_count": 26,
  "questions": [
   {
    "id": "stationery_xerox_online-001",
@@ -49,7 +49,7 @@
     "Hard binding (thesis)",
     "Typing (Telugu & English)",
     "Resume / biodata",
-    "Photo resize for applications"
+    "Photo & signature resize for applications"
    ]
   },
   {
@@ -87,10 +87,18 @@
     "Pensions",
     "Ration card",
     "Passport",
-    "PAN card",
-    "Voter ID",
+    "PAN card (new, corrections, PAN–Aadhaar link)",
+    "Voter ID (new, voter list search, e-EPIC download)",
     "Driving licence services",
-    "Aadhaar update"
+    "Aadhaar update (address, name, mobile link check)",
+    "Aadhaar download & PVC card",
+    "University exam fees, memos & duplicate certificates",
+    "Entrance exam & counselling registration",
+    "Private job applications & job portal accounts",
+    "Udyam (MSME) registration",
+    "GST registration",
+    "Trade licence & shop registration",
+    "FSSAI food licence"
    ]
   },
   {
@@ -150,7 +158,7 @@
   {
    "id": "stationery_xerox_online-010",
    "category": "MeeSeva & certificates",
-   "owner_question": "For each certificate, which documents should customers bring, and what is the government fee plus your service charge?",
+   "owner_question": "For each certificate or service, which documents should customers bring, and what is the government fee plus your service charge?",
    "customer_question": "What documents for a caste certificate?",
    "priority": "important",
    "answer_type": "text"
@@ -177,6 +185,14 @@
   },
   {
    "id": "stationery_xerox_online-013",
+   "category": "Online applications",
+   "owner_question": "If an application has a mistake, is rejected, is pending, or its number is lost, do you help correct it, find the reason, re-apply, recover the number and follow up? Whom should customers contact for long delays?",
+   "customer_question": "My application was rejected, can you check why?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_xerox_online-014",
    "category": "Stationery",
    "owner_question": "Can customers send their list or photos on WhatsApp and collect the packed order later?",
    "customer_question": "Can I send the list on WhatsApp?",
@@ -188,7 +204,7 @@
    ]
   },
   {
-   "id": "stationery_xerox_online-014",
+   "id": "stationery_xerox_online-015",
    "category": "Stationery",
    "owner_question": "Are prices printed (MRP) or shown on a price list?",
    "customer_question": "Is there a price list?",
@@ -200,7 +216,7 @@
    ]
   },
   {
-   "id": "stationery_xerox_online-015",
+   "id": "stationery_xerox_online-016",
    "category": "Xerox & printing",
    "owner_question": "Can you copy selected pages of a book without removing its binding?",
    "customer_question": "Can you copy only page 45 without opening the book?",
@@ -212,7 +228,7 @@
    ]
   },
   {
-   "id": "stationery_xerox_online-016",
+   "id": "stationery_xerox_online-017",
    "category": "Xerox & printing",
    "owner_question": "For bulk jobs (100+ pages, project reports, thesis binding), how long does it take?",
    "customer_question": "When will my project binding be ready?",
@@ -220,7 +236,7 @@
    "answer_type": "text"
   },
   {
-   "id": "stationery_xerox_online-017",
+   "id": "stationery_xerox_online-018",
    "category": "Xerox & printing",
    "owner_question": "Do you type from handwriting, letters or forms, and correct mistakes and reprint? What is the charge?",
    "customer_question": "Can you type my handwritten letter?",
@@ -228,7 +244,25 @@
    "answer_type": "text"
   },
   {
-   "id": "stationery_xerox_online-018",
+   "id": "stationery_xerox_online-019",
+   "category": "Online applications",
+   "owner_question": "Which banking help do you give?",
+   "customer_question": "Can you download my bank statement?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Bank account opening (online)",
+    "KYC document upload",
+    "Statement download & print",
+    "Bank complaints",
+    "Failed or double UPI payment complaints",
+    "Aadhaar–bank link (DBT) check",
+    "Government fee payment & receipts",
+    "None"
+   ]
+  },
+  {
+   "id": "stationery_xerox_online-020",
    "category": "Online applications",
    "owner_question": "Do you tell customers when job notifications or scheme last dates come?",
    "customer_question": "Will you tell me when the police notification comes?",
@@ -240,7 +274,7 @@
    ]
   },
   {
-   "id": "stationery_xerox_online-019",
+   "id": "stationery_xerox_online-021",
    "category": "Online applications",
    "owner_question": "Can application fees be paid at your centre, and is there an extra charge?",
    "customer_question": "Can I pay the exam fee here?",
@@ -248,7 +282,7 @@
    "answer_type": "text"
   },
   {
-   "id": "stationery_xerox_online-020",
+   "id": "stationery_xerox_online-022",
    "category": "Online applications",
    "owner_question": "Does the applicant need to come in person for OTP or fingerprint (Aadhaar, PAN), and do you ask for OTPs only in person, never on call or chat?",
    "customer_question": "Do I have to come for the OTP?",
@@ -260,7 +294,7 @@
    ]
   },
   {
-   "id": "stationery_xerox_online-021",
+   "id": "stationery_xerox_online-023",
    "category": "Online applications",
    "owner_question": "Which tickets do you book?",
    "customer_question": "Can you book a train ticket?",
@@ -274,7 +308,7 @@
    ]
   },
   {
-   "id": "stationery_xerox_online-022",
+   "id": "stationery_xerox_online-024",
    "category": "Online applications",
    "owner_question": "On busy days (last dates), how long is the wait, and do you give tokens?",
    "customer_question": "Is it crowded on the last date?",
@@ -282,7 +316,7 @@
    "answer_type": "text"
   },
   {
-   "id": "stationery_xerox_online-023",
+   "id": "stationery_xerox_online-025",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -298,7 +332,7 @@
    ]
   },
   {
-   "id": "stationery_xerox_online-024",
+   "id": "stationery_xerox_online-026",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
