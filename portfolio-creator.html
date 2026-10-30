@@ -297,6 +297,24 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
 .preview-viewport.mobile #preview .portfolio-site .actor-hero.actor-hero-has-images .actor-hero-copy,.preview-viewport.mobile #preview .portfolio-site .ad-hero.ad-hero-has-images .ad-hero-copy{width:100%;max-width:100%;box-sizing:border-box;padding:24px 18px 38px!important;overflow-wrap:anywhere}
 .preview-viewport.mobile #preview .portfolio-site .actor-hero.actor-hero-has-images h1,.preview-viewport.mobile #preview .portfolio-site .ad-hero.ad-hero-has-images h1{font-size:clamp(30px,8vw,44px)!important;line-height:1.02;white-space:normal;overflow-wrap:anywhere;word-break:normal;max-width:100%}
 </style>
+<style id="portfolioTopbarFixes">
+/* Topbar: buttons keep their label on one line; lower-priority labels collapse to icons as the bar narrows. */
+.topbar .btn,.topbar .icon-btn,.topbar .device-btn,.topbar .shortcut,.topbar .saved,.brand strong{white-space:nowrap}
+.top-actions>*{flex:0 0 auto}
+.top-left-nav .template-dropdown{flex:0 0 auto}
+.top-left-nav .brand{flex:0 1 auto;min-width:0;overflow:hidden}.brand-mark{flex:0 0 auto}
+.topbar .icon-btn{min-width:38px;padding:0;text-align:center}
+.top-actions #downloadBtn{align-items:center;justify-content:center}
+@media(max-width:1599px){.brand span{display:none}#shareBtn span{display:none}#shareBtn{min-width:38px}}
+@media(max-width:1439px){.top-actions .shortcut{display:none}#undoBtn span,#redoBtn span{display:none}#undoBtn,#redoBtn{min-width:38px;padding:0 10px}}
+@media(max-width:1199px){.template-dropdown>span{display:none}.top-left-nav .brand>div:not(.brand-mark){display:none}.device-btn .device-label{display:none}.device-btn{width:34px;padding:0}}
+@media(max-width:1023px){.top-actions .saved span{display:none}}
+@media(max-width:899px){.top-left-nav .brand>div:not(.brand-mark){display:none}}
+@media(max-width:420px){.top-left-nav .brand{display:none}}
+/* Recommended banner: copy on its own line, buttons share the row below without clipping their labels. */
+.suggestion-banner{flex-wrap:wrap}.suggestion-banner>strong{flex:0 0 auto}.suggestion-banner .suggestion-copy{flex:1 1 100%;order:1}
+.suggestion-banner .btn{order:2;flex:1 1 auto;min-width:0;white-space:nowrap}.suggestion-banner [data-dismiss-suggestion]{order:0;flex:0 0 auto;margin-left:auto}
+</style>
 </head>
 <body>
 <div class="app" id="app">
@@ -324,9 +342,9 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
     <div class="device-switch" role="group" aria-label="Preview size"><button class="device-btn active" type="button" data-device="desktop" aria-label="Website preview" aria-pressed="true" title="Website preview"><span class="device-icon" aria-hidden="true">▱</span><span class="device-label">Website</span></button><button class="device-btn" type="button" data-device="mobile" aria-label="Mobile preview" aria-pressed="false" title="Mobile preview"><span class="device-icon" aria-hidden="true">▯</span><span class="device-label">Mobile</span></button></div>
     <div class="saved" id="saveStatus" role="status" aria-live="polite"><i></i><span>Saved</span></div>
     <div class="shortcut"><span class="kbd">Ctrl+S</span><span>Export</span></div>
-    <button class="btn soft" id="shareBtn" type="button" disabled aria-disabled="true" title="Publishing is not available yet">↗ <span>Publish link: coming soon</span></button>
-    <button class="btn soft" id="undoBtn" type="button">↶ <span>Undo</span></button>
-    <button class="btn soft" id="redoBtn" type="button">↷ <span>Redo</span></button>
+    <button class="btn soft" id="shareBtn" type="button" disabled aria-disabled="true" title="Publishing is not available yet" aria-label="Publish link: coming soon">↗ <span>Publish link: coming soon</span></button>
+    <button class="btn soft" id="undoBtn" type="button" title="Undo" aria-label="Undo">↶ <span>Undo</span></button>
+    <button class="btn soft" id="redoBtn" type="button" title="Redo" aria-label="Redo">↷ <span>Redo</span></button>
     <button class="icon-btn" id="editorThemeBtn" type="button" aria-label="Toggle editor theme">◐</button>
     <div class="more-wrap"><button class="icon-btn" id="moreBtn" type="button" aria-label="More actions" aria-expanded="false" aria-controls="moreMenu">⋯</button><div class="more-menu" id="moreMenu" hidden>
       <button type="button" data-more-action="undo">Undo</button><button type="button" data-more-action="redo">Redo</button><button type="button" data-more-action="editor">Editor dark mode</button><button type="button" data-more-action="focus">Focus preview</button><button type="button" data-more-action="preview">Preview in new tab</button><button type="button" data-more-action="json">Export JSON</button><button type="button" data-more-action="reset">Reset demo</button>
