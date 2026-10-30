@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 19,
+ "question_count": 23,
  "questions": [
   {
    "id": "skin_hair_clinic-001",
@@ -77,6 +77,18 @@
   {
    "id": "skin_hair_clinic-008",
    "category": "Procedures",
+   "owner_question": "Do you keep oxygen, adrenaline and an emergency kit ready for drug reactions?",
+   "customer_question": "What if I react to the injection?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skin_hair_clinic-009",
+   "category": "Procedures",
    "owner_question": "Do you sterilise instruments (autoclave) and use disposable needles?",
    "customer_question": "Are the instruments sterilised?",
    "priority": "important",
@@ -87,7 +99,7 @@
    ]
   },
   {
-   "id": "skin_hair_clinic-009",
+   "id": "skin_hair_clinic-010",
    "category": "Skin & hair",
    "owner_question": "Are treatments done or supervised by a dermatologist?",
    "customer_question": "Will a dermatologist do it?",
@@ -99,7 +111,7 @@
    ]
   },
   {
-   "id": "skin_hair_clinic-010",
+   "id": "skin_hair_clinic-011",
    "category": "Skin & hair",
    "owner_question": "Do you explain possible side effects and do a patch test before treatments?",
    "customer_question": "Will it burn my skin?",
@@ -111,7 +123,7 @@
    ]
   },
   {
-   "id": "skin_hair_clinic-011",
+   "id": "skin_hair_clinic-012",
    "category": "Privacy & service",
    "owner_question": "Do you keep every patient's tests and reports confidential, sending reports only to the patient?",
    "customer_question": "Will my report be kept private?",
@@ -123,7 +135,15 @@
    ]
   },
   {
-   "id": "skin_hair_clinic-012",
+   "id": "skin_hair_clinic-013",
+   "category": "Privacy & service",
+   "owner_question": "Which health schemes do you accept (Aarogyasri, Ayushman Bharat, ESI, EHS, CGHS)?",
+   "customer_question": "Is Aarogyasri accepted?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skin_hair_clinic-014",
    "category": "Fees & appointments",
    "owner_question": "What time does the doctor usually start, and how long is the usual wait?",
    "customer_question": "How long will I wait?",
@@ -131,7 +151,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skin_hair_clinic-013",
+   "id": "skin_hair_clinic-015",
    "category": "Fees & appointments",
    "owner_question": "Is the clinic open on festival days?",
    "customer_question": "Is the clinic open on Sankranti?",
@@ -139,7 +159,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skin_hair_clinic-014",
+   "id": "skin_hair_clinic-016",
    "category": "Fees & appointments",
    "owner_question": "Do you offer video consultations or home visits? At what fee?",
    "customer_question": "Can the doctor come home?",
@@ -147,7 +167,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skin_hair_clinic-015",
+   "id": "skin_hair_clinic-017",
    "category": "Fees & appointments",
    "owner_question": "If a patient has a doubt or reaction after the visit, how can they reach the clinic?",
    "customer_question": "Whom do I call if the medicine doesn't suit me?",
@@ -155,7 +175,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skin_hair_clinic-016",
+   "id": "skin_hair_clinic-018",
    "category": "Certificates & bills",
    "owner_question": "Which certificates do you issue (sick leave, fitness, Form 1A for driving licence), and what is the charge?",
    "customer_question": "Can I get a fitness certificate?",
@@ -163,7 +183,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skin_hair_clinic-017",
+   "id": "skin_hair_clinic-019",
    "category": "Certificates & bills",
    "owner_question": "Do you give stamped prescriptions and GST bills for insurance or office reimbursement?",
    "customer_question": "Can I get bills for my insurance claim?",
@@ -175,7 +195,31 @@
    ]
   },
   {
-   "id": "skin_hair_clinic-018",
+   "id": "skin_hair_clinic-020",
+   "category": "Privacy & service",
+   "owner_question": "Do you have a wheelchair, stretcher and ramp for patients who can't walk?",
+   "customer_question": "Is there a wheelchair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skin_hair_clinic-021",
+   "category": "Privacy & service",
+   "owner_question": "Do you dispose of needles and bio-medical waste properly and keep toilets clean?",
+   "customer_question": "Is the toilet clean for the urine sample?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skin_hair_clinic-022",
    "category": "Privacy & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -191,7 +235,7 @@
    ]
   },
   {
-   "id": "skin_hair_clinic-019",
+   "id": "skin_hair_clinic-023",
    "category": "Privacy & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 19,
+ "question_count": 24,
  "questions": [
   {
    "id": "dental_clinic-001",
@@ -77,6 +77,18 @@
   {
    "id": "dental_clinic-008",
    "category": "Procedures",
+   "owner_question": "Do you keep oxygen, adrenaline and an emergency kit ready for drug reactions?",
+   "customer_question": "What if I react to the injection?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "dental_clinic-009",
+   "category": "Procedures",
    "owner_question": "Do you sterilise instruments (autoclave) and use disposable needles?",
    "customer_question": "Are the instruments sterilised?",
    "priority": "important",
@@ -87,7 +99,7 @@
    ]
   },
   {
-   "id": "dental_clinic-009",
+   "id": "dental_clinic-010",
    "category": "Dental",
    "owner_question": "How many sittings does a root canal take, how do you keep it as painless as possible, and what warranty do crowns have?",
    "customer_question": "Is root canal painful?",
@@ -95,7 +107,7 @@
    "answer_type": "text"
   },
   {
-   "id": "dental_clinic-010",
+   "id": "dental_clinic-011",
    "category": "Privacy & service",
    "owner_question": "Do you keep every patient's tests and reports confidential, sending reports only to the patient?",
    "customer_question": "Will my report be kept private?",
@@ -107,7 +119,15 @@
    ]
   },
   {
-   "id": "dental_clinic-011",
+   "id": "dental_clinic-012",
+   "category": "Privacy & service",
+   "owner_question": "Which health schemes do you accept (Aarogyasri, Ayushman Bharat, ESI, EHS, CGHS)?",
+   "customer_question": "Is Aarogyasri accepted?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "dental_clinic-013",
    "category": "Fees & appointments",
    "owner_question": "What time does the doctor usually start, and how long is the usual wait?",
    "customer_question": "How long will I wait?",
@@ -115,7 +135,7 @@
    "answer_type": "text"
   },
   {
-   "id": "dental_clinic-012",
+   "id": "dental_clinic-014",
    "category": "Fees & appointments",
    "owner_question": "Is the clinic open on festival days?",
    "customer_question": "Is the clinic open on Sankranti?",
@@ -123,7 +143,7 @@
    "answer_type": "text"
   },
   {
-   "id": "dental_clinic-013",
+   "id": "dental_clinic-015",
    "category": "Fees & appointments",
    "owner_question": "Do you offer video consultations or home visits? At what fee?",
    "customer_question": "Can the doctor come home?",
@@ -131,7 +151,7 @@
    "answer_type": "text"
   },
   {
-   "id": "dental_clinic-014",
+   "id": "dental_clinic-016",
    "category": "Fees & appointments",
    "owner_question": "If a patient has a doubt or reaction after the visit, how can they reach the clinic?",
    "customer_question": "Whom do I call if the medicine doesn't suit me?",
@@ -139,7 +159,19 @@
    "answer_type": "text"
   },
   {
-   "id": "dental_clinic-015",
+   "id": "dental_clinic-017",
+   "category": "Procedures",
+   "owner_question": "Do you check BP and sugar before procedures and extractions, and have a plan if bleeding doesn't stop?",
+   "customer_question": "I have BP, can you remove my tooth?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "dental_clinic-018",
    "category": "Dental",
    "owner_question": "What do braces and clear aligners cost, and can they be paid in instalments?",
    "customer_question": "How much for braces?",
@@ -147,7 +179,7 @@
    "answer_type": "text"
   },
   {
-   "id": "dental_clinic-016",
+   "id": "dental_clinic-019",
    "category": "Certificates & bills",
    "owner_question": "Which certificates do you issue (sick leave, fitness, Form 1A for driving licence), and what is the charge?",
    "customer_question": "Can I get a fitness certificate?",
@@ -155,7 +187,7 @@
    "answer_type": "text"
   },
   {
-   "id": "dental_clinic-017",
+   "id": "dental_clinic-020",
    "category": "Certificates & bills",
    "owner_question": "Do you give stamped prescriptions and GST bills for insurance or office reimbursement?",
    "customer_question": "Can I get bills for my insurance claim?",
@@ -167,7 +199,31 @@
    ]
   },
   {
-   "id": "dental_clinic-018",
+   "id": "dental_clinic-021",
+   "category": "Privacy & service",
+   "owner_question": "Do you have a wheelchair, stretcher and ramp for patients who can't walk?",
+   "customer_question": "Is there a wheelchair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "dental_clinic-022",
+   "category": "Privacy & service",
+   "owner_question": "Do you dispose of needles and bio-medical waste properly and keep toilets clean?",
+   "customer_question": "Is the toilet clean for the urine sample?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "dental_clinic-023",
    "category": "Privacy & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -183,7 +239,7 @@
    ]
   },
   {
-   "id": "dental_clinic-019",
+   "id": "dental_clinic-024",
    "category": "Privacy & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
