@@ -1,0 +1,126 @@
+{
+ "shop_type_key": "appliance_repair",
+ "name": "Home appliance repair service",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 11,
+ "questions": [
+  {
+   "id": "appliance_repair-001",
+   "category": "Repairs",
+   "owner_question": "Which appliances do you repair?",
+   "customer_question": "Do you repair LED TVs?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "LED / smart TVs (panel, backlight, bonding)",
+    "ACs (install, shift, gas, jet service)",
+    "Fridges (cooling, compressor, gas)",
+    "Washing machines (drum, motor, PCB)",
+    "Microwaves",
+    "Geysers",
+    "RO purifiers",
+    "Chimneys",
+    "Inverters"
+   ]
+  },
+  {
+   "id": "appliance_repair-002",
+   "category": "Repairs",
+   "owner_question": "What is your visiting / inspection charge?",
+   "customer_question": "What is the visiting charge?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliance_repair-003",
+   "category": "Repairs",
+   "owner_question": "What do common jobs usually cost (TV backlight, AC service and gas, fridge gas, washing machine PCB)? Please give ranges.",
+   "customer_question": "How much for AC gas filling?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliance_repair-004",
+   "category": "Repairs",
+   "owner_question": "Which brands do you service?",
+   "customer_question": "Do you repair Samsung?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliance_repair-005",
+   "category": "Repairs",
+   "owner_question": "Which spare parts do you use?",
+   "customer_question": "Are the parts original?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original company parts",
+    "Compatible parts, clearly told",
+    "Customer's choice"
+   ]
+  },
+  {
+   "id": "appliance_repair-006",
+   "category": "Repairs",
+   "owner_question": "Do you give an estimate before repairing and call before any extra work, and give back old parts?",
+   "customer_question": "Will you tell me the cost first?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "appliance_repair-007",
+   "category": "Repairs",
+   "owner_question": "What warranty do you give on repairs and parts?",
+   "customer_question": "Is there a warranty on the repair?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliance_repair-008",
+   "category": "Repairs",
+   "owner_question": "How soon can a technician come, and do you take big repairs to your workshop?",
+   "customer_question": "Can someone come today?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliance_repair-009",
+   "category": "Repairs",
+   "owner_question": "Do you offer yearly maintenance (AMC) for ACs and purifiers?",
+   "customer_question": "Is there an AC service plan?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliance_repair-010",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "appliance_repair-011",
+   "category": "Service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
