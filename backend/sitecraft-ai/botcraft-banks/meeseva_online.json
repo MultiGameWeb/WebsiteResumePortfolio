@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 16,
+ "question_count": 18,
  "questions": [
   {
    "id": "meeseva_online-001",
@@ -58,7 +58,7 @@
   {
    "id": "meeseva_online-003",
    "category": "Xerox & printing",
-   "owner_question": "Do you delete customers' files from your computer and phone after printing or scanning, and send scans only to the customer?",
+   "owner_question": "Do you delete customers' files from your computer and phone after the work, never share them with anyone without permission, and send scans only to the customer?",
    "customer_question": "Will you delete my Aadhaar file after printing?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -112,7 +112,7 @@
   {
    "id": "meeseva_online-008",
    "category": "Online applications",
-   "owner_question": "If an application has a mistake, is rejected, is pending, or its number is lost, do you help correct it, find the reason, re-apply, recover the number and follow up? Whom should customers contact for long delays?",
+   "owner_question": "If an application or certificate has a mistake (for example a parent's name), is rejected, pending or filed twice, or its number or old registration is lost, do you help correct it, find the reason, re-apply, recover it and follow up? What do you do when the website is down, shows a server error or the OTP does not come, and whom should customers contact for long delays?",
    "customer_question": "My application was rejected, can you check why?",
    "priority": "important",
    "answer_type": "text"
@@ -158,7 +158,7 @@
   {
    "id": "meeseva_online-012",
    "category": "Online applications",
-   "owner_question": "Does the applicant need to come in person for OTP or fingerprint (Aadhaar, PAN), and do you ask for OTPs only in person, never on call or chat?",
+   "owner_question": "Does the applicant need to come in person for OTP or fingerprint (Aadhaar, PAN), and do customers type their own passwords and OTPs themselves, never sharing them on call or chat?",
    "customer_question": "Do I have to come for the OTP?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -170,7 +170,7 @@
   {
    "id": "meeseva_online-013",
    "category": "Online applications",
-   "owner_question": "Which tickets do you book?",
+   "owner_question": "Which tickets and bookings do you do (including cancellation and printed tickets)?",
    "customer_question": "Can you book a train ticket?",
    "priority": "optional",
    "answer_type": "list",
@@ -178,11 +178,31 @@
     "Train",
     "Bus",
     "Flight",
+    "Movie",
+    "Temple darshan",
+    "Tourist places",
+    "Hotel rooms",
     "None"
    ]
   },
   {
    "id": "meeseva_online-014",
+   "category": "Online applications",
+   "owner_question": "Do you check certificates' QR code / digital signature and validity, help get them in DigiLocker, and file complaints on official grievance portals with tracking?",
+   "customer_question": "Is my downloaded certificate genuine?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meeseva_online-015",
+   "category": "Online applications",
+   "owner_question": "Can customers use a computer or internet by the hour, connect their laptop, practise online tests or attend a video interview? What is the rate?",
+   "customer_question": "Can I use a computer for an online interview?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meeseva_online-016",
    "category": "Online applications",
    "owner_question": "On busy days (last dates), how long is the wait, and do you give tokens?",
    "customer_question": "Is it crowded on the last date?",
@@ -190,7 +210,7 @@
    "answer_type": "text"
   },
   {
-   "id": "meeseva_online-015",
+   "id": "meeseva_online-017",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -206,7 +226,7 @@
    ]
   },
   {
-   "id": "meeseva_online-016",
+   "id": "meeseva_online-018",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
