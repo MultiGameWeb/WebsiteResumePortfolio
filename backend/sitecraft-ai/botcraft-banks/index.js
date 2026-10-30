@@ -3,7 +3,11 @@ import bank_appliances_showroom from "./appliances_showroom.json" with { type: "
 import bank_bakery from "./bakery.json" with { type: "json" };
 import bank_bakery_sweets from "./bakery_sweets.json" with { type: "json" };
 import bank_beauty_parlour from "./beauty_parlour.json" with { type: "json" };
+import bank_bike_service from "./bike_service.json" with { type: "json" };
 import bank_boutique from "./boutique.json" with { type: "json" };
+import bank_car_bike_service from "./car_bike_service.json" with { type: "json" };
+import bank_car_service from "./car_service.json" with { type: "json" };
+import bank_car_wash_detailing from "./car_wash_detailing.json" with { type: "json" };
 import bank_catering from "./catering.json" with { type: "json" };
 import bank_chit_fund from "./chit_fund.json" with { type: "json" };
 import bank_competitive_coaching from "./competitive_coaching.json" with { type: "json" };
@@ -20,6 +24,7 @@ import bank_gold_loan from "./gold_loan.json" with { type: "json" };
 import bank_goods_equipment_rental from "./goods_equipment_rental.json" with { type: "json" };
 import bank_gym from "./gym.json" with { type: "json" };
 import bank_hardware_store from "./hardware_store.json" with { type: "json" };
+import bank_heavy_vehicle_service from "./heavy_vehicle_service.json" with { type: "json" };
 import bank_hotel_stay from "./hotel_stay.json" with { type: "json" };
 import bank_imitation_jewellery from "./imitation_jewellery.json" with { type: "json" };
 import bank_insurance_investment from "./insurance_investment.json" with { type: "json" };
@@ -54,7 +59,11 @@ export const QUESTION_BANKS = {
   "bakery": bank_bakery,
   "bakery_sweets": bank_bakery_sweets,
   "beauty_parlour": bank_beauty_parlour,
+  "bike_service": bank_bike_service,
   "boutique": bank_boutique,
+  "car_bike_service": bank_car_bike_service,
+  "car_service": bank_car_service,
+  "car_wash_detailing": bank_car_wash_detailing,
   "catering": bank_catering,
   "chit_fund": bank_chit_fund,
   "competitive_coaching": bank_competitive_coaching,
@@ -71,6 +80,7 @@ export const QUESTION_BANKS = {
   "goods_equipment_rental": bank_goods_equipment_rental,
   "gym": bank_gym,
   "hardware_store": bank_hardware_store,
+  "heavy_vehicle_service": bank_heavy_vehicle_service,
   "hotel_stay": bank_hotel_stay,
   "imitation_jewellery": bank_imitation_jewellery,
   "insurance_investment": bank_insurance_investment,

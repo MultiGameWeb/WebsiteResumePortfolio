@@ -1,0 +1,160 @@
+{
+ "shop_type_key": "car_wash_detailing",
+ "name": "Car wash & detailing studio",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 13,
+ "questions": [
+  {
+   "id": "car_wash_detailing-001",
+   "category": "Services",
+   "owner_question": "Which wash and detailing services do you offer?",
+   "customer_question": "Do you do ceramic coating?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Foam wash with underbody on a lift",
+    "Interior dry cleaning",
+    "AC vent disinfection",
+    "Headlight restoration",
+    "Engine bay cleaning (sensors protected)",
+    "Rubbing & polishing",
+    "Teflon coating",
+    "Ceramic coating",
+    "Graphene coating",
+    "Paint protection film (PPF)",
+    "Underbody anti-rust coating"
+   ]
+  },
+  {
+   "id": "car_wash_detailing-002",
+   "category": "Prices & estimates",
+   "owner_question": "What are your wash and detailing prices (by vehicle size), and what warranty do coatings have?",
+   "customer_question": "How much is ceramic coating?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "car_wash_detailing-003",
+   "category": "Prices & estimates",
+   "owner_question": "After inspection, do you give a written estimate and call the customer before any extra work or part change?",
+   "customer_question": "Will you call me before changing parts?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "car_wash_detailing-004",
+   "category": "Trust & parts",
+   "owner_question": "At drop-off, do you note the fuel level, odometer and belongings (spare wheel, jack, tools), keep parts like the catalytic converter safe, use seat and steering covers, and never use customers' vehicles for personal trips?",
+   "customer_question": "Will your boys ride my bike around?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "car_wash_detailing-005",
+   "category": "Accessories",
+   "owner_question": "Which accessories do you fit?",
+   "customer_question": "Can you fit an Android stereo?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Relay-kit LED / projector lights (no wire cutting)",
+    "Android stereo & reverse camera",
+    "Dashcam hardwiring",
+    "Seat covers",
+    "Sound damping",
+    "Suspension buffers"
+   ]
+  },
+  {
+   "id": "car_wash_detailing-006",
+   "category": "Delivery & warranty",
+   "owner_question": "Do you pick up and drop vehicles? What is the charge?",
+   "customer_question": "Can you pick up my car from home?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "car_wash_detailing-007",
+   "category": "Delivery & warranty",
+   "owner_question": "How long does a service usually take, where are vehicles kept overnight (locked, CCTV), and do you give a vehicle to get home if delivery is delayed?",
+   "customer_question": "Will I get it back the same day?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "car_wash_detailing-008",
+   "category": "Delivery & warranty",
+   "owner_question": "If the original complaint isn't fixed, a new problem appears right after the service, or something isn't refitted properly (rattles, grease marks), do you fix it free?",
+   "customer_question": "The noise came after your service, will you fix it free?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "car_wash_detailing-009",
+   "category": "Prices & estimates",
+   "owner_question": "Is GST included in your bill?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill",
+    "No GST"
+   ]
+  },
+  {
+   "id": "car_wash_detailing-010",
+   "category": "Prices & estimates",
+   "owner_question": "Do you have yearly maintenance (AMC) packages?",
+   "customer_question": "Is there a yearly service package?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "car_wash_detailing-011",
+   "category": "Trust & parts",
+   "owner_question": "Can customers sit and watch the work, or get photos and videos on WhatsApp?",
+   "customer_question": "Can I watch the service?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "car_wash_detailing-012",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "car_wash_detailing-013",
+   "category": "Service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
