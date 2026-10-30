@@ -52,7 +52,12 @@ export const SHOP_TYPES = [
   { key: "chit_fund", name: "Chit fund company", aliases: ["chit fund", "chits", "chitti", "chit company"], description: "registered chit fund company running chit groups" },
   { key: "insurance_investment", name: "Insurance & investment advisor", aliases: ["insurance agent", "LIC agent", "insurance office", "mutual fund advisor", "financial advisor", "SIP advisor"], description: "insurance agent or mutual fund distributor" },
   { key: "function_hall", name: "Function hall / banquet hall / lawn", aliases: ["function hall", "banquet hall", "kalyana mandapam", "marriage hall", "convention hall", "party hall", "open lawn", "wedding venue"], description: "function hall, banquet hall, kalyana mandapam or lawn rented for weddings and events" },
-  { key: "kitchen_rental", name: "Commercial & cloud kitchen rental", aliases: ["kitchen for rent", "cloud kitchen space", "commercial kitchen", "dark kitchen"], description: "rents a commercial kitchen by the day or month" }
+  { key: "kitchen_rental", name: "Commercial & cloud kitchen rental", aliases: ["kitchen for rent", "cloud kitchen space", "commercial kitchen", "dark kitchen"], description: "rents a commercial kitchen by the day or month" },
+  { key: "car_service", name: "Car service garage", aliases: ["car garage", "car mechanic", "multi-brand car service", "car AC repair", "denting and painting", "wheel alignment", "car repair shop"], description: "car service and repair garage, including denting, painting and alignment" },
+  { key: "bike_service", name: "Bike & scooter service", aliases: ["bike mechanic", "two-wheeler service", "scooty repair", "bullet mechanic", "bike repair shop", "EV scooter repair"], description: "bike and scooter service and repair shop" },
+  { key: "car_bike_service", name: "Car & bike service garage", aliases: ["car and bike garage", "auto garage", "automobile service centre", "mechanic shed"], description: "garage servicing both cars and two-wheelers" },
+  { key: "car_wash_detailing", name: "Car wash & detailing studio", aliases: ["car wash", "bike wash", "car spa", "detailing studio", "ceramic coating", "PPF studio"], description: "car and bike wash, cleaning, polishing and coatings" },
+  { key: "heavy_vehicle_service", name: "Lorry, auto & tractor service", aliases: ["lorry mechanic", "truck service", "auto rickshaw mechanic", "tractor mechanic", "heavy vehicle garage"], description: "service and repair of lorries, autos and tractors" }
 ];
 
 export const SHOP_TYPE_KEYS = new Set(SHOP_TYPES.map(t => t.key));
