@@ -74,6 +74,8 @@ Q = [
  ("Freshness & quality", "O", "text", "If a customer gets a damaged, leaking, spoiled or expired item (or wrong MFG date), what do you do, and within how many days?", "The packet was leaking, can I change it?", [], "KSV"),
  ("Freshness & quality", "O", "yes_no", "Can customers see and choose vegetables, fruits and loose grains themselves before packing?", "Can I select the tomatoes myself?", YN, "KSV"),
  ("Freshness & quality", "O", "yes_no", "Are your fruits ripened naturally (no carbide)?", "Are these mangoes naturally ripened?", YN, "V"),
+ ("Freshness & quality", "O", "yes_no", "Do you cut and show a watermelon before buying, and replace a coconut or mango that is rotten inside?", "Can you cut the watermelon and show me?", YN, "V"),
+ ("Freshness & quality", "O", "yes_no", "Do you sell cut vegetables, peeled garlic or shelled peas ready to cook?", "Do you have peeled garlic?", YN, "SV"),
  ("Freshness & quality", "O", "yes_no", "Do you have cold storage or fridges for vegetables, dairy and frozen items?", "Is the milk kept in the fridge?", YN, "SV"),
  ("Freshness & quality", "O", "yes_no", "Are your weighing scales electronic and checked (stamped) regularly?", "Is your weighing machine correct?", YN, "KSV"),
  ("Freshness & quality", "O", "yes_no", "When weighing loose items, do you deduct the weight of the cover or container?", "Is the cover weight counted?", YN, "KSV"),

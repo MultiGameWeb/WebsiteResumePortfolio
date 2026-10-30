@@ -3,8 +3,8 @@
  "name": "Vegetables & fruits shop",
  "version": 2,
  "model": "curated",
- "generated_at": "2026-10-29",
- "question_count": 29,
+ "generated_at": "2026-10-30",
+ "question_count": 31,
  "questions": [
   {
    "id": "fruits_vegetables-001",
@@ -183,6 +183,30 @@
   {
    "id": "fruits_vegetables-018",
    "category": "Freshness & quality",
+   "owner_question": "Do you cut and show a watermelon before buying, and replace a coconut or mango that is rotten inside?",
+   "customer_question": "Can you cut the watermelon and show me?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-019",
+   "category": "Freshness & quality",
+   "owner_question": "Do you sell cut vegetables, peeled garlic or shelled peas ready to cook?",
+   "customer_question": "Do you have peeled garlic?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "fruits_vegetables-020",
+   "category": "Freshness & quality",
    "owner_question": "Do you have cold storage or fridges for vegetables, dairy and frozen items?",
    "customer_question": "Is the milk kept in the fridge?",
    "priority": "optional",
@@ -193,7 +217,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-019",
+   "id": "fruits_vegetables-021",
    "category": "Freshness & quality",
    "owner_question": "Are your weighing scales electronic and checked (stamped) regularly?",
    "customer_question": "Is your weighing machine correct?",
@@ -205,7 +229,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-020",
+   "id": "fruits_vegetables-022",
    "category": "Freshness & quality",
    "owner_question": "When weighing loose items, do you deduct the weight of the cover or container?",
    "customer_question": "Is the cover weight counted?",
@@ -217,7 +241,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-021",
+   "id": "fruits_vegetables-023",
    "category": "Ordering & delivery",
    "owner_question": "Do your delivery staff bring items to the door (inside apartments)?",
    "customer_question": "Will you deliver to my flat door?",
@@ -229,7 +253,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-022",
+   "id": "fruits_vegetables-024",
    "category": "Ordering & delivery",
    "owner_question": "Can customers pay on delivery (cash or UPI)?",
    "customer_question": "Can I pay when it comes?",
@@ -241,7 +265,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-023",
+   "id": "fruits_vegetables-025",
    "category": "Ordering & delivery",
    "owner_question": "Do you take daily or weekly fixed orders (for example milk and vegetables every morning)?",
    "customer_question": "Can you send vegetables every morning?",
@@ -253,7 +277,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-024",
+   "id": "fruits_vegetables-026",
    "category": "Ordering & delivery",
    "owner_question": "Do you supply to hotels, tiffin centres, hostels, caterers or functions, with wholesale rates, GST bills and free transport?",
    "customer_question": "Do you supply for functions?",
@@ -265,7 +289,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-025",
+   "id": "fruits_vegetables-027",
    "category": "Ordering & delivery",
    "owner_question": "Can customers call or WhatsApp to keep items packed and ready for pickup?",
    "customer_question": "Can you pack my items, I'll collect?",
@@ -277,7 +301,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-026",
+   "id": "fruits_vegetables-028",
    "category": "Shop & service",
    "owner_question": "Are carry bags free (for example a free cloth bag above a bill amount), or charged on the bill? Can customers bring their own bags?",
    "customer_question": "Do I have to pay for the bag?",
@@ -291,7 +315,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-027",
+   "id": "fruits_vegetables-029",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty card or points? Is joining free (with a mobile number), and can points be used on the next bill?",
    "customer_question": "Do I get points?",
@@ -299,7 +323,7 @@
    "answer_type": "text"
   },
   {
-   "id": "fruits_vegetables-028",
+   "id": "fruits_vegetables-030",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -315,7 +339,7 @@
    ]
   },
   {
-   "id": "fruits_vegetables-029",
+   "id": "fruits_vegetables-031",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
