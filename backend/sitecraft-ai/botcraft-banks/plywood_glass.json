@@ -1,0 +1,252 @@
+{
+ "shop_type_key": "plywood_glass",
+ "name": "Plywood, laminates & glass shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 22,
+ "questions": [
+  {
+   "id": "plywood_glass-001",
+   "category": "Materials",
+   "owner_question": "What do you sell?",
+   "customer_question": "Do you have BWP plywood?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Plywood (BWP / MR)",
+    "HDHMR, MDF & particle boards",
+    "WPC / PVC foam boards",
+    "Flush & WPC doors",
+    "Laminates (sunmica)",
+    "Acrylic & PU / veneer sheets",
+    "Edge-banding tape",
+    "Cabinet hardware (hinges, channels, handles)",
+    "Kitchen baskets & accessories",
+    "Adhesives (Fevicol)",
+    "Glass & mirrors",
+    "Wall panels & louvers",
+    "Wallpaper"
+   ]
+  },
+  {
+   "id": "plywood_glass-002",
+   "category": "Materials",
+   "owner_question": "Which boards do you use for kitchen and bathroom vanities, and which for bedrooms (for example BWP IS:710 plywood, MR IS:303, HDHMR, WPC)?",
+   "customer_question": "Is the kitchen made with BWP plywood?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-003",
+   "category": "Materials",
+   "owner_question": "Which plywood and board brands do you use or sell (for example CenturyPly, Greenply, Austin, Kitply, Sainik 710, Action Tesa, Greenpanel)?",
+   "customer_question": "Which plywood brand do you use?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-004",
+   "category": "Kitchen & hardware",
+   "owner_question": "Which hardware brands do you use or sell (for example Hettich, Hafele, Ebco, Blum, Godrej), with soft-close hinges and channels, and what warranty?",
+   "customer_question": "Are the hinges soft-close?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-005",
+   "category": "Plywood shop service",
+   "owner_question": "Do you give a lower rate or wholesale price for bulk sheets, and is delivery free?",
+   "customer_question": "Is delivery free for 50 sheets?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-006",
+   "category": "Materials",
+   "owner_question": "How can customers check that a plywood sheet is original (brand QR code or app, ISI marks)?",
+   "customer_question": "How do I know this CenturyPly is original?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-007",
+   "category": "Materials",
+   "owner_question": "What core wood is in your plywood (gurjan, alternate, poplar, eucalyptus), and do you tell customers clearly?",
+   "customer_question": "Is this full gurjan plywood?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-008",
+   "category": "Materials",
+   "owner_question": "Do you make termite-proof and waterproof cupboards with WPC or PVC foam board?",
+   "customer_question": "Can you make cupboards that termites can't eat?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "plywood_glass-009",
+   "category": "Materials",
+   "owner_question": "What thickness do you use for carcass, shutters and back panels (for example 18 / 19 mm, 6 or 8 mm back)?",
+   "customer_question": "Is the back panel 4 mm or 8 mm?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-010",
+   "category": "Materials",
+   "owner_question": "Which laminates do you use or sell (brands, 1 mm or 0.8 mm, matte, high-gloss, textured, fluted), and what goes inside the cupboards?",
+   "customer_question": "Is the laminate 1 mm?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-011",
+   "category": "Materials",
+   "owner_question": "Do you do acrylic, lacquered glass, PU or veneer finishes? What is the rate per sq ft?",
+   "customer_question": "How much extra for acrylic shutters?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-012",
+   "category": "Kitchen & hardware",
+   "owner_question": "Which steel do you use for kitchen baskets?",
+   "customer_question": "Will the baskets rust?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "SS 304",
+    "SS 202",
+    "Customer's choice"
+   ]
+  },
+  {
+   "id": "plywood_glass-013",
+   "category": "Kitchen & hardware",
+   "owner_question": "Which kitchen accessories do you fit?",
+   "customer_question": "Do you have a magic corner?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Tandem / box drawers",
+    "Magic corner / carousel",
+    "Tall pantry unit",
+    "Bottle pull-out",
+    "Cutlery tray",
+    "Plate & glass rack (GTPT)",
+    "Wicker / detergent pull-outs",
+    "Profile handles & G-profile"
+   ]
+  },
+  {
+   "id": "plywood_glass-014",
+   "category": "Wardrobes, pooja & glass",
+   "owner_question": "Do you make CNC jali pooja units with backlit acrylic designs?",
+   "customer_question": "Can you make a CNC jali mandir?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "plywood_glass-015",
+   "category": "Wardrobes, pooja & glass",
+   "owner_question": "Which glass and mirror work do you do?",
+   "customer_question": "Do you fit shower glass partitions?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "LED / touch-sensor mirrors",
+    "Toughened glass shower partitions",
+    "Glass & SS railings",
+    "Lacquered & fluted glass",
+    "Glass table tops",
+    "Office glass partitions"
+   ]
+  },
+  {
+   "id": "plywood_glass-016",
+   "category": "Ceiling & walls",
+   "owner_question": "Do you do wall panelling (UV marble sheet, charcoal louvers) and wallpaper?",
+   "customer_question": "Do you do louvers behind the TV?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "plywood_glass-017",
+   "category": "Plywood shop service",
+   "owner_question": "Do you do machine cutting and edge-banding for customers' own carpenters (job work)?",
+   "customer_question": "Can you cut and edge-band my sheets?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "plywood_glass-018",
+   "category": "Plywood shop service",
+   "owner_question": "Do you take back unused full sheets? Any deduction?",
+   "customer_question": "Can I return 5 extra sheets?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-019",
+   "category": "Plywood shop service",
+   "owner_question": "If customers buy directly without a carpenter, do they get the carpenter's commission as a discount?",
+   "customer_question": "I came without a carpenter, will you reduce the commission?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "plywood_glass-020",
+   "category": "Plywood shop service",
+   "owner_question": "Can you suggest trusted carpenters or interior workers?",
+   "customer_question": "Do you know a good carpenter?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "plywood_glass-021",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "plywood_glass-022",
+   "category": "Shop & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your work?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

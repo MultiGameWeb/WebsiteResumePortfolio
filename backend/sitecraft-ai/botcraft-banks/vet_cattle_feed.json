@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 25,
+ "question_count": 26,
  "questions": [
   {
    "id": "vet_cattle_feed-001",
@@ -43,7 +43,12 @@
     "Fever & pain medicines (on prescription)",
     "Antibiotics (on prescription)",
     "Eye & foot-rot medicines",
-    "Sheep & goat medicines"
+    "Sheep & goat medicines",
+    "Calving care (placenta & uterine cleaning, on vet advice)",
+    "Heat & breeding supplements (on vet advice)",
+    "Milk fever & energy (calcium, glucose, energy liquids)",
+    "Prolapse belts (truss)",
+    "Poisoning first aid (activated charcoal)"
    ]
   },
   {
@@ -225,6 +230,18 @@
   },
   {
    "id": "vet_cattle_feed-020",
+   "category": "Vet medicines",
+   "owner_question": "Do you also sell dog vaccines (DHPPi, anti-rabies) and dog medicines?",
+   "customer_question": "Do you have anti-rabies vaccine for my dog?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-021",
    "category": "Vet & farm help",
    "owner_question": "Do you tell farmers about government schemes and free vaccination camps (FMD, LSD, sheep deworming)?",
    "customer_question": "When is the free vaccine camp?",
@@ -236,7 +253,7 @@
    ]
   },
   {
-   "id": "vet_cattle_feed-021",
+   "id": "vet_cattle_feed-022",
    "category": "Vet & farm help",
    "owner_question": "Can you arrange artificial insemination (AI) or a pregnancy check through a vet or gopalamitra?",
    "customer_question": "Can you send someone for AI?",
@@ -248,7 +265,7 @@
    ]
   },
   {
-   "id": "vet_cattle_feed-022",
+   "id": "vet_cattle_feed-023",
    "category": "Dairy & farm equipment",
    "owner_question": "Which dairy farm equipment do you sell?",
    "customer_question": "Do you have milking machine liners?",
@@ -265,7 +282,7 @@
    ]
   },
   {
-   "id": "vet_cattle_feed-023",
+   "id": "vet_cattle_feed-024",
    "category": "Shop & service",
    "owner_question": "Which items can't be returned (for example vaccines, opened medicines, cut feed bags)?",
    "customer_question": "Can I return this vaccine?",
@@ -273,7 +290,7 @@
    "answer_type": "text"
   },
   {
-   "id": "vet_cattle_feed-024",
+   "id": "vet_cattle_feed-025",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -290,7 +307,7 @@
    ]
   },
   {
-   "id": "vet_cattle_feed-025",
+   "id": "vet_cattle_feed-026",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

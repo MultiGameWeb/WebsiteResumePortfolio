@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 15,
+ "question_count": 16,
  "questions": [
   {
    "id": "aqua_needs-001",
@@ -74,7 +74,9 @@
     "Plankton / bloom minerals",
     "Minerals & vitamin C for shrimp",
     "Disinfectants (BKC, iodine, KMnO4)",
-    "Medicines for fish lice (Argulus), on the label rules"
+    "Medicines for fish lice (Argulus), on the label rules",
+    "Anti-stress for fish seed transport",
+    "Liquid calcium & magnesium (shrimp moulting)"
    ]
   },
   {
@@ -136,6 +138,18 @@
   {
    "id": "aqua_needs-012",
    "category": "Pond care",
+   "owner_question": "Do you supply fish seed or shrimp seed (PL), or connect farmers to hatcheries?",
+   "customer_question": "Do you have rohu fish seed?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "aqua_needs-013",
+   "category": "Pond care",
    "owner_question": "Do you have a technician or consultant who visits ponds?",
    "customer_question": "Can someone come and see my pond?",
    "priority": "optional",
@@ -146,7 +160,7 @@
    ]
   },
   {
-   "id": "aqua_needs-013",
+   "id": "aqua_needs-014",
    "category": "Shop & service",
    "owner_question": "Which items can't be returned (for example vaccines, opened medicines, cut feed bags)?",
    "customer_question": "Can I return this vaccine?",
@@ -154,7 +168,7 @@
    "answer_type": "text"
   },
   {
-   "id": "aqua_needs-014",
+   "id": "aqua_needs-015",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -171,7 +185,7 @@
    ]
   },
   {
-   "id": "aqua_needs-015",
+   "id": "aqua_needs-016",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

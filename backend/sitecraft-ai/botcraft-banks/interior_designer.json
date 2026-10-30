@@ -1,0 +1,425 @@
+{
+ "shop_type_key": "interior_designer",
+ "name": "Interior designer & modular kitchen",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 40,
+ "questions": [
+  {
+   "id": "interior_designer-001",
+   "category": "Work & packages",
+   "owner_question": "Which work do you do?",
+   "customer_question": "Do you do modular kitchens?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Full home interiors (turnkey)",
+    "Modular kitchen",
+    "Wardrobes & lofts",
+    "TV units & wall panelling",
+    "Pooja room / mandir",
+    "False ceiling & lighting",
+    "Beds, study & crockery units",
+    "Glass & mirror work",
+    "Wallpaper",
+    "Office & shop interiors"
+   ]
+  },
+  {
+   "id": "interior_designer-002",
+   "category": "Work & packages",
+   "owner_question": "What is your starting package price for a full 2BHK and 3BHK (kitchen, wardrobes, TV unit, pooja unit, false ceiling)?",
+   "customer_question": "How much for full 2BHK interiors?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-003",
+   "category": "Work & packages",
+   "owner_question": "What is your rate per sq ft for wardrobes and kitchen, and what material and finish does it include?",
+   "customer_question": "What is your per sq ft rate?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-004",
+   "category": "Work & packages",
+   "owner_question": "Is your sq ft rate for full box work (with shelves inside) or only frame and shutters on existing cement shelves?",
+   "customer_question": "Is the rate for box work or shutters only?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Full box work",
+    "Frame & shutters only",
+    "Both, at different rates"
+   ]
+  },
+  {
+   "id": "interior_designer-005",
+   "category": "Work & packages",
+   "owner_question": "How do you measure for the final bill (outer size only, or each shelf separately), and do you write this in the quotation?",
+   "customer_question": "How will you measure for the bill?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-006",
+   "category": "Work & packages",
+   "owner_question": "Do you give a written quotation that lists the brands, thickness and finish of every material?",
+   "customer_question": "Will the quotation list the brands?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "interior_designer-007",
+   "category": "Materials",
+   "owner_question": "Which boards do you use for kitchen and bathroom vanities, and which for bedrooms (for example BWP IS:710 plywood, MR IS:303, HDHMR, WPC)?",
+   "customer_question": "Is the kitchen made with BWP plywood?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-008",
+   "category": "Materials",
+   "owner_question": "Which plywood and board brands do you use or sell (for example CenturyPly, Greenply, Austin, Kitply, Sainik 710, Action Tesa, Greenpanel)?",
+   "customer_question": "Which plywood brand do you use?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-009",
+   "category": "Materials",
+   "owner_question": "Is your work factory-made or made on site?",
+   "customer_question": "Is it factory finish?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Factory-made (machine cut & edge-banded)",
+    "Made on site by carpenters",
+    "Both"
+   ]
+  },
+  {
+   "id": "interior_designer-010",
+   "category": "Kitchen & hardware",
+   "owner_question": "Which hardware brands do you use or sell (for example Hettich, Hafele, Ebco, Blum, Godrej), with soft-close hinges and channels, and what warranty?",
+   "customer_question": "Are the hinges soft-close?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-011",
+   "category": "Timeline & payment",
+   "owner_question": "How many days do you usually take for a full 2BHK, and do you agree to a written completion date (with a delay penalty)?",
+   "customer_question": "Can you finish before our gruhapravesam in 45 days?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-012",
+   "category": "Timeline & payment",
+   "owner_question": "What are your payment stages (advance, on material delivery, mid-work, final after checking)?",
+   "customer_question": "How much advance do I pay?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-013",
+   "category": "Work & packages",
+   "owner_question": "What rate do you charge for lofts above wardrobes?",
+   "customer_question": "Is the loft rate lower?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-014",
+   "category": "Work & packages",
+   "owner_question": "Do you show a 3D design or walk-through before starting? Is it charged, and is the fee adjusted if the customer gives you the work?",
+   "customer_question": "Will you show a 3D design first?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-015",
+   "category": "Work & packages",
+   "owner_question": "Which items are not in your package and are charged extra (for example chimney, hob, sink, countertop, electrical, lights, painting)?",
+   "customer_question": "Is the chimney included in the package?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-016",
+   "category": "Materials",
+   "owner_question": "How can customers check that a plywood sheet is original (brand QR code or app, ISI marks)?",
+   "customer_question": "How do I know this CenturyPly is original?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-017",
+   "category": "Materials",
+   "owner_question": "What core wood is in your plywood (gurjan, alternate, poplar, eucalyptus), and do you tell customers clearly?",
+   "customer_question": "Is this full gurjan plywood?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-018",
+   "category": "Materials",
+   "owner_question": "Do you use particle board or plain MDF anywhere? Do you tell customers where?",
+   "customer_question": "Do you use particle board?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "interior_designer-019",
+   "category": "Materials",
+   "owner_question": "Do you make termite-proof and waterproof cupboards with WPC or PVC foam board?",
+   "customer_question": "Can you make cupboards that termites can't eat?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "interior_designer-020",
+   "category": "Materials",
+   "owner_question": "What thickness do you use for carcass, shutters and back panels (for example 18 / 19 mm, 6 or 8 mm back)?",
+   "customer_question": "Is the back panel 4 mm or 8 mm?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-021",
+   "category": "Materials",
+   "owner_question": "Which laminates do you use or sell (brands, 1 mm or 0.8 mm, matte, high-gloss, textured, fluted), and what goes inside the cupboards?",
+   "customer_question": "Is the laminate 1 mm?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-022",
+   "category": "Materials",
+   "owner_question": "Do you do acrylic, lacquered glass, PU or veneer finishes? What is the rate per sq ft?",
+   "customer_question": "How much extra for acrylic shutters?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-023",
+   "category": "Materials",
+   "owner_question": "Which adhesive do you use (for example Fevicol Marine, HeatX)?",
+   "customer_question": "Which gum do you use?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-024",
+   "category": "Kitchen & hardware",
+   "owner_question": "Which steel do you use for kitchen baskets?",
+   "customer_question": "Will the baskets rust?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "SS 304",
+    "SS 202",
+    "Customer's choice"
+   ]
+  },
+  {
+   "id": "interior_designer-025",
+   "category": "Kitchen & hardware",
+   "owner_question": "Which kitchen accessories do you fit?",
+   "customer_question": "Do you have a magic corner?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Tandem / box drawers",
+    "Magic corner / carousel",
+    "Tall pantry unit",
+    "Bottle pull-out",
+    "Cutlery tray",
+    "Plate & glass rack (GTPT)",
+    "Wicker / detergent pull-outs",
+    "Profile handles & G-profile"
+   ]
+  },
+  {
+   "id": "interior_designer-026",
+   "category": "Kitchen & hardware",
+   "owner_question": "Do you supply the countertop (granite, quartz), sink, chimney and hob too? Which brands?",
+   "customer_question": "Do you fit the quartz countertop?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-027",
+   "category": "Wardrobes, pooja & glass",
+   "owner_question": "Do you make sliding wardrobes, aluminium-profile glass shutters and sensor lights inside cupboards?",
+   "customer_question": "Can you make a sliding wardrobe?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "interior_designer-028",
+   "category": "Wardrobes, pooja & glass",
+   "owner_question": "Do you make CNC jali pooja units with backlit acrylic designs?",
+   "customer_question": "Can you make a CNC jali mandir?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "interior_designer-029",
+   "category": "Wardrobes, pooja & glass",
+   "owner_question": "Which glass and mirror work do you do?",
+   "customer_question": "Do you fit shower glass partitions?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "LED / touch-sensor mirrors",
+    "Toughened glass shower partitions",
+    "Glass & SS railings",
+    "Lacquered & fluted glass",
+    "Glass table tops",
+    "Office glass partitions"
+   ]
+  },
+  {
+   "id": "interior_designer-030",
+   "category": "Ceiling & walls",
+   "owner_question": "Which false ceiling do you do (gypsum, POP, PVC or wooden panels), with which brands, and how do you prevent joint cracks?",
+   "customer_question": "Will the ceiling crack?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-031",
+   "category": "Ceiling & walls",
+   "owner_question": "Is wiring, cove lighting and spot lights included in your false ceiling rate? Do you add the fan hook extension?",
+   "customer_question": "Is lighting included in the ceiling rate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-032",
+   "category": "Ceiling & walls",
+   "owner_question": "Do you do wall panelling (UV marble sheet, charcoal louvers) and wallpaper?",
+   "customer_question": "Do you do louvers behind the TV?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "interior_designer-033",
+   "category": "Windows & doors",
+   "owner_question": "Do you also do mosquito mesh, flush / WPC doors and invisible grills?",
+   "customer_question": "Do you fit invisible grills?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "interior_designer-034",
+   "category": "Timeline & payment",
+   "owner_question": "What warranty do you give on your work, and do you come for free service visits (hinge adjustment, alignment)?",
+   "customer_question": "What warranty on the work?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-035",
+   "category": "Site work",
+   "owner_question": "Do your workers follow apartment rules (no noisy work on Sundays or late evenings)?",
+   "customer_question": "Will your workers follow our apartment rules?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "interior_designer-036",
+   "category": "Site work",
+   "owner_question": "Do you protect floors and fittings during work (floor protection sheets)?",
+   "customer_question": "Will you protect the floor tiles?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "interior_designer-037",
+   "category": "Site work",
+   "owner_question": "After work, do you remove the debris and do a deep cleaning? Free or charged?",
+   "customer_question": "Will you clean the house after the work?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "interior_designer-038",
+   "category": "Site work",
+   "owner_question": "Which areas do you work in?",
+   "customer_question": "Do you work in other towns?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Our town / city only",
+    "Nearby towns",
+    "Anywhere in the state",
+    "Other states"
+   ]
+  },
+  {
+   "id": "interior_designer-039",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "interior_designer-040",
+   "category": "Shop & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your work?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

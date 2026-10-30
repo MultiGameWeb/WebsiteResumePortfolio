@@ -39,6 +39,7 @@ import bank_hostel_pg from "./hostel_pg.json" with { type: "json" };
 import bank_hotel_stay from "./hotel_stay.json" with { type: "json" };
 import bank_imitation_jewellery from "./imitation_jewellery.json" with { type: "json" };
 import bank_insurance_investment from "./insurance_investment.json" with { type: "json" };
+import bank_interior_designer from "./interior_designer.json" with { type: "json" };
 import bank_jewellery from "./jewellery.json" with { type: "json" };
 import bank_kids_wear from "./kids_wear.json" with { type: "json" };
 import bank_kirana from "./kirana.json" with { type: "json" };
@@ -54,6 +55,7 @@ import bank_pet_shop from "./pet_shop.json" with { type: "json" };
 import bank_pharmacy from "./pharmacy.json" with { type: "json" };
 import bank_photography from "./photography.json" with { type: "json" };
 import bank_physiotherapy from "./physiotherapy.json" with { type: "json" };
+import bank_plywood_glass from "./plywood_glass.json" with { type: "json" };
 import bank_poultry_needs from "./poultry_needs.json" with { type: "json" };
 import bank_readymade_garments from "./readymade_garments.json" with { type: "json" };
 import bank_real_estate from "./real_estate.json" with { type: "json" };
@@ -71,6 +73,7 @@ import bank_tailor_shop from "./tailor_shop.json" with { type: "json" };
 import bank_tiffin_centre from "./tiffin_centre.json" with { type: "json" };
 import bank_travels from "./travels.json" with { type: "json" };
 import bank_tuition_centre from "./tuition_centre.json" with { type: "json" };
+import bank_upvc_windows from "./upvc_windows.json" with { type: "json" };
 import bank_vet_cattle_feed from "./vet_cattle_feed.json" with { type: "json" };
 import bank_vet_poultry_aqua from "./vet_poultry_aqua.json" with { type: "json" };
 
@@ -115,6 +118,7 @@ export const QUESTION_BANKS = {
   "hotel_stay": bank_hotel_stay,
   "imitation_jewellery": bank_imitation_jewellery,
   "insurance_investment": bank_insurance_investment,
+  "interior_designer": bank_interior_designer,
   "jewellery": bank_jewellery,
   "kids_wear": bank_kids_wear,
   "kirana": bank_kirana,
@@ -130,6 +134,7 @@ export const QUESTION_BANKS = {
   "pharmacy": bank_pharmacy,
   "photography": bank_photography,
   "physiotherapy": bank_physiotherapy,
+  "plywood_glass": bank_plywood_glass,
   "poultry_needs": bank_poultry_needs,
   "readymade_garments": bank_readymade_garments,
   "real_estate": bank_real_estate,
@@ -147,6 +152,7 @@ export const QUESTION_BANKS = {
   "tiffin_centre": bank_tiffin_centre,
   "travels": bank_travels,
   "tuition_centre": bank_tuition_centre,
+  "upvc_windows": bank_upvc_windows,
   "vet_cattle_feed": bank_vet_cattle_feed,
   "vet_poultry_aqua": bank_vet_poultry_aqua
 };
