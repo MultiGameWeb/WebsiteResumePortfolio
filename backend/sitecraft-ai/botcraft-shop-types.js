@@ -64,7 +64,11 @@ export const SHOP_TYPES = [
   { key: "physiotherapy", name: "Physiotherapy centre", aliases: ["physiotherapy", "physio clinic", "rehab centre"], description: "physiotherapy and rehabilitation centre" },
   { key: "ayush_clinic", name: "Ayurveda / homeopathy clinic", aliases: ["ayurveda", "ayurvedic clinic", "homeopathy", "homeo clinic", "siddha", "unani", "naturopathy", "panchakarma"], description: "Ayurveda, homeopathy or other AYUSH clinic" },
   { key: "diagnostic_lab", name: "Diagnostic lab & scan centre", aliases: ["diagnostic centre", "blood test lab", "pathology lab", "scan centre", "X-ray centre", "ultrasound centre", "MRI centre", "diagnostics"], description: "diagnostic lab doing blood tests and scans" },
-  { key: "agri_inputs", name: "Fertilizer, seeds & pesticides shop", aliases: ["fertilizer shop", "pesticide shop", "seeds shop", "agro chemicals", "agri input dealer", "agro centre", "farm inputs", "eruvula shop"], description: "sells fertilizers, seeds, pesticides and farm equipment to farmers" }
+  { key: "agri_inputs", name: "Fertilizer, seeds & pesticides shop", aliases: ["fertilizer shop", "pesticide shop", "seeds shop", "agro chemicals", "agri input dealer", "agro centre", "farm inputs", "eruvula shop"], description: "sells fertilizers, seeds, pesticides and farm equipment to farmers" },
+  { key: "chicken_shop", name: "Chicken shop", aliases: ["chicken centre", "chicken shop", "broiler shop", "natu kodi shop", "poultry shop", "egg shop"], description: "sells chicken, country chicken, quail and eggs" },
+  { key: "mutton_shop", name: "Mutton shop", aliases: ["mutton shop", "goat meat shop", "mutton stall"], description: "sells mutton and goat parts" },
+  { key: "fish_shop", name: "Fish & seafood shop", aliases: ["fish shop", "fish market stall", "prawns shop", "seafood shop", "chepala shop"], description: "sells fish, prawns and crabs" },
+  { key: "meat_shop", name: "Meat shop (chicken, mutton & fish)", aliases: ["meat shop", "chicken and mutton shop", "non-veg shop", "meat and fish"], description: "sells chicken, mutton and fish" }
 ];
 
 export const SHOP_TYPE_KEYS = new Set(SHOP_TYPES.map(t => t.key));

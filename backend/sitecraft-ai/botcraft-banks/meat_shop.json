@@ -1,0 +1,383 @@
+{
+ "shop_type_key": "meat_shop",
+ "name": "Meat shop (chicken, mutton & fish)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 36,
+ "questions": [
+  {
+   "id": "meat_shop-001",
+   "category": "Today's rates",
+   "owner_question": "What are today's chicken rates (skinless, with skin, live bird, country chicken)? (Update them any time.)",
+   "customer_question": "Chicken rate today?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-002",
+   "category": "Today's rates",
+   "owner_question": "What are today's mutton rates (with bone, boneless)? (Update them any time.)",
+   "customer_question": "Mutton rate today?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-003",
+   "category": "Today's rates",
+   "owner_question": "Which fish, prawns and crabs came today, and at what rates (before and after cleaning)? (Update them any time.)",
+   "customer_question": "Which fish came today?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-004",
+   "category": "Freshness & trust",
+   "owner_question": "Is all meat cut fresh the same day, never mixed with frozen or leftover meat?",
+   "customer_question": "Is this fresh?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meat_shop-005",
+   "category": "Freshness & trust",
+   "owner_question": "What do you sell as mutton (male goat, female goat, sheep), and is it stamped by the municipality?",
+   "customer_question": "Is this male goat meat?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-006",
+   "category": "Freshness & trust",
+   "owner_question": "How do you sell chicken?",
+   "customer_question": "Will you cut a live bird in front of me?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Live bird cut in front of the customer",
+    "Ready dressed chicken",
+    "Both"
+   ]
+  },
+  {
+   "id": "meat_shop-007",
+   "category": "Freshness & trust",
+   "owner_question": "Is your fish live or on ice, from ponds, rivers or the sea, and free of formalin?",
+   "customer_question": "Is this river fish?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-008",
+   "category": "Freshness & trust",
+   "owner_question": "Is your scale electronic, stamped by Legal Metrology and visible to customers?",
+   "customer_question": "Is your weighing correct?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meat_shop-009",
+   "category": "Cuts",
+   "owner_question": "Which chicken cuts do you do?",
+   "customer_question": "Can you do biryani cut?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Curry cut",
+    "Small fry cut",
+    "Biryani cut (big pieces)",
+    "Tandoori full bird / 4-piece",
+    "Boneless",
+    "Lollipops",
+    "Wings",
+    "Drumsticks",
+    "Keema (machine or hand-chopped)"
+   ]
+  },
+  {
+   "id": "meat_shop-010",
+   "category": "Cuts",
+   "owner_question": "Which mutton cuts do you do?",
+   "customer_question": "Do you have nalli bones?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Curry cut",
+    "Raan (leg)",
+    "Chops / ribs",
+    "Nalli (marrow bones)",
+    "Seena",
+    "Boneless (for haleem)",
+    "Keema (machine or hand-chopped)"
+   ]
+  },
+  {
+   "id": "meat_shop-011",
+   "category": "Cuts",
+   "owner_question": "How do you cut and clean fish?",
+   "customer_question": "Can you cut fry slices?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Round curry slices",
+    "Fillets",
+    "Thin fry slices",
+    "Head cleaned without breaking the bile",
+    "Roe kept for the customer",
+    "Washed with salt & turmeric"
+   ]
+  },
+  {
+   "id": "meat_shop-012",
+   "category": "Weight & wastage",
+   "owner_question": "How much meat does a live bird give after cleaning, and do you show the live weight on the scale?",
+   "customer_question": "How much meat from a 2 kg bird?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-013",
+   "category": "Weight & wastage",
+   "owner_question": "Do you weigh only good pieces, adding neck, gizzard, liver or backbone only if the customer asks?",
+   "customer_question": "Don't put neck pieces in my kilo",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meat_shop-014",
+   "category": "Weight & wastage",
+   "owner_question": "Do you trim extra fat and avoid heavy bones in mutton weight?",
+   "customer_question": "Please don't add too much fat",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meat_shop-015",
+   "category": "Halal & hygiene",
+   "owner_question": "Is your meat halal or jhatka?",
+   "customer_question": "Is it halal?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Halal",
+    "Jhatka",
+    "Both, as the customer asks"
+   ]
+  },
+  {
+   "id": "meat_shop-016",
+   "category": "Halal & hygiene",
+   "owner_question": "How do you keep the shop clean (blocks and knives washed, glass enclosure, no flies, gloves)?",
+   "customer_question": "Is the shop clean?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-017",
+   "category": "Orders & delivery",
+   "owner_question": "For home delivery, what is the minimum order, the charge and the usual time?",
+   "customer_question": "Can you deliver 1 kg?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-018",
+   "category": "Orders & delivery",
+   "owner_question": "Can customers pre-order on WhatsApp (for example on Saturday night) and collect their packed order on Sunday morning without waiting?",
+   "customer_question": "Can I book for Sunday morning?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meat_shop-019",
+   "category": "Orders & delivery",
+   "owner_question": "For functions and bulk orders, what wholesale rates do you give, and can you deliver early in the morning?",
+   "customer_question": "Rate for 50 kg chicken for a wedding?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-020",
+   "category": "Today's rates",
+   "owner_question": "Do you sell quail, duck or rabbit? At what price?",
+   "customer_question": "Do you have quail?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-021",
+   "category": "Today's rates",
+   "owner_question": "What do eggs cost (white, country eggs; dozen and tray)?",
+   "customer_question": "Egg tray rate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-022",
+   "category": "Today's rates",
+   "owner_question": "Which meats do you sell, and are knives and chopping blocks kept separate for each?",
+   "customer_question": "Do you sell only chicken and mutton?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-023",
+   "category": "Freshness & trust",
+   "owner_question": "How young are your goats, and what do you tell customers about cooking time?",
+   "customer_question": "Is the mutton tender?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-024",
+   "category": "Freshness & trust",
+   "owner_question": "Is your country chicken real free-range natu kodi, or Giriraja / Vanaraja / cross breeds (clearly told)?",
+   "customer_question": "Is this real natu kodi?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-025",
+   "category": "Freshness & trust",
+   "owner_question": "Is your shop FSSAI-registered?",
+   "customer_question": "Is your shop FSSAI registered?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meat_shop-026",
+   "category": "Cuts",
+   "owner_question": "What do special cuts cost (boneless, lollipops, wings, keema)?",
+   "customer_question": "How much is boneless chicken?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-027",
+   "category": "Cuts",
+   "owner_question": "Do you peel and devein prawns, and weigh them after cleaning if the customer asks?",
+   "customer_question": "Can you weigh prawns after cleaning?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meat_shop-028",
+   "category": "Other parts",
+   "owner_question": "What do head, paya, boti, brain, liver, kapura and lungs cost? Do you singe and clean them, and should they be booked early?",
+   "customer_question": "How much is talakaya?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-029",
+   "category": "Other parts",
+   "owner_question": "Do you roast country chicken with turmeric on the flame before cutting?",
+   "customer_question": "Can you roast the natu kodi?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meat_shop-030",
+   "category": "Other parts",
+   "owner_question": "Do you sell chicken feet, heads or scraps for pet dogs? At what price?",
+   "customer_question": "Do you have chicken waste for my dog?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-031",
+   "category": "Orders & delivery",
+   "owner_question": "If customers bring their own goats for a function, do you send butchers? What is the charge, and is the skin adjusted?",
+   "customer_question": "How much to cut our goats?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-032",
+   "category": "Orders & delivery",
+   "owner_question": "Which ready-to-cook items do you sell?",
+   "customer_question": "Do you have marinated chicken?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Ginger-garlic paste",
+    "Meat masalas",
+    "Marinated chicken / fish",
+    "Kebabs",
+    "Frozen items"
+   ]
+  },
+  {
+   "id": "meat_shop-033",
+   "category": "Orders & delivery",
+   "owner_question": "What are your timings on festivals (Kanuma, Bakrid, Bonalu, after Karthika masam), and are you closed on any days?",
+   "customer_question": "Will the shop open early on Kanuma?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-034",
+   "category": "Orders & delivery",
+   "owner_question": "If a customer finds the meat not fresh or not tender, what do you do?",
+   "customer_question": "The mutton didn't cook at all, what now?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meat_shop-035",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "meat_shop-036",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
