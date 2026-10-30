@@ -1,0 +1,106 @@
+{
+ "shop_type_key": "sports_academy",
+ "name": "Sports academy",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 9,
+ "questions": [
+  {
+   "id": "sports_academy-001",
+   "category": "Sports academy",
+   "owner_question": "Which sports do you train?",
+   "customer_question": "Do you have swimming classes?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Cricket",
+    "Badminton",
+    "Swimming",
+    "Karate / Taekwondo",
+    "Skating",
+    "Chess",
+    "Football",
+    "Tennis",
+    "Athletics",
+    "Yoga"
+   ]
+  },
+  {
+   "id": "sports_academy-002",
+   "category": "Sports academy",
+   "owner_question": "What are the monthly fees and batch timings for each sport?",
+   "customer_question": "How much for badminton coaching?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "sports_academy-003",
+   "category": "Sports academy",
+   "owner_question": "What are the hourly rates for court or pool booking, and do you rent equipment or non-marking shoes?",
+   "customer_question": "How much to book a badminton court for an hour?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "sports_academy-004",
+   "category": "Sports academy",
+   "owner_question": "How is the pool water filtered and the chlorine checked, and are there ladies' batches with a lady coach?",
+   "customer_question": "Is there a ladies swimming batch?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "sports_academy-005",
+   "category": "Sports academy",
+   "owner_question": "What do belt or grading tests cost, and do you take students to district and state tournaments?",
+   "customer_question": "How much for the karate belt test?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "sports_academy-006",
+   "category": "Sports academy",
+   "owner_question": "What are your coaches' qualifications (certified coaches, former players)?",
+   "customer_question": "Who is the coach?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "sports_academy-007",
+   "category": "General",
+   "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
+   "customer_question": "Can we see the campus first?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "sports_academy-008",
+   "category": "General",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "sports_academy-009",
+   "category": "General",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

@@ -1,0 +1,264 @@
+{
+ "shop_type_key": "play_school",
+ "name": "Play school, pre-school & daycare",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 23,
+ "questions": [
+  {
+   "id": "play_school-001",
+   "category": "Classes & care",
+   "owner_question": "Which classes and care do you offer?",
+   "customer_question": "Do you have LKG?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Playgroup",
+    "Nursery",
+    "LKG",
+    "UKG",
+    "Daycare / creche",
+    "After-school care"
+   ]
+  },
+  {
+   "id": "play_school-002",
+   "category": "Classes & care",
+   "owner_question": "How old must a child be (as on 1 June) for each class, and do you take children who are a month or two younger?",
+   "customer_question": "My son is 2 years 10 months, can he join nursery?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-003",
+   "category": "Classes & care",
+   "owner_question": "How many ayahs (female caretakers) are there per class, and do they change diapers and help with toilet training?",
+   "customer_question": "Will the ayah change his diaper?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-004",
+   "category": "Classes & care",
+   "owner_question": "How do you teach small children?",
+   "customer_question": "Do you follow Montessori?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Play-way / activity-based",
+    "Montessori",
+    "Phonics",
+    "Kit-based programme (for example Kreedo)",
+    "Mostly books & writing"
+   ]
+  },
+  {
+   "id": "play_school-005",
+   "category": "Classes & care",
+   "owner_question": "Daycare: until what time, is lunch fed and a nap bed given, and what does it cost?",
+   "customer_question": "Can my child stay till 6:30 pm?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-006",
+   "category": "Fees",
+   "owner_question": "Apart from the tuition fee, what else is charged in the year (admission, term, computer, sports, annual day, picnic, exam, university, placement training)?",
+   "customer_question": "Are there any other fees besides tuition fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-007",
+   "category": "Transport",
+   "owner_question": "School bus: which areas, fee by distance, is there a lady attender, and can parents track the bus on an app?",
+   "customer_question": "Does the bus come to our street?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-008",
+   "category": "Activities",
+   "owner_question": "Which sports and activities do you offer?",
+   "customer_question": "Is there a playground?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Playground",
+    "Karate",
+    "Skating",
+    "Swimming",
+    "Dance",
+    "Music",
+    "Abacus",
+    "Robotics",
+    "Chess",
+    "Yoga",
+    "Drawing"
+   ]
+  },
+  {
+   "id": "play_school-009",
+   "category": "Daily rules & care",
+   "owner_question": "Do you have a parent app (homework, attendance, fee receipts), and how can parents reach teachers?",
+   "customer_question": "Is there a school app?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-010",
+   "category": "Classes & care",
+   "owner_question": "In the first week, can a parent sit outside the class while the child settles?",
+   "customer_question": "Can I sit outside for the first few days?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "play_school-011",
+   "category": "Classes & care",
+   "owner_question": "Do you give homework to small children? How much?",
+   "customer_question": "Is there homework for nursery?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-012",
+   "category": "Classes & care",
+   "owner_question": "Can parents watch their child live on CCTV through an app?",
+   "customer_question": "Can I see my child on CCTV from office?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "play_school-013",
+   "category": "Fees",
+   "owner_question": "Must books, uniform and shoes be bought from you?",
+   "customer_question": "Can I buy books outside?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Must buy from us",
+    "Can buy outside with our list",
+    "Books from us, uniform outside"
+   ]
+  },
+  {
+   "id": "play_school-014",
+   "category": "Fees",
+   "owner_question": "Do you admit children under the RTE 25% free quota?",
+   "customer_question": "Is there an RTE free seat?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "play_school-015",
+   "category": "Activities",
+   "owner_question": "Are annual day costumes and picnics optional, and what do they usually cost?",
+   "customer_question": "Is the picnic compulsory?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-016",
+   "category": "Daily rules & care",
+   "owner_question": "What are your birthday rules (colour dress, what can be shared in class)?",
+   "customer_question": "Can she wear a colour dress on her birthday?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-017",
+   "category": "Daily rules & care",
+   "owner_question": "Can parents drop a hot lunch box at the gate at lunch time, and do staff take it to the class?",
+   "customer_question": "Can I bring a hot lunch box at 12?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "play_school-018",
+   "category": "Daily rules & care",
+   "owner_question": "Can children bring egg or non-veg in their lunch box?",
+   "customer_question": "Can I send egg in the tiffin?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Yes",
+    "Egg only",
+    "Veg only"
+   ]
+  },
+  {
+   "id": "play_school-019",
+   "category": "Daily rules & care",
+   "owner_question": "Do you avoid punishments like hitting, insulting or writing an answer many times (impositions)?",
+   "customer_question": "Do teachers punish children?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "play_school-020",
+   "category": "Daily rules & care",
+   "owner_question": "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, and help get a scribe or extra time in board exams?",
+   "customer_question": "My son has dyslexia, can you support him?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-021",
+   "category": "General",
+   "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
+   "customer_question": "Can we see the campus first?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "play_school-022",
+   "category": "General",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "play_school-023",
+   "category": "General",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

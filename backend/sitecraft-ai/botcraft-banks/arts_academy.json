@@ -1,0 +1,91 @@
+{
+ "shop_type_key": "arts_academy",
+ "name": "Music, dance & arts academy",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 7,
+ "questions": [
+  {
+   "id": "arts_academy-001",
+   "category": "Music & dance",
+   "owner_question": "What do you teach?",
+   "customer_question": "Do you teach Kuchipudi?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Kuchipudi",
+    "Bharatanatyam",
+    "Western dance",
+    "Carnatic vocal",
+    "Hindustani vocal",
+    "Guitar",
+    "Keyboard / piano",
+    "Violin",
+    "Flute",
+    "Tabla / mridangam",
+    "Drawing & painting"
+   ]
+  },
+  {
+   "id": "arts_academy-002",
+   "category": "Music & dance",
+   "owner_question": "What are the minimum age, monthly fees and class timings?",
+   "customer_question": "From what age can my daughter learn Bharatanatyam?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "arts_academy-003",
+   "category": "Music & dance",
+   "owner_question": "Do students need their own instrument, or can they practise on yours?",
+   "customer_question": "Do I have to buy a keyboard?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "arts_academy-004",
+   "category": "Music & dance",
+   "owner_question": "Do you prepare students for certificate exams (for example Telugu University, Prayag Sangeet Samiti, Trinity) and arrange an arangetram?",
+   "customer_question": "Will she get a certificate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "arts_academy-005",
+   "category": "General",
+   "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
+   "customer_question": "Can we see the campus first?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "arts_academy-006",
+   "category": "General",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "arts_academy-007",
+   "category": "General",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

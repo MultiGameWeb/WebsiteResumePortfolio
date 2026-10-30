@@ -1,0 +1,293 @@
+{
+ "shop_type_key": "college",
+ "name": "Degree, engineering & professional college",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 29,
+ "questions": [
+  {
+   "id": "college-001",
+   "category": "College",
+   "owner_question": "Which courses do you offer?",
+   "customer_question": "Do you have B.Tech CSE?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "B.Tech",
+    "Degree (BA, B.Com, B.Sc)",
+    "MBA",
+    "MCA",
+    "B.Pharm / Pharm.D",
+    "Nursing & paramedical",
+    "B.Ed / D.El.Ed",
+    "Law (LLB)",
+    "Polytechnic",
+    "ITI",
+    "Hotel management"
+   ]
+  },
+  {
+   "id": "college-002",
+   "category": "Fees",
+   "owner_question": "Apart from the tuition fee, what else is charged in the year (admission, term, computer, sports, annual day, picnic, exam, university, placement training)?",
+   "customer_question": "Are there any other fees besides tuition fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-003",
+   "category": "Inter college",
+   "owner_question": "Do you have a student counsellor and avoid shaming or pressuring students over marks?",
+   "customer_question": "Will my son be under too much pressure?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "college-004",
+   "category": "Hostel",
+   "owner_question": "Do you have a hostel?",
+   "customer_question": "Is there a hostel?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Boys",
+    "Girls",
+    "Both",
+    "No hostel"
+   ]
+  },
+  {
+   "id": "college-005",
+   "category": "College",
+   "owner_question": "What are your counselling codes (EAPCET, ECET, ICET, PGECET), university affiliation or autonomous status, and NAAC / NBA grades?",
+   "customer_question": "What is your EAPCET college code?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-006",
+   "category": "College",
+   "owner_question": "Which approvals do you have (for example AICTE, PCI, INC, NCTE, NCVT, BCI)?",
+   "customer_question": "Is your ITI NCVT approved?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-007",
+   "category": "College",
+   "owner_question": "Does government fee reimbursement apply to convener seats, and what happens if the government payment is late?",
+   "customer_question": "Will fee reimbursement cover everything?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-008",
+   "category": "College",
+   "owner_question": "What are the fees for management (B-category) seats in each branch?",
+   "customer_question": "What is the management quota fee for CSE?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-009",
+   "category": "College",
+   "owner_question": "Last year's placements: how many students were placed, in which companies, and what were the average and highest packages?",
+   "customer_question": "How many got placed last year?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-010",
+   "category": "College",
+   "owner_question": "Do you keep original certificates? Are they returned when the student asks, also if they leave?",
+   "customer_question": "Will you return my originals if I leave?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-011",
+   "category": "College",
+   "owner_question": "Do you have strict anti-ragging rules and an anti-ragging committee?",
+   "customer_question": "Is there ragging?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "college-012",
+   "category": "Daily rules & care",
+   "owner_question": "For girls, do you keep sanitary pads, a spare uniform and a rest room?",
+   "customer_question": "What if my daughter gets her period at school?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "college-013",
+   "category": "Inter college",
+   "owner_question": "Can students move to another branch or campus of your college? Is there an extra fee?",
+   "customer_question": "Can he move to your Vijayawada campus?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-014",
+   "category": "Inter college",
+   "owner_question": "What are your dress code and mobile phone rules?",
+   "customer_question": "Can students bring phones?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-015",
+   "category": "Hostel",
+   "owner_question": "How often can hostel students call their parents, and can parents call the warden in an emergency?",
+   "customer_question": "How often can my son call home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-016",
+   "category": "Hostel",
+   "owner_question": "What are the outing rules, and how do you check who picks up a student (photo ID, OTP)?",
+   "customer_question": "Can my brother pick her up for outing?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-017",
+   "category": "Hostel",
+   "owner_question": "What is the hostel menu, can parents taste the food, and whom do students complain to about it?",
+   "customer_question": "What food do they give in the hostel?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-018",
+   "category": "Hostel",
+   "owner_question": "Is laundry included in the hostel fee, with roll numbers marked on clothes?",
+   "customer_question": "Who washes the clothes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "college-019",
+   "category": "Hostel",
+   "owner_question": "Is there a 24/7 nurse, sick room and ambulance, and do you call parents at once if a student falls ill?",
+   "customer_question": "What if my child gets fever at night?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-020",
+   "category": "Hostel",
+   "owner_question": "How many students share a room, and are there beds, mosquito nets, hot water and AC or non-AC rooms?",
+   "customer_question": "How many in one room?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-021",
+   "category": "College",
+   "owner_question": "What are the fees for spot admissions, and does fee reimbursement apply to them?",
+   "customer_question": "How much for a spot admission seat?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-022",
+   "category": "College",
+   "owner_question": "What is the attendance rule, and how does condonation work?",
+   "customer_question": "What if attendance is below 75%?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-023",
+   "category": "College",
+   "owner_question": "Can students change branch after first year, or take a minor degree (for example in CSE / AI)?",
+   "customer_question": "Can I move from ECE to CSE?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-024",
+   "category": "College",
+   "owner_question": "Do you help with internships (including hotel and hospital internships) and guide final-year projects in your own labs?",
+   "customer_question": "Will the college allow a 6-month internship?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-025",
+   "category": "College",
+   "owner_question": "What is the supplementary exam fee, and is there an instant supplementary exam?",
+   "customer_question": "When is the supplementary exam?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-026",
+   "category": "College",
+   "owner_question": "For nursing and paramedical courses, do you have your own hospital for clinical practice?",
+   "customer_question": "Do you have your own hospital?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "college-027",
+   "category": "General",
+   "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
+   "customer_question": "Can we see the campus first?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "college-028",
+   "category": "General",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "college-029",
+   "category": "General",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

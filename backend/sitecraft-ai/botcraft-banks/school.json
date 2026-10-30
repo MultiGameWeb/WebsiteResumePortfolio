@@ -1,0 +1,393 @@
+{
+ "shop_type_key": "school",
+ "name": "School (1st to 10th class)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 36,
+ "questions": [
+  {
+   "id": "school-001",
+   "category": "Board & recognition",
+   "owner_question": "Which board and classes do you have?",
+   "customer_question": "Is your school CBSE?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "State syllabus",
+    "CBSE",
+    "ICSE",
+    "IB / Cambridge",
+    "Pre-primary",
+    "Classes 1–5",
+    "Classes 6–8",
+    "Classes 9–10"
+   ]
+  },
+  {
+   "id": "school-002",
+   "category": "Classes & care",
+   "owner_question": "How old must a child be (as on 1 June) for each class, and do you take children who are a month or two younger?",
+   "customer_question": "My son is 2 years 10 months, can he join nursery?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-003",
+   "category": "Board & recognition",
+   "owner_question": "Is your school government recognised up to which class, and what are your board affiliation number and UDISE code?",
+   "customer_question": "Is the school recognised till 10th?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-004",
+   "category": "Board & recognition",
+   "owner_question": "Do you have IIT / NEET / Olympiad foundation from class 6? Is there a separate fee for it?",
+   "customer_question": "Is there IIT foundation from 6th?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-005",
+   "category": "Fees",
+   "owner_question": "Apart from the tuition fee, what else is charged in the year (admission, term, computer, sports, annual day, picnic, exam, university, placement training)?",
+   "customer_question": "Are there any other fees besides tuition fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-006",
+   "category": "Fees",
+   "owner_question": "When a student leaves, how soon do you give the TC, bonafide and other certificates, and which dues must be cleared first?",
+   "customer_question": "Will you give the TC if we move mid-year?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-007",
+   "category": "Transport",
+   "owner_question": "School bus: which areas, fee by distance, is there a lady attender, and can parents track the bus on an app?",
+   "customer_question": "Does the bus come to our street?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-008",
+   "category": "Activities",
+   "owner_question": "Which sports and activities do you offer?",
+   "customer_question": "Is there a playground?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Playground",
+    "Karate",
+    "Skating",
+    "Swimming",
+    "Dance",
+    "Music",
+    "Abacus",
+    "Robotics",
+    "Chess",
+    "Yoga",
+    "Drawing"
+   ]
+  },
+  {
+   "id": "school-009",
+   "category": "Daily rules & care",
+   "owner_question": "Do you have a parent app (homework, attendance, fee receipts), and how can parents reach teachers?",
+   "customer_question": "Is there a school app?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-010",
+   "category": "Inter college",
+   "owner_question": "Do you have a student counsellor and avoid shaming or pressuring students over marks?",
+   "customer_question": "Will my son be under too much pressure?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-011",
+   "category": "Hostel",
+   "owner_question": "Do you have a hostel?",
+   "customer_question": "Is there a hostel?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Boys",
+    "Girls",
+    "Both",
+    "No hostel"
+   ]
+  },
+  {
+   "id": "school-012",
+   "category": "Board & recognition",
+   "owner_question": "Do you teach the syllabus of the board you are affiliated to (for example CBSE books in a CBSE school)?",
+   "customer_question": "Do you really follow CBSE books?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-013",
+   "category": "Board & recognition",
+   "owner_question": "Which second and third languages can students take?",
+   "customer_question": "Can my child take Hindi instead of Telugu?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "Sanskrit",
+    "Urdu",
+    "French"
+   ]
+  },
+  {
+   "id": "school-014",
+   "category": "Board & recognition",
+   "owner_question": "How do you form sections?",
+   "customer_question": "Do you put low scorers in a separate section?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "All levels mixed",
+    "By marks",
+    "By language or stream"
+   ]
+  },
+  {
+   "id": "school-015",
+   "category": "Board & recognition",
+   "owner_question": "Do you enter every student in UDISE and create their APAAR ID / PEN, so they get government schemes (for example Thalliki Vandanam)?",
+   "customer_question": "Will my child get the Thalliki Vandanam scheme here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-016",
+   "category": "Fees",
+   "owner_question": "Must books, uniform and shoes be bought from you?",
+   "customer_question": "Can I buy books outside?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Must buy from us",
+    "Can buy outside with our list",
+    "Books from us, uniform outside"
+   ]
+  },
+  {
+   "id": "school-017",
+   "category": "Fees",
+   "owner_question": "Do you admit children under the RTE 25% free quota?",
+   "customer_question": "Is there an RTE free seat?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-018",
+   "category": "Activities",
+   "owner_question": "How do you keep school bags light (lockers, books only as per timetable)?",
+   "customer_question": "Does my child have to carry all books every day?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-019",
+   "category": "Activities",
+   "owner_question": "Are annual day costumes and picnics optional, and what do they usually cost?",
+   "customer_question": "Is the picnic compulsory?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-020",
+   "category": "Daily rules & care",
+   "owner_question": "What are your grooming rules (hair, nails, shoes, plaits) and what happens if they are not followed?",
+   "customer_question": "Will you cut my son's hair at school?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-021",
+   "category": "Daily rules & care",
+   "owner_question": "What are your birthday rules (colour dress, what can be shared in class)?",
+   "customer_question": "Can she wear a colour dress on her birthday?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-022",
+   "category": "Daily rules & care",
+   "owner_question": "For girls, do you keep sanitary pads, a spare uniform and a rest room?",
+   "customer_question": "What if my daughter gets her period at school?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-023",
+   "category": "Daily rules & care",
+   "owner_question": "Can parents drop a hot lunch box at the gate at lunch time, and do staff take it to the class?",
+   "customer_question": "Can I bring a hot lunch box at 12?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-024",
+   "category": "Daily rules & care",
+   "owner_question": "Can children bring egg or non-veg in their lunch box?",
+   "customer_question": "Can I send egg in the tiffin?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Yes",
+    "Egg only",
+    "Veg only"
+   ]
+  },
+  {
+   "id": "school-025",
+   "category": "Daily rules & care",
+   "owner_question": "Do you avoid punishments like hitting, insulting or writing an answer many times (impositions)?",
+   "customer_question": "Do teachers punish children?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-026",
+   "category": "Daily rules & care",
+   "owner_question": "How often are notebooks corrected?",
+   "customer_question": "How often do teachers correct notebooks?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-027",
+   "category": "Daily rules & care",
+   "owner_question": "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, and help get a scribe or extra time in board exams?",
+   "customer_question": "My son has dyslexia, can you support him?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-028",
+   "category": "Hostel",
+   "owner_question": "How often can hostel students call their parents, and can parents call the warden in an emergency?",
+   "customer_question": "How often can my son call home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-029",
+   "category": "Hostel",
+   "owner_question": "What are the outing rules, and how do you check who picks up a student (photo ID, OTP)?",
+   "customer_question": "Can my brother pick her up for outing?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-030",
+   "category": "Hostel",
+   "owner_question": "What is the hostel menu, can parents taste the food, and whom do students complain to about it?",
+   "customer_question": "What food do they give in the hostel?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-031",
+   "category": "Hostel",
+   "owner_question": "Is laundry included in the hostel fee, with roll numbers marked on clothes?",
+   "customer_question": "Who washes the clothes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-032",
+   "category": "Hostel",
+   "owner_question": "Is there a 24/7 nurse, sick room and ambulance, and do you call parents at once if a student falls ill?",
+   "customer_question": "What if my child gets fever at night?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-033",
+   "category": "Hostel",
+   "owner_question": "How many students share a room, and are there beds, mosquito nets, hot water and AC or non-AC rooms?",
+   "customer_question": "How many in one room?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-034",
+   "category": "General",
+   "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
+   "customer_question": "Can we see the campus first?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-035",
+   "category": "General",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "school-036",
+   "category": "General",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
