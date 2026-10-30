@@ -1,0 +1,525 @@
+{
+ "shop_type_key": "photography",
+ "name": "Photography & video studio",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 50,
+ "questions": [
+  {
+   "id": "photography-001",
+   "category": "Shoots & services",
+   "owner_question": "Which shoots and services do you do?",
+   "customer_question": "Do you do baby shoots?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Weddings",
+    "Engagement & reception",
+    "Pre-wedding shoots",
+    "Half-saree / dhoti functions",
+    "Birthdays & cake smash",
+    "Newborn & baby shoots",
+    "Maternity shoots",
+    "Seemantham / gruhapravesam",
+    "Corporate & events",
+    "Product / portfolio shoots",
+    "Passport & visa photos",
+    "Old photo restoration & framing"
+   ]
+  },
+  {
+   "id": "photography-002",
+   "category": "Packages & prices",
+   "owner_question": "What does your full wedding package cost, and what does it include?",
+   "customer_question": "How much for the full wedding?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-003",
+   "category": "Albums & delivery",
+   "owner_question": "How many days after the event do you deliver the edited photos, videos and album, and how do you keep customers updated?",
+   "customer_question": "When will we get the album?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-004",
+   "category": "Packages & prices",
+   "owner_question": "What do you charge for a single event (engagement, birthday, half-saree function, gruhapravesam)?",
+   "customer_question": "How much for an engagement?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-005",
+   "category": "Packages & prices",
+   "owner_question": "What is the price for traditional photo + video only, and how much more for candid photography and cinematic video?",
+   "customer_question": "How much extra for candid?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-006",
+   "category": "Packages & prices",
+   "owner_question": "Is album printing included in the package, or charged separately?",
+   "customer_question": "Is the album included?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-007",
+   "category": "Packages & prices",
+   "owner_question": "Why should customers choose you over cheaper photographers?",
+   "customer_question": "Others are cheaper, why you?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-008",
+   "category": "Booking & timings",
+   "owner_question": "How much advance blocks the date, and when is the rest paid (event day, album delivery)?",
+   "customer_question": "How much advance to book the date?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-009",
+   "category": "Booking & timings",
+   "owner_question": "If the event is postponed or cancelled, do you move the date or refund the advance?",
+   "customer_question": "Will you refund if the wedding is postponed?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-010",
+   "category": "Booking & timings",
+   "owner_question": "How many hours does your team stay at an event, and what do you charge if it runs late (muhurtham change, late makeup)?",
+   "customer_question": "What if the wedding gets delayed by 3 hours?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-011",
+   "category": "Team & conduct",
+   "owner_question": "How many cameramen and assistants come to an event?",
+   "customer_question": "How many photographers will come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-012",
+   "category": "Team & conduct",
+   "owner_question": "Does the lead photographer (the same team as in your portfolio) come in person, not outside freelancers?",
+   "customer_question": "Will you come yourself or send someone else?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-013",
+   "category": "Equipment & live",
+   "owner_question": "Which extras can you arrange?",
+   "customer_question": "Do you have a drone?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Drone",
+    "LED walls / screens",
+    "Crane camera (jimmy jib)",
+    "YouTube / Facebook live streaming",
+    "AI face-recognition photo sharing (QR code)",
+    "Instant photo booth / 360 spin booth",
+    "Same-day edit video"
+   ]
+  },
+  {
+   "id": "photography-014",
+   "category": "Pre-wedding",
+   "owner_question": "What does a pre-wedding shoot cost, which locations do you suggest, and who pays location fees?",
+   "customer_question": "Where can we do a pre-wedding shoot?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-015",
+   "category": "Albums & delivery",
+   "owner_question": "When and how do you give the raw photos and videos (hard disk, pen drive, Google Drive)?",
+   "customer_question": "When do we get all the raw photos?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-016",
+   "category": "Albums & delivery",
+   "owner_question": "How many sheets and photos does the album have, and what does an extra sheet cost?",
+   "customer_question": "How many pages in the album?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-017",
+   "category": "Albums & delivery",
+   "owner_question": "Do you show a soft-copy proof of the album design and print only after approval? How many corrections are allowed?",
+   "customer_question": "Can we see the album before printing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-018",
+   "category": "Data & privacy",
+   "owner_question": "Do your cameras record to two memory cards at once, and do you back up the data the same day?",
+   "customer_question": "What if the memory card gets corrupted?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-019",
+   "category": "Data & privacy",
+   "owner_question": "Do you post customers' photos on your social media only with their permission?",
+   "customer_question": "Will you post our wedding photos online?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-020",
+   "category": "Packages & prices",
+   "owner_question": "What discount do you give if you cover both the bride's and groom's side?",
+   "customer_question": "Any discount if you cover both sides?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-021",
+   "category": "Packages & prices",
+   "owner_question": "Do you make a custom package for the customer's budget?",
+   "customer_question": "My budget is ₹50,000, what can you give?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-022",
+   "category": "Packages & prices",
+   "owner_question": "Do you charge per hour or per day as well?",
+   "customer_question": "Can I book you for 3 hours?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-023",
+   "category": "Packages & prices",
+   "owner_question": "Is GST included in your price?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill",
+    "No GST"
+   ]
+  },
+  {
+   "id": "photography-024",
+   "category": "Booking & timings",
+   "owner_question": "Do you cover the morning rituals at home (Gowri puja, snathakam, pellikoduku) in the same package?",
+   "customer_question": "Will you cover the pellikoduku function?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-025",
+   "category": "Team & conduct",
+   "owner_question": "Do you have female photographers for ladies' functions (mehendi, haldi, seemantham)?",
+   "customer_question": "Is there a lady photographer?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-026",
+   "category": "Team & conduct",
+   "owner_question": "Does your team come in a decent uniform and stay patient and polite with relatives?",
+   "customer_question": "Will your team behave well with our relatives?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-027",
+   "category": "Team & conduct",
+   "owner_question": "During the taali and key moments, does your team film without blocking the guests' view?",
+   "customer_question": "Will the video guys block the stage?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-028",
+   "category": "Team & conduct",
+   "owner_question": "For outstation events, what travel, stay and food do you expect for the team?",
+   "customer_question": "Do we pay your travel for an outstation wedding?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-029",
+   "category": "Equipment & live",
+   "owner_question": "Which cameras do you use (full-frame mirrorless?), and do you shoot video in 4K?",
+   "customer_question": "Is the video in 4K?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-030",
+   "category": "Equipment & live",
+   "owner_question": "Who takes drone permission, and is the drone charge reduced if it can't fly (low ceiling)?",
+   "customer_question": "Who gets drone permission?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-031",
+   "category": "Equipment & live",
+   "owner_question": "For live streaming, who arranges the internet?",
+   "customer_question": "Do we give Wi-Fi for the live stream?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-032",
+   "category": "Pre-wedding",
+   "owner_question": "Do you guide shy couples with poses?",
+   "customer_question": "We don't know how to pose, will you help?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-033",
+   "category": "Pre-wedding",
+   "owner_question": "What do you provide for pre-wedding shoots?",
+   "customer_question": "Do you give costumes?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Gowns & costumes",
+    "Makeup & hair artist",
+    "Props (vintage car, smoke bombs, guitar)",
+    "Nothing extra"
+   ]
+  },
+  {
+   "id": "photography-034",
+   "category": "Pre-wedding",
+   "owner_question": "If it rains on the shoot day, do you reschedule free? How many costume changes are allowed?",
+   "customer_question": "What if it rains on the shoot day?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-035",
+   "category": "Baby & maternity",
+   "owner_question": "For newborn shoots, at what age do you shoot, and how do you keep babies safe (no harsh flash, sanitised props and clothes)?",
+   "customer_question": "Is flash safe for my baby's eyes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-036",
+   "category": "Baby & maternity",
+   "owner_question": "How many baby shoot themes do you have?",
+   "customer_question": "How many themes for a baby shoot?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-037",
+   "category": "Baby & maternity",
+   "owner_question": "Do you have a private room for feeding, and wait patiently when the baby is cranky?",
+   "customer_question": "Is there a room to feed the baby?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-038",
+   "category": "Baby & maternity",
+   "owner_question": "For cake smash shoots, do you bring the cake or do parents?",
+   "customer_question": "Do you bring the cake for cake smash?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-039",
+   "category": "Baby & maternity",
+   "owner_question": "Do you have maternity gowns (flying dresses) for the shoot?",
+   "customer_question": "Do you have flying gowns?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-040",
+   "category": "Albums & delivery",
+   "owner_question": "Do you give a few edited photos and a teaser reel within 2–3 days?",
+   "customer_question": "Can we get a reel for Instagram soon?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-041",
+   "category": "Albums & delivery",
+   "owner_question": "Who selects the photos for the album?",
+   "customer_question": "Do we select the photos?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Customer selects",
+    "We select, customer approves",
+    "Either"
+   ]
+  },
+  {
+   "id": "photography-042",
+   "category": "Albums & delivery",
+   "owner_question": "Do you retouch naturally (skin, slimming) without making faces look unnaturally white?",
+   "customer_question": "Will you remove pimples in the photos?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-043",
+   "category": "Albums & delivery",
+   "owner_question": "What album paper and cover options do you have (Karizma, non-tearable, velvet, acrylic), and is there a warranty?",
+   "customer_question": "Which album paper do you use?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-044",
+   "category": "Albums & delivery",
+   "owner_question": "What extras come with the album (mini album, calendar, frames, album bag)?",
+   "customer_question": "Do we get a mini album free?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-045",
+   "category": "Albums & delivery",
+   "owner_question": "Can customers choose the songs for the video, and do you avoid YouTube copyright problems?",
+   "customer_question": "Can we choose the songs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-046",
+   "category": "Data & privacy",
+   "owner_question": "How long do you keep a backup of the photos and videos after delivery?",
+   "customer_question": "Will you keep a copy if we lose our hard disk?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "photography-047",
+   "category": "Studio",
+   "owner_question": "Do you take passport and visa photos (US, Canada and other sizes) in a few minutes?",
+   "customer_question": "Can I get passport photos now?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-048",
+   "category": "Studio",
+   "owner_question": "Do you restore old or torn photos, colour black-and-white photos and frame them?",
+   "customer_question": "Can you fix my grandfather's old photo?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "photography-049",
+   "category": "Studio",
+   "owner_question": "Which languages can your team speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "photography-050",
+   "category": "Studio",
+   "owner_question": "Please share your Instagram, YouTube and Google reviews links so customers can see your work.",
+   "customer_question": "Where can I see your work?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

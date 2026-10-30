@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 53,
+ "question_count": 71,
  "questions": [
   {
    "id": "hotel_stay-001",
@@ -95,13 +95,33 @@
   {
    "id": "hotel_stay-010",
    "category": "Check-in & booking",
-   "owner_question": "What is your cancellation and refund policy (how many days before for a full refund)?",
+   "owner_question": "What is your cancellation and refund policy (how many days before for a full refund), and for guests who leave earlier than booked?",
    "customer_question": "Will I get my advance back if I cancel?",
    "priority": "important",
    "answer_type": "text"
   },
   {
    "id": "hotel_stay-011",
+   "category": "Check-in & booking",
+   "owner_question": "Do you honour online bookings (OYO, MakeMyTrip) at the booked price, and what do you do if rooms are overbooked?",
+   "customer_question": "I booked on MakeMyTrip, will you give the room at that price?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-012",
+   "category": "Check-in & booking",
+   "owner_question": "Do you have C-Form (FRRO) registration to host foreign guests and OCI card holders?",
+   "customer_question": "Do you take foreign passport holders?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-013",
    "category": "ID & rules",
    "owner_question": "Do you give rooms to unmarried couples (both adults with valid ID)?",
    "customer_question": "Do you allow unmarried couples?",
@@ -114,7 +134,7 @@
    ]
   },
   {
-   "id": "hotel_stay-012",
+   "id": "hotel_stay-014",
    "category": "ID & rules",
    "owner_question": "Do you give rooms to guests with a local ID (same city)?",
    "customer_question": "I'm from this city, will you give me a room?",
@@ -127,7 +147,7 @@
    ]
   },
   {
-   "id": "hotel_stay-013",
+   "id": "hotel_stay-015",
    "category": "Room amenities",
    "owner_question": "What is in your rooms?",
    "customer_question": "Is there hot water?",
@@ -148,11 +168,18 @@
     "Iron box",
     "Hair dryer",
     "Safe locker",
-    "Balcony"
+    "Balcony",
+    "Blackout curtains",
+    "Windows that open",
+    "Sockets near the bed & extension boards",
+    "Universal plug adapters",
+    "Anti-skid mat, bucket & mug",
+    "Cloth-drying stand",
+    "Two key cards"
    ]
   },
   {
-   "id": "hotel_stay-014",
+   "id": "hotel_stay-016",
    "category": "Room amenities",
    "owner_question": "Do you have full power backup that runs the AC in a power cut?",
    "customer_question": "Will the AC work if the power goes?",
@@ -164,7 +191,7 @@
    ]
   },
   {
-   "id": "hotel_stay-015",
+   "id": "hotel_stay-017",
    "category": "Family & access",
    "owner_question": "Do you have a lift, or ground-floor rooms for elders?",
    "customer_question": "Is there a lift?",
@@ -176,7 +203,7 @@
    ]
   },
   {
-   "id": "hotel_stay-016",
+   "id": "hotel_stay-018",
    "category": "Food & room service",
    "owner_question": "Is breakfast included in the rent? Buffet or fixed menu, and at what time?",
    "customer_question": "Is breakfast free?",
@@ -184,7 +211,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-017",
+   "id": "hotel_stay-019",
    "category": "Food & room service",
    "owner_question": "Do you have an in-house restaurant?",
    "customer_question": "Is there a restaurant in the hotel?",
@@ -197,7 +224,7 @@
    ]
   },
   {
-   "id": "hotel_stay-018",
+   "id": "hotel_stay-020",
    "category": "Location & travel",
    "owner_question": "How far is the hotel from the railway station, bus stand, airport and main temple or tourist spots? What do autos charge?",
    "customer_question": "How far is the railway station?",
@@ -205,7 +232,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-019",
+   "id": "hotel_stay-021",
    "category": "Facilities",
    "owner_question": "Which facilities do you have?",
    "customer_question": "Is there a swimming pool?",
@@ -223,7 +250,7 @@
    ]
   },
   {
-   "id": "hotel_stay-020",
+   "id": "hotel_stay-022",
    "category": "Hygiene & safety",
    "owner_question": "Are bed sheets, blankets and pillow covers changed for every guest, and rooms kept free of pests (with mosquito repellent)?",
    "customer_question": "Are the bedsheets fresh?",
@@ -235,7 +262,19 @@
    ]
   },
   {
-   "id": "hotel_stay-021",
+   "id": "hotel_stay-023",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you check rooms regularly so there are no hidden cameras?",
+   "customer_question": "Are there hidden cameras in the room?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-024",
    "category": "Hygiene & safety",
    "owner_question": "Do you have CCTV in common areas and a 24-hour security guard / reception (safe for solo women travellers)?",
    "customer_question": "Is it safe for a woman travelling alone?",
@@ -247,7 +286,7 @@
    ]
   },
   {
-   "id": "hotel_stay-022",
+   "id": "hotel_stay-025",
    "category": "Rooms & rates",
    "owner_question": "Do you give long-stay (weekly / monthly) package rates?",
    "customer_question": "Any rate for a one-month stay?",
@@ -255,7 +294,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-023",
+   "id": "hotel_stay-026",
    "category": "Rooms & rates",
    "owner_question": "What discount do you give on bulk bookings (weddings, meetings) and for corporate tie-ups?",
    "customer_question": "Any discount for 20 rooms?",
@@ -263,7 +302,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-024",
+   "id": "hotel_stay-027",
    "category": "Rooms & rates",
    "owner_question": "Do you give rooms for a few hours (short stay to freshen up)? What is the charge?",
    "customer_question": "Can I take a room for 4 hours?",
@@ -271,7 +310,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-025",
+   "id": "hotel_stay-028",
    "category": "Rooms & rates",
    "owner_question": "Do you give a GST invoice with the company name for office claims?",
    "customer_question": "Can I get a GST bill?",
@@ -283,7 +322,7 @@
    ]
   },
   {
-   "id": "hotel_stay-026",
+   "id": "hotel_stay-029",
    "category": "Check-in & booking",
    "owner_question": "Can guests leave luggage at the reception after check-out (cloakroom)?",
    "customer_question": "Can I keep my bags till evening?",
@@ -295,7 +334,7 @@
    ]
   },
   {
-   "id": "hotel_stay-027",
+   "id": "hotel_stay-030",
    "category": "Check-in & booking",
    "owner_question": "Can guests see the room before booking?",
    "customer_question": "Can I see the room first?",
@@ -307,15 +346,51 @@
    ]
   },
   {
-   "id": "hotel_stay-028",
+   "id": "hotel_stay-031",
+   "category": "Check-in & booking",
+   "owner_question": "Can someone book in their own name for another person (for example a parent or friend) to stay? What is needed?",
+   "customer_question": "Can my father stay in a room booked in my name?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-032",
+   "category": "Check-in & booking",
+   "owner_question": "Can guests extend their stay in the same room?",
+   "customer_question": "Can we stay 2 more days?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-033",
+   "category": "Check-in & booking",
+   "owner_question": "Is there a security deposit, and when is it refunded?",
+   "customer_question": "Is there a deposit?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-034",
+   "category": "Check-in & booking",
+   "owner_question": "What do you charge for damages (broken cups, stains on linen, a lost key card)?",
+   "customer_question": "How much fine for a broken glass?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-035",
    "category": "ID & rules",
-   "owner_question": "Can visitors come to the room, or only meet in the lobby? Until what time?",
+   "owner_question": "Can visitors come to the room (for example a beautician for wedding guests), or only meet in the lobby? Until what time?",
    "customer_question": "Can my friends come to my room?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-029",
+   "id": "hotel_stay-036",
    "category": "ID & rules",
    "owner_question": "Is there a time by which guests must come back at night (gate closing time)?",
    "customer_question": "Will the gate close at night?",
@@ -323,7 +398,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-030",
+   "id": "hotel_stay-037",
    "category": "ID & rules",
    "owner_question": "Are smoking and alcohol allowed in the rooms? Do you have smoking rooms?",
    "customer_question": "Can I smoke in the room?",
@@ -331,7 +406,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-031",
+   "id": "hotel_stay-038",
    "category": "ID & rules",
    "owner_question": "Are pets allowed?",
    "customer_question": "Can I bring my dog?",
@@ -343,7 +418,7 @@
    ]
   },
   {
-   "id": "hotel_stay-032",
+   "id": "hotel_stay-039",
    "category": "Room amenities",
    "owner_question": "Which bed types do you have?",
    "customer_question": "Is it one big bed or two beds?",
@@ -353,11 +428,12 @@
     "King / queen double bed",
     "Twin beds",
     "Family rooms (4–6 beds)",
-    "Interconnecting rooms"
+    "Interconnecting rooms",
+    "Firm / orthopaedic mattresses"
    ]
   },
   {
-   "id": "hotel_stay-033",
+   "id": "hotel_stay-040",
    "category": "Room amenities",
    "owner_question": "Do you give free towels and toiletries (soap, shampoo, toothbrush, paste)?",
    "customer_question": "Will you give soap and shampoo?",
@@ -369,7 +445,7 @@
    ]
   },
   {
-   "id": "hotel_stay-034",
+   "id": "hotel_stay-041",
    "category": "Room amenities",
    "owner_question": "Which rooms have a view (beach, hill, temple, city), and is it extra?",
    "customer_question": "Is there a sea view room?",
@@ -377,7 +453,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-035",
+   "id": "hotel_stay-042",
    "category": "Room amenities",
    "owner_question": "How fast is the Wi-Fi for office work?",
    "customer_question": "Is the Wi-Fi good for work calls?",
@@ -385,7 +461,19 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-036",
+   "id": "hotel_stay-043",
+   "category": "Room amenities",
+   "owner_question": "Can guests ask for a quiet room away from the main road?",
+   "customer_question": "Can I get a quiet room?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-044",
    "category": "Family & access",
    "owner_question": "Do you have a wheelchair for guests who need one?",
    "customer_question": "Is there a wheelchair?",
@@ -397,7 +485,7 @@
    ]
   },
   {
-   "id": "hotel_stay-037",
+   "id": "hotel_stay-045",
    "category": "Family & access",
    "owner_question": "Do you have a drivers' dormitory? Is it free or charged?",
    "customer_question": "Where will my driver sleep?",
@@ -405,7 +493,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-038",
+   "id": "hotel_stay-046",
    "category": "Family & access",
    "owner_question": "Will the kitchen warm milk or food for small children?",
    "customer_question": "Can you warm milk for my baby?",
@@ -417,7 +505,7 @@
    ]
   },
   {
-   "id": "hotel_stay-039",
+   "id": "hotel_stay-047",
    "category": "Family & access",
    "owner_question": "Do you have rooms or service apartments with a kitchen?",
    "customer_question": "Is there a room with a kitchen?",
@@ -429,7 +517,7 @@
    ]
   },
   {
-   "id": "hotel_stay-040",
+   "id": "hotel_stay-048",
    "category": "Food & room service",
    "owner_question": "Do you have room service? Until what time can guests order food?",
    "customer_question": "Can I get food in the room at night?",
@@ -437,7 +525,19 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-041",
+   "id": "hotel_stay-049",
+   "category": "Food & room service",
+   "owner_question": "Can the kitchen make satvik / Jain food (no onion, garlic) and bland food for patients?",
+   "customer_question": "Do you have food without onion and garlic?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-050",
    "category": "Food & room service",
    "owner_question": "Can guests bring outside food or order from Swiggy / Zomato to the room?",
    "customer_question": "Can I order from Zomato?",
@@ -449,7 +549,7 @@
    ]
   },
   {
-   "id": "hotel_stay-042",
+   "id": "hotel_stay-051",
    "category": "Location & travel",
    "owner_question": "Do you arrange pick-up and drop from the station or airport? Is it free?",
    "customer_question": "Can you pick us up from the station?",
@@ -457,7 +557,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-043",
+   "id": "hotel_stay-052",
    "category": "Location & travel",
    "owner_question": "Do you have a travel desk for local sightseeing cabs, and bike or car rentals?",
    "customer_question": "Can you arrange a cab for sightseeing?",
@@ -469,7 +569,7 @@
    ]
   },
   {
-   "id": "hotel_stay-044",
+   "id": "hotel_stay-053",
    "category": "Location & travel",
    "owner_question": "Is there space for buses, and an EV charging point?",
    "customer_question": "Can our bus park inside?",
@@ -481,7 +581,80 @@
    ]
   },
   {
-   "id": "hotel_stay-045",
+   "id": "hotel_stay-054",
+   "category": "Pilgrims & special guests",
+   "owner_question": "Can pilgrim groups share a room (6–8 people) with extra mattresses, blankets and pillows? What is the charge?",
+   "customer_question": "Can 8 of us stay in one room?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-055",
+   "category": "Pilgrims & special guests",
+   "owner_question": "Do you help with temple darshan timings and booking official darshan tickets?",
+   "customer_question": "How long does darshan take?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-056",
+   "category": "Pilgrims & special guests",
+   "owner_question": "Do you give wake-up calls and printouts (darshan tickets, boarding passes) at the reception?",
+   "customer_question": "Can you wake us at 3 am?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-057",
+   "category": "Pilgrims & special guests",
+   "owner_question": "Will the reception keep medicines (for example insulin) in its fridge, and guests' phones or laptops safely (for exam candidates)?",
+   "customer_question": "Can you keep my insulin in your fridge?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-058",
+   "category": "Pilgrims & special guests",
+   "owner_question": "Do you help foreign guests with currency exchange?",
+   "customer_question": "Can I change dollars here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "hotel_stay-059",
+   "category": "Pilgrims & special guests",
+   "owner_question": "Will the reception receive and keep guests' parcels (Amazon, Flipkart)?",
+   "customer_question": "Can my parcel come to the hotel?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-060",
+   "category": "Pilgrims & special guests",
+   "owner_question": "Can guests do photoshoots or reels in the lobby or garden (pre-wedding shoots)? Any charge?",
+   "customer_question": "Can we do a photoshoot in the garden?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hotel_stay-061",
    "category": "Facilities",
    "owner_question": "What are the pool timings and rules (swimwear)?",
    "customer_question": "Do I need a costume for the pool?",
@@ -489,7 +662,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-046",
+   "id": "hotel_stay-062",
    "category": "Facilities",
    "owner_question": "Is laundry same-day? How is it charged?",
    "customer_question": "Can you wash my clothes by evening?",
@@ -497,7 +670,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-047",
+   "id": "hotel_stay-063",
    "category": "Facilities",
    "owner_question": "Do you decorate rooms for honeymoons, anniversaries or birthdays (flowers, cake)? What does it cost?",
    "customer_question": "Can you decorate the room for our anniversary?",
@@ -505,7 +678,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-048",
+   "id": "hotel_stay-064",
    "category": "Facilities",
    "owner_question": "What are the hall charges for a small party or meeting, and how many people does it hold?",
    "customer_question": "How much is the conference hall?",
@@ -513,9 +686,9 @@
    "answer_type": "text"
   },
   {
-   "id": "hotel_stay-049",
+   "id": "hotel_stay-065",
    "category": "Hygiene & safety",
-   "owner_question": "Does housekeeping enter the room only with the guest's permission?",
+   "owner_question": "Do rooms have an inside safety latch, and does staff enter only with the guest's permission (never with a master key unasked)?",
    "customer_question": "Will housekeeping enter when I'm out?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -525,7 +698,7 @@
    ]
   },
   {
-   "id": "hotel_stay-050",
+   "id": "hotel_stay-066",
    "category": "Hygiene & safety",
    "owner_question": "If something doesn't work (AC, drainage, noise), do you change the room right away?",
    "customer_question": "The AC isn't cooling, can you change my room?",
@@ -537,7 +710,7 @@
    ]
   },
   {
-   "id": "hotel_stay-051",
+   "id": "hotel_stay-067",
    "category": "Hygiene & safety",
    "owner_question": "Can you call a doctor at night if a guest falls sick?",
    "customer_question": "Can you call a doctor?",
@@ -549,7 +722,31 @@
    ]
   },
   {
-   "id": "hotel_stay-052",
+   "id": "hotel_stay-068",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you have fire safety (extinguishers, smoke detectors, emergency exits)?",
+   "customer_question": "Is there a fire exit?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-069",
+   "category": "Hygiene & safety",
+   "owner_question": "If guests forget things in the room, do you courier them home?",
+   "customer_question": "I left my watch in the room, can you send it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hotel_stay-070",
    "category": "Hotel & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -565,7 +762,7 @@
    ]
   },
   {
-   "id": "hotel_stay-053",
+   "id": "hotel_stay-071",
    "category": "Hotel & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Where can I see your reviews?",
