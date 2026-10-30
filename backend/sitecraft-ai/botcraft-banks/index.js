@@ -3,6 +3,7 @@ import bank_agri_inputs from "./agri_inputs.json" with { type: "json" };
 import bank_appliance_repair from "./appliance_repair.json" with { type: "json" };
 import bank_appliances_showroom from "./appliances_showroom.json" with { type: "json" };
 import bank_aqua_needs from "./aqua_needs.json" with { type: "json" };
+import bank_arts_academy from "./arts_academy.json" with { type: "json" };
 import bank_ayush_clinic from "./ayush_clinic.json" with { type: "json" };
 import bank_bakery from "./bakery.json" with { type: "json" };
 import bank_bakery_sweets from "./bakery_sweets.json" with { type: "json" };
@@ -17,6 +18,7 @@ import bank_catering from "./catering.json" with { type: "json" };
 import bank_chicken_shop from "./chicken_shop.json" with { type: "json" };
 import bank_chit_fund from "./chit_fund.json" with { type: "json" };
 import bank_clinic from "./clinic.json" with { type: "json" };
+import bank_college from "./college.json" with { type: "json" };
 import bank_competitive_coaching from "./competitive_coaching.json" with { type: "json" };
 import bank_computer_shop from "./computer_shop.json" with { type: "json" };
 import bank_dental_clinic from "./dental_clinic.json" with { type: "json" };
@@ -41,6 +43,7 @@ import bank_imitation_jewellery from "./imitation_jewellery.json" with { type: "
 import bank_insurance_investment from "./insurance_investment.json" with { type: "json" };
 import bank_interior_designer from "./interior_designer.json" with { type: "json" };
 import bank_jewellery from "./jewellery.json" with { type: "json" };
+import bank_junior_college from "./junior_college.json" with { type: "json" };
 import bank_kids_wear from "./kids_wear.json" with { type: "json" };
 import bank_kirana from "./kirana.json" with { type: "json" };
 import bank_kitchen_rental from "./kitchen_rental.json" with { type: "json" };
@@ -50,11 +53,13 @@ import bank_mobile_repair from "./mobile_repair.json" with { type: "json" };
 import bank_mobile_shop from "./mobile_shop.json" with { type: "json" };
 import bank_mobile_shop_repair from "./mobile_shop_repair.json" with { type: "json" };
 import bank_mutton_shop from "./mutton_shop.json" with { type: "json" };
+import bank_open_distance from "./open_distance.json" with { type: "json" };
 import bank_optical from "./optical.json" with { type: "json" };
 import bank_pet_shop from "./pet_shop.json" with { type: "json" };
 import bank_pharmacy from "./pharmacy.json" with { type: "json" };
 import bank_photography from "./photography.json" with { type: "json" };
 import bank_physiotherapy from "./physiotherapy.json" with { type: "json" };
+import bank_play_school from "./play_school.json" with { type: "json" };
 import bank_plywood_glass from "./plywood_glass.json" with { type: "json" };
 import bank_poultry_needs from "./poultry_needs.json" with { type: "json" };
 import bank_readymade_garments from "./readymade_garments.json" with { type: "json" };
@@ -62,11 +67,14 @@ import bank_real_estate from "./real_estate.json" with { type: "json" };
 import bank_restaurant from "./restaurant.json" with { type: "json" };
 import bank_salon from "./salon.json" with { type: "json" };
 import bank_saree_textiles from "./saree_textiles.json" with { type: "json" };
+import bank_school from "./school.json" with { type: "json" };
 import bank_self_drive_rental from "./self_drive_rental.json" with { type: "json" };
 import bank_self_drive_travels from "./self_drive_travels.json" with { type: "json" };
 import bank_skill_institute from "./skill_institute.json" with { type: "json" };
 import bank_skin_hair_clinic from "./skin_hair_clinic.json" with { type: "json" };
 import bank_spa from "./spa.json" with { type: "json" };
+import bank_sports_academy from "./sports_academy.json" with { type: "json" };
+import bank_study_abroad from "./study_abroad.json" with { type: "json" };
 import bank_supermarket from "./supermarket.json" with { type: "json" };
 import bank_sweet_shop from "./sweet_shop.json" with { type: "json" };
 import bank_tailor_shop from "./tailor_shop.json" with { type: "json" };
@@ -82,6 +90,7 @@ export const QUESTION_BANKS = {
   "appliance_repair": bank_appliance_repair,
   "appliances_showroom": bank_appliances_showroom,
   "aqua_needs": bank_aqua_needs,
+  "arts_academy": bank_arts_academy,
   "ayush_clinic": bank_ayush_clinic,
   "bakery": bank_bakery,
   "bakery_sweets": bank_bakery_sweets,
@@ -96,6 +105,7 @@ export const QUESTION_BANKS = {
   "chicken_shop": bank_chicken_shop,
   "chit_fund": bank_chit_fund,
   "clinic": bank_clinic,
+  "college": bank_college,
   "competitive_coaching": bank_competitive_coaching,
   "computer_shop": bank_computer_shop,
   "dental_clinic": bank_dental_clinic,
@@ -120,6 +130,7 @@ export const QUESTION_BANKS = {
   "insurance_investment": bank_insurance_investment,
   "interior_designer": bank_interior_designer,
   "jewellery": bank_jewellery,
+  "junior_college": bank_junior_college,
   "kids_wear": bank_kids_wear,
   "kirana": bank_kirana,
   "kitchen_rental": bank_kitchen_rental,
@@ -129,11 +140,13 @@ export const QUESTION_BANKS = {
   "mobile_shop": bank_mobile_shop,
   "mobile_shop_repair": bank_mobile_shop_repair,
   "mutton_shop": bank_mutton_shop,
+  "open_distance": bank_open_distance,
   "optical": bank_optical,
   "pet_shop": bank_pet_shop,
   "pharmacy": bank_pharmacy,
   "photography": bank_photography,
   "physiotherapy": bank_physiotherapy,
+  "play_school": bank_play_school,
   "plywood_glass": bank_plywood_glass,
   "poultry_needs": bank_poultry_needs,
   "readymade_garments": bank_readymade_garments,
@@ -141,11 +154,14 @@ export const QUESTION_BANKS = {
   "restaurant": bank_restaurant,
   "salon": bank_salon,
   "saree_textiles": bank_saree_textiles,
+  "school": bank_school,
   "self_drive_rental": bank_self_drive_rental,
   "self_drive_travels": bank_self_drive_travels,
   "skill_institute": bank_skill_institute,
   "skin_hair_clinic": bank_skin_hair_clinic,
   "spa": bank_spa,
+  "sports_academy": bank_sports_academy,
+  "study_abroad": bank_study_abroad,
   "supermarket": bank_supermarket,
   "sweet_shop": bank_sweet_shop,
   "tailor_shop": bank_tailor_shop,

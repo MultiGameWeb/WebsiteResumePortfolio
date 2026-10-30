@@ -1,0 +1,85 @@
+{
+ "shop_type_key": "open_distance",
+ "name": "Open school & distance education centre",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 7,
+ "questions": [
+  {
+   "id": "open_distance-001",
+   "category": "Open & distance",
+   "owner_question": "Which programmes do you help with?",
+   "customer_question": "Can I do open 10th?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Open 10th (NIOS / APOSS / TOSS)",
+    "Open Inter",
+    "Distance degree (BA, B.Com, B.Sc)",
+    "Distance MBA / MCA",
+    "Online degrees"
+   ]
+  },
+  {
+   "id": "open_distance-002",
+   "category": "Open & distance",
+   "owner_question": "How long does open 10th or Inter take, and when are the exams?",
+   "customer_question": "Can I finish 10th in one year?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "open_distance-003",
+   "category": "Open & distance",
+   "owner_question": "Which universities or boards do you work with (for example NIOS, IGNOU, Ambedkar Open University), what approvals do they have (UGC-DEB), and are the certificates valid for jobs and higher studies?",
+   "customer_question": "Is open Inter valid for a police job?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "open_distance-004",
+   "category": "Open & distance",
+   "owner_question": "What are the total fees, and what does your centre charge for its help?",
+   "customer_question": "What is the full cost?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "open_distance-005",
+   "category": "General",
+   "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
+   "customer_question": "Can we see the campus first?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "open_distance-006",
+   "category": "General",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "open_distance-007",
+   "category": "General",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

@@ -1,0 +1,115 @@
+{
+ "shop_type_key": "study_abroad",
+ "name": "Study abroad consultancy",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 9,
+ "questions": [
+  {
+   "id": "study_abroad-001",
+   "category": "Study abroad",
+   "owner_question": "Which countries and courses do you help with?",
+   "customer_question": "Do you help with MS in USA?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "USA",
+    "UK",
+    "Canada",
+    "Australia",
+    "Germany",
+    "Ireland",
+    "New Zealand",
+    "MBBS abroad"
+   ]
+  },
+  {
+   "id": "study_abroad-002",
+   "category": "Study abroad",
+   "owner_question": "What is your processing fee? Is it free for some universities?",
+   "customer_question": "What is your processing fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "study_abroad-003",
+   "category": "Study abroad",
+   "owner_question": "Which services do you give?",
+   "customer_question": "Do you help with the SOP?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "University shortlisting",
+    "SOP & LOR help",
+    "Applications",
+    "Visa slot booking",
+    "Mock visa interviews",
+    "Education loan help",
+    "Forex & travel",
+    "Accommodation help",
+    "IELTS / PTE coaching"
+   ]
+  },
+  {
+   "id": "study_abroad-004",
+   "category": "Study abroad",
+   "owner_question": "If the visa is refused, what part of your fee is refunded?",
+   "customer_question": "What if my visa is rejected?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "study_abroad-005",
+   "category": "Study abroad",
+   "owner_question": "Which options do you suggest for students with low marks, backlogs, or without IELTS (MOI letter)?",
+   "customer_question": "I have 10 backlogs, can I still go to UK?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "study_abroad-006",
+   "category": "Study abroad",
+   "owner_question": "For MBBS abroad: total cost, which universities meet NMC rules, and do you help with FMGE / NExT coaching?",
+   "customer_question": "Can I get MBBS in Georgia under 25 lakhs?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "study_abroad-007",
+   "category": "General",
+   "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
+   "customer_question": "Can we see the campus first?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "study_abroad-008",
+   "category": "General",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "study_abroad-009",
+   "category": "General",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

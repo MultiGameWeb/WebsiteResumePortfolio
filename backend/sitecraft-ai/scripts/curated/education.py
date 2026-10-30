@@ -15,8 +15,10 @@ import json, os, datetime
 YN = ["Yes", "No"]
 Q = [
  # category, priority, answer_type, owner question, how a customer asks, options, tags
- ("Classes & courses", "M", "list", "Which classes and subjects do you teach?", "Do you take tuition for 9th class maths?", ["Classes 1–5", "Classes 6–8", "Classes 9–10", "Intermediate (MPC / BiPC / CEC)", "Maths", "Science (Physics, Chemistry, Biology)", "English", "Hindi", "Telugu", "Sanskrit", "Social", "Abacus / Vedic maths", "Olympiad / NTSE", "Navodaya / Sainik school entrance"], "T"),
- ("Classes & courses", "M", "list", "Which exams do you coach for?", "Do you have NEET coaching?", ["IIT-JEE", "NEET", "EAMCET / EAPCET", "Police / SI", "DSC / TET", "Groups (APPSC / TSPSC)", "Bank exams", "SSC", "Railways", "Civil services"], "X"),
+ ("Classes & courses", "M", "list", "Which classes and subjects do you teach?", "Do you take tuition for 9th class maths?", ["Classes 1–5", "Classes 6–8", "Classes 9–10", "Intermediate (MPC / BiPC / CEC)", "Maths", "Science (Physics, Chemistry, Biology)", "English", "Hindi", "Telugu", "Sanskrit", "Social", "Abacus / Vedic maths", "Handwriting (cursive)", "Chess / drawing", "Olympiad / NTSE", "Navodaya / Sainik school entrance"], "T"),
+ ("Classes & courses", "O", "text", "For abacus, how many levels are there, how long is each, and is the kit included?", "How many abacus levels are there?", [], "T"),
+ ("Classes & courses", "O", "text", "Do you run a summer camp (spoken English, crafts, dance, computers)? What is the fee?", "Is there a summer camp?", [], "TS"),
+ ("Classes & courses", "M", "list", "Which exams do you coach for?", "Do you have NEET coaching?", ["IIT-JEE", "NEET", "EAMCET / EAPCET", "Police / SI", "DSC / TET", "Groups (APPSC / TSPSC)", "Bank exams", "SSC", "Railways", "Civil services", "IELTS / PTE / TOEFL / GRE"], "X"),
  ("Classes & courses", "M", "list", "Which courses do you teach?", "Do you have a spoken English course?", ["Spoken English", "Basic computers & MS Office", "Tally / GST accounting", "DTP / Photoshop", "Coding (Python, Java, web)", "Digital marketing", "Data analytics", "Typing", "Hardware & networking", "Communication & interview skills"], "S"),
 
  ("Fees & discounts", "M", "text", "What are your fees (monthly, yearly or full course) for each class or course?", "How much is the fee?", [], "TXS"),
@@ -84,7 +86,8 @@ Q = [
 
  ("Competitive exams", "I", "text", "How long do classes run: till the course is complete, or till the exam notification?", "Till when are the classes?", [], "X"),
  ("Competitive exams", "O", "text", "Once the fee is paid, can students repeat batches until they get selected (validity)?", "Can I attend the next batch free?", [], "X"),
- ("Competitive exams", "O", "text", "Do you have a study hall or library (reading room)? What hours, and is there a separate fee?", "Is there a reading room?", [], "X"),
+ ("Competitive exams", "O", "text", "For IELTS / PTE, do you give mock tests, one-on-one speaking practice and help (or a voucher) for exam booking?", "Do you have IELTS mock tests?", [], "X"),
+ ("Competitive exams", "O", "text", "Do you have a study hall or reading room? Monthly fee, hours, a fixed cabin with locker and plug point, and a separate row for girls?", "Is there a reading room?", [], "X"),
  ("Competitive exams", "O", "yes_no", "Do you have a computer lab for online (CBT) test practice?", "Is there CBT practice?", YN, "X"),
  ("Competitive exams", "O", "yes_no", "Do you practise OMR sheets, shortcut tricks for arithmetic and reasoning, and how to avoid negative marks?", "Do you give OMR practice?", YN, "X"),
  ("Competitive exams", "O", "yes_no", "Do you give a daily or monthly current affairs magazine or PDF?", "Do you give current affairs material?", YN, "X"),
