@@ -100,3 +100,6 @@ html, body { margin: 0; height: 100%; background: var(--page); color: var(--text
 .my-state-ready { background: #1f7a4d; border-color: #1f7a4d; color: #fff; }
 .my-reply { background: var(--surface); border-radius: 10px; padding: 8px 10px; white-space: pre-wrap; }
 .my-text { color: var(--soft); white-space: pre-wrap; }
+
+.notify-button { display: block; width: 100%; margin: 4px 0 10px; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: inherit; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.notify-button[hidden] { display: none; }

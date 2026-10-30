@@ -108,6 +108,24 @@ const SCHEMA = [
     shop_id TEXT PRIMARY KEY,
     settings_json TEXT NOT NULL DEFAULT '{}',
     updated_at TEXT NOT NULL
+  )`,
+  // Web Push subscriptions: the owner's devices (role owner) and customers
+  // waiting for the shop's reply to one of their requests (role customer).
+  `CREATE TABLE IF NOT EXISTS botcraft_push_subs (
+    endpoint TEXT NOT NULL,
+    shop_id TEXT NOT NULL,
+    role TEXT NOT NULL,
+    request_id TEXT NOT NULL DEFAULT '',
+    p256dh TEXT NOT NULL,
+    auth TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    PRIMARY KEY (endpoint, shop_id, role, request_id)
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_botcraft_push_shop ON botcraft_push_subs(shop_id, role, request_id)`,
+  // Server keys made once by the Worker (the VAPID key pair for Web Push).
+  `CREATE TABLE IF NOT EXISTS botcraft_keys (
+    name TEXT PRIMARY KEY,
+    value TEXT NOT NULL
   )`
 ];
 
@@ -323,17 +341,20 @@ const questionKey = text => String(text).toLowerCase().replace(/[^\p{L}\p{N}]+/g
 
 // A customer question the bot could not answer; asking again counts it again
 // and reopens it if the owner had dismissed it.
+// Returns true for a question asked for the first time.
 export async function logUnanswered(env, shopId, question, product = "") {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   const key = questionKey(question);
-  if (!key) return;
+  if (!key) return false;
   const now = new Date().toISOString();
-  await db.prepare(
+  const row = await db.prepare(
     "INSERT INTO botcraft_customer_questions (shop_id, q_key, question, product, first_at, last_at) VALUES (?, ?, ?, ?, ?, ?) " +
     "ON CONFLICT(shop_id, q_key) DO UPDATE SET times = times + 1, last_at = excluded.last_at, product = excluded.product, " +
-    "status = CASE WHEN botcraft_customer_questions.status = 'dismissed' THEN 'open' ELSE botcraft_customer_questions.status END"
-  ).bind(shopId, key, question, product, now, now).run();
+    "status = CASE WHEN botcraft_customer_questions.status = 'dismissed' THEN 'open' ELSE botcraft_customer_questions.status END " +
+    "RETURNING times"
+  ).bind(shopId, key, question, product, now, now).first();
+  return row?.times === 1;
 }
 
 export async function listCustomerQuestions(env, shopId, status) {
@@ -392,7 +413,8 @@ async function pruneRequests(db, shopId) {
   const old = "shop_id = ? AND updated_at < ? AND status IN ('done', 'rejected', 'delivered')";
   await db.batch([
     db.prepare(`DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE ${old})`).bind(shopId, shopId, cutoff),
-    db.prepare(`DELETE FROM botcraft_requests WHERE ${old}`).bind(shopId, cutoff)
+    db.prepare(`DELETE FROM botcraft_requests WHERE ${old}`).bind(shopId, cutoff),
+    db.prepare("DELETE FROM botcraft_push_subs WHERE shop_id = ? AND role = 'customer' AND request_id NOT IN (SELECT request_id FROM botcraft_requests WHERE shop_id = ?)").bind(shopId, shopId)
   ]);
 }
 
@@ -464,7 +486,8 @@ export async function deleteRequest(env, shopId, requestId) {
   await ensureSchema(db);
   await db.batch([
     db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE shop_id = ? AND request_id = ?)").bind(shopId, shopId, requestId),
-    db.prepare("DELETE FROM botcraft_requests WHERE shop_id = ? AND request_id = ?").bind(shopId, requestId)
+    db.prepare("DELETE FROM botcraft_requests WHERE shop_id = ? AND request_id = ?").bind(shopId, requestId),
+    db.prepare("DELETE FROM botcraft_push_subs WHERE shop_id = ? AND role = 'customer' AND request_id = ?").bind(shopId, requestId)
   ]);
 }
 
@@ -498,4 +521,64 @@ export async function findOrder(env, shopId, code) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   return db.prepare("SELECT code, status, reply, updated_at FROM botcraft_requests WHERE shop_id = ? AND kind = 'order' AND code = ?").bind(shopId, orderCode(code)).first();
+}
+
+// ---- Web Push ----
+
+const MAX_OWNER_DEVICES = 10;
+
+// Saves a browser's push subscription for the owner (requestIds empty) or for
+// a customer's requests. Old owner devices beyond the limit are dropped.
+export async function savePushSubscription(env, shopId, role, subscription, requestIds = []) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const now = new Date().toISOString();
+  const ids = role === "owner" ? [""] : requestIds;
+  const sql = "INSERT INTO botcraft_push_subs (endpoint, shop_id, role, request_id, p256dh, auth, created_at) VALUES (?, ?, ?, ?, ?, ?, ?) " +
+    "ON CONFLICT(endpoint, shop_id, role, request_id) DO UPDATE SET p256dh = excluded.p256dh, auth = excluded.auth";
+  const statements = ids.map(id => db.prepare(sql).bind(subscription.endpoint, shopId, role, id, subscription.p256dh, subscription.auth, now));
+  if (role === "owner") {
+    statements.push(db.prepare(
+      "DELETE FROM botcraft_push_subs WHERE shop_id = ? AND role = 'owner' AND endpoint NOT IN " +
+      "(SELECT endpoint FROM botcraft_push_subs WHERE shop_id = ? AND role = 'owner' ORDER BY created_at DESC LIMIT ?)"
+    ).bind(shopId, shopId, MAX_OWNER_DEVICES));
+  }
+  if (statements.length) await db.batch(statements);
+}
+
+// Removes a subscription: everywhere, or only for one shop and role.
+export async function deletePushSubscription(env, endpoint, shopId = null, role = null) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  if (shopId) await db.prepare("DELETE FROM botcraft_push_subs WHERE endpoint = ? AND shop_id = ? AND role = ?").bind(endpoint, shopId, role).run();
+  else await db.prepare("DELETE FROM botcraft_push_subs WHERE endpoint = ?").bind(endpoint).run();
+}
+
+export async function listPushSubscriptions(env, shopId, role, requestId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const rows = await db.prepare("SELECT endpoint, p256dh, auth FROM botcraft_push_subs WHERE shop_id = ? AND role = ? AND request_id = ?")
+    .bind(shopId, role, requestId).all();
+  return rows.results || [];
+}
+
+let vapidKeys = null;
+
+// The VAPID key pair, made the first time it is needed.
+export async function loadVapidKeys(env) {
+  if (vapidKeys) return vapidKeys;
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  let row = await db.prepare("SELECT value FROM botcraft_keys WHERE name = 'vapid'").first();
+  if (!row) {
+    const pair = await crypto.subtle.generateKey({ name: "ECDSA", namedCurve: "P-256" }, true, ["sign", "verify"]);
+    const raw = new Uint8Array(await crypto.subtle.exportKey("raw", pair.publicKey));
+    const publicKey = btoa(String.fromCharCode(...raw)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    const privateJwk = await crypto.subtle.exportKey("jwk", pair.privateKey);
+    // Two isolates may race here; the first key saved wins.
+    await db.prepare("INSERT OR IGNORE INTO botcraft_keys (name, value) VALUES ('vapid', ?)").bind(JSON.stringify({ publicKey, privateJwk })).run();
+    row = await db.prepare("SELECT value FROM botcraft_keys WHERE name = 'vapid'").first();
+  }
+  vapidKeys = JSON.parse(row.value);
+  return vapidKeys;
 }

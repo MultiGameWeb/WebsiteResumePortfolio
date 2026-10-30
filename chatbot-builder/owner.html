@@ -37,10 +37,18 @@
             <li>Customer questions: answer the questions your bot could not answer. From then on the bot uses your answer.</li>
             <li>Customer requests: photos and pre-orders customers send from the Requests tab of your bot. Accept, mark ready or reply — the customer sees it in the bot.</li>
             <li>Order status: add each order by its bill number and update it (received → ready → delivered). Customers check it in the bot.</li>
+            <li>Notifications: tap "Turn on notifications" to get an alert on this phone for new customer questions and requests.</li>
             <li>Offers, timings or any other detail: tell BotCraft in the setup chat (for example "Sunday also open").</li>
           </ol>
         </details>
         <p class="muted">💡 The more detail you give (prices, sizes, materials, policies), the more detailed answers your customers get.</p>
+      </section>
+
+      <section class="card" id="notifyCard" hidden>
+        <h2>🔔 Notifications</h2>
+        <p class="muted">Get a notification on this phone when a customer asks something your bot cannot answer, or sends a photo or pre-order.</p>
+        <div class="row"><button class="btn" type="button" id="notifyButton">Turn on notifications</button></div>
+        <p class="muted" id="notifyNote" role="status"></p>
       </section>
 
       <section class="card" id="questions">
@@ -141,6 +149,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=4"></script>
+  <script type="module" src="./owner.js?v=5"></script>
 </body>
 </html>

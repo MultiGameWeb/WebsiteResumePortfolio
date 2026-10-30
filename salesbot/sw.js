@@ -1,8 +1,8 @@
 // Keeps the shop assistant page installable and quick to open. Pages and scripts
 // come from the network first (so updates show at once), with the cached copy
 // as a fallback; API calls are never cached.
-const CACHE = 'salesbot-v5';
-const SHELL = ['./', './index.html', './styles.css?v=5', './app.js?v=5', './manifest.webmanifest', './icon.svg'];
+const CACHE = 'salesbot-v6';
+const SHELL = ['./', './index.html', './styles.css?v=6', './app.js?v=6', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -26,4 +26,26 @@ self.addEventListener('fetch', (event) => {
       return response;
     })
     .catch(() => caches.match(event.request, { ignoreSearch: url.pathname.endsWith('/') || url.pathname.endsWith('index.html') })));
+});
+
+// The shop's reply or a new status for the customer's request.
+self.addEventListener('push', (event) => {
+  let data = {};
+  try { data = event.data ? event.data.json() : {}; } catch {}
+  event.waitUntil(self.registration.showNotification(data.title || 'Shop update', {
+    body: data.body || 'The shop replied to your request.',
+    icon: './icon.svg',
+    tag: data.tag || 'salesbot',
+    data: { url: data.url || './' },
+  }));
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = new URL(event.notification.data?.url || './', self.registration.scope).href;
+  event.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windows) => {
+    const open = windows.find((client) => client.url.split('#')[0] === url.split('#')[0]);
+    if (open) return open.focus().then((client) => client.navigate?.(url) || client);
+    return self.clients.openWindow(url);
+  }));
 });

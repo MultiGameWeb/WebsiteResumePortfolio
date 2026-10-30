@@ -381,6 +381,85 @@ $('#botNameForm').addEventListener('submit', (event) => {
   call('set_bot_name', { name: $('#botNameInput').value.trim() });
 });
 
+// ---- Notifications (Web Push) for new customer questions and requests. ----
+
+const NOTIFY_KEY = 'botcraft:notify';
+const pushSupported = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+const notifyButton = $('#notifyButton');
+const notifyNote = $('#notifyNote');
+
+function keyBytes(text) {
+  const plain = text.replace(/-/g, '+').replace(/_/g, '/');
+  return Uint8Array.from(atob(plain + '='.repeat((4 - (plain.length % 4)) % 4)), (c) => c.charCodeAt(0));
+}
+
+function notifyOn() {
+  try { return localStorage.getItem(NOTIFY_KEY) === shopId; } catch { return false; }
+}
+
+function renderNotify() {
+  $('#notifyCard').hidden = !pushSupported || !shopId;
+  if (!pushSupported) return;
+  const on = notifyOn() && Notification.permission === 'granted';
+  notifyButton.textContent = on ? 'Turn off notifications' : 'Turn on notifications';
+  notifyButton.className = on ? 'btn btn-light' : 'btn';
+  if (Notification.permission === 'denied') notifyNote.textContent = 'Notifications are blocked for this site. Allow them in your browser settings, then try again.';
+  else if (on) notifyNote.textContent = 'Notifications are on for this phone ✓';
+}
+
+async function pushCall(action, subscription) {
+  const response = await fetch(`${API_BASE}/api/botcraft/push`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, role: 'owner', shopId, subscription: subscription.toJSON() }),
+  });
+  const data = await response.json();
+  if (!response.ok || !data.ok) throw new Error(data.error || 'Could not save. Please try again.');
+}
+
+async function turnOnNotify() {
+  if (await Notification.requestPermission() !== 'granted') { renderNotify(); return; }
+  const registration = await navigator.serviceWorker.register('./owner-sw.js');
+  await navigator.serviceWorker.ready;
+  let subscription = await registration.pushManager.getSubscription();
+  if (!subscription) {
+    const response = await fetch(`${API_BASE}/api/botcraft/push`);
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || 'Notifications are not available right now.');
+    subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes(data.publicKey) });
+  }
+  await pushCall('subscribe', subscription);
+  try { localStorage.setItem(NOTIFY_KEY, shopId); } catch {}
+}
+
+async function turnOffNotify() {
+  const registration = await navigator.serviceWorker.getRegistration('./');
+  const subscription = await registration?.pushManager.getSubscription();
+  if (subscription) {
+    await pushCall('unsubscribe', subscription);
+    await subscription.unsubscribe();
+  }
+  try { localStorage.removeItem(NOTIFY_KEY); } catch {}
+  notifyNote.textContent = 'Notifications are off.';
+}
+
+notifyButton.addEventListener('click', async () => {
+  notifyButton.disabled = true;
+  notifyNote.textContent = '';
+  try {
+    if (notifyOn() && Notification.permission === 'granted') await turnOffNotify();
+    else await turnOnNotify();
+  } catch (error) {
+    notifyNote.textContent = error.message || 'Could not change notifications. Please try again.';
+  } finally {
+    notifyButton.disabled = false;
+    renderNotify();
+  }
+});
+
+if (pushSupported) navigator.serviceWorker.register('./owner-sw.js').catch(() => {});
+renderNotify();
+
 if (!shopId) showStatus('No bot found in this browser. Create your bot in the setup chat first.');
 else {
   call('load');
