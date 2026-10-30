@@ -1,0 +1,546 @@
+{
+ "shop_type_key": "pet_shop",
+ "name": "Pet shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 44,
+ "questions": [
+  {
+   "id": "pet_shop-001",
+   "category": "Pets for sale",
+   "owner_question": "Which pets do you sell?",
+   "customer_question": "Do you have puppies?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Puppies",
+    "Kittens",
+    "Birds",
+    "Aquarium fish",
+    "Rabbits & guinea pigs",
+    "Hamsters",
+    "Turtles (legal species only)",
+    "No pets, only food & accessories"
+   ]
+  },
+  {
+   "id": "pet_shop-002",
+   "category": "Food & supplements",
+   "owner_question": "Which pet food brands do you sell?",
+   "customer_question": "Do you have Royal Canin?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Pedigree",
+    "Royal Canin",
+    "Drools",
+    "Farmina",
+    "Purepet",
+    "Kennel Kitchen",
+    "Whiskas",
+    "Me-O",
+    "Sheba",
+    "Veg dog food",
+    "Fish food",
+    "Bird seed",
+    "Rabbit & hamster food"
+   ]
+  },
+  {
+   "id": "pet_shop-003",
+   "category": "Pets for sale",
+   "owner_question": "Which dog breeds do you usually have?",
+   "customer_question": "Do you have a Shih Tzu?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Labrador",
+    "Golden Retriever",
+    "German Shepherd",
+    "Beagle",
+    "Shih Tzu",
+    "Pug",
+    "Pomeranian",
+    "Rottweiler",
+    "Doberman",
+    "Husky",
+    "Indian breeds (Indie, Rajapalayam, Mudhol)"
+   ]
+  },
+  {
+   "id": "pet_shop-004",
+   "category": "Pets for sale",
+   "owner_question": "Do you sell only birds and animals that are legal to keep, and never Indian parrots, star tortoises or other protected wildlife?",
+   "customer_question": "Can I buy a green parrot here?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-005",
+   "category": "Pets for sale",
+   "owner_question": "Is your shop registered with the State Animal Welfare Board for selling pets?",
+   "customer_question": "Is your pet shop registered?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-006",
+   "category": "Pets for sale",
+   "owner_question": "How do your staff help customers choose a pet for their home (flat size, kids and elders, time alone, shedding, barking, hot weather)?",
+   "customer_question": "Which puppy suits a small flat?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-007",
+   "category": "Pets for sale",
+   "owner_question": "What are the price ranges of your puppies and kittens, and why do male and female prices differ?",
+   "customer_question": "How much is a Labrador puppy?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-008",
+   "category": "Pets for sale",
+   "owner_question": "Where do your puppies and kittens come from? Can customers see the parents, or their photos and videos?",
+   "customer_question": "Can I see the puppy's parents?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-009",
+   "category": "Pets for sale",
+   "owner_question": "Do puppies come with KCI registration papers and a microchip?",
+   "customer_question": "Does the puppy have KCI papers?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-010",
+   "category": "Pets for sale",
+   "owner_question": "At what age do you sell puppies and kittens (weaned, at least 8 weeks old)?",
+   "customer_question": "How old is this puppy?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-011",
+   "category": "Pets for sale",
+   "owner_question": "If a pet falls sick in the first few days (for example parvo), do you replace it or refund? What proof do you need?",
+   "customer_question": "What if the puppy gets sick after I take it home?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-012",
+   "category": "Health & vet",
+   "owner_question": "Are your puppies and kittens given their first vaccination and deworming before sale, with a vaccination card?",
+   "customer_question": "Is the puppy vaccinated?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-013",
+   "category": "Health & vet",
+   "owner_question": "Is a vet available?",
+   "customer_question": "Is there a vet at your shop?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Vet at the shop",
+    "Vet visits on fixed days",
+    "We refer a nearby vet",
+    "No vet"
+   ]
+  },
+  {
+   "id": "pet_shop-014",
+   "category": "Food & supplements",
+   "owner_question": "Do you give a feeding chart (what, how much, how often) with every pet?",
+   "customer_question": "How much should I feed the puppy?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-015",
+   "category": "Food & supplements",
+   "owner_question": "Which supplements and treats do you sell?",
+   "customer_question": "Do you have salmon oil?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Appetite / liver tonics",
+    "Salmon oil (skin & coat)",
+    "Multivitamins",
+    "Calcium bones & treats",
+    "Dental chews",
+    "Puppy milk replacer"
+   ]
+  },
+  {
+   "id": "pet_shop-016",
+   "category": "Food & supplements",
+   "owner_question": "How fresh is your pet food stock (expiry dates), and what discount do you give on bulk or big packs?",
+   "customer_question": "Any discount on 3 bags?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-017",
+   "category": "Hygiene & training",
+   "owner_question": "Which hygiene products do you sell?",
+   "customer_question": "Do you have cat litter?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Potty training sprays & pads",
+    "Cat litter & litter boxes",
+    "Dog diapers (heat cycle)",
+    "Odour cleaners & room fresheners",
+    "Dry shampoo & wipes",
+    "Lint rollers / hair removers",
+    "Poop scoopers & bags"
+   ]
+  },
+  {
+   "id": "pet_shop-018",
+   "category": "Hygiene & training",
+   "owner_question": "Which tick and flea products do you sell?",
+   "customer_question": "Do you have tick medicine?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Tick shampoo",
+    "Tick powder",
+    "Spot-on drops",
+    "Tick collars",
+    "Home tick spray"
+   ]
+  },
+  {
+   "id": "pet_shop-019",
+   "category": "Grooming",
+   "owner_question": "Which grooming services do you offer?",
+   "customer_question": "Do you do dog grooming?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Bath & blow dry",
+    "Haircut / styling",
+    "Nail clipping",
+    "Ear cleaning",
+    "Tick & flea treatment",
+    "Home grooming",
+    "No grooming"
+   ]
+  },
+  {
+   "id": "pet_shop-020",
+   "category": "Grooming",
+   "owner_question": "What are your grooming package prices for small and big dogs and for cats?",
+   "customer_question": "How much is grooming?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-021",
+   "category": "Accessories",
+   "owner_question": "Which accessories do you sell?",
+   "customer_question": "Do you have a harness?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Collars & harnesses",
+    "Leashes",
+    "Crates & cages (all sizes)",
+    "IATA travel crates",
+    "Carrier bags & car seat covers",
+    "Clothes, sweaters & raincoats",
+    "Dog shoes",
+    "Beds & mats",
+    "Bowls & water dispensers",
+    "Chew toys",
+    "Cat scratching posts & trees",
+    "Bird cages",
+    "Hamster & rabbit cages"
+   ]
+  },
+  {
+   "id": "pet_shop-022",
+   "category": "Aquarium",
+   "owner_question": "Which fish do you sell?",
+   "customer_question": "Do you have Flowerhorn?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Goldfish",
+    "Guppy & molly",
+    "Tetras",
+    "Angel fish",
+    "Betta",
+    "Oscar",
+    "Flowerhorn",
+    "Arowana",
+    "Sucker / algae eaters",
+    "Shrimps & snails"
+   ]
+  },
+  {
+   "id": "pet_shop-023",
+   "category": "Aquarium",
+   "owner_question": "Which aquarium items do you sell?",
+   "customer_question": "Do you have a battery air pump?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Tanks (custom sizes)",
+    "Filters & air pumps",
+    "Battery air pumps (power cuts)",
+    "Water conditioner (anti-chlorine)",
+    "Lights & heaters",
+    "Automatic fish feeders",
+    "Plants & decor",
+    "Fish medicines",
+    "Turtle food & UVB lights"
+   ]
+  },
+  {
+   "id": "pet_shop-024",
+   "category": "Boarding & services",
+   "owner_question": "Do you have pet boarding or daycare? What is the charge per day?",
+   "customer_question": "Can I leave my dog with you for 5 days?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-025",
+   "category": "Pets for sale",
+   "owner_question": "Which cat breeds do you usually have?",
+   "customer_question": "Do you have a Persian cat?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Persian (doll face / punch face)",
+    "Himalayan",
+    "Siamese",
+    "Maine Coon",
+    "Bengal",
+    "Indian cats"
+   ]
+  },
+  {
+   "id": "pet_shop-026",
+   "category": "Pets for sale",
+   "owner_question": "Which birds do you sell?",
+   "customer_question": "Do you have talking birds?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Budgies / lovebirds",
+    "Cockatiels",
+    "Finches",
+    "African grey parrots (captive-bred, with papers)",
+    "Macaws & other exotic birds (with papers)",
+    "Hand-tamed birds"
+   ]
+  },
+  {
+   "id": "pet_shop-027",
+   "category": "Pets for sale",
+   "owner_question": "Do you take a pet back within a few days if it doesn't adjust at home?",
+   "customer_question": "Can I return the puppy if it doesn't suit us?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-028",
+   "category": "Pets for sale",
+   "owner_question": "Do you offer EMI or a discount on costly pets?",
+   "customer_question": "Can I pay for the puppy in EMI?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-029",
+   "category": "Pets for sale",
+   "owner_question": "Do you guide customers on municipal pet registration and local rules for some breeds?",
+   "customer_question": "Do I need to register my dog?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-030",
+   "category": "Pets for sale",
+   "owner_question": "Do you arrange safe transport of pets to other towns? How, and at what charge?",
+   "customer_question": "Can you send the puppy to Vijayawada?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-031",
+   "category": "Pets for sale",
+   "owner_question": "Can you tell the male and female birds apart, and do you sell breeding pairs?",
+   "customer_question": "Is this a male or female budgie?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-032",
+   "category": "Health & vet",
+   "owner_question": "Do you give the vaccination schedule with costs and remind customers when the next dose is due?",
+   "customer_question": "When is the next vaccine?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-033",
+   "category": "Health & vet",
+   "owner_question": "Do you arrange spaying / neutering with a vet? What does it cost?",
+   "customer_question": "Where can I get my dog neutered?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-034",
+   "category": "Health & vet",
+   "owner_question": "Do you arrange stud service (mating)? What is the charge?",
+   "customer_question": "Do you have a male Labrador for mating?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-035",
+   "category": "Food & supplements",
+   "owner_question": "How do your pet food prices compare with online stores (Amazon, Supertails, Heads Up For Tails)?",
+   "customer_question": "It's 20% cheaper online, can you match?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Same as online",
+    "Close to online",
+    "MRP with a small discount"
+   ]
+  },
+  {
+   "id": "pet_shop-036",
+   "category": "Hygiene & training",
+   "owner_question": "Do you arrange a dog trainer? What does it cost per month?",
+   "customer_question": "Do you have a dog trainer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-037",
+   "category": "Grooming",
+   "owner_question": "Do you groom without sedation? How do you handle nervous or biting pets?",
+   "customer_question": "Will you give my dog an injection for grooming?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-038",
+   "category": "Accessories",
+   "owner_question": "Do your staff help choose the right collar or harness and crate size for the pet?",
+   "customer_question": "Collar or harness for my puppy?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-039",
+   "category": "Aquarium",
+   "owner_question": "Do you guide customers on tank setup, which fish can live together, water changes and feeding?",
+   "customer_question": "Can goldfish and Oscar be in one tank?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-040",
+   "category": "Aquarium",
+   "owner_question": "Do you send staff home for aquarium setup and cleaning? What does it cost?",
+   "customer_question": "Can you clean my aquarium at home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-041",
+   "category": "Boarding & services",
+   "owner_question": "During boarding, do you share photos or video calls of the pet every day?",
+   "customer_question": "Will you show me my dog on video call?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "pet_shop-042",
+   "category": "Boarding & services",
+   "owner_question": "Do you know a pet burial or cremation service you can suggest?",
+   "customer_question": "Where can I bury my dog?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pet_shop-043",
+   "category": "Boarding & services",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "pet_shop-044",
+   "category": "Boarding & services",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

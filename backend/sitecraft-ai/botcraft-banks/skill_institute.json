@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 36,
+ "question_count": 48,
  "questions": [
   {
    "id": "skill_institute-001",
@@ -90,6 +90,18 @@
   {
    "id": "skill_institute-009",
    "category": "Teachers & teaching",
+   "owner_question": "Are your trainers working IT professionals with real project experience?",
+   "customer_question": "Do the trainers work in software companies?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-010",
+   "category": "Teachers & teaching",
    "owner_question": "Do the same senior teachers from the demo classes teach the whole year?",
    "customer_question": "Will the demo teacher teach all year?",
    "priority": "important",
@@ -100,7 +112,7 @@
    ]
   },
   {
-   "id": "skill_institute-010",
+   "id": "skill_institute-011",
    "category": "Teachers & teaching",
    "owner_question": "In which language do teachers explain?",
    "customer_question": "Will you explain in Telugu?",
@@ -114,7 +126,7 @@
    ]
   },
   {
-   "id": "skill_institute-011",
+   "id": "skill_institute-012",
    "category": "Batches & attention",
    "owner_question": "How many students are in one batch?",
    "customer_question": "How many kids in a class?",
@@ -122,7 +134,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-012",
+   "id": "skill_institute-013",
    "category": "Batches & attention",
    "owner_question": "Do you have one-on-one doubt sessions for students who are shy to ask in class?",
    "customer_question": "Can my son clear doubts separately?",
@@ -134,7 +146,7 @@
    ]
   },
   {
-   "id": "skill_institute-013",
+   "id": "skill_institute-014",
    "category": "Timings & attendance",
    "owner_question": "Which batches do you have?",
    "customer_question": "Is there an evening batch?",
@@ -144,11 +156,12 @@
     "Morning",
     "Evening",
     "Weekend only",
-    "Holiday / summer crash courses"
+    "Holiday / summer courses",
+    "Crash courses before exams"
    ]
   },
   {
-   "id": "skill_institute-014",
+   "id": "skill_institute-015",
    "category": "Syllabus & material",
    "owner_question": "Do you give your own printed notes or study material?",
    "customer_question": "Do you give notes?",
@@ -160,7 +173,7 @@
    ]
   },
   {
-   "id": "skill_institute-015",
+   "id": "skill_institute-016",
    "category": "Tests & results",
    "owner_question": "What were your results last year (10/10 GPA, ranks, selections or placements)?",
    "customer_question": "How many got 10/10 last year?",
@@ -168,7 +181,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-016",
+   "id": "skill_institute-017",
    "category": "Online & hybrid",
    "owner_question": "Which ways of learning do you offer?",
    "customer_question": "Are there online classes?",
@@ -183,7 +196,7 @@
    ]
   },
   {
-   "id": "skill_institute-017",
+   "id": "skill_institute-018",
    "category": "Skill courses",
    "owner_question": "Are computer courses practical (with live projects)? Does each student get their own computer?",
    "customer_question": "Will I get my own computer?",
@@ -191,23 +204,23 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-018",
+   "id": "skill_institute-019",
    "category": "Skill courses",
-   "owner_question": "What certificate do you give, and who recognises it (ISO, government, company)?",
+   "owner_question": "What certificate do you give, and who recognises it (ISO, government, company)? Do you give internship certificates for real project work?",
    "customer_question": "Is the certificate government approved?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-019",
+   "id": "skill_institute-020",
    "category": "Skill courses",
-   "owner_question": "Do you give placement assistance and help with resumes and interviews?",
+   "owner_question": "Do you give placement assistance and help with resumes and interviews? How many interviews do you arrange?",
    "customer_question": "Will you help me get a job?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-020",
+   "id": "skill_institute-021",
    "category": "Facilities & safety",
    "owner_question": "Which facilities do you have?",
    "customer_question": "Is there AC?",
@@ -226,7 +239,7 @@
    ]
   },
   {
-   "id": "skill_institute-021",
+   "id": "skill_institute-022",
    "category": "Fees & discounts",
    "owner_question": "How much discount do you give if the full fee is paid at once?",
    "customer_question": "Any discount if I pay full fee?",
@@ -234,7 +247,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-022",
+   "id": "skill_institute-023",
    "category": "Fees & discounts",
    "owner_question": "What is your refund policy (if the student leaves after the demo or moves to another town)?",
    "customer_question": "Will you refund the fee if we move?",
@@ -242,7 +255,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-023",
+   "id": "skill_institute-024",
    "category": "Fees & discounts",
    "owner_question": "Do you give a referral discount when students bring friends?",
    "customer_question": "Any discount if my friend joins?",
@@ -250,7 +263,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-024",
+   "id": "skill_institute-025",
    "category": "Fees & discounts",
    "owner_question": "For students joining in the middle of the year, is the fee reduced?",
    "customer_question": "We're joining late, is the fee less?",
@@ -258,7 +271,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-025",
+   "id": "skill_institute-026",
    "category": "Teachers & teaching",
    "owner_question": "If a teacher leaves in the middle of the year, how soon do you bring a replacement?",
    "customer_question": "What if the teacher leaves?",
@@ -266,7 +279,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-026",
+   "id": "skill_institute-027",
    "category": "Teachers & teaching",
    "owner_question": "Do you use digital boards or projectors?",
    "customer_question": "Do you have smart classes?",
@@ -279,7 +292,19 @@
    ]
   },
   {
-   "id": "skill_institute-027",
+   "id": "skill_institute-028",
+   "category": "Batches & attention",
+   "owner_question": "Can a student move to another batch or teacher if they don't understand the lessons?",
+   "customer_question": "Can you change his batch?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-029",
    "category": "Timings & attendance",
    "owner_question": "How many hours a day and days a week are classes? Any special classes on Sundays?",
    "customer_question": "Are there classes on Sunday?",
@@ -287,15 +312,15 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-028",
+   "id": "skill_institute-030",
    "category": "Timings & attendance",
-   "owner_question": "If a student misses classes (illness, travel), how do you cover the missed lessons?",
+   "owner_question": "If a student misses classes (illness, travel) or a class is cancelled (rain, holiday), how do you cover the missed lessons?",
    "customer_question": "My daughter was sick for 5 days, will you cover it?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-029",
+   "id": "skill_institute-031",
    "category": "Timings & attendance",
    "owner_question": "How do you cover the syllabus already finished for late joiners?",
    "customer_question": "How will you cover old lessons?",
@@ -303,7 +328,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-030",
+   "id": "skill_institute-032",
    "category": "Online & hybrid",
    "owner_question": "Can students ask doubts online (chat or call)?",
    "customer_question": "Can I ask doubts on WhatsApp?",
@@ -315,7 +340,7 @@
    ]
   },
   {
-   "id": "skill_institute-031",
+   "id": "skill_institute-033",
    "category": "Skill courses",
    "owner_question": "Do you teach English from zero level (basic grammar)?",
    "customer_question": "I don't know any English, can I join?",
@@ -327,7 +352,40 @@
    ]
   },
   {
-   "id": "skill_institute-032",
+   "id": "skill_institute-034",
+   "category": "Skill courses",
+   "owner_question": "Can students from non-IT backgrounds (B.Com, BA) learn coding here from the basics?",
+   "customer_question": "I did B.Com, can I learn Python?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-035",
+   "category": "Skill courses",
+   "owner_question": "How do you help students with a career gap of a few years?",
+   "customer_question": "I have a 3-year gap, can I still get a job?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-036",
+   "category": "Skill courses",
+   "owner_question": "Can students pay part of the fee after getting placed?",
+   "customer_question": "Can I pay after I get a job?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "No, full fee before",
+    "Part now, rest after placement",
+    "Depends on the course"
+   ]
+  },
+  {
+   "id": "skill_institute-037",
    "category": "Skill courses",
    "owner_question": "Do you practise group discussions, debates and stage speaking?",
    "customer_question": "Will I get speaking practice?",
@@ -339,7 +397,7 @@
    ]
   },
   {
-   "id": "skill_institute-033",
+   "id": "skill_institute-038",
    "category": "Skill courses",
    "owner_question": "How many hours can students use the lab for practice after class?",
    "customer_question": "Can I practise in the lab after class?",
@@ -347,7 +405,7 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-034",
+   "id": "skill_institute-039",
    "category": "Discipline & rules",
    "owner_question": "What is your rule on mobile phones in class?",
    "customer_question": "Can my son bring his phone?",
@@ -355,7 +413,19 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-035",
+   "id": "skill_institute-040",
+   "category": "Discipline & rules",
+   "owner_question": "For late fees, do you call the parents instead of asking the child in front of the class?",
+   "customer_question": "Will you ask my child about fees in class?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-041",
    "category": "Facilities & safety",
    "owner_question": "How do you keep girls safe when classes end late (7–8 pm)?",
    "customer_question": "Is it safe for my daughter in the evening?",
@@ -363,7 +433,67 @@
    "answer_type": "text"
   },
   {
-   "id": "skill_institute-036",
+   "id": "skill_institute-042",
+   "category": "Facilities & safety",
+   "owner_question": "Do you have a first-aid kit, and will you take a student to hospital and call parents in an emergency?",
+   "customer_question": "What if my child falls sick in class?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-043",
+   "category": "Facilities & safety",
+   "owner_question": "Do you have a lost-and-found box for children's things (pens, books, umbrellas)?",
+   "customer_question": "He lost his umbrella there, did anyone find it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-044",
+   "category": "Centre & service",
+   "owner_question": "How can parents or students raise a complaint (batch size, teacher, tests, fans, mosquitoes), and how soon do you act?",
+   "customer_question": "Whom do I complain to?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-045",
+   "category": "Centre & service",
+   "owner_question": "Do you keep students' original certificates? When are they returned, also if the student leaves midway?",
+   "customer_question": "Will you return my original certificates?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-046",
+   "category": "Centre & service",
+   "owner_question": "Do you have branches in other areas or towns, and can students transfer between them?",
+   "customer_question": "Can he move to your other branch?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-047",
+   "category": "Centre & service",
+   "owner_question": "Do teachers give career guidance (which college or group to choose) even after the course?",
+   "customer_question": "Can you guide us on which college to join?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-048",
    "category": "Centre & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
