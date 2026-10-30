@@ -149,7 +149,7 @@ function reply(data, status, origin) {
   return new Response(JSON.stringify(data), { status, headers: corsHeaders(origin) });
 }
 
-function allowedOrigins(env) {
+export function allowedOrigins(env) {
   const configured = String(env?.BOTCRAFT_ALLOWED_ORIGINS || "").split(",").map(o => o.trim()).filter(Boolean);
   return new Set(configured.length ? configured : DEFAULT_ALLOWED_ORIGINS);
 }
@@ -843,7 +843,7 @@ const ORDER_STATUS_TYPES = new Set(["packers_movers", "laundry", "ironing_shop",
 // voice (talk mode) and cart (WhatsApp orders) are off until the owner turns them on.
 const FEATURE_KEYS = ["photo", "preorder", "orderStatus", "voice", "cart"];
 
-function shopFeatures(shopType, settings) {
+export function shopFeatures(shopType, settings) {
   const defaults = { photo: true, preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType), voice: false, cart: false };
   const chosen = settings?.features || {};
   return Object.fromEntries(FEATURE_KEYS.map(key => [key, typeof chosen[key] === "boolean" ? chosen[key] : defaults[key]]));
