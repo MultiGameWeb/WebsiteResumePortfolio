@@ -34,7 +34,8 @@ export const SHOP_TYPES = [
   { key: "beauty_parlour", name: "Ladies beauty parlour & bridal makeup", aliases: ["beauty parlour", "ladies parlour", "beauty salon", "bridal makeup studio", "makeup artist", "mehendi", "nail studio"], description: "ladies beauty parlour offering facials, waxing, hair and bridal makeup" },
   { key: "spa", name: "Spa & massage centre", aliases: ["spa", "massage centre", "wellness centre", "ayurvedic massage", "body massage", "thai spa", "foot reflexology"], description: "spa and massage centre offering body massages and wellness treatments" },
   { key: "pharmacy", name: "Pharmacy / medical store", aliases: ["medical shop", "medical store", "chemist", "medicine shop", "druggist", "surgicals", "medicals"], description: "pharmacy and medical store selling medicines and health products" },
-  { key: "optical", name: "Optical shop", aliases: ["opticals", "optical shop", "spectacles shop", "kalladdala shop", "eye wear", "sunglasses", "contact lenses", "eye test centre"], description: "optical shop selling spectacles, frames, lenses and sunglasses" }
+  { key: "optical", name: "Optical shop", aliases: ["opticals", "optical shop", "spectacles shop", "kalladdala shop", "eye wear", "sunglasses", "contact lenses", "eye test centre"], description: "optical shop selling spectacles, frames, lenses and sunglasses" },
+  { key: "gym", name: "Gym & fitness centre", aliases: ["gym", "fitness centre", "fitness studio", "unisex gym", "ladies gym", "health club", "crossfit box", "zumba studio"], description: "gym and fitness centre with memberships, trainers and group classes" }
 ];
 
 export const SHOP_TYPE_KEYS = new Set(SHOP_TYPES.map(t => t.key));

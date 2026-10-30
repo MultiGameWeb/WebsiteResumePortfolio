@@ -1,0 +1,450 @@
+{
+ "shop_type_key": "gym",
+ "name": "Gym & fitness centre",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 41,
+ "questions": [
+  {
+   "id": "gym-001",
+   "category": "Membership & fees",
+   "owner_question": "What are your membership fees for 1, 3, 6 and 12 months?",
+   "customer_question": "How much is the gym fee?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-002",
+   "category": "Timings & crowd",
+   "owner_question": "Is your gym unisex? Do you have ladies-only timings or a ladies section?",
+   "customer_question": "Is this a ladies gym?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Unisex",
+    "Unisex with ladies-only timings",
+    "Separate ladies section",
+    "Men only",
+    "Ladies only"
+   ]
+  },
+  {
+   "id": "gym-003",
+   "category": "Trainers & guidance",
+   "owner_question": "Does a floor trainer guide all members, or is a personal trainer needed for proper guidance?",
+   "customer_question": "Will a trainer help me, or do I need a personal trainer?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Floor trainer guides everyone (free)",
+    "Personal trainer needed for full guidance",
+    "Both available"
+   ]
+  },
+  {
+   "id": "gym-004",
+   "category": "Equipment & facilities",
+   "owner_question": "Which equipment do you have?",
+   "customer_question": "Do you have a treadmill?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Treadmills",
+    "Cross trainers / ellipticals",
+    "Exercise & spin bikes",
+    "Rowing machine",
+    "Dumbbells & free weights",
+    "Benches & squat racks",
+    "Smith machine",
+    "Cable / pulley machines",
+    "Leg machines",
+    "Functional area (kettlebells, TRX, battle ropes)",
+    "Boxing bag"
+   ]
+  },
+  {
+   "id": "gym-005",
+   "category": "Membership & fees",
+   "owner_question": "Is there a registration or admission fee on top of the package fee? How much?",
+   "customer_question": "Is there an admission fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-006",
+   "category": "Membership & fees",
+   "owner_question": "Apart from the package fee, are there any other charges (personal training, locker, group classes, GST)?",
+   "customer_question": "Are there any hidden charges?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-007",
+   "category": "Membership & fees",
+   "owner_question": "Do you give a free trial before joining? For how many days?",
+   "customer_question": "Can I try the gym for a day first?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-008",
+   "category": "Membership & fees",
+   "owner_question": "Can members pay the fee in parts?",
+   "customer_question": "Can I pay the fee in instalments?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Full payment only",
+    "Monthly instalments on long packages",
+    "Depends on the package"
+   ]
+  },
+  {
+   "id": "gym-009",
+   "category": "Timings & crowd",
+   "owner_question": "When is the gym busiest, and when is it quiet?",
+   "customer_question": "What time is the gym less crowded?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-010",
+   "category": "Trainers & guidance",
+   "owner_question": "How much does personal training cost (per month or per session)?",
+   "customer_question": "How much for a personal trainer?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-011",
+   "category": "Trainers & guidance",
+   "owner_question": "Are your trainers certified? How many years of experience do they have?",
+   "customer_question": "Are the trainers certified?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-012",
+   "category": "Trainers & guidance",
+   "owner_question": "Do you have female trainers for ladies?",
+   "customer_question": "Is there a lady trainer?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-013",
+   "category": "Trainers & guidance",
+   "owner_question": "Do trainers teach beginners the basic exercises and correct form?",
+   "customer_question": "I'm new to the gym, who will teach me?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-014",
+   "category": "Trainers & guidance",
+   "owner_question": "For members with back or knee pain, diabetes, BP, PCOD or after surgery, do trainers plan suitable workouts? Do you ask for a doctor's note?",
+   "customer_question": "I have knee pain, can I join?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-015",
+   "category": "Diet & results",
+   "owner_question": "Do you give a diet plan?",
+   "customer_question": "Will you give me a diet chart?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free with membership",
+    "Extra charge",
+    "Only with personal training",
+    "No diet plans"
+   ]
+  },
+  {
+   "id": "gym-016",
+   "category": "Equipment & facilities",
+   "owner_question": "Is the gym air-conditioned?",
+   "customer_question": "Is there AC in the gym?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Full AC, always on",
+    "AC at peak hours",
+    "Non-AC (fans)"
+   ]
+  },
+  {
+   "id": "gym-017",
+   "category": "Equipment & facilities",
+   "owner_question": "How many cardio machines (treadmills, cross trainers, cycles) do you have, and is there a time limit on them at peak hours?",
+   "customer_question": "Will I have to wait for a treadmill?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-018",
+   "category": "Equipment & facilities",
+   "owner_question": "Which group classes do you have?",
+   "customer_question": "Do you have Zumba?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Zumba",
+    "Yoga",
+    "Aerobics",
+    "CrossFit / functional training",
+    "Dance fitness",
+    "Kickboxing / MMA",
+    "Pilates",
+    "No group classes"
+   ]
+  },
+  {
+   "id": "gym-019",
+   "category": "Equipment & facilities",
+   "owner_question": "Which facilities do you have?",
+   "customer_question": "Is there a locker?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Lockers",
+    "Changing rooms",
+    "Washrooms",
+    "Showers",
+    "Steam bath",
+    "Sauna",
+    "RO drinking water",
+    "Music system",
+    "Waiting area"
+   ]
+  },
+  {
+   "id": "gym-020",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you clean and sanitise machines, mats, washrooms and changing rooms every day?",
+   "customer_question": "Are the machines cleaned daily?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-021",
+   "category": "Assessment & progress",
+   "owner_question": "Do you check BMI, body fat and muscle mass when someone joins? Is it free?",
+   "customer_question": "Will you check my body fat?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-022",
+   "category": "Membership & fees",
+   "owner_question": "Do you have couple, family, group or friends discounts?",
+   "customer_question": "Any offer for couples?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-023",
+   "category": "Membership & fees",
+   "owner_question": "Do you have special discounts for students, corporate employees or senior citizens?",
+   "customer_question": "Any student discount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-024",
+   "category": "Membership & fees",
+   "owner_question": "Can members freeze (pause) their membership when they are out of town? For how many days?",
+   "customer_question": "Can I pause my membership for a month?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-025",
+   "category": "Membership & fees",
+   "owner_question": "Do you refund the fee if a member stops, and can a membership be transferred to someone else?",
+   "customer_question": "Can I transfer my membership to my brother?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-026",
+   "category": "Membership & fees",
+   "owner_question": "Do you have a day pass or per-visit fee (for example for visitors from other towns)?",
+   "customer_question": "Can I come for just one day?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-027",
+   "category": "Membership & fees",
+   "owner_question": "What is the minimum age to join? Can teenagers join with a parent's permission?",
+   "customer_question": "Can my 15-year-old son join?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-028",
+   "category": "Timings & crowd",
+   "owner_question": "Can members come any time during opening hours, or only in a chosen slot?",
+   "customer_question": "Can I come at any time?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Any time",
+    "Fixed slot (morning or evening)",
+    "Depends on the package"
+   ]
+  },
+  {
+   "id": "gym-029",
+   "category": "Timings & crowd",
+   "owner_question": "Is the gym open on festival holidays? Any change in timings?",
+   "customer_question": "Is the gym open on Sankranti?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-030",
+   "category": "Trainers & guidance",
+   "owner_question": "Do your trainers give personal training at home?",
+   "customer_question": "Can a trainer come to my home?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "gym-031",
+   "category": "Diet & results",
+   "owner_question": "Do you give vegetarian diet plans?",
+   "customer_question": "I'm vegetarian, will you give a veg diet?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-032",
+   "category": "Diet & results",
+   "owner_question": "What do you tell members about how long weight loss or weight gain usually takes?",
+   "customer_question": "How soon will I lose weight?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-033",
+   "category": "Diet & results",
+   "owner_question": "Do you sell supplements such as protein powder? Do you tell members they are optional?",
+   "customer_question": "Do I have to take protein powder?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-034",
+   "category": "Diet & results",
+   "owner_question": "Do trainers guide members to build muscle with normal home food, without supplements?",
+   "customer_question": "Can I build my body without supplements?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-035",
+   "category": "Equipment & facilities",
+   "owner_question": "Are group classes included in the membership, or charged extra? At what times?",
+   "customer_question": "Is Zumba extra?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-036",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you have a first-aid kit, and staff trained to help if someone gets hurt?",
+   "customer_question": "What if I get hurt?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-037",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you have CCTV on the gym floor (never in changing rooms) for members' safety?",
+   "customer_question": "Is there CCTV in the gym?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-038",
+   "category": "Hygiene & safety",
+   "owner_question": "What should members bring (separate indoor shoes, towel, water bottle, mat)?",
+   "customer_question": "What should I bring to the gym?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-039",
+   "category": "Assessment & progress",
+   "owner_question": "Do trainers check and tell members their progress every month?",
+   "customer_question": "Will you track my progress?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-040",
+   "category": "Gym & service",
+   "owner_question": "Which languages can your trainers speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "gym-041",
+   "category": "Gym & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

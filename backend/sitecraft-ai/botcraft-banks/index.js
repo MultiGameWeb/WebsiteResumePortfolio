@@ -12,6 +12,7 @@ import bank_fast_food from "./fast_food.json" with { type: "json" };
 import bank_footwear from "./footwear.json" with { type: "json" };
 import bank_fruits_vegetables from "./fruits_vegetables.json" with { type: "json" };
 import bank_furniture from "./furniture.json" with { type: "json" };
+import bank_gym from "./gym.json" with { type: "json" };
 import bank_hardware_store from "./hardware_store.json" with { type: "json" };
 import bank_imitation_jewellery from "./imitation_jewellery.json" with { type: "json" };
 import bank_jewellery from "./jewellery.json" with { type: "json" };
@@ -45,6 +46,7 @@ export const QUESTION_BANKS = {
   "footwear": bank_footwear,
   "fruits_vegetables": bank_fruits_vegetables,
   "furniture": bank_furniture,
+  "gym": bank_gym,
   "hardware_store": bank_hardware_store,
   "imitation_jewellery": bank_imitation_jewellery,
   "jewellery": bank_jewellery,
