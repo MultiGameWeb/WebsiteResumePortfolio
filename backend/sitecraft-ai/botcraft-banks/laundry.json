@@ -1,0 +1,186 @@
+{
+ "shop_type_key": "laundry",
+ "name": "Laundry & dry cleaning",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 17,
+ "questions": [
+  {
+   "id": "laundry-001",
+   "category": "Services",
+   "owner_question": "Which services do you offer?",
+   "customer_question": "Do you do dry cleaning?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Wash & fold",
+    "Wash & iron",
+    "Dry cleaning",
+    "Steam ironing",
+    "Ironing only",
+    "Saree polishing & rolling",
+    "Starch",
+    "Stain removal",
+    "Blankets, quilts & bed sheets",
+    "Curtains, carpets & sofa covers",
+    "Shoe cleaning",
+    "Leather & suede jackets",
+    "Bridal & designer wear",
+    "Small repairs (buttons, stitches)"
+   ]
+  },
+  {
+   "id": "laundry-002",
+   "category": "Rates & time",
+   "owner_question": "What are your rates (per piece or per kg) for each service, for example shirt, saree, pattu saree, blanket, suit?",
+   "customer_question": "How much to dry clean a pattu saree?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-003",
+   "category": "Rates & time",
+   "owner_question": "How long does each service usually take, and do you do same-day / express work? Extra charge?",
+   "customer_question": "Can I get it back by tomorrow?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-004",
+   "category": "Pickup & receipts",
+   "owner_question": "Do you pick up clothes from homes and apartments? Minimum order and charge?",
+   "customer_question": "Can you pick up from my flat?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-005",
+   "category": "Pickup & receipts",
+   "owner_question": "Do you count and tag each piece and give a receipt or list (on paper or WhatsApp)?",
+   "customer_question": "Will you give a list of my clothes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "laundry-006",
+   "category": "Care & quality",
+   "owner_question": "If a piece is lost or damaged (shrinks, colour runs, burns, tears), how much do you pay or how do you settle it, and within how many days must customers tell you?",
+   "customer_question": "You lost my shirt, what will you do?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-007",
+   "category": "Rates & time",
+   "owner_question": "Do you have monthly packages for families, or bulk rates for hostels, PGs, hotels and hospitals?",
+   "customer_question": "Is there a monthly package?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-008",
+   "category": "Pickup & receipts",
+   "owner_question": "How long do you keep clothes that are not collected?",
+   "customer_question": "I forgot to collect my clothes for a month, are they safe?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-009",
+   "category": "Care & quality",
+   "owner_question": "Do you check clothes when you take them and tell customers about stains, tears or loose buttons first?",
+   "customer_question": "Will you check for stains before washing?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "laundry-010",
+   "category": "Care & quality",
+   "owner_question": "Which stains usually cannot be removed (old turmeric, ink, oil, rust), and do you tell customers before trying?",
+   "customer_question": "Can you remove turmeric stains?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-011",
+   "category": "Care & quality",
+   "owner_question": "How do you care for silk / pattu sarees and zari (dry clean or gentle wash, rolling, no direct heat on zari)?",
+   "customer_question": "Will the zari get damaged?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-012",
+   "category": "Care & quality",
+   "owner_question": "Do you wash each customer's clothes separately, and keep whites, colours and dark clothes apart so colours don't run?",
+   "customer_question": "Are my clothes washed with others' clothes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "laundry-013",
+   "category": "Care & quality",
+   "owner_question": "Which detergents do you use, and can customers ask for mild, baby-safe or fragrance-free washing?",
+   "customer_question": "Can you use mild detergent for baby clothes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-014",
+   "category": "Care & quality",
+   "owner_question": "Which items do you not accept (very old or torn clothes, some leather, items with valuables)?",
+   "customer_question": "Do you clean leather bags?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "laundry-015",
+   "category": "Care & quality",
+   "owner_question": "Do you check pockets and return any money, cards or jewellery found?",
+   "customer_question": "I left money in my pant pocket, will I get it back?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "laundry-016",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "laundry-017",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

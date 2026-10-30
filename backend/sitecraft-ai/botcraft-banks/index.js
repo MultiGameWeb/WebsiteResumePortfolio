@@ -48,11 +48,13 @@ import bank_hotel_stay from "./hotel_stay.json" with { type: "json" };
 import bank_imitation_jewellery from "./imitation_jewellery.json" with { type: "json" };
 import bank_insurance_investment from "./insurance_investment.json" with { type: "json" };
 import bank_interior_designer from "./interior_designer.json" with { type: "json" };
+import bank_ironing_shop from "./ironing_shop.json" with { type: "json" };
 import bank_jewellery from "./jewellery.json" with { type: "json" };
 import bank_junior_college from "./junior_college.json" with { type: "json" };
 import bank_kids_wear from "./kids_wear.json" with { type: "json" };
 import bank_kirana from "./kirana.json" with { type: "json" };
 import bank_kitchen_rental from "./kitchen_rental.json" with { type: "json" };
+import bank_laundry from "./laundry.json" with { type: "json" };
 import bank_loan_finance from "./loan_finance.json" with { type: "json" };
 import bank_meat_shop from "./meat_shop.json" with { type: "json" };
 import bank_meeseva_online from "./meeseva_online.json" with { type: "json" };
@@ -150,11 +152,13 @@ export const QUESTION_BANKS = {
   "imitation_jewellery": bank_imitation_jewellery,
   "insurance_investment": bank_insurance_investment,
   "interior_designer": bank_interior_designer,
+  "ironing_shop": bank_ironing_shop,
   "jewellery": bank_jewellery,
   "junior_college": bank_junior_college,
   "kids_wear": bank_kids_wear,
   "kirana": bank_kirana,
   "kitchen_rental": bank_kitchen_rental,
+  "laundry": bank_laundry,
   "loan_finance": bank_loan_finance,
   "meat_shop": bank_meat_shop,
   "meeseva_online": bank_meeseva_online,
