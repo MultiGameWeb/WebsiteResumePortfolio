@@ -45,7 +45,12 @@ export const SHOP_TYPES = [
   { key: "self_drive_rental", name: "Self-drive car & bike rental", aliases: ["self drive cars", "car rental", "bike rental", "scooty rental", "rent a bike", "rent a car", "self drive"], description: "rents cars, bikes and scooters to customers who drive themselves" },
   { key: "travels", name: "Travels (cabs, tempo travellers & buses)", aliases: ["travels", "tours and travels", "taxi service", "cab service", "car with driver", "tempo traveller", "bus rental", "wedding cars"], description: "rents cabs, tempo travellers, buses and wedding cars with drivers" },
   { key: "self_drive_travels", name: "Self-drive rental & travels", aliases: ["self drive and travels", "cars with and without driver"], description: "rents vehicles both self-drive and with drivers" },
-  { key: "goods_equipment_rental", name: "Goods vehicle & machinery rental", aliases: ["goods auto", "tata ace rental", "mini truck rental", "lorry rental", "JCB rental", "earthmover", "tractor rental", "crane rental", "harvester rental"], description: "rents goods vehicles, JCBs, tractors, harvesters and other machines" }
+  { key: "goods_equipment_rental", name: "Goods vehicle & machinery rental", aliases: ["goods auto", "tata ace rental", "mini truck rental", "lorry rental", "JCB rental", "earthmover", "tractor rental", "crane rental", "harvester rental"], description: "rents goods vehicles, JCBs, tractors, harvesters and other machines" },
+  { key: "loan_finance", name: "Loan & finance office", aliases: ["finance", "finance company", "NBFC branch", "loan agent", "DSA", "private finance", "money lender", "personal loans", "vehicle finance", "microfinance"], description: "finance office giving or arranging personal, business, home and vehicle loans" },
+  { key: "gold_loan", name: "Gold loan / pawn shop", aliases: ["gold loan", "pawn broker", "pawn shop", "takattu shop", "gold finance"], description: "gives loans against gold jewellery" },
+  { key: "finance_gold", name: "Finance & gold loans", aliases: ["finance and gold loans", "gold loans and finance"], description: "finance office giving both gold loans and other loans" },
+  { key: "chit_fund", name: "Chit fund company", aliases: ["chit fund", "chits", "chitti", "chit company"], description: "registered chit fund company running chit groups" },
+  { key: "insurance_investment", name: "Insurance & investment advisor", aliases: ["insurance agent", "LIC agent", "insurance office", "mutual fund advisor", "financial advisor", "SIP advisor"], description: "insurance agent or mutual fund distributor" }
 ];
 
 export const SHOP_TYPE_KEYS = new Set(SHOP_TYPES.map(t => t.key));

@@ -1,0 +1,126 @@
+{
+ "shop_type_key": "chit_fund",
+ "name": "Chit fund company",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 12,
+ "questions": [
+  {
+   "id": "chit_fund-001",
+   "category": "Licence & trust",
+   "owner_question": "Which registration or licence do you have (RBI-registered NBFC, state money-lenders licence, chit fund registration, IRDAI / AMFI)? Please give the number customers can check.",
+   "customer_question": "Is your finance registered?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "chit_fund-002",
+   "category": "Chit funds",
+   "owner_question": "Is your chit fund registered under the Chit Funds Act with the Registrar of Chits?",
+   "customer_question": "Is your chit registered?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "chit_fund-003",
+   "category": "Licence & trust",
+   "owner_question": "Do you explain the full cost (interest, all charges) in writing, in Telugu if needed, before the customer signs?",
+   "customer_question": "Will you tell all charges before I sign?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "chit_fund-004",
+   "category": "Licence & trust",
+   "owner_question": "Do you give a receipt for every payment and a statement or NOC whenever the customer asks?",
+   "customer_question": "Will I get a receipt for every payment?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "chit_fund-005",
+   "category": "Eligibility & documents",
+   "owner_question": "Which documents are needed, and do you keep any originals?",
+   "customer_question": "What documents do I need?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "chit_fund-006",
+   "category": "Chit funds",
+   "owner_question": "Which chit groups are open (chit value, months, monthly instalment)?",
+   "customer_question": "Is there a ₹5 lakh chit?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "chit_fund-007",
+   "category": "Chit funds",
+   "owner_question": "After winning the auction, how soon is the money paid, what sureties are needed, and what if there are no sureties?",
+   "customer_question": "When will I get the money after the auction?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "chit_fund-008",
+   "category": "Chit funds",
+   "owner_question": "What is the maximum bid discount and the foreman's commission?",
+   "customer_question": "How much can I bid?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "chit_fund-009",
+   "category": "Licence & trust",
+   "owner_question": "Who can customers contact with a complaint, and how soon do you reply?",
+   "customer_question": "Whom do I complain to?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "chit_fund-010",
+   "category": "Chit funds",
+   "owner_question": "What protects members' money (security deposit with the Registrar), and what happens if a member stops paying?",
+   "customer_question": "What if the chit company closes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "chit_fund-011",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "chit_fund-012",
+   "category": "Service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
