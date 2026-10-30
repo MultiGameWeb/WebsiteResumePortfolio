@@ -1,0 +1,258 @@
+{
+ "shop_type_key": "clinic",
+ "name": "Clinic (doctor)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 23,
+ "questions": [
+  {
+   "id": "clinic-001",
+   "category": "Doctors & services",
+   "owner_question": "Which specialities are available?",
+   "customer_question": "Is there a child specialist?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "General physician",
+    "Child specialist",
+    "Gynaecologist",
+    "Orthopaedic",
+    "ENT",
+    "Eye",
+    "Diabetologist",
+    "Cardiologist",
+    "Dermatologist",
+    "Psychiatrist",
+    "General surgeon"
+   ]
+  },
+  {
+   "id": "clinic-002",
+   "category": "Fees & appointments",
+   "owner_question": "What is the consultation fee, for how many days is the follow-up free, and is there a fee just to show reports?",
+   "customer_question": "How much is the doctor's fee?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-003",
+   "category": "Doctors & services",
+   "owner_question": "Who are the doctors, their qualifications and medical council registration numbers?",
+   "customer_question": "Is the doctor an MD?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-004",
+   "category": "Doctors & services",
+   "owner_question": "Does the senior doctor see every patient personally?",
+   "customer_question": "Will the main doctor see me?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clinic-005",
+   "category": "Doctors & services",
+   "owner_question": "Is there a lady doctor, or a lady staff member present when a male doctor examines women?",
+   "customer_question": "Is there a lady doctor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clinic-006",
+   "category": "Fees & appointments",
+   "owner_question": "Do patients need an appointment, or can they walk in? Do you give tokens by phone or WhatsApp?",
+   "customer_question": "Can I book a token on the phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-007",
+   "category": "Pharmacy & tests",
+   "owner_question": "Must medicines be bought at your pharmacy?",
+   "customer_question": "Can I buy the medicines outside?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Patients can buy anywhere",
+    "Some medicines only at our pharmacy",
+    "We have no pharmacy"
+   ]
+  },
+  {
+   "id": "clinic-008",
+   "category": "Pharmacy & tests",
+   "owner_question": "Does the doctor accept recent reports from other labs instead of repeating the tests?",
+   "customer_question": "I already did tests outside, will you see them?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clinic-009",
+   "category": "Procedures",
+   "owner_question": "Which procedures do you do at the clinic?",
+   "customer_question": "Can you do dressing here?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Injections & IV drips (with prescription)",
+    "Wound dressing",
+    "Stitches & stitch removal",
+    "Nebulisation",
+    "Ear wax cleaning",
+    "Foreign body removal (ear, nose, eye)",
+    "Minor surgery (warts, corns, lipoma, cysts)",
+    "Child vaccinations"
+   ]
+  },
+  {
+   "id": "clinic-010",
+   "category": "Procedures",
+   "owner_question": "Do you sterilise instruments (autoclave) and use disposable needles?",
+   "customer_question": "Are the instruments sterilised?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clinic-011",
+   "category": "Privacy & service",
+   "owner_question": "Do you keep every patient's tests and reports confidential, sending reports only to the patient?",
+   "customer_question": "Will my report be kept private?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clinic-012",
+   "category": "Fees & appointments",
+   "owner_question": "What time does the doctor usually start, and how long is the usual wait?",
+   "customer_question": "How long will I wait?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-013",
+   "category": "Fees & appointments",
+   "owner_question": "Is the clinic open on festival days?",
+   "customer_question": "Is the clinic open on Sankranti?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-014",
+   "category": "Fees & appointments",
+   "owner_question": "Do you offer video consultations or home visits? At what fee?",
+   "customer_question": "Can the doctor come home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-015",
+   "category": "Fees & appointments",
+   "owner_question": "If a patient has a doubt or reaction after the visit, how can they reach the clinic?",
+   "customer_question": "Whom do I call if the medicine doesn't suit me?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-016",
+   "category": "Pharmacy & tests",
+   "owner_question": "Do you give a discount on medicines, and take back unopened strips?",
+   "customer_question": "Will you take back unused tablets?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-017",
+   "category": "Procedures",
+   "owner_question": "What do the common procedures cost (injection, dressing, stitches, nebulisation)?",
+   "customer_question": "How much for dressing?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-018",
+   "category": "Procedures",
+   "owner_question": "Which child vaccines do you give (including less-painful versions), and what do they cost?",
+   "customer_question": "Do you have painless vaccines?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-019",
+   "category": "Procedures",
+   "owner_question": "Does the eye doctor give the spectacle power on paper so patients can buy glasses anywhere?",
+   "customer_question": "Will you give me the power to buy glasses outside?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clinic-020",
+   "category": "Certificates & bills",
+   "owner_question": "Which certificates do you issue (sick leave, fitness, Form 1A for driving licence), and what is the charge?",
+   "customer_question": "Can I get a fitness certificate?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "clinic-021",
+   "category": "Certificates & bills",
+   "owner_question": "Do you give stamped prescriptions and GST bills for insurance or office reimbursement?",
+   "customer_question": "Can I get bills for my insurance claim?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "clinic-022",
+   "category": "Privacy & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "clinic-023",
+   "category": "Privacy & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

@@ -1,0 +1,300 @@
+{
+ "shop_type_key": "diagnostic_lab",
+ "name": "Diagnostic lab & scan centre",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 27,
+ "questions": [
+  {
+   "id": "diagnostic_lab-001",
+   "category": "Lab tests",
+   "owner_question": "What do your common tests cost (CBP, sugar, thyroid, lipid, LFT, KFT, vitamin D and B12), and what discount do you give?",
+   "customer_question": "How much for a thyroid test?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-002",
+   "category": "Doctors & services",
+   "owner_question": "Is there a lady doctor, or a lady staff member present when a male doctor examines women?",
+   "customer_question": "Is there a lady doctor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-003",
+   "category": "Lab tests",
+   "owner_question": "Which health packages do you have, and are there couple offers?",
+   "customer_question": "Is there a full body checkup?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-004",
+   "category": "Lab tests",
+   "owner_question": "Do you collect samples at home? From what time, and is there a charge?",
+   "customer_question": "Can you take blood at home?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-005",
+   "category": "Lab tests",
+   "owner_question": "What preparation do common tests need (fasting hours, water, morning medicines, post-lunch sugar timing, full bladder for scans, sample containers)?",
+   "customer_question": "Should I come empty stomach?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-006",
+   "category": "Lab tests",
+   "owner_question": "Do you open new sealed needles in front of the patient, use vacutainers, and draw blood once for all tests?",
+   "customer_question": "Is the needle new?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-007",
+   "category": "Lab tests",
+   "owner_question": "Is your lab NABL accredited?",
+   "customer_question": "Is your lab NABL?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-008",
+   "category": "Lab tests",
+   "owner_question": "Are tests done in your own lab?",
+   "customer_question": "Do you send samples outside?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "All tests in-house",
+    "Some sent to a partner lab",
+    "Collection centre only"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-009",
+   "category": "Lab tests",
+   "owner_question": "If a doctor doubts a result, do you re-test the stored sample free? How long do you keep samples?",
+   "customer_question": "My report looks wrong, will you re-check?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-010",
+   "category": "Lab tests",
+   "owner_question": "When are reports ready, can urgent reports come in 1–2 hours, and which tests take longer (culture, biopsy)?",
+   "customer_question": "When will the report come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-011",
+   "category": "Scans",
+   "owner_question": "Which scans and tests do you do?",
+   "customer_question": "Do you do MRI?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "X-ray",
+    "Ultrasound",
+    "Pregnancy scans (TIFFA, growth)",
+    "Mammogram",
+    "ECG",
+    "2D echo",
+    "TMT",
+    "CT scan",
+    "MRI",
+    "Open MRI",
+    "Lung function (PFT)"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-012",
+   "category": "Scans",
+   "owner_question": "Do you have a lady radiologist or lady technician for women's scans and ECGs?",
+   "customer_question": "Is there a lady technician?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-013",
+   "category": "Privacy & service",
+   "owner_question": "Do you keep every patient's tests and reports confidential, sending reports only to the patient?",
+   "customer_question": "Will my report be kept private?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-014",
+   "category": "Fees & appointments",
+   "owner_question": "Is the clinic open on festival days?",
+   "customer_question": "Is the clinic open on Sankranti?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-015",
+   "category": "Certificates & bills",
+   "owner_question": "Do you give stamped prescriptions and GST bills for insurance or office reimbursement?",
+   "customer_question": "Can I get bills for my insurance claim?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-016",
+   "category": "Lab tests",
+   "owner_question": "How do your prices compare with online labs, and why should patients choose you?",
+   "customer_question": "Online labs are cheaper, why you?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-017",
+   "category": "Lab tests",
+   "owner_question": "Do you have experienced staff for babies, difficult veins and patients afraid of needles?",
+   "customer_question": "My baby needs a blood test, can you do it gently?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-018",
+   "category": "Lab tests",
+   "owner_question": "Do you put barcode labels on samples in front of the patient?",
+   "customer_question": "Will my sample get mixed up?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-019",
+   "category": "Lab tests",
+   "owner_question": "Do you send reports on WhatsApp and give printed copies and films?",
+   "customer_question": "Can you send the report on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-020",
+   "category": "Lab tests",
+   "owner_question": "Is a pathologist or doctor available to explain the report?",
+   "customer_question": "Can someone explain my report?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-021",
+   "category": "Scans",
+   "owner_question": "Can one attender come inside during pregnancy scans?",
+   "customer_question": "Can my husband come in for the scan?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-022",
+   "category": "Scans",
+   "owner_question": "Before X-rays and CT, do you check for pregnancy and use lead aprons?",
+   "customer_question": "I'm pregnant, is the X-ray safe?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-023",
+   "category": "Scans",
+   "owner_question": "For patients afraid of closed spaces, do you have open MRI or sedation? How do you screen for implants and pacemakers?",
+   "customer_question": "I'm scared of the MRI tunnel",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-024",
+   "category": "Scans",
+   "owner_question": "For contrast scans, do you check creatinine first and keep a doctor present?",
+   "customer_question": "Is the contrast injection safe?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-025",
+   "category": "Scans",
+   "owner_question": "Do you give scan images on CD or pen drive (DICOM) with the film?",
+   "customer_question": "Will I get a CD of the scan?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-026",
+   "category": "Privacy & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-027",
+   "category": "Privacy & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
