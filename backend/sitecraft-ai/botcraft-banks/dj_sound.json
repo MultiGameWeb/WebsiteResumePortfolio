@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 38,
+ "question_count": 40,
  "questions": [
   {
    "id": "dj_sound-001",
@@ -87,7 +87,7 @@
   {
    "id": "dj_sound-005",
    "category": "Lighting & power",
-   "owner_question": "Do you bring a generator or backup power, and is it included? What happens if power goes off during the event?",
+   "owner_question": "Do you bring a generator or backup power (what capacity for all lights, DJ and LED screens), is diesel included, is a standby generator kept, where is it placed so the noise does not disturb guests, and do you check the site's power supply beforehand? What happens if power goes off during the event?",
    "customer_question": "What if current goes off?",
    "priority": "important",
    "answer_type": "text"
@@ -382,17 +382,17 @@
   },
   {
    "id": "dj_sound-034",
-   "category": "Weather & safety",
-   "owner_question": "Who is responsible if rain damages decoration, or if your staff or items damage the place or guests' things?",
-   "customer_question": "Who pays if your staff break something?",
+   "category": "Setup & removal",
+   "owner_question": "For big events (thousands of guests), do you plan the layout with separate entry and exit, a VIP entry, sound for each area and extra staff?",
+   "customer_question": "Can you handle 5,000 people for a meeting?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
    "id": "dj_sound-035",
-   "category": "Weather & safety",
-   "owner_question": "Do you take safety care (covered wires, earthing, firm stage and tent fixing, cables away from walkways)?",
-   "customer_question": "Are the wires safe for children?",
+   "category": "Setup & removal",
+   "owner_question": "Do you work with the customer's caterer, photographers, event manager's layout and other decorators, and change the stage between programmes?",
+   "customer_question": "Will you set the dining area with our caterer?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -403,13 +403,33 @@
   {
    "id": "dj_sound-036",
    "category": "Weather & safety",
+   "owner_question": "Who is responsible if rain damages decoration, or if your staff or items damage the place or guests' things?",
+   "customer_question": "Who pays if your staff break something?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "dj_sound-037",
+   "category": "Weather & safety",
+   "owner_question": "Do you take safety care (covered wires, earthing, firm stage and tent fixing, cables away from walkways, fire extinguishers, a clear emergency exit, no welding or open flame near the tent, and staff who know what to do in a fire or short circuit)?",
+   "customer_question": "Are the wires safe for children?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "dj_sound-038",
+   "category": "Weather & safety",
    "owner_question": "How can customers complain about a problem during or after the event, including extra charges they do not agree with?",
    "customer_question": "Whom do I call if something goes wrong?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "dj_sound-037",
+   "id": "dj_sound-039",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -425,7 +445,7 @@
    ]
   },
   {
-   "id": "dj_sound-038",
+   "id": "dj_sound-040",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Where can I see your work?",
