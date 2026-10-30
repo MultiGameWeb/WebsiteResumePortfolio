@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 40,
+ "question_count": 43,
  "questions": [
   {
    "id": "optical-001",
@@ -23,6 +23,9 @@
     "Bifocal (kryptok / D)",
     "Blended (invisible) bifocal",
     "Progressive (incl. wide-corridor)",
+    "Office / computer progressive (occupational)",
+    "Myopia-control lenses for children (Stellest, MyoVision)",
+    "Flip-up reading glasses",
     "High-index thin lenses",
     "Polycarbonate (unbreakable)",
     "Night-drive anti-glare",
@@ -51,7 +54,9 @@
     "Kids' unbreakable silicone",
     "Trendy (transparent, round, cat-eye, aviator)",
     "Stainless steel / titanium / gold-plated (no allergy)",
+    "Large sizes for broad faces (54–56 mm)",
     "Helmet-friendly flat temples",
+    "Bluetooth audio smart glasses",
     "Sports prescription goggles",
     "Magnetic clip-on sunglass frames",
     "Spring-hinge frames",
@@ -246,8 +251,8 @@
   {
    "id": "optical-021",
    "category": "Lenses",
-   "owner_question": "Do you have clear blue-cut lenses without a yellow tint?",
-   "customer_question": "Will white look yellow with blue-cut?",
+   "owner_question": "Can you replace a broken sunglass lens in the same tint (green, black, gradient) without changing the frame?",
+   "customer_question": "Can you change one Ray-Ban glass?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -258,13 +263,37 @@
   {
    "id": "optical-022",
    "category": "Lenses",
+   "owner_question": "Can you dye power lenses with a fashion or gradient tint (brown, grey, pink, blue)?",
+   "customer_question": "Can I get tinted power glasses?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-023",
+   "category": "Lenses",
+   "owner_question": "Do you have clear blue-cut lenses without a yellow tint?",
+   "customer_question": "Will white look yellow with blue-cut?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "optical-024",
+   "category": "Lenses",
    "owner_question": "For photochromic lenses, do you suggest grey or brown tint?",
    "customer_question": "Grey or brown day-night lens?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "optical-023",
+   "id": "optical-025",
    "category": "Lenses",
    "owner_question": "Do you measure PD and fitting height carefully for progressive and high-power lenses?",
    "customer_question": "Will you measure my eyes for progressive?",
@@ -276,7 +305,7 @@
    ]
   },
   {
-   "id": "optical-024",
+   "id": "optical-026",
    "category": "Lenses",
    "owner_question": "For rimless frames, do you use polycarbonate lenses so they don't crack at the holes?",
    "customer_question": "Will rimless glasses break?",
@@ -288,7 +317,7 @@
    ]
   },
   {
-   "id": "optical-025",
+   "id": "optical-027",
    "category": "Frames",
    "owner_question": "Can you put new lenses in a customer's old frame, or fit old lenses into a new frame?",
    "customer_question": "Can you change only the lenses?",
@@ -300,7 +329,7 @@
    ]
   },
   {
-   "id": "optical-026",
+   "id": "optical-028",
    "category": "Frames",
    "owner_question": "Do your staff help customers choose frames for their face shape?",
    "customer_question": "Which frame suits my face?",
@@ -312,7 +341,7 @@
    ]
   },
   {
-   "id": "optical-027",
+   "id": "optical-029",
    "category": "Frames",
    "owner_question": "Which frame type do you suggest for rough daily use (full-rim, half-rim, rimless), and which shape / size for high minus power so the lens edges don't look thick?",
    "customer_question": "Which frame is strongest?",
@@ -320,7 +349,7 @@
    "answer_type": "text"
   },
   {
-   "id": "optical-028",
+   "id": "optical-030",
    "category": "Sunglasses & contact lenses",
    "owner_question": "Do you teach first-time contact lens users how to wear and remove them (trial)?",
    "customer_question": "Can you teach me to wear lenses?",
@@ -332,7 +361,7 @@
    ]
   },
   {
-   "id": "optical-029",
+   "id": "optical-031",
    "category": "Sunglasses & contact lenses",
    "owner_question": "Do you convert spectacle power to the right contact lens power (for high powers)?",
    "customer_question": "Is my lens power the same as my glasses?",
@@ -344,7 +373,7 @@
    ]
   },
   {
-   "id": "optical-030",
+   "id": "optical-032",
    "category": "Sunglasses & contact lenses",
    "owner_question": "Do you sell a single pair of daily disposable lenses for one occasion?",
    "customer_question": "Can I buy lenses for just one day?",
@@ -356,7 +385,7 @@
    ]
   },
   {
-   "id": "optical-031",
+   "id": "optical-033",
    "category": "Sunglasses & contact lenses",
    "owner_question": "How long do unopened contact lens packs last before expiry?",
    "customer_question": "When do these lenses expire?",
@@ -364,10 +393,18 @@
    "answer_type": "text"
   },
   {
-   "id": "optical-032",
+   "id": "optical-034",
    "category": "Repairs & offers",
-   "owner_question": "Do you clean glasses in an ultrasonic cleaner?",
-   "customer_question": "Can you deep clean my glasses?",
+   "owner_question": "Do you give an exchange discount on old glasses or frames?",
+   "customer_question": "Any discount for my old glasses?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "optical-035",
+   "category": "Repairs & offers",
+   "owner_question": "Do you clean glasses in an ultrasonic cleaner and remove stains (for example hair dye on the temples)?",
+   "customer_question": "Can you clean the dye off my frame?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -376,7 +413,7 @@
    ]
   },
   {
-   "id": "optical-033",
+   "id": "optical-036",
    "category": "Repairs & offers",
    "owner_question": "What warranty do branded frames have (colour fading, broken spring hinge)?",
    "customer_question": "Is there a warranty on the frame?",
@@ -384,7 +421,7 @@
    "answer_type": "text"
   },
   {
-   "id": "optical-034",
+   "id": "optical-037",
    "category": "Repairs & offers",
    "owner_question": "Does your optometrist visit homes for elders who can't come (eye test at home)?",
    "customer_question": "Can you test my grandmother at home?",
@@ -396,7 +433,7 @@
    ]
   },
   {
-   "id": "optical-035",
+   "id": "optical-038",
    "category": "Repairs & offers",
    "owner_question": "Do you give a hard case, cleaning cloth and lens spray free with new glasses?",
    "customer_question": "Will I get a box?",
@@ -408,7 +445,7 @@
    ]
   },
   {
-   "id": "optical-036",
+   "id": "optical-039",
    "category": "Repairs & offers",
    "owner_question": "Which accessories do you sell?",
    "customer_question": "Do you have a spectacle chain?",
@@ -422,11 +459,12 @@
     "Cleaning kits",
     "Eye patches / occluders for kids",
     "LED magnifying glasses",
+    "Double spectacle cases & car visor clips",
     "Lubricating eye drops"
    ]
   },
   {
-   "id": "optical-037",
+   "id": "optical-040",
    "category": "Repairs & offers",
    "owner_question": "Do you give a computer bill with the prescription for office medical reimbursement?",
    "customer_question": "Can I get a bill for reimbursement?",
@@ -438,7 +476,7 @@
    ]
   },
   {
-   "id": "optical-038",
+   "id": "optical-041",
    "category": "Repairs & offers",
    "owner_question": "How much advance do you take for an order, with the balance paid at delivery?",
    "customer_question": "How much advance?",
@@ -446,7 +484,7 @@
    "answer_type": "text"
   },
   {
-   "id": "optical-039",
+   "id": "optical-042",
    "category": "Repairs & offers",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -462,7 +500,7 @@
    ]
   },
   {
-   "id": "optical-040",
+   "id": "optical-043",
    "category": "Repairs & offers",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
