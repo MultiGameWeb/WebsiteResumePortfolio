@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 7,
+ "question_count": 9,
  "questions": [
   {
    "id": "stationery_shop-001",
@@ -24,7 +24,10 @@
     "School bags, bottles & lunch boxes",
     "Office stationery (files, registers, staplers)",
     "Guides & study material",
-    "File covers & document folders"
+    "Competitive exam guides & previous papers",
+    "Record & special papers (drawing sheets, cartridge paper)",
+    "File covers & document folders",
+    "Book covering & name labels"
    ]
   },
   {
@@ -62,6 +65,34 @@
   {
    "id": "stationery_shop-005",
    "category": "Stationery",
+   "owner_question": "Can you order special publications or old editions prescribed by schools, and do you buy or exchange second-hand textbooks?",
+   "customer_question": "Do you have old edition textbooks?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "stationery_shop-006",
+   "category": "Stationery",
+   "owner_question": "Which printing jobs do you take?",
+   "customer_question": "Do you print visiting cards?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Visiting cards & letterheads",
+    "Wedding & invitation cards",
+    "Rubber stamps",
+    "Stickers & labels",
+    "Banners, posters & flex",
+    "Transparency sheets",
+    "Large-format plans & maps (A0 / A1)",
+    "Photo prints for frames",
+    "Old photo reprint & restoration",
+    "None"
+   ]
+  },
+  {
+   "id": "stationery_shop-007",
+   "category": "Stationery",
    "owner_question": "Are prices printed (MRP) or shown on a price list?",
    "customer_question": "Is there a price list?",
    "priority": "optional",
@@ -72,7 +103,7 @@
    ]
   },
   {
-   "id": "stationery_shop-006",
+   "id": "stationery_shop-008",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -88,7 +119,7 @@
    ]
   },
   {
-   "id": "stationery_shop-007",
+   "id": "stationery_shop-009",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
