@@ -64,6 +64,7 @@ import bank_mobile_shop_repair from "./mobile_shop_repair.json" with { type: "js
 import bank_mutton_shop from "./mutton_shop.json" with { type: "json" };
 import bank_open_distance from "./open_distance.json" with { type: "json" };
 import bank_optical from "./optical.json" with { type: "json" };
+import bank_packers_movers from "./packers_movers.json" with { type: "json" };
 import bank_pet_shop from "./pet_shop.json" with { type: "json" };
 import bank_pharmacy from "./pharmacy.json" with { type: "json" };
 import bank_photography from "./photography.json" with { type: "json" };
@@ -168,6 +169,7 @@ export const QUESTION_BANKS = {
   "mutton_shop": bank_mutton_shop,
   "open_distance": bank_open_distance,
   "optical": bank_optical,
+  "packers_movers": bank_packers_movers,
   "pet_shop": bank_pet_shop,
   "pharmacy": bank_pharmacy,
   "photography": bank_photography,
