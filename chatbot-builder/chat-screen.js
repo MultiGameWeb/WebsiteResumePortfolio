@@ -1,10 +1,10 @@
-import { loadSavedConversation, prepareQuestionBank, sendChatAction } from './chatApi.js?v=20261030c';
+import { createBot, currentBotId, loadSavedConversation, myBots, openBot, prepareQuestionBank, rememberBotName, sendChatAction } from './chatApi.js?v=20261031a';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261030c';
+} from './components.js?v=20261031a';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -88,7 +88,7 @@ function announce(text) {
 
 function render({ forceBottom = false } = {}) {
   const shouldStick = forceBottom || isNearBottom();
-  headerHost.replaceChildren(ProgressHeader({ answered: state.answered, total: state.total, language: state.language }));
+  headerHost.replaceChildren(ProgressHeader({ answered: state.answered, total: state.total, language: state.language, bots: myBots(), currentBot: currentBotId() }));
   const list = MessageList(state.messages, state.pendingCount > 0);
   messageHost.replaceChildren(list);
   inputHost.replaceChildren(InputBar(state.stagedAttachments, state.inputError, state.micActive));
@@ -298,8 +298,16 @@ async function prepareBankForShop(typeName) {
     });
 }
 
+// Another shop's bot: a fresh setup. This bot stays saved and can be opened
+// again from "My bots".
+function startNewBot() {
+  if (!window.confirm('Create a new bot for another shop or business? This bot stays saved — open it again any time from "My bots".')) return;
+  createBot();
+}
+
 // The customer bot's link and QR poster, shown once the basics are complete.
 function showBotReady(bot) {
+  rememberBotName(bot.name);
   const existing = state.messages.find((message) => message.botCard);
   // Keep the card's name and Wi-Fi current (the owner may add Wi-Fi later).
   if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.botName = bot.botName || existing.botCard.botName; existing.botCard.wifi = bot.wifi || null; existing.botCard.openQuestions = bot.openQuestions || 0; return; }
@@ -540,6 +548,7 @@ app.addEventListener('click', (event) => {
   if (!button) return;
   const action = button.dataset.action;
 
+  if (action === 'new-bot') { startNewBot(); return; }
   if (action === 'theme-toggle') {
     state.theme = state.theme === 'dark' ? 'light' : 'dark';
     applyTheme();
@@ -614,6 +623,12 @@ app.addEventListener('keydown', (event) => {
 });
 
 app.addEventListener('change', (event) => {
+  if (event.target.matches('.bot-select')) {
+    const choice = event.target.value;
+    if (choice === '__new') { event.target.value = currentBotId(); startNewBot(); }
+    else if (choice !== currentBotId()) openBot(choice);
+    return;
+  }
   if (event.target.matches('.language-select')) {
     state.language = event.target.value;
     try { localStorage.setItem(LANGUAGE_KEY, state.language); } catch {}

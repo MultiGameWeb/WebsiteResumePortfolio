@@ -761,6 +761,9 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
 const PUBLIC_ID_PATTERN = /^[a-f0-9]{16}$/;
 const MAX_CUSTOMER_HISTORY = 12;
 
+// Talk mode on the customer bot: the reply is read aloud by the phone.
+const VOICE_RULE = "\n- The customer is talking to you by voice and will hear your reply read aloud: answer in one to three short spoken sentences in the customer's language, with no lists, symbols, links or emojis.";
+
 async function handleSalesbot(request, env, url, path, origin, ctx) {
   if (!storeAvailable(env)) return reply({ ok: false, error: "This bot is not available right now." }, 503, origin);
   let body = {};
@@ -804,7 +807,7 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   const modelErrors = [];
   try {
     const { result } = await callWithFallback(env, {
-      system: salesbotPrompt(profile, knowledge, product, facts.shop_type),
+      system: salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true ? VOICE_RULE : ""),
       contents,
       schema: SALESBOT_SCHEMA,
       models: CHAT_MODELS,

@@ -4,7 +4,7 @@
  * stays on the Worker. If the Worker is unreachable or not configured yet,
  * the local demo in mockChat.js answers instead, so the page never breaks.
  */
-import { sendChatAction as sendDemoAction } from './mockChat.js?v=20261030c';
+import { sendChatAction as sendDemoAction } from './mockChat.js?v=20261031a';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SEND_AS_IMAGE = new Set(['image/jpeg', 'image/png', 'image/webp']);
@@ -15,18 +15,51 @@ const HISTORY_LIMIT = 30;
 // The shop id ties this browser to its saved setup on the Worker. Until owner
 // login exists it is kept in localStorage; history, facts and answers below
 // are also sent so the chat still works when the Worker has no database.
+// One browser can hold several bots (one per shop); botcraft:bots lists them
+// and botcraft:shopId is the one open now (the owner page uses it too).
 const SHOP_ID_KEY = 'botcraft:shopId';
+const BOTS_KEY = 'botcraft:bots';
+const MAX_BOTS = 50;
+
+function readBots() {
+  try { return JSON.parse(localStorage.getItem(BOTS_KEY) || '[]').filter((bot) => typeof bot?.id === 'string' && bot.id); } catch { return []; }
+}
+function writeBots(bots) {
+  try { localStorage.setItem(BOTS_KEY, JSON.stringify(bots.slice(0, MAX_BOTS))); } catch {}
+}
+
 const shopId = (() => {
   try {
-    const existing = localStorage.getItem(SHOP_ID_KEY);
-    if (existing) return existing;
-    const created = crypto.randomUUID();
-    localStorage.setItem(SHOP_ID_KEY, created);
-    return created;
+    const id = localStorage.getItem(SHOP_ID_KEY) || crypto.randomUUID();
+    localStorage.setItem(SHOP_ID_KEY, id);
+    const bots = readBots();
+    if (!bots.some((bot) => bot.id === id)) writeBots([...bots, { id, name: '' }]);
+    return id;
   } catch {
     return crypto.randomUUID();
   }
 })();
+
+export const currentBotId = () => shopId;
+export const myBots = () => readBots();
+
+export function rememberBotName(name) {
+  const bots = readBots();
+  const bot = bots.find((item) => item.id === shopId);
+  if (bot && name && bot.name !== name) { bot.name = String(name).slice(0, 60); writeBots(bots); }
+}
+
+// Opens another bot of this browser (or a new one) by reloading the page.
+export function openBot(id) {
+  try { localStorage.setItem(SHOP_ID_KEY, id); } catch {}
+  window.location.reload();
+}
+
+export function createBot() {
+  const id = crypto.randomUUID();
+  writeBots([...readBots(), { id, name: '' }]);
+  openBot(id);
+}
 const history = [];
 let facts = {};
 // Answers to the shop type's question bank, by question id.

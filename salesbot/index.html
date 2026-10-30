@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=6">
+  <link rel="stylesheet" href="./styles.css?v=7">
 </head>
 <body>
   <div class="app">
@@ -80,11 +80,23 @@
         <button type="button" class="close-sheet" id="closeSheet">Close</button>
       </div>
     </dialog>
+    <section class="talk-panel" id="talkPanel" role="dialog" aria-label="Talk mode" hidden>
+      <div class="talk-head">
+        <strong>🎙️ Talk mode</strong>
+        <select id="talkLang" aria-label="Language you speak"></select>
+        <button type="button" class="talk-end" id="talkEnd">End</button>
+      </div>
+      <button type="button" class="talk-orb" id="talkOrb" aria-label="Tap to talk">🎙️</button>
+      <p class="talk-status" id="talkStatus" role="status">Tap to talk</p>
+      <p class="talk-heard" id="talkHeard"></p>
+      <p class="talk-note">Your phone turns your voice into text. Never say passwords, OTPs or bank details.</p>
+    </section>
     <form class="composer" id="composer" autocomplete="off">
       <input id="input" type="text" maxlength="1000" placeholder="Ask about items, prices, offers…" aria-label="Your question">
+      <button id="talk" type="button" aria-label="Talk to the assistant" title="Talk" hidden>🎙️</button>
       <button id="send" type="submit" aria-label="Send">➤</button>
     </form>
   </div>
-  <script type="module" src="./app.js?v=6"></script>
+  <script type="module" src="./app.js?v=7"></script>
 </body>
 </html>
