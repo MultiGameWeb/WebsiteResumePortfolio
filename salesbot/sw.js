@@ -1,8 +1,8 @@
 // Keeps the shop assistant page installable and quick to open. Pages and scripts
 // come from the network first (so updates show at once), with the cached copy
 // as a fallback; API calls are never cached.
-const CACHE = 'salesbot-v4';
-const SHELL = ['./', './index.html', './styles.css?v=4', './app.js?v=4', './manifest.webmanifest', './icon.svg'];
+const CACHE = 'salesbot-v5';
+const SHELL = ['./', './index.html', './styles.css?v=5', './app.js?v=5', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));

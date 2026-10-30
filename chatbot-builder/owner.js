@@ -196,11 +196,117 @@ function renderQuestions() {
   const badge = $('#questionCount');
   badge.hidden = !open.length;
   badge.textContent = String(open.length);
-  document.title = open.length ? `(${open.length}) Manage my bot · BotCraft` : 'Manage my bot · BotCraft';
+  const waiting = open.length + (view.requests?.open || []).filter((r) => r.status === 'new').length;
+  document.title = waiting ? `(${waiting}) Manage my bot · BotCraft` : 'Manage my bot · BotCraft';
   $('#questionList').replaceChildren(...(open.length ? open.map((q) => questionCard(q, false)) : [element('p', 'empty', 'No new questions. 🎉')]));
   const answered = view.answeredQuestions || [];
   $('#answeredCount').textContent = String(answered.length);
   $('#answeredList').replaceChildren(...answered.map((q) => questionCard(q, true)));
+}
+
+const REQUEST_STATES = { new: 'New', accepted: 'Accepted', ready: 'Ready', done: 'Done', rejected: 'Not possible' };
+const ORDER_STATES = { received: 'Received', in_progress: 'In progress', ready: 'Ready', delivered: 'Delivered' };
+
+function actionButton(label, className, onClick) {
+  const button = element('button', `btn btn-small ${className}`, label);
+  button.type = 'button';
+  button.addEventListener('click', onClick);
+  return button;
+}
+
+function requestCard(request) {
+  const card = element('article', 'question');
+  const head = element('div', 'request-head');
+  head.append(element('span', '', request.kind === 'preorder' ? '⚡ Pre-order' : '📸 Photo'),
+    element('span', 'request-code', `#${request.code}`),
+    element('span', `state state-${request.status}`, REQUEST_STATES[request.status] || request.status));
+  card.append(head);
+  const meta = [request.customer_name && `From ${request.customer_name}`, request.pickup && `Pickup: ${request.pickup}`,
+    new Date(request.created_at).toLocaleString()].filter(Boolean).join(' · ');
+  card.append(element('div', 'question-meta', meta));
+  if (request.photo_id) {
+    const link = element('a', 'request-photo');
+    link.href = photoUrl(request.photo_id);
+    link.target = '_blank';
+    link.rel = 'noopener';
+    const image = element('img');
+    image.src = photoUrl(request.photo_id);
+    image.alt = 'Customer photo';
+    image.loading = 'lazy';
+    link.append(image);
+    card.append(link);
+  }
+  if (request.message) card.append(element('div', 'request-text', request.message));
+  if (request.reply) card.append(element('div', 'question-answer', `Your reply: ${request.reply}`));
+  const update = (status) => call('update_request', { requestId: request.request_id, status });
+  const actions = element('div', 'request-actions');
+  const open = ['new', 'accepted', 'ready'].includes(request.status);
+  if (open && request.kind === 'preorder') {
+    if (request.status === 'new') actions.append(actionButton('Accept', '', () => update('accepted')));
+    if (request.status !== 'ready') actions.append(actionButton('Mark ready', '', () => update('ready')));
+    actions.append(actionButton('Done', 'btn-light', () => update('done')));
+    if (request.status === 'new') actions.append(actionButton('Not possible', 'btn-light', () => update('rejected')));
+  } else if (open) {
+    actions.append(actionButton('Done', 'btn-light', () => update('done')));
+  }
+  actions.append(actionButton('Delete', 'btn-danger', () => { if (window.confirm('Delete this request?')) call('delete_request', { requestId: request.request_id }); }));
+  card.append(actions);
+  if (open) {
+    const row = element('div', 'row');
+    const reply = element('textarea');
+    reply.rows = 2;
+    reply.maxLength = 600;
+    reply.placeholder = request.kind === 'preorder' ? 'Reply to the customer (for example: Ready by 8:30, ₹420)' : 'Reply to the customer';
+    reply.setAttribute('aria-label', `Reply to request ${request.code}`);
+    const send = element('button', 'btn', 'Send reply');
+    send.type = 'button';
+    send.addEventListener('click', () => {
+      if (reply.value.trim()) call('update_request', { requestId: request.request_id, reply: reply.value.trim(), ...(request.status === 'new' && request.kind === 'photo' ? { status: 'done' } : {}) });
+    });
+    row.append(reply, send);
+    card.append(row);
+  }
+  return card;
+}
+
+function renderRequests() {
+  const { open = [], closed = [] } = view.requests || {};
+  const fresh = open.filter((r) => r.status === 'new').length;
+  const badge = $('#requestCount');
+  badge.hidden = !fresh;
+  badge.textContent = String(fresh);
+  const features = view.features || {};
+  $('#requests').hidden = !features.photo && !features.preorder && !open.length && !closed.length;
+  $('#requestList').replaceChildren(...(open.length ? open.map(requestCard) : [element('p', 'empty', 'No open requests.')]));
+  $('#closedCount').textContent = String(closed.length);
+  $('#closedList').replaceChildren(...closed.map(requestCard));
+}
+
+function renderOrders() {
+  const orders = view.orders || [];
+  $('#orders').hidden = !view.features?.orderStatus && !orders.length;
+  $('#orderList').replaceChildren(...(orders.length ? orders.map((order) => {
+    const row = element('div', 'order-row');
+    row.append(element('span', 'request-code', order.code));
+    const select = element('select');
+    select.setAttribute('aria-label', `Status of order ${order.code}`);
+    for (const [value, label] of Object.entries(ORDER_STATES)) {
+      const option = element('option', '', label);
+      option.value = value;
+      option.selected = value === order.status;
+      select.append(option);
+    }
+    select.addEventListener('change', () => call('save_order', { code: order.code, status: select.value, note: order.reply || '' }));
+    row.append(select, element('span', 'order-note', order.reply || ''),
+      actionButton('Delete', 'btn-danger', () => { if (window.confirm(`Delete order ${order.code}?`)) call('delete_order', { requestId: order.request_id }); }));
+    return row;
+  }) : [element('p', 'empty', 'No orders added yet.')]));
+}
+
+function renderFeatures() {
+  const form = $('#featureForm');
+  if (form.contains(document.activeElement)) return;
+  for (const key of ['photo', 'preorder', 'orderStatus']) form.elements[key].checked = Boolean(view.features?.[key]);
 }
 
 function render() {
@@ -213,6 +319,9 @@ function render() {
   openBot.hidden = !view.publicId;
   if (view.publicId) openBot.href = new URL(`../salesbot/?s=${encodeURIComponent(view.publicId)}`, window.location.href).href;
   renderQuestions();
+  renderRequests();
+  renderOrders();
+  renderFeatures();
   renderPhotos();
   renderItems();
 }
@@ -252,6 +361,21 @@ $('#itemForm').addEventListener('submit', async (event) => {
   form.hidden = true;
 });
 
+$('#orderForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const form = event.target;
+  const code = form.elements.code.value.trim();
+  if (!code) return;
+  const saved = await call('save_order', { code, status: form.elements.status.value, note: form.elements.note.value.trim() });
+  if (saved) form.reset();
+});
+
+$('#featureForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const form = event.target;
+  call('save_features', { features: { photo: form.elements.photo.checked, preorder: form.elements.preorder.checked, orderStatus: form.elements.orderStatus.checked } });
+});
+
 $('#botNameForm').addEventListener('submit', (event) => {
   event.preventDefault();
   call('set_bot_name', { name: $('#botNameInput').value.trim() });
@@ -260,9 +384,9 @@ $('#botNameForm').addEventListener('submit', (event) => {
 if (!shopId) showStatus('No bot found in this browser. Create your bot in the setup chat first.');
 else {
   call('load');
-  // New customer questions show up while the page is open, unless the owner is typing.
+  // New customer questions and requests show up while the page is open, unless the owner is typing.
   window.setInterval(() => {
-    const typing = document.activeElement?.matches('input, textarea') || !$('#itemForm').hidden;
+    const typing = document.activeElement?.matches('input, textarea, select') || !$('#itemForm').hidden;
     if (!document.hidden && !typing) call('load');
   }, 60000);
 }

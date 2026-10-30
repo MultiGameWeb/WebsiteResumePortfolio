@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=4">
+  <link rel="stylesheet" href="./styles.css?v=5">
 </head>
 <body>
   <div class="app">
@@ -31,6 +31,7 @@
       <button type="button" role="tab" data-tab="chat" aria-selected="true">Chat</button>
       <button type="button" role="tab" data-tab="products" aria-selected="false">Products</button>
       <button type="button" role="tab" data-tab="photos" aria-selected="false">Photos</button>
+      <button type="button" role="tab" data-tab="requests" aria-selected="false" hidden>Requests</button>
     </nav>
     <section class="panel products-panel" id="productsPanel" hidden>
       <input class="product-search" id="productSearch" type="search" placeholder="Search products" aria-label="Search products">
@@ -38,6 +39,34 @@
     </section>
     <section class="panel photos-panel" id="photosPanel" hidden>
       <div class="photo-grid" id="photoGrid"></div>
+    </section>
+    <section class="panel requests-panel" id="requestsPanel" hidden>
+      <div class="request-buttons" id="requestButtons">
+        <button type="button" data-form="photo" hidden>📸 Send a photo</button>
+        <button type="button" data-form="preorder" hidden>⚡ Pre-order</button>
+        <button type="button" data-form="order" hidden>🔍 Order status</button>
+      </div>
+      <form class="request-form" id="photoForm" data-kind="photo" hidden>
+        <label>Photo <input type="file" name="photo" accept="image/*" required></label>
+        <label>Your question <textarea name="message" maxlength="600" rows="3" placeholder="For example: Which medicine for this? Can you repair this? Do you have this design?"></textarea></label>
+        <label>Your name <span class="optional">(optional)</span> <input name="name" maxlength="60" autocomplete="off"></label>
+        <button type="submit" class="request-submit">Send to the shop</button>
+      </form>
+      <form class="request-form" id="preorderForm" data-kind="preorder" hidden>
+        <label>What would you like? <textarea name="message" maxlength="600" rows="3" required placeholder="For example: 1 kg chicken curry cut, less fat"></textarea></label>
+        <label>When will you collect it? <input name="pickup" maxlength="80" placeholder="For example: today 8:30 am"></label>
+        <label>Your name <span class="optional">(optional)</span> <input name="name" maxlength="60" autocomplete="off"></label>
+        <button type="submit" class="request-submit">Send pre-order</button>
+      </form>
+      <form class="request-form" id="orderForm" hidden>
+        <label>Bill or order number <input name="code" maxlength="40" required autocomplete="off"></label>
+        <button type="submit" class="request-submit">Check status</button>
+        <p class="order-result" id="orderResult" role="status"></p>
+      </form>
+      <p class="request-note" id="requestNote" role="status"></p>
+      <p class="request-privacy">The shop sees what you send here. Never share passwords, OTPs or bank details.</p>
+      <h2 class="my-title" id="myTitle" hidden>My requests</h2>
+      <div class="my-requests" id="myRequests"></div>
     </section>
     <main class="chat" id="chat" aria-live="polite"></main>
     <dialog class="product-sheet" id="productSheet" aria-labelledby="sheetName">
@@ -55,6 +84,6 @@
       <button id="send" type="submit" aria-label="Send">➤</button>
     </form>
   </div>
-  <script type="module" src="./app.js?v=4"></script>
+  <script type="module" src="./app.js?v=5"></script>
 </body>
 </html>

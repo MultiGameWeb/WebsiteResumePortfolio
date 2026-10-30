@@ -29,6 +29,7 @@ Q = [
  ("Products", "O", "yes_no", "Do you have jaggery or millet sweets and biscuits for people who avoid white sugar?", "Any jaggery sweets?", YN, "KW"),
  ("Products", "O", "yes_no", "Do you have sugar-free sweets or cakes for diabetics?", "Do you have sugar-free sweets?", YN, "KW"),
  ("Products", "O", "yes_no", "Is your chhena / paneer for Bengali sweets made from fresh milk?", "Is the rasgulla made from fresh milk?", YN, "W"),
+ ("Products", "O", "text", "Do you sell pickles and podis (avakaya, gongura, boneless chicken pickle, kandi podi)? Which oil, and how long do they keep?", "Do you have chicken pickle?", [], "W"),
  ("Products", "O", "yes_no", "Is your khova made from real milk, without maida or milk powder?", "Is the palakova pure?", YN, "W"),
  ("Products", "O", "yes_no", "Do you have sweets with silver varq? Is the varq pure and edible?", "Is the silver on this sweet real?", YN, "W"),
  ("Products", "O", "text", "What grade of almonds, pistachios and cashews do you use in sweets?", "Are the cashews good quality?", [], "W"),
@@ -58,7 +59,7 @@ Q = [
  ("Bulk, functions & gifts", "O", "yes_no", "Do you vacuum-pack sweets, podis and savouries for sending abroad (USA, UK, Australia)?", "Can you pack sweets for the USA?", YN, "W"),
 
  ("Freshness & safety", "I", "yes_no", "Is your shop FSSAI-registered, with a clean kitchen and covered display (no flies)?", "Is your kitchen clean?", YN, "KW"),
- ("Freshness & safety", "I", "yes_no", "Do you weigh sweets without the box (box charged separately, if at all)?", "Are you weighing the box too?", YN, "W"),
+ ("Freshness & safety", "I", "yes_no", "Do you weigh sweets and cakes without the box or cake board (charged separately, if at all)?", "Are you weighing the box too?", YN, "KW"),
  ("Freshness & safety", "I", "yes_no", "Do you write the expiry / best-before date on boxes?", "How many days will this keep?", YN, "KW"),
  ("Freshness & safety", "O", "text", "How long do dry cakes, tea cakes, cookies and sweets keep?", "How long will the fruit cake last?", [], "KW"),
  ("Freshness & safety", "O", "yes_no", "Do you use food-grade boxes and butter-paper lining for sweets and cakes?", "Is the box food safe?", YN, "KW"),
