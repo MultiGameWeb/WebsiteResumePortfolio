@@ -1,0 +1,377 @@
+{
+ "shop_type_key": "tailor_shop",
+ "name": "Tailor shop (ladies & gents)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 34,
+ "questions": [
+  {
+   "id": "tailor_shop-001",
+   "category": "Stitching & alterations",
+   "owner_question": "What do you stitch?",
+   "customer_question": "Do you stitch gents shirts?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Ladies blouses",
+    "Salwar / churidar / kurtis",
+    "Lehengas & long frocks",
+    "Kids' wear (pattu pavadai, frocks)",
+    "Western wear (formal pants, blazers, jumpsuits, dhoti pants)",
+    "Maternity / feeding kurtis",
+    "Gents shirts & pants",
+    "Suits, blazers & sherwanis",
+    "Uniforms (school, office, police, doctor coats)",
+    "Curtains, cushion & sofa covers",
+    "Alterations"
+   ]
+  },
+  {
+   "id": "tailor_shop-002",
+   "category": "Sizes & fit",
+   "owner_question": "Do you have a trial room?",
+   "customer_question": "Can I try this on?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tailor_shop-003",
+   "category": "Stitching & alterations",
+   "owner_question": "What are your stitching charges (blouse with and without lining, designer cuts like princess, boat neck, high neck, sabyasachi or backless, padded blouse, salwar, lehenga with can-can, kids' pattu pavadai and frocks)?",
+   "customer_question": "Blouse stitching charge?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-004",
+   "category": "Stitching & alterations",
+   "owner_question": "How many days does stitching take, do you give an exact delivery date and time, and is urgent (same-day) stitching available? Extra charge?",
+   "customer_question": "Can I get the blouse in 2 days?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-005",
+   "category": "Stitching & alterations",
+   "owner_question": "Which work do you do?",
+   "customer_question": "Do you do maggam work?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Hand maggam / aari work",
+    "Computer embroidery",
+    "Couple portraits & names in embroidery",
+    "Zardosi",
+    "Stone / bead work",
+    "Hand painting",
+    "Tassels / latkans"
+   ]
+  },
+  {
+   "id": "tailor_shop-006",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you provide lining cloth (pure cotton, pre-shrunk), or should customers bring it?",
+   "customer_question": "Do I bring the lining cloth?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-007",
+   "category": "Stitching & alterations",
+   "owner_question": "Can customers check on WhatsApp or by phone whether their order is ready?",
+   "customer_question": "Is my blouse ready?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tailor_shop-008",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you use non-tarnish beads and zari, lock-stitch the work so beads don't fall, and keep underarms free of beads?",
+   "customer_question": "Will the maggam beads turn black?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tailor_shop-009",
+   "category": "Stitching & alterations",
+   "owner_question": "How do you avoid common fitting problems (shoulders slipping, armhole wrinkles, front hook gaps), and design for plus sizes?",
+   "customer_question": "My blouse shoulders keep slipping, can you fix that?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-010",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you alter readymade clothes (length, side stitches, zips) and repair tears?",
+   "customer_question": "Can you shorten my jeans?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-011",
+   "category": "Stitching & alterations",
+   "owner_question": "If you spoil a customer's cloth (wrong cut, iron burn, oil stain), lose a sample blouse, or stitch a different design, what do you do?",
+   "customer_question": "You ruined my pattu blouse, what now?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-012",
+   "category": "Stitching & alterations",
+   "owner_question": "How much advance do you take for stitching orders?",
+   "customer_question": "How much advance should I pay?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-013",
+   "category": "Stitching & alterations",
+   "owner_question": "How do you take measurements?",
+   "customer_question": "Should I bring a sample blouse?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "At the shop",
+    "From a sample garment",
+    "Customer sends measurements",
+    "Both"
+   ]
+  },
+  {
+   "id": "tailor_shop-014",
+   "category": "Stitching & alterations",
+   "owner_question": "How many trial fittings do you give, are small alterations done on the spot, and is re-stitching free if the fitting or work is not right?",
+   "customer_question": "If the fitting is wrong, will you correct it free?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-015",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you stitch blouses with maggam work done elsewhere? Is there an extra charge?",
+   "customer_question": "Can you stitch my maggam blouse piece?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-016",
+   "category": "Stitching & alterations",
+   "owner_question": "Which finishing do you offer?",
+   "customer_question": "Can you add latkans?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Piping",
+    "Latkans / tassels",
+    "Rust-free hooks",
+    "Hand-made hook loops",
+    "Overlock inside",
+    "Extra margin to loosen later",
+    "Saree pin holder loop",
+    "Concealed feeding zips",
+    "Leftover pieces returned"
+   ]
+  },
+  {
+   "id": "tailor_shop-017",
+   "category": "Stitching & alterations",
+   "owner_question": "If the cloth is short (for example for elbow sleeves), how do you adjust it?",
+   "customer_question": "My blouse piece is short, can you still do elbow sleeves?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-018",
+   "category": "Stitching & alterations",
+   "owner_question": "Can you convert old sarees into dresses or mother-daughter combos?",
+   "customer_question": "Can you make frocks from my old pattu saree?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tailor_shop-019",
+   "category": "Stitching & alterations",
+   "owner_question": "What discount do you give on bulk orders (for example 5–10 wedding blouses)?",
+   "customer_question": "Any discount for 10 blouses?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-020",
+   "category": "Stitching & alterations",
+   "owner_question": "For gents shirts and pants, what are the charges, and do you use good pocket cloth and branded zips?",
+   "customer_question": "How much for a shirt and pant?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-021",
+   "category": "Stitching & alterations",
+   "owner_question": "For school uniforms, do you leave extra length to let out next year?",
+   "customer_question": "Can you leave extra length in the uniform?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tailor_shop-022",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you sell fabric and do colour-matched dyeing (colour-fast)?",
+   "customer_question": "Can you dye cloth to match my saree?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-023",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you visit homes for measurements and deliver stitched clothes, and stitch for outstation or NRI customers from video-call measurements?",
+   "customer_question": "Can you take measurements at home?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tailor_shop-024",
+   "category": "Stitching & alterations",
+   "owner_question": "How are maggam / aari work charges decided (simple to heavy bridal), and how many days does it take?",
+   "customer_question": "How long for maggam work on my bridal blouse?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-025",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you have women tailors / staff to take measurements for ladies?",
+   "customer_question": "Is there a lady to take measurements?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tailor_shop-026",
+   "category": "Stitching & alterations",
+   "owner_question": "Can you make a design from a photo the customer shows?",
+   "customer_question": "Can you make this design from Instagram?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tailor_shop-027",
+   "category": "Stitching & alterations",
+   "owner_question": "During the wedding season, how early should customers order?",
+   "customer_question": "How early should I give my bridal blouse?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-028",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you stitch dhoti / pancha kattu or pre-stitched sarees?",
+   "customer_question": "Can you make a ready-to-wear saree?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tailor_shop-029",
+   "category": "Stitching & alterations",
+   "owner_question": "Which saree works do you do?",
+   "customer_question": "Can you put fall and pico?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Fall & pico",
+    "Hand-hemmed fall",
+    "Kuchulu / crochet / bead tassels",
+    "Pre-pleating & box folding",
+    "Zari border patchwork from old sarees",
+    "Invisible darning (raffu)"
+   ]
+  },
+  {
+   "id": "tailor_shop-030",
+   "category": "Stitching & alterations",
+   "owner_question": "What do saree works cost (fall & pico, kuchulu, pre-pleating)?",
+   "customer_question": "How much for fall and pico?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-031",
+   "category": "Prices & billing",
+   "owner_question": "Is GST included in the price or added on the bill?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill"
+   ]
+  },
+  {
+   "id": "tailor_shop-032",
+   "category": "Exchange details",
+   "owner_question": "What if a stitched dress doesn't fit or the customer doesn't like it? Refund, redo or correction?",
+   "customer_question": "What if I don't like the stitched dress?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tailor_shop-033",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "tailor_shop-034",
+   "category": "Shop & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

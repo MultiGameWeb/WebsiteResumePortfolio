@@ -3,8 +3,8 @@
  "name": "Ladies beauty parlour & bridal makeup",
  "version": 2,
  "model": "curated",
- "generated_at": "2026-10-29",
- "question_count": 55,
+ "generated_at": "2026-10-30",
+ "question_count": 62,
  "questions": [
   {
    "id": "beauty_parlour-001",
@@ -14,18 +14,23 @@
    "priority": "mandatory",
    "answer_type": "list",
    "options": [
-    "Threading",
-    "Waxing",
+    "Threading (eyebrows, upper lip, forehead, chin)",
+    "Eyebrow waxing",
+    "Waxing (hands, legs, underarms)",
+    "Full body / bikini waxing",
     "Facial",
     "Cleanup",
     "Bleach",
-    "Manicure / pedicure",
+    "De-tan",
+    "Manicure / pedicure (crystal, paraffin)",
     "Haircut & styling",
+    "Hair colour & highlights",
     "Hair spa",
     "Bridal makeup",
     "Party makeup",
     "Mehendi",
-    "Saree draping"
+    "Saree draping",
+    "Ear & nose piercing (gun)"
    ]
   },
   {
@@ -77,6 +82,22 @@
   },
   {
    "id": "beauty_parlour-006",
+   "category": "Services & prices",
+   "owner_question": "Which facials do you offer and at what prices (fruit, gold, diamond, O3+, Korean glass skin, hydrafacial), and how many days before a function do you suggest one?",
+   "customer_question": "How much is a gold facial?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "beauty_parlour-007",
+   "category": "Services & prices",
+   "owner_question": "Which straightening treatments do you do (smoothening, rebonding, keratin, botox, nanoplastia), what do they cost by hair length, are products formaldehyde-free, and must customers buy aftercare products?",
+   "customer_question": "How much is keratin for long hair?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "beauty_parlour-008",
    "category": "Bridal & makeup",
    "owner_question": "What do your bridal makeup packages include, and what are the prices?",
    "customer_question": "How much for bridal makeup?",
@@ -84,7 +105,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-007",
+   "id": "beauty_parlour-009",
    "category": "Bridal & makeup",
    "owner_question": "Which makeup types do you do?",
    "customer_question": "Do you do HD makeup?",
@@ -99,7 +120,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-008",
+   "id": "beauty_parlour-010",
    "category": "Bridal & makeup",
    "owner_question": "How early should a bride book, and how much advance do you take?",
    "customer_question": "How early should I book for my wedding?",
@@ -107,7 +128,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-009",
+   "id": "beauty_parlour-011",
    "category": "Products & hygiene",
    "owner_question": "Are combs, scissors and manicure / pedicure tools cleaned or sterilised (for example UV sterilizer) after every customer?",
    "customer_question": "Are your tools clean?",
@@ -119,7 +140,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-010",
+   "id": "beauty_parlour-012",
    "category": "Products & hygiene",
    "owner_question": "Do you use fresh, disposable or washed towels, sheets (and for massages face-cradle covers and disposable innerwear) for every customer?",
    "customer_question": "Are the towels fresh?",
@@ -131,15 +152,15 @@
    ]
   },
   {
-   "id": "beauty_parlour-011",
+   "id": "beauty_parlour-013",
    "category": "Products & hygiene",
-   "owner_question": "Which product brands do you use for facials, bleach and hair (for example O3+, L'Oréal, Lotus, Cheryl's, VLCC), or do you make your own packs?",
+   "owner_question": "Which product brands do you use for facials, bleach and hair (for example O3+, L'Oréal, Lotus, Cheryl's, VLCC), do you use sealed single-use kits, or do you make your own packs?",
    "customer_question": "Which brand facial do you use?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-012",
+   "id": "beauty_parlour-014",
    "category": "Booking & waiting",
    "owner_question": "How can customers book an appointment?",
    "customer_question": "How do I book?",
@@ -153,7 +174,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-013",
+   "id": "beauty_parlour-015",
    "category": "Booking & waiting",
    "owner_question": "What are your busy times (for example Sunday, evenings), and how long is the usual wait then?",
    "customer_question": "When is it less crowded?",
@@ -161,7 +182,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-014",
+   "id": "beauty_parlour-016",
    "category": "Staff & privacy",
    "owner_question": "Do you have private rooms or cabins for facials, waxing and massages?",
    "customer_question": "Is there a private room?",
@@ -173,7 +194,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-015",
+   "id": "beauty_parlour-017",
    "category": "Packages & membership",
    "owner_question": "Which combo packages do you have (for example haircut + beard + facial) and prices?",
    "customer_question": "Any combo offer?",
@@ -181,7 +202,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-016",
+   "id": "beauty_parlour-018",
    "category": "Home service",
    "owner_question": "Do you provide home service?",
    "customer_question": "Can you come home for a facial?",
@@ -194,7 +215,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-017",
+   "id": "beauty_parlour-019",
    "category": "Services & prices",
    "owner_question": "Is GST included in your prices or added on the bill?",
    "customer_question": "Is GST extra?",
@@ -207,7 +228,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-018",
+   "id": "beauty_parlour-020",
    "category": "Services & prices",
    "owner_question": "How much time does each main service usually take (haircut, facial, hair colour)?",
    "customer_question": "How long will a facial take?",
@@ -215,7 +236,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-019",
+   "id": "beauty_parlour-021",
    "category": "Services & prices",
    "owner_question": "Do you give kids' haircuts? Is there a separate price?",
    "customer_question": "Do you cut kids' hair?",
@@ -227,7 +248,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-020",
+   "id": "beauty_parlour-022",
    "category": "Services & prices",
    "owner_question": "Do you give a free hair and skin consultation before colour, treatments or makeup?",
    "customer_question": "Can you suggest a colour for me?",
@@ -239,7 +260,31 @@
    ]
   },
   {
-   "id": "beauty_parlour-021",
+   "id": "beauty_parlour-023",
+   "category": "Services & prices",
+   "owner_question": "Which haircut styles do you do (U, V, layer, feather, butterfly, wolf; split-ends only without losing length), and is wash and blow-dry included?",
+   "customer_question": "How much for a butterfly cut?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "beauty_parlour-024",
+   "category": "Services & prices",
+   "owner_question": "What do root touch-up, global colour (ammonia-free), highlights / balayage and henna cost?",
+   "customer_question": "How much for global hair colour?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "beauty_parlour-025",
+   "category": "Services & prices",
+   "owner_question": "Do you teach a beautician course? How long, what fee, and is a certificate given?",
+   "customer_question": "Do you have a beautician course?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "beauty_parlour-026",
    "category": "Services & prices",
    "owner_question": "How long does hair straightening, smoothening or keratin last, and do you give any guarantee?",
    "customer_question": "How long will smoothening last?",
@@ -247,7 +292,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-022",
+   "id": "beauty_parlour-027",
    "category": "Services & prices",
    "owner_question": "Which wax do you use?",
    "customer_question": "Do you have Rica wax?",
@@ -260,7 +305,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-023",
+   "id": "beauty_parlour-028",
    "category": "Services & prices",
    "owner_question": "Do you have services for men too (haircut, facial, grooming)?",
    "customer_question": "Do you do men's facials?",
@@ -272,10 +317,26 @@
    ]
   },
   {
-   "id": "beauty_parlour-024",
+   "id": "beauty_parlour-029",
    "category": "Services & prices",
-   "owner_question": "Do you do nail art or nail extensions?",
+   "owner_question": "Do you do nail art or extensions (gel, acrylic)? What do they cost, how long do they last, and is removal charged?",
    "customer_question": "Do you do nail extensions?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "beauty_parlour-030",
+   "category": "Services & prices",
+   "owner_question": "What does bridal mehendi cost (both hands and feet, Arabic or Rajasthani)?",
+   "customer_question": "How much for bridal mehendi?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "beauty_parlour-031",
+   "category": "Services & prices",
+   "owner_question": "For brides, does the senior artist do the makeup in person, matched to the skin tone with long-lasting, sweat-proof products?",
+   "customer_question": "Will the makeup turn grey after an hour?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -284,7 +345,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-025",
+   "id": "beauty_parlour-032",
    "category": "Services & prices",
    "owner_question": "Do you do eyelash extensions or eyebrow tinting?",
    "customer_question": "Do you do lash extensions?",
@@ -297,7 +358,7 @@
    "city_only": true
   },
   {
-   "id": "beauty_parlour-026",
+   "id": "beauty_parlour-033",
    "category": "Services & prices",
    "owner_question": "Do you do hair treatments for dandruff or hair fall?",
    "customer_question": "Anything for dandruff?",
@@ -309,7 +370,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-027",
+   "id": "beauty_parlour-034",
    "category": "Bridal & makeup",
    "owner_question": "Do you have pre-bridal packages (facials, body polishing, hair care in the weeks before the wedding)? Price?",
    "customer_question": "Do you have a pre-bridal package?",
@@ -317,7 +378,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-028",
+   "id": "beauty_parlour-035",
    "category": "Bridal & makeup",
    "owner_question": "Do you do a trial makeup before the wedding? Is it paid?",
    "customer_question": "Can I get a trial makeup?",
@@ -329,7 +390,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-029",
+   "id": "beauty_parlour-036",
    "category": "Bridal & makeup",
    "owner_question": "Do you come to the wedding venue or home for bridal makeup?",
    "customer_question": "Can you come to the marriage hall?",
@@ -341,7 +402,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-030",
+   "id": "beauty_parlour-037",
    "category": "Bridal & makeup",
    "owner_question": "Do you do makeup and saree draping for the bride's family and relatives?",
    "customer_question": "Can you do makeup for my sisters too?",
@@ -353,7 +414,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-031",
+   "id": "beauty_parlour-038",
    "category": "Bridal & makeup",
    "owner_question": "Do you do hairstyles with flowers, jada and hair accessories?",
    "customer_question": "Do you do jada with flowers?",
@@ -365,7 +426,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-032",
+   "id": "beauty_parlour-039",
    "category": "Bridal & makeup",
    "owner_question": "Do you provide bridal jewellery or accessories on rent?",
    "customer_question": "Do you give jewellery for the bride?",
@@ -377,7 +438,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-033",
+   "id": "beauty_parlour-040",
    "category": "Bridal & makeup",
    "owner_question": "Which makeup brands do you use for brides (for example MAC, Huda, Kryolan)?",
    "customer_question": "Which brand makeup do you use?",
@@ -385,7 +446,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-034",
+   "id": "beauty_parlour-041",
    "category": "Products & hygiene",
    "owner_question": "Do you have options for sensitive skin or allergies (for example ammonia-free colour)?",
    "customer_question": "I have sensitive skin, is that okay?",
@@ -397,7 +458,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-035",
+   "id": "beauty_parlour-042",
    "category": "Products & hygiene",
    "owner_question": "Do you do a patch test before colour, chemical treatments or a new massage oil?",
    "customer_question": "Will you do a patch test?",
@@ -409,7 +470,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-036",
+   "id": "beauty_parlour-043",
    "category": "Products & hygiene",
    "owner_question": "Are your products cruelty-free or vegan?",
    "customer_question": "Are your products vegan?",
@@ -422,7 +483,7 @@
    "city_only": true
   },
   {
-   "id": "beauty_parlour-037",
+   "id": "beauty_parlour-044",
    "category": "Products & hygiene",
    "owner_question": "Do you sell hair and skin products at the shop?",
    "customer_question": "Can I buy the shampoo here?",
@@ -434,7 +495,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-038",
+   "id": "beauty_parlour-045",
    "category": "Products & hygiene",
    "owner_question": "Do you use organic or herbal products for some services?",
    "customer_question": "Do you have herbal facials?",
@@ -446,7 +507,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-039",
+   "id": "beauty_parlour-046",
    "category": "Booking & waiting",
    "owner_question": "What happens if a customer is late (is the session shortened?) or cancels an appointment? Any charge?",
    "customer_question": "What if I come late?",
@@ -454,7 +515,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-040",
+   "id": "beauty_parlour-047",
    "category": "Booking & waiting",
    "owner_question": "Do you take advance booking for festivals and the wedding season?",
    "customer_question": "Can I book for Diwali morning?",
@@ -466,7 +527,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-041",
+   "id": "beauty_parlour-048",
    "category": "Booking & waiting",
    "owner_question": "Do you have a waiting area with seating, AC or TV?",
    "customer_question": "Is there a place to wait?",
@@ -478,7 +539,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-042",
+   "id": "beauty_parlour-049",
    "category": "Staff & privacy",
    "owner_question": "Can customers choose a particular stylist or therapist?",
    "customer_question": "Can I ask for the same stylist?",
@@ -490,7 +551,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-043",
+   "id": "beauty_parlour-050",
    "category": "Staff & privacy",
    "owner_question": "How many years of experience do your senior stylists or beauticians have?",
    "customer_question": "Are the stylists experienced?",
@@ -498,7 +559,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-044",
+   "id": "beauty_parlour-051",
    "category": "Packages & membership",
    "owner_question": "Do you have a monthly membership or prepaid card? What are the benefits?",
    "customer_question": "Is there a membership card?",
@@ -506,7 +567,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-045",
+   "id": "beauty_parlour-052",
    "category": "Packages & membership",
    "owner_question": "Do you give special gifts or discounts on birthdays or anniversaries?",
    "customer_question": "Any birthday offer?",
@@ -514,7 +575,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-046",
+   "id": "beauty_parlour-053",
    "category": "Packages & membership",
    "owner_question": "Do you sell gift vouchers?",
    "customer_question": "Can I gift a spa voucher?",
@@ -526,7 +587,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-047",
+   "id": "beauty_parlour-054",
    "category": "Packages & membership",
    "owner_question": "Do you give special prices for students, seniors, corporate employees or groups (for example a bridal party or 4–5 friends)?",
    "customer_question": "Any group discount?",
@@ -534,7 +595,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-048",
+   "id": "beauty_parlour-055",
    "category": "Home service",
    "owner_question": "Which areas do you cover for home service, and is there an extra charge?",
    "customer_question": "Is there extra charge for home service?",
@@ -542,7 +603,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-049",
+   "id": "beauty_parlour-056",
    "category": "Shop & service",
    "owner_question": "Is the shop air-conditioned?",
    "customer_question": "Is it AC?",
@@ -554,7 +615,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-050",
+   "id": "beauty_parlour-057",
    "category": "Shop & service",
    "owner_question": "Are tips for therapists expected?",
    "customer_question": "Should I give a tip?",
@@ -567,7 +628,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-051",
+   "id": "beauty_parlour-058",
    "category": "Shop & service",
    "owner_question": "How can customers give feedback after a service (Google review, feedback form or tablet)?",
    "customer_question": "Where can I give feedback?",
@@ -575,7 +636,7 @@
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-052",
+   "id": "beauty_parlour-059",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty card or points for regular customers?",
    "customer_question": "Do I get points?",
@@ -587,15 +648,15 @@
    ]
   },
   {
-   "id": "beauty_parlour-053",
+   "id": "beauty_parlour-060",
    "category": "Shop & service",
-   "owner_question": "If a customer is not happy with a haircut, massage or service, what do you do (redo, another therapist, discount)?",
+   "owner_question": "If a customer is not happy with a service (uneven eyebrows, a cut or wax burn, an allergy, smoothening that doesn't hold), what do you do (redo free, another therapist, discount)?",
    "customer_question": "What if I don't like the service?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "beauty_parlour-054",
+   "id": "beauty_parlour-061",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -611,7 +672,7 @@
    ]
   },
   {
-   "id": "beauty_parlour-055",
+   "id": "beauty_parlour-062",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",

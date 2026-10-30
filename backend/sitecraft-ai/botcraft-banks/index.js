@@ -61,6 +61,7 @@ import bank_skin_hair_clinic from "./skin_hair_clinic.json" with { type: "json" 
 import bank_spa from "./spa.json" with { type: "json" };
 import bank_supermarket from "./supermarket.json" with { type: "json" };
 import bank_sweet_shop from "./sweet_shop.json" with { type: "json" };
+import bank_tailor_shop from "./tailor_shop.json" with { type: "json" };
 import bank_tiffin_centre from "./tiffin_centre.json" with { type: "json" };
 import bank_travels from "./travels.json" with { type: "json" };
 import bank_tuition_centre from "./tuition_centre.json" with { type: "json" };
@@ -128,6 +129,7 @@ export const QUESTION_BANKS = {
   "spa": bank_spa,
   "supermarket": bank_supermarket,
   "sweet_shop": bank_sweet_shop,
+  "tailor_shop": bank_tailor_shop,
   "tiffin_centre": bank_tiffin_centre,
   "travels": bank_travels,
   "tuition_centre": bank_tuition_centre

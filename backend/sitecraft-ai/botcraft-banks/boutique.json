@@ -3,8 +3,8 @@
  "name": "Boutique & designer wear",
  "version": 2,
  "model": "curated",
- "generated_at": "2026-10-28",
- "question_count": 48,
+ "generated_at": "2026-10-30",
+ "question_count": 61,
  "questions": [
   {
    "id": "boutique-001",
@@ -99,7 +99,7 @@
   {
    "id": "boutique-008",
    "category": "Stitching & alterations",
-   "owner_question": "What are your stitching charges (simple blouse, designer blouse, salwar, lehenga)?",
+   "owner_question": "What are your stitching charges (blouse with and without lining, designer cuts like princess, boat neck, high neck, sabyasachi or backless, padded blouse, salwar, lehenga with can-can, kids' pattu pavadai and frocks)?",
    "customer_question": "Blouse stitching charge?",
    "priority": "important",
    "answer_type": "text"
@@ -107,7 +107,7 @@
   {
    "id": "boutique-009",
    "category": "Stitching & alterations",
-   "owner_question": "How many days does stitching take, and is urgent (express) stitching available? Extra charge?",
+   "owner_question": "How many days does stitching take, do you give an exact delivery date and time, and is urgent (same-day) stitching available? Extra charge?",
    "customer_question": "Can I get the blouse in 2 days?",
    "priority": "important",
    "answer_type": "text"
@@ -120,8 +120,9 @@
    "priority": "important",
    "answer_type": "list",
    "options": [
-    "Maggam / aari work",
-    "Embroidery (machine)",
+    "Hand maggam / aari work",
+    "Computer embroidery",
+    "Couple portraits & names in embroidery",
     "Zardosi",
     "Stone / bead work",
     "Hand painting",
@@ -131,13 +132,61 @@
   {
    "id": "boutique-011",
    "category": "Stitching & alterations",
+   "owner_question": "Do you provide lining cloth (pure cotton, pre-shrunk), or should customers bring it?",
+   "customer_question": "Do I bring the lining cloth?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "boutique-012",
+   "category": "Stitching & alterations",
+   "owner_question": "Can customers check on WhatsApp or by phone whether their order is ready?",
+   "customer_question": "Is my blouse ready?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "boutique-013",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you use non-tarnish beads and zari, lock-stitch the work so beads don't fall, and keep underarms free of beads?",
+   "customer_question": "Will the maggam beads turn black?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "boutique-014",
+   "category": "Stitching & alterations",
+   "owner_question": "How do you avoid common fitting problems (shoulders slipping, armhole wrinkles, front hook gaps), and design for plus sizes?",
+   "customer_question": "My blouse shoulders keep slipping, can you fix that?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "boutique-015",
+   "category": "Stitching & alterations",
+   "owner_question": "If you spoil a customer's cloth (wrong cut, iron burn, oil stain), lose a sample blouse, or stitch a different design, what do you do?",
+   "customer_question": "You ruined my pattu blouse, what now?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "boutique-016",
+   "category": "Stitching & alterations",
    "owner_question": "How much advance do you take for stitching orders?",
    "customer_question": "How much advance should I pay?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "boutique-012",
+   "id": "boutique-017",
    "category": "Stitching & alterations",
    "owner_question": "How do you take measurements?",
    "customer_question": "Should I bring a sample blouse?",
@@ -151,15 +200,15 @@
    ]
   },
   {
-   "id": "boutique-013",
+   "id": "boutique-018",
    "category": "Stitching & alterations",
-   "owner_question": "How many trial fittings do you give, and is re-stitching free if the fitting or work is not right?",
+   "owner_question": "How many trial fittings do you give, are small alterations done on the spot, and is re-stitching free if the fitting or work is not right?",
    "customer_question": "If the fitting is wrong, will you correct it free?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "boutique-014",
+   "id": "boutique-019",
    "category": "Prices & billing",
    "owner_question": "Are your prices fixed, or can customers bargain?",
    "customer_question": "Is there any discount on this price?",
@@ -172,7 +221,7 @@
    ]
   },
   {
-   "id": "boutique-015",
+   "id": "boutique-020",
    "category": "Stock & orders",
    "owner_question": "Can customers see new designs on WhatsApp (photos or video call) and order?",
    "customer_question": "Can you send me photos of new sarees?",
@@ -184,7 +233,7 @@
    ]
   },
   {
-   "id": "boutique-016",
+   "id": "boutique-021",
    "category": "Products & collections",
    "owner_question": "Do you have a separate wedding collection (bridal lehengas, pattu sarees, sherwanis)?",
    "customer_question": "Where is the wedding collection?",
@@ -196,7 +245,7 @@
    ]
   },
   {
-   "id": "boutique-017",
+   "id": "boutique-022",
    "category": "Products & collections",
    "owner_question": "Do you sell matching sets for the whole family (same colour for couple, kids, family)?",
    "customer_question": "Do you have matching dresses for the family?",
@@ -208,7 +257,7 @@
    ]
   },
   {
-   "id": "boutique-018",
+   "id": "boutique-023",
    "category": "Products & collections",
    "owner_question": "Which latest trending styles do you have right now?",
    "customer_question": "Do you have the latest trend?",
@@ -216,7 +265,7 @@
    "answer_type": "text"
   },
   {
-   "id": "boutique-019",
+   "id": "boutique-024",
    "category": "Products & collections",
    "owner_question": "Do you sell groom combos (sherwani with matching pagdi, mojari and dupatta)?",
    "customer_question": "Do you have a full groom set?",
@@ -228,7 +277,7 @@
    ]
   },
   {
-   "id": "boutique-020",
+   "id": "boutique-025",
    "category": "Products & collections",
    "owner_question": "Do you sell matching accessories (dupattas, belts, wallets, ties, handkerchiefs, caps, hair accessories, handbags)?",
    "customer_question": "Do you have a matching dupatta?",
@@ -240,7 +289,7 @@
    ]
   },
   {
-   "id": "boutique-021",
+   "id": "boutique-026",
    "category": "Fabric & quality",
    "owner_question": "Do you sell eco-friendly fabrics (organic cotton, natural dyes, recycled fabric)?",
    "customer_question": "Do you have eco-friendly clothes?",
@@ -253,7 +302,7 @@
    "city_only": true
   },
   {
-   "id": "boutique-022",
+   "id": "boutique-027",
    "category": "Fabric & quality",
    "owner_question": "Which clothes need dry cleaning only, and how should customers wash, iron (zari, heavy work) and care for the rest?",
    "customer_question": "Can I wash this at home?",
@@ -261,15 +310,90 @@
    "answer_type": "text"
   },
   {
-   "id": "boutique-023",
+   "id": "boutique-028",
    "category": "Stitching & alterations",
-   "owner_question": "How are maggam / aari work charges decided, and how many days does it take?",
+   "owner_question": "Do you stitch blouses with maggam work done elsewhere? Is there an extra charge?",
+   "customer_question": "Can you stitch my maggam blouse piece?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "boutique-029",
+   "category": "Stitching & alterations",
+   "owner_question": "Which finishing do you offer?",
+   "customer_question": "Can you add latkans?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Piping",
+    "Latkans / tassels",
+    "Rust-free hooks",
+    "Hand-made hook loops",
+    "Overlock inside",
+    "Extra margin to loosen later",
+    "Saree pin holder loop",
+    "Concealed feeding zips",
+    "Leftover pieces returned"
+   ]
+  },
+  {
+   "id": "boutique-030",
+   "category": "Stitching & alterations",
+   "owner_question": "If the cloth is short (for example for elbow sleeves), how do you adjust it?",
+   "customer_question": "My blouse piece is short, can you still do elbow sleeves?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "boutique-031",
+   "category": "Stitching & alterations",
+   "owner_question": "Can you convert old sarees into dresses or mother-daughter combos?",
+   "customer_question": "Can you make frocks from my old pattu saree?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "boutique-032",
+   "category": "Stitching & alterations",
+   "owner_question": "What discount do you give on bulk orders (for example 5–10 wedding blouses)?",
+   "customer_question": "Any discount for 10 blouses?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "boutique-033",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you sell fabric and do colour-matched dyeing (colour-fast)?",
+   "customer_question": "Can you dye cloth to match my saree?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "boutique-034",
+   "category": "Stitching & alterations",
+   "owner_question": "Do you visit homes for measurements and deliver stitched clothes, and stitch for outstation or NRI customers from video-call measurements?",
+   "customer_question": "Can you take measurements at home?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "boutique-035",
+   "category": "Stitching & alterations",
+   "owner_question": "How are maggam / aari work charges decided (simple to heavy bridal), and how many days does it take?",
    "customer_question": "How long for maggam work on my bridal blouse?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "boutique-024",
+   "id": "boutique-036",
    "category": "Stitching & alterations",
    "owner_question": "Do you have women tailors / staff to take measurements for ladies?",
    "customer_question": "Is there a lady to take measurements?",
@@ -281,7 +405,7 @@
    ]
   },
   {
-   "id": "boutique-025",
+   "id": "boutique-037",
    "category": "Stitching & alterations",
    "owner_question": "Can customers bring their own cloth for stitching?",
    "customer_question": "Can I bring my own cloth?",
@@ -293,7 +417,7 @@
    ]
   },
   {
-   "id": "boutique-026",
+   "id": "boutique-038",
    "category": "Stitching & alterations",
    "owner_question": "Can you make a design from a photo the customer shows?",
    "customer_question": "Can you make this design from Instagram?",
@@ -305,7 +429,7 @@
    ]
   },
   {
-   "id": "boutique-027",
+   "id": "boutique-039",
    "category": "Stitching & alterations",
    "owner_question": "During the wedding season, how early should customers order?",
    "customer_question": "How early should I give my bridal blouse?",
@@ -313,7 +437,7 @@
    "answer_type": "text"
   },
   {
-   "id": "boutique-028",
+   "id": "boutique-040",
    "category": "Stitching & alterations",
    "owner_question": "Do you stitch dhoti / pancha kattu or pre-stitched sarees?",
    "customer_question": "Can you make a ready-to-wear saree?",
@@ -325,19 +449,31 @@
    ]
   },
   {
-   "id": "boutique-029",
+   "id": "boutique-041",
    "category": "Stitching & alterations",
-   "owner_question": "Do you do saree pre-pleating or box folding for functions?",
-   "customer_question": "Can you pleat my saree?",
+   "owner_question": "Which saree works do you do?",
+   "customer_question": "Can you put fall and pico?",
    "priority": "optional",
-   "answer_type": "yes_no",
+   "answer_type": "list",
    "options": [
-    "Yes",
-    "No"
+    "Fall & pico",
+    "Hand-hemmed fall",
+    "Kuchulu / crochet / bead tassels",
+    "Pre-pleating & box folding",
+    "Zari border patchwork from old sarees",
+    "Invisible darning (raffu)"
    ]
   },
   {
-   "id": "boutique-030",
+   "id": "boutique-042",
+   "category": "Stitching & alterations",
+   "owner_question": "What do saree works cost (fall & pico, kuchulu, pre-pleating)?",
+   "customer_question": "How much for fall and pico?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "boutique-043",
    "category": "Prices & billing",
    "owner_question": "Is GST included in the price or added on the bill?",
    "customer_question": "Is GST extra?",
@@ -349,7 +485,7 @@
    ]
   },
   {
-   "id": "boutique-031",
+   "id": "boutique-044",
    "category": "Prices & billing",
    "owner_question": "Do you give special discounts for students (college ID) or corporate employees?",
    "customer_question": "Any student discount?",
@@ -357,7 +493,7 @@
    "answer_type": "text"
   },
   {
-   "id": "boutique-032",
+   "id": "boutique-045",
    "category": "Exchange details",
    "owner_question": "What if a stitched dress doesn't fit or the customer doesn't like it? Refund, redo or correction?",
    "customer_question": "What if I don't like the stitched dress?",
@@ -365,7 +501,7 @@
    "answer_type": "text"
   },
   {
-   "id": "boutique-033",
+   "id": "boutique-046",
    "category": "Stock & orders",
    "owner_question": "Can customers reserve a piece for a few days by paying an advance?",
    "customer_question": "Can you keep this aside for me?",
@@ -377,7 +513,7 @@
    ]
   },
   {
-   "id": "boutique-034",
+   "id": "boutique-047",
    "category": "Stock & orders",
    "owner_question": "Do you send sarees / clothes for selection to the customer's home (for weddings or elders)?",
    "customer_question": "Can you bring sarees to our house for selection?",
@@ -389,7 +525,7 @@
    ]
   },
   {
-   "id": "boutique-035",
+   "id": "boutique-048",
    "category": "Stock & orders",
    "owner_question": "Do you courier to other cities and abroad? What are the charges?",
    "customer_question": "Can you send it to the USA?",
@@ -397,7 +533,7 @@
    "answer_type": "text"
   },
   {
-   "id": "boutique-036",
+   "id": "boutique-049",
    "category": "Stock & orders",
    "owner_question": "If a customer doesn't like clothes sent by courier, how do they return them?",
    "customer_question": "Will you pick it up if I don't like it?",
@@ -410,7 +546,7 @@
    ]
   },
   {
-   "id": "boutique-037",
+   "id": "boutique-050",
    "category": "Stock & orders",
    "owner_question": "Do you rent bridal lehengas, sherwanis or costumes?",
    "customer_question": "Can I rent a lehenga?",
@@ -422,7 +558,7 @@
    ]
   },
   {
-   "id": "boutique-038",
+   "id": "boutique-051",
    "category": "Shop & service",
    "owner_question": "Are carry bags free, or charged on the bill?",
    "customer_question": "Do I have to pay for the bag?",
@@ -435,7 +571,7 @@
    ]
   },
   {
-   "id": "boutique-039",
+   "id": "boutique-052",
    "category": "Shop & service",
    "owner_question": "Do you send the bill on WhatsApp or SMS?",
    "customer_question": "Can you send the bill on WhatsApp?",
@@ -447,7 +583,7 @@
    ]
   },
   {
-   "id": "boutique-040",
+   "id": "boutique-053",
    "category": "Shop & service",
    "owner_question": "Do you do gift wrapping or gift box packing?",
    "customer_question": "Can you gift-pack it?",
@@ -459,7 +595,7 @@
    ]
   },
   {
-   "id": "boutique-041",
+   "id": "boutique-054",
    "category": "Shop & service",
    "owner_question": "Do you have a private room or bridal lounge for bride and groom shopping?",
    "customer_question": "Is there a private room for bridal shopping?",
@@ -471,7 +607,7 @@
    ]
   },
   {
-   "id": "boutique-042",
+   "id": "boutique-055",
    "category": "Shop & service",
    "owner_question": "Do you take appointments for bridal or designer consultation?",
    "customer_question": "Can I book an appointment?",
@@ -483,7 +619,7 @@
    ]
   },
   {
-   "id": "boutique-043",
+   "id": "boutique-056",
    "category": "Shop & service",
    "owner_question": "Do you give loyalty points, and can they be used on the next bill?",
    "customer_question": "Do I get points?",
@@ -491,7 +627,7 @@
    "answer_type": "text"
   },
   {
-   "id": "boutique-044",
+   "id": "boutique-057",
    "category": "Shop & service",
    "owner_question": "Does a sales assistant help each customer with selection?",
    "customer_question": "Can someone help me choose?",
@@ -503,7 +639,7 @@
    ]
   },
   {
-   "id": "boutique-045",
+   "id": "boutique-058",
    "category": "Shop & service",
    "owner_question": "If customers have a complaint (staff behaviour, billing delay), whom can they talk to?",
    "customer_question": "Can I talk to the manager?",
@@ -511,7 +647,7 @@
    "answer_type": "text"
   },
   {
-   "id": "boutique-046",
+   "id": "boutique-059",
    "category": "Shop & service",
    "owner_question": "If customers forget a bag or item in the trial room, do you keep it safe for them?",
    "customer_question": "I left my bag in the trial room, do you have it?",
@@ -523,7 +659,7 @@
    ]
   },
   {
-   "id": "boutique-047",
+   "id": "boutique-060",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -539,7 +675,7 @@
    ]
   },
   {
-   "id": "boutique-048",
+   "id": "boutique-061",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
