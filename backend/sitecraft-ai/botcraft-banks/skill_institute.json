@@ -1,0 +1,374 @@
+{
+ "shop_type_key": "skill_institute",
+ "name": "Computer & skill training institute",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 36,
+ "questions": [
+  {
+   "id": "skill_institute-001",
+   "category": "Classes & courses",
+   "owner_question": "Which courses do you teach?",
+   "customer_question": "Do you have a spoken English course?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Spoken English",
+    "Basic computers & MS Office",
+    "Tally / GST accounting",
+    "DTP / Photoshop",
+    "Coding (Python, Java, web)",
+    "Digital marketing",
+    "Data analytics",
+    "Typing",
+    "Hardware & networking",
+    "Communication & interview skills"
+   ]
+  },
+  {
+   "id": "skill_institute-002",
+   "category": "Fees & discounts",
+   "owner_question": "What are your fees (monthly, yearly or full course) for each class or course?",
+   "customer_question": "How much is the fee?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-003",
+   "category": "Fees & discounts",
+   "owner_question": "Is there an admission or registration fee? How much?",
+   "customer_question": "Is there an admission fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-004",
+   "category": "Fees & discounts",
+   "owner_question": "Can the fee be paid in parts?",
+   "customer_question": "Can I pay the fee in instalments?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Full payment only",
+    "2–3 instalments",
+    "Monthly fee"
+   ]
+  },
+  {
+   "id": "skill_institute-005",
+   "category": "Fees & discounts",
+   "owner_question": "What does the fee include (study material, books, uniform, ID card, tests), and what is charged extra?",
+   "customer_question": "Are books included in the fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-006",
+   "category": "Fees & discounts",
+   "owner_question": "Do you give free demo classes before joining? For how many days?",
+   "customer_question": "Can my son attend a demo class?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-007",
+   "category": "Fees & discounts",
+   "owner_question": "What makes your centre special compared to others nearby?",
+   "customer_question": "Why should we join you?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-008",
+   "category": "Teachers & teaching",
+   "owner_question": "What are your teachers' qualifications and years of experience? Where did they teach before?",
+   "customer_question": "Are the teachers qualified?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-009",
+   "category": "Teachers & teaching",
+   "owner_question": "Do the same senior teachers from the demo classes teach the whole year?",
+   "customer_question": "Will the demo teacher teach all year?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-010",
+   "category": "Teachers & teaching",
+   "owner_question": "In which language do teachers explain?",
+   "customer_question": "Will you explain in Telugu?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "English only",
+    "English with Telugu explanation",
+    "Telugu medium",
+    "Hindi too"
+   ]
+  },
+  {
+   "id": "skill_institute-011",
+   "category": "Batches & attention",
+   "owner_question": "How many students are in one batch?",
+   "customer_question": "How many kids in a class?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-012",
+   "category": "Batches & attention",
+   "owner_question": "Do you have one-on-one doubt sessions for students who are shy to ask in class?",
+   "customer_question": "Can my son clear doubts separately?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-013",
+   "category": "Timings & attendance",
+   "owner_question": "Which batches do you have?",
+   "customer_question": "Is there an evening batch?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Morning",
+    "Evening",
+    "Weekend only",
+    "Holiday / summer crash courses"
+   ]
+  },
+  {
+   "id": "skill_institute-014",
+   "category": "Syllabus & material",
+   "owner_question": "Do you give your own printed notes or study material?",
+   "customer_question": "Do you give notes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-015",
+   "category": "Tests & results",
+   "owner_question": "What were your results last year (10/10 GPA, ranks, selections or placements)?",
+   "customer_question": "How many got 10/10 last year?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-016",
+   "category": "Online & hybrid",
+   "owner_question": "Which ways of learning do you offer?",
+   "customer_question": "Are there online classes?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Offline only",
+    "Online live classes",
+    "Hybrid (join online when absent)",
+    "Recorded videos",
+    "Mobile app"
+   ]
+  },
+  {
+   "id": "skill_institute-017",
+   "category": "Skill courses",
+   "owner_question": "Are computer courses practical (with live projects)? Does each student get their own computer?",
+   "customer_question": "Will I get my own computer?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-018",
+   "category": "Skill courses",
+   "owner_question": "What certificate do you give, and who recognises it (ISO, government, company)?",
+   "customer_question": "Is the certificate government approved?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-019",
+   "category": "Skill courses",
+   "owner_question": "Do you give placement assistance and help with resumes and interviews?",
+   "customer_question": "Will you help me get a job?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-020",
+   "category": "Facilities & safety",
+   "owner_question": "Which facilities do you have?",
+   "customer_question": "Is there AC?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "AC classrooms",
+    "Fans & good ventilation",
+    "Benches / chairs",
+    "Power backup",
+    "RO drinking water",
+    "Separate washrooms for boys & girls",
+    "CCTV",
+    "Security guard",
+    "Cycle / bike parking"
+   ]
+  },
+  {
+   "id": "skill_institute-021",
+   "category": "Fees & discounts",
+   "owner_question": "How much discount do you give if the full fee is paid at once?",
+   "customer_question": "Any discount if I pay full fee?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-022",
+   "category": "Fees & discounts",
+   "owner_question": "What is your refund policy (if the student leaves after the demo or moves to another town)?",
+   "customer_question": "Will you refund the fee if we move?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-023",
+   "category": "Fees & discounts",
+   "owner_question": "Do you give a referral discount when students bring friends?",
+   "customer_question": "Any discount if my friend joins?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-024",
+   "category": "Fees & discounts",
+   "owner_question": "For students joining in the middle of the year, is the fee reduced?",
+   "customer_question": "We're joining late, is the fee less?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-025",
+   "category": "Teachers & teaching",
+   "owner_question": "If a teacher leaves in the middle of the year, how soon do you bring a replacement?",
+   "customer_question": "What if the teacher leaves?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-026",
+   "category": "Teachers & teaching",
+   "owner_question": "Do you use digital boards or projectors?",
+   "customer_question": "Do you have smart classes?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Digital board / projector",
+    "Whiteboard / blackboard",
+    "Both"
+   ]
+  },
+  {
+   "id": "skill_institute-027",
+   "category": "Timings & attendance",
+   "owner_question": "How many hours a day and days a week are classes? Any special classes on Sundays?",
+   "customer_question": "Are there classes on Sunday?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-028",
+   "category": "Timings & attendance",
+   "owner_question": "If a student misses classes (illness, travel), how do you cover the missed lessons?",
+   "customer_question": "My daughter was sick for 5 days, will you cover it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-029",
+   "category": "Timings & attendance",
+   "owner_question": "How do you cover the syllabus already finished for late joiners?",
+   "customer_question": "How will you cover old lessons?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-030",
+   "category": "Online & hybrid",
+   "owner_question": "Can students ask doubts online (chat or call)?",
+   "customer_question": "Can I ask doubts on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-031",
+   "category": "Skill courses",
+   "owner_question": "Do you teach English from zero level (basic grammar)?",
+   "customer_question": "I don't know any English, can I join?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-032",
+   "category": "Skill courses",
+   "owner_question": "Do you practise group discussions, debates and stage speaking?",
+   "customer_question": "Will I get speaking practice?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "skill_institute-033",
+   "category": "Skill courses",
+   "owner_question": "How many hours can students use the lab for practice after class?",
+   "customer_question": "Can I practise in the lab after class?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-034",
+   "category": "Discipline & rules",
+   "owner_question": "What is your rule on mobile phones in class?",
+   "customer_question": "Can my son bring his phone?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-035",
+   "category": "Facilities & safety",
+   "owner_question": "How do you keep girls safe when classes end late (7–8 pm)?",
+   "customer_question": "Is it safe for my daughter in the evening?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "skill_institute-036",
+   "category": "Centre & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
