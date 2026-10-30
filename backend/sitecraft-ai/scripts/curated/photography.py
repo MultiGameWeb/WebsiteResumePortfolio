@@ -12,7 +12,7 @@ import json, os, datetime
 YN = ["Yes", "No"]
 Q = [
  # category, priority, answer_type, owner question, how a customer asks, options, tags
- ("Shoots & services", "M", "list", "Which shoots and services do you do?", "Do you do baby shoots?", ["Weddings", "Engagement & reception", "Pre-wedding shoots", "Half-saree / dhoti functions", "Birthdays & cake smash", "Newborn & baby shoots", "Maternity shoots", "Seemantham / gruhapravesam", "Corporate & events", "Product / portfolio shoots", "Passport & visa photos", "Old photo restoration & framing"], "F"),
+ ("Shoots & services", "M", "list", "Which shoots and services do you do?", "Do you do baby shoots?", ["Weddings", "Engagement & reception", "Pre-wedding shoots", "Half-saree / dhoti functions", "Birthdays & cake smash", "Newborn & baby shoots", "Maternity shoots", "Seemantham / gruhapravesam", "Corporate & events", "Product / e-commerce shoots with models", "Food photography (menus, Swiggy / Zomato)", "Real estate, drone & 360° virtual tours", "YouTube / influencer monthly content", "Political events & rallies", "Passport & visa photos", "Album printing for photos taken elsewhere", "Old photo restoration & framing"], "F"),
 
  ("Packages & prices", "M", "text", "What does your full wedding package cost, and what does it include?", "How much for the full wedding?", [], "F"),
  ("Packages & prices", "I", "text", "What do you charge for a single event (engagement, birthday, half-saree function, gruhapravesam)?", "How much for an engagement?", [], "F"),
@@ -33,13 +33,18 @@ Q = [
  ("Team & conduct", "I", "yes_no", "Does the lead photographer (the same team as in your portfolio) come in person, not outside freelancers?", "Will you come yourself or send someone else?", YN, "F"),
  ("Team & conduct", "O", "yes_no", "Do you have female photographers for ladies' functions (mehendi, haldi, seemantham)?", "Is there a lady photographer?", YN, "F"),
  ("Team & conduct", "O", "yes_no", "Does your team come in a decent uniform and stay patient and polite with relatives?", "Will your team behave well with our relatives?", YN, "F"),
- ("Team & conduct", "O", "yes_no", "During the taali and key moments, does your team film without blocking the guests' view?", "Will the video guys block the stage?", YN, "F"),
+ ("Team & conduct", "O", "yes_no", "During the taali and key moments, does your team film without blocking the guests' view (using zoom lenses from a distance)?", "Will the video guys block the stage?", YN, "F"),
+ ("Team & conduct", "O", "yes_no", "Do you follow family wishes at emotional moments (no harsh lights at the bidaai) and avoid shooting guests while they eat?", "Please don't shoot people while they're eating.", YN, "F"),
+ ("Team & conduct", "O", "yes_no", "Do you cover every group photo on the stage, however long it takes?", "Will you take photos with all our relatives?", YN, "F"),
+ ("Team & conduct", "O", "yes_no", "Do you manage poses and angles for height differences, spectacles glare and other worries?", "The bride is taller, can you manage the angles?", YN, "F"),
+ ("Team & conduct", "O", "text", "How do you balance candid shots with the front-facing photos elders want, and cover both families equally?", "Why are all the candid photos side angles?", [], "F"),
  ("Team & conduct", "O", "text", "For outstation events, what travel, stay and food do you expect for the team?", "Do we pay your travel for an outstation wedding?", [], "F"),
 
  ("Equipment & live", "O", "text", "Which cameras do you use (full-frame mirrorless?), and do you shoot video in 4K?", "Is the video in 4K?", [], "F"),
- ("Equipment & live", "I", "list", "Which extras can you arrange?", "Do you have a drone?", ["Drone", "LED walls / screens", "Crane camera (jimmy jib)", "YouTube / Facebook live streaming", "AI face-recognition photo sharing (QR code)", "Instant photo booth / 360 spin booth", "Same-day edit video"], "F"),
+ ("Equipment & live", "I", "list", "Which extras can you arrange?", "Do you have a drone?", ["Drone", "LED walls / screens", "Crane camera (jimmy jib)", "YouTube / Facebook live streaming", "AI face-recognition photo sharing (QR code)", "Instant photo booth / 360 spin booth", "Same-day edit video", "Wedding content creator (phone reels the same day)", "Save-the-date / countdown videos & invites", "Love-story trailer video", "Sangeet & dance practice coverage", "Bride & groom getting-ready shots"], "F"),
  ("Equipment & live", "O", "text", "Who takes drone permission, and is the drone charge reduced if it can't fly (low ceiling)?", "Who gets drone permission?", [], "F"),
  ("Equipment & live", "O", "text", "For live streaming, who arranges the internet?", "Do we give Wi-Fi for the live stream?", [], "F"),
+ ("Equipment & live", "O", "yes_no", "Do you bring extra lighting for outdoor night events, and your own generator for lights and LED walls?", "Our wedding is on an open lawn at night, will the photos be dark?", YN, "F"),
 
  ("Pre-wedding", "I", "text", "What does a pre-wedding shoot cost, which locations do you suggest, and who pays location fees?", "Where can we do a pre-wedding shoot?", [], "F"),
  ("Pre-wedding", "O", "yes_no", "Do you guide shy couples with poses?", "We don't know how to pose, will you help?", YN, "F"),
@@ -56,18 +61,25 @@ Q = [
  ("Albums & delivery", "I", "text", "When and how do you give the raw photos and videos (hard disk, pen drive, Google Drive)?", "When do we get all the raw photos?", [], "F"),
  ("Albums & delivery", "O", "yes_no", "Do you give a few edited photos and a teaser reel within 2–3 days?", "Can we get a reel for Instagram soon?", YN, "F"),
  ("Albums & delivery", "I", "text", "How many sheets and photos does the album have, and what does an extra sheet cost?", "How many pages in the album?", [], "F"),
+ ("Albums & delivery", "O", "text", "Do you do advanced edits (face swap for closed eyes, removing people or objects from photos and videos)? What do they cost?", "Can you remove someone from the album photos?", [], "F"),
+ ("Albums & delivery", "O", "yes_no", "Do you give an online or mobile app to select album photos?", "Is there an app to select photos?", YN, "F"),
+ ("Albums & delivery", "O", "yes_no", "If the printed album has mistakes (repeated photos, dull colours), do you reprint those sheets free?", "Two photos are repeated in the album, will you reprint?", YN, "F"),
  ("Albums & delivery", "O", "options", "Who selects the photos for the album?", "Do we select the photos?", ["Customer selects", "We select, customer approves", "Either"], "F"),
  ("Albums & delivery", "I", "yes_no", "Do you show a soft-copy proof of the album design and print only after approval? How many corrections are allowed?", "Can we see the album before printing?", YN, "F"),
- ("Albums & delivery", "O", "yes_no", "Do you retouch naturally (skin, slimming) without making faces look unnaturally white?", "Will you remove pimples in the photos?", YN, "F"),
+ ("Albums & delivery", "O", "yes_no", "Do you retouch naturally (skin tone, pimples, slimming, double chin, spectacles glare) without making faces look unnaturally white?", "Will you remove pimples in the photos?", YN, "F"),
  ("Albums & delivery", "O", "text", "What album paper and cover options do you have (Karizma, non-tearable, velvet, acrylic), and is there a warranty?", "Which album paper do you use?", [], "F"),
  ("Albums & delivery", "O", "text", "What extras come with the album (mini album, calendar, frames, album bag)?", "Do we get a mini album free?", [], "F"),
- ("Albums & delivery", "O", "yes_no", "Can customers choose the songs for the video, and do you avoid YouTube copyright problems?", "Can we choose the songs?", YN, "F"),
+ ("Albums & delivery", "O", "yes_no", "Can customers choose the songs for the video, do you avoid YouTube copyright problems, and is re-editing free if the songs need changing?", "Can we choose the songs?", YN, "F"),
 
  ("Data & privacy", "I", "yes_no", "Do your cameras record to two memory cards at once, and do you back up the data the same day?", "What if the memory card gets corrupted?", YN, "F"),
  ("Data & privacy", "O", "text", "How long do you keep a backup of the photos and videos after delivery?", "Will you keep a copy if we lose our hard disk?", [], "F"),
  ("Data & privacy", "I", "yes_no", "Do you post customers' photos on your social media only with their permission?", "Will you post our wedding photos online?", YN, "F"),
 
- ("Studio", "O", "yes_no", "Do you take passport and visa photos (US, Canada and other sizes) in a few minutes?", "Can I get passport photos now?", YN, "F"),
+ ("Studio", "O", "yes_no", "Do you take passport and visa photos (US, Canada and other sizes) in a few minutes, change the dress to a suit by editing if needed, and send the soft copy on WhatsApp?", "Can I get passport photos now?", YN, "F"),
+ ("Studio", "O", "text", "What do you charge for commercial shoots (per product photo, monthly content packages), and do you have wireless mics and a teleprompter?", "How much for 15 reels a month?", [], "F"),
+ ("Studio", "O", "text", "What does album design and printing cost for photos taken by another photographer?", "Can you print an album from my pen drive?", [], "F"),
+ ("Studio", "O", "yes_no", "Can you enlarge phone photos for big wall frames with AI enhancement so they don't pixelate?", "Can you print my phone photo 20x30?", YN, "F"),
+ ("Studio", "O", "list", "Which photo prints and gifts do you make?", "Can you print a photo on a mug?", ["Wall frames", "Mugs", "Magic cushions", "T-shirts", "Keychains", "LED acrylic frames", "Tanjore / emboss gold frames"], "F"),
  ("Studio", "O", "yes_no", "Do you restore old or torn photos, colour black-and-white photos and frame them?", "Can you fix my grandfather's old photo?", YN, "F"),
  ("Studio", "O", "list", "Which languages can your team speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "F"),
  ("Studio", "O", "text", "Please share your Instagram, YouTube and Google reviews links so customers can see your work.", "Where can I see your work?", [], "F"),
