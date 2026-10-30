@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 11,
+ "question_count": 12,
  "questions": [
   {
    "id": "appliance_repair-001",
@@ -15,7 +15,8 @@
    "answer_type": "list",
    "options": [
     "LED / smart TVs (panel, backlight, bonding)",
-    "ACs (install, shift, gas, jet service)",
+    "ACs (install, shift, leak test & gas, jet service)",
+    "Board (PCB) repair instead of replacement",
     "Fridges (cooling, compressor, gas)",
     "Washing machines (drum, motor, PCB)",
     "Microwaves",
@@ -93,13 +94,21 @@
   {
    "id": "appliance_repair-009",
    "category": "Repairs",
+   "owner_question": "If a customer doesn't collect a repaired item, how long do you keep it?",
+   "customer_question": "Will you keep my TV if I come late?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliance_repair-010",
+   "category": "Repairs",
    "owner_question": "Do you offer yearly maintenance (AMC) for ACs and purifiers?",
    "customer_question": "Is there an AC service plan?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "appliance_repair-010",
+   "id": "appliance_repair-011",
    "category": "Service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -115,7 +124,7 @@
    ]
   },
   {
-   "id": "appliance_repair-011",
+   "id": "appliance_repair-012",
    "category": "Service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 17,
+ "question_count": 21,
  "questions": [
   {
    "id": "real_estate-001",
@@ -55,7 +55,7 @@
   {
    "id": "real_estate-005",
    "category": "Properties",
-   "owner_question": "Can buyers see the title documents (30-year link documents, EC), and is the land free of assigned, endowment, waqf or lake FTL / buffer issues?",
+   "owner_question": "Can buyers see the title documents (30-year link documents, EC), is the survey number sub-divided, and is the land free of the prohibited list (22A), assigned, endowment, waqf or lake FTL / buffer issues?",
    "customer_question": "Is this land clear of FTL?",
    "priority": "important",
    "answer_type": "text"
@@ -115,7 +115,7 @@
   {
    "id": "real_estate-012",
    "category": "Properties",
-   "owner_question": "What are the super built-up area, carpet area and UDS (land share) of your flats, how many flats per floor, and are they vastu compliant?",
+   "owner_question": "What are the super built-up area, carpet area and UDS (land share) of your flats, how many flats per floor (no shared walls, ventilation), and are they vastu compliant (no bad street focus)?",
    "customer_question": "What is the carpet area?",
    "priority": "optional",
    "answer_type": "text"
@@ -123,13 +123,37 @@
   {
    "id": "real_estate-013",
    "category": "Properties",
+   "owner_question": "Is there anything nearby buyers should know (graveyard, high-tension lines, nala), and do you fence and guard the venture and handle disputes after sale?",
+   "customer_question": "Is there an HT line over the plot?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-014",
+   "category": "Properties",
+   "owner_question": "How are your flats built (red bricks, AAC blocks, Mivan), how deep is the borewell and what about summer water, and what parking does each flat get (covered, direct drive-in or back-to-back)?",
+   "customer_question": "Is the parking back-to-back?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-015",
+   "category": "Properties",
+   "owner_question": "If handover is delayed, what compensation does the agreement give (for example rent)?",
+   "customer_question": "What if the flat is delayed?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-016",
+   "category": "Properties",
    "owner_question": "Do you sell landowner-share flats, and are they registered the same way as the builder's?",
    "customer_question": "Is this a landowner share flat?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "real_estate-014",
+   "id": "real_estate-017",
    "category": "Rentals",
    "owner_question": "Which houses allow bachelors, pets or non-veg cooking, and what about water and the owner living in the same building?",
    "customer_question": "Do they allow bachelors?",
@@ -137,7 +161,15 @@
    "answer_type": "text"
   },
   {
-   "id": "real_estate-015",
+   "id": "real_estate-018",
+   "category": "Rentals",
+   "owner_question": "In your rentals, who pays for repairs (motor, geyser, plumbing), what is cut from the advance when leaving (painting), and does each house have its own electricity meter?",
+   "customer_question": "Will the owner cut painting charges from my advance?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-019",
    "category": "Rentals",
    "owner_question": "Do you help with the rental agreement and tenant police verification?",
    "customer_question": "Will you make the rent agreement?",
@@ -149,7 +181,7 @@
    ]
   },
   {
-   "id": "real_estate-016",
+   "id": "real_estate-020",
    "category": "Service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -165,7 +197,7 @@
    ]
   },
   {
-   "id": "real_estate-017",
+   "id": "real_estate-021",
    "category": "Service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

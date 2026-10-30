@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 13,
+ "question_count": 14,
  "questions": [
   {
    "id": "hostel_pg-001",
@@ -114,13 +114,21 @@
   {
    "id": "hostel_pg-011",
    "category": "Facilities & rules",
+   "owner_question": "How do you handle pests (bed bugs), noise at night and theft (CCTV footage)?",
+   "customer_question": "Are there bed bugs?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hostel_pg-012",
+   "category": "Facilities & rules",
    "owner_question": "Who handles complaints (warden, manager), and how soon?",
    "customer_question": "Whom do I complain to?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "hostel_pg-012",
+   "id": "hostel_pg-013",
    "category": "Service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -136,7 +144,7 @@
    ]
   },
   {
-   "id": "hostel_pg-013",
+   "id": "hostel_pg-014",
    "category": "Service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
