@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 10,
+ "question_count": 11,
  "questions": [
   {
    "id": "xerox_printing-001",
@@ -22,7 +22,7 @@
     "Print from WhatsApp / email / pen drive",
     "Colour photo prints",
     "Passport-size photos",
-    "Scan to PDF (and old photo scanning)",
+    "Scan to PDF (colour, many pages, old photos)",
     "Lamination (small & large)",
     "Spiral binding",
     "Hard binding (thesis)",
@@ -55,6 +55,26 @@
   },
   {
    "id": "xerox_printing-004",
+   "category": "Stationery",
+   "owner_question": "Which printing jobs do you take?",
+   "customer_question": "Do you print visiting cards?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Visiting cards & letterheads",
+    "Wedding & invitation cards",
+    "Rubber stamps",
+    "Stickers & labels",
+    "Banners, posters & flex",
+    "Transparency sheets",
+    "Large-format plans & maps (A0 / A1)",
+    "Photo prints for frames",
+    "Old photo reprint & restoration",
+    "None"
+   ]
+  },
+  {
+   "id": "xerox_printing-005",
    "category": "Xerox & printing",
    "owner_question": "Can you copy selected pages of a book without removing its binding?",
    "customer_question": "Can you copy only page 45 without opening the book?",
@@ -66,7 +86,7 @@
    ]
   },
   {
-   "id": "xerox_printing-005",
+   "id": "xerox_printing-006",
    "category": "Xerox & printing",
    "owner_question": "For bulk jobs (100+ pages, project reports, thesis binding), how long does it take?",
    "customer_question": "When will my project binding be ready?",
@@ -74,7 +94,7 @@
    "answer_type": "text"
   },
   {
-   "id": "xerox_printing-006",
+   "id": "xerox_printing-007",
    "category": "Xerox & printing",
    "owner_question": "Do you type from handwriting, letters or forms, and correct mistakes and reprint? What is the charge?",
    "customer_question": "Can you type my handwritten letter?",
@@ -82,7 +102,7 @@
    "answer_type": "text"
   },
   {
-   "id": "xerox_printing-007",
+   "id": "xerox_printing-008",
    "category": "Online applications",
    "owner_question": "Can customers use a computer or internet by the hour, connect their laptop, practise online tests or attend a video interview? What is the rate?",
    "customer_question": "Can I use a computer for an online interview?",
@@ -90,7 +110,7 @@
    "answer_type": "text"
   },
   {
-   "id": "xerox_printing-008",
+   "id": "xerox_printing-009",
    "category": "Online applications",
    "owner_question": "On busy days (last dates), how long is the wait, and do you give tokens?",
    "customer_question": "Is it crowded on the last date?",
@@ -98,7 +118,7 @@
    "answer_type": "text"
   },
   {
-   "id": "xerox_printing-009",
+   "id": "xerox_printing-010",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -114,7 +134,7 @@
    ]
   },
   {
-   "id": "xerox_printing-010",
+   "id": "xerox_printing-011",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
