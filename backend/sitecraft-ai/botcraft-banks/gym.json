@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 61,
+ "question_count": 78,
  "questions": [
   {
    "id": "gym-001",
@@ -61,6 +61,7 @@
     "Leg press & leg machines",
     "Deadlift platform",
     "Functional area (kettlebells, TRX, battle ropes, tyres, medicine balls)",
+    "Calisthenics (pull-up bars, parallel bars, rings)",
     "Boxing bag"
    ]
   },
@@ -269,19 +270,30 @@
     "RO drinking water",
     "Phone charging points",
     "Healthy café (shakes, eggs, black coffee)",
+    "Accurate weighing scale",
+    "Massage gun & foam rollers",
+    "Ice bath / cold shower",
     "Waiting area (also for kids with parents)"
    ]
   },
   {
    "id": "gym-024",
    "category": "Hygiene & safety",
-   "owner_question": "How many times a day do you clean the floor, machines, washrooms and changing rooms? Do you keep sanitiser sprays and tissues for members?",
+   "owner_question": "How many times a day do you clean the floor, machines, washrooms and changing rooms? Do you keep sanitiser sprays and tissues for members, and take care of ventilation, odour and mosquitoes?",
    "customer_question": "Are the machines cleaned daily?",
    "priority": "important",
    "answer_type": "text"
   },
   {
    "id": "gym-025",
+   "category": "Hygiene & safety",
+   "owner_question": "If a woman member complains of staring or harassment, what action do you take?",
+   "customer_question": "What if someone stares at me in the gym?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-026",
    "category": "Assessment & progress",
    "owner_question": "Do you check BMI, body fat and muscle mass when someone joins? Is it free?",
    "customer_question": "Will you check my body fat?",
@@ -289,7 +301,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-026",
+   "id": "gym-027",
    "category": "Membership & fees",
    "owner_question": "Do you have couple, family, group or friends discounts?",
    "customer_question": "Any offer for couples?",
@@ -297,7 +309,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-027",
+   "id": "gym-028",
    "category": "Membership & fees",
    "owner_question": "Do you have special discounts for students, corporate employees or senior citizens?",
    "customer_question": "Any student discount?",
@@ -305,7 +317,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-028",
+   "id": "gym-029",
    "category": "Membership & fees",
    "owner_question": "Can members freeze (pause) their membership when they are out of town or unwell? For how many days, and are those days added at the end?",
    "customer_question": "Can I pause my membership for a month?",
@@ -313,7 +325,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-029",
+   "id": "gym-030",
    "category": "Membership & fees",
    "owner_question": "Do you refund the fee if a member stops, and can a membership be transferred to someone else?",
    "customer_question": "Can I transfer my membership to my brother?",
@@ -321,7 +333,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-030",
+   "id": "gym-031",
    "category": "Membership & fees",
    "owner_question": "Do you have a day pass or weekly pass (for example for visitors from other towns)? How much?",
    "customer_question": "Can I come for just one day?",
@@ -329,7 +341,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-031",
+   "id": "gym-032",
    "category": "Membership & fees",
    "owner_question": "What is the minimum age to join? Can teenagers join with a parent's permission, and do you have kids' fitness programmes?",
    "customer_question": "Can my 15-year-old son join?",
@@ -337,7 +349,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-032",
+   "id": "gym-033",
    "category": "Membership & fees",
    "owner_question": "Do you give a GST bill that members can use for office fitness reimbursement?",
    "customer_question": "Can I get a bill for reimbursement?",
@@ -349,7 +361,68 @@
    ]
   },
   {
-   "id": "gym-033",
+   "id": "gym-034",
+   "category": "Membership & fees",
+   "owner_question": "Do regular members get an extra discount on renewal? Do you send a WhatsApp / SMS reminder before the package ends?",
+   "customer_question": "Will I get a discount on renewal?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-035",
+   "category": "Membership & fees",
+   "owner_question": "Do you give a referral bonus (discount or free month) when members bring friends?",
+   "customer_question": "Any offer if I bring a friend?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-036",
+   "category": "Membership & fees",
+   "owner_question": "If someone switches from another gym with membership days left, do you add free days?",
+   "customer_question": "I still have a month at my old gym, will you add it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-037",
+   "category": "Membership & fees",
+   "owner_question": "Do you give a welcome kit (gym bag, shaker, T-shirt) on joining?",
+   "customer_question": "Will I get a free shaker?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-038",
+   "category": "Membership & fees",
+   "owner_question": "Do you accept Cult.fit, Fitpass or other fitness app memberships?",
+   "customer_question": "Does my Fitpass work here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "gym-039",
+   "category": "Membership & fees",
+   "owner_question": "Do you extend ladies' packages for days missed during periods?",
+   "customer_question": "Will you add the days I miss during periods?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-040",
    "category": "Timings & crowd",
    "owner_question": "Can members come any time during opening hours (even twice a day), or only in a chosen slot?",
    "customer_question": "Can I come morning and evening?",
@@ -363,7 +436,7 @@
    ]
   },
   {
-   "id": "gym-034",
+   "id": "gym-041",
    "category": "Timings & crowd",
    "owner_question": "Is there a limit on how long members can work out in a day?",
    "customer_question": "How many hours can I work out?",
@@ -371,7 +444,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-035",
+   "id": "gym-042",
    "category": "Timings & crowd",
    "owner_question": "Is the gym open on festival holidays? Any change in timings?",
    "customer_question": "Is the gym open on Sankranti?",
@@ -379,7 +452,15 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-036",
+   "id": "gym-043",
+   "category": "Trainers & guidance",
+   "owner_question": "Can members bring their own outside personal trainer? Is there a charge?",
+   "customer_question": "Can I bring my own trainer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-044",
    "category": "Trainers & guidance",
    "owner_question": "Can members change their personal trainer if they are not comfortable?",
    "customer_question": "Can I change my trainer?",
@@ -391,7 +472,7 @@
    ]
   },
   {
-   "id": "gym-037",
+   "id": "gym-045",
    "category": "Trainers & guidance",
    "owner_question": "Do trainers spot members when they lift heavy weights?",
    "customer_question": "Will someone spot me on bench press?",
@@ -403,7 +484,7 @@
    ]
   },
   {
-   "id": "gym-038",
+   "id": "gym-046",
    "category": "Trainers & guidance",
    "owner_question": "Do your trainers give personal training at home?",
    "customer_question": "Can a trainer come to my home?",
@@ -416,7 +497,7 @@
    "city_only": true
   },
   {
-   "id": "gym-039",
+   "id": "gym-047",
    "category": "Special programmes",
    "owner_question": "Do you have light workouts for senior citizens (above 60)?",
    "customer_question": "Can my father, who is 65, join?",
@@ -428,7 +509,7 @@
    ]
   },
   {
-   "id": "gym-040",
+   "id": "gym-048",
    "category": "Special programmes",
    "owner_question": "Do you have post-pregnancy programmes? When can women join after a normal delivery or C-section (with the doctor's OK)?",
    "customer_question": "Can I join 6 months after delivery?",
@@ -436,7 +517,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-041",
+   "id": "gym-049",
    "category": "Special programmes",
    "owner_question": "Do you have a wedding (bride / groom) transformation package? For how many months, and at what price?",
    "customer_question": "My wedding is in 3 months, any package?",
@@ -444,7 +525,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-042",
+   "id": "gym-050",
    "category": "Special programmes",
    "owner_question": "Do you train candidates for police / army physical tests (running, long jump, pull-ups)?",
    "customer_question": "Do you train for the police physical test?",
@@ -456,10 +537,18 @@
    ]
   },
   {
-   "id": "gym-043",
+   "id": "gym-051",
    "category": "Special programmes",
-   "owner_question": "Do you have rehab training after surgery or an accident, with a physiotherapist?",
+   "owner_question": "Do you have rehab training after surgery or an accident with a physiotherapist? Is a physio or doctor consultation free (for example once a month)?",
    "customer_question": "Do you have physiotherapy?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-052",
+   "category": "Special programmes",
+   "owner_question": "Do you prepare members for bodybuilding competitions (Mr. Andhra, Mr. Telangana, Mr. India), including posing?",
+   "customer_question": "Can you prepare me for Mr. Telangana?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -468,7 +557,19 @@
    ]
   },
   {
-   "id": "gym-044",
+   "id": "gym-053",
+   "category": "Special programmes",
+   "owner_question": "Do trainers adjust workouts for members who are fasting (Ramzan, Karthika masam, Ekadashi)?",
+   "customer_question": "I'm fasting for Ramzan, what timing is good?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-054",
    "category": "Diet & results",
    "owner_question": "Do your diet plans use normal home food, with pure vegetarian plans (no eggs or chicken) for those who need them?",
    "customer_question": "I'm vegetarian, will you give a veg diet?",
@@ -480,7 +581,7 @@
    ]
   },
   {
-   "id": "gym-045",
+   "id": "gym-055",
    "category": "Diet & results",
    "owner_question": "What do you tell members about how long weight loss or weight gain usually takes, and do you promise results?",
    "customer_question": "How soon will I lose weight?",
@@ -488,7 +589,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-046",
+   "id": "gym-056",
    "category": "Diet & results",
    "owner_question": "Do you sell supplements such as protein powder? Are they original (with bill and batch number), and do you tell members they are optional and never forced?",
    "customer_question": "Do I have to take protein powder?",
@@ -496,7 +597,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-047",
+   "id": "gym-057",
    "category": "Diet & results",
    "owner_question": "Do trainers guide members to build muscle with normal home food, without supplements?",
    "customer_question": "Can I build my body without supplements?",
@@ -508,7 +609,7 @@
    ]
   },
   {
-   "id": "gym-048",
+   "id": "gym-058",
    "category": "Equipment & facilities",
    "owner_question": "How old are your machines, and which brands are they? Up to what weight do your dumbbells go?",
    "customer_question": "What's the heaviest dumbbell?",
@@ -516,7 +617,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-049",
+   "id": "gym-059",
    "category": "Equipment & facilities",
    "owner_question": "Can members drop weights on deadlifts, on a separate platform?",
    "customer_question": "Can I drop the weights on deadlifts?",
@@ -528,7 +629,15 @@
    ]
   },
   {
-   "id": "gym-050",
+   "id": "gym-060",
+   "category": "Equipment & facilities",
+   "owner_question": "Do you give gym gloves, lifting belts, knee wraps and resistance bands to use, or do members bring their own? Do you sell them?",
+   "customer_question": "Do you give gym gloves?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-061",
    "category": "Equipment & facilities",
    "owner_question": "Are group classes included in the membership, or charged extra? On which days and at what times? Are yoga mats given?",
    "customer_question": "Is Zumba extra?",
@@ -536,7 +645,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-051",
+   "id": "gym-062",
    "category": "Equipment & facilities",
    "owner_question": "Which facilities are in the fee and which are extra (steam bath, sauna, lockers)? How often can members use them, and do they bring their own locker lock?",
    "customer_question": "Is steam bath free?",
@@ -544,7 +653,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-052",
+   "id": "gym-063",
    "category": "Hygiene & safety",
    "owner_question": "Do you have a first-aid kit, and staff trained to help if someone gets hurt?",
    "customer_question": "What if I get hurt?",
@@ -556,7 +665,31 @@
    ]
   },
   {
-   "id": "gym-053",
+   "id": "gym-064",
+   "category": "Hygiene & safety",
+   "owner_question": "Do ladies' washrooms have a sanitary-pad bin, and do you keep pads for emergencies?",
+   "customer_question": "Is there a sanitary bin?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-065",
+   "category": "Hygiene & safety",
+   "owner_question": "Do you have a lost-and-found box, and will you check CCTV if a member's things go missing?",
+   "customer_question": "I forgot my bottle yesterday, did anyone find it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-066",
    "category": "Hygiene & safety",
    "owner_question": "Do you have CCTV on the gym floor (never in changing rooms) for members' safety?",
    "customer_question": "Is there CCTV in the gym?",
@@ -568,7 +701,7 @@
    ]
   },
   {
-   "id": "gym-054",
+   "id": "gym-067",
    "category": "Hygiene & safety",
    "owner_question": "What should members bring and wear (indoor-only shoes, towel, water bottle, dress code)? Are outdoor shoes, chappals or bare feet allowed?",
    "customer_question": "What should I wear to the gym?",
@@ -576,7 +709,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-055",
+   "id": "gym-068",
    "category": "Assessment & progress",
    "owner_question": "Do trainers check and tell members their progress every month?",
    "customer_question": "Will you track my progress?",
@@ -588,7 +721,43 @@
    ]
   },
   {
-   "id": "gym-056",
+   "id": "gym-069",
+   "category": "Gym rules & complaints",
+   "owner_question": "What are your gym rules for lifting chalk, shirtless mirror photos and loud grunting?",
+   "customer_question": "Can I use chalk for deadlifts?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-070",
+   "category": "Gym rules & complaints",
+   "owner_question": "Do staff make sure members put weights back and don't sit on machines using their phones at peak hours?",
+   "customer_question": "People leave dumbbells everywhere, will you tell them?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gym-071",
+   "category": "Gym rules & complaints",
+   "owner_question": "How can members report a broken machine or a complaint, and how soon do you repair machines?",
+   "customer_question": "This machine has been broken for a week, when will you fix it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-072",
+   "category": "Gym & service",
+   "owner_question": "Do you conduct events (treks, marathons, cricket matches) or transformation challenges with prizes?",
+   "customer_question": "Any running events from the gym?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gym-073",
    "category": "Gym & service",
    "owner_question": "What music do you play and how loud? Can members ask for songs?",
    "customer_question": "Is the music too loud?",
@@ -596,7 +765,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-057",
+   "id": "gym-074",
    "category": "Gym & service",
    "owner_question": "Can members shoot videos or reels with a tripod while working out?",
    "customer_question": "Can I record reels in the gym?",
@@ -608,7 +777,7 @@
    ]
   },
   {
-   "id": "gym-058",
+   "id": "gym-075",
    "category": "Gym & service",
    "owner_question": "Do you have a mobile app? How is attendance marked (biometric, face recognition)?",
    "customer_question": "Is there a gym app?",
@@ -616,7 +785,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-059",
+   "id": "gym-076",
    "category": "Gym & service",
    "owner_question": "Do you have branches in other areas, and can members work out at any branch?",
    "customer_question": "Can I use the other branch?",
@@ -624,7 +793,7 @@
    "answer_type": "text"
   },
   {
-   "id": "gym-060",
+   "id": "gym-077",
    "category": "Gym & service",
    "owner_question": "Which languages can your trainers speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -640,7 +809,7 @@
    ]
   },
   {
-   "id": "gym-061",
+   "id": "gym-078",
    "category": "Gym & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
