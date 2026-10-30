@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 18,
+ "question_count": 21,
  "questions": [
   {
    "id": "physiotherapy-001",
@@ -112,6 +112,14 @@
   },
   {
    "id": "physiotherapy-011",
+   "category": "Privacy & service",
+   "owner_question": "Which health schemes do you accept (Aarogyasri, Ayushman Bharat, ESI, EHS, CGHS)?",
+   "customer_question": "Is Aarogyasri accepted?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "physiotherapy-012",
    "category": "Fees & appointments",
    "owner_question": "What time does the doctor usually start, and how long is the usual wait?",
    "customer_question": "How long will I wait?",
@@ -119,7 +127,7 @@
    "answer_type": "text"
   },
   {
-   "id": "physiotherapy-012",
+   "id": "physiotherapy-013",
    "category": "Fees & appointments",
    "owner_question": "Is the clinic open on festival days?",
    "customer_question": "Is the clinic open on Sankranti?",
@@ -127,7 +135,7 @@
    "answer_type": "text"
   },
   {
-   "id": "physiotherapy-013",
+   "id": "physiotherapy-014",
    "category": "Fees & appointments",
    "owner_question": "Do you offer video consultations or home visits? At what fee?",
    "customer_question": "Can the doctor come home?",
@@ -135,7 +143,7 @@
    "answer_type": "text"
   },
   {
-   "id": "physiotherapy-014",
+   "id": "physiotherapy-015",
    "category": "Fees & appointments",
    "owner_question": "If a patient has a doubt or reaction after the visit, how can they reach the clinic?",
    "customer_question": "Whom do I call if the medicine doesn't suit me?",
@@ -143,7 +151,7 @@
    "answer_type": "text"
   },
   {
-   "id": "physiotherapy-015",
+   "id": "physiotherapy-016",
    "category": "Certificates & bills",
    "owner_question": "Which certificates do you issue (sick leave, fitness, Form 1A for driving licence), and what is the charge?",
    "customer_question": "Can I get a fitness certificate?",
@@ -151,7 +159,7 @@
    "answer_type": "text"
   },
   {
-   "id": "physiotherapy-016",
+   "id": "physiotherapy-017",
    "category": "Certificates & bills",
    "owner_question": "Do you give stamped prescriptions and GST bills for insurance or office reimbursement?",
    "customer_question": "Can I get bills for my insurance claim?",
@@ -163,7 +171,31 @@
    ]
   },
   {
-   "id": "physiotherapy-017",
+   "id": "physiotherapy-018",
+   "category": "Privacy & service",
+   "owner_question": "Do you have a wheelchair, stretcher and ramp for patients who can't walk?",
+   "customer_question": "Is there a wheelchair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "physiotherapy-019",
+   "category": "Privacy & service",
+   "owner_question": "Do you dispose of needles and bio-medical waste properly and keep toilets clean?",
+   "customer_question": "Is the toilet clean for the urine sample?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "physiotherapy-020",
    "category": "Privacy & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -179,7 +211,7 @@
    ]
   },
   {
-   "id": "physiotherapy-018",
+   "id": "physiotherapy-021",
    "category": "Privacy & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

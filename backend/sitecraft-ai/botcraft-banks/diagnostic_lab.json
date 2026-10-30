@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 27,
+ "question_count": 38,
  "questions": [
   {
    "id": "diagnostic_lab-001",
@@ -45,7 +45,7 @@
   {
    "id": "diagnostic_lab-005",
    "category": "Lab tests",
-   "owner_question": "What preparation do common tests need (fasting hours, water, morning medicines, post-lunch sugar timing, full bladder for scans, sample containers)?",
+   "owner_question": "What preparation do common tests need (fasting hours, water, morning medicines, post-lunch sugar timing, full bladder for scans, sample containers, bowel prep for colonoscopy, hair wash before EEG, stopping allergy tablets)?",
    "customer_question": "Should I come empty stomach?",
    "priority": "important",
    "answer_type": "text"
@@ -113,11 +113,32 @@
     "CT scan",
     "MRI",
     "Open MRI",
-    "Lung function (PFT)"
+    "Lung function (PFT)",
+    "Holter monitor",
+    "Endoscopy / colonoscopy",
+    "EEG / EMG / NCV",
+    "Sleep study",
+    "Allergy tests",
+    "Biopsy / FNAC / histopathology",
+    "DNA tests",
+    "Visa medicals",
+    "Pre-employment checkups"
    ]
   },
   {
    "id": "diagnostic_lab-012",
+   "category": "Scans",
+   "owner_question": "Is a cardiologist present with a defibrillator during TMT?",
+   "customer_question": "Is a doctor there during TMT?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-013",
    "category": "Scans",
    "owner_question": "Do you have a lady radiologist or lady technician for women's scans and ECGs?",
    "customer_question": "Is there a lady technician?",
@@ -129,7 +150,7 @@
    ]
   },
   {
-   "id": "diagnostic_lab-013",
+   "id": "diagnostic_lab-014",
    "category": "Privacy & service",
    "owner_question": "Do you keep every patient's tests and reports confidential, sending reports only to the patient?",
    "customer_question": "Will my report be kept private?",
@@ -141,7 +162,15 @@
    ]
   },
   {
-   "id": "diagnostic_lab-014",
+   "id": "diagnostic_lab-015",
+   "category": "Privacy & service",
+   "owner_question": "Which health schemes do you accept (Aarogyasri, Ayushman Bharat, ESI, EHS, CGHS)?",
+   "customer_question": "Is Aarogyasri accepted?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-016",
    "category": "Fees & appointments",
    "owner_question": "Is the clinic open on festival days?",
    "customer_question": "Is the clinic open on Sankranti?",
@@ -149,7 +178,7 @@
    "answer_type": "text"
   },
   {
-   "id": "diagnostic_lab-015",
+   "id": "diagnostic_lab-017",
    "category": "Certificates & bills",
    "owner_question": "Do you give stamped prescriptions and GST bills for insurance or office reimbursement?",
    "customer_question": "Can I get bills for my insurance claim?",
@@ -161,7 +190,7 @@
    ]
   },
   {
-   "id": "diagnostic_lab-016",
+   "id": "diagnostic_lab-018",
    "category": "Lab tests",
    "owner_question": "How do your prices compare with online labs, and why should patients choose you?",
    "customer_question": "Online labs are cheaper, why you?",
@@ -169,7 +198,7 @@
    "answer_type": "text"
   },
   {
-   "id": "diagnostic_lab-017",
+   "id": "diagnostic_lab-019",
    "category": "Lab tests",
    "owner_question": "Do you have experienced staff for babies, difficult veins and patients afraid of needles?",
    "customer_question": "My baby needs a blood test, can you do it gently?",
@@ -181,7 +210,35 @@
    ]
   },
   {
-   "id": "diagnostic_lab-018",
+   "id": "diagnostic_lab-020",
+   "category": "Lab tests",
+   "owner_question": "If a sample is spoiled (clotted, haemolysed), do you re-collect it free, at home if needed?",
+   "customer_question": "Why do I have to give blood again?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-021",
+   "category": "Lab tests",
+   "owner_question": "Do home-collection staff carry samples in a cold box and reach the lab quickly?",
+   "customer_question": "Will my blood sample get spoiled on the way?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-022",
+   "category": "Lab tests",
+   "owner_question": "Which hospitals and doctors accept your reports, and do you have tie-ups with big labs?",
+   "customer_question": "Will the big hospital accept your report?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-023",
    "category": "Lab tests",
    "owner_question": "Do you put barcode labels on samples in front of the patient?",
    "customer_question": "Will my sample get mixed up?",
@@ -193,7 +250,7 @@
    ]
   },
   {
-   "id": "diagnostic_lab-019",
+   "id": "diagnostic_lab-024",
    "category": "Lab tests",
    "owner_question": "Do you send reports on WhatsApp and give printed copies and films?",
    "customer_question": "Can you send the report on WhatsApp?",
@@ -205,7 +262,7 @@
    ]
   },
   {
-   "id": "diagnostic_lab-020",
+   "id": "diagnostic_lab-025",
    "category": "Lab tests",
    "owner_question": "Is a pathologist or doctor available to explain the report?",
    "customer_question": "Can someone explain my report?",
@@ -217,7 +274,31 @@
    ]
   },
   {
-   "id": "diagnostic_lab-021",
+   "id": "diagnostic_lab-026",
+   "category": "Scans",
+   "owner_question": "Is sedation available for endoscopy and colonoscopy? Is the sleep study done at the lab or at home?",
+   "customer_question": "Will endoscopy hurt?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-027",
+   "category": "Scans",
+   "owner_question": "For visa medicals, which approvals do you have (GAMCA / Wafid, US, Canada, Australia panels), and how soon do pre-employment certificates come?",
+   "customer_question": "Are you GAMCA approved?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-028",
+   "category": "Scans",
+   "owner_question": "For DNA tests, what consent and documents are needed (legal vs personal tests)?",
+   "customer_question": "What do I need for a DNA test?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "diagnostic_lab-029",
    "category": "Scans",
    "owner_question": "Can one attender come inside during pregnancy scans?",
    "customer_question": "Can my husband come in for the scan?",
@@ -229,7 +310,7 @@
    ]
   },
   {
-   "id": "diagnostic_lab-022",
+   "id": "diagnostic_lab-030",
    "category": "Scans",
    "owner_question": "Before X-rays and CT, do you check for pregnancy and use lead aprons?",
    "customer_question": "I'm pregnant, is the X-ray safe?",
@@ -241,7 +322,7 @@
    ]
   },
   {
-   "id": "diagnostic_lab-023",
+   "id": "diagnostic_lab-031",
    "category": "Scans",
    "owner_question": "For patients afraid of closed spaces, do you have open MRI or sedation? How do you screen for implants and pacemakers?",
    "customer_question": "I'm scared of the MRI tunnel",
@@ -249,7 +330,7 @@
    "answer_type": "text"
   },
   {
-   "id": "diagnostic_lab-024",
+   "id": "diagnostic_lab-032",
    "category": "Scans",
    "owner_question": "For contrast scans, do you check creatinine first and keep a doctor present?",
    "customer_question": "Is the contrast injection safe?",
@@ -261,7 +342,7 @@
    ]
   },
   {
-   "id": "diagnostic_lab-025",
+   "id": "diagnostic_lab-033",
    "category": "Scans",
    "owner_question": "Do you give scan images on CD or pen drive (DICOM) with the film?",
    "customer_question": "Will I get a CD of the scan?",
@@ -273,7 +354,43 @@
    ]
   },
   {
-   "id": "diagnostic_lab-026",
+   "id": "diagnostic_lab-034",
+   "category": "Privacy & service",
+   "owner_question": "Do you have a wheelchair, stretcher and ramp for patients who can't walk?",
+   "customer_question": "Is there a wheelchair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-035",
+   "category": "Privacy & service",
+   "owner_question": "Is there a separate waiting area for fever patients, away from children and pregnant women?",
+   "customer_question": "Is there a separate place for fever patients?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-036",
+   "category": "Privacy & service",
+   "owner_question": "Do you dispose of needles and bio-medical waste properly and keep toilets clean?",
+   "customer_question": "Is the toilet clean for the urine sample?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "diagnostic_lab-037",
    "category": "Privacy & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -289,7 +406,7 @@
    ]
   },
   {
-   "id": "diagnostic_lab-027",
+   "id": "diagnostic_lab-038",
    "category": "Privacy & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
