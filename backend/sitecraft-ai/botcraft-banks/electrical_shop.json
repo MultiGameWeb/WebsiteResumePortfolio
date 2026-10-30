@@ -1,0 +1,254 @@
+{
+ "shop_type_key": "electrical_shop",
+ "name": "Electrical shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 21,
+ "questions": [
+  {
+   "id": "electrical_shop-001",
+   "category": "Electrical items",
+   "owner_question": "Which electrical items do you sell?",
+   "customer_question": "Do you have FRLS wire?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "House wires (FRLS / ZHFR)",
+    "Service, armoured & submersible cables",
+    "CCTV, LAN (Cat-6) & TV (RG-6) cables",
+    "Modular switches, sockets & plates",
+    "MCB, RCCB, changeover, fuses & AC starter boxes",
+    "Earthing kits",
+    "Conduit pipes, boxes & casing-capping",
+    "LED bulbs, tubes, panel lights & bulb holders",
+    "Decorative lights (chandeliers, pendants, strips, tri-colour)",
+    "Outdoor, flood, gate & solar lights",
+    "Festival & serial lights, night bulbs & electric diyas",
+    "Fans, exhaust fans & regulators",
+    "Extension boards, plug tops & adapters",
+    "Calling bells",
+    "Sub-meters & phase selectors",
+    "Motor starters & control panels",
+    "Emergency lights, torches & inverter bulbs",
+    "Mosquito bats & machines, room heaters"
+   ]
+  },
+  {
+   "id": "electrical_shop-002",
+   "category": "Electrical items",
+   "owner_question": "Which wire brands do you sell (for example Polycab, Finolex, Havells, RR Kabel), and are they ISI-marked FRLS?",
+   "customer_question": "Is this Finolex wire original?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_shop-003",
+   "category": "Electrical items",
+   "owner_question": "Which switch and MCB / RCCB brands do you sell (for example Anchor Roma, Legrand, GM, Goldmedal), and do you have designer plates (wooden, grey, glass)?",
+   "customer_question": "Do you have black switch plates?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_shop-004",
+   "category": "Prices & service",
+   "owner_question": "For a full house-wiring or plumbing list, what discount do you give on the company price list? Do customers who come without an electrician get the electrician's commission as a discount?",
+   "customer_question": "What discount on the full list?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_shop-005",
+   "category": "Prices & service",
+   "owner_question": "If customers send their electrician's or plumber's list on WhatsApp, do you send a price estimate?",
+   "customer_question": "Can you send a quotation for this list?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_shop-006",
+   "category": "Prices & service",
+   "owner_question": "Do you deliver heavy items (pipes, tanks, wire bundles) to the site by auto?",
+   "customer_question": "Can you send the tank to my site?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_shop-007",
+   "category": "Electrical items",
+   "owner_question": "How many years of warranty do switches and sockets have?",
+   "customer_question": "Is there a warranty on switches?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_shop-008",
+   "category": "Electrical items",
+   "owner_question": "Do you have USB / Type-C charging sockets, 2-way switches and small hum-free step regulators?",
+   "customer_question": "Do you have a USB socket?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_shop-009",
+   "category": "Electrical items",
+   "owner_question": "Do you keep heavy-gauge conduit pipes and boxes that don't break?",
+   "customer_question": "Are these pipes strong?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_shop-010",
+   "category": "Electrical items",
+   "owner_question": "Do you cut wire by the metre (for example 5 or 10 m) instead of a full 90 m coil?",
+   "customer_question": "Can I take 10 metres?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_shop-011",
+   "category": "Electrical items",
+   "owner_question": "What warranty do LED bulbs and tubes have? Do you mark the date on them, and replace them without a bill within warranty?",
+   "customer_question": "My bulb fused in 6 months, will you change it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_shop-012",
+   "category": "Electrical items",
+   "owner_question": "Do you give wholesale rates on false-ceiling lights (COB, spot, profile, rope lights)?",
+   "customer_question": "Rate for 40 ceiling lights?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_shop-013",
+   "category": "Electrical items",
+   "owner_question": "Do you have motion-sensor lights, foot / step lights and adjustable panel lights?",
+   "customer_question": "Do you have a sensor light?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "electrical_shop-014",
+   "category": "Electrical items",
+   "owner_question": "Do you make ready-made switch boards (for example 4 sockets + 4 switches for the kitchen) and sell weatherproof switch covers?",
+   "customer_question": "Can you make a kitchen board?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_shop-015",
+   "category": "Electrical items",
+   "owner_question": "Which spare parts do you keep?",
+   "customer_question": "Do you have a fan capacitor?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Fan capacitors, down rods & shackles",
+    "LED drivers & tube chokes / starters",
+    "Immersion heater rods",
+    "Geyser elements & thermostats",
+    "Iron box cords & thermostats",
+    "Mixer couplers, blades & carbon brushes",
+    "Motor capacitors & push buttons",
+    "Electrical tape, clips, cable ties & flexible pipe",
+    "Soldering irons & multimeters"
+   ]
+  },
+  {
+   "id": "electrical_shop-016",
+   "category": "Buying advice",
+   "owner_question": "How do you advise wire sizes (for example 2.5 vs 4 sq mm for AC, geyser and main line) and FR vs FRLS / ZHFR wires?",
+   "customer_question": "Which wire for the AC?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_shop-017",
+   "category": "Buying advice",
+   "owner_question": "For an old flickering tube light, do you suggest a new choke / starter or a 20 W LED tube?",
+   "customer_question": "Repair the tube light or buy LED?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_shop-018",
+   "category": "Prices & service",
+   "owner_question": "Do you take back unused leftover material (wire, switches, fittings) with the bill and refund?",
+   "customer_question": "Can I return the extra wire?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electrical_shop-019",
+   "category": "Prices & service",
+   "owner_question": "Can you send a trusted electrician or plumber for repairs and fitting?",
+   "customer_question": "Do you know a good electrician?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electrical_shop-020",
+   "category": "Prices & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "electrical_shop-021",
+   "category": "Prices & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
