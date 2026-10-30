@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 9,
+ "question_count": 10,
  "questions": [
   {
    "id": "xerox_printing-001",
@@ -28,7 +28,9 @@
     "Hard binding (thesis)",
     "Typing (Telugu & English)",
     "Resume / biodata",
-    "Photo & signature resize for applications"
+    "Photo & signature resize for applications",
+    "Photo background change & clearer scans (no content changes)",
+    "PDF work (merge, split, compress, reorder, JPG to PDF)"
    ]
   },
   {
@@ -42,7 +44,7 @@
   {
    "id": "xerox_printing-003",
    "category": "Xerox & printing",
-   "owner_question": "Do you delete customers' files from your computer and phone after printing or scanning, and send scans only to the customer?",
+   "owner_question": "Do you delete customers' files from your computer and phone after the work, never share them with anyone without permission, and send scans only to the customer?",
    "customer_question": "Will you delete my Aadhaar file after printing?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -82,13 +84,21 @@
   {
    "id": "xerox_printing-007",
    "category": "Online applications",
+   "owner_question": "Can customers use a computer or internet by the hour, connect their laptop, practise online tests or attend a video interview? What is the rate?",
+   "customer_question": "Can I use a computer for an online interview?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "xerox_printing-008",
+   "category": "Online applications",
    "owner_question": "On busy days (last dates), how long is the wait, and do you give tokens?",
    "customer_question": "Is it crowded on the last date?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "xerox_printing-008",
+   "id": "xerox_printing-009",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -104,7 +114,7 @@
    ]
   },
   {
-   "id": "xerox_printing-009",
+   "id": "xerox_printing-010",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
