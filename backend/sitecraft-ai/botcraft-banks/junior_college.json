@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 72,
+ "question_count": 78,
  "questions": [
   {
    "id": "junior_college-001",
@@ -38,7 +38,7 @@
   {
    "id": "junior_college-003",
    "category": "Fees",
-   "owner_question": "Apart from the tuition fee, what else is charged in the year (admission, term, computer, sports, annual day, picnic, exam, university, placement training)?",
+   "owner_question": "Apart from the tuition fee, what else is charged in the year (admission, re-admission or annual development fee for existing students, term, computer, sports, annual day, picnic, exam, university, placement training)?",
    "customer_question": "Are there any other fees besides tuition fee?",
    "priority": "important",
    "answer_type": "text"
@@ -102,7 +102,7 @@
   {
    "id": "junior_college-011",
    "category": "Parents & communication",
-   "owner_question": "How can parents complain about a teacher or other problem, who handles it up to the principal or management, and in how many days do you reply?",
+   "owner_question": "How can parents complain about a teacher or other problem, who handles it up to the principal or management, when can parents meet the principal or correspondent, and in how many days do you reply?",
    "customer_question": "Whom do I complain to about a teacher?",
    "priority": "important",
    "answer_type": "text"
@@ -110,7 +110,7 @@
   {
    "id": "junior_college-012",
    "category": "Safety & health",
-   "owner_question": "Do you have a child protection policy (staff training, a way for children to complain privately, good touch / bad touch awareness), and how do you handle POCSO complaints?",
+   "owner_question": "Do you have a child protection policy (staff training, a way for children to complain privately, good touch / bad touch awareness, police verification of all staff, male staff kept away from small children's washrooms), and how do you handle POCSO complaints?",
    "customer_question": "How do you keep children safe from abuse?",
    "priority": "important",
    "answer_type": "text"
@@ -235,7 +235,7 @@
   {
    "id": "junior_college-025",
    "category": "Exams & results",
-   "owner_question": "Can parents see corrected answer sheets, how are internal marks given (projects, assignments, tests), and can marks be rechecked?",
+   "owner_question": "Can parents see corrected answer sheets, how are internal marks given (projects, assignments, tests), can marks be rechecked, and do you help apply for board or university revaluation, answer-script copies and improvement (betterment) exams?",
    "customer_question": "Can I see my son's answer paper?",
    "priority": "optional",
    "answer_type": "text"
@@ -283,7 +283,7 @@
   {
    "id": "junior_college-031",
    "category": "Safety & health",
-   "owner_question": "Do you hold fire and evacuation drills, with fire extinguishers and emergency exits?",
+   "owner_question": "Do you have a fire safety NOC, fire extinguishers, emergency exits, safety grills on upper floors, and hold evacuation drills?",
    "customer_question": "Do you have fire safety?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -295,7 +295,7 @@
   {
    "id": "junior_college-032",
    "category": "Digital learning",
-   "owner_question": "Do you give recorded lessons for missed classes, and can homework be submitted online (or on paper if the internet fails)?",
+   "owner_question": "Do you give recorded lessons for missed classes, can homework be submitted online (or on paper if the internet fails), and how much screen time do small children have?",
    "customer_question": "He missed the online class, is there a recording?",
    "priority": "optional",
    "answer_type": "text"
@@ -331,7 +331,7 @@
   {
    "id": "junior_college-036",
    "category": "Fees",
-   "owner_question": "If a family has money trouble, can the fee date be extended or a concession given? Which documents are needed?",
+   "owner_question": "What is the late fee, and if a family has money trouble, can the fee date be extended, the late fee waived or a concession given? Which documents are needed?",
    "customer_question": "I lost my job, can I pay the fee later?",
    "priority": "optional",
    "answer_type": "text"
@@ -339,7 +339,7 @@
   {
    "id": "junior_college-037",
    "category": "Fees",
-   "owner_question": "Do you give an official receipt for every payment, and how do you fix online payments that failed or were charged twice?",
+   "owner_question": "Do you give an official receipt for every payment (with PAN and tuition fee shown separately for income tax 80C), and how do you fix online payments that failed or were charged twice?",
    "customer_question": "Money was cut twice on UPI, what now?",
    "priority": "optional",
    "answer_type": "text"
@@ -455,7 +455,7 @@
   {
    "id": "junior_college-051",
    "category": "College",
-   "owner_question": "Are drinking water and washrooms checked and cleaned regularly?",
+   "owner_question": "Are water tanks, drinking water (RO / TDS) and washrooms checked and cleaned regularly, and does the canteen sell healthy food?",
    "customer_question": "Is the drinking water RO?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -467,7 +467,7 @@
   {
    "id": "junior_college-052",
    "category": "Counselling & entrance",
-   "owner_question": "After results, do you guide students through counselling (EAPCET, JoSAA / CSAB, NEET, CUET), including choice filling and documents?",
+   "owner_question": "After results, do you guide students through counselling (EAPCET, JoSAA / CSAB, NEET, CUET), including choice filling, local / non-local documents, and deposit or free-exit rules between rounds?",
    "customer_question": "Will you help with JoSAA choice filling?",
    "priority": "optional",
    "answer_type": "text"
@@ -475,7 +475,7 @@
   {
    "id": "junior_college-053",
    "category": "Certificates & schemes",
-   "owner_question": "How soon do you give bonafide, study certificates and a duplicate TC, and can they be requested online?",
+   "owner_question": "How soon do you give bonafide, study certificates, a duplicate TC, and transcripts, migration, MOI or consolidated marks memos (for study abroad), and can they be requested online?",
    "customer_question": "I need a bonafide certificate for a bus pass, how long?",
    "priority": "optional",
    "answer_type": "text"
@@ -495,7 +495,7 @@
   {
    "id": "junior_college-055",
    "category": "Certificates & schemes",
-   "owner_question": "Who helps students with scholarship applications (government, trusts, companies), including pending or rejected ones?",
+   "owner_question": "Who helps students with scholarship applications (NMMS, NSP, e-Pass / Jnanabhumi, trusts, companies), including biometrics and pending or rejected ones?",
    "customer_question": "My scholarship shows rejected, whom do I meet?",
    "priority": "optional",
    "answer_type": "text"
@@ -530,6 +530,66 @@
   },
   {
    "id": "junior_college-059",
+   "category": "Admissions & records",
+   "owner_question": "Is there an entrance test or interaction for the child (which subjects), or a parent interview, and what if the child scores low?",
+   "customer_question": "Is there an entrance test for 6th class?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-060",
+   "category": "Safety & health",
+   "owner_question": "Where do you have CCTV (classrooms, corridors, buses), how long is footage kept, and can parents view it after an incident?",
+   "customer_question": "Can I see the CCTV of what happened to my child?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-061",
+   "category": "Teachers & staff",
+   "owner_question": "Are your teachers stopped from giving private tuition to their own students?",
+   "customer_question": "The class teacher wants my son in her tuition, is that allowed?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "junior_college-062",
+   "category": "Fees",
+   "owner_question": "Can fees be paid in monthly instalments, or through a 0% EMI partner?",
+   "customer_question": "Can I pay the fee monthly?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-063",
+   "category": "Activities",
+   "owner_question": "Do you have NCC, Scouts & Guides or NSS, and help students with NCC or sports certificates for quotas?",
+   "customer_question": "Is there NCC?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "junior_college-064",
+   "category": "Safety & health",
+   "owner_question": "Is the campus wheelchair-friendly (ramps, lift, ground-floor classes, accessible washrooms)?",
+   "customer_question": "Is there a ramp for wheelchairs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "junior_college-065",
    "category": "Inter college",
    "owner_question": "Do you take second-year students from other colleges (with board permission)?",
    "customer_question": "Can he join you in second year?",
@@ -541,7 +601,7 @@
    ]
   },
   {
-   "id": "junior_college-060",
+   "id": "junior_college-066",
    "category": "Inter college",
    "owner_question": "Can students change group (for example MPC to CEC) after joining? Until when?",
    "customer_question": "Can she change from MPC to CEC?",
@@ -549,7 +609,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-061",
+   "id": "junior_college-067",
    "category": "Inter college",
    "owner_question": "Can students move to another branch or campus of your college? Is there an extra fee?",
    "customer_question": "Can he move to your Vijayawada campus?",
@@ -557,7 +617,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-062",
+   "id": "junior_college-068",
    "category": "Inter college",
    "owner_question": "Who clears doubts in study hours, and what are their qualifications?",
    "customer_question": "Who answers doubts in study hours?",
@@ -565,7 +625,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-063",
+   "id": "junior_college-069",
    "category": "Inter college",
    "owner_question": "What are your dress code and mobile phone rules?",
    "customer_question": "Can students bring phones?",
@@ -573,7 +633,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-064",
+   "id": "junior_college-070",
    "category": "Hostel",
    "owner_question": "How often can hostel students call their parents, and can parents call the warden in an emergency?",
    "customer_question": "How often can my son call home?",
@@ -581,7 +641,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-065",
+   "id": "junior_college-071",
    "category": "Hostel",
    "owner_question": "What are the outing rules, and how do you check who picks up a student (photo ID, OTP)?",
    "customer_question": "Can my brother pick her up for outing?",
@@ -589,7 +649,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-066",
+   "id": "junior_college-072",
    "category": "Hostel",
    "owner_question": "What is the hostel menu, can parents taste the food, and whom do students complain to about it?",
    "customer_question": "What food do they give in the hostel?",
@@ -597,7 +657,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-067",
+   "id": "junior_college-073",
    "category": "Hostel",
    "owner_question": "Is laundry included in the hostel fee, with roll numbers marked on clothes?",
    "customer_question": "Who washes the clothes?",
@@ -609,7 +669,7 @@
    ]
   },
   {
-   "id": "junior_college-068",
+   "id": "junior_college-074",
    "category": "Hostel",
    "owner_question": "Is there a 24/7 nurse, sick room and ambulance, and do you call parents at once if a student falls ill?",
    "customer_question": "What if my child gets fever at night?",
@@ -617,15 +677,15 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-069",
+   "id": "junior_college-075",
    "category": "Hostel",
-   "owner_question": "How many students share a room, and are there beds, mosquito nets, hot water and AC or non-AC rooms?",
+   "owner_question": "How many students share a room, are there beds, mosquito nets, hot water, a personal lockable cupboard, AC or non-AC rooms, and does the warden do night rounds?",
    "customer_question": "How many in one room?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "junior_college-070",
+   "id": "junior_college-076",
    "category": "General",
    "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
    "customer_question": "Can we see the campus first?",
@@ -637,7 +697,7 @@
    ]
   },
   {
-   "id": "junior_college-071",
+   "id": "junior_college-077",
    "category": "General",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -653,7 +713,7 @@
    ]
   },
   {
-   "id": "junior_college-072",
+   "id": "junior_college-078",
    "category": "General",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Where can I see your reviews?",
