@@ -65,7 +65,7 @@ Q = [
  ("Admissions & records", "O", "text", "Do you take admissions 2–3 months after the year starts, and how do you help late joiners catch up?", "Can he join in August?", [], "PSJ"),
  ("Admissions & records", "O", "text", "Do younger siblings get admission priority or a fee concession?", "Is there a discount for the second child?", [], "PS"),
  ("Admissions & records", "O", "text", "For single parents, guardians (for example grandparents) or separated parents: which documents are needed, who is recorded as guardian, do both parents get reports, and how do you check who may pick up the child?", "Can the grandmother be the guardian?", [], "PS"),
- ("Admissions & records", "O", "text", "For students returning from abroad, which class do you admit them to, and which documents or equivalency certificates are needed?", "We are coming back from the US, which class will she join?", [], "SJ"),
+ ("Admissions & records", "O", "text", "For students returning from abroad, foreign students, or students moving from IB / Cambridge, which class do you admit them to, and which documents or equivalency certificates are needed?", "We are coming back from the US, which class will she join?", [], "SJC"),
  ("Admissions & records", "O", "text", "How do you correct a student's name or date of birth in records, and how do you check board exam registration details before the deadline?", "Her name is spelt differently in Aadhaar, can you correct it?", [], "SJ"),
 
  ("Exams & results", "O", "text", "If a student misses an exam due to illness, is there a special exam, and by when must the medical certificate be given?", "He had fever on exam day, will there be a re-exam?", [], "SJC"),
@@ -99,10 +99,47 @@ Q = [
  ("Career & skills", "O", "text", "Do you give aptitude tests and career counselling (from class 8), and hold sessions with doctors, engineers or business people, or company visits?", "Do you help choose a group after 10th?", [], "SJC"),
  ("Career & skills", "O", "yes_no", "Do you teach public speaking, leadership, teamwork and money skills through projects or activities?", "Do you teach public speaking?", YN, "SJ"),
 
+ ("Transport", "O", "text", "Can the bus pick-up point be changed when a family moves, or the bus stopped mid-year? What is the extra fee or refund, and how much notice is needed?", "We are moving house, can the bus stop change?", [], "PSJ"),
+ ("Transport", "O", "text", "If a child misses the bus, can they take another route's bus, and at which gate should parents drop them?", "He missed the bus, where do I drop him?", [], "PSJ"),
+ ("Transport", "I", "text", "Bus safety: are seats within the permitted capacity, do drivers have valid licences and police verification, and does each bus carry a first-aid kit, fire extinguisher and emergency exit?", "Are the bus drivers police verified?", [], "PSJ"),
+ ("Transport", "O", "text", "If a bus is late or breaks down, do parents get an alert and is another bus sent, and do you record when each child gets on and off?", "The bus is late, will I get a message?", [], "PSJ"),
+ ("Transport", "O", "text", "Is there a bus after evening activities, and are buses suitable for wheelchair users (ramp, helper)?", "Is there a bus after the sports class?", [], "PSJ"),
+
+ ("Library & labs", "O", "text", "Library: how many books can a student borrow and for how long, what is the late fine, what if a book is lost, and is there a digital library usable from home?", "How many library books can he take?", [], "SJC"),
+ ("Library & labs", "O", "text", "Do students do experiments themselves (or in small groups), with safety gear (gloves, goggles, eye wash), and who pays if equipment breaks by accident?", "Does every student do the experiment?", [], "SJC"),
+ ("Library & labs", "O", "yes_no", "Do you have research or project labs with faculty mentors for degree and engineering students?", "Is there a lab for my final project?", YN, "C"),
+
+ ("Teachers & staff", "I", "text", "What qualifications do your teachers have (B.Ed, D.El.Ed, TET / CTET), and how are music, sports and language guest teachers chosen?", "Are the teachers B.Ed qualified?", [], "PSJ"),
+ ("Teachers & staff", "O", "text", "How many students are there per teacher in a class, and do you add a teacher when classes grow?", "How many children in one class?", [], "PSJ"),
+ ("Teachers & staff", "O", "text", "If a teacher is on leave or leaves mid-year, who teaches the subject, and how do you keep the syllabus on track?", "What if the maths teacher leaves?", [], "PSJC"),
+ ("Teachers & staff", "O", "text", "How do you train teachers and other staff (ayahs, attenders, guards) on child safety and first aid, and how do you review teaching (results, class visits, anonymous student and parent feedback)?", "Can students give feedback on teachers?", [], "PSJ"),
+
+ ("College", "O", "text", "Do you give the academic calendar and timetable in advance (exams, holidays, project dates), and how do credits and backlog exams work?", "When are the mid exams?", [], "C"),
+ ("College", "O", "yes_no", "Are drinking water and washrooms checked and cleaned regularly?", "Is the drinking water RO?", YN, "SJC"),
+ ("College", "O", "yes_no", "Do you have an active alumni network that mentors current students?", "Do seniors help with jobs?", YN, "C"),
+
+ ("Counselling & entrance", "O", "text", "After results, do you guide students through counselling (EAPCET, JoSAA / CSAB, NEET, CUET), including choice filling and documents?", "Will you help with JoSAA choice filling?", [], "J"),
+
+ ("Certificates & schemes", "O", "text", "How soon do you give bonafide, study certificates and a duplicate TC, and can they be requested online?", "I need a bonafide certificate for a bus pass, how long?", [], "SJC"),
+ ("Certificates & schemes", "O", "yes_no", "Do you guide students on caste, income and local / non-local certificates needed for scholarships, counselling and bus passes?", "Which certificates are needed for the scholarship?", YN, "SJC"),
+ ("Certificates & schemes", "O", "text", "Who helps students with scholarship applications (government, trusts, companies), including pending or rejected ones?", "My scholarship shows rejected, whom do I meet?", [], "SJCA"),
+
+ ("Counselling & wellbeing", "O", "text", "What does your counsellor help with (exam fear, low interest, confidence, career pressure), is it kept private except for safety risks, and do you also counsel parents and make a support plan for weak students?", "My daughter is scared of exams, can the counsellor help?", [], "SJC"),
+ ("Counselling & wellbeing", "O", "text", "How do you handle fights between students, bullying (including online bullying) and too much social media or gaming?", "Someone is bullying my son on Instagram, will you help?", [], "SJC"),
+
+ ("Franchise", "O", "text", "Do you offer franchises? Investment, fees and royalty, training and approvals help?", "Can I open a branch of your school?", [], "PS"),
+
+ ("Loans & finance", "O", "text", "Do you help with education loans (documents, fee certificate or estimate, how the bank pays the college, interest subsidy schemes)?", "Will you give a fee letter for my education loan?", [], "CA"),
+ ("Loans & finance", "O", "yes_no", "Do you give a full budget estimate for studying abroad (tuition, stay, food, insurance, travel, visa)?", "How much will the whole MS cost?", YN, "A"),
+
+ ("Global", "O", "yes_no", "Do you have student exchange or credit transfer programmes with foreign schools or universities?", "Is there a semester abroad?", YN, "SJC"),
+ ("Study abroad", "O", "text", "Do you help with foreign university scholarships and tell students the deadlines in advance?", "Can you help me get a scholarship in Germany?", [], "A"),
+ ("Study abroad", "O", "text", "Before students leave, do you guide them on health insurance, part-time work rules under their visa, safe stay and a local emergency contact?", "Can I work part-time in Canada?", [], "A"),
+ ("Study abroad", "O", "text", "After the course, do you guide on post-study work visas, internships and job search (resume and interview help)?", "Can I get a job after MS?", [], "A"),
+
  ("Inter college", "M", "list", "Which groups and batches do you have?", "Do you have a NEET batch?", ["MPC", "BiPC", "CEC", "MEC", "HEC", "Board only", "EAPCET batch", "JEE Mains batch", "JEE Advanced batch", "NEET batch", "CA / CMA / CLAT foundation"], "J"),
  ("Inter college", "I", "text", "What are the timings for day scholars, and are there supervised study hours in the evening?", "Is there evening study?", [], "J"),
  ("Inter college", "I", "yes_no", "Do you have a student counsellor and avoid shaming or pressuring students over marks?", "Will my son be under too much pressure?", YN, "SJC"),
- ("Inter college", "O", "yes_no", "Do students do real lab experiments for their practical exams?", "Are practicals done in the lab?", YN, "J"),
  ("Inter college", "O", "yes_no", "Do you take second-year students from other colleges (with board permission)?", "Can he join you in second year?", YN, "J"),
  ("Inter college", "O", "text", "Can students change group (for example MPC to CEC) after joining? Until when?", "Can she change from MPC to CEC?", [], "J"),
  ("Inter college", "O", "text", "Can students move to another branch or campus of your college? Is there an extra fee?", "Can he move to your Vijayawada campus?", [], "JC"),
@@ -127,7 +164,7 @@ Q = [
  ("College", "I", "text", "Do you keep original certificates? Are they returned when the student asks, also if they leave?", "Will you return my originals if I leave?", [], "C"),
  ("College", "I", "yes_no", "Do you have strict anti-ragging rules and an anti-ragging committee?", "Is there ragging?", YN, "C"),
  ("College", "O", "text", "What is the attendance rule, and how does condonation work?", "What if attendance is below 75%?", [], "C"),
- ("College", "O", "text", "Can students change branch after first year, or take a minor degree (for example in CSE / AI)?", "Can I move from ECE to CSE?", [], "C"),
+ ("College", "O", "text", "Can students change branch after first year, take a minor degree (for example in CSE / AI) or electives from other departments? Any GPA condition?", "Can I move from ECE to CSE?", [], "C"),
  ("College", "O", "text", "Do you help with internships (including hotel and hospital internships) and guide final-year projects in your own labs?", "Will the college allow a 6-month internship?", [], "C"),
  ("College", "O", "text", "What is the supplementary exam fee, and is there an instant supplementary exam?", "When is the supplementary exam?", [], "C"),
  ("College", "O", "yes_no", "For nursing and paramedical courses, do you have your own hospital for clinical practice?", "Do you have your own hospital?", YN, "C"),
@@ -139,7 +176,7 @@ Q = [
 
  ("Study abroad", "M", "list", "Which countries and courses do you help with?", "Do you help with MS in USA?", ["USA", "UK", "Canada", "Australia", "Germany", "Ireland", "New Zealand", "MBBS abroad"], "A"),
  ("Study abroad", "I", "text", "What is your processing fee? Is it free for some universities?", "What is your processing fee?", [], "A"),
- ("Study abroad", "I", "list", "Which services do you give?", "Do you help with the SOP?", ["University shortlisting", "SOP & LOR help", "Applications", "Visa slot booking", "Mock visa interviews", "Education loan help", "Forex & travel", "Accommodation help", "IELTS / PTE coaching"], "A"),
+ ("Study abroad", "I", "list", "Which services do you give?", "Do you help with the SOP?", ["University shortlisting", "SOP & LOR help", "Applications", "Visa slot booking", "Mock visa interviews", "German / French / Japanese language classes", "Education loan help", "Forex & travel", "Accommodation help", "IELTS / PTE coaching"], "A"),
  ("Study abroad", "I", "text", "If the visa is refused, what part of your fee is refunded?", "What if my visa is rejected?", [], "A"),
  ("Study abroad", "O", "text", "Which options do you suggest for students with low marks, backlogs, or without IELTS (MOI letter)?", "I have 10 backlogs, can I still go to UK?", [], "A"),
  ("Study abroad", "O", "text", "For MBBS abroad: total cost, which universities meet NMC rules, and do you help with FMGE / NExT coaching?", "Can I get MBBS in Georgia under 25 lakhs?", [], "A"),

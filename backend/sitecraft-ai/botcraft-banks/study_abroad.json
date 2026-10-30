@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 9,
+ "question_count": 15,
  "questions": [
   {
    "id": "study_abroad-001",
@@ -45,6 +45,7 @@
     "Applications",
     "Visa slot booking",
     "Mock visa interviews",
+    "German / French / Japanese language classes",
     "Education loan help",
     "Forex & travel",
     "Accommodation help",
@@ -61,6 +62,58 @@
   },
   {
    "id": "study_abroad-005",
+   "category": "Certificates & schemes",
+   "owner_question": "Who helps students with scholarship applications (government, trusts, companies), including pending or rejected ones?",
+   "customer_question": "My scholarship shows rejected, whom do I meet?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "study_abroad-006",
+   "category": "Loans & finance",
+   "owner_question": "Do you help with education loans (documents, fee certificate or estimate, how the bank pays the college, interest subsidy schemes)?",
+   "customer_question": "Will you give a fee letter for my education loan?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "study_abroad-007",
+   "category": "Loans & finance",
+   "owner_question": "Do you give a full budget estimate for studying abroad (tuition, stay, food, insurance, travel, visa)?",
+   "customer_question": "How much will the whole MS cost?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "study_abroad-008",
+   "category": "Study abroad",
+   "owner_question": "Do you help with foreign university scholarships and tell students the deadlines in advance?",
+   "customer_question": "Can you help me get a scholarship in Germany?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "study_abroad-009",
+   "category": "Study abroad",
+   "owner_question": "Before students leave, do you guide them on health insurance, part-time work rules under their visa, safe stay and a local emergency contact?",
+   "customer_question": "Can I work part-time in Canada?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "study_abroad-010",
+   "category": "Study abroad",
+   "owner_question": "After the course, do you guide on post-study work visas, internships and job search (resume and interview help)?",
+   "customer_question": "Can I get a job after MS?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "study_abroad-011",
    "category": "Study abroad",
    "owner_question": "Which options do you suggest for students with low marks, backlogs, or without IELTS (MOI letter)?",
    "customer_question": "I have 10 backlogs, can I still go to UK?",
@@ -68,7 +121,7 @@
    "answer_type": "text"
   },
   {
-   "id": "study_abroad-006",
+   "id": "study_abroad-012",
    "category": "Study abroad",
    "owner_question": "For MBBS abroad: total cost, which universities meet NMC rules, and do you help with FMGE / NExT coaching?",
    "customer_question": "Can I get MBBS in Georgia under 25 lakhs?",
@@ -76,7 +129,7 @@
    "answer_type": "text"
   },
   {
-   "id": "study_abroad-007",
+   "id": "study_abroad-013",
    "category": "General",
    "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
    "customer_question": "Can we see the campus first?",
@@ -88,7 +141,7 @@
    ]
   },
   {
-   "id": "study_abroad-008",
+   "id": "study_abroad-014",
    "category": "General",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -104,7 +157,7 @@
    ]
   },
   {
-   "id": "study_abroad-009",
+   "id": "study_abroad-015",
    "category": "General",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Where can I see your reviews?",
