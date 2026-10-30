@@ -4,7 +4,7 @@
  * stays on the Worker. If the Worker is unreachable or not configured yet,
  * the local demo in mockChat.js answers instead, so the page never breaks.
  */
-import { sendChatAction as sendDemoAction } from './mockChat.js?v=20261031a';
+import { sendChatAction as sendDemoAction } from './mockChat.js?v=20261031b';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SEND_AS_IMAGE = new Set(['image/jpeg', 'image/png', 'image/webp']);
@@ -41,6 +41,18 @@ const shopId = (() => {
 })();
 
 export const currentBotId = () => shopId;
+
+// Turns on one of the bot's optional buttons (voice mode, WhatsApp orders).
+export async function enableFeature(key) {
+  const response = await fetch(`${API_BASE}/api/botcraft/owner`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ shopId, action: 'save_features', features: { [key]: true } }),
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || !data.ok) throw new Error(data.error || 'Could not save. Please try again.');
+  return data.features || {};
+}
 export const myBots = () => readBots();
 
 export function rememberBotName(name) {

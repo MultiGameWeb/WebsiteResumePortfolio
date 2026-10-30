@@ -303,10 +303,12 @@ function renderOrders() {
   }) : [element('p', 'empty', 'No orders added yet.')]));
 }
 
+const FEATURE_KEYS = ['photo', 'preorder', 'orderStatus', 'voice', 'cart'];
+
 function renderFeatures() {
   const form = $('#featureForm');
   if (form.contains(document.activeElement)) return;
-  for (const key of ['photo', 'preorder', 'orderStatus']) form.elements[key].checked = Boolean(view.features?.[key]);
+  for (const key of FEATURE_KEYS) form.elements[key].checked = Boolean(view.features?.[key]);
 }
 
 function render() {
@@ -373,7 +375,7 @@ $('#orderForm').addEventListener('submit', async (event) => {
 $('#featureForm').addEventListener('submit', (event) => {
   event.preventDefault();
   const form = event.target;
-  call('save_features', { features: { photo: form.elements.photo.checked, preorder: form.elements.preorder.checked, orderStatus: form.elements.orderStatus.checked } });
+  call('save_features', { features: Object.fromEntries(FEATURE_KEYS.map((key) => [key, form.elements[key].checked])) });
 });
 
 $('#botNameForm').addEventListener('submit', (event) => {

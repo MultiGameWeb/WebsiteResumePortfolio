@@ -429,3 +429,12 @@ html.botcraft-embedded .botcraft-app {
   border-radius: 0;
   box-shadow: none;
 }
+
+.bot-extras { display: grid; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+.bot-extras-title { margin: 0; font-weight: 700; font-size: 13.5px; }
+.bot-extra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface-soft); }
+.bot-extra-words { display: grid; gap: 3px; flex: 1 1 260px; font-size: 12.5px; line-height: 1.45; }
+.bot-extra-words strong { font-size: 13.5px; }
+.bot-extra .quick-chip { margin: 0; }
+.bot-extra-done { font-size: 12.5px; font-weight: 700; }
+.bot-extras-note { margin: 0; font-size: 12px; color: var(--text-soft); }
