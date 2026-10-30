@@ -1,0 +1,372 @@
+{
+ "shop_type_key": "self_drive_rental",
+ "name": "Self-drive car & bike rental",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 38,
+ "questions": [
+  {
+   "id": "self_drive_rental-001",
+   "category": "Vehicles & rates",
+   "owner_question": "Which self-drive vehicles do you rent?",
+   "customer_question": "Do you have an automatic car?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Scooters & bikes",
+    "Royal Enfield / touring bikes",
+    "Electric scooters (no-licence models)",
+    "Bicycles / geared cycles",
+    "Hatchback",
+    "Sedan",
+    "SUV / 7-seater",
+    "Automatic cars",
+    "Electric cars",
+    "Luxury cars"
+   ]
+  },
+  {
+   "id": "self_drive_rental-002",
+   "category": "Vehicles & rates",
+   "owner_question": "What is the self-drive rent for each vehicle per hour, per day, per week and per month?",
+   "customer_question": "How much is a car for one day?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-003",
+   "category": "Documents & deposit",
+   "owner_question": "Which documents are needed (driving licence, Aadhaar), do you keep any original, and is DigiLocker accepted?",
+   "customer_question": "Will you keep my original licence?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-004",
+   "category": "Vehicles & rates",
+   "owner_question": "For self-drive, what does one day mean?",
+   "customer_question": "Is one day 24 hours?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "24 hours from pick-up",
+    "Calendar day (till midnight)"
+   ]
+  },
+  {
+   "id": "self_drive_rental-005",
+   "category": "Vehicles & rates",
+   "owner_question": "How many free kilometres per day, is there an unlimited-km package, and what is the charge per extra km?",
+   "customer_question": "How many km can I drive in a day?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-006",
+   "category": "Vehicles & rates",
+   "owner_question": "What is the charge if the vehicle is returned late (per hour, or a full day)?",
+   "customer_question": "What if I return the car 2 hours late?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-007",
+   "category": "Vehicles & rates",
+   "owner_question": "How do customers book, how much advance is needed, and what is your cancellation and refund policy?",
+   "customer_question": "How do I book a vehicle?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-008",
+   "category": "Documents & deposit",
+   "owner_question": "What is the minimum age and licence needed (no learner's licence)? Can another licensed person drive too?",
+   "customer_question": "Can my father also drive the car?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-009",
+   "category": "Documents & deposit",
+   "owner_question": "How much is the security deposit, can something else be left instead, and how soon is it refunded after return?",
+   "customer_question": "How much deposit?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-010",
+   "category": "Documents & deposit",
+   "owner_question": "Are your self-drive vehicles registered for rental (black number plate with yellow letters)?",
+   "customer_question": "Is this a rental number plate?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, all are rental registered",
+    "Some vehicles",
+    "No"
+   ]
+  },
+  {
+   "id": "self_drive_rental-011",
+   "category": "Fuel, FASTag & travel",
+   "owner_question": "What is your fuel policy (full to full or same level), and do you refund fuel left over?",
+   "customer_question": "Do I return it with a full tank?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-012",
+   "category": "Fuel, FASTag & travel",
+   "owner_question": "Can vehicles go to other states, and who pays the border permit / state tax?",
+   "customer_question": "Can I take the car to Goa?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-013",
+   "category": "Fuel, FASTag & travel",
+   "owner_question": "Do you deliver and pick up vehicles at home, the airport or the station? What is the charge?",
+   "customer_question": "Can you bring the car to the airport?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-014",
+   "category": "Vehicle condition",
+   "owner_question": "If the vehicle or machine breaks down on the way or at the site, do you send a replacement or a mechanic, and who pays?",
+   "customer_question": "What if the car breaks down on the highway?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-015",
+   "category": "Damage & insurance",
+   "owner_question": "Do you record a video of existing scratches at pick-up and check the vehicle together with the customer at return?",
+   "customer_question": "Can I take a video of old scratches?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "self_drive_rental-016",
+   "category": "Damage & insurance",
+   "owner_question": "What do you charge for scratches, dents or broken glass?",
+   "customer_question": "How much for a small scratch?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-017",
+   "category": "Damage & insurance",
+   "owner_question": "What insurance do your vehicles have, and what is the most a customer pays in an accident (maximum liability)?",
+   "customer_question": "What if there is an accident?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-018",
+   "category": "Damage & insurance",
+   "owner_question": "How are traffic e-challans during the rental paid?",
+   "customer_question": "Who pays the challan?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-019",
+   "category": "Vehicles & rates",
+   "owner_question": "Are rates higher on weekends and festivals?",
+   "customer_question": "Is the rate more on Sunday?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-020",
+   "category": "Vehicles & rates",
+   "owner_question": "Is GST included in your rates?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill",
+    "No GST"
+   ]
+  },
+  {
+   "id": "self_drive_rental-021",
+   "category": "Fuel, FASTag & travel",
+   "owner_question": "Do vehicles have a FASTag? Who recharges it, and how are tolls settled?",
+   "customer_question": "Is there a FASTag?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-022",
+   "category": "Fuel, FASTag & travel",
+   "owner_question": "Can customers pick up in one town and drop in another (one-way)?",
+   "customer_question": "Can I drop the car in Vijayawada?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "self_drive_rental-023",
+   "category": "Vehicle condition",
+   "owner_question": "How old are your vehicles (model year, km run)?",
+   "customer_question": "Is the car new?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-024",
+   "category": "Vehicle condition",
+   "owner_question": "Are AC, music, power windows and reverse camera checked, with a spare tyre, jack and tool kit in every car?",
+   "customer_question": "Is there a spare tyre?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "self_drive_rental-025",
+   "category": "Vehicle condition",
+   "owner_question": "Do bikes come with two helmets and a mobile holder?",
+   "customer_question": "Will I get two helmets?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "self_drive_rental-026",
+   "category": "Vehicle condition",
+   "owner_question": "For electric vehicles, how many km does a full charge give, and where can customers charge?",
+   "customer_question": "How far does the electric scooter go?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-027",
+   "category": "Vehicle condition",
+   "owner_question": "Who pays for a puncture or a burst tyre?",
+   "customer_question": "Who pays if the tyre bursts?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-028",
+   "category": "Damage & insurance",
+   "owner_question": "Do customers pay rent for the days the vehicle is in the garage after an accident?",
+   "customer_question": "Do I pay rent while it's repaired?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-029",
+   "category": "Damage & insurance",
+   "owner_question": "What happens in case of theft, floods or a tree falling on a parked vehicle?",
+   "customer_question": "What if the car is stolen?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-030",
+   "category": "Damage & insurance",
+   "owner_question": "What if the key is lost or locked inside, or the wrong fuel is filled? Do you have a spare key?",
+   "customer_question": "I locked the key inside, what now?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-031",
+   "category": "Damage & insurance",
+   "owner_question": "If police seize the vehicle (for example drunk driving), what does the customer pay?",
+   "customer_question": "What if police seize the car?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-032",
+   "category": "Damage & insurance",
+   "owner_question": "Do vehicles have a speed governor or GPS tracking? Do you ever stop a vehicle remotely, and when?",
+   "customer_question": "Will you track where I go?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-033",
+   "category": "Rules & fees",
+   "owner_question": "What are the fines for smoking, drinking, pets or vomiting in the vehicle, and is there a washing charge?",
+   "customer_question": "Is there a fine for smoking?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-034",
+   "category": "Rules & fees",
+   "owner_question": "Is there any in-cabin camera or voice recorder in your vehicles?",
+   "customer_question": "Is there a camera inside the car?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "self_drive_rental-035",
+   "category": "Rules & fees",
+   "owner_question": "What extras can customers rent?",
+   "customer_question": "Do you have a baby car seat?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Baby car seat",
+    "Riding jackets & knee guards",
+    "Saddle bags",
+    "Fuel cans",
+    "Sunshades",
+    "Roof carrier"
+   ]
+  },
+  {
+   "id": "self_drive_rental-036",
+   "category": "Corporate & partners",
+   "owner_question": "Do you give vehicles on monthly corporate contracts (employee pick-up and drop)?",
+   "customer_question": "Can you give 10 cars monthly for our office?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "self_drive_rental-037",
+   "category": "Corporate & partners",
+   "owner_question": "Can people attach their own car to your agency? What do they earn, and who pays for damage?",
+   "customer_question": "Can I attach my car with you?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "self_drive_rental-038",
+   "category": "Corporate & partners",
+   "owner_question": "Please share your Google reviews link and Instagram page, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
