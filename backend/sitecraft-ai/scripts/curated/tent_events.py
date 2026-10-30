@@ -39,7 +39,7 @@ Q = [
  ("Stage & mandap", "O", "yes_no", "Are stage setup and removal included in the price?", "Is stage setup included?", YN, "TD"),
 
  ("Lighting & power", "I", "list", "Which lights do you provide?", "Do you have serial lights?", ["LED & serial lights", "Decorative lights (chandeliers, hanging)", "Stage lights", "Focus & halogen lights", "DJ / party lights", "Moving heads & lasers", "Parking & washroom area lights"], "TDS"),
- ("Lighting & power", "I", "text", "Do you bring a generator or backup power, and is it included? What happens if power goes off during the event?", "What if current goes off?", [], "TDS"),
+ ("Lighting & power", "I", "text", "Do you bring a generator or backup power (what capacity for all lights, DJ and LED screens), is diesel included, is a standby generator kept, where is it placed so the noise does not disturb guests, and do you check the site's power supply beforehand? What happens if power goes off during the event?", "What if current goes off?", [], "TDS"),
  ("Lighting & power", "O", "text", "Are wiring and electrical fitting charged separately?", "Is wiring extra?", [], "TDS"),
 
  ("DJ & sound", "M", "list", "Which sound and music services do you provide?", "Do you have a DJ?", ["DJ with DJ operator", "Sound system only (no DJ)", "Speech & announcement sound (mics)", "Wireless mics", "Indoor & outdoor speakers", "Subwoofers / bass", "Live singer / band", "Orchestra", "Nadaswaram / band baaja", "Dance floor (LED)"], "S"),
@@ -73,10 +73,14 @@ Q = [
  ("Setup & removal", "O", "yes_no", "If a booked item is not available, do you give an equal or better replacement?", "What if the sofa I chose is not there?", YN, "TDS"),
  ("Setup & removal", "O", "text", "Do you clean the place after removing items? Is it charged?", "Will you clean up after?", [], "TDS"),
 
+ ("Setup & removal", "O", "text", "How do you handle difficult sites (soft ground, cement floors without drilling, walls and ceilings that must not be damaged, low height, trees or poles in the way)?", "Can you put the tent without drilling our floor?", [], "TD"),
+ ("Setup & removal", "O", "text", "For big events (thousands of guests), do you plan the layout with separate entry and exit, a VIP entry, sound for each area and extra staff?", "Can you handle 5,000 people for a meeting?", [], "TDS"),
+ ("Setup & removal", "O", "yes_no", "Do you work with the customer's caterer, photographers, event manager's layout and other decorators, and change the stage between programmes?", "Will you set the dining area with our caterer?", YN, "TDS"),
+ ("Setup & removal", "O", "text", "Can customers rent items and set them up themselves? Extra-day rent, deposit and refund time, and do you give a list of items with their count and condition at handover?", "Can I take 100 chairs and set them myself?", [], "T"),
  ("Weather & safety", "I", "text", "What do you do in heavy rain or strong wind (waterproof covers, ground drainage, strong fixing, alternate plan)?", "What if it rains during the function?", [], "TD"),
  ("Weather & safety", "O", "text", "In hot weather, how do you keep the tent cool (fans, coolers, AC)?", "It will be very hot, can you keep it cool?", [], "T"),
  ("Weather & safety", "O", "text", "Who is responsible if rain damages decoration, or if your staff or items damage the place or guests' things?", "Who pays if your staff break something?", [], "TDS"),
- ("Weather & safety", "O", "yes_no", "Do you take safety care (covered wires, earthing, firm stage and tent fixing, cables away from walkways)?", "Are the wires safe for children?", YN, "TDS"),
+ ("Weather & safety", "O", "yes_no", "Do you take safety care (covered wires, earthing, firm stage and tent fixing, cables away from walkways, fire extinguishers, a clear emergency exit, no welding or open flame near the tent, and staff who know what to do in a fire or short circuit)?", "Are the wires safe for children?", YN, "TDS"),
  ("Weather & safety", "O", "text", "How can customers complain about a problem during or after the event, including extra charges they do not agree with?", "Whom do I call if something goes wrong?", [], "TDS"),
 
  ("Shop & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "TDS"),
