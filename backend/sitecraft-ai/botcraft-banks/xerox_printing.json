@@ -1,0 +1,115 @@
+{
+ "shop_type_key": "xerox_printing",
+ "name": "Xerox & printing shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 9,
+ "questions": [
+  {
+   "id": "xerox_printing-001",
+   "category": "Xerox & printing",
+   "owner_question": "Which print and document services do you offer?",
+   "customer_question": "Do you do colour xerox?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Black & white xerox",
+    "Colour xerox",
+    "A3 printing",
+    "Both-side printing",
+    "ID card front & back on one page",
+    "Print from WhatsApp / email / pen drive",
+    "Colour photo prints",
+    "Passport-size photos",
+    "Scan to PDF (and old photo scanning)",
+    "Lamination (small & large)",
+    "Spiral binding",
+    "Hard binding (thesis)",
+    "Typing (Telugu & English)",
+    "Resume / biodata",
+    "Photo resize for applications"
+   ]
+  },
+  {
+   "id": "xerox_printing-002",
+   "category": "Xerox & printing",
+   "owner_question": "What are your rates: black & white and colour per page (A4, A3), bulk rate, lamination, binding and passport photos?",
+   "customer_question": "How much per page for xerox?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "xerox_printing-003",
+   "category": "Xerox & printing",
+   "owner_question": "Do you delete customers' files from your computer and phone after printing or scanning, and send scans only to the customer?",
+   "customer_question": "Will you delete my Aadhaar file after printing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "xerox_printing-004",
+   "category": "Xerox & printing",
+   "owner_question": "Can you copy selected pages of a book without removing its binding?",
+   "customer_question": "Can you copy only page 45 without opening the book?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "xerox_printing-005",
+   "category": "Xerox & printing",
+   "owner_question": "For bulk jobs (100+ pages, project reports, thesis binding), how long does it take?",
+   "customer_question": "When will my project binding be ready?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "xerox_printing-006",
+   "category": "Xerox & printing",
+   "owner_question": "Do you type from handwriting, letters or forms, and correct mistakes and reprint? What is the charge?",
+   "customer_question": "Can you type my handwritten letter?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "xerox_printing-007",
+   "category": "Online applications",
+   "owner_question": "On busy days (last dates), how long is the wait, and do you give tokens?",
+   "customer_question": "Is it crowded on the last date?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "xerox_printing-008",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "xerox_printing-009",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

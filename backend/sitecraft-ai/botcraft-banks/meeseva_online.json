@@ -1,0 +1,183 @@
+{
+ "shop_type_key": "meeseva_online",
+ "name": "MeeSeva / online service centre",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 14,
+ "questions": [
+  {
+   "id": "meeseva_online-001",
+   "category": "MeeSeva & certificates",
+   "owner_question": "Which certificate services do you offer?",
+   "customer_question": "Can I apply for an income certificate here?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Income",
+    "Caste",
+    "Residence",
+    "Birth",
+    "Death",
+    "Family member",
+    "EWS",
+    "Land records (pahani / adangal / 1-B)",
+    "Encumbrance certificate (EC)"
+   ]
+  },
+  {
+   "id": "meeseva_online-002",
+   "category": "Online applications",
+   "owner_question": "Which online applications do you help with?",
+   "customer_question": "Can you fill my job application?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Government job applications",
+    "Hall tickets & results",
+    "Scholarships",
+    "College admissions",
+    "Government schemes",
+    "Pensions",
+    "Ration card",
+    "Passport",
+    "PAN card",
+    "Voter ID",
+    "Driving licence services",
+    "Aadhaar update"
+   ]
+  },
+  {
+   "id": "meeseva_online-003",
+   "category": "Xerox & printing",
+   "owner_question": "Do you delete customers' files from your computer and phone after printing or scanning, and send scans only to the customer?",
+   "customer_question": "Will you delete my Aadhaar file after printing?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meeseva_online-004",
+   "category": "MeeSeva & certificates",
+   "owner_question": "What kind of centre are you?",
+   "customer_question": "Is this an official MeeSeva?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Authorised MeeSeva centre",
+    "CSC (Common Service Centre)",
+    "Aadhaar update centre",
+    "Private online centre (help with applications)"
+   ]
+  },
+  {
+   "id": "meeseva_online-005",
+   "category": "MeeSeva & certificates",
+   "owner_question": "For each certificate, which documents should customers bring, and what is the government fee plus your service charge?",
+   "customer_question": "What documents for a caste certificate?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "meeseva_online-006",
+   "category": "MeeSeva & certificates",
+   "owner_question": "How many days do certificates usually take, and can you check the application status?",
+   "customer_question": "When will my income certificate come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "meeseva_online-007",
+   "category": "Online applications",
+   "owner_question": "Before submitting, do you show the filled form to the customer to check, and give a printed copy or receipt?",
+   "customer_question": "Can I check the form before you submit?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meeseva_online-008",
+   "category": "Online applications",
+   "owner_question": "Do you tell customers when job notifications or scheme last dates come?",
+   "customer_question": "Will you tell me when the police notification comes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meeseva_online-009",
+   "category": "Online applications",
+   "owner_question": "Can application fees be paid at your centre, and is there an extra charge?",
+   "customer_question": "Can I pay the exam fee here?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meeseva_online-010",
+   "category": "Online applications",
+   "owner_question": "Does the applicant need to come in person for OTP or fingerprint (Aadhaar, PAN), and do you ask for OTPs only in person, never on call or chat?",
+   "customer_question": "Do I have to come for the OTP?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "meeseva_online-011",
+   "category": "Online applications",
+   "owner_question": "Which tickets do you book?",
+   "customer_question": "Can you book a train ticket?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Train",
+    "Bus",
+    "Flight",
+    "None"
+   ]
+  },
+  {
+   "id": "meeseva_online-012",
+   "category": "Online applications",
+   "owner_question": "On busy days (last dates), how long is the wait, and do you give tokens?",
+   "customer_question": "Is it crowded on the last date?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "meeseva_online-013",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "meeseva_online-014",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
