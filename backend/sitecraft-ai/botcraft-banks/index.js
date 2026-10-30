@@ -13,6 +13,7 @@ import bank_fast_food from "./fast_food.json" with { type: "json" };
 import bank_footwear from "./footwear.json" with { type: "json" };
 import bank_fruits_vegetables from "./fruits_vegetables.json" with { type: "json" };
 import bank_furniture from "./furniture.json" with { type: "json" };
+import bank_goods_equipment_rental from "./goods_equipment_rental.json" with { type: "json" };
 import bank_gym from "./gym.json" with { type: "json" };
 import bank_hardware_store from "./hardware_store.json" with { type: "json" };
 import bank_hotel_stay from "./hotel_stay.json" with { type: "json" };
@@ -31,11 +32,14 @@ import bank_readymade_garments from "./readymade_garments.json" with { type: "js
 import bank_restaurant from "./restaurant.json" with { type: "json" };
 import bank_salon from "./salon.json" with { type: "json" };
 import bank_saree_textiles from "./saree_textiles.json" with { type: "json" };
+import bank_self_drive_rental from "./self_drive_rental.json" with { type: "json" };
+import bank_self_drive_travels from "./self_drive_travels.json" with { type: "json" };
 import bank_skill_institute from "./skill_institute.json" with { type: "json" };
 import bank_spa from "./spa.json" with { type: "json" };
 import bank_supermarket from "./supermarket.json" with { type: "json" };
 import bank_sweet_shop from "./sweet_shop.json" with { type: "json" };
 import bank_tiffin_centre from "./tiffin_centre.json" with { type: "json" };
+import bank_travels from "./travels.json" with { type: "json" };
 import bank_tuition_centre from "./tuition_centre.json" with { type: "json" };
 
 export const QUESTION_BANKS = {
@@ -53,6 +57,7 @@ export const QUESTION_BANKS = {
   "footwear": bank_footwear,
   "fruits_vegetables": bank_fruits_vegetables,
   "furniture": bank_furniture,
+  "goods_equipment_rental": bank_goods_equipment_rental,
   "gym": bank_gym,
   "hardware_store": bank_hardware_store,
   "hotel_stay": bank_hotel_stay,
@@ -71,10 +76,13 @@ export const QUESTION_BANKS = {
   "restaurant": bank_restaurant,
   "salon": bank_salon,
   "saree_textiles": bank_saree_textiles,
+  "self_drive_rental": bank_self_drive_rental,
+  "self_drive_travels": bank_self_drive_travels,
   "skill_institute": bank_skill_institute,
   "spa": bank_spa,
   "supermarket": bank_supermarket,
   "sweet_shop": bank_sweet_shop,
   "tiffin_centre": bank_tiffin_centre,
+  "travels": bank_travels,
   "tuition_centre": bank_tuition_centre
 };

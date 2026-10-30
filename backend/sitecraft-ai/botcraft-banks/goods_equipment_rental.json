@@ -1,0 +1,156 @@
+{
+ "shop_type_key": "goods_equipment_rental",
+ "name": "Goods vehicle & machinery rental",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 15,
+ "questions": [
+  {
+   "id": "goods_equipment_rental-001",
+   "category": "Vehicles & rates",
+   "owner_question": "Which goods vehicles and machines do you rent?",
+   "customer_question": "Do you have a JCB?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Goods auto / Tata Ace",
+    "Bolero pickup",
+    "Mini truck / Eicher",
+    "Lorry",
+    "JCB",
+    "Crane",
+    "Tractor & rotavator",
+    "Combine harvester",
+    "Agri drone",
+    "DJ / campaign van",
+    "Generator van"
+   ]
+  },
+  {
+   "id": "goods_equipment_rental-002",
+   "category": "Vehicles & rates",
+   "owner_question": "What are your rates for goods vehicles and machines (per trip, per hour, per acre), and is the transport to the site charged?",
+   "customer_question": "How much per hour for a JCB?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-003",
+   "category": "Vehicles & rates",
+   "owner_question": "How do customers book, how much advance is needed, and what is your cancellation and refund policy?",
+   "customer_question": "How do I book a vehicle?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-004",
+   "category": "Fuel, FASTag & travel",
+   "owner_question": "Are tolls, parking and state permits included in the package, or paid separately?",
+   "customer_question": "Are tolls included?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-005",
+   "category": "Vehicle condition",
+   "owner_question": "If the vehicle or machine breaks down on the way or at the site, do you send a replacement or a mechanic, and who pays?",
+   "customer_question": "What if the car breaks down on the highway?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-006",
+   "category": "Goods & machines",
+   "owner_question": "Which vehicle suits house shifting (1BHK, 2BHK, 3BHK)?",
+   "customer_question": "Which vehicle for a 2BHK shifting?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-007",
+   "category": "Goods & machines",
+   "owner_question": "Do loading and unloading workers come with the vehicle? What do they charge?",
+   "customer_question": "Will you send loading workers?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-008",
+   "category": "Goods & machines",
+   "owner_question": "Is there a minimum charge (minimum hours or trips), and is diesel included for machines?",
+   "customer_question": "Is diesel included for the JCB?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-009",
+   "category": "Vehicles & rates",
+   "owner_question": "Is GST included in your rates?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill",
+    "No GST"
+   ]
+  },
+  {
+   "id": "goods_equipment_rental-010",
+   "category": "Vehicle condition",
+   "owner_question": "How old are your vehicles (model year, km run)?",
+   "customer_question": "Is the car new?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-011",
+   "category": "Goods & machines",
+   "owner_question": "Does an experienced operator come with JCBs, tractors and harvesters?",
+   "customer_question": "Does the JCB come with a driver?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "goods_equipment_rental-012",
+   "category": "Goods & machines",
+   "owner_question": "Which villages and areas do you serve, and how soon can a vehicle or machine reach the site?",
+   "customer_question": "Can the tractor come today?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-013",
+   "category": "Goods & machines",
+   "owner_question": "If goods get damaged in shifting, or something gets damaged at the work site, who pays?",
+   "customer_question": "What if my fridge gets damaged in shifting?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "goods_equipment_rental-014",
+   "category": "Goods & machines",
+   "owner_question": "Do you pack goods (sheets, bubble wrap) for house shifting?",
+   "customer_question": "Will you pack the furniture?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "goods_equipment_rental-015",
+   "category": "Corporate & partners",
+   "owner_question": "Please share your Google reviews link and Instagram page, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

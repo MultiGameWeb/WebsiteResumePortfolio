@@ -1,0 +1,283 @@
+{
+ "shop_type_key": "travels",
+ "name": "Travels (cabs, tempo travellers & buses)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 26,
+ "questions": [
+  {
+   "id": "travels-001",
+   "category": "Vehicles & rates",
+   "owner_question": "Which vehicles with driver do you have?",
+   "customer_question": "Do you have a tempo traveller?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Sedan",
+    "SUV / Innova",
+    "Tempo traveller (12–26 seats)",
+    "Mini bus",
+    "Bus (35–50 seats)",
+    "Sleeper coach",
+    "Wedding cars (Audi, BMW, open jeep, vintage)",
+    "Caravan / motorhome",
+    "Ambulance / freezer van",
+    "Boats / yachts"
+   ]
+  },
+  {
+   "id": "travels-002",
+   "category": "Vehicles & rates",
+   "owner_question": "What is your rate per km with driver, and the minimum km charged per day?",
+   "customer_question": "How much per km for an Innova?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-003",
+   "category": "Vehicles & rates",
+   "owner_question": "How do you count kilometres?",
+   "customer_question": "Do you count km from your garage?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Garage to garage",
+    "Point to point (from the customer's place)"
+   ]
+  },
+  {
+   "id": "travels-004",
+   "category": "Vehicles & rates",
+   "owner_question": "How do customers book, how much advance is needed, and what is your cancellation and refund policy?",
+   "customer_question": "How do I book a vehicle?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-005",
+   "category": "Fuel, FASTag & travel",
+   "owner_question": "Can vehicles go to other states, and who pays the border permit / state tax?",
+   "customer_question": "Can I take the car to Goa?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-006",
+   "category": "Fuel, FASTag & travel",
+   "owner_question": "Are tolls, parking and state permits included in the package, or paid separately?",
+   "customer_question": "Are tolls included?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-007",
+   "category": "Vehicle condition",
+   "owner_question": "If the vehicle or machine breaks down on the way or at the site, do you send a replacement or a mechanic, and who pays?",
+   "customer_question": "What if the car breaks down on the highway?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-008",
+   "category": "Driver & trip",
+   "owner_question": "How much is the driver bata per day and the night charge? Who pays for the driver's food and stay?",
+   "customer_question": "How much is driver bata?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-009",
+   "category": "Driver & trip",
+   "owner_question": "Are your drivers experienced on these routes, sober and careful (no gutka, smoking or phone while driving), and will you change the driver on a complaint?",
+   "customer_question": "Is the driver safe?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "travels-010",
+   "category": "Vehicles & rates",
+   "owner_question": "Are rates higher on weekends and festivals?",
+   "customer_question": "Is the rate more on Sunday?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-011",
+   "category": "Vehicles & rates",
+   "owner_question": "Is GST included in your rates?",
+   "customer_question": "Is GST extra?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Included",
+    "Added on the bill",
+    "No GST"
+   ]
+  },
+  {
+   "id": "travels-012",
+   "category": "Fuel, FASTag & travel",
+   "owner_question": "Can customers pick up in one town and drop in another (one-way)?",
+   "customer_question": "Can I drop the car in Vijayawada?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "travels-013",
+   "category": "Vehicle condition",
+   "owner_question": "How old are your vehicles (model year, km run)?",
+   "customer_question": "Is the car new?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-014",
+   "category": "Vehicle condition",
+   "owner_question": "Are AC, music, power windows and reverse camera checked, with a spare tyre, jack and tool kit in every car?",
+   "customer_question": "Is there a spare tyre?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "travels-015",
+   "category": "Rules & fees",
+   "owner_question": "Is there any in-cabin camera or voice recorder in your vehicles?",
+   "customer_question": "Is there a camera inside the car?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "travels-016",
+   "category": "Driver & trip",
+   "owner_question": "Which languages do your drivers speak? Can you send a driver who knows the language of the state we visit?",
+   "customer_question": "Does the driver know Tamil?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-017",
+   "category": "Driver & trip",
+   "owner_question": "Do drivers stop where customers want (no commission hotels) and drop them near the entrance?",
+   "customer_question": "Will the driver stop where we want?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "travels-018",
+   "category": "Driver & trip",
+   "owner_question": "Is the AC kept on on ghat roads (Tirumala, Araku)?",
+   "customer_question": "Will you switch off the AC on the ghat?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "travels-019",
+   "category": "Driver & trip",
+   "owner_question": "Can customers note the odometer reading at the start and see the fuel bills?",
+   "customer_question": "Can I take a photo of the odometer?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "travels-020",
+   "category": "Buses & special vehicles",
+   "owner_question": "What do your tempo travellers and buses have?",
+   "customer_question": "Are the seats push-back?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Push-back seats",
+    "Sleeper berths",
+    "Music / DJ system",
+    "LED TV & mic",
+    "Charging points",
+    "Roof carrier / big boot"
+   ]
+  },
+  {
+   "id": "travels-021",
+   "category": "Buses & special vehicles",
+   "owner_question": "Can groups carry cooking items in the bus for yatras? What is not allowed?",
+   "customer_question": "Can we carry a gas stove?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-022",
+   "category": "Buses & special vehicles",
+   "owner_question": "Do you arrange tour packages with hotels and sightseeing (Tirupati, Srisailam, Araku)?",
+   "customer_question": "Do you have a Tirupati package?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "travels-023",
+   "category": "Buses & special vehicles",
+   "owner_question": "What are your wedding car packages (4 / 8 hours), and do you decorate the car or allow outside decoration?",
+   "customer_question": "How much is an Audi for the baraat?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-024",
+   "category": "Corporate & partners",
+   "owner_question": "Do you give vehicles on monthly corporate contracts (employee pick-up and drop)?",
+   "customer_question": "Can you give 10 cars monthly for our office?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "travels-025",
+   "category": "Corporate & partners",
+   "owner_question": "Can people attach their own car to your agency? What do they earn, and who pays for damage?",
+   "customer_question": "Can I attach my car with you?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "travels-026",
+   "category": "Corporate & partners",
+   "owner_question": "Please share your Google reviews link and Instagram page, if you have them.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
