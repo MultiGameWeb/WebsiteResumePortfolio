@@ -1,0 +1,132 @@
+{
+ "shop_type_key": "ironing_shop",
+ "name": "Ironing (istri / press) shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 12,
+ "questions": [
+  {
+   "id": "ironing_shop-001",
+   "category": "Services",
+   "owner_question": "Which ironing do you do?",
+   "customer_question": "Do you iron sarees?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Shirts & pants",
+    "Sarees",
+    "Dresses & kurtis",
+    "Bed sheets",
+    "Starch & ironing",
+    "Steam ironing",
+    "Charcoal (coal) ironing",
+    "Electric ironing"
+   ]
+  },
+  {
+   "id": "ironing_shop-002",
+   "category": "Rates & time",
+   "owner_question": "What is your ironing rate per piece (shirt, pant, saree, bed sheet)?",
+   "customer_question": "How much per shirt for ironing?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "ironing_shop-003",
+   "category": "Rates & time",
+   "owner_question": "How long does each service usually take, and do you do same-day / express work? Extra charge?",
+   "customer_question": "Can I get it back by tomorrow?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "ironing_shop-004",
+   "category": "Pickup & receipts",
+   "owner_question": "Do you pick up clothes from homes and apartments? Minimum order and charge?",
+   "customer_question": "Can you pick up from my flat?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "ironing_shop-005",
+   "category": "Pickup & receipts",
+   "owner_question": "Do you count and tag each piece and give a receipt or list (on paper or WhatsApp)?",
+   "customer_question": "Will you give a list of my clothes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "ironing_shop-006",
+   "category": "Care & quality",
+   "owner_question": "If a piece is lost or damaged (shrinks, colour runs, burns, tears), how much do you pay or how do you settle it, and within how many days must customers tell you?",
+   "customer_question": "You lost my shirt, what will you do?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "ironing_shop-007",
+   "category": "Rates & time",
+   "owner_question": "Do you have monthly packages for families, or bulk rates for hostels, PGs, hotels and hospitals?",
+   "customer_question": "Is there a monthly package?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "ironing_shop-008",
+   "category": "Pickup & receipts",
+   "owner_question": "How long do you keep clothes that are not collected?",
+   "customer_question": "I forgot to collect my clothes for a month, are they safe?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "ironing_shop-009",
+   "category": "Care & quality",
+   "owner_question": "How do you care for silk / pattu sarees and zari (dry clean or gentle wash, rolling, no direct heat on zari)?",
+   "customer_question": "Will the zari get damaged?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "ironing_shop-010",
+   "category": "Care & quality",
+   "owner_question": "Do you check pockets and return any money, cards or jewellery found?",
+   "customer_question": "I left money in my pant pocket, will I get it back?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "ironing_shop-011",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "ironing_shop-012",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
