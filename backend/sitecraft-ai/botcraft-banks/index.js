@@ -23,6 +23,7 @@ import bank_mobile_repair from "./mobile_repair.json" with { type: "json" };
 import bank_mobile_shop from "./mobile_shop.json" with { type: "json" };
 import bank_mobile_shop_repair from "./mobile_shop_repair.json" with { type: "json" };
 import bank_optical from "./optical.json" with { type: "json" };
+import bank_pet_shop from "./pet_shop.json" with { type: "json" };
 import bank_pharmacy from "./pharmacy.json" with { type: "json" };
 import bank_readymade_garments from "./readymade_garments.json" with { type: "json" };
 import bank_restaurant from "./restaurant.json" with { type: "json" };
@@ -60,6 +61,7 @@ export const QUESTION_BANKS = {
   "mobile_shop": bank_mobile_shop,
   "mobile_shop_repair": bank_mobile_shop_repair,
   "optical": bank_optical,
+  "pet_shop": bank_pet_shop,
   "pharmacy": bank_pharmacy,
   "readymade_garments": bank_readymade_garments,
   "restaurant": bank_restaurant,

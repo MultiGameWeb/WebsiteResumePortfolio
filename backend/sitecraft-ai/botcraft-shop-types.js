@@ -38,7 +38,8 @@ export const SHOP_TYPES = [
   { key: "gym", name: "Gym & fitness centre", aliases: ["gym", "fitness centre", "fitness studio", "unisex gym", "ladies gym", "health club", "crossfit box", "zumba studio"], description: "gym and fitness centre with memberships, trainers and group classes" },
   { key: "tuition_centre", name: "Tuition centre (school classes)", aliases: ["tuition", "tuitions", "tutorials", "home tuition", "study centre", "abacus classes", "vedic maths", "kids tuition"], description: "tuition centre teaching school children (classes 1-10 and intermediate)" },
   { key: "competitive_coaching", name: "Coaching institute (competitive exams)", aliases: ["coaching centre", "IIT coaching", "NEET coaching", "EAMCET coaching", "government job coaching", "bank coaching", "police coaching", "DSC coaching", "Groups coaching", "civils coaching"], description: "coaching institute for entrance and government job exams" },
-  { key: "skill_institute", name: "Computer & skill training institute", aliases: ["computer institute", "computer classes", "spoken English", "Tally classes", "coding classes", "typing institute", "software training", "digital marketing course"], description: "institute teaching computer courses, spoken English and job skills" }
+  { key: "skill_institute", name: "Computer & skill training institute", aliases: ["computer institute", "computer classes", "spoken English", "Tally classes", "coding classes", "typing institute", "software training", "digital marketing course"], description: "institute teaching computer courses, spoken English and job skills" },
+  { key: "pet_shop", name: "Pet shop", aliases: ["pet store", "pets and accessories", "pet food shop", "aquarium shop", "fish aquarium", "birds shop", "kennel", "pet grooming"], description: "pet shop selling pets, pet food, accessories and aquarium fish, with grooming" }
 ];
 
 export const SHOP_TYPE_KEYS = new Set(SHOP_TYPES.map(t => t.key));
