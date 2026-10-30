@@ -1,0 +1,282 @@
+{
+ "shop_type_key": "mutton_shop",
+ "name": "Mutton shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 27,
+ "questions": [
+  {
+   "id": "mutton_shop-001",
+   "category": "Today's rates",
+   "owner_question": "What are today's mutton rates (with bone, boneless)? (Update them any time.)",
+   "customer_question": "Mutton rate today?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-002",
+   "category": "Freshness & trust",
+   "owner_question": "Is all meat cut fresh the same day, never mixed with frozen or leftover meat, and never water-injected or soaked?",
+   "customer_question": "Is this fresh?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mutton_shop-003",
+   "category": "Freshness & trust",
+   "owner_question": "What do you sell as mutton (male goat, female goat, sheep), and is it stamped by the municipality?",
+   "customer_question": "Is this male goat meat?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-004",
+   "category": "Freshness & trust",
+   "owner_question": "Is your scale electronic, stamped by Legal Metrology, visible to customers and set to zero in front of them?",
+   "customer_question": "Is your weighing correct?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mutton_shop-005",
+   "category": "Cuts",
+   "owner_question": "Which mutton cuts do you do?",
+   "customer_question": "Do you have nalli bones?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Curry cut",
+    "Raan (leg)",
+    "Chops / ribs",
+    "Nalli (marrow bones)",
+    "Seena",
+    "Boneless (for haleem)",
+    "Soup bones only",
+    "Keema (machine or hand-chopped)"
+   ]
+  },
+  {
+   "id": "mutton_shop-006",
+   "category": "Weight & wastage",
+   "owner_question": "Do you trim extra fat and avoid heavy bones in mutton weight?",
+   "customer_question": "Please don't add too much fat",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mutton_shop-007",
+   "category": "Halal & hygiene",
+   "owner_question": "Is your meat halal or jhatka?",
+   "customer_question": "Is it halal?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Halal",
+    "Jhatka",
+    "Both, as the customer asks"
+   ]
+  },
+  {
+   "id": "mutton_shop-008",
+   "category": "Halal & hygiene",
+   "owner_question": "How do you keep the shop clean (blocks and knives washed, glass enclosure, no flies, gloves)?",
+   "customer_question": "Is the shop clean?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-009",
+   "category": "Orders & delivery",
+   "owner_question": "For home delivery, what is the minimum order, the charge and the usual time?",
+   "customer_question": "Can you deliver 1 kg?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-010",
+   "category": "Orders & delivery",
+   "owner_question": "Can customers pre-order on WhatsApp (for example on Saturday night) and collect their packed order on Sunday morning without waiting?",
+   "customer_question": "Can I book for Sunday morning?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mutton_shop-011",
+   "category": "Orders & delivery",
+   "owner_question": "For functions and bulk orders, what wholesale rates do you give, and can you deliver early in the morning?",
+   "customer_question": "Rate for 50 kg chicken for a wedding?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-012",
+   "category": "Today's rates",
+   "owner_question": "Which meats do you sell, and are knives and chopping blocks kept separate for each?",
+   "customer_question": "Do you sell only chicken and mutton?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-013",
+   "category": "Freshness & trust",
+   "owner_question": "How young are your goats, and what do you tell customers about cooking time?",
+   "customer_question": "Is the mutton tender?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-014",
+   "category": "Freshness & trust",
+   "owner_question": "Is your shop FSSAI-registered?",
+   "customer_question": "Is your shop FSSAI registered?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mutton_shop-015",
+   "category": "Cuts",
+   "owner_question": "What do special cuts cost (boneless, lollipops, wings, keema)?",
+   "customer_question": "How much is boneless chicken?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-016",
+   "category": "Other parts",
+   "owner_question": "What do head, paya, boti (with tripe), brain, liver, kapura, lungs and blood cost? Do you singe and clean them (boti turned inside out), and should they be booked early?",
+   "customer_question": "How much is talakaya?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-017",
+   "category": "Other parts",
+   "owner_question": "Do you sell chicken feet, heads or scraps for pet dogs? At what price?",
+   "customer_question": "Do you have chicken waste for my dog?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-018",
+   "category": "Orders & delivery",
+   "owner_question": "If customers bring their own birds or goats (functions, temple offerings), what do you charge for cleaning, singeing and cutting, and is the skin adjusted?",
+   "customer_question": "How much to clean and cut our offering rooster?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-019",
+   "category": "Orders & delivery",
+   "owner_question": "Do you supply birds or goats for temple offerings (for example a pure black rooster)?",
+   "customer_question": "Do you have a black rooster for the jatara?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-020",
+   "category": "Orders & delivery",
+   "owner_question": "Do you supply restaurants and fast-food centres daily (rate below the market paper rate, weekly settlement)?",
+   "customer_question": "Can you supply 20 kg chicken daily to my hotel?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-021",
+   "category": "Orders & delivery",
+   "owner_question": "Do you pack for long travel (thermocol box with ice packs)? At what charge?",
+   "customer_question": "Can you pack this for the bus to Bangalore?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-022",
+   "category": "Orders & delivery",
+   "owner_question": "Do you pack in food-grade boxes, or in the customer's own vessel?",
+   "customer_question": "Can you put it in my steel box?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mutton_shop-023",
+   "category": "Orders & delivery",
+   "owner_question": "Which ready-to-cook items do you sell?",
+   "customer_question": "Do you have marinated chicken?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Ginger-garlic paste",
+    "Meat masalas",
+    "Marinated chicken / fish",
+    "Kebabs",
+    "Boneless thighs (shawarma)",
+    "Sausages, salami & burger patties",
+    "Frozen items"
+   ]
+  },
+  {
+   "id": "mutton_shop-024",
+   "category": "Orders & delivery",
+   "owner_question": "What are your timings on festivals (Kanuma, Bakrid, Bonalu, after Karthika masam), do you prepare early-morning orders for ceremonies, and are you closed on any days?",
+   "customer_question": "Will the shop open early on Kanuma?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-025",
+   "category": "Orders & delivery",
+   "owner_question": "If a customer finds the meat not fresh or not tender, what do you do?",
+   "customer_question": "The mutton didn't cook at all, what now?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mutton_shop-026",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "mutton_shop-027",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

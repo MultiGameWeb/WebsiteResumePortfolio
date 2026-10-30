@@ -11,6 +11,7 @@ import bank_car_bike_service from "./car_bike_service.json" with { type: "json" 
 import bank_car_service from "./car_service.json" with { type: "json" };
 import bank_car_wash_detailing from "./car_wash_detailing.json" with { type: "json" };
 import bank_catering from "./catering.json" with { type: "json" };
+import bank_chicken_shop from "./chicken_shop.json" with { type: "json" };
 import bank_chit_fund from "./chit_fund.json" with { type: "json" };
 import bank_clinic from "./clinic.json" with { type: "json" };
 import bank_competitive_coaching from "./competitive_coaching.json" with { type: "json" };
@@ -21,6 +22,7 @@ import bank_electrical_hardware from "./electrical_hardware.json" with { type: "
 import bank_electrical_shop from "./electrical_shop.json" with { type: "json" };
 import bank_fast_food from "./fast_food.json" with { type: "json" };
 import bank_finance_gold from "./finance_gold.json" with { type: "json" };
+import bank_fish_shop from "./fish_shop.json" with { type: "json" };
 import bank_footwear from "./footwear.json" with { type: "json" };
 import bank_fruits_vegetables from "./fruits_vegetables.json" with { type: "json" };
 import bank_function_hall from "./function_hall.json" with { type: "json" };
@@ -38,9 +40,11 @@ import bank_kids_wear from "./kids_wear.json" with { type: "json" };
 import bank_kirana from "./kirana.json" with { type: "json" };
 import bank_kitchen_rental from "./kitchen_rental.json" with { type: "json" };
 import bank_loan_finance from "./loan_finance.json" with { type: "json" };
+import bank_meat_shop from "./meat_shop.json" with { type: "json" };
 import bank_mobile_repair from "./mobile_repair.json" with { type: "json" };
 import bank_mobile_shop from "./mobile_shop.json" with { type: "json" };
 import bank_mobile_shop_repair from "./mobile_shop_repair.json" with { type: "json" };
+import bank_mutton_shop from "./mutton_shop.json" with { type: "json" };
 import bank_optical from "./optical.json" with { type: "json" };
 import bank_pet_shop from "./pet_shop.json" with { type: "json" };
 import bank_pharmacy from "./pharmacy.json" with { type: "json" };
@@ -74,6 +78,7 @@ export const QUESTION_BANKS = {
   "car_service": bank_car_service,
   "car_wash_detailing": bank_car_wash_detailing,
   "catering": bank_catering,
+  "chicken_shop": bank_chicken_shop,
   "chit_fund": bank_chit_fund,
   "clinic": bank_clinic,
   "competitive_coaching": bank_competitive_coaching,
@@ -84,6 +89,7 @@ export const QUESTION_BANKS = {
   "electrical_shop": bank_electrical_shop,
   "fast_food": bank_fast_food,
   "finance_gold": bank_finance_gold,
+  "fish_shop": bank_fish_shop,
   "footwear": bank_footwear,
   "fruits_vegetables": bank_fruits_vegetables,
   "function_hall": bank_function_hall,
@@ -101,9 +107,11 @@ export const QUESTION_BANKS = {
   "kirana": bank_kirana,
   "kitchen_rental": bank_kitchen_rental,
   "loan_finance": bank_loan_finance,
+  "meat_shop": bank_meat_shop,
   "mobile_repair": bank_mobile_repair,
   "mobile_shop": bank_mobile_shop,
   "mobile_shop_repair": bank_mobile_shop_repair,
+  "mutton_shop": bank_mutton_shop,
   "optical": bank_optical,
   "pet_shop": bank_pet_shop,
   "pharmacy": bank_pharmacy,
