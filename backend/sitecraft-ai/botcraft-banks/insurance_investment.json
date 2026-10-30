@@ -1,0 +1,123 @@
+{
+ "shop_type_key": "insurance_investment",
+ "name": "Insurance & investment advisor",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 10,
+ "questions": [
+  {
+   "id": "insurance_investment-001",
+   "category": "Licence & trust",
+   "owner_question": "Which registration or licence do you have (RBI-registered NBFC, state money-lenders licence, chit fund registration, IRDAI / AMFI)? Please give the number customers can check.",
+   "customer_question": "Is your finance registered?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "insurance_investment-002",
+   "category": "Insurance & investments",
+   "owner_question": "Which products do you offer?",
+   "customer_question": "Do you sell health insurance?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Term insurance",
+    "Health insurance",
+    "Life insurance (LIC)",
+    "Motor insurance",
+    "ULIP / endowment plans",
+    "Mutual funds (SIP)",
+    "Corporate / post office deposits"
+   ]
+  },
+  {
+   "id": "insurance_investment-003",
+   "category": "Licence & trust",
+   "owner_question": "Do you explain the full cost (interest, all charges) in writing, in Telugu if needed, before the customer signs?",
+   "customer_question": "Will you tell all charges before I sign?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "insurance_investment-004",
+   "category": "Insurance & investments",
+   "owner_question": "Do you explain that mutual fund returns are not guaranteed, along with exit load and taxes, before investing?",
+   "customer_question": "Is the SIP return guaranteed?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "insurance_investment-005",
+   "category": "Insurance & investments",
+   "owner_question": "How do you explain the free-look period and cancellation to policy buyers?",
+   "customer_question": "Can I cancel the policy?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "insurance_investment-006",
+   "category": "Insurance & investments",
+   "owner_question": "Do you help customers with claims?",
+   "customer_question": "Will you help with my claim?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "insurance_investment-007",
+   "category": "Licence & trust",
+   "owner_question": "Who can customers contact with a complaint, and how soon do you reply?",
+   "customer_question": "Whom do I complain to?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "insurance_investment-008",
+   "category": "Insurance & investments",
+   "owner_question": "For health insurance, do you explain room-rent limits, co-pay and waiting periods before selling?",
+   "customer_question": "Is there a waiting period?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "insurance_investment-009",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "insurance_investment-010",
+   "category": "Service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

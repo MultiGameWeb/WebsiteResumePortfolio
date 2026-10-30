@@ -1,0 +1,381 @@
+{
+ "shop_type_key": "loan_finance",
+ "name": "Loan & finance office",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 40,
+ "questions": [
+  {
+   "id": "loan_finance-001",
+   "category": "Licence & trust",
+   "owner_question": "Which registration or licence do you have (RBI-registered NBFC, state money-lenders licence, chit fund registration, IRDAI / AMFI)? Please give the number customers can check.",
+   "customer_question": "Is your finance registered?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-002",
+   "category": "Loans offered",
+   "owner_question": "Which loans do you give or arrange?",
+   "customer_question": "Do you give personal loans?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Personal loans",
+    "Business / MSME loans (Mudra, PMEGP)",
+    "Home & construction loans",
+    "Loan against property",
+    "Vehicle loans (new, used, tractor)",
+    "Consumer durable loans",
+    "Education loans",
+    "Agriculture / Kisan credit card",
+    "Daily / weekly repayment loans",
+    "Women's group (SHG) loans",
+    "Credit cards"
+   ]
+  },
+  {
+   "id": "loan_finance-003",
+   "category": "Loans offered",
+   "owner_question": "Do you lend yourselves, or arrange loans from banks and NBFCs?",
+   "customer_question": "Is this your own finance or a bank's?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "We lend ourselves",
+    "Agent / DSA for banks and NBFCs",
+    "Both"
+   ]
+  },
+  {
+   "id": "loan_finance-004",
+   "category": "Licence & trust",
+   "owner_question": "Do you explain the full cost (interest, all charges) in writing, in Telugu if needed, before the customer signs?",
+   "customer_question": "Will you tell all charges before I sign?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "loan_finance-005",
+   "category": "Licence & trust",
+   "owner_question": "Do you give a receipt for every payment and a statement or NOC whenever the customer asks?",
+   "customer_question": "Will I get a receipt for every payment?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "loan_finance-006",
+   "category": "Interest & charges",
+   "owner_question": "How is your interest quoted (per year or per month, flat or reducing balance, fixed or floating)? What are the usual rates?",
+   "customer_question": "Is the interest flat or reducing?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-007",
+   "category": "Interest & charges",
+   "owner_question": "What are the processing and other charges (documentation, stamp duty, valuation), how much reaches the customer's account, and is the fee refunded if the loan is rejected?",
+   "customer_question": "How much will I actually get in hand?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-008",
+   "category": "Eligibility & documents",
+   "owner_question": "Who can get a loan (minimum income, cash salary, small businesses without ITR or GST, age limits)?",
+   "customer_question": "My salary is ₹15,000, how much loan can I get?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-009",
+   "category": "Eligibility & documents",
+   "owner_question": "Which documents are needed, and do you keep any originals?",
+   "customer_question": "What documents do I need?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-010",
+   "category": "Eligibility & documents",
+   "owner_question": "How soon is the money credited after applying?",
+   "customer_question": "How soon will I get the money?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-011",
+   "category": "EMI & closing",
+   "owner_question": "Can customers choose the EMI date, and what are the charges for a bounced EMI?",
+   "customer_question": "Can my EMI date be the 10th?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-012",
+   "category": "EMI & closing",
+   "owner_question": "Can loans be closed early or part-paid? Any lock-in period or foreclosure charge?",
+   "customer_question": "Can I close the loan early?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-013",
+   "category": "EMI & closing",
+   "owner_question": "How do you collect when EMIs are missed? Do you follow RBI's fair practice rules (no harassment, no calling the customer's contacts)?",
+   "customer_question": "Will recovery agents come home?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-014",
+   "category": "Home & property loans",
+   "owner_question": "After the loan is closed, how many days do you take to return original documents and release the mortgage?",
+   "customer_question": "When will I get my original documents back?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-015",
+   "category": "Vehicle & other loans",
+   "owner_question": "After a vehicle loan is closed, how soon do you give the NOC / Form 35 to remove the hypothecation?",
+   "customer_question": "When will I get the NOC for my bike?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-016",
+   "category": "Licence & trust",
+   "owner_question": "Who can customers contact with a complaint, and how soon do you reply?",
+   "customer_question": "Whom do I complain to?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-017",
+   "category": "Interest & charges",
+   "owner_question": "Is loan insurance compulsory?",
+   "customer_question": "Do I have to take loan insurance?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Optional",
+    "Compulsory for some loans",
+    "Not offered"
+   ]
+  },
+  {
+   "id": "loan_finance-018",
+   "category": "Interest & charges",
+   "owner_question": "Do you deduct any advance interest or commission from the loan amount before giving it?",
+   "customer_question": "Will you cut the first month's interest in advance?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-019",
+   "category": "Interest & charges",
+   "owner_question": "For daily or weekly repayment schemes, what is the penalty for a late payment?",
+   "customer_question": "What if I miss one day's payment?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-020",
+   "category": "Eligibility & documents",
+   "owner_question": "Do you consider people with a low or no CIBIL score, or an old settled loan?",
+   "customer_question": "My CIBIL is low, will I get a loan?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-021",
+   "category": "Eligibility & documents",
+   "owner_question": "When is a guarantor or co-applicant needed, and what do you explain to guarantors about their responsibility?",
+   "customer_question": "Do I need a guarantor?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-022",
+   "category": "Eligibility & documents",
+   "owner_question": "Do you take blank signed cheques or promissory notes, and are they returned when the loan is closed?",
+   "customer_question": "Will you return my cheques after I close the loan?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-023",
+   "category": "Eligibility & documents",
+   "owner_question": "Do your officers visit the home or workplace for verification?",
+   "customer_question": "Will someone come home to verify?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "loan_finance-024",
+   "category": "EMI & closing",
+   "owner_question": "If a customer can't pay for a while (job loss, illness), do you give time or a settlement?",
+   "customer_question": "I lost my job, can you give me time?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-025",
+   "category": "EMI & closing",
+   "owner_question": "What notices and steps come before legal action, and do you settle at Lok Adalat?",
+   "customer_question": "Will you take me to court?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-026",
+   "category": "EMI & closing",
+   "owner_question": "If the borrower dies, what happens to the loan (insurance cover, family's liability)?",
+   "customer_question": "What happens to the loan if the borrower dies?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-027",
+   "category": "EMI & closing",
+   "owner_question": "Do you offer balance transfer from other lenders, with a top-up loan?",
+   "customer_question": "Can I move my loan to you?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "loan_finance-028",
+   "category": "EMI & closing",
+   "owner_question": "Do you help customers correct wrong entries in their CIBIL report?",
+   "customer_question": "There's a wrong loan in my CIBIL, can you help?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "loan_finance-029",
+   "category": "Home & property loans",
+   "owner_question": "For home loans, how much of the value do you fund (market or guideline value), and which properties do you accept (GP layouts, plots without LRS, gramakantam, open plots, agricultural land)?",
+   "customer_question": "Will you give a loan for a GP layout plot?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-030",
+   "category": "Home & property loans",
+   "owner_question": "For construction loans, is money released stage-wise, is pre-EMI possible, and do you help with PMAY subsidy?",
+   "customer_question": "Will you give the money in stages?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-031",
+   "category": "Home & property loans",
+   "owner_question": "What does mortgage registration (MODT) cost?",
+   "customer_question": "How much for MODT registration?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-032",
+   "category": "Vehicle & other loans",
+   "owner_question": "For vehicle loans, do you give zero down payment, used-vehicle loans or refinance on an existing vehicle?",
+   "customer_question": "Can I get a loan for a second-hand car?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-033",
+   "category": "Vehicle & other loans",
+   "owner_question": "If vehicle EMIs are missed, what is your repossession process (notice first)?",
+   "customer_question": "Will you seize my bike on the road?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-034",
+   "category": "Vehicle & other loans",
+   "owner_question": "For no-cost EMI, what fees does the customer still pay (processing fee, GST)?",
+   "customer_question": "Why was I charged a fee on no-cost EMI?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-035",
+   "category": "Vehicle & other loans",
+   "owner_question": "Do you help with Mudra / PMEGP loans and subsidy, or OD / cash credit limits?",
+   "customer_question": "Can you get me a Mudra loan?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-036",
+   "category": "Vehicle & other loans",
+   "owner_question": "For education loans, how much without collateral, is management quota allowed, and how does the moratorium work?",
+   "customer_question": "How much education loan without property?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-037",
+   "category": "Vehicle & other loans",
+   "owner_question": "For farmers, what crop loan (KCC) per acre do you arrange, with interest subvention, and loans for dairy, poultry or fish farming?",
+   "customer_question": "How much crop loan per acre?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-038",
+   "category": "Vehicle & other loans",
+   "owner_question": "For credit cards you arrange, are they lifetime free, and do you explain the interest on paying only the minimum due?",
+   "customer_question": "Is the credit card free?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "loan_finance-039",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "loan_finance-040",
+   "category": "Service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

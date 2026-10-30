@@ -1,0 +1,167 @@
+{
+ "shop_type_key": "gold_loan",
+ "name": "Gold loan / pawn shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 16,
+ "questions": [
+  {
+   "id": "gold_loan-001",
+   "category": "Licence & trust",
+   "owner_question": "Which registration or licence do you have (RBI-registered NBFC, state money-lenders licence, chit fund registration, IRDAI / AMFI)? Please give the number customers can check.",
+   "customer_question": "Is your finance registered?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "gold_loan-002",
+   "category": "Gold loans",
+   "owner_question": "How much loan do you give per gram of gold today, and at what interest?",
+   "customer_question": "How much per gram today?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "gold_loan-003",
+   "category": "Licence & trust",
+   "owner_question": "Do you explain the full cost (interest, all charges) in writing, in Telugu if needed, before the customer signs?",
+   "customer_question": "Will you tell all charges before I sign?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gold_loan-004",
+   "category": "Licence & trust",
+   "owner_question": "Do you give a receipt for every payment and a statement or NOC whenever the customer asks?",
+   "customer_question": "Will I get a receipt for every payment?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gold_loan-005",
+   "category": "Eligibility & documents",
+   "owner_question": "Which documents are needed, and do you keep any originals?",
+   "customer_question": "What documents do I need?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gold_loan-006",
+   "category": "Gold loans",
+   "owner_question": "How do you test purity (without scratching or acid), and how much stone weight do you deduct?",
+   "customer_question": "Will you scratch my jewellery to test it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gold_loan-007",
+   "category": "Gold loans",
+   "owner_question": "How can gold loans be repaid?",
+   "customer_question": "Should I pay interest every month?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Monthly interest",
+    "Pay anytime (interest + principal together)",
+    "Both"
+   ]
+  },
+  {
+   "id": "gold_loan-008",
+   "category": "Gold loans",
+   "owner_question": "If interest is not paid, how much notice do you give before an auction?",
+   "customer_question": "Will you auction my gold without telling me?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gold_loan-009",
+   "category": "Gold loans",
+   "owner_question": "How is pledged gold kept safe (strong room, insurance, sealed packet with the customer's signature)?",
+   "customer_question": "Is my gold safe with you?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "gold_loan-010",
+   "category": "Licence & trust",
+   "owner_question": "Who can customers contact with a complaint, and how soon do you reply?",
+   "customer_question": "Whom do I complain to?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gold_loan-011",
+   "category": "Eligibility & documents",
+   "owner_question": "Do you take blank signed cheques or promissory notes, and are they returned when the loan is closed?",
+   "customer_question": "Will you return my cheques after I close the loan?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gold_loan-012",
+   "category": "Gold loans",
+   "owner_question": "Can customers take back part of their jewellery and keep the rest pledged?",
+   "customer_question": "Can I take back one chain only?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gold_loan-013",
+   "category": "Gold loans",
+   "owner_question": "What if the pledge receipt is lost, or the borrower dies (nominee)?",
+   "customer_question": "I lost my gold loan receipt, what now?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "gold_loan-014",
+   "category": "Gold loans",
+   "owner_question": "Do you give agricultural gold loans at lower interest?",
+   "customer_question": "Is there a farmer gold loan?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "gold_loan-015",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "gold_loan-016",
+   "category": "Service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
