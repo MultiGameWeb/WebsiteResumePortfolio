@@ -25,6 +25,8 @@ import bank_courier_parcel from "./courier_parcel.json" with { type: "json" };
 import bank_dental_clinic from "./dental_clinic.json" with { type: "json" };
 import bank_diagnostic_lab from "./diagnostic_lab.json" with { type: "json" };
 import bank_dj_sound from "./dj_sound.json" with { type: "json" };
+import bank_driving_school from "./driving_school.json" with { type: "json" };
+import bank_driving_school_rto from "./driving_school_rto.json" with { type: "json" };
 import bank_electrical_hardware from "./electrical_hardware.json" with { type: "json" };
 import bank_electrical_shop from "./electrical_shop.json" with { type: "json" };
 import bank_event_decorator from "./event_decorator.json" with { type: "json" };
@@ -72,6 +74,7 @@ import bank_printing_press from "./printing_press.json" with { type: "json" };
 import bank_readymade_garments from "./readymade_garments.json" with { type: "json" };
 import bank_real_estate from "./real_estate.json" with { type: "json" };
 import bank_restaurant from "./restaurant.json" with { type: "json" };
+import bank_rto_agent from "./rto_agent.json" with { type: "json" };
 import bank_salon from "./salon.json" with { type: "json" };
 import bank_saree_textiles from "./saree_textiles.json" with { type: "json" };
 import bank_school from "./school.json" with { type: "json" };
@@ -124,6 +127,8 @@ export const QUESTION_BANKS = {
   "dental_clinic": bank_dental_clinic,
   "diagnostic_lab": bank_diagnostic_lab,
   "dj_sound": bank_dj_sound,
+  "driving_school": bank_driving_school,
+  "driving_school_rto": bank_driving_school_rto,
   "electrical_hardware": bank_electrical_hardware,
   "electrical_shop": bank_electrical_shop,
   "event_decorator": bank_event_decorator,
@@ -171,6 +176,7 @@ export const QUESTION_BANKS = {
   "readymade_garments": bank_readymade_garments,
   "real_estate": bank_real_estate,
   "restaurant": bank_restaurant,
+  "rto_agent": bank_rto_agent,
   "salon": bank_salon,
   "saree_textiles": bank_saree_textiles,
   "school": bank_school,
