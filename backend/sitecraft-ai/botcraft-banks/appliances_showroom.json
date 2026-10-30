@@ -3,7 +3,7 @@
  "name": "Electronics & home appliances showroom",
  "version": 2,
  "model": "curated",
- "generated_at": "2026-10-29",
+ "generated_at": "2026-10-30",
  "question_count": 121,
  "questions": [
   {
@@ -761,44 +761,6 @@
   {
    "id": "appliances_showroom-067",
    "category": "Prices & bills",
-   "owner_question": "Which ways to pay do you accept?",
-   "customer_question": "Can I pay by credit card?",
-   "priority": "optional",
-   "answer_type": "list",
-   "options": [
-    "Cash",
-    "UPI",
-    "Debit / credit card",
-    "Bank transfer"
-   ]
-  },
-  {
-   "id": "appliances_showroom-068",
-   "category": "Prices & bills",
-   "owner_question": "Do you add any extra charge for card payments?",
-   "customer_question": "Is there extra charge on card?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "No extra charge",
-    "Yes, a small percentage"
-   ]
-  },
-  {
-   "id": "appliances_showroom-069",
-   "category": "Prices & bills",
-   "owner_question": "Can customers pay part in cash and part by card or UPI?",
-   "customer_question": "Can I pay half cash, half card?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "appliances_showroom-070",
-   "category": "Prices & bills",
    "owner_question": "If a customer loses the bill, can you print a duplicate using their mobile number or the serial number?",
    "customer_question": "I lost my bill, can you give a copy?",
    "priority": "optional",
@@ -809,7 +771,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-071",
+   "id": "appliances_showroom-068",
    "category": "Prices & bills",
    "owner_question": "Do you sell gift vouchers or gift cards?",
    "customer_question": "Can I buy a gift card?",
@@ -821,7 +783,7 @@
    ]
   },
   {
-   "id": "appliances_showroom-072",
+   "id": "appliances_showroom-069",
    "category": "Prices & bills",
    "owner_question": "Do you run lucky draws or prize contests during festivals?",
    "customer_question": "Is there a Diwali lucky draw?",
@@ -829,7 +791,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-073",
+   "id": "appliances_showroom-070",
    "category": "Prices & bills",
    "owner_question": "Do you give free gifts or accessories with purchases?",
    "customer_question": "Any free gift with this TV?",
@@ -837,7 +799,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-074",
+   "id": "appliances_showroom-071",
    "category": "Prices & bills",
    "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
    "customer_question": "Any discount for 10 laptops?",
@@ -845,7 +807,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-075",
+   "id": "appliances_showroom-072",
    "category": "Prices & bills",
    "owner_question": "Do you give special discounts or commission for customers referred by builders or interior designers?",
    "customer_question": "My interior designer sent me, any discount?",
@@ -853,7 +815,7 @@
    "answer_type": "text"
   },
   {
-   "id": "appliances_showroom-076",
+   "id": "appliances_showroom-073",
    "category": "Prices & bills",
    "owner_question": "Can customers order online or on WhatsApp and collect from the shop (click and collect)?",
    "customer_question": "Can I order now and pick up later?",
@@ -863,6 +825,36 @@
     "Yes",
     "No"
    ]
+  },
+  {
+   "id": "appliances_showroom-074",
+   "category": "Prices & bills",
+   "owner_question": "Do you have an upgrade or assured buy-back plan (for example a fixed value for the phone after 1 year when buying a new one)?",
+   "customer_question": "Is there a buy-back offer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "appliances_showroom-075",
+   "category": "Prices & bills",
+   "owner_question": "If the price drops within a few days after purchase, do you refund the difference (price-drop protection)?",
+   "customer_question": "The price dropped after I bought it, will you refund?",
+   "priority": "optional",
+   "answer_type": "text",
+   "city_only": true
+  },
+  {
+   "id": "appliances_showroom-076",
+   "category": "Prices & bills",
+   "owner_question": "Are your offers and prices the same in all your branches and on your website?",
+   "customer_question": "Is this offer at the other branch too?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
   },
   {
    "id": "appliances_showroom-077",

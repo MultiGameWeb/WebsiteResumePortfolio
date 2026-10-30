@@ -1,0 +1,457 @@
+{
+ "shop_type_key": "mobile_repair",
+ "name": "Mobile repair & service centre",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 37,
+ "questions": [
+  {
+   "id": "mobile_repair-001",
+   "category": "Mobile repairs",
+   "owner_question": "Which phone repairs do you do?",
+   "customer_question": "Can you change my phone screen?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Screen / display (folder) replacement",
+    "Touch glass only (OCA)",
+    "Battery replacement",
+    "Charging port / charging IC",
+    "Speaker, mic & earpiece",
+    "Camera & camera glass",
+    "Back panel & frame",
+    "Power / volume buttons",
+    "Water damage",
+    "Dead phone / motherboard (chip-level)",
+    "Network & SIM problems",
+    "Software update, flashing & virus removal",
+    "Forgotten pattern / Google account lock (with proof)",
+    "Data recovery & backup"
+   ]
+  },
+  {
+   "id": "mobile_repair-002",
+   "category": "Mobile repairs",
+   "owner_question": "Which devices and brands do you repair?",
+   "customer_question": "Do you repair iPhones?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "All Android brands",
+    "iPhone",
+    "Keypad phones",
+    "Tablets & iPads",
+    "Smartwatches",
+    "Earbuds & Bluetooth speakers",
+    "Laptops"
+   ]
+  },
+  {
+   "id": "mobile_repair-003",
+   "category": "Products & brands",
+   "owner_question": "Do you sell refurbished or second-hand products?",
+   "customer_question": "Do you have second-hand phones?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No, only new",
+    "Refurbished",
+    "Second-hand",
+    "Both"
+   ]
+  },
+  {
+   "id": "mobile_repair-004",
+   "category": "Products & brands",
+   "owner_question": "If you sell second-hand or refurbished products, do they come with a bill and a warranty? How long?",
+   "customer_question": "Is there warranty on a used phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-005",
+   "category": "Products & brands",
+   "owner_question": "Which accessories do you sell?",
+   "customer_question": "Do you have a fast charger?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Covers & cases",
+    "Tempered glass",
+    "Back skins & lamination",
+    "Chargers & cables",
+    "OTG & adapters",
+    "Wired earphones & neckbands",
+    "Earbuds / ANC headphones",
+    "Smartwatches (calling, health tracking)",
+    "Bluetooth speakers",
+    "Power banks",
+    "Memory cards & pen drives",
+    "Car chargers & mobile holders",
+    "Selfie sticks, tripods & ring lights"
+   ]
+  },
+  {
+   "id": "mobile_repair-006",
+   "category": "Products & brands",
+   "owner_question": "Are your accessories original brand products, or compatible ones?",
+   "customer_question": "Is this charger original?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original brand",
+    "Compatible / local",
+    "Both, clearly marked"
+   ]
+  },
+  {
+   "id": "mobile_repair-007",
+   "category": "Warranty & service",
+   "owner_question": "For repairs, do you use original or compatible parts?",
+   "customer_question": "Is the new screen original?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original parts",
+    "Compatible parts",
+    "Customer's choice"
+   ]
+  },
+  {
+   "id": "mobile_repair-008",
+   "category": "Warranty & service",
+   "owner_question": "Do you give a warranty on repairs? How long?",
+   "customer_question": "Is there warranty on the repair?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-009",
+   "category": "Warranty & service",
+   "owner_question": "Is there a checking (diagnosis) charge if the customer decides not to repair?",
+   "customer_question": "Do you charge just to check it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-010",
+   "category": "Mobile repairs",
+   "owner_question": "Which display qualities do you offer for screen replacement?",
+   "customer_question": "Is the new screen original?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Original (company)",
+    "OLED / AMOLED (same as original)",
+    "Incell / LCD copy (cheaper)",
+    "Customer's choice with price for each"
+   ]
+  },
+  {
+   "id": "mobile_repair-011",
+   "category": "Mobile repairs",
+   "owner_question": "What are your starting prices for common repairs (screen, battery, charging port) for popular models?",
+   "customer_question": "How much to change the Redmi Note screen?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-012",
+   "category": "Mobile repairs",
+   "owner_question": "Do you tell the full price before starting, and call the customer before doing any extra work?",
+   "customer_question": "Will you tell me the price first?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-013",
+   "category": "Mobile repairs",
+   "owner_question": "Do you give a job card or receipt when a phone is left for repair?",
+   "customer_question": "Will I get a slip for my phone?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-014",
+   "category": "Mobile repairs",
+   "owner_question": "Can customers wait and watch while small repairs (battery, glass, port) are done?",
+   "customer_question": "Can I wait while you fix it?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-015",
+   "category": "Mobile repairs",
+   "owner_question": "How do you keep customers' data safe during repairs (do you need the phone password, can they remove photos or take a backup first)?",
+   "customer_question": "Do you need my phone password?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-016",
+   "category": "Products & brands",
+   "owner_question": "Do you sell SIM cards or do mobile recharges?",
+   "customer_question": "Can I get a new Jio SIM here?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Jio",
+    "Airtel",
+    "Vi",
+    "BSNL",
+    "None"
+   ]
+  },
+  {
+   "id": "mobile_repair-017",
+   "category": "Products & brands",
+   "owner_question": "Which other services do you offer at the counter?",
+   "customer_question": "Can I pay my current bill here?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "DTH recharges",
+    "Electricity & other bill payments",
+    "Money transfer / cash withdrawal (AEPS)",
+    "FASTag",
+    "Xerox & printouts",
+    "PAN / ticket booking help",
+    "None"
+   ]
+  },
+  {
+   "id": "mobile_repair-018",
+   "category": "Products & brands",
+   "owner_question": "Do you buy old phones for cash, even when the customer is not buying a new one?",
+   "customer_question": "Will you buy my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-019",
+   "category": "Products & brands",
+   "owner_question": "When you take an old phone (exchange or purchase), do you erase all its data in front of the customer?",
+   "customer_question": "Will my photos be deleted from my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-020",
+   "category": "Warranty & service",
+   "owner_question": "How long does a common repair (screen, battery) usually take?",
+   "customer_question": "How long to change the screen?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-021",
+   "category": "Warranty & service",
+   "owner_question": "Do you pick up and drop devices for repair?",
+   "customer_question": "Can you collect my laptop for repair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-022",
+   "category": "Warranty & service",
+   "owner_question": "Do you give a spare phone to use while the customer's phone is being repaired?",
+   "customer_question": "Can I get a phone while mine is repaired?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-023",
+   "category": "Mobile repairs",
+   "owner_question": "Do you give back the old parts (old screen, battery) if the customer asks?",
+   "customer_question": "Can I take my old screen back?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-024",
+   "category": "Mobile repairs",
+   "owner_question": "Do you send a WhatsApp message when the repair is done?",
+   "customer_question": "Will you tell me when it's ready?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-025",
+   "category": "Mobile repairs",
+   "owner_question": "What do you tell customers to do right after their phone falls in water, and how soon should they bring it?",
+   "customer_question": "My phone fell in water, what do I do?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-026",
+   "category": "Mobile repairs",
+   "owner_question": "For iPhones, do you explain the 'unknown part' message after a screen or battery change, and do you keep True Tone / Face ID working?",
+   "customer_question": "Will Face ID work after screen change?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-027",
+   "category": "Mobile repairs",
+   "owner_question": "For locked phones (forgotten pattern or Google account), do you ask for the bill or ID proof before unlocking?",
+   "customer_question": "I forgot my pattern, can you open it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-028",
+   "category": "Mobile repairs",
+   "owner_question": "Do you tell customers when an outside repair may end the company warranty, and send in-warranty phones to the service centre instead?",
+   "customer_question": "My phone is in warranty, should I repair here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-029",
+   "category": "Mobile repairs",
+   "owner_question": "If a customer doesn't collect a repaired phone, how long do you keep it?",
+   "customer_question": "Can I collect my phone next month?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-030",
+   "category": "Mobile repairs",
+   "owner_question": "Do you repair phones at the customer's home or office (doorstep repair)?",
+   "customer_question": "Can you come and fix it at my office?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "mobile_repair-031",
+   "category": "Mobile repairs",
+   "owner_question": "Do you sell spare parts (displays, batteries) to other technicians at wholesale prices?",
+   "customer_question": "Do you sell displays wholesale?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-032",
+   "category": "Mobile repairs",
+   "owner_question": "Do you teach mobile repair courses?",
+   "customer_question": "Do you have a mobile repair course?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-033",
+   "category": "Shop & service",
+   "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
+   "customer_question": "Can I give my old phone for recycling?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-034",
+   "category": "Shop & service",
+   "owner_question": "Do you have other branches in the city? Can warranty service be done at any branch?",
+   "customer_question": "Do you have a branch in Kukatpally?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-035",
+   "category": "Shop & service",
+   "owner_question": "Do you have a loyalty or points programme for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-036",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "mobile_repair-037",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

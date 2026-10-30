@@ -3,8 +3,8 @@
  "name": "Mobile shop",
  "version": 2,
  "model": "curated",
- "generated_at": "2026-10-29",
- "question_count": 86,
+ "generated_at": "2026-10-30",
+ "question_count": 93,
  "questions": [
   {
    "id": "mobile_shop-001",
@@ -20,10 +20,15 @@
     "Vivo",
     "Oppo",
     "Realme",
-    "Redmi / Xiaomi",
+    "Redmi / Xiaomi / Poco",
+    "iQOO",
     "Motorola",
     "Nothing",
-    "Google Pixel"
+    "Google Pixel",
+    "Honor",
+    "Tecno / Infinix / itel",
+    "Lava",
+    "Nokia (keypad)"
    ]
   },
   {
@@ -130,12 +135,17 @@
    "options": [
     "Covers & cases",
     "Tempered glass",
+    "Back skins & lamination",
     "Chargers & cables",
+    "OTG & adapters",
+    "Wired earphones & neckbands",
     "Earbuds / ANC headphones",
     "Smartwatches (calling, health tracking)",
     "Bluetooth speakers",
     "Power banks",
-    "Memory cards & pen drives"
+    "Memory cards & pen drives",
+    "Car chargers & mobile holders",
+    "Selfie sticks, tripods & ring lights"
    ]
   },
   {
@@ -154,6 +164,22 @@
   {
    "id": "mobile_shop-012",
    "category": "Products & brands",
+   "owner_question": "Which phone variants do you keep in stock?",
+   "customer_question": "Do you have the 8 GB / 256 GB model?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "5G phones",
+    "High RAM / storage variants (8–12 GB, 256 GB+)",
+    "All colours of popular models",
+    "Foldable / flip phones",
+    "Big-font / easy phones for elders",
+    "Rugged / big-battery phones"
+   ]
+  },
+  {
+   "id": "mobile_shop-013",
+   "category": "Products & brands",
    "owner_question": "Which phone price ranges do you stock?",
    "customer_question": "Any good phone under 15,000?",
    "priority": "important",
@@ -167,7 +193,7 @@
    ]
   },
   {
-   "id": "mobile_shop-013",
+   "id": "mobile_shop-014",
    "category": "Prices & bills",
    "owner_question": "Is GST included in the price on the tag?",
    "customer_question": "Is GST extra?",
@@ -179,7 +205,7 @@
    ]
   },
   {
-   "id": "mobile_shop-014",
+   "id": "mobile_shop-015",
    "category": "Prices & bills",
    "owner_question": "Are your prices fixed, or can customers get a discount?",
    "customer_question": "Can you reduce the price?",
@@ -192,7 +218,7 @@
    ]
   },
   {
-   "id": "mobile_shop-015",
+   "id": "mobile_shop-016",
    "category": "Prices & bills",
    "owner_question": "Do you match online prices (Amazon, Flipkart)?",
    "customer_question": "It's cheaper on Amazon, can you match?",
@@ -205,7 +231,7 @@
    ]
   },
   {
-   "id": "mobile_shop-016",
+   "id": "mobile_shop-017",
    "category": "Prices & bills",
    "owner_question": "Do you take an old product in exchange when buying a new one? How is its value decided?",
    "customer_question": "How much will you give for my old phone?",
@@ -213,7 +239,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-017",
+   "id": "mobile_shop-018",
    "category": "Buying & checking",
    "owner_question": "Do you have demo pieces customers can try before buying?",
    "customer_question": "Can I try the phone first?",
@@ -225,7 +251,7 @@
    ]
   },
   {
-   "id": "mobile_shop-018",
+   "id": "mobile_shop-019",
    "category": "Buying & checking",
    "owner_question": "Do you open and check the product in front of the customer before billing?",
    "customer_question": "Will you open the box and check?",
@@ -237,7 +263,7 @@
    ]
   },
   {
-   "id": "mobile_shop-019",
+   "id": "mobile_shop-020",
    "category": "Buying & checking",
    "owner_question": "Do you transfer data from the old phone and set up the new phone for free?",
    "customer_question": "Will you move my WhatsApp and photos?",
@@ -249,7 +275,7 @@
    ]
   },
   {
-   "id": "mobile_shop-020",
+   "id": "mobile_shop-021",
    "category": "Buying & checking",
    "owner_question": "Do you put on a tempered glass and cover when someone buys a phone?",
    "customer_question": "Is screen guard free?",
@@ -262,7 +288,7 @@
    ]
   },
   {
-   "id": "mobile_shop-021",
+   "id": "mobile_shop-022",
    "category": "Warranty & service",
    "owner_question": "Within how many days of purchase can a defective product be replaced?",
    "customer_question": "Can I replace it after 3 days?",
@@ -270,7 +296,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-022",
+   "id": "mobile_shop-023",
    "category": "Returns & refunds",
    "owner_question": "Do you take a product back if the customer simply doesn't like it, or only if it has a manufacturing defect?",
    "customer_question": "Can I return it if I don't like it?",
@@ -283,7 +309,7 @@
    ]
   },
   {
-   "id": "mobile_shop-023",
+   "id": "mobile_shop-024",
    "category": "Returns & refunds",
    "owner_question": "If a product is returned, how do you give the money back?",
    "customer_question": "Will I get cash back?",
@@ -296,7 +322,7 @@
    ]
   },
   {
-   "id": "mobile_shop-024",
+   "id": "mobile_shop-025",
    "category": "Warranty & service",
    "owner_question": "How many years of company warranty do your main products have (for example TV panel, fridge compressor with free gas refill, washing machine motor and drum, phone)?",
    "customer_question": "How many years warranty on this fridge?",
@@ -304,7 +330,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-025",
+   "id": "mobile_shop-026",
    "category": "Warranty & service",
    "owner_question": "During warranty, does the customer bring the product to you, or does the company technician visit the home?",
    "customer_question": "Will the technician come home for warranty repair?",
@@ -317,7 +343,7 @@
    ]
   },
   {
-   "id": "mobile_shop-026",
+   "id": "mobile_shop-027",
    "category": "Warranty & service",
    "owner_question": "Do you help customers with warranty claims and service centre visits?",
    "customer_question": "Will you help with the warranty claim?",
@@ -329,7 +355,7 @@
    ]
   },
   {
-   "id": "mobile_shop-027",
+   "id": "mobile_shop-028",
    "category": "Warranty & service",
    "owner_question": "Do you sell extended warranty or protection plans? Price?",
    "customer_question": "Can I get extra warranty?",
@@ -337,7 +363,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-028",
+   "id": "mobile_shop-029",
    "category": "Warranty & service",
    "owner_question": "Do you repair phones? Which repairs?",
    "customer_question": "Can you change my phone screen?",
@@ -354,7 +380,7 @@
    ]
   },
   {
-   "id": "mobile_shop-029",
+   "id": "mobile_shop-030",
    "category": "Warranty & service",
    "owner_question": "For repairs, do you use original or compatible parts?",
    "customer_question": "Is the new screen original?",
@@ -367,7 +393,7 @@
    ]
   },
   {
-   "id": "mobile_shop-030",
+   "id": "mobile_shop-031",
    "category": "Warranty & service",
    "owner_question": "Do you give a warranty on repairs? How long?",
    "customer_question": "Is there warranty on the repair?",
@@ -375,7 +401,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-031",
+   "id": "mobile_shop-032",
    "category": "Warranty & service",
    "owner_question": "Is there a checking (diagnosis) charge if the customer decides not to repair?",
    "customer_question": "Do you charge just to check it?",
@@ -383,7 +409,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-032",
+   "id": "mobile_shop-033",
    "category": "Finance & loans",
    "owner_question": "What is the minimum bill amount for buying on a loan / finance?",
    "customer_question": "Can I take a loan for a ₹6,000 phone?",
@@ -391,7 +417,7 @@
    "answer_type": "price"
   },
   {
-   "id": "mobile_shop-033",
+   "id": "mobile_shop-034",
    "category": "Finance & loans",
    "owner_question": "How much down payment is usually needed (percentage of the price)?",
    "customer_question": "How much do I pay first?",
@@ -399,7 +425,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-034",
+   "id": "mobile_shop-035",
    "category": "Finance & loans",
    "owner_question": "What processing fee or file charge do finance companies take?",
    "customer_question": "Is there a processing fee?",
@@ -407,7 +433,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-035",
+   "id": "mobile_shop-036",
    "category": "Products & brands",
    "owner_question": "On which day of the week does new stock usually arrive?",
    "customer_question": "When will new models come?",
@@ -415,7 +441,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-036",
+   "id": "mobile_shop-037",
    "category": "Products & brands",
    "owner_question": "Can customers reserve a product by paying an advance?",
    "customer_question": "Can you keep one aside for me?",
@@ -427,7 +453,7 @@
    ]
   },
   {
-   "id": "mobile_shop-037",
+   "id": "mobile_shop-038",
    "category": "Products & brands",
    "owner_question": "Do you sell SIM cards or do mobile recharges?",
    "customer_question": "Can I get a new Jio SIM here?",
@@ -442,7 +468,56 @@
    ]
   },
   {
-   "id": "mobile_shop-038",
+   "id": "mobile_shop-039",
+   "category": "Products & brands",
+   "owner_question": "Which other services do you offer at the counter?",
+   "customer_question": "Can I pay my current bill here?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "DTH recharges",
+    "Electricity & other bill payments",
+    "Money transfer / cash withdrawal (AEPS)",
+    "FASTag",
+    "Xerox & printouts",
+    "PAN / ticket booking help",
+    "None"
+   ]
+  },
+  {
+   "id": "mobile_shop-040",
+   "category": "Buying advice",
+   "owner_question": "How do you help customers choose a phone (camera, battery, gaming, budget), and do you compare two models side by side?",
+   "customer_question": "Which is better for camera under 20,000?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-041",
+   "category": "Products & brands",
+   "owner_question": "Do you buy old phones for cash, even when the customer is not buying a new one?",
+   "customer_question": "Will you buy my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-042",
+   "category": "Products & brands",
+   "owner_question": "When you take an old phone (exchange or purchase), do you erase all its data in front of the customer?",
+   "customer_question": "Will my photos be deleted from my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-043",
    "category": "Products & brands",
    "owner_question": "Do you sell keypad (feature) phones?",
    "customer_question": "Do you have a basic keypad phone?",
@@ -454,7 +529,7 @@
    ]
   },
   {
-   "id": "mobile_shop-039",
+   "id": "mobile_shop-044",
    "category": "Products & brands",
    "owner_question": "Do you sell tablets / iPads?",
    "customer_question": "Do you have iPads?",
@@ -466,7 +541,7 @@
    ]
   },
   {
-   "id": "mobile_shop-040",
+   "id": "mobile_shop-045",
    "category": "Products & brands",
    "owner_question": "Do you sell gaming accessories (triggers, coolers, controllers)?",
    "customer_question": "Do you have a phone cooler for gaming?",
@@ -478,7 +553,7 @@
    ]
   },
   {
-   "id": "mobile_shop-041",
+   "id": "mobile_shop-046",
    "category": "Products & brands",
    "owner_question": "Do you sell display or open-box pieces at a lower price?",
    "customer_question": "Do you have any display piece for less?",
@@ -490,7 +565,7 @@
    ]
   },
   {
-   "id": "mobile_shop-042",
+   "id": "mobile_shop-047",
    "category": "Products & brands",
    "owner_question": "Do you sell smart home and security devices?",
    "customer_question": "Do you have Alexa?",
@@ -506,7 +581,7 @@
    ]
   },
   {
-   "id": "mobile_shop-043",
+   "id": "mobile_shop-048",
    "category": "Prices & bills",
    "owner_question": "Do you give a B2B GST invoice so business customers can claim input tax credit?",
    "customer_question": "Can I get a GST invoice with my company GSTIN?",
@@ -518,7 +593,7 @@
    ]
   },
   {
-   "id": "mobile_shop-044",
+   "id": "mobile_shop-049",
    "category": "Prices & bills",
    "owner_question": "Do you have cashback or bank card offers right now? (Change them any time with Update.)",
    "customer_question": "Any HDFC card offer?",
@@ -526,7 +601,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-045",
+   "id": "mobile_shop-050",
    "category": "Prices & bills",
    "owner_question": "Do you give combo deals when buying products together (for example TV + sound bar, or TV + fridge + washing machine + mixie for a wedding or gruhapravesam)?",
    "customer_question": "Any offer if I buy a fridge and washing machine?",
@@ -534,7 +609,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-046",
+   "id": "mobile_shop-051",
    "category": "Prices & bills",
    "owner_question": "Do you take old products in exchange even if they are not working?",
    "customer_question": "My old TV is dead, will you still exchange it?",
@@ -546,7 +621,7 @@
    ]
   },
   {
-   "id": "mobile_shop-047",
+   "id": "mobile_shop-052",
    "category": "Prices & bills",
    "owner_question": "For an exchange, does the customer need the old product's original box and bill?",
    "customer_question": "I don't have the box, can I still exchange?",
@@ -559,7 +634,7 @@
    ]
   },
   {
-   "id": "mobile_shop-048",
+   "id": "mobile_shop-053",
    "category": "Prices & bills",
    "owner_question": "Can customers exchange an old product of one brand for a new one of another brand (for example old Samsung for new LG)?",
    "customer_question": "Can I exchange my Samsung TV for an LG?",
@@ -571,7 +646,7 @@
    ]
   },
   {
-   "id": "mobile_shop-049",
+   "id": "mobile_shop-054",
    "category": "Prices & bills",
    "owner_question": "Can customers negotiate the exchange value you offer for their old product?",
    "customer_question": "Can you give more for my old phone?",
@@ -583,45 +658,7 @@
    ]
   },
   {
-   "id": "mobile_shop-050",
-   "category": "Prices & bills",
-   "owner_question": "Which ways to pay do you accept?",
-   "customer_question": "Can I pay by credit card?",
-   "priority": "optional",
-   "answer_type": "list",
-   "options": [
-    "Cash",
-    "UPI",
-    "Debit / credit card",
-    "Bank transfer"
-   ]
-  },
-  {
-   "id": "mobile_shop-051",
-   "category": "Prices & bills",
-   "owner_question": "Do you add any extra charge for card payments?",
-   "customer_question": "Is there extra charge on card?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "No extra charge",
-    "Yes, a small percentage"
-   ]
-  },
-  {
-   "id": "mobile_shop-052",
-   "category": "Prices & bills",
-   "owner_question": "Can customers pay part in cash and part by card or UPI?",
-   "customer_question": "Can I pay half cash, half card?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "mobile_shop-053",
+   "id": "mobile_shop-055",
    "category": "Prices & bills",
    "owner_question": "If a customer loses the bill, can you print a duplicate using their mobile number or the serial number?",
    "customer_question": "I lost my bill, can you give a copy?",
@@ -633,7 +670,7 @@
    ]
   },
   {
-   "id": "mobile_shop-054",
+   "id": "mobile_shop-056",
    "category": "Prices & bills",
    "owner_question": "Do you sell gift vouchers or gift cards?",
    "customer_question": "Can I buy a gift card?",
@@ -645,7 +682,7 @@
    ]
   },
   {
-   "id": "mobile_shop-055",
+   "id": "mobile_shop-057",
    "category": "Prices & bills",
    "owner_question": "Do you run lucky draws or prize contests during festivals?",
    "customer_question": "Is there a Diwali lucky draw?",
@@ -653,7 +690,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-056",
+   "id": "mobile_shop-058",
    "category": "Prices & bills",
    "owner_question": "Do you give free gifts or accessories with purchases?",
    "customer_question": "Any free gift with this TV?",
@@ -661,7 +698,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-057",
+   "id": "mobile_shop-059",
    "category": "Prices & bills",
    "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
    "customer_question": "Any discount for 10 laptops?",
@@ -669,7 +706,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-058",
+   "id": "mobile_shop-060",
    "category": "Prices & bills",
    "owner_question": "Do you give special discounts or commission for customers referred by builders or interior designers?",
    "customer_question": "My interior designer sent me, any discount?",
@@ -677,7 +714,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-059",
+   "id": "mobile_shop-061",
    "category": "Prices & bills",
    "owner_question": "Can customers order online or on WhatsApp and collect from the shop (click and collect)?",
    "customer_question": "Can I order now and pick up later?",
@@ -689,7 +726,61 @@
    ]
   },
   {
-   "id": "mobile_shop-060",
+   "id": "mobile_shop-062",
+   "category": "Prices & bills",
+   "owner_question": "Do you have an upgrade or assured buy-back plan (for example a fixed value for the phone after 1 year when buying a new one)?",
+   "customer_question": "Is there a buy-back offer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop-063",
+   "category": "Prices & bills",
+   "owner_question": "If the price drops within a few days after purchase, do you refund the difference (price-drop protection)?",
+   "customer_question": "The price dropped after I bought it, will you refund?",
+   "priority": "optional",
+   "answer_type": "text",
+   "city_only": true
+  },
+  {
+   "id": "mobile_shop-064",
+   "category": "Prices & bills",
+   "owner_question": "Are your offers and prices the same in all your branches and on your website?",
+   "customer_question": "Is this offer at the other branch too?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "mobile_shop-065",
+   "category": "Buying & checking",
+   "owner_question": "Do you open sealed-box phones in front of the customer and show the IMEI on the box, bill and phone match?",
+   "customer_question": "Is the box sealed? Does the IMEI match?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-066",
+   "category": "Buying & checking",
+   "owner_question": "Do you help register the brand warranty and set up the phone (Google account, apps, Telugu keyboard) when it's bought?",
+   "customer_question": "Can you set up my new phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop-067",
    "category": "Delivery & installation",
    "owner_question": "Do you patiently show customers, including elderly people, how to use the product (in Telugu if needed)?",
    "customer_question": "Can you teach my mother how to use it?",
@@ -701,7 +792,7 @@
    ]
   },
   {
-   "id": "mobile_shop-061",
+   "id": "mobile_shop-068",
    "category": "Delivery & installation",
    "owner_question": "Do you help set up smart devices on the customer's phone and connect them to Wi-Fi?",
    "customer_question": "Can you connect it to my Wi-Fi?",
@@ -713,7 +804,7 @@
    ]
   },
   {
-   "id": "mobile_shop-062",
+   "id": "mobile_shop-069",
    "category": "Delivery & installation",
    "owner_question": "Are user manuals available in Telugu, or only in English?",
    "customer_question": "Is there a Telugu manual?",
@@ -725,7 +816,7 @@
    ]
   },
   {
-   "id": "mobile_shop-063",
+   "id": "mobile_shop-070",
    "category": "Returns & refunds",
    "owner_question": "Do you have a 7-day return policy like online stores?",
    "customer_question": "Is there a 7-day return?",
@@ -738,7 +829,7 @@
    ]
   },
   {
-   "id": "mobile_shop-064",
+   "id": "mobile_shop-071",
    "category": "Returns & refunds",
    "owner_question": "If the product doesn't fit the space at home, can customers change it for another size? Within how many days?",
    "customer_question": "The TV is too big for my wall, can I change it?",
@@ -746,7 +837,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-065",
+   "id": "mobile_shop-072",
    "category": "Warranty & service",
    "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
    "customer_question": "Where is the Samsung service centre?",
@@ -754,7 +845,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-066",
+   "id": "mobile_shop-073",
    "category": "Warranty & service",
    "owner_question": "Is your extended warranty from the brand itself, or from a third party (for example OneAssist, ResQ)?",
    "customer_question": "Who gives the extended warranty?",
@@ -767,7 +858,7 @@
    ]
   },
   {
-   "id": "mobile_shop-067",
+   "id": "mobile_shop-074",
    "category": "Warranty & service",
    "owner_question": "Does the extended warranty cover both parts and labour?",
    "customer_question": "Do I pay labour in extended warranty?",
@@ -780,7 +871,7 @@
    ]
   },
   {
-   "id": "mobile_shop-068",
+   "id": "mobile_shop-075",
    "category": "Warranty & service",
    "owner_question": "Which protection or insurance plans do you sell?",
    "customer_question": "Does the insurance cover water damage?",
@@ -795,7 +886,7 @@
    ]
   },
   {
-   "id": "mobile_shop-069",
+   "id": "mobile_shop-076",
    "category": "Warranty & service",
    "owner_question": "Can customers buy a protection plan later (a week or a month after purchase)?",
    "customer_question": "Can I take insurance next month?",
@@ -807,7 +898,7 @@
    ]
   },
   {
-   "id": "mobile_shop-070",
+   "id": "mobile_shop-077",
    "category": "Warranty & service",
    "owner_question": "If a customer needs to claim insurance, do you help, or do they deal with the insurance company directly?",
    "customer_question": "Will you help with my insurance claim?",
@@ -820,7 +911,7 @@
    ]
   },
   {
-   "id": "mobile_shop-071",
+   "id": "mobile_shop-078",
    "category": "Warranty & service",
    "owner_question": "How long does a common repair (screen, battery) usually take?",
    "customer_question": "How long to change the screen?",
@@ -828,7 +919,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-072",
+   "id": "mobile_shop-079",
    "category": "Warranty & service",
    "owner_question": "Do you pick up and drop devices for repair?",
    "customer_question": "Can you collect my laptop for repair?",
@@ -840,7 +931,7 @@
    ]
   },
   {
-   "id": "mobile_shop-073",
+   "id": "mobile_shop-080",
    "category": "Warranty & service",
    "owner_question": "Do you give a spare phone to use while the customer's phone is being repaired?",
    "customer_question": "Can I get a phone while mine is repaired?",
@@ -852,7 +943,7 @@
    ]
   },
   {
-   "id": "mobile_shop-074",
+   "id": "mobile_shop-081",
    "category": "Shop & service",
    "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
    "customer_question": "Can I give my old phone for recycling?",
@@ -864,7 +955,7 @@
    ]
   },
   {
-   "id": "mobile_shop-075",
+   "id": "mobile_shop-082",
    "category": "Shop & service",
    "owner_question": "Do you have an online store or a WhatsApp catalogue, and do you send price quotations on WhatsApp?",
    "customer_question": "Can I see your products online?",
@@ -876,7 +967,7 @@
    ]
   },
   {
-   "id": "mobile_shop-076",
+   "id": "mobile_shop-083",
    "category": "Shop & service",
    "owner_question": "Do you send a copy of the bill on WhatsApp?",
    "customer_question": "Can you send the bill on WhatsApp?",
@@ -888,7 +979,7 @@
    ]
   },
   {
-   "id": "mobile_shop-077",
+   "id": "mobile_shop-084",
    "category": "Shop & service",
    "owner_question": "Is there a separate number for complaints (product problems or late delivery)?",
    "customer_question": "Whom do I call to complain?",
@@ -896,7 +987,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-078",
+   "id": "mobile_shop-085",
    "category": "Shop & service",
    "owner_question": "Do you have other branches in the city? Can warranty service be done at any branch?",
    "customer_question": "Do you have a branch in Kukatpally?",
@@ -904,7 +995,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-079",
+   "id": "mobile_shop-086",
    "category": "Finance & loans",
    "owner_question": "Can customers without a credit or debit card get an instant consumer loan with just Aadhaar?",
    "customer_question": "I don't have a card, can I still get a loan?",
@@ -916,7 +1007,7 @@
    ]
   },
   {
-   "id": "mobile_shop-080",
+   "id": "mobile_shop-087",
    "category": "Finance & loans",
    "owner_question": "What minimum CIBIL score do finance companies usually need?",
    "customer_question": "Will I get a loan with a low CIBIL score?",
@@ -924,7 +1015,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-081",
+   "id": "mobile_shop-088",
    "category": "Finance & loans",
    "owner_question": "What income proof do self-employed people or farmers need for a loan?",
    "customer_question": "I'm a farmer, can I get a loan?",
@@ -932,7 +1023,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-082",
+   "id": "mobile_shop-089",
    "category": "Finance & loans",
    "owner_question": "How long does loan approval usually take in the shop?",
    "customer_question": "How long will the loan approval take?",
@@ -940,7 +1031,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-083",
+   "id": "mobile_shop-090",
    "category": "Finance & loans",
    "owner_question": "Is there a penalty for paying off the loan early (foreclosure)?",
    "customer_question": "Can I close the loan early?",
@@ -948,7 +1039,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_shop-084",
+   "id": "mobile_shop-091",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty or points programme for regular customers?",
    "customer_question": "Do I get points?",
@@ -960,7 +1051,7 @@
    ]
   },
   {
-   "id": "mobile_shop-085",
+   "id": "mobile_shop-092",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -976,7 +1067,7 @@
    ]
   },
   {
-   "id": "mobile_shop-086",
+   "id": "mobile_shop-093",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

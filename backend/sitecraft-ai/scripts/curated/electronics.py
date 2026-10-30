@@ -1,9 +1,16 @@
 # Hand-written (curated) question banks for electronics businesses: mobile
-# shop, electronics & home appliances showroom, and computer & laptop shop.
+# shop (local shops and big chain showrooms), mobile repair & service centre,
+# mobile shop & repair (both), electronics & home appliances showroom, and
+# computer & laptop shop.
 # Run: python3 scripts/curated/electronics.py  -> writes botcraft-banks/<type>.json
 # Priorities: M = mandatory, I = important, O = optional.
-# Tags: P = mobile phone shop, A = appliances & TV showroom, C = computer & laptop shop.
-# Each owner is asked only the questions tagged for their business.
+# Tags: P = mobile phone shop, R = mobile repair, A = appliances & TV showroom,
+# C = computer & laptop shop; p = only a mobile shop without a repair section
+# (its short repair question is left out where the full repair list is asked).
+# Each owner is asked only the questions tagged for their business; the
+# mobile shop & repair type gets every question tagged P or R.
+# A * in the tags marks a city-only question, asked only to shops in a district
+# headquarters or city (local shops rarely know these).
 # Core questions (name, address, map, parking, timings, holiday, phone,
 # WhatsApp, main items, return/exchange, home delivery, EMI, offers, photos)
 # are asked separately, so they are not repeated here.
@@ -12,26 +19,31 @@ import json, os, datetime
 YN = ["Yes", "No"]
 Q = [
  # category, priority, answer_type, owner question, how a customer asks, options, tags
- ("Products & brands", "M", "list", "Which phone brands do you sell?", "Do you have Samsung phones?", ["Apple", "Samsung", "OnePlus", "Vivo", "Oppo", "Realme", "Redmi / Xiaomi", "Motorola", "Nothing", "Google Pixel"], "P"),
+ ("Products & brands", "M", "list", "Which phone brands do you sell?", "Do you have Samsung phones?", ["Apple", "Samsung", "OnePlus", "Vivo", "Oppo", "Realme", "Redmi / Xiaomi / Poco", "iQOO", "Motorola", "Nothing", "Google Pixel", "Honor", "Tecno / Infinix / itel", "Lava", "Nokia (keypad)"], "P"),
  ("Products & brands", "M", "list", "Which products do you sell?", "Do you sell washing machines?", ["TVs", "Refrigerators", "Washing machines", "ACs", "Microwaves / ovens", "Water purifiers", "Kitchen appliances (mixie, grinder, induction)", "Fans & coolers", "Geysers & room heaters", "Soundbars & home theatres", "Party / Bluetooth speakers", "Personal care (iron box, trimmer, hair dryer)", "Vacuum cleaners (wet & dry, robot)", "BLDC energy-saving fans"], "A"),
  ("Products & brands", "M", "list", "Which brands do you sell?", "Do you have LG?", ["Samsung", "LG", "Sony", "Whirlpool", "Godrej", "Haier", "Voltas", "Daikin", "IFB", "Bosch", "Panasonic"], "A"),
  ("Products & brands", "M", "list", "Which products do you sell?", "Do you sell printers?", ["Laptops", "Desktops", "Monitors", "Printers", "Accessories (keyboard, mouse, etc.)", "Hard disks, SSDs & pen drives", "PC parts (graphics cards, RAM, SSD)", "Routers & networking", "CCTV cameras", "Software"], "C"),
  ("Products & brands", "M", "list", "Which laptop and computer brands do you sell?", "Do you have Dell laptops?", ["HP", "Dell", "Lenovo", "Asus", "Acer", "Apple", "MSI"], "C"),
  ("Products & brands", "M", "options", "Are your products brand new and original, with the company's official warranty?", "Is this original with company warranty?", ["All original with brand warranty", "Some imported / without Indian warranty", "We also sell refurbished"], "PAC"),
- ("Products & brands", "I", "options", "Do you sell refurbished or second-hand products?", "Do you have second-hand phones?", ["No, only new", "Refurbished", "Second-hand", "Both"], "PAC"),
- ("Products & brands", "I", "text", "If you sell second-hand or refurbished products, do they come with a bill and a warranty? How long?", "Is there warranty on a used phone?", [], "PAC"),
+ ("Products & brands", "I", "options", "Do you sell refurbished or second-hand products?", "Do you have second-hand phones?", ["No, only new", "Refurbished", "Second-hand", "Both"], "PARC"),
+ ("Products & brands", "I", "text", "If you sell second-hand or refurbished products, do they come with a bill and a warranty? How long?", "Is there warranty on a used phone?", [], "PARC"),
  ("Products & brands", "I", "options", "Do you sell iPhones, and are they from authorised Indian distribution?", "Is the iPhone Indian warranty?", ["Yes, Indian warranty", "Some imported", "We don't sell iPhones"], "P"),
  ("Products & brands", "I", "options", "Do you get new launches on the launch day, or can customers pre-book them?", "Is the new Samsung available?", ["Available on launch day", "Pre-booking available", "Comes later"], "PAC"),
  ("Products & brands", "I", "text", "If a model is out of stock, how many days does it take to get it?", "When will this model come?", [], "PAC"),
  ("Products & brands", "O", "text", "On which day of the week does new stock usually arrive?", "When will new models come?", [], "PAC"),
  ("Products & brands", "O", "yes_no", "Can customers reserve a product by paying an advance?", "Can you keep one aside for me?", YN, "PAC"),
- ("Products & brands", "I", "list", "Which accessories do you sell?", "Do you have a fast charger?", ["Covers & cases", "Tempered glass", "Chargers & cables", "Earbuds / ANC headphones", "Smartwatches (calling, health tracking)", "Bluetooth speakers", "Power banks", "Memory cards & pen drives"], "PC"),
- ("Products & brands", "I", "options", "Are your accessories original brand products, or compatible ones?", "Is this charger original?", ["Original brand", "Compatible / local", "Both, clearly marked"], "PC"),
+ ("Products & brands", "I", "list", "Which accessories do you sell?", "Do you have a fast charger?", ["Covers & cases", "Tempered glass", "Back skins & lamination", "Chargers & cables", "OTG & adapters", "Wired earphones & neckbands", "Earbuds / ANC headphones", "Smartwatches (calling, health tracking)", "Bluetooth speakers", "Power banks", "Memory cards & pen drives", "Car chargers & mobile holders", "Selfie sticks, tripods & ring lights"], "PRC"),
+ ("Products & brands", "I", "options", "Are your accessories original brand products, or compatible ones?", "Is this charger original?", ["Original brand", "Compatible / local", "Both, clearly marked"], "PRC"),
  ("Products & brands", "O", "yes_no", "Do you sell energy-saving (5-star, inverter) models, and do you explain the yearly power-bill saving (for example 3-star vs 5-star)?", "Do you have inverter AC?", YN, "A"),
  ("Products & brands", "O", "yes_no", "Do you sell voltage stabilisers for ACs, fridges and TVs?", "Do I need a stabiliser?", YN, "A"),
  ("Products & brands", "O", "options", "Is a stabiliser given free with an AC?", "Will you give a stabiliser with the AC?", ["Free with AC", "Paid", "Not needed for inverter ACs"], "A"),
  ("Products & brands", "O", "yes_no", "Do you have budget laptops for students?", "Any laptop for college under 40,000?", YN, "C"),
- ("Products & brands", "O", "list", "Do you sell SIM cards or do mobile recharges?", "Can I get a new Jio SIM here?", ["Jio", "Airtel", "Vi", "BSNL", "None"], "P"),
+ ("Products & brands", "O", "list", "Do you sell SIM cards or do mobile recharges?", "Can I get a new Jio SIM here?", ["Jio", "Airtel", "Vi", "BSNL", "None"], "PR"),
+ ("Products & brands", "O", "list", "Which other services do you offer at the counter?", "Can I pay my current bill here?", ["DTH recharges", "Electricity & other bill payments", "Money transfer / cash withdrawal (AEPS)", "FASTag", "Xerox & printouts", "PAN / ticket booking help", "None"], "PR"),
+ ("Products & brands", "I", "list", "Which phone variants do you keep in stock?", "Do you have the 8 GB / 256 GB model?", ["5G phones", "High RAM / storage variants (8–12 GB, 256 GB+)", "All colours of popular models", "Foldable / flip phones", "Big-font / easy phones for elders", "Rugged / big-battery phones"], "P"),
+ ("Buying advice", "O", "text", "How do you help customers choose a phone (camera, battery, gaming, budget), and do you compare two models side by side?", "Which is better for camera under 20,000?", [], "P"),
+ ("Products & brands", "O", "yes_no", "Do you buy old phones for cash, even when the customer is not buying a new one?", "Will you buy my old phone?", YN, "PR"),
+ ("Products & brands", "O", "yes_no", "When you take an old phone (exchange or purchase), do you erase all its data in front of the customer?", "Will my photos be deleted from my old phone?", YN, "PR"),
  ("Products & brands", "I", "list", "Which phone price ranges do you stock?", "Any good phone under 15,000?", ["Under ₹10,000", "₹10,000–20,000", "₹20,000–30,000", "₹30,000–50,000", "Above ₹50,000"], "P"),
  ("Products & brands", "O", "yes_no", "Do you sell keypad (feature) phones?", "Do you have a basic keypad phone?", YN, "P"),
  ("Products & brands", "O", "yes_no", "Do you sell tablets / iPads?", "Do you have iPads?", YN, "PC"),
@@ -77,9 +89,6 @@ Q = [
  ("Prices & bills", "O", "options", "For an exchange, does the customer need the old product's original box and bill?", "I don't have the box, can I still exchange?", ["Not needed", "Bill needed", "Box and bill needed"], "PAC"),
  ("Prices & bills", "O", "yes_no", "Can customers exchange an old product of one brand for a new one of another brand (for example old Samsung for new LG)?", "Can I exchange my Samsung TV for an LG?", YN, "PAC"),
  ("Prices & bills", "O", "yes_no", "Can customers negotiate the exchange value you offer for their old product?", "Can you give more for my old phone?", YN, "PAC"),
- ("Prices & bills", "O", "list", "Which ways to pay do you accept?", "Can I pay by credit card?", ["Cash", "UPI", "Debit / credit card", "Bank transfer"], "PAC"),
- ("Prices & bills", "O", "options", "Do you add any extra charge for card payments?", "Is there extra charge on card?", ["No extra charge", "Yes, a small percentage"], "PAC"),
- ("Prices & bills", "O", "yes_no", "Can customers pay part in cash and part by card or UPI?", "Can I pay half cash, half card?", YN, "PAC"),
  ("Prices & bills", "O", "yes_no", "If a customer loses the bill, can you print a duplicate using their mobile number or the serial number?", "I lost my bill, can you give a copy?", YN, "PAC"),
  ("Prices & bills", "O", "yes_no", "Do you sell gift vouchers or gift cards?", "Can I buy a gift card?", YN, "PAC"),
  ("Prices & bills", "O", "text", "Do you run lucky draws or prize contests during festivals?", "Is there a Diwali lucky draw?", [], "PAC"),
@@ -87,12 +96,17 @@ Q = [
  ("Prices & bills", "O", "text", "Do you give discounts for bulk, corporate or student purchases?", "Any discount for 10 laptops?", [], "PAC"),
  ("Prices & bills", "O", "text", "Do you give special discounts or commission for customers referred by builders or interior designers?", "My interior designer sent me, any discount?", [], "PAC"),
  ("Prices & bills", "O", "yes_no", "Can customers order online or on WhatsApp and collect from the shop (click and collect)?", "Can I order now and pick up later?", YN, "PAC"),
+ ("Prices & bills", "O", "text", "Do you have an upgrade or assured buy-back plan (for example a fixed value for the phone after 1 year when buying a new one)?", "Is there a buy-back offer?", [], "PA"),
+ ("Prices & bills", "O", "text", "If the price drops within a few days after purchase, do you refund the difference (price-drop protection)?", "The price dropped after I bought it, will you refund?", [], "PA*"),
+ ("Prices & bills", "O", "yes_no", "Are your offers and prices the same in all your branches and on your website?", "Is this offer at the other branch too?", YN, "PA*"),
 
  ("Buying & checking", "I", "yes_no", "Do you have demo pieces customers can try before buying?", "Can I try the phone first?", YN, "PAC"),
  ("Buying & checking", "I", "yes_no", "Do you open and check the product in front of the customer before billing?", "Will you open the box and check?", YN, "PAC"),
  ("Buying & checking", "O", "yes_no", "Do you have a demo area to watch TVs and listen to sound systems?", "Can I see the TV picture quality?", YN, "A"),
  ("Buying & checking", "I", "yes_no", "Do you transfer data from the old phone and set up the new phone for free?", "Will you move my WhatsApp and photos?", YN, "P"),
  ("Buying & checking", "I", "options", "Do you put on a tempered glass and cover when someone buys a phone?", "Is screen guard free?", ["Free", "Paid", "Not available"], "P"),
+ ("Buying & checking", "O", "yes_no", "Do you open sealed-box phones in front of the customer and show the IMEI on the box, bill and phone match?", "Is the box sealed? Does the IMEI match?", YN, "P"),
+ ("Buying & checking", "O", "yes_no", "Do you help register the brand warranty and set up the phone (Google account, apps, Telugu keyboard) when it's bought?", "Can you set up my new phone?", YN, "P"),
 
  ("Delivery & installation", "I", "text", "Is installation free? For which products is it charged?", "Is AC installation free?", [], "A"),
  ("Delivery & installation", "I", "text", "For AC installation, are copper pipe, stand and extra piping charged extra? How much?", "Is extra pipe charged?", [], "A"),
@@ -136,17 +150,36 @@ Q = [
  ("Warranty & service", "O", "list", "Which protection or insurance plans do you sell?", "Does the insurance cover water damage?", ["Accidental damage", "Liquid damage", "Theft", "Short circuit / power surge", "None"], "PAC"),
  ("Warranty & service", "O", "yes_no", "Can customers buy a protection plan later (a week or a month after purchase)?", "Can I take insurance next month?", YN, "PAC"),
  ("Warranty & service", "O", "options", "If a customer needs to claim insurance, do you help, or do they deal with the insurance company directly?", "Will you help with my insurance claim?", ["We handle the claim", "We help with the papers", "Customer contacts the insurer"], "PAC"),
- ("Warranty & service", "I", "list", "Do you repair phones? Which repairs?", "Can you change my phone screen?", ["Screen", "Battery", "Charging port", "Speaker / mic", "Water damage", "Software / unlocking", "No repairs"], "P"),
+ ("Warranty & service", "I", "list", "Do you repair phones? Which repairs?", "Can you change my phone screen?", ["Screen", "Battery", "Charging port", "Speaker / mic", "Water damage", "Software / unlocking", "No repairs"], "p"),
  ("Warranty & service", "I", "list", "Do you repair laptops and computers? Which problems?", "My laptop is not starting, can you fix it?", ["Hardware", "Screen", "Keyboard", "Battery", "Software / virus", "Data recovery", "No repairs"], "C"),
  ("Warranty & service", "O", "options", "Do you repair or service appliances, or only through the brand's service?", "Can you repair my washing machine?", ["We repair", "Only brand service", "Both"], "A"),
  ("Warranty & service", "O", "text", "For small appliances (mixie, grinder, juicer, induction), do you give your own replacement warranty?", "If the mixie stops working, will you replace it?", [], "A"),
- ("Warranty & service", "I", "options", "For repairs, do you use original or compatible parts?", "Is the new screen original?", ["Original parts", "Compatible parts", "Customer's choice"], "PC"),
- ("Warranty & service", "I", "text", "Do you give a warranty on repairs? How long?", "Is there warranty on the repair?", [], "PC"),
- ("Warranty & service", "O", "text", "How long does a common repair (screen, battery) usually take?", "How long to change the screen?", [], "PC"),
- ("Warranty & service", "I", "text", "Is there a checking (diagnosis) charge if the customer decides not to repair?", "Do you charge just to check it?", [], "PC"),
- ("Warranty & service", "O", "yes_no", "Do you pick up and drop devices for repair?", "Can you collect my laptop for repair?", YN, "PC"),
- ("Warranty & service", "O", "yes_no", "Do you give a spare phone to use while the customer's phone is being repaired?", "Can I get a phone while mine is repaired?", YN, "P"),
+ ("Warranty & service", "I", "options", "For repairs, do you use original or compatible parts?", "Is the new screen original?", ["Original parts", "Compatible parts", "Customer's choice"], "PRC"),
+ ("Warranty & service", "I", "text", "Do you give a warranty on repairs? How long?", "Is there warranty on the repair?", [], "PRC"),
+ ("Warranty & service", "O", "text", "How long does a common repair (screen, battery) usually take?", "How long to change the screen?", [], "PRC"),
+ ("Warranty & service", "I", "text", "Is there a checking (diagnosis) charge if the customer decides not to repair?", "Do you charge just to check it?", [], "PRC"),
+ ("Warranty & service", "O", "yes_no", "Do you pick up and drop devices for repair?", "Can you collect my laptop for repair?", YN, "PRC"),
+ ("Warranty & service", "O", "yes_no", "Do you give a spare phone to use while the customer's phone is being repaired?", "Can I get a phone while mine is repaired?", YN, "PR"),
  ("Warranty & service", "O", "text", "Do you visit homes or offices for service? What is the visit charge?", "Can someone come to my office?", [], "C"),
+
+ ("Mobile repairs", "M", "list", "Which phone repairs do you do?", "Can you change my phone screen?", ["Screen / display (folder) replacement", "Touch glass only (OCA)", "Battery replacement", "Charging port / charging IC", "Speaker, mic & earpiece", "Camera & camera glass", "Back panel & frame", "Power / volume buttons", "Water damage", "Dead phone / motherboard (chip-level)", "Network & SIM problems", "Software update, flashing & virus removal", "Forgotten pattern / Google account lock (with proof)", "Data recovery & backup"], "R"),
+ ("Mobile repairs", "M", "list", "Which devices and brands do you repair?", "Do you repair iPhones?", ["All Android brands", "iPhone", "Keypad phones", "Tablets & iPads", "Smartwatches", "Earbuds & Bluetooth speakers", "Laptops"], "R"),
+ ("Mobile repairs", "I", "list", "Which display qualities do you offer for screen replacement?", "Is the new screen original?", ["Original (company)", "OLED / AMOLED (same as original)", "Incell / LCD copy (cheaper)", "Customer's choice with price for each"], "R"),
+ ("Mobile repairs", "I", "text", "What are your starting prices for common repairs (screen, battery, charging port) for popular models?", "How much to change the Redmi Note screen?", [], "R"),
+ ("Mobile repairs", "I", "yes_no", "Do you tell the full price before starting, and call the customer before doing any extra work?", "Will you tell me the price first?", YN, "R"),
+ ("Mobile repairs", "I", "yes_no", "Do you give a job card or receipt when a phone is left for repair?", "Will I get a slip for my phone?", YN, "R"),
+ ("Mobile repairs", "I", "yes_no", "Can customers wait and watch while small repairs (battery, glass, port) are done?", "Can I wait while you fix it?", YN, "R"),
+ ("Mobile repairs", "I", "text", "How do you keep customers' data safe during repairs (do you need the phone password, can they remove photos or take a backup first)?", "Do you need my phone password?", [], "R"),
+ ("Mobile repairs", "O", "yes_no", "Do you give back the old parts (old screen, battery) if the customer asks?", "Can I take my old screen back?", YN, "R"),
+ ("Mobile repairs", "O", "yes_no", "Do you send a WhatsApp message when the repair is done?", "Will you tell me when it's ready?", YN, "R"),
+ ("Mobile repairs", "O", "text", "What do you tell customers to do right after their phone falls in water, and how soon should they bring it?", "My phone fell in water, what do I do?", [], "R"),
+ ("Mobile repairs", "O", "text", "For iPhones, do you explain the 'unknown part' message after a screen or battery change, and do you keep True Tone / Face ID working?", "Will Face ID work after screen change?", [], "R"),
+ ("Mobile repairs", "O", "yes_no", "For locked phones (forgotten pattern or Google account), do you ask for the bill or ID proof before unlocking?", "I forgot my pattern, can you open it?", YN, "R"),
+ ("Mobile repairs", "O", "yes_no", "Do you tell customers when an outside repair may end the company warranty, and send in-warranty phones to the service centre instead?", "My phone is in warranty, should I repair here?", YN, "R"),
+ ("Mobile repairs", "O", "text", "If a customer doesn't collect a repaired phone, how long do you keep it?", "Can I collect my phone next month?", [], "R"),
+ ("Mobile repairs", "O", "yes_no", "Do you repair phones at the customer's home or office (doorstep repair)?", "Can you come and fix it at my office?", YN, "R*"),
+ ("Mobile repairs", "O", "yes_no", "Do you sell spare parts (displays, batteries) to other technicians at wholesale prices?", "Do you sell displays wholesale?", YN, "R"),
+ ("Mobile repairs", "O", "yes_no", "Do you teach mobile repair courses?", "Do you have a mobile repair course?", YN, "R"),
  ("Warranty & service", "I", "yes_no", "Do you do AC servicing and gas refilling?", "Can you service my AC?", YN, "A"),
  ("Warranty & service", "O", "yes_no", "Do you offer yearly service plans for ACs and water purifiers?", "Is there an AC service plan?", YN, "A"),
  ("Warranty & service", "O", "yes_no", "Do you upgrade RAM and SSD?", "Can you add more RAM?", YN, "C"),
@@ -154,11 +187,11 @@ Q = [
  ("Warranty & service", "O", "yes_no", "Do you sell and refill printer cartridges?", "Do you refill ink cartridges?", YN, "C"),
  ("Warranty & service", "O", "yes_no", "Do you offer annual maintenance (AMC) for offices?", "Do you do AMC for offices?", YN, "C"),
 
- ("Shop & service", "O", "yes_no", "Do you take old electronics for safe recycling (e-waste)?", "Can I give my old phone for recycling?", YN, "PAC"),
+ ("Shop & service", "O", "yes_no", "Do you take old electronics for safe recycling (e-waste)?", "Can I give my old phone for recycling?", YN, "PARC"),
  ("Shop & service", "O", "yes_no", "Do you have an online store or a WhatsApp catalogue, and do you send price quotations on WhatsApp?", "Can I see your products online?", YN, "PAC"),
  ("Shop & service", "O", "yes_no", "Do you send a copy of the bill on WhatsApp?", "Can you send the bill on WhatsApp?", YN, "PAC"),
  ("Shop & service", "O", "text", "Is there a separate number for complaints (product problems or late delivery)?", "Whom do I call to complain?", [], "PAC"),
- ("Shop & service", "O", "text", "Do you have other branches in the city? Can warranty service be done at any branch?", "Do you have a branch in Kukatpally?", [], "PAC"),
+ ("Shop & service", "O", "text", "Do you have other branches in the city? Can warranty service be done at any branch?", "Do you have a branch in Kukatpally?", [], "PARC"),
 
  ("Finance & loans", "I", "price", "What is the minimum bill amount for buying on a loan / finance?", "Can I take a loan for a ₹6,000 phone?", [], "PAC"),
  ("Finance & loans", "I", "text", "How much down payment is usually needed (percentage of the price)?", "How much do I pay first?", [], "PAC"),
@@ -169,18 +202,20 @@ Q = [
  ("Finance & loans", "O", "text", "How long does loan approval usually take in the shop?", "How long will the loan approval take?", [], "PAC"),
  ("Finance & loans", "O", "text", "Is there a penalty for paying off the loan early (foreclosure)?", "Can I close the loan early?", [], "PAC"),
  ("Shop & service", "O", "yes_no", "Do you bring products home for a demo before buying?", "Can you show the TV at my home?", YN, "A"),
- ("Shop & service", "O", "yes_no", "Do you have a loyalty or points programme for regular customers?", "Do I get points?", YN, "PAC"),
- ("Shop & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "PAC"),
- ("Shop & service", "O", "text", "Please share your Google reviews link, if you have one.", "Where can I see your reviews?", [], "PAC"),
+ ("Shop & service", "O", "yes_no", "Do you have a loyalty or points programme for regular customers?", "Do I get points?", YN, "PARC"),
+ ("Shop & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "PARC"),
+ ("Shop & service", "O", "text", "Please share your Google reviews link, if you have one.", "Where can I see your reviews?", [], "PARC"),
 ]
 
-TYPES = [("mobile_shop", "Mobile shop", "P"), ("appliances_showroom", "Electronics & home appliances showroom", "A"),
+TYPES = [("mobile_shop", "Mobile shop", "Pp"), ("mobile_repair", "Mobile repair & service centre", "R"),
+         ("mobile_shop_repair", "Mobile shop & repair", "PR"),
+         ("appliances_showroom", "Electronics & home appliances showroom", "A"),
          ("computer_shop", "Computer & laptop shop", "C")]
 PRI = {"M": "mandatory", "I": "important", "O": "optional"}
 order = {"M": 0, "I": 1, "O": 2}
 here = os.path.dirname(os.path.abspath(__file__))
 for key, name, tag in TYPES:
-    chosen = [q for q in Q if tag in q[6]]
+    chosen = [q for q in Q if any(t in q[6] for t in tag)]
     assert len({q[3] for q in chosen}) == len(chosen), f"duplicate question in {key}"
     rows = sorted(enumerate(chosen), key=lambda x: (order[x[1][1]], x[0]))
     questions = []
@@ -188,6 +223,7 @@ for key, name, tag in TYPES:
         q = {"id": f"{key}-{n:03d}", "category": cat, "owner_question": owner, "customer_question": customer,
              "priority": PRI[pri], "answer_type": typ}
         if opts: q["options"] = opts
+        if "*" in _tags: q["city_only"] = True
         questions.append(q)
     out = os.path.join(here, "..", "..", "botcraft-banks", f"{key}.json")
     json.dump({"shop_type_key": key, "name": name, "version": 2, "model": "curated",

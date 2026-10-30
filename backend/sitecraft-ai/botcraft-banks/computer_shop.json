@@ -3,8 +3,8 @@
  "name": "Computer & laptop shop",
  "version": 2,
  "model": "curated",
- "generated_at": "2026-10-29",
- "question_count": 93,
+ "generated_at": "2026-10-30",
+ "question_count": 90,
  "questions": [
   {
    "id": "computer_shop-001",
@@ -134,12 +134,17 @@
    "options": [
     "Covers & cases",
     "Tempered glass",
+    "Back skins & lamination",
     "Chargers & cables",
+    "OTG & adapters",
+    "Wired earphones & neckbands",
     "Earbuds / ANC headphones",
     "Smartwatches (calling, health tracking)",
     "Bluetooth speakers",
     "Power banks",
-    "Memory cards & pen drives"
+    "Memory cards & pen drives",
+    "Car chargers & mobile holders",
+    "Selfie sticks, tripods & ring lights"
    ]
   },
   {
@@ -597,44 +602,6 @@
   {
    "id": "computer_shop-051",
    "category": "Prices & bills",
-   "owner_question": "Which ways to pay do you accept?",
-   "customer_question": "Can I pay by credit card?",
-   "priority": "optional",
-   "answer_type": "list",
-   "options": [
-    "Cash",
-    "UPI",
-    "Debit / credit card",
-    "Bank transfer"
-   ]
-  },
-  {
-   "id": "computer_shop-052",
-   "category": "Prices & bills",
-   "owner_question": "Do you add any extra charge for card payments?",
-   "customer_question": "Is there extra charge on card?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "No extra charge",
-    "Yes, a small percentage"
-   ]
-  },
-  {
-   "id": "computer_shop-053",
-   "category": "Prices & bills",
-   "owner_question": "Can customers pay part in cash and part by card or UPI?",
-   "customer_question": "Can I pay half cash, half card?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "computer_shop-054",
-   "category": "Prices & bills",
    "owner_question": "If a customer loses the bill, can you print a duplicate using their mobile number or the serial number?",
    "customer_question": "I lost my bill, can you give a copy?",
    "priority": "optional",
@@ -645,7 +612,7 @@
    ]
   },
   {
-   "id": "computer_shop-055",
+   "id": "computer_shop-052",
    "category": "Prices & bills",
    "owner_question": "Do you sell gift vouchers or gift cards?",
    "customer_question": "Can I buy a gift card?",
@@ -657,7 +624,7 @@
    ]
   },
   {
-   "id": "computer_shop-056",
+   "id": "computer_shop-053",
    "category": "Prices & bills",
    "owner_question": "Do you run lucky draws or prize contests during festivals?",
    "customer_question": "Is there a Diwali lucky draw?",
@@ -665,7 +632,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-057",
+   "id": "computer_shop-054",
    "category": "Prices & bills",
    "owner_question": "Do you give free gifts or accessories with purchases?",
    "customer_question": "Any free gift with this TV?",
@@ -673,7 +640,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-058",
+   "id": "computer_shop-055",
    "category": "Prices & bills",
    "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
    "customer_question": "Any discount for 10 laptops?",
@@ -681,7 +648,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-059",
+   "id": "computer_shop-056",
    "category": "Prices & bills",
    "owner_question": "Do you give special discounts or commission for customers referred by builders or interior designers?",
    "customer_question": "My interior designer sent me, any discount?",
@@ -689,7 +656,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-060",
+   "id": "computer_shop-057",
    "category": "Prices & bills",
    "owner_question": "Can customers order online or on WhatsApp and collect from the shop (click and collect)?",
    "customer_question": "Can I order now and pick up later?",
@@ -701,7 +668,7 @@
    ]
   },
   {
-   "id": "computer_shop-061",
+   "id": "computer_shop-058",
    "category": "Delivery & installation",
    "owner_question": "Do you patiently show customers, including elderly people, how to use the product (in Telugu if needed)?",
    "customer_question": "Can you teach my mother how to use it?",
@@ -713,7 +680,7 @@
    ]
   },
   {
-   "id": "computer_shop-062",
+   "id": "computer_shop-059",
    "category": "Delivery & installation",
    "owner_question": "Do you help set up smart devices on the customer's phone and connect them to Wi-Fi?",
    "customer_question": "Can you connect it to my Wi-Fi?",
@@ -725,7 +692,7 @@
    ]
   },
   {
-   "id": "computer_shop-063",
+   "id": "computer_shop-060",
    "category": "Delivery & installation",
    "owner_question": "Are user manuals available in Telugu, or only in English?",
    "customer_question": "Is there a Telugu manual?",
@@ -737,7 +704,7 @@
    ]
   },
   {
-   "id": "computer_shop-064",
+   "id": "computer_shop-061",
    "category": "Delivery & installation",
    "owner_question": "Do you send a technician to install CCTV cameras and Wi-Fi networks at homes and offices? What is the charge?",
    "customer_question": "Can you install CCTV at my house? How much?",
@@ -745,7 +712,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-065",
+   "id": "computer_shop-062",
    "category": "Returns & refunds",
    "owner_question": "Do you have a 7-day return policy like online stores?",
    "customer_question": "Is there a 7-day return?",
@@ -758,7 +725,7 @@
    ]
   },
   {
-   "id": "computer_shop-066",
+   "id": "computer_shop-063",
    "category": "Returns & refunds",
    "owner_question": "If the product doesn't fit the space at home, can customers change it for another size? Within how many days?",
    "customer_question": "The TV is too big for my wall, can I change it?",
@@ -766,7 +733,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-067",
+   "id": "computer_shop-064",
    "category": "Warranty & service",
    "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
    "customer_question": "Where is the Samsung service centre?",
@@ -774,7 +741,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-068",
+   "id": "computer_shop-065",
    "category": "Warranty & service",
    "owner_question": "Is your extended warranty from the brand itself, or from a third party (for example OneAssist, ResQ)?",
    "customer_question": "Who gives the extended warranty?",
@@ -787,7 +754,7 @@
    ]
   },
   {
-   "id": "computer_shop-069",
+   "id": "computer_shop-066",
    "category": "Warranty & service",
    "owner_question": "Does the extended warranty cover both parts and labour?",
    "customer_question": "Do I pay labour in extended warranty?",
@@ -800,7 +767,7 @@
    ]
   },
   {
-   "id": "computer_shop-070",
+   "id": "computer_shop-067",
    "category": "Warranty & service",
    "owner_question": "During a warranty repair, do you give a standby product to use until it comes back?",
    "customer_question": "Will I get a TV to use while mine is repaired?",
@@ -812,7 +779,7 @@
    ]
   },
   {
-   "id": "computer_shop-071",
+   "id": "computer_shop-068",
    "category": "Warranty & service",
    "owner_question": "Which protection or insurance plans do you sell?",
    "customer_question": "Does the insurance cover water damage?",
@@ -827,7 +794,7 @@
    ]
   },
   {
-   "id": "computer_shop-072",
+   "id": "computer_shop-069",
    "category": "Warranty & service",
    "owner_question": "Can customers buy a protection plan later (a week or a month after purchase)?",
    "customer_question": "Can I take insurance next month?",
@@ -839,7 +806,7 @@
    ]
   },
   {
-   "id": "computer_shop-073",
+   "id": "computer_shop-070",
    "category": "Warranty & service",
    "owner_question": "If a customer needs to claim insurance, do you help, or do they deal with the insurance company directly?",
    "customer_question": "Will you help with my insurance claim?",
@@ -852,7 +819,7 @@
    ]
   },
   {
-   "id": "computer_shop-074",
+   "id": "computer_shop-071",
    "category": "Warranty & service",
    "owner_question": "How long does a common repair (screen, battery) usually take?",
    "customer_question": "How long to change the screen?",
@@ -860,7 +827,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-075",
+   "id": "computer_shop-072",
    "category": "Warranty & service",
    "owner_question": "Do you pick up and drop devices for repair?",
    "customer_question": "Can you collect my laptop for repair?",
@@ -872,7 +839,7 @@
    ]
   },
   {
-   "id": "computer_shop-076",
+   "id": "computer_shop-073",
    "category": "Warranty & service",
    "owner_question": "Do you visit homes or offices for service? What is the visit charge?",
    "customer_question": "Can someone come to my office?",
@@ -880,7 +847,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-077",
+   "id": "computer_shop-074",
    "category": "Warranty & service",
    "owner_question": "Do you upgrade RAM and SSD?",
    "customer_question": "Can you add more RAM?",
@@ -892,7 +859,7 @@
    ]
   },
   {
-   "id": "computer_shop-078",
+   "id": "computer_shop-075",
    "category": "Warranty & service",
    "owner_question": "Do you assemble custom or gaming desktops?",
    "customer_question": "Can you build a gaming PC?",
@@ -904,7 +871,7 @@
    ]
   },
   {
-   "id": "computer_shop-079",
+   "id": "computer_shop-076",
    "category": "Warranty & service",
    "owner_question": "Do you sell and refill printer cartridges?",
    "customer_question": "Do you refill ink cartridges?",
@@ -916,7 +883,7 @@
    ]
   },
   {
-   "id": "computer_shop-080",
+   "id": "computer_shop-077",
    "category": "Warranty & service",
    "owner_question": "Do you offer annual maintenance (AMC) for offices?",
    "customer_question": "Do you do AMC for offices?",
@@ -928,7 +895,7 @@
    ]
   },
   {
-   "id": "computer_shop-081",
+   "id": "computer_shop-078",
    "category": "Shop & service",
    "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
    "customer_question": "Can I give my old phone for recycling?",
@@ -940,7 +907,7 @@
    ]
   },
   {
-   "id": "computer_shop-082",
+   "id": "computer_shop-079",
    "category": "Shop & service",
    "owner_question": "Do you have an online store or a WhatsApp catalogue, and do you send price quotations on WhatsApp?",
    "customer_question": "Can I see your products online?",
@@ -952,7 +919,7 @@
    ]
   },
   {
-   "id": "computer_shop-083",
+   "id": "computer_shop-080",
    "category": "Shop & service",
    "owner_question": "Do you send a copy of the bill on WhatsApp?",
    "customer_question": "Can you send the bill on WhatsApp?",
@@ -964,7 +931,7 @@
    ]
   },
   {
-   "id": "computer_shop-084",
+   "id": "computer_shop-081",
    "category": "Shop & service",
    "owner_question": "Is there a separate number for complaints (product problems or late delivery)?",
    "customer_question": "Whom do I call to complain?",
@@ -972,7 +939,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-085",
+   "id": "computer_shop-082",
    "category": "Shop & service",
    "owner_question": "Do you have other branches in the city? Can warranty service be done at any branch?",
    "customer_question": "Do you have a branch in Kukatpally?",
@@ -980,7 +947,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-086",
+   "id": "computer_shop-083",
    "category": "Finance & loans",
    "owner_question": "Can customers without a credit or debit card get an instant consumer loan with just Aadhaar?",
    "customer_question": "I don't have a card, can I still get a loan?",
@@ -992,7 +959,7 @@
    ]
   },
   {
-   "id": "computer_shop-087",
+   "id": "computer_shop-084",
    "category": "Finance & loans",
    "owner_question": "What minimum CIBIL score do finance companies usually need?",
    "customer_question": "Will I get a loan with a low CIBIL score?",
@@ -1000,7 +967,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-088",
+   "id": "computer_shop-085",
    "category": "Finance & loans",
    "owner_question": "What income proof do self-employed people or farmers need for a loan?",
    "customer_question": "I'm a farmer, can I get a loan?",
@@ -1008,7 +975,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-089",
+   "id": "computer_shop-086",
    "category": "Finance & loans",
    "owner_question": "How long does loan approval usually take in the shop?",
    "customer_question": "How long will the loan approval take?",
@@ -1016,7 +983,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-090",
+   "id": "computer_shop-087",
    "category": "Finance & loans",
    "owner_question": "Is there a penalty for paying off the loan early (foreclosure)?",
    "customer_question": "Can I close the loan early?",
@@ -1024,7 +991,7 @@
    "answer_type": "text"
   },
   {
-   "id": "computer_shop-091",
+   "id": "computer_shop-088",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty or points programme for regular customers?",
    "customer_question": "Do I get points?",
@@ -1036,7 +1003,7 @@
    ]
   },
   {
-   "id": "computer_shop-092",
+   "id": "computer_shop-089",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -1052,7 +1019,7 @@
    ]
   },
   {
-   "id": "computer_shop-093",
+   "id": "computer_shop-090",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
