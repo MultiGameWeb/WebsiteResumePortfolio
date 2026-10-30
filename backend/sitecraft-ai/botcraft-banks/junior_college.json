@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 28,
+ "question_count": 54,
  "questions": [
   {
    "id": "junior_college-001",
@@ -46,7 +46,7 @@
   {
    "id": "junior_college-004",
    "category": "Fees",
-   "owner_question": "When a student leaves, how soon do you give the TC, bonafide and other certificates, and which dues must be cleared first?",
+   "owner_question": "When a student leaves, how soon do you give the TC, bonafide, study records and other certificates, and which dues must be cleared first?",
    "customer_question": "Will you give the TC if we move mid-year?",
    "priority": "important",
    "answer_type": "text"
@@ -78,13 +78,53 @@
   {
    "id": "junior_college-008",
    "category": "Daily rules & care",
-   "owner_question": "Do you have a parent app (homework, attendance, fee receipts), and how can parents reach teachers?",
+   "owner_question": "Do you have a parent app (homework, attendance, fee receipts), can both parents log in, and how can parents reach teachers?",
    "customer_question": "Is there a school app?",
    "priority": "important",
    "answer_type": "text"
   },
   {
    "id": "junior_college-009",
+   "category": "Admissions & records",
+   "owner_question": "Which documents are needed for admission (birth certificate, Aadhaar, photos, parent ID, previous records), originals or copies, and do you give provisional admission if one is missing?",
+   "customer_question": "Which documents do I need for admission?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-010",
+   "category": "Parents & communication",
+   "owner_question": "How often are parent-teacher meetings held (in person or online), can parents book a time with a teacher, and do you send a monthly progress report?",
+   "customer_question": "When is the next parents meeting?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-011",
+   "category": "Parents & communication",
+   "owner_question": "How can parents complain about a teacher or other problem, who handles it up to the principal or management, and in how many days do you reply?",
+   "customer_question": "Whom do I complain to about a teacher?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-012",
+   "category": "Safety & health",
+   "owner_question": "Do you have a child protection policy (staff training, a way for children to complain privately, good touch / bad touch awareness), and how do you handle POCSO complaints?",
+   "customer_question": "How do you keep children safe from abuse?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-013",
+   "category": "Safety & health",
+   "owner_question": "Who gives first aid, how do you record allergies and medical needs (shared only with the staff who need it), and do you have a plan for severe allergies?",
+   "customer_question": "My daughter has a peanut allergy, will teachers know?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-014",
    "category": "Inter college",
    "owner_question": "What are the timings for day scholars, and are there supervised study hours in the evening?",
    "customer_question": "Is there evening study?",
@@ -92,7 +132,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-010",
+   "id": "junior_college-015",
    "category": "Inter college",
    "owner_question": "Do you have a student counsellor and avoid shaming or pressuring students over marks?",
    "customer_question": "Will my son be under too much pressure?",
@@ -104,7 +144,7 @@
    ]
   },
   {
-   "id": "junior_college-011",
+   "id": "junior_college-016",
    "category": "Hostel",
    "owner_question": "Do you have a hostel?",
    "customer_question": "Is there a hostel?",
@@ -118,7 +158,7 @@
    ]
   },
   {
-   "id": "junior_college-012",
+   "id": "junior_college-017",
    "category": "Board & recognition",
    "owner_question": "Which second and third languages can students take?",
    "customer_question": "Can my child take Hindi instead of Telugu?",
@@ -133,7 +173,7 @@
    ]
   },
   {
-   "id": "junior_college-013",
+   "id": "junior_college-018",
    "category": "Daily rules & care",
    "owner_question": "For girls, do you keep sanitary pads, a spare uniform and a rest room?",
    "customer_question": "What if my daughter gets her period at school?",
@@ -145,7 +185,187 @@
    ]
   },
   {
-   "id": "junior_college-014",
+   "id": "junior_college-019",
+   "category": "Admissions & records",
+   "owner_question": "Do you take admissions 2–3 months after the year starts, and how do you help late joiners catch up?",
+   "customer_question": "Can he join in August?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-020",
+   "category": "Admissions & records",
+   "owner_question": "For students returning from abroad, which class do you admit them to, and which documents or equivalency certificates are needed?",
+   "customer_question": "We are coming back from the US, which class will she join?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-021",
+   "category": "Admissions & records",
+   "owner_question": "How do you correct a student's name or date of birth in records, and how do you check board exam registration details before the deadline?",
+   "customer_question": "Her name is spelt differently in Aadhaar, can you correct it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-022",
+   "category": "Exams & results",
+   "owner_question": "If a student misses an exam due to illness, is there a special exam, and by when must the medical certificate be given?",
+   "customer_question": "He had fever on exam day, will there be a re-exam?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-023",
+   "category": "Exams & results",
+   "owner_question": "Can parents see corrected answer sheets, how are internal marks given (projects, assignments, tests), and can marks be rechecked?",
+   "customer_question": "Can I see my son's answer paper?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-024",
+   "category": "Exams & results",
+   "owner_question": "What are your promotion rules if a student fails in subjects, and do you give remedial classes or a re-test?",
+   "customer_question": "Will he be promoted if he fails in maths?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-025",
+   "category": "Exams & results",
+   "owner_question": "When are original marks memos given, and do you help with DigiLocker and duplicate certificates?",
+   "customer_question": "When will we get the original memo?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-026",
+   "category": "Parents & communication",
+   "owner_question": "How do you inform parents about exam date changes, holidays and sudden closures (rain, government orders), and what happens if a closure is announced after buses leave?",
+   "customer_question": "How will I know if school is closed due to rain?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-027",
+   "category": "Parents & communication",
+   "owner_question": "What disciplinary steps do you take for rule breaking, and do parents get to explain before a suspension?",
+   "customer_question": "Will my son be suspended?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-028",
+   "category": "Parents & communication",
+   "owner_question": "Can parents visit without an appointment or meet children during class time, and how do you check visitors and delivery or contract staff (visitor pass, ID)?",
+   "customer_question": "Can I come to school without an appointment?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-029",
+   "category": "Safety & health",
+   "owner_question": "Do you hold fire and evacuation drills, with fire extinguishers and emergency exits?",
+   "customer_question": "Do you have fire safety?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "junior_college-030",
+   "category": "Digital learning",
+   "owner_question": "Do you give recorded lessons for missed classes, and can homework be submitted online (or on paper if the internet fails)?",
+   "customer_question": "He missed the online class, is there a recording?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-031",
+   "category": "Digital learning",
+   "owner_question": "Does each student get their own computer in the lab, what do they learn (coding, office tools), and do you teach safe use of AI tools without copying homework?",
+   "customer_question": "Do children learn coding?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-032",
+   "category": "Digital learning",
+   "owner_question": "Do you take parents' permission before posting children's photos online, and respect a request not to share them?",
+   "customer_question": "Will you put my child's photo on Instagram?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "junior_college-033",
+   "category": "Fees",
+   "owner_question": "If admission is cancelled before the child joins, how much is refunded (admission, tuition and other fees)?",
+   "customer_question": "If we cancel admission, will we get the fee back?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-034",
+   "category": "Fees",
+   "owner_question": "If a family has money trouble, can the fee date be extended or a concession given? Which documents are needed?",
+   "customer_question": "I lost my job, can I pay the fee later?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-035",
+   "category": "Fees",
+   "owner_question": "Do you give an official receipt for every payment, and how do you fix online payments that failed or were charged twice?",
+   "customer_question": "Money was cut twice on UPI, what now?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-036",
+   "category": "Fees",
+   "owner_question": "How early do you tell parents about a fee increase for the next year?",
+   "customer_question": "Will the fee go up next year?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-037",
+   "category": "Fees",
+   "owner_question": "If fees are due, do you stop classes, exams or library for the student, or talk to parents first?",
+   "customer_question": "Will my child be stopped from exams if the fee is late?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-038",
+   "category": "Career & skills",
+   "owner_question": "Do you give aptitude tests and career counselling (from class 8), and hold sessions with doctors, engineers or business people, or company visits?",
+   "customer_question": "Do you help choose a group after 10th?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "junior_college-039",
+   "category": "Career & skills",
+   "owner_question": "Do you teach public speaking, leadership, teamwork and money skills through projects or activities?",
+   "customer_question": "Do you teach public speaking?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "junior_college-040",
    "category": "Inter college",
    "owner_question": "Do students do real lab experiments for their practical exams?",
    "customer_question": "Are practicals done in the lab?",
@@ -157,7 +377,7 @@
    ]
   },
   {
-   "id": "junior_college-015",
+   "id": "junior_college-041",
    "category": "Inter college",
    "owner_question": "Do you take second-year students from other colleges (with board permission)?",
    "customer_question": "Can he join you in second year?",
@@ -169,7 +389,7 @@
    ]
   },
   {
-   "id": "junior_college-016",
+   "id": "junior_college-042",
    "category": "Inter college",
    "owner_question": "Can students change group (for example MPC to CEC) after joining? Until when?",
    "customer_question": "Can she change from MPC to CEC?",
@@ -177,7 +397,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-017",
+   "id": "junior_college-043",
    "category": "Inter college",
    "owner_question": "Can students move to another branch or campus of your college? Is there an extra fee?",
    "customer_question": "Can he move to your Vijayawada campus?",
@@ -185,7 +405,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-018",
+   "id": "junior_college-044",
    "category": "Inter college",
    "owner_question": "Who clears doubts in study hours, and what are their qualifications?",
    "customer_question": "Who answers doubts in study hours?",
@@ -193,7 +413,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-019",
+   "id": "junior_college-045",
    "category": "Inter college",
    "owner_question": "What are your dress code and mobile phone rules?",
    "customer_question": "Can students bring phones?",
@@ -201,7 +421,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-020",
+   "id": "junior_college-046",
    "category": "Hostel",
    "owner_question": "How often can hostel students call their parents, and can parents call the warden in an emergency?",
    "customer_question": "How often can my son call home?",
@@ -209,7 +429,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-021",
+   "id": "junior_college-047",
    "category": "Hostel",
    "owner_question": "What are the outing rules, and how do you check who picks up a student (photo ID, OTP)?",
    "customer_question": "Can my brother pick her up for outing?",
@@ -217,7 +437,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-022",
+   "id": "junior_college-048",
    "category": "Hostel",
    "owner_question": "What is the hostel menu, can parents taste the food, and whom do students complain to about it?",
    "customer_question": "What food do they give in the hostel?",
@@ -225,7 +445,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-023",
+   "id": "junior_college-049",
    "category": "Hostel",
    "owner_question": "Is laundry included in the hostel fee, with roll numbers marked on clothes?",
    "customer_question": "Who washes the clothes?",
@@ -237,7 +457,7 @@
    ]
   },
   {
-   "id": "junior_college-024",
+   "id": "junior_college-050",
    "category": "Hostel",
    "owner_question": "Is there a 24/7 nurse, sick room and ambulance, and do you call parents at once if a student falls ill?",
    "customer_question": "What if my child gets fever at night?",
@@ -245,7 +465,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-025",
+   "id": "junior_college-051",
    "category": "Hostel",
    "owner_question": "How many students share a room, and are there beds, mosquito nets, hot water and AC or non-AC rooms?",
    "customer_question": "How many in one room?",
@@ -253,7 +473,7 @@
    "answer_type": "text"
   },
   {
-   "id": "junior_college-026",
+   "id": "junior_college-052",
    "category": "General",
    "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
    "customer_question": "Can we see the campus first?",
@@ -265,7 +485,7 @@
    ]
   },
   {
-   "id": "junior_college-027",
+   "id": "junior_college-053",
    "category": "General",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -281,7 +501,7 @@
    ]
   },
   {
-   "id": "junior_college-028",
+   "id": "junior_college-054",
    "category": "General",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Where can I see your reviews?",

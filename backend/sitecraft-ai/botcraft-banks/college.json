@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 29,
+ "question_count": 38,
  "questions": [
   {
    "id": "college-001",
@@ -37,6 +37,14 @@
   },
   {
    "id": "college-003",
+   "category": "Parents & communication",
+   "owner_question": "How can parents complain about a teacher or other problem, who handles it up to the principal or management, and in how many days do you reply?",
+   "customer_question": "Whom do I complain to about a teacher?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-004",
    "category": "Inter college",
    "owner_question": "Do you have a student counsellor and avoid shaming or pressuring students over marks?",
    "customer_question": "Will my son be under too much pressure?",
@@ -48,7 +56,7 @@
    ]
   },
   {
-   "id": "college-004",
+   "id": "college-005",
    "category": "Hostel",
    "owner_question": "Do you have a hostel?",
    "customer_question": "Is there a hostel?",
@@ -62,7 +70,7 @@
    ]
   },
   {
-   "id": "college-005",
+   "id": "college-006",
    "category": "College",
    "owner_question": "What are your counselling codes (EAPCET, ECET, ICET, PGECET), university affiliation or autonomous status, and NAAC / NBA grades?",
    "customer_question": "What is your EAPCET college code?",
@@ -70,7 +78,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-006",
+   "id": "college-007",
    "category": "College",
    "owner_question": "Which approvals do you have (for example AICTE, PCI, INC, NCTE, NCVT, BCI)?",
    "customer_question": "Is your ITI NCVT approved?",
@@ -78,7 +86,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-007",
+   "id": "college-008",
    "category": "College",
    "owner_question": "Does government fee reimbursement apply to convener seats, and what happens if the government payment is late?",
    "customer_question": "Will fee reimbursement cover everything?",
@@ -86,7 +94,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-008",
+   "id": "college-009",
    "category": "College",
    "owner_question": "What are the fees for management (B-category) seats in each branch?",
    "customer_question": "What is the management quota fee for CSE?",
@@ -94,7 +102,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-009",
+   "id": "college-010",
    "category": "College",
    "owner_question": "Last year's placements: how many students were placed, in which companies, and what were the average and highest packages?",
    "customer_question": "How many got placed last year?",
@@ -102,7 +110,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-010",
+   "id": "college-011",
    "category": "College",
    "owner_question": "Do you keep original certificates? Are they returned when the student asks, also if they leave?",
    "customer_question": "Will you return my originals if I leave?",
@@ -110,7 +118,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-011",
+   "id": "college-012",
    "category": "College",
    "owner_question": "Do you have strict anti-ragging rules and an anti-ragging committee?",
    "customer_question": "Is there ragging?",
@@ -122,7 +130,7 @@
    ]
   },
   {
-   "id": "college-012",
+   "id": "college-013",
    "category": "Daily rules & care",
    "owner_question": "For girls, do you keep sanitary pads, a spare uniform and a rest room?",
    "customer_question": "What if my daughter gets her period at school?",
@@ -134,7 +142,75 @@
    ]
   },
   {
-   "id": "college-013",
+   "id": "college-014",
+   "category": "Exams & results",
+   "owner_question": "If a student misses an exam due to illness, is there a special exam, and by when must the medical certificate be given?",
+   "customer_question": "He had fever on exam day, will there be a re-exam?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-015",
+   "category": "Exams & results",
+   "owner_question": "When are original marks memos given, and do you help with DigiLocker and duplicate certificates?",
+   "customer_question": "When will we get the original memo?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-016",
+   "category": "Safety & health",
+   "owner_question": "Do you hold fire and evacuation drills, with fire extinguishers and emergency exits?",
+   "customer_question": "Do you have fire safety?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "college-017",
+   "category": "Fees",
+   "owner_question": "If admission is cancelled before the child joins, how much is refunded (admission, tuition and other fees)?",
+   "customer_question": "If we cancel admission, will we get the fee back?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-018",
+   "category": "Fees",
+   "owner_question": "If a family has money trouble, can the fee date be extended or a concession given? Which documents are needed?",
+   "customer_question": "I lost my job, can I pay the fee later?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-019",
+   "category": "Fees",
+   "owner_question": "Do you give an official receipt for every payment, and how do you fix online payments that failed or were charged twice?",
+   "customer_question": "Money was cut twice on UPI, what now?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-020",
+   "category": "Fees",
+   "owner_question": "If fees are due, do you stop classes, exams or library for the student, or talk to parents first?",
+   "customer_question": "Will my child be stopped from exams if the fee is late?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-021",
+   "category": "Career & skills",
+   "owner_question": "Do you give aptitude tests and career counselling (from class 8), and hold sessions with doctors, engineers or business people, or company visits?",
+   "customer_question": "Do you help choose a group after 10th?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "college-022",
    "category": "Inter college",
    "owner_question": "Can students move to another branch or campus of your college? Is there an extra fee?",
    "customer_question": "Can he move to your Vijayawada campus?",
@@ -142,7 +218,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-014",
+   "id": "college-023",
    "category": "Inter college",
    "owner_question": "What are your dress code and mobile phone rules?",
    "customer_question": "Can students bring phones?",
@@ -150,7 +226,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-015",
+   "id": "college-024",
    "category": "Hostel",
    "owner_question": "How often can hostel students call their parents, and can parents call the warden in an emergency?",
    "customer_question": "How often can my son call home?",
@@ -158,7 +234,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-016",
+   "id": "college-025",
    "category": "Hostel",
    "owner_question": "What are the outing rules, and how do you check who picks up a student (photo ID, OTP)?",
    "customer_question": "Can my brother pick her up for outing?",
@@ -166,7 +242,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-017",
+   "id": "college-026",
    "category": "Hostel",
    "owner_question": "What is the hostel menu, can parents taste the food, and whom do students complain to about it?",
    "customer_question": "What food do they give in the hostel?",
@@ -174,7 +250,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-018",
+   "id": "college-027",
    "category": "Hostel",
    "owner_question": "Is laundry included in the hostel fee, with roll numbers marked on clothes?",
    "customer_question": "Who washes the clothes?",
@@ -186,7 +262,7 @@
    ]
   },
   {
-   "id": "college-019",
+   "id": "college-028",
    "category": "Hostel",
    "owner_question": "Is there a 24/7 nurse, sick room and ambulance, and do you call parents at once if a student falls ill?",
    "customer_question": "What if my child gets fever at night?",
@@ -194,7 +270,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-020",
+   "id": "college-029",
    "category": "Hostel",
    "owner_question": "How many students share a room, and are there beds, mosquito nets, hot water and AC or non-AC rooms?",
    "customer_question": "How many in one room?",
@@ -202,7 +278,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-021",
+   "id": "college-030",
    "category": "College",
    "owner_question": "What are the fees for spot admissions, and does fee reimbursement apply to them?",
    "customer_question": "How much for a spot admission seat?",
@@ -210,7 +286,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-022",
+   "id": "college-031",
    "category": "College",
    "owner_question": "What is the attendance rule, and how does condonation work?",
    "customer_question": "What if attendance is below 75%?",
@@ -218,7 +294,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-023",
+   "id": "college-032",
    "category": "College",
    "owner_question": "Can students change branch after first year, or take a minor degree (for example in CSE / AI)?",
    "customer_question": "Can I move from ECE to CSE?",
@@ -226,7 +302,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-024",
+   "id": "college-033",
    "category": "College",
    "owner_question": "Do you help with internships (including hotel and hospital internships) and guide final-year projects in your own labs?",
    "customer_question": "Will the college allow a 6-month internship?",
@@ -234,7 +310,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-025",
+   "id": "college-034",
    "category": "College",
    "owner_question": "What is the supplementary exam fee, and is there an instant supplementary exam?",
    "customer_question": "When is the supplementary exam?",
@@ -242,7 +318,7 @@
    "answer_type": "text"
   },
   {
-   "id": "college-026",
+   "id": "college-035",
    "category": "College",
    "owner_question": "For nursing and paramedical courses, do you have your own hospital for clinical practice?",
    "customer_question": "Do you have your own hospital?",
@@ -254,7 +330,7 @@
    ]
   },
   {
-   "id": "college-027",
+   "id": "college-036",
    "category": "General",
    "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
    "customer_question": "Can we see the campus first?",
@@ -266,7 +342,7 @@
    ]
   },
   {
-   "id": "college-028",
+   "id": "college-037",
    "category": "General",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -282,7 +358,7 @@
    ]
   },
   {
-   "id": "college-029",
+   "id": "college-038",
    "category": "General",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Where can I see your reviews?",
