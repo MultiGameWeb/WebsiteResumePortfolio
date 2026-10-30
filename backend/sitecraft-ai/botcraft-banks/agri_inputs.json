@@ -1,0 +1,410 @@
+{
+ "shop_type_key": "agri_inputs",
+ "name": "Fertilizer, seeds & pesticides shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 38,
+ "questions": [
+  {
+   "id": "agri_inputs-001",
+   "category": "Fertilizers & stock",
+   "owner_question": "Which fertilizers do you keep?",
+   "customer_question": "Do you have DAP?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Urea",
+    "DAP",
+    "Potash (MOP)",
+    "Complex (20-20-0-13, 10-26-26, 14-35-14, 28-28-0)",
+    "Single super phosphate (SSP)",
+    "Nano urea / nano DAP",
+    "Water-soluble (19:19:19, 13:0:45, 0:52:34, 0:0:50, 12:61:0)",
+    "Micronutrients (zinc, boron, MgSO4, ferrous, calcium nitrate)",
+    "Organic (neem cake, castor cake, vermicompost)",
+    "Humic acid & mycorrhiza"
+   ]
+  },
+  {
+   "id": "agri_inputs-002",
+   "category": "Fertilizers & stock",
+   "owner_question": "What is today's stock of urea and DAP, is the e-POS machine working, and when is the next load due? (Update this any time.)",
+   "customer_question": "Is urea in stock today?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-003",
+   "category": "Seeds",
+   "owner_question": "Which seeds do you sell?",
+   "customer_question": "Do you have cotton seeds?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Paddy",
+    "Cotton (BT)",
+    "Chilli",
+    "Maize",
+    "Groundnut",
+    "Pulses (red gram, black gram, green gram)",
+    "Soybean",
+    "Vegetable hybrids",
+    "Green manure (dhaincha, sunnhemp, pillipesara)"
+   ]
+  },
+  {
+   "id": "agri_inputs-004",
+   "category": "Pesticides",
+   "owner_question": "Which crop protection products do you keep?",
+   "customer_question": "Do you have weedicides?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Insecticides",
+    "Fungicides",
+    "Weedicides",
+    "Granules",
+    "Bio-pesticides (neem oil, Trichoderma, Pseudomonas)",
+    "Sticky traps & pheromone lures",
+    "Spreaders / stickers"
+   ]
+  },
+  {
+   "id": "agri_inputs-005",
+   "category": "Fertilizers & stock",
+   "owner_question": "Do you sell fertilizers at the government MRP? Is there any hamali or transport charge?",
+   "customer_question": "What is the urea bag rate?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-006",
+   "category": "Fertilizers & stock",
+   "owner_question": "Do you sell urea and DAP without making farmers buy other items (nano urea, zinc, granules)?",
+   "customer_question": "Do I have to buy nano urea with urea?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "agri_inputs-007",
+   "category": "e-POS & subsidy",
+   "owner_question": "What must farmers bring for subsidised fertilizer (Aadhaar, pattadar passbook)? Can a family member or tenant farmer buy, and what if fingerprints don't work (iris, OTP)?",
+   "customer_question": "Do I need my passbook?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-008",
+   "category": "Credit & bills",
+   "owner_question": "Do you give credit until harvest? Is the price or interest different on credit?",
+   "customer_question": "Can I pay after harvest?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-009",
+   "category": "Credit & bills",
+   "owner_question": "Do you give a proper bill (with GST, batch and lot numbers) for every sale, usable for crop loans and complaints?",
+   "customer_question": "Will you give a bill with the lot number?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "agri_inputs-010",
+   "category": "Seeds",
+   "owner_question": "Which paddy varieties do you have, with their duration and the company's yield claims (BPT 5204, MTU 1010, MTU 1061, RNR 15048, KNM 118 and others)?",
+   "customer_question": "Do you have BPT seeds?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-011",
+   "category": "Seeds",
+   "owner_question": "Which cotton seed brands do you have and at what packet price? Which suit black or red soil?",
+   "customer_question": "Which cotton seed is good for black soil?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-012",
+   "category": "Seeds",
+   "owner_question": "Do you sell only government-approved seeds (no HT cotton or loose unlabelled seed)?",
+   "customer_question": "Do you have HT cotton seeds?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "agri_inputs-013",
+   "category": "Seeds",
+   "owner_question": "If seeds don't germinate or turn out fake, how do you help (lot number on the bill, complaint to the company, compensation)?",
+   "customer_question": "My seeds didn't germinate, what now?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-014",
+   "category": "Pesticides",
+   "owner_question": "For common pests and diseases here (for example paddy stem borer, BPH, blast; cotton sucking pests, pink bollworm; chilli thrips and mites; maize armyworm; mango flowering, hoppers and powdery mildew; banana, papaya and guava; coconut and oil palm beetles; turmeric and ginger rhizome rot; sugarcane, Bengal gram and flowers), which products does your shop usually recommend? The assistant will share these and always ask farmers to follow the label and confirm at the counter.",
+   "customer_question": "Which spray for paddy stem borer?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-015",
+   "category": "Pesticides",
+   "owner_question": "Does a qualified person at the shop (agri graduate / licensed dealer) explain dose, mixing order, hard-water use, cleaning sprayers after weedicide, the waiting period before harvest, label instructions and safety (gloves, mask)?",
+   "customer_question": "How many ml per tank?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "agri_inputs-016",
+   "category": "Pesticides",
+   "owner_question": "Do you look at crop photos on WhatsApp or visit fields to suggest a remedy?",
+   "customer_question": "Can I send you a photo of the leaf?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "agri_inputs-017",
+   "category": "Pesticides",
+   "owner_question": "Do you check expiry dates and never sell expired or old stock?",
+   "customer_question": "Is this an old stock?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "agri_inputs-018",
+   "category": "Pesticides",
+   "owner_question": "If a product doesn't work after spraying, do you bring the company representative to see the field?",
+   "customer_question": "I sprayed twice and the pest is still there, what now?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-019",
+   "category": "Other products",
+   "owner_question": "Which other products do you keep?",
+   "customer_question": "Do you have rat poison?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Rat & bandicoot baits",
+    "Animal repellents & reflective ribbons",
+    "Snail baits",
+    "Termite & white grub control",
+    "Water conditioner / pH balancer",
+    "Storage grain protectants",
+    "Approved fruit-ripening sachets",
+    "Stubble / waste decomposer",
+    "Nursery items (cocopeat, pro-trays)",
+    "Small packs & hand sprayers for home gardens",
+    "Fodder seeds (jowar, Super Napier, lucerne, COFS-29)",
+    "Fish pond items (lime, zeolite, potassium permanganate)",
+    "Safety kits (masks, gloves, goggles)"
+   ]
+  },
+  {
+   "id": "agri_inputs-020",
+   "category": "Equipment & services",
+   "owner_question": "Which equipment do you sell?",
+   "customer_question": "Do you have battery sprayers?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Battery sprayers",
+    "Petrol power sprayers",
+    "HTP sprayers",
+    "Sprayer spares (batteries, motors, nozzles)",
+    "Tarpaulins",
+    "Mulching sheets",
+    "Bird & shade nets"
+   ]
+  },
+  {
+   "id": "agri_inputs-021",
+   "category": "Fertilizers & stock",
+   "owner_question": "Which fertilizer companies do you stock (IFFCO, Coromandel, Nagarjuna, Zuari, RCF, Kribhco)?",
+   "customer_question": "Do you have Gromor?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-022",
+   "category": "Fertilizers & stock",
+   "owner_question": "What do nano urea and nano DAP cost, and what does the company say they replace?",
+   "customer_question": "How much is nano urea?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-023",
+   "category": "e-POS & subsidy",
+   "owner_question": "Is there a limit on bags per Aadhaar?",
+   "customer_question": "How many bags can I get?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-024",
+   "category": "Credit & bills",
+   "owner_question": "Do you buy farmers' produce and adjust their dues?",
+   "customer_question": "Will you buy my paddy?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-025",
+   "category": "Credit & bills",
+   "owner_question": "What discount do you give for cash payment?",
+   "customer_question": "Any discount for cash?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-026",
+   "category": "Seeds",
+   "owner_question": "Which chilli, maize and vegetable hybrids do you have, and at what price?",
+   "customer_question": "Do you have Syngenta chilli seeds?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-027",
+   "category": "Seeds",
+   "owner_question": "What do green manure seeds cost, and are they available on subsidy?",
+   "customer_question": "Is dhaincha on subsidy?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-028",
+   "category": "Pesticides",
+   "owner_question": "Which weedicides do you keep for each crop, and do you sell restricted products like glyphosate only as the rules allow?",
+   "customer_question": "Do you have weedicide for paddy?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-029",
+   "category": "Pesticides",
+   "owner_question": "Which tonics and growth regulators do you keep (for flowering, fruit set)?",
+   "customer_question": "Any tonic for more flowers?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-030",
+   "category": "Pesticides",
+   "owner_question": "Do you take back unopened products, and replace caked fertilizer bags or leaking bottles?",
+   "customer_question": "The DAP bag is caked, will you change it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-031",
+   "category": "Other products",
+   "owner_question": "Which subsidised items are available at your shop, and which only at the RBK / RSK, PACS or Agros?",
+   "customer_question": "Is subsidy groundnut seed available here?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-032",
+   "category": "Other products",
+   "owner_question": "Do you help farmers redeem company scratch cards and QR cashback coupons?",
+   "customer_question": "How do I use this coupon in the bottle?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "agri_inputs-033",
+   "category": "Equipment & services",
+   "owner_question": "Do you repair sprayers?",
+   "customer_question": "Can you repair my sprayer?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "agri_inputs-034",
+   "category": "Equipment & services",
+   "owner_question": "Do you arrange drone spraying? What does it cost per acre?",
+   "customer_question": "How much for drone spraying?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-035",
+   "category": "Equipment & services",
+   "owner_question": "Do you help with soil testing?",
+   "customer_question": "Can you test my soil?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-036",
+   "category": "Equipment & services",
+   "owner_question": "Do you deliver bulk orders to villages or fields? Who pays hamali?",
+   "customer_question": "Can you send 30 bags to my village?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "agri_inputs-037",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "agri_inputs-038",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
