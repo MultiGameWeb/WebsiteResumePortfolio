@@ -21,7 +21,7 @@ ALL = "PSJCOAGM"
 Q = [
  # category, priority, answer_type, owner question, how a customer asks, options, tags
  ("Classes & care", "M", "list", "Which classes and care do you offer?", "Do you have LKG?", ["Playgroup", "Nursery", "LKG", "UKG", "Daycare / creche", "After-school care"], "P"),
- ("Classes & care", "I", "text", "How old must a child be (as on 1 June) for each class, and do you take children who are a month or two younger?", "My son is 2 years 10 months, can he join nursery?", [], "PS"),
+ ("Classes & care", "I", "text", "How old must a child be (as on 1 June) for each class, do you take children who are a month or two younger, and do you allow a class jump (double promotion) for advanced children?", "My son is 2 years 10 months, can he join nursery?", [], "PS"),
  ("Classes & care", "I", "text", "How many ayahs (female caretakers) are there per class, and do they change diapers and help with toilet training?", "Will the ayah change his diaper?", [], "P"),
  ("Classes & care", "O", "yes_no", "In the first week, can a parent sit outside the class while the child settles?", "Can I sit outside for the first few days?", YN, "P"),
  ("Classes & care", "I", "list", "How do you teach small children?", "Do you follow Montessori?", ["Play-way / activity-based", "Montessori", "Phonics", "Kit-based programme (for example Kreedo)", "Mostly books & writing"], "P"),
@@ -38,8 +38,8 @@ Q = [
  ("Board & recognition", "O", "yes_no", "Do you enter every student in UDISE and create their APAAR ID / PEN, so they get government schemes (for example Thalliki Vandanam)?", "Will my child get the Thalliki Vandanam scheme here?", YN, "S"),
  ("Board & recognition", "I", "text", "Is your college recognised by the Intermediate board, and which exam centre do students write at?", "Is the college board recognised?", [], "J"),
 
- ("Fees", "I", "text", "Apart from the tuition fee, what else is charged in the year (admission, term, computer, sports, annual day, picnic, exam, university, placement training)?", "Are there any other fees besides tuition fee?", [], "PSJC"),
- ("Fees", "O", "options", "Must books, uniform and shoes be bought from you?", "Can I buy books outside?", ["Must buy from us", "Can buy outside with our list", "Books from us, uniform outside"], "PS"),
+ ("Fees", "I", "text", "Apart from the tuition fee, what else is charged in the year (admission, re-admission or annual development fee for existing students, term, computer, sports, annual day, picnic, exam, university, placement training)?", "Are there any other fees besides tuition fee?", [], "PSJC"),
+ ("Fees", "O", "options", "Must books, uniform, shoes or tablets be bought from you?", "Can I buy books outside?", ["Must buy from us", "Can buy outside with our list", "Books from us, uniform outside"], "PS"),
  ("Fees", "O", "yes_no", "Do you admit children under the RTE 25% free quota?", "Is there an RTE free seat?", YN, "PS"),
  ("Fees", "I", "text", "When a student leaves, how soon do you give the TC, bonafide, study records and other certificates, and which dues must be cleared first?", "Will you give the TC if we move mid-year?", [], "SJ"),
  ("Fees", "I", "text", "What are the fees for each batch (board only, EAPCET, JEE Mains, JEE Advanced, NEET)?", "What is the fee for the NEET batch?", [], "J"),
@@ -59,7 +59,7 @@ Q = [
  ("Daily rules & care", "O", "yes_no", "Do you avoid punishments like hitting, insulting or writing an answer many times (impositions)?", "Do teachers punish children?", YN, "PS"),
  ("Daily rules & care", "I", "text", "Do you have a parent app (homework, attendance, fee receipts), can both parents log in, and how can parents reach teachers?", "Is there a school app?", [], "PSJ"),
  ("Daily rules & care", "O", "text", "How often are notebooks corrected?", "How often do teachers correct notebooks?", [], "S"),
- ("Daily rules & care", "O", "text", "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, and help get a scribe, extra time or other allowed help (for weak eyesight or hearing) in exams?", "My son has dyslexia, can you support him?", [], "PS"),
+ ("Daily rules & care", "O", "text", "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, help get a scribe, extra time, subject or third-language exemptions or other allowed help (for weak eyesight or hearing) in board exams, or guide to NIOS if needed?", "My son has dyslexia, can you support him?", [], "PS"),
 
  ("Admissions & records", "I", "text", "Which documents are needed for admission (birth certificate, Aadhaar, photos, parent ID, previous records), originals or copies, and do you give provisional admission if one is missing?", "Which documents do I need for admission?", [], "PSJ"),
  ("Admissions & records", "O", "text", "Do you take admissions 2–3 months after the year starts, and how do you help late joiners catch up?", "Can he join in August?", [], "PSJ"),
@@ -69,30 +69,30 @@ Q = [
  ("Admissions & records", "O", "text", "How do you correct a student's name or date of birth in records, and how do you check board exam registration details before the deadline?", "Her name is spelt differently in Aadhaar, can you correct it?", [], "SJ"),
 
  ("Exams & results", "O", "text", "If a student misses an exam due to illness, is there a special exam, and by when must the medical certificate be given?", "He had fever on exam day, will there be a re-exam?", [], "SJC"),
- ("Exams & results", "O", "text", "Can parents see corrected answer sheets, how are internal marks given (projects, assignments, tests), and can marks be rechecked?", "Can I see my son's answer paper?", [], "SJ"),
+ ("Exams & results", "O", "text", "Can parents see corrected answer sheets, how are internal marks given (projects, assignments, tests), can marks be rechecked, and do you help apply for board or university revaluation, answer-script copies and improvement (betterment) exams?", "Can I see my son's answer paper?", [], "SJC"),
  ("Exams & results", "O", "text", "What are your promotion rules if a student fails in subjects, and do you give remedial classes or a re-test?", "Will he be promoted if he fails in maths?", [], "SJ"),
  ("Exams & results", "O", "text", "When are original marks memos given, and do you help with DigiLocker and duplicate certificates?", "When will we get the original memo?", [], "SJC"),
 
  ("Parents & communication", "I", "text", "How often are parent-teacher meetings held (in person or online), can parents book a time with a teacher, and do you send a monthly progress report?", "When is the next parents meeting?", [], "PSJ"),
  ("Parents & communication", "O", "text", "How do you inform parents about exam date changes, holidays and sudden closures (rain, government orders), and what happens if a closure is announced after buses leave?", "How will I know if school is closed due to rain?", [], "PSJ"),
- ("Parents & communication", "I", "text", "How can parents complain about a teacher or other problem, who handles it up to the principal or management, and in how many days do you reply?", "Whom do I complain to about a teacher?", [], "PSJC"),
+ ("Parents & communication", "I", "text", "How can parents complain about a teacher or other problem, who handles it up to the principal or management, when can parents meet the principal or correspondent, and in how many days do you reply?", "Whom do I complain to about a teacher?", [], "PSJC"),
  ("Parents & communication", "O", "text", "What disciplinary steps do you take for rule breaking, and do parents get to explain before a suspension?", "Will my son be suspended?", [], "SJ"),
  ("Parents & communication", "O", "yes_no", "Do you keep a lost-and-found for bags, bottles and books?", "My son lost his water bottle, where do I ask?", YN, "PS"),
  ("Parents & communication", "O", "text", "Can parents visit without an appointment or meet children during class time, and how do you check visitors and delivery or contract staff (visitor pass, ID)?", "Can I come to school without an appointment?", [], "PSJ"),
 
- ("Safety & health", "I", "text", "Do you have a child protection policy (staff training, a way for children to complain privately, good touch / bad touch awareness), and how do you handle POCSO complaints?", "How do you keep children safe from abuse?", [], "PSJ"),
+ ("Safety & health", "I", "text", "Do you have a child protection policy (staff training, a way for children to complain privately, good touch / bad touch awareness, police verification of all staff, male staff kept away from small children's washrooms), and how do you handle POCSO complaints?", "How do you keep children safe from abuse?", [], "PSJ"),
  ("Safety & health", "I", "text", "Who gives first aid, how do you record allergies and medical needs (shared only with the staff who need it), and do you have a plan for severe allergies?", "My daughter has a peanut allergy, will teachers know?", [], "PSJ"),
  ("Safety & health", "O", "yes_no", "With a parent's written note, do staff give a child their daily medicine and record the time and who gave it?", "Can the teacher give his medicine at lunch?", YN, "PS"),
- ("Safety & health", "O", "yes_no", "Do you hold fire and evacuation drills, with fire extinguishers and emergency exits?", "Do you have fire safety?", YN, "PSJC"),
+ ("Safety & health", "O", "yes_no", "Do you have a fire safety NOC, fire extinguishers, emergency exits, safety grills on upper floors, and hold evacuation drills?", "Do you have fire safety?", YN, "PSJC"),
  ("Safety & health", "O", "yes_no", "Do you hold health check-ups (eyes, teeth, height, weight) and send the report to parents?", "Do you do eye check-ups?", YN, "PS"),
 
- ("Digital learning", "O", "text", "Do you give recorded lessons for missed classes, and can homework be submitted online (or on paper if the internet fails)?", "He missed the online class, is there a recording?", [], "SJ"),
+ ("Digital learning", "O", "text", "Do you give recorded lessons for missed classes, can homework be submitted online (or on paper if the internet fails), and how much screen time do small children have?", "He missed the online class, is there a recording?", [], "SJ"),
  ("Digital learning", "O", "text", "Does each student get their own computer in the lab, what do they learn (coding, office tools), and do you teach safe use of AI tools without copying homework?", "Do children learn coding?", [], "SJ"),
  ("Digital learning", "O", "yes_no", "Do you take parents' permission before posting children's photos online, and respect a request not to share them?", "Will you put my child's photo on Instagram?", YN, "PSJ"),
 
  ("Fees", "O", "text", "If admission is cancelled before the child joins, how much is refunded (admission, tuition and other fees)?", "If we cancel admission, will we get the fee back?", [], "PSJC"),
- ("Fees", "O", "text", "If a family has money trouble, can the fee date be extended or a concession given? Which documents are needed?", "I lost my job, can I pay the fee later?", [], "PSJC"),
- ("Fees", "O", "text", "Do you give an official receipt for every payment, and how do you fix online payments that failed or were charged twice?", "Money was cut twice on UPI, what now?", [], "PSJC"),
+ ("Fees", "O", "text", "What is the late fee, and if a family has money trouble, can the fee date be extended, the late fee waived or a concession given? Which documents are needed?", "I lost my job, can I pay the fee later?", [], "PSJC"),
+ ("Fees", "O", "text", "Do you give an official receipt for every payment (with PAN and tuition fee shown separately for income tax 80C), and how do you fix online payments that failed or were charged twice?", "Money was cut twice on UPI, what now?", [], "PSJC"),
  ("Fees", "O", "text", "How early do you tell parents about a fee increase for the next year?", "Will the fee go up next year?", [], "PSJ"),
  ("Fees", "O", "text", "If fees are due, do you stop classes, exams or library for the student, or talk to parents first?", "Will my child be stopped from exams if the fee is late?", [], "PSJC"),
 
@@ -115,14 +115,14 @@ Q = [
  ("Teachers & staff", "O", "text", "How do you train teachers and other staff (ayahs, attenders, guards) on child safety and first aid, and how do you review teaching (results, class visits, anonymous student and parent feedback)?", "Can students give feedback on teachers?", [], "PSJ"),
 
  ("College", "O", "text", "Do you give the academic calendar and timetable in advance (exams, holidays, project dates), and how do credits and backlog exams work?", "When are the mid exams?", [], "C"),
- ("College", "O", "yes_no", "Are drinking water and washrooms checked and cleaned regularly?", "Is the drinking water RO?", YN, "SJC"),
+ ("College", "O", "yes_no", "Are water tanks, drinking water (RO / TDS) and washrooms checked and cleaned regularly, and does the canteen sell healthy food?", "Is the drinking water RO?", YN, "SJC"),
  ("College", "O", "yes_no", "Do you have an active alumni network that mentors current students?", "Do seniors help with jobs?", YN, "C"),
 
- ("Counselling & entrance", "O", "text", "After results, do you guide students through counselling (EAPCET, JoSAA / CSAB, NEET, CUET), including choice filling and documents?", "Will you help with JoSAA choice filling?", [], "J"),
+ ("Counselling & entrance", "O", "text", "After results, do you guide students through counselling (EAPCET, JoSAA / CSAB, NEET, CUET), including choice filling, local / non-local documents, and deposit or free-exit rules between rounds?", "Will you help with JoSAA choice filling?", [], "J"),
 
- ("Certificates & schemes", "O", "text", "How soon do you give bonafide, study certificates and a duplicate TC, and can they be requested online?", "I need a bonafide certificate for a bus pass, how long?", [], "SJC"),
+ ("Certificates & schemes", "O", "text", "How soon do you give bonafide, study certificates, a duplicate TC, and transcripts, migration, MOI or consolidated marks memos (for study abroad), and can they be requested online?", "I need a bonafide certificate for a bus pass, how long?", [], "SJC"),
  ("Certificates & schemes", "O", "yes_no", "Do you guide students on caste, income and local / non-local certificates needed for scholarships, counselling and bus passes?", "Which certificates are needed for the scholarship?", YN, "SJC"),
- ("Certificates & schemes", "O", "text", "Who helps students with scholarship applications (government, trusts, companies), including pending or rejected ones?", "My scholarship shows rejected, whom do I meet?", [], "SJCA"),
+ ("Certificates & schemes", "O", "text", "Who helps students with scholarship applications (NMMS, NSP, e-Pass / Jnanabhumi, trusts, companies), including biometrics and pending or rejected ones?", "My scholarship shows rejected, whom do I meet?", [], "SJCA"),
 
  ("Counselling & wellbeing", "O", "text", "What does your counsellor help with (exam fear, low interest, confidence, career pressure), is it kept private except for safety risks, and do you also counsel parents and make a support plan for weak students?", "My daughter is scared of exams, can the counsellor help?", [], "SJC"),
  ("Counselling & wellbeing", "O", "text", "How do you handle fights between students, bullying (including online bullying) and too much social media or gaming?", "Someone is bullying my son on Instagram, will you help?", [], "SJC"),
@@ -134,9 +134,17 @@ Q = [
 
  ("Global", "O", "yes_no", "Do you have student exchange or credit transfer programmes with foreign schools or universities?", "Is there a semester abroad?", YN, "SJC"),
  ("Study abroad", "O", "text", "Do you help with foreign university scholarships and tell students the deadlines in advance?", "Can you help me get a scholarship in Germany?", [], "A"),
- ("Study abroad", "O", "text", "Before students leave, do you guide them on health insurance, part-time work rules under their visa, safe stay and a local emergency contact?", "Can I work part-time in Canada?", [], "A"),
- ("Study abroad", "O", "text", "After the course, do you guide on post-study work visas, internships and job search (resume and interview help)?", "Can I get a job after MS?", [], "A"),
+ ("Study abroad", "O", "text", "Before students leave, do you guide them on health insurance, part-time work rules under their visa, airport pickup, safe stay and a local emergency contact?", "Can I work part-time in Canada?", [], "A"),
+ ("Study abroad", "O", "text", "After the course, do you guide on post-study work visas (OPT / PSW), dependent (spouse) visa rules, internships and job search (resume and interview help)?", "Can I get a job after MS?", [], "A"),
 
+ ("Admissions & records", "O", "text", "Is there an entrance test or interaction for the child (which subjects), or a parent interview, and what if the child scores low?", "Is there an entrance test for 6th class?", [], "PSJ"),
+ ("Daily rules & care", "O", "yes_no", "Do you rotate seats so every child gets front benches, and let children go to the washroom or drink water whenever needed?", "Will my son always sit at the back?", YN, "PS"),
+ ("Safety & health", "O", "text", "Where do you have CCTV (classrooms, corridors, buses), how long is footage kept, and can parents view it after an incident?", "Can I see the CCTV of what happened to my child?", [], "PSJ"),
+ ("Teachers & staff", "O", "yes_no", "Are your teachers stopped from giving private tuition to their own students?", "The class teacher wants my son in her tuition, is that allowed?", YN, "SJ"),
+ ("Fees", "O", "text", "Can fees be paid in monthly instalments, or through a 0% EMI partner?", "Can I pay the fee monthly?", [], "PSJC"),
+ ("Activities", "O", "yes_no", "Do you have NCC, Scouts & Guides or NSS, and help students with NCC or sports certificates for quotas?", "Is there NCC?", YN, "SJC"),
+ ("Safety & health", "O", "yes_no", "Is the campus wheelchair-friendly (ramps, lift, ground-floor classes, accessible washrooms)?", "Is there a ramp for wheelchairs?", YN, "PSJC"),
+ ("Sports academy", "O", "text", "Do you offer sports with schooling (integrated timetable), a sports physiotherapist, and a sports diet in the hostel?", "Can he train and study at the same place?", [], "G"),
  ("Inter college", "M", "list", "Which groups and batches do you have?", "Do you have a NEET batch?", ["MPC", "BiPC", "CEC", "MEC", "HEC", "Board only", "EAPCET batch", "JEE Mains batch", "JEE Advanced batch", "NEET batch", "CA / CMA / CLAT foundation"], "J"),
  ("Inter college", "I", "text", "What are the timings for day scholars, and are there supervised study hours in the evening?", "Is there evening study?", [], "J"),
  ("Inter college", "I", "yes_no", "Do you have a student counsellor and avoid shaming or pressuring students over marks?", "Will my son be under too much pressure?", YN, "SJC"),
@@ -152,7 +160,7 @@ Q = [
  ("Hostel", "O", "text", "What is the hostel menu, can parents taste the food, and whom do students complain to about it?", "What food do they give in the hostel?", [], "SJC"),
  ("Hostel", "O", "yes_no", "Is laundry included in the hostel fee, with roll numbers marked on clothes?", "Who washes the clothes?", YN, "SJC"),
  ("Hostel", "O", "text", "Is there a 24/7 nurse, sick room and ambulance, and do you call parents at once if a student falls ill?", "What if my child gets fever at night?", [], "SJC"),
- ("Hostel", "O", "text", "How many students share a room, and are there beds, mosquito nets, hot water and AC or non-AC rooms?", "How many in one room?", [], "SJC"),
+ ("Hostel", "O", "text", "How many students share a room, are there beds, mosquito nets, hot water, a personal lockable cupboard, AC or non-AC rooms, and does the warden do night rounds?", "How many in one room?", [], "SJC"),
 
  ("College", "M", "list", "Which courses do you offer?", "Do you have B.Tech CSE?", ["B.Tech", "Degree (BA, B.Com, B.Sc)", "MBA", "MCA", "B.Pharm / Pharm.D", "Nursing & paramedical", "B.Ed / D.El.Ed", "Law (LLB)", "Polytechnic", "ITI", "Hotel management"], "C"),
  ("College", "I", "text", "What are your counselling codes (EAPCET, ECET, ICET, PGECET), university affiliation or autonomous status, and NAAC / NBA grades?", "What is your EAPCET college code?", [], "C"),
@@ -176,7 +184,7 @@ Q = [
 
  ("Study abroad", "M", "list", "Which countries and courses do you help with?", "Do you help with MS in USA?", ["USA", "UK", "Canada", "Australia", "Germany", "Ireland", "New Zealand", "MBBS abroad"], "A"),
  ("Study abroad", "I", "text", "What is your processing fee? Is it free for some universities?", "What is your processing fee?", [], "A"),
- ("Study abroad", "I", "list", "Which services do you give?", "Do you help with the SOP?", ["University shortlisting", "SOP & LOR help", "Applications", "Visa slot booking", "Mock visa interviews", "German / French / Japanese language classes", "Education loan help", "Forex & travel", "Accommodation help", "IELTS / PTE coaching"], "A"),
+ ("Study abroad", "I", "list", "Which services do you give?", "Do you help with the SOP?", ["University shortlisting", "SOP & LOR help", "Applications", "Visa slot booking", "Mock visa interviews", "German / French / Japanese language classes", "Education loan help", "Forex, fee transfer, GIC / blocked account", "Accommodation help", "IELTS / PTE coaching"], "A"),
  ("Study abroad", "I", "text", "If the visa is refused, what part of your fee is refunded?", "What if my visa is rejected?", [], "A"),
  ("Study abroad", "O", "text", "Which options do you suggest for students with low marks, backlogs, or without IELTS (MOI letter)?", "I have 10 backlogs, can I still go to UK?", [], "A"),
  ("Study abroad", "O", "text", "For MBBS abroad: total cost, which universities meet NMC rules, and do you help with FMGE / NExT coaching?", "Can I get MBBS in Georgia under 25 lakhs?", [], "A"),

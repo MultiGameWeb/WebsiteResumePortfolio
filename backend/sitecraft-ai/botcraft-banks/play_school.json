@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 53,
+ "question_count": 58,
  "questions": [
   {
    "id": "play_school-001",
@@ -25,7 +25,7 @@
   {
    "id": "play_school-002",
    "category": "Classes & care",
-   "owner_question": "How old must a child be (as on 1 June) for each class, and do you take children who are a month or two younger?",
+   "owner_question": "How old must a child be (as on 1 June) for each class, do you take children who are a month or two younger, and do you allow a class jump (double promotion) for advanced children?",
    "customer_question": "My son is 2 years 10 months, can he join nursery?",
    "priority": "important",
    "answer_type": "text"
@@ -64,7 +64,7 @@
   {
    "id": "play_school-006",
    "category": "Fees",
-   "owner_question": "Apart from the tuition fee, what else is charged in the year (admission, term, computer, sports, annual day, picnic, exam, university, placement training)?",
+   "owner_question": "Apart from the tuition fee, what else is charged in the year (admission, re-admission or annual development fee for existing students, term, computer, sports, annual day, picnic, exam, university, placement training)?",
    "customer_question": "Are there any other fees besides tuition fee?",
    "priority": "important",
    "answer_type": "text"
@@ -125,7 +125,7 @@
   {
    "id": "play_school-012",
    "category": "Parents & communication",
-   "owner_question": "How can parents complain about a teacher or other problem, who handles it up to the principal or management, and in how many days do you reply?",
+   "owner_question": "How can parents complain about a teacher or other problem, who handles it up to the principal or management, when can parents meet the principal or correspondent, and in how many days do you reply?",
    "customer_question": "Whom do I complain to about a teacher?",
    "priority": "important",
    "answer_type": "text"
@@ -133,7 +133,7 @@
   {
    "id": "play_school-013",
    "category": "Safety & health",
-   "owner_question": "Do you have a child protection policy (staff training, a way for children to complain privately, good touch / bad touch awareness), and how do you handle POCSO complaints?",
+   "owner_question": "Do you have a child protection policy (staff training, a way for children to complain privately, good touch / bad touch awareness, police verification of all staff, male staff kept away from small children's washrooms), and how do you handle POCSO complaints?",
    "customer_question": "How do you keep children safe from abuse?",
    "priority": "important",
    "answer_type": "text"
@@ -197,7 +197,7 @@
   {
    "id": "play_school-020",
    "category": "Fees",
-   "owner_question": "Must books, uniform and shoes be bought from you?",
+   "owner_question": "Must books, uniform, shoes or tablets be bought from you?",
    "customer_question": "Can I buy books outside?",
    "priority": "optional",
    "answer_type": "options",
@@ -275,7 +275,7 @@
   {
    "id": "play_school-027",
    "category": "Daily rules & care",
-   "owner_question": "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, and help get a scribe, extra time or other allowed help (for weak eyesight or hearing) in exams?",
+   "owner_question": "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, help get a scribe, extra time, subject or third-language exemptions or other allowed help (for weak eyesight or hearing) in board exams, or guide to NIOS if needed?",
    "customer_question": "My son has dyslexia, can you support him?",
    "priority": "optional",
    "answer_type": "text"
@@ -347,7 +347,7 @@
   {
    "id": "play_school-035",
    "category": "Safety & health",
-   "owner_question": "Do you hold fire and evacuation drills, with fire extinguishers and emergency exits?",
+   "owner_question": "Do you have a fire safety NOC, fire extinguishers, emergency exits, safety grills on upper floors, and hold evacuation drills?",
    "customer_question": "Do you have fire safety?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -391,7 +391,7 @@
   {
    "id": "play_school-039",
    "category": "Fees",
-   "owner_question": "If a family has money trouble, can the fee date be extended or a concession given? Which documents are needed?",
+   "owner_question": "What is the late fee, and if a family has money trouble, can the fee date be extended, the late fee waived or a concession given? Which documents are needed?",
    "customer_question": "I lost my job, can I pay the fee later?",
    "priority": "optional",
    "answer_type": "text"
@@ -399,7 +399,7 @@
   {
    "id": "play_school-040",
    "category": "Fees",
-   "owner_question": "Do you give an official receipt for every payment, and how do you fix online payments that failed or were charged twice?",
+   "owner_question": "Do you give an official receipt for every payment (with PAN and tuition fee shown separately for income tax 80C), and how do you fix online payments that failed or were charged twice?",
    "customer_question": "Money was cut twice on UPI, what now?",
    "priority": "optional",
    "answer_type": "text"
@@ -486,6 +486,54 @@
   },
   {
    "id": "play_school-051",
+   "category": "Admissions & records",
+   "owner_question": "Is there an entrance test or interaction for the child (which subjects), or a parent interview, and what if the child scores low?",
+   "customer_question": "Is there an entrance test for 6th class?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-052",
+   "category": "Daily rules & care",
+   "owner_question": "Do you rotate seats so every child gets front benches, and let children go to the washroom or drink water whenever needed?",
+   "customer_question": "Will my son always sit at the back?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "play_school-053",
+   "category": "Safety & health",
+   "owner_question": "Where do you have CCTV (classrooms, corridors, buses), how long is footage kept, and can parents view it after an incident?",
+   "customer_question": "Can I see the CCTV of what happened to my child?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-054",
+   "category": "Fees",
+   "owner_question": "Can fees be paid in monthly instalments, or through a 0% EMI partner?",
+   "customer_question": "Can I pay the fee monthly?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "play_school-055",
+   "category": "Safety & health",
+   "owner_question": "Is the campus wheelchair-friendly (ramps, lift, ground-floor classes, accessible washrooms)?",
+   "customer_question": "Is there a ramp for wheelchairs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "play_school-056",
    "category": "General",
    "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
    "customer_question": "Can we see the campus first?",
@@ -497,7 +545,7 @@
    ]
   },
   {
-   "id": "play_school-052",
+   "id": "play_school-057",
    "category": "General",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -513,7 +561,7 @@
    ]
   },
   {
-   "id": "play_school-053",
+   "id": "play_school-058",
    "category": "General",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Where can I see your reviews?",
