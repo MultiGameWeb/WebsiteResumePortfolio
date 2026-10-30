@@ -23,8 +23,10 @@ import bank_competitive_coaching from "./competitive_coaching.json" with { type:
 import bank_computer_shop from "./computer_shop.json" with { type: "json" };
 import bank_dental_clinic from "./dental_clinic.json" with { type: "json" };
 import bank_diagnostic_lab from "./diagnostic_lab.json" with { type: "json" };
+import bank_dj_sound from "./dj_sound.json" with { type: "json" };
 import bank_electrical_hardware from "./electrical_hardware.json" with { type: "json" };
 import bank_electrical_shop from "./electrical_shop.json" with { type: "json" };
+import bank_event_decorator from "./event_decorator.json" with { type: "json" };
 import bank_fast_food from "./fast_food.json" with { type: "json" };
 import bank_finance_gold from "./finance_gold.json" with { type: "json" };
 import bank_fish_shop from "./fish_shop.json" with { type: "json" };
@@ -78,6 +80,8 @@ import bank_study_abroad from "./study_abroad.json" with { type: "json" };
 import bank_supermarket from "./supermarket.json" with { type: "json" };
 import bank_sweet_shop from "./sweet_shop.json" with { type: "json" };
 import bank_tailor_shop from "./tailor_shop.json" with { type: "json" };
+import bank_tent_decor_dj from "./tent_decor_dj.json" with { type: "json" };
+import bank_tent_house from "./tent_house.json" with { type: "json" };
 import bank_tiffin_centre from "./tiffin_centre.json" with { type: "json" };
 import bank_travels from "./travels.json" with { type: "json" };
 import bank_tuition_centre from "./tuition_centre.json" with { type: "json" };
@@ -110,8 +114,10 @@ export const QUESTION_BANKS = {
   "computer_shop": bank_computer_shop,
   "dental_clinic": bank_dental_clinic,
   "diagnostic_lab": bank_diagnostic_lab,
+  "dj_sound": bank_dj_sound,
   "electrical_hardware": bank_electrical_hardware,
   "electrical_shop": bank_electrical_shop,
+  "event_decorator": bank_event_decorator,
   "fast_food": bank_fast_food,
   "finance_gold": bank_finance_gold,
   "fish_shop": bank_fish_shop,
@@ -165,6 +171,8 @@ export const QUESTION_BANKS = {
   "supermarket": bank_supermarket,
   "sweet_shop": bank_sweet_shop,
   "tailor_shop": bank_tailor_shop,
+  "tent_decor_dj": bank_tent_decor_dj,
+  "tent_house": bank_tent_house,
   "tiffin_centre": bank_tiffin_centre,
   "travels": bank_travels,
   "tuition_centre": bank_tuition_centre,
