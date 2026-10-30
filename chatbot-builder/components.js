@@ -66,7 +66,7 @@ export const LANGUAGE_CHOICES = [
   ['Bengali', 'বাংলা'], ['Gujarati', 'ગુજરાતી'], ['Odia', 'ଓଡ଼ିଆ'], ['Punjabi', 'ਪੰਜਾਬੀ'], ['Urdu', 'اردو'],
 ];
 
-export function ProgressHeader({ answered = 0, total = 0, language = 'auto' }) {
+export function ProgressHeader({ answered = 0, total = 0, language = 'auto', bots = [], currentBot = '' }) {
   const header = makeElement('header', 'app-header-inner');
   const identity = makeElement('div', 'brand-lockup');
   const mark = makeElement('div', 'brand-mark');
@@ -105,8 +105,22 @@ export function ProgressHeader({ answered = 0, total = 0, language = 'auto' }) {
     option.selected = value === language;
     select.append(option);
   }
+  // The owner's bots in this browser, and a way to start another one.
+  const botSelect = makeElement('select', 'bot-select');
+  botSelect.setAttribute('aria-label', 'My bots');
+  botSelect.title = 'My bots';
+  bots.forEach((bot, index) => {
+    // Bots still in setup have no shop name yet.
+    const option = makeElement('option', '', bot.name || `My bot ${index + 1}`);
+    option.value = bot.id;
+    option.selected = bot.id === currentBot;
+    botSelect.append(option);
+  });
+  const add = makeElement('option', '', '➕ Create new bot');
+  add.value = '__new';
+  botSelect.append(add);
   const theme = iconButton('moon', 'Switch to dark mode', 'theme-toggle', 'theme-toggle');
-  tools.append(select, theme);
+  tools.append(botSelect, select, theme);
   header.append(identity, progress, tools);
   return header;
 }
@@ -219,7 +233,10 @@ export function BotReadyCard(message) {
   poster.dataset.messageId = message.id;
   const manage = makeElement('a', 'quick-chip bot-ready-manage', 'Manage my bot (photos, items)');
   manage.href = './owner.html';
-  actions.append(open, copy, poster, manage);
+  const another = makeElement('button', 'quick-chip', '➕ Create another bot');
+  another.type = 'button';
+  another.dataset.action = 'new-bot';
+  actions.append(open, copy, poster, manage, another);
   details.append(link, actions);
   card.append(details);
   card.append(OwnerHelp(message.botCard.openQuestions || 0));
