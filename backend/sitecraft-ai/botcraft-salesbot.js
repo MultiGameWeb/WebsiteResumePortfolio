@@ -153,6 +153,7 @@ function requestLines(features = {}) {
   else lines.push("- You cannot take orders: for orders, ask them to call or WhatsApp the shop.");
   if (features.photo) lines.push("- If showing a photo would help (a damaged item, a crop or pet problem, a design they want), tell them to use \"📸 Send a photo\" in the Requests tab; the shop replies there.");
   if (features.orderStatus) lines.push("- To check an order or repair, tell them to use \"🔍 Order status\" in the Requests tab with their bill or order number.");
+  if (features.cart) lines.push("- Customers at home can add items to the cart in the Items tab and send the order to the shop's WhatsApp; the shop confirms the total and the payment on WhatsApp. Never take payment details or confirm an order yourself.");
   return lines.join("\n");
 }
 

@@ -495,7 +495,7 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
     const savedFacts = cleanFacts(saved.facts);
     const bank = await resolveBank(env, savedFacts);
     const answers = cleanAnswers(saved.answers, bank);
-    const bot = coreComplete(savedFacts) ? { publicId: await ensurePublicId(env, shopId), name: savedFacts.shop_name || "", botName: botName(savedFacts), wifi: posterWifi(savedFacts), openQuestions: await countOpenQuestions(env, shopId) + await countNewRequests(env, shopId) } : null;
+    const bot = coreComplete(savedFacts) ? { publicId: await ensurePublicId(env, shopId), name: savedFacts.shop_name || "", botName: botName(savedFacts), wifi: posterWifi(savedFacts), openQuestions: await countOpenQuestions(env, shopId) + await countNewRequests(env, shopId), features: shopFeatures(savedFacts.shop_type, await loadSettings(env, shopId)) } : null;
     return reply({ ok: true, messages: saved.messages, progress: progress(savedFacts, answers, bank), bot }, 200, origin);
   }
 
@@ -697,7 +697,7 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   for (const q of newExtras) {
     if (questions.length < MAX_FORM_QUESTIONS && !questions.some(asked => asked.id === q.id)) questions.push(q);
   }
-  const bot = saved && coreComplete(merged) ? { publicId: await ensurePublicId(env, shopId).catch(() => null), name: merged.shop_name || "", botName: botName(merged), wifi: posterWifi(merged), openQuestions: (await countOpenQuestions(env, shopId).catch(() => 0)) + (await countNewRequests(env, shopId).catch(() => 0)) } : null;
+  const bot = saved && coreComplete(merged) ? { publicId: await ensurePublicId(env, shopId).catch(() => null), name: merged.shop_name || "", botName: botName(merged), wifi: posterWifi(merged), openQuestions: (await countOpenQuestions(env, shopId).catch(() => 0)) + (await countNewRequests(env, shopId).catch(() => 0)), features: shopFeatures(merged.shop_type, await loadSettings(env, shopId).catch(() => ({}))) } : null;
   const nextPhoto = sameBank && text !== FINISH_OPTION ? nextStep(merged, mergedAnswers, mergedBank).photo : null;
   const allowSkip = questions.length ? questions.every(q => !q.mandatory) : !nextQuestion || nextQuestion.priority !== "mandatory";
 
@@ -840,10 +840,11 @@ const PREORDER_TYPES = new Set(["restaurant", "fast_food", "tiffin_centre", "cat
 const ORDER_STATUS_TYPES = new Set(["packers_movers", "laundry", "ironing_shop", "rto_agent", "driving_school_rto", "flex_printing", "printing_press", "printing_flex", "interior_designer", "upvc_windows", "tailor_shop", "boutique", "mobile_repair", "mobile_shop_repair", "appliance_repair", "computer_shop",
   "car_service", "bike_service", "car_bike_service", "car_wash_detailing", "heavy_vehicle_service", "optical", "photography",
   "jewellery", "furniture", "catering", "bakery", "bakery_sweets"]);
-const FEATURE_KEYS = ["photo", "preorder", "orderStatus"];
+// voice (talk mode) and cart (WhatsApp orders) are off until the owner turns them on.
+const FEATURE_KEYS = ["photo", "preorder", "orderStatus", "voice", "cart"];
 
 function shopFeatures(shopType, settings) {
-  const defaults = { photo: true, preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType) };
+  const defaults = { photo: true, preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType), voice: false, cart: false };
   const chosen = settings?.features || {};
   return Object.fromEntries(FEATURE_KEYS.map(key => [key, typeof chosen[key] === "boolean" ? chosen[key] : defaults[key]]));
 }

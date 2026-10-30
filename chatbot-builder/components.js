@@ -239,8 +239,38 @@ export function BotReadyCard(message) {
   actions.append(open, copy, poster, manage, another);
   details.append(link, actions);
   card.append(details);
+  card.append(BotExtras(message));
   card.append(OwnerHelp(message.botCard.openQuestions || 0));
   return card;
+}
+
+// Optional extras offered once the bot is ready: talk mode and WhatsApp orders.
+const EXTRAS = [
+  ['voice', '🎙️ Add voice mode?', 'Your customers can talk to your bot and hear the answers — no typing. Helpful for elders and busy customers.', 'Add voice mode', 'Voice mode is on ✓'],
+  ['cart', '🛒 Take orders on WhatsApp?', 'Customers at home can add your items to a cart and send the order to your WhatsApp; you confirm the total and payment there. Customers in your shop don\'t need it.', 'Turn on WhatsApp orders', 'WhatsApp orders are on ✓'],
+];
+
+function BotExtras(message) {
+  const box = makeElement('div', 'bot-extras');
+  box.append(makeElement('p', 'bot-extras-title', 'Make your bot more helpful (optional)'));
+  for (const [key, title, text, action, done] of EXTRAS) {
+    const row = makeElement('div', 'bot-extra');
+    const words = makeElement('div', 'bot-extra-words');
+    words.append(makeElement('strong', '', title), makeElement('span', '', text));
+    row.append(words);
+    if (message.botCard.features?.[key]) row.append(makeElement('span', 'bot-extra-done', done));
+    else {
+      const button = makeElement('button', 'quick-chip', action);
+      button.type = 'button';
+      button.dataset.action = 'enable-extra';
+      button.dataset.feature = key;
+      button.dataset.messageId = message.id;
+      row.append(button);
+    }
+    box.append(row);
+  }
+  box.append(makeElement('p', 'bot-extras-note', 'You can turn these on or off any time in Manage my bot → Bot buttons.'));
+  return box;
 }
 
 const UPDATE_STEPS = [

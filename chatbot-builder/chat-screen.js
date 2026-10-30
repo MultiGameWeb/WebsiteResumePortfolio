@@ -1,10 +1,10 @@
-import { createBot, currentBotId, loadSavedConversation, myBots, openBot, prepareQuestionBank, rememberBotName, sendChatAction } from './chatApi.js?v=20261031a';
+import { createBot, currentBotId, enableFeature, loadSavedConversation, myBots, openBot, prepareQuestionBank, rememberBotName, sendChatAction } from './chatApi.js?v=20261031b';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261031a';
+} from './components.js?v=20261031b';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -310,12 +310,12 @@ function showBotReady(bot) {
   rememberBotName(bot.name);
   const existing = state.messages.find((message) => message.botCard);
   // Keep the card's name and Wi-Fi current (the owner may add Wi-Fi later).
-  if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.botName = bot.botName || existing.botCard.botName; existing.botCard.wifi = bot.wifi || null; existing.botCard.openQuestions = bot.openQuestions || 0; return; }
+  if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.botName = bot.botName || existing.botCard.botName; existing.botCard.wifi = bot.wifi || null; existing.botCard.openQuestions = bot.openQuestions || 0; existing.botCard.features = bot.features || existing.botCard.features; return; }
   const url = new URL(`../salesbot/?s=${encodeURIComponent(bot.publicId)}`, window.location.href).href;
   state.messages.push({
     id: makeId('message'), role: 'assistant', time: new Date(),
     text: `Your shop assistant${bot.botName ? ` "${bot.botName}"` : ''} is ready! 🎉 Open the link to try it like a customer. Print the QR poster and keep it in your shop — customers scan it to chat. Add photos and items in "Manage my bot", and keep answering questions to make it smarter.`,
-    botCard: { url, name: bot.name || '', botName: bot.botName || '', wifi: bot.wifi || null, openQuestions: bot.openQuestions || 0 },
+    botCard: { url, name: bot.name || '', botName: bot.botName || '', wifi: bot.wifi || null, openQuestions: bot.openQuestions || 0, features: bot.features || {} },
   });
 }
 
@@ -549,6 +549,18 @@ app.addEventListener('click', (event) => {
   const action = button.dataset.action;
 
   if (action === 'new-bot') { startNewBot(); return; }
+  if (action === 'enable-extra') {
+    const message = state.messages.find((item) => item.id === button.dataset.messageId);
+    button.disabled = true;
+    enableFeature(button.dataset.feature)
+      .then((features) => {
+        if (message?.botCard) message.botCard.features = features;
+        showToast(button.dataset.feature === 'voice' ? 'Voice mode is on in your bot.' : 'WhatsApp orders are on. Customers can now add items to a cart.');
+        render();
+      })
+      .catch((error) => { button.disabled = false; showToast(error.message); });
+    return;
+  }
   if (action === 'theme-toggle') {
     state.theme = state.theme === 'dark' ? 'light' : 'dark';
     applyTheme();

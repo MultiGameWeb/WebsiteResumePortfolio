@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=7">
+  <link rel="stylesheet" href="./styles.css?v=8">
 </head>
 <body>
   <div class="app">
@@ -36,6 +36,9 @@
     <section class="panel products-panel" id="productsPanel" hidden>
       <input class="product-search" id="productSearch" type="search" placeholder="Search products" aria-label="Search products">
       <div class="product-grid" id="productGrid"></div>
+      <div class="cart-bar" id="cartBar" hidden>
+        <button type="button" id="openCart">🛒 <span id="cartSummary"></span> · View cart</button>
+      </div>
     </section>
     <section class="panel photos-panel" id="photosPanel" hidden>
       <div class="photo-grid" id="photoGrid"></div>
@@ -76,8 +79,21 @@
       <p class="sheet-price" id="sheetPrice"></p>
       <p class="sheet-details" id="sheetDetails"></p>
       <div class="sheet-actions">
+        <button type="button" class="ask-this" id="addThis" hidden>🛒 Add to cart</button>
         <button type="button" class="ask-this" id="askThis">Ask about this</button>
         <button type="button" class="close-sheet" id="closeSheet">Close</button>
+      </div>
+    </dialog>
+    <dialog class="product-sheet cart-sheet" id="cartSheet" aria-labelledby="cartTitle">
+      <h2 id="cartTitle">Your cart</h2>
+      <div class="cart-list" id="cartList"></div>
+      <p class="cart-total" id="cartTotal"></p>
+      <label class="cart-field">Your name <span class="optional">(optional)</span> <input id="cartName" maxlength="60" autocomplete="name"></label>
+      <label class="cart-field">Delivery address or pickup time <span class="optional">(optional)</span> <textarea id="cartNote" maxlength="300" rows="2"></textarea></label>
+      <p class="cart-help">Your order goes to the shop on WhatsApp. The shop confirms the total, delivery and how to pay there. Never share OTPs or card details.</p>
+      <div class="sheet-actions">
+        <button type="button" class="ask-this" id="sendCart">Send order on WhatsApp</button>
+        <button type="button" class="close-sheet" id="closeCart">Close</button>
       </div>
     </dialog>
     <section class="talk-panel" id="talkPanel" role="dialog" aria-label="Talk mode" hidden>
@@ -97,6 +113,6 @@
       <button id="send" type="submit" aria-label="Send">➤</button>
     </form>
   </div>
-  <script type="module" src="./app.js?v=7"></script>
+  <script type="module" src="./app.js?v=8"></script>
 </body>
 </html>
