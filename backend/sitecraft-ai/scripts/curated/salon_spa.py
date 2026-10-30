@@ -111,6 +111,7 @@ Q = [
  ("Packages & membership", "O", "text", "Do you give special prices for students, seniors, corporate employees or groups (for example a bridal party or 4–5 friends)?", "Any group discount?", [], "HBS"),
 
  ("Home service", "I", "options", "Do you provide home service?", "Can you come home for a facial?", ["No home service", "Yes, some services", "Yes, all services"], "HB"),
+ ("Home service", "O", "text", "Do you visit homes for a baby's first haircut or tonsure (puttu ventrukalu)? What is the charge?", "Can you come home for my baby's first haircut?", [], "H"),
  ("Home service", "O", "text", "Which areas do you cover for home service, and is there an extra charge?", "Is there extra charge for home service?", [], "HB"),
 
  ("Shop & service", "O", "yes_no", "Is the shop air-conditioned?", "Is it AC?", YN, "HB"),

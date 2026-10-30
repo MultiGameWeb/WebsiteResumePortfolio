@@ -78,6 +78,8 @@ Q = [
  ("Products & brands", "I", "list", "Which software do you sell or install?", "Can you install Tally?", ["Windows", "MS Office", "Antivirus", "Tally", "Adobe", "None"], "C"),
  ("Products & brands", "O", "yes_no", "Do you rent laptops or desktops?", "Can I rent a laptop for a month?", YN, "C"),
  ("Products & brands", "O", "yes_no", "Do you sell ink-tank printers?", "Do you have ink-tank printers?", YN, "C"),
+ ("Products & brands", "I", "yes_no", "Do you always give a new factory-sealed piece (not the display unit), opened in front of the customer?", "Is this the display TV or a new box?", YN, "AC"),
+ ("Products & brands", "O", "yes_no", "Does the warranty start from your bill date (as shown on the brand's website for the serial number)?", "When does my laptop warranty start?", YN, "AC"),
  ("Products & brands", "O", "yes_no", "Do you sell display or open-box pieces at a lower price?", "Do you have any display piece for less?", YN, "PAC"),
  ("Products & brands", "O", "list", "Do you sell smart home and security devices?", "Do you have Alexa?", ["Smart bulbs & plugs", "Alexa / Google Home", "Wi-Fi smart cameras", "Digital door locks", "Video doorbells", "None"], "PAC"),
 
@@ -190,7 +192,7 @@ Q = [
  ("Mobile repairs", "O", "yes_no", "Do you teach mobile repair courses?", "Do you have a mobile repair course?", YN, "R"),
  ("Warranty & service", "I", "yes_no", "Do you do AC servicing and gas refilling?", "Can you service my AC?", YN, "A"),
  ("Warranty & service", "O", "yes_no", "Do you offer yearly service plans for ACs and water purifiers?", "Is there an AC service plan?", YN, "A"),
- ("Warranty & service", "O", "yes_no", "Do you upgrade RAM and SSD?", "Can you add more RAM?", YN, "C"),
+ ("Warranty & service", "O", "yes_no", "Do you upgrade RAM and SSD, and tell customers before buying whether a laptop's RAM is soldered or has a free slot?", "Can I add more RAM later?", YN, "C"),
  ("Warranty & service", "O", "yes_no", "Do you assemble custom or gaming desktops?", "Can you build a gaming PC?", YN, "C"),
  ("Warranty & service", "O", "yes_no", "Do you sell and refill printer cartridges?", "Do you refill ink cartridges?", YN, "C"),
  ("Warranty & service", "O", "yes_no", "Do you offer annual maintenance (AMC) for offices?", "Do you do AMC for offices?", YN, "C"),
