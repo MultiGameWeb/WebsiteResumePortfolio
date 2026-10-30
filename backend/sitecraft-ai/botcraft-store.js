@@ -228,7 +228,7 @@ export async function ensurePublicId(env, shopId) {
 export async function loadPublicShop(env, publicId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
-  const row = await db.prepare("SELECT shop_id FROM botcraft_public WHERE public_id = ?").bind(publicId).first();
+  const row = await db.prepare("SELECT p.shop_id FROM botcraft_public p JOIN botcraft_shops s ON s.shop_id = p.shop_id WHERE p.public_id = ? AND s.status != 'disabled'").bind(publicId).first();
   if (!row) return null;
   const shop = await loadShop(env, row.shop_id, 0);
   if (!shop) return null;
