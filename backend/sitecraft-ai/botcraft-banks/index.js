@@ -21,6 +21,7 @@ import bank_clinic from "./clinic.json" with { type: "json" };
 import bank_college from "./college.json" with { type: "json" };
 import bank_competitive_coaching from "./competitive_coaching.json" with { type: "json" };
 import bank_computer_shop from "./computer_shop.json" with { type: "json" };
+import bank_courier_parcel from "./courier_parcel.json" with { type: "json" };
 import bank_dental_clinic from "./dental_clinic.json" with { type: "json" };
 import bank_diagnostic_lab from "./diagnostic_lab.json" with { type: "json" };
 import bank_dj_sound from "./dj_sound.json" with { type: "json" };
@@ -119,6 +120,7 @@ export const QUESTION_BANKS = {
   "college": bank_college,
   "competitive_coaching": bank_competitive_coaching,
   "computer_shop": bank_computer_shop,
+  "courier_parcel": bank_courier_parcel,
   "dental_clinic": bank_dental_clinic,
   "diagnostic_lab": bank_diagnostic_lab,
   "dj_sound": bank_dj_sound,
