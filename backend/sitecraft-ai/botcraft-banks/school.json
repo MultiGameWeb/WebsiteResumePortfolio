@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 36,
+ "question_count": 67,
  "questions": [
   {
    "id": "school-001",
@@ -59,7 +59,7 @@
   {
    "id": "school-006",
    "category": "Fees",
-   "owner_question": "When a student leaves, how soon do you give the TC, bonafide and other certificates, and which dues must be cleared first?",
+   "owner_question": "When a student leaves, how soon do you give the TC, bonafide, study records and other certificates, and which dues must be cleared first?",
    "customer_question": "Will you give the TC if we move mid-year?",
    "priority": "important",
    "answer_type": "text"
@@ -96,13 +96,53 @@
   {
    "id": "school-009",
    "category": "Daily rules & care",
-   "owner_question": "Do you have a parent app (homework, attendance, fee receipts), and how can parents reach teachers?",
+   "owner_question": "Do you have a parent app (homework, attendance, fee receipts), can both parents log in, and how can parents reach teachers?",
    "customer_question": "Is there a school app?",
    "priority": "important",
    "answer_type": "text"
   },
   {
    "id": "school-010",
+   "category": "Admissions & records",
+   "owner_question": "Which documents are needed for admission (birth certificate, Aadhaar, photos, parent ID, previous records), originals or copies, and do you give provisional admission if one is missing?",
+   "customer_question": "Which documents do I need for admission?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-011",
+   "category": "Parents & communication",
+   "owner_question": "How often are parent-teacher meetings held (in person or online), can parents book a time with a teacher, and do you send a monthly progress report?",
+   "customer_question": "When is the next parents meeting?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-012",
+   "category": "Parents & communication",
+   "owner_question": "How can parents complain about a teacher or other problem, who handles it up to the principal or management, and in how many days do you reply?",
+   "customer_question": "Whom do I complain to about a teacher?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-013",
+   "category": "Safety & health",
+   "owner_question": "Do you have a child protection policy (staff training, a way for children to complain privately, good touch / bad touch awareness), and how do you handle POCSO complaints?",
+   "customer_question": "How do you keep children safe from abuse?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-014",
+   "category": "Safety & health",
+   "owner_question": "Who gives first aid, how do you record allergies and medical needs (shared only with the staff who need it), and do you have a plan for severe allergies?",
+   "customer_question": "My daughter has a peanut allergy, will teachers know?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-015",
    "category": "Inter college",
    "owner_question": "Do you have a student counsellor and avoid shaming or pressuring students over marks?",
    "customer_question": "Will my son be under too much pressure?",
@@ -114,7 +154,7 @@
    ]
   },
   {
-   "id": "school-011",
+   "id": "school-016",
    "category": "Hostel",
    "owner_question": "Do you have a hostel?",
    "customer_question": "Is there a hostel?",
@@ -128,7 +168,7 @@
    ]
   },
   {
-   "id": "school-012",
+   "id": "school-017",
    "category": "Board & recognition",
    "owner_question": "Do you teach the syllabus of the board you are affiliated to (for example CBSE books in a CBSE school)?",
    "customer_question": "Do you really follow CBSE books?",
@@ -140,7 +180,7 @@
    ]
   },
   {
-   "id": "school-013",
+   "id": "school-018",
    "category": "Board & recognition",
    "owner_question": "Which second and third languages can students take?",
    "customer_question": "Can my child take Hindi instead of Telugu?",
@@ -155,7 +195,7 @@
    ]
   },
   {
-   "id": "school-014",
+   "id": "school-019",
    "category": "Board & recognition",
    "owner_question": "How do you form sections?",
    "customer_question": "Do you put low scorers in a separate section?",
@@ -168,7 +208,7 @@
    ]
   },
   {
-   "id": "school-015",
+   "id": "school-020",
    "category": "Board & recognition",
    "owner_question": "Do you enter every student in UDISE and create their APAAR ID / PEN, so they get government schemes (for example Thalliki Vandanam)?",
    "customer_question": "Will my child get the Thalliki Vandanam scheme here?",
@@ -180,7 +220,7 @@
    ]
   },
   {
-   "id": "school-016",
+   "id": "school-021",
    "category": "Fees",
    "owner_question": "Must books, uniform and shoes be bought from you?",
    "customer_question": "Can I buy books outside?",
@@ -193,7 +233,7 @@
    ]
   },
   {
-   "id": "school-017",
+   "id": "school-022",
    "category": "Fees",
    "owner_question": "Do you admit children under the RTE 25% free quota?",
    "customer_question": "Is there an RTE free seat?",
@@ -205,7 +245,7 @@
    ]
   },
   {
-   "id": "school-018",
+   "id": "school-023",
    "category": "Activities",
    "owner_question": "How do you keep school bags light (lockers, books only as per timetable)?",
    "customer_question": "Does my child have to carry all books every day?",
@@ -213,7 +253,7 @@
    "answer_type": "text"
   },
   {
-   "id": "school-019",
+   "id": "school-024",
    "category": "Activities",
    "owner_question": "Are annual day costumes and picnics optional, and what do they usually cost?",
    "customer_question": "Is the picnic compulsory?",
@@ -221,7 +261,7 @@
    "answer_type": "text"
   },
   {
-   "id": "school-020",
+   "id": "school-025",
    "category": "Daily rules & care",
    "owner_question": "What are your grooming rules (hair, nails, shoes, plaits) and what happens if they are not followed?",
    "customer_question": "Will you cut my son's hair at school?",
@@ -229,7 +269,7 @@
    "answer_type": "text"
   },
   {
-   "id": "school-021",
+   "id": "school-026",
    "category": "Daily rules & care",
    "owner_question": "What are your birthday rules (colour dress, what can be shared in class)?",
    "customer_question": "Can she wear a colour dress on her birthday?",
@@ -237,7 +277,7 @@
    "answer_type": "text"
   },
   {
-   "id": "school-022",
+   "id": "school-027",
    "category": "Daily rules & care",
    "owner_question": "For girls, do you keep sanitary pads, a spare uniform and a rest room?",
    "customer_question": "What if my daughter gets her period at school?",
@@ -249,7 +289,7 @@
    ]
   },
   {
-   "id": "school-023",
+   "id": "school-028",
    "category": "Daily rules & care",
    "owner_question": "Can parents drop a hot lunch box at the gate at lunch time, and do staff take it to the class?",
    "customer_question": "Can I bring a hot lunch box at 12?",
@@ -261,7 +301,7 @@
    ]
   },
   {
-   "id": "school-024",
+   "id": "school-029",
    "category": "Daily rules & care",
    "owner_question": "Can children bring egg or non-veg in their lunch box?",
    "customer_question": "Can I send egg in the tiffin?",
@@ -274,7 +314,7 @@
    ]
   },
   {
-   "id": "school-025",
+   "id": "school-030",
    "category": "Daily rules & care",
    "owner_question": "Do you avoid punishments like hitting, insulting or writing an answer many times (impositions)?",
    "customer_question": "Do teachers punish children?",
@@ -286,7 +326,7 @@
    ]
   },
   {
-   "id": "school-026",
+   "id": "school-031",
    "category": "Daily rules & care",
    "owner_question": "How often are notebooks corrected?",
    "customer_question": "How often do teachers correct notebooks?",
@@ -294,15 +334,247 @@
    "answer_type": "text"
   },
   {
-   "id": "school-027",
+   "id": "school-032",
    "category": "Daily rules & care",
-   "owner_question": "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, and help get a scribe or extra time in board exams?",
+   "owner_question": "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, and help get a scribe, extra time or other allowed help (for weak eyesight or hearing) in exams?",
    "customer_question": "My son has dyslexia, can you support him?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "school-028",
+   "id": "school-033",
+   "category": "Admissions & records",
+   "owner_question": "Do you take admissions 2–3 months after the year starts, and how do you help late joiners catch up?",
+   "customer_question": "Can he join in August?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-034",
+   "category": "Admissions & records",
+   "owner_question": "Do younger siblings get admission priority or a fee concession?",
+   "customer_question": "Is there a discount for the second child?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-035",
+   "category": "Admissions & records",
+   "owner_question": "For single parents, guardians (for example grandparents) or separated parents: which documents are needed, who is recorded as guardian, do both parents get reports, and how do you check who may pick up the child?",
+   "customer_question": "Can the grandmother be the guardian?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-036",
+   "category": "Admissions & records",
+   "owner_question": "For students returning from abroad, which class do you admit them to, and which documents or equivalency certificates are needed?",
+   "customer_question": "We are coming back from the US, which class will she join?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-037",
+   "category": "Admissions & records",
+   "owner_question": "How do you correct a student's name or date of birth in records, and how do you check board exam registration details before the deadline?",
+   "customer_question": "Her name is spelt differently in Aadhaar, can you correct it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-038",
+   "category": "Exams & results",
+   "owner_question": "If a student misses an exam due to illness, is there a special exam, and by when must the medical certificate be given?",
+   "customer_question": "He had fever on exam day, will there be a re-exam?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-039",
+   "category": "Exams & results",
+   "owner_question": "Can parents see corrected answer sheets, how are internal marks given (projects, assignments, tests), and can marks be rechecked?",
+   "customer_question": "Can I see my son's answer paper?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-040",
+   "category": "Exams & results",
+   "owner_question": "What are your promotion rules if a student fails in subjects, and do you give remedial classes or a re-test?",
+   "customer_question": "Will he be promoted if he fails in maths?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-041",
+   "category": "Exams & results",
+   "owner_question": "When are original marks memos given, and do you help with DigiLocker and duplicate certificates?",
+   "customer_question": "When will we get the original memo?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-042",
+   "category": "Parents & communication",
+   "owner_question": "How do you inform parents about exam date changes, holidays and sudden closures (rain, government orders), and what happens if a closure is announced after buses leave?",
+   "customer_question": "How will I know if school is closed due to rain?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-043",
+   "category": "Parents & communication",
+   "owner_question": "What disciplinary steps do you take for rule breaking, and do parents get to explain before a suspension?",
+   "customer_question": "Will my son be suspended?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-044",
+   "category": "Parents & communication",
+   "owner_question": "Do you keep a lost-and-found for bags, bottles and books?",
+   "customer_question": "My son lost his water bottle, where do I ask?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-045",
+   "category": "Parents & communication",
+   "owner_question": "Can parents visit without an appointment or meet children during class time, and how do you check visitors and delivery or contract staff (visitor pass, ID)?",
+   "customer_question": "Can I come to school without an appointment?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-046",
+   "category": "Safety & health",
+   "owner_question": "With a parent's written note, do staff give a child their daily medicine and record the time and who gave it?",
+   "customer_question": "Can the teacher give his medicine at lunch?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-047",
+   "category": "Safety & health",
+   "owner_question": "Do you hold fire and evacuation drills, with fire extinguishers and emergency exits?",
+   "customer_question": "Do you have fire safety?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-048",
+   "category": "Safety & health",
+   "owner_question": "Do you hold health check-ups (eyes, teeth, height, weight) and send the report to parents?",
+   "customer_question": "Do you do eye check-ups?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-049",
+   "category": "Digital learning",
+   "owner_question": "Do you give recorded lessons for missed classes, and can homework be submitted online (or on paper if the internet fails)?",
+   "customer_question": "He missed the online class, is there a recording?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-050",
+   "category": "Digital learning",
+   "owner_question": "Does each student get their own computer in the lab, what do they learn (coding, office tools), and do you teach safe use of AI tools without copying homework?",
+   "customer_question": "Do children learn coding?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-051",
+   "category": "Digital learning",
+   "owner_question": "Do you take parents' permission before posting children's photos online, and respect a request not to share them?",
+   "customer_question": "Will you put my child's photo on Instagram?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-052",
+   "category": "Fees",
+   "owner_question": "If admission is cancelled before the child joins, how much is refunded (admission, tuition and other fees)?",
+   "customer_question": "If we cancel admission, will we get the fee back?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-053",
+   "category": "Fees",
+   "owner_question": "If a family has money trouble, can the fee date be extended or a concession given? Which documents are needed?",
+   "customer_question": "I lost my job, can I pay the fee later?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-054",
+   "category": "Fees",
+   "owner_question": "Do you give an official receipt for every payment, and how do you fix online payments that failed or were charged twice?",
+   "customer_question": "Money was cut twice on UPI, what now?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-055",
+   "category": "Fees",
+   "owner_question": "How early do you tell parents about a fee increase for the next year?",
+   "customer_question": "Will the fee go up next year?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-056",
+   "category": "Fees",
+   "owner_question": "If fees are due, do you stop classes, exams or library for the student, or talk to parents first?",
+   "customer_question": "Will my child be stopped from exams if the fee is late?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-057",
+   "category": "Career & skills",
+   "owner_question": "Do you give aptitude tests and career counselling (from class 8), and hold sessions with doctors, engineers or business people, or company visits?",
+   "customer_question": "Do you help choose a group after 10th?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "school-058",
+   "category": "Career & skills",
+   "owner_question": "Do you teach public speaking, leadership, teamwork and money skills through projects or activities?",
+   "customer_question": "Do you teach public speaking?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "school-059",
    "category": "Hostel",
    "owner_question": "How often can hostel students call their parents, and can parents call the warden in an emergency?",
    "customer_question": "How often can my son call home?",
@@ -310,7 +582,7 @@
    "answer_type": "text"
   },
   {
-   "id": "school-029",
+   "id": "school-060",
    "category": "Hostel",
    "owner_question": "What are the outing rules, and how do you check who picks up a student (photo ID, OTP)?",
    "customer_question": "Can my brother pick her up for outing?",
@@ -318,7 +590,7 @@
    "answer_type": "text"
   },
   {
-   "id": "school-030",
+   "id": "school-061",
    "category": "Hostel",
    "owner_question": "What is the hostel menu, can parents taste the food, and whom do students complain to about it?",
    "customer_question": "What food do they give in the hostel?",
@@ -326,7 +598,7 @@
    "answer_type": "text"
   },
   {
-   "id": "school-031",
+   "id": "school-062",
    "category": "Hostel",
    "owner_question": "Is laundry included in the hostel fee, with roll numbers marked on clothes?",
    "customer_question": "Who washes the clothes?",
@@ -338,7 +610,7 @@
    ]
   },
   {
-   "id": "school-032",
+   "id": "school-063",
    "category": "Hostel",
    "owner_question": "Is there a 24/7 nurse, sick room and ambulance, and do you call parents at once if a student falls ill?",
    "customer_question": "What if my child gets fever at night?",
@@ -346,7 +618,7 @@
    "answer_type": "text"
   },
   {
-   "id": "school-033",
+   "id": "school-064",
    "category": "Hostel",
    "owner_question": "How many students share a room, and are there beds, mosquito nets, hot water and AC or non-AC rooms?",
    "customer_question": "How many in one room?",
@@ -354,7 +626,7 @@
    "answer_type": "text"
   },
   {
-   "id": "school-034",
+   "id": "school-065",
    "category": "General",
    "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
    "customer_question": "Can we see the campus first?",
@@ -366,7 +638,7 @@
    ]
   },
   {
-   "id": "school-035",
+   "id": "school-066",
    "category": "General",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -382,7 +654,7 @@
    ]
   },
   {
-   "id": "school-036",
+   "id": "school-067",
    "category": "General",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Where can I see your reviews?",

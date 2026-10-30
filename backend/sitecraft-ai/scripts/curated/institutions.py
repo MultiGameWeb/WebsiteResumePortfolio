@@ -41,7 +41,7 @@ Q = [
  ("Fees", "I", "text", "Apart from the tuition fee, what else is charged in the year (admission, term, computer, sports, annual day, picnic, exam, university, placement training)?", "Are there any other fees besides tuition fee?", [], "PSJC"),
  ("Fees", "O", "options", "Must books, uniform and shoes be bought from you?", "Can I buy books outside?", ["Must buy from us", "Can buy outside with our list", "Books from us, uniform outside"], "PS"),
  ("Fees", "O", "yes_no", "Do you admit children under the RTE 25% free quota?", "Is there an RTE free seat?", YN, "PS"),
- ("Fees", "I", "text", "When a student leaves, how soon do you give the TC, bonafide and other certificates, and which dues must be cleared first?", "Will you give the TC if we move mid-year?", [], "SJ"),
+ ("Fees", "I", "text", "When a student leaves, how soon do you give the TC, bonafide, study records and other certificates, and which dues must be cleared first?", "Will you give the TC if we move mid-year?", [], "SJ"),
  ("Fees", "I", "text", "What are the fees for each batch (board only, EAPCET, JEE Mains, JEE Advanced, NEET)?", "What is the fee for the NEET batch?", [], "J"),
  ("Fees", "I", "text", "What concession do you give for 10th marks (for example 10/10 GPA) or on your scholarship test?", "How much discount for 10 GPA?", [], "J"),
 
@@ -57,9 +57,47 @@ Q = [
  ("Daily rules & care", "O", "yes_no", "Can parents drop a hot lunch box at the gate at lunch time, and do staff take it to the class?", "Can I bring a hot lunch box at 12?", YN, "PS"),
  ("Daily rules & care", "O", "options", "Can children bring egg or non-veg in their lunch box?", "Can I send egg in the tiffin?", ["Yes", "Egg only", "Veg only"], "PS"),
  ("Daily rules & care", "O", "yes_no", "Do you avoid punishments like hitting, insulting or writing an answer many times (impositions)?", "Do teachers punish children?", YN, "PS"),
- ("Daily rules & care", "I", "text", "Do you have a parent app (homework, attendance, fee receipts), and how can parents reach teachers?", "Is there a school app?", [], "PSJ"),
+ ("Daily rules & care", "I", "text", "Do you have a parent app (homework, attendance, fee receipts), can both parents log in, and how can parents reach teachers?", "Is there a school app?", [], "PSJ"),
  ("Daily rules & care", "O", "text", "How often are notebooks corrected?", "How often do teachers correct notebooks?", [], "S"),
- ("Daily rules & care", "O", "text", "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, and help get a scribe or extra time in board exams?", "My son has dyslexia, can you support him?", [], "PS"),
+ ("Daily rules & care", "O", "text", "Do you have a special educator or shadow teacher for children with ADHD, dyslexia or slow learning, and help get a scribe, extra time or other allowed help (for weak eyesight or hearing) in exams?", "My son has dyslexia, can you support him?", [], "PS"),
+
+ ("Admissions & records", "I", "text", "Which documents are needed for admission (birth certificate, Aadhaar, photos, parent ID, previous records), originals or copies, and do you give provisional admission if one is missing?", "Which documents do I need for admission?", [], "PSJ"),
+ ("Admissions & records", "O", "text", "Do you take admissions 2–3 months after the year starts, and how do you help late joiners catch up?", "Can he join in August?", [], "PSJ"),
+ ("Admissions & records", "O", "text", "Do younger siblings get admission priority or a fee concession?", "Is there a discount for the second child?", [], "PS"),
+ ("Admissions & records", "O", "text", "For single parents, guardians (for example grandparents) or separated parents: which documents are needed, who is recorded as guardian, do both parents get reports, and how do you check who may pick up the child?", "Can the grandmother be the guardian?", [], "PS"),
+ ("Admissions & records", "O", "text", "For students returning from abroad, which class do you admit them to, and which documents or equivalency certificates are needed?", "We are coming back from the US, which class will she join?", [], "SJ"),
+ ("Admissions & records", "O", "text", "How do you correct a student's name or date of birth in records, and how do you check board exam registration details before the deadline?", "Her name is spelt differently in Aadhaar, can you correct it?", [], "SJ"),
+
+ ("Exams & results", "O", "text", "If a student misses an exam due to illness, is there a special exam, and by when must the medical certificate be given?", "He had fever on exam day, will there be a re-exam?", [], "SJC"),
+ ("Exams & results", "O", "text", "Can parents see corrected answer sheets, how are internal marks given (projects, assignments, tests), and can marks be rechecked?", "Can I see my son's answer paper?", [], "SJ"),
+ ("Exams & results", "O", "text", "What are your promotion rules if a student fails in subjects, and do you give remedial classes or a re-test?", "Will he be promoted if he fails in maths?", [], "SJ"),
+ ("Exams & results", "O", "text", "When are original marks memos given, and do you help with DigiLocker and duplicate certificates?", "When will we get the original memo?", [], "SJC"),
+
+ ("Parents & communication", "I", "text", "How often are parent-teacher meetings held (in person or online), can parents book a time with a teacher, and do you send a monthly progress report?", "When is the next parents meeting?", [], "PSJ"),
+ ("Parents & communication", "O", "text", "How do you inform parents about exam date changes, holidays and sudden closures (rain, government orders), and what happens if a closure is announced after buses leave?", "How will I know if school is closed due to rain?", [], "PSJ"),
+ ("Parents & communication", "I", "text", "How can parents complain about a teacher or other problem, who handles it up to the principal or management, and in how many days do you reply?", "Whom do I complain to about a teacher?", [], "PSJC"),
+ ("Parents & communication", "O", "text", "What disciplinary steps do you take for rule breaking, and do parents get to explain before a suspension?", "Will my son be suspended?", [], "SJ"),
+ ("Parents & communication", "O", "yes_no", "Do you keep a lost-and-found for bags, bottles and books?", "My son lost his water bottle, where do I ask?", YN, "PS"),
+ ("Parents & communication", "O", "text", "Can parents visit without an appointment or meet children during class time, and how do you check visitors and delivery or contract staff (visitor pass, ID)?", "Can I come to school without an appointment?", [], "PSJ"),
+
+ ("Safety & health", "I", "text", "Do you have a child protection policy (staff training, a way for children to complain privately, good touch / bad touch awareness), and how do you handle POCSO complaints?", "How do you keep children safe from abuse?", [], "PSJ"),
+ ("Safety & health", "I", "text", "Who gives first aid, how do you record allergies and medical needs (shared only with the staff who need it), and do you have a plan for severe allergies?", "My daughter has a peanut allergy, will teachers know?", [], "PSJ"),
+ ("Safety & health", "O", "yes_no", "With a parent's written note, do staff give a child their daily medicine and record the time and who gave it?", "Can the teacher give his medicine at lunch?", YN, "PS"),
+ ("Safety & health", "O", "yes_no", "Do you hold fire and evacuation drills, with fire extinguishers and emergency exits?", "Do you have fire safety?", YN, "PSJC"),
+ ("Safety & health", "O", "yes_no", "Do you hold health check-ups (eyes, teeth, height, weight) and send the report to parents?", "Do you do eye check-ups?", YN, "PS"),
+
+ ("Digital learning", "O", "text", "Do you give recorded lessons for missed classes, and can homework be submitted online (or on paper if the internet fails)?", "He missed the online class, is there a recording?", [], "SJ"),
+ ("Digital learning", "O", "text", "Does each student get their own computer in the lab, what do they learn (coding, office tools), and do you teach safe use of AI tools without copying homework?", "Do children learn coding?", [], "SJ"),
+ ("Digital learning", "O", "yes_no", "Do you take parents' permission before posting children's photos online, and respect a request not to share them?", "Will you put my child's photo on Instagram?", YN, "PSJ"),
+
+ ("Fees", "O", "text", "If admission is cancelled before the child joins, how much is refunded (admission, tuition and other fees)?", "If we cancel admission, will we get the fee back?", [], "PSJC"),
+ ("Fees", "O", "text", "If a family has money trouble, can the fee date be extended or a concession given? Which documents are needed?", "I lost my job, can I pay the fee later?", [], "PSJC"),
+ ("Fees", "O", "text", "Do you give an official receipt for every payment, and how do you fix online payments that failed or were charged twice?", "Money was cut twice on UPI, what now?", [], "PSJC"),
+ ("Fees", "O", "text", "How early do you tell parents about a fee increase for the next year?", "Will the fee go up next year?", [], "PSJ"),
+ ("Fees", "O", "text", "If fees are due, do you stop classes, exams or library for the student, or talk to parents first?", "Will my child be stopped from exams if the fee is late?", [], "PSJC"),
+
+ ("Career & skills", "O", "text", "Do you give aptitude tests and career counselling (from class 8), and hold sessions with doctors, engineers or business people, or company visits?", "Do you help choose a group after 10th?", [], "SJC"),
+ ("Career & skills", "O", "yes_no", "Do you teach public speaking, leadership, teamwork and money skills through projects or activities?", "Do you teach public speaking?", YN, "SJ"),
 
  ("Inter college", "M", "list", "Which groups and batches do you have?", "Do you have a NEET batch?", ["MPC", "BiPC", "CEC", "MEC", "HEC", "Board only", "EAPCET batch", "JEE Mains batch", "JEE Advanced batch", "NEET batch", "CA / CMA / CLAT foundation"], "J"),
  ("Inter college", "I", "text", "What are the timings for day scholars, and are there supervised study hours in the evening?", "Is there evening study?", [], "J"),
