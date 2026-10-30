@@ -1,0 +1,132 @@
+{
+ "shop_type_key": "kitchen_rental",
+ "name": "Commercial & cloud kitchen rental",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 12,
+ "questions": [
+  {
+   "id": "kitchen_rental-001",
+   "category": "Kitchen rental",
+   "owner_question": "Do you rent only the kitchen (per day for bulk cooking, or monthly for a cloud kitchen)? At what rent?",
+   "customer_question": "Can I rent only the kitchen?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "kitchen_rental-002",
+   "category": "Timings & booking",
+   "owner_question": "How much advance blocks the date, when is the balance paid, and how much is the caution deposit (refunded when)?",
+   "customer_question": "How much advance to book?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "kitchen_rental-003",
+   "category": "Timings & booking",
+   "owner_question": "If the function is cancelled or the muhurtham changes, do you refund or move the advance?",
+   "customer_question": "Will you refund if the wedding is cancelled?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "kitchen_rental-004",
+   "category": "Kitchen & catering",
+   "owner_question": "What does your kitchen have?",
+   "customer_question": "Do you have big vessels?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Big vessels (degchis, kadais, ladles)",
+    "Wet grinders & vegetable cutters",
+    "Serving buckets & basins",
+    "High-pressure burners / bhatti",
+    "Commercial gas cylinders",
+    "Deep freezer / cold storage",
+    "Dishwashing area & staff",
+    "Outside space for firewood / tandoor",
+    "24-hour sweet water",
+    "Exhaust hood & grease trap",
+    "3-phase power",
+    "Fire safety NOC"
+   ]
+  },
+  {
+   "id": "kitchen_rental-005",
+   "category": "In-house food",
+   "owner_question": "Is your kitchen FSSAI-licensed? Which oil do you use, and do you avoid reusing oil?",
+   "customer_question": "Is your kitchen FSSAI licensed?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "kitchen_rental-006",
+   "category": "Kitchen & catering",
+   "owner_question": "Are kitchen vessels free or rented per item, and what is charged for missing items?",
+   "customer_question": "Are the vessels free?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kitchen_rental-007",
+   "category": "Kitchen & catering",
+   "owner_question": "How are gas cylinders charged, or can customers bring their own?",
+   "customer_question": "Do we bring our own gas?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kitchen_rental-008",
+   "category": "Kitchen & catering",
+   "owner_question": "Who clears the kitchen waste and leaf plates?",
+   "customer_question": "Who will clean the kitchen?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kitchen_rental-009",
+   "category": "Kitchen rental",
+   "owner_question": "Is there space for Swiggy / Zomato riders to wait and park?",
+   "customer_question": "Where will delivery boys wait?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "kitchen_rental-010",
+   "category": "Kitchen rental",
+   "owner_question": "How many people can the kitchen cook for in a day?",
+   "customer_question": "Can we cook for 1,000 people?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "kitchen_rental-011",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "kitchen_rental-012",
+   "category": "Service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Where can I see photos of the hall?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

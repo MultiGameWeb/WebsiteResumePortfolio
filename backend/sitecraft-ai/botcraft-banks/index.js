@@ -14,6 +14,7 @@ import bank_fast_food from "./fast_food.json" with { type: "json" };
 import bank_finance_gold from "./finance_gold.json" with { type: "json" };
 import bank_footwear from "./footwear.json" with { type: "json" };
 import bank_fruits_vegetables from "./fruits_vegetables.json" with { type: "json" };
+import bank_function_hall from "./function_hall.json" with { type: "json" };
 import bank_furniture from "./furniture.json" with { type: "json" };
 import bank_gold_loan from "./gold_loan.json" with { type: "json" };
 import bank_goods_equipment_rental from "./goods_equipment_rental.json" with { type: "json" };
@@ -25,6 +26,7 @@ import bank_insurance_investment from "./insurance_investment.json" with { type:
 import bank_jewellery from "./jewellery.json" with { type: "json" };
 import bank_kids_wear from "./kids_wear.json" with { type: "json" };
 import bank_kirana from "./kirana.json" with { type: "json" };
+import bank_kitchen_rental from "./kitchen_rental.json" with { type: "json" };
 import bank_loan_finance from "./loan_finance.json" with { type: "json" };
 import bank_mobile_repair from "./mobile_repair.json" with { type: "json" };
 import bank_mobile_shop from "./mobile_shop.json" with { type: "json" };
@@ -63,6 +65,7 @@ export const QUESTION_BANKS = {
   "finance_gold": bank_finance_gold,
   "footwear": bank_footwear,
   "fruits_vegetables": bank_fruits_vegetables,
+  "function_hall": bank_function_hall,
   "furniture": bank_furniture,
   "gold_loan": bank_gold_loan,
   "goods_equipment_rental": bank_goods_equipment_rental,
@@ -74,6 +77,7 @@ export const QUESTION_BANKS = {
   "jewellery": bank_jewellery,
   "kids_wear": bank_kids_wear,
   "kirana": bank_kirana,
+  "kitchen_rental": bank_kitchen_rental,
   "loan_finance": bank_loan_finance,
   "mobile_repair": bank_mobile_repair,
   "mobile_shop": bank_mobile_shop,
