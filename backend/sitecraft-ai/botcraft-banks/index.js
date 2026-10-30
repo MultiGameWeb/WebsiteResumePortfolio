@@ -30,6 +30,7 @@ import bank_event_decorator from "./event_decorator.json" with { type: "json" };
 import bank_fast_food from "./fast_food.json" with { type: "json" };
 import bank_finance_gold from "./finance_gold.json" with { type: "json" };
 import bank_fish_shop from "./fish_shop.json" with { type: "json" };
+import bank_flex_printing from "./flex_printing.json" with { type: "json" };
 import bank_footwear from "./footwear.json" with { type: "json" };
 import bank_fruits_vegetables from "./fruits_vegetables.json" with { type: "json" };
 import bank_function_hall from "./function_hall.json" with { type: "json" };
@@ -65,6 +66,8 @@ import bank_physiotherapy from "./physiotherapy.json" with { type: "json" };
 import bank_play_school from "./play_school.json" with { type: "json" };
 import bank_plywood_glass from "./plywood_glass.json" with { type: "json" };
 import bank_poultry_needs from "./poultry_needs.json" with { type: "json" };
+import bank_printing_flex from "./printing_flex.json" with { type: "json" };
+import bank_printing_press from "./printing_press.json" with { type: "json" };
 import bank_readymade_garments from "./readymade_garments.json" with { type: "json" };
 import bank_real_estate from "./real_estate.json" with { type: "json" };
 import bank_restaurant from "./restaurant.json" with { type: "json" };
@@ -125,6 +128,7 @@ export const QUESTION_BANKS = {
   "fast_food": bank_fast_food,
   "finance_gold": bank_finance_gold,
   "fish_shop": bank_fish_shop,
+  "flex_printing": bank_flex_printing,
   "footwear": bank_footwear,
   "fruits_vegetables": bank_fruits_vegetables,
   "function_hall": bank_function_hall,
@@ -160,6 +164,8 @@ export const QUESTION_BANKS = {
   "play_school": bank_play_school,
   "plywood_glass": bank_plywood_glass,
   "poultry_needs": bank_poultry_needs,
+  "printing_flex": bank_printing_flex,
+  "printing_press": bank_printing_press,
   "readymade_garments": bank_readymade_garments,
   "real_estate": bank_real_estate,
   "restaurant": bank_restaurant,
