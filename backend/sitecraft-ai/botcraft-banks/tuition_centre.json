@@ -1,0 +1,593 @@
+{
+ "shop_type_key": "tuition_centre",
+ "name": "Tuition centre (school classes)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 55,
+ "questions": [
+  {
+   "id": "tuition_centre-001",
+   "category": "Classes & courses",
+   "owner_question": "Which classes and subjects do you teach?",
+   "customer_question": "Do you take tuition for 9th class maths?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Classes 1–5",
+    "Classes 6–8",
+    "Classes 9–10",
+    "Intermediate (MPC / BiPC / CEC)",
+    "Maths",
+    "Science (Physics, Chemistry, Biology)",
+    "English",
+    "Hindi",
+    "Telugu",
+    "Social",
+    "Abacus / Vedic maths"
+   ]
+  },
+  {
+   "id": "tuition_centre-002",
+   "category": "Fees & discounts",
+   "owner_question": "What are your fees (monthly, yearly or full course) for each class or course?",
+   "customer_question": "How much is the fee?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-003",
+   "category": "Fees & discounts",
+   "owner_question": "Is there an admission or registration fee? How much?",
+   "customer_question": "Is there an admission fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-004",
+   "category": "Fees & discounts",
+   "owner_question": "Can the fee be paid in parts?",
+   "customer_question": "Can I pay the fee in instalments?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Full payment only",
+    "2–3 instalments",
+    "Monthly fee"
+   ]
+  },
+  {
+   "id": "tuition_centre-005",
+   "category": "Fees & discounts",
+   "owner_question": "What does the fee include (study material, books, uniform, ID card, tests), and what is charged extra?",
+   "customer_question": "Are books included in the fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-006",
+   "category": "Fees & discounts",
+   "owner_question": "Do you give free demo classes before joining? For how many days?",
+   "customer_question": "Can my son attend a demo class?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-007",
+   "category": "Fees & discounts",
+   "owner_question": "What makes your centre special compared to others nearby?",
+   "customer_question": "Why should we join you?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-008",
+   "category": "Teachers & teaching",
+   "owner_question": "What are your teachers' qualifications and years of experience? Where did they teach before?",
+   "customer_question": "Are the teachers qualified?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-009",
+   "category": "Teachers & teaching",
+   "owner_question": "Is there a separate teacher for each subject?",
+   "customer_question": "Does one teacher teach all subjects?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Separate teacher for each subject",
+    "One teacher for all subjects",
+    "Depends on the class"
+   ]
+  },
+  {
+   "id": "tuition_centre-010",
+   "category": "Teachers & teaching",
+   "owner_question": "Do the same senior teachers from the demo classes teach the whole year?",
+   "customer_question": "Will the demo teacher teach all year?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-011",
+   "category": "Teachers & teaching",
+   "owner_question": "In which language do teachers explain?",
+   "customer_question": "Will you explain in Telugu?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "English only",
+    "English with Telugu explanation",
+    "Telugu medium",
+    "Hindi too"
+   ]
+  },
+  {
+   "id": "tuition_centre-012",
+   "category": "Batches & attention",
+   "owner_question": "How many students are in one batch?",
+   "customer_question": "How many kids in a class?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-013",
+   "category": "Batches & attention",
+   "owner_question": "Do teachers give extra attention to slow learners?",
+   "customer_question": "My son is weak in studies, will you take care?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-014",
+   "category": "Batches & attention",
+   "owner_question": "Do you have one-on-one doubt sessions for students who are shy to ask in class?",
+   "customer_question": "Can my son clear doubts separately?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-015",
+   "category": "Batches & attention",
+   "owner_question": "Do you have separate batches for each syllabus?",
+   "customer_question": "Is there a CBSE batch?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Separate batches (State, CBSE, ICSE)",
+    "Mixed, with syllabus-wise help",
+    "Only one syllabus"
+   ]
+  },
+  {
+   "id": "tuition_centre-016",
+   "category": "Timings & attendance",
+   "owner_question": "Which batches do you have?",
+   "customer_question": "Is there an evening batch?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Morning",
+    "Evening",
+    "Weekend only",
+    "Holiday / summer crash courses"
+   ]
+  },
+  {
+   "id": "tuition_centre-017",
+   "category": "Timings & attendance",
+   "owner_question": "If a student is absent, do you call or message the parents the same day?",
+   "customer_question": "Will you tell me if my son bunks?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-018",
+   "category": "Syllabus & material",
+   "owner_question": "Do you give your own printed notes or study material?",
+   "customer_question": "Do you give notes?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-019",
+   "category": "Tests & results",
+   "owner_question": "Which tests do you conduct?",
+   "customer_question": "Are there weekly tests?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Weekly tests",
+    "Chapter-wise tests",
+    "Monthly tests",
+    "Grand / mock tests before finals"
+   ]
+  },
+  {
+   "id": "tuition_centre-020",
+   "category": "Tests & results",
+   "owner_question": "Do you show corrected papers to parents and send marks on WhatsApp?",
+   "customer_question": "Will I see my son's test marks?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-021",
+   "category": "Tests & results",
+   "owner_question": "What were your results last year (10/10 GPA, ranks, selections or placements)?",
+   "customer_question": "How many got 10/10 last year?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-022",
+   "category": "Online & hybrid",
+   "owner_question": "Which ways of learning do you offer?",
+   "customer_question": "Are there online classes?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Offline only",
+    "Online live classes",
+    "Hybrid (join online when absent)",
+    "Recorded videos",
+    "Mobile app"
+   ]
+  },
+  {
+   "id": "tuition_centre-023",
+   "category": "Facilities & safety",
+   "owner_question": "Which facilities do you have?",
+   "customer_question": "Is there AC?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "AC classrooms",
+    "Fans & good ventilation",
+    "Benches / chairs",
+    "Power backup",
+    "RO drinking water",
+    "Separate washrooms for boys & girls",
+    "CCTV",
+    "Security guard",
+    "Cycle / bike parking"
+   ]
+  },
+  {
+   "id": "tuition_centre-024",
+   "category": "Fees & discounts",
+   "owner_question": "Do you give a discount when two children from the same family join?",
+   "customer_question": "Any discount for two kids?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-025",
+   "category": "Fees & discounts",
+   "owner_question": "Do you give scholarships or fee concessions for merit students (for example 90%+ marks)?",
+   "customer_question": "My daughter got 95%, any scholarship?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-026",
+   "category": "Fees & discounts",
+   "owner_question": "How much discount do you give if the full fee is paid at once?",
+   "customer_question": "Any discount if I pay full fee?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-027",
+   "category": "Fees & discounts",
+   "owner_question": "What is your refund policy (if the student leaves after the demo or moves to another town)?",
+   "customer_question": "Will you refund the fee if we move?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-028",
+   "category": "Fees & discounts",
+   "owner_question": "Do you give a referral discount when students bring friends?",
+   "customer_question": "Any discount if my friend joins?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-029",
+   "category": "Fees & discounts",
+   "owner_question": "For students joining in the middle of the year, is the fee reduced?",
+   "customer_question": "We're joining late, is the fee less?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-030",
+   "category": "Teachers & teaching",
+   "owner_question": "If a teacher leaves in the middle of the year, how soon do you bring a replacement?",
+   "customer_question": "What if the teacher leaves?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-031",
+   "category": "Teachers & teaching",
+   "owner_question": "Do teachers focus on basics and concepts, not just memorising?",
+   "customer_question": "Do you teach concepts or just by-heart?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-032",
+   "category": "Teachers & teaching",
+   "owner_question": "Do you use digital boards or projectors?",
+   "customer_question": "Do you have smart classes?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Digital board / projector",
+    "Whiteboard / blackboard",
+    "Both"
+   ]
+  },
+  {
+   "id": "tuition_centre-033",
+   "category": "Batches & attention",
+   "owner_question": "Do you have separate batches for toppers and average students?",
+   "customer_question": "Are toppers in a separate batch?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-034",
+   "category": "Batches & attention",
+   "owner_question": "Can you arrange teachers for home tuition?",
+   "customer_question": "Can a teacher come home?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-035",
+   "category": "Timings & attendance",
+   "owner_question": "How many hours a day and days a week are classes? Any special classes on Sundays?",
+   "customer_question": "Are there classes on Sunday?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-036",
+   "category": "Timings & attendance",
+   "owner_question": "If a student misses classes (illness, travel), how do you cover the missed lessons?",
+   "customer_question": "My daughter was sick for 5 days, will you cover it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-037",
+   "category": "Timings & attendance",
+   "owner_question": "How do you cover the syllabus already finished for late joiners?",
+   "customer_question": "How will you cover old lessons?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-038",
+   "category": "Timings & attendance",
+   "owner_question": "Do you change tuition timings during school exams (FA, SA, finals)?",
+   "customer_question": "Will timings change in exams?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-039",
+   "category": "Syllabus & material",
+   "owner_question": "How do you follow the syllabus?",
+   "customer_question": "Do you teach ahead of school?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Ahead of school",
+    "Along with school",
+    "Revise what school teaches"
+   ]
+  },
+  {
+   "id": "tuition_centre-040",
+   "category": "Syllabus & material",
+   "owner_question": "Do you help children finish school homework and projects here?",
+   "customer_question": "Will you help with school homework?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-041",
+   "category": "Syllabus & material",
+   "owner_question": "Do you give separate tuition homework? How much?",
+   "customer_question": "Is there tuition homework too?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-042",
+   "category": "Syllabus & material",
+   "owner_question": "Do you give previous years' question papers and an important-question bank?",
+   "customer_question": "Do you give old question papers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-043",
+   "category": "Syllabus & material",
+   "owner_question": "By when do you finish the syllabus, and how much time is left for revision?",
+   "customer_question": "When will the syllabus finish?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-044",
+   "category": "Syllabus & material",
+   "owner_question": "Do you help improve handwriting?",
+   "customer_question": "Can you improve his handwriting?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-045",
+   "category": "Tests & results",
+   "owner_question": "How often do you hold parent-teacher meetings?",
+   "customer_question": "When is the parents' meeting?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-046",
+   "category": "Tests & results",
+   "owner_question": "Can new parents talk to past toppers' parents (with their permission)?",
+   "customer_question": "Can I talk to a topper's parents?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-047",
+   "category": "Online & hybrid",
+   "owner_question": "Can students ask doubts online (chat or call)?",
+   "customer_question": "Can I ask doubts on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-048",
+   "category": "Discipline & rules",
+   "owner_question": "How do teachers handle discipline? Do you follow a no-beating policy?",
+   "customer_question": "Do teachers beat children?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-049",
+   "category": "Discipline & rules",
+   "owner_question": "What is your rule on mobile phones in class?",
+   "customer_question": "Can my son bring his phone?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-050",
+   "category": "Discipline & rules",
+   "owner_question": "How are boys and girls seated?",
+   "customer_question": "Do boys and girls sit together?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Separately",
+    "Mixed",
+    "Separate batches"
+   ]
+  },
+  {
+   "id": "tuition_centre-051",
+   "category": "Discipline & rules",
+   "owner_question": "Do you hold motivational sessions to remove exam fear?",
+   "customer_question": "Any motivation classes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "tuition_centre-052",
+   "category": "Discipline & rules",
+   "owner_question": "Is there a dress code or uniform?",
+   "customer_question": "Is there a uniform?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-053",
+   "category": "Facilities & safety",
+   "owner_question": "How do you keep girls safe when classes end late (7–8 pm)?",
+   "customer_question": "Is it safe for my daughter in the evening?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-054",
+   "category": "Facilities & safety",
+   "owner_question": "Do you have van or bus transport? Which areas, and what charge?",
+   "customer_question": "Is there a van?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "tuition_centre-055",
+   "category": "Centre & service",
+   "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
+   "customer_question": "Do you have Instagram?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

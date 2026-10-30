@@ -5,6 +5,7 @@ import bank_bakery_sweets from "./bakery_sweets.json" with { type: "json" };
 import bank_beauty_parlour from "./beauty_parlour.json" with { type: "json" };
 import bank_boutique from "./boutique.json" with { type: "json" };
 import bank_catering from "./catering.json" with { type: "json" };
+import bank_competitive_coaching from "./competitive_coaching.json" with { type: "json" };
 import bank_computer_shop from "./computer_shop.json" with { type: "json" };
 import bank_electrical_hardware from "./electrical_hardware.json" with { type: "json" };
 import bank_electrical_shop from "./electrical_shop.json" with { type: "json" };
@@ -27,10 +28,12 @@ import bank_readymade_garments from "./readymade_garments.json" with { type: "js
 import bank_restaurant from "./restaurant.json" with { type: "json" };
 import bank_salon from "./salon.json" with { type: "json" };
 import bank_saree_textiles from "./saree_textiles.json" with { type: "json" };
+import bank_skill_institute from "./skill_institute.json" with { type: "json" };
 import bank_spa from "./spa.json" with { type: "json" };
 import bank_supermarket from "./supermarket.json" with { type: "json" };
 import bank_sweet_shop from "./sweet_shop.json" with { type: "json" };
 import bank_tiffin_centre from "./tiffin_centre.json" with { type: "json" };
+import bank_tuition_centre from "./tuition_centre.json" with { type: "json" };
 
 export const QUESTION_BANKS = {
   "appliances_showroom": bank_appliances_showroom,
@@ -39,6 +42,7 @@ export const QUESTION_BANKS = {
   "beauty_parlour": bank_beauty_parlour,
   "boutique": bank_boutique,
   "catering": bank_catering,
+  "competitive_coaching": bank_competitive_coaching,
   "computer_shop": bank_computer_shop,
   "electrical_hardware": bank_electrical_hardware,
   "electrical_shop": bank_electrical_shop,
@@ -61,8 +65,10 @@ export const QUESTION_BANKS = {
   "restaurant": bank_restaurant,
   "salon": bank_salon,
   "saree_textiles": bank_saree_textiles,
+  "skill_institute": bank_skill_institute,
   "spa": bank_spa,
   "supermarket": bank_supermarket,
   "sweet_shop": bank_sweet_shop,
-  "tiffin_centre": bank_tiffin_centre
+  "tiffin_centre": bank_tiffin_centre,
+  "tuition_centre": bank_tuition_centre
 };
