@@ -1,0 +1,231 @@
+{
+ "shop_type_key": "courier_parcel",
+ "name": "Courier & parcel service",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 21,
+ "questions": [
+  {
+   "id": "courier_parcel-001",
+   "category": "Services",
+   "owner_question": "Which courier services do you offer?",
+   "customer_question": "Do you send parcels abroad?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Documents (domestic)",
+    "Parcels (domestic)",
+    "Express / priority",
+    "Same-day city delivery",
+    "International courier",
+    "Heavy parcels & cargo",
+    "Pickup from home or office",
+    "Packing service",
+    "Business / bulk shipping",
+    "Cash on delivery for sellers",
+    "Receiving parcels for customers (pickup point)"
+   ]
+  },
+  {
+   "id": "courier_parcel-002",
+   "category": "Services",
+   "owner_question": "Which courier companies do you book with?",
+   "customer_question": "Is this DTDC?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "DTDC",
+    "Blue Dart",
+    "Delhivery",
+    "Professional Couriers",
+    "Shree Maruti",
+    "ST Courier",
+    "India Post / Speed Post",
+    "Ekart",
+    "DHL / FedEx / Aramex (international)",
+    "Our own network"
+   ]
+  },
+  {
+   "id": "courier_parcel-003",
+   "category": "Rates & time",
+   "owner_question": "What are your rates by weight (for example first 500 g and each extra 500 g) for within the state, other states and metros, and how do you charge big light parcels (volumetric weight)?",
+   "customer_question": "How much to send 1 kg to Hyderabad?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-004",
+   "category": "Rates & time",
+   "owner_question": "How many days does delivery usually take to the same city, other districts, other states and villages?",
+   "customer_question": "How many days to Delhi?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-005",
+   "category": "Booking & packing",
+   "owner_question": "Do you pick up from homes and offices? Is there a charge or minimum?",
+   "customer_question": "Can you pick up from my house?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-006",
+   "category": "Booking & packing",
+   "owner_question": "Do you pack parcels (boxes, bubble wrap, wooden crates for fragile items)? What does packing cost?",
+   "customer_question": "Can you pack my laptop safely?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-007",
+   "category": "Booking & packing",
+   "owner_question": "Which ID or documents does the sender need (ID proof, invoice or bill for goods, KYC for international)?",
+   "customer_question": "Do I need Aadhaar to send a parcel?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-008",
+   "category": "Booking & packing",
+   "owner_question": "Which items do you NOT accept?",
+   "customer_question": "Can I send a power bank?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Cash, cheques & gold / jewellery",
+    "Liquids, oils & ghee (unless sealed and allowed)",
+    "Batteries & power banks",
+    "Perfumes, aerosols & sprays",
+    "Gas, firecrackers & inflammables",
+    "Medicines without a bill",
+    "Perishable food",
+    "Live plants, seeds & animals",
+    "Weapons, knives & sharp items",
+    "Anything illegal"
+   ]
+  },
+  {
+   "id": "courier_parcel-009",
+   "category": "Tracking & delivery",
+   "owner_question": "How can customers track a parcel (tracking number, website, SMS / WhatsApp updates)?",
+   "customer_question": "How do I track my courier?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-010",
+   "category": "Loss & damage",
+   "owner_question": "If a parcel is lost, delayed or damaged, how do customers claim, how long does it take, and what is the maximum compensation?",
+   "customer_question": "My parcel is damaged, what do I do?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-011",
+   "category": "Rates & time",
+   "owner_question": "Which areas or pin codes do you not deliver to, and what happens for remote villages?",
+   "customer_question": "Do you deliver to my village?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-012",
+   "category": "Rates & time",
+   "owner_question": "What is the last time to book for same-day dispatch, and do you deliver on Sundays and holidays?",
+   "customer_question": "If I book at 6 pm, will it go today?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-013",
+   "category": "Booking & packing",
+   "owner_question": "How do you send home-made food (pickles, sweets, podis) safely within India and abroad, and which foods are not allowed for certain countries?",
+   "customer_question": "Can I send pickles to the USA?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-014",
+   "category": "Tracking & delivery",
+   "owner_question": "If the receiver is not available, how many attempts are made, can it be held at the office, and what does a return to the sender cost?",
+   "customer_question": "Nobody was home, what happens to my parcel?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-015",
+   "category": "Tracking & delivery",
+   "owner_question": "Can the delivery address be changed after booking?",
+   "customer_question": "Can I change the address now?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "courier_parcel-016",
+   "category": "Tracking & delivery",
+   "owner_question": "Do you give proof of delivery (receiver's name or signature) when asked?",
+   "customer_question": "Can I get proof that it was delivered?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "courier_parcel-017",
+   "category": "Loss & damage",
+   "owner_question": "Do you offer insurance or declared-value cover for costly items? What does it cost?",
+   "customer_question": "Can I insure my parcel?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-018",
+   "category": "International",
+   "owner_question": "For international courier: which countries, delivery time, documents needed, and who pays customs duty?",
+   "customer_question": "How many days to the US, and who pays customs?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-019",
+   "category": "Business customers",
+   "owner_question": "Do you give monthly accounts, bulk rates or cash-on-delivery for sellers and businesses (online sellers, offices)?",
+   "customer_question": "I sell on Instagram, do you have COD?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "courier_parcel-020",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "courier_parcel-021",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
