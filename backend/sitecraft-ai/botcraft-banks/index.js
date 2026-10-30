@@ -2,6 +2,7 @@
 import bank_agri_inputs from "./agri_inputs.json" with { type: "json" };
 import bank_appliance_repair from "./appliance_repair.json" with { type: "json" };
 import bank_appliances_showroom from "./appliances_showroom.json" with { type: "json" };
+import bank_aqua_needs from "./aqua_needs.json" with { type: "json" };
 import bank_ayush_clinic from "./ayush_clinic.json" with { type: "json" };
 import bank_bakery from "./bakery.json" with { type: "json" };
 import bank_bakery_sweets from "./bakery_sweets.json" with { type: "json" };
@@ -53,6 +54,7 @@ import bank_pet_shop from "./pet_shop.json" with { type: "json" };
 import bank_pharmacy from "./pharmacy.json" with { type: "json" };
 import bank_photography from "./photography.json" with { type: "json" };
 import bank_physiotherapy from "./physiotherapy.json" with { type: "json" };
+import bank_poultry_needs from "./poultry_needs.json" with { type: "json" };
 import bank_readymade_garments from "./readymade_garments.json" with { type: "json" };
 import bank_real_estate from "./real_estate.json" with { type: "json" };
 import bank_restaurant from "./restaurant.json" with { type: "json" };
@@ -69,11 +71,14 @@ import bank_tailor_shop from "./tailor_shop.json" with { type: "json" };
 import bank_tiffin_centre from "./tiffin_centre.json" with { type: "json" };
 import bank_travels from "./travels.json" with { type: "json" };
 import bank_tuition_centre from "./tuition_centre.json" with { type: "json" };
+import bank_vet_cattle_feed from "./vet_cattle_feed.json" with { type: "json" };
+import bank_vet_poultry_aqua from "./vet_poultry_aqua.json" with { type: "json" };
 
 export const QUESTION_BANKS = {
   "agri_inputs": bank_agri_inputs,
   "appliance_repair": bank_appliance_repair,
   "appliances_showroom": bank_appliances_showroom,
+  "aqua_needs": bank_aqua_needs,
   "ayush_clinic": bank_ayush_clinic,
   "bakery": bank_bakery,
   "bakery_sweets": bank_bakery_sweets,
@@ -125,6 +130,7 @@ export const QUESTION_BANKS = {
   "pharmacy": bank_pharmacy,
   "photography": bank_photography,
   "physiotherapy": bank_physiotherapy,
+  "poultry_needs": bank_poultry_needs,
   "readymade_garments": bank_readymade_garments,
   "real_estate": bank_real_estate,
   "restaurant": bank_restaurant,
@@ -140,5 +146,7 @@ export const QUESTION_BANKS = {
   "tailor_shop": bank_tailor_shop,
   "tiffin_centre": bank_tiffin_centre,
   "travels": bank_travels,
-  "tuition_centre": bank_tuition_centre
+  "tuition_centre": bank_tuition_centre,
+  "vet_cattle_feed": bank_vet_cattle_feed,
+  "vet_poultry_aqua": bank_vet_poultry_aqua
 };
