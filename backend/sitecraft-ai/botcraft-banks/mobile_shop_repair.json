@@ -1,0 +1,1277 @@
+{
+ "shop_type_key": "mobile_shop_repair",
+ "name": "Mobile shop & repair",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 110,
+ "questions": [
+  {
+   "id": "mobile_shop_repair-001",
+   "category": "Products & brands",
+   "owner_question": "Which phone brands do you sell?",
+   "customer_question": "Do you have Samsung phones?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Apple",
+    "Samsung",
+    "OnePlus",
+    "Vivo",
+    "Oppo",
+    "Realme",
+    "Redmi / Xiaomi / Poco",
+    "iQOO",
+    "Motorola",
+    "Nothing",
+    "Google Pixel",
+    "Honor",
+    "Tecno / Infinix / itel",
+    "Lava",
+    "Nokia (keypad)"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-002",
+   "category": "Products & brands",
+   "owner_question": "Are your products brand new and original, with the company's official warranty?",
+   "customer_question": "Is this original with company warranty?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "All original with brand warranty",
+    "Some imported / without Indian warranty",
+    "We also sell refurbished"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-003",
+   "category": "Prices & bills",
+   "owner_question": "Do you give a GST bill for every product (needed for warranty)?",
+   "customer_question": "Will I get a GST bill?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-004",
+   "category": "Warranty & service",
+   "owner_question": "What happens if a product is defective on the first day (dead on arrival)?",
+   "customer_question": "The phone is not working on day one!",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "We replace it",
+    "We send it to the company service centre",
+    "Depends on the brand"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-005",
+   "category": "Mobile repairs",
+   "owner_question": "Which phone repairs do you do?",
+   "customer_question": "Can you change my phone screen?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Screen / display (folder) replacement",
+    "Touch glass only (OCA)",
+    "Battery replacement",
+    "Charging port / charging IC",
+    "Speaker, mic & earpiece",
+    "Camera & camera glass",
+    "Back panel & frame",
+    "Power / volume buttons",
+    "Water damage",
+    "Dead phone / motherboard (chip-level)",
+    "Network & SIM problems",
+    "Software update, flashing & virus removal",
+    "Forgotten pattern / Google account lock (with proof)",
+    "Data recovery & backup"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-006",
+   "category": "Mobile repairs",
+   "owner_question": "Which devices and brands do you repair?",
+   "customer_question": "Do you repair iPhones?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "All Android brands",
+    "iPhone",
+    "Keypad phones",
+    "Tablets & iPads",
+    "Smartwatches",
+    "Earbuds & Bluetooth speakers",
+    "Laptops"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-007",
+   "category": "Products & brands",
+   "owner_question": "Do you sell refurbished or second-hand products?",
+   "customer_question": "Do you have second-hand phones?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No, only new",
+    "Refurbished",
+    "Second-hand",
+    "Both"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-008",
+   "category": "Products & brands",
+   "owner_question": "If you sell second-hand or refurbished products, do they come with a bill and a warranty? How long?",
+   "customer_question": "Is there warranty on a used phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-009",
+   "category": "Products & brands",
+   "owner_question": "Do you sell iPhones, and are they from authorised Indian distribution?",
+   "customer_question": "Is the iPhone Indian warranty?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, Indian warranty",
+    "Some imported",
+    "We don't sell iPhones"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-010",
+   "category": "Products & brands",
+   "owner_question": "Do you get new launches on the launch day, or can customers pre-book them?",
+   "customer_question": "Is the new Samsung available?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Available on launch day",
+    "Pre-booking available",
+    "Comes later"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-011",
+   "category": "Products & brands",
+   "owner_question": "If a model is out of stock, how many days does it take to get it?",
+   "customer_question": "When will this model come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-012",
+   "category": "Products & brands",
+   "owner_question": "Which accessories do you sell?",
+   "customer_question": "Do you have a fast charger?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Covers & cases",
+    "Tempered glass",
+    "Back skins & lamination",
+    "Chargers & cables",
+    "OTG & adapters",
+    "Wired earphones & neckbands",
+    "Earbuds / ANC headphones",
+    "Smartwatches (calling, health tracking)",
+    "Bluetooth speakers",
+    "Power banks",
+    "Memory cards & pen drives",
+    "Car chargers & mobile holders",
+    "Selfie sticks, tripods & ring lights"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-013",
+   "category": "Products & brands",
+   "owner_question": "Are your accessories original brand products, or compatible ones?",
+   "customer_question": "Is this charger original?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original brand",
+    "Compatible / local",
+    "Both, clearly marked"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-014",
+   "category": "Products & brands",
+   "owner_question": "Which phone variants do you keep in stock?",
+   "customer_question": "Do you have the 8 GB / 256 GB model?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "5G phones",
+    "High RAM / storage variants (8–12 GB, 256 GB+)",
+    "All colours of popular models",
+    "Foldable / flip phones",
+    "Big-font / easy phones for elders",
+    "Rugged / big-battery phones"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-015",
+   "category": "Products & brands",
+   "owner_question": "Which phone price ranges do you stock?",
+   "customer_question": "Any good phone under 15,000?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Under ₹10,000",
+    "₹10,000–20,000",
+    "₹20,000–30,000",
+    "₹30,000–50,000",
+    "Above ₹50,000"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-016",
+   "category": "Prices & bills",
+   "owner_question": "Is GST included in the price on the tag?",
+   "customer_question": "Is GST extra?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in the tag price",
+    "Added at billing"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-017",
+   "category": "Prices & bills",
+   "owner_question": "Are your prices fixed, or can customers get a discount?",
+   "customer_question": "Can you reduce the price?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed price",
+    "Small discount possible",
+    "Negotiable"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-018",
+   "category": "Prices & bills",
+   "owner_question": "Do you match online prices (Amazon, Flipkart)?",
+   "customer_question": "It's cheaper on Amazon, can you match?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, we match",
+    "Sometimes, depends on the model",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-019",
+   "category": "Prices & bills",
+   "owner_question": "Do you take an old product in exchange when buying a new one? How is its value decided?",
+   "customer_question": "How much will you give for my old phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-020",
+   "category": "Buying & checking",
+   "owner_question": "Do you have demo pieces customers can try before buying?",
+   "customer_question": "Can I try the phone first?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-021",
+   "category": "Buying & checking",
+   "owner_question": "Do you open and check the product in front of the customer before billing?",
+   "customer_question": "Will you open the box and check?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-022",
+   "category": "Buying & checking",
+   "owner_question": "Do you transfer data from the old phone and set up the new phone for free?",
+   "customer_question": "Will you move my WhatsApp and photos?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-023",
+   "category": "Buying & checking",
+   "owner_question": "Do you put on a tempered glass and cover when someone buys a phone?",
+   "customer_question": "Is screen guard free?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Paid",
+    "Not available"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-024",
+   "category": "Warranty & service",
+   "owner_question": "Within how many days of purchase can a defective product be replaced?",
+   "customer_question": "Can I replace it after 3 days?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-025",
+   "category": "Returns & refunds",
+   "owner_question": "Do you take a product back if the customer simply doesn't like it, or only if it has a manufacturing defect?",
+   "customer_question": "Can I return it if I don't like it?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Any reason, unused",
+    "Only manufacturing defects",
+    "No returns"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-026",
+   "category": "Returns & refunds",
+   "owner_question": "If a product is returned, how do you give the money back?",
+   "customer_question": "Will I get cash back?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Cash / original payment",
+    "Store credit only",
+    "Exchange only"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-027",
+   "category": "Warranty & service",
+   "owner_question": "How many years of company warranty do your main products have (for example TV panel, fridge compressor with free gas refill, washing machine motor and drum, phone)?",
+   "customer_question": "How many years warranty on this fridge?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-028",
+   "category": "Warranty & service",
+   "owner_question": "During warranty, does the customer bring the product to you, or does the company technician visit the home?",
+   "customer_question": "Will the technician come home for warranty repair?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Technician visits home",
+    "Bring it to the shop / service centre",
+    "Depends on the product"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-029",
+   "category": "Warranty & service",
+   "owner_question": "Do you help customers with warranty claims and service centre visits?",
+   "customer_question": "Will you help with the warranty claim?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-030",
+   "category": "Warranty & service",
+   "owner_question": "Do you sell extended warranty or protection plans? Price?",
+   "customer_question": "Can I get extra warranty?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-031",
+   "category": "Warranty & service",
+   "owner_question": "For repairs, do you use original or compatible parts?",
+   "customer_question": "Is the new screen original?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original parts",
+    "Compatible parts",
+    "Customer's choice"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-032",
+   "category": "Warranty & service",
+   "owner_question": "Do you give a warranty on repairs? How long?",
+   "customer_question": "Is there warranty on the repair?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-033",
+   "category": "Warranty & service",
+   "owner_question": "Is there a checking (diagnosis) charge if the customer decides not to repair?",
+   "customer_question": "Do you charge just to check it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-034",
+   "category": "Mobile repairs",
+   "owner_question": "Which display qualities do you offer for screen replacement?",
+   "customer_question": "Is the new screen original?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Original (company)",
+    "OLED / AMOLED (same as original)",
+    "Incell / LCD copy (cheaper)",
+    "Customer's choice with price for each"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-035",
+   "category": "Mobile repairs",
+   "owner_question": "What are your starting prices for common repairs (screen, battery, charging port) for popular models?",
+   "customer_question": "How much to change the Redmi Note screen?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-036",
+   "category": "Mobile repairs",
+   "owner_question": "Do you tell the full price before starting, and call the customer before doing any extra work?",
+   "customer_question": "Will you tell me the price first?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-037",
+   "category": "Mobile repairs",
+   "owner_question": "Do you give a job card or receipt when a phone is left for repair?",
+   "customer_question": "Will I get a slip for my phone?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-038",
+   "category": "Mobile repairs",
+   "owner_question": "Can customers wait and watch while small repairs (battery, glass, port) are done?",
+   "customer_question": "Can I wait while you fix it?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-039",
+   "category": "Mobile repairs",
+   "owner_question": "How do you keep customers' data safe during repairs (do you need the phone password, can they remove photos or take a backup first)?",
+   "customer_question": "Do you need my phone password?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-040",
+   "category": "Finance & loans",
+   "owner_question": "What is the minimum bill amount for buying on a loan / finance?",
+   "customer_question": "Can I take a loan for a ₹6,000 phone?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "mobile_shop_repair-041",
+   "category": "Finance & loans",
+   "owner_question": "How much down payment is usually needed (percentage of the price)?",
+   "customer_question": "How much do I pay first?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-042",
+   "category": "Finance & loans",
+   "owner_question": "What processing fee or file charge do finance companies take?",
+   "customer_question": "Is there a processing fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-043",
+   "category": "Products & brands",
+   "owner_question": "On which day of the week does new stock usually arrive?",
+   "customer_question": "When will new models come?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-044",
+   "category": "Products & brands",
+   "owner_question": "Can customers reserve a product by paying an advance?",
+   "customer_question": "Can you keep one aside for me?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-045",
+   "category": "Products & brands",
+   "owner_question": "Do you sell SIM cards or do mobile recharges?",
+   "customer_question": "Can I get a new Jio SIM here?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Jio",
+    "Airtel",
+    "Vi",
+    "BSNL",
+    "None"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-046",
+   "category": "Products & brands",
+   "owner_question": "Which other services do you offer at the counter?",
+   "customer_question": "Can I pay my current bill here?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "DTH recharges",
+    "Electricity & other bill payments",
+    "Money transfer / cash withdrawal (AEPS)",
+    "FASTag",
+    "Xerox & printouts",
+    "PAN / ticket booking help",
+    "None"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-047",
+   "category": "Buying advice",
+   "owner_question": "How do you help customers choose a phone (camera, battery, gaming, budget), and do you compare two models side by side?",
+   "customer_question": "Which is better for camera under 20,000?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-048",
+   "category": "Products & brands",
+   "owner_question": "Do you buy old phones for cash, even when the customer is not buying a new one?",
+   "customer_question": "Will you buy my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-049",
+   "category": "Products & brands",
+   "owner_question": "When you take an old phone (exchange or purchase), do you erase all its data in front of the customer?",
+   "customer_question": "Will my photos be deleted from my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-050",
+   "category": "Products & brands",
+   "owner_question": "Do you sell keypad (feature) phones?",
+   "customer_question": "Do you have a basic keypad phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-051",
+   "category": "Products & brands",
+   "owner_question": "Do you sell tablets / iPads?",
+   "customer_question": "Do you have iPads?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-052",
+   "category": "Products & brands",
+   "owner_question": "Do you sell gaming accessories (triggers, coolers, controllers)?",
+   "customer_question": "Do you have a phone cooler for gaming?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-053",
+   "category": "Products & brands",
+   "owner_question": "Do you sell display or open-box pieces at a lower price?",
+   "customer_question": "Do you have any display piece for less?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-054",
+   "category": "Products & brands",
+   "owner_question": "Do you sell smart home and security devices?",
+   "customer_question": "Do you have Alexa?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Smart bulbs & plugs",
+    "Alexa / Google Home",
+    "Wi-Fi smart cameras",
+    "Digital door locks",
+    "Video doorbells",
+    "None"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-055",
+   "category": "Prices & bills",
+   "owner_question": "Do you give a B2B GST invoice so business customers can claim input tax credit?",
+   "customer_question": "Can I get a GST invoice with my company GSTIN?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-056",
+   "category": "Prices & bills",
+   "owner_question": "Do you have cashback or bank card offers right now? (Change them any time with Update.)",
+   "customer_question": "Any HDFC card offer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-057",
+   "category": "Prices & bills",
+   "owner_question": "Do you give combo deals when buying products together (for example TV + sound bar, or TV + fridge + washing machine + mixie for a wedding or gruhapravesam)?",
+   "customer_question": "Any offer if I buy a fridge and washing machine?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-058",
+   "category": "Prices & bills",
+   "owner_question": "Do you take old products in exchange even if they are not working?",
+   "customer_question": "My old TV is dead, will you still exchange it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-059",
+   "category": "Prices & bills",
+   "owner_question": "For an exchange, does the customer need the old product's original box and bill?",
+   "customer_question": "I don't have the box, can I still exchange?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Not needed",
+    "Bill needed",
+    "Box and bill needed"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-060",
+   "category": "Prices & bills",
+   "owner_question": "Can customers exchange an old product of one brand for a new one of another brand (for example old Samsung for new LG)?",
+   "customer_question": "Can I exchange my Samsung TV for an LG?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-061",
+   "category": "Prices & bills",
+   "owner_question": "Can customers negotiate the exchange value you offer for their old product?",
+   "customer_question": "Can you give more for my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-062",
+   "category": "Prices & bills",
+   "owner_question": "If a customer loses the bill, can you print a duplicate using their mobile number or the serial number?",
+   "customer_question": "I lost my bill, can you give a copy?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-063",
+   "category": "Prices & bills",
+   "owner_question": "Do you sell gift vouchers or gift cards?",
+   "customer_question": "Can I buy a gift card?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-064",
+   "category": "Prices & bills",
+   "owner_question": "Do you run lucky draws or prize contests during festivals?",
+   "customer_question": "Is there a Diwali lucky draw?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-065",
+   "category": "Prices & bills",
+   "owner_question": "Do you give free gifts or accessories with purchases?",
+   "customer_question": "Any free gift with this TV?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-066",
+   "category": "Prices & bills",
+   "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
+   "customer_question": "Any discount for 10 laptops?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-067",
+   "category": "Prices & bills",
+   "owner_question": "Do you give special discounts or commission for customers referred by builders or interior designers?",
+   "customer_question": "My interior designer sent me, any discount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-068",
+   "category": "Prices & bills",
+   "owner_question": "Can customers order online or on WhatsApp and collect from the shop (click and collect)?",
+   "customer_question": "Can I order now and pick up later?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-069",
+   "category": "Prices & bills",
+   "owner_question": "Do you have an upgrade or assured buy-back plan (for example a fixed value for the phone after 1 year when buying a new one)?",
+   "customer_question": "Is there a buy-back offer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-070",
+   "category": "Prices & bills",
+   "owner_question": "If the price drops within a few days after purchase, do you refund the difference (price-drop protection)?",
+   "customer_question": "The price dropped after I bought it, will you refund?",
+   "priority": "optional",
+   "answer_type": "text",
+   "city_only": true
+  },
+  {
+   "id": "mobile_shop_repair-071",
+   "category": "Prices & bills",
+   "owner_question": "Are your offers and prices the same in all your branches and on your website?",
+   "customer_question": "Is this offer at the other branch too?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "mobile_shop_repair-072",
+   "category": "Buying & checking",
+   "owner_question": "Do you open sealed-box phones in front of the customer and show the IMEI on the box, bill and phone match?",
+   "customer_question": "Is the box sealed? Does the IMEI match?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-073",
+   "category": "Buying & checking",
+   "owner_question": "Do you help register the brand warranty and set up the phone (Google account, apps, Telugu keyboard) when it's bought?",
+   "customer_question": "Can you set up my new phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-074",
+   "category": "Delivery & installation",
+   "owner_question": "Do you patiently show customers, including elderly people, how to use the product (in Telugu if needed)?",
+   "customer_question": "Can you teach my mother how to use it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-075",
+   "category": "Delivery & installation",
+   "owner_question": "Do you help set up smart devices on the customer's phone and connect them to Wi-Fi?",
+   "customer_question": "Can you connect it to my Wi-Fi?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-076",
+   "category": "Delivery & installation",
+   "owner_question": "Are user manuals available in Telugu, or only in English?",
+   "customer_question": "Is there a Telugu manual?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Telugu available",
+    "English only"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-077",
+   "category": "Returns & refunds",
+   "owner_question": "Do you have a 7-day return policy like online stores?",
+   "customer_question": "Is there a 7-day return?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Yes, 7 days",
+    "Yes, a few days",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-078",
+   "category": "Returns & refunds",
+   "owner_question": "If the product doesn't fit the space at home, can customers change it for another size? Within how many days?",
+   "customer_question": "The TV is too big for my wall, can I change it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-079",
+   "category": "Warranty & service",
+   "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
+   "customer_question": "Where is the Samsung service centre?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-080",
+   "category": "Warranty & service",
+   "owner_question": "Is your extended warranty from the brand itself, or from a third party (for example OneAssist, ResQ)?",
+   "customer_question": "Who gives the extended warranty?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "From the brand",
+    "Third party",
+    "Both available"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-081",
+   "category": "Warranty & service",
+   "owner_question": "Does the extended warranty cover both parts and labour?",
+   "customer_question": "Do I pay labour in extended warranty?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Parts and labour free",
+    "Only parts",
+    "Only labour"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-082",
+   "category": "Warranty & service",
+   "owner_question": "Which protection or insurance plans do you sell?",
+   "customer_question": "Does the insurance cover water damage?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Accidental damage",
+    "Liquid damage",
+    "Theft",
+    "Short circuit / power surge",
+    "None"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-083",
+   "category": "Warranty & service",
+   "owner_question": "Can customers buy a protection plan later (a week or a month after purchase)?",
+   "customer_question": "Can I take insurance next month?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-084",
+   "category": "Warranty & service",
+   "owner_question": "If a customer needs to claim insurance, do you help, or do they deal with the insurance company directly?",
+   "customer_question": "Will you help with my insurance claim?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "We handle the claim",
+    "We help with the papers",
+    "Customer contacts the insurer"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-085",
+   "category": "Warranty & service",
+   "owner_question": "How long does a common repair (screen, battery) usually take?",
+   "customer_question": "How long to change the screen?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-086",
+   "category": "Warranty & service",
+   "owner_question": "Do you pick up and drop devices for repair?",
+   "customer_question": "Can you collect my laptop for repair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-087",
+   "category": "Warranty & service",
+   "owner_question": "Do you give a spare phone to use while the customer's phone is being repaired?",
+   "customer_question": "Can I get a phone while mine is repaired?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-088",
+   "category": "Mobile repairs",
+   "owner_question": "Do you give back the old parts (old screen, battery) if the customer asks?",
+   "customer_question": "Can I take my old screen back?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-089",
+   "category": "Mobile repairs",
+   "owner_question": "Do you send a WhatsApp message when the repair is done?",
+   "customer_question": "Will you tell me when it's ready?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-090",
+   "category": "Mobile repairs",
+   "owner_question": "What do you tell customers to do right after their phone falls in water, and how soon should they bring it?",
+   "customer_question": "My phone fell in water, what do I do?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-091",
+   "category": "Mobile repairs",
+   "owner_question": "For iPhones, do you explain the 'unknown part' message after a screen or battery change, and do you keep True Tone / Face ID working?",
+   "customer_question": "Will Face ID work after screen change?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-092",
+   "category": "Mobile repairs",
+   "owner_question": "For locked phones (forgotten pattern or Google account), do you ask for the bill or ID proof before unlocking?",
+   "customer_question": "I forgot my pattern, can you open it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-093",
+   "category": "Mobile repairs",
+   "owner_question": "Do you tell customers when an outside repair may end the company warranty, and send in-warranty phones to the service centre instead?",
+   "customer_question": "My phone is in warranty, should I repair here?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-094",
+   "category": "Mobile repairs",
+   "owner_question": "If a customer doesn't collect a repaired phone, how long do you keep it?",
+   "customer_question": "Can I collect my phone next month?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-095",
+   "category": "Mobile repairs",
+   "owner_question": "Do you repair phones at the customer's home or office (doorstep repair)?",
+   "customer_question": "Can you come and fix it at my office?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "mobile_shop_repair-096",
+   "category": "Mobile repairs",
+   "owner_question": "Do you sell spare parts (displays, batteries) to other technicians at wholesale prices?",
+   "customer_question": "Do you sell displays wholesale?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-097",
+   "category": "Mobile repairs",
+   "owner_question": "Do you teach mobile repair courses?",
+   "customer_question": "Do you have a mobile repair course?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-098",
+   "category": "Shop & service",
+   "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
+   "customer_question": "Can I give my old phone for recycling?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-099",
+   "category": "Shop & service",
+   "owner_question": "Do you have an online store or a WhatsApp catalogue, and do you send price quotations on WhatsApp?",
+   "customer_question": "Can I see your products online?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-100",
+   "category": "Shop & service",
+   "owner_question": "Do you send a copy of the bill on WhatsApp?",
+   "customer_question": "Can you send the bill on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-101",
+   "category": "Shop & service",
+   "owner_question": "Is there a separate number for complaints (product problems or late delivery)?",
+   "customer_question": "Whom do I call to complain?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-102",
+   "category": "Shop & service",
+   "owner_question": "Do you have other branches in the city? Can warranty service be done at any branch?",
+   "customer_question": "Do you have a branch in Kukatpally?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-103",
+   "category": "Finance & loans",
+   "owner_question": "Can customers without a credit or debit card get an instant consumer loan with just Aadhaar?",
+   "customer_question": "I don't have a card, can I still get a loan?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-104",
+   "category": "Finance & loans",
+   "owner_question": "What minimum CIBIL score do finance companies usually need?",
+   "customer_question": "Will I get a loan with a low CIBIL score?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-105",
+   "category": "Finance & loans",
+   "owner_question": "What income proof do self-employed people or farmers need for a loan?",
+   "customer_question": "I'm a farmer, can I get a loan?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-106",
+   "category": "Finance & loans",
+   "owner_question": "How long does loan approval usually take in the shop?",
+   "customer_question": "How long will the loan approval take?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-107",
+   "category": "Finance & loans",
+   "owner_question": "Is there a penalty for paying off the loan early (foreclosure)?",
+   "customer_question": "Can I close the loan early?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_shop_repair-108",
+   "category": "Shop & service",
+   "owner_question": "Do you have a loyalty or points programme for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-109",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "mobile_shop_repair-110",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

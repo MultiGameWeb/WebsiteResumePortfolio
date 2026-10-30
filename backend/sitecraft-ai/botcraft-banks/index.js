@@ -17,7 +17,9 @@ import bank_imitation_jewellery from "./imitation_jewellery.json" with { type: "
 import bank_jewellery from "./jewellery.json" with { type: "json" };
 import bank_kids_wear from "./kids_wear.json" with { type: "json" };
 import bank_kirana from "./kirana.json" with { type: "json" };
+import bank_mobile_repair from "./mobile_repair.json" with { type: "json" };
 import bank_mobile_shop from "./mobile_shop.json" with { type: "json" };
+import bank_mobile_shop_repair from "./mobile_shop_repair.json" with { type: "json" };
 import bank_optical from "./optical.json" with { type: "json" };
 import bank_pharmacy from "./pharmacy.json" with { type: "json" };
 import bank_readymade_garments from "./readymade_garments.json" with { type: "json" };
@@ -48,7 +50,9 @@ export const QUESTION_BANKS = {
   "jewellery": bank_jewellery,
   "kids_wear": bank_kids_wear,
   "kirana": bank_kirana,
+  "mobile_repair": bank_mobile_repair,
   "mobile_shop": bank_mobile_shop,
+  "mobile_shop_repair": bank_mobile_shop_repair,
   "optical": bank_optical,
   "pharmacy": bank_pharmacy,
   "readymade_garments": bank_readymade_garments,

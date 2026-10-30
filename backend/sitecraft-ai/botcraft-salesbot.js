@@ -49,7 +49,7 @@ function safeLink(value) {
 
 // Business words dropped from the default bot name: "Sri Sai Garments" ->
 // "Sri Sai Assistant".
-const BUSINESS_WORDS = /\s+(garments?|textiles?|silks?|sarees?|jewell?ers?|jewell?ery|gold|diamonds?|electronics?|mobiles?|appliances?|computers?|restaurant|hotel|tiffins?|caterers?|catering|fast\s*food|function\s*hall|banquet\s*hall|convention(\s*hall)?|footwear|shoes?|furniture|bakery|sweets?|stores?|shop|mart|emporium|centre|center|traders?|enterprises?|collections?|boutique)$/i;
+const BUSINESS_WORDS = /\s+(garments?|textiles?|silks?|sarees?|jewell?ers?|jewell?ery|gold|diamonds?|electronics?|mobiles?|repairs?|appliances?|computers?|restaurant|hotel|tiffins?|caterers?|catering|fast\s*food|function\s*hall|banquet\s*hall|convention(\s*hall)?|footwear|shoes?|furniture|bakery|sweets?|stores?|shop|mart|emporium|centre|center|traders?|enterprises?|collections?|boutique)$/i;
 
 export function botName(facts) {
   const chosen = String(facts.bot_name || "").trim();
