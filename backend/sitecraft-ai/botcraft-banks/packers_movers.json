@@ -1,0 +1,212 @@
+{
+ "shop_type_key": "packers_movers",
+ "name": "Packers & movers",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 19,
+ "questions": [
+  {
+   "id": "packers_movers-001",
+   "category": "Services",
+   "owner_question": "Which shifting services do you offer?",
+   "customer_question": "Do you shift to other states?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Home shifting (same city)",
+    "Home shifting (other cities & states)",
+    "Office shifting",
+    "Car & bike transport",
+    "Packing only",
+    "Loading & unloading only",
+    "Storage / warehouse",
+    "Furniture dismantling & refitting",
+    "AC, TV & washing machine uninstall / install",
+    "Mini truck / tempo only",
+    "International relocation"
+   ]
+  },
+  {
+   "id": "packers_movers-002",
+   "category": "Services",
+   "owner_question": "Which vehicles do you use (closed container, Tata Ace, 14 / 17 / 20 ft trucks), and is it a full dedicated vehicle or shared (part load)?",
+   "customer_question": "Will my goods go in a separate truck?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-003",
+   "category": "Price & survey",
+   "owner_question": "How do you decide the price (house size, distance, floors, lift, packing), and what are typical ranges (for example 1BHK / 2BHK / 3BHK within the city and to Hyderabad / Bengaluru)?",
+   "customer_question": "How much to shift a 2BHK within the city?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-004",
+   "category": "Price & survey",
+   "owner_question": "Do you do a free survey (at home or on video call) and give a written quotation with every charge (GST, tolls, packing, floors, insurance)?",
+   "customer_question": "Can you come and see the house first?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "packers_movers-005",
+   "category": "Price & survey",
+   "owner_question": "How much advance do you take, and is the balance paid only after delivery and checking the goods?",
+   "customer_question": "How much advance?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-006",
+   "category": "Packing & handling",
+   "owner_question": "Which packing materials do you use (bubble wrap, corrugated sheets, cartons, wooden crates for glass and TVs), and do you unpack and arrange at the new house?",
+   "customer_question": "How will you pack the TV and glass items?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-007",
+   "category": "Packing & handling",
+   "owner_question": "Do you make an item list (inventory) signed by both sides at pickup and at delivery?",
+   "customer_question": "Will you give a list of all items?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "packers_movers-008",
+   "category": "Transit & insurance",
+   "owner_question": "How many days does an intercity shift usually take, and how do customers track the vehicle?",
+   "customer_question": "How many days to Bengaluru?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-009",
+   "category": "Transit & insurance",
+   "owner_question": "Do you offer transit insurance? What does it cost, what does it cover (not self-packed boxes?), and how do customers claim for damage or loss?",
+   "customer_question": "What if something breaks on the way?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-010",
+   "category": "Services",
+   "owner_question": "Do you use your own trucks and trained staff (not outsourced), and are you GST registered?",
+   "customer_question": "Are these your own trucks?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "packers_movers-011",
+   "category": "Price & survey",
+   "owner_question": "Which extra charges can come up (stairs without a lift, long carry, waiting time, Sundays, society entry, tolls), and are they written in the quote?",
+   "customer_question": "Will there be any extra charges later?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-012",
+   "category": "Price & survey",
+   "owner_question": "Do you give IBA-approved bills or receipts for company and government transfer claims?",
+   "customer_question": "Can I get an IBA-approved bill?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "packers_movers-013",
+   "category": "Price & survey",
+   "owner_question": "What is your policy for rescheduling or cancelling a booked shift?",
+   "customer_question": "Can I change the shifting date?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-014",
+   "category": "Packing & handling",
+   "owner_question": "Which items do you not carry?",
+   "customer_question": "Can you carry the gas cylinder?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Filled gas cylinders",
+    "Petrol, kerosene & inflammables",
+    "Cash, jewellery & important documents (customer should carry)",
+    "Perishable food",
+    "Plants",
+    "Pets",
+    "Anything illegal"
+   ]
+  },
+  {
+   "id": "packers_movers-015",
+   "category": "Packing & handling",
+   "owner_question": "Do you help get society permission, lift booking or entry passes at both apartments?",
+   "customer_question": "Will you talk to our society for the lift?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "packers_movers-016",
+   "category": "Vehicles & storage",
+   "owner_question": "For car and bike transport: which carrier (closed / open), which documents are needed (RC, insurance, ID), how much fuel should be left, and how many days?",
+   "customer_question": "How do you send my car to Chennai?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-017",
+   "category": "Vehicles & storage",
+   "owner_question": "For storage: monthly charges, is the warehouse safe from rain, termites and theft, and can customers take items out in parts?",
+   "customer_question": "Can I keep my furniture with you for 3 months?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "packers_movers-018",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "packers_movers-019",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
