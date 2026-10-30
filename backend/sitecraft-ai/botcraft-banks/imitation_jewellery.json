@@ -3,7 +3,7 @@
  "name": "One-gram gold & imitation jewellery shop",
  "version": 2,
  "model": "curated",
- "generated_at": "2026-10-28",
+ "generated_at": "2026-10-30",
  "question_count": 27,
  "questions": [
   {
@@ -19,6 +19,7 @@
     "Oxidised",
     "Kundan / polki (imitation)",
     "American diamond (AD / CZ)",
+    "Panchaloha / impon",
     "Beads & pearls",
     "Bangles",
     "Bridal sets"
@@ -237,14 +238,10 @@
   {
    "id": "imitation_jewellery-021",
    "category": "Buying & payment",
-   "owner_question": "Do you rent jewellery for weddings and functions?",
-   "customer_question": "Can I rent a bridal set?",
+   "owner_question": "Do you rent bridal jewellery sets for weddings and functions? Rent per day and security deposit?",
+   "customer_question": "Can I rent a bridal set? How much?",
    "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "answer_type": "text"
   },
   {
    "id": "imitation_jewellery-022",

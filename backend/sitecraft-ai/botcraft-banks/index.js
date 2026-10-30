@@ -8,6 +8,7 @@ import bank_bakery_sweets from "./bakery_sweets.json" with { type: "json" };
 import bank_beauty_parlour from "./beauty_parlour.json" with { type: "json" };
 import bank_bike_service from "./bike_service.json" with { type: "json" };
 import bank_boutique from "./boutique.json" with { type: "json" };
+import bank_building_materials from "./building_materials.json" with { type: "json" };
 import bank_car_bike_service from "./car_bike_service.json" with { type: "json" };
 import bank_car_service from "./car_service.json" with { type: "json" };
 import bank_car_wash_detailing from "./car_wash_detailing.json" with { type: "json" };
@@ -79,6 +80,7 @@ export const QUESTION_BANKS = {
   "beauty_parlour": bank_beauty_parlour,
   "bike_service": bank_bike_service,
   "boutique": bank_boutique,
+  "building_materials": bank_building_materials,
   "car_bike_service": bank_car_bike_service,
   "car_service": bank_car_service,
   "car_wash_detailing": bank_car_wash_detailing,

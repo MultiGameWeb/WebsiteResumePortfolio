@@ -1,0 +1,152 @@
+{
+ "shop_type_key": "building_materials",
+ "name": "Cement, steel & tiles shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 13,
+ "questions": [
+  {
+   "id": "building_materials-001",
+   "category": "Building materials",
+   "owner_question": "Which building materials do you sell?",
+   "customer_question": "Do you have cement?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Cement",
+    "TMT steel bars",
+    "Bricks & blocks (red, fly-ash, AAC)",
+    "Sand & aggregates (river sand, M-sand, jelly)",
+    "Floor tiles (vitrified, ceramic)",
+    "Wall & bathroom tiles (anti-skid)",
+    "Parking & outdoor tiles",
+    "Granite & marble",
+    "Tile adhesive & epoxy grout",
+    "Waterproofing chemicals",
+    "Binding wire & nails",
+    "Roofing sheets"
+   ]
+  },
+  {
+   "id": "building_materials-002",
+   "category": "Building materials",
+   "owner_question": "Which cement brands do you sell (for example UltraTech, Maha, Ramco, Nagarjuna), and how should customers get today's bag rate?",
+   "customer_question": "What is the cement bag rate today?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "building_materials-003",
+   "category": "Building materials",
+   "owner_question": "Which TMT steel brands and sizes do you sell (for example Vizag Steel, Tata Tiscon, Kamdhenu; 8–16 mm), and how is the rate given (per ton or per kg)?",
+   "customer_question": "What is the 12 mm steel rate per ton?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "building_materials-004",
+   "category": "Building materials",
+   "owner_question": "For bulk orders (for example 50 bags or more), are transport and loading / unloading (hamali) free or charged?",
+   "customer_question": "Is transport free for 50 bags?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "building_materials-005",
+   "category": "Tiles & granite",
+   "owner_question": "Which tile brands do you sell (for example Kajaria, Somany, Johnson, Nitco), and what is the price range per sq ft (floor, wall, bathroom, parking)?",
+   "customer_question": "How much are 2x2 vitrified tiles per sq ft?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "building_materials-006",
+   "category": "Building materials",
+   "owner_question": "Is your cement fresh stock (recent manufacturing date, no lumps)?",
+   "customer_question": "Is the cement fresh?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "building_materials-007",
+   "category": "Tiles & granite",
+   "owner_question": "Do you work out how many tile boxes are needed (with wastage) from the room size?",
+   "customer_question": "How many boxes for a 12x12 room?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "building_materials-008",
+   "category": "Tiles & granite",
+   "owner_question": "Do you give all boxes of one design from the same batch (same shade)?",
+   "customer_question": "Will all boxes be the same shade?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "building_materials-009",
+   "category": "Tiles & granite",
+   "owner_question": "If customers need a few more boxes later, can you get the same design and batch?",
+   "customer_question": "Can I get 2 more boxes later?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "building_materials-010",
+   "category": "Tiles & granite",
+   "owner_question": "If tiles arrive broken, do you replace them? How soon must customers tell you?",
+   "customer_question": "Some tiles came broken, will you replace them?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "building_materials-011",
+   "category": "Tiles & granite",
+   "owner_question": "Do you take back unused full boxes or bags? Any deduction?",
+   "customer_question": "Can I return 3 extra boxes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "building_materials-012",
+   "category": "Prices & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "building_materials-013",
+   "category": "Prices & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 16,
+ "question_count": 22,
  "questions": [
   {
    "id": "hardware_store-001",
@@ -56,6 +56,26 @@
   },
   {
    "id": "hardware_store-004",
+   "category": "Paints",
+   "owner_question": "Which paint and putty brands do you sell (for example Asian Paints, Berger, Nerolac, Birla Opus, JK or Birla putty)?",
+   "customer_question": "Do you have Asian Paints?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hardware_store-005",
+   "category": "Paints",
+   "owner_question": "Do you have a computer colour-mixing (tinting) machine to make any shade from the shade card?",
+   "customer_question": "Can you make this colour from the shade card?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-006",
    "category": "Prices & service",
    "owner_question": "For a full house-wiring or plumbing list, what discount do you give on the company price list? Do customers who come without an electrician get the electrician's commission as a discount?",
    "customer_question": "What discount on the full list?",
@@ -63,7 +83,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hardware_store-005",
+   "id": "hardware_store-007",
    "category": "Prices & service",
    "owner_question": "If customers send their electrician's or plumber's list on WhatsApp, do you send a price estimate?",
    "customer_question": "Can you send a quotation for this list?",
@@ -75,7 +95,7 @@
    ]
   },
   {
-   "id": "hardware_store-006",
+   "id": "hardware_store-008",
    "category": "Prices & service",
    "owner_question": "Do you deliver heavy items (pipes, tanks, wire bundles) to the site by auto?",
    "customer_question": "Can you send the tank to my site?",
@@ -87,7 +107,7 @@
    ]
   },
   {
-   "id": "hardware_store-007",
+   "id": "hardware_store-009",
    "category": "Hardware & plumbing items",
    "owner_question": "What is the starting price for a bathroom set (wall mixer, overhead shower, health faucet)?",
    "customer_question": "How much for a bathroom set?",
@@ -95,7 +115,15 @@
    "answer_type": "text"
   },
   {
-   "id": "hardware_store-008",
+   "id": "hardware_store-010",
+   "category": "Hardware & plumbing items",
+   "owner_question": "What warranty do taps and sanitaryware carry, and which taps do you suggest for hard (salty) bore water?",
+   "customer_question": "Will this tap rust with bore water?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hardware_store-011",
    "category": "Hardware & plumbing items",
    "owner_question": "Do you sell tap spares separately (washers, spindles, cartridges)?",
    "customer_question": "My tap is dripping, do you have the spindle?",
@@ -107,7 +135,7 @@
    ]
   },
   {
-   "id": "hardware_store-009",
+   "id": "hardware_store-012",
    "category": "Hardware & plumbing items",
    "owner_question": "Do you have washing machine taps and long inlet / outlet pipes?",
    "customer_question": "Do you have a washing machine tap?",
@@ -119,7 +147,7 @@
    ]
   },
   {
-   "id": "hardware_store-010",
+   "id": "hardware_store-013",
    "category": "Hardware & plumbing items",
    "owner_question": "Do you cut curtain rods to size?",
    "customer_question": "Can you cut the rod to 5 feet?",
@@ -131,7 +159,7 @@
    ]
   },
   {
-   "id": "hardware_store-011",
+   "id": "hardware_store-014",
    "category": "Hardware & plumbing items",
    "owner_question": "Do you fit ceiling cloth-dryer hangers at home?",
    "customer_question": "Can you fit the dryer hanger?",
@@ -143,7 +171,39 @@
    ]
   },
   {
-   "id": "hardware_store-012",
+   "id": "hardware_store-015",
+   "category": "Paints",
+   "owner_question": "Do you help work out how much putty, primer and paint a house needs (for example a 2BHK, two coats)?",
+   "customer_question": "How many buckets for a 2BHK?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-016",
+   "category": "Paints",
+   "owner_question": "Do you take back unopened paint buckets? What about tinted (colour-mixed) paint?",
+   "customer_question": "Can I return 2 unopened buckets?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hardware_store-017",
+   "category": "Paints",
+   "owner_question": "Can you suggest trusted painters?",
+   "customer_question": "Do you know a good painter?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-018",
    "category": "Buying advice",
    "owner_question": "How do you advise water motors (0.5 vs 1 HP, monoblock vs submersible) and tanks (3- or 4-layer)?",
    "customer_question": "Which motor for my sump?",
@@ -151,7 +211,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hardware_store-013",
+   "id": "hardware_store-019",
    "category": "Prices & service",
    "owner_question": "Do you take back unused leftover material (wire, switches, fittings) with the bill and refund?",
    "customer_question": "Can I return the extra wire?",
@@ -159,7 +219,7 @@
    "answer_type": "text"
   },
   {
-   "id": "hardware_store-014",
+   "id": "hardware_store-020",
    "category": "Prices & service",
    "owner_question": "Can you send a trusted electrician or plumber for repairs and fitting?",
    "customer_question": "Do you know a good electrician?",
@@ -171,7 +231,7 @@
    ]
   },
   {
-   "id": "hardware_store-015",
+   "id": "hardware_store-021",
    "category": "Prices & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -187,7 +247,7 @@
    ]
   },
   {
-   "id": "hardware_store-016",
+   "id": "hardware_store-022",
    "category": "Prices & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

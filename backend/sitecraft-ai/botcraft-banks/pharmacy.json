@@ -3,8 +3,8 @@
  "name": "Pharmacy / medical store",
  "version": 2,
  "model": "curated",
- "generated_at": "2026-10-29",
- "question_count": 47,
+ "generated_at": "2026-10-30",
+ "question_count": 48,
  "questions": [
   {
    "id": "pharmacy-001",
@@ -30,8 +30,8 @@
   {
    "id": "pharmacy-002",
    "category": "Prescriptions & medicines",
-   "owner_question": "If a customer sends a doctor's prescription photo on WhatsApp, do you check which medicines are available?",
-   "customer_question": "Can I send my prescription on WhatsApp?",
+   "owner_question": "If a customer sends a doctor's prescription photo (on WhatsApp or from the bot), do you check which medicines are available and tell the total bill?",
+   "customer_question": "Can I send my prescription photo?",
    "priority": "important",
    "answer_type": "yes_no",
    "options": [
@@ -135,7 +135,7 @@
   {
    "id": "pharmacy-011",
    "category": "Prices & bills",
-   "owner_question": "What discount do you give on MRP (for example 10–20%)?",
+   "owner_question": "What discount do you give on MRP — on medicines (for example 10–20%), and on other items (ayurvedic, protein powders, baby food, soaps)?",
    "customer_question": "How much discount do you give?",
    "priority": "important",
    "answer_type": "text"
@@ -183,7 +183,7 @@
    "answer_type": "list",
    "options": [
     "Baby milk powders (all stages)",
-    "Diapers, wipes & baby care",
+    "Diapers, wipes, feeding bottles, breast pumps & baby care",
     "Protein & nutrition (Ensure, Protinex)",
     "Women's care (pregnancy kits, pads, supplements)",
     "Skin care (medicated sunscreen, acne creams)",
@@ -292,13 +292,21 @@
   {
    "id": "pharmacy-024",
    "category": "Prices & bills",
+   "owner_question": "Online pharmacies sometimes give bigger discounts. Do you match them for regular monthly customers?",
+   "customer_question": "1mg gives 25% off, can you match it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "pharmacy-025",
+   "category": "Prices & bills",
    "owner_question": "Do you take back unopened full strips with the bill if the doctor changes the medicine? Within how many days?",
    "customer_question": "Doctor changed my tablet, can I return this?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "pharmacy-025",
+   "id": "pharmacy-026",
    "category": "Prices & bills",
    "owner_question": "Which medicines can't be returned (for example fridge items, syrups, cut strips)?",
    "customer_question": "Can I return this syrup?",
@@ -306,7 +314,7 @@
    "answer_type": "text"
   },
   {
-   "id": "pharmacy-026",
+   "id": "pharmacy-027",
    "category": "Prices & bills",
    "owner_question": "If a customer loses a bill, can you print a duplicate using their phone number?",
    "customer_question": "I lost my bill, can you print it again?",
@@ -318,7 +326,7 @@
    ]
   },
   {
-   "id": "pharmacy-027",
+   "id": "pharmacy-028",
    "category": "Prices & bills",
    "owner_question": "Do you remind regular customers before their monthly medicines run out and keep them packed?",
    "customer_question": "Can you remind me every month?",
@@ -330,7 +338,7 @@
    ]
   },
   {
-   "id": "pharmacy-028",
+   "id": "pharmacy-029",
    "category": "Prices & bills",
    "owner_question": "If you have no change, what do you do?",
    "customer_question": "Will you give Vicks instead of change?",
@@ -343,7 +351,7 @@
    ]
   },
   {
-   "id": "pharmacy-029",
+   "id": "pharmacy-030",
    "category": "Prices & bills",
    "owner_question": "Do you have membership points or cashback for regular customers?",
    "customer_question": "Do I get points?",
@@ -351,7 +359,7 @@
    "answer_type": "text"
   },
   {
-   "id": "pharmacy-030",
+   "id": "pharmacy-031",
    "category": "Delivery & timings",
    "owner_question": "Can elders pay on delivery (cash or UPI QR)?",
    "customer_question": "Can my father pay when it comes?",
@@ -363,7 +371,7 @@
    ]
   },
   {
-   "id": "pharmacy-031",
+   "id": "pharmacy-032",
    "category": "Delivery & timings",
    "owner_question": "If a wrong or damaged medicine is delivered, how quickly do you replace it?",
    "customer_question": "You sent the wrong tablet, what now?",
@@ -371,7 +379,7 @@
    "answer_type": "text"
   },
   {
-   "id": "pharmacy-032",
+   "id": "pharmacy-033",
    "category": "Delivery & timings",
    "owner_question": "Can customers pay online and get medicines delivered to their parents in another town?",
    "customer_question": "Can you deliver to my parents in Guntur?",
@@ -383,7 +391,7 @@
    ]
   },
   {
-   "id": "pharmacy-033",
+   "id": "pharmacy-034",
    "category": "Devices & surgical",
    "owner_question": "Which checks can customers get at your shop?",
    "customer_question": "Can I check my BP here?",
@@ -397,7 +405,7 @@
    ]
   },
   {
-   "id": "pharmacy-034",
+   "id": "pharmacy-035",
    "category": "Devices & surgical",
    "owner_question": "Which brands of BP machines and glucometers do you sell (for example Omron, Accu-Chek, OneTouch), and with what warranty?",
    "customer_question": "Is there a warranty on the BP machine?",
@@ -405,7 +413,7 @@
    "answer_type": "text"
   },
   {
-   "id": "pharmacy-035",
+   "id": "pharmacy-036",
    "category": "Devices & surgical",
    "owner_question": "Do you keep glucometer strips, lancets and insulin pen needles (4 / 6 mm) for all common brands?",
    "customer_question": "Do you have insulin pen needles?",
@@ -417,7 +425,7 @@
    ]
   },
   {
-   "id": "pharmacy-036",
+   "id": "pharmacy-037",
    "category": "Devices & surgical",
    "owner_question": "Do you show customers how to use a BP machine or nebulizer at the shop?",
    "customer_question": "Can you show me how to use it?",
@@ -429,7 +437,7 @@
    ]
   },
   {
-   "id": "pharmacy-037",
+   "id": "pharmacy-038",
    "category": "Devices & surgical",
    "owner_question": "Do you give bulk rates on adult diapers and underpads?",
    "customer_question": "Any rate for a full pack of adult diapers?",
@@ -441,7 +449,7 @@
    ]
   },
   {
-   "id": "pharmacy-038",
+   "id": "pharmacy-039",
    "category": "Devices & surgical",
    "owner_question": "Do you keep supports and stockings in all sizes?",
    "customer_question": "Do you have an XL knee cap?",
@@ -453,7 +461,7 @@
    ]
   },
   {
-   "id": "pharmacy-039",
+   "id": "pharmacy-040",
    "category": "Baby, nutrition & care",
    "owner_question": "Do you keep fresh stock of baby milk powders in all stages?",
    "customer_question": "Do you have Lactogen stage 2?",
@@ -465,7 +473,7 @@
    ]
   },
   {
-   "id": "pharmacy-040",
+   "id": "pharmacy-041",
    "category": "Baby, nutrition & care",
    "owner_question": "Do you give discounts on diapers, wipes and baby care items?",
    "customer_question": "Any discount on diapers?",
@@ -473,7 +481,7 @@
    "answer_type": "text"
   },
   {
-   "id": "pharmacy-041",
+   "id": "pharmacy-042",
    "category": "Shop & service",
    "owner_question": "Is there a clinic, nurse, doctor or blood-test collection centre at or near your shop (for injections, drips or tests prescribed by a doctor)?",
    "customer_question": "Can I get a blood test here?",
@@ -485,9 +493,9 @@
    ]
   },
   {
-   "id": "pharmacy-042",
+   "id": "pharmacy-043",
    "category": "Shop & service",
-   "owner_question": "Do you pack sanitary pads and personal items discreetly (paper or dark cover)?",
+   "owner_question": "Do you pack sanitary pads, condoms, pregnancy kits and other personal items discreetly (paper or dark cover)?",
    "customer_question": "Can you pack this in a paper cover?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -497,9 +505,9 @@
    ]
   },
   {
-   "id": "pharmacy-043",
+   "id": "pharmacy-044",
    "category": "Shop & service",
-   "owner_question": "Can you arrange medical equipment on rent (oxygen cylinder or concentrator, hospital bed)?",
+   "owner_question": "Can you arrange medical equipment on rent (oxygen cylinder or concentrator, hospital bed, wheelchair, walker, commode chair, air bed)?",
    "customer_question": "Can I rent an oxygen concentrator?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -509,7 +517,7 @@
    ]
   },
   {
-   "id": "pharmacy-044",
+   "id": "pharmacy-045",
    "category": "Shop & service",
    "owner_question": "Do you do gun-shot ear piercing?",
    "customer_question": "Do you pierce ears?",
@@ -521,7 +529,7 @@
    ]
   },
   {
-   "id": "pharmacy-045",
+   "id": "pharmacy-046",
    "category": "Shop & service",
    "owner_question": "Do you help customers dispose of expired medicines safely (advice or a drop box)?",
    "customer_question": "Where do I throw old medicines?",
@@ -533,7 +541,7 @@
    ]
   },
   {
-   "id": "pharmacy-046",
+   "id": "pharmacy-047",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -549,7 +557,7 @@
    ]
   },
   {
-   "id": "pharmacy-047",
+   "id": "pharmacy-048",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
