@@ -119,11 +119,11 @@ async function getStorageAsset(env, siteId, assetId) {
 export { GeminiUsProxy } from "./gemini-proxy.js";
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     // BotCraft checks the origin itself, including on preflight.
-    const botcraftResponse = await handleBotcraftRoute(request, env, url);
+    const botcraftResponse = await handleBotcraftRoute(request, env, url, ctx);
     if (botcraftResponse) return botcraftResponse;
 
     if (request.method === "OPTIONS") {

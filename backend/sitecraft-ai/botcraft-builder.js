@@ -5,8 +5,9 @@ import {
   GALLERY_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
-  saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
+  deletePushSubscription, savePushSubscription, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
+import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
 import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
 
 // POST /api/botcraft/chat — BotCraft's conversation with a shop owner.
@@ -18,6 +19,8 @@ import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, public
 // POST /api/botcraft/request — a customer's photo question or pre-order;
 // POST /api/botcraft/requests — the status of the customer's own requests;
 // GET /api/botcraft/order?s=&code= — an order's status by its bill number.
+// GET /api/botcraft/push — the Web Push public key; POST — subscribe or
+// unsubscribe the owner's device, or a customer's device for their requests.
 // POST /api/botcraft/owner — the owner page: products, photos and bot name.
 // POST /api/botcraft/bank — prepares the question bank for a shop type that has
 // no ready-made file (takes 1-2 minutes) and stores it in D1 for every later
@@ -459,10 +462,17 @@ function base64Size(data) {
   return Math.floor((String(data).length * 3) / 4);
 }
 
-export async function handleBotcraftRoute(request, env, url) {
+// Work that may finish after the response (sending notifications).
+function later(ctx, task) {
+  const safe = task.catch(error => console.error("BotCraft background task failed", error));
+  if (ctx?.waitUntil) ctx.waitUntil(safe);
+  else return safe;
+}
+
+export async function handleBotcraftRoute(request, env, url, ctx) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
   if (!["/api/botcraft/chat", "/api/botcraft/shop", "/api/botcraft/bank", "/api/botcraft/public", "/api/botcraft/ask", "/api/botcraft/photo", "/api/botcraft/owner",
-    "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order"].includes(path)) return null;
+    "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order", "/api/botcraft/push"].includes(path)) return null;
 
   // Photos are loaded by <img> tags, which send no Origin header.
   if (path === "/api/botcraft/photo") return servePhoto(env, url);
@@ -489,9 +499,10 @@ export async function handleBotcraftRoute(request, env, url) {
     return reply({ ok: true, messages: saved.messages, progress: progress(savedFacts, answers, bank), bot }, 200, origin);
   }
 
-  if (path === "/api/botcraft/public" || path === "/api/botcraft/ask") return handleSalesbot(request, env, url, path, origin);
-  if (path === "/api/botcraft/request" || path === "/api/botcraft/requests" || path === "/api/botcraft/order") return handleCustomerRequests(request, env, url, path, origin);
-  if (path === "/api/botcraft/owner") return handleOwner(request, env, origin);
+  if (path === "/api/botcraft/public" || path === "/api/botcraft/ask") return handleSalesbot(request, env, url, path, origin, ctx);
+  if (path === "/api/botcraft/request" || path === "/api/botcraft/requests" || path === "/api/botcraft/order") return handleCustomerRequests(request, env, url, path, origin, ctx);
+  if (path === "/api/botcraft/owner") return handleOwner(request, env, origin, ctx);
+  if (path === "/api/botcraft/push") return handlePush(request, env, origin);
 
   if (path === "/api/botcraft/bank") {
     if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
@@ -750,7 +761,7 @@ export async function handleBotcraftRoute(request, env, url) {
 const PUBLIC_ID_PATTERN = /^[a-f0-9]{16}$/;
 const MAX_CUSTOMER_HISTORY = 12;
 
-async function handleSalesbot(request, env, url, path, origin) {
+async function handleSalesbot(request, env, url, path, origin, ctx) {
   if (!storeAvailable(env)) return reply({ ok: false, error: "This bot is not available right now." }, 503, origin);
   let body = {};
   if (path === "/api/botcraft/ask") {
@@ -804,7 +815,8 @@ async function handleSalesbot(request, env, url, path, origin) {
     });
     // Questions the bot could not answer go to the owner page.
     if (result?.answered === false) {
-      await logUnanswered(env, shop.shopId, text, product?.name || "").catch(error => console.error("BotCraft question log failed", error));
+      const isNew = await logUnanswered(env, shop.shopId, text, product?.name || "").catch(error => console.error("BotCraft question log failed", error));
+      if (isNew) await later(ctx, notifyOwner(env, shop.shopId, { title: "New customer question", body: clip(text, 140), url: "owner.html#questions", tag: "botcraft-questions" }));
     }
     return reply({
       ok: true,
@@ -840,7 +852,7 @@ const ORDER_STATUSES = new Set(["received", "in_progress", "ready", "delivered"]
 // What a customer may see of their own request.
 const customerRequest = r => ({ id: r.request_id, kind: r.kind, code: r.code, message: r.message, pickup: r.pickup, status: r.status, reply: r.reply, updatedAt: r.updated_at });
 
-async function handleCustomerRequests(request, env, url, path, origin) {
+async function handleCustomerRequests(request, env, url, path, origin, ctx) {
   if (!storeAvailable(env)) return reply({ ok: false, error: "This bot is not available right now." }, 503, origin);
   let body = {};
   if (path === "/api/botcraft/order") {
@@ -886,6 +898,12 @@ async function handleCustomerRequests(request, env, url, path, origin) {
   }
   const result = await createRequest(env, shop.shopId, { kind, message, pickup: clip(body?.pickup, 80), name: clip(body?.name, 60), image });
   if (result.error) return reply({ ok: false, error: result.error }, 400, origin);
+  await later(ctx, notifyOwner(env, shop.shopId, {
+    title: kind === "photo" ? `New photo question #${result.request.code}` : `New pre-order #${result.request.code}`,
+    body: clip(message || "A customer sent a photo.", 140),
+    url: "owner.html#requests",
+    tag: `botcraft-request-${result.request.code}`
+  }));
   return reply({ ok: true, request: customerRequest(result.request) }, 200, origin);
 }
 
@@ -942,7 +960,73 @@ async function ownerView(env, shopId) {
 
 // The owner page. The private shop id (kept in the owner's browser) is the
 // owner's key until sign-in exists.
-async function handleOwner(request, env, origin) {
+const STATUS_MESSAGES = {
+  accepted: "Your request was accepted.",
+  ready: "Your order is ready ✅",
+  done: "Your request is completed.",
+  rejected: "Sorry, the shop cannot do this request."
+};
+
+// Tells the customer about the shop's reply or a new status.
+async function notifyRequestUpdate(env, shopId, requestId, status, replyText) {
+  const saved = await loadShop(env, shopId, 0);
+  const facts = cleanFacts(saved?.facts);
+  const publicId = await ensurePublicId(env, shopId);
+  const body = replyText ? `Reply: ${replyText}` : STATUS_MESSAGES[status];
+  if (!body) return;
+  await notifyCustomer(env, shopId, requestId, {
+    title: facts.shop_name || "Shop update",
+    body: clip(body, 160),
+    url: `./?s=${publicId}#requests`,
+    tag: `botcraft-request-${requestId}`
+  });
+}
+
+const PUSH_KEY_PATTERN = /^[A-Za-z0-9_-]{16,200}$/;
+
+function cleanSubscription(value) {
+  const endpoint = String(value?.endpoint || "");
+  const p256dh = String(value?.keys?.p256dh || "");
+  const auth = String(value?.keys?.auth || "");
+  let url = null;
+  try { url = new URL(endpoint); } catch {}
+  if (!url || url.protocol !== "https:" || endpoint.length > 1000 || !PUSH_KEY_PATTERN.test(p256dh) || !PUSH_KEY_PATTERN.test(auth)) return null;
+  return { endpoint, p256dh, auth };
+}
+
+async function handlePush(request, env, origin) {
+  if (!storeAvailable(env)) return reply({ ok: false, error: "Notifications are not available right now." }, 503, origin);
+  if (request.method === "GET") return reply({ ok: true, publicKey: await vapidPublicKey(env) }, 200, origin);
+  if (request.method !== "POST") return reply({ ok: false, error: "Use GET or POST." }, 405, origin);
+  if (throttled(request.headers.get("CF-Connecting-IP") || "unknown", Date.now())) {
+    return reply({ ok: false, error: "Too many requests. Please wait a minute." }, 429, origin);
+  }
+  let body;
+  try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
+  const subscription = cleanSubscription(body?.subscription);
+  if (!subscription) return reply({ ok: false, error: "This browser's notification details were not accepted." }, 400, origin);
+  const role = body?.role === "owner" ? "owner" : "customer";
+  let shopId = "";
+  let requestIds = [];
+  if (role === "owner") {
+    shopId = String(body?.shopId || "");
+    if (!SHOP_ID_PATTERN.test(shopId) || !(await shopExists(env, shopId))) return reply({ ok: false, error: "Your bot was not found in this browser." }, 404, origin);
+  } else {
+    const publicId = String(body?.s || "");
+    const shop = PUBLIC_ID_PATTERN.test(publicId) ? await loadPublicShop(env, publicId) : null;
+    if (!shop) return reply({ ok: false, error: "This shop's bot was not found." }, 404, origin);
+    shopId = shop.shopId;
+    const ids = (Array.isArray(body?.ids) ? body.ids : []).map(String).filter(id => REQUEST_ID_PATTERN.test(id)).slice(0, 20);
+    // Only the customer's own requests, which their private ids prove.
+    requestIds = (await getRequests(env, shopId, ids)).map(r => r.request_id);
+    if (!requestIds.length && body?.action !== "unsubscribe") return reply({ ok: false, error: "No requests to follow." }, 400, origin);
+  }
+  if (body?.action === "unsubscribe") await deletePushSubscription(env, subscription.endpoint, shopId, role);
+  else await savePushSubscription(env, shopId, role, subscription, requestIds);
+  return reply({ ok: true }, 200, origin);
+}
+
+async function handleOwner(request, env, origin, ctx) {
   if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
   if (!storeAvailable(env)) return reply({ ok: false, error: "BotCraft storage is not configured yet." }, 503, origin);
   if (throttled(request.headers.get("CF-Connecting-IP") || "unknown", Date.now())) {
@@ -992,7 +1076,9 @@ async function handleOwner(request, env, origin) {
     const requestId = String(body?.requestId || "");
     const status = body?.status === undefined ? undefined : String(body.status);
     if (!REQUEST_ID_PATTERN.test(requestId) || (status !== undefined && !REQUEST_STATUSES.has(status))) return reply({ ok: false, error: "Unknown request." }, 400, origin);
-    await updateRequest(env, shopId, requestId, { status, reply: body?.reply === undefined ? undefined : clip(body.reply, 600) });
+    const replyText = body?.reply === undefined ? undefined : clip(body.reply, 600);
+    await updateRequest(env, shopId, requestId, { status, reply: replyText });
+    await later(ctx, notifyRequestUpdate(env, shopId, requestId, status, replyText));
   } else if (action === "delete_request" || action === "delete_order") {
     const requestId = String(body?.requestId || "");
     if (REQUEST_ID_PATTERN.test(requestId)) await deleteRequest(env, shopId, requestId);

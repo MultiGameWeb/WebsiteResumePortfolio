@@ -144,6 +144,9 @@ async function loadShop() {
   setupTabs();
   addMessage('bot', `Hi! I'm ${saved.shop.botName || `the assistant of ${saved.shop.name}`}. Ask me about items, prices, offers or timings — in any language.`,
     navigator.onLine ? ['What do you sell?', 'Any offers today?', 'What are your timings?'] : OFFLINE_CHIPS);
+  // Opened from a notification about a request.
+  if (window.location.hash === '#requests' && !tabs.querySelector('[data-tab="requests"]').hidden) selectTab('requests');
+  renderNotify();
 }
 
 // ---- Products and photos tabs ----
@@ -335,12 +338,66 @@ async function sendRequest(formNode) {
     formNode.hidden = true;
     requestNote.textContent = `Sent ✓ Your number is #${data.request.code}. The shop's reply will show below${kind === 'preorder' ? ' — show this number at the counter' : ''}.`;
     refreshMyRequests();
+    // Already following replies: follow this request too.
+    if (notifyOn()) followRequests(false).catch(() => {});
+    renderNotify();
   } catch (error) {
     requestNote.textContent = error.message || 'Could not send. Please try again.';
   } finally {
     submit.disabled = false;
   }
 }
+
+// ---- Notifications for the shop's replies (Web Push). ----
+
+const NOTIFY_KEY = `salesbot:notify:${shopId}`;
+const pushSupported = 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+const notifyButton = document.querySelector('#notifyMe');
+
+function keyBytes(text) {
+  const plain = text.replace(/-/g, '+').replace(/_/g, '/');
+  return Uint8Array.from(atob(plain + '='.repeat((4 - (plain.length % 4)) % 4)), (c) => c.charCodeAt(0));
+}
+
+const notifyOn = () => pushSupported && readStore(NOTIFY_KEY) === '1' && Notification.permission === 'granted';
+
+function renderNotify() {
+  notifyButton.hidden = !pushSupported || !myRequestIds().length || notifyOn() || Notification.permission === 'denied';
+}
+
+// Saves this phone's subscription for all of its requests to this shop.
+async function followRequests(create) {
+  const registration = await navigator.serviceWorker.ready;
+  let subscription = await registration.pushManager.getSubscription();
+  if (!subscription) {
+    if (!create) return;
+    const keyResponse = await fetch(`${API_BASE}/api/botcraft/push`);
+    const keyData = await keyResponse.json();
+    if (!keyResponse.ok || !keyData.ok) throw new Error(keyData.error || 'Notifications are not available right now.');
+    subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes(keyData.publicKey) });
+  }
+  const response = await fetch(`${API_BASE}/api/botcraft/push`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ role: 'customer', s: shopId, ids: myRequestIds(), subscription: subscription.toJSON() }),
+  });
+  const data = await response.json();
+  if (!response.ok || !data.ok) throw new Error(data.error || 'Could not turn on notifications.');
+  writeStore(NOTIFY_KEY, '1');
+}
+
+notifyButton.addEventListener('click', async () => {
+  notifyButton.disabled = true;
+  try {
+    if (await Notification.requestPermission() !== 'granted') throw new Error('Notifications were not allowed. The reply will still show here.');
+    await followRequests(true);
+    requestNote.textContent = '🔔 You will get a notification when the shop replies.';
+  } catch (error) {
+    requestNote.textContent = error.message || 'Could not turn on notifications.';
+  } finally {
+    notifyButton.disabled = false;
+    renderNotify();
+  }
+});
 
 async function checkOrder(formNode) {
   const result = document.querySelector('#orderResult');

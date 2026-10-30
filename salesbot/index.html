@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=5">
+  <link rel="stylesheet" href="./styles.css?v=6">
 </head>
 <body>
   <div class="app">
@@ -64,6 +64,7 @@
         <p class="order-result" id="orderResult" role="status"></p>
       </form>
       <p class="request-note" id="requestNote" role="status"></p>
+      <button type="button" class="notify-button" id="notifyMe" hidden>🔔 Notify me when the shop replies</button>
       <p class="request-privacy">The shop sees what you send here. Never share passwords, OTPs or bank details.</p>
       <h2 class="my-title" id="myTitle" hidden>My requests</h2>
       <div class="my-requests" id="myRequests"></div>
@@ -84,6 +85,6 @@
       <button id="send" type="submit" aria-label="Send">➤</button>
     </form>
   </div>
-  <script type="module" src="./app.js?v=5"></script>
+  <script type="module" src="./app.js?v=6"></script>
 </body>
 </html>
