@@ -7,10 +7,12 @@ import bank_boutique from "./boutique.json" with { type: "json" };
 import bank_catering from "./catering.json" with { type: "json" };
 import bank_computer_shop from "./computer_shop.json" with { type: "json" };
 import bank_electrical_hardware from "./electrical_hardware.json" with { type: "json" };
+import bank_electrical_shop from "./electrical_shop.json" with { type: "json" };
 import bank_fast_food from "./fast_food.json" with { type: "json" };
 import bank_footwear from "./footwear.json" with { type: "json" };
 import bank_fruits_vegetables from "./fruits_vegetables.json" with { type: "json" };
 import bank_furniture from "./furniture.json" with { type: "json" };
+import bank_hardware_store from "./hardware_store.json" with { type: "json" };
 import bank_imitation_jewellery from "./imitation_jewellery.json" with { type: "json" };
 import bank_jewellery from "./jewellery.json" with { type: "json" };
 import bank_kids_wear from "./kids_wear.json" with { type: "json" };
@@ -36,10 +38,12 @@ export const QUESTION_BANKS = {
   "catering": bank_catering,
   "computer_shop": bank_computer_shop,
   "electrical_hardware": bank_electrical_hardware,
+  "electrical_shop": bank_electrical_shop,
   "fast_food": bank_fast_food,
   "footwear": bank_footwear,
   "fruits_vegetables": bank_fruits_vegetables,
   "furniture": bank_furniture,
+  "hardware_store": bank_hardware_store,
   "imitation_jewellery": bank_imitation_jewellery,
   "jewellery": bank_jewellery,
   "kids_wear": bank_kids_wear,

@@ -1,0 +1,198 @@
+{
+ "shop_type_key": "hardware_store",
+ "name": "Hardware, plumbing & paints store",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 16,
+ "questions": [
+  {
+   "id": "hardware_store-001",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Which hardware, plumbing and paint items do you sell?",
+   "customer_question": "Do you have CPVC pipes?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "CPVC / UPVC pipes & fittings",
+    "Taps & showers (PTMT, brass)",
+    "Sanitaryware (commodes, basins, flush tanks)",
+    "Kitchen sinks & couplings",
+    "Water tanks",
+    "Water motors & level controllers",
+    "Garden hoses & spray guns",
+    "Leak repair (Teflon tape, M-Seal, solvent)",
+    "Bathroom accessories (stands, rods, mirror cabinets)",
+    "Locks & padlocks",
+    "Door & window hardware (hinges, tower bolts, aldrops, closers, stoppers)",
+    "Cabinet fittings (soft-close hinges, channels)",
+    "Mosquito mesh & door seals",
+    "Curtain rods & brackets",
+    "Ceiling cloth-dryer hangers",
+    "Hand tools & ladders",
+    "Adhesives & screws (Fevicol)",
+    "Waterproofing, putty & white cement",
+    "Paints, primers, brushes & rollers",
+    "Cutting wheels, drill bits & sandpaper",
+    "Construction safety items (helmets, gloves, rope, tools)",
+    "Drain cleaners & plungers"
+   ]
+  },
+  {
+   "id": "hardware_store-002",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Which pipe and tap brands do you sell (for example Ashirvad, Astral, Finolex, Supreme, Jaquar, Hindware, Cera, Parryware, Prayag)?",
+   "customer_question": "Do you have Jaquar taps?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hardware_store-003",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Which lock brands do you sell (for example Godrej, Europa, Yale, Harrison), and from what price?",
+   "customer_question": "How much is a Godrej main door lock?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hardware_store-004",
+   "category": "Prices & service",
+   "owner_question": "For a full house-wiring or plumbing list, what discount do you give on the company price list? Do customers who come without an electrician get the electrician's commission as a discount?",
+   "customer_question": "What discount on the full list?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hardware_store-005",
+   "category": "Prices & service",
+   "owner_question": "If customers send their electrician's or plumber's list on WhatsApp, do you send a price estimate?",
+   "customer_question": "Can you send a quotation for this list?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-006",
+   "category": "Prices & service",
+   "owner_question": "Do you deliver heavy items (pipes, tanks, wire bundles) to the site by auto?",
+   "customer_question": "Can you send the tank to my site?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-007",
+   "category": "Hardware & plumbing items",
+   "owner_question": "What is the starting price for a bathroom set (wall mixer, overhead shower, health faucet)?",
+   "customer_question": "How much for a bathroom set?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hardware_store-008",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Do you sell tap spares separately (washers, spindles, cartridges)?",
+   "customer_question": "My tap is dripping, do you have the spindle?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-009",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Do you have washing machine taps and long inlet / outlet pipes?",
+   "customer_question": "Do you have a washing machine tap?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-010",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Do you cut curtain rods to size?",
+   "customer_question": "Can you cut the rod to 5 feet?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-011",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Do you fit ceiling cloth-dryer hangers at home?",
+   "customer_question": "Can you fit the dryer hanger?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-012",
+   "category": "Buying advice",
+   "owner_question": "How do you advise water motors (0.5 vs 1 HP, monoblock vs submersible) and tanks (3- or 4-layer)?",
+   "customer_question": "Which motor for my sump?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hardware_store-013",
+   "category": "Prices & service",
+   "owner_question": "Do you take back unused leftover material (wire, switches, fittings) with the bill and refund?",
+   "customer_question": "Can I return the extra wire?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hardware_store-014",
+   "category": "Prices & service",
+   "owner_question": "Can you send a trusted electrician or plumber for repairs and fitting?",
+   "customer_question": "Do you know a good electrician?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hardware_store-015",
+   "category": "Prices & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "hardware_store-016",
+   "category": "Prices & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

@@ -1,102 +1,117 @@
 {
  "shop_type_key": "electrical_hardware",
  "name": "Electrical & hardware shop",
- "version": 1,
- "model": "gemini-3.1-flash-lite",
- "generated_at": "2026-10-28",
- "question_count": 229,
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 30,
  "questions": [
   {
    "id": "electrical_hardware-001",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you sell only company-authorized original products, or do you also keep local/unbranded alternatives?",
-   "customer_question": "Are these products original or first copy?",
+   "category": "Electrical items",
+   "owner_question": "Which electrical items do you sell?",
+   "customer_question": "Do you have FRLS wire?",
    "priority": "mandatory",
-   "answer_type": "options",
+   "answer_type": "list",
    "options": [
-    "Only original branded products",
-    "Both original and local alternatives",
-    "Mostly local/unbranded products"
+    "House wires (FRLS / ZHFR)",
+    "Service, armoured & submersible cables",
+    "CCTV, LAN (Cat-6) & TV (RG-6) cables",
+    "Modular switches, sockets & plates",
+    "MCB, RCCB, changeover, fuses & AC starter boxes",
+    "Earthing kits",
+    "Conduit pipes, boxes & casing-capping",
+    "LED bulbs, tubes, panel lights & bulb holders",
+    "Decorative lights (chandeliers, pendants, strips, tri-colour)",
+    "Outdoor, flood, gate & solar lights",
+    "Festival & serial lights, night bulbs & electric diyas",
+    "Fans, exhaust fans & regulators",
+    "Extension boards, plug tops & adapters",
+    "Calling bells",
+    "Sub-meters & phase selectors",
+    "Motor starters & control panels",
+    "Emergency lights, torches & inverter bulbs",
+    "Mosquito bats & machines, room heaters"
    ]
   },
   {
    "id": "electrical_hardware-002",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you specifically stock pipes and fittings that have the ISI mark?",
-   "customer_question": "Do you keep ISI marked plumbing pipes?",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Which hardware, plumbing and paint items do you sell?",
+   "customer_question": "Do you have CPVC pipes?",
    "priority": "mandatory",
-   "answer_type": "yes_no",
+   "answer_type": "list",
    "options": [
-    "Yes",
-    "No"
+    "CPVC / UPVC pipes & fittings",
+    "Taps & showers (PTMT, brass)",
+    "Sanitaryware (commodes, basins, flush tanks)",
+    "Kitchen sinks & couplings",
+    "Water tanks",
+    "Water motors & level controllers",
+    "Garden hoses & spray guns",
+    "Leak repair (Teflon tape, M-Seal, solvent)",
+    "Bathroom accessories (stands, rods, mirror cabinets)",
+    "Locks & padlocks",
+    "Door & window hardware (hinges, tower bolts, aldrops, closers, stoppers)",
+    "Cabinet fittings (soft-close hinges, channels)",
+    "Mosquito mesh & door seals",
+    "Curtain rods & brackets",
+    "Ceiling cloth-dryer hangers",
+    "Hand tools & ladders",
+    "Adhesives & screws (Fevicol)",
+    "Waterproofing, putty & white cement",
+    "Paints, primers, brushes & rollers",
+    "Cutting wheels, drill bits & sandpaper",
+    "Construction safety items (helmets, gloves, rope, tools)",
+    "Drain cleaners & plungers"
    ]
   },
   {
    "id": "electrical_hardware-003",
-   "category": "Installation Services",
-   "owner_question": "Do you offer installation or fitting services for the products you sell?",
-   "customer_question": "Do you provide installation services for the items I buy?",
-   "priority": "mandatory",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Electrical items",
+   "owner_question": "Which wire brands do you sell (for example Polycab, Finolex, Havells, RR Kabel), and are they ISI-marked FRLS?",
+   "customer_question": "Is this Finolex wire original?",
+   "priority": "important",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-004",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you offer special pricing for bulk quantity orders?",
-   "customer_question": "Do you offer special prices for bulk construction orders?",
-   "priority": "mandatory",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Electrical items",
+   "owner_question": "Which switch and MCB / RCCB brands do you sell (for example Anchor Roma, Legrand, GM, Goldmedal), and do you have designer plates (wooden, grey, glass)?",
+   "customer_question": "Do you have black switch plates?",
+   "priority": "important",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-005",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you have a computerized paint mixing machine available in your shop?",
-   "customer_question": "Do you have a computerized paint mixing machine in your shop?",
-   "priority": "mandatory",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Hardware & plumbing items",
+   "owner_question": "Which pipe and tap brands do you sell (for example Ashirvad, Astral, Finolex, Supreme, Jaquar, Hindware, Cera, Parryware, Prayag)?",
+   "customer_question": "Do you have Jaquar taps?",
+   "priority": "important",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-006",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Do you offer direct assistance to customers for warranty claims on products bought at your shop?",
-   "customer_question": "Do you handle the warranty claims for appliances bought here?",
-   "priority": "mandatory",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Hardware & plumbing items",
+   "owner_question": "Which lock brands do you sell (for example Godrej, Europa, Yale, Harrison), and from what price?",
+   "customer_question": "How much is a Godrej main door lock?",
+   "priority": "important",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-007",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you provide a GST bill for every purchase?",
-   "customer_question": "Do you provide a bill for the products?",
-   "priority": "mandatory",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Prices & service",
+   "owner_question": "For a full house-wiring or plumbing list, what discount do you give on the company price list? Do customers who come without an electrician get the electrician's commission as a discount?",
+   "customer_question": "What discount on the full list?",
+   "priority": "important",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-008",
-   "category": "GST and Billing",
-   "owner_question": "Do you provide GST invoices for all customer purchases?",
-   "customer_question": "Do you provide a GST bill for my purchase?",
-   "priority": "mandatory",
+   "category": "Prices & service",
+   "owner_question": "If customers send their electrician's or plumber's list on WhatsApp, do you send a price estimate?",
+   "customer_question": "Can you send a quotation for this list?",
+   "priority": "important",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -105,10 +120,10 @@
   },
   {
    "id": "electrical_hardware-009",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Do you accept returns of unopened paint tins?",
-   "customer_question": "Can I return extra paint tins if they are unopened?",
-   "priority": "mandatory",
+   "category": "Prices & service",
+   "owner_question": "Do you deliver heavy items (pipes, tanks, wire bundles) to the site by auto?",
+   "customer_question": "Can you send the tank to my site?",
+   "priority": "important",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -117,18 +132,18 @@
   },
   {
    "id": "electrical_hardware-010",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "What are the main brands of electrical wires you keep in stock?",
-   "customer_question": "Which electrical wire brands do you stock?",
-   "priority": "important",
-   "answer_type": "list"
+   "category": "Electrical items",
+   "owner_question": "How many years of warranty do switches and sockets have?",
+   "customer_question": "Is there a warranty on switches?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-011",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you keep premium electrical brands like Havells, Finolex, or Polycab?",
-   "customer_question": "Do you have Finolex or Havells products?",
-   "priority": "important",
+   "category": "Electrical items",
+   "owner_question": "Do you have USB / Type-C charging sockets, 2-way switches and small hum-free step regulators?",
+   "customer_question": "Do you have a USB socket?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -137,10 +152,10 @@
   },
   {
    "id": "electrical_hardware-012",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you sell authorized paint brands like Asian Paints, Berger, or Nerolac?",
-   "customer_question": "Are your paints from original companies like Asian Paints or Berger?",
-   "priority": "important",
+   "category": "Electrical items",
+   "owner_question": "Do you keep heavy-gauge conduit pipes and boxes that don't break?",
+   "customer_question": "Are these pipes strong?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -149,38 +164,30 @@
   },
   {
    "id": "electrical_hardware-013",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "What are the top brands of PVC/CPVC pipes you carry?",
-   "customer_question": "Which plumbing pipe brands do you have?",
-   "priority": "important",
-   "answer_type": "list"
+   "category": "Electrical items",
+   "owner_question": "Do you cut wire by the metre (for example 5 or 10 m) instead of a full 90 m coil?",
+   "customer_question": "Can I take 10 metres?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
   },
   {
    "id": "electrical_hardware-014",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you keep genuine spare parts for major tap brands like Jaquar or Hindware?",
-   "customer_question": "Do you have genuine spare parts for plumbing taps?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Electrical items",
+   "owner_question": "What warranty do LED bulbs and tubes have? Do you mark the date on them, and replace them without a bill within warranty?",
+   "customer_question": "My bulb fused in 6 months, will you change it?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-015",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Which cement brands do you currently supply?",
-   "customer_question": "Is your cement from a reliable company?",
-   "priority": "important",
-   "answer_type": "list"
-  },
-  {
-   "id": "electrical_hardware-016",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you provide company-issued warranty cards for electrical appliances or switches?",
-   "customer_question": "Can I get a warranty card with these electrical items?",
-   "priority": "important",
+   "category": "Electrical items",
+   "owner_question": "Do you give wholesale rates on false-ceiling lights (COB, spot, profile, rope lights)?",
+   "customer_question": "Rate for 40 ceiling lights?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -188,48 +195,63 @@
    ]
   },
   {
-   "id": "electrical_hardware-017",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock branded LED bulbs (like Philips, Syska) or unbranded ones?",
-   "customer_question": "Are these LED bulbs branded?",
-   "priority": "important",
-   "answer_type": "options",
+   "id": "electrical_hardware-016",
+   "category": "Electrical items",
+   "owner_question": "Do you have motion-sensor lights, foot / step lights and adjustable panel lights?",
+   "customer_question": "Do you have a sensor light?",
+   "priority": "optional",
+   "answer_type": "yes_no",
    "options": [
-    "Only branded",
-    "Both branded and unbranded",
-    "Only unbranded"
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "electrical_hardware-017",
+   "category": "Electrical items",
+   "owner_question": "Do you make ready-made switch boards (for example 4 sockets + 4 switches for the kitchen) and sell weatherproof switch covers?",
+   "customer_question": "Can you make a kitchen board?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
    ]
   },
   {
    "id": "electrical_hardware-018",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you have an authorized computer color-mixing machine for paints?",
-   "customer_question": "Are these paint colors mixed by machine?",
-   "priority": "important",
-   "answer_type": "yes_no",
+   "category": "Electrical items",
+   "owner_question": "Which spare parts do you keep?",
+   "customer_question": "Do you have a fan capacitor?",
+   "priority": "optional",
+   "answer_type": "list",
    "options": [
-    "Yes",
-    "No"
+    "Fan capacitors, down rods & shackles",
+    "LED drivers & tube chokes / starters",
+    "Immersion heater rods",
+    "Geyser elements & thermostats",
+    "Iron box cords & thermostats",
+    "Mixer couplers, blades & carbon brushes",
+    "Motor capacitors & push buttons",
+    "Electrical tape, clips, cable ties & flexible pipe",
+    "Soldering irons & multimeters"
    ]
   },
   {
    "id": "electrical_hardware-019",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock fire-retardant (FR) electrical wires and switches?",
-   "customer_question": "Are your electrical switches fire-resistant?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Hardware & plumbing items",
+   "owner_question": "What is the starting price for a bathroom set (wall mixer, overhead shower, health faucet)?",
+   "customer_question": "How much for a bathroom set?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-020",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Are the plumbing valves you sell ISI certified?",
-   "customer_question": "Are your plumbing valves ISI certified?",
-   "priority": "important",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Do you sell tap spares separately (washers, spindles, cartridges)?",
+   "customer_question": "My tap is dripping, do you have the spindle?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -238,18 +260,22 @@
   },
   {
    "id": "electrical_hardware-021",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Which brands of MCBs and ELCBs do you keep?",
-   "customer_question": "Do you sell branded electrical MCBs?",
-   "priority": "important",
-   "answer_type": "list"
+   "category": "Hardware & plumbing items",
+   "owner_question": "Do you have washing machine taps and long inlet / outlet pipes?",
+   "customer_question": "Do you have a washing machine tap?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
   },
   {
    "id": "electrical_hardware-022",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock branded exterior waterproof paints?",
-   "customer_question": "Do you have waterproof paint options?",
-   "priority": "important",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Do you cut curtain rods to size?",
+   "customer_question": "Can you cut the rod to 5 feet?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -258,10 +284,10 @@
   },
   {
    "id": "electrical_hardware-023",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock branded door locks like Godrej or Yale?",
-   "customer_question": "Are your hardware locks branded?",
-   "priority": "important",
+   "category": "Hardware & plumbing items",
+   "owner_question": "Do you fit ceiling cloth-dryer hangers at home?",
+   "customer_question": "Can you fit the dryer hanger?",
+   "priority": "optional",
    "answer_type": "yes_no",
    "options": [
     "Yes",
@@ -270,2264 +296,71 @@
   },
   {
    "id": "electrical_hardware-024",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you guarantee that the copper wires sold are 100% electrolytic grade copper?",
-   "customer_question": "Do you sell genuine copper wiring?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Buying advice",
+   "owner_question": "How do you advise wire sizes (for example 2.5 vs 4 sq mm for AC, geyser and main line) and FR vs FRLS / ZHFR wires?",
+   "customer_question": "Which wire for the AC?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-025",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock stainless steel (SS) hardware that is guaranteed rust-proof?",
-   "customer_question": "Are these hardware items rust-proof?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "category": "Buying advice",
+   "owner_question": "For an old flickering tube light, do you suggest a new choke / starter or a 20 W LED tube?",
+   "customer_question": "Repair the tube light or buy LED?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-026",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "What are the common pipe diameters (in inches or mm) that you sell?",
-   "customer_question": "What is the standard pipe size you keep in stock?",
-   "priority": "important",
-   "answer_type": "list"
+   "category": "Buying advice",
+   "owner_question": "How do you advise water motors (0.5 vs 1 HP, monoblock vs submersible) and tanks (3- or 4-layer)?",
+   "customer_question": "Which motor for my sump?",
+   "priority": "optional",
+   "answer_type": "text"
   },
   {
    "id": "electrical_hardware-027",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Are the electrical wires you sell ISI certified or do you carry other quality certifications?",
-   "customer_question": "Are these electrical wires ISI marked?",
-   "priority": "important",
+   "category": "Prices & service",
+   "owner_question": "Do you take back unused leftover material (wire, switches, fittings) with the bill and refund?",
+   "customer_question": "Can I return the extra wire?",
+   "priority": "optional",
    "answer_type": "text"
   },
   {
    "id": "electrical_hardware-028",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "What is the standard voltage rating (e.g., 230V, 415V) for the MCBs and electrical switches you stock?",
-   "customer_question": "What is the voltage rating of this MCB?",
-   "priority": "important",
-   "answer_type": "list"
+   "category": "Prices & service",
+   "owner_question": "Can you send a trusted electrician or plumber for repairs and fitting?",
+   "customer_question": "Do you know a good electrician?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
   },
   {
    "id": "electrical_hardware-029",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock paints specifically for metal surfaces, or are your paints multi-surface?",
-   "customer_question": "Can I use this paint on metal surfaces?",
-   "priority": "important",
-   "answer_type": "options",
+   "category": "Prices & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
    "options": [
-    "Only wood",
-    "Only wall",
-    "Only metal",
-    "Multi-surface"
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
    ]
   },
   {
    "id": "electrical_hardware-030",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Are most of your bathroom and kitchen taps standard 1/2 inch fittings?",
-   "customer_question": "Is this tap compatible with standard 1/2 inch fittings?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-031",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock circuit breakers for different amperage ratings (e.g., 6A, 16A, 32A)?",
-   "customer_question": "What is the maximum load capacity of this circuit breaker?",
-   "priority": "important",
-   "answer_type": "list"
-  },
-  {
-   "id": "electrical_hardware-032",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock specific exterior weather-proof or waterproof paints?",
-   "customer_question": "Do you have weather-proof paint for exterior walls?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-033",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock CPVC, UPVC, or regular PVC fittings?",
-   "customer_question": "Are these plumbing fittings PVC or CPVC?",
-   "priority": "important",
-   "answer_type": "list"
-  },
-  {
-   "id": "electrical_hardware-034",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock masonry drill bits specifically for concrete?",
-   "customer_question": "Is this drill bit suitable for concrete walls?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-035",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you sell modular switches, non-modular, or both?",
-   "customer_question": "Are these switches modular or non-modular?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Only modular",
-    "Only non-modular",
-    "Both"
-   ]
-  },
-  {
-   "id": "electrical_hardware-036",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you sell primers that are mandatory for your paint brands?",
-   "customer_question": "Does this paint require a primer first?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-037",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock heavy-duty extension cords with specific wire thicknesses (e.g., 1.5 sq mm, 2.5 sq mm)?",
-   "customer_question": "What is the wire gauge for this extension cord?",
-   "priority": "important",
-   "answer_type": "list"
-  },
-  {
-   "id": "electrical_hardware-038",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock waterproof sealants specifically for bathroom or kitchen leaks?",
-   "customer_question": "Can I use this sealant for bathroom leaks?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-039",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock stainless steel or anti-rust hardware hinges?",
-   "customer_question": "Are these hinges rust-proof?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-040",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you provide information about the square foot coverage for your paint products?",
-   "customer_question": "What is the coverage area for this paint tin?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-041",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock universal 3-pin plugs or specific Indian standard plugs?",
-   "customer_question": "Do you have 3-pin plugs that fit all socket types?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Universal",
-    "Indian Standard",
-    "Both"
-   ]
-  },
-  {
-   "id": "electrical_hardware-042",
-   "category": "Installation Services",
-   "owner_question": "Is your installation service free, or do you charge a fee for it?",
-   "customer_question": "Is the installation service free of charge?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Free",
-    "Paid",
-    "Depends on the product"
-   ]
-  },
-  {
-   "id": "electrical_hardware-043",
-   "category": "Installation Services",
-   "owner_question": "What is the standard fee or price range for your installation services?",
-   "customer_question": "How much do you charge for installation?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-044",
-   "category": "Installation Services",
-   "owner_question": "Do you provide professional electricians for electrical installations?",
-   "customer_question": "Do you provide an electrician for installing fans or lights?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-045",
-   "category": "Installation Services",
-   "owner_question": "Do you provide professional plumbers for plumbing installations?",
-   "customer_question": "Do you provide a plumber for installing taps or pipes?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-046",
-   "category": "Installation Services",
-   "owner_question": "How much time does it usually take to schedule an installation after purchase?",
-   "customer_question": "How soon can you send someone for installation?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-047",
-   "category": "Installation Services",
-   "owner_question": "Do customers need to book an appointment for installation, or is it done on-demand?",
-   "customer_question": "Do I need to book the installation in advance?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-048",
-   "category": "Installation Services",
-   "owner_question": "Do you offer any warranty or guarantee on your installation services?",
-   "customer_question": "Do you provide a warranty on the installation work?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-049",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "What is the minimum quantity or order value required to qualify for bulk pricing?",
-   "customer_question": "What is the minimum quantity required to get a bulk discount?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-050",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you offer a separate price list or special discount rates for registered contractors or interior designers?",
-   "customer_question": "Do you have special rates for contractors or interior designers?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-051",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "What documents (like GST registration or business card) do you require from contractors to register them for special rates?",
-   "customer_question": "How can I register as a contractor to get special rates?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-052",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Are you willing to provide written quotations for large project material lists?",
-   "customer_question": "Can I get a quotation for my project list?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-053",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Typically, how many days is a project quotation valid for before prices change?",
-   "customer_question": "How long is a project quotation valid for?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-054",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you allow credit terms or payment cycles for regular contractors?",
-   "customer_question": "Do you offer credit terms for regular contractors?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-055",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you provide GST-compliant invoices for all bulk or contractor orders?",
-   "customer_question": "Do you provide GST invoices for bulk orders?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-056",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you provide free delivery to construction sites for bulk orders?",
-   "customer_question": "Can I get free site delivery for large orders?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-057",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you allow returns for unused items from a bulk order if they are in good condition?",
-   "customer_question": "Can I return unused items from a bulk order?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-058",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "For bulk orders, are you able to source and order specific items that are not currently in your shop stock?",
-   "customer_question": "Can you arrange items that are not currently in your shop stock?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-059",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "What percentage of the total amount do you require as an advance deposit for bulk orders?",
-   "customer_question": "How much advance payment is required for special bulk orders?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-060",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Should bulk order inquiries be directed to a specific person or phone number at your shop?",
-   "customer_question": "How do I contact you for a bulk order inquiry?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-061",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Can you match a specific paint shade if a customer brings a physical sample?",
-   "customer_question": "Can you match a specific paint shade if I bring a sample?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-062",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "What is the average time (in minutes) it takes to mix a custom paint shade?",
-   "customer_question": "How long does it take to mix a custom color?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-063",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you charge an extra fee for custom paint mixing services?",
-   "customer_question": "Is there an extra charge for custom color mixing?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-064",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you provide physical shade cards or fan decks for customers to select colors?",
-   "customer_question": "Do you have a color shade card available for me to choose from?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-065",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you accept returns or exchanges for custom mixed paint?",
-   "customer_question": "Can I return custom mixed paint if I don't like the color?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-066",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Does your mixing machine handle both interior and exterior paint types?",
-   "customer_question": "Do you mix paint for interior and exterior walls?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Interior only",
-    "Exterior only",
-    "Both"
-   ]
-  },
-  {
-   "id": "electrical_hardware-067",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Does your mixing service include paints for wood or metal surfaces?",
-   "customer_question": "Can you mix paint for wood or metal surfaces?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-068",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "What specific documents (like original bill, warranty card, or box) must a customer bring to your shop to initiate a warranty claim?",
-   "customer_question": "What documents do I need to bring to claim a warranty?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-069",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "On average, how many days does it typically take for a warranty claim to be resolved once the customer brings the item to you?",
-   "customer_question": "How many days does it take to process a warranty claim?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-070",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Do you provide immediate replacement for faulty items, or does it always have to go to the company service center first?",
-   "customer_question": "Do I get a replacement immediately if the product is faulty?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Immediate replacement",
-    "Must go to service center",
-    "Depends on the product"
-   ]
-  },
-  {
-   "id": "electrical_hardware-071",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Do you offer any shop-level warranty or guarantee on electrical consumables like wires and switches, or is it strictly manufacturer warranty?",
-   "customer_question": "Is there a warranty on electrical wires and switches?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-072",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Do you provide paid repair services for electrical appliances that are no longer under warranty?",
-   "customer_question": "What if the product is out of warranty? Do you offer repair services?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-073",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Are you able to provide customers with the contact details or addresses of local authorized service centers for the brands you sell?",
-   "customer_question": "Will you help me find the nearest service center for this brand?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-074",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Are there specific types of damage (like water damage or physical breakage) that are explicitly excluded from your warranty support?",
-   "customer_question": "Does the warranty cover physical damage or water damage?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-075",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Do the brands you sell require customers to register their products online for the warranty to be valid?",
-   "customer_question": "Do I need to register my product online to claim the warranty?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-076",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Can you verify a purchase and support a warranty claim if the customer loses their physical receipt but has a record of the transaction in your system?",
-   "customer_question": "Is the warranty valid if I lose my physical receipt?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-077",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "What is the typical warranty duration you provide for plumbing fixtures like taps and valves?",
-   "customer_question": "What is the warranty period for plumbing fixtures like taps and valves?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-078",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Does the warranty remain valid if the customer installs the product themselves, or is professional installation mandatory?",
-   "customer_question": "Is the warranty valid if I installed the product myself?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Self-installation is fine",
-    "Professional installation required",
-    "Depends on product"
-   ]
-  },
-  {
-   "id": "electrical_hardware-079",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Do you provide a written warranty document or stamp on the invoice for all products that come with a guarantee?",
-   "customer_question": "Do you provide a written warranty document for all items?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-080",
-   "category": "Stock Availability and Ordering",
-   "owner_question": "What is your typical turnaround time for ordering out-of-stock items (in days)?",
-   "customer_question": "If an item is out of stock, how long does it take to get it?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-081",
-   "category": "Stock Availability and Ordering",
-   "owner_question": "Do you accept special orders for industrial parts not currently in your inventory?",
-   "customer_question": "Can you source specific industrial parts that are not on your shelf?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-082",
-   "category": "Stock Availability and Ordering",
-   "owner_question": "Do you require an advance payment for special orders?",
-   "customer_question": "Do I need to pay an advance for special orders?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-083",
-   "category": "Stock Availability and Ordering",
-   "owner_question": "What percentage of the total price is required as an advance for special orders?",
-   "customer_question": "What percentage of the total cost do I need to pay as an advance?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-084",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you stock only ISI-marked electrical wires, or do you also keep non-ISI options?",
-   "customer_question": "Are the electrical wires you sell ISI marked?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Only ISI marked",
-    "Both ISI and non-ISI"
-   ]
-  },
-  {
-   "id": "electrical_hardware-085",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you carry food-grade pipes for water tanks or drinking water lines?",
-   "customer_question": "Are these PVC pipes food-grade or standard quality?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-086",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you provide original manufacturer warranty cards for all electrical appliances sold?",
-   "customer_question": "Do you provide a warranty card for electrical appliances?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-087",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you sell only branded/original hardware tools, or do you also stock local/unbranded alternatives?",
-   "customer_question": "Are these hardware tools original or local copies?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Only original brands",
-    "Both original and local"
-   ]
-  },
-  {
-   "id": "electrical_hardware-088",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "What is the maximum age of cement bags you keep in your inventory?",
-   "customer_question": "Is the cement you sell fresh?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-089",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you stock high-quality brass plumbing fittings alongside standard plastic ones?",
-   "customer_question": "Are the plumbing fittings brass or plastic?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-090",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Are all your electrical switch brands authorized dealer products?",
-   "customer_question": "Do you sell genuine electrical switches?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-091",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you carry BWP (Boiling Water Proof) or termite-resistant plywood?",
-   "customer_question": "Is the plywood termite-proof?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-092",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you stock FR (Fire Retardant) or FRLS (Fire Retardant Low Smoke) wires?",
-   "customer_question": "Are these electrical cables fire-retardant?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-093",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you only sell plumbing pipes that are certified for high-pressure water systems?",
-   "customer_question": "Are these plumbing pipes leak-proof?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-094",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Are your MCBs from reputable, certified manufacturers?",
-   "customer_question": "Do you sell genuine electrical MCBs?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-095",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you provide in-house repair services for electrical tools purchased at your shop?",
-   "customer_question": "Do you offer repair services for electrical tools bought here?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-096",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you offer repair or maintenance services for water pumps?",
-   "customer_question": "Do you repair water pumps?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-097",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you stock and sell spare parts for the electrical tools you sell?",
-   "customer_question": "Do you sell spare parts for the tools I bought?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-098",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "What is the typical turnaround time in days for repairing a tool?",
-   "customer_question": "How long does it take to repair a tool?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-099",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you offer a service warranty on the repairs you perform? If yes, how many days?",
-   "customer_question": "Do you provide a warranty on your repair work?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-100",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you offer on-site/home visit repair services for plumbing or electrical issues?",
-   "customer_question": "Can you provide a technician to visit my home for repairs?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-101",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you have a minimum inspection or service charge for looking at a faulty product?",
-   "customer_question": "What is the minimum service charge for a repair?",
-   "priority": "important",
-   "answer_type": "price"
-  },
-  {
-   "id": "electrical_hardware-102",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you keep a stock of spare parts like washers, cartridges, or seals for plumbing fixtures?",
-   "customer_question": "Do you provide spare parts for plumbing fixtures?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-103",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you act as a service center for specific power tool brands?",
-   "customer_question": "Do you provide after-sales service for power tools?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-104",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "What documents or proof do you require for a repair (e.g., original bill, warranty card)?",
-   "customer_question": "What should I bring when I come for a repair?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-105",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Are you willing to help customers identify parts if they bring a sample or photo?",
-   "customer_question": "Can you help me identify the right spare part if I don't know the name?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-106",
-   "category": "GST and Billing",
-   "owner_question": "Can you print the customer's company name and GSTIN on the invoice?",
-   "customer_question": "Can you add my company name and GST number to the bill?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-107",
-   "category": "GST and Billing",
-   "owner_question": "Are the prices displayed in your shop inclusive of GST?",
-   "customer_question": "Is GST included in the prices I see in the shop?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-108",
-   "category": "GST and Billing",
-   "owner_question": "Do you charge any extra fees for card or digital payments?",
-   "customer_question": "Do you charge extra for card payments?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-109",
-   "category": "Safety and Handling",
-   "owner_question": "Do you recommend customers wear protective gear like gloves or masks when handling your chemicals or paints?",
-   "customer_question": "Do I need special gloves or masks while using these paints or chemicals?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-110",
-   "category": "Safety and Handling",
-   "owner_question": "What is the best way for a customer to store the paints or chemicals they buy from you (e.g., away from sunlight, cool place)?",
-   "customer_question": "How should I store these paints at home to keep them safe?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-111",
-   "category": "Safety and Handling",
-   "owner_question": "Are any of the products you sell highly flammable and require special handling warnings?",
-   "customer_question": "Are these chemicals flammable?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-112",
-   "category": "Safety and Handling",
-   "owner_question": "Do you advise customers to keep your products out of reach of children or pets?",
-   "customer_question": "Is it safe to keep these products near children or pets?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-113",
-   "category": "Safety and Handling",
-   "owner_question": "Do you recommend that customers keep their windows open or use ventilation while applying your paints or solvents?",
-   "customer_question": "Do I need to keep the room ventilated while using these paints?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-114",
-   "category": "Safety and Handling",
-   "owner_question": "Do you sell any products that are strictly for outdoor use only and not safe for indoor application?",
-   "customer_question": "Are these paints safe for indoor use?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-115",
-   "category": "Safety and Handling",
-   "owner_question": "Do you warn customers against mixing your products with other chemicals or solvents?",
-   "customer_question": "Can I mix these chemicals with other products?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-116",
-   "category": "Safety and Handling",
-   "owner_question": "Do you provide a general rule of thumb for how long customers can store these products before they become unsafe or unusable?",
-   "customer_question": "What is the shelf life of these paints?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-117",
-   "category": "Safety and Handling",
-   "owner_question": "Do you have specific safety advice for using your electrical components in bathrooms or damp areas?",
-   "customer_question": "Are these electrical parts safe to use in damp areas?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-118",
-   "category": "Safety and Handling",
-   "owner_question": "Do you tell customers to rinse with water immediately if they get chemicals in their eyes?",
-   "customer_question": "What should I do if a chemical splashes in my eyes?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-119",
-   "category": "Product Comparison",
-   "owner_question": "Which brand of PVC pipe do you recommend for outdoor use that can withstand direct sunlight?",
-   "customer_question": "Which brand of PVC pipe is best for outdoor sunlight exposure?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-120",
-   "category": "Product Comparison",
-   "owner_question": "What is the main advantage of the LED bulb brands you stock in terms of power saving?",
-   "customer_question": "Are your LED bulbs energy efficient compared to standard ones?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-121",
-   "category": "Product Comparison",
-   "owner_question": "Which paint brand do you suggest for exterior walls that provides the best protection against rain?",
-   "customer_question": "Which paint brand is better for exterior walls in rainy areas?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-122",
-   "category": "Product Comparison",
-   "owner_question": "What is the main difference in durability between the brass and stainless steel taps you sell?",
-   "customer_question": "Is this brass tap better than the stainless steel one?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-123",
-   "category": "Product Comparison",
-   "owner_question": "Which brand of electrical wire do you recommend for home wiring based on safety ratings?",
-   "customer_question": "Which brand of electrical wire is safer for home wiring?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-124",
-   "category": "Product Comparison",
-   "owner_question": "Do you stock water pumps specifically designed to handle low voltage fluctuations?",
-   "customer_question": "Does this water pump work well with low voltage?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-125",
-   "category": "Product Comparison",
-   "owner_question": "Which cement brand do you carry that is most recommended for heavy-duty concrete work?",
-   "customer_question": "Which cement brand is best for strong concrete slabs?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-126",
-   "category": "Product Comparison",
-   "owner_question": "Do the modular switches you sell have fire-retardant properties?",
-   "customer_question": "Are these modular switches fire-resistant?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-127",
-   "category": "Product Comparison",
-   "owner_question": "Do you sell specific paint brands that are marketed as 'washable' or 'stain-resistant'?",
-   "customer_question": "Is this paint washable?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-128",
-   "category": "Product Comparison",
-   "owner_question": "Which brand of pipe fittings do you find has the fewest complaints regarding leaks?",
-   "customer_question": "Which brand of pipe fittings is less prone to leakage?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-129",
-   "category": "Product Comparison",
-   "owner_question": "Are the floodlights you sell rated for outdoor use (IP65 or higher)?",
-   "customer_question": "Are these LED floodlights good for outdoor security?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-130",
-   "category": "Product Comparison",
-   "owner_question": "Do you stock rust-proof or stainless steel hinges suitable for humid areas like bathrooms?",
-   "customer_question": "Do you have rust-proof hinges for bathroom doors?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-131",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Within how many days can a customer return unused plumbing or hardware items?",
-   "customer_question": "Is there a time limit for returning unused plumbing fittings?",
-   "priority": "important",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-132",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Is the original invoice mandatory for returning unused items?",
-   "customer_question": "Do I need the original bill to return leftover materials?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-133",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Do you allow returns of partial packs or broken-set items?",
-   "customer_question": "Can I return a partial box of tiles or hardware?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-134",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Do you provide cash refunds or store credit for returned surplus materials?",
-   "customer_question": "Will I get cash back for returned items?",
-   "priority": "important",
-   "answer_type": "options",
-   "options": [
-    "Cash refund",
-    "Store credit",
-    "Exchange only"
-   ]
-  },
-  {
-   "id": "electrical_hardware-135",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Do you deduct any restocking fee when a customer returns unused items?",
-   "customer_question": "Do you charge a restocking fee for returns?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-136",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Do you accept returns on paint that was custom-mixed or tinted at the shop?",
-   "customer_question": "Can I return custom-mixed paint colors?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-137",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Are there specific categories of items (like electrical wires or cut pipes) that are non-returnable?",
-   "customer_question": "Are there any items that cannot be returned at all?",
-   "priority": "important",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-138",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Is it required that the packaging of the returned item is undamaged and sealed?",
-   "customer_question": "Do the returned items need to be in original packaging?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-139",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Do you allow customers to exchange leftover materials for a different size or type instead of a refund?",
-   "customer_question": "Can I exchange leftover plumbing parts for a different size?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-140",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Are electrical components like switches, sockets, or MCBs eligible for return?",
-   "customer_question": "Do you accept returns on electrical components like switches or sockets?",
-   "priority": "important",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-141",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock professional-grade hardware tools (like Bosch, Stanley) or general-purpose tools?",
-   "customer_question": "Are your hardware tools professional grade?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Only professional grade",
-    "Both professional and general purpose",
-    "Only general purpose"
-   ]
-  },
-  {
-   "id": "electrical_hardware-142",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock high-tensile or stainless steel hardware fasteners?",
-   "customer_question": "Do you have high-quality hardware screws?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-143",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock genuine branded adhesives like Fevicol?",
-   "customer_question": "Do you sell genuine Fevicol products?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-144",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock luxury or premium range bathroom fittings?",
-   "customer_question": "Do you have premium quality bathroom fittings?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-145",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock branded plumbing tapes and sealants?",
-   "customer_question": "Do you have branded plumbing sealants?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-146",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock universal or multi-plug electrical sockets?",
-   "customer_question": "Are your electrical sockets compatible with all plugs?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-147",
-   "category": "Product Authenticity and Brands",
-   "owner_question": "Do you stock low-VOC or eco-friendly paint varieties?",
-   "customer_question": "Do you have eco-friendly paint options?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-148",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "What thickness gauges (in mm) do you typically stock for GI or PVC pipes?",
-   "customer_question": "What is the thickness of these GI pipes?",
-   "priority": "optional",
-   "answer_type": "list"
-  },
-  {
-   "id": "electrical_hardware-149",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "What is the maximum wattage capacity for the light fixtures and holders you sell?",
-   "customer_question": "What is the wattage limit for this bulb holder?",
+   "category": "Prices & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
    "priority": "optional",
    "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-150",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock adhesives that are specifically for plastic bonding?",
-   "customer_question": "Can I use this glue on plastic?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-151",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock high-pressure rated pipes for overhead water tanks?",
-   "customer_question": "What is the pressure rating of this water tank pipe?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-152",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock brass plumbing connectors and valves?",
-   "customer_question": "Are these plumbing valves compatible with brass fittings?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-153",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock metric thread bolts or imperial (inch) thread bolts?",
-   "customer_question": "What is the thread type for these bolts?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Metric",
-    "Imperial",
-    "Both"
-   ]
-  },
-  {
-   "id": "electrical_hardware-154",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you sell dimmable LED bulbs?",
-   "customer_question": "Is this LED bulb compatible with a dimmer switch?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-155",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you generally stock fresh paint batches with a long shelf life?",
-   "customer_question": "What is the shelf life of your paints?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-156",
-   "category": "Technical Specifications and Compatibility",
-   "owner_question": "Do you stock specialized Teflon tape for gas line sealing?",
-   "customer_question": "Is this plumbing tape suitable for gas pipes?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-157",
-   "category": "Installation Services",
-   "owner_question": "Do you offer installation services for products not purchased from your shop?",
-   "customer_question": "Do you provide installation services for products bought elsewhere?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-158",
-   "category": "Installation Services",
-   "owner_question": "Are your installers shop staff or external contractors?",
-   "customer_question": "Who will come for the installation, a shop employee or a third-party contractor?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Shop staff",
-    "External contractor",
-    "Both"
-   ]
-  },
-  {
-   "id": "electrical_hardware-159",
-   "category": "Installation Services",
-   "owner_question": "How long is the warranty period for your installation services?",
-   "customer_question": "What is the warranty period for the installation work?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-160",
-   "category": "Installation Services",
-   "owner_question": "Do you provide a formal invoice or receipt for the installation services?",
-   "customer_question": "Will I get a receipt for the installation charges?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-161",
-   "category": "Installation Services",
-   "owner_question": "Are your installation services available on Sundays or public holidays?",
-   "customer_question": "Do you offer installation services on Sundays or holidays?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-162",
-   "category": "Installation Services",
-   "owner_question": "Do you have different installation charges for locations outside your immediate area?",
-   "customer_question": "Do you charge extra for installation outside the city limits?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-163",
-   "category": "Installation Services",
-   "owner_question": "Are there any specific items or tools the customer needs to provide for the installation?",
-   "customer_question": "What tools or materials should I keep ready for the installation?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-164",
-   "category": "Installation Services",
-   "owner_question": "Do you offer specialized installation for heavy or large items?",
-   "customer_question": "Do you provide installation for heavy items like water tanks?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-165",
-   "category": "Installation Services",
-   "owner_question": "Do you allow customers to request a specific technician for their installation?",
-   "customer_question": "Can I request a specific technician for the installation?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-166",
-   "category": "Installation Services",
-   "owner_question": "What is your process if a customer is unhappy with the installation quality?",
-   "customer_question": "What happens if the installation is not done properly?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-167",
-   "category": "Installation Services",
-   "owner_question": "Do you offer pre-purchase site visits to measure or check feasibility?",
-   "customer_question": "Do you provide site visits to check if the product will fit before I buy?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-168",
-   "category": "Installation Services",
-   "owner_question": "Are your installation service fees inclusive of GST?",
-   "customer_question": "Is the installation fee inclusive of GST?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-169",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "What is the maximum distance (in kilometers) from your shop for free site delivery?",
-   "customer_question": "Is there a limit on the distance for free site delivery?",
-   "priority": "optional",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-170",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you offer an additional discount for advance cash payments on bulk orders?",
-   "customer_question": "Do you offer cash discounts for bulk payments?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-171",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you charge a restocking fee if a customer returns unused bulk items?",
-   "customer_question": "Is there a restocking fee for returning bulk items?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-172",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you have a loyalty program or reward system for regular contractors?",
-   "customer_question": "Do you offer loyalty points for regular contractors?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-173",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you provide samples for materials (like tiles or paint shades) before a bulk order is finalized?",
-   "customer_question": "Can I get a sample of the material before placing a bulk order?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-174",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Do you offer technical support or site visits for installation guidance on large hardware or electrical orders?",
-   "customer_question": "Do you provide technical support or installation guidance for bulk hardware?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-175",
-   "category": "Bulk Orders and Contractor Discounts",
-   "owner_question": "Are bulk discounts applicable to all brands, or are some brands excluded?",
-   "customer_question": "Are bulk discounts available on all brands you stock?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-176",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you offer small sample pots or test sizes of custom mixed paint?",
-   "customer_question": "Can I get a small sample of the mixed paint to test on my wall?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-177",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you keep a record of custom color formulas for repeat customers?",
-   "customer_question": "Can you save my custom color formula for future orders?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-178",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Can your machine match shades from color cards of brands you do not stock?",
-   "customer_question": "Can you match colors from other brands if I bring their shade card?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-179",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Are you able to mix or match metallic or textured paint finishes?",
-   "customer_question": "Do you provide color matching for metallic or textured paints?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-180",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you advise customers that digital screen colors may vary slightly from the final paint?",
-   "customer_question": "Is the color I see on the digital screen exactly the same as the final paint?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-182",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you offer professional color consultation or site visits for color selection?",
-   "customer_question": "Do you offer home visits for color consultation?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-183",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you use a spectrophotometer or digital scanner for color matching?",
-   "customer_question": "How accurate is your color matching machine?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-184",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Are your mixing machines calibrated regularly to ensure color accuracy?",
-   "customer_question": "Are your mixing machines calibrated regularly?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-185",
-   "category": "Paint Mixing and Color Matching",
-   "owner_question": "Do you have a curated catalog or book of popular color combinations available?",
-   "customer_question": "Do you have a catalog of popular color combinations?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-186",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Do you offer any shop-level guarantee regarding the quality or finish of the paints you sell?",
-   "customer_question": "Do you provide a warranty on paint finishes or coverage?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-187",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "If an item needs to be sent to a service center, do you cover the transportation costs, or is it the customer's responsibility?",
-   "customer_question": "Do I have to pay for the shipping if I send an item for repair?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Shop covers it",
-    "Customer pays",
-    "Depends on the brand"
-   ]
-  },
-  {
-   "id": "electrical_hardware-188",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Are accessories included with electrical products (like remotes or batteries) covered under the same warranty as the main unit?",
-   "customer_question": "Are accessories like remote controls or batteries covered under warranty?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-189",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Do you provide a temporary replacement or 'loaner' unit to customers while their product is being repaired?",
-   "customer_question": "Can I get a loaner unit while my product is being repaired?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-190",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Do you sell any extended warranty or annual maintenance contracts (AMC) for the products you sell?",
-   "customer_question": "Do you offer an extended warranty program?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-191",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "Are issues like rust or corrosion covered under the warranty for your hardware and plumbing items?",
-   "customer_question": "Does the warranty cover rust or corrosion on hardware items?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-192",
-   "category": "Warranty and Guarantee Claims",
-   "owner_question": "If a manufacturer rejects a warranty claim, do you have a process to advocate for the customer or escalate the issue?",
-   "customer_question": "What if the company refuses my warranty claim?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-193",
-   "category": "Stock Availability and Ordering",
-   "owner_question": "How many minutes does it typically take to mix a custom paint shade?",
-   "customer_question": "How long does it take for custom paint mixing?",
-   "priority": "optional",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-194",
-   "category": "Stock Availability and Ordering",
-   "owner_question": "Are you willing to source specific hardware brands upon customer request?",
-   "customer_question": "Can you order specific brands of hardware not in your shop?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-195",
-   "category": "Stock Availability and Ordering",
-   "owner_question": "Do you stock heavy-duty industrial tools, or only standard home-use tools?",
-   "customer_question": "Do you keep stock of heavy-duty industrial tools?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Both",
-    "Only home-use"
-   ]
-  },
-  {
-   "id": "electrical_hardware-196",
-   "category": "Stock Availability and Ordering",
-   "owner_question": "Are you able to order specific gauges or brands of electrical cables?",
-   "customer_question": "Can you order specific electrical wires or cables?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-197",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you stock any specific eco-friendly or lead-free paint brands?",
-   "customer_question": "Is this paint lead-free or eco-friendly?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-198",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you clearly mark the star rating or energy efficiency on your LED lighting products?",
-   "customer_question": "Are these light bulbs energy-efficient or star-rated?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-199",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you stock premium washable interior paints?",
-   "customer_question": "Are these paints washable?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-200",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you mention the material quality (like stainless steel or chrome-plated) for your faucets?",
-   "customer_question": "Are the bathroom faucets rust-proof?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-201",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you provide manufacturer information regarding the expected life or warranty of exterior paints?",
-   "customer_question": "Are the paints you sell long-lasting?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-202",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you categorize your hardware items by 'heavy-duty' vs 'standard' usage?",
-   "customer_question": "Are these hardware items heavy-duty?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-203",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you clearly label whether your tools are 'Made in India' or imported?",
-   "customer_question": "Are these tools made in India or imported?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-204",
-   "category": "Quality Standards and Certifications",
-   "owner_question": "Do you carry ISI-certified bathroom fittings or sanitaryware?",
-   "customer_question": "Are the bathroom fittings ISI certified?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-205",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you accept repair jobs for items purchased from other shops?",
-   "customer_question": "Do you repair products that were not bought at your shop?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-206",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you offer AMC (Annual Maintenance Contracts) for pumps or heavy equipment?",
-   "customer_question": "Do you offer annual maintenance contracts for pumps?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-207",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you provide sharpening services for drill bits, saw blades, or other cutting tools?",
-   "customer_question": "Do you sharpen drill bits or blades?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-208",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you provide repair advice or solutions for broken PVC pipes and plumbing fittings?",
-   "customer_question": "Can you fix broken PVC pipes or fittings?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-209",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Are your repair technicians available on Sundays or public holidays?",
-   "customer_question": "Do you provide repair services on Sundays?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-210",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Should customers ask for a specific person or department when they come for repairs?",
-   "customer_question": "Do you have a contact person for repairs?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-211",
-   "category": "Repair and Maintenance Support",
-   "owner_question": "Do you provide a temporary replacement tool while the customer's tool is being repaired?",
-   "customer_question": "Do you provide a loaner tool while mine is being repaired?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-212",
-   "category": "GST and Billing",
-   "owner_question": "Can a customer request a tax invoice for a previous purchase if they forgot to ask?",
-   "customer_question": "Can I get a tax invoice for a purchase made earlier?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-213",
-   "category": "GST and Billing",
-   "owner_question": "Do you offer credit facilities to regular contractors or business clients?",
-   "customer_question": "Do you offer credit to regular customers?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-214",
-   "category": "GST and Billing",
-   "owner_question": "Is there a minimum purchase amount required for issuing a GST invoice?",
-   "customer_question": "Is there a minimum purchase amount for a GST bill?",
-   "priority": "optional",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-216",
-   "category": "GST and Billing",
-   "owner_question": "Do you provide a shop-stamped receipt for cash payments?",
-   "customer_question": "Do you provide a stamped receipt for cash payments?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-217",
-   "category": "GST and Billing",
-   "owner_question": "Are the prices of your items fixed, or is there room for negotiation?",
-   "customer_question": "Are your prices negotiable?",
-   "priority": "optional",
-   "answer_type": "options",
-   "options": [
-    "Fixed Prices",
-    "Negotiable"
-   ]
-  },
-  {
-   "id": "electrical_hardware-218",
-   "category": "GST and Billing",
-   "owner_question": "Do you provide a detailed packing list or delivery challan for large orders?",
-   "customer_question": "Do you provide a packing list for large orders?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-219",
-   "category": "GST and Billing",
-   "owner_question": "What is your process for handling billing errors or overpayments?",
-   "customer_question": "Can I get a refund if I overpaid by mistake?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-220",
-   "category": "Safety and Handling",
-   "owner_question": "Do you have a standard safety instruction for customers if they accidentally get chemicals or paint on their skin?",
-   "customer_question": "What should I do if this paint gets on my skin?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-221",
-   "category": "Safety and Handling",
-   "owner_question": "Do you have any specific advice for customers on how to dispose of empty paint cans or chemical bottles safely?",
-   "customer_question": "How do I safely dispose of the leftover paint or chemical containers?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-222",
-   "category": "Safety and Handling",
-   "owner_question": "Do you carry any eco-friendly or non-toxic product lines that you highlight to customers?",
-   "customer_question": "Are these products non-toxic?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-223",
-   "category": "Safety and Handling",
-   "owner_question": "Do you recommend eye protection for customers using your heavy-duty cleaning or paint-stripping chemicals?",
-   "customer_question": "Do I need to wear eye protection?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-224",
-   "category": "Safety and Handling",
-   "owner_question": "Do you advise customers to cover their floors or furniture before using your products?",
-   "customer_question": "Is there a risk of these products staining my floor or furniture?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-225",
-   "category": "Product Comparison",
-   "owner_question": "Which tile adhesive brand do you recommend for long-lasting bonding?",
-   "customer_question": "Which adhesive brand is stronger for sticking tiles?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-226",
-   "category": "Product Comparison",
-   "owner_question": "Which brand of power tools do you recommend for basic home DIY tasks?",
-   "customer_question": "Which brand of drill machine is better for home DIY?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-227",
-   "category": "Product Comparison",
-   "owner_question": "What is the main benefit of the premium wall putty brands you stock over cheaper ones?",
-   "customer_question": "Is this putty better than local brands?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-228",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Do you have a maximum quantity or value limit for returning leftover materials?",
-   "customer_question": "Is there a limit on the quantity of items I can return?",
-   "priority": "optional",
-   "answer_type": "number"
-  },
-  {
-   "id": "electrical_hardware-229",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Is there a specific condition regarding the date of purchase for returns?",
-   "customer_question": "Can I return materials if the project was finished weeks ago?",
-   "priority": "optional",
-   "answer_type": "text"
-  },
-  {
-   "id": "electrical_hardware-230",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Do you offer pickup services for returns of large leftover materials?",
-   "customer_question": "Do I need to bring the item back to the shop myself?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
-  },
-  {
-   "id": "electrical_hardware-231",
-   "category": "Store Policies on Leftover Materials",
-   "owner_question": "Are there any times of the year or specific sale periods when returns are not accepted?",
-   "customer_question": "Are there any seasonal restrictions on returns?",
-   "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
   }
  ]
 }
