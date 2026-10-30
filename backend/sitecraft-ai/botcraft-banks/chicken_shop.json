@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 25,
+ "question_count": 32,
  "questions": [
   {
    "id": "chicken_shop-001",
@@ -17,7 +17,7 @@
   {
    "id": "chicken_shop-002",
    "category": "Freshness & trust",
-   "owner_question": "Is all meat cut fresh the same day, never mixed with frozen or leftover meat?",
+   "owner_question": "Is all meat cut fresh the same day, never mixed with frozen or leftover meat, and never water-injected or soaked?",
    "customer_question": "Is this fresh?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -42,7 +42,7 @@
   {
    "id": "chicken_shop-004",
    "category": "Freshness & trust",
-   "owner_question": "Is your scale electronic, stamped by Legal Metrology and visible to customers?",
+   "owner_question": "Is your scale electronic, stamped by Legal Metrology, visible to customers and set to zero in front of them?",
    "customer_question": "Is your weighing correct?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -67,6 +67,7 @@
     "Lollipops",
     "Wings",
     "Drumsticks",
+    "Lean breast fillets (steak / butterfly cut)",
     "Keema (machine or hand-chopped)"
    ]
   },
@@ -81,7 +82,7 @@
   {
    "id": "chicken_shop-007",
    "category": "Weight & wastage",
-   "owner_question": "Do you weigh only good pieces, adding neck, gizzard, liver or backbone only if the customer asks?",
+   "owner_question": "Do you weigh and pack only the pieces the customer chose, adding neck, gizzard, liver or backbone only if they ask?",
    "customer_question": "Don't put neck pieces in my kilo",
    "priority": "important",
    "answer_type": "yes_no",
@@ -150,7 +151,7 @@
   {
    "id": "chicken_shop-014",
    "category": "Today's rates",
-   "owner_question": "What do eggs cost (white, country eggs; dozen and tray)?",
+   "owner_question": "What do eggs cost (white, country eggs; dozen and tray), and are your country eggs genuine?",
    "customer_question": "Egg tray rate?",
    "priority": "optional",
    "answer_type": "text"
@@ -166,13 +167,21 @@
   {
    "id": "chicken_shop-016",
    "category": "Freshness & trust",
-   "owner_question": "Is your country chicken real free-range natu kodi, or Giriraja / Vanaraja / cross breeds (clearly told)?",
+   "owner_question": "Is your country chicken real free-range natu kodi, or Giriraja / Vanaraja / cross breeds (clearly told)? Do you have Kadaknath, and hens or roosters as the customer wants?",
    "customer_question": "Is this real natu kodi?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
    "id": "chicken_shop-017",
+   "category": "Freshness & trust",
+   "owner_question": "Where do your birds come from, and do you sell antibiotic-free chicken?",
+   "customer_question": "Is this chicken antibiotic free?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "chicken_shop-018",
    "category": "Freshness & trust",
    "owner_question": "Is your shop FSSAI-registered?",
    "customer_question": "Is your shop FSSAI registered?",
@@ -184,7 +193,7 @@
    ]
   },
   {
-   "id": "chicken_shop-018",
+   "id": "chicken_shop-019",
    "category": "Cuts",
    "owner_question": "What do special cuts cost (boneless, lollipops, wings, keema)?",
    "customer_question": "How much is boneless chicken?",
@@ -192,7 +201,7 @@
    "answer_type": "text"
   },
   {
-   "id": "chicken_shop-019",
+   "id": "chicken_shop-020",
    "category": "Other parts",
    "owner_question": "Do you roast country chicken with turmeric on the flame before cutting?",
    "customer_question": "Can you roast the natu kodi?",
@@ -204,7 +213,7 @@
    ]
   },
   {
-   "id": "chicken_shop-020",
+   "id": "chicken_shop-021",
    "category": "Other parts",
    "owner_question": "Do you sell chicken feet, heads or scraps for pet dogs? At what price?",
    "customer_question": "Do you have chicken waste for my dog?",
@@ -212,7 +221,59 @@
    "answer_type": "text"
   },
   {
-   "id": "chicken_shop-021",
+   "id": "chicken_shop-022",
+   "category": "Orders & delivery",
+   "owner_question": "If customers bring their own birds or goats (functions, temple offerings), what do you charge for cleaning, singeing and cutting, and is the skin adjusted?",
+   "customer_question": "How much to clean and cut our offering rooster?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "chicken_shop-023",
+   "category": "Orders & delivery",
+   "owner_question": "Do you supply birds or goats for temple offerings (for example a pure black rooster)?",
+   "customer_question": "Do you have a black rooster for the jatara?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "chicken_shop-024",
+   "category": "Orders & delivery",
+   "owner_question": "Do you give monthly packs (for example daily chicken breast for gym-goers) at a lower rate?",
+   "customer_question": "Can I get 250 g breast daily for a month?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "chicken_shop-025",
+   "category": "Orders & delivery",
+   "owner_question": "Do you supply restaurants and fast-food centres daily (rate below the market paper rate, weekly settlement)?",
+   "customer_question": "Can you supply 20 kg chicken daily to my hotel?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "chicken_shop-026",
+   "category": "Orders & delivery",
+   "owner_question": "Do you pack for long travel (thermocol box with ice packs)? At what charge?",
+   "customer_question": "Can you pack this for the bus to Bangalore?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "chicken_shop-027",
+   "category": "Orders & delivery",
+   "owner_question": "Do you pack in food-grade boxes, or in the customer's own vessel?",
+   "customer_question": "Can you put it in my steel box?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "chicken_shop-028",
    "category": "Orders & delivery",
    "owner_question": "Which ready-to-cook items do you sell?",
    "customer_question": "Do you have marinated chicken?",
@@ -223,19 +284,21 @@
     "Meat masalas",
     "Marinated chicken / fish",
     "Kebabs",
+    "Boneless thighs (shawarma)",
+    "Sausages, salami & burger patties",
     "Frozen items"
    ]
   },
   {
-   "id": "chicken_shop-022",
+   "id": "chicken_shop-029",
    "category": "Orders & delivery",
-   "owner_question": "What are your timings on festivals (Kanuma, Bakrid, Bonalu, after Karthika masam), and are you closed on any days?",
+   "owner_question": "What are your timings on festivals (Kanuma, Bakrid, Bonalu, after Karthika masam), do you prepare early-morning orders for ceremonies, and are you closed on any days?",
    "customer_question": "Will the shop open early on Kanuma?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "chicken_shop-023",
+   "id": "chicken_shop-030",
    "category": "Orders & delivery",
    "owner_question": "If a customer finds the meat not fresh or not tender, what do you do?",
    "customer_question": "The mutton didn't cook at all, what now?",
@@ -243,7 +306,7 @@
    "answer_type": "text"
   },
   {
-   "id": "chicken_shop-024",
+   "id": "chicken_shop-031",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -259,7 +322,7 @@
    ]
   },
   {
-   "id": "chicken_shop-025",
+   "id": "chicken_shop-032",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",

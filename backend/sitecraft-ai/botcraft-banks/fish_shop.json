@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 17,
+ "question_count": 22,
  "questions": [
   {
    "id": "fish_shop-001",
@@ -17,7 +17,7 @@
   {
    "id": "fish_shop-002",
    "category": "Freshness & trust",
-   "owner_question": "Is all meat cut fresh the same day, never mixed with frozen or leftover meat?",
+   "owner_question": "Is all meat cut fresh the same day, never mixed with frozen or leftover meat, and never water-injected or soaked?",
    "customer_question": "Is this fresh?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -37,7 +37,7 @@
   {
    "id": "fish_shop-004",
    "category": "Freshness & trust",
-   "owner_question": "Is your scale electronic, stamped by Legal Metrology and visible to customers?",
+   "owner_question": "Is your scale electronic, stamped by Legal Metrology, visible to customers and set to zero in front of them?",
    "customer_question": "Is your weighing correct?",
    "priority": "important",
    "answer_type": "yes_no",
@@ -59,7 +59,9 @@
     "Thin fry slices",
     "Head cleaned without breaking the bile",
     "Roe kept for the customer",
-    "Washed with salt & turmeric"
+    "Washed with salt & turmeric",
+    "Murrel skinned or with skin",
+    "Crabs cleaned with shells cracked"
    ]
   },
   {
@@ -121,8 +123,48 @@
   {
    "id": "fish_shop-012",
    "category": "Cuts",
-   "owner_question": "Do you peel and devein prawns, and weigh them after cleaning if the customer asks?",
-   "customer_question": "Can you weigh prawns after cleaning?",
+   "owner_question": "What count per kg are your prawns, do you peel them (tail on or off) and remove the black vein, and do you weigh fish and prawns after cleaning and without ice or water?",
+   "customer_question": "What count are these prawns?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fish_shop-013",
+   "category": "Cuts",
+   "owner_question": "Which fish have few small bones (for children and elders)?",
+   "customer_question": "Which fish has no small bones?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fish_shop-014",
+   "category": "Cuts",
+   "owner_question": "Which dry fish do you sell (anchovies, dry prawns, salted seer), and are they cleaned of sand?",
+   "customer_question": "Do you have dry fish?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fish_shop-015",
+   "category": "Orders & delivery",
+   "owner_question": "Do you supply restaurants and fast-food centres daily (rate below the market paper rate, weekly settlement)?",
+   "customer_question": "Can you supply 20 kg chicken daily to my hotel?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fish_shop-016",
+   "category": "Orders & delivery",
+   "owner_question": "Do you pack for long travel (thermocol box with ice packs)? At what charge?",
+   "customer_question": "Can you pack this for the bus to Bangalore?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "fish_shop-017",
+   "category": "Orders & delivery",
+   "owner_question": "Do you pack in food-grade boxes, or in the customer's own vessel?",
+   "customer_question": "Can you put it in my steel box?",
    "priority": "optional",
    "answer_type": "yes_no",
    "options": [
@@ -131,7 +173,7 @@
    ]
   },
   {
-   "id": "fish_shop-013",
+   "id": "fish_shop-018",
    "category": "Orders & delivery",
    "owner_question": "Which ready-to-cook items do you sell?",
    "customer_question": "Do you have marinated chicken?",
@@ -142,19 +184,21 @@
     "Meat masalas",
     "Marinated chicken / fish",
     "Kebabs",
+    "Boneless thighs (shawarma)",
+    "Sausages, salami & burger patties",
     "Frozen items"
    ]
   },
   {
-   "id": "fish_shop-014",
+   "id": "fish_shop-019",
    "category": "Orders & delivery",
-   "owner_question": "What are your timings on festivals (Kanuma, Bakrid, Bonalu, after Karthika masam), and are you closed on any days?",
+   "owner_question": "What are your timings on festivals (Kanuma, Bakrid, Bonalu, after Karthika masam), do you prepare early-morning orders for ceremonies, and are you closed on any days?",
    "customer_question": "Will the shop open early on Kanuma?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "fish_shop-015",
+   "id": "fish_shop-020",
    "category": "Orders & delivery",
    "owner_question": "If a customer finds the meat not fresh or not tender, what do you do?",
    "customer_question": "The mutton didn't cook at all, what now?",
@@ -162,7 +206,7 @@
    "answer_type": "text"
   },
   {
-   "id": "fish_shop-016",
+   "id": "fish_shop-021",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -178,7 +222,7 @@
    ]
   },
   {
-   "id": "fish_shop-017",
+   "id": "fish_shop-022",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
