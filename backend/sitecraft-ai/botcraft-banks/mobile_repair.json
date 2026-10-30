@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 37,
+ "question_count": 46,
  "questions": [
   {
    "id": "mobile_repair-001",
@@ -19,15 +19,18 @@
     "Battery replacement",
     "Charging port / charging IC",
     "Speaker, mic & earpiece",
-    "Camera & camera glass",
-    "Back panel & frame",
+    "Camera, camera glass & dust inside the lens",
+    "Back glass (laser machine), bent body & new housing",
     "Power / volume buttons",
+    "Fingerprint sensor",
+    "Green / pink line on screen (flex bonding)",
     "Water damage",
     "Dead phone / motherboard (chip-level)",
     "Network & SIM problems",
-    "Software update, flashing & virus removal",
-    "Forgotten pattern / Google account lock (with proof)",
-    "Data recovery & backup"
+    "Software update, flashing, virus removal & speed-up",
+    "Forgotten pattern / Google or Apple ID lock (with bill)",
+    "iPhone 'unavailable' restore",
+    "Data recovery (even from dead phones) & backup"
    ]
   },
   {
@@ -79,21 +82,59 @@
    "options": [
     "Covers & cases",
     "Tempered glass",
-    "Back skins & lamination",
-    "Chargers & cables",
-    "OTG & adapters",
+    "Custom back skins & lamination (cut by machine)",
+    "Original fast chargers & cables",
+    "OTG & adapters (Type-C to 3.5 mm)",
     "Wired earphones & neckbands",
     "Earbuds / ANC headphones",
     "Smartwatches (calling, health tracking)",
+    "Smartwatch straps & chargers",
     "Bluetooth speakers",
     "Power banks",
     "Memory cards & pen drives",
-    "Car chargers & mobile holders",
-    "Selfie sticks, tripods & ring lights"
+    "Bike & car mobile holders, car chargers",
+    "Selfie sticks, tripods, ring lights & collar mics",
+    "PopSockets, table stands & rain pouches",
+    "Pocket Wi-Fi (JioFi) & UPI sound boxes",
+    "SIM trays, SIM pins & cable protectors"
    ]
   },
   {
    "id": "mobile_repair-006",
+   "category": "Products & brands",
+   "owner_question": "Which screen guards do you have, and do you fit them bubble-free?",
+   "customer_question": "Do you have privacy glass?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Full-glue tempered glass (11D / HD+)",
+    "Privacy (anti-spy) glass",
+    "Matte gaming glass",
+    "UV glass for curved screens",
+    "Hydrogel / memory film",
+    "Camera lens protectors",
+    "Smartwatch screen guards"
+   ]
+  },
+  {
+   "id": "mobile_repair-007",
+   "category": "Products & brands",
+   "owner_question": "Which phone covers do you keep?",
+   "customer_question": "Do you have a MagSafe cover?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Clear covers that don't turn yellow",
+    "Shockproof / puff covers",
+    "Leather covers",
+    "MagSafe covers",
+    "Flip covers & belt pouches",
+    "Rugged / armour covers",
+    "Custom photo covers"
+   ]
+  },
+  {
+   "id": "mobile_repair-008",
    "category": "Products & brands",
    "owner_question": "Are your accessories original brand products, or compatible ones?",
    "customer_question": "Is this charger original?",
@@ -106,7 +147,7 @@
    ]
   },
   {
-   "id": "mobile_repair-007",
+   "id": "mobile_repair-009",
    "category": "Warranty & service",
    "owner_question": "For repairs, do you use original or compatible parts?",
    "customer_question": "Is the new screen original?",
@@ -119,23 +160,23 @@
    ]
   },
   {
-   "id": "mobile_repair-008",
+   "id": "mobile_repair-010",
    "category": "Warranty & service",
-   "owner_question": "Do you give a warranty on repairs? How long?",
+   "owner_question": "Do you give a warranty on repairs (display, battery, parts)? How long, and what does it not cover (for example a new fall or water)?",
    "customer_question": "Is there warranty on the repair?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "mobile_repair-009",
+   "id": "mobile_repair-011",
    "category": "Warranty & service",
-   "owner_question": "Is there a checking (diagnosis) charge if the customer decides not to repair?",
+   "owner_question": "Is there a checking (diagnosis) charge if the customer decides not to repair, and is the phone returned as it was?",
    "customer_question": "Do you charge just to check it?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "mobile_repair-010",
+   "id": "mobile_repair-012",
    "category": "Mobile repairs",
    "owner_question": "Which display qualities do you offer for screen replacement?",
    "customer_question": "Is the new screen original?",
@@ -149,7 +190,7 @@
    ]
   },
   {
-   "id": "mobile_repair-011",
+   "id": "mobile_repair-013",
    "category": "Mobile repairs",
    "owner_question": "What are your starting prices for common repairs (screen, battery, charging port) for popular models?",
    "customer_question": "How much to change the Redmi Note screen?",
@@ -157,7 +198,35 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_repair-012",
+   "id": "mobile_repair-014",
+   "category": "Mobile repairs",
+   "owner_question": "For touch-glass-only (OCA) replacement, what do you tell customers about the risk to the display, and who pays if it gets damaged?",
+   "customer_question": "Will my display break if you change only the glass?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-015",
+   "category": "Mobile repairs",
+   "owner_question": "After a display or charging port change, do in-display fingerprint, touch and fast charging work like before, is the display fitted neatly (no gum showing, doesn't lift), and do you reseal water-resistant phones with new seal tape?",
+   "customer_question": "Will fingerprint work after the new display?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-016",
+   "category": "Mobile repairs",
+   "owner_question": "If customers send their phone model and problem on WhatsApp, do you send a repair estimate?",
+   "customer_question": "Can you tell the price on WhatsApp?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-017",
    "category": "Mobile repairs",
    "owner_question": "Do you tell the full price before starting, and call the customer before doing any extra work?",
    "customer_question": "Will you tell me the price first?",
@@ -169,7 +238,7 @@
    ]
   },
   {
-   "id": "mobile_repair-013",
+   "id": "mobile_repair-018",
    "category": "Mobile repairs",
    "owner_question": "Do you give a job card or receipt when a phone is left for repair?",
    "customer_question": "Will I get a slip for my phone?",
@@ -181,7 +250,7 @@
    ]
   },
   {
-   "id": "mobile_repair-014",
+   "id": "mobile_repair-019",
    "category": "Mobile repairs",
    "owner_question": "Can customers wait and watch while small repairs (battery, glass, port) are done?",
    "customer_question": "Can I wait while you fix it?",
@@ -193,17 +262,33 @@
    ]
   },
   {
-   "id": "mobile_repair-015",
+   "id": "mobile_repair-020",
    "category": "Mobile repairs",
-   "owner_question": "How do you keep customers' data safe during repairs (do you need the phone password, can they remove photos or take a backup first)?",
+   "owner_question": "How do you keep customers' data safe during repairs (do you need the phone password, can they remove photos or take a backup first, do you hand back the SIM and memory card)?",
    "customer_question": "Do you need my phone password?",
    "priority": "important",
    "answer_type": "text"
   },
   {
-   "id": "mobile_repair-016",
+   "id": "mobile_repair-021",
    "category": "Products & brands",
-   "owner_question": "Do you sell SIM cards or do mobile recharges?",
+   "owner_question": "From what price do earbuds, neckbands, calling smartwatches and power banks start?",
+   "customer_question": "How much are earbuds?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-022",
+   "category": "Products & brands",
+   "owner_question": "What warranty do chargers, cables, earbuds and power banks have, and are they replaced at the shop or at the service centre?",
+   "customer_question": "My neckband stopped working, will you change it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-023",
+   "category": "Products & brands",
+   "owner_question": "Do you sell new SIM cards, do number porting (MNP), duplicate SIMs for lost phones, eSIM activation and recharges? For which networks?",
    "customer_question": "Can I get a new Jio SIM here?",
    "priority": "optional",
    "answer_type": "list",
@@ -216,7 +301,7 @@
    ]
   },
   {
-   "id": "mobile_repair-017",
+   "id": "mobile_repair-024",
    "category": "Products & brands",
    "owner_question": "Which other services do you offer at the counter?",
    "customer_question": "Can I pay my current bill here?",
@@ -233,9 +318,9 @@
    ]
   },
   {
-   "id": "mobile_repair-018",
+   "id": "mobile_repair-025",
    "category": "Products & brands",
-   "owner_question": "Do you buy old phones for cash, even when the customer is not buying a new one?",
+   "owner_question": "Do you buy old phones for cash, even when the customer is not buying a new one (also broken or dead phones for parts)?",
    "customer_question": "Will you buy my old phone?",
    "priority": "optional",
    "answer_type": "yes_no",
@@ -245,7 +330,7 @@
    ]
   },
   {
-   "id": "mobile_repair-019",
+   "id": "mobile_repair-026",
    "category": "Products & brands",
    "owner_question": "When you take an old phone (exchange or purchase), do you erase all its data in front of the customer?",
    "customer_question": "Will my photos be deleted from my old phone?",
@@ -257,7 +342,7 @@
    ]
   },
   {
-   "id": "mobile_repair-020",
+   "id": "mobile_repair-027",
    "category": "Warranty & service",
    "owner_question": "How long does a common repair (screen, battery) usually take?",
    "customer_question": "How long to change the screen?",
@@ -265,7 +350,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_repair-021",
+   "id": "mobile_repair-028",
    "category": "Warranty & service",
    "owner_question": "Do you pick up and drop devices for repair?",
    "customer_question": "Can you collect my laptop for repair?",
@@ -277,7 +362,7 @@
    ]
   },
   {
-   "id": "mobile_repair-022",
+   "id": "mobile_repair-029",
    "category": "Warranty & service",
    "owner_question": "Do you give a spare phone to use while the customer's phone is being repaired?",
    "customer_question": "Can I get a phone while mine is repaired?",
@@ -289,7 +374,15 @@
    ]
   },
   {
-   "id": "mobile_repair-023",
+   "id": "mobile_repair-030",
+   "category": "Mobile repairs",
+   "owner_question": "If a display or part for an old model is not in stock, can you order it? How many days?",
+   "customer_question": "Can you get a display for my old phone?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "mobile_repair-031",
    "category": "Mobile repairs",
    "owner_question": "Do you give back the old parts (old screen, battery) if the customer asks?",
    "customer_question": "Can I take my old screen back?",
@@ -301,7 +394,7 @@
    ]
   },
   {
-   "id": "mobile_repair-024",
+   "id": "mobile_repair-032",
    "category": "Mobile repairs",
    "owner_question": "Do you send a WhatsApp message when the repair is done?",
    "customer_question": "Will you tell me when it's ready?",
@@ -313,15 +406,15 @@
    ]
   },
   {
-   "id": "mobile_repair-025",
+   "id": "mobile_repair-033",
    "category": "Mobile repairs",
-   "owner_question": "What do you tell customers to do right after their phone falls in water, and how soon should they bring it?",
+   "owner_question": "What do you tell customers to do right after their phone falls in water, how soon should they bring it, and do you do same-day cleaning (ultrasonic / IPA)?",
    "customer_question": "My phone fell in water, what do I do?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "mobile_repair-026",
+   "id": "mobile_repair-034",
    "category": "Mobile repairs",
    "owner_question": "For iPhones, do you explain the 'unknown part' message after a screen or battery change, and do you keep True Tone / Face ID working?",
    "customer_question": "Will Face ID work after screen change?",
@@ -329,19 +422,15 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_repair-027",
+   "id": "mobile_repair-035",
    "category": "Mobile repairs",
-   "owner_question": "For locked phones (forgotten pattern or Google account), do you ask for the bill or ID proof before unlocking?",
+   "owner_question": "For locked phones (forgotten pattern, PIN or Google account), do you ask for the bill or ID proof before unlocking? What does it cost, and is the data lost?",
    "customer_question": "I forgot my pattern, can you open it?",
    "priority": "optional",
-   "answer_type": "yes_no",
-   "options": [
-    "Yes",
-    "No"
-   ]
+   "answer_type": "text"
   },
   {
-   "id": "mobile_repair-028",
+   "id": "mobile_repair-036",
    "category": "Mobile repairs",
    "owner_question": "Do you tell customers when an outside repair may end the company warranty, and send in-warranty phones to the service centre instead?",
    "customer_question": "My phone is in warranty, should I repair here?",
@@ -353,7 +442,7 @@
    ]
   },
   {
-   "id": "mobile_repair-029",
+   "id": "mobile_repair-037",
    "category": "Mobile repairs",
    "owner_question": "If a customer doesn't collect a repaired phone, how long do you keep it?",
    "customer_question": "Can I collect my phone next month?",
@@ -361,7 +450,7 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_repair-030",
+   "id": "mobile_repair-038",
    "category": "Mobile repairs",
    "owner_question": "Do you repair phones at the customer's home or office (doorstep repair)?",
    "customer_question": "Can you come and fix it at my office?",
@@ -374,7 +463,7 @@
    "city_only": true
   },
   {
-   "id": "mobile_repair-031",
+   "id": "mobile_repair-039",
    "category": "Mobile repairs",
    "owner_question": "Do you sell spare parts (displays, batteries) to other technicians at wholesale prices?",
    "customer_question": "Do you sell displays wholesale?",
@@ -386,7 +475,7 @@
    ]
   },
   {
-   "id": "mobile_repair-032",
+   "id": "mobile_repair-040",
    "category": "Mobile repairs",
    "owner_question": "Do you teach mobile repair courses?",
    "customer_question": "Do you have a mobile repair course?",
@@ -398,7 +487,7 @@
    ]
   },
   {
-   "id": "mobile_repair-033",
+   "id": "mobile_repair-041",
    "category": "Shop & service",
    "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
    "customer_question": "Can I give my old phone for recycling?",
@@ -410,7 +499,7 @@
    ]
   },
   {
-   "id": "mobile_repair-034",
+   "id": "mobile_repair-042",
    "category": "Shop & service",
    "owner_question": "Do you have other branches in the city? Can warranty service be done at any branch?",
    "customer_question": "Do you have a branch in Kukatpally?",
@@ -418,7 +507,19 @@
    "answer_type": "text"
   },
   {
-   "id": "mobile_repair-035",
+   "id": "mobile_repair-043",
+   "category": "Finance & loans",
+   "owner_question": "Do you explain the EMI due date and auto-debit, and that a phone bought on finance can get locked if an EMI is missed? If the lock stays after paying, do you help remove it?",
+   "customer_question": "Will my phone get locked if I miss an EMI?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "mobile_repair-044",
    "category": "Shop & service",
    "owner_question": "Do you have a loyalty or points programme for regular customers?",
    "customer_question": "Do I get points?",
@@ -430,7 +531,7 @@
    ]
   },
   {
-   "id": "mobile_repair-036",
+   "id": "mobile_repair-045",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -446,7 +547,7 @@
    ]
   },
   {
-   "id": "mobile_repair-037",
+   "id": "mobile_repair-046",
    "category": "Shop & service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
