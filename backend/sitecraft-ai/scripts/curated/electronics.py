@@ -134,7 +134,7 @@ Q = [
  ("Delivery & installation", "O", "options", "Does a TV come with a table-top stand in the box if the customer doesn't want wall mounting?", "Does the TV come with legs?", ["Yes, stand in the box", "Depends on the model", "Stand is extra"], "A"),
  ("Delivery & installation", "O", "yes_no", "If copper pipe or wire is left over after installation, do you take it back and reduce the bill?", "Will you refund the extra pipe?", YN, "A"),
  ("Delivery & installation", "O", "text", "When customers shift house, do your technicians uninstall and reinstall appliances (AC, TV)? What is the charge?", "Can you shift my AC to the new house?", [], "A"),
- ("Delivery & installation", "I", "text", "Do you install Windows and MS Office? Is the licence genuine, and is it charged?", "Will Windows be installed?", [], "C"),
+ ("Delivery & installation", "I", "text", "Do you install Windows and MS Office? Is the licence genuine, is it charged, and do you keep the customer's files safe when formatting?", "Will Windows be installed?", [], "C"),
  ("Delivery & installation", "O", "text", "Do you send a technician to install CCTV cameras and Wi-Fi networks at homes and offices? What is the charge?", "Can you install CCTV at my house? How much?", [], "C"),
 
  ("Warranty & service", "M", "options", "What happens if a product is defective on the first day (dead on arrival)?", "The phone is not working on day one!", ["We replace it", "We send it to the company service centre", "Depends on the brand"], "PAC"),
@@ -155,7 +155,7 @@ Q = [
  ("Warranty & service", "O", "yes_no", "Can customers buy a protection plan later (a week or a month after purchase)?", "Can I take insurance next month?", YN, "PAC"),
  ("Warranty & service", "O", "options", "If a customer needs to claim insurance, do you help, or do they deal with the insurance company directly?", "Will you help with my insurance claim?", ["We handle the claim", "We help with the papers", "Customer contacts the insurer"], "PAC"),
  ("Warranty & service", "I", "list", "Do you repair phones? Which repairs?", "Can you change my phone screen?", ["Screen", "Battery", "Charging port", "Speaker / mic", "Water damage", "Software / unlocking", "No repairs"], "p"),
- ("Warranty & service", "I", "list", "Do you repair laptops and computers? Which problems?", "My laptop is not starting, can you fix it?", ["Hardware", "Screen", "Keyboard", "Battery", "Software / virus", "Data recovery", "No repairs"], "C"),
+ ("Warranty & service", "I", "list", "Do you repair laptops and computers? Which problems?", "My laptop is not starting, can you fix it?", ["Hardware", "Screen", "Keyboard", "Hinges", "Battery", "Overheating (fan cleaning, thermal paste)", "SSD & RAM upgrades", "Software / virus", "Data recovery", "No repairs"], "C"),
  ("Warranty & service", "O", "options", "Do you repair or service appliances, or only through the brand's service?", "Can you repair my washing machine?", ["We repair", "Only brand service", "Both"], "A"),
  ("Warranty & service", "O", "text", "For small appliances (mixie, grinder, juicer, induction), do you give your own replacement warranty?", "If the mixie stops working, will you replace it?", [], "A"),
  ("Warranty & service", "I", "options", "For repairs, do you use original or compatible parts?", "Is the new screen original?", ["Original parts", "Compatible parts", "Customer's choice"], "PRC"),
