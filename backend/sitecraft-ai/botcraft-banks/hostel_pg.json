@@ -1,0 +1,147 @@
+{
+ "shop_type_key": "hostel_pg",
+ "name": "Hostel / PG",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 13,
+ "questions": [
+  {
+   "id": "hostel_pg-001",
+   "category": "Rooms & rent",
+   "owner_question": "What is the rent for each sharing (1, 2, 3, 4) and for AC / non-AC rooms?",
+   "customer_question": "How much for 2 sharing?",
+   "priority": "mandatory",
+   "answer_type": "text"
+  },
+  {
+   "id": "hostel_pg-002",
+   "category": "Rooms & rent",
+   "owner_question": "Who is the hostel for?",
+   "customer_question": "Is this a ladies hostel?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Men",
+    "Women",
+    "Co-living"
+   ]
+  },
+  {
+   "id": "hostel_pg-003",
+   "category": "Rooms & rent",
+   "owner_question": "What deposit do you take, what is the notice period before leaving, and when is the deposit deducted?",
+   "customer_question": "Will I get my deposit back?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hostel_pg-004",
+   "category": "Rooms & rent",
+   "owner_question": "What is included in the rent, and what is extra (for example AC electricity)?",
+   "customer_question": "Is electricity extra for AC?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hostel_pg-005",
+   "category": "Food",
+   "owner_question": "How many meals a day, which days have chicken and eggs, and do you pack a lunch box for office or college?",
+   "customer_question": "How many days chicken?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hostel_pg-006",
+   "category": "Facilities & rules",
+   "owner_question": "Which facilities do you have?",
+   "customer_question": "Is there Wi-Fi?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Wi-Fi",
+    "Washing machine",
+    "Geyser / hot water",
+    "Room cleaning",
+    "AC rooms",
+    "Power backup",
+    "RO water",
+    "CCTV & security",
+    "Lockers / cupboards",
+    "Bike parking"
+   ]
+  },
+  {
+   "id": "hostel_pg-007",
+   "category": "Facilities & rules",
+   "owner_question": "What are the gate timings and visitor rules?",
+   "customer_question": "What time is the gate closed?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "hostel_pg-008",
+   "category": "Facilities & rules",
+   "owner_question": "Do you verify residents' ID and register them with the police as required?",
+   "customer_question": "Do you check IDs?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hostel_pg-009",
+   "category": "Facilities & rules",
+   "owner_question": "How far are the nearby colleges, offices or IT parks, and how do residents usually travel?",
+   "customer_question": "How far is the IT park?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hostel_pg-010",
+   "category": "Facilities & rules",
+   "owner_question": "Can someone stay a day or two before joining?",
+   "customer_question": "Can I stay one day and see?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "hostel_pg-011",
+   "category": "Facilities & rules",
+   "owner_question": "Who handles complaints (warden, manager), and how soon?",
+   "customer_question": "Whom do I complain to?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "hostel_pg-012",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "hostel_pg-013",
+   "category": "Service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

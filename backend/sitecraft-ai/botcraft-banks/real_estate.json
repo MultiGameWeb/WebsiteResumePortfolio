@@ -1,0 +1,176 @@
+{
+ "shop_type_key": "real_estate",
+ "name": "Real estate agent & builder",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 17,
+ "questions": [
+  {
+   "id": "real_estate-001",
+   "category": "Properties",
+   "owner_question": "What do you deal in?",
+   "customer_question": "Do you have open plots?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Open plots / ventures",
+    "Farm land / farm plots",
+    "New flats / apartments",
+    "Independent houses / villas",
+    "Resale properties",
+    "House rentals",
+    "Shops & offices (sale / rent)"
+   ]
+  },
+  {
+   "id": "real_estate-002",
+   "category": "Properties",
+   "owner_question": "Are you the builder / developer, or an agent?",
+   "customer_question": "Are you the builder?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "Builder / developer",
+    "Agent / broker",
+    "Both"
+   ]
+  },
+  {
+   "id": "real_estate-003",
+   "category": "Properties",
+   "owner_question": "What are your plot rates (per square yard, gunta or acre), and the extra for east / north facing or corner plots?",
+   "customer_question": "What is the rate per yard?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-004",
+   "category": "Properties",
+   "owner_question": "Which approvals do your projects have (HMDA / DTCP / RERA with LP and RERA numbers), or are they GP layouts or farm plots? Please give the numbers so buyers can check them.",
+   "customer_question": "Is this venture HMDA approved?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-005",
+   "category": "Properties",
+   "owner_question": "Can buyers see the title documents (30-year link documents, EC), and is the land free of assigned, endowment, waqf or lake FTL / buffer issues?",
+   "customer_question": "Is this land clear of FTL?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-006",
+   "category": "Properties",
+   "owner_question": "For flats, what is the rate per sft, and what is the all-inclusive price (parking, amenities, corpus fund, GST, registration)?",
+   "customer_question": "What is the full price of a 2BHK?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-007",
+   "category": "Properties",
+   "owner_question": "Are the flats ready to move (with occupancy certificate), or when is handover?",
+   "customer_question": "Is OC received?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-008",
+   "category": "Rentals",
+   "owner_question": "For rentals, what are the usual rent, maintenance, advance (how many months) and your brokerage?",
+   "customer_question": "How much is a 2BHK rent?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-009",
+   "category": "Properties",
+   "owner_question": "Is LRS paid, and can buyers get building permission now?",
+   "customer_question": "Can I start building right away?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-010",
+   "category": "Properties",
+   "owner_question": "Which banks give loans on your projects, and how is registration done (charges, spot registration)?",
+   "customer_question": "Will SBI give a loan here?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-011",
+   "category": "Properties",
+   "owner_question": "Do you arrange free site visits with pick-up and drop?",
+   "customer_question": "Can you take us to see the venture on Sunday?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "real_estate-012",
+   "category": "Properties",
+   "owner_question": "What are the super built-up area, carpet area and UDS (land share) of your flats, how many flats per floor, and are they vastu compliant?",
+   "customer_question": "What is the carpet area?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-013",
+   "category": "Properties",
+   "owner_question": "Do you sell landowner-share flats, and are they registered the same way as the builder's?",
+   "customer_question": "Is this a landowner share flat?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-014",
+   "category": "Rentals",
+   "owner_question": "Which houses allow bachelors, pets or non-veg cooking, and what about water and the owner living in the same building?",
+   "customer_question": "Do they allow bachelors?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-015",
+   "category": "Rentals",
+   "owner_question": "Do you help with the rental agreement and tenant police verification?",
+   "customer_question": "Will you make the rent agreement?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "real_estate-016",
+   "category": "Service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "real_estate-017",
+   "category": "Service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

@@ -26,7 +26,7 @@ Q = [
  ("Products & brands", "M", "list", "Which laptop and computer brands do you sell?", "Do you have Dell laptops?", ["HP", "Dell", "Lenovo", "Asus", "Acer", "Apple", "MSI"], "C"),
  ("Products & brands", "M", "options", "Are your products brand new and original, with the company's official warranty?", "Is this original with company warranty?", ["All original with brand warranty", "Some imported / without Indian warranty", "We also sell refurbished"], "PAC"),
  ("Products & brands", "I", "options", "Do you sell refurbished or second-hand products?", "Do you have second-hand phones?", ["No, only new", "Refurbished", "Second-hand", "Both"], "PARC"),
- ("Products & brands", "I", "text", "If you sell second-hand or refurbished products, do they come with a bill and a warranty? How long?", "Is there warranty on a used phone?", [], "PARC"),
+ ("Products & brands", "I", "text", "If you sell second-hand or refurbished products, do they come with the box, a bill, an IMEI / ownership check (not stolen) and a warranty? For used iPhones, do you show the real battery health and whether parts were replaced?", "Is there warranty on a used phone?", [], "PARC"),
  ("Products & brands", "I", "text", "Are your phones (iPhone, OnePlus and others) Indian units or imported / global pieces? Do imported ones get Indian warranty and work on Jio / Airtel 5G?", "Is the iPhone Indian warranty?", [], "P"),
  ("Products & brands", "I", "options", "Do you get new launches on the launch day, or can customers pre-book them?", "Is the new Samsung available?", ["Available on launch day", "Pre-booking available", "Comes later"], "PAC"),
  ("Products & brands", "I", "text", "If a model is out of stock, how many days does it take to get it?", "When will this model come?", [], "PAC"),

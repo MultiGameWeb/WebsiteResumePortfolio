@@ -69,7 +69,10 @@ export const SHOP_TYPES = [
   { key: "chicken_shop", name: "Chicken shop", aliases: ["chicken centre", "chicken shop", "broiler shop", "natu kodi shop", "poultry shop", "egg shop"], description: "sells chicken, country chicken, quail and eggs" },
   { key: "mutton_shop", name: "Mutton shop", aliases: ["mutton shop", "goat meat shop", "mutton stall"], description: "sells mutton and goat parts" },
   { key: "fish_shop", name: "Fish & seafood shop", aliases: ["fish shop", "fish market stall", "prawns shop", "seafood shop", "chepala shop"], description: "sells fish, prawns and crabs" },
-  { key: "meat_shop", name: "Meat shop (chicken, mutton & fish)", aliases: ["meat shop", "chicken and mutton shop", "non-veg shop", "meat and fish"], description: "sells chicken, mutton and fish" }
+  { key: "meat_shop", name: "Meat shop (chicken, mutton & fish)", aliases: ["meat shop", "chicken and mutton shop", "non-veg shop", "meat and fish"], description: "sells chicken, mutton and fish" },
+  { key: "real_estate", name: "Real estate agent & builder", aliases: ["real estate", "real estate agent", "property dealer", "builder", "developer", "ventures", "plots", "flats", "to-let broker", "rental broker"], description: "sells or rents plots, flats, houses and commercial spaces" },
+  { key: "hostel_pg", name: "Hostel / PG", aliases: ["hostel", "PG", "paying guest", "ladies hostel", "mens hostel", "co-living", "boys hostel"], description: "hostel or paying-guest accommodation with food" },
+  { key: "appliance_repair", name: "Home appliance repair service", aliases: ["AC repair", "TV repair", "fridge repair", "washing machine repair", "appliance service", "AC service centre", "electronics repair"], description: "repairs and services TVs, ACs, fridges, washing machines and other appliances" }
 ];
 
 export const SHOP_TYPE_KEYS = new Set(SHOP_TYPES.map(t => t.key));

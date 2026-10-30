@@ -16,7 +16,7 @@ Q = [
  # category, priority, answer_type, owner question, how a customer asks, options, tags
  ("Products", "M", "list", "Which cakes and bakery items do you make?", "Do you have pastries?", ["Cakes", "Pastries", "Bread & buns", "Cookies & biscuits", "Puffs, burgers & pizza", "Cupcakes & brownies", "Cheesecakes, donuts & macarons", "Chocolates", "Kids' candies & lollipops"], "K"),
  ("Products", "M", "list", "Which sweets and savouries do you make?", "Do you have kaju katli?", ["Ghee sweets (laddu, mysore pak)", "Kaju & dry-fruit sweets", "Bengali sweets (rasgulla, rasmalai)", "Milk sweets (kalakand, peda)", "Traditional sweets (pootharekulu, ariselu, bobbatlu)", "Savouries (mixture, chekkalu, murukulu)", "Hot snacks (samosa, kachori)", "Jaggery / millet sweets", "Sugar-free sweets"], "W"),
- ("Products", "I", "options", "Are your cakes eggless?", "Is this cake eggless?", ["All eggless", "Eggless on order", "Both, clearly marked", "With egg only"], "K"),
+ ("Products", "I", "options", "Are your cakes eggless, and are eggless cakes cut with separate knives?", "Is this cake eggless?", ["All eggless", "Eggless on order", "Both, clearly marked", "With egg only"], "K"),
  ("Products", "I", "text", "Which cake flavours do you make (for example black forest, red velvet, butterscotch, fruit)?", "Do you have red velvet?", [], "K"),
  ("Products", "I", "yes_no", "Are 1/2 kg and 1 kg ready-made birthday cakes always available at the counter without ordering?", "Do you have a ready cake now?", YN, "K"),
  ("Products", "I", "yes_no", "Are your sweets made fresh every day?", "Are these sweets fresh?", YN, "W"),
@@ -42,7 +42,7 @@ Q = [
  ("Custom cakes & orders", "I", "text", "How much advance do you take for custom cakes or bulk orders, and what is the refund policy if it is cancelled or rescheduled?", "How much advance should I pay?", [], "KW"),
  ("Custom cakes & orders", "O", "yes_no", "Are the paper and ink for photo cakes edible?", "Is the photo on the cake edible?", YN, "K"),
  ("Custom cakes & orders", "O", "yes_no", "Can customers change the flavour of a design cake?", "Can I have this design in chocolate?", YN, "K"),
- ("Custom cakes & orders", "O", "options", "Do you colour cream with natural or artificial colours?", "Are the colours safe?", ["Natural colours", "Food-grade artificial colours", "Both"], "K"),
+ ("Custom cakes & orders", "O", "options", "Do you colour cream with natural or artificial colours, and do dark colours stain the tongue or taste bitter?", "Are the colours safe?", ["Natural colours", "Food-grade artificial colours", "Both"], "K"),
  ("Custom cakes & orders", "O", "yes_no", "Can you make nut-free or gluten-free cakes on order?", "Do you have gluten-free cake?", YN, "K*"),
  ("Custom cakes & orders", "O", "text", "Do you write names on a chocolate plaque? Any extra charge?", "Can you write the name on chocolate?", [], "K"),
  ("Custom cakes & orders", "O", "yes_no", "Do you make 2- or 3-tier wedding cakes and send a chef to assemble them at the venue?", "Can you make a 3-tier cake?", YN, "K*"),
