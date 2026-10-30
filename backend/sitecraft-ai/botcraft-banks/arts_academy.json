@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 7,
+ "question_count": 20,
  "questions": [
   {
    "id": "arts_academy-001",
@@ -38,13 +38,21 @@
   {
    "id": "arts_academy-003",
    "category": "Music & dance",
+   "owner_question": "How is the course structured (levels or grades, syllabus), and how many students are in a batch (group or one-to-one)?",
+   "customer_question": "Is it group or individual class?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "arts_academy-004",
+   "category": "Music & dance",
    "owner_question": "Do students need their own instrument, or can they practise on yours?",
    "customer_question": "Do I have to buy a keyboard?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "arts_academy-004",
+   "id": "arts_academy-005",
    "category": "Music & dance",
    "owner_question": "Do you prepare students for certificate exams (for example Telugu University, Prayag Sangeet Samiti, Trinity) and arrange an arangetram?",
    "customer_question": "Will she get a certificate?",
@@ -52,7 +60,135 @@
    "answer_type": "text"
   },
   {
-   "id": "arts_academy-005",
+   "id": "arts_academy-006",
+   "category": "Music & dance",
+   "owner_question": "What is your teachers' training (guru, institution, certificates) and experience?",
+   "customer_question": "Where did the teacher learn?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "arts_academy-007",
+   "category": "Music & dance",
+   "owner_question": "Do students get chances to perform (annual day, stage shows, competitions, temple festivals), and what do costumes and make-up cost?",
+   "customer_question": "Will my daughter get to perform on stage?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "arts_academy-008",
+   "category": "Music & dance",
+   "owner_question": "Can students practise in your room or on your instruments outside class time?",
+   "customer_question": "Can she practise on your veena on Sunday?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "arts_academy-009",
+   "category": "Music & dance",
+   "owner_question": "Do you help buy instruments (brand advice, discounts) or rent them?",
+   "customer_question": "Which guitar should I buy?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "arts_academy-010",
+   "category": "Music & dance",
+   "owner_question": "Do you share practice videos or recordings for students to practise at home?",
+   "customer_question": "Can you send a video to practise at home?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "arts_academy-011",
+   "category": "Music & dance",
+   "owner_question": "Are drawing and painting materials included, or do students bring their own?",
+   "customer_question": "Do we have to buy colours?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "arts_academy-012",
+   "category": "Academy",
+   "owner_question": "Do you run summer camps and short courses?",
+   "customer_question": "Is there a summer camp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "arts_academy-013",
+   "category": "Academy",
+   "owner_question": "Do you also teach online?",
+   "customer_question": "Are there online classes?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "arts_academy-014",
+   "category": "Academy",
+   "owner_question": "Do you have batches for adults and working people?",
+   "customer_question": "Can I join at 35?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "arts_academy-015",
+   "category": "Academy",
+   "owner_question": "How are missed classes made up, and can the fee be paused (illness, exams, travel)? What is your refund policy?",
+   "customer_question": "Can I pause for a month during exams?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "arts_academy-016",
+   "category": "Academy",
+   "owner_question": "Can parents watch classes, and are there lady teachers or coaches for girls?",
+   "customer_question": "Can I sit and watch the class?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "arts_academy-017",
+   "category": "Academy",
+   "owner_question": "Do you have van or pickup service for students?",
+   "customer_question": "Do you have a van?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "arts_academy-018",
    "category": "General",
    "owner_question": "Can parents or students visit the campus or take a demo class before joining?",
    "customer_question": "Can we see the campus first?",
@@ -64,7 +200,7 @@
    ]
   },
   {
-   "id": "arts_academy-006",
+   "id": "arts_academy-019",
    "category": "General",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -80,7 +216,7 @@
    ]
   },
   {
-   "id": "arts_academy-007",
+   "id": "arts_academy-020",
    "category": "General",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Where can I see your reviews?",
