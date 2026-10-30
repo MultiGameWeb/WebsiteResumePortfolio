@@ -4,7 +4,7 @@
  "version": 2,
  "model": "curated",
  "generated_at": "2026-10-30",
- "question_count": 21,
+ "question_count": 27,
  "questions": [
   {
    "id": "real_estate-001",
@@ -123,13 +123,61 @@
   {
    "id": "real_estate-013",
    "category": "Properties",
+   "owner_question": "For farm land, what is the patta type (patta, assigned / DKT, inam), is NALA conversion done, will buyers get a pattadar passbook, and is the access road a government cart track or a private path?",
+   "customer_question": "Is this assigned land?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-014",
+   "category": "Properties",
+   "owner_question": "Is any part of the plot affected by road widening in the master plan, and what is the soil (red or black cotton)?",
+   "customer_question": "Will road widening take my plot?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-015",
+   "category": "Properties",
+   "owner_question": "For farm plots with plantation schemes (sandalwood, red sanders, mango), who maintains and replaces trees and takes forest permissions? (No income is promised.)",
+   "customer_question": "Will the sandalwood trees really give a crore?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-016",
+   "category": "Properties",
+   "owner_question": "For resale flats, how old is the building, are property tax, electricity and maintenance dues cleared with a society NOC, and are there seepage or terrace waterproofing issues?",
+   "customer_question": "Are there any dues on this flat?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-017",
+   "category": "Properties",
+   "owner_question": "For commercial spaces, what are the rent, goodwill / pagdi, allowed uses (hotel, medical shop), 3-phase power, parking, lease term and yearly increase?",
+   "customer_question": "Is there goodwill for this shop?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-018",
+   "category": "Properties",
+   "owner_question": "Do you take joint development (JDA) of owners' plots? What share, goodwill and rent during construction do you offer?",
+   "customer_question": "What share do you give for development?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "real_estate-019",
+   "category": "Properties",
    "owner_question": "Is there anything nearby buyers should know (graveyard, high-tension lines, nala), and do you fence and guard the venture and handle disputes after sale?",
    "customer_question": "Is there an HT line over the plot?",
    "priority": "optional",
    "answer_type": "text"
   },
   {
-   "id": "real_estate-014",
+   "id": "real_estate-020",
    "category": "Properties",
    "owner_question": "How are your flats built (red bricks, AAC blocks, Mivan), how deep is the borewell and what about summer water, and what parking does each flat get (covered, direct drive-in or back-to-back)?",
    "customer_question": "Is the parking back-to-back?",
@@ -137,7 +185,7 @@
    "answer_type": "text"
   },
   {
-   "id": "real_estate-015",
+   "id": "real_estate-021",
    "category": "Properties",
    "owner_question": "If handover is delayed, what compensation does the agreement give (for example rent)?",
    "customer_question": "What if the flat is delayed?",
@@ -145,7 +193,7 @@
    "answer_type": "text"
   },
   {
-   "id": "real_estate-016",
+   "id": "real_estate-022",
    "category": "Properties",
    "owner_question": "Do you sell landowner-share flats, and are they registered the same way as the builder's?",
    "customer_question": "Is this a landowner share flat?",
@@ -153,7 +201,7 @@
    "answer_type": "text"
   },
   {
-   "id": "real_estate-017",
+   "id": "real_estate-023",
    "category": "Rentals",
    "owner_question": "Which houses allow bachelors, pets or non-veg cooking, and what about water and the owner living in the same building?",
    "customer_question": "Do they allow bachelors?",
@@ -161,7 +209,7 @@
    "answer_type": "text"
   },
   {
-   "id": "real_estate-018",
+   "id": "real_estate-024",
    "category": "Rentals",
    "owner_question": "In your rentals, who pays for repairs (motor, geyser, plumbing), what is cut from the advance when leaving (painting), and does each house have its own electricity meter?",
    "customer_question": "Will the owner cut painting charges from my advance?",
@@ -169,7 +217,7 @@
    "answer_type": "text"
   },
   {
-   "id": "real_estate-019",
+   "id": "real_estate-025",
    "category": "Rentals",
    "owner_question": "Do you help with the rental agreement and tenant police verification?",
    "customer_question": "Will you make the rent agreement?",
@@ -181,7 +229,7 @@
    ]
   },
   {
-   "id": "real_estate-020",
+   "id": "real_estate-026",
    "category": "Service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -197,7 +245,7 @@
    ]
   },
   {
-   "id": "real_estate-021",
+   "id": "real_estate-027",
    "category": "Service",
    "owner_question": "Please share your Google reviews link, if you have one.",
    "customer_question": "Where can I see your reviews?",
