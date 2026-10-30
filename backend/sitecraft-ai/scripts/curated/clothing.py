@@ -4,7 +4,7 @@
 # Run: python3 scripts/curated/clothing.py  -> writes botcraft-banks/<type>.json
 # Priorities: M = mandatory, I = important, O = optional.
 # Tags: S = saree & textile showroom, G = readymade garments / family fashion store,
-#       B = boutique & designer wear, K = kids wear shop.
+#       B = boutique & designer wear, K = kids wear shop, T = tailor shop.
 # Each owner is asked only the questions tagged for their business.
 # A * in the tags marks a city-only question, asked only to shops in a district
 # headquarters or city (local shops rarely know these).
@@ -69,7 +69,7 @@ Q = [
 
  ("Sizes & fit", "M", "list", "Which sizes do you stock?", "Do you have XXL?", SIZES, "G"),
  ("Sizes & fit", "I", "yes_no", "Do you have plus sizes (3XL and above)?", "Do you have 5XL?", YN, "GB"),
- ("Sizes & fit", "I", "yes_no", "Do you have a trial room?", "Can I try this on?", YN, "GBK"),
+ ("Sizes & fit", "I", "yes_no", "Do you have a trial room?", "Can I try this on?", YN, "GBKT"),
  ("Sizes & fit", "O", "yes_no", "Do you have a size chart (by age, height or measurements)?", "Which size for a 5-year-old?", YN, "GK"),
  ("Sizes & fit", "O", "yes_no", "Do you have a full mirror and good lighting to see saree colours properly?", "Can I see the saree in daylight?", YN, "S"),
  ("Sizes & fit", "O", "text", "If a size is not available, can you get it? How many days?", "Can you get this in M size?", [], "GK"),
@@ -77,25 +77,42 @@ Q = [
  ("Stitching & alterations", "I", "yes_no", "Do you do fall and pico for sarees bought here?", "Will you do fall and pico?", YN, "S"),
  ("Stitching & alterations", "I", "text", "What is the charge for fall and pico, and how many days does it take?", "How much for fall pico?", [], "S"),
  ("Stitching & alterations", "I", "yes_no", "Do you have in-house tailors to stitch new clothes (blouses, dresses, shirts, safari suits)?", "Do you stitch blouses?", YN, "SGB"),
- ("Stitching & alterations", "I", "text", "What are your stitching charges (simple blouse, designer blouse, salwar, lehenga)?", "Blouse stitching charge?", [], "SB"),
- ("Stitching & alterations", "I", "text", "How many days does stitching take, and is urgent (express) stitching available? Extra charge?", "Can I get the blouse in 2 days?", [], "SB"),
- ("Stitching & alterations", "I", "list", "Which work do you do?", "Do you do maggam work?", ["Maggam / aari work", "Embroidery (machine)", "Zardosi", "Stone / bead work", "Hand painting", "Tassels / latkans"], "B"),
- ("Stitching & alterations", "O", "text", "How are maggam / aari work charges decided, and how many days does it take?", "How long for maggam work on my bridal blouse?", [], "SB"),
- ("Stitching & alterations", "I", "text", "How much advance do you take for stitching orders?", "How much advance should I pay?", [], "B"),
- ("Stitching & alterations", "I", "options", "How do you take measurements?", "Should I bring a sample blouse?", ["At the shop", "From a sample garment", "Customer sends measurements", "Both"], "SB"),
- ("Stitching & alterations", "O", "yes_no", "Do you have women tailors / staff to take measurements for ladies?", "Is there a lady to take measurements?", YN, "SB"),
- ("Stitching & alterations", "I", "text", "How many trial fittings do you give, and is re-stitching free if the fitting or work is not right?", "If the fitting is wrong, will you correct it free?", [], "SB"),
+ ("Stitching & alterations", "I", "text", "What are your stitching charges (blouse with and without lining, designer cuts like princess, boat neck, high neck, sabyasachi or backless, padded blouse, salwar, lehenga with can-can, kids' pattu pavadai and frocks)?", "Blouse stitching charge?", [], "SBT"),
+ ("Stitching & alterations", "I", "text", "How many days does stitching take, do you give an exact delivery date and time, and is urgent (same-day) stitching available? Extra charge?", "Can I get the blouse in 2 days?", [], "SBT"),
+ ("Stitching & alterations", "I", "list", "Which work do you do?", "Do you do maggam work?", ["Hand maggam / aari work", "Computer embroidery", "Couple portraits & names in embroidery", "Zardosi", "Stone / bead work", "Hand painting", "Tassels / latkans"], "BT"),
+ ("Stitching & alterations", "M", "list", "What do you stitch?", "Do you stitch gents shirts?", ["Ladies blouses", "Salwar / churidar / kurtis", "Lehengas & long frocks", "Kids' wear (pattu pavadai, frocks)", "Western wear (formal pants, blazers, jumpsuits, dhoti pants)", "Maternity / feeding kurtis", "Gents shirts & pants", "Suits, blazers & sherwanis", "Uniforms (school, office, police, doctor coats)", "Curtains, cushion & sofa covers", "Alterations"], "T"),
+ ("Stitching & alterations", "I", "text", "Do you provide lining cloth (pure cotton, pre-shrunk), or should customers bring it?", "Do I bring the lining cloth?", [], "BT"),
+ ("Stitching & alterations", "I", "yes_no", "Can customers check on WhatsApp or by phone whether their order is ready?", "Is my blouse ready?", YN, "BT"),
+ ("Stitching & alterations", "I", "yes_no", "Do you use non-tarnish beads and zari, lock-stitch the work so beads don't fall, and keep underarms free of beads?", "Will the maggam beads turn black?", YN, "BT"),
+ ("Stitching & alterations", "O", "text", "Do you stitch blouses with maggam work done elsewhere? Is there an extra charge?", "Can you stitch my maggam blouse piece?", [], "BT"),
+ ("Stitching & alterations", "I", "text", "How do you avoid common fitting problems (shoulders slipping, armhole wrinkles, front hook gaps), and design for plus sizes?", "My blouse shoulders keep slipping, can you fix that?", [], "BT"),
+ ("Stitching & alterations", "O", "list", "Which finishing do you offer?", "Can you add latkans?", ["Piping", "Latkans / tassels", "Rust-free hooks", "Hand-made hook loops", "Overlock inside", "Extra margin to loosen later", "Saree pin holder loop", "Concealed feeding zips", "Leftover pieces returned"], "BT"),
+ ("Stitching & alterations", "O", "text", "If the cloth is short (for example for elbow sleeves), how do you adjust it?", "My blouse piece is short, can you still do elbow sleeves?", [], "BT"),
+ ("Stitching & alterations", "O", "yes_no", "Can you convert old sarees into dresses or mother-daughter combos?", "Can you make frocks from my old pattu saree?", YN, "BT"),
+ ("Stitching & alterations", "O", "text", "What discount do you give on bulk orders (for example 5–10 wedding blouses)?", "Any discount for 10 blouses?", [], "BT"),
+ ("Stitching & alterations", "I", "text", "Do you alter readymade clothes (length, side stitches, zips) and repair tears?", "Can you shorten my jeans?", [], "T"),
+ ("Stitching & alterations", "O", "text", "For gents shirts and pants, what are the charges, and do you use good pocket cloth and branded zips?", "How much for a shirt and pant?", [], "T"),
+ ("Stitching & alterations", "O", "yes_no", "For school uniforms, do you leave extra length to let out next year?", "Can you leave extra length in the uniform?", YN, "T"),
+ ("Stitching & alterations", "O", "text", "Do you sell fabric and do colour-matched dyeing (colour-fast)?", "Can you dye cloth to match my saree?", [], "BT"),
+ ("Stitching & alterations", "O", "yes_no", "Do you visit homes for measurements and deliver stitched clothes, and stitch for outstation or NRI customers from video-call measurements?", "Can you take measurements at home?", YN, "BT"),
+ ("Stitching & alterations", "I", "text", "If you spoil a customer's cloth (wrong cut, iron burn, oil stain), lose a sample blouse, or stitch a different design, what do you do?", "You ruined my pattu blouse, what now?", [], "BT"),
+ ("Stitching & alterations", "O", "text", "How are maggam / aari work charges decided (simple to heavy bridal), and how many days does it take?", "How long for maggam work on my bridal blouse?", [], "SBT"),
+ ("Stitching & alterations", "I", "text", "How much advance do you take for stitching orders?", "How much advance should I pay?", [], "BT"),
+ ("Stitching & alterations", "I", "options", "How do you take measurements?", "Should I bring a sample blouse?", ["At the shop", "From a sample garment", "Customer sends measurements", "Both"], "SBT"),
+ ("Stitching & alterations", "O", "yes_no", "Do you have women tailors / staff to take measurements for ladies?", "Is there a lady to take measurements?", YN, "SBT"),
+ ("Stitching & alterations", "I", "text", "How many trial fittings do you give, are small alterations done on the spot, and is re-stitching free if the fitting or work is not right?", "If the fitting is wrong, will you correct it free?", [], "SBT"),
  ("Stitching & alterations", "O", "yes_no", "Can customers bring their own cloth for stitching?", "Can I bring my own cloth?", YN, "B"),
- ("Stitching & alterations", "O", "yes_no", "Can you make a design from a photo the customer shows?", "Can you make this design from Instagram?", YN, "B"),
- ("Stitching & alterations", "O", "text", "During the wedding season, how early should customers order?", "How early should I give my bridal blouse?", [], "B"),
+ ("Stitching & alterations", "O", "yes_no", "Can you make a design from a photo the customer shows?", "Can you make this design from Instagram?", YN, "BT"),
+ ("Stitching & alterations", "O", "text", "During the wedding season, how early should customers order?", "How early should I give my bridal blouse?", [], "BT"),
  ("Stitching & alterations", "I", "options", "Do you alter clothes bought from you (length, waist, sleeves)?", "Can you shorten the pant?", ["Free alteration", "Paid alteration", "No alteration"], "GK"),
  ("Stitching & alterations", "O", "text", "Is a tailor available at the shop, and how long do alterations take?", "When will the alteration be ready?", [], "GK"),
- ("Stitching & alterations", "O", "yes_no", "Do you stitch dhoti / pancha kattu or pre-stitched sarees?", "Can you make a ready-to-wear saree?", YN, "SB"),
- ("Stitching & alterations", "O", "yes_no", "Do you do saree pre-pleating or box folding for functions?", "Can you pleat my saree?", YN, "SB"),
+ ("Stitching & alterations", "O", "yes_no", "Do you stitch dhoti / pancha kattu or pre-stitched sarees?", "Can you make a ready-to-wear saree?", YN, "SBT"),
+ ("Stitching & alterations", "O", "list", "Which saree works do you do?", "Can you put fall and pico?", ["Fall & pico", "Hand-hemmed fall", "Kuchulu / crochet / bead tassels", "Pre-pleating & box folding", "Zari border patchwork from old sarees", "Invisible darning (raffu)"], "SBT"),
+ ("Stitching & alterations", "O", "text", "What do saree works cost (fall & pico, kuchulu, pre-pleating)?", "How much for fall and pico?", [], "SBT"),
 
  ("Prices & billing", "I", "options", "Are your prices fixed, or can customers bargain?", "Is there any discount on this price?", ["Fixed price", "Small discount possible", "Bargaining allowed"], "SGBK"),
  ("Prices & billing", "I", "yes_no", "Is the price (MRP) printed on the tag of every item?", "Where is the price tag?", YN, "SGK"),
- ("Prices & billing", "O", "options", "Is GST included in the price or added on the bill?", "Is GST extra?", ["Included", "Added on the bill"], "SGBK"),
+ ("Prices & billing", "O", "options", "Is GST included in the price or added on the bill?", "Is GST extra?", ["Included", "Added on the bill"], "SGBKT"),
  ("Prices & billing", "O", "text", "Do you give wholesale rates or extra discount on big wedding purchases (for example above ₹50,000, or 10+ sarees)?", "Any discount if we buy for the whole wedding?", [], "SG"),
  ("Prices & billing", "O", "text", "In which months do you have sales (Sankranti, Dasara, Diwali, end of season, stock clearance)?", "When is your sale?", [], "SGK"),
  ("Prices & billing", "O", "yes_no", "Do you sell gift vouchers / gift cards?", "Do you have a gift card?", YN, "SGK"),
@@ -106,7 +123,7 @@ Q = [
 
  ("Exchange details", "O", "text", "Can a saree be exchanged after fall and pico or blouse cutting is done?", "Can I exchange it after fall pico?", [], "S"),
  ("Exchange details", "O", "text", "Do exchange and alteration apply to sale or discount items too?", "Can I exchange a sale item?", [], "SGK"),
- ("Exchange details", "O", "text", "What if a stitched dress doesn't fit or the customer doesn't like it? Refund, redo or correction?", "What if I don't like the stitched dress?", [], "B"),
+ ("Exchange details", "O", "text", "What if a stitched dress doesn't fit or the customer doesn't like it? Refund, redo or correction?", "What if I don't like the stitched dress?", [], "BT"),
  ("Exchange details", "O", "text", "For exchange, are the original price tag and bill both needed? Can gifts be exchanged with only the tag?", "Do I need the bill to exchange?", [], "SGK"),
  ("Exchange details", "O", "yes_no", "Do you exchange clothes that are already washed or altered?", "I washed it once, can I still exchange it?", YN, "GK"),
  ("Exchange details", "O", "options", "On returns, do you give money back or a store credit?", "Will I get my money back?", ["Money back", "Store credit / credit note", "Exchange only"], "SGK"),
@@ -132,11 +149,12 @@ Q = [
  ("Shop & service", "O", "yes_no", "Does a sales assistant help each customer with selection?", "Can someone help me choose?", YN, "SGBK"),
  ("Shop & service", "O", "text", "If customers have a complaint (staff behaviour, billing delay), whom can they talk to?", "Can I talk to the manager?", [], "SGBK"),
  ("Shop & service", "O", "yes_no", "If customers forget a bag or item in the trial room, do you keep it safe for them?", "I left my bag in the trial room, do you have it?", YN, "SGBK"),
- ("Shop & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "SGBK"),
- ("Shop & service", "O", "text", "Please share your Instagram page and Google reviews link, if you have them.", "Do you have Instagram?", [], "SGBK"),
+ ("Shop & service", "O", "list", "Which languages can your staff speak?", "Does anyone speak Hindi?", ["Telugu", "Hindi", "English", "Urdu", "Tamil", "Kannada"], "SGBKT"),
+ ("Shop & service", "O", "text", "Please share your Instagram page and Google reviews link, if you have them.", "Do you have Instagram?", [], "SGBKT"),
 ]
 
 TYPES = [("saree_textiles", "Saree & textile showroom", "S"), ("readymade_garments", "Readymade garments / family fashion store", "G"),
+         ("tailor_shop", "Tailor shop (ladies & gents)", "T"),
          ("boutique", "Boutique & designer wear", "B"), ("kids_wear", "Kids wear shop", "K")]
 PRI = {"M": "mandatory", "I": "important", "O": "optional"}
 order = {"M": 0, "I": 1, "O": 2}

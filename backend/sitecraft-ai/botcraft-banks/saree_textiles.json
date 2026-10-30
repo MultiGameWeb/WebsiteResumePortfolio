@@ -3,8 +3,8 @@
  "name": "Saree & textile showroom",
  "version": 2,
  "model": "curated",
- "generated_at": "2026-10-28",
- "question_count": 70,
+ "generated_at": "2026-10-30",
+ "question_count": 71,
  "questions": [
   {
    "id": "saree_textiles-001",
@@ -167,7 +167,7 @@
   {
    "id": "saree_textiles-013",
    "category": "Stitching & alterations",
-   "owner_question": "What are your stitching charges (simple blouse, designer blouse, salwar, lehenga)?",
+   "owner_question": "What are your stitching charges (blouse with and without lining, designer cuts like princess, boat neck, high neck, sabyasachi or backless, padded blouse, salwar, lehenga with can-can, kids' pattu pavadai and frocks)?",
    "customer_question": "Blouse stitching charge?",
    "priority": "important",
    "answer_type": "text"
@@ -175,7 +175,7 @@
   {
    "id": "saree_textiles-014",
    "category": "Stitching & alterations",
-   "owner_question": "How many days does stitching take, and is urgent (express) stitching available? Extra charge?",
+   "owner_question": "How many days does stitching take, do you give an exact delivery date and time, and is urgent (same-day) stitching available? Extra charge?",
    "customer_question": "Can I get the blouse in 2 days?",
    "priority": "important",
    "answer_type": "text"
@@ -197,7 +197,7 @@
   {
    "id": "saree_textiles-016",
    "category": "Stitching & alterations",
-   "owner_question": "How many trial fittings do you give, and is re-stitching free if the fitting or work is not right?",
+   "owner_question": "How many trial fittings do you give, are small alterations done on the spot, and is re-stitching free if the fitting or work is not right?",
    "customer_question": "If the fitting is wrong, will you correct it free?",
    "priority": "important",
    "answer_type": "text"
@@ -425,7 +425,7 @@
   {
    "id": "saree_textiles-037",
    "category": "Stitching & alterations",
-   "owner_question": "How are maggam / aari work charges decided, and how many days does it take?",
+   "owner_question": "How are maggam / aari work charges decided (simple to heavy bridal), and how many days does it take?",
    "customer_question": "How long for maggam work on my bridal blouse?",
    "priority": "optional",
    "answer_type": "text"
@@ -457,17 +457,29 @@
   {
    "id": "saree_textiles-040",
    "category": "Stitching & alterations",
-   "owner_question": "Do you do saree pre-pleating or box folding for functions?",
-   "customer_question": "Can you pleat my saree?",
+   "owner_question": "Which saree works do you do?",
+   "customer_question": "Can you put fall and pico?",
    "priority": "optional",
-   "answer_type": "yes_no",
+   "answer_type": "list",
    "options": [
-    "Yes",
-    "No"
+    "Fall & pico",
+    "Hand-hemmed fall",
+    "Kuchulu / crochet / bead tassels",
+    "Pre-pleating & box folding",
+    "Zari border patchwork from old sarees",
+    "Invisible darning (raffu)"
    ]
   },
   {
    "id": "saree_textiles-041",
+   "category": "Stitching & alterations",
+   "owner_question": "What do saree works cost (fall & pico, kuchulu, pre-pleating)?",
+   "customer_question": "How much for fall and pico?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "saree_textiles-042",
    "category": "Prices & billing",
    "owner_question": "Is GST included in the price or added on the bill?",
    "customer_question": "Is GST extra?",
@@ -479,7 +491,7 @@
    ]
   },
   {
-   "id": "saree_textiles-042",
+   "id": "saree_textiles-043",
    "category": "Prices & billing",
    "owner_question": "Do you give wholesale rates or extra discount on big wedding purchases (for example above ₹50,000, or 10+ sarees)?",
    "customer_question": "Any discount if we buy for the whole wedding?",
@@ -487,7 +499,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-043",
+   "id": "saree_textiles-044",
    "category": "Prices & billing",
    "owner_question": "In which months do you have sales (Sankranti, Dasara, Diwali, end of season, stock clearance)?",
    "customer_question": "When is your sale?",
@@ -495,7 +507,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-044",
+   "id": "saree_textiles-045",
    "category": "Prices & billing",
    "owner_question": "Do you sell gift vouchers / gift cards?",
    "customer_question": "Do you have a gift card?",
@@ -507,7 +519,7 @@
    ]
   },
   {
-   "id": "saree_textiles-045",
+   "id": "saree_textiles-046",
    "category": "Prices & billing",
    "owner_question": "Do you accept Sodexo / Pluxee or other company gift coupons?",
    "customer_question": "Can I pay with Sodexo coupons?",
@@ -519,7 +531,7 @@
    ]
   },
   {
-   "id": "saree_textiles-046",
+   "id": "saree_textiles-047",
    "category": "Prices & billing",
    "owner_question": "Do you give special discounts for students (college ID) or corporate employees?",
    "customer_question": "Any student discount?",
@@ -527,7 +539,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-047",
+   "id": "saree_textiles-048",
    "category": "Prices & billing",
    "owner_question": "Do you sell to resellers or small shops at wholesale rates?",
    "customer_question": "Do you give wholesale rates?",
@@ -539,7 +551,7 @@
    ]
   },
   {
-   "id": "saree_textiles-048",
+   "id": "saree_textiles-049",
    "category": "Exchange details",
    "owner_question": "Can a saree be exchanged after fall and pico or blouse cutting is done?",
    "customer_question": "Can I exchange it after fall pico?",
@@ -547,7 +559,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-049",
+   "id": "saree_textiles-050",
    "category": "Exchange details",
    "owner_question": "Do exchange and alteration apply to sale or discount items too?",
    "customer_question": "Can I exchange a sale item?",
@@ -555,7 +567,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-050",
+   "id": "saree_textiles-051",
    "category": "Exchange details",
    "owner_question": "For exchange, are the original price tag and bill both needed? Can gifts be exchanged with only the tag?",
    "customer_question": "Do I need the bill to exchange?",
@@ -563,7 +575,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-051",
+   "id": "saree_textiles-052",
    "category": "Exchange details",
    "owner_question": "On returns, do you give money back or a store credit?",
    "customer_question": "Will I get my money back?",
@@ -576,7 +588,7 @@
    ]
   },
   {
-   "id": "saree_textiles-052",
+   "id": "saree_textiles-053",
    "category": "Stock & orders",
    "owner_question": "How often does new stock come in, and on which day usually?",
    "customer_question": "When does the new collection come?",
@@ -584,7 +596,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-053",
+   "id": "saree_textiles-054",
    "category": "Stock & orders",
    "owner_question": "Can customers reserve a piece for a few days by paying an advance?",
    "customer_question": "Can you keep this aside for me?",
@@ -596,7 +608,7 @@
    ]
   },
   {
-   "id": "saree_textiles-054",
+   "id": "saree_textiles-055",
    "category": "Stock & orders",
    "owner_question": "Can you get the same design in another colour?",
    "customer_question": "Do you have this in green?",
@@ -608,7 +620,7 @@
    ]
   },
   {
-   "id": "saree_textiles-055",
+   "id": "saree_textiles-056",
    "category": "Stock & orders",
    "owner_question": "Do you send sarees / clothes for selection to the customer's home (for weddings or elders)?",
    "customer_question": "Can you bring sarees to our house for selection?",
@@ -620,7 +632,7 @@
    ]
   },
   {
-   "id": "saree_textiles-056",
+   "id": "saree_textiles-057",
    "category": "Stock & orders",
    "owner_question": "Do you courier to other cities and abroad? What are the charges?",
    "customer_question": "Can you send it to the USA?",
@@ -628,7 +640,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-057",
+   "id": "saree_textiles-058",
    "category": "Stock & orders",
    "owner_question": "If a customer doesn't like clothes sent by courier, how do they return them?",
    "customer_question": "Will you pick it up if I don't like it?",
@@ -641,7 +653,7 @@
    ]
   },
   {
-   "id": "saree_textiles-058",
+   "id": "saree_textiles-059",
    "category": "Stock & orders",
    "owner_question": "Do you take custom weaving orders (name or design woven into the saree)?",
    "customer_question": "Can you weave our names in the saree?",
@@ -653,7 +665,7 @@
    ]
   },
   {
-   "id": "saree_textiles-059",
+   "id": "saree_textiles-060",
    "category": "Shop & service",
    "owner_question": "Are carry bags free, or charged on the bill?",
    "customer_question": "Do I have to pay for the bag?",
@@ -666,7 +678,7 @@
    ]
   },
   {
-   "id": "saree_textiles-060",
+   "id": "saree_textiles-061",
    "category": "Shop & service",
    "owner_question": "Do you send the bill on WhatsApp or SMS?",
    "customer_question": "Can you send the bill on WhatsApp?",
@@ -678,7 +690,7 @@
    ]
   },
   {
-   "id": "saree_textiles-061",
+   "id": "saree_textiles-062",
    "category": "Shop & service",
    "owner_question": "Do you do gift wrapping or gift box packing?",
    "customer_question": "Can you gift-pack it?",
@@ -690,7 +702,7 @@
    ]
   },
   {
-   "id": "saree_textiles-062",
+   "id": "saree_textiles-063",
    "category": "Shop & service",
    "owner_question": "Do you have seating for families and a kids' play area?",
    "customer_question": "Is there a place to sit?",
@@ -702,7 +714,7 @@
    ]
   },
   {
-   "id": "saree_textiles-063",
+   "id": "saree_textiles-064",
    "category": "Shop & service",
    "owner_question": "Do you have a private room or bridal lounge for bride and groom shopping?",
    "customer_question": "Is there a private room for bridal shopping?",
@@ -714,7 +726,7 @@
    ]
   },
   {
-   "id": "saree_textiles-064",
+   "id": "saree_textiles-065",
    "category": "Shop & service",
    "owner_question": "Do you take appointments for bridal or designer consultation?",
    "customer_question": "Can I book an appointment?",
@@ -726,7 +738,7 @@
    ]
   },
   {
-   "id": "saree_textiles-065",
+   "id": "saree_textiles-066",
    "category": "Shop & service",
    "owner_question": "Do you give loyalty points, and can they be used on the next bill?",
    "customer_question": "Do I get points?",
@@ -734,7 +746,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-066",
+   "id": "saree_textiles-067",
    "category": "Shop & service",
    "owner_question": "Does a sales assistant help each customer with selection?",
    "customer_question": "Can someone help me choose?",
@@ -746,7 +758,7 @@
    ]
   },
   {
-   "id": "saree_textiles-067",
+   "id": "saree_textiles-068",
    "category": "Shop & service",
    "owner_question": "If customers have a complaint (staff behaviour, billing delay), whom can they talk to?",
    "customer_question": "Can I talk to the manager?",
@@ -754,7 +766,7 @@
    "answer_type": "text"
   },
   {
-   "id": "saree_textiles-068",
+   "id": "saree_textiles-069",
    "category": "Shop & service",
    "owner_question": "If customers forget a bag or item in the trial room, do you keep it safe for them?",
    "customer_question": "I left my bag in the trial room, do you have it?",
@@ -766,7 +778,7 @@
    ]
   },
   {
-   "id": "saree_textiles-069",
+   "id": "saree_textiles-070",
    "category": "Shop & service",
    "owner_question": "Which languages can your staff speak?",
    "customer_question": "Does anyone speak Hindi?",
@@ -782,7 +794,7 @@
    ]
   },
   {
-   "id": "saree_textiles-070",
+   "id": "saree_textiles-071",
    "category": "Shop & service",
    "owner_question": "Please share your Instagram page and Google reviews link, if you have them.",
    "customer_question": "Do you have Instagram?",
