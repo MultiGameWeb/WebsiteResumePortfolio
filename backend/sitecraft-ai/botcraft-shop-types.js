@@ -63,7 +63,8 @@ export const SHOP_TYPES = [
   { key: "skin_hair_clinic", name: "Skin & hair clinic", aliases: ["skin clinic", "dermatologist", "hair clinic", "cosmetology clinic", "laser clinic", "hair transplant"], description: "skin, hair and cosmetology clinic" },
   { key: "physiotherapy", name: "Physiotherapy centre", aliases: ["physiotherapy", "physio clinic", "rehab centre"], description: "physiotherapy and rehabilitation centre" },
   { key: "ayush_clinic", name: "Ayurveda / homeopathy clinic", aliases: ["ayurveda", "ayurvedic clinic", "homeopathy", "homeo clinic", "siddha", "unani", "naturopathy", "panchakarma"], description: "Ayurveda, homeopathy or other AYUSH clinic" },
-  { key: "diagnostic_lab", name: "Diagnostic lab & scan centre", aliases: ["diagnostic centre", "blood test lab", "pathology lab", "scan centre", "X-ray centre", "ultrasound centre", "MRI centre", "diagnostics"], description: "diagnostic lab doing blood tests and scans" }
+  { key: "diagnostic_lab", name: "Diagnostic lab & scan centre", aliases: ["diagnostic centre", "blood test lab", "pathology lab", "scan centre", "X-ray centre", "ultrasound centre", "MRI centre", "diagnostics"], description: "diagnostic lab doing blood tests and scans" },
+  { key: "agri_inputs", name: "Fertilizer, seeds & pesticides shop", aliases: ["fertilizer shop", "pesticide shop", "seeds shop", "agro chemicals", "agri input dealer", "agro centre", "farm inputs", "eruvula shop"], description: "sells fertilizers, seeds, pesticides and farm equipment to farmers" }
 ];
 
 export const SHOP_TYPE_KEYS = new Set(SHOP_TYPES.map(t => t.key));
