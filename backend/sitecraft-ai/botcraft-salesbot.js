@@ -20,6 +20,22 @@ const PRIVATE_KEYS = new Set(["wifi_name", "wifi_password"]);
 
 const usable = value => !EMPTY_ANSWER.test(String(value ?? "").trim());
 
+// Questions BotCraft's AI adds for a shop after its question list is done
+// (ids extra_1..extra_3), saved as {"q": question, "a": answer}.
+export const EXTRA_ID = /^extra_[1-3]$/;
+
+export function extraQuestions(answers) {
+  const out = [];
+  for (const [id, value] of Object.entries(answers || {})) {
+    if (!EXTRA_ID.test(id)) continue;
+    try {
+      const item = JSON.parse(value);
+      if (typeof item?.q === "string" && item.q.trim()) out.push({ id, q: item.q, a: String(item.a || "") });
+    } catch { /* not an extra question */ }
+  }
+  return out.sort((x, y) => x.id.localeCompare(y.id));
+}
+
 // Digits for tel: and wa.me links; "" when there is no usable number.
 function phoneDigits(value) {
   const digits = String(value || "").replace(/[^\d+]/g, "").replace(/(?!^)\+/g, "");
@@ -73,6 +89,9 @@ export function shopKnowledge(shop, bank, typeName) {
     const value = shop.answers[q.id];
     if (usable(value)) lines.push(`- ${q.owner_question} ${value}`);
   }
+  for (const extra of extraQuestions(shop.answers)) {
+    if (usable(extra.a)) lines.push(`- ${extra.q} ${extra.a}`);
+  }
   for (const note of shop.notes || []) lines.push(`- ${note}`);
   for (const q of shop.ownerAnswers || []) lines.push(`- ${q.question} ${q.answer}`);
   const products = (shop.products || []).map(p =>
@@ -91,6 +110,9 @@ export function offlineData(shop, bank) {
   for (const q of bank?.questions || []) {
     const value = shop.answers[q.id];
     if (usable(value)) faqs.push({ q: q.customer_question || q.owner_question, a: String(value) });
+  }
+  for (const extra of extraQuestions(shop.answers)) {
+    if (usable(extra.a)) faqs.push({ q: extra.q, a: extra.a });
   }
   for (const q of shop.ownerAnswers || []) faqs.push({ q: q.question, a: q.answer });
   const items = (shop.products || []).slice(0, 200).map(p => ({

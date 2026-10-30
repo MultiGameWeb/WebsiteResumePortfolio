@@ -6,7 +6,7 @@ import {
   listCustomerQuestions, logUnanswered, listPhotos, listProducts, loadPhoto, loadPublicShop, loadShop,
   loadStoredBank, savePhoto, saveProduct, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts
 } from "./botcraft-store.js";
-import { SALESBOT_SCHEMA, botName, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
+import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
 
 // POST /api/botcraft/chat — BotCraft's conversation with a shop owner.
 // GET /api/botcraft/shop?id=<shopId> — the saved conversation, to restore the page.
@@ -49,6 +49,10 @@ const BANK_WINDOW = 12;
 // Questions are asked as a small form, a few at a time, so the owner answers
 // them together instead of waiting for one reply per question.
 const MAX_FORM_QUESTIONS = 8;
+// After the question list is done, the AI may add up to this many questions
+// the list missed for this particular shop, once (then "extra_done" is saved).
+const MAX_EXTRA_QUESTIONS = 3;
+const EXTRA_DONE = "extra_done";
 const BULK_MESSAGE_CHARS = 300;
 const FINISH_OPTION = "Finish for now";
 // Languages the owner can pick at the top of the page ("Auto" sends none).
@@ -85,6 +89,11 @@ const REPLY_SCHEMA = {
         properties: { id: { type: "STRING" }, value: { type: "STRING" } },
         required: ["id", "value"]
       }
+    },
+    extra_questions: {
+      type: "ARRAY",
+      items: { type: "STRING" },
+      description: `only when asked for in the instructions: up to ${MAX_EXTRA_QUESTIONS} more questions for this shop that nothing known answers, in the owner's language`
     },
     questions: {
       type: "ARRAY",
@@ -224,14 +233,15 @@ function cleanAnswers(raw, bank) {
   const ids = new Set((bank?.questions || []).map(q => q.id));
   const answers = {};
   for (const [id, value] of Object.entries(raw && typeof raw === "object" ? raw : {})) {
-    if (ids.has(id) && String(value ?? "").trim()) answers[id] = clip(value, 600);
+    if ((ids.has(id) || EXTRA_ID.test(id) || id === EXTRA_DONE) && String(value ?? "").trim()) answers[id] = clip(value, 1000);
   }
   return answers;
 }
 
 // Answers the owner gave in a question form, by core key or shop question id.
-function formAnswerValues(raw, facts, bank) {
+function formAnswerValues(raw, facts, bank, answers) {
   const bankIds = new Set((bank?.questions || []).map(q => q.id));
+  const extras = new Map(pendingExtras(answers).map(q => [q.id, q.owner_question]));
   const out = { facts: {}, answers: {} };
   for (const item of (Array.isArray(raw) ? raw : []).slice(0, MAX_FORM_QUESTIONS * 2)) {
     const id = String(item?.id || "");
@@ -239,6 +249,7 @@ function formAnswerValues(raw, facts, bank) {
     if (!value) continue;
     if (id !== "shop_type" && CORE_KEYS.has(id)) out.facts[id] = value;
     else if (bankIds.has(id)) out.answers[id] = value;
+    else if (extras.has(id)) out.answers[id] = JSON.stringify({ q: extras.get(id), a: value });
   }
   const callNumber = out.facts.call_number || facts.call_number;
   if (/^same as/i.test(out.facts.whatsapp_number || "") && callNumber) out.facts.whatsapp_number = callNumber;
@@ -253,7 +264,8 @@ function nextStep(facts, answers, bank) {
   if (coreForm.length) return { form: coreForm.slice(0, MAX_FORM_QUESTIONS) };
   const photo = core.find(q => q.answer_type === "image");
   if (photo) return { form: [], photo };
-  return { form: pendingBank(bank, answers, facts).slice(0, MAX_FORM_QUESTIONS) };
+  const bankForm = pendingBank(bank, answers, facts);
+  return { form: (bankForm.length ? bankForm : pendingExtras(answers)).slice(0, MAX_FORM_QUESTIONS) };
 }
 
 function planLines(step) {
@@ -266,7 +278,7 @@ function planLines(step) {
 // The form the model chose, limited to questions still pending. Options keep
 // their original values (follow-ups match on them) with translated labels.
 function formQuestions(raw, facts, answers, bank) {
-  const pending = new Map([...pendingCore(facts), ...pendingBank(bank, answers, facts)].map(q => [q.key || q.id, q]));
+  const pending = new Map([...pendingCore(facts), ...pendingBank(bank, answers, facts), ...pendingExtras(answers)].map(q => [q.key || q.id, q]));
   const questions = [];
   for (const item of Array.isArray(raw) ? raw : []) {
     const id = String(item?.id || "");
@@ -348,6 +360,26 @@ function pendingBank(bank, answers, facts) {
   return (bank?.questions || []).filter(q => !answers[q.id] && bankApplies(q, facts));
 }
 
+// Extra questions the AI added that the owner has not answered yet, in the
+// shape of a bank question.
+function pendingExtras(answers) {
+  return extraQuestions(answers).filter(item => !item.a)
+    .map(item => ({ id: item.id, owner_question: item.q, answer_type: "text", priority: "optional", options: [] }));
+}
+
+// The AI is asked for extra questions once, when the basics and the whole
+// question list are done.
+function extrasOpen(facts, answers, bank) {
+  return Boolean(bank) && !answers[EXTRA_DONE] && pendingCore(facts).length === 0
+    && pendingBank(bank, answers, facts).length === 0 && extraQuestions(answers).length === 0;
+}
+
+// What the owner already told, so extra questions never repeat it.
+function answeredLines(bank, answers) {
+  return (bank?.questions || []).filter(q => answers[q.id] && !/^(skipped|not applicable)$/i.test(answers[q.id]))
+    .map(q => `- ${q.owner_question} ${clip(answers[q.id], 120)}`).join("\n");
+}
+
 // Progress covers the mandatory core questions and the bank's mandatory and
 // important questions; optional ones are extra.
 function progress(facts, answers, bankRecord) {
@@ -365,7 +397,7 @@ function bankLines(questions) {
   return questions.map(q => `- ${q.id} [${q.priority}]: ${q.owner_question}${q.options?.length ? ` [options: ${q.options.join(" | ")}]` : ""}`).join("\n");
 }
 
-function systemPrompt(facts, answers, bankShown, bank, step, language) {
+function systemPrompt(facts, answers, bankShown, bank, step, language, askExtras) {
   const pending = pendingCore(facts);
   const bankPending = pendingBank(bank, answers, facts);
   const known = Object.entries(facts).map(([k, v]) => `- ${k}: ${v}`).join("\n") || "- (nothing yet)";
@@ -411,7 +443,12 @@ ${planLines(step)}
 Shop type keys:
 ${shopTypeList}
 
-Shop questions${bank ? ` for ${bank.name}: ${Object.keys(answers).length} answered, ${bankPending.length} left` : ": none for this shop type yet"}${bankShown.length ? `. ${bankShown.length === bankPending.length ? "All remaining" : "Next"} shop questions (ask in this order; record answers by id):\n${bankLines(bankShown)}` : ""}`;
+${askExtras ? `The question list for this shop is complete. Before finishing, look at what this owner told you (facts, notes, answers below and their messages) and think of up to ${MAX_EXTRA_QUESTIONS} short questions that customers of THIS shop would often ask and that nothing known answers yet, for example details of a special item or service the owner mentioned. Put them in "extra_questions" in the owner's language, one question each, no options. Never repeat or rephrase anything already asked or known, and never ask about payment methods, customer data, passwords or bank details. Leave "extra_questions" empty if nothing important is missing. If you add any, keep "reply" to one short line (for example "A few more questions about your shop:") and set "options" to ["${FINISH_OPTION}"]; otherwise tell the owner the setup questions are complete.
+
+Answers the owner already gave:
+${answeredLines(bank, answers) || "- (none)"}
+
+` : ""}Shop questions${bank ? ` for ${bank.name}: ${Object.keys(answers).length} answered, ${bankPending.length} left` : ": none for this shop type yet"}${bankShown.length ? `. ${bankShown.length === bankPending.length ? "All remaining" : "Next"} shop questions (ask in this order; record answers by id):\n${bankLines(bankShown)}` : ""}`;
 }
 
 function base64Size(data) {
@@ -511,7 +548,7 @@ export async function handleBotcraftRoute(request, env, url) {
   const bank = await resolveBank(env, facts);
   const answers = cleanAnswers(saved ? saved.answers : body?.answers, bank);
   // A submitted form is saved as given, before the model sees the turn.
-  const form = formAnswerValues(body?.formAnswers, facts, bank);
+  const form = formAnswerValues(body?.formAnswers, facts, bank, answers);
   Object.assign(facts, form.facts);
   Object.assign(answers, form.answers);
   const text = clip(body?.text, MAX_TEXT);
@@ -546,11 +583,12 @@ export async function handleBotcraftRoute(request, env, url) {
   const bankShown = bulk ? bankRemaining : coreDone ? bankRemaining.slice(0, BANK_WINDOW) : [];
 
   const step = nextStep(facts, answers, bank);
+  const askExtras = Boolean(saved) && text !== FINISH_OPTION && extrasOpen(facts, answers, bank);
   let result;
   const modelErrors = [];
   try {
     ({ result } = await callWithFallback(env, {
-      system: systemPrompt(facts, answers, bankShown, bank, step, language),
+      system: systemPrompt(facts, answers, bankShown, bank, step, language, askExtras),
       contents,
       schema: REPLY_SCHEMA,
       // Flash-Lite answers a setup chat in 1-2 s and has the most free quota.
@@ -596,6 +634,21 @@ export async function handleBotcraftRoute(request, env, url) {
     const id = String(answer?.id || "");
     if (shownIds.has(id) && clip(answer?.value, 600)) newAnswers[id] = clip(answer.value, 600);
   }
+  // Extra questions the AI added, saved unanswered ({q, a: ""}) and asked as a form.
+  const newExtras = [];
+  if (askExtras) {
+    const asked = new Set();
+    for (const raw of Array.isArray(result?.extra_questions) ? result.extra_questions : []) {
+      const question = clip(raw, 300);
+      if (!question || asked.has(question.toLowerCase())) continue;
+      asked.add(question.toLowerCase());
+      const id = `extra_${newExtras.length + 1}`;
+      newAnswers[id] = JSON.stringify({ q: question, a: "" });
+      newExtras.push({ id, question, type: "text", mandatory: false, options: [] });
+      if (newExtras.length >= MAX_EXTRA_QUESTIONS) break;
+    }
+    newAnswers[EXTRA_DONE] = "yes";
+  }
   // A new shop type means a different bank; earlier bank answers no longer apply.
   const sameBank = merged.shop_type === facts.shop_type;
   const mergedAnswers = sameBank ? { ...answers, ...newAnswers } : {};
@@ -623,6 +676,9 @@ export async function handleBotcraftRoute(request, env, url) {
     const target = language || (LANGUAGES.has(result?.language) ? result.language : null);
     if (added.length && target && target !== "English") await translateQuestions(env, added, target);
     questions.push(...added);
+  }
+  for (const q of newExtras) {
+    if (questions.length < MAX_FORM_QUESTIONS && !questions.some(asked => asked.id === q.id)) questions.push(q);
   }
   const bot = saved && coreComplete(merged) ? { publicId: await ensurePublicId(env, shopId).catch(() => null), name: merged.shop_name || "", botName: botName(merged), wifi: posterWifi(merged), openQuestions: await countOpenQuestions(env, shopId).catch(() => 0) } : null;
   const nextPhoto = sameBank && text !== FINISH_OPTION ? nextStep(merged, mergedAnswers, mergedBank).photo : null;
