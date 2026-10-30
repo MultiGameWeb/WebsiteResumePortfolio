@@ -157,6 +157,7 @@ const sheet = document.querySelector('#productSheet');
 let sheetProduct = null;
 
 function selectTab(name) {
+  if (talking && name !== 'chat') endTalk();
   for (const button of tabs.querySelectorAll('[data-tab]')) button.setAttribute('aria-selected', String(button.dataset.tab === name));
   panels.products.hidden = name !== 'products';
   panels.photos.hidden = name !== 'photos';
@@ -459,14 +460,16 @@ function offlineAnswer(question) {
   return [...itemHits, ...faqHits].join('\n\n');
 }
 
-async function ask(text, product = null) {
+// Returns the reply shown (so talk mode can read it aloud).
+async function ask(text, product = null, { voice = false } = {}) {
   const question = String(text || '').trim();
-  if (!question || busy) return;
+  if (!question || busy) return '';
   addMessage('customer', question);
   input.value = '';
   if (!navigator.onLine) {
-    addMessage('bot', offlineAnswer(question), OFFLINE_CHIPS);
-    return;
+    const answer = offlineAnswer(question);
+    addMessage('bot', answer, OFFLINE_CHIPS);
+    return answer;
   }
   busy = true;
   send.disabled = true;
@@ -476,22 +479,149 @@ async function ask(text, product = null) {
     const response = await fetch(`${API_BASE}/api/botcraft/ask`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ s: shopId, text: question, history: history.slice(-HISTORY_LIMIT), product: product?.key || undefined }),
+      body: JSON.stringify({ s: shopId, text: question, history: history.slice(-HISTORY_LIMIT), product: product?.key || undefined, voice: voice || undefined }),
     });
     const data = await response.json();
     typing.remove();
     if (!response.ok || !data.ok) throw new Error(data.error);
     history.push({ role: 'customer', text: question }, { role: 'bot', text: data.reply });
     addMessage('bot', data.reply, data.suggestions || []);
+    return data.reply;
   } catch {
     // No connection or the AI is busy: answer from the saved copy.
     typing.remove();
-    addMessage('bot', `(Basic answer — AI not available right now)\n${offlineAnswer(question)}`, OFFLINE_CHIPS);
+    const answer = offlineAnswer(question);
+    addMessage('bot', `(Basic answer — AI not available right now)\n${answer}`, OFFLINE_CHIPS);
+    return answer;
   } finally {
     busy = false;
     send.disabled = false;
-    input.focus();
+    if (!talking) input.focus();
   }
+}
+
+// ---- Talk mode: speak, hear the answer, speak again (no typing). ----
+// The phone's own speech services turn speech into text and read replies
+// aloud; the AI sees the same text as in chat, asked for short replies.
+
+const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const TALK_LANG_KEY = 'salesbot:talkLang';
+const TALK_LANGS = [['te-IN', 'తెలుగు'], ['hi-IN', 'हिन्दी'], ['en-IN', 'English'], ['ta-IN', 'தமிழ்'], ['kn-IN', 'ಕನ್ನಡ'],
+  ['ml-IN', 'മലയാളം'], ['mr-IN', 'मराठी'], ['bn-IN', 'বাংলা'], ['gu-IN', 'ગુજરાતી'], ['ur-IN', 'اردو']];
+const talkButton = document.querySelector('#talk');
+const talkPanel = document.querySelector('#talkPanel');
+const talkOrb = document.querySelector('#talkOrb');
+const talkStatus = document.querySelector('#talkStatus');
+const talkHeard = document.querySelector('#talkHeard');
+const talkLang = document.querySelector('#talkLang');
+let talking = false;
+let talkState = 'idle'; // idle, listening, thinking, speaking
+let recognizer = null;
+
+function setTalkState(state, status) {
+  talkState = state;
+  talkPanel.dataset.state = state;
+  talkStatus.textContent = status;
+  talkOrb.textContent = state === 'speaking' ? '🔊' : state === 'thinking' ? '…' : '🎙️';
+  talkOrb.setAttribute('aria-label', state === 'listening' ? 'Stop listening' : state === 'speaking' ? 'Stop and talk' : 'Tap to talk');
+}
+
+// Reads a reply aloud; resolves when it ends (or fails).
+function speakText(text) {
+  const synth = window.speechSynthesis;
+  const clean = String(text || '').replace(/[*_#>`~]|https?:\/\/\S+|\p{Extended_Pictographic}/gu, '').trim();
+  if (!synth || !clean) return Promise.resolve();
+  return new Promise((resolve) => {
+    const utterance = new SpeechSynthesisUtterance(clean);
+    utterance.lang = speechLang(clean) === 'en-IN' ? talkLang.value : speechLang(clean);
+    const voice = synth.getVoices().find((item) => item.lang.replace('_', '-').startsWith(utterance.lang.slice(0, 2)));
+    if (voice) utterance.voice = voice;
+    // Some phones never fire "end": stop waiting after a generous time.
+    const timer = window.setTimeout(resolve, 4000 + clean.length * 120);
+    const done = () => { window.clearTimeout(timer); resolve(); };
+    utterance.onend = done;
+    utterance.onerror = done;
+    synth.cancel();
+    synth.speak(utterance);
+  });
+}
+
+function listen() {
+  if (!talking) return;
+  window.speechSynthesis?.cancel();
+  let heard = '';
+  talkHeard.textContent = '';
+  recognizer = new Recognition();
+  recognizer.lang = talkLang.value;
+  recognizer.interimResults = true;
+  recognizer.maxAlternatives = 1;
+  recognizer.onresult = (event) => {
+    heard = Array.from(event.results).map((result) => result[0].transcript).join('');
+    talkHeard.textContent = heard;
+  };
+  recognizer.onerror = (event) => {
+    if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+      talking = false;
+      setTalkState('idle', 'Please allow the microphone for this page, then tap to talk.');
+    }
+  };
+  recognizer.onend = async () => {
+    recognizer = null;
+    if (!talking) return;
+    const question = heard.trim();
+    if (!question) { setTalkState('idle', 'I didn’t hear anything. Tap to talk.'); return; }
+    setTalkState('thinking', 'Thinking…');
+    const reply = await ask(question, null, { voice: true });
+    if (!talking) return;
+    setTalkState('speaking', 'Speaking… tap to interrupt');
+    await speakText(reply);
+    if (talking && talkState === 'speaking') listen();
+  };
+  setTalkState('listening', 'Listening… speak now');
+  try { recognizer.start(); } catch { setTalkState('idle', 'Tap to talk'); }
+}
+
+function startTalk() {
+  talking = true;
+  talkPanel.hidden = false;
+  form.hidden = true;
+  listen();
+}
+
+function endTalk() {
+  talking = false;
+  recognizer?.abort();
+  recognizer = null;
+  window.speechSynthesis?.cancel();
+  talkPanel.hidden = true;
+  form.hidden = false;
+  setTalkState('idle', 'Tap to talk');
+}
+
+if (Recognition && window.speechSynthesis) {
+  const saved = readStore(TALK_LANG_KEY);
+  const browser = (navigator.language || '').slice(0, 2);
+  const preferred = saved || TALK_LANGS.find(([code]) => code.startsWith(browser) && browser !== 'en')?.[0] || 'te-IN';
+  talkLang.replaceChildren(...TALK_LANGS.map(([code, label]) => {
+    const option = element('option', '', label);
+    option.value = code;
+    option.selected = code === preferred;
+    return option;
+  }));
+  talkButton.hidden = false;
+  talkButton.addEventListener('click', startTalk);
+  document.querySelector('#talkEnd').addEventListener('click', endTalk);
+  talkLang.addEventListener('change', () => {
+    writeStore(TALK_LANG_KEY, talkLang.value);
+    if (talkState === 'listening') recognizer?.abort();
+    else if (talking) listen();
+  });
+  talkOrb.addEventListener('click', () => {
+    if (!talking) { talking = true; listen(); return; }
+    if (talkState === 'listening') recognizer?.stop();
+    else if (talkState === 'speaking') { talkState = 'interrupted'; listen(); }
+    else if (talkState === 'idle') listen();
+  });
 }
 
 form.addEventListener('submit', (event) => {
