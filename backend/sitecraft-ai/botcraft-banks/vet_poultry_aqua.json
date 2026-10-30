@@ -1,0 +1,498 @@
+{
+ "shop_type_key": "vet_poultry_aqua",
+ "name": "Veterinary, poultry & aqua shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 41,
+ "questions": [
+  {
+   "id": "vet_poultry_aqua-001",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Which cattle feed and fodder items do you keep?",
+   "customer_question": "Do you have cattle feed?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Cattle feed pellets (bags)",
+    "Bypass protein / bypass fat feed",
+    "Rice bran (with oil and de-oiled / DORB)",
+    "Oil cakes (cottonseed, groundnut, coconut, sesame, sunflower)",
+    "Chuni / husk (chana, red gram, black gram)",
+    "Maize grit / powder",
+    "Calf milk replacer & calf starter",
+    "Sheep & goat feed",
+    "Silage bales",
+    "Fodder seeds & slips"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-002",
+   "category": "Vet medicines",
+   "owner_question": "Which veterinary medicines do you keep?",
+   "customer_question": "Do you have deworming medicine for buffaloes?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Dewormers (liquid & bolus)",
+    "Tick, lice & fly medicines (spray, pour-on)",
+    "Skin & wound sprays (maggot wounds)",
+    "Mastitis tubes & udder gels",
+    "Bloat & digestion medicines",
+    "Diarrhoea / scour medicines",
+    "Fever & pain medicines (on prescription)",
+    "Antibiotics (on prescription)",
+    "Eye & foot-rot medicines",
+    "Sheep & goat medicines"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-003",
+   "category": "Poultry feed",
+   "owner_question": "Which poultry feed do you keep?",
+   "customer_question": "Do you have broiler starter feed?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Broiler pre-starter",
+    "Broiler starter",
+    "Broiler finisher",
+    "Layer mash",
+    "Grower mash",
+    "Country chicken feed",
+    "Feed for fighter cocks (grains & mixes)"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-004",
+   "category": "Aqua feed",
+   "owner_question": "Which aqua feed do you keep?",
+   "customer_question": "Do you have floating fish feed?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Floating fish feed (pellets)",
+    "Sinking fish feed",
+    "Rice bran & oil cakes for fish",
+    "Vannamei shrimp feed (starter to grower)",
+    "Scampi feed",
+    "Feed binders & gels"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-005",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Which cattle feed brands do you keep (for example Godrej, Heritage, Vijaya, Kapila, Cargill, Kaveri, Nandini, SKM, Amul), and how should farmers get today's bag rate?",
+   "customer_question": "What is the rate of a 50 kg feed bag?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-006",
+   "category": "Cattle feed & fodder",
+   "owner_question": "For farmers whose milk, fat or SNF is low, which feed or supplements do you usually suggest (to be confirmed with a vet)?",
+   "customer_question": "Which feed increases fat in buffalo milk?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-007",
+   "category": "Minerals & supplements",
+   "owner_question": "Which supplements do you keep for cattle?",
+   "customer_question": "Do you have liquid calcium?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Liquid calcium (5 / 10 litre cans)",
+    "Chelated mineral mixture",
+    "Mineral salt lick blocks",
+    "Liver tonics",
+    "Rumen powders & digestives",
+    "Soda bicarbonate",
+    "Galactagogue boluses / powders (without injections)",
+    "Weight-gain tonics for sheep & goats"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-008",
+   "category": "Vet medicines",
+   "owner_question": "Do you sell antibiotics and injections only with a vet's prescription?",
+   "customer_question": "Can I buy an antibiotic injection without a doctor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-009",
+   "category": "Vet medicines",
+   "owner_question": "Do you keep dewormers that the label says are safe for pregnant animals, and tell farmers to confirm with a vet?",
+   "customer_question": "Which dewormer is safe for a pregnant buffalo?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-010",
+   "category": "Vet & farm help",
+   "owner_question": "Is a vet available?",
+   "customer_question": "Is there a vet at your shop?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Vet at the shop",
+    "Vet visits on fixed days",
+    "We give a nearby vet's number",
+    "Government vet hospital nearby",
+    "No vet"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-011",
+   "category": "Poultry feed",
+   "owner_question": "Which poultry feed brands do you keep, and do you give wholesale rates for farms (for example per 10 bags)?",
+   "customer_question": "What is the rate for 10 bags of starter?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-012",
+   "category": "Poultry health",
+   "owner_question": "Which poultry medicines and vaccines do you keep?",
+   "customer_question": "Do you have Lasota vaccine?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Vaccines (Lasota, F1, R2B, Gumboro / IBD, fowl pox)",
+    "Water-soluble antibiotics (on prescription)",
+    "Coccidiosis medicines",
+    "Vitamins & electrolytes (summer heat)",
+    "Liver & kidney tonics",
+    "Dewormers",
+    "Disinfectants & lime for sheds",
+    "Fly baits & larvicides"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-013",
+   "category": "Aqua feed",
+   "owner_question": "Which aqua feed brands, pellet sizes and protein levels do you keep (for example Avanti, CP, Growel, Uno, Waterbase, Godrej; 2–4 mm; 24–32% protein)?",
+   "customer_question": "Do you have 3 mm floating feed?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-014",
+   "category": "Pond care",
+   "owner_question": "Which pond care products do you keep?",
+   "customer_question": "Do you have oxygen tablets?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Oxygen tablets & powders",
+    "Zeolite",
+    "Yucca",
+    "Water & soil probiotics",
+    "Gut probiotics",
+    "Lime & dolomite",
+    "Plankton / bloom minerals",
+    "Minerals & vitamin C for shrimp",
+    "Disinfectants (BKC, iodine, KMnO4)",
+    "Medicines for fish lice (Argulus), on the label rules"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-015",
+   "category": "Pond care",
+   "owner_question": "Do you keep oxygen tablets / powders in stock all the time, and can farmers get them early in the morning or at night in an emergency?",
+   "customer_question": "Fish are gasping, can I get oxygen tablets now?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-016",
+   "category": "Shop & service",
+   "owner_question": "Do you give a bill with batch number and expiry for medicines and vaccines?",
+   "customer_question": "Will I get a bill with the expiry date?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-017",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Do you check feed and oil cakes for fungus and dampness (aflatoxin) and store them off the floor?",
+   "customer_question": "Is this cottonseed cake free of fungus?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-018",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Which fodder seeds and slips do you keep (for example Super Napier, CO-4, COFS-29, multi-cut jowar, maize, lucerne)?",
+   "customer_question": "Do you have Super Napier slips?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-019",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Do you give a lower rate or free auto delivery for bulk feed (for example 10–20 bags)?",
+   "customer_question": "Will you send 20 bags home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-020",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Do you give credit to dairy farmers until the milk bill comes (for example every 15 days)?",
+   "customer_question": "Can I pay when the dairy bill comes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-021",
+   "category": "Minerals & supplements",
+   "owner_question": "Which calcium and mineral mixture brands do you keep (for example Ostovet, Calshakti, Milchigen, Agrimin Forte, Minfa Gold), and in what pack sizes?",
+   "customer_question": "How much is a 5 kg mineral mixture?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-022",
+   "category": "Vet medicines",
+   "owner_question": "Which dewormer and tick medicine brands do you keep (for example Fenbendazole / Panacur, Albendazole, Ivermectin, Oxyclozanide, Butox, Flumethrin pour-on)?",
+   "customer_question": "Do you have Butox?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-023",
+   "category": "Vet medicines",
+   "owner_question": "Do you explain the label safety steps for tick medicines (for example stopping the animal from licking, gloves, keeping away from the water trough)?",
+   "customer_question": "Will it harm the buffalo if it licks the medicine?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-024",
+   "category": "Vet medicines",
+   "owner_question": "Which mastitis items do you keep (intramammary tubes, udder gels, teat siphons and teat dips)?",
+   "customer_question": "Do you have mastitis tubes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-025",
+   "category": "Vet medicines",
+   "owner_question": "Do you keep vaccines for cattle, sheep and goats (FMD, HS, BQ, PPR, ET, sheep pox, LSD) in a fridge with power backup, and pack them with ice for travel?",
+   "customer_question": "Do you have PPR vaccine for sheep?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-026",
+   "category": "Vet medicines",
+   "owner_question": "Do you sell vaccines and medicines in small packs for farmers with only a few animals or birds?",
+   "customer_question": "I have only 10 hens, do you have a small pack?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-027",
+   "category": "Vet & farm help",
+   "owner_question": "Do you tell farmers about government schemes and free vaccination camps (FMD, LSD, sheep deworming)?",
+   "customer_question": "When is the free vaccine camp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-028",
+   "category": "Vet & farm help",
+   "owner_question": "Can you arrange artificial insemination (AI) or a pregnancy check through a vet or gopalamitra?",
+   "customer_question": "Can you send someone for AI?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-029",
+   "category": "Dairy & farm equipment",
+   "owner_question": "Which dairy farm equipment do you sell?",
+   "customer_question": "Do you have milking machine liners?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Milking machines & liners",
+    "Chaff cutters & blades",
+    "Cow rubber mats",
+    "Ropes, bells & halters",
+    "Water troughs & buckets",
+    "Teat dips & udder wipes",
+    "Fans & foggers for sheds"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-030",
+   "category": "Poultry health",
+   "owner_question": "Do you give poultry vaccines with an ice flask (cold chain) and the vaccination schedule?",
+   "customer_question": "Will you pack the vaccine with ice?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-031",
+   "category": "Poultry health",
+   "owner_question": "Which vitamins, calcium and tonics do you keep for country chickens and fighter cocks?",
+   "customer_question": "Do you have vitamins for fighting roosters?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-032",
+   "category": "Poultry health",
+   "owner_question": "Can farmers bring a dead or sick bird for a post-mortem check through a vet?",
+   "customer_question": "Can someone check why my hens are dying?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-033",
+   "category": "Poultry equipment",
+   "owner_question": "Which poultry equipment do you sell?",
+   "customer_question": "Do you have nipple drinkers?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Nipple & bell drinkers",
+    "Feeders",
+    "Brooders (gas, charcoal, electric)",
+    "Litter (paddy husk)",
+    "Shed curtains",
+    "Cages & nets",
+    "Egg trays",
+    "Incubators"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-034",
+   "category": "Poultry equipment",
+   "owner_question": "Do you sell day-old chicks (broiler, layer or country) or take orders for them?",
+   "customer_question": "Do you have country chicken chicks?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-035",
+   "category": "Aqua feed",
+   "owner_question": "Do you give credit until harvest for regular pond farmers? On what terms?",
+   "customer_question": "Can I pay after the harvest?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-036",
+   "category": "Pond care",
+   "owner_question": "Do you test pond water (pH, ammonia, nitrite, alkalinity, hardness) or shrimp gut under a microscope? Is it free?",
+   "customer_question": "Can you test my pond water?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-037",
+   "category": "Pond care",
+   "owner_question": "Do you sell water test kits, aerators and spares (paddle wheels, gearboxes, motors)?",
+   "customer_question": "Do you have a 2 HP aerator?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-038",
+   "category": "Pond care",
+   "owner_question": "Do you have a technician or consultant who visits ponds?",
+   "customer_question": "Can someone come and see my pond?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-039",
+   "category": "Shop & service",
+   "owner_question": "Which items can't be returned (for example vaccines, opened medicines, cut feed bags)?",
+   "customer_question": "Can I return this vaccine?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_poultry_aqua-040",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada",
+    "Odia"
+   ]
+  },
+  {
+   "id": "vet_poultry_aqua-041",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

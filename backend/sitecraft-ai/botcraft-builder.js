@@ -820,7 +820,8 @@ async function handleSalesbot(request, env, url, path, origin) {
 // Customer request buttons on the bot page. On by default for the shop types
 // where they help most; the owner can switch each one on or off.
 const PREORDER_TYPES = new Set(["restaurant", "fast_food", "tiffin_centre", "catering", "bakery", "sweet_shop", "bakery_sweets",
-  "kirana", "supermarket", "fruits_vegetables", "chicken_shop", "mutton_shop", "fish_shop", "meat_shop", "agri_inputs", "pharmacy", "pet_shop"]);
+  "kirana", "supermarket", "fruits_vegetables", "chicken_shop", "mutton_shop", "fish_shop", "meat_shop", "agri_inputs", "pharmacy", "pet_shop",
+  "vet_cattle_feed", "poultry_needs", "aqua_needs", "vet_poultry_aqua"]);
 const ORDER_STATUS_TYPES = new Set(["tailor_shop", "boutique", "mobile_repair", "mobile_shop_repair", "appliance_repair", "computer_shop",
   "car_service", "bike_service", "car_bike_service", "car_wash_detailing", "heavy_vehicle_service", "optical", "photography",
   "jewellery", "furniture", "catering", "bakery", "bakery_sweets"]);

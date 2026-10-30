@@ -1,0 +1,301 @@
+{
+ "shop_type_key": "vet_cattle_feed",
+ "name": "Veterinary medicines & cattle feed shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 25,
+ "questions": [
+  {
+   "id": "vet_cattle_feed-001",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Which cattle feed and fodder items do you keep?",
+   "customer_question": "Do you have cattle feed?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Cattle feed pellets (bags)",
+    "Bypass protein / bypass fat feed",
+    "Rice bran (with oil and de-oiled / DORB)",
+    "Oil cakes (cottonseed, groundnut, coconut, sesame, sunflower)",
+    "Chuni / husk (chana, red gram, black gram)",
+    "Maize grit / powder",
+    "Calf milk replacer & calf starter",
+    "Sheep & goat feed",
+    "Silage bales",
+    "Fodder seeds & slips"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-002",
+   "category": "Vet medicines",
+   "owner_question": "Which veterinary medicines do you keep?",
+   "customer_question": "Do you have deworming medicine for buffaloes?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Dewormers (liquid & bolus)",
+    "Tick, lice & fly medicines (spray, pour-on)",
+    "Skin & wound sprays (maggot wounds)",
+    "Mastitis tubes & udder gels",
+    "Bloat & digestion medicines",
+    "Diarrhoea / scour medicines",
+    "Fever & pain medicines (on prescription)",
+    "Antibiotics (on prescription)",
+    "Eye & foot-rot medicines",
+    "Sheep & goat medicines"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-003",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Which cattle feed brands do you keep (for example Godrej, Heritage, Vijaya, Kapila, Cargill, Kaveri, Nandini, SKM, Amul), and how should farmers get today's bag rate?",
+   "customer_question": "What is the rate of a 50 kg feed bag?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-004",
+   "category": "Cattle feed & fodder",
+   "owner_question": "For farmers whose milk, fat or SNF is low, which feed or supplements do you usually suggest (to be confirmed with a vet)?",
+   "customer_question": "Which feed increases fat in buffalo milk?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-005",
+   "category": "Minerals & supplements",
+   "owner_question": "Which supplements do you keep for cattle?",
+   "customer_question": "Do you have liquid calcium?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Liquid calcium (5 / 10 litre cans)",
+    "Chelated mineral mixture",
+    "Mineral salt lick blocks",
+    "Liver tonics",
+    "Rumen powders & digestives",
+    "Soda bicarbonate",
+    "Galactagogue boluses / powders (without injections)",
+    "Weight-gain tonics for sheep & goats"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-006",
+   "category": "Vet medicines",
+   "owner_question": "Do you sell antibiotics and injections only with a vet's prescription?",
+   "customer_question": "Can I buy an antibiotic injection without a doctor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-007",
+   "category": "Vet medicines",
+   "owner_question": "Do you keep dewormers that the label says are safe for pregnant animals, and tell farmers to confirm with a vet?",
+   "customer_question": "Which dewormer is safe for a pregnant buffalo?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-008",
+   "category": "Vet & farm help",
+   "owner_question": "Is a vet available?",
+   "customer_question": "Is there a vet at your shop?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Vet at the shop",
+    "Vet visits on fixed days",
+    "We give a nearby vet's number",
+    "Government vet hospital nearby",
+    "No vet"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-009",
+   "category": "Shop & service",
+   "owner_question": "Do you give a bill with batch number and expiry for medicines and vaccines?",
+   "customer_question": "Will I get a bill with the expiry date?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-010",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Do you check feed and oil cakes for fungus and dampness (aflatoxin) and store them off the floor?",
+   "customer_question": "Is this cottonseed cake free of fungus?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-011",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Which fodder seeds and slips do you keep (for example Super Napier, CO-4, COFS-29, multi-cut jowar, maize, lucerne)?",
+   "customer_question": "Do you have Super Napier slips?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-012",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Do you give a lower rate or free auto delivery for bulk feed (for example 10–20 bags)?",
+   "customer_question": "Will you send 20 bags home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-013",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Do you give credit to dairy farmers until the milk bill comes (for example every 15 days)?",
+   "customer_question": "Can I pay when the dairy bill comes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-014",
+   "category": "Minerals & supplements",
+   "owner_question": "Which calcium and mineral mixture brands do you keep (for example Ostovet, Calshakti, Milchigen, Agrimin Forte, Minfa Gold), and in what pack sizes?",
+   "customer_question": "How much is a 5 kg mineral mixture?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-015",
+   "category": "Vet medicines",
+   "owner_question": "Which dewormer and tick medicine brands do you keep (for example Fenbendazole / Panacur, Albendazole, Ivermectin, Oxyclozanide, Butox, Flumethrin pour-on)?",
+   "customer_question": "Do you have Butox?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-016",
+   "category": "Vet medicines",
+   "owner_question": "Do you explain the label safety steps for tick medicines (for example stopping the animal from licking, gloves, keeping away from the water trough)?",
+   "customer_question": "Will it harm the buffalo if it licks the medicine?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-017",
+   "category": "Vet medicines",
+   "owner_question": "Which mastitis items do you keep (intramammary tubes, udder gels, teat siphons and teat dips)?",
+   "customer_question": "Do you have mastitis tubes?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-018",
+   "category": "Vet medicines",
+   "owner_question": "Do you keep vaccines for cattle, sheep and goats (FMD, HS, BQ, PPR, ET, sheep pox, LSD) in a fridge with power backup, and pack them with ice for travel?",
+   "customer_question": "Do you have PPR vaccine for sheep?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-019",
+   "category": "Vet medicines",
+   "owner_question": "Do you sell vaccines and medicines in small packs for farmers with only a few animals or birds?",
+   "customer_question": "I have only 10 hens, do you have a small pack?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-020",
+   "category": "Vet & farm help",
+   "owner_question": "Do you tell farmers about government schemes and free vaccination camps (FMD, LSD, sheep deworming)?",
+   "customer_question": "When is the free vaccine camp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-021",
+   "category": "Vet & farm help",
+   "owner_question": "Can you arrange artificial insemination (AI) or a pregnancy check through a vet or gopalamitra?",
+   "customer_question": "Can you send someone for AI?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-022",
+   "category": "Dairy & farm equipment",
+   "owner_question": "Which dairy farm equipment do you sell?",
+   "customer_question": "Do you have milking machine liners?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Milking machines & liners",
+    "Chaff cutters & blades",
+    "Cow rubber mats",
+    "Ropes, bells & halters",
+    "Water troughs & buckets",
+    "Teat dips & udder wipes",
+    "Fans & foggers for sheds"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-023",
+   "category": "Shop & service",
+   "owner_question": "Which items can't be returned (for example vaccines, opened medicines, cut feed bags)?",
+   "customer_question": "Can I return this vaccine?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "vet_cattle_feed-024",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada",
+    "Odia"
+   ]
+  },
+  {
+   "id": "vet_cattle_feed-025",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

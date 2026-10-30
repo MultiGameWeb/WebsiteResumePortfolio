@@ -1,0 +1,203 @@
+{
+ "shop_type_key": "poultry_needs",
+ "name": "Poultry feed & medicines shop",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 16,
+ "questions": [
+  {
+   "id": "poultry_needs-001",
+   "category": "Poultry feed",
+   "owner_question": "Which poultry feed do you keep?",
+   "customer_question": "Do you have broiler starter feed?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Broiler pre-starter",
+    "Broiler starter",
+    "Broiler finisher",
+    "Layer mash",
+    "Grower mash",
+    "Country chicken feed",
+    "Feed for fighter cocks (grains & mixes)"
+   ]
+  },
+  {
+   "id": "poultry_needs-002",
+   "category": "Vet medicines",
+   "owner_question": "Do you sell antibiotics and injections only with a vet's prescription?",
+   "customer_question": "Can I buy an antibiotic injection without a doctor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "poultry_needs-003",
+   "category": "Vet & farm help",
+   "owner_question": "Is a vet available?",
+   "customer_question": "Is there a vet at your shop?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Vet at the shop",
+    "Vet visits on fixed days",
+    "We give a nearby vet's number",
+    "Government vet hospital nearby",
+    "No vet"
+   ]
+  },
+  {
+   "id": "poultry_needs-004",
+   "category": "Poultry feed",
+   "owner_question": "Which poultry feed brands do you keep, and do you give wholesale rates for farms (for example per 10 bags)?",
+   "customer_question": "What is the rate for 10 bags of starter?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "poultry_needs-005",
+   "category": "Poultry health",
+   "owner_question": "Which poultry medicines and vaccines do you keep?",
+   "customer_question": "Do you have Lasota vaccine?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Vaccines (Lasota, F1, R2B, Gumboro / IBD, fowl pox)",
+    "Water-soluble antibiotics (on prescription)",
+    "Coccidiosis medicines",
+    "Vitamins & electrolytes (summer heat)",
+    "Liver & kidney tonics",
+    "Dewormers",
+    "Disinfectants & lime for sheds",
+    "Fly baits & larvicides"
+   ]
+  },
+  {
+   "id": "poultry_needs-006",
+   "category": "Shop & service",
+   "owner_question": "Do you give a bill with batch number and expiry for medicines and vaccines?",
+   "customer_question": "Will I get a bill with the expiry date?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "poultry_needs-007",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Do you give a lower rate or free auto delivery for bulk feed (for example 10–20 bags)?",
+   "customer_question": "Will you send 20 bags home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "poultry_needs-008",
+   "category": "Vet medicines",
+   "owner_question": "Do you sell vaccines and medicines in small packs for farmers with only a few animals or birds?",
+   "customer_question": "I have only 10 hens, do you have a small pack?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "poultry_needs-009",
+   "category": "Poultry health",
+   "owner_question": "Do you give poultry vaccines with an ice flask (cold chain) and the vaccination schedule?",
+   "customer_question": "Will you pack the vaccine with ice?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "poultry_needs-010",
+   "category": "Poultry health",
+   "owner_question": "Which vitamins, calcium and tonics do you keep for country chickens and fighter cocks?",
+   "customer_question": "Do you have vitamins for fighting roosters?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "poultry_needs-011",
+   "category": "Poultry health",
+   "owner_question": "Can farmers bring a dead or sick bird for a post-mortem check through a vet?",
+   "customer_question": "Can someone check why my hens are dying?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "poultry_needs-012",
+   "category": "Poultry equipment",
+   "owner_question": "Which poultry equipment do you sell?",
+   "customer_question": "Do you have nipple drinkers?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Nipple & bell drinkers",
+    "Feeders",
+    "Brooders (gas, charcoal, electric)",
+    "Litter (paddy husk)",
+    "Shed curtains",
+    "Cages & nets",
+    "Egg trays",
+    "Incubators"
+   ]
+  },
+  {
+   "id": "poultry_needs-013",
+   "category": "Poultry equipment",
+   "owner_question": "Do you sell day-old chicks (broiler, layer or country) or take orders for them?",
+   "customer_question": "Do you have country chicken chicks?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "poultry_needs-014",
+   "category": "Shop & service",
+   "owner_question": "Which items can't be returned (for example vaccines, opened medicines, cut feed bags)?",
+   "customer_question": "Can I return this vaccine?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "poultry_needs-015",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada",
+    "Odia"
+   ]
+  },
+  {
+   "id": "poultry_needs-016",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}

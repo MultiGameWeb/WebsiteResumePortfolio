@@ -1,0 +1,182 @@
+{
+ "shop_type_key": "aqua_needs",
+ "name": "Aqua shop (fish & prawn feed, pond care)",
+ "version": 2,
+ "model": "curated",
+ "generated_at": "2026-10-30",
+ "question_count": 15,
+ "questions": [
+  {
+   "id": "aqua_needs-001",
+   "category": "Aqua feed",
+   "owner_question": "Which aqua feed do you keep?",
+   "customer_question": "Do you have floating fish feed?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Floating fish feed (pellets)",
+    "Sinking fish feed",
+    "Rice bran & oil cakes for fish",
+    "Vannamei shrimp feed (starter to grower)",
+    "Scampi feed",
+    "Feed binders & gels"
+   ]
+  },
+  {
+   "id": "aqua_needs-002",
+   "category": "Vet medicines",
+   "owner_question": "Do you sell antibiotics and injections only with a vet's prescription?",
+   "customer_question": "Can I buy an antibiotic injection without a doctor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "aqua_needs-003",
+   "category": "Vet & farm help",
+   "owner_question": "Is a vet available?",
+   "customer_question": "Is there a vet at your shop?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Vet at the shop",
+    "Vet visits on fixed days",
+    "We give a nearby vet's number",
+    "Government vet hospital nearby",
+    "No vet"
+   ]
+  },
+  {
+   "id": "aqua_needs-004",
+   "category": "Aqua feed",
+   "owner_question": "Which aqua feed brands, pellet sizes and protein levels do you keep (for example Avanti, CP, Growel, Uno, Waterbase, Godrej; 2–4 mm; 24–32% protein)?",
+   "customer_question": "Do you have 3 mm floating feed?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "aqua_needs-005",
+   "category": "Pond care",
+   "owner_question": "Which pond care products do you keep?",
+   "customer_question": "Do you have oxygen tablets?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Oxygen tablets & powders",
+    "Zeolite",
+    "Yucca",
+    "Water & soil probiotics",
+    "Gut probiotics",
+    "Lime & dolomite",
+    "Plankton / bloom minerals",
+    "Minerals & vitamin C for shrimp",
+    "Disinfectants (BKC, iodine, KMnO4)",
+    "Medicines for fish lice (Argulus), on the label rules"
+   ]
+  },
+  {
+   "id": "aqua_needs-006",
+   "category": "Pond care",
+   "owner_question": "Do you keep oxygen tablets / powders in stock all the time, and can farmers get them early in the morning or at night in an emergency?",
+   "customer_question": "Fish are gasping, can I get oxygen tablets now?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "aqua_needs-007",
+   "category": "Shop & service",
+   "owner_question": "Do you give a bill with batch number and expiry for medicines and vaccines?",
+   "customer_question": "Will I get a bill with the expiry date?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "aqua_needs-008",
+   "category": "Cattle feed & fodder",
+   "owner_question": "Do you give a lower rate or free auto delivery for bulk feed (for example 10–20 bags)?",
+   "customer_question": "Will you send 20 bags home?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "aqua_needs-009",
+   "category": "Aqua feed",
+   "owner_question": "Do you give credit until harvest for regular pond farmers? On what terms?",
+   "customer_question": "Can I pay after the harvest?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "aqua_needs-010",
+   "category": "Pond care",
+   "owner_question": "Do you test pond water (pH, ammonia, nitrite, alkalinity, hardness) or shrimp gut under a microscope? Is it free?",
+   "customer_question": "Can you test my pond water?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "aqua_needs-011",
+   "category": "Pond care",
+   "owner_question": "Do you sell water test kits, aerators and spares (paddle wheels, gearboxes, motors)?",
+   "customer_question": "Do you have a 2 HP aerator?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "aqua_needs-012",
+   "category": "Pond care",
+   "owner_question": "Do you have a technician or consultant who visits ponds?",
+   "customer_question": "Can someone come and see my pond?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "aqua_needs-013",
+   "category": "Shop & service",
+   "owner_question": "Which items can't be returned (for example vaccines, opened medicines, cut feed bags)?",
+   "customer_question": "Can I return this vaccine?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "aqua_needs-014",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada",
+    "Odia"
+   ]
+  },
+  {
+   "id": "aqua_needs-015",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  }
+ ]
+}
