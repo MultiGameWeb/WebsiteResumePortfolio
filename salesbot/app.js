@@ -149,7 +149,7 @@ async function loadShop() {
 // ---- Products and photos tabs ----
 
 const tabs = document.querySelector('#tabs');
-const panels = { products: document.querySelector('#productsPanel'), photos: document.querySelector('#photosPanel') };
+const panels = { products: document.querySelector('#productsPanel'), photos: document.querySelector('#photosPanel'), requests: document.querySelector('#requestsPanel') };
 const sheet = document.querySelector('#productSheet');
 let sheetProduct = null;
 
@@ -157,6 +157,8 @@ function selectTab(name) {
   for (const button of tabs.querySelectorAll('[data-tab]')) button.setAttribute('aria-selected', String(button.dataset.tab === name));
   panels.products.hidden = name !== 'products';
   panels.photos.hidden = name !== 'photos';
+  panels.requests.hidden = name !== 'requests';
+  if (name === 'requests') refreshMyRequests();
   chat.hidden = name !== 'chat';
   form.hidden = name !== 'chat';
   if (name === 'chat') input.focus();
@@ -199,9 +201,15 @@ function openSheet(item) {
 function setupTabs() {
   const items = saved.offline?.items || [];
   const gallery = saved.shop.gallery || [];
+  const features = saved.shop.features || {};
+  const anyRequest = Boolean(features.photo || features.preorder || features.orderStatus);
   tabs.querySelector('[data-tab="products"]').hidden = !items.length;
   tabs.querySelector('[data-tab="photos"]').hidden = !gallery.length;
-  tabs.hidden = !items.length && !gallery.length;
+  tabs.querySelector('[data-tab="requests"]').hidden = !anyRequest;
+  tabs.hidden = !items.length && !gallery.length && !anyRequest;
+  for (const button of document.querySelectorAll('#requestButtons [data-form]')) {
+    button.hidden = !features[{ photo: 'photo', preorder: 'preorder', order: 'orderStatus' }[button.dataset.form]];
+  }
   if (items.length) renderProducts();
   document.querySelector('#photoGrid').replaceChildren(...gallery.map((photoId) => {
     const link = element('a', 'gallery-photo');
@@ -230,6 +238,137 @@ document.querySelector('#askThis').addEventListener('click', () => {
   selectTab('chat');
   if (item) ask(`Tell me about ${item.name}`, item);
 });
+
+// ---- Requests tab: photo questions, pre-orders and order status. ----
+
+const MAX_IMAGE_SIDE = 1280;
+const REQUESTS_KEY = `salesbot:requests:${shopId}`;
+const REQUEST_LABELS = { new: 'Sent — waiting for the shop', accepted: 'Accepted by the shop', ready: 'Ready ✅', done: 'Completed', rejected: 'Not possible' };
+const ORDER_LABELS = { received: 'Received', in_progress: 'In progress', ready: 'Ready ✅ — you can collect it', delivered: 'Delivered' };
+const requestForms = { photo: document.querySelector('#photoForm'), preorder: document.querySelector('#preorderForm'), order: document.querySelector('#orderForm') };
+const requestNote = document.querySelector('#requestNote');
+
+function myRequestIds() {
+  try { return JSON.parse(readStore(REQUESTS_KEY) || '[]').filter((id) => /^[a-f0-9]{32}$/.test(id)); } catch { return []; }
+}
+
+// Shrinks photos so they upload quickly on mobile data.
+async function prepareImage(file) {
+  const bitmap = await createImageBitmap(file);
+  const scale = Math.min(1, MAX_IMAGE_SIDE / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.round(bitmap.width * scale);
+  canvas.height = Math.round(bitmap.height * scale);
+  canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close?.();
+  const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.8));
+  const data = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',')[1] || '');
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(blob);
+  });
+  return { mimeType: 'image/jpeg', data };
+}
+
+function openRequestForm(name) {
+  for (const [key, formNode] of Object.entries(requestForms)) formNode.hidden = key !== name || !formNode.hidden;
+  for (const button of document.querySelectorAll('#requestButtons [data-form]')) {
+    button.setAttribute('aria-pressed', String(button.dataset.form === name && !requestForms[name].hidden));
+  }
+  requestNote.textContent = '';
+}
+
+function renderMyRequests(requests) {
+  const list = document.querySelector('#myRequests');
+  document.querySelector('#myTitle').hidden = !requests.length;
+  list.replaceChildren(...requests.map((request) => {
+    const card = element('article', 'my-request');
+    const head = element('div', 'my-request-head');
+    head.append(element('span', '', `${request.kind === 'preorder' ? '⚡ Pre-order' : '📸 Photo'} #${request.code}`),
+      element('span', `my-state my-state-${request.status}`, REQUEST_LABELS[request.status] || request.status));
+    card.append(head);
+    const text = [request.message, request.pickup && `Pickup: ${request.pickup}`].filter(Boolean).join('\n');
+    if (text) card.append(element('div', 'my-text', text));
+    if (request.reply) card.append(element('div', 'my-reply', `Shop: ${request.reply}`));
+    return card;
+  }));
+}
+
+async function refreshMyRequests() {
+  const ids = myRequestIds();
+  if (!ids.length || !navigator.onLine) return;
+  try {
+    const response = await fetch(`${API_BASE}/api/botcraft/requests`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ s: shopId, ids }),
+    });
+    const data = await response.json();
+    if (!response.ok || !data.ok) return;
+    const byId = new Map(data.requests.map((request) => [request.id, request]));
+    // Requests the shop deleted drop off this phone's list too.
+    writeStore(REQUESTS_KEY, JSON.stringify(ids.filter((id) => byId.has(id))));
+    renderMyRequests(ids.map((id) => byId.get(id)).filter(Boolean));
+  } catch {}
+}
+
+async function sendRequest(formNode) {
+  if (!navigator.onLine) { requestNote.textContent = 'Please connect to the internet to send this.'; return; }
+  const kind = formNode.dataset.kind;
+  const submit = formNode.querySelector('.request-submit');
+  submit.disabled = true;
+  requestNote.textContent = 'Sending…';
+  try {
+    const body = { s: shopId, kind, message: formNode.elements.message.value.trim(), name: formNode.elements.name.value.trim() };
+    if (kind === 'preorder') body.pickup = formNode.elements.pickup.value.trim();
+    if (kind === 'photo') {
+      const file = formNode.elements.photo.files[0];
+      if (!file) throw new Error('Please choose a photo.');
+      body.image = await prepareImage(file).catch(() => { throw new Error('This photo could not be read. Please choose another one.'); });
+    }
+    const response = await fetch(`${API_BASE}/api/botcraft/request`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+    });
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || 'Could not send. Please try again.');
+    writeStore(REQUESTS_KEY, JSON.stringify([data.request.id, ...myRequestIds()].slice(0, 20)));
+    formNode.reset();
+    formNode.hidden = true;
+    requestNote.textContent = `Sent ✓ Your number is #${data.request.code}. The shop's reply will show below${kind === 'preorder' ? ' — show this number at the counter' : ''}.`;
+    refreshMyRequests();
+  } catch (error) {
+    requestNote.textContent = error.message || 'Could not send. Please try again.';
+  } finally {
+    submit.disabled = false;
+  }
+}
+
+async function checkOrder(formNode) {
+  const result = document.querySelector('#orderResult');
+  const code = formNode.elements.code.value.trim();
+  if (!code) return;
+  if (!navigator.onLine) { result.textContent = 'Please connect to the internet to check.'; return; }
+  result.textContent = 'Checking…';
+  try {
+    const response = await fetch(`${API_BASE}/api/botcraft/order?s=${encodeURIComponent(shopId)}&code=${encodeURIComponent(code)}`);
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error);
+    result.textContent = data.order
+      ? `Order ${data.order.code}: ${ORDER_LABELS[data.order.status] || data.order.status}${data.order.note ? `\n${data.order.note}` : ''}`
+      : 'No order with this number yet. Please check the number on your bill, or ask the shop.';
+  } catch (error) {
+    result.textContent = error.message || 'Could not check right now. Please try again.';
+  }
+}
+
+document.querySelector('#requestButtons').addEventListener('click', (event) => {
+  const button = event.target.closest('[data-form]');
+  if (button) openRequestForm(button.dataset.form);
+});
+requestForms.photo.addEventListener('submit', (event) => { event.preventDefault(); sendRequest(event.target); });
+requestForms.preorder.addEventListener('submit', (event) => { event.preventDefault(); sendRequest(event.target); });
+requestForms.order.addEventListener('submit', (event) => { event.preventDefault(); checkOrder(event.target); });
+// The shop's replies show up while the Requests tab is open.
+window.setInterval(() => { if (!panels.requests.hidden && !document.hidden) refreshMyRequests(); }, 60000);
 
 // ---- Offline answers: plain text search over the saved copy, no AI. ----
 

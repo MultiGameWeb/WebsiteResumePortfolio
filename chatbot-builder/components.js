@@ -242,7 +242,7 @@ export function OwnerHelp(openQuestions = 0) {
   const help = makeElement('div', 'owner-help');
   help.append(makeElement('p', 'owner-help-text', 'Update your bot any time from "Manage my bot". Every change shows in your customer bot right away.'));
   if (openQuestions > 0) {
-    const alert = makeElement('a', 'owner-help-alert', `🔔 ${openQuestions} customer question${openQuestions === 1 ? '' : 's'} waiting for your answer — open Manage my bot`);
+    const alert = makeElement('a', 'owner-help-alert', `🔔 ${openQuestions} customer question${openQuestions === 1 ? '' : 's'} or request${openQuestions === 1 ? '' : 's'} waiting — open Manage my bot`);
     alert.href = './owner.html#questions';
     help.append(alert);
   }

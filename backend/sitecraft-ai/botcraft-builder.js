@@ -2,9 +2,10 @@ import { CORE_QUESTIONS, callWithFallback, generateQuestionBank, toBankRecord } 
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, answerCustomerQuestion, countOpenQuestions, deletePhoto, deleteProduct, dismissCustomerQuestion, ensurePublicId,
-  listCustomerQuestions, logUnanswered, listPhotos, listProducts, loadPhoto, loadPublicShop, loadShop,
-  loadStoredBank, savePhoto, saveProduct, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts
+  GALLERY_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, deleteRequest,
+  dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
+  listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
+  saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
 import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
 
@@ -14,6 +15,9 @@ import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, public
 // for the customer bot page. POST /api/botcraft/ask — a customer's question
 // to the shop's AI assistant (botcraft-salesbot.js).
 // GET /api/botcraft/photo?id=<photoId> — a shop photo (public, for <img>).
+// POST /api/botcraft/request — a customer's photo question or pre-order;
+// POST /api/botcraft/requests — the status of the customer's own requests;
+// GET /api/botcraft/order?s=&code= — an order's status by its bill number.
 // POST /api/botcraft/owner — the owner page: products, photos and bot name.
 // POST /api/botcraft/bank — prepares the question bank for a shop type that has
 // no ready-made file (takes 1-2 minutes) and stores it in D1 for every later
@@ -457,7 +461,8 @@ function base64Size(data) {
 
 export async function handleBotcraftRoute(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
-  if (!["/api/botcraft/chat", "/api/botcraft/shop", "/api/botcraft/bank", "/api/botcraft/public", "/api/botcraft/ask", "/api/botcraft/photo", "/api/botcraft/owner"].includes(path)) return null;
+  if (!["/api/botcraft/chat", "/api/botcraft/shop", "/api/botcraft/bank", "/api/botcraft/public", "/api/botcraft/ask", "/api/botcraft/photo", "/api/botcraft/owner",
+    "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order"].includes(path)) return null;
 
   // Photos are loaded by <img> tags, which send no Origin header.
   if (path === "/api/botcraft/photo") return servePhoto(env, url);
@@ -480,11 +485,12 @@ export async function handleBotcraftRoute(request, env, url) {
     const savedFacts = cleanFacts(saved.facts);
     const bank = await resolveBank(env, savedFacts);
     const answers = cleanAnswers(saved.answers, bank);
-    const bot = coreComplete(savedFacts) ? { publicId: await ensurePublicId(env, shopId), name: savedFacts.shop_name || "", botName: botName(savedFacts), wifi: posterWifi(savedFacts), openQuestions: await countOpenQuestions(env, shopId) } : null;
+    const bot = coreComplete(savedFacts) ? { publicId: await ensurePublicId(env, shopId), name: savedFacts.shop_name || "", botName: botName(savedFacts), wifi: posterWifi(savedFacts), openQuestions: await countOpenQuestions(env, shopId) + await countNewRequests(env, shopId) } : null;
     return reply({ ok: true, messages: saved.messages, progress: progress(savedFacts, answers, bank), bot }, 200, origin);
   }
 
   if (path === "/api/botcraft/public" || path === "/api/botcraft/ask") return handleSalesbot(request, env, url, path, origin);
+  if (path === "/api/botcraft/request" || path === "/api/botcraft/requests" || path === "/api/botcraft/order") return handleCustomerRequests(request, env, url, path, origin);
   if (path === "/api/botcraft/owner") return handleOwner(request, env, origin);
 
   if (path === "/api/botcraft/bank") {
@@ -680,7 +686,7 @@ export async function handleBotcraftRoute(request, env, url) {
   for (const q of newExtras) {
     if (questions.length < MAX_FORM_QUESTIONS && !questions.some(asked => asked.id === q.id)) questions.push(q);
   }
-  const bot = saved && coreComplete(merged) ? { publicId: await ensurePublicId(env, shopId).catch(() => null), name: merged.shop_name || "", botName: botName(merged), wifi: posterWifi(merged), openQuestions: await countOpenQuestions(env, shopId).catch(() => 0) } : null;
+  const bot = saved && coreComplete(merged) ? { publicId: await ensurePublicId(env, shopId).catch(() => null), name: merged.shop_name || "", botName: botName(merged), wifi: posterWifi(merged), openQuestions: (await countOpenQuestions(env, shopId).catch(() => 0)) + (await countNewRequests(env, shopId).catch(() => 0)) } : null;
   const nextPhoto = sameBank && text !== FINISH_OPTION ? nextStep(merged, mergedAnswers, mergedBank).photo : null;
   const allowSkip = questions.length ? questions.every(q => !q.mandatory) : !nextQuestion || nextQuestion.priority !== "mandatory";
 
@@ -764,6 +770,7 @@ async function handleSalesbot(request, env, url, path, origin) {
   const facts = cleanFacts(shop.facts);
   const typeName = SHOP_TYPES.find(t => t.key === facts.shop_type)?.name || shopTypeName(facts.shop_type);
   const profile = publicProfile(facts, typeName, shop.photos);
+  profile.features = shopFeatures(facts.shop_type, await loadSettings(env, shop.shopId));
   const bank = await resolveBank(env, facts);
   const answers = cleanAnswers(shop.answers, bank);
   if (path === "/api/botcraft/public") {
@@ -810,6 +817,77 @@ async function handleSalesbot(request, env, url, path, origin) {
   }
 }
 
+// Customer request buttons on the bot page. On by default for the shop types
+// where they help most; the owner can switch each one on or off.
+const PREORDER_TYPES = new Set(["restaurant", "fast_food", "tiffin_centre", "catering", "bakery", "sweet_shop", "bakery_sweets",
+  "kirana", "supermarket", "fruits_vegetables", "chicken_shop", "mutton_shop", "fish_shop", "meat_shop", "agri_inputs", "pharmacy", "pet_shop"]);
+const ORDER_STATUS_TYPES = new Set(["tailor_shop", "boutique", "mobile_repair", "mobile_shop_repair", "appliance_repair", "computer_shop",
+  "car_service", "bike_service", "car_bike_service", "car_wash_detailing", "heavy_vehicle_service", "optical", "photography",
+  "jewellery", "furniture", "catering", "bakery", "bakery_sweets"]);
+const FEATURE_KEYS = ["photo", "preorder", "orderStatus"];
+
+function shopFeatures(shopType, settings) {
+  const defaults = { photo: true, preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType) };
+  const chosen = settings?.features || {};
+  return Object.fromEntries(FEATURE_KEYS.map(key => [key, typeof chosen[key] === "boolean" ? chosen[key] : defaults[key]]));
+}
+
+const REQUEST_ID_PATTERN = /^[a-f0-9]{32}$/;
+const REQUEST_STATUSES = new Set(["new", "accepted", "ready", "done", "rejected"]);
+const ORDER_STATUSES = new Set(["received", "in_progress", "ready", "delivered"]);
+
+// What a customer may see of their own request.
+const customerRequest = r => ({ id: r.request_id, kind: r.kind, code: r.code, message: r.message, pickup: r.pickup, status: r.status, reply: r.reply, updatedAt: r.updated_at });
+
+async function handleCustomerRequests(request, env, url, path, origin) {
+  if (!storeAvailable(env)) return reply({ ok: false, error: "This bot is not available right now." }, 503, origin);
+  let body = {};
+  if (path === "/api/botcraft/order") {
+    if (request.method !== "GET") return reply({ ok: false, error: "Use GET." }, 405, origin);
+  } else {
+    if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
+    if (Number(request.headers.get("Content-Length") || 0) > MAX_BODY_BYTES) return reply({ ok: false, error: "The photo is too large." }, 413, origin);
+    try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
+  }
+  if (path !== "/api/botcraft/requests" && throttled(request.headers.get("CF-Connecting-IP") || "unknown", Date.now())) {
+    return reply({ ok: false, error: "Too many requests. Please wait a minute." }, 429, origin);
+  }
+  const publicId = String(path === "/api/botcraft/order" ? url.searchParams.get("s") || "" : body?.s || "");
+  const shop = PUBLIC_ID_PATTERN.test(publicId) ? await loadPublicShop(env, publicId) : null;
+  if (!shop) return reply({ ok: false, error: "This shop's bot was not found." }, 404, origin);
+  const features = shopFeatures(cleanFacts(shop.facts).shop_type, await loadSettings(env, shop.shopId));
+
+  if (path === "/api/botcraft/order") {
+    if (!features.orderStatus) return reply({ ok: false, error: "This shop does not share order status here. Please call the shop." }, 400, origin);
+    const code = clip(url.searchParams.get("code"), 40);
+    if (!code) return reply({ ok: false, error: "Please enter your bill or order number." }, 400, origin);
+    const order = await findOrder(env, shop.shopId, code);
+    return reply({ ok: true, order: order ? { code: order.code, status: order.status, note: order.reply, updatedAt: order.updated_at } : null }, 200, origin);
+  }
+  if (path === "/api/botcraft/requests") {
+    const ids = (Array.isArray(body?.ids) ? body.ids : []).map(String).filter(id => REQUEST_ID_PATTERN.test(id)).slice(0, 30);
+    return reply({ ok: true, requests: (await getRequests(env, shop.shopId, ids)).map(customerRequest) }, 200, origin);
+  }
+
+  const kind = String(body?.kind || "");
+  if (!(kind === "photo" && features.photo) && !(kind === "preorder" && features.preorder)) {
+    return reply({ ok: false, error: "This shop does not take this request here. Please call or WhatsApp the shop." }, 400, origin);
+  }
+  const message = clip(body?.message, 600);
+  let image = null;
+  if (kind === "photo") {
+    const photo = body?.image;
+    if (!PHOTO_TYPES.has(photo?.mimeType) || typeof photo?.data !== "string") return reply({ ok: false, error: "Please choose a photo." }, 400, origin);
+    image = { mime: photo.mimeType, bytes: base64Bytes(photo.data) };
+    if (image.bytes.length > MAX_PHOTO_BYTES) return reply({ ok: false, error: "The photo is too large." }, 413, origin);
+  } else if (!message) {
+    return reply({ ok: false, error: "Please write what you would like to order." }, 400, origin);
+  }
+  const result = await createRequest(env, shop.shopId, { kind, message, pickup: clip(body?.pickup, 80), name: clip(body?.name, 60), image });
+  if (result.error) return reply({ ok: false, error: result.error }, 400, origin);
+  return reply({ ok: true, request: customerRequest(result.request) }, 200, origin);
+}
+
 const PHOTO_ID_PATTERN = /^[a-f0-9]{32}$/;
 const PHOTO_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 const MAX_PHOTO_BYTES = 1536 * 1024;
@@ -839,8 +917,9 @@ async function servePhoto(env, url) {
 async function ownerView(env, shopId) {
   const saved = await loadShop(env, shopId, 0);
   const facts = cleanFacts(saved?.facts);
-  const [products, photos, questions, answeredQuestions] = await Promise.all([
-    listProducts(env, shopId), listPhotos(env, shopId), listCustomerQuestions(env, shopId, "open"), listCustomerQuestions(env, shopId, "answered")
+  const [products, photos, questions, answeredQuestions, requests, orders, settings] = await Promise.all([
+    listProducts(env, shopId), listPhotos(env, shopId), listCustomerQuestions(env, shopId, "open"), listCustomerQuestions(env, shopId, "answered"),
+    listRequests(env, shopId), listOrders(env, shopId), loadSettings(env, shopId)
   ]);
   return {
     ok: true,
@@ -853,6 +932,9 @@ async function ownerView(env, shopId) {
     photos,
     questions,
     answeredQuestions,
+    requests,
+    orders,
+    features: shopFeatures(facts.shop_type, settings),
     galleryLimit: GALLERY_LIMIT
   };
 }
@@ -905,6 +987,24 @@ async function handleOwner(request, env, origin) {
     await answerCustomerQuestion(env, shopId, clip(body?.qKey, 200), answer);
   } else if (action === "dismiss_question") {
     await dismissCustomerQuestion(env, shopId, clip(body?.qKey, 200));
+  } else if (action === "update_request") {
+    const requestId = String(body?.requestId || "");
+    const status = body?.status === undefined ? undefined : String(body.status);
+    if (!REQUEST_ID_PATTERN.test(requestId) || (status !== undefined && !REQUEST_STATUSES.has(status))) return reply({ ok: false, error: "Unknown request." }, 400, origin);
+    await updateRequest(env, shopId, requestId, { status, reply: body?.reply === undefined ? undefined : clip(body.reply, 600) });
+  } else if (action === "delete_request" || action === "delete_order") {
+    const requestId = String(body?.requestId || "");
+    if (REQUEST_ID_PATTERN.test(requestId)) await deleteRequest(env, shopId, requestId);
+  } else if (action === "save_order") {
+    const code = clip(body?.code, 40);
+    const status = String(body?.status || "");
+    if (!code) return reply({ ok: false, error: "Please enter the bill or order number." }, 400, origin);
+    if (!ORDER_STATUSES.has(status)) return reply({ ok: false, error: "Please choose a status." }, 400, origin);
+    await saveOrder(env, shopId, { code, status, note: clip(body?.note, 300) });
+  } else if (action === "save_features") {
+    const features = Object.fromEntries(FEATURE_KEYS.filter(key => typeof body?.features?.[key] === "boolean").map(key => [key, body.features[key]]));
+    const current = await loadSettings(env, shopId);
+    await saveSettings(env, shopId, { features: { ...(current.features || {}), ...features } });
   } else if (action === "set_bot_name") {
     await updateFacts(env, shopId, { bot_name: clip(body?.name, 40) });
   } else if (action !== "load") {

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./owner.css?v=2">
+  <link rel="stylesheet" href="./owner.css?v=3">
 </head>
 <body>
   <div class="owner-app">
@@ -35,6 +35,8 @@
             <li>Item finished: "Mark out of stock". When it is back, "Mark in stock".</li>
             <li>Photos: add your main shop photo, your photo and up to 10 gallery photos.</li>
             <li>Customer questions: answer the questions your bot could not answer. From then on the bot uses your answer.</li>
+            <li>Customer requests: photos and pre-orders customers send from the Requests tab of your bot. Accept, mark ready or reply — the customer sees it in the bot.</li>
+            <li>Order status: add each order by its bill number and update it (received → ready → delivered). Customers check it in the bot.</li>
             <li>Offers, timings or any other detail: tell BotCraft in the setup chat (for example "Sunday also open").</li>
           </ol>
         </details>
@@ -49,6 +51,44 @@
           <summary>Answered questions (<span id="answeredCount">0</span>)</summary>
           <div class="questions" id="answeredList"></div>
         </details>
+      </section>
+
+      <section class="card" id="requests">
+        <h2>Customer requests <span class="count-badge" id="requestCount" hidden></span></h2>
+        <p class="muted">Photos and pre-orders customers sent from your bot. Whatever you choose or reply shows in the customer's bot.</p>
+        <div class="questions" id="requestList"></div>
+        <details class="answered">
+          <summary>Finished requests (<span id="closedCount">0</span>)</summary>
+          <div class="questions" id="closedList"></div>
+        </details>
+      </section>
+
+      <section class="card" id="orders">
+        <h2>Order status</h2>
+        <p class="muted">Add an order by its bill or order number. Customers check its status in your bot with that number, so do not write names or phone numbers in the note.</p>
+        <form class="row order-form" id="orderForm">
+          <input name="code" maxlength="40" placeholder="Bill / order number" aria-label="Bill or order number" required>
+          <select name="status" aria-label="Order status">
+            <option value="received">Received</option>
+            <option value="in_progress">In progress</option>
+            <option value="ready">Ready</option>
+            <option value="delivered">Delivered</option>
+          </select>
+          <input name="note" maxlength="300" placeholder="Note for the customer (optional)" aria-label="Note for the customer">
+          <button class="btn" type="submit">Save order</button>
+        </form>
+        <div class="questions" id="orderList"></div>
+      </section>
+
+      <section class="card" id="buttons">
+        <h2>Bot buttons</h2>
+        <p class="muted">Choose what customers can do from the Requests tab of your bot.</p>
+        <form class="features" id="featureForm">
+          <label class="check"><input type="checkbox" name="photo"> 📸 Send a photo — customers send a photo with their question</label>
+          <label class="check"><input type="checkbox" name="preorder"> ⚡ Pre-order — customers order in advance and you confirm</label>
+          <label class="check"><input type="checkbox" name="orderStatus"> 🔍 Order status — customers check an order by its bill number</label>
+          <div><button class="btn" type="submit">Save buttons</button></div>
+        </form>
       </section>
 
       <section class="card">
@@ -101,6 +141,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=3"></script>
+  <script type="module" src="./owner.js?v=4"></script>
 </body>
 </html>

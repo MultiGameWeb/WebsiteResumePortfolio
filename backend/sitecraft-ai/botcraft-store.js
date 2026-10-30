@@ -82,6 +82,32 @@ const SCHEMA = [
     first_at TEXT NOT NULL,
     last_at TEXT NOT NULL,
     PRIMARY KEY (shop_id, q_key)
+  )`,
+  // Customer requests from the bot page: a photo with a question, or a
+  // pre-order (kind photo / preorder; status new, accepted, ready, done or
+  // rejected). Orders the owner tracks by bill number are kind order (status
+  // received, in_progress, ready or delivered); customers look them up by code.
+  // request_id is the customer's private key to their own request.
+  `CREATE TABLE IF NOT EXISTS botcraft_requests (
+    request_id TEXT PRIMARY KEY,
+    shop_id TEXT NOT NULL,
+    kind TEXT NOT NULL,
+    code TEXT NOT NULL,
+    message TEXT NOT NULL DEFAULT '',
+    pickup TEXT NOT NULL DEFAULT '',
+    customer_name TEXT NOT NULL DEFAULT '',
+    photo_id TEXT NOT NULL DEFAULT '',
+    status TEXT NOT NULL,
+    reply TEXT NOT NULL DEFAULT '',
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_botcraft_requests_shop ON botcraft_requests(shop_id, kind, updated_at)`,
+  // Owner settings that are not shop facts (which bot buttons are on).
+  `CREATE TABLE IF NOT EXISTS botcraft_settings (
+    shop_id TEXT PRIMARY KEY,
+    settings_json TEXT NOT NULL DEFAULT '{}',
+    updated_at TEXT NOT NULL
   )`
 ];
 
@@ -336,4 +362,140 @@ export async function dismissCustomerQuestion(env, shopId, key) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   await db.prepare("UPDATE botcraft_customer_questions SET status = 'dismissed' WHERE shop_id = ? AND q_key = ?").bind(shopId, key).run();
+}
+
+export async function loadSettings(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT settings_json FROM botcraft_settings WHERE shop_id = ?").bind(shopId).first();
+  try { return JSON.parse(row?.settings_json || "{}"); } catch { return {}; }
+}
+
+export async function saveSettings(env, shopId, patch) {
+  const db = env.BOTCRAFT_DB;
+  const settings = { ...(await loadSettings(env, shopId)), ...patch };
+  await db.prepare(
+    "INSERT INTO botcraft_settings (shop_id, settings_json, updated_at) VALUES (?, ?, ?) " +
+    "ON CONFLICT(shop_id) DO UPDATE SET settings_json = excluded.settings_json, updated_at = excluded.updated_at"
+  ).bind(shopId, JSON.stringify(settings), new Date().toISOString()).run();
+  return settings;
+}
+
+const OPEN_REQUEST_STATUSES = ["new", "accepted", "ready"];
+// Closed requests (and their photos) are cleared after this many days.
+const CLOSED_REQUEST_DAYS = 30;
+const DAILY_REQUEST_LIMIT = 200;
+const REQUEST_FIELDS = "request_id, kind, code, message, pickup, customer_name, photo_id, status, reply, created_at, updated_at";
+
+async function pruneRequests(db, shopId) {
+  const cutoff = new Date(Date.now() - CLOSED_REQUEST_DAYS * 86400000).toISOString();
+  const old = "shop_id = ? AND updated_at < ? AND status IN ('done', 'rejected', 'delivered')";
+  await db.batch([
+    db.prepare(`DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE ${old})`).bind(shopId, shopId, cutoff),
+    db.prepare(`DELETE FROM botcraft_requests WHERE ${old}`).bind(shopId, cutoff)
+  ]);
+}
+
+// A customer's photo question or pre-order. Returns the request, or an error.
+export async function createRequest(env, shopId, { kind, message, pickup = "", name = "", image = null }) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await pruneRequests(db, shopId);
+  const since = new Date(Date.now() - 86400000).toISOString();
+  const today = await db.prepare("SELECT COUNT(*) AS n FROM botcraft_requests WHERE shop_id = ? AND kind != 'order' AND created_at > ?").bind(shopId, since).first();
+  if ((today?.n || 0) >= DAILY_REQUEST_LIMIT) return { error: "The shop is getting many requests right now. Please call or WhatsApp the shop." };
+  let photoId = "";
+  if (image) {
+    const saved = await savePhoto(env, shopId, { kind: "request", mime: image.mime, bytes: image.bytes });
+    if (saved.error) return saved;
+    photoId = saved.photoId;
+  }
+  const open = await db.prepare(`SELECT code FROM botcraft_requests WHERE shop_id = ? AND kind != 'order' AND status IN ('new', 'accepted', 'ready')`).bind(shopId).all();
+  const used = new Set((open.results || []).map(r => r.code));
+  let code = "";
+  for (let i = 0; i < 20 && (!code || used.has(code)); i += 1) code = String(1000 + Math.floor(Math.random() * 9000));
+  const requestId = crypto.randomUUID().replace(/-/g, "");
+  const now = new Date().toISOString();
+  await db.prepare(
+    "INSERT INTO botcraft_requests (request_id, shop_id, kind, code, message, pickup, customer_name, photo_id, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?)"
+  ).bind(requestId, shopId, kind, code, message, pickup, name, photoId, now, now).run();
+  return { request: { request_id: requestId, kind, code, message, pickup, customer_name: name, photo_id: photoId, status: "new", reply: "", created_at: now, updated_at: now } };
+}
+
+// The customer's own requests, by their private ids.
+export async function getRequests(env, shopId, requestIds) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  if (!requestIds.length) return [];
+  const rows = await db.prepare(
+    `SELECT ${REQUEST_FIELDS} FROM botcraft_requests WHERE shop_id = ? AND kind != 'order' AND request_id IN (${requestIds.map(() => "?").join(", ")})`
+  ).bind(shopId, ...requestIds).all();
+  return rows.results || [];
+}
+
+// Photo questions and pre-orders for the owner page: open ones first, then
+// the latest closed ones.
+export async function listRequests(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const [open, closed] = await Promise.all([
+    db.prepare(`SELECT ${REQUEST_FIELDS} FROM botcraft_requests WHERE shop_id = ? AND kind != 'order' AND status IN ('new', 'accepted', 'ready') ORDER BY created_at DESC LIMIT 200`).bind(shopId).all(),
+    db.prepare(`SELECT ${REQUEST_FIELDS} FROM botcraft_requests WHERE shop_id = ? AND kind != 'order' AND status IN ('done', 'rejected') ORDER BY updated_at DESC LIMIT 30`).bind(shopId).all()
+  ]);
+  return { open: open.results || [], closed: closed.results || [] };
+}
+
+export async function countNewRequests(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT COUNT(*) AS n FROM botcraft_requests WHERE shop_id = ? AND kind != 'order' AND status = 'new'").bind(shopId).first();
+  return row?.n || 0;
+}
+
+export async function updateRequest(env, shopId, requestId, { status, reply }) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("UPDATE botcraft_requests SET status = COALESCE(?, status), reply = COALESCE(?, reply), updated_at = ? WHERE shop_id = ? AND request_id = ? AND kind != 'order'")
+    .bind(status ?? null, reply ?? null, new Date().toISOString(), shopId, requestId).run();
+}
+
+export async function deleteRequest(env, shopId, requestId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.batch([
+    db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE shop_id = ? AND request_id = ?)").bind(shopId, shopId, requestId),
+    db.prepare("DELETE FROM botcraft_requests WHERE shop_id = ? AND request_id = ?").bind(shopId, requestId)
+  ]);
+}
+
+const orderCode = code => String(code).toUpperCase().replace(/\s+/g, "");
+
+// Adds or updates the order with this bill / order number.
+export async function saveOrder(env, shopId, { code, status, note }) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await pruneRequests(db, shopId);
+  const key = orderCode(code);
+  const now = new Date().toISOString();
+  const existing = await db.prepare("SELECT request_id FROM botcraft_requests WHERE shop_id = ? AND kind = 'order' AND code = ?").bind(shopId, key).first();
+  if (existing) {
+    await db.prepare("UPDATE botcraft_requests SET status = ?, reply = ?, updated_at = ? WHERE request_id = ?").bind(status, note, now, existing.request_id).run();
+    return;
+  }
+  await db.prepare(
+    "INSERT INTO botcraft_requests (request_id, shop_id, kind, code, status, reply, created_at, updated_at) VALUES (?, ?, 'order', ?, ?, ?, ?, ?)"
+  ).bind(crypto.randomUUID().replace(/-/g, ""), shopId, key, status, note, now, now).run();
+}
+
+export async function listOrders(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const rows = await db.prepare("SELECT request_id, code, status, reply, updated_at FROM botcraft_requests WHERE shop_id = ? AND kind = 'order' ORDER BY updated_at DESC LIMIT 200").bind(shopId).all();
+  return rows.results || [];
+}
+
+export async function findOrder(env, shopId, code) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  return db.prepare("SELECT code, status, reply, updated_at FROM botcraft_requests WHERE shop_id = ? AND kind = 'order' AND code = ?").bind(shopId, orderCode(code)).first();
 }

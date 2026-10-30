@@ -76,3 +76,27 @@ html, body { margin: 0; height: 100%; background: var(--page); color: var(--text
 .ask-this, .close-sheet { flex: 1; border-radius: 999px; padding: 11px; font: inherit; font-weight: 600; cursor: pointer; }
 .ask-this { border: 0; background: var(--accent); color: var(--accent-text); }
 .close-sheet { border: 1px solid var(--border); background: var(--page); color: var(--text); }
+.request-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.request-buttons button { flex: 1 1 140px; border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 14px; padding: 12px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.request-buttons button[hidden] { display: none; }
+.request-buttons button[aria-pressed="true"] { border-color: var(--accent); background: var(--page); }
+.request-form { display: grid; gap: 10px; padding: 14px; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 12px; }
+.request-form[hidden] { display: none; }
+.request-form label { display: grid; gap: 5px; font-size: 13px; font-weight: 600; }
+.request-form input, .request-form textarea { font: inherit; font-size: 14px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px; }
+.optional { color: var(--soft); font-weight: 400; }
+.request-submit { border: 0; border-radius: 999px; padding: 11px; font: inherit; font-weight: 600; background: var(--accent); color: var(--accent-text); cursor: pointer; }
+.request-submit:disabled { opacity: .5; cursor: default; }
+.request-note { margin: 0 0 8px; font-size: 13.5px; font-weight: 600; }
+.request-note:empty, .order-result:empty { display: none; }
+.order-result { margin: 0; font-size: 14px; }
+.request-privacy { margin: 0 0 14px; color: var(--soft); font-size: 12px; }
+.my-title { font-size: 15px; margin: 4px 0 8px; }
+.my-title[hidden] { display: none; }
+.my-requests { display: grid; gap: 8px; }
+.my-request { border: 1px solid var(--border); border-radius: 14px; padding: 10px 12px; display: grid; gap: 4px; font-size: 13.5px; }
+.my-request-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-weight: 600; }
+.my-state { font-size: 11.5px; border-radius: 999px; padding: 2px 9px; border: 1px solid var(--border); color: var(--soft); }
+.my-state-ready { background: #1f7a4d; border-color: #1f7a4d; color: #fff; }
+.my-reply { background: var(--surface); border-radius: 10px; padding: 8px 10px; white-space: pre-wrap; }
+.my-text { color: var(--soft); white-space: pre-wrap; }
