@@ -506,6 +506,7 @@
                     <div class="rules-box">
                         <ul>
                             <li>❤️❤️❤️ <b>3 Lives System:</b> Crashing into a wall or tail costs 1 Heart and gives a 3-second safe shield instead of instant Game Over!</li>
+                            <li>🤖 <b>Computer Rival:</b> The red computer snake hunts the same eggs. Compare the two scores and try to finish ahead of the rival.</li>
                             <li>🌀 <b>Moving Portals:</b> Enter one glowing hole to exit from the other. Portals relocate after you pass through!</li>
                             <li>📱 <b>Controls:</b> Swipe anywhere on the screen, use the floating buttons, or press Arrow Keys / WASD.</li>
                         </ul>
@@ -871,17 +872,29 @@
 
         // --- COMPUTER RIVAL SNAKE ---
         function resetComputerSnake(resetScore = false) {
-            const headX = Math.max(4, GRID_COLS - 4);
-            let headY = Math.max(3, Math.min(GRID_ROWS - 3, Math.floor(GRID_ROWS * 0.25)));
-            if (Math.abs(headY - Math.floor(GRID_ROWS / 2)) < 4) headY = Math.max(3, GRID_ROWS - 4);
-            computerSnake = [
-                { x: headX, y: headY },
-                { x: Math.min(GRID_COLS - 1, headX + 1), y: headY },
-                { x: Math.min(GRID_COLS - 1, headX + 2), y: headY },
-                { x: Math.min(GRID_COLS - 1, headX + 3), y: headY }
+            const candidates = [
+                { x: GRID_COLS - 5, y: 4, dx: -1 },
+                { x: GRID_COLS - 5, y: GRID_ROWS - 5, dx: -1 },
+                { x: 4, y: 4, dx: 1 },
+                { x: 4, y: GRID_ROWS - 5, dx: 1 }
             ];
+            const safeStart = candidates.find(candidate => {
+                const cells = Array.from({ length: 4 }, (_, i) => ({
+                    x: candidate.x - candidate.dx * i, y: candidate.y
+                }));
+                return cells.every(cell =>
+                    cell.x >= 1 && cell.x < GRID_COLS - 1 &&
+                    cell.y >= 1 && cell.y < GRID_ROWS - 1 &&
+                    !snake.some(seg => seg.x === cell.x && seg.y === cell.y) &&
+                    !portals.some(portal => portal.x === cell.x && portal.y === cell.y) &&
+                    !(mainEgg && mainEgg.x === cell.x && mainEgg.y === cell.y)
+                );
+            }) || candidates[0];
+            computerSnake = Array.from({ length: 4 }, (_, i) => ({
+                x: safeStart.x - safeStart.dx * i, y: safeStart.y
+            }));
             prevComputerSnake = computerSnake.map(seg => ({ ...seg }));
-            computerDir = { x: -1, y: 0 };
+            computerDir = { x: safeStart.dx, y: 0 };
             lastComputerMoveTime = performance.now();
             if (resetScore) computerScore = 0;
         }
