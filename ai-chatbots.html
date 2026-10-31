@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#100f17">
-<meta name="description" content="BotCraft by SiteCraft: create an AI assistant for your business. It answers customers in any language, suggests items, shares prices and details, and takes photos, pre-orders and order-status checks.">
+<meta name="description" content="Pair a SiteCraft website template with auto hosting and BotCraft, an AI customer assistant for your business. Customers scan a QR code to ask about products, prices and services.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SiteCraft">
 <meta property="og:title" content="BotCraft — AI Assistant for Your Business | SiteCraft">
@@ -33,10 +33,64 @@ a{color:inherit}.cb-container{width:min(1180px,calc(100% - 42px));margin:0 auto}
 @media(max-width:720px){.cb-container{width:min(100% - 28px,1180px)}.cb-section{padding:58px 0}.cb-hero{padding-top:42px}.cb-hero-grid{grid-template-columns:minmax(0,1fr)}.cb-hero-art{min-height:390px;order:-1}.cb-hero h1{font-size:clamp(38px,10vw,55px)}.cb-hero .cb-lead{font-size:14px}.cb-hero-actions .cb-btn{flex:1}.cb-proof{gap:7px}.cb-proof span{font-size:10px;padding:7px 9px}.cb-tier-head{display:block}.cb-tier-head p{margin-top:12px}.cb-tier-tabs{gap:7px;margin-top:20px}.cb-tier-tab{padding:12px;min-height:80px;gap:9px}.cb-tier-tab strong{font-size:10px}.cb-tier-tab small{font-size:9px}.cb-carousel-shell{padding:7px;border-radius:23px}.cb-slide{grid-template-columns:minmax(0,1fr)}.cb-slide-visual{min-height:0;height:clamp(205px,62vw,310px)}.cb-slide-copy{padding:22px 17px 18px}.cb-slide-copy h3{font-size:clamp(25px,7.5vw,33px)}.cb-slide-copy .desc{font-size:13px}.cb-where{margin-top:16px}.cb-slide-controls{padding-top:20px}.cb-mini-tiers{grid-template-columns:minmax(0,1fr);gap:9px}.cb-mini-tier{padding:14px}.cb-channel-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cb-channel{padding:14px}.cb-bottom-cta{grid-template-columns:minmax(0,1fr);gap:20px;padding:22px}.cb-bottom-cta .actions .cb-btn{flex:1}.cb-bottom-cta h2{font-size:30px}}
 @media(max-width:720px){.cb-channel-grid.three,.cb-price-grid{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Website + BotCraft combo feature */
+.cb-combo-strip{width:min(1180px,calc(100% - 42px));margin:26px auto 0;padding:clamp(20px,3.2vw,32px);border:1px solid rgba(196,181,253,.34);border-radius:24px;background:radial-gradient(ellipse at 10% 0%,rgba(139,92,246,.19),transparent 42%),radial-gradient(ellipse at 95% 100%,rgba(34,211,238,.12),transparent 38%),linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.025));box-shadow:0 22px 65px rgba(0,0,0,.2)}
+.cb-combo-top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px}
+.cb-combo-title{margin:10px 0 0;font:800 clamp(25px,3.8vw,39px)/1.08 Sora,Inter,sans-serif;letter-spacing:-.055em}
+.cb-combo-intro{max-width:455px;margin:0;color:var(--cb-muted);font-size:13px;line-height:1.75}
+.cb-combo-grid{display:grid;grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr);align-items:stretch;gap:12px}
+.cb-combo-card{display:flex;align-items:flex-start;gap:15px;min-width:0;padding:19px;border:1px solid var(--cb-line);border-radius:17px;background:rgba(13,12,20,.45)}
+.cb-combo-icon{display:grid;place-items:center;width:43px;height:43px;flex:0 0 auto;border-radius:13px;background:rgba(167,139,250,.17);font-size:21px}
+.cb-combo-card.ai .cb-combo-icon{background:rgba(34,211,238,.13)}
+.cb-combo-copy{min-width:0}
+.cb-combo-tag{display:block;margin:1px 0 7px;color:#d8b4fe;font-size:9px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
+.cb-combo-card.ai .cb-combo-tag{color:#8be9f4}
+.cb-combo-card h3{margin:0 0 7px;font:700 16px/1.25 Sora,Inter,sans-serif}
+.cb-combo-card p{margin:0 0 13px;color:var(--cb-muted);font-size:11.5px;line-height:1.65}
+.cb-combo-card .cb-btn{min-height:39px;padding:0 12px;font-size:10.5px}
+.cb-combo-plus{display:grid;place-items:center;align-self:center;width:38px;height:38px;border:1px solid rgba(196,181,253,.35);border-radius:50%;background:rgba(139,92,246,.14);color:#e9d5ff;font:800 17px Sora,Inter,sans-serif}
+.cb-combo-note{margin:14px 0 0;color:#928ba3;font-size:10px;line-height:1.55}
+@media(max-width:780px){.cb-combo-top{display:block}.cb-combo-intro{margin-top:11px}.cb-combo-grid{grid-template-columns:minmax(0,1fr);gap:9px}.cb-combo-plus{width:auto;height:22px;border:0;background:none;font-size:10px;letter-spacing:.18em}.cb-combo-card{padding:16px}}
+@media(max-width:720px){.cb-combo-strip{width:calc(100% - 28px);margin-top:15px;padding:18px;border-radius:20px}}
+
 </style>
 </head>
 <body class="sc-chatbot-page">
 <main id="main-content">
+
+<section class="cb-combo-strip" aria-labelledby="combo-title">
+ <div class="cb-combo-top">
+  <div>
+   <span class="cb-kicker">COMPLETE DIGITAL SHOP</span>
+   <h2 class="cb-combo-title" id="combo-title">Your website + your AI assistant.<br><span class="cb-gradient">A better experience together.</span></h2>
+  </div>
+  <p class="cb-combo-intro">Give your business both a professional online home and an AI assistant that helps customers. Choose either service on its own, or use both together.</p>
+ </div>
+ <div class="cb-combo-grid">
+  <article class="cb-combo-card">
+   <span class="cb-combo-icon" aria-hidden="true">🌐</span>
+   <div class="cb-combo-copy">
+    <span class="cb-combo-tag">01 · WEBSITE + AUTO HOSTING</span>
+    <h3>Your business website</h3>
+    <p>Choose a SiteCraft template for your Home, About, Products or Services, Gallery, Offers, Contact, Maps and more. Customize it and publish it with auto hosting.</p>
+    <a class="cb-btn ghost" href="templates.html">Explore Website Templates <span aria-hidden="true">↗</span></a>
+   </div>
+  </article>
+  <span class="cb-combo-plus" aria-label="plus">+</span>
+  <article class="cb-combo-card ai">
+   <span class="cb-combo-icon" aria-hidden="true">✦</span>
+   <div class="cb-combo-copy">
+    <span class="cb-combo-tag">02 · BOTCRAFT AI ASSISTANT</span>
+    <h3>Your 24/7 customer assistant</h3>
+    <p>Customers scan your QR code and ask about products, photos, prices, services and offers in their language — by chat or voice.</p>
+    <a class="cb-btn primary" href="ai-chatbot-software.html">Create BotCraft Assistant <span aria-hidden="true">↗</span></a>
+   </div>
+  </article>
+ </div>
+ <p class="cb-combo-note">Use the website and BotCraft together for one complete business presence. Each is set up through its own flow today.</p>
+</section>
+
 <section class="cb-hero">
  <div class="cb-container cb-hero-grid">
   <div>
