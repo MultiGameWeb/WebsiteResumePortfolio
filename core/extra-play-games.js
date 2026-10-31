@@ -38,9 +38,15 @@
     '.sc-pg-section .sc-extra-typing-prompt .typed-ok{color:#86efac}.sc-pg-section .sc-extra-typing-prompt .typed-bad{color:#fca5a5;text-decoration:underline}.sc-pg-section .sc-extra-typing-input{display:block;width:min(100%,720px);min-height:100px;margin:0 auto;padding:12px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:#191526;color:#fff;font:14px/1.7 Inter,system-ui,sans-serif;resize:vertical;outline:none}',
     '.sc-pg-section .sc-extra-sudoku{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));width:min(100%,450px);margin:14px auto;border:2px solid #a78bfa;border-radius:7px;overflow:hidden;aspect-ratio:1}',
     '.sc-pg-section .sc-extra-sudoku-cell{display:grid;place-items:center;min-width:0;padding:0;border:0;border-right:1px solid rgba(255,255,255,.13);border-bottom:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.035);color:#f8f5ff;font-size:clamp(13px,3vw,20px);font-weight:650;cursor:pointer}',
-    '.sc-pg-section .sc-extra-sudoku-cell:nth-child(3n){border-right:2px solid rgba(196,181,253,.75)}.sc-pg-section .sc-extra-sudoku-cell:nth-child(n+19):nth-child(-n+27),.sc-pg-section .sc-extra-sudoku-cell:nth-child(n+46):nth-child(-n+54){border-bottom:2px solid rgba(196,181,253,.75)}',
+    '.sc-pg-section .sc-extra-sudoku-cell.box-right{border-right:2px solid rgba(196,181,253,.75)}.sc-pg-section .sc-extra-sudoku-cell.box-bottom{border-bottom:2px solid rgba(196,181,253,.75)}',
     '.sc-pg-section .sc-extra-sudoku-cell.given{color:#aaa1bd;font-weight:900}.sc-pg-section .sc-extra-sudoku-cell.selected{background:rgba(124,58,237,.42)}.sc-pg-section .sc-extra-sudoku-cell.related{background:rgba(255,255,255,.085)}.sc-pg-section .sc-extra-sudoku-cell.conflict{background:rgba(239,68,68,.28);color:#fecaca}',
     '.sc-pg-section .sc-extra-numberpad{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:12px auto}.sc-pg-section .sc-extra-numberpad button{width:38px;height:39px;border:1px solid rgba(255,255,255,.15);border-radius:9px;background:rgba(255,255,255,.05);color:#fff;font-weight:800;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-card{width:min(100%,650px);margin:12px auto;padding:clamp(16px,3vw,24px);border:1px solid rgba(196,181,253,.25);border-radius:16px;background:linear-gradient(145deg,rgba(124,58,237,.13),rgba(255,255,255,.025));text-align:center}',
+    '.sc-pg-section .sc-extra-math-expression{margin:16px 0 18px;color:#fff;font-size:clamp(30px,7vw,48px);font-weight:900;letter-spacing:.02em;font-variant-numeric:tabular-nums}',
+    '.sc-pg-section .sc-extra-math-answer{display:block;width:min(100%,260px);height:54px;margin:0 auto 10px;padding:0 14px;border:1px solid rgba(196,181,253,.4);border-radius:12px;background:#171323;color:#fff;font:800 22px Inter,system-ui,sans-serif;text-align:center;outline:none}',
+    '.sc-pg-section .sc-extra-math-answer:focus{border-color:#c4b5fd;box-shadow:0 0 0 3px rgba(196,181,253,.12)}',
+    '.sc-pg-section .sc-extra-math-hearts{font-size:22px;letter-spacing:5px}.sc-pg-section .sc-extra-math-submit{min-width:150px;min-height:43px;padding:0 18px;border:0;border-radius:11px;background:linear-gradient(110deg,#7c3aed,#db2777);color:#fff;font:800 12px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-over{padding:16px;border:1px solid rgba(248,113,113,.35);border-radius:12px;background:rgba(127,29,29,.12);color:#fecaca;text-align:center}',
     '.sc-pg-section .sc-extra-connect{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;width:min(100%,490px);margin:14px auto;padding:10px;border-radius:16px;background:#2455a3}',
     '.sc-pg-section .sc-extra-connect button{display:grid;place-items:center;min-width:0;padding:0;aspect-ratio:1;border:0;border-radius:50%;background:#111b35;cursor:pointer}.sc-pg-section .sc-extra-connect .red:after,.sc-pg-section .sc-extra-connect .yellow:after{content:"";display:block;width:82%;height:82%;border-radius:50%;background:#f87171}.sc-pg-section .sc-extra-connect .yellow:after{background:#facc15}',
     '.sc-pg-section .sc-extra-connect button:disabled{cursor:default;opacity:.65}',
@@ -122,6 +128,7 @@
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="blocks">🧩 Block Puzzle</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="typing">⌨️ Typing Test</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sudoku">🔢 Sudoku</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="math">➗ Math Challenge</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="connect">🔴 Connect Four</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="starfighter">🚀 3D Starfighter</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="brick-breaker">💎 Brick Breaker</button>' +
@@ -130,7 +137,7 @@
 
     const preferredOrder = [
       'starfighter','brick-breaker','snake','memory',
-      'connect','2048','blocks','word','sudoku','typing','ttt','rps'
+      'connect','2048','blocks','sudoku','math','word','typing','ttt','rps'
     ];
     preferredOrder.forEach(key => {
       const tab = tabs.querySelector('[data-extra-tab="' + key + '"], [data-pg-tab="' + key + '"]');
@@ -168,7 +175,8 @@
       if (id === '2048') init2048();
       if (id === 'blocks') initBlocks();
       if (id === 'typing') initTyping();
-      if (id === 'sudoku') initSudoku('medium');
+      if (id === 'sudoku') initSudoku('medium',9);
+      if (id === 'math') initMath();
       if (id === 'connect') initConnect();
       if (id === 'starfighter') paintStarfighter();
       if (id === 'brick-breaker') paintBrickBreaker();
@@ -539,87 +547,130 @@
       paintTyping();
     }
 
-    function pattern(r,c) { return (r*3 + Math.floor(r/3) + c) % 9; }
-    function countSolutions(grid, limit) {
-      const rows=Array(9).fill(0),cols=Array(9).fill(0),boxes=Array(9).fill(0);
-      for(let r=0;r<9;r++)for(let c=0;c<9;c++){const v=grid[r][c];if(v){const bit=1<<v;rows[r]|=bit;cols[c]|=bit;boxes[Math.floor(r/3)*3+Math.floor(c/3)]|=bit;}}
+    function bitCount(n){let count=0;while(n){n&=n-1;count++;}return count;}
+    const sudokuConfigs = {
+      4:{boxRows:2,boxCols:2,holes:{easy:4,medium:6,hard:8}},
+      6:{boxRows:2,boxCols:3,holes:{easy:12,medium:16,hard:20}},
+      9:{boxRows:3,boxCols:3,holes:{easy:34,medium:42,hard:48}}
+    };
+    function sudokuPattern(r,c,size,boxRows,boxCols) {
+      return (r*boxCols + Math.floor(r/boxRows) + c) % size;
+    }
+    function countSolutions(grid,boxRows,boxCols,limit) {
+      const size=grid.length,rows=Array(size).fill(0),cols=Array(size).fill(0),boxes=Array(size).fill(0);
+      const boxIndex=(r,c)=>Math.floor(r/boxRows)*(size/boxCols)+Math.floor(c/boxCols);
+      for(let r=0;r<size;r++)for(let c=0;c<size;c++){
+        const value=grid[r][c];
+        if(value){
+          const bit=1<<value,box=boxIndex(r,c);
+          if((rows[r]&bit)||(cols[c]&bit)||(boxes[box]&bit))return 0;
+          rows[r]|=bit;cols[c]|=bit;boxes[box]|=bit;
+        }
+      }
+      const fullMask=((1<<(size+1))-2);
       let count=0;
       function solve(){
         if(count>=limit)return;
-        let bestR=-1,bestC=-1,bestMask=0,bestN=10;
-        for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(!grid[r][c]){
-          const b=Math.floor(r/3)*3+Math.floor(c/3);
-          const mask=1022 & ~(rows[r]|cols[c]|boxes[b]);
+        let bestR=-1,bestC=-1,bestMask=0,bestN=size+1;
+        for(let r=0;r<size;r++)for(let c=0;c<size;c++)if(!grid[r][c]){
+          const box=boxIndex(r,c);
+          const mask=fullMask & ~(rows[r]|cols[c]|boxes[box]);
           const n=bitCount(mask);
           if(n===0)return;
-          if(n<bestN){bestN=n;bestR=r;bestC=c;bestMask=mask;if(n===1)break;}
+          if(n<bestN){bestN=n;bestR=r;bestC=c;bestMask=mask;}
         }
         if(bestR<0){count++;return;}
-        const b=Math.floor(bestR/3)*3+Math.floor(bestC/3);
-        for(let v=1;v<=9;v++){const bit=1<<v;if(bestMask&bit){grid[bestR][bestC]=v;rows[bestR]|=bit;cols[bestC]|=bit;boxes[b]|=bit;solve();grid[bestR][bestC]=0;rows[bestR]^=bit;cols[bestC]^=bit;boxes[b]^=bit;if(count>=limit)return;}}
+        const box=boxIndex(bestR,bestC);
+        for(let value=1;value<=size;value++){
+          const bit=1<<value;
+          if(bestMask&bit){
+            grid[bestR][bestC]=value;rows[bestR]|=bit;cols[bestC]|=bit;boxes[box]|=bit;
+            solve();
+            grid[bestR][bestC]=0;rows[bestR]^=bit;cols[bestC]^=bit;boxes[box]^=bit;
+            if(count>=limit)return;
+          }
+        }
       }
       solve();return count;
     }
-    function bitCount(n){let count=0;while(n){n&=n-1;count++;}return count;}
-    function createSudoku(level) {
-      const rng=seeded(dayNumber()*31 + ({easy:1,medium:2,hard:3}[level]||2)*7919);
-      let bands=shuffle([0,1,2],rng),stacks=shuffle([0,1,2],rng);
-      let rowOrder=bands.flatMap(b=>shuffle([0,1,2],rng).map(r=>b*3+r));
-      let colOrder=stacks.flatMap(b=>shuffle([0,1,2],rng).map(c=>b*3+c));
-      const digits=shuffle([1,2,3,4,5,6,7,8,9],rng);
-      const solution=rowOrder.map(r=>colOrder.map(c=>digits[pattern(r,c)]));
+    function createSudoku(level,size) {
+      const config=sudokuConfigs[size]||sudokuConfigs[9];
+      const boxRows=config.boxRows,boxCols=config.boxCols;
+      const rng=seeded(dayNumber()*31 + size*1009 + ({easy:1,medium:2,hard:3}[level]||2)*7919);
+      const bands=shuffle(Array.from({length:size/boxRows},(_,i)=>i),rng);
+      const stacks=shuffle(Array.from({length:size/boxCols},(_,i)=>i),rng);
+      const rowOrder=bands.flatMap(b=>shuffle(Array.from({length:boxRows},(_,i)=>i),rng).map(r=>b*boxRows+r));
+      const colOrder=stacks.flatMap(b=>shuffle(Array.from({length:boxCols},(_,i)=>i),rng).map(c=>b*boxCols+c));
+      const digits=shuffle(Array.from({length:size},(_,i)=>i+1),rng);
+      const solution=rowOrder.map(r=>colOrder.map(c=>digits[sudokuPattern(r,c,size,boxRows,boxCols)]));
       const puzzle=solution.map(row=>row.slice());
-      const target={easy:34,medium:42,hard:48}[level];
-      const cells=shuffle(Array.from({length:81},(_,i)=>i),rng);
+      const target=config.holes[level]||config.holes.medium;
+      const cells=shuffle(Array.from({length:size*size},(_,i)=>i),rng);
       let removed=0;
       for(const index of cells){
         if(removed>=target)break;
-        const r=Math.floor(index/9),c=index%9,old=puzzle[r][c];
+        const r=Math.floor(index/size),c=index%size,old=puzzle[r][c];
         puzzle[r][c]=0;
-        if(countSolutions(puzzle,2)===1)removed++;
+        if(countSolutions(puzzle,boxRows,boxCols,2)===1)removed++;
         else puzzle[r][c]=old;
       }
-      return {puzzle:puzzle,solution:solution};
+      return {puzzle,solution,boxRows,boxCols};
     }
-    function initSudoku(level) {
+    function initSudoku(level,size) {
       clearInterval(typingTimer);
-      const generated=createSudoku(level||'medium');
-      sudoku={level:level||'medium',board:generated.puzzle.map(r=>r.slice()),solution:generated.solution,givens:generated.puzzle.map(r=>r.slice()),selected:[0,0],mistakes:0,won:false};
+      const selectedSize=Number(size||sudoku&&sudoku.size||9);
+      const generated=createSudoku(level||sudoku&&sudoku.level||'medium',selectedSize);
+      sudoku={
+        size:selectedSize,level:level||sudoku&&sudoku.level||'medium',
+        boxRows:generated.boxRows,boxCols:generated.boxCols,
+        board:generated.puzzle.map(r=>r.slice()),solution:generated.solution,
+        givens:generated.puzzle.map(r=>r.slice()),selected:[0,0],mistakes:0,won:false
+      };
       paintSudoku('Select an empty cell, then choose a number.');
     }
-    function sudokuConflict(r,c,v) {
-      if(!v)return false;
-      for(let i=0;i<9;i++){if(i!==c&&sudoku.board[r][i]===v)return true;if(i!==r&&sudoku.board[i][c]===v)return true;}
-      const br=Math.floor(r/3)*3,bc=Math.floor(c/3)*3;
-      for(let y=br;y<br+3;y++)for(let x=bc;x<bc+3;x++)if((y!==r||x!==c)&&sudoku.board[y][x]===v)return true;
+    function sudokuConflict(r,c,value) {
+      if(!value)return false;
+      const size=sudoku.size,boxRows=sudoku.boxRows,boxCols=sudoku.boxCols;
+      for(let i=0;i<size;i++){
+        if(i!==c&&sudoku.board[r][i]===value)return true;
+        if(i!==r&&sudoku.board[i][c]===value)return true;
+      }
+      const br=Math.floor(r/boxRows)*boxRows,bc=Math.floor(c/boxCols)*boxCols;
+      for(let y=br;y<br+boxRows;y++)for(let x=bc;x<bc+boxCols;x++)
+        if((y!==r||x!==c)&&sudoku.board[y][x]===value)return true;
       return false;
     }
     function paintSudoku(message) {
-      const r0=sudoku.selected[0],c0=sudoku.selected[1];
-      const cells=sudoku.board.map((row,r)=>row.map((v,c)=>{
-        const given=!!sudoku.givens[r][c],related=r===r0||c===c0||Math.floor(r/3)===Math.floor(r0/3)&&Math.floor(c/3)===Math.floor(c0/3);
-        const classes=['sc-extra-sudoku-cell',given?'given':'',r===r0&&c===c0?'selected':'',related?'related':'',sudokuConflict(r,c,v)?'conflict':''].filter(Boolean).join(' ');
-        return '<button type="button" class="' + classes + '" data-sudoku-cell="' + r + ',' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + ', ' + (v||'empty') + '"' + (given?' disabled':'') + '>' + (v||'') + '</button>';
+      const size=sudoku.size,r0=sudoku.selected[0],c0=sudoku.selected[1];
+      const cells=sudoku.board.map((row,r)=>row.map((value,c)=>{
+        const given=!!sudoku.givens[r][c];
+        const related=r===r0||c===c0||Math.floor(r/sudoku.boxRows)===Math.floor(r0/sudoku.boxRows)&&Math.floor(c/sudoku.boxCols)===Math.floor(c0/sudoku.boxCols);
+        const boxRight=c<size-1&&(c+1)%sudoku.boxCols===0;
+        const boxBottom=r<size-1&&(r+1)%sudoku.boxRows===0;
+        const classes=['sc-extra-sudoku-cell',given?'given':'',r===r0&&c===c0?'selected':'',related?'related':'',sudokuConflict(r,c,value)?'conflict':'',boxRight?'box-right':'',boxBottom?'box-bottom':''].filter(Boolean).join(' ');
+        return '<button type="button" class="'+classes+'" data-sudoku-cell="'+r+','+c+'" aria-label="Row '+(r+1)+', column '+(c+1)+', '+(value||'empty')+'"'+(given?' disabled':'')+'>'+(value||'')+'</button>';
       }).join('')).join('');
-      view.innerHTML=commonHead('SUDOKU · DAILY NUMBER PUZZLE','Fill every row, column and 3 × 3 box.','↻ New puzzle') +
-        '<div class="sc-extra-toggle">' + ['easy','medium','hard'].map(l=>'<button type="button" data-sudoku-level="' + l + '" aria-pressed="' + (sudoku.level===l) + '">' + l[0].toUpperCase()+l.slice(1) + '</button>').join('') + '</div>' +
-        '<p class="sc-extra-status sc-extra-center" data-sudoku-status>' + esc(message) + '</p>' +
-        '<div class="sc-extra-sudoku">' + cells + '</div>' +
-        '<div class="sc-extra-numberpad">' + [1,2,3,4,5,6,7,8,9].map(n=>'<button type="button" data-sudoku-number="' + n + '">' + n + '</button>').join('') + '<button type="button" data-sudoku-number="0">⌫</button></div>' +
-        '<div class="sc-extra-stats"><span>Difficulty<strong>' + sudoku.level.toUpperCase() + '</strong></span><span>Mistakes<strong>' + sudoku.mistakes + '</strong></span><span>Filled<strong>' + sudoku.board.flat().filter(Boolean).length + ' / 81</strong></span></div>' +
-        '<p class="sc-extra-muted sc-extra-center">Today’s puzzle stays the same on this device for each difficulty. Red cells show a number conflict. Use Backspace or Delete to clear a selected cell.</p>';
-      const keypadFocus = $(view, '[data-sudoku-number="1"]');
-      if (keypadFocus) keypadFocus.focus({preventScroll:true});
+      view.innerHTML=commonHead('SUDOKU · DAILY NUMBER PUZZLE','Fill every row, column and box.','↻ New puzzle')+
+        '<div class="sc-extra-toggle">'+[4,6,9].map(n=>'<button type="button" data-sudoku-size="'+n+'" aria-pressed="'+(size===n)+'">'+n+' × '+n+'</button>').join('')+'</div>'+
+        '<div class="sc-extra-toggle">'+['easy','medium','hard'].map(level=>'<button type="button" data-sudoku-level="'+level+'" aria-pressed="'+(sudoku.level===level)+'">'+level[0].toUpperCase()+level.slice(1)+'</button>').join('')+'</div>'+
+        '<p class="sc-extra-status sc-extra-center" data-sudoku-status>'+esc(message)+'</p>'+
+        '<div class="sc-extra-sudoku" style="grid-template-columns:repeat('+size+',minmax(0,1fr))">'+cells+'</div>'+
+        '<div class="sc-extra-numberpad">'+Array.from({length:size},(_,i)=>i+1).map(n=>'<button type="button" data-sudoku-number="'+n+'">'+n+'</button>').join('')+'<button type="button" data-sudoku-number="0">⌫</button></div>'+
+        '<div class="sc-extra-stats"><span>Board<strong>'+size+' × '+size+'</strong></span><span>Difficulty<strong>'+sudoku.level.toUpperCase()+'</strong></span><span>Filled<strong>'+sudoku.board.flat().filter(Boolean).length+' / '+(size*size)+'</strong></span></div>'+
+        '<p class="sc-extra-muted sc-extra-center">Choose a board size and difficulty. Today’s puzzle is unique and stays the same on this device. Red cells show a number conflict.</p>';
+      const keypadFocus=$(view,'[data-sudoku-number="1"]');
+      if(keypadFocus)keypadFocus.focus({preventScroll:true});
     }
     function setSudokuNumber(value) {
       if(sudoku.won)return;
       const [r,c]=sudoku.selected;
       if(sudoku.givens[r][c])return;
+      if(value>sudoku.size)return;
       sudoku.board[r][c]=value;
-      if(value && sudokuConflict(r,c,value))sudoku.mistakes++;
-      if(sudoku.board.every((row,y)=>row.every((v,x)=>v===sudoku.solution[y][x]))) {
+      if(value&&sudokuConflict(r,c,value))sudoku.mistakes++;
+      if(sudoku.board.every((row,y)=>row.every((entry,x)=>entry===sudoku.solution[y][x]))){
         sudoku.won=true;paintSudoku('Puzzle solved! Excellent work! 🎉');
-      } else paintSudoku(value?'Number placed. Keep going.':'Cell cleared.');
+      }else paintSudoku(value?'Number placed. Keep going.':'Cell cleared.');
     }
 
     function emptyConnectBoard(){return Array.from({length:6},()=>Array(7).fill(''));}
