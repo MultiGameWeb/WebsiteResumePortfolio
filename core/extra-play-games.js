@@ -347,6 +347,8 @@
       te:'ప్రతి రోజు చిన్న ప్రయత్నం మనల్ని పెద్ద విజయాల వైపు తీసుకెళ్తుంది. కొత్త విషయాలు నేర్చుకోండి, ఆసక్తిగా ఉండండి, నిన్నటికంటే ఈ రోజు కొంచెం మెరుగ్గా ప్రయత్నించండి. నిరంతర సాధనతో మంచి ఫలితాలు సాధించవచ్చు.'
     };
     function initTyping(lang) {
+      clearInterval(typingTimer);
+      typingTimer = 0;
       lang = lang || 'en';
       typing = {lang:lang,text:typingSamples[lang],value:'',seconds:60,started:false,done:false,startAt:0,wpm:0,accuracy:100};
       paintTyping();
@@ -425,7 +427,7 @@
         let bestR=-1,bestC=-1,bestMask=0,bestN=10;
         for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(!grid[r][c]){
           const b=Math.floor(r/3)*3+Math.floor(c/3);
-          const mask=511 & ~(rows[r]|cols[c]|boxes[b]);
+          const mask=1022 & ~(rows[r]|cols[c]|boxes[b]);
           const n=bitCount(mask);
           if(n===0)return;
           if(n<bestN){bestN=n;bestR=r;bestC=c;bestMask=mask;if(n===1)break;}
@@ -471,7 +473,7 @@
       return false;
     }
     function paintSudoku(message) {
-      const r0=sudoku.selected[0],c0=sudoku.selected[1],selectedValue=sudoku.board[r0][c0];
+      const r0=sudoku.selected[0],c0=sudoku.selected[1];
       const cells=sudoku.board.map((row,r)=>row.map((v,c)=>{
         const given=!!sudoku.givens[r][c],related=r===r0||c===c0||Math.floor(r/3)===Math.floor(r0/3)&&Math.floor(c/3)===Math.floor(c0/3);
         const classes=['sc-extra-sudoku-cell',given?'given':'',r===r0&&c===c0?'selected':'',related?'related':'',sudokuConflict(r,c,v)?'conflict':''].filter(Boolean).join(' ');
@@ -565,8 +567,7 @@
     function paintConnect(message) {
       view.innerHTML=commonHead('CONNECT FOUR · YOU VS COMPUTER','Get four discs in a line before the computer.','↻ New match') +
         '<p class="sc-extra-status sc-extra-center" data-connect-status>' + esc(message) + '</p>' +
-        '<div class="sc-extra-connect">' + Array.from({length:7},(_,c)=>'<button type="button" data-connect-col="' + c + '" aria-label="Drop disc in column ' + (c+1) + '">' +
-          connect.board.map(row=>'<span class="' + (row[c]==='R'?'red':row[c]==='Y'?'yellow':'') + '"></span>').join('') + '</button>').join('') + '</div>' +
+        '<div class="sc-extra-connect">' + connect.board.map((row,r)=>row.map((value,c)=>'<button type="button" class="' + (value==='R'?'red':value==='Y'?'yellow':'') + '" data-connect-col="' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + '"></button>').join('')).join('') + '</div>' +
         '<div class="sc-extra-stats"><span>You<strong>🔴 Red</strong></span><span>Computer<strong>🟡 Yellow</strong></span></div>' +
         '<p class="sc-extra-muted sc-extra-center">Tap a column to drop your disc. The computer looks for winning moves and blocks your winning line.</p>';
     }
@@ -644,7 +645,7 @@
         const parts=wordParts(word.guess.trim());
         if(parts.length===word.limit)submitWord();
       }
-      if(active==='typing' && event.target.matches('[data-typing-input]'))updateTypingLive();
+      if(active==='typing' && event.target.matches('[data-typing-input]') && !event.isComposing)updateTypingLive();
     });
     section.addEventListener('keydown', event => {
       if(active==='word' && event.target.matches('[data-word-input]') && event.key==='Enter') {event.preventDefault();submitWord();return;}
