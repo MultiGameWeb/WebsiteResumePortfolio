@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#100f17">
+  <meta name="description" content="Play free browser games on SiteCraft: Memory Match, Tic-Tac-Toe, Rock Paper Scissors and 3D Snake Ultimate. No account or sign-in required.">
+  <title>Play Games | SiteCraft</title>
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="site-navigation.css">
+  <style>
+    html,body{min-height:100%;margin:0;background:#100f17;color:#fbf9ff}
+    body{font-family:Inter,system-ui,sans-serif}
+    #playGamesPage{width:100%;min-height:calc(100vh - 76px);margin:0;padding:0}
+    @media(max-width:720px){#playGamesPage{min-height:calc(100vh - 68px)}}
+  </style>
+</head>
+<body data-page="play-games">
+  <main id="playGamesPage" aria-label="SiteCraft games"></main>
+  <script src="site-navigation.js"></script>
+  <script src="core/play-games.js"></script>
+  <script>
+    (function(){
+      function mountGames(){
+        if(window.SiteCraftPlayGames){
+          window.SiteCraftPlayGames.append(document.getElementById('playGamesPage'),'SiteCraft Play Games');
+        }
+      }
+      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountGames,{once:true});
+      else mountGames();
+    })();
+  </script>
+</body>
+</html>
