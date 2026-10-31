@@ -31,7 +31,7 @@
     '.sc-pg-snake-frame{display:block;width:100%;height:clamp(560px,76vh,780px);min-height:560px;border:0;background:#070a10}' +
     '@media(max-width:620px){.sc-pg-snake-frame{height:720px;min-height:650px}}' +
     '.sc-pg-section button:focus-visible{outline:3px solid #f0abfc;outline-offset:3px}' +
-    '@media(max-width:620px){.sc-pg-head{display:block}.sc-pg-brand{display:inline-flex;margin-top:14px}.sc-pg-tabs{display:grid;grid-template-columns:1fr}.sc-pg-tab{text-align:left}.sc-pg-panel{padding:14px;border-radius:16px}.sc-pg-memory{gap:6px}.sc-pg-memory button{border-radius:9px}.sc-pg-rps-choices button{width:calc(33.333% - 8px);min-height:92px}}' +
+    '@media(max-width:620px){.sc-pg-head{display:block}.sc-pg-brand{display:inline-flex;margin-top:14px}.sc-pg-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.sc-pg-tab{text-align:left;min-width:0;padding:0 10px;white-space:normal;line-height:1.3}.sc-pg-panel{padding:14px;border-radius:16px}.sc-pg-memory{gap:6px}.sc-pg-memory button{border-radius:9px}.sc-pg-rps-choices button{width:calc(33.333% - 8px);min-height:92px}}' +
     '.sc-pg-game-tools{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap;margin:-2px 0 13px}' +
     '.sc-pg-help{position:relative;max-width:100%;color:#e9e3f3;font-size:11px}' +
     '.sc-pg-help summary{cursor:pointer;list-style:none;min-height:35px;padding:9px 12px;border:1px solid rgba(255,255,255,.17);border-radius:10px;background:rgba(255,255,255,.055);font-weight:750}' +
@@ -305,7 +305,11 @@
 
     function switchGame(next) {
       game = next;
-      tabs.forEach(tab => tab.setAttribute('aria-selected', String(tab.dataset.pgTab === game)));
+      panel.dataset.extraGameActive = 'false';
+      section.querySelectorAll('.sc-pg-tab').forEach(tab => {
+        const tabGame = tab.dataset.pgTab || tab.dataset.extraTab || '';
+        tab.setAttribute('aria-selected', String(tabGame === game));
+      });
       if (game === 'memory') resetMemory();
       else if (game === 'ttt') resetTtt();
       else if (game === 'snake') paintSnake();
@@ -313,6 +317,7 @@
     }
     tabs.forEach(tab => tab.addEventListener('click', () => switchGame(tab.dataset.pgTab)));
     panel.addEventListener('click', event => {
+      if (panel.dataset.extraGameActive === 'true') return;
       if (event.target.closest('[data-pg-fullscreen]')) {
         const active = document.fullscreenElement || document.webkitFullscreenElement;
         if (active === panel) {
