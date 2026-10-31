@@ -285,7 +285,8 @@
     function resetTtt() { board = Array(9).fill(''); currentTttTurn = 'you'; ended = false; paintTtt('Your turn — you are X.'); }
     function paintRps(message) {
       const options = [{id:'rock',label:'Rock',emoji:'✊'},{id:'paper',label:'Paper',emoji:'✋'},{id:'scissors',label:'Scissors',emoji:'✌️'}];
-      panel.innerHTML = header('ROCK PAPER SCISSORS · VS COMPUTER','Can you beat the computer?','↻ Reset score') +
+      panel.innerHTML = header('ROCK PAPER SCISSORS · VS COMPUTER','Can you beat the computer?','↻ Reset score',
+        '<b>Goal:</b> Beat the computer. <b>How:</b> Choose Rock, Paper or Scissors. The computer picks one too. Rock beats Scissors, Scissors beats Paper, and Paper beats Rock. <b>Win:</b> The round winner gets one point. Keep playing and try to get the higher score.') +
         '<p class="sc-pg-status" data-pg-rps-status>' + esc(message || 'Choose rock, paper or scissors to play.') + '</p>' +
         '<div class="sc-pg-rps-result"><span>You<strong data-pg-you-pick>' + esc(youPicked) +
         '</strong></span><span>VS</span><span>Computer<strong data-pg-computer-pick>' + esc(computerPicked) +
@@ -296,9 +297,10 @@
     }
 
     function paintSnake() {
-      panel.innerHTML = header('3D SNAKE ULTIMATE · ARCADE', 'Choose your theme. Chase your high score.', '↻ Restart snake') +
-        '<p class="sc-pg-status">3 lives · 4 board themes · 6 snake skins · power-up eggs · moving portals. Use arrow keys / WASD, swipe, or the on-screen controls. No account or sign-in needed. Your best score is stored only in this browser.</p>' +
-        '<div class="sc-pg-snake-shell"><iframe class="sc-pg-snake-frame" data-pg-snake-frame src="games/snake-ultimate.html" title="3D Snake Ultimate game" loading="lazy" referrerpolicy="no-referrer"></iframe></div>';
+      panel.innerHTML = header('3D SNAKE ULTIMATE · YOU VS COMPUTER', 'Race the computer snake for the eggs.', '↻ Restart snake',
+        '<b>Goal:</b> Score more than the computer snake. <b>How:</b> Move with Arrow Keys or WASD, swipe on the board, or use the on-screen arrows. Collect eggs for points. The red rival snake is controlled by the computer and competes for the same eggs. Avoid your own tail, the rival snake and the walls. <b>Win:</b> Survive and finish with a higher score than the computer.') +
+        '<p class="sc-pg-status">3 lives · 4 board themes · 6 snake skins · 8 egg types · moving portals. Beat the computer rival score. No login or account needed; your personal best stays in this browser.</p>' +
+        '<div class="sc-pg-snake-shell"><iframe class="sc-pg-snake-frame" data-pg-snake-frame src="games/snake-ultimate.html" title="3D Snake Ultimate — You versus computer" loading="lazy" referrerpolicy="no-referrer" allow="fullscreen" allowfullscreen></iframe></div>';
     }
 
     function switchGame(next) {
