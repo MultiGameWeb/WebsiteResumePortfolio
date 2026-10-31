@@ -30,7 +30,7 @@
     '.sc-extra-tile{display:grid;place-items:center;width:48px;height:48px;border:1px solid rgba(255,255,255,.2);border-radius:8px;background:rgba(255,255,255,.05);color:#fff;font-size:18px;font-weight:850}',
     '.sc-extra-tile.exact{background:#16845b;border-color:#16845b}.sc-extra-tile.present{background:#a87519;border-color:#a87519}.sc-extra-tile.absent{background:#393445;border-color:#393445}',
     '.sc-extra-toggle{display:flex;justify-content:center;gap:7px;margin:12px 0}.sc-extra-toggle button{min-height:34px;padding:0 13px;border:1px solid rgba(255,255,255,.16);border-radius:9px;background:rgba(255,255,255,.04);color:#ddd5e9;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}.sc-extra-toggle button[aria-pressed=true]{background:rgba(124,58,237,.25);border-color:#a78bfa;color:#fff}',
-    '.sc-extra-board2048{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(100%,390px);aspect-ratio:1;margin:14px auto;padding:9px;border-radius:14px;background:#342d40}',
+    '.sc-extra-board2048{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(100%,390px);aspect-ratio:1;margin:14px auto;padding:9px;border-radius:14px;background:#342d40;touch-action:none}',
     '.sc-extra-2048-cell{display:grid;place-items:center;min-width:0;border-radius:9px;background:rgba(255,255,255,.08);color:#352b42;font-size:clamp(17px,4vw,27px);font-weight:900;font-variant-numeric:tabular-nums}',
     '.sc-extra-2048-cell[data-v="2"]{background:#eee4da}.sc-extra-2048-cell[data-v="4"]{background:#ede0c8}.sc-extra-2048-cell[data-v="8"]{background:#f2b179;color:#fff}.sc-extra-2048-cell[data-v="16"]{background:#f59563;color:#fff}.sc-extra-2048-cell[data-v="32"]{background:#f67c5f;color:#fff}.sc-extra-2048-cell[data-v="64"]{background:#f65e3b;color:#fff}.sc-extra-2048-cell[data-v="128"],.sc-extra-2048-cell[data-v="256"],.sc-extra-2048-cell[data-v="512"],.sc-extra-2048-cell[data-v="1024"],.sc-extra-2048-cell[data-v="2048"]{background:#edc850;color:#fff;font-size:clamp(14px,3.4vw,23px)}',
     '.sc-extra-block-wrap{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:14px;align-items:start}',
@@ -521,7 +521,7 @@
         const w=[board[r][c],board[r][c+1],board[r][c+2],board[r][c+3]];
         const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
         if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;
+        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
       }
       for(let c=0;c<7;c++)for(let r=0;r<=2;r++){
         const w=[board[r][c],board[r+1][c],board[r+2][c],board[r+3][c]];
@@ -640,10 +640,8 @@
     });
 
     section.addEventListener('input', event => {
-      if(active==='word' && event.target.matches('[data-word-input]')) {
+      if(active==='word' && event.target.matches('[data-word-input]') && !event.isComposing) {
         word.guess=event.target.value;
-        const parts=wordParts(word.guess.trim());
-        if(parts.length===word.limit)submitWord();
       }
       if(active==='typing' && event.target.matches('[data-typing-input]') && !event.isComposing)updateTypingLive();
     });
