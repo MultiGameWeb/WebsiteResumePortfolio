@@ -313,46 +313,65 @@
     }
     tabs.forEach(tab => tab.addEventListener('click', () => switchGame(tab.dataset.pgTab)));
     panel.addEventListener('click', event => {
+      if (event.target.closest('[data-pg-fullscreen]')) {
+        const active = document.fullscreenElement || document.webkitFullscreenElement;
+        if (active === panel) {
+          const leave = document.exitFullscreen || document.webkitExitFullscreen;
+          if (leave) leave.call(document);
+        } else {
+          const enter = panel.requestFullscreen || panel.webkitRequestFullscreen;
+          if (enter) {
+            const result = enter.call(panel);
+            if (result && typeof result.catch === 'function') result.catch(() => {});
+          }
+        }
+        return;
+      }
       if (event.target.closest('[data-pg-reset]')) {
         if (game === 'memory') resetMemory();
         else if (game === 'ttt') resetTtt();
-        else if (game === 'snake') { const frame = panel.querySelector('[data-pg-snake-frame]'); if (frame) frame.src = frame.getAttribute('src'); }
-        else { you = 0; computer = 0; youPicked = '—'; computerPicked = '—'; paintRps('Score reset. Your move!'); }
+        else if (game === 'snake') {
+          const frame = panel.querySelector('[data-pg-snake-frame]');
+          if (frame) frame.src = frame.getAttribute('src');
+        } else {
+          you = 0; computer = 0; youPicked = '—'; computerPicked = '—';
+          paintRps('Score reset. Your move!');
+        }
         return;
       }
       if (game === 'memory') {
         const card = event.target.closest('[data-pg-card]');
-        if (!card || locked) return;
+        if (!card || locked || memoryTurn !== 'you') return;
         const index = Number(card.dataset.pgCard);
         if (!Number.isInteger(index) || matched.has(index) || opened.includes(index)) return;
         opened.push(index);
-        if (opened.length === 1) { paintMemory('Good start. Find the matching symbol.'); return; }
-        moves++;
-        const first = opened[0], second = opened[1];
-        if (deck[first] === deck[second]) {
-          matched.add(first); matched.add(second); opened = [];
-          paintMemory(matched.size === deck.length ? 'Perfect! You found every pair. 🎉' : 'A match! Keep going.');
-        } else {
-          locked = true;
-          paintMemory('Not a match. Take another look…');
-          window.setTimeout(() => {
-            if (game !== 'memory') return;
-            opened = []; locked = false; paintMemory('Try another pair.');
-          }, 720);
+        memoryRemember(index);
+        if (opened.length === 1) {
+          paintMemory('Choose one more card.');
+          return;
         }
+        locked = true;
+        paintMemory('Checking your pair…');
+        window.setTimeout(() => {
+          if (game === 'memory' && memoryTurn === 'you') resolveMemoryPair('you');
+        }, 550);
         return;
       }
       if (game === 'ttt') {
         const cell = event.target.closest('[data-pg-cell]');
-        if (!cell || ended) return;
+        if (!cell || ended || currentTttTurn !== 'you') return;
         const index = Number(cell.dataset.pgCell);
         if (!Number.isInteger(index) || board[index]) return;
-        board[index] = turn;
-        const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-        const won = lines.some(line => line.every(i => board[i] === turn));
-        if (won) { ended = true; paintTtt('Player ' + turn + ' wins! 🎉'); }
-        else if (board.every(Boolean)) { ended = true; paintTtt('It is a draw. Start another round!'); }
-        else { turn = turn === 'X' ? 'O' : 'X'; paintTtt(); }
+        board[index] = 'X';
+        if (tttWinner(board, 'X')) {
+          ended = true; currentTttTurn = 'done'; paintTtt('You win! 🎉 Three X marks in a row.');
+        } else if (board.every(Boolean)) {
+          ended = true; currentTttTurn = 'done'; paintTtt('It is a draw. Well played!');
+        } else {
+          currentTttTurn = 'computer';
+          paintTtt('Your move is in. Computer is thinking…');
+          window.setTimeout(runComputerTtt, 360);
+        }
         return;
       }
       if (game === 'rps') {
@@ -360,6 +379,7 @@
         if (!button) return;
         const choices = [{id:'rock',label:'Rock',emoji:'✊'},{id:'paper',label:'Paper',emoji:'✋'},{id:'scissors',label:'Scissors',emoji:'✌️'}];
         const player = choices.find(item => item.id === button.dataset.pgChoice);
+        if (!player) return;
         const rival = choices[Math.floor(Math.random() * choices.length)];
         youPicked = player.emoji + ' ' + player.label;
         computerPicked = rival.emoji + ' ' + rival.label;
@@ -372,6 +392,13 @@
         paintRps(message);
       }
     });
+    function updateFullscreenLabel() {
+      const active = document.fullscreenElement || document.webkitFullscreenElement;
+      const button = panel.querySelector('[data-pg-fullscreen]');
+      if (button) button.textContent = active === panel ? '⤢ Exit Full Screen' : '⛶ Full Screen';
+    }
+    document.addEventListener('fullscreenchange', updateFullscreenLabel);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenLabel);
     switchGame('memory');
   }
 
