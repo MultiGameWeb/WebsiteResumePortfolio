@@ -45,6 +45,11 @@
     '.sc-pg-section .sc-extra-connect button{display:grid;place-items:center;min-width:0;padding:0;aspect-ratio:1;border:0;border-radius:50%;background:#111b35;cursor:pointer}.sc-pg-section .sc-extra-connect .red:after,.sc-pg-section .sc-extra-connect .yellow:after{content:"";display:block;width:82%;height:82%;border-radius:50%;background:#f87171}.sc-pg-section .sc-extra-connect .yellow:after{background:#facc15}',
     '.sc-pg-section .sc-extra-connect button:disabled{cursor:default;opacity:.65}',
     '.sc-pg-section .sc-pg-starfighter-shell{overflow:hidden;border:1px solid rgba(0,242,254,.25);border-radius:14px;background:#050711}',
+    '.sc-pg-section .sc-pg-brick-breaker-shell{overflow:hidden;border:1px solid rgba(255,154,0,.28);border-radius:14px;background:#060811}',
+    '.sc-pg-section .sc-pg-brick-breaker-frame{display:block;width:100%;height:clamp(600px,78vh,850px);min-height:560px;border:0;background:#060811}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-brick-breaker-frame{height:760px;min-height:700px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-brick-breaker-frame{height:calc(100vh - 175px);min-height:420px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-brick-breaker-frame{height:calc(100vh - 190px);min-height:360px}}',
     '.sc-pg-section .sc-pg-starfighter-frame{display:block;width:100%;height:clamp(600px,78vh,850px);min-height:560px;border:0;background:#04060c}',
     '@media(max-width:620px){.sc-pg-section .sc-pg-starfighter-frame{height:760px;min-height:700px}}',
     '.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 175px);min-height:420px}',
@@ -119,8 +124,20 @@
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sudoku">🔢 Sudoku</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="connect">🔴 Connect Four</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="starfighter">🚀 3D Starfighter</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="brick-breaker">💎 Brick Breaker</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-gk-pending disabled title="GK Quiz will be enabled after secure question API integration">🇮🇳 GK Quiz · Soon</button>'
     );
+
+    const preferredOrder = [
+      'starfighter','brick-breaker','snake','memory',
+      'connect','2048','blocks','word','sudoku','typing','ttt','rps'
+    ];
+    preferredOrder.forEach(key => {
+      const tab = tabs.querySelector('[data-extra-tab="' + key + '"], [data-pg-tab="' + key + '"]');
+      if (tab) tabs.appendChild(tab);
+    });
+    const pendingTab = tabs.querySelector('[data-gk-pending]');
+    if (pendingTab) tabs.appendChild(pendingTab);
 
     bind(section, tabs, panel);
     section.dataset.extraGamesReady = 'true';
@@ -154,11 +171,17 @@
       if (id === 'sudoku') initSudoku('medium');
       if (id === 'connect') initConnect();
       if (id === 'starfighter') paintStarfighter();
+      if (id === 'brick-breaker') paintBrickBreaker();
     }
     function paintStarfighter() {
       view.innerHTML = commonHead('3D STARFIGHTER · SPACE ARCADE', 'Pilot your fighter. Survive the galaxy.', '↻ Restart mission') +
         '<p class="sc-extra-status">Drag to steer on touch or mouse. Use Arrow Keys / WASD on desktop. Lasers fire automatically. Collect weapon, shield and life capsules, and defeat the boss dreadnought.</p>' +
         '<div class="sc-pg-starfighter-shell"><iframe class="sc-pg-starfighter-frame" data-starfighter-frame src="games/starfighter-3d.html" title="3D Starfighter arcade game" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintBrickBreaker() {
+      view.innerHTML = commonHead('3D CRYSTAL BRICK BREAKER · BOSS EDITION', 'Smash the crystals. Defeat the Mecha Boss.', '↻ Restart stage') +
+        '<p class="sc-extra-status">Slide to move the hover-paddle on mobile or mouse. Use Left / Right Arrow Keys or A / D on desktop. Catch Fireball, Multi-Ball, Twin Laser and Wide Paddle capsules. Clear every brick and defeat the boss to advance.</p>' +
+        '<div class="sc-pg-brick-breaker-shell"><iframe class="sc-pg-brick-breaker-frame" data-brick-breaker-frame src="games/crystal-brick-breaker.html" title="3D Crystal Brick Breaker Boss Edition" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
     }
     tabs.querySelectorAll('[data-extra-tab]').forEach(tab => {
       tab.addEventListener('click', () => start(tab.dataset.extraTab));
@@ -167,6 +190,8 @@
       const button = $(view, '[data-extra-fullscreen]');
       if (button) button.textContent = document.fullscreenElement === view ? '⤢ Exit Full Screen' : '⛶ Full Screen';
     });
+
+    start('starfighter');
 
     const englishWords = ['APPLE','BRAVE','CLOUD','DREAM','EARTH','FLAME','GRAPE','HEART','JUICE','KNIFE','LEMON','MUSIC','NIGHT','OCEAN','PEACE','QUEEN','RIVER','SMILE','TRAIN','WATER','YOUTH','BREAD','CHAIR','DANCE','LIGHT','PLANT','SHINE','SPACE','STONE','TIGER','WORLD','MANGO','GREEN','HAPPY','STARS','SWEET','CANDY','BLOOM','CROWN','MAGIC','SOUND','SLEEP','STORM','TRUCK','VOICE','BEACH','CHESS','FRUIT','HORSE','MONEY','ROBOT','SNAKE','TABLE','ZEBRA'];
     const teluguWords = ['తెలుగు','మనసు','కలలు','వెలుగు','విజయం','ప్రకృతి','నగరం','గెలుపు','చదువు','దేవుడు','పండుగ','కవిత','మాటలు','పాటలు','సమయం','వానలు','మేఘాలు','పుస్తకం','సహాయం','గురువు','బంగారం','తారలు','చెలిమి','హాయిగా','ఆకాశం','ఆశయం','ప్రయాణం','నవోదయం','పరిచయం','కరుణ'];
@@ -708,6 +733,10 @@
         if(active==='connect')initConnect();
         if(active==='starfighter'){
           const frame=$(view,'[data-starfighter-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='brick-breaker'){
+          const frame=$(view,'[data-brick-breaker-frame]');
           if(frame)frame.src=frame.getAttribute('src');
         }
         return;
