@@ -17,12 +17,12 @@ const menuItems=[
  ["Slides","presentation-maker.html","presentation"],
  ["Chit Manager","committee-book.html","committee"],
  ["AI Ad Videos","ai-ad-videos.html","ad-videos"],
- ["Features","index.html#website-features","website-features"],
+ ["Play Games","games.html","play-games"],
  ["Contact","index.html#contact","contact"]
 ];
 const committeePages=new Set(["committee-book.html","my-chits.html","auction-chit-manager.html","fixed-discount-chit-manager.html","fixed-rotation-bc-chit-manager.html","lottery-kuri-chit-manager.html"]);
 const templateFlow=new Set(["templates.html","features.html","builder.html","checkout.html","success.html","admin.html","ai-builder.html","ai-websites.html"]);
-const currentKey=isHome?"home":committeePages.has(leaf)?"committee":templateFlow.has(leaf)?"templates":({"ai-chatbots.html":"chatbots","ai-chatbot-builder.html":"chatbots","ai-chatbot-software.html":"chatbots","portfolio-creator.html":"portfolio","resume-builder.html":"resume","pdf-tools.html":"pdf","document-editor.html":"document","presentation-maker.html":"presentation","ai-ad-videos.html":"ad-videos"})[leaf]||"";
+const currentKey=isHome?"home":committeePages.has(leaf)?"committee":templateFlow.has(leaf)?"templates":({"ai-chatbots.html":"chatbots","ai-chatbot-builder.html":"chatbots","ai-chatbot-software.html":"chatbots","portfolio-creator.html":"portfolio","resume-builder.html":"resume","pdf-tools.html":"pdf","document-editor.html":"document","presentation-maker.html":"presentation","ai-ad-videos.html":"ad-videos","games.html":"play-games"})[leaf]||"";
 const nav=document.createElement("header");
 nav.id="sitecraftGlobalNav";nav.setAttribute("aria-label","SiteCraft site navigation");
 nav.innerHTML='<div class="sc-nav-inner"><a class="sc-brand" href="index.html" aria-label="SiteCraft home"><span class="sc-brand-mark" aria-hidden="true">✦</span><span>SiteCraft</span></a><div class="sc-actions"><button type="button" class="sc-action sc-back" aria-label="Go back" title="Back"><span aria-hidden="true">←</span><span class="sc-action-label">Back</span></button><a class="sc-action sc-home" href="index.html" aria-label="Go to home" title="Home"><span aria-hidden="true">⌂</span><span class="sc-action-label">Home</span></a></div><div class="sc-nav-right"><a class="sc-get-started" href="templates.html">Get a Website <span aria-hidden="true">↗</span></a><button type="button" class="sc-menu-toggle" aria-label="Open site menu" aria-controls="scSiteMenu" aria-expanded="false"><span aria-hidden="true">☰</span></button></div><nav class="sc-menu" id="scSiteMenu" aria-label="Main menu"></nav></div>';
