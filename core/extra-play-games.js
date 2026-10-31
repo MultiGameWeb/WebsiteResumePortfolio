@@ -436,8 +436,8 @@
       return {typed:typed,correct:correct,target:target};
     }
     function typingPromptHtml(stats) {
-      const start = Math.max(0, stats.typed.length - 28);
-      const end = Math.min(stats.target.length, Math.max(start + 180, stats.typed.length + 145));
+      const start = stats.typed.length;
+      const end = Math.min(stats.target.length, start + 180);
       return stats.target.slice(start,end).map((ch,offset)=>{
         const index = start + offset;
         const entered = stats.typed[index];
