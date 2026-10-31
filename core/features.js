@@ -18,7 +18,7 @@
       ? [...store.selectedFeatures]
       : (Array.isArray(manifest.defaultSelectedFeatures)
         ? [...manifest.defaultSelectedFeatures]
-        : (manifest.features || []).map(feature => feature.id));
+        : (manifest.features || []).map(feature => feature.id)).filter(featureId => featureId !== 'play-games');
     Store.update({
       templateId: id,
       data: store.templateId === id && store.data ? store.data : clone(manifest.demoData || {}),
@@ -35,10 +35,7 @@
   }
   function render() {
     const grid = document.querySelector('#featureGrid');
-    const features = [...(manifest.features || [])];
-    if (!features.some(feature => feature.id === 'play-games')) {
-      features.push({ id: 'play-games', label: 'Play Games' });
-    }
+    const features = (manifest.features || []).filter(feature => feature.id !== 'play-games');
     grid.innerHTML = features.map((feature, index) => {
       const checked = selected.includes(feature.id);
       return '<label class="feature-card ' + (checked ? 'selected' : '') + '">' +
