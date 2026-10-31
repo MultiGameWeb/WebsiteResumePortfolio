@@ -27,6 +27,9 @@
     '.sc-pg-rps-choices button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:clamp(92px,18vw,125px);min-height:105px;border:1px solid rgba(255,255,255,.14);border-radius:15px;background:rgba(255,255,255,.045);color:#fff;font:750 11px Inter,system-ui,sans-serif;cursor:pointer}' +
     '.sc-pg-rps-choices button:hover{border-color:rgba(216,180,254,.65);background:rgba(139,92,246,.12)}.sc-pg-rps-choices span{font-size:30px}' +
     '.sc-pg-rps-result{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;color:#d9d2e6;text-align:center;font-size:12px}.sc-pg-rps-result strong{display:block;margin-top:5px;color:#fff;font-size:19px}' +
+    '.sc-pg-snake-shell{overflow:hidden;border:1px solid rgba(255,255,255,.14);border-radius:14px;background:#070a10}' +
+    '.sc-pg-snake-frame{display:block;width:100%;height:clamp(560px,76vh,780px);min-height:560px;border:0;background:#070a10}' +
+    '@media(max-width:620px){.sc-pg-snake-frame{height:720px;min-height:650px}}' +
     '.sc-pg-section button:focus-visible{outline:3px solid #f0abfc;outline-offset:3px}' +
     '@media(max-width:620px){.sc-pg-head{display:block}.sc-pg-brand{display:inline-flex;margin-top:14px}.sc-pg-tabs{display:grid;grid-template-columns:1fr}.sc-pg-tab{text-align:left}.sc-pg-panel{padding:14px;border-radius:16px}.sc-pg-memory{gap:6px}.sc-pg-memory button{border-radius:9px}.sc-pg-rps-choices button{width:calc(33.333% - 8px);min-height:92px}}' +
     '@media(prefers-reduced-motion:reduce){.sc-pg-section *{transition:none!important}}';
@@ -66,6 +69,7 @@
           '<button class="sc-pg-tab" type="button" role="tab" aria-selected="true" data-pg-tab="memory">🧠 Memory Match</button>' +
           '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-pg-tab="ttt">⭕ Tic-Tac-Toe</button>' +
           '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-pg-tab="rps">✊ Rock Paper Scissors</button>' +
+          '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-pg-tab="snake">🐍 3D Snake Ultimate</button>' +
         '</div><div class="sc-pg-panel" data-pg-panel aria-live="polite"></div>' +
       '</div>';
 
@@ -134,11 +138,18 @@
         score('You', you) + score('Computer', computer) + '</div>';
     }
 
+    function paintSnake() {
+      panel.innerHTML = header('3D SNAKE ULTIMATE · ARCADE', 'Choose your theme. Chase your high score.', '↻ Restart snake') +
+        '<p class="sc-pg-status">3 lives · 4 board themes · 6 snake skins · power-up eggs · moving portals. Use arrow keys / WASD, swipe, or the on-screen controls. No account or sign-in needed. Your best score is stored only in this browser.</p>' +
+        '<div class="sc-pg-snake-shell"><iframe class="sc-pg-snake-frame" data-pg-snake-frame src="games/snake-ultimate.html" title="3D Snake Ultimate game" loading="lazy" referrerpolicy="no-referrer"></iframe></div>';
+    }
+
     function switchGame(next) {
       game = next;
       tabs.forEach(tab => tab.setAttribute('aria-selected', String(tab.dataset.pgTab === game)));
       if (game === 'memory') resetMemory();
       else if (game === 'ttt') resetTtt();
+      else if (game === 'snake') paintSnake();
       else paintRps();
     }
     tabs.forEach(tab => tab.addEventListener('click', () => switchGame(tab.dataset.pgTab)));
@@ -146,6 +157,7 @@
       if (event.target.closest('[data-pg-reset]')) {
         if (game === 'memory') resetMemory();
         else if (game === 'ttt') resetTtt();
+        else if (game === 'snake') { const frame = panel.querySelector('[data-pg-snake-frame]'); if (frame) frame.src = frame.getAttribute('src'); }
         else { you = 0; computer = 0; youPicked = '—'; computerPicked = '—'; paintRps('Score reset. Your move!'); }
         return;
       }
