@@ -297,10 +297,10 @@
     }
 
     function paintSnake() {
-      panel.innerHTML = header('3D SNAKE ULTIMATE · YOU VS COMPUTER', 'Race the computer snake for the eggs.', '↻ Restart snake',
-        '<b>Goal:</b> Score more than the computer snake. <b>How:</b> Move with Arrow Keys or WASD, swipe on the board, or use the on-screen arrows. Collect eggs for points. The red rival snake is controlled by the computer and competes for the same eggs. Avoid your own tail, the rival snake and the walls. <b>Win:</b> Survive and finish with a higher score than the computer.') +
-        '<p class="sc-pg-status">3 lives · 4 board themes · 6 snake skins · 8 egg types · moving portals. Beat the computer rival score. No login or account needed; your personal best stays in this browser.</p>' +
-        '<div class="sc-pg-snake-shell"><iframe class="sc-pg-snake-frame" data-pg-snake-frame src="games/snake-ultimate.html" title="3D Snake Ultimate — You versus computer" loading="lazy" referrerpolicy="no-referrer" allow="fullscreen" allowfullscreen></iframe></div>';
+      panel.innerHTML = header('3D SNAKE ULTIMATE · ARCADE', 'Choose your theme. Chase your high score.', '↻ Restart snake',
+        '<b>Goal:</b> Collect eggs, grow your snake and beat your personal best. <b>How:</b> Use Arrow Keys or WASD on a keyboard, swipe on mobile, or use the on-screen arrow controls. Avoid hitting your own tail and the walls. Collect normal and golden eggs, catch the moving Mega Frog, and use power-up eggs wisely. Choose a board theme and snake skin from the selectors. <b>Win:</b> Keep playing and set a new high score.') +
+        '<p class="sc-pg-status">Single-player arcade · 3 lives · 4 board themes · 6 snake skins · 8 egg types · moving portals. No login or account needed; your personal best stays in this browser.</p>' +
+        '<div class="sc-pg-snake-shell"><iframe class="sc-pg-snake-frame" data-pg-snake-frame src="games/snake-ultimate.html" title="3D Snake Ultimate solo game" loading="lazy" referrerpolicy="no-referrer" allow="fullscreen" allowfullscreen></iframe></div>';
     }
 
     function switchGame(next) {
