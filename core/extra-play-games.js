@@ -527,19 +527,19 @@
         const w=[board[r][c],board[r+1][c],board[r+2][c],board[r+3][c]];
         const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
         if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;
+        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
       }
       for(let r=0;r<=2;r++)for(let c=0;c<=3;c++){
         const w=[board[r][c],board[r+1][c+1],board[r+2][c+2],board[r+3][c+3]];
         const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
         if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;
+        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
       }
       for(let r=0;r<=2;r++)for(let c=3;c<7;c++){
         const w=[board[r][c],board[r+1][c-1],board[r+2][c-2],board[r+3][c-3]];
         const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
         if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;
+        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
       }
       return score;
     }
