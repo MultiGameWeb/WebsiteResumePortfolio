@@ -32,9 +32,32 @@
     '@media(max-width:620px){.sc-pg-snake-frame{height:720px;min-height:650px}}' +
     '.sc-pg-section button:focus-visible{outline:3px solid #f0abfc;outline-offset:3px}' +
     '@media(max-width:620px){.sc-pg-head{display:block}.sc-pg-brand{display:inline-flex;margin-top:14px}.sc-pg-tabs{display:grid;grid-template-columns:1fr}.sc-pg-tab{text-align:left}.sc-pg-panel{padding:14px;border-radius:16px}.sc-pg-memory{gap:6px}.sc-pg-memory button{border-radius:9px}.sc-pg-rps-choices button{width:calc(33.333% - 8px);min-height:92px}}' +
+    '.sc-pg-game-tools{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap;margin:-2px 0 13px}' +
+    '.sc-pg-help{position:relative;max-width:100%;color:#e9e3f3;font-size:11px}' +
+    '.sc-pg-help summary{cursor:pointer;list-style:none;min-height:35px;padding:9px 12px;border:1px solid rgba(255,255,255,.17);border-radius:10px;background:rgba(255,255,255,.055);font-weight:750}' +
+    '.sc-pg-help summary::-webkit-details-marker{display:none}.sc-pg-help summary:after{content:"⌄";margin-left:8px;color:#d8b4fe}' +
+    '.sc-pg-help[open] summary:after{content:"⌃"}' +
+    '.sc-pg-help-body{position:absolute;right:0;top:calc(100% + 7px);z-index:30;width:min(360px,calc(100vw - 48px));padding:13px 15px;border:1px solid rgba(255,255,255,.16);border-radius:12px;background:#211b30;box-shadow:0 18px 45px rgba(0,0,0,.4);color:#d7cee4;line-height:1.7}' +
+    '.sc-pg-fullscreen{min-height:35px;padding:0 11px;border:1px solid rgba(255,255,255,.17);border-radius:10px;background:rgba(255,255,255,.055);color:#f4effb;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}' +
+    '.sc-pg-panel:fullscreen{width:100vw;height:100vh;max-height:100vh;overflow:auto;border:0;border-radius:0;padding:clamp(16px,3vw,36px);background:#11101b}' +
+    '.sc-pg-panel:fullscreen .sc-pg-snake-frame{height:calc(100vh - 190px);min-height:420px}' +
+    '.sc-pg-memory-meta{margin:-7px 0 13px;color:#aaa1bd;text-align:center;font-size:10px}' +
+    '.sc-pg-memory button:disabled{cursor:default}.sc-pg-ttt button:disabled{opacity:.85}' +
+    '@media(max-width:620px){.sc-pg-game-tools{justify-content:flex-start}.sc-pg-help-body{left:0;right:auto}.sc-pg-panel:fullscreen{padding:12px}.sc-pg-panel:fullscreen .sc-pg-snake-frame{height:calc(100vh - 210px);min-height:360px}}' +
     '@media(prefers-reduced-motion:reduce){.sc-pg-section *{transition:none!important}}';
 
-  const symbols = ['🍋','🍓','🍉','🍇','🍒','🥝','🍍','🥑'];
+  const memoryThemes = [
+    { name:'Wild Animals', items:['🦁','🐯','🐘','🦒','🦓','🐼','🦊','🐵','🦏','🦛','🐻','🐨'] },
+    { name:'Ocean Life', items:['🐬','🐳','🦈','🐙','🦀','🦞','🐠','🐢','🪼','🦭','🦑','🐚'] },
+    { name:'Space', items:['🚀','🪐','🌎','🌙','⭐','☄️','👽','🛰️','🌌','🛸','🌞','🌠'] },
+    { name:'Sports', items:['⚽','🏀','🏈','⚾','🎾','🏐','🎱','🥊','🏓','🏸','🥇','🏆'] },
+    { name:'Vehicles', items:['🚗','🚕','🚌','🚑','🚒','🚜','🚲','🏍️','🚀','🚁','🚂','🚢'] },
+    { name:'Nature', items:['🌵','🌴','🌻','🌈','🍀','🌳','🌋','🏔️','🌊','🌸','🍄','🌼'] },
+    { name:'Music & Art', items:['🎸','🎹','🥁','🎺','🎻','🎧','🎤','🎨','🎬','🎼','🪇','🪈'] },
+    { name:'Food & Treats', items:['🍕','🍔','🍟','🌮','🍩','🍪','🍿','🍦','🍉','🥑','🍜','🧁'] },
+    { name:'Travel', items:['🗼','🗽','🏰','⛩️','🗿','🏝️','🏕️','🎡','🚠','🛶','🧳','🗺️'] },
+    { name:'Everyday Things', items:['⌚','📷','🎒','🔑','💡','📚','🎁','☎️','🧸','🪁','🕹️','🪄'] }
+  ];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const shuffle = values => {
     const result = values.slice();
@@ -95,37 +118,171 @@
     let board = Array(9).fill(''), turn = 'X', ended = false;
     let you = 0, computer = 0, youPicked = '—', computerPicked = '—';
 
-    function header(label, title, resetLabel) {
+    let memoryTheme = '';
+    let memoryTurn = 'you', youPairs = 0, computerPairs = 0;
+    let computerMemory = new Map();
+    let currentTttTurn = 'you';
+
+    function helpText(instructions) {
+      return '<div class="sc-pg-game-tools">' +
+        '<details class="sc-pg-help"><summary>How to Play</summary><div class="sc-pg-help-body">' + instructions + '</div></details>' +
+        '<button class="sc-pg-fullscreen" type="button" data-pg-fullscreen>⛶ Full Screen</button>' +
+      '</div>';
+    }
+    function header(label, title, resetLabel, instructions) {
       return '<div class="sc-pg-gamehead"><div><small>' + label + '</small><h3>' + title + '</h3></div>' +
-        '<button class="sc-pg-reset" type="button" data-pg-reset>' + resetLabel + '</button></div>';
+        '<button class="sc-pg-reset" type="button" data-pg-reset>' + resetLabel + '</button></div>' +
+        helpText(instructions);
     }
     function score(label, value) { return '<span>' + label + '<strong>' + value + '</strong></span>'; }
+
     function paintMemory(message) {
-      panel.innerHTML = header('MEMORY MATCH · 4 × 4','Find all eight matching pairs','↻ Restart') +
-        '<p class="sc-pg-status">' + esc(message) + '</p><div class="sc-pg-memory">' +
+      const turnName = memoryTurn === 'you' ? 'Your turn' : 'Computer is playing';
+      panel.innerHTML = header('MEMORY MATCH · PLAYER VS COMPUTER', 'Beat the computer by finding more pairs.', '↻ New round',
+        '<b>Goal:</b> Collect more matching pairs than the computer. <b>How:</b> On your turn, tap any two hidden cards. A match earns one pair and lets you play again. If they do not match, the cards turn back over and the computer takes its turn. The computer remembers cards it has seen. <b>Win:</b> The player with the most pairs after all 8 pairs are found wins.') +
+        '<p class="sc-pg-status">' + esc(message || turnName) + '</p>' +
+        '<p class="sc-pg-memory-meta">Theme this round: ' + esc(memoryTheme) + ' · ' + turnName + '</p>' +
+        '<div class="sc-pg-memory">' +
         deck.map((symbol, i) => {
           const visible = matched.has(i) || opened.includes(i);
           return '<button type="button" data-pg-card="' + i + '" class="' +
             (matched.has(i) ? 'matched' : visible ? 'open' : '') + '"' +
-            (matched.has(i) ? ' disabled' : '') + ' aria-label="' +
-            (visible ? esc(symbol) : 'Reveal card ' + (i + 1)) + '">' +
+            ((!visible && (locked || memoryTurn !== 'you')) || matched.has(i) ? ' disabled' : '') +
+            ' aria-label="' + (visible ? esc(symbol) : 'Reveal card ' + (i + 1)) + '">' +
             (visible ? symbol : '?') + '</button>';
         }).join('') + '</div><div class="sc-pg-score">' +
-        score('Moves', moves) + score('Pairs', matched.size / 2 + '/8') + '</div>';
+        score('You', youPairs) + score('Computer', computerPairs) + score('Pairs found', matched.size / 2 + '/8') +
+        '</div>';
     }
     function resetMemory() {
-      deck = shuffle(symbols.concat(symbols));
+      const theme = shuffle(memoryThemes)[0];
+      memoryTheme = theme.name;
+      const picks = shuffle(theme.items).slice(0, 8);
+      deck = shuffle(picks.concat(picks));
       opened = []; matched = new Set(); moves = 0; locked = false;
-      paintMemory('Flip two cards and find the matching pairs.');
+      memoryTurn = 'you'; youPairs = 0; computerPairs = 0; computerMemory = new Map();
+      paintMemory('New ' + memoryTheme + ' cards! You start. Find a matching pair.');
+    }
+    function memoryRemember(index) {
+      if (!matched.has(index)) computerMemory.set(index, deck[index]);
+    }
+    function finishMemoryIfDone() {
+      if (matched.size !== deck.length) return false;
+      locked = true;
+      const result = youPairs > computerPairs ? 'You win! 🎉' : youPairs < computerPairs ? 'Computer wins this round. Try again!' : 'It is a tie!';
+      paintMemory(result + ' Final score — You ' + youPairs + ', Computer ' + computerPairs + '.');
+      return true;
+    }
+    function resolveMemoryPair(who) {
+      moves++;
+      const [first, second] = opened;
+      const isMatch = deck[first] === deck[second];
+      if (isMatch) {
+        matched.add(first); matched.add(second);
+        computerMemory.delete(first); computerMemory.delete(second);
+        if (who === 'you') youPairs++; else computerPairs++;
+        opened = [];
+        if (finishMemoryIfDone()) return;
+        locked = false;
+        memoryTurn = who;
+        paintMemory(who === 'you' ? 'Nice match! You get another turn.' : 'Computer found a pair and gets another turn.');
+        if (memoryTurn === 'computer') window.setTimeout(runComputerMemoryTurn, 700);
+      } else {
+        window.setTimeout(() => {
+          if (game !== 'memory') return;
+          opened = []; locked = false;
+          memoryTurn = who === 'you' ? 'computer' : 'you';
+          paintMemory(who === 'you' ? 'No match. Computer turn.' : 'Computer missed. Your turn!');
+          if (memoryTurn === 'computer') window.setTimeout(runComputerMemoryTurn, 550);
+        }, 850);
+      }
+    }
+    function runComputerMemoryTurn() {
+      if (game !== 'memory' || memoryTurn !== 'computer' || matched.size === deck.length) return;
+      locked = true;
+      const known = [...computerMemory.entries()].filter(([index]) => !matched.has(index));
+      let first = -1, second = -1;
+      outer: for (let i = 0; i < known.length; i++) {
+        for (let j = i + 1; j < known.length; j++) {
+          if (known[i][1] === known[j][1]) { first = known[i][0]; second = known[j][0]; break outer; }
+        }
+      }
+      if (first < 0) {
+        const unknown = deck.map((_, i) => i).filter(i => !matched.has(i) && !computerMemory.has(i));
+        const fallback = deck.map((_, i) => i).filter(i => !matched.has(i));
+        const choices = unknown.length ? unknown : fallback;
+        first = shuffle(choices)[0];
+      }
+      opened = [first]; memoryRemember(first); paintMemory('Computer reveals a card…');
+      window.setTimeout(() => {
+        if (game !== 'memory' || memoryTurn !== 'computer') return;
+        if (second < 0 || matched.has(second) || second === first) {
+          const available = deck.map((_, i) => i).filter(i => !matched.has(i) && i !== first);
+          if (computerMemory.has(first)) {
+            const pair = available.find(i => computerMemory.get(i) === computerMemory.get(first));
+            second = pair ?? -1;
+          }
+          if (second < 0) {
+            const unknown = available.filter(i => !computerMemory.has(i));
+            second = shuffle(unknown.length ? unknown : available)[0];
+          }
+        }
+        if (second == null || second < 0) { opened = []; locked = false; memoryTurn = 'you'; paintMemory('Your turn.'); return; }
+        opened.push(second); memoryRemember(second);
+        paintMemory('Computer reveals its second card…');
+        window.setTimeout(() => {
+          if (game !== 'memory' || memoryTurn !== 'computer') return;
+          resolveMemoryPair('computer');
+        }, 650);
+      }, 650);
     }
     function paintTtt(message) {
-      panel.innerHTML = header('TIC-TAC-TOE · TWO PLAYERS','A quick classic','↻ New game') +
-        '<p class="sc-pg-status">' + esc(message || ('Player ' + turn + ', your turn.')) + '</p><div class="sc-pg-ttt">' +
+      panel.innerHTML = header('TIC-TAC-TOE · YOU VS COMPUTER', 'Can you beat the computer?', '↻ New game',
+        '<b>Goal:</b> Get three of your X marks in a row, column or diagonal before the computer gets three O marks. <b>How:</b> Tap any empty square. You play X first; the computer replies with O. <b>Win:</b> Make a line of three. The computer blocks winning moves and looks for its own winning line.') +
+        '<p class="sc-pg-status">' + esc(message || (currentTttTurn === 'you' ? 'Your turn — you are X.' : 'Computer is thinking…')) + '</p><div class="sc-pg-ttt">' +
         board.map((value, i) => '<button type="button" data-pg-cell="' + i + '" class="' +
-          (value ? value.toLowerCase() : '') + '"' + (value || ended ? ' disabled' : '') + ' aria-label="Cell ' +
+          (value ? value.toLowerCase() : '') + '"' + (value || ended || currentTttTurn !== 'you' ? ' disabled' : '') + ' aria-label="Cell ' +
           (i + 1) + (value ? ': ' + value : ': empty') + '">' + value + '</button>').join('') + '</div>';
     }
-    function resetTtt() { board = Array(9).fill(''); turn = 'X'; ended = false; paintTtt('Player X, your turn.'); }
+    function tttWinner(state, mark) {
+      const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+      return lines.some(line => line.every(i => state[i] === mark));
+    }
+    function computerTttMove() {
+      let bestScore = -Infinity, bestMoves = [];
+      function minimax(state, maximizing, depth) {
+        if (tttWinner(state, 'O')) return 10 - depth;
+        if (tttWinner(state, 'X')) return depth - 10;
+        const empty = state.map((value, i) => value ? -1 : i).filter(i => i >= 0);
+        if (!empty.length) return 0;
+        if (maximizing) {
+          let best = -Infinity;
+          empty.forEach(i => { state[i] = 'O'; best = Math.max(best, minimax(state, false, depth + 1)); state[i] = ''; });
+          return best;
+        }
+        let best = Infinity;
+        empty.forEach(i => { state[i] = 'X'; best = Math.min(best, minimax(state, true, depth + 1)); state[i] = ''; });
+        return best;
+      }
+      board.forEach((value, i) => {
+        if (value) return;
+        board[i] = 'O';
+        const valueScore = minimax(board, false, 1);
+        board[i] = '';
+        if (valueScore > bestScore) { bestScore = valueScore; bestMoves = [i]; }
+        else if (valueScore === bestScore) bestMoves.push(i);
+      });
+      return bestMoves.length ? shuffle(bestMoves)[0] : -1;
+    }
+    function runComputerTtt() {
+      if (game !== 'ttt' || currentTttTurn !== 'computer' || ended) return;
+      const index = computerTttMove();
+      if (index >= 0) board[index] = 'O';
+      if (tttWinner(board, 'O')) { ended = true; currentTttTurn = 'done'; paintTtt('Computer wins this round. 🤖'); }
+      else if (board.every(Boolean)) { ended = true; currentTttTurn = 'done'; paintTtt('It is a draw. Well played!'); }
+      else { currentTttTurn = 'you'; paintTtt('Computer played O. Your turn!'); }
+    }
+    function resetTtt() { board = Array(9).fill(''); currentTttTurn = 'you'; ended = false; paintTtt('Your turn — you are X.'); }
     function paintRps(message) {
       const options = [{id:'rock',label:'Rock',emoji:'✊'},{id:'paper',label:'Paper',emoji:'✋'},{id:'scissors',label:'Scissors',emoji:'✌️'}];
       panel.innerHTML = header('ROCK PAPER SCISSORS · VS COMPUTER','Can you beat the computer?','↻ Reset score') +
