@@ -749,7 +749,7 @@
             '<p class="sc-extra-muted">QUESTION '+(math.total+1)+' · 3 mistakes allowed</p>'+
             '<div class="sc-extra-math-expression">'+esc(math.question.expression)+'</div>'+
             '<form data-math-form><input class="sc-extra-math-answer" data-math-answer type="number" inputmode="decimal" step="1" autocomplete="off" placeholder="Answer only" aria-label="Type your answer" required>'+
-            '<button type="submit" class="sc-extra-math-submit">Check Answer</button></form>'
+            '<button type="submit" data-math-submit class="sc-extra-math-submit">Check Answer</button></form>'
           )+
         '</div>'+
         '<p class="sc-extra-muted sc-extra-center">Difficulty increases every 5 correct answers: addition and subtraction → multiplication → squares → square roots → powers → larger calculations. Three wrong answers end the game.</p>';
@@ -928,8 +928,7 @@
       if(sudokuCell){sudoku.selected=sudokuCell.dataset.sudokuCell.split(',').map(Number);paintSudoku('Cell selected. Choose a number.');return;}
       const sudokuNum=target.closest('[data-sudoku-number]');
       if(sudokuNum){setSudokuNumber(Number(sudokuNum.dataset.sudokuNumber));return;}
-      const mathForm=target.closest('[data-math-form]');
-      if(mathForm){event.preventDefault();submitMath();return;}
+      if(target.closest('[data-math-submit]')){event.preventDefault();submitMath();return;}
             const connectCol=target.closest('[data-connect-col]');
       if(connectCol){playConnect(Number(connectCol.dataset.connectCol));return;}
     });
