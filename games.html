@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#100f17">
-  <meta name="description" content="Play free browser games on SiteCraft: Memory Match, Tic-Tac-Toe, Rock Paper Scissors and 3D Snake Ultimate. No account or sign-in required.">
+  <meta name="description" content="Play free browser games on SiteCraft: Memory Match, Tic-Tac-Toe, Rock Paper Scissors, 3D Snake, Daily Word Challenge, 2048, Block Puzzle, Typing Speed Test, Sudoku and Connect Four. No login required.">
   <title>Play Games | SiteCraft</title>
   <link rel="stylesheet" href="global.css">
   <link rel="stylesheet" href="site-navigation.css">
@@ -19,11 +19,15 @@
   <main id="playGamesPage" aria-label="SiteCraft games"></main>
   <script src="site-navigation.js"></script>
   <script src="core/play-games.js"></script>
+  <script src="core/extra-play-games.js"></script>
   <script>
     (function(){
       function mountGames(){
         if(window.SiteCraftPlayGames){
           window.SiteCraftPlayGames.append(document.getElementById('playGamesPage'),'SiteCraft Play Games');
+        }
+        if(window.SiteCraftExtraGames){
+          window.SiteCraftExtraGames.append(document.getElementById('playGamesPage'));
         }
       }
       if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mountGames,{once:true});
