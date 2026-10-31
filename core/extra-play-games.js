@@ -403,7 +403,8 @@
       const sentences = shuffle(typingSamples[lang]);
       typing = {
         lang:lang,
-        text:sentences.join('  '),
+        text:sentences.slice(0,8).join('  '),
+        remaining:sentences.slice(8),
         sentenceCount:sentences.length,
         value:'',
         seconds:60,
@@ -414,6 +415,15 @@
         accuracy:100
       };
       paintTyping();
+    }
+    function extendTypingText() {
+      if (!typing || !typing.remaining.length) return;
+      const typedCount = typingChars(typing.value, typing.lang).length;
+      const targetCount = typingChars(typing.text, typing.lang).length;
+      if (targetCount - typedCount < 180) {
+        const nextSentences = typing.remaining.splice(0,5);
+        typing.text += '  ' + nextSentences.join('  ');
+      }
     }
     function typingStats() {
       const typed = typingChars(typing.value, typing.lang);
@@ -455,6 +465,7 @@
       const input = $(view,'[data-typing-input]');
       if (!input || typing.done) return;
       typing.value = input.value;
+      extendTypingText();
       if (!typing.started && typing.value.length) {
         typing.started = true;
         typing.startAt = Date.now();
