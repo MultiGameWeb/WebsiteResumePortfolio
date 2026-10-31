@@ -185,7 +185,7 @@
       word.limit = lang === 'te' ? segmentText(word.answer).length : 5;
       paintWord('Guess the hidden word in six tries.');
     }
-    function wordParts(value) { return word.lang === 'te' ? segmentText(value) : Array.from(value.toUpperCase()); }
+    function wordParts(value) { return word.lang === 'te' ? segmentText(value.normalize('NFC')) : Array.from(value.toUpperCase()); }
     function paintWord(message) {
       const pool = word.lang === 'te' ? teluguWords : englishWords;
       const length = word.limit;
@@ -261,6 +261,8 @@
         '</div><div class="sc-extra-toggle">' +
         '<button type="button" data-2048-move="up">↑ Up</button><button type="button" data-2048-move="left">← Left</button><button type="button" data-2048-move="down">↓ Down</button><button type="button" data-2048-move="right">Right →</button></div>' +
         '<p class="sc-extra-muted sc-extra-center">Combine matching tiles. Each move slides all tiles in one direction. Your best score is saved on this device.</p>';
+      const focusBoard = $(view, '[data-2048-board]');
+      if (focusBoard) focusBoard.focus({preventScroll:true});
       if (puzzle2048.over) {
         const status = $(view, '[data-2048-status]');
         if (status) status.textContent = message + ' Start a new game to play again.';
@@ -486,6 +488,8 @@
         '<div class="sc-extra-numberpad">' + [1,2,3,4,5,6,7,8,9].map(n=>'<button type="button" data-sudoku-number="' + n + '">' + n + '</button>').join('') + '<button type="button" data-sudoku-number="0">⌫</button></div>' +
         '<div class="sc-extra-stats"><span>Difficulty<strong>' + sudoku.level.toUpperCase() + '</strong></span><span>Mistakes<strong>' + sudoku.mistakes + '</strong></span><span>Filled<strong>' + sudoku.board.flat().filter(Boolean).length + ' / 81</strong></span></div>' +
         '<p class="sc-extra-muted sc-extra-center">Today’s puzzle stays the same on this device for each difficulty. Red cells show a number conflict. Use Backspace or Delete to clear a selected cell.</p>';
+      const keypadFocus = $(view, '[data-sudoku-number="1"]');
+      if (keypadFocus) keypadFocus.focus({preventScroll:true});
     }
     function setSudokuNumber(value) {
       if(sudoku.won)return;
