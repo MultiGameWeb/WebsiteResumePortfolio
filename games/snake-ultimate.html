@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>3D Snake Ultimate — SiteCraft Play Games</title>
+    <title>3D Snake Ultimate — Clean Board Edition | SiteCraft</title>
     <meta name="theme-color" content="#070a10">
     <meta name="description" content="Play 3D Snake Ultimate. No login, OTP, password or account required.">
     <style>
@@ -24,17 +24,25 @@
             align-items: center;
         }
 
-        /* Top Bar */
+        /* Top Bar & Outside Timer Strip */
         #top-bar {
             width: 100%;
             max-width: 760px;
             background: #161b22;
             color: white;
-            padding: 8px 14px;
+            padding: 6px 12px;
             border-bottom: 2px solid #30363d;
             border-left: 2px solid #30363d;
             border-right: 2px solid #30363d;
             border-radius: 0 0 10px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 20;
+            flex-shrink: 0;
+        }
+        .bar-main-row {
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
@@ -42,8 +50,6 @@
             gap: 8px;
             font-size: 13.5px;
             font-weight: bold;
-            z-index: 20;
-            flex-shrink: 0;
         }
         .stats-group {
             display: flex;
@@ -63,7 +69,30 @@
             font-size: 11.5px;
             display: none;
         }
-        
+        /* Compact Timers Row OUTSIDE the board */
+        #active-timers-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+            min-height: 0;
+        }
+        .timer-pill {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #fff;
+            background: #21262d;
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+        #pill-golden { background: rgba(255, 170, 0, 0.2); border-color: #ffd700; color: #ffd700; }
+        #pill-frog   { background: rgba(63, 185, 80, 0.2); border-color: #7ee787; color: #7ee787; }
+        #pill-wall   { background: rgba(0, 242, 254, 0.2); border-color: #00f2fe; color: #00f2fe; }
+        #pill-magnet { background: rgba(255, 75, 110, 0.2); border-color: #ff6b8b; color: #ff6b8b; }
         .controls-group {
             display: flex;
             gap: 6px;
@@ -73,7 +102,7 @@
             background: #21262d;
             color: #fff;
             border: 1px solid #444c56;
-            padding: 5px 8px;
+            padding: 4px 8px;
             border-radius: 6px;
             font-weight: bold;
             font-size: 12px;
@@ -118,46 +147,6 @@
             width: 100%;
             height: 100%;
         }
-
-        /* Timers & Banners */
-        #hud-overlays {
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .timer-box {
-            width: 100%;
-            background: rgba(13, 17, 23, 0.88);
-            padding: 4px 10px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.25);
-            display: none;
-            text-align: center;
-            color: #fff;
-            font-size: 11.5px;
-            font-weight: bold;
-        }
-        .bar-bg {
-            width: 100%;
-            height: 5px;
-            background: #333;
-            border-radius: 4px;
-            margin-top: 3px;
-            overflow: hidden;
-        }
-        .bar-fill { height: 100%; width: 100%; }
-        #golden-bar { background: linear-gradient(90deg, #ff8c00, #ffd700); }
-        #frog-bar { background: linear-gradient(90deg, #3fb950, #ffd700); }
-        #ghost-bar { background: linear-gradient(90deg, #00f2fe, #ff00ff, #00ff88); }
-        #magnet-bar { background: linear-gradient(90deg, #ff416c, #ff4b2b); }
 
         /* --- CINEMATIC HISSING INTRO SCREEN --- */
         #cinematic-overlay {
@@ -371,56 +360,45 @@
 <body>
 
     <div id="top-bar">
-        <div class="stats-group">
-            <div class="stat">Score: <span id="score">0</span></div>
-            <div class="stat">🤖 Computer: <span id="computer-score">0</span></div>
-            <div id="lives-display" title="3 Lives">❤️❤️❤️</div>
-            <div id="combo-badge">🔥 2x!</div>
-            <div class="stat">🏆: <span id="best-score">0</span></div>
-            <div class="stat">🥚: <span id="eggs">0</span>/5</div>
-            <div class="stat">⚡: <span id="speed-val">1.0x</span></div>
+        <div class="bar-main-row">
+            <div class="stats-group">
+                <div class="stat">Score: <span id="score">0</span></div>
+                <div class="stat">🤖 Computer: <span id="computer-score">0</span></div>
+                <div id="lives-display" title="3 Lives">❤️❤️❤️</div>
+                <div id="combo-badge">🔥 2x!</div>
+                <div class="stat">🏆: <span id="best-score">0</span></div>
+                <div class="stat">🥚: <span id="eggs">0</span>/5</div>
+                <div class="stat">⚡: <span id="speed-val">1.0x</span></div>
+            </div>
+            <div class="controls-group">
+                <select id="board-select" onchange="changeBoardTheme(this.value)" title="Board Theme">
+                    <option value="jungle" selected>🌿 Jungle</option>
+                    <option value="desert">🏜️ Desert</option>
+                    <option value="cyber">🌌 Cyber</option>
+                    <option value="dark">🌑 Dark</option>
+                </select>
+                <select id="skin-select" onchange="changeSkin(this.value)" title="Snake Skin">
+                    <option value="emerald">🐍 Emerald</option>
+                    <option value="fire">🔥 Fire Cobra</option>
+                    <option value="neon">⚡ Neon Cyber</option>
+                    <option value="gold">👑 Royal Gold</option>
+                    <option value="venom">💜 Venom</option>
+                    <option value="arctic">❄️ Arctic</option>
+                </select>
+                <button class="small-btn" onclick="openRulesModal()" title="Rules & Guide">❓</button>
+                <button class="small-btn" id="pause-btn" onclick="togglePause()">⏸️</button>
+            </div>
         </div>
-        <div class="controls-group">
-            <select id="board-select" onchange="changeBoardTheme(this.value)" title="Board Theme">
-                <option value="jungle" selected>🌿 Jungle</option>
-                <option value="desert">🏜️ Desert</option>
-                <option value="cyber">🌌 Cyber</option>
-                <option value="dark">🌑 Dark</option>
-            </select>
-            <select id="skin-select" onchange="changeSkin(this.value)" title="Snake Skin">
-                <option value="emerald">🐍 Emerald</option>
-                <option value="fire">🔥 Fire Cobra</option>
-                <option value="neon">⚡ Neon Cyber</option>
-                <option value="gold">👑 Royal Gold</option>
-                <option value="venom">💜 Venom</option>
-                <option value="arctic">❄️ Arctic</option>
-            </select>
-            <button class="small-btn" onclick="openRulesModal()" title="Rules & Guide">❓</button>
-            <button class="small-btn" id="pause-btn" onclick="togglePause()">⏸️</button>
+        <div id="active-timers-row">
+            <div id="pill-golden" class="timer-pill">🌟 Gold Egg: <span id="golden-sec">8.0</span>s</div>
+            <div id="pill-frog" class="timer-pill">🐸 Mega Frog: <span id="frog-sec">12.0</span>s</div>
+            <div id="pill-wall" class="timer-pill">🌈 Wall-Pass: <span id="wall-sec">12.0</span>s</div>
+            <div id="pill-magnet" class="timer-pill">🧲 Magnet: <span id="magnet-sec">10.0</span>s</div>
         </div>
     </div>
 
     <div id="stage-wrapper">
         <div id="game-container">
-            <div id="hud-overlays">
-                <div id="golden-timer-box" class="timer-box">
-                    🌟 BIG GOLDEN EGG! GRAB FAST! (<span id="golden-sec">8.0</span>s)
-                    <div class="bar-bg"><div id="golden-bar" class="bar-fill"></div></div>
-                </div>
-                <div id="frog-timer-box" class="timer-box">
-                    🐸 MEGA GOLDEN FROG! CATCH FOR +100! (<span id="frog-sec">12.0</span>s)
-                    <div class="bar-bg"><div id="frog-bar" class="bar-fill"></div></div>
-                </div>
-                <div id="ghost-timer-box" class="timer-box">
-                    🌈 WALL-PASS ACTIVE! (Safe Wall Wrap!)
-                    <div class="bar-bg"><div id="ghost-bar" class="bar-fill"></div></div>
-                </div>
-                <div id="magnet-timer-box" class="timer-box">
-                    🧲 MAGNET ACTIVE! (Auto-Pulls Nearby Eggs!)
-                    <div class="bar-bg"><div id="magnet-bar" class="bar-fill"></div></div>
-                </div>
-            </div>
-
             <!-- CINEMATIC HISSING SNAKE INTRO OVERLAY -->
             <div id="cinematic-overlay">
                 <div class="cine-top">
@@ -586,11 +564,9 @@
 
         function setupResponsiveBoard() {
             const topBarEl = document.getElementById('top-bar');
-            const topBarH = topBarEl ? topBarEl.offsetHeight : 50;
-
-            // Use window dimensions directly so it NEVER collapses to 0!
-            const availW = Math.max(260, window.innerWidth - 16);
-            const availH = Math.max(320, window.innerHeight - topBarH - 16);
+            const topBarH = topBarEl ? topBarEl.offsetHeight : 65;
+            const availW = Math.max(320, window.innerWidth - 16);
+            const availH = Math.max(420, window.innerHeight - topBarH - 16);
             const isPortrait = availH > availW * 1.12;
 
             if (isPortrait) {
@@ -603,7 +579,7 @@
                 GRID_ROWS = 20;
             }
 
-            TILE_SIZE = Math.max(18, Math.floor(Math.min(availW / GRID_COLS, availH / GRID_ROWS)));
+            TILE_SIZE = Math.max(24, Math.floor(Math.min(availW / GRID_COLS, availH / GRID_ROWS)));
             const bw = GRID_COLS * TILE_SIZE;
             const bh = GRID_ROWS * TILE_SIZE;
 
@@ -856,10 +832,10 @@
             gameContainer.classList.remove('wall-pass-active', 'damage-flash');
             document.getElementById('pause-btn').innerText = isPaused ? '▶️' : '⏸️';
             document.getElementById('game-over').style.display = 'none';
-            document.getElementById('golden-timer-box').style.display = 'none';
-            document.getElementById('frog-timer-box').style.display = 'none';
-            document.getElementById('ghost-timer-box').style.display = 'none';
-            document.getElementById('magnet-timer-box').style.display = 'none';
+            document.getElementById('pill-golden').style.display = 'none';
+            document.getElementById('pill-frog').style.display = 'none';
+            document.getElementById('pill-wall').style.display = 'none';
+            document.getElementById('pill-magnet').style.display = 'none';
             document.getElementById('combo-badge').style.display = 'none';
 
             relocatePortals();
@@ -1315,62 +1291,59 @@
             }
         }
 
+        // Updates compact timer pills in the Top Bar (OUTSIDE the board!)
         function checkExpirations(now) {
             if (comboCount > 1 && now - lastEggEatTime >= 4200) {
                 comboCount = 1;
                 document.getElementById('combo-badge').style.display = 'none';
             }
 
-            const goldBox = document.getElementById('golden-timer-box');
+            const goldPill = document.getElementById('pill-golden');
             if (bigEgg) {
                 const rem = bigEgg.expireTime - now;
                 if (rem <= 0) {
-                    addFloatingText(bigEgg.x, bigEgg.y, 'Time Up!', '#aaa');
                     bigEgg = null;
-                    goldBox.style.display = 'none';
+                    goldPill.style.display = 'none';
                 } else {
-                    goldBox.style.display = 'block';
+                    goldPill.style.display = 'inline-flex';
                     document.getElementById('golden-sec').innerText = (rem / 1000).toFixed(1);
-                    document.getElementById('golden-bar').style.width = ((rem / bigEgg.duration) * 100) + '%';
                 }
             } else {
-                goldBox.style.display = 'none';
+                goldPill.style.display = 'none';
             }
 
-            const frogBox = document.getElementById('frog-timer-box');
+            const frogPill = document.getElementById('pill-frog');
             if (megaFrog) {
                 const rem = megaFrog.expireTime - now;
                 if (rem <= 0) {
-                    addFloatingText(megaFrog.x, megaFrog.y, 'Frog Escaped!', '#aaa');
                     megaFrog = null;
-                    frogBox.style.display = 'none';
+                    frogPill.style.display = 'none';
                 } else {
-                    frogBox.style.display = 'block';
+                    frogPill.style.display = 'inline-flex';
                     document.getElementById('frog-sec').innerText = (rem / 1000).toFixed(1);
-                    document.getElementById('frog-bar').style.width = ((rem / megaFrog.duration) * 100) + '%';
                 }
             } else {
-                frogBox.style.display = 'none';
+                frogPill.style.display = 'none';
             }
 
-            const ghostBox = document.getElementById('ghost-timer-box');
+            const wallPill = document.getElementById('pill-wall');
             if (now < wallPassEndTime) {
                 const rem = wallPassEndTime - now;
-                ghostBox.style.display = 'block';
-                document.getElementById('ghost-bar').style.width = ((rem / WALL_PASS_DURATION) * 100) + '%';
+                wallPill.style.display = 'inline-flex';
+                document.getElementById('wall-sec').innerText = (rem / 1000).toFixed(1);
                 gameContainer.classList.add('wall-pass-active');
             } else {
-                ghostBox.style.display = 'none';
+                wallPill.style.display = 'none';
                 gameContainer.classList.remove('wall-pass-active');
             }
 
-            const magBox = document.getElementById('magnet-timer-box');
+            const magPill = document.getElementById('pill-magnet');
             if (now < magnetEndTime) {
                 const rem = magnetEndTime - now;
-                magBox.style.display = 'block';
-                document.getElementById('magnet-bar').style.width = ((rem / MAGNET_DURATION) * 100) + '%';
+                magPill.style.display = 'inline-flex';
+                document.getElementById('magnet-sec').innerText = (rem / 1000).toFixed(1);
             } else {
-                magBox.style.display = 'none';
+                magPill.style.display = 'none';
             }
 
             if (magicEgg && now > magicEgg.expireTime) magicEgg = null;
