@@ -363,7 +363,6 @@
         <div class="bar-main-row">
             <div class="stats-group">
                 <div class="stat">Score: <span id="score">0</span></div>
-                <div class="stat">🤖 Computer: <span id="computer-score">0</span></div>
                 <div id="lives-display" title="3 Lives">❤️❤️❤️</div>
                 <div id="combo-badge">🔥 2x!</div>
                 <div class="stat">🏆: <span id="best-score">0</span></div>
@@ -484,7 +483,6 @@
                     <div class="rules-box">
                         <ul>
                             <li>❤️❤️❤️ <b>3 Lives System:</b> Crashing into a wall or tail costs 1 Heart and gives a 3-second safe shield instead of instant Game Over!</li>
-                            <li>🤖 <b>Computer Rival:</b> The red computer snake hunts the same eggs. Compare the two scores and try to finish ahead of the rival.</li>
                             <li>🌀 <b>Moving Portals:</b> Enter one glowing hole to exit from the other. Portals relocate after you pass through!</li>
                             <li>📱 <b>Controls:</b> Swipe anywhere on the screen, use the floating buttons, or press Arrow Keys / WASD.</li>
                         </ul>
@@ -510,8 +508,6 @@
                 <h2>GAME OVER</h2>
                 <p style="font-size: 13px; color: #ff7b72; margin: 4px 0;">All 3 Lives Used! 💔💔💔</p>
                 <p style="font-size: 19px; margin: 8px 0;">Your score: <span id="final-score" style="color:#ffd700; font-weight:bold;">0</span></p>
-                <p style="font-size: 15px; margin: 7px 0;">Computer score: <span id="final-computer-score" style="color:#ff7b72; font-weight:bold;">0</span></p>
-                <p id="winner-message" style="font-size:14px;color:#7ee787;margin:4px 0;"></p>
                 <p style="font-size: 14px; color: #8b949e; margin: 4px 0;">High Score: <span id="final-best" style="color:#fff;">0</span></p>
                 <button class="play-btn" onclick="startGameNow()">Play Again 🚀</button>
                 <button class="guide-open-btn" style="margin-top:8px;" onclick="openRulesModal()">📖 View Egg Guide</button>
@@ -686,11 +682,6 @@
         // --- GAME STATE ---
         let snake = [];
         let prevSnake = [];
-        let computerSnake = [];
-        let prevComputerSnake = [];
-        let computerDir = { x: -1, y: 0 };
-        let computerScore = 0;
-        let lastComputerMoveTime = 0;
         let dir = { x: 1, y: 0 };
         let inputQueue = [];
         
@@ -796,7 +787,6 @@
             prevSnake = snake.map(s => ({ ...s }));
             dir = { x: 1, y: 0 };
             inputQueue = [];
-            resetComputerSnake(true);
 
             score = 0;
             lives = 3;
@@ -846,122 +836,8 @@
         }
 
 
-        // --- COMPUTER RIVAL SNAKE ---
-        function resetComputerSnake(resetScore = false) {
-            const candidates = [
-                { x: GRID_COLS - 5, y: 4, dx: -1 },
-                { x: GRID_COLS - 5, y: GRID_ROWS - 5, dx: -1 },
-                { x: 4, y: 4, dx: 1 },
-                { x: 4, y: GRID_ROWS - 5, dx: 1 }
-            ];
-            const safeStart = candidates.find(candidate => {
-                const cells = Array.from({ length: 4 }, (_, i) => ({
-                    x: candidate.x - candidate.dx * i, y: candidate.y
-                }));
-                return cells.every(cell =>
-                    cell.x >= 1 && cell.x < GRID_COLS - 1 &&
-                    cell.y >= 1 && cell.y < GRID_ROWS - 1 &&
-                    !snake.some(seg => seg.x === cell.x && seg.y === cell.y) &&
-                    !portals.some(portal => portal.x === cell.x && portal.y === cell.y) &&
-                    !(mainEgg && mainEgg.x === cell.x && mainEgg.y === cell.y)
-                );
-            }) || candidates[0];
-            computerSnake = Array.from({ length: 4 }, (_, i) => ({
-                x: safeStart.x - safeStart.dx * i, y: safeStart.y
-            }));
-            prevComputerSnake = computerSnake.map(seg => ({ ...seg }));
-            computerDir = { x: safeStart.dx, y: 0 };
-            lastComputerMoveTime = performance.now();
-            if (resetScore) computerScore = 0;
-        }
-
-        function chooseComputerDirection() {
-            if (!computerSnake.length || !mainEgg) return computerDir;
-            const start = computerSnake[0];
-            const moves = [
-                { x: 1, y: 0 }, { x: 0, y: 1 },
-                { x: -1, y: 0 }, { x: 0, y: -1 }
-            ];
-            const blocked = new Set();
-            snake.slice(0, -1).forEach(seg => blocked.add(seg.x + ',' + seg.y));
-            computerSnake.slice(0, -1).forEach(seg => blocked.add(seg.x + ',' + seg.y));
-            portals.forEach(portal => blocked.add(portal.x + ',' + portal.y));
-            const key = (x, y) => x + ',' + y;
-            const queue = [{ x: start.x, y: start.y, first: null }];
-            const visited = new Set([key(start.x, start.y)]);
-            while (queue.length) {
-                const node = queue.shift();
-                if (node.x === mainEgg.x && node.y === mainEgg.y) return node.first || computerDir;
-                for (let n = 0; n < moves.length; n++) {
-                    const d = moves[(n + Math.floor(performance.now() / 500)) % moves.length];
-                    if (!node.first && d.x === -computerDir.x && d.y === -computerDir.y) continue;
-                    const x = node.x + d.x, y = node.y + d.y, tile = key(x, y);
-                    if (x < 1 || x >= GRID_COLS - 1 || y < 1 || y >= GRID_ROWS - 1) continue;
-                    if (visited.has(tile) || blocked.has(tile)) continue;
-                    visited.add(tile);
-                    queue.push({ x, y, first: node.first || d });
-                }
-            }
-            const safe = moves.filter(d => !(d.x === -computerDir.x && d.y === -computerDir.y))
-                .map(d => ({ d, x: start.x + d.x, y: start.y + d.y }))
-                .filter(p => p.x >= 1 && p.x < GRID_COLS - 1 && p.y >= 1 && p.y < GRID_ROWS - 1)
-                .filter(p => !blocked.has(key(p.x, p.y)));
-            safe.sort((a, b) =>
-                Math.abs(a.x - mainEgg.x) + Math.abs(a.y - mainEgg.y) -
-                (Math.abs(b.x - mainEgg.x) + Math.abs(b.y - mainEgg.y))
-            );
-            return safe.length ? safe[0].d : computerDir;
-        }
-
-        function updateComputerSnake(now) {
-            if (!computerSnake.length || !mainEgg) return;
-            prevComputerSnake = computerSnake.map(seg => ({ ...seg }));
-            const nextDir = chooseComputerDirection();
-            if (nextDir) computerDir = nextDir;
-            let newHead = { x: computerSnake[0].x + computerDir.x, y: computerSnake[0].y + computerDir.y };
-            if (newHead.x < 0) newHead.x = GRID_COLS - 1;
-            if (newHead.x >= GRID_COLS) newHead.x = 0;
-            if (newHead.y < 0) newHead.y = GRID_ROWS - 1;
-            if (newHead.y >= GRID_ROWS) newHead.y = 0;
-
-            const hitOwnBody = computerSnake.slice(0, -1).some(seg => seg.x === newHead.x && seg.y === newHead.y);
-            const hitPlayer = snake.some(seg => seg.x === newHead.x && seg.y === newHead.y);
-            const hitPortal = portals.some(portal => portal.x === newHead.x && portal.y === newHead.y);
-            if (hitOwnBody || hitPlayer || hitPortal) {
-                addFloatingText(computerSnake[0].x, computerSnake[0].y, '🤖 Rival crashed!', '#ff7b72');
-                resetComputerSnake(false);
-                return;
-            }
-
-            computerSnake.unshift(newHead);
-            if (newHead.x === mainEgg.x && newHead.y === mainEgg.y) {
-                computerScore += 10;
-                computerSnake.push({ ...computerSnake[computerSnake.length - 1] });
-                addFloatingText(newHead.x, newHead.y, '🤖 Computer +10', '#ff7b72');
-                mainEgg = getFreeTile(1);
-                updateUI();
-            } else {
-                computerSnake.pop();
-            }
-        }
-
-        function getSmoothComputerSnake(progress) {
-            const p = Math.min(1, Math.max(0, progress));
-            return computerSnake.map((seg, i) => {
-                const prev = prevComputerSnake[i] || seg;
-                if (Math.abs(seg.x - prev.x) > 1 || Math.abs(seg.y - prev.y) > 1) {
-                    return { x: seg.x * TILE_SIZE + TILE_SIZE / 2, y: seg.y * TILE_SIZE + TILE_SIZE / 2 };
-                }
-                return {
-                    x: (prev.x + (seg.x - prev.x) * p) * TILE_SIZE + TILE_SIZE / 2,
-                    y: (prev.y + (seg.y - prev.y) * p) * TILE_SIZE + TILE_SIZE / 2
-                };
-            });
-        }
-
         function isTileOccupied(x, y) {
             if (snake.some(s => s.x === x && s.y === y)) return true;
-            if (computerSnake.some(s => s.x === x && s.y === y)) return true;
             if (portals.some(p => p.x === x && p.y === y)) return true;
             if (mainEgg && mainEgg.x === x && mainEgg.y === y) return true;
             if (bigEgg && bigEgg.x === x && bigEgg.y === y) return true;
@@ -1139,7 +1015,7 @@
 
             // 3. Self Collision Check
             const bodyToCheck = growthPending > 0 ? snake : snake.slice(0, -1);
-            if (!isProtected && (bodyToCheck.some(seg => seg.x === newHead.x && seg.y === newHead.y) || computerSnake.some(seg => seg.x === newHead.x && seg.y === newHead.y))) {
+            if (!isProtected && bodyToCheck.some(seg => seg.x === newHead.x && seg.y === newHead.y)) {
                 const survived = handleMistakeCrash(newHead.x, newHead.y, now);
                 if (!survived) return;
             }
@@ -1936,15 +1812,14 @@
         }
 
         // --- THICK, CHUNKY 3D SNAKE WITH SCALES ---
-        function draw3DSnake(pts, time, customThick = null, skinOverride = null, isOpponent = false) {
+        function draw3DSnake(pts, time, customThick = null) {
             if (pts.length < 2) return;
 
             const thick = customThick || snakeThickness;
-            const skin = skinOverride || currentSkin;
             ctx.save();
-            const isWallPass = !isOpponent && time < wallPassEndTime;
-            const isMagnet = !isOpponent && time < magnetEndTime;
-            const isDamageShield = !isOpponent && time < damageShieldUntil;
+            const isWallPass = time < wallPassEndTime;
+            const isMagnet = time < magnetEndTime;
+            const isDamageShield = time < damageShieldUntil;
 
             if (isDamageShield && Math.floor(time / 110) % 2 === 0) {
                 ctx.globalAlpha = 0.45;
@@ -1981,10 +1856,10 @@
             ctx.restore();
 
             // 2. Thick 3D Layered Tube Body
-            strokeConnectedBody(skin.outer, thick + 3);
-            strokeConnectedBody(skin.mid, thick * 0.85);
-            strokeConnectedBody(skin.outer, thick * 0.62, [3, 9]);
-            strokeConnectedBody(skin.inner, thick * 0.44);
+            strokeConnectedBody(currentSkin.outer, thick + 3);
+            strokeConnectedBody(currentSkin.mid, thick * 0.85);
+            strokeConnectedBody(currentSkin.outer, thick * 0.62, [3, 9]);
+            strokeConnectedBody(currentSkin.inner, thick * 0.44);
             strokeConnectedBody('rgba(255, 255, 255, 0.4)', thick * 0.16);
 
             // --- SNAKE HEAD ---
@@ -1992,7 +1867,7 @@
             const neck = pts[1];
             let angle = Math.atan2(head.y - neck.y, head.x - neck.x);
             if (Math.hypot(head.x - neck.x, head.y - neck.y) > TILE_SIZE * 2) {
-                angle = Math.atan2((isOpponent ? computerDir : dir).y, (isOpponent ? computerDir : dir).x);
+                angle = Math.atan2(dir.y, dir.x);
             }
 
             ctx.translate(head.x, head.y);
@@ -2027,7 +1902,7 @@
             ctx.stroke();
 
             // Cobra Hood / Wide Jaw Flare
-            ctx.fillStyle = skin.outer;
+            ctx.fillStyle = currentSkin.outer;
             ctx.beginPath();
             ctx.ellipse(-r * 0.1, 0, r * 1.1, r * 1.25, 0, 0, Math.PI * 2);
             ctx.fill();
@@ -2036,9 +1911,9 @@
             ctx.beginPath();
             ctx.ellipse(3, 0, r * 1.3, r * 1.08, 0, 0, Math.PI * 2);
             const headGrad = ctx.createRadialGradient(-2, -3, 2, 0, 0, r * 1.35);
-            headGrad.addColorStop(0, skin.headTop);
-            headGrad.addColorStop(0.5, skin.mid);
-            headGrad.addColorStop(1, skin.outer);
+            headGrad.addColorStop(0, currentSkin.headTop);
+            headGrad.addColorStop(0.5, currentSkin.mid);
+            headGrad.addColorStop(1, currentSkin.outer);
             ctx.fillStyle = headGrad;
             ctx.fill();
 
@@ -2059,10 +1934,6 @@
                 ctx.fill();
             });
 
-            if (isOpponent) {
-                ctx.fillStyle = '#ff7b72';
-                ctx.beginPath(); ctx.arc(0, -r * 1.25, Math.max(3, r * 0.22), 0, Math.PI * 2); ctx.fill();
-            }
             ctx.restore();
         }
 
@@ -2148,8 +2019,6 @@
             updateUI();
             document.getElementById('final-score').innerText = score;
             document.getElementById('final-best').innerText = highScore;
-            document.getElementById('final-computer-score').innerText = computerScore;
-            document.getElementById('winner-message').innerText = score > computerScore ? 'You beat the computer! 🏆' : score < computerScore ? 'Computer wins this round. Try again!' : 'It is a draw!';
             document.getElementById('game-over').style.display = 'block';
         }
 
@@ -2160,7 +2029,6 @@
                 saveSnakeBestScore(highScore);
             }
             document.getElementById('best-score').innerText = highScore;
-            document.getElementById('computer-score').innerText = computerScore;
             document.getElementById('eggs').innerText = regularEggsEaten % 5;
 
             const heartsStr = '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(Math.max(0, 3 - lives));
@@ -2246,29 +2114,17 @@
                     updateLogic(currentTime);
                     lastMoveTime = currentTime;
                 }
-                const computerInterval = Math.max(165, moveInterval * 1.18);
-                if (!isGameOver && currentTime - lastComputerMoveTime >= computerInterval) {
-                    updateComputerSnake(currentTime);
-                    lastComputerMoveTime = currentTime;
-                }
+
             }
 
             const progress = (isGameOver || isPaused) ? 1 : (currentTime - lastMoveTime) / moveInterval;
             const smoothPoints = getSmoothSnake(progress);
-            const computerSmoothPoints = getSmoothComputerSnake(progress);
 
             drawBoard(currentTime, smoothPoints);
             drawPortals(currentTime);
             drawAllEggs(currentTime);
             drawMegaFrog(currentTime);
             draw3DSnake(smoothPoints, currentTime);
-            if (!inCinematicIntro && computerSmoothPoints.length > 1) {
-                draw3DSnake(computerSmoothPoints, currentTime, baseThickness * 0.78, SKINS.fire, true);
-                const rivalHead = computerSmoothPoints[0];
-                ctx.save(); ctx.font = 'bold 11px Segoe UI'; ctx.textAlign = 'center';
-                ctx.fillStyle = '#ff7b72'; ctx.shadowColor = '#000'; ctx.shadowBlur = 5;
-                ctx.fillText('COMPUTER', rivalHead.x, rivalHead.y - baseThickness - 9); ctx.restore();
-            }
             drawEnvironmentForeground(currentTime);
             drawFloatingTexts();
         }
