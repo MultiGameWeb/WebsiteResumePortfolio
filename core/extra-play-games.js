@@ -155,7 +155,7 @@
     if (section.dataset.ready === 'true') return;
     section.dataset.ready = 'true';
     let active = '';
-    let word = null, puzzle2048 = null, blocks = null, typing = null, sudoku = null, connect = null;
+    let word = null, puzzle2048 = null, blocks = null, typing = null, sudoku = null, math = null, connect = null;
     let typingTimer = 0;
 
     function commonHead(label, title, resetText) {
@@ -673,6 +673,115 @@
       }else paintSudoku(value?'Number placed. Keep going.':'Cell cleared.');
     }
 
+    function mathRandom(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+    function mathQuestion(expression,answer){return {expression:expression,answer:answer};}
+    function buildMathQuestion(correct,total) {
+      const examples=[
+        mathQuestion('23 − 34',-11),
+        mathQuestion('56 + 74',130),
+        mathQuestion('79 × 3',237)
+      ];
+      if(total<examples.length)return examples[total];
+      const tier=Math.floor(correct/5);
+      let a,b,n,root,choice;
+      if(tier===0){
+        a=mathRandom(12,89);b=mathRandom(11,79);
+        return Math.random()<.5?mathQuestion(a+' + '+b,a+b):mathQuestion(a+' − '+b,a-b);
+      }
+      if(tier===1){
+        a=mathRandom(100,999);b=mathRandom(100,999);
+        return Math.random()<.5?mathQuestion(a+' + '+b,a+b):mathQuestion(a+' − '+b,a-b);
+      }
+      if(tier===2){
+        a=mathRandom(12,99);b=mathRandom(2,9);
+        return mathQuestion(a+' × '+b,a*b);
+      }
+      if(tier===3){
+        if(Math.random()<.58){n=mathRandom(11,35);return mathQuestion(n+'²',n*n);}
+        a=mathRandom(18,79);b=mathRandom(12,39);return mathQuestion(a+' × '+b,a*b);
+      }
+      if(tier===4){
+        if(Math.random()<.65){n=mathRandom(12,40);return mathQuestion('√'+(n*n),n);}
+        n=mathRandom(7,9);return mathQuestion('2'+(['⁷','⁸','⁹'][n-7]),Math.pow(2,n));
+      }
+      if(tier===5){
+        choice=mathRandom(0,2);
+        if(choice===0){n=mathRandom(3,5);b=mathRandom(4,5);return mathQuestion(n+'⁵',Math.pow(n,5));}
+        if(choice===1){n=mathRandom(41,75);return mathQuestion('√'+(n*n),n);}
+        n=mathRandom(36,65);return mathQuestion(n+'²',n*n);
+      }
+      if(tier===6){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(100,999);b=mathRandom(12,99);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===1){n=mathRandom(76,120);return mathQuestion('√'+(n*n),n);}
+        if(choice===2){n=mathRandom(50,99);return mathQuestion(n+'²',n*n);}
+        n=mathRandom(2,4);b=n===2?12:5;return mathQuestion(n+'^'+b,Math.pow(n,b));
+      }
+      if(tier===7){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(1000,9999);b=mathRandom(1000,9999);return mathQuestion(a+' + '+b,a+b);}
+        if(choice===1){a=mathRandom(120,999);b=mathRandom(25,99);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===2){n=mathRandom(121,180);return mathQuestion('√'+(n*n),n);}
+        n=mathRandom(2,5);b=n===2?14:n===3?6:5;return mathQuestion(n+'^'+b,Math.pow(n,b));
+      }
+      choice=mathRandom(0,4);
+      if(choice===0){a=mathRandom(1000,99999);b=mathRandom(1000,99999);return mathQuestion(a+' + '+b,a+b);}
+      if(choice===1){a=mathRandom(250,999);b=mathRandom(120,999);return mathQuestion(a+' × '+b,a*b);}
+      if(choice===2){n=mathRandom(181,300);return mathQuestion('√'+(n*n),n);}
+      if(choice===3){n=mathRandom(75,150);return mathQuestion(n+'²',n*n);}
+      n=mathRandom(3,5);b=n===3?7:n===4?6:5;return mathQuestion(n+'^'+b,Math.pow(n,b));
+    }
+    function initMath() {
+      math={correct:0,total:0,mistakes:0,score:0,over:false,question:buildMathQuestion(0,0),feedback:'Start with the answer. Only type the number.'};
+      paintMath(math.feedback);
+    }
+    function paintMath(message) {
+      const level=Math.floor(math.correct/5)+1;
+      const lives=Math.max(0,3-math.mistakes);
+      const title=math.over?'Three mistakes. Game over!':'Solve the question. Level '+level;
+      view.innerHTML=commonHead('MATH CHALLENGE · LEVEL '+level,title,'↻ Restart game')+
+        '<p class="sc-extra-status sc-extra-center" data-math-status>'+esc(message||'Only type your numerical answer.')+'</p>'+
+        '<div class="sc-extra-stats"><span>Correct<strong>'+math.correct+'</strong></span><span>Level<strong>'+level+'</strong></span><span>Score<strong>'+math.score+'</strong></span><span>Best<strong>'+best('math',math.score)+'</strong></span></div>'+
+        '<div class="sc-extra-math-card">'+
+          '<div class="sc-extra-math-hearts" aria-label="'+lives+' lives remaining">'+('❤️'.repeat(lives))+('🖤'.repeat(3-lives))+'</div>'+
+          (math.over?
+            '<div class="sc-extra-math-over"><h3>GAME OVER</h3><p>You made 3 mistakes.</p><p>Correct answers: '+math.correct+' · Final score: '+math.score+'</p><button type="button" class="sc-extra-math-submit" data-math-restart>Play Again</button></div>':
+            '<p class="sc-extra-muted">QUESTION '+(math.total+1)+' · 3 mistakes allowed</p>'+
+            '<div class="sc-extra-math-expression">'+esc(math.question.expression)+'</div>'+
+            '<form data-math-form><input class="sc-extra-math-answer" data-math-answer type="number" inputmode="decimal" step="1" autocomplete="off" placeholder="Answer only" aria-label="Type your answer" required>'+
+            '<button type="submit" class="sc-extra-math-submit">Check Answer</button></form>'
+          )+
+        '</div>'+
+        '<p class="sc-extra-muted sc-extra-center">Difficulty increases every 5 correct answers: addition and subtraction → multiplication → squares → square roots → powers → larger calculations. Three wrong answers end the game.</p>';
+      const input=$(view,'[data-math-answer]');
+      if(input)input.focus({preventScroll:true});
+    }
+    function submitMath() {
+      if(!math||math.over)return;
+      const input=$(view,'[data-math-answer]');
+      if(!input||input.value.trim()==='')return;
+      const answer=Number(input.value);
+      if(!Number.isFinite(answer)||!Number.isInteger(answer))return;
+      math.total++;
+      let message='';
+      if(answer===math.question.answer){
+        math.correct++;
+        math.score+=10*Math.min(10,Math.floor(math.correct/5)+1);
+        message='Correct! Great job. Next question gets a little harder.';
+      }else{
+        math.mistakes++;
+        message='Not quite. Correct answer: '+math.question.answer+'. Mistakes '+math.mistakes+' / 3.';
+      }
+      if(math.mistakes>=3){
+        math.over=true;
+        best('math',math.score);
+        paintMath('Game over. Try again and beat your score!');
+        return;
+      }
+      math.question=buildMathQuestion(math.correct,math.total);
+      paintMath(message);
+    }
+
     function emptyConnectBoard(){return Array.from({length:6},()=>Array(7).fill(''));}
     function connectDrop(board,col,mark) {
       for(let r=5;r>=0;r--)if(!board[r][col]){board[r][col]=mark;return r;}
@@ -780,7 +889,8 @@
         if(active==='2048')init2048();
         if(active==='blocks')initBlocks();
         if(active==='typing')initTyping(typing.lang);
-        if(active==='sudoku')initSudoku(sudoku.level);
+        if(active==='sudoku')initSudoku(sudoku.level,sudoku.size);
+        if(active==='math')initMath();
         if(active==='connect')initConnect();
         if(active==='starfighter'){
           const frame=$(view,'[data-starfighter-frame]');
@@ -809,13 +919,18 @@
       if(blockCell){const parts=blockCell.dataset.blockCell.split(',').map(Number);placeBlock(parts[0],parts[1]);return;}
       const typingLang=target.closest('[data-typing-lang]');
       if(typingLang){initTyping(typingLang.dataset.typingLang);return;}
+      const sudokuSize=target.closest('[data-sudoku-size]');
+      if(sudokuSize){initSudoku(sudoku.level,Number(sudokuSize.dataset.sudokuSize));return;}
       const sudokuLevel=target.closest('[data-sudoku-level]');
-      if(sudokuLevel){initSudoku(sudokuLevel.dataset.sudokuLevel);return;}
+      if(sudokuLevel){initSudoku(sudokuLevel.dataset.sudokuLevel,sudoku.size);return;}
+      if(target.closest('[data-math-restart]')){initMath();return;}
       const sudokuCell=target.closest('[data-sudoku-cell]');
       if(sudokuCell){sudoku.selected=sudokuCell.dataset.sudokuCell.split(',').map(Number);paintSudoku('Cell selected. Choose a number.');return;}
       const sudokuNum=target.closest('[data-sudoku-number]');
       if(sudokuNum){setSudokuNumber(Number(sudokuNum.dataset.sudokuNumber));return;}
-      const connectCol=target.closest('[data-connect-col]');
+      const mathForm=target.closest('[data-math-form]');
+      if(mathForm){event.preventDefault();submitMath();return;}
+            const connectCol=target.closest('[data-connect-col]');
       if(connectCol){playConnect(Number(connectCol.dataset.connectCol));return;}
     });
 
@@ -830,11 +945,17 @@
       if(active==='2048' && ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(event.key) && !event.target.matches('input,textarea')) {
         event.preventDefault();move2048(event.key.replace('Arrow','').toLowerCase());return;
       }
+      if(active==='math' && event.target.matches('[data-math-answer]') && event.key==='Enter'){
+        event.preventDefault();submitMath();return;
+      }
       if(active==='sudoku' && !event.target.matches('input,textarea')) {
-        if(/^[1-9]$/.test(event.key)){event.preventDefault();setSudokuNumber(Number(event.key));}
+        if(/^[1-9]$/.test(event.key)&&Number(event.key)<=sudoku.size){event.preventDefault();setSudokuNumber(Number(event.key));}
         else if(event.key==='Backspace'||event.key==='Delete'){event.preventDefault();setSudokuNumber(0);}
         else if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(event.key)){
-          event.preventDefault();const r=Math.max(0,Math.min(8,sudoku.selected[0]+(event.key==='ArrowUp'?-1:event.key==='ArrowDown'?1:0)));const c=Math.max(0,Math.min(8,sudoku.selected[1]+(event.key==='ArrowLeft'?-1:event.key==='ArrowRight'?1:0)));sudoku.selected=[r,c];paintSudoku('Cell selected.');
+          event.preventDefault();
+          const r=Math.max(0,Math.min(sudoku.size-1,sudoku.selected[0]+(event.key==='ArrowUp'?-1:event.key==='ArrowDown'?1:0)));
+          const c=Math.max(0,Math.min(sudoku.size-1,sudoku.selected[1]+(event.key==='ArrowLeft'?-1:event.key==='ArrowRight'?1:0)));
+          sudoku.selected=[r,c];paintSudoku('Cell selected.');
         }
       }
     });
