@@ -44,6 +44,11 @@
     '.sc-pg-section .sc-extra-connect{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;width:min(100%,490px);margin:14px auto;padding:10px;border-radius:16px;background:#2455a3}',
     '.sc-pg-section .sc-extra-connect button{display:grid;place-items:center;min-width:0;padding:0;aspect-ratio:1;border:0;border-radius:50%;background:#111b35;cursor:pointer}.sc-pg-section .sc-extra-connect .red:after,.sc-pg-section .sc-extra-connect .yellow:after{content:"";display:block;width:82%;height:82%;border-radius:50%;background:#f87171}.sc-pg-section .sc-extra-connect .yellow:after{background:#facc15}',
     '.sc-pg-section .sc-extra-connect button:disabled{cursor:default;opacity:.65}',
+    '.sc-pg-section .sc-pg-starfighter-shell{overflow:hidden;border:1px solid rgba(0,242,254,.25);border-radius:14px;background:#050711}',
+    '.sc-pg-section .sc-pg-starfighter-frame{display:block;width:100%;height:clamp(600px,78vh,850px);min-height:560px;border:0;background:#04060c}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-starfighter-frame{height:760px;min-height:700px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 175px);min-height:420px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 190px);min-height:360px}}',
     '@media(max-width:720px){.sc-pg-section .sc-extra-block-wrap{grid-template-columns:1fr}.sc-pg-section .sc-extra-pieces{grid-template-columns:repeat(3,minmax(0,1fr))}.sc-pg-section .sc-extra-piece{min-height:62px}.sc-pg-section .sc-extra-connect{gap:4px;padding:6px}.sc-pg-section .sc-extra-typing-prompt{font-size:13px;padding:12px}}',
     '@media(max-width:390px){.sc-pg-section .sc-extra-tile{width:42px;height:44px}.sc-pg-section .sc-extra-connect{gap:3px;padding:5px}}',
     '@media(prefers-reduced-motion:reduce){.sc-pg-section .sc-extra-btn,.sc-pg-section .sc-extra-toggle button{transition:none!important}}'
@@ -113,6 +118,7 @@
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="typing">⌨️ Typing Test</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sudoku">🔢 Sudoku</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="connect">🔴 Connect Four</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="starfighter">🚀 3D Starfighter</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-gk-pending disabled title="GK Quiz will be enabled after secure question API integration">🇮🇳 GK Quiz · Soon</button>'
     );
 
@@ -147,6 +153,12 @@
       if (id === 'typing') initTyping();
       if (id === 'sudoku') initSudoku('medium');
       if (id === 'connect') initConnect();
+      if (id === 'starfighter') paintStarfighter();
+    }
+    function paintStarfighter() {
+      view.innerHTML = commonHead('3D STARFIGHTER · SPACE ARCADE', 'Pilot your fighter. Survive the galaxy.', '↻ Restart mission') +
+        '<p class="sc-extra-status">Drag to steer on touch or mouse. Use Arrow Keys / WASD on desktop. Lasers fire automatically. Collect weapon, shield and life capsules, and defeat the boss dreadnought.</p>' +
+        '<div class="sc-pg-starfighter-shell"><iframe class="sc-pg-starfighter-frame" data-starfighter-frame src="games/starfighter-3d.html" title="3D Starfighter arcade game" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
     }
     tabs.querySelectorAll('[data-extra-tab]').forEach(tab => {
       tab.addEventListener('click', () => start(tab.dataset.extraTab));
@@ -694,6 +706,10 @@
         if(active==='typing')initTyping(typing.lang);
         if(active==='sudoku')initSudoku(sudoku.level);
         if(active==='connect')initConnect();
+        if(active==='starfighter'){
+          const frame=$(view,'[data-starfighter-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
         return;
       }
       const wordLang=target.closest('[data-word-lang]');
