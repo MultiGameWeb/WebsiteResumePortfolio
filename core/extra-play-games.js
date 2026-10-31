@@ -11,6 +11,14 @@
     '.sc-pg-section .sc-extra-status{min-height:22px;margin:0 0 14px;color:#c9c1d7;font-size:12px;line-height:1.6}',
     '.sc-pg-section .sc-extra-stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:12px 0;color:#aaa1bd;font-size:10px;text-align:center}',
     '.sc-pg-section .sc-extra-stats strong{display:block;margin-top:4px;color:#fff;font-size:17px;font-variant-numeric:tabular-nums}',
+    '.sc-pg-section .sc-extra-timer{width:min(100%,720px);margin:14px auto 10px;padding:12px 15px;border:1px solid rgba(216,180,254,.22);border-radius:12px;background:rgba(124,58,237,.1)}',
+    '.sc-pg-section .sc-extra-timer>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}',
+    '.sc-pg-section .sc-extra-timer span{color:#c4b5fd;font-size:10px;font-weight:850;letter-spacing:.1em}',
+    '.sc-pg-section .sc-extra-timer strong{color:#fff;font-size:22px;font-variant-numeric:tabular-nums}',
+    '.sc-pg-section .sc-extra-timer-track{height:7px;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.12)}',
+    '.sc-pg-section .sc-extra-timer-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#8b5cf6,#ec4899,#fb923c);transition:width .2s linear}',
+    '.sc-pg-section .sc-extra-typing-prompt{min-height:105px;max-height:170px;overflow:hidden}',
+    '.sc-pg-section .sc-extra-typing-prompt .typing-next{border-bottom:2px solid #f0abfc;color:#fff}',
     '.sc-pg-section .sc-extra-muted{color:#aaa1bd;font-size:10px;line-height:1.6}.sc-pg-section .sc-extra-center{text-align:center}',
     '.sc-pg-section .sc-extra-word-input{display:block;width:min(100%,330px);height:48px;margin:16px auto 9px;padding:0 14px;border:1px solid rgba(216,180,254,.38);border-radius:12px;background:#191526;color:#fff;font:750 18px Inter,system-ui,sans-serif;text-align:center;letter-spacing:.12em;outline:none}',
     '.sc-pg-section .sc-extra-word-input:focus,.sc-pg-section .sc-extra-typing-input:focus{border-color:#c4b5fd;box-shadow:0 0 0 3px rgba(196,181,253,.12)}',
@@ -320,44 +328,132 @@
     }
 
     const typingSamples = {
-      en:'Small steps every day lead to big changes over time. Keep learning, stay curious, and practise a little more than yesterday. A clear mind and steady effort can turn a simple idea into something meaningful.',
-      te:'ప్రతి రోజు చిన్న ప్రయత్నం మనల్ని పెద్ద విజయాల వైపు తీసుకెళ్తుంది. కొత్త విషయాలు నేర్చుకోండి, ఆసక్తిగా ఉండండి, నిన్నటికంటే ఈ రోజు కొంచెం మెరుగ్గా ప్రయత్నించండి. నిరంతర సాధనతో మంచి ఫలితాలు సాధించవచ్చు.'
+      en: [
+        'The morning light slowly fills the quiet streets.',
+        'A good idea becomes stronger when we put it into action.',
+        'Learning something new keeps the mind active and curious.',
+        'Take a short pause, breathe deeply, and begin again.',
+        'Small improvements can create a meaningful change over time.',
+        'A clear plan makes difficult tasks easier to complete.',
+        'Practice brings confidence even when progress feels slow.',
+        'Every place has a story waiting for someone to discover it.',
+        'Kind words can make an ordinary day feel special.',
+        'Technology is useful when it solves real problems for people.',
+        'A simple habit can become a powerful routine.',
+        'Focus on the next step instead of worrying about the whole journey.',
+        'Fresh air and a little movement can refresh your attention.',
+        'Good teamwork begins with listening and sharing ideas.',
+        'Books open doors to places we have never visited.',
+        'Curiosity helps us ask better questions and find better answers.',
+        'A steady effort is often more useful than a perfect start.',
+        'Choose your words carefully and make every message clear.',
+        'Creative thinking turns everyday challenges into opportunities.',
+        'Make time to learn, build, explore, and enjoy the process.',
+        'The best way to improve is to keep showing up.',
+        'A thoughtful decision can save time and prevent confusion.',
+        'Beautiful things often grow from patience and care.',
+        'Stay open to feedback and use it to become better.',
+        'A calm mind can notice details that hurry might miss.',
+        'Share useful knowledge and help someone take a first step.',
+        'Simple solutions are powerful when they are easy to use.',
+        'A little progress today is still progress worth celebrating.',
+        'Try a different path when the first idea does not work.',
+        'Finish one task well before moving on to the next.'
+      ],
+      te: [
+        'ప్రతి రోజు కొత్త విషయాన్ని నేర్చుకోవడానికి మంచి అవకాశం.',
+        'చిన్న ప్రయత్నాలు కూడా పెద్ద మార్పుకు దారి చూపిస్తాయి.',
+        'మన లక్ష్యాన్ని చేరుకోవడానికి క్రమశిక్షణ అవసరం.',
+        'కొత్త ఆలోచనలు మన జీవితాన్ని మరింత ఆసక్తికరంగా చేస్తాయి.',
+        'సమయాన్ని సరిగ్గా ఉపయోగిస్తే మంచి ఫలితాలు వస్తాయి.',
+        'పుస్తకాలు మనకు ఎన్నో కొత్త ప్రపంచాలను పరిచయం చేస్తాయి.',
+        'ఆరోగ్యంగా ఉండటానికి తగిన విశ్రాంతి కూడా ముఖ్యం.',
+        'మంచి మాట ఇతరులకు ధైర్యాన్ని అందిస్తుంది.',
+        'ప్రకృతిని గమనిస్తే ఎన్నో విషయాలు అర్థమవుతాయి.',
+        'మన పని మీద శ్రద్ధ పెడితే నైపుణ్యం మెరుగుపడుతుంది.',
+        'సహనం ఉంటే కష్టమైన పనిని కూడా పూర్తి చేయవచ్చు.',
+        'ప్రతి సమస్యలో ఒక కొత్త పరిష్కారం దాగి ఉంటుంది.',
+        'కలిసి పనిచేస్తే మంచి ఆలోచనలు పంచుకోవచ్చు.',
+        'రోజువారీ సాధన మనలో ఆత్మవిశ్వాసాన్ని పెంచుతుంది.',
+        'స్పష్టమైన లక్ష్యం మన ప్రయాణానికి దిశ చూపిస్తుంది.',
+        'ఇతరుల అభిప్రాయాలను గౌరవంగా వినడం మంచి అలవాటు.',
+        'చిన్న సహాయం కూడా ఒకరి రోజును ఆనందంగా మార్చగలదు.',
+        'కొత్త ప్రదేశాలను చూడటం వల్ల మన అనుభవం పెరుగుతుంది.',
+        'ప్రశాంతంగా ఆలోచిస్తే సరైన నిర్ణయం తీసుకోవచ్చు.',
+        'మన సమయాన్ని విలువైన పనులకు కేటాయించాలి.',
+        'ప్రయత్నం కొనసాగిస్తే నైపుణ్యం తప్పకుండా పెరుగుతుంది.',
+        'మన చుట్టూ ఉన్న విషయాలను ఆసక్తిగా గమనించాలి.',
+        'మంచి అలవాట్లు జీవితాన్ని సులభంగా మారుస్తాయి.',
+        'ఒక అడుగు ముందుకు వేయడం కూడా విజయమే.',
+        'నేర్చుకున్న విషయాలను ఆచరణలో పెట్టినప్పుడే ప్రయోజనం.',
+        'సహకారం వల్ల పెద్ద పనులు కూడా సులభంగా పూర్తవుతాయి.',
+        'ప్రతి ఉదయం కొత్త ఉత్సాహంతో పనిని ప్రారంభించండి.',
+        'సరళమైన పరిష్కారం అందరికీ ఉపయోగపడుతుంది.',
+        'ఆలోచించి మాట్లాడితే అపార్థాలు తగ్గుతాయి.',
+        'నిరంతర సాధన మన ప్రయత్నానికి మంచి ఫలితాన్ని ఇస్తుంది.'
+      ]
     };
+    function typingChars(value, lang) {
+      return lang === 'te' ? segmentText(String(value).normalize('NFC')) : Array.from(String(value));
+    }
     function initTyping(lang) {
       clearInterval(typingTimer);
       typingTimer = 0;
       lang = lang || 'en';
-      typing = {lang:lang,text:typingSamples[lang],value:'',seconds:60,started:false,done:false,startAt:0,wpm:0,accuracy:100};
+      const sentences = shuffle(typingSamples[lang]);
+      typing = {
+        lang:lang,
+        text:sentences.join('  '),
+        sentenceCount:sentences.length,
+        value:'',
+        seconds:60,
+        started:false,
+        done:false,
+        startAt:0,
+        wpm:0,
+        accuracy:100
+      };
       paintTyping();
     }
     function typingStats() {
-      const typed = Array.from(typing.value);
+      const typed = typingChars(typing.value, typing.lang);
+      const target = typingChars(typing.text, typing.lang);
       let correct = 0;
-      typed.forEach((ch,i)=>{if(ch===Array.from(typing.text)[i])correct++;});
+      typed.forEach((ch,i)=>{if(ch===target[i])correct++;});
       const elapsed = typing.started ? Math.max(1,(Date.now()-typing.startAt)/1000) : 1;
       typing.accuracy = typed.length ? Math.round(correct/typed.length*100) : 100;
       typing.wpm = Math.round((correct/5)/(elapsed/60));
-      return {typed:typed,correct:correct};
+      return {typed:typed,correct:correct,target:target};
+    }
+    function typingPromptHtml(stats) {
+      const start = Math.max(0, stats.typed.length - 28);
+      const end = Math.min(stats.target.length, Math.max(start + 180, stats.typed.length + 145));
+      return stats.target.slice(start,end).map((ch,offset)=>{
+        const index = start + offset;
+        const entered = stats.typed[index];
+        const className = entered == null ? (index===stats.typed.length?'typing-next':'') :
+          entered===ch ? 'typed-ok' : 'typed-bad';
+        const visible = ch === ' ' ? '&nbsp;' : esc(ch);
+        return '<span class="' + className + '">' + visible + '</span>';
+      }).join('');
     }
     function paintTyping() {
       const stats = typingStats();
-      const prompt = Array.from(typing.text).map((ch,i)=>{
-        const entered = stats.typed[i];
-        return '<span class="' + (entered == null ? '' : entered===ch?'typed-ok':'typed-bad') + '">' + esc(ch) + '</span>';
-      }).join('');
+      const progress = Math.max(0,Math.min(100,(typing.seconds/60)*100));
       view.innerHTML = commonHead('TYPING SPEED TEST · 60 SECONDS', 'How fast and accurately can you type?', '↻ Restart test') +
         '<div class="sc-extra-toggle"><button type="button" data-typing-lang="en" aria-pressed="' + (typing.lang==='en') + '">English</button><button type="button" data-typing-lang="te" aria-pressed="' + (typing.lang==='te') + '">తెలుగు</button></div>' +
-        '<p class="sc-extra-status sc-extra-center" data-typing-status>' + (typing.done?'Time is up. Great effort!':typing.started?'Keep going — the clock is running.':'Start typing in the box below to begin the 60-second test.') + '</p>' +
-        '<div class="sc-extra-stats"><span>Time left<strong data-typing-time>' + typing.seconds + 's</strong></span><span>Speed<strong data-typing-wpm>' + typing.wpm + ' WPM</strong></span><span>Accuracy<strong data-typing-accuracy>' + typing.accuracy + '%</strong></span><span>Best<strong>' + best('typing-'+typing.lang,typing.wpm) + ' WPM</strong></span></div>' +
-        '<div class="sc-extra-typing-prompt" aria-label="Text to type">' + prompt + '</div>' +
+        '<p class="sc-extra-status sc-extra-center" data-typing-status>' + (typing.done?'Time is up! Your result is ready.':typing.started?'Keep going — the clock is running.':'The 60-second timer starts with your first keystroke.') + '</p>' +
+        '<div class="sc-extra-timer"><div><span>TIME REMAINING</span><strong data-typing-time>' + typing.seconds + 's</strong></div><div class="sc-extra-timer-track"><i data-typing-progress style="width:' + progress + '%"></i></div></div>' +
+        '<div class="sc-extra-stats"><span>Speed<strong data-typing-wpm>' + typing.wpm + ' WPM</strong></span><span>Accuracy<strong data-typing-accuracy>' + typing.accuracy + '%</strong></span><span>Best<strong>' + best('typing-'+typing.lang,typing.wpm) + ' WPM</strong></span><span>Sentences<strong>' + typing.sentenceCount + ' unique</strong></span></div>' +
+        '<div class="sc-extra-typing-prompt" aria-label="Text to type" data-typing-prompt>' + typingPromptHtml(stats) + '</div>' +
         '<textarea class="sc-extra-typing-input" data-typing-input rows="3" placeholder="' + (typing.lang==='te'?'ఇక్కడ టైప్ చేయండి…':'Start typing here…') + '" autocapitalize="off" autocomplete="off" spellcheck="false"' + (typing.done?' disabled':'') + '>' + esc(typing.value) + '</textarea>' +
-        '<p class="sc-extra-muted sc-extra-center">WPM is calculated from correctly typed characters. Telugu typing works with your device’s Telugu keyboard / input method.</p>';
+        '<p class="sc-extra-muted sc-extra-center">Type continuously until the timer ends. Every round uses a shuffled set of unique sentences, so a sentence will not repeat during that test. Telugu typing works with your device’s Telugu keyboard / input method.</p>';
       const input = $(view,'[data-typing-input]');
       if (input && !typing.done) input.focus({preventScroll:true});
     }
     function updateTypingLive() {
       const input = $(view,'[data-typing-input]');
-      if (!input) return;
+      if (!input || typing.done) return;
       typing.value = input.value;
       if (!typing.started && typing.value.length) {
         typing.started = true;
@@ -367,22 +463,23 @@
           typing.seconds = Math.max(0,60-Math.floor((Date.now()-typing.startAt)/1000));
           const time = $(view,'[data-typing-time]');
           if (time) time.textContent = typing.seconds + 's';
+          const progress = $(view,'[data-typing-progress]');
+          if (progress) progress.style.width = (typing.seconds/60*100) + '%';
           const stats = typingStats();
           const wpm = $(view,'[data-typing-wpm]');
           const acc = $(view,'[data-typing-accuracy]');
           if (wpm) wpm.textContent = stats.wpm + ' WPM';
           if (acc) acc.textContent = typing.accuracy + '%';
           if (typing.seconds <= 0) finishTyping();
-        },250);
+        },200);
       }
       const stats = typingStats();
-      const prompt = $(view,'.sc-extra-typing-prompt');
-      if (prompt) prompt.innerHTML = Array.from(typing.text).map((ch,i)=>'<span class="' + (stats.typed[i]==null?'':stats.typed[i]===ch?'typed-ok':'typed-bad') + '">' + esc(ch) + '</span>').join('');
+      const prompt = $(view,'[data-typing-prompt]');
+      if (prompt) prompt.innerHTML = typingPromptHtml(stats);
       const wpm = $(view,'[data-typing-wpm]');
       const acc = $(view,'[data-typing-accuracy]');
       if (wpm) wpm.textContent = stats.wpm + ' WPM';
       if (acc) acc.textContent = typing.accuracy + '%';
-      if (typing.value.length >= typing.text.length) finishTyping();
     }
     function finishTyping() {
       if (!typing || typing.done) return;
