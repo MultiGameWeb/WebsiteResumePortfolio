@@ -228,6 +228,7 @@ select{cursor:pointer}.btn{cursor:pointer;transition:transform .12s ease,backgro
         if(attacked.has(r+','+c)) classes.push('attacked');
         cell.className=classes.join(' ');
         cell.type='button';
+        cell.disabled=won||solutionShown;
         cell.setAttribute('aria-label',letters(size)[c]+(size-r)+(isQueen?', queen':''));
         cell.title=letters(size)[c]+(size-r);
         if(isQueen){
