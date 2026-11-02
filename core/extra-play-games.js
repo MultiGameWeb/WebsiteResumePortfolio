@@ -33,6 +33,10 @@
     '.sc-pg-section .sc-extra-block-board{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;width:100%;max-width:470px;aspect-ratio:1;margin:0 auto;padding:7px;border-radius:12px;background:#282337;touch-action:manipulation}',
     '.sc-pg-section .sc-extra-block-cell{min-width:0;padding:0;border:0;border-radius:3px;background:rgba(255,255,255,.055)}.sc-pg-section .sc-extra-block-cell.filled{background:linear-gradient(145deg,#a78bfa,#7c3aed)}',
     '.sc-pg-section .sc-extra-pieces{display:grid;gap:9px}.sc-pg-section .sc-extra-piece{min-height:70px;padding:8px;border:1px solid rgba(255,255,255,.13);border-radius:11px;background:rgba(255,255,255,.04);cursor:pointer}.sc-pg-section .sc-extra-piece.selected{border-color:#c4b5fd;background:rgba(124,58,237,.2)}.sc-pg-section .sc-extra-piece:disabled{opacity:.25;cursor:default}',
+    '.sc-pg-section .sc-extra-block-board{position:relative}.sc-pg-section .sc-extra-piece{touch-action:none;-webkit-user-select:none;user-select:none}',
+    '.sc-pg-section .sc-extra-block-cell{transition:background .08s}.sc-pg-section .sc-extra-block-cell.ghost-ok{background:rgba(167,139,250,.55);box-shadow:inset 0 0 0 2px #c4b5fd}.sc-pg-section .sc-extra-block-cell.ghost-bad{background:rgba(239,68,68,.35);box-shadow:inset 0 0 0 2px rgba(248,113,113,.8)}.sc-pg-section .sc-extra-block-cell.filled.ghost-clear,.sc-pg-section .sc-extra-block-cell.ghost-ok.ghost-clear{background:linear-gradient(145deg,#f0abfc,#db2777)}',
+    '.sc-pg-section .sc-extra-block-drag{position:fixed;z-index:50;display:grid;pointer-events:none;transform:translate(-50%,-50%);opacity:.92;filter:drop-shadow(0 8px 16px rgba(0,0,0,.45))}.sc-pg-section .sc-extra-block-drag i{border-radius:3px;background:linear-gradient(145deg,#c4b5fd,#7c3aed)}.sc-pg-section .sc-extra-block-drag i.blank{background:transparent}',
+    '.sc-pg-section .sc-extra-block-over{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-radius:12px;background:rgba(17,16,27,.78);backdrop-filter:blur(2px);color:#fff;text-align:center}.sc-pg-section .sc-extra-block-over strong{font-size:22px}.sc-pg-section .sc-extra-block-over span{color:#d8b4fe;font-size:13px}',
     '.sc-pg-section .sc-extra-piece-grid{display:grid;grid-template-columns:repeat(4,13px);grid-template-rows:repeat(4,13px);gap:2px;justify-content:center}.sc-pg-section .sc-extra-piece-grid i{border-radius:2px;background:#a78bfa}.sc-pg-section .sc-extra-piece-grid i.blank{background:transparent}',
     '.sc-pg-section .sc-extra-typing-prompt{max-width:720px;margin:14px auto;padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(0,0,0,.16);color:#e5def0;font-size:15px;line-height:1.9;white-space:pre-wrap}',
     '.sc-pg-section .sc-extra-typing-prompt .typed-ok{color:#86efac}.sc-pg-section .sc-extra-typing-prompt .typed-bad{color:#fca5a5;text-decoration:underline}.sc-pg-section .sc-extra-typing-input{display:block;width:min(100%,720px);min-height:100px;margin:0 auto;padding:12px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:#191526;color:#fff;font:14px/1.7 Inter,system-ui,sans-serif;resize:vertical;outline:none}',
@@ -286,10 +290,13 @@
       [[0,0],[0,1],[1,0],[1,1]], [[0,0],[0,1],[0,2],[1,1]], [[0,0],[1,0],[2,0]], [[0,0],[1,0],[1,1],[2,1]],
       [[0,1],[1,0],[1,1],[1,2]], [[0,0],[0,1],[1,1],[1,2]], [[0,0],[1,0],[2,0],[3,0]], [[0,0],[0,1],[0,2],[0,3]]
     ];
+    let blockDrag = null, blockClickBlockUntil = 0;
     function randomPiece() { return {shape:blockShapes[Math.floor(Math.random()*blockShapes.length)].map(p=>p.slice())}; }
+    function shapeSize(shape) { return [Math.max.apply(null,shape.map(p=>p[0]))+1, Math.max.apply(null,shape.map(p=>p[1]))+1]; }
+    function firstFreePiece() { const i = blocks.pieces.findIndex(Boolean); return i < 0 ? 0 : i; }
     function initBlocks() {
       blocks = {board:Array.from({length:10},()=>Array(10).fill(0)),pieces:[randomPiece(),randomPiece(),randomPiece()],selected:0,score:0,over:false};
-      paintBlocks('Select a piece, then tap a position on the board.');
+      paintBlocks('Drag a piece onto the board, or select it and tap a spot.');
     }
     function canPlaceBlock(shape,row,col) {
       return shape.every(([r,c]) => row+r>=0 && row+r<10 && col+c>=0 && col+c<10 && !blocks.board[row+r][col+c]);
@@ -297,35 +304,152 @@
     function anyBlockFit() {
       return blocks.pieces.some(piece => piece && blocks.board.some((row,r) => row.some((_,c) => canPlaceBlock(piece.shape,r,c))));
     }
+    // Top-left anchor when the piece's centre sits on cell (row, col).
+    function centredAnchor(shape,row,col) {
+      const size = shapeSize(shape);
+      return [Math.round(row + .5 - size[0]/2), Math.round(col + .5 - size[1]/2)];
+    }
+    // Forgiving snap: try the exact anchor first, then the 8 neighbours.
+    function resolveAnchor(shape,row,col) {
+      const tries = [[0,0],[0,-1],[0,1],[-1,0],[1,0],[-1,-1],[-1,1],[1,-1],[1,1]];
+      for (const [dr,dc] of tries) if (canPlaceBlock(shape,row+dr,col+dc)) return [row+dr,col+dc];
+      return null;
+    }
+    function blockCellEl(r,c) { return $(view, '[data-block-cell="' + r + ',' + c + '"]'); }
+    function clearBlockGhost() {
+      view.querySelectorAll('.sc-extra-block-cell.ghost-ok,.sc-extra-block-cell.ghost-bad,.sc-extra-block-cell.ghost-clear')
+        .forEach(el => el.classList.remove('ghost-ok','ghost-bad','ghost-clear'));
+    }
+    function showBlockGhost(shape,base) {
+      clearBlockGhost();
+      if (!shape || !base) return null;
+      const fit = resolveAnchor(shape,base[0],base[1]);
+      const at = fit || base;
+      const cells = shape.map(([r,c]) => [at[0]+r, at[1]+c]);
+      cells.forEach(([r,c]) => { const el = r>=0&&r<10&&c>=0&&c<10 ? blockCellEl(r,c) : null; if (el) el.classList.add(fit?'ghost-ok':'ghost-bad'); });
+      if (fit) {
+        const filled = (r,c) => blocks.board[r][c] || cells.some(p=>p[0]===r&&p[1]===c);
+        for (let i=0;i<10;i++) {
+          if (Array.from({length:10},(_,c)=>filled(i,c)).every(Boolean)) for (let c=0;c<10;c++) blockCellEl(i,c).classList.add('ghost-clear');
+          if (Array.from({length:10},(_,r)=>filled(r,i)).every(Boolean)) for (let r=0;r<10;r++) blockCellEl(r,i).classList.add('ghost-clear');
+        }
+      }
+      return fit;
+    }
     function paintBlocks(message) {
-      const selected = blocks.pieces[blocks.selected];
       view.innerHTML = commonHead('BLOCK PUZZLE · 10 × 10', 'Fit the pieces. Clear the board.', '↻ New game') +
         '<p class="sc-extra-status sc-extra-center" data-block-status>' + esc(message) + '</p>' +
         '<div class="sc-extra-stats"><span>Score<strong>' + blocks.score + '</strong></span><span>Best<strong>' + best('blocks',blocks.score) + '</strong></span></div>' +
         '<div class="sc-extra-block-wrap"><div class="sc-extra-block-board" data-block-board>' +
         blocks.board.map((row,r)=>row.map((v,c)=>'<button class="sc-extra-block-cell ' + (v?'filled':'') + '" type="button" data-block-cell="' + r + ',' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + '"></button>').join('')).join('') +
-        '</div><div><p class="sc-extra-muted sc-extra-center">Choose a piece</p><div class="sc-extra-pieces">' +
-        blocks.pieces.map((piece,i)=>'<button class="sc-extra-piece ' + (blocks.selected===i?'selected':'') + '" type="button" data-block-piece="' + i + '"' + (!piece?' disabled':'') + ' aria-label="Select piece ' + (i+1) + '">' +
+        (blocks.over ? '<div class="sc-extra-block-over"><strong>Game over</strong><span>Score ' + blocks.score + '</span><button class="sc-extra-btn primary" type="button" data-extra-reset>↻ Play again</button></div>' : '') +
+        '</div><div><p class="sc-extra-muted sc-extra-center">Drag or tap a piece</p><div class="sc-extra-pieces">' +
+        blocks.pieces.map((piece,i)=>'<button class="sc-extra-piece ' + (blocks.selected===i&&piece?'selected':'') + '" type="button" data-block-piece="' + i + '"' + (!piece?' disabled':'') + ' aria-label="Select piece ' + (i+1) + '">' +
           (piece?'<span class="sc-extra-piece-grid">' + Array.from({length:16},(_,n)=>'<i class="' + (piece.shape.some(([r,c])=>r*4+c===n)?'':'blank') + '"></i>').join('') + '</span>':'<span class="sc-extra-muted">Used</span>') +
         '</button>').join('') + '</div></div></div>' +
-        '<p class="sc-extra-muted sc-extra-center">Complete a full row or column to clear it. Clear multiple lines at once for a bigger score. No rotation required.</p>';
+        '<p class="sc-extra-muted sc-extra-center">The highlighted shadow shows where the piece lands. Fill a full row or column to clear it — clear several at once for a bigger score.</p>';
     }
-    function placeBlock(row,col) {
-      if (blocks.over || !blocks.pieces[blocks.selected]) return;
-      const shape = blocks.pieces[blocks.selected].shape;
-      if (!canPlaceBlock(shape,row,col)) { paintBlocks('That piece does not fit there. Try another position.'); return; }
-      shape.forEach(([r,c])=>blocks.board[row+r][col+c]=1);
+    function placeBlockAt(index,anchor) {
+      const piece = blocks.pieces[index];
+      if (blocks.over || !piece) return;
+      if (!anchor) { paintBlocks('That piece does not fit there. Try another spot.'); return; }
+      const shape = piece.shape;
+      shape.forEach(([r,c])=>blocks.board[anchor[0]+r][anchor[1]+c]=1);
       blocks.score += shape.length * 10;
       const rows = blocks.board.map((line,i)=>line.every(Boolean)?i:-1).filter(i=>i>=0);
       const cols = Array.from({length:10},(_,c)=>blocks.board.every(row=>row[c])?c:-1).filter(i=>i>=0);
       rows.forEach(r=>blocks.board[r].fill(0));
       cols.forEach(c=>blocks.board.forEach(row=>row[c]=0));
       blocks.score += (rows.length + cols.length) * 100;
-      blocks.pieces[blocks.selected] = null;
-      if (blocks.pieces.every(p=>!p)) { blocks.pieces=[randomPiece(),randomPiece(),randomPiece()]; blocks.selected=0; }
+      blocks.pieces[index] = null;
+      if (blocks.pieces.every(p=>!p)) blocks.pieces=[randomPiece(),randomPiece(),randomPiece()];
+      blocks.selected = firstFreePiece();
       if (!anyBlockFit()) blocks.over=true;
-      paintBlocks(blocks.over?'No more pieces fit. Game over!':(rows.length+cols.length?'Great! Cleared ' + (rows.length+cols.length) + ' line(s).':'Nice placement. Choose your next piece.'));
+      paintBlocks(blocks.over?'No more pieces fit. Game over!':(rows.length+cols.length?'Great! Cleared ' + (rows.length+cols.length) + ' line(s).':'Nice placement. Next piece is ready.'));
     }
+    function placeBlock(row,col) {
+      const piece = blocks.pieces[blocks.selected];
+      if (blocks.over || !piece) return;
+      const base = centredAnchor(piece.shape,row,col);
+      placeBlockAt(blocks.selected, resolveAnchor(piece.shape,base[0],base[1]));
+    }
+    // Board-relative anchor for a piece whose centre is at screen point (x, y).
+    function anchorFromPoint(shape,x,y) {
+      const a = blockCellEl(0,0), b = blockCellEl(9,9);
+      if (!a || !b) return null;
+      const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+      const pitch = (rb.left - ra.left) / 9;
+      if (x < ra.left - pitch*2 || x > rb.right + pitch*2 || y < ra.top - pitch*2 || y > rb.bottom + pitch*2) return null;
+      const size = shapeSize(shape);
+      return [Math.round((y - ra.top) / pitch - size[0]/2), Math.round((x - ra.left) / pitch - size[1]/2)];
+    }
+    function startBlockDrag(event,index) {
+      const piece = blocks.pieces[index];
+      if (!piece || blocks.over) return;
+      const cellEl = blockCellEl(0,0), cellEl2 = blockCellEl(0,1);
+      const cell = cellEl ? cellEl.getBoundingClientRect().width : 30;
+      const pitch = cellEl && cellEl2 ? cellEl2.getBoundingClientRect().left - cellEl.getBoundingClientRect().left : cell + 3;
+      blockDrag = {index:index, id:event.pointerId, x0:event.clientX, y0:event.clientY, moved:false, ghost:null, anchor:null,
+        lift:event.pointerType === 'mouse' ? 0 : Math.max(48, pitch * 1.6), cell:cell, pitch:pitch};
+    }
+    function moveBlockDrag(event) {
+      const d = blockDrag;
+      if (!d || event.pointerId !== d.id) return;
+      if (!d.moved && Math.hypot(event.clientX-d.x0, event.clientY-d.y0) < 6) return;
+      const shape = blocks.pieces[d.index].shape;
+      if (!d.moved) {
+        d.moved = true;
+        blocks.selected = d.index;
+        view.querySelectorAll('[data-block-piece]').forEach(el => el.classList.toggle('selected', Number(el.dataset.blockPiece) === d.index));
+        const size = shapeSize(shape);
+        const ghost = document.createElement('div');
+        ghost.className = 'sc-extra-block-drag';
+        ghost.style.gridTemplateColumns = 'repeat(' + size[1] + ',' + d.cell + 'px)';
+        ghost.style.gridTemplateRows = 'repeat(' + size[0] + ',' + d.cell + 'px)';
+        ghost.style.gap = (d.pitch - d.cell) + 'px';
+        for (let r=0;r<size[0];r++) for (let c=0;c<size[1];c++) {
+          const i = document.createElement('i');
+          if (!shape.some(p=>p[0]===r&&p[1]===c)) i.className = 'blank';
+          ghost.appendChild(i);
+        }
+        view.appendChild(ghost);
+        d.ghost = ghost;
+      }
+      const cx = event.clientX, cy = event.clientY - d.lift;
+      d.ghost.style.left = cx + 'px';
+      d.ghost.style.top = cy + 'px';
+      const base = anchorFromPoint(shape,cx,cy);
+      d.anchor = showBlockGhost(shape,base);
+      d.over = !!base;
+    }
+    function endBlockDrag(event,cancel) {
+      const d = blockDrag;
+      if (!d || event.pointerId !== d.id) return;
+      blockDrag = null;
+      if (!d.moved) return; // plain tap: the click handler selects the piece
+      blockClickBlockUntil = Date.now() + 400;
+      if (d.ghost) d.ghost.remove();
+      clearBlockGhost();
+      if (cancel || !d.over) { paintBlocks('Drop the piece on the board to place it.'); return; }
+      placeBlockAt(d.index, d.anchor);
+    }
+    view.addEventListener('pointerdown', event => {
+      if (active !== 'blocks' || event.button > 0) return;
+      const piece = event.target.closest('[data-block-piece]');
+      if (piece && !piece.disabled) startBlockDrag(event, Number(piece.dataset.blockPiece));
+    });
+    document.addEventListener('pointermove', event => {
+      if (active !== 'blocks' || !blocks) return;
+      if (blockDrag) { moveBlockDrag(event); if (blockDrag && blockDrag.moved) event.preventDefault(); return; }
+      if (event.pointerType !== 'mouse') return;
+      const cellEl = event.target.closest && event.target.closest('[data-block-cell]');
+      const piece = blocks.pieces[blocks.selected];
+      if (!cellEl || !view.contains(cellEl) || !piece || blocks.over) { clearBlockGhost(); return; }
+      const rc = cellEl.dataset.blockCell.split(',').map(Number);
+      showBlockGhost(piece.shape, centredAnchor(piece.shape,rc[0],rc[1]));
+    }, {passive:false});
+    document.addEventListener('pointerup', event => { if (active === 'blocks') endBlockDrag(event,false); });
+    document.addEventListener('pointercancel', event => { if (active === 'blocks') endBlockDrag(event,true); });
 
     const typingSamples = {
       en: [
@@ -707,8 +831,9 @@
       }
       const move=target.closest('[data-2048-move]');
       if(move){move2048(move.dataset['2048Move']);return;}
+      if(active==='blocks'&&Date.now()<blockClickBlockUntil&&target.closest('[data-block-piece],[data-block-cell]'))return;
       const piece=target.closest('[data-block-piece]');
-      if(piece&&!piece.disabled){blocks.selected=Number(piece.dataset.blockPiece);paintBlocks('Piece selected. Tap where its top-left corner should go.');return;}
+      if(piece&&!piece.disabled){blocks.selected=Number(piece.dataset.blockPiece);paintBlocks('Piece selected. Tap the board where its centre should go, or drag it.');return;}
       const blockCell=target.closest('[data-block-cell]');
       if(blockCell){const parts=blockCell.dataset.blockCell.split(',').map(Number);placeBlock(parts[0],parts[1]);return;}
       const typingLang=target.closest('[data-typing-lang]');
