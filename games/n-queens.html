@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6eee2">
+<title>N-Queens Challenge</title>
+<style>
+:root{color-scheme:light;--ink:#25211d;--muted:#756d64;--light:#f7d2a5;--dark:#c78d4d;--accent:#276b55;--danger:#bd3d35;--panel:#fffaf3}
+*{box-sizing:border-box}
+body{margin:0;padding:clamp(14px,3vw,28px);background:#f6eee2;color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{width:min(100%,900px);margin:0 auto}
+.hero{text-align:center;margin:0 auto 20px}
+.eyebrow{color:#8c5d2d;font-size:10px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+h1{margin:8px 0 7px;font-size:clamp(27px,5vw,42px);letter-spacing:-.045em}
+.intro{max-width:610px;margin:0 auto;color:var(--muted);font-size:13px;line-height:1.65}
+.toolbar{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:18px auto 22px}
+select,.btn{min-height:40px;padding:0 13px;border:1px solid #d9c6ae;border-radius:11px;background:#fffaf3;color:var(--ink);font:750 12px Inter,system-ui,sans-serif}
+select{cursor:pointer}.btn{cursor:pointer;transition:transform .12s ease,background .12s ease}
+.btn:active{transform:translateY(1px)}
+.btn.primary{border-color:var(--accent);background:var(--accent);color:white}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 230px;align-items:start;gap:20px}
+.board-card{min-width:0;padding:clamp(10px,2vw,17px);border:1px solid #e5d6c3;border-radius:18px;background:var(--panel);box-shadow:0 12px 35px rgba(91,63,32,.08)}
+.board-wrap{width:100%;max-width:620px;margin:0 auto}
+.files{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));margin:0 25px 5px;text-align:center;color:#51473e;font-size:clamp(11px,2.2vw,17px);font-weight:750}
+.files.bottom{margin:5px 25px 0}
+.board-row{display:grid;grid-template-columns:20px minmax(0,1fr) 20px;align-items:stretch;gap:4px}
+.ranks{display:grid;grid-template-rows:repeat(var(--n),minmax(0,1fr));align-items:center;justify-items:center;color:#51473e;font-size:clamp(11px,2.2vw,17px);font-weight:750}
+.board{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));width:100%;aspect-ratio:1;border:1px solid rgba(70,48,25,.18);overflow:hidden;touch-action:manipulation}
+.square{position:relative;display:grid;place-items:center;min-width:0;min-height:0;padding:0;border:0;border-radius:0;cursor:pointer;font-family:Georgia,"Times New Roman",serif;font-size:clamp(25px,7.3vw,62px);line-height:1;transition:filter .1s ease,box-shadow .1s ease}
+.square.light{background:var(--light)}.square.dark{background:var(--dark)}
+.square:hover{filter:brightness(1.07)}
+.square:focus-visible{outline:3px solid #1d5fba;outline-offset:-4px;z-index:2}
+.square.attacked:not(.has-queen):after{content:"";position:absolute;inset:0;background:rgba(189,61,53,.12);pointer-events:none}
+.square.has-queen{color:#fff;text-shadow:-2px -2px 0 #28231e,2px -2px 0 #28231e,-2px 2px 0 #28231e,2px 2px 0 #28231e,0 3px 5px rgba(0,0,0,.4)}
+.square.conflict{box-shadow:inset 0 0 0 4px #bd3d35,inset 0 0 0 7px rgba(255,255,255,.48);z-index:1}
+.square .queen{transform:translateY(-2%);pointer-events:none}
+.side{display:grid;gap:12px}
+.stat-card,.help-card{padding:15px;border:1px solid #e5d6c3;border-radius:16px;background:var(--panel)}
+.stat-label{color:#877a6d;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
+.stat-value{margin-top:5px;font-size:26px;font-weight:900;font-variant-numeric:tabular-nums}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mini-stat{padding:12px;border:1px solid #eadfce;border-radius:12px;background:#fff}
+.mini-stat .stat-value{font-size:19px}
+.status{min-height:72px;margin-top:12px;padding:12px;border:1px solid #d8e7dd;border-radius:12px;background:#f0f7f1;color:#24523e;font-size:12px;line-height:1.55}
+.status.error{border-color:#efcfcb;background:#fff1ef;color:#96362f}
+.status.win{border-color:#b9d8c6;background:#e8f6ed;color:#15563c}
+.help-card h2{margin:0 0 9px;font-size:14px}
+.help-card p,.help-card li{color:var(--muted);font-size:11px;line-height:1.6}
+.help-card ul{margin:7px 0 0;padding-left:17px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 13px;margin-top:12px;color:#72675d;font-size:10px}
+.dot{display:inline-block;width:9px;height:9px;margin-right:5px;border-radius:50%;background:#bd3d35}
+.note{margin:16px 4px 0;color:#8b8075;text-align:center;font-size:10px;line-height:1.6}
+@media(max-width:700px){body{padding:13px}.layout{grid-template-columns:1fr;gap:12px}.side{grid-template-columns:1fr 1fr}.help-card{grid-column:1/-1}.board-card{padding:9px}.files{margin-left:22px;margin-right:22px}.files.bottom{margin-left:22px;margin-right:22px}.board-row{grid-template-columns:17px minmax(0,1fr) 17px;gap:3px}}
+@media(max-width:420px){.toolbar{gap:6px}.toolbar .btn,.toolbar select{min-height:38px;padding:0 9px;font-size:10px}.side{grid-template-columns:1fr 1fr}.square{font-size:clamp(24px,8vw,39px)}.files{margin-left:20px;margin-right:20px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="hero">
+    <div class="eyebrow">Classic Chess Logic · Brain Challenge</div>
+    <h1>N-Queens Challenge</h1>
+    <p class="intro">Place N queens on an N × N chessboard. Every row must contain one queen, and no two queens may attack each other horizontally, vertically or diagonally.</p>
+  </header>
+
+  <div class="toolbar">
+    <label for="boardSize"><strong>Board size</strong></label>
+    <select id="boardSize" aria-label="Board size">
+      <option value="4">4 × 4 · Beginner</option>
+      <option value="5">5 × 5 · Beginner</option>
+      <option value="6">6 × 6 · Easy</option>
+      <option value="7">7 × 7 · Medium</option>
+      <option value="8" selected>8 × 8 · Classic</option>
+      <option value="9">9 × 9 · Hard</option>
+      <option value="10">10 × 10 · Hard</option>
+      <option value="11">11 × 11 · Expert</option>
+      <option value="12">12 × 12 · Expert</option>
+    </select>
+    <button class="btn primary" id="newGame" type="button">↻ New Game</button>
+    <button class="btn" id="undo" type="button">↶ Undo</button>
+    <button class="btn" id="hint" type="button">💡 Hint</button>
+    <button class="btn" id="solution" type="button">Show Solution</button>
+  </div>
+
+  <section class="layout">
+    <div class="board-card">
+      <div class="board-wrap">
+        <div class="files" id="filesTop" aria-hidden="true"></div>
+        <div class="board-row">
+          <div class="ranks" id="ranksLeft" aria-hidden="true"></div>
+          <div class="board" id="board" role="group" aria-label="N Queens chessboard"></div>
+          <div class="ranks" id="ranksRight" aria-hidden="true"></div>
+        </div>
+        <div class="files bottom" id="filesBottom" aria-hidden="true"></div>
+      </div>
+      <div class="legend"><span><i class="dot"></i>Conflicting queen</span><span>🔴 Red tint = attacked square</span><span>Tap a queen again to remove it</span></div>
+    </div>
+
+    <aside class="side">
+      <div class="stat-card">
+        <div class="stat-label">Queens placed</div>
+        <div class="stat-value" id="progress">0 / 8</div>
+        <div class="status" id="status" role="status" aria-live="polite">Place your first queen. Start with any square.</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card mini-stat">
+          <div class="stat-label">Time</div>
+          <div class="stat-value" id="timer">00:00</div>
+        </div>
+        <div class="stat-card mini-stat">
+          <div class="stat-label">Best time</div>
+          <div class="stat-value" id="best">—</div>
+        </div>
+      </div>
+      <div class="help-card">
+        <h2>How to play</h2>
+        <ul>
+          <li>Tap one square in each row to place a queen.</li>
+          <li>Each row can hold only one queen. Tap another square in that row to move it.</li>
+          <li>Queens attack along rows, columns and diagonals.</li>
+          <li>Place all N queens without any conflicts to win.</li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+  <p class="note">Your best time is stored only on this browser. No login or backend required.</p>
+</main>
+
+<script>
+(function(){
+  'use strict';
+  var board = document.getElementById('board');
+  var sizeSelect = document.getElementById('boardSize');
+  var progress = document.getElementById('progress');
+  var statusBox = document.getElementById('status');
+  var timerBox = document.getElementById('timer');
+  var bestBox = document.getElementById('best');
+  var undoButton = document.getElementById('undo');
+  var size = 8;
+  var queens = [];
+  var history = [];
+  var timerStarted = Date.now();
+  var timerId = null;
+  var elapsed = 0;
+  var won = false;
+  var solutionShown = false;
+  var statusOverride = '';
+
+  function letters(n){
+    var out = [];
+    for(var i=0;i<n;i++) out.push(String.fromCharCode(97+i));
+    return out;
+  }
+  function formatTime(ms){
+    var seconds = Math.floor(ms/1000);
+    var mins = String(Math.floor(seconds/60)).padStart(2,'0');
+    var secs = String(seconds%60).padStart(2,'0');
+    return mins+':'+secs;
+  }
+  function bestKey(){ return 'sitecraft-nqueens-best-'+size; }
+  function readBest(){
+    try { var value = Number(localStorage.getItem(bestKey())); return value>0 ? value : 0; }
+    catch(e){ return 0; }
+  }
+  function writeBest(value){
+    try { localStorage.setItem(bestKey(),String(value)); } catch(e){}
+  }
+  function stopClock(){
+    if(timerId!==null){ clearInterval(timerId); timerId=null; }
+  }
+  function startClock(){
+    stopClock();
+    timerStarted = Date.now()-elapsed;
+    timerId = setInterval(function(){
+      if(!won && !solutionShown){
+        elapsed = Date.now()-timerStarted;
+        timerBox.textContent = formatTime(elapsed);
+      }
+    },250);
+  }
+  function conflictRows(values){
+    var bad = new Set();
+    for(var r1=0;r1<size;r1++){
+      if(values[r1]<0) continue;
+      for(var r2=r1+1;r2<size;r2++){
+        if(values[r2]<0) continue;
+        if(values[r1]===values[r2] || Math.abs(values[r1]-values[r2])===r2-r1){
+          bad.add(r1); bad.add(r2);
+        }
+      }
+    }
+    return bad;
+  }
+  function attackedSquares(values){
+    var attacked = new Set();
+    for(var qr=0;qr<size;qr++){
+      var qc=values[qr];
+      if(qc<0) continue;
+      for(var r=0;r<size;r++){
+        for(var c=0;c<size;c++){
+          if(r===qr && c===qc) continue;
+          if(c===qc || Math.abs(r-qr)===Math.abs(c-qc)) attacked.add(r+','+c);
+        }
+      }
+    }
+    return attacked;
+  }
+  function saveBest(){
+    var old=readBest();
+    if(!old || elapsed<old) writeBest(elapsed);
+    bestBox.textContent=formatTime(readBest());
+  }
+  function render(){
+    var bad=conflictRows(queens);
+    var attacked=attackedSquares(queens);
+    var count=queens.filter(function(c){return c>=0;}).length;
+    board.style.setProperty('--n',size);
+    board.innerHTML='';
+    for(var r=0;r<size;r++){
+      for(var c=0;c<size;c++){
+        var cell=document.createElement('button');
+        var isQueen=queens[r]===c;
+        var classes=['square',((r+c)%2===0?'light':'dark')];
+        if(isQueen) classes.push('has-queen');
+        if(bad.has(r)) classes.push('conflict');
+        if(attacked.has(r+','+c)) classes.push('attacked');
+        cell.className=classes.join(' ');
+        cell.type='button';
+        cell.setAttribute('aria-label',letters(size)[c]+(size-r)+(isQueen?', queen':''));
+        cell.title=letters(size)[c]+(size-r);
+        if(isQueen){
+          var piece=document.createElement('span');
+          piece.className='queen';
+          piece.textContent='♛';
+          cell.appendChild(piece);
+        }
+        (function(row,col){ cell.addEventListener('click',function(){placeQueen(row,col);}); })(r,c);
+        board.appendChild(cell);
+      }
+    }
+    var files=letters(size);
+    document.getElementById('filesTop').style.setProperty('--n',size);
+    document.getElementById('filesBottom').style.setProperty('--n',size);
+    document.getElementById('filesTop').textContent=files.join('   ');
+    document.getElementById('filesBottom').textContent=files.join('   ');
+    var ranks=[];
+    for(var i=size;i>=1;i--) ranks.push(String(i));
+    document.getElementById('ranksLeft').textContent=ranks.join(' ');
+    document.getElementById('ranksRight').textContent=ranks.join(' ');
+    document.getElementById('ranksLeft').style.setProperty('--n',size);
+    document.getElementById('ranksRight').style.setProperty('--n',size);
+    progress.textContent=count+' / '+size;
+    undoButton.disabled=history.length===0 || won || solutionShown;
+    bestBox.textContent=readBest()?formatTime(readBest()):'—';
+
+    if(statusOverride){
+      statusBox.className='status'+(bad.size?' error':'');
+      statusBox.textContent=statusOverride;
+    } else if(solutionShown){
+      statusBox.className='status';
+      statusBox.textContent='A valid solution is displayed. Start a new game to try it yourself.';
+    } else if(bad.size){
+      statusBox.className='status error';
+      statusBox.textContent=bad.size+' queens are in conflict. Move the highlighted queens until no queens attack each other.';
+    } else if(count===size){
+      statusBox.className='status win';
+      statusBox.textContent='Excellent! You solved the '+size+'-Queens challenge in '+formatTime(elapsed)+'. 🎉';
+    } else {
+      statusBox.className='status';
+      statusBox.textContent='Great start. Place '+(size-count)+' more queen'+(size-count===1?'':'s')+'. Avoid the red-tinted attacked squares.';
+    }
+  }
+  function placeQueen(row,col){
+    if(won) return;
+    history.push(queens.slice());
+    queens[row]=(queens[row]===col?-1:col);
+    solutionShown=false;
+    statusOverride='';
+    if(timerId===null) startClock();
+    var bad=conflictRows(queens);
+    var count=queens.filter(function(c){return c>=0;}).length;
+    if(count===size && bad.size===0){
+      won=true;
+      stopClock();
+      saveBest();
+      statusOverride='Excellent! You solved the '+size+'-Queens challenge in '+formatTime(elapsed)+'. 🎉';
+    } else if(bad.size){
+      statusOverride=bad.size+' queens are attacking each other. Move a highlighted queen to a safe square.';
+    }
+    render();
+  }
+  function findCompletion(fixed){
+    var placed=fixed.slice();
+    var cols=new Set(), diagA=new Set(), diagB=new Set();
+    function search(row){
+      if(row===size) return placed.slice();
+      var candidates=[];
+      if(placed[row]>=0) candidates=[placed[row]];
+      else {
+        for(var c=0;c<size;c++) candidates.push(c);
+        for(var i=candidates.length-1;i>0;i--){
+          var j=Math.floor(Math.random()*(i+1));
+          var tmp=candidates[i];candidates[i]=candidates[j];candidates[j]=tmp;
+        }
+      }
+      for(var k=0;k<candidates.length;k++){
+        var col=candidates[k], a=row-col, b=row+col;
+        if(cols.has(col)||diagA.has(a)||diagB.has(b)) continue;
+        placed[row]=col;cols.add(col);diagA.add(a);diagB.add(b);
+        var result=search(row+1);
+        if(result) return result;
+        cols.delete(col);diagA.delete(a);diagB.delete(b);placed[row]=-1;
+      }
+      return null;
+    }
+    return search(0);
+  }
+  function newGame(nextSize){
+    size=Number(nextSize)||8;
+    sizeSelect.value=String(size);
+    queens=Array(size).fill(-1);
+    history=[];
+    elapsed=0;
+    won=false;
+    solutionShown=false;
+    statusOverride='';
+    timerBox.textContent='00:00';
+    render();
+    startClock();
+  }
+  document.getElementById('newGame').addEventListener('click',function(){newGame(size);});
+  sizeSelect.addEventListener('change',function(){newGame(Number(sizeSelect.value));});
+  undoButton.addEventListener('click',function(){
+    if(!history.length||won||solutionShown) return;
+    queens=history.pop();
+    statusOverride='';
+    render();
+  });
+  document.getElementById('hint').addEventListener('click',function(){
+    if(won||solutionShown) return;
+    var solution=findCompletion(queens);
+    if(!solution){
+      statusOverride='Your current queens block every possible solution. Undo or move one of the conflicting queens, then try Hint again.';
+      render();return;
+    }
+    var row=queens.findIndex(function(col){return col<0;});
+    if(row<0) return;
+    history.push(queens.slice());
+    queens[row]=solution[row];
+    statusOverride='Hint: a safe queen has been placed in row '+(size-row)+'. Keep going!';
+    render();
+  });
+  document.getElementById('solution').addEventListener('click',function(){
+    var solution=null;
+    if(size===8) solution=[5,3,6,0,7,1,4,2];
+    else solution=findCompletion(Array(size).fill(-1));
+    if(!solution) return;
+    stopClock();
+    queens=solution;
+    history=[];
+    won=false;
+    solutionShown=true;
+    statusOverride='';
+    render();
+  });
+  newGame(8);
+})();
+</script>
+</body>
+</html>
