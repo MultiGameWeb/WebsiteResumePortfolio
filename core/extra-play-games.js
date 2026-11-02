@@ -71,6 +71,11 @@
     '@media(max-width:620px){.sc-pg-section .sc-pg-starfighter-frame{height:760px;min-height:700px}}',
     '.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 175px);min-height:420px}',
     '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 190px);min-height:360px}}',
+    '.sc-pg-section .sc-pg-arrow-escape-shell{overflow:hidden;border:1px solid rgba(140,224,255,.35);border-radius:14px;background:#1e3c72}',
+    '.sc-pg-section .sc-pg-arrow-escape-frame{display:block;width:100%;height:clamp(700px,88vh,900px);min-height:660px;border:0;background:#1e3c72}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-arrow-escape-frame{height:800px;min-height:760px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame{height:calc(100vh - 175px);min-height:520px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame{height:calc(100vh - 190px);min-height:420px}}',
     '@media(max-width:720px){.sc-pg-section .sc-extra-block-wrap{grid-template-columns:1fr}.sc-pg-section .sc-extra-pieces{grid-template-columns:repeat(3,minmax(0,1fr))}.sc-pg-section .sc-extra-piece{min-height:62px}.sc-pg-section .sc-extra-connect{gap:4px;padding:6px}.sc-pg-section .sc-extra-typing-prompt{font-size:13px;padding:12px}}',
     '@media(max-width:390px){.sc-pg-section .sc-extra-tile{width:42px;height:44px}.sc-pg-section .sc-extra-connect{gap:3px;padding:5px}}',
     '@media(prefers-reduced-motion:reduce){.sc-pg-section .sc-extra-btn,.sc-pg-section .sc-extra-toggle button{transition:none!important}}'
@@ -139,6 +144,7 @@
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="blocks">🧩 Block Puzzle</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="typing">⌨️ Typing Test</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sudoku">🔢 Sudoku</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="arrow-escape">🧭 Arrow Escape</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="math">➗ Math Challenge</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="connect">🔴 Connect Four</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sky-ball">🌤️ 3D Sky Ball</button>' +
@@ -149,6 +155,7 @@
 
     const preferredOrder = [
       '2048','snake','sky-ball','math','starfighter','word','sudoku',
+      'arrow-escape',
       'memory','brick-breaker','blocks','typing','connect','ttt','rps'
     ];
     preferredOrder.forEach(key => {
@@ -198,6 +205,7 @@
       if (id === 'sky-ball') paintSkyBall();
       if (id === 'starfighter') paintStarfighter();
       if (id === 'brick-breaker') paintBrickBreaker();
+      if (id === 'arrow-escape') paintArrowEscape();
     }
     function paintSkyBall() {
       view.innerHTML = commonHead('3D SKY BALL RUNNER · 3D ARCADE', 'Roll through the skyway. Dodge obstacles and collect diamonds.', '↻ Restart run') +
@@ -213,6 +221,11 @@
       view.innerHTML = commonHead('3D CRYSTAL BRICK BREAKER · BOSS EDITION', 'Smash the crystals. Defeat the Mecha Boss.', '↻ Restart stage') +
         '<p class="sc-extra-status">Slide to move the hover-paddle on mobile or mouse. Use Left / Right Arrow Keys or A / D on desktop. Catch Fireball, Multi-Ball, Twin Laser and Wide Paddle capsules. Clear every brick and defeat the boss to advance.</p>' +
         '<div class="sc-pg-brick-breaker-shell"><iframe class="sc-pg-brick-breaker-frame" data-brick-breaker-frame src="games/crystal-brick-breaker.html" title="3D Crystal Brick Breaker Boss Edition" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintArrowEscape() {
+      view.innerHTML = commonHead('ARROW ESCAPE PUZZLE · LOGIC GAME', 'Clear the grid. Let every arrow escape.', '↻ Restart level') +
+        '<p class="sc-extra-status">Tap arrows only when their pointing path to the board edge is clear. A blocked arrow costs one heart. Use Hint and Bomb tools wisely, collect coins and clear all 15 levels. Your progress is saved on this browser.</p>' +
+        '<div class="sc-pg-arrow-escape-shell"><iframe class="sc-pg-arrow-escape-frame" data-arrow-escape-frame src="games/arrow-escape-puzzle.html" title="Arrow Escape Puzzle" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
     }
     tabs.querySelectorAll('[data-extra-tab]').forEach(tab => {
       tab.addEventListener('click', () => start(tab.dataset.extraTab));
@@ -1033,6 +1046,13 @@
         if(active==='brick-breaker'){
           const frame=$(view,'[data-brick-breaker-frame]');
           if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='arrow-escape'){
+          const frame=$(view,'[data-arrow-escape-frame]');
+          if(frame){
+            try{localStorage.removeItem('ae_state');}catch(_){}
+            frame.src=frame.getAttribute('src');
+          }
         }
         return;
       }
