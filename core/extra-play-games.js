@@ -53,6 +53,9 @@
     '.sc-pg-section .sc-extra-connect{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;width:min(100%,490px);margin:14px auto;padding:10px;border-radius:16px;background:#2455a3}',
     '.sc-pg-section .sc-extra-connect button{display:grid;place-items:center;min-width:0;padding:0;aspect-ratio:1;border:0;border-radius:50%;background:#111b35;cursor:pointer}.sc-pg-section .sc-extra-connect .red:after,.sc-pg-section .sc-extra-connect .yellow:after{content:"";display:block;width:82%;height:82%;border-radius:50%;background:#f87171}.sc-pg-section .sc-extra-connect .yellow:after{background:#facc15}',
     '.sc-pg-section .sc-extra-connect button:disabled{cursor:default;opacity:.65}',
+    '.sc-pg-section .sc-extra-connect-levels{display:flex;justify-content:center;align-items:center;gap:7px;flex-wrap:wrap;margin:10px auto 13px;color:#c9c1d7;font-size:11px}',
+    '.sc-pg-section .sc-extra-connect-levels button{min-height:32px;padding:0 11px;border:1px solid rgba(255,255,255,.16);border-radius:9px;background:rgba(255,255,255,.05);color:#ddd5e9;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-connect-levels button[aria-pressed=true]{border-color:#a78bfa;background:rgba(124,58,237,.3);color:#fff}',
     '.sc-pg-section .sc-pg-sky-ball-shell{overflow:hidden;border:1px solid rgba(0,229,255,.28);border-radius:14px;background:#0b132b}',
     '.sc-pg-section .sc-pg-sky-ball-frame{display:block;width:100%;height:clamp(680px,82vh,900px);min-height:620px;border:0;background:#0b132b}',
     '@media(max-width:620px){.sc-pg-section .sc-pg-sky-ball-frame{height:780px;min-height:720px}}',
@@ -841,6 +844,12 @@
       paintMath(message);
     }
 
+    const CONNECT_LEVELS = {
+      easy:{label:'Easy',depth:2,delay:420},
+      medium:{label:'Medium',depth:4,delay:620},
+      hard:{label:'Hard',depth:6,delay:850},
+      veryhard:{label:'Very Hard',depth:8,delay:1100}
+    };
     function emptyConnectBoard(){return Array.from({length:6},()=>Array(7).fill(''));}
     function connectDrop(board,col,mark) {
       for(let r=5;r>=0;r--)if(!board[r][col]){board[r][col]=mark;return r;}
@@ -855,79 +864,123 @@
       });
     }
     function initConnect() {
-      connect={board:emptyConnectBoard(),over:false,turn:'you',you:'R',computer:'Y'};
+      const saved=safeGet('sitecraft-connect-difficulty','easy');
+      const difficulty=CONNECT_LEVELS[saved]?saved:'easy';
+      connect={board:emptyConnectBoard(),over:false,turn:'you',you:'R',computer:'Y',difficulty:difficulty};
       paintConnect('Your turn. Choose a column to drop a red disc.');
     }
     function connectScore(board,mark) {
-      const other=mark==='Y'?'R':'Y';let score=0;
-      for(let r=0;r<6;r++)for(let c=0;c<7;c++)if(c<=3){
-        const w=[board[r][c],board[r][c+1],board[r][c+2],board[r][c+3]];
-        const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
-        if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
-      }
-      for(let c=0;c<7;c++)for(let r=0;r<=2;r++){
-        const w=[board[r][c],board[r+1][c],board[r+2][c],board[r+3][c]];
-        const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
-        if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
-      }
-      for(let r=0;r<=2;r++)for(let c=0;c<=3;c++){
-        const w=[board[r][c],board[r+1][c+1],board[r+2][c+2],board[r+3][c+3]];
-        const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
-        if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
-      }
-      for(let r=0;r<=2;r++)for(let c=3;c<7;c++){
-        const w=[board[r][c],board[r+1][c-1],board[r+2][c-2],board[r+3][c-3]];
-        const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
-        if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
+      const other=mark==='Y'?'R':'Y';
+      let score=0;
+      // Prefer the middle column: it participates in the greatest number of winning lines.
+      for(let r=0;r<6;r++)if(board[r][3]===mark)score+=6;
+      for(let r=0;r<6;r++)for(let c=0;c<7;c++){
+        for(const [dr,dc] of [[0,1],[1,0],[1,1],[1,-1]]){
+          const endR=r+dr*3,endC=c+dc*3;
+          if(endR<0||endR>=6||endC<0||endC>=7)continue;
+          let own=0,opp=0,empty=0;
+          for(let i=0;i<4;i++){
+            const value=board[r+dr*i][c+dc*i];
+            if(value===mark)own++;
+            else if(value===other)opp++;
+            else empty++;
+          }
+          if(own&&opp)continue;
+          if(own===4)score+=100000;
+          else if(own===3&&empty===1)score+=150;
+          else if(own===2&&empty===2)score+=18;
+          if(opp===3&&empty===1)score-=175;
+          else if(opp===2&&empty===2)score-=20;
+        }
       }
       return score;
     }
     function connectMoveOptions(board){return [3,2,4,1,5,0,6].filter(c=>!board[0][c]);}
-    function connectMinimax(board,depth,alpha,beta,maximizing) {
-      if(depth===0||board[0].every(Boolean))return connectScore(board,'Y');
-      const options=connectMoveOptions(board);
-      if(maximizing){
-        let value=-Infinity;
-        for(const col of options){const copy=board.map(row=>row.slice());connectDrop(copy,col,'Y');value=Math.max(value,connectMinimax(copy,depth-1,alpha,beta,false));alpha=Math.max(alpha,value);if(alpha>=beta)break;}
-        return value;
+    function connectPositionKey(board,turn){return board.map(row=>row.join('')).join('/')+'|'+turn;}
+    function connectMinimax(board,depth,alpha,beta,turn,ply,table) {
+      const alphaOriginal=alpha,betaOriginal=beta;
+      const key=connectPositionKey(board,turn);
+      const cached=table.get(key);
+      if(cached&&cached.depth>=depth){
+        if(cached.flag==='exact')return cached.score;
+        if(cached.flag==='lower')alpha=Math.max(alpha,cached.score);
+        else if(cached.flag==='upper')beta=Math.min(beta,cached.score);
+        if(alpha>=beta)return cached.score;
       }
-      let value=Infinity;
-      for(const col of options){const copy=board.map(row=>row.slice());connectDrop(copy,col,'R');value=Math.min(value,connectMinimax(copy,depth-1,alpha,beta,true));beta=Math.min(beta,value);if(alpha>=beta)break;}
+      if(depth===0||board[0].every(Boolean))return connectScore(board,'Y');
+      const maximizing=turn==='Y';
+      const mark=maximizing?'Y':'R';
+      const options=connectMoveOptions(board);
+      let value=maximizing?-Infinity:Infinity;
+      for(const col of options){
+        const copy=board.map(row=>row.slice());
+        const row=connectDrop(copy,col,mark);
+        if(row<0)continue;
+        let score;
+        if(connectWin(copy,row,col,mark))score=mark==='Y'?1000000-ply:-1000000+ply;
+        else if(copy[0].every(Boolean))score=0;
+        else score=connectMinimax(copy,depth-1,alpha,beta,maximizing?'R':'Y',ply+1,table);
+        if(maximizing){value=Math.max(value,score);alpha=Math.max(alpha,value);}
+        else{value=Math.min(value,score);beta=Math.min(beta,value);}
+        if(alpha>=beta)break;
+      }
+      if(value===-Infinity||value===Infinity)value=0;
+      const flag=value<=alphaOriginal?'upper':value>=betaOriginal?'lower':'exact';
+      if(table.size>60000)table.clear();
+      table.set(key,{depth:depth,score:value,flag:flag});
       return value;
     }
     function chooseConnectMove() {
       const options=connectMoveOptions(connect.board);
-      for(const col of options){const copy=connect.board.map(row=>row.slice());const r=connectDrop(copy,col,'Y');if(connectWin(copy,r,col,'Y'))return col;}
-      for(const col of options){const copy=connect.board.map(row=>row.slice());const r=connectDrop(copy,col,'R');if(connectWin(copy,r,col,'R'))return col;}
+      if(!options.length)return -1;
+      // Never miss an immediate win.
+      for(const col of options){
+        const copy=connect.board.map(row=>row.slice());
+        const row=connectDrop(copy,col,'Y');
+        if(connectWin(copy,row,col,'Y'))return col;
+      }
+      const config=CONNECT_LEVELS[connect.difficulty]||CONNECT_LEVELS.easy;
+      const table=new Map();
       let bestCol=options[0],bestScore=-Infinity;
-      for(const col of options){const copy=connect.board.map(row=>row.slice());connectDrop(copy,col,'Y');const score=connectMinimax(copy,4,-Infinity,Infinity,false);if(score>bestScore){bestScore=score;bestCol=col;}}
+      for(const col of options){
+        const copy=connect.board.map(row=>row.slice());
+        const row=connectDrop(copy,col,'Y');
+        let score;
+        if(connectWin(copy,row,col,'Y'))score=1000000;
+        else if(copy[0].every(Boolean))score=0;
+        else score=connectMinimax(copy,config.depth-1,-Infinity,Infinity,'R',1,table);
+        // Tiny centre preference breaks equal-score ties consistently.
+        score+= (3-Math.abs(3-col))*0.01;
+        if(score>bestScore){bestScore=score;bestCol=col;}
+      }
       return bestCol;
     }
     function paintConnect(message) {
+      const level=CONNECT_LEVELS[connect.difficulty]||CONNECT_LEVELS.easy;
+      const choices=Object.keys(CONNECT_LEVELS).map(key=>'<button type="button" data-connect-level="'+key+'" aria-pressed="'+String(connect.difficulty===key)+'">'+CONNECT_LEVELS[key].label+'</button>').join('');
       view.innerHTML=commonHead('CONNECT FOUR · YOU VS COMPUTER','Get four discs in a line before the computer.','↻ New match') +
+        '<div class="sc-extra-connect-levels" role="group" aria-label="Computer difficulty"><span>Computer level:</span>'+choices+'</div>' +
         '<p class="sc-extra-status sc-extra-center" data-connect-status>' + esc(message) + '</p>' +
-        '<div class="sc-extra-connect">' + connect.board.map((row,r)=>row.map((value,c)=>'<button type="button" class="' + (value==='R'?'red':value==='Y'?'yellow':'') + '" data-connect-col="' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + '"></button>').join('')).join('') + '</div>' +
-        '<div class="sc-extra-stats"><span>You<strong>🔴 Red</strong></span><span>Computer<strong>🟡 Yellow</strong></span></div>' +
-        '<p class="sc-extra-muted sc-extra-center">Tap a column to drop your disc. The computer looks for winning moves and blocks your winning line.</p>';
+        '<div class="sc-extra-connect">' + connect.board.map((row,r)=>row.map((value,c)=>'<button type="button" class="' + (value==='R'?'red':value==='Y'?'yellow':'') + '" data-connect-col="' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + '"' + (connect.over||connect.turn!=='you'?' disabled':'') + '></button>').join('')).join('') + '</div>' +
+        '<div class="sc-extra-stats"><span>You<strong>🔴 Red</strong></span><span>Computer<strong>🟡 Yellow</strong></span><span>Search depth<strong>'+level.depth+' moves</strong></span></div>' +
+        '<p class="sc-extra-muted sc-extra-center">Tap a column to drop your disc. Higher levels search more future moves, spot winning chances and block your threats. Choose a level before or during a match; it applies to the next computer turn.</p>';
     }
     function playConnect(col) {
       if(connect.over||connect.turn!=='you'||col<0||col>6)return;
       const row=connectDrop(connect.board,col,'R');
       if(row<0)return;
-      if(connectWin(connect.board,row,col,'R')){connect.over=true;paintConnect('You win! Four in a row! 🎉');return;}
-      if(connect.board[0].every(Boolean)){connect.over=true;paintConnect('It’s a draw. Well played!');return;}
-      connect.turn='computer';paintConnect('Computer is thinking…');
+      if(connectWin(connect.board,row,col,'R')){connect.over=true;connect.turn='done';paintConnect('You win! Four in a row! 🎉');return;}
+      if(connect.board[0].every(Boolean)){connect.over=true;connect.turn='done';paintConnect('It’s a draw. Well played!');return;}
+      connect.turn='computer';
+      const config=CONNECT_LEVELS[connect.difficulty]||CONNECT_LEVELS.easy;
+      paintConnect('Computer is thinking… '+config.label+' mode.');
       window.setTimeout(()=>{
-        if(active!=='connect'||connect.over)return;
+        if(active!=='connect'||connect.over||connect.turn!=='computer')return;
         const compCol=chooseConnectMove(),compRow=connectDrop(connect.board,compCol,'Y');
         if(compRow>=0&&connectWin(connect.board,compRow,compCol,'Y')){connect.over=true;connect.turn='done';paintConnect('Computer wins this match. Try again!');}
-        else if(connect.board[0].every(Boolean)){connect.over=true;paintConnect('It’s a draw. Well played!');}
+        else if(connect.board[0].every(Boolean)){connect.over=true;connect.turn='done';paintConnect('It’s a draw. Well played!');}
         else{connect.turn='you';paintConnect('Your turn. Choose a column.');}
-      },350);
+      },config.delay);
     }
 
     section.addEventListener('click', event => {
@@ -1010,7 +1063,17 @@
       const sudokuNum=target.closest('[data-sudoku-number]');
       if(sudokuNum){setSudokuNumber(Number(sudokuNum.dataset.sudokuNumber));return;}
       if(target.closest('[data-math-submit]')){event.preventDefault();submitMath();return;}
-            const connectCol=target.closest('[data-connect-col]');
+            const connectLevel=target.closest('[data-connect-level]');
+      if(connectLevel&&active==='connect'&&connect){
+        const selected=connectLevel.dataset.connectLevel;
+        if(CONNECT_LEVELS[selected]){
+          connect.difficulty=selected;
+          safeSet('sitecraft-connect-difficulty',selected);
+          paintConnect(connect.turn==='computer'?'Difficulty saved. It will apply to the next computer move.':'Difficulty set to '+CONNECT_LEVELS[selected].label+'.');
+        }
+        return;
+      }
+      const connectCol=target.closest('[data-connect-col]');
       if(connectCol){playConnect(Number(connectCol.dataset.connectCol));return;}
     });
 
