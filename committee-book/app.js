@@ -83,6 +83,8 @@ function nextDateForSeed(start,n,due){
  const dt=new Date(start+"T00:00:00");dt.setMonth(dt.getMonth()+n-1);dt.setDate(Math.min(due,new Date(dt.getFullYear(),dt.getMonth()+1,0).getDate()));return dateISO(dt);
 }
 let state;state=buildDemoState("en");
+const CB_KEY="committee-book:fixed-discount:v1",CB_SKIP=["toast","toastTimer","modal","selectedWinnerId"];
+(function(){const saved=window.CBPersist&&CBPersist.load(CB_KEY);if(saved&&Array.isArray(saved.members)&&Array.isArray(saved.cycles)&&Array.isArray(saved.payments)&&saved.chit){state=Object.assign(buildDemoState(saved.lang||"en"),saved,{toast:null,modal:null})}})();
 function getPayment(memberId,cycleNo){
   let p=state.payments.find(x=>x.memberId===memberId&&x.cycleNo===Number(cycleNo));
   if(!p){p={memberId:memberId,cycleNo:Number(cycleNo),status:"pending",amountPaidPaise:0,mode:"upi",paidDate:"",history:[]};state.payments.push(p);}
@@ -258,6 +260,7 @@ function modalView(){
     '</div>'+(existing&&existing.status==="removed"?'<div class="field-help">'+esc(t("removedNotice"))+'</div>':"")+'</div><div class="modal-footer"><button class="btn" data-action="close-modal">'+esc(t("cancel"))+'</button><button class="btn primary" data-action="save-member">'+esc(t("saveMember"))+'</button></div></section></div>';
 }
 function render(){
+  if(window.CBPersist)CBPersist.save(CB_KEY,state,CB_SKIP);
   document.title=t("pageTitle");document.documentElement.lang=state.lang==="te"?"te":"en";
   root.innerHTML=header()+'<div class="shell">'+navigation()+'<main class="main">'+pageContent()+'<footer class="footer">'+esc(t("footerText"))+'</footer></main></div>'+modalView()+'<div class="toast-area" id="toast-area">'+(state.toast?'<div class="toast '+(state.toast.error?"error":"")+'">'+esc(state.toast.message)+'</div>':"")+'</div>';
 }
@@ -396,7 +399,7 @@ root.addEventListener("click",function(e){
   if(el.hasAttribute("data-page")){state.page=el.getAttribute("data-page");state.modal=null;state.toast=null;render();return;}
   const action=el.getAttribute("data-action");
   if(action==="toggle-lang"){state.lang=state.lang==="en"?"te":"en";render();return;}
-  if(action==="reset-demo"){if(window.confirm(t("resetConfirm"))){const lang=state.lang;state=buildDemoState(lang);render();}return;}
+  if(action==="reset-demo"){if(window.confirm(t("resetConfirm"))){const lang=state.lang;if(window.CBPersist)CBPersist.clear(CB_KEY);state=buildDemoState(lang);render();}return;}
   if(action==="save-setup"){saveSetup();return;}
   if(action==="add-member"){if(activeCount()>=state.chit.membersCount){showToast(t("noMemberSlots"),true);return;}openMember(null);return;}
   if(action==="edit-member"){openMember(el.getAttribute("data-id"));return;}
