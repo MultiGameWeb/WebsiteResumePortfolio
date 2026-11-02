@@ -322,11 +322,11 @@ body.sc-home-page:after{content:"";position:fixed;inset:0;z-index:-1;pointer-eve
 .sitecraft-video-label{display:inline-block;margin-bottom:9px;color:#c4a7ff;font-size:9px;font-weight:900;letter-spacing:.16em}
 .sitecraft-video-copy h3,.sitecraft-video-copy h4{margin:0;color:#fbf9ff;font:800 clamp(19px,2vw,25px)/1.2 Sora,Inter,sans-serif;letter-spacing:-.035em}
 .sitecraft-video-copy p{margin:9px 0 0;color:var(--home-muted);font-size:12px;line-height:1.7}
-.sitecraft-botcraft-video{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);align-items:center;gap:clamp(20px,4vw,42px);max-width:900px;margin:28px auto 0;padding:16px;border:1px solid rgba(255,255,255,.13);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018))}
-.sitecraft-botcraft-video .sitecraft-video-frame{padding:8px;border-radius:17px}
-.sitecraft-botcraft-video .sitecraft-video-frame video{max-height:470px}
-.sitecraft-botcraft-video .sitecraft-video-copy{padding:18px}
-@media(max-width:700px){.sitecraft-video-grid{grid-template-columns:minmax(0,1fr);gap:16px}.sitecraft-video-frame{padding:10px}.sitecraft-video-frame video{max-height:540px}.sitecraft-video-copy{padding:18px 18px 21px}.sitecraft-botcraft-video{grid-template-columns:minmax(0,1fr);gap:12px;padding:10px}.sitecraft-botcraft-video .sitecraft-video-frame video{max-height:520px}.sitecraft-botcraft-video .sitecraft-video-copy{padding:12px 10px 14px}}
+.sitecraft-botcraft-video{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;max-width:1000px;margin:24px auto 30px;padding:14px;border:1px solid rgba(255,255,255,.13);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018));box-shadow:0 20px 55px rgba(0,0,0,.22)}
+.sitecraft-botcraft-video .sitecraft-video-frame{width:100%;padding:8px;border-radius:17px}
+.sitecraft-botcraft-video .sitecraft-video-frame video{display:block;width:100%;height:auto;max-height:560px;aspect-ratio:16/9;object-fit:contain;border-radius:12px;background:#050509}
+.sitecraft-botcraft-video .sitecraft-video-copy{padding:8px 12px 12px;text-align:center}
+@media(max-width:700px){.sitecraft-video-grid{grid-template-columns:minmax(0,1fr);gap:16px}.sitecraft-video-frame{padding:10px}.sitecraft-video-frame video{max-height:540px}.sitecraft-video-copy{padding:18px 18px 21px}.sitecraft-botcraft-video{gap:8px;margin:18px auto 24px;padding:9px}.sitecraft-botcraft-video .sitecraft-video-frame{padding:4px}.sitecraft-botcraft-video .sitecraft-video-frame video{max-height:360px;aspect-ratio:16/9}.sitecraft-botcraft-video .sitecraft-video-copy{padding:8px 8px 12px}}
 
 </style>
 </head>
@@ -439,6 +439,19 @@ body.sc-home-page:after{content:"";position:fixed;inset:0;z-index:-1;pointer-eve
    <div><span class="section-kicker">NEW · BOTCRAFT</span><h2 id="chatbot-home-title">An AI salesman<br>for every shop.</h2></div>
    <p>When you are busy with one customer, your AI salesman serves the next. Customers scan your QR poster and see your items, photos, prices and details in any language.</p>
   </div>
+  <div class="sitecraft-botcraft-video reveal">
+   <div class="sitecraft-video-frame">
+    <video controls playsinline preload="metadata" aria-label="BotCraft AI Shop Manager demonstration video">
+     <source src="./assets/videos/AI%20Shop%20Manager%20Reel.mp4" type="video/mp4">
+     Your browser does not support HTML video.
+    </video>
+   </div>
+   <div class="sitecraft-video-copy">
+    <span class="sitecraft-video-label">BOTCRAFT · AI CHATBOT</span>
+    <h3>Watch the AI Shop Manager in action.</h3>
+    <p>See how BotCraft can answer customer questions while the business owner updates products, prices and offers through chat or voice.</p>
+   </div>
+  </div>
   <div class="chatbot-service-card reveal">
    <div class="chatbot-service-poster">
     <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1100&q=85" width="1100" height="900" alt="Artificial intelligence and digital assistant concept" loading="lazy">
@@ -453,19 +466,7 @@ body.sc-home-page:after{content:"";position:fixed;inset:0;z-index:-1;pointer-eve
     <div class="chatbot-service-actions"><a class="btn-primary" href="ai-chatbots.html">Explore BotCraft <span aria-hidden="true">↗</span></a><a class="btn-ghost" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%27m%20interested%20in%20BotCraft%20for%20my%20shop." target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="btn-ghost" href="tel:+917981587505">Call</a></div>
    </div>
   </div>
-  <div class="sitecraft-botcraft-video reveal">
-   <div class="sitecraft-video-frame">
-    <video controls playsinline preload="metadata" aria-label="BotCraft AI Shop Manager demonstration video">
-     <source src="./assets/videos/AI%20Shop%20Manager%20Reel.mp4" type="video/mp4">
-     Your browser does not support HTML video.
-    </video>
-   </div>
-   <div class="sitecraft-video-copy">
-    <span class="sitecraft-video-label">BOTCRAFT · AI CHATBOT</span>
-    <h3>Watch the AI Shop Manager in action.</h3>
-    <p>See how BotCraft can answer customer questions while the business owner updates products, prices and offers through chat or voice.</p>
-   </div>
-  </div>
+
  </div>
 </section>
 <section class="sc-section" id="website-features" aria-labelledby="website-features-title" style="background:rgba(255,255,255,.018);border-block:1px solid var(--home-line)">
