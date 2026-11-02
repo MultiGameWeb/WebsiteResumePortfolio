@@ -4,8 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Shop assistant</title>
-  <meta name="description" content="Chat with the shop's AI assistant: items, prices, offers and timings in your language.">
+  <meta name="description" id="metaDescription" content="The shop's page: items, prices, timings, location and an AI assistant that answers in your language.">
   <meta name="theme-color" content="#0d0d0d">
+  <meta property="og:type" content="website">
+  <meta property="og:title" id="ogTitle" content="Shop assistant">
+  <meta property="og:description" id="ogDescription" content="Items, prices, timings and an AI assistant.">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./icon.svg">
@@ -13,66 +16,135 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=8">
+  <link rel="stylesheet" href="./styles.css?v=9">
+  <script src="../chatbot-builder/demo-api.js"></script>
 </head>
 <body>
   <div class="app">
-    <img class="hero" id="heroPhoto" alt="" hidden>
     <header class="shop-header" id="shopHeader">
+      <img class="hero" id="heroPhoto" alt="" hidden>
+      <div class="hero-shade"></div>
       <div class="shop-title">
         <p class="bot-name" id="botName"></p>
         <h1 id="shopName">Loading…</h1>
         <p id="shopMeta" class="shop-meta"></p>
+        <p class="open-chip" id="openChip" hidden></p>
       </div>
       <nav class="contact-row" id="contactRow" aria-label="Contact the shop"></nav>
     </header>
     <p class="offline-banner" id="offlineBanner" role="status" hidden>Offline — showing the shop's saved answers only.</p>
-    <nav class="tabs" id="tabs" role="tablist" hidden>
-      <button type="button" role="tab" data-tab="chat" aria-selected="true">Chat</button>
-      <button type="button" role="tab" data-tab="products" aria-selected="false">Products</button>
-      <button type="button" role="tab" data-tab="photos" aria-selected="false">Photos</button>
-      <button type="button" role="tab" data-tab="requests" aria-selected="false" hidden>Requests</button>
+    <nav class="sections-nav" id="sectionsNav" aria-label="Page sections" hidden>
+      <a href="#aboutSection" data-section="aboutSection">About</a>
+      <a href="#productsSection" data-section="productsSection">Items</a>
+      <a href="#photosSection" data-section="photosSection">Gallery</a>
+      <a href="#infoSection" data-section="infoSection">Info</a>
+      <a href="#requestsSection" data-section="requestsSection">Order</a>
     </nav>
-    <section class="panel products-panel" id="productsPanel" hidden>
-      <input class="product-search" id="productSearch" type="search" placeholder="Search products" aria-label="Search products">
-      <div class="product-grid" id="productGrid"></div>
-      <div class="cart-bar" id="cartBar" hidden>
-        <button type="button" id="openCart">🛒 <span id="cartSummary"></span> · View cart</button>
-      </div>
-    </section>
-    <section class="panel photos-panel" id="photosPanel" hidden>
-      <div class="photo-grid" id="photoGrid"></div>
-    </section>
-    <section class="panel requests-panel" id="requestsPanel" hidden>
-      <div class="request-buttons" id="requestButtons">
-        <button type="button" data-form="photo" hidden>📸 Send a photo</button>
-        <button type="button" data-form="preorder" hidden>⚡ Pre-order</button>
-        <button type="button" data-form="order" hidden>🔍 Order status</button>
-      </div>
-      <form class="request-form" id="photoForm" data-kind="photo" hidden>
-        <label>Photo <input type="file" name="photo" accept="image/*" required></label>
-        <label>Your question <textarea name="message" maxlength="600" rows="3" placeholder="For example: Which medicine for this? Can you repair this? Do you have this design?"></textarea></label>
-        <label>Your name <span class="optional">(optional)</span> <input name="name" maxlength="60" autocomplete="off"></label>
-        <button type="submit" class="request-submit">Send to the shop</button>
+
+    <main class="sections" id="sections">
+      <section class="block about-block" id="aboutSection" hidden>
+        <h2>About us</h2>
+        <div class="about-row">
+          <img class="owner-photo" id="ownerPhoto" alt="Owner" hidden>
+          <div>
+            <p class="about-text" id="aboutText"></p>
+            <p class="about-type" id="aboutType"></p>
+          </div>
+        </div>
+        <div class="faq" id="faqList"></div>
+      </section>
+
+      <section class="block products-panel" id="productsSection" hidden>
+        <h2>Items &amp; prices</h2>
+        <input class="product-search" id="productSearch" type="search" placeholder="Search items" aria-label="Search items">
+        <div class="product-grid" id="productGrid"></div>
+        <div class="cart-bar" id="cartBar" hidden>
+          <button type="button" id="openCart">🛒 <span id="cartSummary"></span> · View cart</button>
+        </div>
+      </section>
+
+      <section class="block photos-panel" id="photosSection" hidden>
+        <h2>Gallery</h2>
+        <div class="photo-grid" id="photoGrid"></div>
+      </section>
+
+      <section class="block info-block" id="infoSection" hidden>
+        <h2>Timings &amp; location</h2>
+        <dl class="info-list" id="infoList"></dl>
+        <div class="info-actions" id="infoActions"></div>
+        <iframe class="map-frame" id="mapFrame" title="Map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" hidden></iframe>
+      </section>
+
+      <section class="block requests-panel" id="requestsSection" hidden>
+        <h2>Order &amp; requests</h2>
+        <div class="request-buttons" id="requestButtons">
+          <button type="button" data-form="photo" hidden>📸 Send a photo</button>
+          <button type="button" data-form="preorder" hidden>⚡ Pre-order</button>
+          <button type="button" data-form="order" hidden>🔍 Order status</button>
+        </div>
+        <form class="request-form" id="photoForm" data-kind="photo" hidden>
+          <label>Photo <input type="file" name="photo" accept="image/*" required></label>
+          <label>Your question <textarea name="message" maxlength="600" rows="3" placeholder="For example: Which medicine for this? Can you repair this? Do you have this design?"></textarea></label>
+          <label>Your name <span class="optional">(optional)</span> <input name="name" maxlength="60" autocomplete="off"></label>
+          <button type="submit" class="request-submit">Send to the shop</button>
+        </form>
+        <form class="request-form" id="preorderForm" data-kind="preorder" hidden>
+          <label>What would you like? <textarea name="message" maxlength="600" rows="3" required placeholder="For example: 1 kg chicken curry cut, less fat"></textarea></label>
+          <label>When will you collect it? <input name="pickup" maxlength="80" placeholder="For example: today 8:30 am"></label>
+          <label>Your name <span class="optional">(optional)</span> <input name="name" maxlength="60" autocomplete="off"></label>
+          <button type="submit" class="request-submit">Send pre-order</button>
+        </form>
+        <form class="request-form" id="orderForm" hidden>
+          <label>Bill or order number <input name="code" maxlength="40" required autocomplete="off"></label>
+          <button type="submit" class="request-submit">Check status</button>
+          <p class="order-result" id="orderResult" role="status"></p>
+        </form>
+        <p class="request-note" id="requestNote" role="status"></p>
+        <button type="button" class="notify-button" id="notifyMe" hidden>🔔 Notify me when the shop replies</button>
+        <p class="request-privacy">The shop sees what you send here. Never share passwords, OTPs or bank details.</p>
+        <h3 class="my-title" id="myTitle" hidden>My requests</h3>
+        <div class="my-requests" id="myRequests"></div>
+      </section>
+
+      <footer class="page-footer">
+        <button type="button" class="share-button" id="shareButton">Share this page</button>
+        <p>Made with BotCraft by SiteCraft</p>
+      </footer>
+    </main>
+
+    <div class="fab-row" id="fabRow" hidden>
+      <button type="button" class="fab fab-mic" id="micFab" aria-label="Talk to the assistant" title="Talk" hidden>🎙️</button>
+      <button type="button" class="fab fab-chat" id="chatFab"><span class="fab-icon">💬</span> <span id="chatFabLabel">Ask the assistant</span></button>
+    </div>
+
+    <section class="chat-sheet" id="chatSheet" role="dialog" aria-label="Chat with the assistant" hidden>
+      <header class="chat-head">
+        <strong id="chatTitle">Assistant</strong>
+        <button type="button" class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+      </header>
+      <main class="chat" id="chat" aria-live="polite"></main>
+      <section class="talk-panel" id="talkPanel" role="region" aria-label="Talk mode" hidden>
+        <div class="talk-head">
+          <strong>🎙️ Talk mode</strong>
+          <select id="talkLang" aria-label="Language you speak"></select>
+          <button type="button" class="talk-end" id="talkEnd">End</button>
+        </div>
+        <div class="talk-stage">
+          <span class="talk-ring talk-ring-1"></span><span class="talk-ring talk-ring-2"></span>
+          <button type="button" class="talk-orb" id="talkOrb" aria-label="Tap to talk">🎙️</button>
+        </div>
+        <p class="talk-status" id="talkStatus" role="status">Tap to talk</p>
+        <p class="talk-heard" id="talkHeard"></p>
+        <p class="talk-said" id="talkSaid"></p>
+        <p class="talk-note" id="talkNote">Your phone turns your voice into text. Never say passwords, OTPs or bank details.</p>
+      </section>
+      <form class="composer" id="composer" autocomplete="off">
+        <input id="input" type="text" maxlength="1000" placeholder="Ask about items, prices, offers…" aria-label="Your question">
+        <button id="talk" type="button" aria-label="Talk to the assistant" title="Talk" hidden>🎙️</button>
+        <button id="send" type="submit" aria-label="Send">➤</button>
       </form>
-      <form class="request-form" id="preorderForm" data-kind="preorder" hidden>
-        <label>What would you like? <textarea name="message" maxlength="600" rows="3" required placeholder="For example: 1 kg chicken curry cut, less fat"></textarea></label>
-        <label>When will you collect it? <input name="pickup" maxlength="80" placeholder="For example: today 8:30 am"></label>
-        <label>Your name <span class="optional">(optional)</span> <input name="name" maxlength="60" autocomplete="off"></label>
-        <button type="submit" class="request-submit">Send pre-order</button>
-      </form>
-      <form class="request-form" id="orderForm" hidden>
-        <label>Bill or order number <input name="code" maxlength="40" required autocomplete="off"></label>
-        <button type="submit" class="request-submit">Check status</button>
-        <p class="order-result" id="orderResult" role="status"></p>
-      </form>
-      <p class="request-note" id="requestNote" role="status"></p>
-      <button type="button" class="notify-button" id="notifyMe" hidden>🔔 Notify me when the shop replies</button>
-      <p class="request-privacy">The shop sees what you send here. Never share passwords, OTPs or bank details.</p>
-      <h2 class="my-title" id="myTitle" hidden>My requests</h2>
-      <div class="my-requests" id="myRequests"></div>
     </section>
-    <main class="chat" id="chat" aria-live="polite"></main>
+
     <dialog class="product-sheet" id="productSheet" aria-labelledby="sheetName">
       <img id="sheetPhoto" alt="">
       <h2 id="sheetName"></h2>
@@ -96,23 +168,7 @@
         <button type="button" class="close-sheet" id="closeCart">Close</button>
       </div>
     </dialog>
-    <section class="talk-panel" id="talkPanel" role="dialog" aria-label="Talk mode" hidden>
-      <div class="talk-head">
-        <strong>🎙️ Talk mode</strong>
-        <select id="talkLang" aria-label="Language you speak"></select>
-        <button type="button" class="talk-end" id="talkEnd">End</button>
-      </div>
-      <button type="button" class="talk-orb" id="talkOrb" aria-label="Tap to talk">🎙️</button>
-      <p class="talk-status" id="talkStatus" role="status">Tap to talk</p>
-      <p class="talk-heard" id="talkHeard"></p>
-      <p class="talk-note">Your phone turns your voice into text. Never say passwords, OTPs or bank details.</p>
-    </section>
-    <form class="composer" id="composer" autocomplete="off">
-      <input id="input" type="text" maxlength="1000" placeholder="Ask about items, prices, offers…" aria-label="Your question">
-      <button id="talk" type="button" aria-label="Talk to the assistant" title="Talk" hidden>🎙️</button>
-      <button id="send" type="submit" aria-label="Send">➤</button>
-    </form>
   </div>
-  <script type="module" src="./app.js?v=8"></script>
+  <script type="module" src="./app.js?v=9"></script>
 </body>
 </html>
