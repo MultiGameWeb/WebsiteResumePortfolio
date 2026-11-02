@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101821">
+<title>Ludo vs Computer | SiteCraft Games</title>
+<style>
+:root{color-scheme:dark;--bg:#101821;--panel:#1a2631;--line:#334556;--text:#f5f8ff;--muted:#a9b7c5;--red:#e44759;--yellow:#f4c342}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;background:radial-gradient(ellipse at 50% -12%,#294051 0,transparent 52%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overscroll-behavior:none}
+button{font:inherit;touch-action:manipulation}
+#app{height:100dvh;width:100%;max-width:940px;margin:auto;padding:clamp(6px,1.3vh,13px) clamp(8px,2vw,17px);display:flex;flex-direction:column;align-items:center;gap:clamp(4px,.8vh,8px)}
+header{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.brand{display:flex;align-items:center;gap:9px;min-width:0}
+.logo{width:37px;height:37px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#cf5261,#edaa46);font-size:22px}
+h1{margin:0;font-size:clamp(18px,3.3vw,26px);letter-spacing:-.04em}
+.sub{margin-top:2px;color:var(--muted);font-size:9px}
+.btn,.diff{min-height:32px;padding:0 11px;border:1px solid var(--line);border-radius:10px;background:#ffffff09;color:#eaf2ff;font-size:10px;font-weight:850;cursor:pointer}
+.btn.primary{border-color:transparent;background:linear-gradient(110deg,#da475b,#e49a3d);color:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.difficulty{display:flex;align-items:center;justify-content:center;gap:6px}
+.difficulty span{color:var(--muted);font-size:9px;font-weight:850;letter-spacing:.08em}
+.diff{min-height:27px;padding:0 12px;border-radius:999px}
+.diff[aria-pressed=true]{border-color:#eac15e;background:#eac15e20;color:#ffe5a0}
+.scorebar{width:min(100%,600px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+.player{display:flex;align-items:center;gap:7px;padding:5px 9px;border:1px solid var(--line);border-radius:11px;background:#ffffff08}
+.player.cpu{justify-content:flex-end;text-align:right}
+.dot{width:15px;height:15px;border-radius:50%;background:#e44759;box-shadow:0 0 0 3px #e4475927}
+.dot.yellow{background:#f4c342;box-shadow:0 0 0 3px #f4c34227}
+.player b{display:block;font-size:10px}.player small{display:block;color:var(--muted);font-size:8px;margin-top:2px}
+.score{font-size:15px;font-weight:900;color:#f4d88e;font-variant-numeric:tabular-nums}
+.status{width:100%;min-height:17px;color:#dbe6f3;text-align:center;font-size:10px;font-weight:800}
+.board-wrap{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
+#board{display:block;width:min(94vw,min(620px,calc(100dvh - 190px)));height:auto;max-height:100%;aspect-ratio:1;border-radius:13px;box-shadow:0 16px 45px #0008;touch-action:manipulation}
+.controls{width:100%;display:flex;align-items:center;justify-content:center;gap:10px}
+.dice{width:48px;height:42px;display:grid;place-items:center;border:1px solid #73859a66;border-radius:13px;background:#f8f1dc;color:#253344;font-size:25px;font-weight:950;box-shadow:0 4px 12px #0004}
+.hint{min-height:15px;color:#96a8b8;font-size:9px;text-align:center}
+#board .token{cursor:pointer;transition:filter .12s}
+#board .token.available circle:first-child{stroke:#fff5a8;stroke-width:4}
+#board .token.selected circle:first-child{stroke:#fff;stroke-width:5;filter:drop-shadow(0 0 5px #fff)}
+#board .token text{pointer-events:none;font-family:Inter,system-ui,sans-serif;font-size:13px;font-weight:950;fill:#151821}
+@media(max-height:600px){#app{gap:3px;padding:4px 7px}.logo{width:30px;height:30px}.difficulty{gap:4px}.diff{min-height:24px;padding:0 9px}.player{padding:3px 6px}.status{min-height:14px;font-size:9px}#board{width:min(91vw,min(500px,calc(100dvh - 155px)))}.btn{min-height:28px}.dice{height:32px;width:39px;font-size:21px}}
+@media(max-width:370px){.sub{display:none}.player{gap:5px}.player b{font-size:9px}.difficulty span{display:none}}
+</style>
+</head>
+<body>
+<div id="app">
+ <header><div class="brand"><div class="logo" aria-hidden="true">🎲</div><div><h1>Ludo vs Computer</h1><div class="sub">Race all four tokens to the centre</div></div></div><button class="btn" id="newBtn" type="button">↻ New Game</button></header>
+ <div class="difficulty"><span>COMPUTER</span><button class="diff" data-level="easy" aria-pressed="false" type="button">Easy</button><button class="diff" data-level="medium" aria-pressed="true" type="button">Medium</button><button class="diff" data-level="hard" aria-pressed="false" type="button">Hard</button></div>
+ <section class="scorebar"><div class="player"><span class="dot"></span><div><b>You · Red</b><small id="redHome">0 / 4 home</small></div></div><div class="score" id="score">0 – 0</div><div class="player cpu"><div><b>Computer · Yellow</b><small id="yellowHome">0 / 4 home</small></div><span class="dot yellow"></span></div></section>
+ <div class="status" id="status" aria-live="polite">Your turn. Roll a 6 to bring a token out.</div>
+ <main class="board-wrap"><svg id="board" viewBox="0 0 600 600" role="img" aria-label="Ludo board. You are red at bottom-left; computer is yellow at top-right."></svg></main>
+ <div class="controls"><div class="dice" id="dice" aria-label="Dice result">–</div><button class="btn primary" id="rollBtn" type="button">🎲 Roll Dice</button></div>
+ <div class="hint" id="hint">Roll the dice, then choose one of your highlighted tokens.</div>
+</div>
+<script>
+(function(){
+'use strict';
+const NS='http://www.w3.org/2000/svg';
+const path=[[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0]];
+const safe=new Set([0,8,13,21,26,34,39,47]);
+const homeLane={red:[[7,1],[7,2],[7,3],[7,4],[7,5]],yellow:[[7,13],[7,12],[7,11],[7,10],[7,9]]};
+const yard={red:[[9,9],[9,12],[12,9],[12,12]],yellow:[[2,2],[2,5],[5,2],[5,5]]};
+const sideInfo={red:{start:0,color:'#e44759',dark:'#9c263b',light:'#ff9ba4'},yellow:{start:26,color:'#f4c342',dark:'#ad7915',light:'#ffe59a'}};
+const board=document.getElementById('board'),statusEl=document.getElementById('status'),rollBtn=document.getElementById('rollBtn'),diceEl=document.getElementById('dice');
+let tokens,turn,dice,legal,phase,difficulty='medium',sixStreak,selected=-1,timer=0,finished=false,lastAction='';
+function el(name,attrs={},parent=board){const n=document.createElementNS(NS,name);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));parent.appendChild(n);return n;}
+function rectCell(r,c,fill,stroke='#c9bca5'){el('rect',{x:c*40+1,y:r*40+1,width:38,height:38,rx:4,fill,stroke,'stroke-width':1});}
+function base(x,y,color){el('rect',{x:x*40,y:y*40,width:240,height:240,rx:17,fill:color});el('rect',{x:x*40+28,y:y*40+28,width:184,height:184,rx:19,fill:'#f4f0e6',stroke:'#fff','stroke-width':3});}
+function centre(){
+ el('rect',{x:240,y:240,width:120,height:120,fill:'#f5efe1',stroke:'#d9ccb8','stroke-width':2});
+ el('path',{d:'M240 240H360L300 300Z',fill:sideInfo.yellow.color});
+ el('path',{d:'M360 240V360L300 300Z',fill:'#5e9bd3'});
+ el('path',{d:'M360 360H240L300 300Z',fill:sideInfo.red.color});
+ el('path',{d:'M240 360V240L300 300Z',fill:'#47a978'});
+ el('circle',{cx:300,cy:300,r:17,fill:'#fff3d2',stroke:'#86684c','stroke-width':2});
+}
+function drawBoard(){
+ board.replaceChildren();
+ el('rect',{x:0,y:0,width:600,height:600,rx:16,fill:'#e9e3d8'});
+ base(0,0,'#4c9a77');base(9,0,sideInfo.yellow.color);base(0,9,sideInfo.red.color);base(9,9,'#5796ca');
+ // Yard slots
+ for(const side of ['yellow','red'])yard[side].forEach(([r,c])=>el('circle',{cx:c*40+20,cy:r*40+20,r:13,fill:'#fff',stroke:sideInfo[side].color,'stroke-width':4}));
+ // Track
+ path.forEach(([r,c],i)=>{
+  let fill='#f6f1e8';if(i===0)fill='#f7a3aa';if(i===26)fill='#ffe08a';if(safe.has(i))fill='#fff8d9';
+  rectCell(r,c,fill);
+  if(safe.has(i)){el('path',{d:'M'+(c*40+20)+' '+(r*40+10)+'l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1Z',fill:'#a88b58',opacity:.7});}
+ });
+ // Home lanes
+ homeLane.red.forEach(([r,c],i)=>rectCell(r,c,i===4?'#f5a0a7':'#f8c9ce'));
+ homeLane.yellow.forEach(([r,c],i)=>rectCell(r,c,i===4?'#ffdf83':'#ffedbd'));
+ centre();
+ // light board grid border
+ el('rect',{x:1,y:1,width:598,height:598,rx:15,fill:'none',stroke:'#f4f0e8','stroke-width':3});
+ drawTokens();
+}
+function getPos(side,idx){
+ const t=tokens[side][idx];
+ if(t.progress<0)return {x:yard[side][idx][1]*40+20,y:yard[side][idx][0]*40+20,home:true};
+ if(t.progress>=57)return {x:300+(idx-1.5)*8,y:300+(side==='red'?12:-12),done:true};
+ if(t.progress>=52){const [r,c]=homeLane[side][t.progress-52];return {x:c*40+20,y:r*40+20,lane:true};}
+ const p=path[(sideInfo[side].start+t.progress)%52];return {x:p[1]*40+20,y:p[0]*40+20};
+}
+function drawTokens(){
+ const all=[];
+ for(const side of ['yellow','red'])tokens[side].forEach((t,i)=>{if(t.progress<57)all.push({side,i,...getPos(side,i)});});
+ const groups=new Map();for(const a of all){const k=Math.round(a.x)+','+Math.round(a.y);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(a);}
+ for(const list of groups.values())list.forEach((a,j)=>{
+  const offsets=list.length>1?[[0,0],[-7,-7],[7,7],[-7,7],[7,-7]]:[[0,0]];
+  const [ox,oy]=offsets[j%offsets.length],x=a.x+ox,y=a.y+oy,available=phase==='choose'&&turn==='red'&&legal.includes(a.i)&&a.side==='red';
+  const g=el('g',{class:'token'+(available?' available':'')+(selected===a.i&&a.side==='red'?' selected':''),'data-side':a.side,'data-token':a.i});
+  el('circle',{cx:x,cy:y,r:14,fill:sideInfo[a.side].color,stroke:sideInfo[a.side].dark,'stroke-width':3},g);
+  el('circle',{cx:x-4,cy:y-4,r:4,fill:sideInfo[a.side].light,opacity:.8},g);
+  el('text',{x,y:y+4,'text-anchor':'middle'},g).textContent=String(a.i+1);
+  if(available){el('circle',{cx:x,cy:y,r:18,fill:'none',stroke:'#fff1a8','stroke-width':2,'stroke-dasharray':'3 3'},g);}
+ });
+}
+function setup(){
+ if(timer)clearTimeout(timer);timer=0;
+ tokens={red:Array.from({length:4},()=>({progress:-1})),yellow:Array.from({length:4},()=>({progress:-1}))};
+ turn='red';dice=0;legal=[];phase='roll';sixStreak=0;selected=-1;finished=false;lastAction='';
+ diceEl.textContent='–';statusEl.textContent='Your turn. Roll a 6 to bring a token out.';rollBtn.disabled=false;rollBtn.textContent='🎲 Roll Dice';
+ document.getElementById('hint').textContent='Roll the dice, then choose one of your highlighted tokens.';
+ updateHud();drawBoard();
+}
+function updateHud(){
+ document.getElementById('redHome').textContent=tokens.red.filter(t=>t.progress>=57).length+' / 4 home';
+ document.getElementById('yellowHome').textContent=tokens.yellow.filter(t=>t.progress>=57).length+' / 4 home';
+ document.getElementById('score').textContent=tokens.red.filter(t=>t.progress>=57).length+' – '+tokens.yellow.filter(t=>t.progress>=57).length;
+ document.querySelectorAll('.diff').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===difficulty)));
+}
+function legalMoves(side,d){return tokens[side].map((t,i)=>({i,progress:t.progress})).filter(t=>t.progress<57&&((t.progress===-1&&d===6)||(t.progress>=0&&t.progress+d<=57))).map(t=>t.i);}
+function globalPath(side,progress){return (sideInfo[side].start+progress)%52;}
+function safeLanding(side,progress){return progress>=0&&progress<52&&safe.has(globalPath(side,progress));}
+function moveToken(side,i){
+ const t=tokens[side][i],old=t.progress;
+ if(old===-1)t.progress=0;else t.progress+=dice;
+ let capture=false,home=false;
+ if(t.progress<52&&!safeLanding(side,t.progress)){
+  const sq=globalPath(side,t.progress),enemy=side==='red'?'yellow':'red';
+  tokens[enemy].forEach(et=>{if(et.progress>=0&&et.progress<52&&globalPath(enemy,et.progress)===sq){et.progress=-1;capture=true;}});
+ }
+ if(t.progress===57)home=true;
+ lastAction=(side==='red'?'You':'Computer')+' moved token '+(i+1)+(capture?' · captured a token':'')+(home?' · reached home':'');
+ if(side==='red')updateHud();else updateHud();
+ drawBoard();
+ if(tokens[side].every(x=>x.progress>=57)){
+  finished=true;phase='over';rollBtn.disabled=true;statusEl.textContent=side==='red'?'🏆 You win! All four red tokens reached home.':'Computer wins. All four yellow tokens reached home.';document.getElementById('hint').textContent=lastAction;return;
+ }
+ const bonus=dice===6||capture||home;
+ if(bonus){
+  if(dice===6)sixStreak++;else sixStreak=0;
+  if(sixStreak>=3){sixStreak=0;turn=side==='red'?'yellow':'red';phase='roll';dice=0;legal=[];selected=-1;drawBoard();nextTurn('Three sixes in a row — turn forfeited.');return;}
+  phase='roll';dice=0;legal=[];selected=-1;
+  statusEl.textContent=(side==='red'?'You':'Computer')+' get another turn'+(capture?' after the capture':home?' for reaching home':' after rolling a 6')+'.';
+  rollBtn.disabled=side==='yellow';rollBtn.textContent=side==='red'?'🎲 Roll Again':'Computer rolling…';
+  document.getElementById('hint').textContent=lastAction;
+  if(side==='yellow')timer=setTimeout(computerRoll,650);
+ }else{
+  sixStreak=0;turn=side==='red'?'yellow':'red';phase='roll';dice=0;legal=[];selected=-1;nextTurn(lastAction);
+ }
+}
+function nextTurn(note){
+ drawBoard();rollBtn.disabled=turn==='yellow';rollBtn.textContent=turn==='red'?'🎲 Roll Dice':'Computer rolling…';
+ statusEl.textContent=note|| (turn==='red'?'Your turn. Roll the dice.':'Computer turn.');
+ document.getElementById('hint').textContent=lastAction||'Roll a 6 to leave your yard. Exact roll needed to finish.';
+ if(turn==='yellow')timer=setTimeout(computerRoll,650);
+}
+function roll(side){
+ if(phase!=='roll'||turn!==side||finished)return;
+ dice=1+Math.floor(Math.random()*6);diceEl.textContent=String(dice);legal=legalMoves(side,dice);
+ if(side==='red')rollBtn.disabled=true;
+ if(!legal.length){
+  statusEl.textContent=(side==='red'?'You':'Computer')+' rolled '+dice+' — no legal move.';
+  document.getElementById('hint').textContent='No token can move with this roll.';
+  if(dice===6){sixStreak++;if(sixStreak>=3){sixStreak=0;turn=side==='red'?'yellow':'red';phase='roll';dice=0;legal=[];nextTurn('Three sixes in a row — turn forfeited.');return;}}
+  else sixStreak=0;
+  timer=setTimeout(()=>{turn=side==='red'?'yellow':'red';dice=0;legal=[];phase='roll';nextTurn();},850);return;
+ }
+ phase='choose';
+ if(side==='red'){
+  statusEl.textContent='You rolled '+dice+'. Choose a highlighted red token.';
+  rollBtn.textContent='Choose Token';
+  document.getElementById('hint').textContent=legal.map(i=>'Token '+(i+1)).join(' · ')+' can move.';
+  drawBoard();
+ }else{
+  statusEl.textContent='Computer rolled '+dice+'…';
+  timer=setTimeout(computerChoose,500);
+ }
+}
+function aiScore(i,side){
+ const t=tokens[side][i],newP=t.progress<0?0:t.progress+dice;
+ let score=0;
+ if(t.progress<0)score=side==='yellow'?16:12;
+ else score=newP*1.4;
+ if(newP>=57)score+=difficulty==='hard'?1000:400;
+ if(newP<52&&!safeLanding(side,newP)){
+  const sq=globalPath(side,newP),enemy=side==='red'?'yellow':'red';
+  const captures=tokens[enemy].filter(et=>et.progress>=0&&et.progress<52&&globalPath(enemy,et.progress)===sq).length;
+  score+=captures*(difficulty==='hard'?220:difficulty==='medium'?130:45);
+ }
+ if(safeLanding(side,newP))score+=difficulty==='hard'?48:24;
+ const opponents=side==='red'?'yellow':'red';
+ if(newP>=0&&newP<52){
+  const mySq=globalPath(side,newP);
+  const threats=tokens[opponents].filter(et=>et.progress>=0&&et.progress<52&&((globalPath(opponents,et.progress)+1)%52===mySq||(globalPath(opponents,et.progress)+2)%52===mySq||(globalPath(opponents,et.progress)+3)%52===mySq));
+  if(threats.length)score-=difficulty==='hard'?22:7;
+ }
+ return score+(Math.random()*.3);
+}
+function computerChoose(){
+ if(turn!=='yellow'||phase!=='choose'||finished)return;
+ let chosen;
+ if(difficulty==='easy')chosen=legal[Math.floor(Math.random()*legal.length)];
+ else chosen=legal.slice().sort((a,b)=>aiScore(b,'yellow')-aiScore(a,'yellow'))[0];
+ moveToken('yellow',chosen);
+}
+function computerRoll(){if(!finished&&turn==='yellow'&&phase==='roll')roll('yellow');}
+function handleBoardClick(e){
+ const g=e.target.closest('[data-token]');if(!g||turn!=='red'||phase!=='choose')return;
+ const side=g.getAttribute('data-side'),i=Number(g.getAttribute('data-token'));
+ if(side!=='red'||!legal.includes(i))return;
+ moveToken('red',i);
+}
+board.addEventListener('click',handleBoardClick);
+rollBtn.addEventListener('click',()=>roll('red'));
+document.getElementById('newBtn').addEventListener('click',setup);
+document.querySelectorAll('.diff').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.level;updateHud();statusEl.textContent='Computer difficulty: '+difficulty.toUpperCase()+'.';}));
+setup();
+})();
+</script>
+</body>
+</html>
