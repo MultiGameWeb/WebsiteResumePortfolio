@@ -74,7 +74,8 @@ export function publicProfile(facts, typeName, photos = []) {
     weeklyHoliday: usable(facts.weekly_holiday) ? String(facts.weekly_holiday) : "",
     call,
     whatsapp: phoneDigits(facts.whatsapp_number) || call,
-    mapLink: safeLink(facts.map_link)
+    mapLink: safeLink(facts.map_link),
+    about: usable(facts.about) ? String(facts.about) : ""
   };
 }
 
