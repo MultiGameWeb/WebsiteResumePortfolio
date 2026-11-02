@@ -73,6 +73,8 @@
     '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 190px);min-height:360px}}',
     '.sc-pg-section .sc-pg-arrow-escape-shell{overflow:hidden;border:1px solid rgba(140,224,255,.35);border-radius:14px;background:#1e3c72}',
     '.sc-pg-section .sc-pg-arrow-escape-frame{display:block;width:100%;height:clamp(700px,88vh,900px);min-height:660px;border:0;background:#1e3c72}',
+    '.sc-pg-section .sc-pg-daily-connections-shell{overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#fff}',
+    '.sc-pg-section .sc-pg-daily-connections-frame{display:block;width:100%;height:clamp(760px,92vh,1050px);min-height:720px;border:0;background:#fff}',
     '@media(max-width:620px){.sc-pg-section .sc-pg-arrow-escape-frame{height:800px;min-height:760px}}',
     '.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame{height:calc(100vh - 175px);min-height:520px}',
     '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame{height:calc(100vh - 190px);min-height:420px}}',
@@ -145,6 +147,7 @@
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="typing">⌨️ Typing Test</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sudoku">🔢 Sudoku</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="arrow-escape">🧭 Arrow Escape</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="daily-connections">🔗 Daily Connections · తెలుగు / English</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="math">➗ Math Challenge</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="connect">🔴 Connect Four</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sky-ball">🌤️ 3D Sky Ball</button>' +
@@ -156,6 +159,7 @@
     const preferredOrder = [
       '2048','snake','sky-ball','math','starfighter','word','sudoku',
       'arrow-escape',
+      'daily-connections',
       'memory','brick-breaker','blocks','typing','connect','ttt','rps'
     ];
     preferredOrder.forEach(key => {
@@ -206,6 +210,7 @@
       if (id === 'starfighter') paintStarfighter();
       if (id === 'brick-breaker') paintBrickBreaker();
       if (id === 'arrow-escape') paintArrowEscape();
+      if (id === 'daily-connections') paintDailyConnections();
     }
     function paintSkyBall() {
       view.innerHTML = commonHead('3D SKY BALL RUNNER · 3D ARCADE', 'Roll through the skyway. Dodge obstacles and collect diamonds.', '↻ Restart run') +
@@ -226,6 +231,11 @@
       view.innerHTML = commonHead('ARROW ESCAPE PUZZLE · LOGIC GAME', 'Clear the grid. Let every arrow escape.', '↻ Restart level') +
         '<p class="sc-extra-status">Tap arrows only when their pointing path to the board edge is clear. A blocked arrow costs one heart. Use Hint and Bomb tools wisely, collect coins and clear all 15 levels. Your progress is saved on this browser.</p>' +
         '<div class="sc-pg-arrow-escape-shell"><iframe class="sc-pg-arrow-escape-frame" data-arrow-escape-frame src="games/arrow-escape-puzzle.html" title="Arrow Escape Puzzle" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintDailyConnections() {
+      view.innerHTML = commonHead('DAILY CONNECTIONS · WORD LOGIC', 'Find four groups of four connected words.', '↻ Reload game') +
+        '<p class="sc-extra-status">A daily word-connection challenge in Telugu and English. Select four related words, submit your guess and solve all four groups. Your daily progress is saved in this browser.</p>' +
+        '<div class="sc-pg-daily-connections-shell"><iframe class="sc-pg-daily-connections-frame" data-daily-connections-frame src="games/daily-connections.html" title="Daily Connections Telugu and English game" loading="lazy" allow="clipboard-write" allow="fullscreen" allowfullscreen></iframe></div>';
     }
     tabs.querySelectorAll('[data-extra-tab]').forEach(tab => {
       tab.addEventListener('click', () => start(tab.dataset.extraTab));
@@ -1053,6 +1063,10 @@
             try{localStorage.removeItem('ae_state');}catch(_){}
             frame.src=frame.getAttribute('src');
           }
+        }
+        if(active==='daily-connections'){
+          const frame=$(view,'[data-daily-connections-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
         }
         return;
       }
