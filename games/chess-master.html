@@ -75,7 +75,7 @@ let state,history=[],moveLog=[],selected=-1,pendingPromo=null,difficulty='medium
 const idx=(r,c)=>r*8+c, row=i=>i>>3, col=i=>i&7, sq=i=>'abcdefgh'[col(i)]+(8-row(i));
 function initial(){return {b:'rnbqkbnrpppppppp................................PPPPPPPPRNBQKBNR'.split(''),turn:1,castle:'KQkq',ep:-1,half:0,full:1};}
 function clone(s){return {b:s.b.slice(),turn:s.turn,castle:s.castle,ep:s.ep,half:s.half,full:s.full};}
-function side(p){return !p?0:(p===p.toUpperCase()?1:-1);}
+function side(p){return !p||p==='.'?0:(p===p.toUpperCase()?1:-1);}
 const inside=(r,c)=>r>=0&&r<8&&c>=0&&c<8;
 function kingSquare(s,color){return s.b.indexOf(color===1?'K':'k');}
 function attacked(s,target,by){
