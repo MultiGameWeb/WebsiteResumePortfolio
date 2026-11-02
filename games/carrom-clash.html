@@ -213,7 +213,8 @@ function finishShot(){
  if(leftWhite===0||leftBlack===0){
    phase='over';drag=null;
    if(leftBlack===0&&leftWhite===0)statusEl.textContent='All coins cleared — '+(playerScore>=cpuScore?'You win!':'Computer wins!');
-   else statusEl.textContent=leftWhite===0?'Computer wins this round.':'You win! All white coins cleared.';
+   else if(leftWhite===0)statusEl.textContent='You win! All white coins cleared.';
+   else statusEl.textContent='Computer wins this round. All black coins cleared.';
    updateHud();draw();return;
  }
  if(events.foul){turn=turn==='player'?'computer':'player';}
