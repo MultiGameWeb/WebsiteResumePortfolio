@@ -41,6 +41,9 @@
     '.sc-pg-section .sc-extra-sudoku-cell.box-right{border-right:2px solid rgba(196,181,253,.75)}.sc-pg-section .sc-extra-sudoku-cell.box-bottom{border-bottom:2px solid rgba(196,181,253,.75)}',
     '.sc-pg-section .sc-extra-sudoku-cell.given{color:#aaa1bd;font-weight:900}.sc-pg-section .sc-extra-sudoku-cell.selected{background:rgba(124,58,237,.42)}.sc-pg-section .sc-extra-sudoku-cell.related{background:rgba(255,255,255,.085)}.sc-pg-section .sc-extra-sudoku-cell.conflict{background:rgba(239,68,68,.28);color:#fecaca}',
     '.sc-pg-section .sc-extra-numberpad{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:12px auto}.sc-pg-section .sc-extra-numberpad button{width:38px;height:39px;border:1px solid rgba(255,255,255,.15);border-radius:9px;background:rgba(255,255,255,.05);color:#fff;font-weight:800;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-mode{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:0 auto 14px;color:#c9c1d7;font-size:11px}',
+    '.sc-pg-section .sc-extra-math-mode button{min-height:35px;padding:0 13px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.05);color:#ddd5e9;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-mode button[aria-pressed=true]{border-color:rgba(196,181,253,.75);background:rgba(124,58,237,.28);color:#fff;box-shadow:0 0 0 2px rgba(124,58,237,.1)}',
     '.sc-pg-section .sc-extra-math-card{width:min(100%,650px);margin:12px auto;padding:clamp(16px,3vw,24px);border:1px solid rgba(196,181,253,.25);border-radius:16px;background:linear-gradient(145deg,rgba(124,58,237,.13),rgba(255,255,255,.025));text-align:center}',
     '.sc-pg-section .sc-extra-math-expression{margin:16px 0 18px;color:#fff;font-size:clamp(30px,7vw,48px);font-weight:900;letter-spacing:.02em;font-variant-numeric:tabular-nums}',
     '.sc-pg-section .sc-extra-math-answer{display:block;width:min(100%,260px);height:54px;margin:0 auto 10px;padding:0 14px;border:1px solid rgba(196,181,253,.4);border-radius:12px;background:#171323;color:#fff;font:800 22px Inter,system-ui,sans-serif;text-align:center;outline:none}',
@@ -163,6 +166,8 @@
     let active = '';
     let word = null, puzzle2048 = null, blocks = null, typing = null, sudoku = null, math = null, connect = null;
     let typingTimer = 0;
+    let mathSubmitTimer = 0;
+    let mathSubmitting = false;
 
     function commonHead(label, title, resetText) {
       return '<div class="sc-extra-gamehead"><div><small>' + label + '</small><h3>' + title + '</h3></div>' +
@@ -173,6 +178,9 @@
       active = id;
       clearInterval(typingTimer);
       typingTimer = 0;
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      mathSubmitting = false;
       view.dataset.extraGameActive = 'true';
       section.querySelectorAll('.sc-pg-tab').forEach(tab => {
         tab.setAttribute('aria-selected', String(tab.dataset.extraTab === id));
@@ -744,24 +752,45 @@
       n=mathRandom(3,5);b=n===3?7:n===4?6:5;return mathQuestion(n+'^'+b,Math.pow(n,b));
     }
     function initMath() {
-      math={correct:0,total:0,mistakes:0,score:0,over:false,question:buildMathQuestion(0,0),feedback:'Start with the answer. Only type the number.'};
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      mathSubmitting = false;
+      math={correct:0,total:0,mistakes:0,score:0,over:false,autoSubmit:safeGet('sitecraft-math-submit-mode','manual')==='auto',question:buildMathQuestion(0,0),feedback:'Start with the answer. Only type the number.'};
       paintMath(math.feedback);
+    }
+    function queueMathAutoSubmit() {
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      if(!math||math.over||!math.autoSubmit||active!=='math')return;
+      const input=$(view,'[data-math-answer]');
+      if(!input||input.value.trim()==='')return;
+      const answer=Number(input.value);
+      if(!Number.isFinite(answer)||!Number.isInteger(answer))return;
+      const status=$(view,'[data-math-status]');
+      if(status)status.textContent='Auto Submit is on. Checking in a moment…';
+      mathSubmitTimer=window.setTimeout(()=>{
+        mathSubmitTimer=0;
+        if(active==='math'&&math&&math.autoSubmit)submitMath();
+      },900);
     }
     function paintMath(message) {
       const level=Math.floor(math.correct/5)+1;
       const lives=Math.max(0,3-math.mistakes);
       const title=math.over?'Three mistakes. Game over!':'Solve the question. Level '+level;
+      const auto=!!math.autoSubmit;
       view.innerHTML=commonHead('MATH CHALLENGE · LEVEL '+level,title,'↻ Restart game')+
         '<p class="sc-extra-status sc-extra-center" data-math-status>'+esc(message||'Only type your numerical answer.')+'</p>'+
         '<div class="sc-extra-stats"><span>Correct<strong>'+math.correct+'</strong></span><span>Level<strong>'+level+'</strong></span><span>Score<strong>'+math.score+'</strong></span><span>Best<strong>'+best('math',math.score)+'</strong></span></div>'+
         '<div class="sc-extra-math-card">'+
           '<div class="sc-extra-math-hearts" aria-label="'+lives+' lives remaining">'+('❤️'.repeat(lives))+('🖤'.repeat(3-lives))+'</div>'+
+          '<div class="sc-extra-math-mode" role="group" aria-label="Answer submission mode"><span>Answer mode:</span><button type="button" data-math-mode="auto" aria-pressed="'+String(auto)+'">⚡ Auto Submit</button><button type="button" data-math-mode="manual" aria-pressed="'+String(!auto)+'">✋ Manual</button></div>'+
           (math.over?
             '<div class="sc-extra-math-over"><h3>GAME OVER</h3><p>You made 3 mistakes.</p><p>Correct answers: '+math.correct+' · Final score: '+math.score+'</p><button type="button" class="sc-extra-math-submit" data-math-restart>Play Again</button></div>':
             '<p class="sc-extra-muted">QUESTION '+(math.total+1)+' · 3 mistakes allowed</p>'+
             '<div class="sc-extra-math-expression">'+esc(math.question.expression)+'</div>'+
             '<form data-math-form><input class="sc-extra-math-answer" data-math-answer type="number" inputmode="decimal" step="1" autocomplete="off" placeholder="Answer only" aria-label="Type your answer" required>'+
-            '<button type="submit" data-math-submit class="sc-extra-math-submit">Check Answer</button></form>'
+            '<button type="submit" data-math-submit class="sc-extra-math-submit">'+(auto?'Check Now':'Check Answer')+'</button></form>'+
+            '<p class="sc-extra-muted sc-extra-center">'+(auto?'Auto Submit checks your answer after you stop typing. You can also tap Check Now.':'Manual mode: tap Check Answer or press Enter when ready.')+'</p>'
           )+
         '</div>'+
         '<p class="sc-extra-muted sc-extra-center">Difficulty increases every 5 correct answers: addition and subtraction → multiplication → squares → square roots → powers → larger calculations. Three wrong answers end the game.</p>';
@@ -769,11 +798,14 @@
       if(input)input.focus({preventScroll:true});
     }
     function submitMath() {
-      if(!math||math.over)return;
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      if(!math||math.over||mathSubmitting)return;
       const input=$(view,'[data-math-answer]');
       if(!input||input.value.trim()==='')return;
       const answer=Number(input.value);
       if(!Number.isFinite(answer)||!Number.isInteger(answer))return;
+      mathSubmitting=true;
       math.total++;
       let message='';
       if(answer===math.question.answer){
@@ -787,10 +819,12 @@
       if(math.mistakes>=3){
         math.over=true;
         best('math',math.score);
+        mathSubmitting=false;
         paintMath('Game over. Try again and beat your score!');
         return;
       }
       math.question=buildMathQuestion(math.correct,math.total);
+      mathSubmitting=false;
       paintMath(message);
     }
 
@@ -885,6 +919,23 @@
 
     section.addEventListener('click', event => {
       const target = event.target;
+      const mathMode=target.closest('[data-math-mode]');
+      if(mathMode&&active==='math'&&math&&!math.over){
+        const currentInput=$(view,'[data-math-answer]');
+        const currentValue=currentInput?currentInput.value:'';
+        clearTimeout(mathSubmitTimer);
+        mathSubmitTimer=0;
+        math.autoSubmit=mathMode.dataset.mathMode==='auto';
+        safeSet('sitecraft-math-submit-mode',math.autoSubmit?'auto':'manual');
+        paintMath(math.autoSubmit?'Auto Submit enabled. It checks after you stop typing.':'Manual mode enabled. Submit with the button or Enter.');
+        const nextInput=$(view,'[data-math-answer]');
+        if(nextInput&&currentValue!==''){
+          nextInput.value=currentValue;
+          nextInput.focus({preventScroll:true});
+          if(math.autoSubmit)queueMathAutoSubmit();
+        }
+        return;
+      }
       if (target.closest('[data-extra-fullscreen]')) {
         const full = document.fullscreenElement || document.webkitFullscreenElement;
         if (full === view) {
@@ -903,6 +954,7 @@
         if(active==='typing')initTyping(typing.lang);
         if(active==='sudoku')initSudoku(sudoku.level,sudoku.size);
         if(active==='math')initMath();
+        if(active!=='math'){clearTimeout(mathSubmitTimer);mathSubmitTimer=0;}
         if(active==='connect')initConnect();
         if(active==='sky-ball'){
           const frame=$(view,'[data-sky-ball-frame]');
@@ -954,6 +1006,7 @@
         word.guess=event.target.value;
       }
       if(active==='typing' && event.target.matches('[data-typing-input]') && !event.isComposing)updateTypingLive();
+      if(active==='math' && event.target.matches('[data-math-answer]'))queueMathAutoSubmit();
     });
     section.addEventListener('keydown', event => {
       if(active==='word' && event.target.matches('[data-word-input]') && event.key==='Enter') {event.preventDefault();submitWord();return;}
