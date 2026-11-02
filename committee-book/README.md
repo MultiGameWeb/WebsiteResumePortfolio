@@ -13,7 +13,7 @@
 - `lottery-rotation.css` — lucky wheel, confetti, order editor and timeline styles.
 - `lottery-rotation-schema.sql` — additive Supabase schema/RPC scaffold for server-side lottery draws, fixed rotation order and interest ledger.
 
-Both templates currently run sample data in page memory. Refresh resets the sample. The draw wheel uses a locally generated demo seed and is **not a production fairness guarantee**. Do not record or use live financial events until the server-side RPCs, RLS, authenticated organizer roles, payment verification and compliance have been configured and tested.
+Both templates keep their data in this browser (localStorage) so a refresh does not lose your work; use Reset demo to restore the sample. The draw wheel uses a locally generated demo seed and is **not a production fairness guarantee**. Do not record or use live financial events until the server-side RPCs, RLS, authenticated organizer roles, payment verification and compliance have been configured and tested.
 
 ## Auction Chit Manager files
 
@@ -25,7 +25,7 @@ Both templates currently run sample data in page memory. Refresh resets the samp
 
 ## Current implementation status
 
-The deployed HTML/JS template is a front-end demonstration with in-memory sample data. Refreshing resets the demo. Google OAuth, shared Supabase database reads/writes, KYC/document uploads, payment screenshot uploads, and payment-provider verification are **not live-connected in this repository yet**. The sign-in button intentionally reports that configuration is missing instead of pretending the demo session is authenticated.
+The deployed HTML/JS template is a front-end demonstration. Data entered is saved in the visitor's own browser only (localStorage); use Reset to clear it. Google OAuth, shared Supabase database reads/writes, KYC/document uploads, payment screenshot uploads, and payment-provider verification are **not live-connected in this repository yet**. The sign-in button intentionally reports that configuration is missing instead of pretending the demo session is authenticated.
 
 The UPI QR preview, when an Organizer UPI ID is entered in the demo setup, opens a UPI payment intent. It does not verify a payment or automatically mark an installment paid.
 
