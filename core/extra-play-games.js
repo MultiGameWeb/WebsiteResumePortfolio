@@ -696,60 +696,69 @@
     function mathRandom(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
     function mathQuestion(expression,answer){return {expression:expression,answer:answer};}
     function buildMathQuestion(correct,total) {
-      const examples=[
-        mathQuestion('23 − 34',-11),
-        mathQuestion('56 + 74',130),
-        mathQuestion('79 × 3',237)
-      ];
-      if(total<examples.length)return examples[total];
       const tier=Math.floor(correct/5);
-      let a,b,n,root,choice;
+      let a,b,n,choice,divisor,quotient;
+      // Each stage stays active until the player answers 5 questions correctly.
       if(tier===0){
-        a=mathRandom(12,89);b=mathRandom(11,79);
-        return Math.random()<.5?mathQuestion(a+' + '+b,a+b):mathQuestion(a+' − '+b,a-b);
+        a=mathRandom(2,9);b=mathRandom(1,9);
+        if(Math.random()<.5)return mathQuestion(a+' + '+b,a+b);
+        if(a<b){const t=a;a=b;b=t;}
+        return mathQuestion(a+' − '+b,a-b);
       }
       if(tier===1){
-        a=mathRandom(100,999);b=mathRandom(100,999);
-        return Math.random()<.5?mathQuestion(a+' + '+b,a+b):mathQuestion(a+' − '+b,a-b);
+        choice=mathRandom(0,2);
+        if(choice===0){a=mathRandom(10,99);b=mathRandom(10,99);return mathQuestion(a+' + '+b,a+b);}
+        if(choice===1){a=mathRandom(20,99);b=mathRandom(10,a);return mathQuestion(a+' − '+b,a-b);}
+        a=mathRandom(2,9);b=mathRandom(2,12);return mathQuestion(a+' × '+b,a*b);
       }
       if(tier===2){
-        a=mathRandom(12,99);b=mathRandom(2,9);
-        return mathQuestion(a+' × '+b,a*b);
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(100,999);b=mathRandom(100,999);return mathQuestion(a+' + '+b,a+b);}
+        if(choice===1){a=mathRandom(300,999);b=mathRandom(100,a-100);return mathQuestion(a+' − '+b,a-b);}
+        if(choice===2){a=mathRandom(12,30);b=mathRandom(2,9);return mathQuestion(a+' × '+b,a*b);}
+        divisor=mathRandom(2,9);quotient=mathRandom(2,15);return mathQuestion((divisor*quotient)+' ÷ '+divisor,quotient);
       }
       if(tier===3){
-        if(Math.random()<.58){n=mathRandom(11,35);return mathQuestion(n+'²',n*n);}
-        a=mathRandom(18,79);b=mathRandom(12,39);return mathQuestion(a+' × '+b,a*b);
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(12,35);b=mathRandom(11,25);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===1){n=mathRandom(11,20);return mathQuestion(n+'²',n*n);}
+        if(choice===2){divisor=mathRandom(3,12);quotient=mathRandom(12,30);return mathQuestion((divisor*quotient)+' ÷ '+divisor,quotient);}
+        a=mathRandom(25,60);b=mathRandom(2,9);return mathQuestion(a+' × '+b,a*b);
       }
       if(tier===4){
-        if(Math.random()<.65){n=mathRandom(12,40);return mathQuestion('√'+(n*n),n);}
-        n=mathRandom(7,9);return mathQuestion('2'+(['⁷','⁸','⁹'][n-7]),Math.pow(2,n));
+        choice=mathRandom(0,3);
+        if(choice===0){n=mathRandom(21,35);return mathQuestion(n+'²',n*n);}
+        if(choice===1){n=mathRandom(21,40);return mathQuestion('√'+(n*n),n);}
+        if(choice===2){a=mathRandom(35,75);b=mathRandom(12,25);return mathQuestion(a+' × '+b,a*b);}
+        divisor=mathRandom(5,20);quotient=mathRandom(25,60);return mathQuestion((divisor*quotient)+' ÷ '+divisor,quotient);
       }
       if(tier===5){
-        choice=mathRandom(0,2);
-        if(choice===0){n=mathRandom(3,5);b=mathRandom(4,5);return mathQuestion(n+'⁵',Math.pow(n,5));}
-        if(choice===1){n=mathRandom(41,75);return mathQuestion('√'+(n*n),n);}
-        n=mathRandom(36,65);return mathQuestion(n+'²',n*n);
+        choice=mathRandom(0,3);
+        if(choice===0){const powers=[[2,8],[3,5],[4,4],[5,3]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));}
+        if(choice===1){n=mathRandom(36,55);return mathQuestion(n+'²',n*n);}
+        if(choice===2){n=mathRandom(41,65);return mathQuestion('√'+(n*n),n);}
+        a=mathRandom(60,99);b=mathRandom(20,49);return mathQuestion(a+' × '+b,a*b);
       }
       if(tier===6){
         choice=mathRandom(0,3);
         if(choice===0){a=mathRandom(100,999);b=mathRandom(12,99);return mathQuestion(a+' × '+b,a*b);}
-        if(choice===1){n=mathRandom(76,120);return mathQuestion('√'+(n*n),n);}
-        if(choice===2){n=mathRandom(50,99);return mathQuestion(n+'²',n*n);}
-        n=mathRandom(2,4);b=n===2?12:5;return mathQuestion(n+'^'+b,Math.pow(n,b));
+        if(choice===1){n=mathRandom(66,110);return mathQuestion('√'+(n*n),n);}
+        if(choice===2){n=mathRandom(56,90);return mathQuestion(n+'²',n*n);}
+        const powers=[[2,10],[3,6],[4,5],[5,4]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));
       }
       if(tier===7){
         choice=mathRandom(0,3);
         if(choice===0){a=mathRandom(1000,9999);b=mathRandom(1000,9999);return mathQuestion(a+' + '+b,a+b);}
-        if(choice===1){a=mathRandom(120,999);b=mathRandom(25,99);return mathQuestion(a+' × '+b,a*b);}
-        if(choice===2){n=mathRandom(121,180);return mathQuestion('√'+(n*n),n);}
-        n=mathRandom(2,5);b=n===2?14:n===3?6:5;return mathQuestion(n+'^'+b,Math.pow(n,b));
+        if(choice===1){a=mathRandom(120,999);b=mathRandom(120,999);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===2){n=mathRandom(111,180);return mathQuestion('√'+(n*n),n);}
+        const powers=[[2,12],[3,7],[4,6],[5,5]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));
       }
       choice=mathRandom(0,4);
-      if(choice===0){a=mathRandom(1000,99999);b=mathRandom(1000,99999);return mathQuestion(a+' + '+b,a+b);}
+      if(choice===0){a=mathRandom(10000,999999);b=mathRandom(10000,999999);return mathQuestion(a+' + '+b,a+b);}
       if(choice===1){a=mathRandom(250,999);b=mathRandom(120,999);return mathQuestion(a+' × '+b,a*b);}
       if(choice===2){n=mathRandom(181,300);return mathQuestion('√'+(n*n),n);}
-      if(choice===3){n=mathRandom(75,150);return mathQuestion(n+'²',n*n);}
-      n=mathRandom(3,5);b=n===3?7:n===4?6:5;return mathQuestion(n+'^'+b,Math.pow(n,b));
+      if(choice===3){n=mathRandom(100,300);return mathQuestion(n+'²',n*n);}
+      const powers=[[2,14],[3,8],[4,7],[5,6]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));
     }
     function initMath() {
       clearTimeout(mathSubmitTimer);
@@ -774,13 +783,17 @@
       },900);
     }
     function paintMath(message) {
-      const level=Math.floor(math.correct/5)+1;
+      const tier=Math.floor(math.correct/5);
+      const level=tier+1;
+      const stages=['Warm-up · Easy + / −','Basic · Two-digit sums and ×','Intermediate · 3-digit sums, × and ÷','Multiplication and squares','Squares, roots and larger ×','Powers including 3^5','Advanced calculations','Expert calculations','Extreme calculations'];
+      const stage=stages[Math.min(tier,stages.length-1)];
+      const toNext=5-(math.correct%5);
       const lives=Math.max(0,3-math.mistakes);
       const title=math.over?'Three mistakes. Game over!':'Solve the question. Level '+level;
       const auto=!!math.autoSubmit;
       view.innerHTML=commonHead('MATH CHALLENGE · LEVEL '+level,title,'↻ Restart game')+
         '<p class="sc-extra-status sc-extra-center" data-math-status>'+esc(message||'Only type your numerical answer.')+'</p>'+
-        '<div class="sc-extra-stats"><span>Correct<strong>'+math.correct+'</strong></span><span>Level<strong>'+level+'</strong></span><span>Score<strong>'+math.score+'</strong></span><span>Best<strong>'+best('math',math.score)+'</strong></span></div>'+
+        '<div class="sc-extra-stats"><span>Correct<strong>'+math.correct+'</strong></span><span>Level<strong>'+level+'</strong></span><span>Stage<strong>'+esc(stage)+'</strong></span><span>Score<strong>'+math.score+'</strong></span><span>Next level<strong>'+toNext+' correct</strong></span><span>Best<strong>'+best('math',math.score)+'</strong></span></div>'+
         '<div class="sc-extra-math-card">'+
           '<div class="sc-extra-math-hearts" aria-label="'+lives+' lives remaining">'+('❤️'.repeat(lives))+('🖤'.repeat(3-lives))+'</div>'+
           '<div class="sc-extra-math-mode" role="group" aria-label="Answer submission mode"><span>Answer mode:</span><button type="button" data-math-mode="auto" aria-pressed="'+String(auto)+'">⚡ Auto Submit</button><button type="button" data-math-mode="manual" aria-pressed="'+String(!auto)+'">✋ Manual</button></div>'+
@@ -793,7 +806,7 @@
             '<p class="sc-extra-muted sc-extra-center">'+(auto?'Auto Submit checks your answer after you stop typing. You can also tap Check Now.':'Manual mode: tap Check Answer or press Enter when ready.')+'</p>'
           )+
         '</div>'+
-        '<p class="sc-extra-muted sc-extra-center">Difficulty increases every 5 correct answers: addition and subtraction → multiplication → squares → square roots → powers → larger calculations. Three wrong answers end the game.</p>';
+        '<p class="sc-extra-muted sc-extra-center">Every 5 correct answers unlocks the next difficulty stage. Wrong answers do not increase your level; 3 mistakes end the game. Answer with numbers only.</p>';
       const input=$(view,'[data-math-answer]');
       if(input)input.focus({preventScroll:true});
     }
