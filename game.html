@@ -18,11 +18,11 @@
     #gameMount .sc-pg-inner{width:100%!important}
     #gameMount .sc-pg-panel{min-height:450px}
     .loadError{padding:28px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:#1c1a29;color:#eee8f7;text-align:center}
-    .cricket-game-frame{display:block;width:100%;height:calc(100dvh - 105px);min-height:560px;border:0;border-radius:14px;background:#0b1622}
+    .cricket-game-frame{display:block;width:100%;height:calc(100dvh - 105px);min-height:0;max-height:calc(100dvh - 70px);border:0;border-radius:14px;background:#0b1622}
     .playerFullscreen{display:inline-flex;min-height:38px;align-items:center;padding:0 12px;border:1px solid rgba(255,255,255,.15);border-radius:10px;background:rgba(255,255,255,.055);color:#eee8f7;font-size:11px;font-weight:800;cursor:pointer}
     .playerFullscreen[hidden]{display:none!important}
     .cricket-game-frame:fullscreen,.cricket-game-frame:-webkit-full-screen{width:100vw;height:100vh;height:100dvh;max-height:100dvh;border:0;border-radius:0;background:#0b1622}
-    @media(max-width:480px){.cricket-game-frame{height:calc(100dvh - 96px);min-height:520px}.playerFullscreen{min-height:35px;padding:0 9px;font-size:10px}}
+    @media(max-width:480px){.cricket-game-frame{height:calc(100dvh - 96px);min-height:0;max-height:calc(100dvh - 70px)}.playerFullscreen{min-height:35px;padding:0 9px;font-size:10px}}
     @media(max-width:480px){.playerTop{align-items:flex-start}.backLink{min-height:35px;padding:0 9px;font-size:10px}#gameMount .sc-pg-panel{padding:12px!important}}
   </style>
 </head>
