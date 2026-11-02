@@ -53,7 +53,7 @@
         word:'Daily Word','daily-connections':'Daily Connections',typing:'Typing Test',
         'arrow-escape':'Arrow Escape',connect:'Connect Four','brick-breaker':'Brick Breaker',
         blocks:'Block Puzzle','n-queens':'N-Queens',memory:'Memory Match',
-        ttt:'Tic-Tac-Toe',rps:'Rock Paper Scissors','cricket-super-over-pro':'Cricket Super Over Pro','water-sort':'Water Sort Puzzle','carrom-clash':'Carrom Clash'
+        ttt:'Tic-Tac-Toe',rps:'Rock Paper Scissors','cricket-super-over-pro':'Cricket Super Over Pro','water-sort':'Water Sort Puzzle','carrom-clash':'Carrom Clash','chess-master':'Chess Master','ludo':'Ludo vs Computer'
       };
       const baseGames=new Set(['snake','memory','ttt','rps']);
       function showError(message){
@@ -65,12 +65,12 @@
         document.title=labels[gameId]+' | SiteCraft Games';
         document.getElementById('playerTitle').textContent=labels[gameId];
         const root=document.getElementById('gameMount');
-        if(gameId==='water-sort'||gameId==='carrom-clash'){
+        if(['water-sort','carrom-clash','chess-master','ludo'].includes(gameId)){
           document.body.classList.add('mini-game-mode');
-          const isWaterSort=gameId==='water-sort';
+          const gameFiles={'water-sort':'games/water-sort-puzzle.html','carrom-clash':'games/carrom-clash.html','chess-master':'games/chess-master.html','ludo':'games/ludo-vs-computer.html'};
           const frame=document.createElement('iframe');
           frame.className='mini-game-frame';
-          frame.src=isWaterSort?'games/water-sort-puzzle.html':'games/carrom-clash.html';
+          frame.src=gameFiles[gameId];
           frame.title=labels[gameId];
           frame.loading='eager';
           frame.allow='fullscreen';
