@@ -50,6 +50,11 @@
     '.sc-pg-section .sc-extra-connect{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;width:min(100%,490px);margin:14px auto;padding:10px;border-radius:16px;background:#2455a3}',
     '.sc-pg-section .sc-extra-connect button{display:grid;place-items:center;min-width:0;padding:0;aspect-ratio:1;border:0;border-radius:50%;background:#111b35;cursor:pointer}.sc-pg-section .sc-extra-connect .red:after,.sc-pg-section .sc-extra-connect .yellow:after{content:"";display:block;width:82%;height:82%;border-radius:50%;background:#f87171}.sc-pg-section .sc-extra-connect .yellow:after{background:#facc15}',
     '.sc-pg-section .sc-extra-connect button:disabled{cursor:default;opacity:.65}',
+    '.sc-pg-section .sc-pg-sky-ball-shell{overflow:hidden;border:1px solid rgba(0,229,255,.28);border-radius:14px;background:#0b132b}',
+    '.sc-pg-section .sc-pg-sky-ball-frame{display:block;width:100%;height:clamp(680px,82vh,900px);min-height:620px;border:0;background:#0b132b}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-sky-ball-frame{height:780px;min-height:720px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-sky-ball-frame{height:calc(100vh - 175px);min-height:420px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-sky-ball-frame{height:calc(100vh - 190px);min-height:360px}}',
     '.sc-pg-section .sc-pg-starfighter-shell{overflow:hidden;border:1px solid rgba(0,242,254,.25);border-radius:14px;background:#050711}',
     '.sc-pg-section .sc-pg-brick-breaker-shell{overflow:hidden;border:1px solid rgba(255,154,0,.28);border-radius:14px;background:#060811}',
     '.sc-pg-section .sc-pg-brick-breaker-frame{display:block;width:100%;height:clamp(600px,78vh,850px);min-height:560px;border:0;background:#060811}',
@@ -130,14 +135,15 @@
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sudoku">🔢 Sudoku</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="math">➗ Math Challenge</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="connect">🔴 Connect Four</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sky-ball">🌤️ 3D Sky Ball</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="starfighter">🚀 3D Starfighter</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="brick-breaker">💎 Brick Breaker</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-gk-pending disabled title="GK Quiz will be enabled after secure question API integration">🇮🇳 GK Quiz · Soon</button>'
     );
 
     const preferredOrder = [
-      'starfighter','brick-breaker','snake','memory',
-      'connect','2048','blocks','sudoku','math','word','typing','ttt','rps'
+      '2048','snake','sky-ball','math','starfighter','word','sudoku',
+      'memory','brick-breaker','blocks','typing','connect','ttt','rps'
     ];
     preferredOrder.forEach(key => {
       const tab = tabs.querySelector('[data-extra-tab="' + key + '"], [data-pg-tab="' + key + '"]');
@@ -178,8 +184,14 @@
       if (id === 'sudoku') initSudoku('medium',9);
       if (id === 'math') initMath();
       if (id === 'connect') initConnect();
+      if (id === 'sky-ball') paintSkyBall();
       if (id === 'starfighter') paintStarfighter();
       if (id === 'brick-breaker') paintBrickBreaker();
+    }
+    function paintSkyBall() {
+      view.innerHTML = commonHead('3D SKY BALL RUNNER · 3D ARCADE', 'Roll through the skyway. Dodge obstacles and collect diamonds.', '↻ Restart run') +
+        '<p class="sc-extra-status">Drag left or right on mobile to steer the 3D ball. On desktop, use the Left / Right Arrow Keys or A / D. Choose a world, ball skin and difficulty before starting.</p>' +
+        '<div class="sc-pg-sky-ball-shell"><iframe class="sc-pg-sky-ball-frame" data-sky-ball-frame src="games/sky-ball-runner-3d.html" title="3D Sky Ball Runner game" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
     }
     function paintStarfighter() {
       view.innerHTML = commonHead('3D STARFIGHTER · SPACE ARCADE', 'Pilot your fighter. Survive the galaxy.', '↻ Restart mission') +
@@ -199,7 +211,7 @@
       if (button) button.textContent = document.fullscreenElement === view ? '⤢ Exit Full Screen' : '⛶ Full Screen';
     });
 
-    start('starfighter');
+    start('2048');
 
     const englishWords = ['APPLE','BRAVE','CLOUD','DREAM','EARTH','FLAME','GRAPE','HEART','JUICE','KNIFE','LEMON','MUSIC','NIGHT','OCEAN','PEACE','QUEEN','RIVER','SMILE','TRAIN','WATER','YOUTH','BREAD','CHAIR','DANCE','LIGHT','PLANT','SHINE','SPACE','STONE','TIGER','WORLD','MANGO','GREEN','HAPPY','STARS','SWEET','CANDY','BLOOM','CROWN','MAGIC','SOUND','SLEEP','STORM','TRUCK','VOICE','BEACH','CHESS','FRUIT','HORSE','MONEY','ROBOT','SNAKE','TABLE','ZEBRA'];
     const teluguWords = ['తెలుగు','మనసు','కలలు','వెలుగు','విజయం','ప్రకృతి','నగరం','గెలుపు','చదువు','దేవుడు','పండుగ','కవిత','మాటలు','పాటలు','సమయం','వానలు','మేఘాలు','పుస్తకం','సహాయం','గురువు','బంగారం','తారలు','చెలిమి','హాయిగా','ఆకాశం','ఆశయం','ప్రయాణం','నవోదయం','పరిచయం','కరుణ'];
@@ -892,6 +904,10 @@
         if(active==='sudoku')initSudoku(sudoku.level,sudoku.size);
         if(active==='math')initMath();
         if(active==='connect')initConnect();
+        if(active==='sky-ball'){
+          const frame=$(view,'[data-sky-ball-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
         if(active==='starfighter'){
           const frame=$(view,'[data-starfighter-frame]');
           if(frame)frame.src=frame.getAttribute('src');
