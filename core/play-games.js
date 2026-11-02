@@ -83,10 +83,9 @@
     section.setAttribute('aria-labelledby', 'sc-pg-title');
     section.innerHTML =
       '<div class="sc-pg-inner">' +
-        '<div class="sc-pg-head"><div><span class="sc-pg-kicker">A LITTLE FUN</span>' +
+        '<div class="sc-pg-head"><div>' +
         '<h2 id="sc-pg-title">Take a break. Play a game.</h2>' +
-        '<p>Give your visitors a fun reason to stay a little longer. Pick a game below and enjoy a quick round—right here on this website.</p></div>' +
-        (brandName ? '<span class="sc-pg-brand">' + esc(brandName) + '</span>' : '') +
+        '<p>Choose a game and enjoy a quick round—right here on this website.</p></div>' +
         '</div>' +
         '<div class="sc-pg-tabs" role="tablist" aria-label="Choose a game">' +
           '<button class="sc-pg-tab" type="button" role="tab" aria-selected="true" data-pg-tab="memory">🧠 Memory Match</button>' +
@@ -130,7 +129,7 @@
       '</div>';
     }
     function header(label, title, resetLabel, instructions) {
-      return '<div class="sc-pg-gamehead"><div><small>' + label + '</small><h3>' + title + '</h3></div>' +
+      return '<div class="sc-pg-gamehead"><div><h3>' + title + '</h3></div>' +
         '<button class="sc-pg-reset" type="button" data-pg-reset>' + resetLabel + '</button></div>' +
         helpText(instructions);
     }
