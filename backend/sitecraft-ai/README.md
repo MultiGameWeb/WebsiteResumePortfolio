@@ -95,3 +95,30 @@ The current catalog contains 50+ configurable features and can be edited without
 The code is pushed as the backend architecture and remains safe to deploy without API keys, but the Worker will report missing Gemini/D1 bindings until the Cloudflare secrets and D1 migration are configured.
 
 The existing template marketplace remains a separate path in the frontend. Do not replace its template registry or rendering engine with this AI workflow.
+
+## Resume AI ("Create with AI" in the Resume Builder)
+
+Reads an old resume (PDF, photo or pasted text) and returns the details in the shape the Resume Builder uses. The builder's own templates do the design; the AI only copies facts and never invents them. The file is sent to Gemini to be read and is not stored.
+
+Routes (`resume-ai.js`):
+
+- `GET /api/resume-ai/health` shows which settings exist (true/false only, never the values).
+- `POST /api/resume-ai/import` with `{ text?, file?: { mimeType, data } }` and header `X-AI-Token`.
+
+Worker secrets and variables:
+
+| Name | Kind | Purpose |
+|---|---|---|
+| `RESUME_GEMINI_API_KEY` | secret | Gemini key used only for this feature, so its cost is separate |
+| `AI_TEST_TOKEN` | secret | Access code while testing. If it is not set, the AI stays switched off |
+| `RESUME_AI_DAILY_LIMIT` | variable | Calls per day across everyone, default 50 |
+| `RESUME_GEMINI_MODEL` | variable | Optional model name (default: cheap model first, a stronger one as fallback) |
+| `RESUME_AI_ALLOWED_ORIGINS` | variable | Optional, comma separated allowed sites |
+
+Set the secrets in Cloudflare (Worker, Settings, Variables and Secrets) or with `wrangler secret put RESUME_GEMINI_API_KEY`. Never commit a key. For local runs put them in `.dev.vars`, which is git-ignored.
+
+Daily calls are counted in D1 (table `resume_ai_usage`, created on first use). Without the `DB` binding the AI refuses to run, so a missing counter can never mean unlimited spending.
+
+Access is decided in one function, `checkAiAccess` in `resume-ai.js`. When login and payment exist, replace it (check the signed-in user and take a credit); the rest of the file stays the same.
+
+To test: set the three secrets, open `/api/resume-ai/health` and check all values are `true`, then open the Resume Builder, choose "Create with AI" and enter the access code.

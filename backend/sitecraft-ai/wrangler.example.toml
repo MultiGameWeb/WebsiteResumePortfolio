@@ -14,3 +14,6 @@ compatibility_date = "2026-10-01"
 
 [vars]
 GEMINI_MODEL = "gemini-2.5-flash"
+# Resume AI: calls per day across everyone (default 50). Secrets RESUME_GEMINI_API_KEY and
+# AI_TEST_TOKEN are set in Cloudflare, not here.
+# RESUME_AI_DAILY_LIMIT = "50"

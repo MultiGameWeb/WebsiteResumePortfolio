@@ -267,6 +267,22 @@ body.preview-section-dragging{user-select:none!important;cursor:grabbing!importa
 
 </style>
 
+<style id="resumeAiStyles">
+.ai-create-btn{display:inline-flex;align-items:center;gap:5px;min-height:30px;padding:0 12px;border:1px solid #c9c2ff;border-radius:999px;background:#f3f1ff;color:#3b2fb8;font-size:12px;font-weight:850;cursor:pointer}
+.ai-create-btn:hover{background:#e9e5ff}
+.ai-card{width:min(560px,calc(100vw - 30px));max-height:calc(100dvh - 40px);overflow:auto}
+.ai-lead{margin:6px 0 12px;font-size:13px;line-height:1.55}
+.ai-upload{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.ai-upload input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+.ai-upload input[type=file]:focus-visible+.help,.ai-file-btn:focus-within{outline:3px solid rgba(109,94,252,.25)}
+.ai-card .field{margin-bottom:10px}.ai-card .field textarea{min-height:110px}
+.ai-error{margin:8px 0 0;padding:9px 11px;border:1px solid #e6b3b9;border-radius:10px;background:#fff1f2;color:#9f1d2c;font-size:12px;font-weight:700}
+.ai-summary{margin:8px 0 10px;padding-left:18px;display:grid;gap:4px;font-size:13px;word-break:break-word}
+.ai-spinner{width:28px;height:28px;margin:14px auto 4px;border:3px solid var(--line);border-top-color:#6658ed;border-radius:50%;animation:aiSpin .9s linear infinite}
+@keyframes aiSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.ai-spinner{animation:none}}
+@media print{.ai-modal{display:none!important}}
+</style>
 <style id="resumeMobileFixes">
 /* The More menu lives inside the topbar, so the topbar must sit above the template picker (z-index 90) but below modals (100). */
 .topbar{z-index:95}
@@ -297,7 +313,7 @@ body.preview-section-dragging{user-select:none!important;cursor:grabbing!importa
 </div>
 <button type="button" id="quickDesignBtn" class="design-open-btn">Design</button>
 </div>
-<div class="editor-quiet-actions"><button type="button" class="quiet-link" id="tipsBtn" aria-controls="tipsPanel" aria-expanded="false">Tips</button><button type="button" class="quiet-link" id="sampleResumeBtn">Fill with sample</button><button type="button" class="quiet-link" id="clearResumeBtn">Clear all</button></div>
+<div class="editor-quiet-actions"><button type="button" class="ai-create-btn" id="aiCreateBtn" aria-haspopup="dialog">✦ Create with AI</button><button type="button" class="quiet-link" id="tipsBtn" aria-controls="tipsPanel" aria-expanded="false">Tips</button><button type="button" class="quiet-link" id="sampleResumeBtn">Fill with sample</button><button type="button" class="quiet-link" id="clearResumeBtn">Clear all</button></div>
 <details id="tipsPanel" class="tips-panel"><summary>Resume checks</summary><div id="tipsContent" class="tips-content"><p class="quiet-empty">Helpful checks will appear here as you edit.</p></div></details>
 <section class="design-panel" id="designPanel" aria-label="Resume design settings" hidden>
 <div class="compact-design-header"><strong>Design</strong><button id="closeDesignBtn" type="button" aria-label="Close design">×</button></div>
@@ -362,6 +378,32 @@ remove unlabeled legacy zoom dropdown and Fit width button</section>
 
 <div class="modal" id="resetModal" role="dialog" aria-modal="true" aria-labelledby="resetTitle">
   <div class="modal-card"><div class="help">RESET RESUME</div><h2 id="resetTitle">Reset this resume?</h2><p id="resetMessage">Your current edits will stay available through Undo.</p><div class="modal-actions"><button class="btn soft" data-close-modal="resetModal" type="button">Cancel</button><button class="btn danger" id="confirmReset" type="button">Reset</button></div></div>
+</div>
+<div class="modal ai-modal" id="aiModal" role="dialog" aria-modal="true" aria-labelledby="aiTitle">
+  <div class="modal-card ai-card">
+    <div class="help">CREATE WITH AI</div><h2 id="aiTitle">Create your resume with AI</h2>
+    <div id="aiStepInput">
+      <p class="ai-lead">Upload your old resume and the AI fills in the details. Your chosen template does the design, and you check everything before it is used.</p>
+      <div class="ai-upload"><label class="btn soft ai-file-btn" for="aiFile">Upload PDF or photo</label><input id="aiFile" type="file" accept="application/pdf,image/png,image/jpeg,image/webp"><span class="help" id="aiFileName">No file chosen. PDF, PNG, JPG or WEBP, up to 5 MB.</span></div>
+      <div class="field"><label for="aiText">Or paste the text of your old resume</label><textarea id="aiText" maxlength="20000" placeholder="Paste your old resume here"></textarea></div>
+      <div class="field"><label for="aiToken">Access code <span class="help">(the AI is in testing)</span></label><input id="aiToken" type="password" autocomplete="off" placeholder="Access code"></div>
+      <p class="help">Your file is sent to Google Gemini to be read. We do not save it.</p>
+      <p class="ai-error" id="aiError" role="alert" hidden></p>
+      <div class="modal-actions"><button class="btn soft" id="aiCancel" type="button">Cancel</button><button class="btn primary" id="aiRun" type="button">Create resume</button></div>
+    </div>
+    <div id="aiStepWorking" hidden>
+      <p role="status" aria-live="polite">Reading your resume. This usually takes 10 to 20 seconds.</p>
+      <div class="ai-spinner" aria-hidden="true"></div>
+      <div class="modal-actions"><button class="btn soft" id="aiStop" type="button">Cancel</button></div>
+    </div>
+    <div id="aiStepReview" hidden>
+      <p class="ai-lead">Here is what the AI found. <strong>AI can make mistakes</strong>, so check every detail in the editor before you download.</p>
+      <ul class="ai-summary" id="aiSummary"></ul>
+      <div id="aiNotesBox" hidden><strong>Please double-check:</strong><ul class="ai-summary" id="aiNotes"></ul></div>
+      <p class="help" id="aiReplaceNote"></p>
+      <div class="modal-actions"><button class="btn soft" id="aiBack" type="button">Back</button><button class="btn primary" id="aiUse" type="button">Use these details</button></div>
+    </div>
+  </div>
 </div>
 <div class="modal" id="leaveModal" role="dialog" aria-modal="true" aria-labelledby="leaveTitle">
   <div class="modal-card"><div class="help">SAVE STATUS</div><h2 id="leaveTitle">Leave this page?</h2><p>Your latest changes may still be saving. You can stay here while autosave finishes.</p><div class="modal-actions"><button class="btn soft" id="leaveStay" type="button">Stay</button><button class="btn danger" id="leaveAnyway" type="button">Leave anyway</button><button class="btn primary" id="leaveDownload" type="button">Download first</button></div></div>
@@ -1222,7 +1264,10 @@ function sanitizeSection(id,sec,def){
  }
  return out;
 }
-function normalizeResumeState(x){
+// normalizeResumeState borrows the global state while it works. It must always give the live resume back,
+// otherwise cancelling an import (or an AI result) would still swap in the imported data.
+function normalizeResumeState(x){var live=state;try{return normalizeResumeStateInner(x)}finally{state=live}}
+function normalizeResumeStateInner(x){
   var raw=x;
   if(isRecord(x)&&x.app==='SiteCraft Resume Builder'&&x.state!==undefined)raw=x.state;
   if(!isRecord(raw))throw new Error('Invalid resume JSON: expected an object.');
@@ -1379,6 +1424,99 @@ function loadPortfolioStateDb(){
     var tx=db.transaction('state','readonly'),store=tx.objectStore('state'),req=store.get('current');
     req.onsuccess=function(){db.close();resolve(req.result||null)};req.onerror=function(){db.close();reject(req.error||new Error('Could not read Portfolio data.'))};
   })});
+}
+// ---- Create with AI: reads an old resume through the Worker and fills the form. The templates still do the design.
+var AI_API_BASE=window.RESUME_AI_API_BASE||'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
+var AI_MAX_FILE=5*1024*1024,AI_FILE_TYPES=['application/pdf','image/png','image/jpeg','image/webp'],aiResult=null,aiController=null,aiOpener=null;
+function aiToResume(ai){
+  if(!isRecord(ai))throw new Error('The AI answer was not readable.');
+  var h=isRecord(ai.header)?ai.header:{},out=blankResumeState(),rows=function(v){return Array.isArray(v)?v.filter(isRecord):[]},texts=function(v){return Array.isArray(v)?v.map(norm).filter(Boolean):[]};
+  out.preset='AI';
+  out.order=['header','summary','experience','skills','projects','education','certifications','awards','languages','volunteering','publications','references'];
+  out.sections.header=Object.assign({},out.sections.header,{show:true,name:norm(h.name),headline:norm(h.headline),email:norm(h.email),phone:norm(h.phone),location:norm(h.location),linkedin:norm(h.linkedin),github:norm(h.github),website:norm(h.website)});
+  out.sections.summary={show:true,text:norm(ai.summary).slice(0,700),max:700};
+  out.sections.experience={show:true,items:rows(ai.experience).map(function(e){var cur=e.current===true;return{company:norm(e.company),role:norm(e.role),location:norm(e.location),start:norm(e.start),end:cur?'':norm(e.end),currently:cur,bullets:texts(e.bullets).slice(0,MAX_JOB_BULLETS)}})};
+  out.sections.education={show:true,items:rows(ai.education).map(function(e){return{institution:norm(e.institution),degree:norm(e.degree),field:norm(e.field),start:norm(e.start),end:norm(e.end),ongoing:false,score:norm(e.score),notes:''}})};
+  var groups=rows(ai.skills).map(function(g){return{name:norm(g.category),items:texts(g.items)}}).filter(function(g){return g.items.length});
+  if(groups.length===1&&(!groups[0].name||groups[0].name==='Skills'))groups[0].name='';
+  out.sections.skills={show:true,groups:groups.length?groups:[{name:'',items:[]}],tags:[]};
+  out.sections.projects={show:true,items:rows(ai.projects).map(function(pr){return{name:norm(pr.name),link:norm(pr.link),tech:[],bullets:texts(pr.bullets).slice(0,4)}})};
+  out.sections.certifications={show:true,items:rows(ai.certifications).map(function(c){return{name:norm(c.name),issuer:norm(c.issuer),date:norm(c.date),link:''}})};
+  out.sections.languages={show:true,items:rows(ai.languages).map(function(l){return{name:norm(l.name),level:norm(l.level)}})};
+  return normalizeResumeState(out);
+}
+function aiSummaryLines(r){
+  var h=r.header||{},lines=[],plural=function(n,one,many){return n+' '+(n===1?one:many)};
+  lines.push('Name: '+(norm(h.name)||'not found'));
+  var contact=[h.email,h.phone,h.location].map(norm).filter(Boolean);lines.push('Contact: '+(contact.join(', ')||'not found'));
+  if(norm(r.summary))lines.push('Summary: found');
+  lines.push('Work experience: '+plural((r.experience||[]).length,'job','jobs'));
+  lines.push('Education: '+plural((r.education||[]).length,'entry','entries'));
+  var skillCount=(r.skills||[]).reduce(function(n,g){return n+(g.items||[]).length},0);lines.push('Skills: '+plural(skillCount,'skill','skills')+((r.skills||[]).length>1?' in '+(r.skills||[]).length+' groups':''));
+  if((r.projects||[]).length)lines.push('Projects: '+(r.projects||[]).length);
+  if((r.certifications||[]).length)lines.push('Certifications: '+(r.certifications||[]).length);
+  if((r.languages||[]).length)lines.push('Languages: '+(r.languages||[]).length);
+  return lines;
+}
+function aiFill(listEl,lines){listEl.textContent='';lines.forEach(function(t){var li=document.createElement('li');li.textContent=t;listEl.appendChild(li)})}
+function aiShow(step){['Input','Working','Review'].forEach(function(n){var el=$('#aiStep'+n);if(el)el.hidden=n!==step});if(step==='Working'){var stop=$('#aiStop');if(stop)stop.focus()}}
+function aiError(msg){var el=$('#aiError');if(!el)return;el.textContent=msg||'';el.hidden=!msg}
+function aiStoredCode(){try{return localStorage.getItem('resumeAiCode')||''}catch(e){return ''}}
+function aiStoreCode(v){try{if(v)localStorage.setItem('resumeAiCode',v);else localStorage.removeItem('resumeAiCode')}catch(e){}}
+function openAiModal(){
+  aiOpener=document.activeElement;aiResult=null;aiError('');aiShow('Input');
+  $('#aiFile').value='';$('#aiFileName').textContent='No file chosen. PDF, PNG, JPG or WEBP, up to 5 MB.';$('#aiText').value='';$('#aiToken').value=aiStoredCode();
+  $('#aiModal').classList.add('show');setTimeout(function(){var f=$('#aiFile');if(f)f.focus()},0);
+}
+function closeAiModal(){
+  if(aiController){aiController.abort();aiController=null}
+  var m=$('#aiModal');if(m)m.classList.remove('show');
+  var o=aiOpener;aiOpener=null;if(o&&document.contains(o)&&o.focus)o.focus();
+}
+function fileToBase64(file){return new Promise(function(resolve,reject){var r=new FileReader();r.onload=function(){var s=String(r.result||''),i=s.indexOf(',');resolve(i>=0?s.slice(i+1):'')};r.onerror=function(){reject(new Error('read'))};r.readAsDataURL(file)})}
+function runAiImport(){
+  var file=$('#aiFile').files&&$('#aiFile').files[0],text=$('#aiText').value.trim(),code=$('#aiToken').value.trim();
+  aiError('');
+  if(!file&&text.length<30){aiError('Upload your old resume, or paste its text.');return}
+  if(file&&AI_FILE_TYPES.indexOf(file.type)<0){aiError('Only PDF, PNG, JPG or WEBP files are supported.');return}
+  if(file&&file.size>AI_MAX_FILE){aiError('That file is too large. Please use a file under 5 MB.');return}
+  if(!code){aiError('Enter the access code.');return}
+  aiShow('Working');aiController=new AbortController();var ctrl=aiController;
+  (file?fileToBase64(file):Promise.resolve('')).then(function(data){
+    var body={};if(file)body.file={mimeType:file.type,data:data};if(text)body.text=text;
+    return fetch(AI_API_BASE+'/api/resume-ai/import',{method:'POST',headers:{'Content-Type':'application/json','X-AI-Token':code},body:JSON.stringify(body),signal:ctrl.signal});
+  }).then(function(res){return res.json().catch(function(){return{}}).then(function(j){return{status:res.status,json:j}})}).then(function(r){
+    if(ctrl!==aiController)return;aiController=null;
+    if(r.status===200&&r.json&&r.json.ok&&r.json.resume){aiStoreCode(code);aiResult=r.json.resume;showAiReview();return}
+    if(r.status===401)aiStoreCode('');
+    aiShow('Input');aiError((r.json&&r.json.error)||'Something went wrong. Please try again.');
+  }).catch(function(err){
+    if(ctrl!==aiController)return;aiController=null;
+    aiShow('Input');if(err&&err.name==='AbortError')return;
+    aiError(err&&err.message==='read'?'The file could not be read. Please try another file.':'Could not reach the AI service. Check your internet and try again.');
+  });
+}
+function showAiReview(){
+  aiFill($('#aiSummary'),aiSummaryLines(aiResult));
+  var notes=Array.isArray(aiResult.notes)?aiResult.notes.map(norm).filter(Boolean):[];
+  $('#aiNotesBox').hidden=!notes.length;aiFill($('#aiNotes'),notes);
+  $('#aiReplaceNote').textContent=resumeHasUserContent()?'This will replace your current resume. You can use Undo to get it back.':'';
+  aiShow('Review');setTimeout(function(){var b=$('#aiUse');if(b)b.focus()},0);
+}
+function useAiResult(){
+  var next;try{next=aiToResume(aiResult)}catch(err){aiShow('Input');aiError('The AI answer could not be used. Please try again.');return}
+  groupSkillsMode=next.sections.skills.groups.length>1;
+  closeAiModal();applyImportedState(next,'Resume created with AI. Please check every detail.');
+}
+function bindAiModal(){
+  safeBind('#aiCreateBtn','click',openAiModal);
+  safeBind('#aiCancel','click',closeAiModal);
+  safeBind('#aiStop','click',function(){if(aiController){aiController.abort();aiController=null}aiShow('Input')});
+  safeBind('#aiRun','click',runAiImport);
+  safeBind('#aiBack','click',function(){aiShow('Input')});
+  safeBind('#aiUse','click',useAiResult);
+  safeBind('#aiFile','change',function(){var f=$('#aiFile').files&&$('#aiFile').files[0];$('#aiFileName').textContent=f?f.name+' ('+Math.max(1,Math.round(f.size/1024))+' KB)':'No file chosen. PDF, PNG, JPG or WEBP, up to 5 MB.'});
+  document.addEventListener('keydown',function(e){var m=$('#aiModal');if(e.key==='Escape'&&m&&m.classList.contains('show')){e.preventDefault();closeAiModal()}});
 }
 function beginPortfolioImport(){
   loadPortfolioStateDb().then(function(payload){
@@ -1592,6 +1730,7 @@ safeStep('mobile More menu',function(){
 
   safeStep('presets and settings',function(){
     safeBind('#importPortfolioBtn','click',beginPortfolioImport);
+    bindAiModal();
     safeBind('#confirmReset','click',confirmReplacement);
     safeEach('[data-close-modal]',function(b){safeBind(b,'click',closeReplacementConfirm)});
     safeEach('[data-preset]',function(b){safeBind(b,'click',function(){if(state.preset!==b.dataset.preset)preset(b.dataset.preset)})});
