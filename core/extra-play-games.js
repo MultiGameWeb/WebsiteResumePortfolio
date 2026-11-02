@@ -254,6 +254,7 @@
       if (id === 'daily-connections') paintDailyConnections();
       if (id === 'n-queens') paintNQueens();
     }
+    section.__siteCraftOpenExtraGame = start;
     function paintSkyBall() {
       view.innerHTML = commonHead('3D SKY BALL RUNNER · 3D ARCADE', 'Roll through the skyway. Dodge obstacles and collect diamonds.', '↻ Restart run') +
         '<p class="sc-extra-status">Drag left or right on mobile to steer the 3D ball. On desktop, use the Left / Right Arrow Keys or A / D. Choose a world, ball skin and difficulty before starting.</p>' +
@@ -1201,5 +1202,11 @@
     },{passive:true});
   }
 
-  window.SiteCraftExtraGames = {append:append};
+  function openGame(root,id) {
+    const section = root && root.querySelector ? root.querySelector('.sc-pg-section') : document.querySelector('.sc-pg-section');
+    if (!section || typeof section.__siteCraftOpenExtraGame !== 'function') return false;
+    section.__siteCraftOpenExtraGame(id);
+    return true;
+  }
+  window.SiteCraftExtraGames = {append:append,openGame:openGame};
 })();
