@@ -75,6 +75,15 @@
     '.sc-pg-section .sc-pg-arrow-escape-frame{display:block;width:100%;height:clamp(700px,88vh,900px);min-height:660px;border:0;background:#1e3c72}',
     '.sc-pg-section .sc-pg-n-queens-shell{overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#f6eee2}',
     '.sc-pg-section .sc-pg-n-queens-frame{display:block;width:100%;height:clamp(760px,92vh,1050px);min-height:720px;border:0;background:#f6eee2}',
+    '.sc-pg-section .sc-pg-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:4px 0 20px}',
+    '.sc-pg-section .sc-pg-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;min-width:0;min-height:116px;padding:14px 8px;border:1px solid rgba(216,180,254,.19);border-radius:17px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));color:#f5efff;text-align:center;white-space:normal;line-height:1.25;box-shadow:0 8px 20px rgba(0,0,0,.14);transition:transform .16s ease,border-color .16s ease,background .16s ease}',
+    '.sc-pg-section .sc-pg-tab:hover{transform:translateY(-2px);border-color:rgba(216,180,254,.55);background:linear-gradient(145deg,rgba(139,92,246,.18),rgba(255,255,255,.045))}',
+    '.sc-pg-section .sc-pg-tab[aria-selected=true]{border-color:#a78bfa;background:linear-gradient(145deg,rgba(124,58,237,.28),rgba(219,39,119,.13));box-shadow:0 0 0 1px rgba(167,139,250,.15),0 12px 28px rgba(0,0,0,.18)}',
+    '.sc-pg-section .sc-pg-tab .sc-pg-card-icon{display:block;font-size:clamp(25px,3vw,37px);line-height:1.05}',
+    '.sc-pg-section .sc-pg-tab .sc-pg-card-title{display:block;font-size:clamp(10px,1.25vw,13px);font-weight:850;letter-spacing:-.01em;overflow-wrap:anywhere}',
+    '.sc-pg-section .sc-pg-tab:disabled{opacity:.45;filter:saturate(.65);cursor:not-allowed;transform:none}',
+    '.sc-pg-section .sc-pg-gamehead small,.sc-pg-section .sc-extra-gamehead small{display:none!important}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:15px}.sc-pg-section .sc-pg-tab{min-height:91px;padding:10px 4px;border-radius:13px;gap:6px}.sc-pg-section .sc-pg-tab .sc-pg-card-icon{font-size:27px}.sc-pg-section .sc-pg-tab .sc-pg-card-title{font-size:10px;line-height:1.2}.sc-pg-section .sc-pg-panel{padding:14px;border-radius:16px}}',
     '@media(max-width:620px){.sc-pg-section .sc-pg-n-queens-frame{height:1120px;min-height:1040px}}',
     '.sc-pg-section .sc-pg-daily-connections-shell{overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#fff}',
     '.sc-pg-section .sc-pg-daily-connections-frame{display:block;width:100%;height:clamp(760px,92vh,1050px);min-height:720px;border:0;background:#fff}',
@@ -161,11 +170,16 @@
     );
 
     const preferredOrder = [
-      '2048','snake','sky-ball','math','starfighter','word','sudoku',
-      'arrow-escape',
-      'daily-connections',
-      'n-queens',
-      'memory','brick-breaker','blocks','typing','connect','ttt','rps'
+      // Row 1: Snake, Math, Starfighter
+      'snake','math','starfighter',
+      // Row 2: 3D Sky Ball, Sudoku, 2048
+      'sky-ball','sudoku','2048',
+      // Row 3: Daily Word, Daily Connections, Typing Test
+      'word','daily-connections','typing',
+      // Remaining games: three cards per row
+      'arrow-escape','connect','brick-breaker',
+      'blocks','n-queens','memory',
+      'ttt','rps'
     ];
     preferredOrder.forEach(key => {
       const tab = tabs.querySelector('[data-extra-tab="' + key + '"], [data-pg-tab="' + key + '"]');
@@ -173,6 +187,28 @@
     });
     const pendingTab = tabs.querySelector('[data-gk-pending]');
     if (pendingTab) tabs.appendChild(pendingTab);
+
+    const gameCardMeta = {
+      'snake':['🐍','3D Snake'], 'math':['➗','Math Challenge'], 'starfighter':['🚀','3D Starfighter'],
+      'sky-ball':['🌤️','3D Sky Ball'], 'sudoku':['🔢','Sudoku'], '2048':['🟨','2048'],
+      'word':['🟩','Daily Word'], 'daily-connections':['🔗','Daily Connections'], 'typing':['⌨️','Typing Test'],
+      'arrow-escape':['🧭','Arrow Escape'], 'connect':['🔴','Connect Four'], 'brick-breaker':['💎','Brick Breaker'],
+      'blocks':['🧩','Block Puzzle'], 'n-queens':['♛','N-Queens'], 'memory':['🧠','Memory Match'],
+      'ttt':['⭕','Tic-Tac-Toe'], 'rps':['✊','Rock Paper Scissors']
+    };
+    tabs.querySelectorAll('.sc-pg-tab').forEach(card => {
+      const key = card.dataset.extraTab || card.dataset.pgTab || '';
+      const meta = gameCardMeta[key];
+      if(meta){
+        card.innerHTML = '<span class="sc-pg-card-icon" aria-hidden="true">'+meta[0]+'</span><span class="sc-pg-card-title">'+meta[1]+'</span>';
+        card.setAttribute('aria-label',meta[1]);
+        card.setAttribute('title',meta[1]);
+      } else if(card.hasAttribute('data-gk-pending')) {
+        card.innerHTML = '<span class="sc-pg-card-icon" aria-hidden="true">🇮🇳</span><span class="sc-pg-card-title">GK Quiz · Soon</span>';
+        card.setAttribute('aria-label','GK Quiz — coming soon');
+      }
+      card.classList.add('sc-pg-game-card');
+    });
 
     bind(section, tabs, panel);
     section.dataset.extraGamesReady = 'true';
@@ -189,7 +225,7 @@
     let mathSubmitting = false;
 
     function commonHead(label, title, resetText) {
-      return '<div class="sc-extra-gamehead"><div><small>' + label + '</small><h3>' + title + '</h3></div>' +
+      return '<div class="sc-extra-gamehead"><div><h3>' + title + '</h3></div>' +
         '<button class="sc-extra-btn" type="button" data-extra-reset>' + resetText + '</button></div>' +
         '<div class="sc-extra-actions"><button class="sc-extra-btn" type="button" data-extra-fullscreen>⛶ Full Screen</button></div>';
     }
