@@ -75,6 +75,7 @@
     '.sc-pg-section .sc-pg-arrow-escape-frame{display:block;width:100%;height:clamp(700px,88vh,900px);min-height:660px;border:0;background:#1e3c72}',
     '.sc-pg-section .sc-pg-n-queens-shell{overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#f6eee2}',
     '.sc-pg-section .sc-pg-n-queens-frame{display:block;width:100%;height:clamp(760px,92vh,1050px);min-height:720px;border:0;background:#f6eee2}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-n-queens-frame{height:1120px;min-height:1040px}}',
     '.sc-pg-section .sc-pg-daily-connections-shell{overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#fff}',
     '.sc-pg-section .sc-pg-daily-connections-frame{display:block;width:100%;height:clamp(760px,92vh,1050px);min-height:720px;border:0;background:#fff}',
     '@media(max-width:620px){.sc-pg-section .sc-pg-arrow-escape-frame{height:800px;min-height:760px}}',
