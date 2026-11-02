@@ -53,7 +53,7 @@
         word:'Daily Word','daily-connections':'Daily Connections',typing:'Typing Test',
         'arrow-escape':'Arrow Escape',connect:'Connect Four','brick-breaker':'Brick Breaker',
         blocks:'Block Puzzle','n-queens':'N-Queens',memory:'Memory Match',
-        ttt:'Tic-Tac-Toe',rps:'Rock Paper Scissors','cricket-super-over-pro':'Cricket Super Over Pro','water-sort':'Water Sort Puzzle','carrom-clash':'Carrom Clash','chess-master':'Chess Master','ludo':'Ludo vs Computer'
+        ttt:'Tic-Tac-Toe',rps:'Rock Paper Scissors','cricket-super-over-pro':'Cricket Super Over Pro','water-sort':'Water Sort Puzzle','carrom-clash':'Carrom Clash','chess-master':'Chess Master','ludo':'Ludo vs Computer','hashi-bridges':'Hashi — Bridges Puzzle'
       };
       const baseGames=new Set(['snake','memory','ttt','rps']);
       function showError(message){
@@ -65,9 +65,9 @@
         document.title=labels[gameId]+' | SiteCraft Games';
         document.getElementById('playerTitle').textContent=labels[gameId];
         const root=document.getElementById('gameMount');
-        if(['water-sort','carrom-clash','chess-master','ludo'].includes(gameId)){
+        if(['water-sort','carrom-clash','chess-master','ludo','hashi-bridges'].includes(gameId)){
           document.body.classList.add('mini-game-mode');
-          const gameFiles={'water-sort':'games/water-sort-puzzle.html','carrom-clash':'games/carrom-clash.html','chess-master':'games/chess-master.html','ludo':'games/ludo-vs-computer.html'};
+          const gameFiles={'water-sort':'games/water-sort-puzzle.html','carrom-clash':'games/carrom-clash.html','chess-master':'games/chess-master.html','ludo':'games/ludo-vs-computer.html','hashi-bridges':'games/hashi-bridges.html'};
           const frame=document.createElement('iframe');
           frame.className='mini-game-frame';
           frame.src=gameFiles[gameId];
@@ -90,7 +90,16 @@
           function updateMiniFullscreen(){
             const active=document.fullscreenElement===frame||document.webkitFullscreenElement===frame;
             fullBtn.textContent=active?'⤢ Exit Full Screen':'⛶ Full Screen';
+            if(gameId==='hashi-bridges'&&frame.contentWindow){
+              frame.contentWindow.postMessage({type:'sitecraft-hashi-fullscreen',active},window.location.origin);
+            }
           }
+          frame.addEventListener('load',function(){
+            const active=document.fullscreenElement===frame||document.webkitFullscreenElement===frame;
+            if(gameId==='hashi-bridges'&&frame.contentWindow){
+              frame.contentWindow.postMessage({type:'sitecraft-hashi-fullscreen',active},window.location.origin);
+            }
+          });
           document.addEventListener('fullscreenchange',updateMiniFullscreen);
           document.addEventListener('webkitfullscreenchange',updateMiniFullscreen);
           return;
