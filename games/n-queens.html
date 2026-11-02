@@ -241,16 +241,16 @@ select{cursor:pointer}.btn{cursor:pointer;transition:transform .12s ease,backgro
       }
     }
     var files=letters(size);
-    document.getElementById('filesTop').style.setProperty('--n',size);
-    document.getElementById('filesBottom').style.setProperty('--n',size);
-    document.getElementById('filesTop').textContent=files.join('   ');
-    document.getElementById('filesBottom').textContent=files.join('   ');
-    var ranks=[];
-    for(var i=size;i>=1;i--) ranks.push(String(i));
-    document.getElementById('ranksLeft').textContent=ranks.join(' ');
-    document.getElementById('ranksRight').textContent=ranks.join(' ');
-    document.getElementById('ranksLeft').style.setProperty('--n',size);
-    document.getElementById('ranksRight').style.setProperty('--n',size);
+    var topFiles=document.getElementById('filesTop'), bottomFiles=document.getElementById('filesBottom');
+    var leftRanks=document.getElementById('ranksLeft'), rightRanks=document.getElementById('ranksRight');
+    [topFiles,bottomFiles].forEach(function(container){
+      container.style.setProperty('--n',size);container.innerHTML='';
+      files.forEach(function(file){var label=document.createElement('span');label.textContent=file;container.appendChild(label);});
+    });
+    [leftRanks,rightRanks].forEach(function(container){
+      container.style.setProperty('--n',size);container.innerHTML='';
+      for(var rank=size;rank>=1;rank--){var label=document.createElement('span');label.textContent=String(rank);container.appendChild(label);}
+    });
     progress.textContent=count+' / '+size;
     undoButton.disabled=history.length===0 || won || solutionShown;
     bestBox.textContent=readBest()?formatTime(readBest()):'—';
@@ -349,7 +349,14 @@ select{cursor:pointer}.btn{cursor:pointer;transition:transform .12s ease,backgro
     if(row<0) return;
     history.push(queens.slice());
     queens[row]=solution[row];
-    statusOverride='Hint: a safe queen has been placed in row '+(size-row)+'. Keep going!';
+    var hintedCount=queens.filter(function(col){return col>=0;}).length;
+    var hintedConflicts=conflictRows(queens);
+    if(hintedCount===size && hintedConflicts.size===0){
+      won=true;stopClock();saveBest();
+      statusOverride='Excellent! The hint completed your '+size+'-Queens challenge in '+formatTime(elapsed)+'. 🎉';
+    } else {
+      statusOverride='Hint: a safe queen has been placed in row '+(size-row)+'. Keep going!';
+    }
     render();
   });
   document.getElementById('solution').addEventListener('click',function(){
