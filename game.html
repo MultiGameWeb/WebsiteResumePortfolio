@@ -19,6 +19,13 @@
     #gameMount .sc-pg-panel{min-height:450px}
     .loadError{padding:28px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:#1c1a29;color:#eee8f7;text-align:center}
     .cricket-game-frame{display:block;width:100%;height:calc(100dvh - 105px);min-height:0;max-height:calc(100dvh - 70px);border:0;border-radius:14px;background:#0b1622}
+    body.mini-game-mode{height:100dvh;min-height:0;overflow:hidden}
+    body.mini-game-mode #playerPage{height:100dvh;display:flex;flex-direction:column;padding:8px clamp(10px,3vw,24px)}
+    body.mini-game-mode .playerTop{flex:0 0 auto;margin:0 0 8px;padding:3px 2px}
+    body.mini-game-mode #gameMount{flex:1;min-height:0}
+    .mini-game-frame{display:block;width:100%;height:100%;min-height:0;max-height:100%;border:0;border-radius:14px;background:#10131f}
+    .mini-game-frame:fullscreen,.mini-game-frame:-webkit-full-screen{width:100vw;height:100vh;height:100dvh;max-height:100dvh;border:0;border-radius:0;background:#10131f}
+
     .playerFullscreen{display:inline-flex;min-height:38px;align-items:center;padding:0 12px;border:1px solid rgba(255,255,255,.15);border-radius:10px;background:rgba(255,255,255,.055);color:#eee8f7;font-size:11px;font-weight:800;cursor:pointer}
     .playerFullscreen[hidden]{display:none!important}
     .cricket-game-frame:fullscreen,.cricket-game-frame:-webkit-full-screen{width:100vw;height:100vh;height:100dvh;max-height:100dvh;border:0;border-radius:0;background:#0b1622}
@@ -46,7 +53,7 @@
         word:'Daily Word','daily-connections':'Daily Connections',typing:'Typing Test',
         'arrow-escape':'Arrow Escape',connect:'Connect Four','brick-breaker':'Brick Breaker',
         blocks:'Block Puzzle','n-queens':'N-Queens',memory:'Memory Match',
-        ttt:'Tic-Tac-Toe',rps:'Rock Paper Scissors','cricket-super-over-pro':'Cricket Super Over Pro'
+        ttt:'Tic-Tac-Toe',rps:'Rock Paper Scissors','cricket-super-over-pro':'Cricket Super Over Pro','water-sort':'Water Sort Puzzle','carrom-clash':'Carrom Clash'
       };
       const baseGames=new Set(['snake','memory','ttt','rps']);
       function showError(message){
@@ -58,6 +65,36 @@
         document.title=labels[gameId]+' | SiteCraft Games';
         document.getElementById('playerTitle').textContent=labels[gameId];
         const root=document.getElementById('gameMount');
+        if(gameId==='water-sort'||gameId==='carrom-clash'){
+          document.body.classList.add('mini-game-mode');
+          const isWaterSort=gameId==='water-sort';
+          const frame=document.createElement('iframe');
+          frame.className='mini-game-frame';
+          frame.src=isWaterSort?'games/water-sort-puzzle.html':'games/carrom-clash.html';
+          frame.title=labels[gameId];
+          frame.loading='eager';
+          frame.allow='fullscreen';
+          frame.allowFullscreen=true;
+          root.replaceChildren(frame);
+          const fullBtn=document.getElementById('playerFullscreen');
+          fullBtn.hidden=false;
+          fullBtn.addEventListener('click',function(){
+            if(document.fullscreenElement===frame||document.webkitFullscreenElement===frame){
+              const exit=document.exitFullscreen||document.webkitExitFullscreen;
+              if(exit){const result=exit.call(document);if(result&&typeof result.catch==='function')result.catch(()=>{});}
+              return;
+            }
+            const request=frame.requestFullscreen||frame.webkitRequestFullscreen;
+            if(request){const result=request.call(frame);if(result&&typeof result.catch==='function')result.catch(()=>{});}
+          });
+          function updateMiniFullscreen(){
+            const active=document.fullscreenElement===frame||document.webkitFullscreenElement===frame;
+            fullBtn.textContent=active?'⤢ Exit Full Screen':'⛶ Full Screen';
+          }
+          document.addEventListener('fullscreenchange',updateMiniFullscreen);
+          document.addEventListener('webkitfullscreenchange',updateMiniFullscreen);
+          return;
+        }
         if(gameId==='cricket-super-over-pro'){
           const frame=document.createElement('iframe');
           frame.className='cricket-game-frame';
