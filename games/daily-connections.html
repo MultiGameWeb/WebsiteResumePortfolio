@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Connections - Telugu & English</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&family=Noto+Sans+Telugu:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --tile-bg: #efefe6;
+      --tile-selected: #5a594e;
+      --text-dark: #121212;
+      --text-light: #ffffff;
+      --yellow: #f9df6d;
+      --green: #a0c35a;
+      --blue: #b0c4ef;
+      --purple: #ba81c5;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans Telugu', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px 12px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      gap: 10px;
+    }
+
+    .top-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    h1 { font-size: 1.6rem; font-weight: 800; }
+
+    .badge {
+      font-size: 0.8rem;
+      background: #efefe6;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .lang-switch {
+      display: flex;
+      background: #efefe6;
+      border-radius: 30px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .lang-btn.active {
+      background: var(--text-dark);
+      color: var(--text-light);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #333;
+      text-align: center;
+    }
+
+    #toast {
+      position: fixed;
+      top: 75px;
+      background: #121212;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 300;
+    }
+
+    #toast.show { opacity: 1; }
+
+    .board-container {
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .solved-container { display: flex; flex-direction: column; gap: 8px; }
+
+    .solved-row {
+      width: 100%;
+      border-radius: 8px;
+      padding: 16px 12px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 80px;
+      animation: popIn 0.35s ease;
+    }
+
+    .solved-title { font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+    .solved-words { font-weight: 500; font-size: 0.95rem; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .tile {
+      background-color: var(--tile-bg);
+      color: var(--text-dark);
+      border-radius: 8px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6px;
+      font-weight: 700;
+      font-size: clamp(0.75rem, 2.5vw, 1rem);
+      cursor: pointer;
+      transition: 0.15s ease;
+      word-break: break-word;
+    }
+
+    .tile.selected {
+      background-color: var(--tile-selected);
+      color: var(--text-light);
+    }
+
+    .tile.shake { animation: shake 0.4s ease; }
+
+    .mistakes-container {
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .dots { display: flex; gap: 8px; }
+    .dot {
+      width: 14px;
+      height: 14px;
+      background-color: var(--tile-selected);
+      border-radius: 50%;
+      transition: 0.25s ease;
+    }
+    .dot.lost { transform: scale(0); opacity: 0; }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 11px 18px;
+      border-radius: 30px;
+      border: 1.5px solid var(--text-dark);
+      background: transparent;
+      color: var(--text-dark);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn.submit-btn {
+      background: var(--text-dark);
+      color: var(--text-light);
+    }
+
+    .btn.submit-btn:disabled {
+      background: transparent;
+      color: #b5b5b5;
+      border-color: #b5b5b5;
+      cursor: not-allowed;
+    }
+
+    .daily-Banner {
+      display: none;
+      margin-top: 18px;
+      padding: 14px 20px;
+      background: #f7f7f2;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .daily-Banner.show {
+      display: block;
+    }
+
+    .timer-text {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-top: 4px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 200;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: #fff;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .emoji-grid {
+      font-size: 1.6rem;
+      line-height: 1.35;
+      margin: 14px 0;
+      white-space: pre-line;
+    }
+
+    .countdown-box {
+      background: #efefe6;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+
+    .countdown-label {
+      font-size: 0.85rem;
+      color: #444;
+      font-weight: 600;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast">One away...</div>
+
+  <header>
+    <div class="top-bar">
+      <div class="title-wrap">
+        <h1>Connections</h1>
+        <span class="badge" id="date-badge">Today</span>
+      </div>
+      <div class="lang-switch">
+        <button class="lang-btn active" id="btn-te" onclick="switchLanguage('te')">తెలుగు</button>
+        <button class="lang-btn" id="btn-en" onclick="switchLanguage('en')">English</button>
+      </div>
+    </div>
+    <p class="subtitle" id="subtitle">సంబంధం ఉన్న 4 పదాలతో నాలుగు గ్రూపులను తయారు చేయండి!</p>
+  </header>
+
+  <main class="board-container">
+    <div class="solved-container" id="solved-container"></div>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <div class="mistakes-container" id="mistakes-box">
+    <span id="mistakes-label">మిగిలిన అవకాశాలు:</span>
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <div class="controls" id="controls-box">
+    <button class="btn" onclick="shuffleBoard()">Shuffle</button>
+    <button class="btn" onclick="deselectAll()">Deselect All</button>
+    <button class="btn submit-btn" id="submit-btn" onclick="submitGuess()" disabled>Submit</button>
+  </div>
+
+  <!-- ఆ రోజు గేమ్ పూర్తయ్యాక కనిపించే బ్యానర్ -->
+  <div class="daily-Banner" id="daily-banner">
+    <div id="banner-msg" style="font-weight: 700; margin-bottom: 6px;">నేటి పజిల్ పూర్తయింది! తదుపరి పజిల్ సమయం:</div>
+    <div class="timer-text" id="banner-timer">00:00:00</div>
+    <button class="btn submit-btn" style="margin-top: 12px;" onclick="openModal()">View & Share Result 📋</button>
+  </div>
+
+  <!-- Result Modal -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2 id="modal-title">అద్భుతం! 🎉</h2>
+      <div class="emoji-grid" id="emoji-grid"></div>
+      <div class="countdown-box">
+        <div class="countdown-label" id="next-puzzle-label">తదుపరి పజిల్ (Next Daily Puzzle):</div>
+        <div class="timer-text" id="modal-timer">00:00:00</div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn submit-btn" onclick="shareResult()">Share Result 📋</button>
+        <button class="btn" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 48 TELUGU GROUPS & 48 ENGLISH GROUPS (మొత్తం 96 గ్రూపులు = 384 పదాలు)
+    // =========================================================================
+    const CATEGORY_POOL = {
+      te: [
+        // 1 to 12
+        { title: "తెలుగు వారాల పేర్లు", words: ["సోమ", "మంగళ", "బుధ", "గురు"] },
+        { title: "ప్రసిద్ధ నదులు", words: ["గోదావరి", "కృష్ణా", "పెన్నా", "తుంగభద్ర"] },
+        { title: "షడ్రుచులలో కొన్ని", words: ["తీపి", "చేదు", "పులుపు", "వగరు"] },
+        { title: "చివర 'పురం' చేరితే ఊరి పేరు అయ్యేవి", words: ["అమలా", "హిందూ", "మార్కా", "పిఠా"] },
+        { title: "సంగీత వాయిద్యాలు", words: ["వీణ", "తబలా", "వేణువు", "మృదంగం"] },
+        { title: "నవరత్నాలలో కొన్ని", words: ["వజ్రం", "కెంపు", "పచ్చ", "నీలం"] },
+        { title: "తెలుగు మాసాలు", words: ["చైత్రం", "వైశాఖం", "శ్రావణం", "కార్తీకం"] },
+        { title: "క్రికెట్ పదాలు", words: ["బ్యాట్", "వికెట్", "బౌండరీ", "సిక్సర్"] },
+        { title: "దక్షిణ భారత రాజధానులు", words: ["హైదరాబాద్", "అమరావతి", "చెన్నై", "బెంగళూరు"] },
+        { title: "బంగారం పర్యాయపదాలు", words: ["పసిడి", "పుత్తడి", "కనకం", "స్వర్ణం"] },
+        { title: "నాలుగు దిక్కులు", words: ["తూర్పు", "పడమర", "ఉత్తరం", "దక్షిణం"] },
+        { title: "చివర 'గిరి' చేరితే ప్రసిద్ధ ప్రదేశం అయ్యేవి", words: ["యాద", "మంగళ", "చంద్ర", "భువన"] },
+
+        // 13 to 24
+        { title: "పంచభూతాలలో కొన్ని", words: ["నింగి", "నేల", "గాలి", "నీరు"] },
+        { title: "తెలుగు ఋతువులు", words: ["వసంత", "గ్రీష్మ", "వర్ష", "శరత్"] },
+        { title: "పువ్వుల పేర్లు", words: ["మల్లె", "జాజి", "గులాబీ", "చామంతి"] },
+        { title: "పండ్ల రకాలు", words: ["మామిడి", "అరటి", "జామ", "దానిమ్మ"] },
+        { title: "కూరగాయలు", words: ["వంకాయ", "బెండకాయ", "దొండకాయ", "కాకరకాయ"] },
+        { title: "ఆకుకూరలు", words: ["పాలకూర", "తోటకూర", "గోంగూర", "మెంతికూర"] },
+        { title: "భారతీయ శాస్త్రీయ నృత్యాలు", words: ["కూచిపూడి", "భరతనాట్యం", "కథక్", "ఒడిస్సీ"] },
+        { title: "రామాయణ పాత్రలు", words: ["రాముడు", "సీత", "లక్ష్మణుడు", "హనుమంతుడు"] },
+        { title: "పాండవులు", words: ["ధర్మరాజు", "భీముడు", "అర్జునుడు", "నకులుడు"] },
+        { title: "తెలుగు పండుగలు", words: ["సంక్రాంతి", "ఉగాది", "దసరా", "దీపావళి"] },
+        { title: "వంటగది దినుసులు", words: ["పసుపు", "జీలకర్ర", "ఆవాలు", "మెంతులు"] },
+        { title: "పాల ఉత్పత్తులు", words: ["పెరుగు", "వెన్న", "నెయ్యి", "జున్ను"] },
+
+        // 25 to 36
+        { title: "తెలుగు పిండివంటలు", words: ["అరిసెలు", "బూరెలు", "గారెలు", "సున్నుండలు"] },
+        { title: "లోహాలు (Metals)", words: ["ఇనుము", "రాగి", "వెండి", "సీసం"] },
+        { title: "గ్రహాలు", words: ["బుధుడు", "శుక్రుడు", "అంగారకుడు", "శని"] },
+        { title: "రాశులు (Zodiac Signs)", words: ["మేషం", "వృషభం", "మిథునం", "కర్కాటకం"] },
+        { title: "నక్షత్రాలు", words: ["అశ్విని", "భరణి", "కృత్తిక", "రోహిణి"] },
+        { title: "వేదాలు", words: ["ఋగ్వేదం", "యజుర్వేదం", "సామవేదం", "అథర్వణవేదం"] },
+        { title: "సముద్రం పర్యాయపదాలు", words: ["కడలి", "సాగరం", "జలధి", "సంద్రం"] },
+        { title: "సూర్యుడి పర్యాయపదాలు", words: ["రవి", "భానుడు", "దివాకరుడు", "భాస్కరుడు"] },
+        { title: "చంద్రుడి పర్యాయపదాలు", words: ["జాబిలి", "శశి", "సోముడు", "చందమామ"] },
+        { title: "కన్ను పర్యాయపదాలు", words: ["నేత్రం", "లోచనం", "నయనం", "చక్షువు"] },
+        { title: "అడవి జంతువులు", words: ["సింహం", "పులి", "ఏనుగు", "జింక"] },
+        { title: "పక్షులు", words: ["నెమలి", "చిలుక", "కోయిల", "పావురం"] },
+
+        // 37 to 48
+        { title: "చెట్ల భాగాలు", words: ["వేరు", "కాండం", "కొమ్మ", "ఆకు"] },
+        { title: "కంప్యూటర్ భాగాలు", words: ["మౌస్", "కీబోర్డ్", "మానిటర్", "ప్రింటర్"] },
+        { title: "రవాణా సాధనాలు", words: ["బస్సు", "రైలు", "విమానం", "పడవ"] },
+        { title: "చదరంగం (Chess) పావులు", words: ["రాజు", "మంత్రి", "శకటం", "గుర్రం"] },
+        { title: "చివర 'వరం' చేరితే ఊరి పేరు అయ్యేవి", words: ["భీమ", "అన్న", "ధర్మ", "రాజమహేంద్ర"] },
+        { title: "చివర 'పల్లి' చేరితే ఊరి పేరు అయ్యేవి", words: ["కూకట్", "కొండా", "మదన", "సర్వే"] },
+        { title: "చివర 'వాడ' చేరితే ఊరి పేరు అయ్యేవి", words: ["విజయ", "గుడి", "పెద్ద", "ధవళేశ్వరం"] },
+        { title: "తెలుగు వ్యాకరణ విభక్తులు", words: ["ప్రథమా", "ద్వితీయా", "తృతీయా", "చతుర్థీ"] },
+        { title: "శరీర భాగాలు", words: ["తల", "చేయి", "కాలు", "భుజం"] },
+        { title: "ఆభరణాలు", words: ["గాజులు", "ఉంగరం", "హారం", "కమ్మలు"] },
+        { title: "ధాన్యాలు / చిరుధాన్యాలు", words: ["వరి", "గోధుమ", "రాగులు", "జొన్నలు"] },
+        { title: "రంగులు", words: ["ఎరుపు", "పసుపు", "తెలుపు", "నలుపు"] }
+      ],
+
+      en: [
+        // 1 to 12
+        { title: "CONTACT VIA TELEPHONE", words: ["CALL", "DIAL", "PHONE", "RING"] },
+        { title: "PARTS OF A CAR", words: ["BELT", "HORN", "MIRROR", "WHEEL"] },
+        { title: "LEVELS OF BIOLOGICAL ORGANIZATION", words: ["ATOM", "CELL", "ORGAN", "TISSUE"] },
+        { title: "ENDING IN UNITS OF MEASUREMENT", words: ["BIGFOOT", "COMPOUND", "INSTAGRAM", "THERMOMETER"] },
+        { title: "PLANETS", words: ["MARS", "VENUS", "SATURN", "JUPITER"] },
+        { title: "WEB BROWSERS", words: ["CHROME", "SAFARI", "EDGE", "BRAVE"] },
+        { title: "COFFEE DRINKS", words: ["LATTE", "MOCHA", "ESPRESSO", "AMERICANO"] },
+        { title: "WORDS AFTER 'FIRE'", words: ["WORK", "FLY", "PLACE", "TRUCK"] },
+        { title: "PALINDROMES", words: ["KAYAK", "LEVEL", "RADAR", "CIVIC"] },
+        { title: "METALS", words: ["GOLD", "SILVER", "PLATINUM", "COPPER"] },
+        { title: "KEYBOARD KEYS", words: ["SHIFT", "ENTER", "SPACE", "TAB"] },
+        { title: "SILENT FIRST LETTER", words: ["KNEE", "WRIST", "HOUR", "PSALM"] },
+
+        // 13 to 24
+        { title: "SOCIAL MEDIA PLATFORMS", words: ["REDDIT", "THREADS", "LINKEDIN", "YOUTUBE"] },
+        { title: "PROGRAMMING LANGUAGES", words: ["PYTHON", "JAVA", "RUST", "SWIFT"] },
+        { title: "CHESS PIECES", words: ["KING", "QUEEN", "ROOK", "BISHOP"] },
+        { title: "CARD SUITS", words: ["HEART", "SPADE", "CLUB", "DIAMOND"] },
+        { title: "SEASONS", words: ["SPRING", "SUMMER", "AUTUMN", "WINTER"] },
+        { title: "OCEANS", words: ["PACIFIC", "ATLANTIC", "INDIAN", "ARCTIC"] },
+        { title: "TYPES OF CLOUDS", words: ["CIRRUS", "CUMULUS", "STRATUS", "NIMBUS"] },
+        { title: "GREEK LETTERS", words: ["ALPHA", "BETA", "GAMMA", "DELTA"] },
+        { title: "MUSIC GENRES", words: ["JAZZ", "BLUES", "ROCK", "DISCO"] },
+        { title: "PASTA SHAPES", words: ["PENNE", "FUSILLI", "RIGATONI", "FARFALLE"] },
+        { title: "TYPES OF CHEESE", words: ["CHEDDAR", "GOUDA", "BRIE", "FETA"] },
+        { title: "CITRUS FRUITS", words: ["LEMON", "LIME", "ORANGE", "POMELO"] },
+
+        // 25 to 36
+        { title: "BERRIES", words: ["STRAWBERRY", "BLUEBERRY", "RASPBERRY", "BLACKBERRY"] },
+        { title: "TREE NUTS", words: ["ALMOND", "WALNUT", "CASHEW", "PECAN"] },
+        { title: "SPICES", words: ["CLOVE", "CUMIN", "CINNAMON", "GINGER"] },
+        { title: "GEMSTONES", words: ["RUBY", "EMERALD", "SAPPHIRE", "OPAL"] },
+        { title: "CURRENCIES", words: ["DOLLAR", "RUPEE", "YEN", "EURO"] },
+        { title: "OLYMPIC RINGS COLORS", words: ["BLUE", "YELLOW", "BLACK", "GREEN"] },
+        { title: "WOODWIND INSTRUMENTS", words: ["FLUTE", "CLARINET", "OBOE", "BASSOON"] },
+        { title: "STRING INSTRUMENTS", words: ["VIOLIN", "CELLO", "HARP", "GUITAR"] },
+        { title: "MARTIAL ARTS", words: ["KARATE", "JUDO", "TAEKWONDO", "AIKIDO"] },
+        { title: "RACKET SPORTS", words: ["TENNIS", "SQUASH", "BADMINTON", "PICKLEBALL"] },
+        { title: "WINTER SPORTS", words: ["SKIING", "CURLING", "LUGE", "BIATHLON"] },
+        { title: "BOARD GAMES", words: ["MONOPOLY", "SCRABBLE", "CLUE", "RISK"] },
+
+        // 37 to 48
+        { title: "FILE EXTENSIONS", words: ["PDF", "JPEG", "DOCX", "HTML"] },
+        { title: "CLOUD STORAGE SERVICES", words: ["DROPBOX", "ICLOUD", "ONEDRIVE", "BOX"] },
+        { title: "STREAMING PLATFORMS", words: ["NETFLIX", "HULU", "DISNEY", "PRIME"] },
+        { title: "SHAKESPEARE PLAYS", words: ["HAMLET", "OTHELLO", "MACBETH", "TEMPEST"] },
+        { title: "HOMOPHONES OF NUMBERS", words: ["WON", "TOO", "FORE", "ATE"] },
+        { title: "WORDS BEFORE 'BALL'", words: ["BASKET", "FOOT", "SNOW", "BASE"] },
+        { title: "WORDS AFTER 'SUN'", words: ["FLOWER", "GLASSES", "SCREEN", "SET"] },
+        { title: "WORDS BEFORE 'LIGHT'", words: ["FLASH", "SPOT", "MOON", "STAR"] },
+        { title: "PARTS OF A BOOK", words: ["SPINE", "COVER", "PAGE", "INDEX"] },
+        { title: "PARTS OF A SHOE", words: ["SOLE", "HEEL", "TONGUE", "LACE"] },
+        { title: "THINGS WITH TEETH", words: ["COMB", "SAW", "ZIPPER", "GEAR"] },
+        { title: "FLIGHTLESS BIRDS", words: ["PENGUIN", "OSTRICH", "EMU", "KIWI"] }
+      ]
+    };
+
+    const TIER_STYLES = [
+      { color: "var(--yellow)", emoji: "🟨" },
+      { color: "var(--green)", emoji: "🟩" },
+      { color: "var(--blue)", emoji: "🟦" },
+      { color: "var(--purple)", emoji: "🟪" }
+    ];
+
+    let currentLang = 'te';
+    let activeCategories = [];
+    let remainingWords = [];
+    let selectedWords = [];
+    let solvedCategories = [];
+    let mistakesRemaining = 4;
+    let guessHistory = [];
+    let previousGuesses = new Set();
+    let isGameOver = false;
+    let didWin = false;
+
+    // ఈరోజు తేదీని "YYYY-MM-DD" ఫార్మాట్‌లో తీసుకోవడం
+    function getTodayDateString() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+
+    // తేదీ ఆధారంగా ఆ రోజుకి మాత్రమే ఫిక్స్ అయిన 4 గ్రూపులను ఎంచుకోవడం (Daily Deterministic Selection)
+    function getDailyPuzzleIndex() {
+      const epoch = new Date(2026, 0, 1); // Jan 1, 2026
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const diffDays = Math.floor((today - epoch) / (1000 * 60 * 60 * 24));
+      return Math.abs(diffDays);
+    }
+
+    function getDailyFourCategories(lang) {
+      const pool = CATEGORY_POOL[lang];
+      const totalSets = Math.floor(pool.length / 4); // 48 / 4 = 12 sets
+      const dayNumber = getDailyPuzzleIndex();
+      const setIndex = dayNumber % totalSets;
+      const startIdx = setIndex * 4;
+
+      const chosen = pool.slice(startIdx, startIdx + 4);
+      return chosen.map((cat, idx) => ({
+        ...cat,
+        color: TIER_STYLES[idx].color,
+        emoji: TIER_STYLES[idx].emoji
+      }));
+    }
+
+    // ఆ రోజు గేమ్ స్టేట్ localStorage లో సేవ్ & లోడ్ చేయడం
+    function getStorageKey(lang) {
+      return `daily_conn_${lang}_${getTodayDateString()}`;
+    }
+
+    function saveDailyState() {
+      const state = {
+        solvedCategoryIndices: solvedCategories.map(c => activeCategories.findIndex(ac => ac.title === c.title)),
+        mistakesRemaining,
+        guessHistory,
+        previousGuesses: Array.from(previousGuesses),
+        isGameOver,
+        didWin
+      };
+      localStorage.setItem(getStorageKey(currentLang), JSON.stringify(state));
+    }
+
+    function loadDailyGame() {
+      const todayStr = getTodayDateString();
+      const dayNum = (getDailyPuzzleIndex() % 12) + 1;
+      document.getElementById('date-badge').textContent = `${todayStr} (#${dayNum})`;
+
+      document.getElementById('subtitle').textContent =
+        currentLang === 'te'
+          ? "సంబంధం ఉన్న 4 పదాలతో నాలుగు గ్రూపులను తయారు చేయండి! (రోజుకు ఒక పజిల్)"
+          : "Create four groups of four! (One puzzle per day)";
+      document.getElementById('mistakes-label').textContent =
+        currentLang === 'te' ? "మిగిలిన అవకాశాలు:" : "Mistakes Remaining:";
+      document.getElementById('next-puzzle-label').textContent =
+        currentLang === 'te' ? "తదుపరి పజిల్ (Next Daily Puzzle):" : "Next Daily Puzzle in:";
+      document.getElementById('banner-msg').textContent =
+        currentLang === 'te'
+          ? "నేటి పజిల్ పూర్తయింది! తదుపరి పజిల్ సమయం:"
+          : "Today's puzzle is complete! Next puzzle in:";
+
+      activeCategories = getDailyFourCategories(currentLang);
+      selectedWords = [];
+
+      const savedRaw = localStorage.getItem(getStorageKey(currentLang));
+
+      if (savedRaw) {
+        const saved = JSON.parse(savedRaw);
+        mistakesRemaining = saved.mistakesRemaining;
+        guessHistory = saved.guessHistory || [];
+        previousGuesses = new Set(saved.previousGuesses || []);
+        isGameOver = saved.isGameOver;
+        didWin = saved.didWin;
+
+        const solvedIdxSet = new Set(saved.solvedCategoryIndices || []);
+        solvedCategories = (saved.solvedCategoryIndices || []).map(i => activeCategories[i]);
+
+        remainingWords = [];
+        if (!isGameOver) {
+          activeCategories.forEach((cat, idx) => {
+            if (!solvedIdxSet.has(idx)) {
+              cat.words.forEach(word => remainingWords.push({ word, categoryIndex: idx }));
+            }
+          });
+          shuffleArray(remainingWords);
+        } else {
+          // గేమ్ పూర్తయితే అన్ని గ్రూపులు చూపించడం
+          activeCategories.forEach(cat => {
+            if (!solvedCategories.some(sc => sc.title === cat.title)) {
+              solvedCategories.push(cat);
+            }
+          });
+        }
+      } else {
+        solvedCategories = [];
+        mistakesRemaining = 4;
+        guessHistory = [];
+        previousGuesses.clear();
+        isGameOver = false;
+        didWin = false;
+        remainingWords = [];
+
+        activeCategories.forEach((cat, idx) => {
+          cat.words.forEach(word => remainingWords.push({ word, categoryIndex: idx }));
+        });
+        shuffleArray(remainingWords);
+      }
+
+      renderSolved();
+      renderGrid();
+      renderMistakes();
+      updateSubmitBtn();
+      updateDailyLockUI();
+    }
+
+    function updateDailyLockUI() {
+      const banner = document.getElementById('daily-banner');
+      const controls = document.getElementById('controls-box');
+      const mistakesBox = document.getElementById('mistakes-box');
+
+      if (isGameOver) {
+        banner.classList.add('show');
+        controls.style.display = 'none';
+        mistakesBox.style.display = 'none';
+      } else {
+        banner.classList.remove('show');
+        controls.style.display = 'flex';
+        mistakesBox.style.display = 'flex';
+      }
+    }
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      document.getElementById('btn-te').classList.toggle('active', lang === 'te');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      closeModal();
+      loadDailyGame();
+    }
+
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      remainingWords.forEach(item => {
+        const tile = document.createElement('div');
+        tile.className = 'tile' + (selectedWords.includes(item.word) ? ' selected' : '');
+        tile.textContent = item.word;
+        tile.onclick = () => toggleSelect(item.word);
+        grid.appendChild(tile);
+      });
+    }
+
+    function renderSolved() {
+      const container = document.getElementById('solved-container');
+      container.innerHTML = '';
+      solvedCategories.forEach(cat => {
+        const row = document.createElement('div');
+        row.className = 'solved-row';
+        row.style.backgroundColor = cat.color;
+        row.innerHTML = `
+          <div class="solved-title">${cat.title}</div>
+          <div class="solved-words">${cat.words.join(', ')}</div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function renderMistakes() {
+      const dotsContainer = document.getElementById('dots');
+      dotsContainer.innerHTML = '';
+      for (let i = 0; i < 4; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i >= mistakesRemaining ? ' lost' : '');
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function toggleSelect(word) {
+      if (isGameOver) return;
+      const idx = selectedWords.indexOf(word);
+      if (idx > -1) selectedWords.splice(idx, 1);
+      else if (selectedWords.length < 4) selectedWords.push(word);
+      renderGrid();
+      updateSubmitBtn();
+    }
+
+    function deselectAll() {
+      selectedWords = [];
+      renderGrid();
+      updateSubmitBtn();
+    }
+
+    function shuffleBoard() {
+      if (isGameOver) return;
+      shuffleArray(remainingWords);
+      renderGrid();
+    }
+
+    function updateSubmitBtn() {
+      document.getElementById('submit-btn').disabled = selectedWords.length !== 4 || isGameOver;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function submitGuess() {
+      if (selectedWords.length !== 4 || isGameOver) return;
+
+      const guessKey = [...selectedWords].sort().join('|');
+      if (previousGuesses.has(guessKey)) {
+        showToast(currentLang === 'te' ? "ఇది ఇప్పటికే ప్రయత్నించారు!" : "Already guessed!");
+        return;
+      }
+      previousGuesses.add(guessKey);
+
+      const selectedItems = remainingWords.filter(item => selectedWords.includes(item.word));
+      const emojiRow = selectedItems.map(item => activeCategories[item.categoryIndex].emoji).join('');
+      guessHistory.push(emojiRow);
+
+      const counts = {};
+      selectedItems.forEach(item => {
+        counts[item.categoryIndex] = (counts[item.categoryIndex] || 0) + 1;
+      });
+
+      const maxMatch = Math.max(...Object.values(counts));
+
+      if (maxMatch === 4) {
+        const catIndex = selectedItems[0].categoryIndex;
+        solvedCategories.push(activeCategories[catIndex]);
+        remainingWords = remainingWords.filter(item => item.categoryIndex !== catIndex);
+        selectedWords = [];
+
+        if (solvedCategories.length === 4) {
+          isGameOver = true;
+          didWin = true;
+          saveDailyState();
+          renderSolved();
+          renderGrid();
+          updateSubmitBtn();
+          updateDailyLockUI();
+          setTimeout(() => openModal(), 500);
+        } else {
+          saveDailyState();
+          renderSolved();
+          renderGrid();
+          updateSubmitBtn();
+        }
+      } else {
+        mistakesRemaining--;
+        renderMistakes();
+        if (maxMatch === 3) {
+          showToast(currentLang === 'te' ? "ఒక్క పదం తేడాలో ఉన్నారు (One away)..." : "One away...");
+        }
+        const tiles = document.querySelectorAll('.tile.selected');
+        tiles.forEach(t => t.classList.add('shake'));
+        setTimeout(() => tiles.forEach(t => t.classList.remove('shake')), 450);
+
+        if (mistakesRemaining === 0) {
+          isGameOver = true;
+          didWin = false;
+          saveDailyState();
+          setTimeout(revealAllCategories, 700);
+        } else {
+          saveDailyState();
+        }
+      }
+    }
+
+    function revealAllCategories() {
+      activeCategories.forEach(cat => {
+        if (!solvedCategories.some(sc => sc.title === cat.title)) {
+          solvedCategories.push(cat);
+        }
+      });
+      remainingWords = [];
+      selectedWords = [];
+      renderSolved();
+      renderGrid();
+      updateSubmitBtn();
+      updateDailyLockUI();
+      setTimeout(() => openModal(), 700);
+    }
+
+    function openModal() {
+      document.getElementById('modal-title').textContent = didWin
+        ? (currentLang === 'te' ? "అద్భుతం! 🎉" : "Splendid! 🎉")
+        : (currentLang === 'te' ? "మంచి ప్రయత్నం!" : "Next Time!");
+      document.getElementById('emoji-grid').textContent = guessHistory.join('\n');
+      document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+    }
+
+    function shareResult() {
+      const todayStr = getTodayDateString();
+      const text = `Daily Connections (${currentLang.toUpperCase()}) - ${todayStr}\n${guessHistory.join('\n')}`;
+      navigator.clipboard.writeText(text).then(() => showToast("Copied to clipboard! 📋"));
+    }
+
+    // అర్ధరాత్రి 12 గంటల వరకు కౌంట్‌డౌన్ టైమర్
+    function startCountdownTimer() {
+      function updateTimer() {
+        const now = new Date();
+        const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        const diff = tomorrow - now;
+
+        const hrs = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+        const mins = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
+        const secs = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+        const timeStr = `${hrs}:${mins}:${secs}`;
+
+        document.getElementById('modal-timer').textContent = timeStr;
+        document.getElementById('banner-timer').textContent = timeStr;
+      }
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
+    loadDailyGame();
+    startCountdownTimer();
+  </script>
+</body>
+</html>
