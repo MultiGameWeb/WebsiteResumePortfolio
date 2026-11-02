@@ -20,7 +20,7 @@
     .card{display:flex;min-width:0;min-height:154px;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:15px 9px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));box-shadow:0 9px 22px rgba(0,0,0,.16);text-align:center;transition:transform .16s ease,border-color .16s ease,background .16s ease}
     .card:hover{transform:translateY(-3px);border-color:rgba(216,180,254,.48);background:linear-gradient(145deg,rgba(124,58,237,.17),rgba(255,255,255,.035))}
     .icon{display:grid;place-items:center;width:53px;height:53px;border:1px solid rgba(255,255,255,.1);border-radius:15px;background:rgba(255,255,255,.055);font-size:31px;line-height:1}
-    .diamond-icon{display:block;width:37px;height:37px;filter:drop-shadow(0 2px 4px rgba(8,145,178,.45))}
+    .brick-wall-icon{display:block;width:39px;height:39px;filter:drop-shadow(0 2px 4px rgba(180,83,9,.35))}
     .card h2{min-width:0;margin:0;color:#fff;font-size:clamp(11px,1.35vw,15px);font-weight:850;line-height:1.25;overflow-wrap:anywhere}
     .play{display:inline-flex;min-width:92px;min-height:34px;align-items:center;justify-content:center;gap:5px;padding:0 13px;border:0;border-radius:9px;background:linear-gradient(110deg,#7c3aed,#db2777);color:#fff;text-decoration:none;font-size:11px;font-weight:850;letter-spacing:.02em;box-shadow:0 4px 12px rgba(124,58,237,.2)}
     .play:hover{filter:brightness(1.12)}
@@ -45,7 +45,7 @@
       <article class="card"><div class="icon" aria-hidden="true">🔢</div><h2>Sudoku</h2><a class="play" href="game.html?game=sudoku">▶ Play</a></article>
       <article class="card"><div class="icon" aria-hidden="true">🟨</div><h2>2048</h2><a class="play" href="game.html?game=2048">▶ Play</a></article>
 
-      <article class="card"><div class="icon" aria-hidden="true"><svg class="diamond-icon" viewBox="0 0 64 64" role="img" aria-label="Diamond"><path d="M17 5h30l14 19-29 35L3 24 17 5Z" fill="#0891b2"/><path d="M17 5 12 24h20V5H17Z" fill="#a5f3fc"/><path d="M47 5 52 24H32V5h15Z" fill="#38bdf8"/><path d="M3 24h58L32 59 3 24Z" fill="#0284c7"/><path d="M12 24 32 59V24H12Z" fill="#67e8f9"/><path d="M52 24 32 59V24h20Z" fill="#0e7490"/></svg></div><h2>Brick Breaker</h2><a class="play" href="game.html?game=brick-breaker">▶ Play</a></article>
+      <article class="card"><div class="icon" aria-hidden="true"><svg class="brick-wall-icon" viewBox="0 0 64 64" role="img" aria-label="Brick wall"><rect x="5" y="9" width="54" height="46" rx="5" fill="#b45309"/><path d="M5 24h54M5 40h54M23 9v15M43 9v15M14 24v16M34 24v16M52 24v16M23 40v15M43 40v15" fill="none" stroke="#ffedd5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h2>Brick Breaker</h2><a class="play" href="game.html?game=brick-breaker">▶ Play</a></article>
       <article class="card"><div class="icon" aria-hidden="true">🔗</div><h2>Daily Connections</h2><a class="play" href="game.html?game=daily-connections">▶ Play</a></article>
       <article class="card"><div class="icon" aria-hidden="true">⌨️</div><h2>Typing Test</h2><a class="play" href="game.html?game=typing">▶ Play</a></article>
 
