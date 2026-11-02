@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17131b">
+<title>Carrom Clash | SiteCraft Games</title>
+<style>
+:root{color-scheme:dark;--bg:#17131b;--panel:#241d28;--line:#4b3948;--text:#fff8f0;--muted:#c0aeb2;--gold:#f6c978}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:radial-gradient(ellipse at 50% -10%,#4a2d3d 0,transparent 48%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overscroll-behavior:none}
+button{font:inherit;touch-action:manipulation}
+#app{height:100dvh;width:100%;max-width:900px;margin:auto;padding:clamp(6px,1.5vh,13px) clamp(9px,2vw,18px);display:flex;flex-direction:column;align-items:center;gap:clamp(4px,1vh,9px)}
+header{width:100%;display:flex;align-items:center;justify-content:space-between;gap:9px}
+.brand{display:flex;align-items:center;gap:9px;min-width:0}
+.logo{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(145deg,#9c563d,#e5a95e);font-size:22px;box-shadow:0 7px 22px #e5a95e30}
+h1{margin:0;font-size:clamp(18px,3.4vw,26px);letter-spacing:-.04em}
+.sub{margin-top:2px;color:var(--muted);font-size:9px}
+.reset{min-height:35px;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:#ffffff0b;color:#f8e7dd;font-size:10px;font-weight:850;cursor:pointer}
+.difficulty{display:flex;align-items:center;justify-content:center;gap:7px}
+.difficulty span{margin-right:2px;color:var(--muted);font-size:10px;font-weight:800}
+.diff{min-height:30px;padding:0 13px;border:1px solid var(--line);border-radius:999px;background:#ffffff08;color:#e8d9d7;font-size:10px;font-weight:850;cursor:pointer}
+.diff[aria-pressed=true]{border-color:#e9b76e;background:#e9b76e23;color:#ffe0a8;box-shadow:0 0 0 2px #e9b76e12}
+.scorebar{width:min(100%,620px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+.player{padding:7px 10px;border:1px solid var(--line);border-radius:12px;background:#ffffff08;display:flex;align-items:center;gap:8px}
+.player.cpu{justify-content:flex-end;text-align:right}
+.disc{width:20px;height:20px;border-radius:50%;border:2px solid #f9e9ce;background:radial-gradient(circle at 35% 28%,#fff,#e6d8b7 50%,#9b8b6e);box-shadow:0 2px 5px #0006}
+.disc.dark{background:radial-gradient(circle at 35% 28%,#806b62,#30262a 60%,#100d11);border-color:#b9a39a}
+.player b{display:block;font-size:11px}
+.player small{display:block;margin-top:2px;color:var(--muted);font-size:9px}
+.score{font-size:22px;font-weight:950;font-variant-numeric:tabular-nums;color:var(--gold)}
+.status{width:min(100%,620px);min-height:19px;color:#f5d5a0;font-size:11px;font-weight:800;text-align:center}
+.board-wrap{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
+#board{display:block;width:min(92vw, min(620px, 63dvh));height:auto;max-height:100%;aspect-ratio:1;border-radius:17px;box-shadow:0 15px 50px #0008;touch-action:none;user-select:none;-webkit-user-select:none}
+.help{width:min(100%,660px);margin:0;color:#bbaeb5;font-size:9px;line-height:1.4;text-align:center}
+@media(max-height:600px){#app{gap:3px;padding:5px 8px}.logo{width:32px;height:32px}.diff{min-height:26px;padding:0 10px}.player{padding:4px 7px}.status{min-height:15px;font-size:10px}#board{width:min(88vw, min(520px, 59dvh))}.help{font-size:8px}}
+@media(max-width:390px){.sub{display:none}.player{gap:5px;padding:6px}.player b{font-size:10px}.score{font-size:19px}.diff{padding:0 10px}.difficulty{gap:5px}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand"><div class="logo" aria-hidden="true">🎯</div><div><h1>Carrom Clash</h1><div class="sub">Challenge the computer • Pocket your coins</div></div></div>
+    <button class="reset" id="resetBtn" type="button">↻ New Game</button>
+  </header>
+  <div class="difficulty" aria-label="Computer difficulty">
+    <span>COMPUTER</span>
+    <button class="diff" data-level="easy" aria-pressed="false" type="button">Easy</button>
+    <button class="diff" data-level="medium" aria-pressed="true" type="button">Medium</button>
+    <button class="diff" data-level="hard" aria-pressed="false" type="button">Hard</button>
+  </div>
+  <section class="scorebar" aria-label="Score">
+    <div class="player"><span class="disc"></span><div><b>You · White</b><small id="youRemaining">9 coins left</small></div></div>
+    <div class="score" id="score">0 : 0</div>
+    <div class="player cpu"><div><b>Computer · Black</b><small id="cpuRemaining">9 coins left</small></div><span class="disc dark"></span></div>
+  </section>
+  <div class="status" id="status" aria-live="polite">Your turn — drag the striker backward and release to shoot.</div>
+  <main class="board-wrap"><canvas id="board" width="700" height="700" aria-label="Carrom board. Drag the white striker backward and release to shoot."></canvas></main>
+  <p class="help">Drag the white striker backward, then release. Tap your baseline to reposition it. Pocket white coins to keep your turn; first to clear all own coins wins. Queen is worth 3 bonus points when covered by one of your coins in the same shot.</p>
+</div>
+<script>
+(function(){
+'use strict';
+const canvas=document.getElementById('board'),ctx=canvas.getContext('2d');
+const statusEl=document.getElementById('status'),scoreEl=document.getElementById('score');
+const pockets=[{x:91,y:91},{x:609,y:91},{x:91,y:609},{x:609,y:609}];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+let coins=[],striker,turn='player',phase='ready',difficulty='medium',drag=null,events=null;
+let playerScore=0,cpuScore=0,settled=0,raf=0,cpuTimer=0,queenCovered=false;
+function coin(x,y,kind){return {x,y,vx:0,vy:0,r:12,kind,alive:true};}
+function setupCoins(){
+ coins=[];queenCovered=false;
+ coins.push(coin(350,350,'queen'));
+ for(let i=0;i<6;i++){
+   const a=i*Math.PI/3;
+   coins.push(coin(350+Math.cos(a)*31,350+Math.sin(a)*31,i%2?'black':'white'));
+ }
+ for(let i=0;i<12;i++){
+   const a=i*Math.PI/6+Math.PI/12;
+   coins.push(coin(350+Math.cos(a)*67,350+Math.sin(a)*67,i%2?'white':'black'));
+ }
+}
+function resetStriker(){striker={x:350,y:558,vx:0,vy:0,r:17,kind:'striker',alive:true};}
+function newGame(){
+ if(cpuTimer)clearTimeout(cpuTimer);cpuTimer=0;
+ setupCoins();resetStriker();turn='player';phase='ready';drag=null;events=null;playerScore=0;cpuScore=0;settled=0;
+ statusEl.textContent='Your turn — drag the striker backward and release to shoot.';
+ updateHud();draw();
+}
+function updateHud(){
+ const w=coins.filter(c=>c.alive&&c.kind==='white').length,b=coins.filter(c=>c.alive&&c.kind==='black').length;
+ document.getElementById('youRemaining').textContent=w+' coins left';
+ document.getElementById('cpuRemaining').textContent=b+' coins left';
+ scoreEl.textContent=playerScore+' : '+cpuScore;
+ document.querySelectorAll('.diff').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===difficulty)));
+}
+function roundRect(x,y,w,h,r,fill,stroke){
+ ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();
+ if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=3;ctx.stroke();}
+}
+function drawBoard(){
+ ctx.clearRect(0,0,700,700);
+ const wood=ctx.createLinearGradient(40,40,660,660);wood.addColorStop(0,'#d79b5d');wood.addColorStop(.5,'#a85e36');wood.addColorStop(1,'#6f3b2d');
+ roundRect(33,33,634,634,30,wood,'#e7bb7c');
+ roundRect(65,65,570,570,16,'#e9c996','#75452f');
+ const play=ctx.createLinearGradient(90,90,610,610);play.addColorStop(0,'#f4dfb9');play.addColorStop(1,'#d9b37e');
+ ctx.fillStyle=play;ctx.fillRect(86,86,528,528);
+ ctx.strokeStyle='#986044';ctx.lineWidth=2;ctx.strokeRect(86,86,528,528);
+ // Baselines and arrows
+ ctx.lineWidth=3;ctx.strokeStyle='#a96045';
+ ctx.beginPath();ctx.moveTo(252,130);ctx.lineTo(448,130);ctx.moveTo(252,570);ctx.lineTo(448,570);ctx.stroke();
+ for(const y of [130,570])for(const x of [252,448]){ctx.beginPath();ctx.arc(x,y,14,0,Math.PI*2);ctx.stroke();}
+ // Centre markings
+ ctx.beginPath();ctx.arc(350,350,88,0,Math.PI*2);ctx.stroke();
+ ctx.beginPath();ctx.arc(350,350,37,0,Math.PI*2);ctx.stroke();
+ ctx.beginPath();ctx.moveTo(350,308);ctx.lineTo(350,392);ctx.moveTo(308,350);ctx.lineTo(392,350);ctx.stroke();
+ // Corner pocket guides
+ for(const p of pockets){
+   ctx.beginPath();ctx.arc(p.x,p.y,36,0,Math.PI*2);ctx.strokeStyle='#9d6041';ctx.lineWidth=3;ctx.stroke();
+   const g=ctx.createRadialGradient(p.x-5,p.y-7,3,p.x,p.y,29);g.addColorStop(0,'#30232b');g.addColorStop(1,'#09080c');
+   ctx.beginPath();ctx.arc(p.x,p.y,27,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+   ctx.beginPath();ctx.arc(p.x,p.y,27,0,Math.PI*2);ctx.strokeStyle='#6b3c30';ctx.lineWidth=4;ctx.stroke();
+ }
+}
+function drawCoin(c){
+ if(!c.alive)return;
+ ctx.save();ctx.shadowColor='#4b271c88';ctx.shadowBlur=6;ctx.shadowOffsetY=3;
+ const g=ctx.createRadialGradient(c.x-c.r*.35,c.y-c.r*.4,2,c.x,c.y,c.r*1.25);
+ if(c.kind==='white'){g.addColorStop(0,'#fffef3');g.addColorStop(.65,'#eadfbe');g.addColorStop(1,'#a99875');}
+ else if(c.kind==='black'){g.addColorStop(0,'#9e8378');g.addColorStop(.6,'#4b3735');g.addColorStop(1,'#171216');}
+ else {g.addColorStop(0,'#ffb0a2');g.addColorStop(.55,'#d74742');g.addColorStop(1,'#681c28');}
+ ctx.beginPath();ctx.arc(c.x,c.y,c.r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+ ctx.shadowColor='transparent';ctx.lineWidth=1.6;ctx.strokeStyle=c.kind==='white'?'#907e5d':c.kind==='black'?'#c0a298':'#ffe1c6';ctx.stroke();
+ if(c.kind==='queen'){ctx.beginPath();ctx.arc(c.x,c.y,4,0,Math.PI*2);ctx.fillStyle='#ffe4b4';ctx.fill();}
+ ctx.restore();
+}
+function drawStriker(){
+ if(!striker||!striker.alive)return;
+ ctx.save();ctx.shadowColor='#33221899';ctx.shadowBlur=10;ctx.shadowOffsetY=4;
+ const g=ctx.createRadialGradient(striker.x-7,striker.y-8,2,striker.x,striker.y,striker.r);
+ g.addColorStop(0,'#fff');g.addColorStop(.55,'#e1e6ec');g.addColorStop(1,'#758392');
+ ctx.beginPath();ctx.arc(striker.x,striker.y,striker.r,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();ctx.shadowColor='transparent';
+ ctx.lineWidth=3;ctx.strokeStyle='#53708a';ctx.stroke();
+ ctx.beginPath();ctx.arc(striker.x,striker.y,6,0,Math.PI*2);ctx.fillStyle='#9b3d55';ctx.fill();
+ ctx.restore();
+}
+function drawAim(){
+ if(!drag||phase!=='ready')return;
+ const dx=drag.start.x-drag.pointer.x,dy=drag.start.y-drag.pointer.y,len=Math.hypot(dx,dy);
+ if(len<3)return;
+ const ux=dx/len,uy=dy/len,end={x:striker.x+ux*150,y:striker.y+uy*150};
+ ctx.save();ctx.setLineDash([8,7]);ctx.lineWidth=3;ctx.strokeStyle='#fff9e8cc';
+ ctx.beginPath();ctx.moveTo(striker.x,striker.y);ctx.lineTo(end.x,end.y);ctx.stroke();ctx.setLineDash([]);
+ ctx.beginPath();ctx.arc(end.x,end.y,7,0,Math.PI*2);ctx.fillStyle='#f4ce83';ctx.fill();
+ ctx.restore();
+}
+function draw(){
+ drawBoard();coins.forEach(drawCoin);drawStriker();drawAim();
+}
+function bodies(){return coins.filter(c=>c.alive).concat(striker&&striker.alive?[striker]:[]);}
+function markPocket(body){
+ body.alive=false;body.vx=0;body.vy=0;
+ if(body.kind==='striker'){events.foul=true;return;}
+ if(body.kind==='queen'){events.queen=true;return;}
+ if(body.kind==='white')events.playerOwn++;
+ if(body.kind==='black')events.cpuOwn++;
+ if(body.kind==='white'&&turn==='player')playerScore++;
+ if(body.kind==='black'&&turn==='computer')cpuScore++;
+}
+function physicsStep(){
+ const list=bodies();
+ for(const b of list){
+   b.x+=b.vx;b.y+=b.vy;
+   b.vx*=.986;b.vy*=.986;
+   if(Math.abs(b.vx)<.025)b.vx=0;if(Math.abs(b.vy)<.025)b.vy=0;
+   for(const p of pockets){if(distance(b,p)<27){markPocket(b);break;}}
+   if(!b.alive)continue;
+   const lo=82+b.r,hi=618-b.r;
+   if(b.x<lo){b.x=lo;b.vx=Math.abs(b.vx)*.82;}else if(b.x>hi){b.x=hi;b.vx=-Math.abs(b.vx)*.82;}
+   if(b.y<lo){b.y=lo;b.vy=Math.abs(b.vy)*.82;}else if(b.y>hi){b.y=hi;b.vy=-Math.abs(b.vy)*.82;}
+ }
+ const active=bodies();
+ for(let i=0;i<active.length;i++)for(let j=i+1;j<active.length;j++){
+   const a=active[i],b=active[j],dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy),min=a.r+b.r;
+   if(d>0&&d<min){
+     const nx=dx/d,ny=dy/d,overlap=min-d;
+     a.x-=nx*overlap*.51;a.y-=ny*overlap*.51;b.x+=nx*overlap*.51;b.y+=ny*overlap*.51;
+     const rel=(a.vx-b.vx)*nx+(a.vy-b.vy)*ny;
+     if(rel>0){const impulse=rel*.94;a.vx-=impulse*nx;a.vy-=impulse*ny;b.vx+=impulse*nx;b.vy+=impulse*ny;}
+   }
+ }
+}
+function anyMoving(){return bodies().some(b=>Math.hypot(b.vx,b.vy)>.12);}
+function startShot(vx,vy){
+ if(phase!=='ready'||turn!=='player'||!striker.alive)return;
+ striker.vx=vx;striker.vy=vy;drag=null;phase='moving';settled=0;
+ events={playerOwn:0,cpuOwn:0,queen:false,foul:false};
+ statusEl.textContent='Your shot…';
+}
+function finishShot(){
+ phase='ready';
+ if(events.foul){
+   if(turn==='player')playerScore=Math.max(0,playerScore-1);else cpuScore=Math.max(0,cpuScore-1);
+   statusEl.textContent=(turn==='player'?'Foul!':'Computer foul!')+' Striker pocketed — 1 point penalty.';
+ }else if(events.queen){
+   const covered=turn==='player'?events.playerOwn>0:events.cpuOwn>0;
+   if(covered){queenCovered=true;if(turn==='player')playerScore+=3;else cpuScore+=3;statusEl.textContent='Queen covered! +3 bonus points.';}
+   else{coins.push(coin(350,350,'queen'));statusEl.textContent='Queen needs cover — returned to the centre.';}
+ }
+ const leftWhite=coins.filter(c=>c.alive&&c.kind==='white').length;
+ const leftBlack=coins.filter(c=>c.alive&&c.kind==='black').length;
+ if(leftWhite===0||leftBlack===0){
+   phase='over';drag=null;
+   if(leftBlack===0&&leftWhite===0)statusEl.textContent='All coins cleared — '+(playerScore>=cpuScore?'You win!':'Computer wins!');
+   else statusEl.textContent=leftWhite===0?'Computer wins this round.':'You win! All white coins cleared.';
+   updateHud();draw();return;
+ }
+ if(events.foul){turn=turn==='player'?'computer':'player';}
+ else{
+   const own=turn==='player'?events.playerOwn:events.cpuOwn;
+   if(!own)turn=turn==='player'?'computer':'player';
+ }
+ resetStriker();updateHud();
+ if(turn==='player')statusEl.textContent='Your turn — drag the striker backward and release.';
+ else{statusEl.textContent='Computer is lining up a shot…';cpuTimer=setTimeout(computerShot,650);}
+ draw();
+}
+function gameLoop(){
+ if(phase==='moving'){
+   physicsStep();
+   if(anyMoving())settled=0;else settled++;
+   if(settled>20)finishShot();
+   updateHud();
+ }
+ draw();
+ raf=requestAnimationFrame(gameLoop);
+}
+function rotate(vx,vy,a){return {x:vx*Math.cos(a)-vy*Math.sin(a),y:vx*Math.sin(a)+vy*Math.cos(a)};}
+function computerShot(){
+ if(phase!=='ready'||turn!=='computer')return;
+ const targets=coins.filter(c=>c.alive&&c.kind==='black');
+ if(!targets.length){turn='player';resetStriker();statusEl.textContent='Your turn.';draw();return;}
+ let best=null;
+ for(const target of targets)for(const pocket of [pockets[2],pockets[3]]){
+   let dx=target.x-pocket.x,dy=target.y-pocket.y,len=Math.hypot(dx,dy);if(!len)continue;
+   dx/=len;dy/=len;
+   if(dy>=-.12)continue;
+   const t=(145-target.y)/dy;
+   if(t<=35)continue;
+   const sx=target.x+dx*t;
+   if(sx<255||sx>445)continue;
+   const candidate={target,sx,dist:t};
+   if(!best||candidate.dist<best.dist)best=candidate;
+ }
+ if(!best){
+   const target=targets.sort((a,b)=>Math.abs(a.x-350)-Math.abs(b.x-350))[0];
+   best={target,sx:clamp(target.x,255,445),dist:Math.hypot(target.x-clamp(target.x,255,445),target.y-145)};
+ }
+ striker.x=best.sx;striker.y=142;striker.vx=0;striker.vy=0;
+ let dx=best.target.x-striker.x,dy=best.target.y-striker.y,len=Math.hypot(dx,dy);dx/=len;dy/=len;
+ const err=difficulty==='easy'?.13:difficulty==='hard'?.012:.045;
+ const rotated=rotate(dx,dy,(Math.random()*2-1)*err);
+ const power=clamp(5.5+len*.013,6,12.5);
+ striker.vx=rotated.x*power;striker.vy=rotated.y*power;
+ events={playerOwn:0,cpuOwn:0,queen:false,foul:false};phase='moving';settled=0;
+ statusEl.textContent='Computer shot…';
+ draw();
+}
+function point(e){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*700/r.width,y:(e.clientY-r.top)*700/r.height};}
+canvas.addEventListener('pointerdown',e=>{
+ if(phase!=='ready'||turn!=='player'||!striker.alive)return;
+ const p=point(e),d=distance(p,striker);
+ if(p.y>520&&p.y<592&&p.x>235&&p.x<465&&d>34){
+   striker.x=clamp(p.x,260,440);draw();statusEl.textContent='Striker position set. Drag it backward to shoot.';return;
+ }
+ if(d<=36){
+   drag={start:{x:striker.x,y:striker.y},pointer:p};canvas.setPointerCapture(e.pointerId);e.preventDefault();draw();
+ }
+});
+canvas.addEventListener('pointermove',e=>{if(!drag)return;drag.pointer=point(e);draw();});
+function release(e){
+ if(!drag)return;
+ drag.pointer=point(e);const dx=drag.start.x-drag.pointer.x,dy=drag.start.y-drag.pointer.y,len=Math.hypot(dx,dy);
+ if(len>15){const power=clamp(len*.115,0,13.5);startShot(dx/len*power,dy/len*power);}
+ else{drag=null;draw();}
+}
+canvas.addEventListener('pointerup',release);canvas.addEventListener('pointercancel',()=>{drag=null;draw();});
+document.getElementById('resetBtn').addEventListener('click',newGame);
+document.querySelectorAll('.diff').forEach(btn=>btn.addEventListener('click',()=>{
+ difficulty=btn.dataset.level;updateHud();
+ statusEl.textContent='Computer difficulty: '+difficulty.toUpperCase()+'.';
+}));
+newGame();cancelAnimationFrame(raf);raf=requestAnimationFrame(gameLoop);
+})();
+</script>
+</body>
+</html>
