@@ -307,16 +307,26 @@ body.sc-home-page:after{content:"";position:fixed;inset:0;z-index:-1;pointer-eve
 @media(max-width:760px){.av-home-panel{grid-template-columns:minmax(0,1fr);gap:22px}.av-home-art{min-height:230px}.av-home-actions a{flex:1}}
 @media(max-width:420px){.av-home-panel{padding:20px}.av-home-actions{flex-direction:column}}
 
-/* SiteCraft promo video showcase */
+
+/* Video placements: website-builder promos under Templates; AI Shop Manager under BotCraft */
+.sitecraft-template-videos{margin-top:clamp(42px,6vw,68px);padding-top:clamp(28px,4vw,42px);border-top:1px solid var(--home-line)}
+.sitecraft-video-heading{max-width:720px;margin:0 auto 24px;text-align:center}
+.sitecraft-video-heading .section-kicker{display:block}
+.sitecraft-video-heading h3{margin:9px 0 8px;color:#fbf9ff;font:800 clamp(24px,3vw,34px)/1.15 Sora,Inter,sans-serif;letter-spacing:-.045em}
+.sitecraft-video-heading p{margin:0;color:var(--home-muted);font-size:13px;line-height:1.7}
 .sitecraft-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;align-items:stretch}
 .sitecraft-video-card{min-width:0;overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.018));box-shadow:0 20px 55px rgba(0,0,0,.22)}
 .sitecraft-video-frame{display:grid;place-items:center;padding:14px;background:radial-gradient(ellipse at 50% 15%,rgba(139,92,246,.16),transparent 55%),#080710}
 .sitecraft-video-frame video{display:block;width:100%;max-height:590px;aspect-ratio:9/16;object-fit:contain;border-radius:14px;background:#050509}
-.sitecraft-video-copy{padding:21px 22px 24px}
+.sitecraft-video-copy{align-self:center;padding:21px 22px 24px}
 .sitecraft-video-label{display:inline-block;margin-bottom:9px;color:#c4a7ff;font-size:9px;font-weight:900;letter-spacing:.16em}
-.sitecraft-video-copy h3{margin:0;color:#fbf9ff;font:800 clamp(19px,2vw,25px)/1.2 Sora,Inter,sans-serif;letter-spacing:-.035em}
+.sitecraft-video-copy h3,.sitecraft-video-copy h4{margin:0;color:#fbf9ff;font:800 clamp(19px,2vw,25px)/1.2 Sora,Inter,sans-serif;letter-spacing:-.035em}
 .sitecraft-video-copy p{margin:9px 0 0;color:var(--home-muted);font-size:12px;line-height:1.7}
-@media(max-width:700px){.sitecraft-video-grid{grid-template-columns:minmax(0,1fr);gap:16px}.sitecraft-video-frame{padding:10px}.sitecraft-video-frame video{max-height:540px}.sitecraft-video-copy{padding:18px 18px 21px}}
+.sitecraft-botcraft-video{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);align-items:center;gap:clamp(20px,4vw,42px);max-width:900px;margin:28px auto 0;padding:16px;border:1px solid rgba(255,255,255,.13);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018))}
+.sitecraft-botcraft-video .sitecraft-video-frame{padding:8px;border-radius:17px}
+.sitecraft-botcraft-video .sitecraft-video-frame video{max-height:470px}
+.sitecraft-botcraft-video .sitecraft-video-copy{padding:18px}
+@media(max-width:700px){.sitecraft-video-grid{grid-template-columns:minmax(0,1fr);gap:16px}.sitecraft-video-frame{padding:10px}.sitecraft-video-frame video{max-height:540px}.sitecraft-video-copy{padding:18px 18px 21px}.sitecraft-botcraft-video{grid-template-columns:minmax(0,1fr);gap:12px;padding:10px}.sitecraft-botcraft-video .sitecraft-video-frame video{max-height:520px}.sitecraft-botcraft-video .sitecraft-video-copy{padding:12px 10px 14px}}
 
 </style>
 </head>
@@ -358,45 +368,7 @@ body.sc-home-page:after{content:"";position:fixed;inset:0;z-index:-1;pointer-eve
 <div class="template-marquee" aria-label="Website categories">
  <div class="marquee-track" aria-hidden="true"><span class="marquee-label">Restaurants</span><i class="marquee-dot"></i><span class="marquee-label">Photography studios</span><i class="marquee-dot"></i><span class="marquee-label">Cafés & cloud kitchens</span><i class="marquee-dot"></i><span class="marquee-label">Salons & wellness</span><i class="marquee-dot"></i><span class="marquee-label">Real estate</span><i class="marquee-dot"></i><span class="marquee-label">Made for your business</span><i class="marquee-dot"></i><span class="marquee-label">Restaurants</span><i class="marquee-dot"></i><span class="marquee-label">Photography studios</span><i class="marquee-dot"></i><span class="marquee-label">Cafés & cloud kitchens</span><i class="marquee-dot"></i><span class="marquee-label">Salons & wellness</span><i class="marquee-dot"></i><span class="marquee-label">Real estate</span><i class="marquee-dot"></i><span class="marquee-label">Made for your business</span></div>
 </div>
-<!-- SiteCraft promo videos -->
-<section class="sc-section sitecraft-video-section" id="sitecraft-videos" aria-labelledby="sitecraft-videos-title">
- <div class="container">
-  <div class="section-heading reveal">
-   <div><span class="section-kicker">SEE THE EXPERIENCE</span><h2 id="sitecraft-videos-title">SiteCraft in action.</h2></div>
-   <p>Watch how quickly a professional business website can come together—no coding, no waiting.</p>
-  </div>
-  <div class="sitecraft-video-grid">
-   <article class="sitecraft-video-card reveal">
-    <div class="sitecraft-video-frame">
-     <video controls playsinline preload="metadata" aria-label="Instant website builder promo video">
-      <source src="./assets/videos/instant-website-builder-promo.mp4" type="video/mp4">
-      Your browser does not support HTML video.
-     </video>
-    </div>
-    <div class="sitecraft-video-copy">
-     <span class="sitecraft-video-label">VIDEO 01</span>
-     <h3>Instant Website Builder</h3>
-     <p>Create your website in seconds, without coding or waiting for developers.</p>
-    </div>
-   </article>
-   <article class="sitecraft-video-card reveal">
-    <div class="sitecraft-video-frame">
-     <video controls playsinline preload="metadata" aria-label="SiteCraft business website promo video">
-      <source src="./assets/videos/1000181733.mp4" type="video/mp4">
-      Your browser does not support HTML video.
-     </video>
-    </div>
-    <div class="sitecraft-video-copy">
-     <span class="sitecraft-video-label">VIDEO 02</span>
-     <h3>Your Business Deserves a Website</h3>
-     <p>A simple, fast and ready-to-use website experience for your business.</p>
-    </div>
-   </article>
-  </div>
- </div>
-</section>
-
-<section class="sc-section" id="templates" aria-labelledby="templates-title">
+<section class="sc-section" id="templates"<section class="sc-section" id="templates" aria-labelledby="templates-title">
  <div class="container">
   <div class="section-heading reveal">
    <div><span class="section-kicker">THE TEMPLATE MARKETPLACE</span><h2 id="templates-title">A better first impression<br>starts right here.</h2></div>
@@ -444,6 +416,19 @@ body.sc-home-page:after{content:"";position:fixed;inset:0;z-index:-1;pointer-eve
     <p>Tell BotCraft about your shop and send photos or price lists. It builds a salesman that knows every item and price, and you can update it with a photo or a message whenever stock changes.</p>
     <div class="chatbot-service-list"><span>Item photos & prices</span><span>Any language</span><span>No customer waits</span><span>Easy owner updates</span><span>Customer insights</span></div>
     <div class="chatbot-service-actions"><a class="btn-primary" href="ai-chatbots.html">Explore BotCraft <span aria-hidden="true">↗</span></a><a class="btn-ghost" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%27m%20interested%20in%20BotCraft%20for%20my%20shop." target="_blank" rel="noopener noreferrer">WhatsApp</a><a class="btn-ghost" href="tel:+917981587505">Call</a></div>
+   </div>
+  </div>
+  <div class="sitecraft-botcraft-video reveal">
+   <div class="sitecraft-video-frame">
+    <video controls playsinline preload="metadata" aria-label="BotCraft AI Shop Manager demonstration video">
+     <source src="./assets/videos/AI%20Shop%20Manager%20Reel.mp4" type="video/mp4">
+     Your browser does not support HTML video.
+    </video>
+   </div>
+   <div class="sitecraft-video-copy">
+    <span class="sitecraft-video-label">BOTCRAFT · AI CHATBOT</span>
+    <h3>Watch the AI Shop Manager in action.</h3>
+    <p>See how BotCraft can answer customer questions while the business owner updates products, prices and offers through chat or voice.</p>
    </div>
   </div>
  </div>
