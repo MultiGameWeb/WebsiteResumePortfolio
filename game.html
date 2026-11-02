@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#100f17">
+  <title>Game | SiteCraft</title>
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="site-navigation.css">
+  <style>
+    html,body{min-height:100%;margin:0;background:#100f17;color:#fbf9ff;font-family:Inter,system-ui,sans-serif}
+    #playerPage{width:min(100%,1040px);margin:0 auto;padding:15px clamp(10px,3vw,24px) 36px}
+    .playerTop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 15px;padding:8px 2px}
+    .playerTop h1{margin:0;font-size:clamp(20px,3.5vw,30px);font-weight:900;letter-spacing:-.04em}
+    .backLink{display:inline-flex;min-height:38px;align-items:center;padding:0 13px;border:1px solid rgba(255,255,255,.15);border-radius:10px;background:rgba(255,255,255,.055);color:#eee8f7;text-decoration:none;font-size:11px;font-weight:800;white-space:nowrap}
+    #gameMount .sc-pg-head,#gameMount .sc-pg-tabs{display:none!important}
+    #gameMount .sc-pg-section{padding:0!important;background:transparent!important}
+    #gameMount .sc-pg-inner{width:100%!important}
+    #gameMount .sc-pg-panel{min-height:450px}
+    .loadError{padding:28px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:#1c1a29;color:#eee8f7;text-align:center}
+    @media(max-width:480px){.playerTop{align-items:flex-start}.backLink{min-height:35px;padding:0 9px;font-size:10px}#gameMount .sc-pg-panel{padding:12px!important}}
+  </style>
+</head>
+<body data-page="game-player">
+  <main id="playerPage">
+    <header class="playerTop">
+      <h1 id="playerTitle">Loading game…</h1>
+      <a class="backLink" href="games.html">← All Games</a>
+    </header>
+    <div id="gameMount"></div>
+  </main>
+  <script src="site-navigation.js"></script>
+  <script src="core/play-games.js"></script>
+  <script src="core/extra-play-games.js"></script>
+  <script>
+    (function(){
+      'use strict';
+      const labels={
+        snake:'3D Snake',math:'Math Challenge',starfighter:'3D Starfighter',
+        'sky-ball':'3D Sky Ball',sudoku:'Sudoku','2048':'2048',
+        word:'Daily Word','daily-connections':'Daily Connections',typing:'Typing Test',
+        'arrow-escape':'Arrow Escape',connect:'Connect Four','brick-breaker':'Brick Breaker',
+        blocks:'Block Puzzle','n-queens':'N-Queens',memory:'Memory Match',
+        ttt:'Tic-Tac-Toe',rps:'Rock Paper Scissors'
+      };
+      const baseGames=new Set(['snake','memory','ttt','rps']);
+      function showError(message){
+        document.getElementById('gameMount').innerHTML='<div class="loadError">'+message+'<p><a href="games.html" style="color:#c4b5fd">Back to all games</a></p></div>';
+      }
+      function mount(){
+        const gameId=new URLSearchParams(window.location.search).get('game')||'';
+        if(!labels[gameId]){showError('This game could not be found.');return;}
+        document.title=labels[gameId]+' | SiteCraft Games';
+        document.getElementById('playerTitle').textContent=labels[gameId];
+        const root=document.getElementById('gameMount');
+        if(!window.SiteCraftPlayGames||!window.SiteCraftExtraGames){showError('The game could not be loaded. Please go back and try again.');return;}
+        window.SiteCraftPlayGames.append(root,'');
+        window.SiteCraftExtraGames.append(root);
+        const opened=baseGames.has(gameId)
+          ? window.SiteCraftPlayGames.openGame(root,gameId)
+          : window.SiteCraftExtraGames.openGame(root,gameId);
+        if(!opened)showError('The game could not be opened. Please go back and try again.');
+      }
+      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});
+      else mount();
+    })();
+  </script>
+</body>
+</html>
