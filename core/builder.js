@@ -12,6 +12,7 @@ function colField(s,i,it,f){const v=it[f.key],a=`data-col="${esc(s.id)}" data-id
  if(f.type==='checkbox')return `<label class="check-line"><input type="checkbox" ${a} ${v!==false?'checked':''}> ${esc(f.label)}</label>`;
  if(f.type==='media')return `<div class="builder-col-media"><div class="builder-media-preview">${v?'<img src="'+esc(v)+'" alt="">':'<span>No image</span>'}</div><label class="btn ghost small">${esc(f.label)}<input type="file" accept="image/*" data-col-media="${esc(s.id)}" data-idx="${i}" data-key="${esc(f.key)}"></label></div>`;
  if(f.type==='textarea')return `<label class="field wide"><span>${esc(f.label)}</span><textarea ${a}>${esc(v??'')}</textarea></label>`;
+ if(f.type==='select')return `<label class="field"><span>${esc(f.label)}</span><select ${a}>${(f.options||[]).map(o=>{const val=o.value??o,lab=o.label??o;return `<option value="${esc(val)}" ${String(val)===String(v)?'selected':''}>${esc(lab)}</option>`}).join('')}</select></label>`;
  if(f.type==='video'||f.type==='nestedCollection')return '';
  return `<label class="field"><span>${esc(f.label)}</span><input ${a} value="${esc(v??'')}" type="${f.type==='number'?'number':'text'}"></label>`}
 function bindExtras(b){const sec=id=>(m.admin?.sections||[]).find(s=>s.id===id);
