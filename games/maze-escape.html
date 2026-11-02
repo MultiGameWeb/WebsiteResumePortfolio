@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en" class="embed-player">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maze Escape — Neon Edition</title>
+  <style>
+    :root {
+      --bg-dark: #05070f;
+      --panel-bg: #0c1224;
+      --border-neon: #1e3a8a;
+      --neon-blue: #3b82f6;
+      --neon-cyan: #00f2fe;
+      --neon-green: #10b981;
+      --neon-red: #ff2a54;
+      --neon-gold: #fbbf24;
+      --text-light: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    button {
+      touch-action: manipulation;
+    }
+
+    body {
+      margin: 0;
+      padding: 12px;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at 50% 15%, #111c38 0%, #05070f 70%);
+      color: var(--text-light);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .game-shell {
+      width: 100%;
+      max-width: 540px;
+      background: var(--panel-bg);
+      border: 1px solid var(--border-neon);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Neon Title */
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    h1.neon-title {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #e0e7ff;
+      text-shadow:
+        0 0 6px #6366f1,
+        0 0 14px #4f46e5,
+        0 0 28px #3b82f6;
+    }
+
+    .top-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      min-width: 42px;
+      min-height: 42px;
+      background: #111a33;
+      border: 1px solid #2563eb;
+      color: var(--text-light);
+      border-radius: 10px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 10px rgba(59, 130, 246, 0.25);
+      transition: transform 0.1s, background 0.15s;
+    }
+
+    .icon-btn:active:not(:disabled) {
+      transform: scale(0.93);
+    }
+
+    .icon-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* HUD Bar (6 cards: 3x2 grid) */
+    .hud-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .hud-card {
+      background: #080d1a;
+      border: 1px solid #1e3a8a;
+      border-radius: 10px;
+      padding: 6px 8px;
+      text-align: center;
+    }
+
+    .hud-label {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hud-val {
+      font-size: 1rem;
+      font-weight: 800;
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hud-val.timer-low {
+      color: var(--neon-red);
+      text-shadow: 0 0 8px var(--neon-red);
+      animation: pulse 0.7s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { opacity: 1; }
+      to { opacity: 0.45; }
+    }
+
+    /* Canvas Wrapper */
+    .canvas-wrap {
+      position: relative;
+      background: #03050a;
+      border: 2px solid #2563eb;
+      border-radius: 14px;
+      box-shadow:
+        0 0 20px rgba(37, 99, 235, 0.35),
+        inset 0 0 20px rgba(37, 99, 235, 0.2);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      touch-action: none;
+    }
+
+    canvas#maze-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Status Message */
+    .status-banner {
+      margin: 12px 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #080d1a;
+      border: 1px solid #1e3a8a;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #93c5fd;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .status-banner.trap {
+      border-color: var(--neon-red);
+      color: #fda4af;
+      box-shadow: 0 0 12px rgba(255, 42, 84, 0.25);
+    }
+
+    .status-banner.win {
+      border-color: var(--neon-green);
+      color: #6ee7b7;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+    }
+
+    /* Mobile D-Pad & Controls */
+    .controls-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .dpad {
+      display: grid;
+      grid-template-columns: repeat(3, 52px);
+      grid-template-rows: repeat(2, 48px);
+      gap: 6px;
+      margin: 0 auto;
+    }
+
+    .dpad-btn {
+      background: #111a33;
+      border: 1px solid #3b82f6;
+      color: #e0f2fe;
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.25);
+      transition: transform 0.08s, background 0.15s;
+      touch-action: manipulation;
+    }
+
+    .dpad-btn:active:not(:disabled),
+    .dpad-btn.pressed:not(:disabled) {
+      background: #2563eb;
+      transform: scale(0.93);
+    }
+
+    .dpad-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    .btn {
+      min-height: 44px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid #3b82f6;
+      background: #111a33;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      flex: 1;
+      transition: all 0.15s;
+      touch-action: manipulation;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: #1d4ed8;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      border-color: #60a5fa;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Dropdown (How to Play) */
+    details.dropdown {
+      background: #080d1a;
+      border: 1px solid #1e3a8a;
+      border-radius: 12px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+
+    details.dropdown summary {
+      padding: 12px 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #bfdbfe;
+      touch-action: manipulation;
+    }
+
+    details.dropdown summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.dropdown summary::after {
+      content: "▼";
+      font-size: 0.75rem;
+      transition: transform 0.2s;
+    }
+
+    details.dropdown[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-content {
+      padding: 0 14px 14px 14px;
+      font-size: 0.86rem;
+      line-height: 1.55;
+      color: var(--text-dim);
+      border-top: 1px solid #1e293b;
+    }
+
+    .dropdown-content ul {
+      margin: 8px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .dropdown-content li {
+      margin-bottom: 5px;
+    }
+  
+    /* SiteCraft standalone player fit: keep the neon maze and controls inside the viewport. */
+    html.embed-player, html.embed-player body {
+      width:100%; height:100%; min-height:0; overflow:hidden;
+    }
+    html.embed-player body {
+      height:100dvh; padding:6px; justify-content:center; align-items:center;
+    }
+    html.embed-player .game-shell {
+      width:100%; height:100%; max-height:100%; max-width:760px;
+      min-height:0; padding:10px; display:flex; flex-direction:column;
+      gap:5px; overflow:hidden;
+    }
+    html.embed-player .header-row { flex:0 0 auto; margin-bottom:3px; }
+    html.embed-player .hud-bar {
+      flex:0 0 auto; gap:5px; margin-bottom:3px;
+    }
+    html.embed-player .hud-card { padding:4px 6px; }
+    html.embed-player .hud-label { font-size:.6rem; }
+    html.embed-player .hud-val { font-size:.88rem; }
+    html.embed-player .canvas-wrap {
+      flex:1 1 auto; min-height:70px; min-width:0;
+      width:100%; aspect-ratio:auto; max-height:none;
+    }
+    html.embed-player canvas#maze-canvas { width:100%; height:100%; }
+    html.embed-player .status-banner {
+      flex:0 0 auto; min-height:34px; margin:4px 0;
+      padding:6px 10px; font-size:.8rem;
+    }
+    html.embed-player .controls-section {
+      flex:0 0 auto; display:grid; grid-template-columns:auto minmax(0,1fr);
+      align-items:center; justify-content:center; gap:8px; margin:0;
+    }
+    html.embed-player .dpad {
+      grid-template-columns:repeat(3,38px); grid-template-rows:repeat(2,36px);
+      gap:4px; margin:0;
+    }
+    html.embed-player .dpad-btn { font-size:1rem; border-radius:8px; }
+    html.embed-player .action-btns {
+      width:auto; margin:0; display:flex; flex-direction:column; gap:6px;
+    }
+    html.embed-player .btn {
+      min-height:38px; padding:5px 8px; font-size:.78rem;
+    }
+    html.embed-player details.dropdown {
+      flex:0 0 auto; margin-top:0; max-height:36px;
+    }
+    html.embed-player details.dropdown[open] {
+      position:absolute; z-index:20; left:8px; right:8px; bottom:8px;
+      max-height:55%; overflow:auto; box-shadow:0 8px 30px #000b;
+    }
+    html.embed-player .dropdown-content { max-height:180px; overflow:auto; }
+    html.maze-fullscreen .game-shell { max-width:none; border-radius:0; }
+    @media(max-width:380px) {
+      html.embed-player .game-shell { padding:7px; gap:4px; }
+      html.embed-player .dpad { grid-template-columns:repeat(3,34px); grid-template-rows:repeat(2,32px); }
+      html.embed-player .dpad-btn { font-size:.9rem; }
+      html.embed-player .btn { min-height:34px; padding:4px 6px; font-size:.7rem; }
+      html.embed-player .icon-btn { min-width:36px; min-height:36px; }
+    }
+    @media(max-height:570px) {
+      html.embed-player body { padding:3px; }
+      html.embed-player .game-shell { padding:5px; gap:3px; }
+      html.embed-player .header-row { margin-bottom:0; }
+      html.embed-player .icon-btn { min-height:32px; min-width:34px; }
+      html.embed-player .hud-card { padding:3px 4px; }
+      html.embed-player .hud-val { font-size:.78rem; }
+      html.embed-player .status-banner { min-height:27px; margin:2px 0; }
+      html.embed-player .dpad { grid-template-columns:repeat(3,31px); grid-template-rows:repeat(2,29px); gap:3px; }
+      html.embed-player .btn { min-height:30px; }
+      html.embed-player details.dropdown:not([open]) { max-height:29px; }
+      html.embed-player details.dropdown summary { min-height:28px; padding:4px 9px; font-size:.75rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <main class="game-shell">
+    <!-- Top Header -->
+    <div class="header-row">
+      <h1 class="neon-title">MAZE ESCAPE</h1>
+      <div class="top-btns">
+        <button id="btn-pause" class="icon-btn" title="Pause / Resume" aria-label="Pause Game">⏸️</button>
+        <button id="btn-mute" class="icon-btn" title="Mute / Unmute" aria-label="Toggle Sound">🔊</button>
+      </div>
+    </div>
+
+    <!-- HUD Stats -->
+    <div class="hud-bar">
+      <div class="hud-card">
+        <div class="hud-label">Level</div>
+        <div id="hud-level" class="hud-val" style="color:#60a5fa;">1</div>
+      </div>
+      <div class="hud-card">
+        <div class="hud-label">Timer</div>
+        <div id="hud-timer" class="hud-val">00:15</div>
+      </div>
+      <div class="hud-card">
+        <div class="hud-label">Lives</div>
+        <div id="hud-lives" class="hud-val">❤️❤️❤️</div>
+      </div>
+      <div class="hud-card">
+        <div class="hud-label">Score</div>
+        <div id="hud-score" class="hud-val" style="color:#fbbf24;">0</div>
+      </div>
+      <div class="hud-card">
+        <div class="hud-label">Best Score</div>
+        <div id="hud-best-score" class="hud-val" style="color:#fde047;">0</div>
+      </div>
+      <div class="hud-card">
+        <div class="hud-label">Best Cleared</div>
+        <div id="hud-best-lvl" class="hud-val" style="color:#34d399;">0</div>
+      </div>
+    </div>
+
+    <!-- Neon Maze Canvas -->
+    <div class="canvas-wrap">
+      <canvas id="maze-canvas"></canvas>
+    </div>
+
+    <!-- Status Bar -->
+    <div id="status-bar" class="status-banner">
+      Guide the Cyan Orb to the Green Exit Portal before time runs out!
+    </div>
+
+    <!-- On-screen D-Pad & Action Buttons -->
+    <div class="controls-section">
+      <div class="dpad">
+        <div></div>
+        <button class="dpad-btn" data-dir="UP" aria-label="Up">▲</button>
+        <div></div>
+        <button class="dpad-btn" data-dir="LEFT" aria-label="Left">◀</button>
+        <button class="dpad-btn" data-dir="DOWN" aria-label="Down">▼</button>
+        <button class="dpad-btn" data-dir="RIGHT" aria-label="Right">▶</button>
+      </div>
+
+      <div class="action-btns">
+        <button id="btn-restart" class="btn">🔄 Retry Level (-1 ❤️)</button>
+        <button id="btn-reset-all" class="btn btn-primary">✨ New Run (Lvl 1)</button>
+      </div>
+    </div>
+
+    <!-- Collapsible How to Play Dropdown -->
+    <details class="dropdown">
+      <summary>📖 How to Play (Click to Expand)</summary>
+      <div class="dropdown-content">
+        <ul>
+          <li><strong>Objective:</strong> Navigate the glowing <span style="color:#00f2fe;font-weight:700;">Cyan Orb</span> through the neon maze to reach the <span style="color:#10b981;font-weight:700;">Green Exit Square</span> before the countdown timer hits zero.</li>
+          <li><strong>3 Lives Run:</strong> You start each run with <strong>❤️❤️❤️ (3 lives)</strong>. Running out of time or pressing <em>Retry Level</em> costs 1 life and restarts the <strong>same maze</strong> with already-collected rings staying collected.</li>
+          <li><strong>Controls:</strong> Use <strong>Arrow Keys / WASD</strong> on desktop, hold the <strong>D-Pad</strong> buttons for continuous movement, or <strong>Swipe</strong> on the maze to slide until the next junction, ring, trap, or wall.</li>
+          <li><strong>Bonus Rings (<span style="color:#fbbf24;font-weight:700;">Yellow Circles</span>):</strong> Collect glowing yellow rings for <strong>+50 points</strong> and <strong>+4 seconds</strong> of extra time!</li>
+          <li><strong>Spike Traps (<span style="color:#ff2a54;font-weight:700;">Red Spikes</span>):</strong> Stepping onto a red spike trap costs <strong>-5 seconds</strong> and teleports you back to the start of the maze!</li>
+          <li><strong>Scaling Difficulty:</strong> Every level increases grid size (up to 19×19), tightens timer pace, and boosts trap density!</li>
+        </ul>
+      </div>
+    </details>
+  </main>
+
+  <script>
+    window.addEventListener('message', (event) => {
+      if (event.origin !== window.location.origin) return;
+      if (!event.data || event.data.type !== 'sitecraft-maze-fullscreen') return;
+      document.documentElement.classList.toggle('maze-fullscreen', !!event.data.active);
+    });
+
+    /* ==========================================================================
+       SAFE LOCALSTORAGE HELPER
+       ========================================================================== */
+    const Store = {
+      get(key, fallback) {
+        try {
+          const val = localStorage.getItem(key);
+          return val !== null ? JSON.parse(val) : fallback;
+        } catch (e) {
+          return fallback;
+        }
+      },
+      set(key, val) {
+        try {
+          localStorage.setItem(key, JSON.stringify(val));
+        } catch (e) {}
+      }
+    };
+
+    /* ==========================================================================
+       WEB AUDIO SOUND EFFECTS
+       ========================================================================== */
+    const AudioFX = {
+      ctx: null,
+      muted: Store.get('neon_maze_muted', false),
+      init() {
+        if (!this.ctx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) this.ctx = new AC();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+      },
+      play(freq, type, dur, gainVal = 0.07, delay = 0) {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime + delay;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(gainVal, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + dur);
+        } catch (e) {}
+      },
+      step() { this.play(320, 'sine', 0.045, 0.04); },
+      coin() {
+        this.play(587.33, 'sine', 0.09, 0.08);
+        this.play(880, 'sine', 0.14, 0.08, 0.06);
+      },
+      trap() {
+        this.play(150, 'sawtooth', 0.18, 0.09);
+        this.play(110, 'sawtooth', 0.22, 0.09, 0.08);
+      },
+      win() {
+        [523.25, 659.25, 783.99, 1046.5].forEach((f, i) =>
+          this.play(f, 'triangle', 0.2, 0.09, i * 0.08)
+        );
+      },
+      gameOver() {
+        [300, 250, 200, 140].forEach((f, i) =>
+          this.play(f, 'sawtooth', 0.22, 0.08, i * 0.1)
+        );
+      }
+    };
+
+    /* ==========================================================================
+       GAME STATE & PERSISTENT STATS
+       ========================================================================== */
+    const DEFAULT_MSG = "Guide the Cyan Orb to the Green Exit Portal before time runs out!";
+    const LOGICAL_SIZE = 520;
+
+    const canvas = document.getElementById('maze-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let bestScore = Store.get('neon_maze_best_score', 0);
+    let bestLevelCleared = Store.get('neon_maze_best_lvl_cleared', 0);
+    let totalRuns = Store.get('neon_maze_total_runs', 0);
+
+    let level = 1;
+    let lives = 3;
+    let score = 0;
+    let newBestScoreThisRun = false;
+    let newBestLevelThisRun = false;
+
+    let cols = 7, rows = 7;
+    let grid = [];
+    let player = { r: 0, c: 0, trail: [] };
+    let exitCell = { r: 6, c: 6 };
+    let coins = []; // { r, c, collected }
+    let traps = []; // { r, c }
+    let initialLevelTime = 20;
+    let timeLeft = 20;
+
+    let gameActive = true;
+    let isPaused = false;
+    let isGameOver = false;
+
+    let timerId = null;
+    let slideIntervalId = null;
+    let dpadHoldIntervalId = null;
+    let statusTimeoutId = null;
+    let animFrame = 0;
+
+    /* ==========================================================================
+       HIGH-DPI CANVAS SCALING
+       ========================================================================== */
+    function setupCanvasDPI() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      const displayW = Math.max(280, Math.round(rect.width || LOGICAL_SIZE));
+      const displayH = Math.max(280, Math.round(rect.height || LOGICAL_SIZE));
+
+      if (canvas.width !== Math.round(displayW * dpr) || canvas.height !== Math.round(displayH * dpr)) {
+        canvas.width = Math.round(displayW * dpr);
+        canvas.height = Math.round(displayH * dpr);
+      }
+    }
+
+    window.addEventListener('resize', setupCanvasDPI);
+
+    /* ==========================================================================
+       MAZE GENERATOR & LEVEL RETRY LOGIC
+       ========================================================================== */
+    function createMaze(lvl) {
+      stopSlide();
+      // 1. Grid: 7x7 at level 1, +2 per level, cap 19x19
+      const size = Math.min(19, 7 + (lvl - 1) * 2);
+      cols = size;
+      rows = size;
+
+      grid = Array.from({ length: rows }, (_, r) =>
+        Array.from({ length: cols }, (_, c) => ({
+          r, c,
+          walls: { top: true, right: true, bottom: true, left: true },
+          visited: false
+        }))
+      );
+
+      // Recursive Backtracker maze carving
+      const stack = [];
+      const start = grid[0][0];
+      start.visited = true;
+      stack.push(start);
+
+      while (stack.length > 0) {
+        const current = stack[stack.length - 1];
+        const neighbors = [];
+        const { r, c } = current;
+
+        if (r > 0 && !grid[r - 1][c].visited) neighbors.push({ cell: grid[r - 1][c], w1: 'top', w2: 'bottom' });
+        if (c < cols - 1 && !grid[r][c + 1].visited) neighbors.push({ cell: grid[r][c + 1], w1: 'right', w2: 'left' });
+        if (r < rows - 1 && !grid[r + 1][c].visited) neighbors.push({ cell: grid[r + 1][c], w1: 'bottom', w2: 'top' });
+        if (c > 0 && !grid[r][c - 1].visited) neighbors.push({ cell: grid[r][c - 1], w1: 'left', w2: 'right' });
+
+        if (neighbors.length > 0) {
+          const next = neighbors[Math.floor(Math.random() * neighbors.length)];
+          current.walls[next.w1] = false;
+          next.cell.walls[next.w2] = false;
+          next.cell.visited = true;
+          stack.push(next.cell);
+        } else {
+          stack.pop();
+        }
+      }
+
+      // Knock down extra internal walls to create alternate routes around traps
+      const extraOpenings = Math.floor((rows * cols) * 0.14);
+      for (let i = 0; i < extraOpenings; i++) {
+        const r = Math.floor(Math.random() * (rows - 1));
+        const c = Math.floor(Math.random() * (cols - 1));
+        if (Math.random() < 0.5) {
+          grid[r][c].walls.right = false;
+          grid[r][c + 1].walls.left = false;
+        } else {
+          grid[r][c].walls.bottom = false;
+          grid[r + 1][c].walls.top = false;
+        }
+      }
+
+      exitCell = { r: rows - 1, c: cols - 1 };
+
+      // Find shortest path from (0,0) to (rows-1, cols-1)
+      const safePath = findShortestPath();
+      const pathLength = Math.max(1, safePath.size - 1);
+
+      // 2. Timer computed from shortest path length and scaling secondsPerCell (min 0.55s)
+      const secondsPerCell = Math.max(0.55, 1.0 - (lvl - 1) * 0.05);
+      initialLevelTime = Math.ceil(pathLength * secondsPerCell) + 8;
+      timeLeft = initialLevelTime;
+
+      // 3. Place Red Spike Traps FIRST: 1 + lvl*2, capped at 25% of non-path cells
+      const totalCells = rows * cols;
+      const nonPathCellsCount = Math.max(0, totalCells - safePath.size);
+      const maxAllowedTraps = Math.floor(nonPathCellsCount * 0.25);
+      const targetTraps = Math.min(maxAllowedTraps, 1 + lvl * 2);
+
+      traps = [];
+      const trapSet = new Set();
+      let guard = 0;
+      while (traps.length < targetTraps && guard < 600) {
+        guard++;
+        const tr = Math.floor(Math.random() * rows);
+        const tc = Math.floor(Math.random() * cols);
+        const key = `${tr},${tc}`;
+        if ((tr === 0 && tc === 0) || (tr === exitCell.r && tc === exitCell.c)) continue;
+        if (safePath.has(key) || trapSet.has(key)) continue;
+        trapSet.add(key);
+        traps.push({ r: tr, c: tc });
+      }
+
+      // 4. Fair Rings: BFS from (0,0) treating traps as impassable walls
+      const trapFreeReachable = getTrapFreeReachableCells(trapSet);
+      const validCoinCells = trapFreeReachable.filter(
+        pos => !(pos.r === 0 && pos.c === 0) && !(pos.r === exitCell.r && pos.c === exitCell.c)
+      );
+
+      coins = [];
+      const numCoins = Math.min(8, 2 + Math.floor(lvl * 0.8), validCoinCells.length);
+      for (let i = validCoinCells.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = validCoinCells[i];
+        validCoinCells[i] = validCoinCells[j];
+        validCoinCells[j] = tmp;
+      }
+      for (let i = 0; i < numCoins; i++) {
+        coins.push({ r: validCoinCells[i].r, c: validCoinCells[i].c, collected: false });
+      }
+
+      player = { r: 0, c: 0, trail: [{ r: 0, c: 0 }] };
+      gameActive = true;
+      isPaused = false;
+      syncControlButtons();
+      updateHUD();
+    }
+
+    // Restart the SAME maze layout (collected rings stay collected, score kept)
+    function restartSameMazeLayout() {
+      stopSlide();
+      player = { r: 0, c: 0, trail: [{ r: 0, c: 0 }] };
+      timeLeft = initialLevelTime;
+      gameActive = true;
+      isPaused = false;
+      syncControlButtons();
+      updateHUD();
+    }
+
+    function findShortestPath() {
+      const q = [{ r: 0, c: 0, path: ['0,0'] }];
+      const seen = new Set(['0,0']);
+      while (q.length > 0) {
+        const cur = q.shift();
+        if (cur.r === rows - 1 && cur.c === cols - 1) {
+          return new Set(cur.path);
+        }
+        const cell = grid[cur.r][cur.c];
+        const moves = [
+          { dir: 'top', dr: -1, dc: 0 },
+          { dir: 'right', dr: 0, dc: 1 },
+          { dir: 'bottom', dr: 1, dc: 0 },
+          { dir: 'left', dr: 0, dc: -1 }
+        ];
+        for (const m of moves) {
+          if (!cell.walls[m.dir]) {
+            const nr = cur.r + m.dr, nc = cur.c + m.dc;
+            const key = `${nr},${nc}`;
+            if (!seen.has(key)) {
+              seen.add(key);
+              q.push({ r: nr, c: nc, path: [...cur.path, key] });
+            }
+          }
+        }
+      }
+      return new Set(['0,0']);
+    }
+
+    // BFS from (0,0) that treats trap cells as walls
+    function getTrapFreeReachableCells(trapSet) {
+      const reachable = [];
+      const seen = new Set(['0,0']);
+      const q = [{ r: 0, c: 0 }];
+
+      while (q.length > 0) {
+        const cur = q.shift();
+        reachable.push(cur);
+        const cell = grid[cur.r][cur.c];
+        const moves = [
+          { dir: 'top', dr: -1, dc: 0 },
+          { dir: 'right', dr: 0, dc: 1 },
+          { dir: 'bottom', dr: 1, dc: 0 },
+          { dir: 'left', dr: 0, dc: -1 }
+        ];
+        for (const m of moves) {
+          if (!cell.walls[m.dir]) {
+            const nr = cur.r + m.dr, nc = cur.c + m.dc;
+            const key = `${nr},${nc}`;
+            if (!seen.has(key) && !trapSet.has(key)) {
+              seen.add(key);
+              q.push({ r: nr, c: nc });
+            }
+          }
+        }
+      }
+      return reachable;
+    }
+
+    /* ==========================================================================
+       LIVES, RETRY & GAME OVER
+       ========================================================================== */
+    function checkAndSaveBestScore() {
+      if (score > bestScore) {
+        bestScore = score;
+        newBestScoreThisRun = true;
+        Store.set('neon_maze_best_score', bestScore);
+      }
+    }
+
+    function getNewBestLabel() {
+      if (newBestScoreThisRun && newBestLevelThisRun) return "🏆 NEW BEST SCORE & LEVEL!";
+      if (newBestScoreThisRun) return "🏆 NEW BEST SCORE!";
+      if (newBestLevelThisRun) return "🏆 NEW BEST LEVEL!";
+      return "";
+    }
+
+    function loseLifeAndRetry(reasonMsg) {
+      stopSlide();
+      lives = Math.max(0, lives - 1);
+      updateHUD();
+
+      if (lives <= 0) {
+        triggerGameOver();
+      } else {
+        AudioFX.trap();
+        restartSameMazeLayout();
+        setBanner(`${reasonMsg} (-1 ❤️, ${lives} left). Same maze restarted!`, "trap");
+      }
+    }
+
+    function triggerGameOver() {
+      stopSlide();
+      gameActive = false;
+      isGameOver = true;
+      isPaused = false;
+      checkAndSaveBestScore();
+      AudioFX.gameOver();
+      syncControlButtons();
+      updateHUD();
+
+      const badge = getNewBestLabel();
+      setBanner(`💀 GAME OVER! Final Score: ${score} | Level Reached: ${level}.${badge ? ' ' + badge : ''}`, "trap");
+    }
+
+    function startNewRun() {
+      stopSlide();
+      totalRuns++;
+      Store.set('neon_maze_total_runs', totalRuns);
+
+      level = 1;
+      lives = 3;
+      score = 0;
+      newBestScoreThisRun = false;
+      newBestLevelThisRun = false;
+      isGameOver = false;
+      isPaused = false;
+
+      createMaze(1);
+      setBanner(DEFAULT_MSG, "");
+    }
+
+    /* ==========================================================================
+       PLAYER MOVEMENT, SLIDE MODE & COLLISIONS
+       ========================================================================== */
+    function canMoveInDir(r, c, dir) {
+      const cell = grid[r][c];
+      if (dir === 'UP') return !cell.walls.top;
+      if (dir === 'RIGHT') return !cell.walls.right;
+      if (dir === 'DOWN') return !cell.walls.bottom;
+      if (dir === 'LEFT') return !cell.walls.left;
+      return false;
+    }
+
+    // Returns { moved, event } where event is 'none' | 'coin' | 'trap' | 'exit'
+    function movePlayer(dir) {
+      if (!gameActive || isPaused || isGameOver) return { moved: false, event: 'none' };
+
+      if (!canMoveInDir(player.r, player.c, dir)) {
+        return { moved: false, event: 'none' };
+      }
+
+      let nr = player.r, nc = player.c;
+      if (dir === 'UP') nr--;
+      else if (dir === 'RIGHT') nc++;
+      else if (dir === 'DOWN') nr++;
+      else if (dir === 'LEFT') nc--;
+
+      player.r = nr;
+      player.c = nc;
+      player.trail.push({ r: nr, c: nc });
+      if (player.trail.length > 7) player.trail.shift();
+      AudioFX.step();
+
+      // 1. Check Coin (Ring) Collection
+      const coin = coins.find(k => !k.collected && k.r === nr && k.c === nc);
+      if (coin) {
+        coin.collected = true;
+        score += 50;
+        timeLeft += 4;
+        checkAndSaveBestScore();
+        AudioFX.coin();
+        setBanner("✨ Bonus Ring collected! +50 Score & +4s Time!", "", 2000);
+        updateHUD();
+        return { moved: true, event: 'coin' };
+      }
+
+      // 2. Check Spike Trap Collision
+      const hitTrap = traps.some(t => t.r === nr && t.c === nc);
+      if (hitTrap) {
+        player.r = 0;
+        player.c = 0;
+        player.trail = [{ r: 0, c: 0 }];
+
+        if (timeLeft <= 5) {
+          timeLeft = 0;
+          loseLifeAndRetry("💥 Spike trap drained your remaining time!");
+        } else {
+          AudioFX.trap();
+          timeLeft -= 5;
+          setBanner("💥 Ouch! Hit Red Spikes! -5s Penalty & Reset to Start!", "trap");
+          updateHUD();
+        }
+        return { moved: true, event: 'trap' };
+      }
+
+      // 3. Check Exit Portal Reached
+      if (nr === exitCell.r && nc === exitCell.c) {
+        stopSlide();
+        AudioFX.win();
+        score += 100 + timeLeft * 5;
+
+        const clearedLvl = level;
+        if (clearedLvl > bestLevelCleared) {
+          bestLevelCleared = clearedLvl;
+          newBestLevelThisRun = true;
+          Store.set('neon_maze_best_lvl_cleared', bestLevelCleared);
+        }
+        checkAndSaveBestScore();
+
+        level++;
+        setBanner(`🎉 Level ${clearedLvl} Cleared! Entering Level ${level}...`, "win");
+        gameActive = false;
+        syncControlButtons();
+        updateHUD();
+
+        setTimeout(() => {
+          if (!isGameOver) {
+            createMaze(level);
+            setBanner(DEFAULT_MSG, "");
+          }
+        }, 900);
+        return { moved: true, event: 'exit' };
+      }
+
+      updateHUD();
+      return { moved: true, event: 'none' };
+    }
+
+    // Swipe Slide Mode: keep moving in `dir` until a wall, junction, ring, trap, or exit
+    function startSlide(dir) {
+      if (!gameActive || isPaused || isGameOver) return;
+      stopSlide();
+
+      // Returns true if slide should continue
+      function stepSlide() {
+        if (!gameActive || isPaused || isGameOver) return false;
+        const res = movePlayer(dir);
+        if (!res.moved || res.event !== 'none') return false;
+
+        const { r, c } = player;
+        if (!canMoveInDir(r, c, dir)) return false;
+
+        const perp = (dir === 'UP' || dir === 'DOWN') ? ['LEFT', 'RIGHT'] : ['UP', 'DOWN'];
+        return !perp.some(pd => canMoveInDir(r, c, pd));
+      }
+
+      if (!stepSlide()) return;
+      slideIntervalId = setInterval(() => {
+        if (!stepSlide()) stopSlide();
+      }, 55);
+    }
+
+    function stopSlide() {
+      if (slideIntervalId) {
+        clearInterval(slideIntervalId);
+        slideIntervalId = null;
+      }
+    }
+
+    /* ==========================================================================
+       NEON RENDERING ENGINE (With DPI Scaling + Pause & Game Over Overlays)
+       ========================================================================== */
+    function drawMaze() {
+      animFrame++;
+      setupCanvasDPI();
+
+      const scaleX = canvas.width / LOGICAL_SIZE;
+      const scaleY = canvas.height / LOGICAL_SIZE;
+
+      ctx.save();
+      ctx.scale(scaleX, scaleY);
+      ctx.clearRect(0, 0, LOGICAL_SIZE, LOGICAL_SIZE);
+
+      const pad = 22;
+      const cellSize = (LOGICAL_SIZE - pad * 2) / cols;
+
+      // 1. Subtle grid floor
+      ctx.strokeStyle = 'rgba(30, 58, 138, 0.22)';
+      ctx.lineWidth = 1;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          ctx.strokeRect(pad + c * cellSize, pad + r * cellSize, cellSize, cellSize);
+        }
+      }
+
+      // 2. Red Spike Traps
+      traps.forEach(t => {
+        const x = pad + t.c * cellSize;
+        const y = pad + t.r * cellSize;
+        ctx.save();
+        ctx.shadowColor = '#ff2a54';
+        ctx.shadowBlur = 10;
+        ctx.strokeStyle = '#ff2a54';
+        ctx.fillStyle = 'rgba(255, 42, 84, 0.22)';
+        ctx.lineWidth = 1.6;
+
+        const m = cellSize * 0.16;
+        ctx.strokeRect(x + m, y + m, cellSize - m * 2, cellSize - m * 2);
+
+        const spikes = 3;
+        const sw = (cellSize - m * 2) / spikes;
+        for (let sr = 0; sr < 2; sr++) {
+          for (let sc = 0; sc < spikes; sc++) {
+            const sx = x + m + sc * sw + sw / 2;
+            const sy = y + m + (sr + 1) * ((cellSize - m * 2) / 2);
+            ctx.beginPath();
+            ctx.moveTo(sx - sw * 0.35, sy);
+            ctx.lineTo(sx, sy - sw * 0.85);
+            ctx.lineTo(sx + sw * 0.35, sy);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+          }
+        }
+        ctx.restore();
+      });
+
+      // 3. Glowing Yellow Bonus Rings
+      const pulse = Math.sin(animFrame * 0.08) * 2;
+      coins.forEach(k => {
+        if (k.collected) return;
+        const cx = pad + (k.c + 0.5) * cellSize;
+        const cy = pad + (k.r + 0.5) * cellSize;
+        const r = Math.max(4.5, cellSize * 0.25 + pulse * 0.35);
+
+        ctx.save();
+        ctx.shadowColor = '#fbbf24';
+        ctx.shadowBlur = 14;
+        ctx.strokeStyle = '#fde047';
+        ctx.lineWidth = Math.max(2, cellSize * 0.08);
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * 0.58, 0, Math.PI * 2);
+        ctx.stroke();        ctx.restore();
+      });
+
+      // 4. Green Neon Exit Portal
+      {
+        const ex = pad + exitCell.c * cellSize;
+        const ey = pad + exitCell.r * cellSize;
+        const m = cellSize * 0.18;
+        ctx.save();
+        ctx.shadowColor = '#10b981';
+        ctx.shadowBlur = 18;
+        ctx.strokeStyle = '#34d399';
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.25)';
+        ctx.lineWidth = Math.max(2.5, cellSize * 0.08);
+        ctx.fillRect(ex + m, ey + m, cellSize - m * 2, cellSize - m * 2);
+        ctx.strokeRect(ex + m, ey + m, cellSize - m * 2, cellSize - m * 2);
+        ctx.restore();
+      }
+
+      // 5. Player Cyan Trail & Glowing Orb
+      for (let i = 0; i < player.trail.length; i++) {
+        const pt = player.trail[i];
+        const tx = pad + (pt.c + 0.5) * cellSize;
+        const ty = pad + (pt.r + 0.5) * cellSize;
+        const ratio = (i + 1) / player.trail.length;
+        ctx.fillStyle = `rgba(0, 242, 254, ${ratio * 0.22})`;
+        ctx.beginPath();
+        ctx.arc(tx, ty, cellSize * 0.28 * ratio, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      {
+        const px = pad + (player.c + 0.5) * cellSize;
+        const py = pad + (player.r + 0.5) * cellSize;
+        const pr = Math.max(5, cellSize * 0.31);
+
+        ctx.save();
+        ctx.shadowColor = '#00f2fe';
+        ctx.shadowBlur = 20;
+        ctx.fillStyle = '#00f2fe';
+        ctx.strokeStyle = '#e0f2fe';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(px, py, pr, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // 6. Neon Blue Maze Walls
+      ctx.save();
+      ctx.strokeStyle = '#3b82f6';
+      ctx.shadowColor = '#2563eb';
+      ctx.shadowBlur = 10;
+      ctx.lineWidth = Math.max(2, cellSize * 0.09);
+      ctx.lineCap = 'round';
+
+      ctx.beginPath();
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const cell = grid[r][c];
+          const x = pad + c * cellSize;
+          const y = pad + r * cellSize;
+
+          if (cell.walls.top) {
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + cellSize, y);
+          }
+          if (cell.walls.right) {
+            ctx.moveTo(x + cellSize, y);
+            ctx.lineTo(x + cellSize, y + cellSize);
+          }
+          if (cell.walls.bottom) {
+            ctx.moveTo(x, y + cellSize);
+            ctx.lineTo(x + cellSize, y + cellSize);
+          }
+          if (cell.walls.left) {
+            ctx.moveTo(x, y);
+            ctx.lineTo(x, y + cellSize);
+          }
+        }
+      }
+      ctx.stroke();
+      ctx.restore();
+
+      // 7. Overlays: PAUSED or GAME OVER
+      if (isPaused && !isGameOver) {
+        ctx.fillStyle = 'rgba(5, 7, 15, 0.78)';
+        ctx.fillRect(0, 0, LOGICAL_SIZE, LOGICAL_SIZE);
+
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '900 42px "Segoe UI", system-ui, sans-serif';
+        ctx.fillStyle = '#e0f2fe';
+        ctx.shadowColor = '#3b82f6';
+        ctx.shadowBlur = 18;
+        ctx.fillText('PAUSED', LOGICAL_SIZE / 2, LOGICAL_SIZE / 2 - 14);
+
+        ctx.font = '600 16px "Segoe UI", system-ui, sans-serif';
+        ctx.fillStyle = '#93c5fd';
+        ctx.shadowBlur = 0;
+        ctx.fillText('Tap ▶️ in the header to resume', LOGICAL_SIZE / 2, LOGICAL_SIZE / 2 + 28);
+        ctx.restore();
+      } else if (isGameOver) {
+        ctx.fillStyle = 'rgba(5, 7, 15, 0.86)';
+        ctx.fillRect(0, 0, LOGICAL_SIZE, LOGICAL_SIZE);
+
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        ctx.font = '900 40px "Segoe UI", system-ui, sans-serif';
+        ctx.fillStyle = '#ff2a54';
+        ctx.shadowColor = '#ff2a54';
+        ctx.shadowBlur = 20;
+        ctx.fillText('GAME OVER', LOGICAL_SIZE / 2, LOGICAL_SIZE / 2 - 74);
+
+        const bestLabel = getNewBestLabel();
+        if (bestLabel) {
+          ctx.font = '800 20px "Segoe UI", system-ui, sans-serif';
+          ctx.fillStyle = '#fde047';
+          ctx.shadowColor = '#fbbf24';
+          ctx.shadowBlur = 14;
+          ctx.fillText(bestLabel, LOGICAL_SIZE / 2, LOGICAL_SIZE / 2 - 30);
+        }
+
+        ctx.shadowBlur = 0;
+        ctx.font = '700 20px "Segoe UI", system-ui, sans-serif';
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillText(`Final Score: ${score}`, LOGICAL_SIZE / 2, LOGICAL_SIZE / 2 + 12);
+
+        ctx.font = '600 16px "Segoe UI", system-ui, sans-serif';
+        ctx.fillStyle = '#93c5fd';
+        ctx.fillText(`Level Reached: ${level}  |  Best Cleared: ${bestLevelCleared}`, LOGICAL_SIZE / 2, LOGICAL_SIZE / 2 + 44);
+
+        ctx.font = '600 14px "Segoe UI", system-ui, sans-serif';
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText(`Total Runs Played: ${totalRuns}`, LOGICAL_SIZE / 2, LOGICAL_SIZE / 2 + 72);
+
+        ctx.font = '600 15px "Segoe UI", system-ui, sans-serif';
+        ctx.fillStyle = '#34d399';
+        ctx.fillText('Tap "✨ New Run (Lvl 1)" below to play again', LOGICAL_SIZE / 2, LOGICAL_SIZE / 2 + 106);
+        ctx.restore();
+      }
+
+      ctx.restore();
+      requestAnimationFrame(drawMaze);
+    }
+
+    /* ==========================================================================
+       HUD, TIMER, PAUSE & CONTROLS
+       ========================================================================== */
+    function updateHUD() {
+      document.getElementById('hud-level').textContent = level;
+      document.getElementById('hud-score').textContent = score;
+      document.getElementById('hud-best-score').textContent = bestScore;
+      document.getElementById('hud-best-lvl').textContent = bestLevelCleared;
+      document.getElementById('hud-lives').textContent =
+        '❤️'.repeat(Math.max(0, lives)) + '🖤'.repeat(Math.max(0, 3 - lives));
+
+      const timerEl = document.getElementById('hud-timer');
+      const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+      const s = String(timeLeft % 60).padStart(2, '0');
+      timerEl.textContent = `${m}:${s}`;
+      timerEl.classList.toggle('timer-low', timeLeft <= 8 && !isGameOver);
+    }
+
+    function syncControlButtons() {
+      const pauseBtn = document.getElementById('btn-pause');
+      pauseBtn.textContent = isPaused ? '▶️' : '⏸️';
+      pauseBtn.disabled = isGameOver || !gameActive;
+
+      document.getElementById('btn-restart').disabled = isGameOver || !gameActive;
+      document.querySelectorAll('.dpad-btn').forEach(b => {
+        b.disabled = isGameOver || isPaused || !gameActive;
+      });
+    }
+
+    function setBanner(msg, cls = '', autoClearMs = 0) {
+      if (statusTimeoutId) {
+        clearTimeout(statusTimeoutId);
+        statusTimeoutId = null;
+      }
+      const el = document.getElementById('status-bar');
+      el.textContent = msg;
+      el.className = 'status-banner' + (cls ? ' ' + cls : '');
+
+      if (autoClearMs > 0) {
+        statusTimeoutId = setTimeout(() => {
+          if (gameActive && !isPaused && !isGameOver) {
+            el.textContent = DEFAULT_MSG;
+            el.className = 'status-banner';
+          }
+        }, autoClearMs);
+      }
+    }
+
+    function togglePause(forcePause = null) {
+      if (isGameOver || !gameActive) return;
+      isPaused = forcePause !== null ? forcePause : !isPaused;
+      if (isPaused) {
+        stopSlide();
+        stopDpadHold();
+        setBanner("⏸️ Game Paused. Tap ▶️ to resume.");
+      } else {
+        setBanner(DEFAULT_MSG);
+      }
+      syncControlButtons();
+    }
+
+    function startTimer() {
+      if (timerId) clearInterval(timerId);
+      timerId = setInterval(() => {
+        if (document.hidden || !gameActive || isPaused || isGameOver) return;
+        timeLeft--;
+        updateHUD();
+        if (timeLeft <= 0) {
+          timeLeft = 0;
+          loseLifeAndRetry("⏰ Time's Up!");
+        }
+      }, 1000);
+    }
+
+    // Auto-pause when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && gameActive && !isGameOver && !isPaused) {
+        togglePause(true);
+      }
+    });
+
+    // Keyboard Controls
+    window.addEventListener('keydown', (e) => {
+      const key = e.key.toLowerCase();
+      if (key === 'p' || key === 'escape') {
+        e.preventDefault();
+        togglePause();
+        return;
+      }
+      if (['arrowup', 'w'].includes(key)) { e.preventDefault(); stopSlide(); movePlayer('UP'); }
+      else if (['arrowright', 'd'].includes(key)) { e.preventDefault(); stopSlide(); movePlayer('RIGHT'); }
+      else if (['arrowdown', 's'].includes(key)) { e.preventDefault(); stopSlide(); movePlayer('DOWN'); }
+      else if (['arrowleft', 'a'].includes(key)) { e.preventDefault(); stopSlide(); movePlayer('LEFT'); }
+    });
+
+    // Hold-to-repeat on D-Pad (instant first move, then every 120ms while held)
+    function stopDpadHold() {
+      if (dpadHoldIntervalId) {
+        clearInterval(dpadHoldIntervalId);
+        dpadHoldIntervalId = null;
+      }
+      document.querySelectorAll('.dpad-btn').forEach(b => b.classList.remove('pressed'));
+    }
+
+    document.querySelectorAll('.dpad-btn').forEach(btn => {
+      const dir = btn.dataset.dir;
+
+      btn.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        if (btn.disabled) return;
+        stopSlide();
+        stopDpadHold();
+        btn.classList.add('pressed');
+        movePlayer(dir);
+        dpadHoldIntervalId = setInterval(() => {
+          if (!gameActive || isPaused || isGameOver) {
+            stopDpadHold();
+            return;
+          }
+          movePlayer(dir);
+        }, 120);
+      });
+
+      btn.addEventListener('pointerup', stopDpadHold);
+      btn.addEventListener('pointerleave', stopDpadHold);
+      btn.addEventListener('pointercancel', stopDpadHold);
+      btn.addEventListener('contextmenu', e => e.preventDefault());
+    });
+
+    // Touch Swipe on Canvas -> Slide Mode
+    let touchStartX = null, touchStartY = null;
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    canvas.addEventListener('touchend', (e) => {
+      if (touchStartX === null || touchStartY === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.max(Math.abs(dx), Math.abs(dy)) > 20) {
+        if (Math.abs(dx) > Math.abs(dy)) startSlide(dx > 0 ? 'RIGHT' : 'LEFT');
+        else startSlide(dy > 0 ? 'DOWN' : 'UP');
+      }
+      touchStartX = null;
+      touchStartY = null;
+    }, { passive: true });
+
+    // Action & Header Buttons
+    document.getElementById('btn-restart').addEventListener('click', () => {
+      if (isGameOver || !gameActive) return;
+      loseLifeAndRetry("🔄 Retried Level!");
+    });
+
+    document.getElementById('btn-reset-all').addEventListener('click', () => {
+      if (
+        gameActive &&
+        !isGameOver &&
+        (score > 0 || level > 1) &&
+        !confirm("Abandon current run and start over at Level 1?")
+      ) {
+        return;
+      }
+      startNewRun();
+    });
+
+    document.getElementById('btn-pause').addEventListener('click', () => {
+      togglePause();
+    });
+
+    const muteBtn = document.getElementById('btn-mute');
+    const syncMuteUI = () => { muteBtn.textContent = AudioFX.muted ? '🔇' : '🔊'; };
+    syncMuteUI();
+    muteBtn.addEventListener('click', () => {
+      AudioFX.muted = !AudioFX.muted;
+      Store.set('neon_maze_muted', AudioFX.muted);
+      syncMuteUI();
+    });
+
+    // Boot Game
+    setupCanvasDPI();
+    startNewRun();
+    startTimer();
+    requestAnimationFrame(drawMaze);
+  </script>
+</body>
+</html>
