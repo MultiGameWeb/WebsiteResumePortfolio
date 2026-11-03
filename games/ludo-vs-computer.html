@@ -88,7 +88,7 @@ const homeLane={red:[[7,1],[7,2],[7,3],[7,4],[7,5]],yellow:[[7,13],[7,12],[7,11]
 const yard={red:[[9,2],[9,5],[12,2],[12,5]],yellow:[[2,9],[2,12],[5,9],[5,12]]};
 const sideInfo={red:{start:0,color:'#e44759',dark:'#9c263b',light:'#ff9ba4'},yellow:{start:26,color:'#f4c342',dark:'#ad7915',light:'#ffe59a'}};
 const board=document.getElementById('board'),statusEl=document.getElementById('status'),rollBtn=document.getElementById('rollBtn'),diceEl=document.getElementById('dice');
-let tokens,turn,dice,legal,phase,difficulty='medium',sixStreak,selected=-1,timer=0,finished=false,lastAction='';
+let tokens,turn,dice,legal,phase,difficulty='medium',sixStreak,selected=-1,timer=0,diceAnimationTimer=0,finished=false,lastAction='';
 function el(name,attrs={},parent=board){const n=document.createElementNS(NS,name);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));parent.appendChild(n);return n;}
 function rectCell(r,c,fill,stroke='#c9bca5'){el('rect',{x:c*40+1,y:r*40+1,width:38,height:38,rx:4,fill,stroke,'stroke-width':1});}
 function base(x,y,color){el('rect',{x:x*40,y:y*40,width:240,height:240,rx:17,fill:color});el('rect',{x:x*40+28,y:y*40+28,width:184,height:184,rx:19,fill:'#f4f0e6',stroke:'#fff','stroke-width':3});}
@@ -141,12 +141,20 @@ function drawTokens(){
   if(available){el('circle',{cx:x,cy:y,r:18,fill:'none',stroke:'#fff1a8','stroke-width':2,'stroke-dasharray':'3 3'},g);}
  });
 }
+function setDiceFace(value){
+ diceEl.dataset.value=String(value);
+ diceEl.setAttribute('aria-label',value?'Dice shows '+value:'Dice ready to roll');
+ const readout=document.getElementById('diceReadout');
+ if(readout)readout.textContent=value?'ROLLED '+value:'READY';
+}
 function setup(){
  if(timer)clearTimeout(timer);timer=0;
+ if(diceAnimationTimer)clearInterval(diceAnimationTimer);diceAnimationTimer=0;
+ diceEl.classList.remove('rolling');
  tokens={red:Array.from({length:4},()=>({progress:-1})),yellow:Array.from({length:4},()=>({progress:-1}))};
  turn='red';dice=0;legal=[];phase='roll';sixStreak=0;selected=-1;finished=false;lastAction='';
- diceEl.textContent='–';statusEl.textContent='Your turn. Roll a 6 to bring a token out.';rollBtn.disabled=false;rollBtn.textContent='🎲 Roll Dice';
- document.getElementById('hint').textContent='Roll the dice, then choose one of your highlighted tokens.';
+ setDiceFace(0);statusEl.textContent='Your turn. Tap the dice to roll — you need a 6 to bring a token out.';rollBtn.disabled=false;rollBtn.textContent='🎲 ROLL DICE';
+ document.getElementById('hint').textContent='Tap ROLL DICE. Then tap one of the glowing tokens.';
  updateHud();drawBoard();
 }
 function updateHud(){
@@ -179,7 +187,7 @@ function moveToken(side,i){
   if(sixStreak>=3){sixStreak=0;turn=side==='red'?'yellow':'red';phase='roll';dice=0;legal=[];selected=-1;drawBoard();nextTurn('Three sixes in a row — turn forfeited.');return;}
   phase='roll';dice=0;legal=[];selected=-1;
   statusEl.textContent=(side==='red'?'You':'Computer')+' get another turn'+(capture?' after the capture':home?' for reaching home':' after rolling a 6')+'.';
-  rollBtn.disabled=side==='yellow';rollBtn.textContent=side==='red'?'🎲 Roll Again':'Computer rolling…';
+  rollBtn.disabled=side==='yellow';rollBtn.textContent=side==='red'?'🎲 ROLL AGAIN':'Computer rolling…';
   document.getElementById('hint').textContent=lastAction;
   if(side==='yellow')timer=setTimeout(computerRoll,650);
  }else{
@@ -192,27 +200,40 @@ function nextTurn(note){
  document.getElementById('hint').textContent=lastAction||'Roll a 6 to leave your yard. Exact roll needed to finish.';
  if(turn==='yellow')timer=setTimeout(computerRoll,650);
 }
-function roll(side){
+function resolveRoll(side){
  if(phase!=='roll'||turn!==side||finished)return;
- dice=1+Math.floor(Math.random()*6);diceEl.textContent=String(dice);legal=legalMoves(side,dice);
- if(side==='red')rollBtn.disabled=true;
+ legal=legalMoves(side,dice);
  if(!legal.length){
   statusEl.textContent=(side==='red'?'You':'Computer')+' rolled '+dice+' — no legal move.';
-  document.getElementById('hint').textContent='No token can move with this roll.';
+  document.getElementById('hint').textContent='No token can move with this roll. Turn will pass.';
   if(dice===6){sixStreak++;if(sixStreak>=3){sixStreak=0;turn=side==='red'?'yellow':'red';phase='roll';dice=0;legal=[];nextTurn('Three sixes in a row — turn forfeited.');return;}}
   else sixStreak=0;
   timer=setTimeout(()=>{turn=side==='red'?'yellow':'red';dice=0;legal=[];phase='roll';nextTurn();},850);return;
  }
  phase='choose';
  if(side==='red'){
-  statusEl.textContent='You rolled '+dice+'. Choose a highlighted red token.';
-  rollBtn.textContent='Choose Token';
+  statusEl.textContent='You rolled '+dice+'. Choose one of the glowing red tokens.';
+  rollBtn.textContent='CHOOSE TOKEN';
   document.getElementById('hint').textContent=legal.map(i=>'Token '+(i+1)).join(' · ')+' can move.';
   drawBoard();
  }else{
-  statusEl.textContent='Computer rolled '+dice+'…';
+  statusEl.textContent='Computer rolled '+dice+' — choosing a token…';
   timer=setTimeout(computerChoose,500);
  }
+}
+function roll(side){
+ if(phase!=='roll'||turn!==side||finished)return;
+ phase='rolling';rollBtn.disabled=true;rollBtn.textContent=side==='red'?'🎲 ROLLING…':'Computer rolling…';
+ diceEl.classList.remove('rolling');void diceEl.offsetWidth;diceEl.classList.add('rolling');
+ let ticks=0;const finalValue=1+Math.floor(Math.random()*6);
+ diceAnimationTimer=setInterval(()=>{
+  ticks++;setDiceFace(ticks>=8?finalValue:1+Math.floor(Math.random()*6));
+  if(ticks>=8){
+   clearInterval(diceAnimationTimer);diceAnimationTimer=0;diceEl.classList.remove('rolling');
+   dice=finalValue;phase='roll';if(side==='red')rollBtn.textContent='CHOOSE TOKEN';
+   resolveRoll(side);
+  }
+ },75);
 }
 function aiScore(i,side){
  const t=tokens[side][i],newP=t.progress<0?0:t.progress+dice;
