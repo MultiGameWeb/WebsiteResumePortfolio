@@ -413,8 +413,8 @@ function showTerminal(){
  const t=terminal(state,history);
  if(t.done){
   const wasEnded=ended;ended=true;thinking=false;
+  const moves=legal(state),check=inCheck(state,state.turn);
   if(!resultCounted){
-   const moves=legal(state),check=inCheck(state,state.turn);
    if(!moves.length&&check)recordResult(-state.turn===playerColor?'win':'loss');
    else recordResult('draw');
   }
