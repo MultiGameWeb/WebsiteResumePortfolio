@@ -515,7 +515,7 @@ function beginNewGame(nextColor,confirmed){
   if(moveLog.length>=2)recordResult('loss');
  }
  if(aiTimer)clearTimeout(aiTimer);aiTimer=0;
- playerColor=next;state=initial();history=[clone(state)];moveLog=[];captureLog=[];
+ playerColor=next;flipped=playerColor===-1;state=initial();history=[clone(state)];moveLog=[];captureLog=[];
  lastMove=null;selected=-1;pendingPromo=null;thinking=false;ended=false;resultCounted=false;
  document.getElementById('promotion').classList.remove('show');
  statusEl.textContent=playerColor===1?'Your turn — White moves first.':'Computer is thinking…';
