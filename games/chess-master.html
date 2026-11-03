@@ -405,6 +405,7 @@ function renderCaptured(){
 }
 function updateControlLabels(){
  document.getElementById('colorBtn').textContent=playerColor===1?'Play as Black':'Play as White';
+ const subtitle=document.querySelector('.sub');if(subtitle)subtitle.textContent=(playerColor===1?'White':'Black')+' vs Computer · Full chess rules';
  document.getElementById('flipBtn').textContent=flipped?'↻ Unflip board':'↻ Flip board';
  document.getElementById('muteBtn').textContent=muted?'🔇 Muted':'🔊 Sound on';
 }
@@ -417,7 +418,7 @@ function showTerminal(){
    if(!moves.length&&check)recordResult(-state.turn===playerColor?'win':'loss');
    else recordResult('draw');
   }
-  statusEl.textContent=t.text;
+  statusEl.textContent=(!moves.length&&check)?((-state.turn===playerColor)?'Checkmate — You win!':'Checkmate — Computer wins!'):t.text;
   if(!wasEnded)playSound('end');
  }else{
   ended=false;
