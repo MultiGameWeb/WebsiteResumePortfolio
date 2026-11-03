@@ -143,7 +143,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
     }
 
@@ -160,9 +160,15 @@
       font-weight: 700;
       font-size: clamp(0.75rem, 2.5vw, 1rem);
       cursor: pointer;
-      transition: 0.15s ease;
-      word-break: break-word;
+      transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+      min-width: 0;
+      overflow: hidden;
+      line-height: 1.15;
+      word-break: normal;
+      overflow-wrap: normal;
     }
+
+    .tile-label { display: block; width: 100%; }
 
     .tile.selected {
       background-color: var(--tile-selected);
@@ -662,11 +668,36 @@
       remainingWords.forEach(item => {
         const tile = document.createElement('div');
         tile.className = 'tile' + (selectedWords.includes(item.word) ? ' selected' : '');
-        tile.textContent = item.word;
+        const label = document.createElement('span');
+        label.className = 'tile-label';
+        label.textContent = item.word;
+        tile.appendChild(label);
         tile.onclick = () => toggleSelect(item.word);
         grid.appendChild(tile);
       });
+      fitTiles();
     }
+
+    // Shrink a tile's text until its longest word fits, so words never split mid-word on small screens.
+    function fitTiles() {
+      document.querySelectorAll('#grid .tile').forEach(tile => {
+        const label = tile.querySelector('.tile-label');
+        if (!label || !tile.clientWidth) return;
+        tile.style.transition = 'none';
+        tile.style.fontSize = '';
+        label.style.overflowWrap = '';
+        let size = parseFloat(getComputedStyle(tile).fontSize) || 14;
+        const tooBig = () => label.scrollWidth > label.clientWidth + 1 || label.offsetHeight > tile.clientHeight - 8;
+        while (size > 8 && tooBig()) {
+          size -= 0.5;
+          tile.style.fontSize = size + 'px';
+        }
+        if (label.scrollWidth > label.clientWidth + 1) label.style.overflowWrap = 'anywhere';
+        void tile.offsetWidth;
+        tile.style.transition = '';
+      });
+    }
+    window.addEventListener('resize', () => { if (typeof fitTiles === 'function') fitTiles(); });
 
     function renderSolved() {
       const container = document.getElementById('solved-container');

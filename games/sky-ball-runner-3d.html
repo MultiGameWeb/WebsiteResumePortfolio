@@ -375,6 +375,17 @@
 
     <!-- Three.js for True 3D Graphics -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      // Backup CDN if cdnjs is blocked or slow on the visitor's network.
+      if (!window.THREE) document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"><\/script>');
+    </script>
+    <script>
+      if (!window.THREE) {
+        document.addEventListener('DOMContentLoaded', function () {
+          document.body.innerHTML = '<div style="display:grid;place-items:center;min-height:100vh;padding:24px;text-align:center;font-family:system-ui,sans-serif;color:#fff;background:#10131f"><div><p style="font-size:18px;font-weight:800;margin:0 0 8px">3D engine could not load</p><p style="margin:0 0 16px;color:#c4b5fd;font-size:13px">Please check your internet connection and try again.</p><button onclick="location.reload()" style="padding:10px 18px;border:0;border-radius:10px;background:#7c3aed;color:#fff;font-weight:800">Retry</button></div></div>';
+        });
+      }
+    </script>
 
     <script>
         const container = document.getElementById('game-container');

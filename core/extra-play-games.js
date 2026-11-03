@@ -748,7 +748,7 @@
       const elapsed = typing.started ? Math.max(1,(Date.now()-typing.startAt)/1000) : 1;
       typing.accuracy = typed.length ? Math.round(correct/typed.length*100) : 100;
       typing.wpm = Math.round((correct/5)/(elapsed/60));
-      return {typed:typed,correct:correct,target:target};
+      return {typed:typed,correct:correct,target:target,wpm:typing.wpm,accuracy:typing.accuracy};
     }
     function typingPromptHtml(stats) {
       const start = stats.typed.length;
