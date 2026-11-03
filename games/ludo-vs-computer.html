@@ -125,13 +125,13 @@ function normalizeStats(source){
 }
 let tokens=makeTokens(),turn='red',dice=0,legal=[],phase='roll',difficulty='medium',sixStreak=0,selected=-1;
 let timer=0,diceAnimationTimer=0,finished=false,gameStarted=false,resultCounted=false;
-let capturesMadeThisGame=0,capturesSufferedThisGame=0,lastAction='',muted=false,stats=defaultStats();
+let capturesMadeThisGame=0,capturesSufferedThisGame=0,lastAction='',muted=false,stats=defaultStats(),pendingDice=null,gameDifficulty='medium';
 let audioCtx=null,checkpoint=null,autoRollMessage='';
 function cloneTokens(source){return {red:source.red.map(t=>({progress:t.progress})),yellow:source.yellow.map(t=>({progress:t.progress}))};}
 function snapshot(){return {tokens:cloneTokens(tokens),turn:turn,phase:phase==='over'?'over':'roll',sixStreak:sixStreak,finished:finished,gameStarted:gameStarted,resultCounted:resultCounted,capturesMadeThisGame:capturesMadeThisGame,capturesSufferedThisGame:capturesSufferedThisGame,lastAction:lastAction};}
 function cloneSnapshot(s){return {tokens:cloneTokens(s.tokens),turn:s.turn,phase:s.phase,sixStreak:s.sixStreak,finished:s.finished,gameStarted:s.gameStarted,resultCounted:s.resultCounted,capturesMadeThisGame:s.capturesMadeThisGame,capturesSufferedThisGame:s.capturesSufferedThisGame,lastAction:s.lastAction||''};}
 function saveGame(){
- try{const stable=(phase==='over'||!checkpoint)?snapshot():cloneSnapshot(checkpoint);localStorage.setItem(STORAGE_KEY,JSON.stringify({game:stable,difficulty:difficulty,muted:muted,stats:stats}));}catch(e){}
+ try{const stable=(phase==='over'||!checkpoint)?snapshot():cloneSnapshot(checkpoint);stable.pendingDice=pendingDice?{value:pendingDice.value,side:pendingDice.side}:null;localStorage.setItem(STORAGE_KEY,JSON.stringify({game:stable,difficulty:difficulty,gameDifficulty:gameDifficulty,muted:muted,stats:stats}));}catch(e){}
 }
 function saveStable(){checkpoint=snapshot();saveGame();}
 function loadGame(){
@@ -143,10 +143,11 @@ function loadGame(){
   const valid=t=>t&&Number.isInteger(t.progress)&&t.progress>=-1&&t.progress<=HOME;
   if(!g.tokens.red.every(valid)||!g.tokens.yellow.every(valid)||(g.turn!=='red'&&g.turn!=='yellow'))return false;
   tokens=cloneTokens(g.tokens);turn=g.turn;sixStreak=Math.max(0,Math.min(2,Number(g.sixStreak)||0));
+  pendingDice=g.pendingDice&&Number.isInteger(g.pendingDice.value)&&g.pendingDice.value>=1&&g.pendingDice.value<=6&&g.pendingDice.side===turn?{value:g.pendingDice.value,side:g.pendingDice.side}:null;
   finished=!!g.finished;resultCounted=!!g.resultCounted;gameStarted=!!g.gameStarted;
   capturesMadeThisGame=Math.max(0,Number(g.capturesMadeThisGame)||0);capturesSufferedThisGame=Math.max(0,Number(g.capturesSufferedThisGame)||0);lastAction=String(g.lastAction||'');
   phase=finished?'over':'roll';dice=0;legal=[];selected=-1;
-  difficulty=['easy','medium','hard'].includes(data.difficulty)?data.difficulty:'medium';muted=!!data.muted;stats=normalizeStats(data.stats);
+  difficulty=['easy','medium','hard'].includes(data.difficulty)?data.difficulty:'medium';gameDifficulty=['easy','medium','hard'].includes(data.gameDifficulty)?data.gameDifficulty:difficulty;muted=!!data.muted;stats=normalizeStats(data.stats);
   checkpoint=snapshot();return true;
  }catch(e){return false;}
 }
@@ -160,7 +161,7 @@ function renderStats(){
  });
 }
 function recordResult(result){
- if(resultCounted)return;const s=stats[difficulty];s.gamesPlayed++;
+ if(resultCounted)return;const s=stats[gameDifficulty];s.gamesPlayed++;
  if(result==='win'){s.wins++;s.currentStreak++;s.bestStreak=Math.max(s.bestStreak,s.currentStreak);}else{s.losses++;s.currentStreak=0;}
  s.totalCaptures+=capturesMadeThisGame;resultCounted=true;renderStats();saveGame();
 }
@@ -236,7 +237,7 @@ function finishGame(side){
  document.getElementById('hint').textContent='Game complete · '+capturesMadeThisGame+' captures made.';
  drawBoard();updateHud();showOverlay(won?'win':'loss');saveStable();
 }
-function passTurn(side,note){dice=0;legal=[];selected=-1;phase='roll';sixStreak=0;turn=side==='red'?'yellow':'red';autoRollMessage='';saveStable();nextTurn(note);}
+function passTurn(side,note){pendingDice=null;dice=0;legal=[];selected=-1;phase='roll';sixStreak=0;turn=side==='red'?'yellow':'red';autoRollMessage='';saveStable();nextTurn(note);}
 function nextTurn(note){
  phase='roll';dice=0;legal=[];selected=-1;autoRollMessage='';drawBoard();updateHud();
  statusEl.textContent=note||(turn==='red'?'Your turn. Roll the dice.':'Computer turn.');
@@ -244,7 +245,7 @@ function nextTurn(note){
  if(turn==='yellow')timer=setTimeout(computerRoll,650);
 }
 function extraRoll(side,note){
- phase='roll';dice=0;legal=[];selected=-1;autoRollMessage=side==='red'?'🎲 ROLL AGAIN':'';
+ pendingDice=null;phase='roll';dice=0;legal=[];selected=-1;autoRollMessage=side==='red'?'🎲 ROLL AGAIN':'';
  statusEl.textContent=note;document.getElementById('hint').textContent='You rolled a 6, captured a token, or reached home. Roll again.';
  saveStable();drawBoard();updateHud();if(side==='yellow')timer=setTimeout(computerRoll,650);
 }
@@ -254,7 +255,7 @@ function resolveRoll(side){
  else sixStreak=0;
  legal=legalMoves(side,dice);
  if(!legal.length){
-  const rolled=dice;dice=0;selected=-1;legal=[];phase='roll';
+  const rolled=dice;pendingDice=null;dice=0;selected=-1;legal=[];phase='roll';
   if(rolled===6)extraRoll(side,(side==='red'?'You rolled a 6':'Computer rolled a 6')+' but no token can move. Roll again.');
   else passTurn(side,side==='red'?'No legal move. Your turn passes.':'Computer has no legal move. Your turn.');
   return;
@@ -278,7 +279,7 @@ function roll(side){
  let ticks=0;const finalValue=1+Math.floor(Math.random()*6);
  diceAnimationTimer=setInterval(()=>{
   ticks++;setDiceFace(ticks>=8?finalValue:1+Math.floor(Math.random()*6));
-  if(ticks>=8){clearInterval(diceAnimationTimer);diceAnimationTimer=0;diceEl.classList.remove('rolling');dice=finalValue;phase='roll';resolveRoll(side);}
+  if(ticks>=8){clearInterval(diceAnimationTimer);diceAnimationTimer=0;diceEl.classList.remove('rolling');dice=finalValue;phase='roll';pendingDice={value:finalValue,side:side};saveGame();resolveRoll(side);}
  },75);
 }
 function aiScore(i,side){
@@ -334,7 +335,7 @@ function moveToken(side,i){
  timer=setTimeout(step,120);
 }
 function finishMove(side,i,old,target){
- timer=0;let captured=0,home=target===HOME;
+ timer=0;pendingDice=null;let captured=0,home=target===HOME;
  if(target>=0&&target<LANE_START&&!safeLanding(side,target)){
   const square=globalPath(side,target),enemy=side==='red'?'yellow':'red';
   tokens[enemy].forEach(et=>{if(et.progress>=0&&et.progress<LANE_START&&globalPath(enemy,et.progress)===square){et.progress=-1;captured++;}});
@@ -374,7 +375,7 @@ function setup(skipConfirm){
   if(!window.confirm('Start a new game? Your current game will be abandoned.'))return;
   if(tokens.red.concat(tokens.yellow).some(t=>t.progress>=0))recordResult('loss');
  }
- clearPending();tokens=makeTokens();turn='red';dice=0;legal=[];phase='roll';sixStreak=0;selected=-1;
+ clearPending();tokens=makeTokens();turn='red';dice=0;legal=[];phase='roll';sixStreak=0;selected=-1;pendingDice=null;gameDifficulty=difficulty;
  finished=false;gameStarted=false;resultCounted=false;capturesMadeThisGame=0;capturesSufferedThisGame=0;lastAction='';autoRollMessage='';
  setDiceFace(0);statusEl.textContent='Your turn. Tap the dice to roll — you need a 6 to bring a token out.';
  document.getElementById('hint').textContent='Tap ROLL DICE. Then tap one of your highlighted tokens.';
@@ -388,12 +389,13 @@ document.getElementById('newBtn').addEventListener('click',()=>setup(false));
 document.getElementById('playAgainBtn').addEventListener('click',()=>setup(true));
 document.getElementById('muteBtn').addEventListener('click',()=>{muted=!muted;updateMuteButton();saveGame();if(!muted)playSound('safe');});
 document.getElementById('resetStatsBtn').addEventListener('click',resetStats);
-document.querySelectorAll('.diff').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.level;updateHud();statusEl.textContent='Computer difficulty: '+difficulty.toUpperCase()+'.';if(phase==='roll')saveStable();else saveGame();}));
+document.querySelectorAll('.diff').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.level;updateHud();statusEl.textContent='Computer difficulty: '+difficulty.toUpperCase()+'. Stats will count under '+gameDifficulty.toUpperCase()+' until a new game starts.';if(phase==='roll')saveStable();else saveGame();}));
 const resumed=loadGame();
 if(!resumed){stats=defaultStats();muted=false;setup(true);}
 else{
  setDiceFace(0);updateHud();drawBoard();
  if(finished){statusEl.textContent=tokens.red.every(t=>t.progress>=HOME)?'🏆 You win! All four red tokens reached home.':'Computer wins. All four yellow tokens reached home.';showOverlay(tokens.red.every(t=>t.progress>=HOME)?'win':'loss');}
+ else if(pendingDice&&pendingDice.side===turn){dice=pendingDice.value;setDiceFace(dice);phase='roll';statusEl.textContent=(turn==='red'?'Your':'Computer')+' roll restored: '+dice+'. Resolving the saved roll…';resolveRoll(pendingDice.side);}
  else if(turn==='yellow')timer=setTimeout(computerRoll,500);
  else statusEl.textContent='Game resumed. Your turn — roll the dice.';
 }
