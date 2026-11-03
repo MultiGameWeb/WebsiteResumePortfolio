@@ -152,6 +152,7 @@ function loadGame(){
 }
 function updateMuteButton(){const b=document.getElementById('muteBtn');if(!b)return;b.textContent=muted?'🔇 Sound off':'🔊 Sound on';b.setAttribute('aria-pressed',String(muted));}
 function renderStats(){
+ const levelLabel=document.getElementById('statsDifficulty');if(levelLabel)levelLabel.textContent=difficulty.toUpperCase();
  const host=document.getElementById('statsContent');if(!host)return;host.replaceChildren();
  const s=stats[difficulty]||defaultStats()[difficulty];
  [['Games played',s.gamesPlayed],['Wins',s.wins],['Losses',s.losses],['Current win streak',s.currentStreak],['Best win streak',s.bestStreak],['Total captures',s.totalCaptures]].forEach(([label,value])=>{
