@@ -449,3 +449,22 @@ html{scroll-behavior:smooth;scroll-padding-top:88px}body{font-family:Inter,syste
 .btn-primary:focus-visible,.btn-ghost:focus-visible,a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(236,72,153,.75);outline-offset:3px}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.2,1)}.reveal.is-visible{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal,.reveal.is-visible{opacity:1;transform:none;transition:none}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* builder: editable content collections */
+.builder-collection{margin:10px 0;border:1px solid #e1e0d9;border-radius:12px;background:#fff;overflow:hidden}
+.builder-collection>summary{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;list-style:none;font-size:14px}
+.builder-collection>summary::-webkit-details-marker{display:none}
+.builder-collection>summary span{font-size:12px;color:#83877f}
+.builder-collection-body{display:grid;gap:10px;padding:0 12px 12px}
+.builder-col-item{padding:10px;border:1px solid #ecebe4;border-radius:10px;background:#fafaf7;display:grid;gap:8px}
+.builder-col-head{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px}
+.builder-col-fields{display:grid;gap:8px}
+.builder-col-fields .field{margin:0}
+.builder-col-media{display:grid;grid-template-columns:72px 1fr;gap:10px;align-items:center}
+.builder-col-media .builder-media-preview{width:72px;height:54px}
+.builder-col-media label{position:relative;overflow:hidden;justify-self:start}
+.builder-col-media input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.builder-collection .check-line{display:flex;align-items:center;gap:8px;font-size:13px}
+html body .builder-panel .builder-collection .btn.ghost.small{color:#1f211c!important;background:#fff!important;border:1px solid #cfcfc6!important}
+html body .builder-panel .builder-collection .btn.ghost.small:hover{background:#f1f1ea!important}
+html body .builder-panel .builder-col-head .btn.ghost.small{color:#a0302a!important;border-color:#e3c6c3!important}

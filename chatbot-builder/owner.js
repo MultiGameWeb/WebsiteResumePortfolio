@@ -2,6 +2,8 @@
 // customer sees is changed from here (or from the setup chat). The private
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
+import { initUpdateChat } from './owner-update.js?v=1';
+
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';
 const MAX_IMAGE_SIDE = 1280;
@@ -20,7 +22,7 @@ function showStatus(text) {
   statusBox.hidden = !text;
 }
 
-const photoUrl = (photoId) => `${API_BASE}/api/botcraft/photo?id=${encodeURIComponent(photoId)}`;
+const photoUrl = (photoId) => (String(photoId).startsWith('data:') ? photoId : `${API_BASE}/api/botcraft/photo?id=${encodeURIComponent(photoId)}`);
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -311,6 +313,20 @@ function renderFeatures() {
   for (const key of FEATURE_KEYS) form.elements[key].checked = Boolean(view.features?.[key]);
 }
 
+const INFO_KEYS = ['timings', 'weekly_holiday', 'address', 'call_number', 'whatsapp_number', 'map_link', 'about'];
+
+function renderInfo() {
+  const form = $('#infoForm');
+  if (!form || form.contains(document.activeElement)) return;
+  for (const key of INFO_KEYS) form.elements[key].value = view.info?.[key] || '';
+}
+
+$('#infoForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const form = event.target;
+  call('save_info', { info: Object.fromEntries(INFO_KEYS.map((key) => [key, form.elements[key].value.trim()])) });
+});
+
 function render() {
   $('#sections').hidden = false;
   $('#shopName').textContent = view.shopName || 'Your shop';
@@ -320,6 +336,7 @@ function render() {
   const openBot = $('#openBot');
   openBot.hidden = !view.publicId;
   if (view.publicId) openBot.href = new URL(`../salesbot/?s=${encodeURIComponent(view.publicId)}`, window.location.href).href;
+  renderInfo();
   renderQuestions();
   renderRequests();
   renderOrders();
@@ -464,6 +481,7 @@ renderNotify();
 
 if (!shopId) showStatus('No bot found in this browser. Create your bot in the setup chat first.');
 else {
+  initUpdateChat({ getView: () => view || { products: [], info: {} }, call, prepareImage, apiBase: API_BASE, shopId });
   call('load');
   // New customer questions and requests show up while the page is open, unless the owner is typing.
   window.setInterval(() => {

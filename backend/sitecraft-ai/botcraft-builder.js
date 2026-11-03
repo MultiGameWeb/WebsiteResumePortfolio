@@ -1,4 +1,5 @@
 import { CORE_QUESTIONS, callWithFallback, generateQuestionBank, toBankRecord } from "./botcraft-question-bank.js";
+import { INFO_FIELDS, PLAN_SCHEMA, buildPlanPrompt, cleanPlan } from "./botcraft-owner-update.js";
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
@@ -168,7 +169,7 @@ const SHOP_ID_PATTERN = /^[A-Za-z0-9-]{16,64}$/;
 function cleanFacts(raw) {
   const facts = {};
   for (const [key, value] of Object.entries(raw && typeof raw === "object" ? raw : {})) {
-    if (CORE_KEYS.has(key) && String(value ?? "").trim()) facts[key] = clip(value, 600);
+    if ((CORE_KEYS.has(key) || key === "about") && String(value ?? "").trim()) facts[key] = clip(value, 600);
   }
   return facts;
 }
@@ -840,11 +841,11 @@ const PREORDER_TYPES = new Set(["restaurant", "fast_food", "tiffin_centre", "cat
 const ORDER_STATUS_TYPES = new Set(["packers_movers", "laundry", "ironing_shop", "rto_agent", "driving_school_rto", "flex_printing", "printing_press", "printing_flex", "interior_designer", "upvc_windows", "tailor_shop", "boutique", "mobile_repair", "mobile_shop_repair", "appliance_repair", "computer_shop",
   "car_service", "bike_service", "car_bike_service", "car_wash_detailing", "heavy_vehicle_service", "optical", "photography",
   "jewellery", "furniture", "catering", "bakery", "bakery_sweets"]);
-// voice (talk mode) and cart (WhatsApp orders) are off until the owner turns them on.
+// voice (talk mode) is on by default (the phone does the speech work; replies cost the same as chat). Cart (WhatsApp orders) is off until the owner turns it on.
 const FEATURE_KEYS = ["photo", "preorder", "orderStatus", "voice", "cart"];
 
 export function shopFeatures(shopType, settings) {
-  const defaults = { photo: true, preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType), voice: false, cart: false };
+  const defaults = { photo: true, preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType), voice: true, cart: false };
   const chosen = settings?.features || {};
   return Object.fromEntries(FEATURE_KEYS.map(key => [key, typeof chosen[key] === "boolean" ? chosen[key] : defaults[key]]));
 }
@@ -958,7 +959,8 @@ async function ownerView(env, shopId) {
     requests,
     orders,
     features: shopFeatures(facts.shop_type, settings),
-    galleryLimit: GALLERY_LIMIT
+    galleryLimit: GALLERY_LIMIT,
+    info: Object.fromEntries(Object.keys(INFO_FIELDS).map(key => [key, String(facts[key] || "")]))
   };
 }
 
@@ -1030,6 +1032,37 @@ async function handlePush(request, env, origin) {
   return reply({ ok: true }, 200, origin);
 }
 
+// Owner Update mode: turn the owner's message (and photos) into a list of
+// changes. Nothing is saved here; the owner confirms on the owner page.
+async function handlePlanUpdate(env, shopId, body, origin) {
+  const text = clip(body?.text, 1500);
+  const images = (Array.isArray(body?.images) ? body.images : [])
+    .filter(img => PHOTO_TYPES.has(img?.mimeType) && typeof img?.data === "string" && img.data.length < 1_500_000)
+    .slice(0, 3);
+  if (!text && !images.length) return reply({ ok: false, error: "Please write what to change." }, 400, origin);
+  const [products, saved] = await Promise.all([listProducts(env, shopId), loadShop(env, shopId, 0)]);
+  const facts = cleanFacts(saved?.facts);
+  const info = Object.fromEntries(Object.keys(INFO_FIELDS).map(key => [key, String(facts[key] || "")]));
+  const parts = [{ text: text || "(photos only)" }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.data } }))];
+  const modelErrors = [];
+  try {
+    const { result } = await callWithFallback(env, {
+      system: buildPlanPrompt(products, info, images.length),
+      contents: [{ role: "user", parts }],
+      schema: PLAN_SCHEMA,
+      models: CHAT_MODELS,
+      temperature: 0.1,
+      timeoutMs: 40000,
+      maxAttempts: 1,
+      log: message => modelErrors.push(message.slice(0, 160))
+    });
+    return reply({ ok: true, plan: cleanPlan(result, products, images.length) }, 200, origin);
+  } catch (error) {
+    console.error("BotCraft plan_update failed", error, modelErrors);
+    return reply({ ok: false, error: "The AI helper is busy right now. Please try again." }, 503, origin);
+  }
+}
+
 async function handleOwner(request, env, origin, ctx) {
   if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
   if (!storeAvailable(env)) return reply({ ok: false, error: "BotCraft storage is not configured yet." }, 503, origin);
@@ -1098,6 +1131,19 @@ async function handleOwner(request, env, origin, ctx) {
     await saveSettings(env, shopId, { features: { ...(current.features || {}), ...features } });
   } else if (action === "set_bot_name") {
     await updateFacts(env, shopId, { bot_name: clip(body?.name, 40) });
+  } else if (action === "save_info") {
+    // Shop information the owner may change from the owner page (timings, holiday, address, contact, about).
+    const patch = {};
+    for (const [key, max] of Object.entries(INFO_FIELDS)) {
+      if (typeof body?.info?.[key] !== "string") continue;
+      let value = clip(body.info[key], max);
+      if (key === "call_number" || key === "whatsapp_number") value = value.replace(/\D/g, "").slice(0, 13);
+      if (key === "map_link" && value && !/^https?:\/\/[^\s]+$/i.test(value)) continue;
+      patch[key] = value;
+    }
+    if (Object.keys(patch).length) await updateFacts(env, shopId, patch);
+  } else if (action === "plan_update") {
+    return handlePlanUpdate(env, shopId, body, origin);
   } else if (action !== "load") {
     return reply({ ok: false, error: "Unknown action." }, 400, origin);
   }

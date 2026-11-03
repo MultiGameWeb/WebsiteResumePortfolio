@@ -20,7 +20,12 @@
     '.sc-pg-memory button{display:grid;place-items:center;aspect-ratio:1;border:1px solid rgba(216,180,254,.22);border-radius:12px;background:linear-gradient(145deg,#30213f,#211c31);color:#fff;font-size:clamp(20px,4vw,32px);cursor:pointer}' +
     '.sc-pg-memory button.open{background:linear-gradient(145deg,#4c2870,#342044);border-color:rgba(216,180,254,.7)}.sc-pg-memory button.matched{background:rgba(34,197,94,.14);border-color:rgba(74,222,128,.4);cursor:default}' +
     '.sc-pg-score{display:flex;justify-content:center;gap:23px;margin-top:15px;color:#aaa1bd;font-size:10px}.sc-pg-score strong{margin-left:5px;color:#fff;font-size:12px}' +
-    '.sc-pg-ttt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:min(100%,315px);margin:0 auto}' +
+    '.sc-pg-ttt{display:grid;grid-template-columns:repeat(var(--ttt-size,3),minmax(0,1fr));gap:8px;width:min(100%,460px);margin:0 auto}' +
+    '.sc-pg-ttt-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;width:min(100%,600px);margin:0 auto 15px}' +
+    '.sc-pg-ttt-control{display:grid;gap:5px;color:#c9c1d7;font-size:10px;font-weight:750}' +
+    '.sc-pg-ttt-control select{width:100%;min-width:0;min-height:39px;padding:0 8px;border:1px solid rgba(255,255,255,.17);border-radius:9px;background:#211b30;color:#fff;font:700 11px Inter,system-ui,sans-serif}' +
+    '.sc-pg-ttt button{aspect-ratio:1;min-width:0}' +
+    '@media(max-width:420px){.sc-pg-ttt-controls{gap:6px}.sc-pg-ttt-control{font-size:9px}.sc-pg-ttt-control select{font-size:10px;padding:0 5px}}' +
     '.sc-pg-ttt button{display:grid;place-items:center;aspect-ratio:1;border:1px solid rgba(255,255,255,.14);border-radius:13px;background:rgba(255,255,255,.045);color:#fff;font-size:clamp(30px,7vw,45px);font-weight:850;cursor:pointer}' +
     '.sc-pg-ttt button:disabled{cursor:default}.sc-pg-ttt .x{color:#c4b5fd}.sc-pg-ttt .o{color:#f9a8d4}' +
     '.sc-pg-rps-choices{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:20px auto}' +
@@ -83,10 +88,9 @@
     section.setAttribute('aria-labelledby', 'sc-pg-title');
     section.innerHTML =
       '<div class="sc-pg-inner">' +
-        '<div class="sc-pg-head"><div><span class="sc-pg-kicker">A LITTLE FUN</span>' +
+        '<div class="sc-pg-head"><div>' +
         '<h2 id="sc-pg-title">Take a break. Play a game.</h2>' +
-        '<p>Give your visitors a fun reason to stay a little longer. Pick a game below and enjoy a quick round—right here on this website.</p></div>' +
-        (brandName ? '<span class="sc-pg-brand">' + esc(brandName) + '</span>' : '') +
+        '<p>Choose a game and enjoy a quick round—right here on this website.</p></div>' +
         '</div>' +
         '<div class="sc-pg-tabs" role="tablist" aria-label="Choose a game">' +
           '<button class="sc-pg-tab" type="button" role="tab" aria-selected="true" data-pg-tab="memory">🧠 Memory Match</button>' +
@@ -115,6 +119,7 @@
     const tabs = Array.from(section.querySelectorAll('[data-pg-tab]'));
     let game = 'memory';
     let deck = [], opened = [], matched = new Set(), moves = 0, locked = false;
+    let tttSize = 3, tttMode = 'computer', tttDifficulty = 'medium';
     let board = Array(9).fill(''), turn = 'X', ended = false;
     let you = 0, computer = 0, youPicked = '—', computerPicked = '—';
 
@@ -130,7 +135,7 @@
       '</div>';
     }
     function header(label, title, resetLabel, instructions) {
-      return '<div class="sc-pg-gamehead"><div><small>' + label + '</small><h3>' + title + '</h3></div>' +
+      return '<div class="sc-pg-gamehead"><div><h3>' + title + '</h3></div>' +
         '<button class="sc-pg-reset" type="button" data-pg-reset>' + resetLabel + '</button></div>' +
         helpText(instructions);
     }
@@ -237,52 +242,120 @@
       }, 650);
     }
     function paintTtt(message) {
-      panel.innerHTML = header('TIC-TAC-TOE · YOU VS COMPUTER', 'Can you beat the computer?', '↻ New game',
-        '<b>Goal:</b> Get three of your X marks in a row, column or diagonal before the computer gets three O marks. <b>How:</b> Tap any empty square. You play X first; the computer replies with O. <b>Win:</b> Make a line of three. The computer blocks winning moves and looks for its own winning line.') +
-        '<p class="sc-pg-status">' + esc(message || (currentTttTurn === 'you' ? 'Your turn — you are X.' : 'Computer is thinking…')) + '</p><div class="sc-pg-ttt">' +
+      const modeLabel = tttMode === 'two' ? 'Two Players' : 'Against Computer';
+      const turnLabel = tttMode === 'two'
+        ? 'Player ' + (turn === 'X' ? '1' : '2') + ' turn — ' + turn + '.'
+        : (currentTttTurn === 'you' ? 'Your turn — you are X.' : 'Computer is thinking…');
+      const sizeOptions = [3,4,5].map(n => '<option value="' + n + '"' + (tttSize === n ? ' selected' : '') + '>' + n + ' × ' + n + ' (' + n + ' in a row)</option>').join('');
+      const modeOptions = '<option value="computer"' + (tttMode === 'computer' ? ' selected' : '') + '>Play vs Computer</option><option value="two"' + (tttMode === 'two' ? ' selected' : '') + '>2 Players</option>';
+      const difficultyOptions = ['easy','medium','hard'].map(level => '<option value="' + level + '"' + (tttDifficulty === level ? ' selected' : '') + '>' + level.charAt(0).toUpperCase() + level.slice(1) + '</option>').join('');
+      panel.innerHTML = header('TIC-TAC-TOE · ' + modeLabel.toUpperCase(), 'Choose your board. Make a line to win.', '↻ New game',
+        '<b>Board:</b> Choose 3 × 3, 4 × 4 or 5 × 5. The number of marks needed to win matches the board size. <b>Modes:</b> Play against the computer or take turns with a second player on the same device. <b>Computer:</b> Choose Easy, Medium or Hard difficulty.') +
+        '<div class="sc-pg-ttt-controls">' +
+          '<label class="sc-pg-ttt-control">Board size<select data-ttt-size aria-label="Tic-Tac-Toe board size">' + sizeOptions + '</select></label>' +
+          '<label class="sc-pg-ttt-control">Game mode<select data-ttt-mode aria-label="Tic-Tac-Toe game mode">' + modeOptions + '</select></label>' +
+          '<label class="sc-pg-ttt-control"' + (tttMode === 'two' ? ' hidden' : '') + '>Computer level<select data-ttt-difficulty aria-label="Computer difficulty">' + difficultyOptions + '</select></label>' +
+        '</div>' +
+        '<p class="sc-pg-status">' + esc(message || turnLabel) + '</p><div class="sc-pg-ttt" style="--ttt-size:' + tttSize + '">' +
         board.map((value, i) => '<button type="button" data-pg-cell="' + i + '" class="' +
-          (value ? value.toLowerCase() : '') + '"' + (value || ended || currentTttTurn !== 'you' ? ' disabled' : '') + ' aria-label="Cell ' +
-          (i + 1) + (value ? ': ' + value : ': empty') + '">' + value + '</button>').join('') + '</div>';
+          (value ? value.toLowerCase() : '') + '"' + (value || ended || (tttMode === 'computer' && currentTttTurn !== 'you') ? ' disabled' : '') + ' aria-label="Cell ' +
+          (i + 1) + (value ? ': ' + value : ': empty') + '">' + value + '</button>').join('') + '</div>' +
+        '<div class="sc-pg-score">' + score('Board', tttSize + ' × ' + tttSize) + score('Win line', tttSize + ' marks') + score('Mode', modeLabel) + '</div>';
     }
     function tttWinner(state, mark) {
-      const lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
-      return lines.some(line => line.every(i => state[i] === mark));
+      const n=tttSize,k=tttSize;
+      for(let r=0;r<n;r++)for(let c=0;c<n;c++){
+        if(c+k<=n&&Array.from({length:k},(_,j)=>state[r*n+c+j]).every(v=>v===mark))return true;
+        if(r+k<=n&&Array.from({length:k},(_,j)=>state[(r+j)*n+c]).every(v=>v===mark))return true;
+        if(r+k<=n&&c+k<=n&&Array.from({length:k},(_,j)=>state[(r+j)*n+c+j]).every(v=>v===mark))return true;
+        if(r+k<=n&&c-k+1>=0&&Array.from({length:k},(_,j)=>state[(r+j)*n+c-j]).every(v=>v===mark))return true;
+      }
+      return false;
+    }
+    function findTttWinningMove(mark) {
+      for(let i=0;i<board.length;i++){
+        if(board[i])continue;
+        board[i]=mark;const wins=tttWinner(board,mark);board[i]='';
+        if(wins)return i;
+      }
+      return -1;
+    }
+    function tttPotential(mark) {
+      const n=tttSize,k=tttSize,opponent=mark==='X'?'O':'X';
+      let scoreValue=0;
+      for(const [dr,dc] of [[0,1],[1,0],[1,1],[1,-1]]){
+        for(let r=0;r<n;r++)for(let c=0;c<n;c++){
+          const er=r+(k-1)*dr,ec=c+(k-1)*dc;
+          if(er<0||er>=n||ec<0||ec>=n)continue;
+          let count=0,blocked=false;
+          for(let j=0;j<k;j++){
+            const v=board[(r+j*dr)*n+(c+j*dc)];
+            if(v===opponent){blocked=true;break;}
+            if(v===mark)count++;
+          }
+          if(!blocked&&count)scoreValue+=Math.pow(5,count);
+        }
+      }
+      return scoreValue;
     }
     function computerTttMove() {
-      let bestScore = -Infinity, bestMoves = [];
-      function minimax(state, maximizing, depth) {
-        if (tttWinner(state, 'O')) return 10 - depth;
-        if (tttWinner(state, 'X')) return depth - 10;
-        const empty = state.map((value, i) => value ? -1 : i).filter(i => i >= 0);
-        if (!empty.length) return 0;
-        if (maximizing) {
-          let best = -Infinity;
-          empty.forEach(i => { state[i] = 'O'; best = Math.max(best, minimax(state, false, depth + 1)); state[i] = ''; });
-          return best;
+      const empty=board.map((value,i)=>value?-1:i).filter(i=>i>=0);
+      if(!empty.length)return -1;
+      if(tttSize===3&&tttDifficulty==='hard'){
+        function minimax(state,maximizing,depth){
+          if(tttWinner(state,'O'))return 10-depth;
+          if(tttWinner(state,'X'))return depth-10;
+          const spaces=state.map((v,i)=>v?-1:i).filter(i=>i>=0);
+          if(!spaces.length)return 0;
+          let value=maximizing?-Infinity:Infinity;
+          spaces.forEach(i=>{
+            state[i]=maximizing?'O':'X';
+            const result=minimax(state,!maximizing,depth+1);
+            state[i]='';
+            value=maximizing?Math.max(value,result):Math.min(value,result);
+          });
+          return value;
         }
-        let best = Infinity;
-        empty.forEach(i => { state[i] = 'X'; best = Math.min(best, minimax(state, true, depth + 1)); state[i] = ''; });
-        return best;
+        let best=-Infinity,moves=[];
+        empty.forEach(i=>{
+          board[i]='O';const value=minimax(board,false,1);board[i]='';
+          if(value>best){best=value;moves=[i];}else if(value===best)moves.push(i);
+        });
+        return shuffle(moves)[0];
       }
-      board.forEach((value, i) => {
-        if (value) return;
-        board[i] = 'O';
-        const valueScore = minimax(board, false, 1);
-        board[i] = '';
-        if (valueScore > bestScore) { bestScore = valueScore; bestMoves = [i]; }
-        else if (valueScore === bestScore) bestMoves.push(i);
+      if(tttDifficulty==='easy')return shuffle(empty)[0];
+      const win=findTttWinningMove('O');if(win>=0)return win;
+      const block=findTttWinningMove('X');if(block>=0)return block;
+      if(tttDifficulty==='medium'){
+        const centre=empty.filter(i=>{
+          const r=Math.floor(i/tttSize),c=i%tttSize;
+          return Math.abs(r-(tttSize-1)/2)+Math.abs(c-(tttSize-1)/2)<1.6;
+        });
+        return shuffle(centre.length?centre:empty)[0];
+      }
+      let best=-Infinity,moves=[];
+      empty.forEach(i=>{
+        board[i]='O';
+        const value=tttPotential('O')-tttPotential('X')*1.15+
+          (tttSize-Math.abs(Math.floor(i/tttSize)-(tttSize-1)/2)-Math.abs(i%tttSize-(tttSize-1)/2));
+        board[i]='';
+        if(value>best){best=value;moves=[i];}else if(value===best)moves.push(i);
       });
-      return bestMoves.length ? shuffle(bestMoves)[0] : -1;
+      return shuffle(moves)[0];
     }
     function runComputerTtt() {
-      if (game !== 'ttt' || currentTttTurn !== 'computer' || ended) return;
-      const index = computerTttMove();
-      if (index >= 0) board[index] = 'O';
-      if (tttWinner(board, 'O')) { ended = true; currentTttTurn = 'done'; paintTtt('Computer wins this round. 🤖'); }
-      else if (board.every(Boolean)) { ended = true; currentTttTurn = 'done'; paintTtt('It is a draw. Well played!'); }
-      else { currentTttTurn = 'you'; paintTtt('Computer played O. Your turn!'); }
+      if(game!=='ttt'||currentTttTurn!=='computer'||ended)return;
+      const index=computerTttMove();
+      if(index>=0)board[index]='O';
+      if(tttWinner(board,'O')){ended=true;currentTttTurn='done';paintTtt('Computer wins this round. 🤖');}
+      else if(board.every(Boolean)){ended=true;currentTttTurn='done';paintTtt('It is a draw. Well played!');}
+      else{currentTttTurn='you';turn='X';paintTtt('Computer played O. Your turn!');}
     }
-    function resetTtt() { board = Array(9).fill(''); currentTttTurn = 'you'; ended = false; paintTtt('Your turn — you are X.'); }
+    function resetTtt(message) {
+      board=Array(tttSize*tttSize).fill('');
+      turn='X';currentTttTurn='you';ended=false;
+      paintTtt(message||(tttMode==='two'?'Player 1 starts as X. Player 2 is O.':'Your turn — you are X.'));
+    }
     function paintRps(message) {
       const options = [{id:'rock',label:'Rock',emoji:'✊'},{id:'paper',label:'Paper',emoji:'✋'},{id:'scissors',label:'Scissors',emoji:'✌️'}];
       panel.innerHTML = header('ROCK PAPER SCISSORS · VS COMPUTER','Can you beat the computer?','↻ Reset score',
@@ -315,6 +388,7 @@
       else if (game === 'snake') paintSnake();
       else paintRps();
     }
+    section.__siteCraftOpenBaseGame = switchGame;
     tabs.forEach(tab => tab.addEventListener('click', () => switchGame(tab.dataset.pgTab)));
     panel.addEventListener('click', event => {
       if (panel.dataset.extraGameActive === 'true') return;
@@ -364,14 +438,19 @@
       }
       if (game === 'ttt') {
         const cell = event.target.closest('[data-pg-cell]');
-        if (!cell || ended || currentTttTurn !== 'you') return;
+        if (!cell || ended || (tttMode === 'computer' && currentTttTurn !== 'you')) return;
         const index = Number(cell.dataset.pgCell);
         if (!Number.isInteger(index) || board[index]) return;
-        board[index] = 'X';
-        if (tttWinner(board, 'X')) {
-          ended = true; currentTttTurn = 'done'; paintTtt('You win! 🎉 Three X marks in a row.');
+        const mark = tttMode === 'two' ? turn : 'X';
+        board[index] = mark;
+        if (tttWinner(board, mark)) {
+          ended = true; currentTttTurn = 'done';
+          paintTtt(tttMode === 'two' ? (mark === 'X' ? 'Player 1 wins! 🎉' : 'Player 2 wins! 🎉') : 'You win! 🎉');
         } else if (board.every(Boolean)) {
           ended = true; currentTttTurn = 'done'; paintTtt('It is a draw. Well played!');
+        } else if (tttMode === 'two') {
+          turn = mark === 'X' ? 'O' : 'X';
+          paintTtt('Player ' + (turn === 'X' ? '1' : '2') + ' turn — ' + turn + '.');
         } else {
           currentTttTurn = 'computer';
           paintTtt('Your move is in. Computer is thinking…');
@@ -397,6 +476,19 @@
         paintRps(message);
       }
     });
+    section.addEventListener('change', event => {
+      if(game!=='ttt')return;
+      if(event.target.matches('[data-ttt-size]')){
+        tttSize=Math.max(3,Math.min(5,Number(event.target.value)||3));
+        resetTtt('New '+tttSize+' × '+tttSize+' board. Place your first X.');
+      }else if(event.target.matches('[data-ttt-mode]')){
+        tttMode=event.target.value==='two'?'two':'computer';
+        resetTtt(tttMode==='two'?'Two-player mode. Player 1 starts as X.':'Computer mode. You are X; computer is O.');
+      }else if(event.target.matches('[data-ttt-difficulty]')){
+        tttDifficulty=['easy','medium','hard'].includes(event.target.value)?event.target.value:'medium';
+        resetTtt('Computer difficulty set to '+tttDifficulty+'. Your turn!');
+      }
+    });
     function updateFullscreenLabel() {
       const active = document.fullscreenElement || document.webkitFullscreenElement;
       const button = panel.querySelector('[data-pg-fullscreen]');
@@ -407,5 +499,13 @@
     switchGame('memory');
   }
 
-  window.SiteCraftPlayGames = { append: append, init: init };
+  function openGame(root, id) {
+    const section = root && root.querySelector ? root.querySelector('.sc-pg-section') : document.querySelector('.sc-pg-section');
+    if (!section) return false;
+    init(section);
+    if (typeof section.__siteCraftOpenBaseGame !== 'function') return false;
+    section.__siteCraftOpenBaseGame(id);
+    return true;
+  }
+  window.SiteCraftPlayGames = { append: append, init: init, openGame: openGame };
 })();

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10131f">
+<title>Water Sort Puzzle | SiteCraft Games</title>
+<style>
+:root{color-scheme:dark;--bg:#10131f;--panel:#1a2030;--line:#343d55;--text:#f6f7ff;--muted:#aab3c8;--accent:#7c9cff}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:radial-gradient(ellipse at 50% -12%,#27365b 0,transparent 48%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overscroll-behavior:none}
+button{font:inherit;touch-action:manipulation}
+#app{height:100dvh;width:100%;max-width:1050px;margin:auto;padding:clamp(8px,2vw,18px);display:flex;flex-direction:column;gap:clamp(7px,1.6vh,13px)}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#4f77f5,#8b5cf6);font-size:23px;box-shadow:0 8px 25px #617cf533}
+h1{margin:0;font-size:clamp(18px,3.4vw,27px);letter-spacing:-.04em}
+.sub{margin-top:3px;color:var(--muted);font-size:10px}
+.level-pill{flex:none;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#ffffff09;color:#dce5ff;font-size:11px;font-weight:850}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{padding:8px 11px;border:1px solid var(--line);border-radius:13px;background:#ffffff08;text-align:center}
+.stat span{display:block;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.stat strong{display:block;margin-top:3px;font-size:18px;font-variant-numeric:tabular-nums}
+.stage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:clamp(8px,1.7vh,14px)}
+.message{min-height:23px;color:#d7e0f7;font-size:clamp(11px,2vw,13px);font-weight:700;text-align:center}
+.tube-grid{width:100%;max-width:850px;display:flex;flex-wrap:wrap;align-content:center;align-items:center;justify-content:center;gap:clamp(17px,4.5vw,34px) clamp(12px,3vw,24px);padding:5px 4px}
+.tube{position:relative;width:clamp(42px,8vw,58px);height:clamp(126px,23vh,180px);padding:5px 4px 4px;border:3px solid #b9c8e8aa;border-top:0;border-radius:0 0 20px 20px;background:linear-gradient(90deg,#ffffff13,#ffffff04 45%,#ffffff12);box-shadow:inset 4px 0 7px #fff1,inset -4px 0 7px #fff1,0 10px 22px #0005;display:flex;flex-direction:column-reverse;overflow:hidden;cursor:pointer;transition:transform .15s,border-color .15s;touch-action:manipulation}
+.tube:before{content:"";position:absolute;top:0;left:-3px;right:-3px;height:5px;border-radius:9px;background:#c7d5eeaa}
+.tube.selected{transform:translateY(-11px);border-color:#a5c2ff;box-shadow:0 0 0 3px #7c9cff33,0 12px 27px #0006}
+.tube.target{border-color:#71e5c1}
+.liquid{position:relative;z-index:1;flex:1;min-height:0;border-radius:3px;margin:1px 0;box-shadow:inset 0 3px 5px #ffffff26,inset 0 -4px 5px #0002;animation:fillIn .2s ease-out}
+@keyframes fillIn{from{transform:scaleY(.3);opacity:.55}to{transform:scaleY(1);opacity:1}}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.btn{min-height:39px;padding:0 15px;border:1px solid var(--line);border-radius:12px;background:#ffffff0b;color:#e8edff;font-size:11px;font-weight:850;cursor:pointer}
+.btn:active{transform:scale(.97)}
+.btn.primary{border-color:transparent;background:linear-gradient(110deg,#4f77f5,#8b5cf6);color:#fff}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.help{max-width:650px;margin:0 auto;color:#8f9ab3;font-size:10px;line-height:1.5;text-align:center}
+.overlay{position:fixed;inset:0;z-index:5;display:none;place-items:center;padding:18px;background:#090c16c9;backdrop-filter:blur(7px)}
+.overlay.show{display:grid}
+.dialog{width:min(100%,330px);padding:23px;border:1px solid #506087;border-radius:20px;background:#1b2336;text-align:center;box-shadow:0 22px 80px #0008}
+.dialog .trophy{font-size:39px}
+.dialog h2{margin:7px 0;font-size:22px}
+.dialog p{color:var(--muted);font-size:12px;line-height:1.5}
+@media(max-height:590px){#app{gap:5px;padding:7px}.logo{width:35px;height:35px}.stats{gap:5px}.stat{padding:5px}.stat strong{font-size:15px}.stage{gap:5px}.tube-grid{gap:9px}.tube{height:clamp(105px,22vh,135px);width:40px}.btn{min-height:34px}.help{font-size:9px}}
+@media(max-width:390px){.tube-grid{gap:12px 11px}.tube{width:42px}.btn{padding:0 11px}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand"><div class="logo" aria-hidden="true">🧪</div><div><h1>Water Sort Puzzle</h1><div class="sub">Sort every colour into its own tube</div></div></div>
+    <div class="level-pill" id="levelPill">LEVEL 1</div>
+  </header>
+  <section class="stats" aria-label="Game stats">
+    <div class="stat"><span>Moves</span><strong id="moves">0</strong></div>
+    <div class="stat"><span>Best</span><strong id="best">—</strong></div>
+    <div class="stat"><span>Colours</span><strong id="colourCount">3</strong></div>
+  </section>
+  <main class="stage">
+    <div class="message" id="message" aria-live="polite">Tap a tube, then tap another tube to pour.</div>
+    <div class="tube-grid" id="tubeGrid" aria-label="Water tubes"></div>
+    <div class="actions">
+      <button class="btn" id="undoBtn" type="button">↶ Undo</button>
+      <button class="btn" id="hintBtn" type="button">✦ Hint</button>
+      <button class="btn" id="restartBtn" type="button">↻ Restart</button>
+      <button class="btn primary" id="nextBtn" type="button" hidden>Next Level →</button>
+    </div>
+    <p class="help">Pour only into an empty tube or onto the same colour. You can move a stack only when its top colours match. Complete each colour in one tube.</p>
+  </main>
+</div>
+<div class="overlay" id="winOverlay" role="dialog" aria-modal="true" aria-labelledby="winTitle">
+  <div class="dialog"><div class="trophy">🏆</div><h2 id="winTitle">Level complete!</h2><p id="winText">Perfect sorting.</p><button class="btn primary" id="continueBtn" type="button">Next Level →</button></div>
+</div>
+<script>
+(function(){
+'use strict';
+const palette=[
+  ['#ff5b6e','#ff9aa5'],['#4b9eff','#94cbff'],['#31c78d','#95f0c8'],['#ffb547','#ffdc95'],
+  ['#a879ff','#d1b4ff'],['#f062c0','#ffb2e5'],['#23c7d8','#a1f5fb'],['#a6c93a','#d8f28e'],
+  ['#ed7640','#ffc09b'],['#7888a8','#becbe3']
+];
+const grid=document.getElementById('tubeGrid'),message=document.getElementById('message');
+let level=Math.max(1,Number(localStorage.getItem('waterSortLevel')||1));
+let tubes=[],initial=[],history=[],moves=0,selected=-1,won=false;
+let bestMap={};try{bestMap=JSON.parse(localStorage.getItem('waterSortBest')||'{}')||{};}catch(_){bestMap={};}
+const clone=a=>a.map(t=>t.slice());
+const rand=n=>Math.floor(Math.random()*n);
+function config(){return {colours:Math.min(8,3+Math.floor((level-1)/2)),capacity:4};}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=rand(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;}
+function makeLevel(){
+ const cfg=config(),balls=[];
+ for(let c=0;c<cfg.colours;c++)for(let k=0;k<cfg.capacity;k++)balls.push(c);
+ let mixed;
+ do{
+   const pile=shuffle(balls.slice());
+   mixed=[];
+   for(let i=0;i<cfg.colours;i++)mixed.push(pile.slice(i*4,(i+1)*4));
+ }while(mixed.some(t=>t.every(v=>v===t[0])));
+ mixed.push([],[]);
+ tubes=mixed;initial=clone(tubes);history=[];moves=0;selected=-1;won=false;
+ document.getElementById('levelPill').textContent='LEVEL '+level;
+ document.getElementById('colourCount').textContent=cfg.colours;
+ document.getElementById('moves').textContent='0';
+ document.getElementById('best').textContent=bestMap[level]||'—';
+ document.getElementById('nextBtn').hidden=true;
+ document.getElementById('undoBtn').disabled=true;
+ document.getElementById('winOverlay').classList.remove('show');
+ message.textContent='Tap a tube, then tap another tube to pour.';
+ render();
+}
+function topRun(t){if(!t.length)return 0;let n=0,c=t[t.length-1];for(let i=t.length-1;i>=0&&t[i]===c;i--)n++;return n;}
+function canPour(a,b){return a!==b&&tubes[a]&&tubes[a].length&&tubes[b]&&tubes[b].length<4&&(!tubes[b].length||tubes[b][tubes[b].length-1]===tubes[a][tubes[a].length-1]);}
+function solved(){return tubes.every(t=>!t.length||(t.length===4&&t.every(v=>v===t[0])));}
+function render(){
+ grid.replaceChildren();
+ tubes.forEach((tube,index)=>{
+   const el=document.createElement('button');el.type='button';el.className='tube'+(selected===index?' selected':'');el.setAttribute('aria-label','Tube '+(index+1)+', '+tube.length+' of 4 filled');
+   if(selected>=0&&index!==selected&&canPour(selected,index))el.classList.add('target');
+   tube.forEach(c=>{const liquid=document.createElement('span');liquid.className='liquid';liquid.style.background='linear-gradient(90deg,'+palette[c][0]+','+palette[c][1]+' 48%,'+palette[c][0]+')';el.appendChild(liquid);});
+   el.addEventListener('click',()=>tapTube(index));grid.appendChild(el);
+ });
+ document.getElementById('moves').textContent=moves;
+ document.getElementById('undoBtn').disabled=!history.length||won;
+ document.getElementById('hintBtn').disabled=won;
+}
+function snapshot(){history.push({tubes:clone(tubes),moves});if(history.length>100)history.shift();}
+function tapTube(i){
+ if(won)return;
+ if(selected<0){if(!tubes[i].length){message.textContent='Choose a tube that has water in it.';return;}selected=i;message.textContent='Now choose an empty tube or the same top colour.';render();return;}
+ if(selected===i){selected=-1;message.textContent='Selection cleared.';render();return;}
+ if(canPour(selected,i)){
+   snapshot();const from=tubes[selected],to=tubes[i],colour=from[from.length-1],amount=Math.min(topRun(from),4-to.length);
+   for(let n=0;n<amount;n++)to.push(from.pop());
+   moves++;selected=-1;message.textContent='Poured '+amount+' layer'+(amount===1?'':'s')+'.';render();checkWin();return;
+ }
+ if(tubes[i].length){selected=i;message.textContent='Switched tube. Pick a valid destination.';}
+ else message.textContent='That move is not allowed. Choose a matching colour or empty tube.';
+ render();
+}
+function checkWin(){
+ if(!solved())return;
+ won=true;selected=-1;
+ const old=bestMap[level];if(!old||moves<old){bestMap[level]=moves;localStorage.setItem('waterSortBest',JSON.stringify(bestMap));}
+ document.getElementById('best').textContent=bestMap[level];
+ document.getElementById('undoBtn').disabled=true;document.getElementById('hintBtn').disabled=true;
+ document.getElementById('nextBtn').hidden=false;
+ message.textContent='All colours sorted. Nice work!';
+ document.getElementById('winText').textContent='You completed Level '+level+' in '+moves+' moves.';
+ document.getElementById('continueBtn').textContent='Next Level →';
+ document.getElementById('winOverlay').classList.add('show');
+}
+function next(){level++;localStorage.setItem('waterSortLevel',String(level));makeLevel();}
+function undo(){if(!history.length||won)return;const s=history.pop();tubes=clone(s.tubes);moves=s.moves;selected=-1;message.textContent='Last move undone.';render();}
+function hint(){
+ if(won)return;
+ let choices=[];
+ for(let a=0;a<tubes.length;a++)for(let b=0;b<tubes.length;b++)if(canPour(a,b)){
+   const same=!!tubes[b].length,amount=Math.min(topRun(tubes[a]),4-tubes[b].length);
+   let score=(same?100:0)+amount*3+(tubes[a].length===amount?15:0)+(tubes[b].length+amount===4?35:0);
+   choices.push({a,b,score});
+ }
+ choices.sort((a,b)=>b.score-a.score);
+ if(!choices.length){message.textContent='No valid pour found. Try Undo or Restart.';return;}
+ selected=choices[0].a;render();
+ message.textContent='Hint: pour Tube '+(choices[0].a+1)+' into Tube '+(choices[0].b+1)+'.';
+ const destination=grid.children[choices[0].b];if(destination)destination.classList.add('target');
+}
+document.getElementById('undoBtn').addEventListener('click',undo);
+document.getElementById('hintBtn').addEventListener('click',hint);
+document.getElementById('restartBtn').addEventListener('click',()=>{tubes=clone(initial);history=[];moves=0;selected=-1;won=false;message.textContent='Level restarted. Find the colour groups.';document.getElementById('nextBtn').hidden=true;document.getElementById('winOverlay').classList.remove('show');render();});
+document.getElementById('nextBtn').addEventListener('click',next);
+document.getElementById('continueBtn').addEventListener('click',next);
+makeLevel();
+})();
+</script>
+</body>
+</html>

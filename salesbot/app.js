@@ -99,21 +99,71 @@ function whatsappNumber(digits) {
   return plain.length === 10 ? `91${plain}` : plain;
 }
 
-const photoUrl = (photoId) => `${API_BASE}/api/botcraft/photo?id=${encodeURIComponent(photoId)}`;
+const photoUrl = (photoId) => (String(photoId).startsWith('data:') ? photoId : `${API_BASE}/api/botcraft/photo?id=${encodeURIComponent(photoId)}`);
+
+const WEEKDAY_INDEX = { sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6 };
+
+// "10:00 AM – 8:30 PM" + "Sunday" → { open: true, text: 'Open now · closes 8:30 PM' }, or null when the text cannot be read.
+function openStatus(shop, now = new Date()) {
+  const holiday = WEEKDAY_INDEX[String(shop.weeklyHoliday || '').trim().toLowerCase()];
+  if (holiday !== undefined && holiday === now.getDay()) return { open: false, text: 'Closed today (weekly holiday)' };
+  const times = [...String(shop.timings || '').matchAll(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/gi)];
+  if (times.length < 2) return null;
+  const toMinutes = (m, fallback) => {
+    let hour = Number(m[1]);
+    const minute = Number(m[2] || 0);
+    const suffix = (m[3] || fallback || '').toLowerCase();
+    if (hour > 24 || minute > 59) return null;
+    if (suffix === 'pm' && hour < 12) hour += 12;
+    if (suffix === 'am' && hour === 12) hour = 0;
+    return hour * 60 + minute;
+  };
+  const start = toMinutes(times[0], times[0][3] ? '' : 'am');
+  const end = toMinutes(times[1], times[1][3] ? '' : 'pm');
+  if (start === null || end === null) return null;
+  const current = now.getHours() * 60 + now.getMinutes();
+  const open = end > start ? current >= start && current < end : current >= start || current < end;
+  const label = `${String(times[1][1])}${times[1][2] ? `:${times[1][2]}` : ''} ${(times[1][3] || (end >= 720 ? 'PM' : 'AM')).toUpperCase()}`;
+  return open ? { open: true, text: `Open now · closes ${label}` } : { open: false, text: 'Closed now' };
+}
+
+function setMeta(selector, attribute, value) {
+  const node = document.querySelector(selector);
+  if (node) node.setAttribute(attribute, value);
+}
 
 function showShop(shop) {
-  document.title = `${shop.botName || shop.name} · ${shop.name}`;
+  const botLabel = shop.botName || `${shop.name} assistant`;
+  document.title = `${shop.name} · ${botLabel}`;
+  const blurb = shop.about || [shop.type, shop.timings && `Open ${shop.timings}`, shop.address].filter(Boolean).join(' · ');
+  setMeta('#metaDescription', 'content', blurb || `${shop.name} — items, prices, timings and an AI assistant.`);
+  setMeta('#ogTitle', 'content', shop.name);
+  setMeta('#ogDescription', 'content', blurb || shop.name);
   document.querySelector('#shopName').textContent = shop.name;
-  document.querySelector('#botName').textContent = shop.botName || '';
+  document.querySelector('#botName').textContent = shop.type || '';
   const hero = document.querySelector('#heroPhoto');
   hero.hidden = !shop.mainPhoto;
+  document.querySelector('#shopHeader').classList.toggle('has-photo', Boolean(shop.mainPhoto));
   if (shop.mainPhoto) { hero.src = photoUrl(shop.mainPhoto); hero.alt = shop.name; }
-  document.querySelector('#shopMeta').textContent = [shop.type, shop.timings, shop.weeklyHoliday && `Holiday: ${shop.weeklyHoliday}`].filter(Boolean).join(' · ');
+  document.querySelector('#shopMeta').textContent = shop.address || '';
+  const status = openStatus(shop);
+  const chip = document.querySelector('#openChip');
+  chip.hidden = !status;
+  if (status) { chip.textContent = status.text; chip.dataset.open = String(status.open); }
   const contacts = document.querySelector('#contactRow');
   contacts.replaceChildren();
-  if (shop.call) contacts.append(contactLink('Call', `tel:${shop.call}`));
+  if (shop.call) contacts.append(contactLink('📞 Call', `tel:${shop.call}`));
   if (shop.whatsapp) contacts.append(contactLink('WhatsApp', `https://wa.me/${whatsappNumber(shop.whatsapp)}`, true));
-  if (shop.mapLink) contacts.append(contactLink('Directions', shop.mapLink, true));
+  if (shop.mapLink) contacts.append(contactLink('📍 Directions', shop.mapLink, true));
+  document.querySelector('#chatTitle').textContent = botLabel;
+  document.querySelector('#chatFabLabel').textContent = `Ask ${shop.botName || 'the assistant'}`;
+  // Search engines and link previews understand this.
+  let ld = document.querySelector('#shopJsonLd');
+  if (!ld) { ld = document.createElement('script'); ld.type = 'application/ld+json'; ld.id = 'shopJsonLd'; document.head.append(ld); }
+  ld.textContent = JSON.stringify({
+    '@context': 'https://schema.org', '@type': 'LocalBusiness', name: shop.name, description: blurb || undefined,
+    address: shop.address || undefined, telephone: shop.call || undefined, openingHours: shop.timings || undefined, url: window.location.href.split('#')[0],
+  });
 }
 
 function updateBanner() {
@@ -122,50 +172,72 @@ function updateBanner() {
 
 function notFound(message) {
   document.querySelector('#shopName').textContent = 'Shop not found';
+  document.querySelector('#fabRow').hidden = true;
   addMessage('bot', message);
+  document.querySelector('#shopMeta').textContent = message;
   form.hidden = true;
 }
 
-async function loadShop() {
+let greeted = false;
+
+async function loadShop({ silent = false } = {}) {
   updateBanner();
-  if (!shopId) { notFound('Please scan the QR code in the shop again to open its assistant.'); return; }
+  if (!shopId) { if (!silent) notFound('Please scan the QR code in the shop again to open its page.'); return; }
   try {
     const response = await fetch(`${API_BASE}/api/botcraft/public?s=${encodeURIComponent(shopId)}`);
     const data = await response.json();
-    if (response.status === 404) { notFound('Sorry, this shop’s assistant was not found. Please scan the QR code again or ask at the counter.'); return; }
+    if (response.status === 404) { if (!silent) notFound('Sorry, this shop’s page was not found. Please scan the QR code again or ask at the counter.'); return; }
     if (!response.ok || !data.ok) throw new Error(data.error || 'Unavailable');
+    const changed = JSON.stringify(saved?.shop) !== JSON.stringify(data.shop) || JSON.stringify(saved?.offline?.items) !== JSON.stringify(data.offline?.items)
+      || JSON.stringify(saved?.offline?.faqs) !== JSON.stringify(data.offline?.faqs);
     saved = { shop: data.shop, offline: data.offline };
     writeStore(DATA_KEY_PREFIX + shopId, JSON.stringify(saved));
+    if (silent && !changed) return;
   } catch {
     // No internet or server trouble: use the copy from the last visit.
-    if (!saved) { notFound('Please connect to the internet (or the shop’s Wi-Fi) to open the assistant.'); return; }
+    if (silent) return;
+    if (!saved) { notFound('Please connect to the internet (or the shop’s Wi-Fi) to open this page.'); return; }
   }
   showShop(saved.shop);
-  setupTabs();
-  addMessage('bot', `Hi! I'm ${saved.shop.botName || `the assistant of ${saved.shop.name}`}. Ask me about items, prices, offers or timings — in any language.`,
-    navigator.onLine ? ['What do you sell?', 'Any offers today?', 'What are your timings?'] : OFFLINE_CHIPS);
-  // Opened from a notification about a request.
-  if (window.location.hash === '#requests' && !tabs.querySelector('[data-tab="requests"]').hidden) selectTab('requests');
-  renderNotify();
+  setupSections();
+  if (!greeted) {
+    greeted = true;
+    addMessage('bot', `Hi! I'm ${saved.shop.botName || `the assistant of ${saved.shop.name}`}. Ask me about items, prices, offers or timings — in any language.`,
+      navigator.onLine ? ['What do you sell?', 'Any offers today?', 'What are your timings?'] : OFFLINE_CHIPS);
+    // Opened from a notification about a request.
+    if (window.location.hash === '#requests' && !sections.requests.hidden) { sections.requests.scrollIntoView(); refreshMyRequests(); }
+    renderNotify();
+  }
 }
 
-// ---- Products and photos tabs ----
+// The page follows the owner's changes: when you come back to it, and every half minute while it is open.
+document.addEventListener('visibilitychange', () => { if (!document.hidden) loadShop({ silent: true }); });
+window.addEventListener('focus', () => loadShop({ silent: true }));
+window.addEventListener('storage', (event) => { if (event.key === 'botcraft:demo:v1') loadShop({ silent: true }); });
+window.setInterval(() => { if (!document.hidden) loadShop({ silent: true }); }, 30000);
 
-const tabs = document.querySelector('#tabs');
-const panels = { products: document.querySelector('#productsPanel'), photos: document.querySelector('#photosPanel'), requests: document.querySelector('#requestsPanel') };
+// ---- Page sections ----
+
+const sections = {
+  about: document.querySelector('#aboutSection'), products: document.querySelector('#productsSection'), photos: document.querySelector('#photosSection'),
+  info: document.querySelector('#infoSection'), requests: document.querySelector('#requestsSection'),
+};
+const sectionsNav = document.querySelector('#sectionsNav');
+const chatSheet = document.querySelector('#chatSheet');
 const sheet = document.querySelector('#productSheet');
 let sheetProduct = null;
 
-function selectTab(name) {
-  if (talking && name !== 'chat') endTalk();
-  for (const button of tabs.querySelectorAll('[data-tab]')) button.setAttribute('aria-selected', String(button.dataset.tab === name));
-  panels.products.hidden = name !== 'products';
-  panels.photos.hidden = name !== 'photos';
-  panels.requests.hidden = name !== 'requests';
-  if (name === 'requests') refreshMyRequests();
-  chat.hidden = name !== 'chat';
-  form.hidden = name !== 'chat';
-  if (name === 'chat') input.focus();
+function openChat({ focus = true } = {}) {
+  chatSheet.hidden = false;
+  document.body.classList.add('chat-open');
+  if (focus && !talking) input.focus();
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function closeChat() {
+  if (talking) endTalk();
+  chatSheet.hidden = true;
+  document.body.classList.remove('chat-open');
 }
 
 function renderProducts() {
@@ -317,19 +389,63 @@ function openSheet(item) {
   sheet.showModal();
 }
 
-function setupTabs() {
+function renderAbout(shop, faqs) {
+  const text = shop.about || '';
+  document.querySelector('#aboutText').textContent = text;
+  document.querySelector('#aboutType').textContent = [shop.type, shop.timings && `Open ${shop.timings}`].filter(Boolean).join(' · ');
+  const owner = document.querySelector('#ownerPhoto');
+  owner.hidden = !shop.ownerPhoto;
+  if (shop.ownerPhoto) owner.src = photoUrl(shop.ownerPhoto);
+  const list = document.querySelector('#faqList');
+  const shown = faqs.filter((faq) => faq.q && faq.a).slice(0, 12);
+  list.replaceChildren(...shown.map((faq) => {
+    const row = element('details', 'faq-item');
+    row.append(element('summary', '', faq.q), element('p', '', faq.a));
+    return row;
+  }));
+  const any = Boolean(text || owner.src && !owner.hidden || shown.length);
+  sections.about.hidden = !any;
+  return any;
+}
+
+function renderInfo(shop) {
+  const list = document.querySelector('#infoList');
+  const rows = [['🕒 Timings', shop.timings], ['📅 Weekly holiday', shop.weeklyHoliday], ['📍 Address', shop.address], ['📞 Phone', shop.call]].filter(([, value]) => value);
+  list.replaceChildren(...rows.flatMap(([label, value]) => [element('dt', '', label), element('dd', '', value)]));
+  const actions = document.querySelector('#infoActions');
+  actions.replaceChildren();
+  if (shop.mapLink) actions.append(contactLink('📍 Open in Maps', shop.mapLink, true));
+  if (shop.call) actions.append(contactLink('📞 Call', `tel:${shop.call}`));
+  if (shop.whatsapp) actions.append(contactLink('WhatsApp', `https://wa.me/${whatsappNumber(shop.whatsapp)}`, true));
+  const frame = document.querySelector('#mapFrame');
+  const query = shop.address ? encodeURIComponent(`${shop.name}, ${shop.address}`) : '';
+  frame.hidden = !query || !navigator.onLine;
+  const wanted = query ? `https://www.google.com/maps?q=${query}&output=embed` : '';
+  if (wanted && frame.dataset.src !== wanted) { frame.dataset.src = wanted; frame.src = wanted; }
+  sections.info.hidden = !rows.length && !shop.mapLink;
+}
+
+function setupSections() {
+  const shop = saved.shop;
   const items = saved.offline?.items || [];
-  const gallery = saved.shop.gallery || [];
-  const features = saved.shop.features || {};
+  const gallery = shop.gallery || [];
+  const features = shop.features || {};
   const anyRequest = Boolean(features.photo || features.preorder || features.orderStatus);
-  tabs.querySelector('[data-tab="products"]').hidden = !items.length;
-  tabs.querySelector('[data-tab="photos"]').hidden = !gallery.length;
-  tabs.querySelector('[data-tab="requests"]').hidden = !anyRequest;
-  tabs.hidden = !items.length && !gallery.length && !anyRequest;
+  const hasAbout = renderAbout(shop, saved.offline?.faqs || []);
+  renderInfo(shop);
+  sections.products.hidden = !items.length;
+  sections.photos.hidden = !gallery.length;
+  sections.requests.hidden = !anyRequest;
+  const visible = { aboutSection: hasAbout, productsSection: items.length > 0, photosSection: gallery.length > 0, infoSection: !sections.info.hidden, requestsSection: anyRequest };
+  for (const link of sectionsNav.querySelectorAll('[data-section]')) link.hidden = !visible[link.dataset.section];
+  sectionsNav.hidden = Object.values(visible).filter(Boolean).length < 2;
   for (const button of document.querySelectorAll('#requestButtons [data-form]')) {
     button.hidden = !features[{ photo: 'photo', preorder: 'preorder', order: 'orderStatus' }[button.dataset.form]];
   }
-  talkButton.hidden = !(talkSupported && features.voice);
+  document.querySelector('#fabRow').hidden = false;
+  const voiceOn = talkSupported && features.voice !== false;
+  talkButton.hidden = !voiceOn;
+  document.querySelector('#micFab').hidden = !voiceOn;
   if (items.length) renderProducts();
   document.querySelector('#photoGrid').replaceChildren(...gallery.map((photoId) => {
     const link = element('a', 'gallery-photo');
@@ -338,25 +454,43 @@ function setupTabs() {
     link.rel = 'noopener';
     const image = element('img');
     image.src = photoUrl(photoId);
-    image.alt = `${saved.shop.name} photo`;
+    image.alt = `${shop.name} photo`;
     image.loading = 'lazy';
     link.append(image);
     return link;
   }));
 }
 
-tabs.addEventListener('click', (event) => {
-  const button = event.target.closest('[data-tab]');
-  if (button) selectTab(button.dataset.tab);
-});
+// Highlights the section you are reading in the sticky menu.
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      for (const link of sectionsNav.querySelectorAll('[data-section]')) link.classList.toggle('active', link.dataset.section === entry.target.id);
+    }
+  }, { rootMargin: '-35% 0px -55% 0px' });
+  for (const section of Object.values(sections)) observer.observe(section);
+}
+
 document.querySelector('#productSearch').addEventListener('input', () => saved && renderProducts());
 document.querySelector('#closeSheet').addEventListener('click', () => sheet.close());
 sheet.addEventListener('click', (event) => { if (event.target === sheet) sheet.close(); });
 document.querySelector('#askThis').addEventListener('click', () => {
   const item = sheetProduct;
   sheet.close();
-  selectTab('chat');
+  openChat();
   if (item) ask(`Tell me about ${item.name}`, item);
+});
+document.querySelector('#chatFab').addEventListener('click', () => openChat());
+document.querySelector('#chatClose').addEventListener('click', closeChat);
+document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !chatSheet.hidden && !sheet.open) closeChat(); });
+document.querySelector('#shareButton').addEventListener('click', async () => {
+  const url = window.location.href.split('#')[0];
+  const title = saved?.shop?.name || document.title;
+  try {
+    if (navigator.share) { await navigator.share({ title, text: `${title} — items, prices and timings`, url }); return; }
+  } catch { return; }
+  window.open(`https://wa.me/?text=${encodeURIComponent(`${title}\n${url}`)}`, '_blank', 'noopener');
 });
 
 // ---- Requests tab: photo questions, pre-orders and order status. ----
@@ -542,7 +676,7 @@ requestForms.photo.addEventListener('submit', (event) => { event.preventDefault(
 requestForms.preorder.addEventListener('submit', (event) => { event.preventDefault(); sendRequest(event.target); });
 requestForms.order.addEventListener('submit', (event) => { event.preventDefault(); checkOrder(event.target); });
 // The shop's replies show up while the Requests tab is open.
-window.setInterval(() => { if (!panels.requests.hidden && !document.hidden) refreshMyRequests(); }, 60000);
+window.setInterval(() => { if (!sections.requests.hidden && !document.hidden) refreshMyRequests(); }, 60000);
 
 // ---- Offline answers: plain text search over the saved copy, no AI. ----
 
@@ -635,12 +769,17 @@ let talkSupported = false;
 let talkState = 'idle'; // idle, listening, thinking, speaking
 let recognizer = null;
 
+const talkSaid = document.querySelector('#talkSaid');
+const talkNote = document.querySelector('#talkNote');
+const TALK_NOTE = 'Your phone turns your voice into text. Never say passwords, OTPs or bank details.';
+
 function setTalkState(state, status) {
   talkState = state;
   talkPanel.dataset.state = state;
   talkStatus.textContent = status;
-  talkOrb.textContent = state === 'speaking' ? '🔊' : state === 'thinking' ? '…' : '🎙️';
-  talkOrb.setAttribute('aria-label', state === 'listening' ? 'Stop listening' : state === 'speaking' ? 'Stop and talk' : 'Tap to talk');
+  talkOrb.textContent = state === 'speaking' ? '🔊' : state === 'thinking' ? '…' : state === 'listening' ? '⏹' : '🎙️';
+  talkOrb.setAttribute('aria-label', state === 'listening' ? 'Done speaking' : state === 'speaking' ? 'Stop and talk' : 'Tap to talk');
+  document.querySelector('#micFab').classList.toggle('active', talking);
 }
 
 // Reads a reply aloud; resolves when it ends (or fails).
@@ -651,8 +790,11 @@ function speakText(text) {
   return new Promise((resolve) => {
     const utterance = new SpeechSynthesisUtterance(clean);
     utterance.lang = speechLang(clean) === 'en-IN' ? talkLang.value : speechLang(clean);
-    const voice = synth.getVoices().find((item) => item.lang.replace('_', '-').startsWith(utterance.lang.slice(0, 2)));
+    const voices = synth.getVoices();
+    const voice = voices.find((item) => item.lang.replace('_', '-') === utterance.lang) || voices.find((item) => item.lang.replace('_', '-').startsWith(utterance.lang.slice(0, 2)));
     if (voice) utterance.voice = voice;
+    // Some phones have no voice for this language: the answer stays on screen.
+    talkNote.textContent = voices.length && !voice ? 'This phone has no voice for this language, so the answer is shown on screen. Install it in the phone’s text-to-speech settings to hear it.' : TALK_NOTE;
     // Some phones never fire "end": stop waiting after a generous time.
     const timer = window.setTimeout(resolve, 4000 + clean.length * 120);
     const done = () => { window.clearTimeout(timer); resolve(); };
@@ -680,6 +822,12 @@ function listen() {
     if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
       talking = false;
       setTalkState('idle', 'Please allow the microphone for this page, then tap to talk.');
+    } else if (event.error === 'audio-capture') {
+      talking = false;
+      setTalkState('idle', 'No microphone was found on this device.');
+    } else if (event.error === 'network') {
+      talking = false;
+      setTalkState('idle', 'Voice needs the internet. Please check your connection and tap to talk.');
     }
   };
   recognizer.onend = async () => {
@@ -691,6 +839,7 @@ function listen() {
     const reply = await ask(question, null, { voice: true });
     if (!talking) return;
     setTalkState('speaking', 'Speaking… tap to interrupt');
+    talkSaid.textContent = String(reply || '').replace(/\s+/g, ' ').slice(0, 220);
     await speakText(reply);
     if (talking && talkState === 'speaking') listen();
   };
@@ -699,7 +848,10 @@ function listen() {
 }
 
 function startTalk() {
+  openChat({ focus: false });
   talking = true;
+  talkSaid.textContent = '';
+  talkNote.textContent = TALK_NOTE;
   talkPanel.hidden = false;
   form.hidden = true;
   listen();
@@ -727,6 +879,7 @@ if (Recognition && window.speechSynthesis) {
   }));
   talkSupported = true;
   talkButton.addEventListener('click', startTalk);
+  document.querySelector('#micFab').addEventListener('click', () => { if (talking) { openChat({ focus: false }); } else startTalk(); });
   document.querySelector('#talkEnd').addEventListener('click', endTalk);
   talkLang.addEventListener('change', () => {
     writeStore(TALK_LANG_KEY, talkLang.value);

@@ -42,14 +42,69 @@
     '.sc-pg-section .sc-extra-typing-prompt .typed-ok{color:#86efac}.sc-pg-section .sc-extra-typing-prompt .typed-bad{color:#fca5a5;text-decoration:underline}.sc-pg-section .sc-extra-typing-input{display:block;width:min(100%,720px);min-height:100px;margin:0 auto;padding:12px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:#191526;color:#fff;font:14px/1.7 Inter,system-ui,sans-serif;resize:vertical;outline:none}',
     '.sc-pg-section .sc-extra-sudoku{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));width:min(100%,450px);margin:14px auto;border:2px solid #a78bfa;border-radius:7px;overflow:hidden;aspect-ratio:1}',
     '.sc-pg-section .sc-extra-sudoku-cell{display:grid;place-items:center;min-width:0;padding:0;border:0;border-right:1px solid rgba(255,255,255,.13);border-bottom:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.035);color:#f8f5ff;font-size:clamp(13px,3vw,20px);font-weight:650;cursor:pointer}',
-    '.sc-pg-section .sc-extra-sudoku-cell:nth-child(3n){border-right:2px solid rgba(196,181,253,.75)}.sc-pg-section .sc-extra-sudoku-cell:nth-child(n+19):nth-child(-n+27),.sc-pg-section .sc-extra-sudoku-cell:nth-child(n+46):nth-child(-n+54){border-bottom:2px solid rgba(196,181,253,.75)}',
+    '.sc-pg-section .sc-extra-sudoku-cell.box-right{border-right:2px solid rgba(196,181,253,.75)}.sc-pg-section .sc-extra-sudoku-cell.box-bottom{border-bottom:2px solid rgba(196,181,253,.75)}',
     '.sc-pg-section .sc-extra-sudoku-cell.given{color:#aaa1bd;font-weight:900}.sc-pg-section .sc-extra-sudoku-cell.selected{background:rgba(124,58,237,.42)}.sc-pg-section .sc-extra-sudoku-cell.related{background:rgba(255,255,255,.085)}.sc-pg-section .sc-extra-sudoku-cell.conflict{background:rgba(239,68,68,.28);color:#fecaca}',
     '.sc-pg-section .sc-extra-numberpad{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:12px auto}.sc-pg-section .sc-extra-numberpad button{width:38px;height:39px;border:1px solid rgba(255,255,255,.15);border-radius:9px;background:rgba(255,255,255,.05);color:#fff;font-weight:800;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-mode{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:0 auto 14px;color:#c9c1d7;font-size:11px}',
+    '.sc-pg-section .sc-extra-math-mode button{min-height:35px;padding:0 13px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.05);color:#ddd5e9;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-mode button[aria-pressed=true]{border-color:rgba(196,181,253,.75);background:rgba(124,58,237,.28);color:#fff;box-shadow:0 0 0 2px rgba(124,58,237,.1)}',
+    '.sc-pg-section .sc-extra-math-card{width:min(100%,650px);margin:12px auto;padding:clamp(16px,3vw,24px);border:1px solid rgba(196,181,253,.25);border-radius:16px;background:linear-gradient(145deg,rgba(124,58,237,.13),rgba(255,255,255,.025));text-align:center}',
+    '.sc-pg-section .sc-extra-math-expression{margin:16px 0 18px;color:#fff;font-size:clamp(30px,7vw,48px);font-weight:900;letter-spacing:.02em;font-variant-numeric:tabular-nums}',
+    '.sc-pg-section .sc-extra-math-answer{display:block;width:min(100%,260px);height:54px;margin:0 auto 10px;padding:0 14px;border:1px solid rgba(196,181,253,.4);border-radius:12px;background:#171323;color:#fff;font:800 22px Inter,system-ui,sans-serif;text-align:center;outline:none}',
+    '.sc-pg-section .sc-extra-math-answer:focus{border-color:#c4b5fd;box-shadow:0 0 0 3px rgba(196,181,253,.12)}',
+    '.sc-pg-section .sc-extra-math-hearts{font-size:22px;letter-spacing:5px}.sc-pg-section .sc-extra-math-submit{min-width:150px;min-height:43px;padding:0 18px;border:0;border-radius:11px;background:linear-gradient(110deg,#7c3aed,#db2777);color:#fff;font:800 12px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-over{padding:16px;border:1px solid rgba(248,113,113,.35);border-radius:12px;background:rgba(127,29,29,.12);color:#fecaca;text-align:center}',
     '.sc-pg-section .sc-extra-connect{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;width:min(100%,490px);margin:14px auto;padding:10px;border-radius:16px;background:#2455a3}',
     '.sc-pg-section .sc-extra-connect button{display:grid;place-items:center;min-width:0;padding:0;aspect-ratio:1;border:0;border-radius:50%;background:#111b35;cursor:pointer}.sc-pg-section .sc-extra-connect .red:after,.sc-pg-section .sc-extra-connect .yellow:after{content:"";display:block;width:82%;height:82%;border-radius:50%;background:#f87171}.sc-pg-section .sc-extra-connect .yellow:after{background:#facc15}',
     '.sc-pg-section .sc-extra-connect button:disabled{cursor:default;opacity:.65}',
+    '.sc-pg-section .sc-extra-connect-levels{display:flex;justify-content:center;align-items:center;gap:7px;flex-wrap:wrap;margin:10px auto 13px;color:#c9c1d7;font-size:11px}',
+    '.sc-pg-section .sc-extra-connect-levels button{min-height:32px;padding:0 11px;border:1px solid rgba(255,255,255,.16);border-radius:9px;background:rgba(255,255,255,.05);color:#ddd5e9;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-connect-levels button[aria-pressed=true]{border-color:#a78bfa;background:rgba(124,58,237,.3);color:#fff}',
+    '.sc-pg-section .sc-pg-sky-ball-shell{overflow:hidden;border:1px solid rgba(0,229,255,.28);border-radius:14px;background:#0b132b}',
+    '.sc-pg-section .sc-pg-sky-ball-frame{display:block;width:100%;height:clamp(680px,82vh,900px);min-height:620px;border:0;background:#0b132b}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-sky-ball-frame{height:780px;min-height:720px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-sky-ball-frame{height:calc(100vh - 175px);min-height:420px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-sky-ball-frame{height:calc(100vh - 190px);min-height:360px}}',
+    '.sc-pg-section .sc-pg-starfighter-shell{overflow:hidden;border:1px solid rgba(0,242,254,.25);border-radius:14px;background:#050711}',
+    '.sc-pg-section .sc-pg-brick-breaker-shell{overflow:hidden;border:1px solid rgba(255,154,0,.28);border-radius:14px;background:#060811}',
+    '.sc-pg-section .sc-pg-brick-breaker-frame{display:block;width:100%;height:clamp(600px,78vh,850px);min-height:560px;border:0;background:#060811}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-brick-breaker-frame{height:760px;min-height:700px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-brick-breaker-frame{height:calc(100vh - 175px);min-height:420px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-brick-breaker-frame{height:calc(100vh - 190px);min-height:360px}}',
+    '.sc-pg-section .sc-pg-starfighter-frame{display:block;width:100%;height:clamp(600px,78vh,850px);min-height:560px;border:0;background:#04060c}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-starfighter-frame{height:760px;min-height:700px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 175px);min-height:420px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 190px);min-height:360px}}',
+    '.sc-pg-section .sc-pg-arrow-escape-shell{overflow:hidden;border:1px solid rgba(140,224,255,.35);border-radius:14px;background:#1e3c72}',
+    '.sc-pg-section .sc-pg-arrow-escape-frame{display:block;width:100%;height:clamp(700px,88vh,900px);min-height:660px;border:0;background:#1e3c72}',
+    '.sc-pg-section .sc-pg-n-queens-shell{overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#f6eee2}',
+    '.sc-pg-section .sc-pg-n-queens-frame{display:block;width:100%;height:clamp(760px,92vh,1050px);min-height:720px;border:0;background:#f6eee2}',
+    '.sc-pg-section .sc-pg-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:4px 0 20px}',
+    '.sc-pg-section .sc-pg-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;min-width:0;min-height:116px;padding:14px 8px;border:1px solid rgba(216,180,254,.19);border-radius:17px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));color:#f5efff;text-align:center;white-space:normal;line-height:1.25;box-shadow:0 8px 20px rgba(0,0,0,.14);transition:transform .16s ease,border-color .16s ease,background .16s ease}',
+    '.sc-pg-section .sc-pg-tab:hover{transform:translateY(-2px);border-color:rgba(216,180,254,.55);background:linear-gradient(145deg,rgba(139,92,246,.18),rgba(255,255,255,.045))}',
+    '.sc-pg-section .sc-pg-tab[aria-selected=true]{border-color:#a78bfa;background:linear-gradient(145deg,rgba(124,58,237,.28),rgba(219,39,119,.13));box-shadow:0 0 0 1px rgba(167,139,250,.15),0 12px 28px rgba(0,0,0,.18)}',
+    '.sc-pg-section .sc-pg-tab .sc-pg-card-icon{display:block;font-size:clamp(25px,3vw,37px);line-height:1.05}',
+    '.sc-pg-section .sc-pg-tab .sc-pg-card-title{display:block;font-size:clamp(10px,1.25vw,13px);font-weight:850;letter-spacing:-.01em;overflow-wrap:anywhere}',
+    '.sc-pg-section .sc-pg-tab:disabled{opacity:.45;filter:saturate(.65);cursor:not-allowed;transform:none}',
+    '.sc-pg-section .sc-pg-gamehead small,.sc-pg-section .sc-extra-gamehead small{display:none!important}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:15px}.sc-pg-section .sc-pg-tab{min-height:91px;padding:10px 4px;border-radius:13px;gap:6px}.sc-pg-section .sc-pg-tab .sc-pg-card-icon{font-size:27px}.sc-pg-section .sc-pg-tab .sc-pg-card-title{font-size:10px;line-height:1.2}.sc-pg-section .sc-pg-panel{padding:14px;border-radius:16px}}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-n-queens-frame{height:1120px;min-height:1040px}}',
+    '.sc-pg-section .sc-pg-daily-connections-shell{overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#fff}',
+    '.sc-pg-section .sc-pg-daily-connections-frame{display:block;width:100%;height:clamp(760px,92vh,1050px);min-height:720px;border:0;background:#fff}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-arrow-escape-frame{height:800px;min-height:760px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame{height:calc(100vh - 175px);min-height:520px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame{height:calc(100vh - 190px);min-height:420px}}',
     '@media(max-width:720px){.sc-pg-section .sc-extra-block-wrap{grid-template-columns:1fr}.sc-pg-section .sc-extra-pieces{grid-template-columns:repeat(3,minmax(0,1fr))}.sc-pg-section .sc-extra-piece{min-height:62px}.sc-pg-section .sc-extra-connect{gap:4px;padding:6px}.sc-pg-section .sc-extra-typing-prompt{font-size:13px;padding:12px}}',
     '@media(max-width:390px){.sc-pg-section .sc-extra-tile{width:42px;height:44px}.sc-pg-section .sc-extra-connect{gap:3px;padding:5px}}',
+    '.sc-pg-panel:fullscreen,.sc-pg-panel:-webkit-full-screen{position:fixed!important;inset:0!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;gap:4px!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-height:100vh!important;max-height:100dvh!important;min-height:0!important;margin:0!important;padding:8px!important;overflow:hidden!important;overscroll-behavior:none!important;touch-action:pan-x pan-y;border:0!important;border-radius:0!important;background:#11101b!important}',
+    '.sc-pg-panel:fullscreen .sc-extra-gamehead,.sc-pg-panel:-webkit-full-screen .sc-extra-gamehead,.sc-pg-panel:fullscreen .sc-pg-gamehead,.sc-pg-panel:-webkit-full-screen .sc-pg-gamehead{flex:0 0 auto;margin:0 0 3px!important}',
+    '.sc-pg-panel:fullscreen .sc-extra-actions,.sc-pg-panel:-webkit-full-screen .sc-extra-actions,.sc-pg-panel:fullscreen .sc-pg-game-tools,.sc-pg-panel:-webkit-full-screen .sc-pg-game-tools{flex:0 0 auto;margin:0 0 3px!important}',
+    '.sc-pg-panel:fullscreen .sc-extra-status,.sc-pg-panel:-webkit-full-screen .sc-extra-status,.sc-pg-panel:fullscreen .sc-pg-status,.sc-pg-panel:-webkit-full-screen .sc-pg-status{flex:0 0 auto;min-height:0;max-height:2.6em;overflow:hidden;margin:0 0 4px!important;line-height:1.3}',
+    '.sc-pg-panel:fullscreen iframe,.sc-pg-panel:-webkit-full-screen iframe{display:block;flex:1 1 auto;width:100%!important;height:100%!important;min-height:0!important;max-height:100%!important;border:0}',
+    '.sc-pg-panel:fullscreen .sc-pg-snake-shell,.sc-pg-panel:fullscreen .sc-pg-sky-ball-shell,.sc-pg-panel:fullscreen .sc-pg-starfighter-shell,.sc-pg-panel:fullscreen .sc-pg-brick-breaker-shell,.sc-pg-panel:fullscreen .sc-pg-arrow-escape-shell,.sc-pg-panel:fullscreen .sc-pg-n-queens-shell,.sc-pg-panel:fullscreen .sc-pg-daily-connections-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-snake-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-sky-ball-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-starfighter-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-brick-breaker-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-arrow-escape-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-n-queens-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-daily-connections-shell{display:flex;flex:1 1 0;flex-direction:column;min-height:0;height:auto!important;max-height:none;overflow:hidden}',
+    '.sc-pg-panel:fullscreen .sc-pg-snake-frame,.sc-pg-panel:fullscreen .sc-pg-sky-ball-frame,.sc-pg-panel:fullscreen .sc-pg-starfighter-frame,.sc-pg-panel:fullscreen .sc-pg-brick-breaker-frame,.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame,.sc-pg-panel:fullscreen .sc-pg-n-queens-frame,.sc-pg-panel:fullscreen .sc-pg-daily-connections-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-snake-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-sky-ball-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-starfighter-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-brick-breaker-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-arrow-escape-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-n-queens-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-daily-connections-frame{flex:1 1 auto;width:100%!important;height:100%!important;min-height:0!important;max-height:100%!important}',
+    '.sc-pg-panel:fullscreen .sc-extra-board2048,.sc-pg-panel:-webkit-full-screen .sc-extra-board2048{width:min(100%,calc(100dvh - 170px));max-height:calc(100dvh - 145px)}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen,.sc-pg-panel:-webkit-full-screen{padding:5px!important;gap:3px!important}.sc-pg-panel:fullscreen .sc-extra-gamehead h3,.sc-pg-panel:fullscreen .sc-pg-gamehead h3{font-size:17px}.sc-pg-panel:fullscreen .sc-extra-actions,.sc-pg-panel:fullscreen .sc-pg-game-tools{margin-bottom:2px!important}.sc-pg-panel:fullscreen .sc-extra-status,.sc-pg-panel:fullscreen .sc-pg-status{font-size:10px;max-height:2.2em}}',
     '@media(prefers-reduced-motion:reduce){.sc-pg-section .sc-extra-btn,.sc-pg-section .sc-extra-toggle button{transition:none!important}}'
   ].join('');
 
@@ -116,9 +171,57 @@
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="blocks">🧩 Block Puzzle</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="typing">⌨️ Typing Test</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sudoku">🔢 Sudoku</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="arrow-escape">🧭 Arrow Escape</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="daily-connections">🔗 Daily Connections · తెలుగు / English</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="n-queens">♛ N-Queens</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="math">➗ Math Challenge</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="connect">🔴 Connect Four</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sky-ball">🌤️ 3D Sky Ball</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="starfighter">🚀 3D Starfighter</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="brick-breaker">💎 Brick Breaker</button>' +
       '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-gk-pending disabled title="GK Quiz will be enabled after secure question API integration">🇮🇳 GK Quiz · Soon</button>'
     );
+
+    const preferredOrder = [
+      // Row 1: Snake, Math, Starfighter
+      'snake','math','starfighter',
+      // Row 2: 3D Sky Ball, Sudoku, 2048
+      'sky-ball','sudoku','2048',
+      // Row 3: Daily Word, Daily Connections, Typing Test
+      'word','daily-connections','typing',
+      // Remaining games: three cards per row
+      'arrow-escape','connect','brick-breaker',
+      'blocks','n-queens','memory',
+      'ttt','rps'
+    ];
+    preferredOrder.forEach(key => {
+      const tab = tabs.querySelector('[data-extra-tab="' + key + '"], [data-pg-tab="' + key + '"]');
+      if (tab) tabs.appendChild(tab);
+    });
+    const pendingTab = tabs.querySelector('[data-gk-pending]');
+    if (pendingTab) tabs.appendChild(pendingTab);
+
+    const gameCardMeta = {
+      'snake':['🐍','3D Snake'], 'math':['➗','Math Challenge'], 'starfighter':['🚀','3D Starfighter'],
+      'sky-ball':['🌤️','3D Sky Ball'], 'sudoku':['🔢','Sudoku'], '2048':['🟨','2048'],
+      'word':['🟩','Daily Word'], 'daily-connections':['🔗','Daily Connections'], 'typing':['⌨️','Typing Test'],
+      'arrow-escape':['🧭','Arrow Escape'], 'connect':['🔴','Connect Four'], 'brick-breaker':['💎','Brick Breaker'],
+      'blocks':['🧩','Block Puzzle'], 'n-queens':['♛','N-Queens'], 'memory':['🧠','Memory Match'],
+      'ttt':['⭕','Tic-Tac-Toe'], 'rps':['✊','Rock Paper Scissors']
+    };
+    tabs.querySelectorAll('.sc-pg-tab').forEach(card => {
+      const key = card.dataset.extraTab || card.dataset.pgTab || '';
+      const meta = gameCardMeta[key];
+      if(meta){
+        card.innerHTML = '<span class="sc-pg-card-icon" aria-hidden="true">'+meta[0]+'</span><span class="sc-pg-card-title">'+meta[1]+'</span>';
+        card.setAttribute('aria-label',meta[1]);
+        card.setAttribute('title',meta[1]);
+      } else if(card.hasAttribute('data-gk-pending')) {
+        card.innerHTML = '<span class="sc-pg-card-icon" aria-hidden="true">🇮🇳</span><span class="sc-pg-card-title">GK Quiz · Soon</span>';
+        card.setAttribute('aria-label','GK Quiz — coming soon');
+      }
+      card.classList.add('sc-pg-game-card');
+    });
 
     bind(section, tabs, panel);
     section.dataset.extraGamesReady = 'true';
@@ -129,11 +232,13 @@
     if (section.dataset.ready === 'true') return;
     section.dataset.ready = 'true';
     let active = '';
-    let word = null, puzzle2048 = null, blocks = null, typing = null, sudoku = null, connect = null;
+    let word = null, puzzle2048 = null, blocks = null, typing = null, sudoku = null, math = null, connect = null;
     let typingTimer = 0;
+    let mathSubmitTimer = 0;
+    let mathSubmitting = false;
 
     function commonHead(label, title, resetText) {
-      return '<div class="sc-extra-gamehead"><div><small>' + label + '</small><h3>' + title + '</h3></div>' +
+      return '<div class="sc-extra-gamehead"><div><h3>' + title + '</h3></div>' +
         '<button class="sc-extra-btn" type="button" data-extra-reset>' + resetText + '</button></div>' +
         '<div class="sc-extra-actions"><button class="sc-extra-btn" type="button" data-extra-fullscreen>⛶ Full Screen</button></div>';
     }
@@ -141,6 +246,9 @@
       active = id;
       clearInterval(typingTimer);
       typingTimer = 0;
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      mathSubmitting = false;
       view.dataset.extraGameActive = 'true';
       section.querySelectorAll('.sc-pg-tab').forEach(tab => {
         tab.setAttribute('aria-selected', String(tab.dataset.extraTab === id));
@@ -149,16 +257,99 @@
       if (id === '2048') init2048();
       if (id === 'blocks') initBlocks();
       if (id === 'typing') initTyping();
-      if (id === 'sudoku') initSudoku('medium');
+      if (id === 'sudoku') initSudoku('medium',9);
+      if (id === 'math') initMath();
       if (id === 'connect') initConnect();
+      if (id === 'sky-ball') paintSkyBall();
+      if (id === 'starfighter') paintStarfighter();
+      if (id === 'brick-breaker') paintBrickBreaker();
+      if (id === 'arrow-escape') paintArrowEscape();
+      if (id === 'daily-connections') paintDailyConnections();
+      if (id === 'n-queens') paintNQueens();
+    }
+    section.__siteCraftOpenExtraGame = start;
+    function paintSkyBall() {
+      view.innerHTML = commonHead('3D SKY BALL RUNNER · 3D ARCADE', 'Roll through the skyway. Dodge obstacles and collect diamonds.', '↻ Restart run') +
+        '<p class="sc-extra-status">Drag left or right on mobile to steer the 3D ball. On desktop, use the Left / Right Arrow Keys or A / D. Choose a world, ball skin and difficulty before starting.</p>' +
+        '<div class="sc-pg-sky-ball-shell"><iframe class="sc-pg-sky-ball-frame" data-sky-ball-frame src="games/sky-ball-runner-3d.html" title="3D Sky Ball Runner game" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintStarfighter() {
+      view.innerHTML = commonHead('3D STARFIGHTER · SPACE ARCADE', 'Pilot your fighter. Survive the galaxy.', '↻ Restart mission') +
+        '<p class="sc-extra-status">Drag to steer on touch or mouse. Use Arrow Keys / WASD on desktop. Lasers fire automatically. Collect weapon, shield and life capsules, and defeat the boss dreadnought.</p>' +
+        '<div class="sc-pg-starfighter-shell"><iframe class="sc-pg-starfighter-frame" data-starfighter-frame src="games/starfighter-3d.html" title="3D Starfighter arcade game" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintBrickBreaker() {
+      view.innerHTML = commonHead('3D CRYSTAL BRICK BREAKER · BOSS EDITION', 'Smash the crystals. Defeat the Mecha Boss.', '↻ Restart stage') +
+        '<p class="sc-extra-status">Slide to move the hover-paddle on mobile or mouse. Use Left / Right Arrow Keys or A / D on desktop. Catch Fireball, Multi-Ball, Twin Laser and Wide Paddle capsules. Clear every brick and defeat the boss to advance.</p>' +
+        '<div class="sc-pg-brick-breaker-shell"><iframe class="sc-pg-brick-breaker-frame" data-brick-breaker-frame src="games/crystal-brick-breaker.html" title="3D Crystal Brick Breaker Boss Edition" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintArrowEscape() {
+      view.innerHTML = commonHead('ARROW ESCAPE PUZZLE · LOGIC GAME', 'Clear the grid. Let every arrow escape.', '↻ Restart level') +
+        '<p class="sc-extra-status">Tap arrows only when their pointing path to the board edge is clear. A blocked arrow costs one heart. Use Hint and Bomb tools wisely, collect coins and clear all 15 levels. Your progress is saved on this browser.</p>' +
+        '<div class="sc-pg-arrow-escape-shell"><iframe class="sc-pg-arrow-escape-frame" data-arrow-escape-frame src="games/arrow-escape-puzzle.html" title="Arrow Escape Puzzle" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintDailyConnections() {
+      view.innerHTML = commonHead('DAILY CONNECTIONS · WORD LOGIC', 'Find four groups of four connected words.', '↻ Reload game') +
+        '<p class="sc-extra-status">A daily word-connection challenge in Telugu and English. Select four related words, submit your guess and solve all four groups. Your daily progress is saved in this browser.</p>' +
+        '<div class="sc-pg-daily-connections-shell"><iframe class="sc-pg-daily-connections-frame" data-daily-connections-frame src="games/daily-connections.html" title="Daily Connections Telugu and English game" loading="lazy" allow="clipboard-write" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintNQueens() {
+      view.innerHTML = commonHead('N-QUEENS · CHESS LOGIC', 'Place N queens so none can attack another.', '↻ New challenge') +
+        '<p class="sc-extra-status">Choose a board from 4 × 4 to 12 × 12. Place one queen in every row without sharing a column or diagonal. Use Hint or Show Solution when you need help.</p>' +
+        '<div class="sc-pg-n-queens-shell"><iframe class="sc-pg-n-queens-frame" data-n-queens-frame src="games/n-queens.html" title="N-Queens chess puzzle" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
     }
     tabs.querySelectorAll('[data-extra-tab]').forEach(tab => {
       tab.addEventListener('click', () => start(tab.dataset.extraTab));
     });
-    document.addEventListener('fullscreenchange', () => {
+    function syncFullscreenFrames() {
+      const activeFullscreen = document.fullscreenElement === view || document.webkitFullscreenElement === view;
+      view.querySelectorAll('iframe').forEach(frame => {
+        try {
+          const doc = frame.contentDocument;
+          if (!doc || !doc.head) return;
+          let injected = doc.getElementById('sitecraft-no-scroll-fullscreen');
+          if (activeFullscreen && !injected) {
+            injected = doc.createElement('style');
+            injected.id = 'sitecraft-no-scroll-fullscreen';
+            if (frame.hasAttribute('data-n-queens-frame')) {
+              injected.textContent = [
+                'html,body{height:100%!important;overflow:hidden!important;overscroll-behavior:none!important}',
+                'body{padding:5px!important;align-items:stretch!important}',
+                '.app{height:100%!important;max-height:100%!important;min-height:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}',
+                '.hero{flex:0 0 auto;margin:0 auto 5px!important}',
+                '.hero .intro{display:none!important}',
+                '.hero h1{font-size:clamp(20px,3vh,30px)!important;margin:2px 0!important}',
+                '.toolbar{flex:0 0 auto;gap:5px!important;margin:5px auto 7px!important}',
+                '.toolbar select,.toolbar .btn{min-height:34px!important;padding:0 7px!important;font-size:10px!important}',
+                '.layout{flex:1 1 auto!important;min-height:0!important;grid-template-columns:minmax(0,1fr) 112px!important;gap:5px!important;align-items:center!important}',
+                '.board-card{min-height:0!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:5px!important}',
+                '.board-wrap{width:min(100%,calc(100dvh - 150px),calc(100vw - 130px))!important;max-width:min(100%,calc(100dvh - 150px),calc(100vw - 130px))!important;margin:auto!important}',
+                '.side{min-height:0!important;display:grid!important;grid-template-columns:1fr!important;gap:4px!important;overflow:hidden!important}',
+                '.side .help-card,.note{display:none!important}',
+                '.stat-card{padding:6px!important}.stat-row{grid-template-columns:1fr!important;gap:4px!important}',
+                '.stat-label{font-size:8px!important}.stat-value{font-size:17px!important;margin-top:2px!important}',
+                '.status{min-height:0!important;padding:5px!important;font-size:9px!important;line-height:1.3!important}',
+                '.legend{display:none!important}',
+                '@media(max-width:700px){.layout{grid-template-columns:minmax(0,1fr) 92px!important}.board-wrap{width:min(100%,calc(100dvh - 145px),calc(100vw - 105px))!important;max-width:min(100%,calc(100dvh - 145px),calc(100vw - 105px))!important}.stat-row{gap:3px!important}.stat-card{padding:4px!important}.stat-value{font-size:14px!important}.toolbar{gap:3px!important}.toolbar select,.toolbar .btn{font-size:8px!important;padding:0 4px!important}.side{gap:3px!important}}',
+                '@media(max-height:520px){.hero{display:none!important}.toolbar{margin:2px auto!important}.layout{grid-template-columns:minmax(0,1fr) 92px!important}.board-wrap{width:min(100%,calc(100dvh - 90px),calc(100vw - 105px))!important;max-width:min(100%,calc(100dvh - 90px),calc(100vw - 105px))!important}}'
+              ].join('');
+            } else {
+              injected.textContent = 'html,body{height:100%!important;overflow:hidden!important;overscroll-behavior:none!important}body{overscroll-behavior:none!important}';
+            }
+            doc.head.appendChild(injected);
+          } else if (!activeFullscreen && injected) {
+            injected.remove();
+          }
+        } catch (_) {}
+      });
       const button = $(view, '[data-extra-fullscreen]');
-      if (button) button.textContent = document.fullscreenElement === view ? '⤢ Exit Full Screen' : '⛶ Full Screen';
-    });
+      const isFullscreen = document.fullscreenElement === view || document.webkitFullscreenElement === view;
+      if (button) button.textContent = isFullscreen ? '⤢ Exit Full Screen' : '⛶ Full Screen';
+    }
+    document.addEventListener('fullscreenchange', syncFullscreenFrames);
+    document.addEventListener('webkitfullscreenchange', syncFullscreenFrames);
+
+    start('2048');
 
     const englishWords = ['APPLE','BRAVE','CLOUD','DREAM','EARTH','FLAME','GRAPE','HEART','JUICE','KNIFE','LEMON','MUSIC','NIGHT','OCEAN','PEACE','QUEEN','RIVER','SMILE','TRAIN','WATER','YOUTH','BREAD','CHAIR','DANCE','LIGHT','PLANT','SHINE','SPACE','STONE','TIGER','WORLD','MANGO','GREEN','HAPPY','STARS','SWEET','CANDY','BLOOM','CROWN','MAGIC','SOUND','SLEEP','STORM','TRUCK','VOICE','BEACH','CHESS','FRUIT','HORSE','MONEY','ROBOT','SNAKE','TABLE','ZEBRA'];
     const teluguWords = ['తెలుగు','మనసు','కలలు','వెలుగు','విజయం','ప్రకృతి','నగరం','గెలుపు','చదువు','దేవుడు','పండుగ','కవిత','మాటలు','పాటలు','సమయం','వానలు','మేఘాలు','పుస్తకం','సహాయం','గురువు','బంగారం','తారలు','చెలిమి','హాయిగా','ఆకాశం','ఆశయం','ప్రయాణం','నవోదయం','పరిచయం','కరుణ'];
@@ -626,89 +817,286 @@
       paintTyping();
     }
 
-    function pattern(r,c) { return (r*3 + Math.floor(r/3) + c) % 9; }
-    function countSolutions(grid, limit) {
-      const rows=Array(9).fill(0),cols=Array(9).fill(0),boxes=Array(9).fill(0);
-      for(let r=0;r<9;r++)for(let c=0;c<9;c++){const v=grid[r][c];if(v){const bit=1<<v;rows[r]|=bit;cols[c]|=bit;boxes[Math.floor(r/3)*3+Math.floor(c/3)]|=bit;}}
+    function bitCount(n){let count=0;while(n){n&=n-1;count++;}return count;}
+    const sudokuConfigs = {
+      4:{boxRows:2,boxCols:2,holes:{easy:4,medium:6,hard:8}},
+      6:{boxRows:2,boxCols:3,holes:{easy:12,medium:16,hard:20}},
+      9:{boxRows:3,boxCols:3,holes:{easy:34,medium:42,hard:48}}
+    };
+    function sudokuPattern(r,c,size,boxRows,boxCols) {
+      return (r*boxCols + Math.floor(r/boxRows) + c) % size;
+    }
+    function countSolutions(grid,boxRows,boxCols,limit) {
+      const size=grid.length,rows=Array(size).fill(0),cols=Array(size).fill(0),boxes=Array(size).fill(0);
+      const boxIndex=(r,c)=>Math.floor(r/boxRows)*(size/boxCols)+Math.floor(c/boxCols);
+      for(let r=0;r<size;r++)for(let c=0;c<size;c++){
+        const value=grid[r][c];
+        if(value){
+          const bit=1<<value,box=boxIndex(r,c);
+          if((rows[r]&bit)||(cols[c]&bit)||(boxes[box]&bit))return 0;
+          rows[r]|=bit;cols[c]|=bit;boxes[box]|=bit;
+        }
+      }
+      const fullMask=((1<<(size+1))-2);
       let count=0;
       function solve(){
         if(count>=limit)return;
-        let bestR=-1,bestC=-1,bestMask=0,bestN=10;
-        for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(!grid[r][c]){
-          const b=Math.floor(r/3)*3+Math.floor(c/3);
-          const mask=1022 & ~(rows[r]|cols[c]|boxes[b]);
+        let bestR=-1,bestC=-1,bestMask=0,bestN=size+1;
+        for(let r=0;r<size;r++)for(let c=0;c<size;c++)if(!grid[r][c]){
+          const box=boxIndex(r,c);
+          const mask=fullMask & ~(rows[r]|cols[c]|boxes[box]);
           const n=bitCount(mask);
           if(n===0)return;
-          if(n<bestN){bestN=n;bestR=r;bestC=c;bestMask=mask;if(n===1)break;}
+          if(n<bestN){bestN=n;bestR=r;bestC=c;bestMask=mask;}
         }
         if(bestR<0){count++;return;}
-        const b=Math.floor(bestR/3)*3+Math.floor(bestC/3);
-        for(let v=1;v<=9;v++){const bit=1<<v;if(bestMask&bit){grid[bestR][bestC]=v;rows[bestR]|=bit;cols[bestC]|=bit;boxes[b]|=bit;solve();grid[bestR][bestC]=0;rows[bestR]^=bit;cols[bestC]^=bit;boxes[b]^=bit;if(count>=limit)return;}}
+        const box=boxIndex(bestR,bestC);
+        for(let value=1;value<=size;value++){
+          const bit=1<<value;
+          if(bestMask&bit){
+            grid[bestR][bestC]=value;rows[bestR]|=bit;cols[bestC]|=bit;boxes[box]|=bit;
+            solve();
+            grid[bestR][bestC]=0;rows[bestR]^=bit;cols[bestC]^=bit;boxes[box]^=bit;
+            if(count>=limit)return;
+          }
+        }
       }
       solve();return count;
     }
-    function bitCount(n){let count=0;while(n){n&=n-1;count++;}return count;}
-    function createSudoku(level) {
-      const rng=seeded(dayNumber()*31 + ({easy:1,medium:2,hard:3}[level]||2)*7919);
-      let bands=shuffle([0,1,2],rng),stacks=shuffle([0,1,2],rng);
-      let rowOrder=bands.flatMap(b=>shuffle([0,1,2],rng).map(r=>b*3+r));
-      let colOrder=stacks.flatMap(b=>shuffle([0,1,2],rng).map(c=>b*3+c));
-      const digits=shuffle([1,2,3,4,5,6,7,8,9],rng);
-      const solution=rowOrder.map(r=>colOrder.map(c=>digits[pattern(r,c)]));
+    function createSudoku(level,size) {
+      const config=sudokuConfigs[size]||sudokuConfigs[9];
+      const boxRows=config.boxRows,boxCols=config.boxCols;
+      const rng=seeded(dayNumber()*31 + size*1009 + ({easy:1,medium:2,hard:3}[level]||2)*7919);
+      const bands=shuffle(Array.from({length:size/boxRows},(_,i)=>i),rng);
+      const stacks=shuffle(Array.from({length:size/boxCols},(_,i)=>i),rng);
+      const rowOrder=bands.flatMap(b=>shuffle(Array.from({length:boxRows},(_,i)=>i),rng).map(r=>b*boxRows+r));
+      const colOrder=stacks.flatMap(b=>shuffle(Array.from({length:boxCols},(_,i)=>i),rng).map(c=>b*boxCols+c));
+      const digits=shuffle(Array.from({length:size},(_,i)=>i+1),rng);
+      const solution=rowOrder.map(r=>colOrder.map(c=>digits[sudokuPattern(r,c,size,boxRows,boxCols)]));
       const puzzle=solution.map(row=>row.slice());
-      const target={easy:34,medium:42,hard:48}[level];
-      const cells=shuffle(Array.from({length:81},(_,i)=>i),rng);
+      const target=config.holes[level]||config.holes.medium;
+      const cells=shuffle(Array.from({length:size*size},(_,i)=>i),rng);
       let removed=0;
       for(const index of cells){
         if(removed>=target)break;
-        const r=Math.floor(index/9),c=index%9,old=puzzle[r][c];
+        const r=Math.floor(index/size),c=index%size,old=puzzle[r][c];
         puzzle[r][c]=0;
-        if(countSolutions(puzzle,2)===1)removed++;
+        if(countSolutions(puzzle,boxRows,boxCols,2)===1)removed++;
         else puzzle[r][c]=old;
       }
-      return {puzzle:puzzle,solution:solution};
+      return {puzzle,solution,boxRows,boxCols};
     }
-    function initSudoku(level) {
+    function initSudoku(level,size) {
       clearInterval(typingTimer);
-      const generated=createSudoku(level||'medium');
-      sudoku={level:level||'medium',board:generated.puzzle.map(r=>r.slice()),solution:generated.solution,givens:generated.puzzle.map(r=>r.slice()),selected:[0,0],mistakes:0,won:false};
+      const selectedSize=Number(size||sudoku&&sudoku.size||9);
+      const generated=createSudoku(level||sudoku&&sudoku.level||'medium',selectedSize);
+      sudoku={
+        size:selectedSize,level:level||sudoku&&sudoku.level||'medium',
+        boxRows:generated.boxRows,boxCols:generated.boxCols,
+        board:generated.puzzle.map(r=>r.slice()),solution:generated.solution,
+        givens:generated.puzzle.map(r=>r.slice()),selected:[0,0],mistakes:0,won:false
+      };
       paintSudoku('Select an empty cell, then choose a number.');
     }
-    function sudokuConflict(r,c,v) {
-      if(!v)return false;
-      for(let i=0;i<9;i++){if(i!==c&&sudoku.board[r][i]===v)return true;if(i!==r&&sudoku.board[i][c]===v)return true;}
-      const br=Math.floor(r/3)*3,bc=Math.floor(c/3)*3;
-      for(let y=br;y<br+3;y++)for(let x=bc;x<bc+3;x++)if((y!==r||x!==c)&&sudoku.board[y][x]===v)return true;
+    function sudokuConflict(r,c,value) {
+      if(!value)return false;
+      const size=sudoku.size,boxRows=sudoku.boxRows,boxCols=sudoku.boxCols;
+      for(let i=0;i<size;i++){
+        if(i!==c&&sudoku.board[r][i]===value)return true;
+        if(i!==r&&sudoku.board[i][c]===value)return true;
+      }
+      const br=Math.floor(r/boxRows)*boxRows,bc=Math.floor(c/boxCols)*boxCols;
+      for(let y=br;y<br+boxRows;y++)for(let x=bc;x<bc+boxCols;x++)
+        if((y!==r||x!==c)&&sudoku.board[y][x]===value)return true;
       return false;
     }
     function paintSudoku(message) {
-      const r0=sudoku.selected[0],c0=sudoku.selected[1];
-      const cells=sudoku.board.map((row,r)=>row.map((v,c)=>{
-        const given=!!sudoku.givens[r][c],related=r===r0||c===c0||Math.floor(r/3)===Math.floor(r0/3)&&Math.floor(c/3)===Math.floor(c0/3);
-        const classes=['sc-extra-sudoku-cell',given?'given':'',r===r0&&c===c0?'selected':'',related?'related':'',sudokuConflict(r,c,v)?'conflict':''].filter(Boolean).join(' ');
-        return '<button type="button" class="' + classes + '" data-sudoku-cell="' + r + ',' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + ', ' + (v||'empty') + '"' + (given?' disabled':'') + '>' + (v||'') + '</button>';
+      const size=sudoku.size,r0=sudoku.selected[0],c0=sudoku.selected[1];
+      const cells=sudoku.board.map((row,r)=>row.map((value,c)=>{
+        const given=!!sudoku.givens[r][c];
+        const related=r===r0||c===c0||Math.floor(r/sudoku.boxRows)===Math.floor(r0/sudoku.boxRows)&&Math.floor(c/sudoku.boxCols)===Math.floor(c0/sudoku.boxCols);
+        const boxRight=c<size-1&&(c+1)%sudoku.boxCols===0;
+        const boxBottom=r<size-1&&(r+1)%sudoku.boxRows===0;
+        const classes=['sc-extra-sudoku-cell',given?'given':'',r===r0&&c===c0?'selected':'',related?'related':'',sudokuConflict(r,c,value)?'conflict':'',boxRight?'box-right':'',boxBottom?'box-bottom':''].filter(Boolean).join(' ');
+        return '<button type="button" class="'+classes+'" data-sudoku-cell="'+r+','+c+'" aria-label="Row '+(r+1)+', column '+(c+1)+', '+(value||'empty')+'"'+(given?' disabled':'')+'>'+(value||'')+'</button>';
       }).join('')).join('');
-      view.innerHTML=commonHead('SUDOKU · DAILY NUMBER PUZZLE','Fill every row, column and 3 × 3 box.','↻ New puzzle') +
-        '<div class="sc-extra-toggle">' + ['easy','medium','hard'].map(l=>'<button type="button" data-sudoku-level="' + l + '" aria-pressed="' + (sudoku.level===l) + '">' + l[0].toUpperCase()+l.slice(1) + '</button>').join('') + '</div>' +
-        '<p class="sc-extra-status sc-extra-center" data-sudoku-status>' + esc(message) + '</p>' +
-        '<div class="sc-extra-sudoku">' + cells + '</div>' +
-        '<div class="sc-extra-numberpad">' + [1,2,3,4,5,6,7,8,9].map(n=>'<button type="button" data-sudoku-number="' + n + '">' + n + '</button>').join('') + '<button type="button" data-sudoku-number="0">⌫</button></div>' +
-        '<div class="sc-extra-stats"><span>Difficulty<strong>' + sudoku.level.toUpperCase() + '</strong></span><span>Mistakes<strong>' + sudoku.mistakes + '</strong></span><span>Filled<strong>' + sudoku.board.flat().filter(Boolean).length + ' / 81</strong></span></div>' +
-        '<p class="sc-extra-muted sc-extra-center">Today’s puzzle stays the same on this device for each difficulty. Red cells show a number conflict. Use Backspace or Delete to clear a selected cell.</p>';
-      const keypadFocus = $(view, '[data-sudoku-number="1"]');
-      if (keypadFocus) keypadFocus.focus({preventScroll:true});
+      view.innerHTML=commonHead('SUDOKU · DAILY NUMBER PUZZLE','Fill every row, column and box.','↻ New puzzle')+
+        '<div class="sc-extra-toggle">'+[4,6,9].map(n=>'<button type="button" data-sudoku-size="'+n+'" aria-pressed="'+(size===n)+'">'+n+' × '+n+'</button>').join('')+'</div>'+
+        '<div class="sc-extra-toggle">'+['easy','medium','hard'].map(level=>'<button type="button" data-sudoku-level="'+level+'" aria-pressed="'+(sudoku.level===level)+'">'+level[0].toUpperCase()+level.slice(1)+'</button>').join('')+'</div>'+
+        '<p class="sc-extra-status sc-extra-center" data-sudoku-status>'+esc(message)+'</p>'+
+        '<div class="sc-extra-sudoku" style="grid-template-columns:repeat('+size+',minmax(0,1fr))">'+cells+'</div>'+
+        '<div class="sc-extra-numberpad">'+Array.from({length:size},(_,i)=>i+1).map(n=>'<button type="button" data-sudoku-number="'+n+'">'+n+'</button>').join('')+'<button type="button" data-sudoku-number="0">⌫</button></div>'+
+        '<div class="sc-extra-stats"><span>Board<strong>'+size+' × '+size+'</strong></span><span>Difficulty<strong>'+sudoku.level.toUpperCase()+'</strong></span><span>Filled<strong>'+sudoku.board.flat().filter(Boolean).length+' / '+(size*size)+'</strong></span></div>'+
+        '<p class="sc-extra-muted sc-extra-center">Choose a board size and difficulty. Today’s puzzle is unique and stays the same on this device. Red cells show a number conflict.</p>';
+      const keypadFocus=$(view,'[data-sudoku-number="1"]');
+      if(keypadFocus)keypadFocus.focus({preventScroll:true});
     }
     function setSudokuNumber(value) {
       if(sudoku.won)return;
       const [r,c]=sudoku.selected;
       if(sudoku.givens[r][c])return;
+      if(value>sudoku.size)return;
       sudoku.board[r][c]=value;
-      if(value && sudokuConflict(r,c,value))sudoku.mistakes++;
-      if(sudoku.board.every((row,y)=>row.every((v,x)=>v===sudoku.solution[y][x]))) {
+      if(value&&sudokuConflict(r,c,value))sudoku.mistakes++;
+      if(sudoku.board.every((row,y)=>row.every((entry,x)=>entry===sudoku.solution[y][x]))){
         sudoku.won=true;paintSudoku('Puzzle solved! Excellent work! 🎉');
-      } else paintSudoku(value?'Number placed. Keep going.':'Cell cleared.');
+      }else paintSudoku(value?'Number placed. Keep going.':'Cell cleared.');
     }
 
+    function mathRandom(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+    function mathQuestion(expression,answer){return {expression:expression,answer:answer};}
+    function buildMathQuestion(correct,total) {
+      const tier=Math.floor(correct/5);
+      let a,b,n,choice,divisor,quotient;
+      // Each stage stays active until the player answers 5 questions correctly.
+      if(tier===0){
+        a=mathRandom(2,9);b=mathRandom(1,9);
+        if(Math.random()<.5)return mathQuestion(a+' + '+b,a+b);
+        if(a<b){const t=a;a=b;b=t;}
+        return mathQuestion(a+' − '+b,a-b);
+      }
+      if(tier===1){
+        choice=mathRandom(0,2);
+        if(choice===0){a=mathRandom(10,99);b=mathRandom(10,99);return mathQuestion(a+' + '+b,a+b);}
+        if(choice===1){a=mathRandom(20,99);b=mathRandom(10,a);return mathQuestion(a+' − '+b,a-b);}
+        a=mathRandom(2,9);b=mathRandom(2,12);return mathQuestion(a+' × '+b,a*b);
+      }
+      if(tier===2){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(100,999);b=mathRandom(100,999);return mathQuestion(a+' + '+b,a+b);}
+        if(choice===1){a=mathRandom(300,999);b=mathRandom(100,a-100);return mathQuestion(a+' − '+b,a-b);}
+        if(choice===2){a=mathRandom(12,30);b=mathRandom(2,9);return mathQuestion(a+' × '+b,a*b);}
+        divisor=mathRandom(2,9);quotient=mathRandom(2,15);return mathQuestion((divisor*quotient)+' ÷ '+divisor,quotient);
+      }
+      if(tier===3){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(12,35);b=mathRandom(11,25);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===1){n=mathRandom(11,20);return mathQuestion(n+'²',n*n);}
+        if(choice===2){divisor=mathRandom(3,12);quotient=mathRandom(12,30);return mathQuestion((divisor*quotient)+' ÷ '+divisor,quotient);}
+        a=mathRandom(25,60);b=mathRandom(2,9);return mathQuestion(a+' × '+b,a*b);
+      }
+      if(tier===4){
+        choice=mathRandom(0,3);
+        if(choice===0){n=mathRandom(21,35);return mathQuestion(n+'²',n*n);}
+        if(choice===1){n=mathRandom(21,40);return mathQuestion('√'+(n*n),n);}
+        if(choice===2){a=mathRandom(35,75);b=mathRandom(12,25);return mathQuestion(a+' × '+b,a*b);}
+        divisor=mathRandom(5,20);quotient=mathRandom(25,60);return mathQuestion((divisor*quotient)+' ÷ '+divisor,quotient);
+      }
+      if(tier===5){
+        choice=mathRandom(0,3);
+        if(choice===0){const powers=[[2,8],[3,5],[4,4],[5,3]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));}
+        if(choice===1){n=mathRandom(36,55);return mathQuestion(n+'²',n*n);}
+        if(choice===2){n=mathRandom(41,65);return mathQuestion('√'+(n*n),n);}
+        a=mathRandom(60,99);b=mathRandom(20,49);return mathQuestion(a+' × '+b,a*b);
+      }
+      if(tier===6){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(100,999);b=mathRandom(12,99);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===1){n=mathRandom(66,110);return mathQuestion('√'+(n*n),n);}
+        if(choice===2){n=mathRandom(56,90);return mathQuestion(n+'²',n*n);}
+        const powers=[[2,10],[3,6],[4,5],[5,4]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));
+      }
+      if(tier===7){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(1000,9999);b=mathRandom(1000,9999);return mathQuestion(a+' + '+b,a+b);}
+        if(choice===1){a=mathRandom(120,999);b=mathRandom(120,999);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===2){n=mathRandom(111,180);return mathQuestion('√'+(n*n),n);}
+        const powers=[[2,12],[3,7],[4,6],[5,5]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));
+      }
+      choice=mathRandom(0,4);
+      if(choice===0){a=mathRandom(10000,999999);b=mathRandom(10000,999999);return mathQuestion(a+' + '+b,a+b);}
+      if(choice===1){a=mathRandom(250,999);b=mathRandom(120,999);return mathQuestion(a+' × '+b,a*b);}
+      if(choice===2){n=mathRandom(181,300);return mathQuestion('√'+(n*n),n);}
+      if(choice===3){n=mathRandom(100,300);return mathQuestion(n+'²',n*n);}
+      const powers=[[2,14],[3,8],[4,7],[5,6]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));
+    }
+    function initMath() {
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      mathSubmitting = false;
+      math={correct:0,total:0,mistakes:0,score:0,over:false,autoSubmit:safeGet('sitecraft-math-submit-mode','manual')==='auto',question:buildMathQuestion(0,0),feedback:'Start with the answer. Only type the number.'};
+      paintMath(math.feedback);
+    }
+    function queueMathAutoSubmit() {
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      if(!math||math.over||!math.autoSubmit||active!=='math')return;
+      const input=$(view,'[data-math-answer]');
+      if(!input||input.value.trim()==='')return;
+      const answer=Number(input.value);
+      if(!Number.isFinite(answer)||!Number.isInteger(answer))return;
+      const status=$(view,'[data-math-status]');
+      if(status)status.textContent='Auto Submit is on. Checking in a moment…';
+      mathSubmitTimer=window.setTimeout(()=>{
+        mathSubmitTimer=0;
+        if(active==='math'&&math&&math.autoSubmit)submitMath();
+      },900);
+    }
+    function paintMath(message) {
+      const tier=Math.floor(math.correct/5);
+      const level=tier+1;
+      const stages=['Warm-up · Easy + / −','Basic · Two-digit sums and ×','Intermediate · 3-digit sums, × and ÷','Multiplication and squares','Squares, roots and larger ×','Powers including 3^5','Advanced calculations','Expert calculations','Extreme calculations'];
+      const stage=stages[Math.min(tier,stages.length-1)];
+      const toNext=5-(math.correct%5);
+      const lives=Math.max(0,3-math.mistakes);
+      const title=math.over?'Three mistakes. Game over!':'Solve the question. Level '+level;
+      const auto=!!math.autoSubmit;
+      view.innerHTML=commonHead('MATH CHALLENGE · LEVEL '+level,title,'↻ Restart game')+
+        '<p class="sc-extra-status sc-extra-center" data-math-status>'+esc(message||'Only type your numerical answer.')+'</p>'+
+        '<div class="sc-extra-stats"><span>Correct<strong>'+math.correct+'</strong></span><span>Level<strong>'+level+'</strong></span><span>Stage<strong>'+esc(stage)+'</strong></span><span>Score<strong>'+math.score+'</strong></span><span>Next level<strong>'+toNext+' correct</strong></span><span>Best<strong>'+best('math',math.score)+'</strong></span></div>'+
+        '<div class="sc-extra-math-card">'+
+          '<div class="sc-extra-math-hearts" aria-label="'+lives+' lives remaining">'+('❤️'.repeat(lives))+('🖤'.repeat(3-lives))+'</div>'+
+          '<div class="sc-extra-math-mode" role="group" aria-label="Answer submission mode"><span>Answer mode:</span><button type="button" data-math-mode="auto" aria-pressed="'+String(auto)+'">⚡ Auto Submit</button><button type="button" data-math-mode="manual" aria-pressed="'+String(!auto)+'">✋ Manual</button></div>'+
+          (math.over?
+            '<div class="sc-extra-math-over"><h3>GAME OVER</h3><p>You made 3 mistakes.</p><p>Correct answers: '+math.correct+' · Final score: '+math.score+'</p><button type="button" class="sc-extra-math-submit" data-math-restart>Play Again</button></div>':
+            '<p class="sc-extra-muted">QUESTION '+(math.total+1)+' · 3 mistakes allowed</p>'+
+            '<div class="sc-extra-math-expression">'+esc(math.question.expression)+'</div>'+
+            '<form data-math-form><input class="sc-extra-math-answer" data-math-answer type="number" inputmode="decimal" step="1" autocomplete="off" placeholder="Answer only" aria-label="Type your answer" required>'+
+            '<button type="submit" data-math-submit class="sc-extra-math-submit">'+(auto?'Check Now':'Check Answer')+'</button></form>'+
+            '<p class="sc-extra-muted sc-extra-center">'+(auto?'Auto Submit checks your answer after you stop typing. You can also tap Check Now.':'Manual mode: tap Check Answer or press Enter when ready.')+'</p>'
+          )+
+        '</div>'+
+        '<p class="sc-extra-muted sc-extra-center">Every 5 correct answers unlocks the next difficulty stage. Wrong answers do not increase your level; 3 mistakes end the game. Answer with numbers only.</p>';
+      const input=$(view,'[data-math-answer]');
+      if(input)input.focus({preventScroll:true});
+    }
+    function submitMath() {
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      if(!math||math.over||mathSubmitting)return;
+      const input=$(view,'[data-math-answer]');
+      if(!input||input.value.trim()==='')return;
+      const answer=Number(input.value);
+      if(!Number.isFinite(answer)||!Number.isInteger(answer))return;
+      mathSubmitting=true;
+      math.total++;
+      let message='';
+      if(answer===math.question.answer){
+        math.correct++;
+        math.score+=10*Math.min(10,Math.floor(math.correct/5)+1);
+        message='Correct! Great job. Next question gets a little harder.';
+      }else{
+        math.mistakes++;
+        message='Not quite. Correct answer: '+math.question.answer+'. Mistakes '+math.mistakes+' / 3.';
+      }
+      if(math.mistakes>=3){
+        math.over=true;
+        best('math',math.score);
+        mathSubmitting=false;
+        paintMath('Game over. Try again and beat your score!');
+        return;
+      }
+      math.question=buildMathQuestion(math.correct,math.total);
+      mathSubmitting=false;
+      paintMath(message);
+    }
+
+    const CONNECT_LEVELS = {
+      easy:{label:'Easy',depth:2,delay:420},
+      medium:{label:'Medium',depth:4,delay:620},
+      hard:{label:'Hard',depth:6,delay:850},
+      veryhard:{label:'Very Hard',depth:8,delay:1100}
+    };
     function emptyConnectBoard(){return Array.from({length:6},()=>Array(7).fill(''));}
     function connectDrop(board,col,mark) {
       for(let r=5;r>=0;r--)if(!board[r][col]){board[r][col]=mark;return r;}
@@ -723,83 +1111,144 @@
       });
     }
     function initConnect() {
-      connect={board:emptyConnectBoard(),over:false,turn:'you',you:'R',computer:'Y'};
+      const saved=safeGet('sitecraft-connect-difficulty','easy');
+      const difficulty=CONNECT_LEVELS[saved]?saved:'easy';
+      connect={board:emptyConnectBoard(),over:false,turn:'you',you:'R',computer:'Y',difficulty:difficulty};
       paintConnect('Your turn. Choose a column to drop a red disc.');
     }
     function connectScore(board,mark) {
-      const other=mark==='Y'?'R':'Y';let score=0;
-      for(let r=0;r<6;r++)for(let c=0;c<7;c++)if(c<=3){
-        const w=[board[r][c],board[r][c+1],board[r][c+2],board[r][c+3]];
-        const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
-        if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
-      }
-      for(let c=0;c<7;c++)for(let r=0;r<=2;r++){
-        const w=[board[r][c],board[r+1][c],board[r+2][c],board[r+3][c]];
-        const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
-        if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
-      }
-      for(let r=0;r<=2;r++)for(let c=0;c<=3;c++){
-        const w=[board[r][c],board[r+1][c+1],board[r+2][c+2],board[r+3][c+3]];
-        const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
-        if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
-      }
-      for(let r=0;r<=2;r++)for(let c=3;c<7;c++){
-        const w=[board[r][c],board[r+1][c-1],board[r+2][c-2],board[r+3][c-3]];
-        const own=w.filter(v=>v===mark).length,opp=w.filter(v=>v===other).length,empty=w.filter(v=>!v).length;
-        if(own===4)score+=100000;else if(own===3&&empty===1)score+=80;else if(own===2&&empty===2)score+=8;
-        if(opp===3&&empty===1)score-=95;else if(opp===4)score-=100000;
+      const other=mark==='Y'?'R':'Y';
+      let score=0;
+      // Prefer the middle column: it participates in the greatest number of winning lines.
+      for(let r=0;r<6;r++)if(board[r][3]===mark)score+=6;
+      for(let r=0;r<6;r++)for(let c=0;c<7;c++){
+        for(const [dr,dc] of [[0,1],[1,0],[1,1],[1,-1]]){
+          const endR=r+dr*3,endC=c+dc*3;
+          if(endR<0||endR>=6||endC<0||endC>=7)continue;
+          let own=0,opp=0,empty=0;
+          for(let i=0;i<4;i++){
+            const value=board[r+dr*i][c+dc*i];
+            if(value===mark)own++;
+            else if(value===other)opp++;
+            else empty++;
+          }
+          if(own&&opp)continue;
+          if(own===4)score+=100000;
+          else if(own===3&&empty===1)score+=150;
+          else if(own===2&&empty===2)score+=18;
+          if(opp===3&&empty===1)score-=175;
+          else if(opp===2&&empty===2)score-=20;
+        }
       }
       return score;
     }
     function connectMoveOptions(board){return [3,2,4,1,5,0,6].filter(c=>!board[0][c]);}
-    function connectMinimax(board,depth,alpha,beta,maximizing) {
-      if(depth===0||board[0].every(Boolean))return connectScore(board,'Y');
-      const options=connectMoveOptions(board);
-      if(maximizing){
-        let value=-Infinity;
-        for(const col of options){const copy=board.map(row=>row.slice());connectDrop(copy,col,'Y');value=Math.max(value,connectMinimax(copy,depth-1,alpha,beta,false));alpha=Math.max(alpha,value);if(alpha>=beta)break;}
-        return value;
+    function connectPositionKey(board,turn){return board.map(row=>row.join('')).join('/')+'|'+turn;}
+    function connectMinimax(board,depth,alpha,beta,turn,ply,table) {
+      const alphaOriginal=alpha,betaOriginal=beta;
+      const key=connectPositionKey(board,turn);
+      const cached=table.get(key);
+      if(cached&&cached.depth>=depth){
+        if(cached.flag==='exact')return cached.score;
+        if(cached.flag==='lower')alpha=Math.max(alpha,cached.score);
+        else if(cached.flag==='upper')beta=Math.min(beta,cached.score);
+        if(alpha>=beta)return cached.score;
       }
-      let value=Infinity;
-      for(const col of options){const copy=board.map(row=>row.slice());connectDrop(copy,col,'R');value=Math.min(value,connectMinimax(copy,depth-1,alpha,beta,true));beta=Math.min(beta,value);if(alpha>=beta)break;}
+      if(depth===0||board[0].every(Boolean))return connectScore(board,'Y');
+      const maximizing=turn==='Y';
+      const mark=maximizing?'Y':'R';
+      const options=connectMoveOptions(board);
+      let value=maximizing?-Infinity:Infinity;
+      for(const col of options){
+        const copy=board.map(row=>row.slice());
+        const row=connectDrop(copy,col,mark);
+        if(row<0)continue;
+        let score;
+        if(connectWin(copy,row,col,mark))score=mark==='Y'?1000000-ply:-1000000+ply;
+        else if(copy[0].every(Boolean))score=0;
+        else score=connectMinimax(copy,depth-1,alpha,beta,maximizing?'R':'Y',ply+1,table);
+        if(maximizing){value=Math.max(value,score);alpha=Math.max(alpha,value);}
+        else{value=Math.min(value,score);beta=Math.min(beta,value);}
+        if(alpha>=beta)break;
+      }
+      if(value===-Infinity||value===Infinity)value=0;
+      const flag=value<=alphaOriginal?'upper':value>=betaOriginal?'lower':'exact';
+      if(table.size>60000)table.clear();
+      table.set(key,{depth:depth,score:value,flag:flag});
       return value;
     }
     function chooseConnectMove() {
       const options=connectMoveOptions(connect.board);
-      for(const col of options){const copy=connect.board.map(row=>row.slice());const r=connectDrop(copy,col,'Y');if(connectWin(copy,r,col,'Y'))return col;}
-      for(const col of options){const copy=connect.board.map(row=>row.slice());const r=connectDrop(copy,col,'R');if(connectWin(copy,r,col,'R'))return col;}
+      if(!options.length)return -1;
+      // Never miss an immediate win.
+      for(const col of options){
+        const copy=connect.board.map(row=>row.slice());
+        const row=connectDrop(copy,col,'Y');
+        if(connectWin(copy,row,col,'Y'))return col;
+      }
+      const config=CONNECT_LEVELS[connect.difficulty]||CONNECT_LEVELS.easy;
+      const table=new Map();
       let bestCol=options[0],bestScore=-Infinity;
-      for(const col of options){const copy=connect.board.map(row=>row.slice());connectDrop(copy,col,'Y');const score=connectMinimax(copy,4,-Infinity,Infinity,false);if(score>bestScore){bestScore=score;bestCol=col;}}
+      for(const col of options){
+        const copy=connect.board.map(row=>row.slice());
+        const row=connectDrop(copy,col,'Y');
+        let score;
+        if(connectWin(copy,row,col,'Y'))score=1000000;
+        else if(copy[0].every(Boolean))score=0;
+        else score=connectMinimax(copy,config.depth-1,-Infinity,Infinity,'R',1,table);
+        // Tiny centre preference breaks equal-score ties consistently.
+        score+= (3-Math.abs(3-col))*0.01;
+        if(score>bestScore){bestScore=score;bestCol=col;}
+      }
       return bestCol;
     }
     function paintConnect(message) {
+      const level=CONNECT_LEVELS[connect.difficulty]||CONNECT_LEVELS.easy;
+      const choices=Object.keys(CONNECT_LEVELS).map(key=>'<button type="button" data-connect-level="'+key+'" aria-pressed="'+String(connect.difficulty===key)+'">'+CONNECT_LEVELS[key].label+'</button>').join('');
       view.innerHTML=commonHead('CONNECT FOUR · YOU VS COMPUTER','Get four discs in a line before the computer.','↻ New match') +
+        '<div class="sc-extra-connect-levels" role="group" aria-label="Computer difficulty"><span>Computer level:</span>'+choices+'</div>' +
         '<p class="sc-extra-status sc-extra-center" data-connect-status>' + esc(message) + '</p>' +
-        '<div class="sc-extra-connect">' + connect.board.map((row,r)=>row.map((value,c)=>'<button type="button" class="' + (value==='R'?'red':value==='Y'?'yellow':'') + '" data-connect-col="' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + '"></button>').join('')).join('') + '</div>' +
-        '<div class="sc-extra-stats"><span>You<strong>🔴 Red</strong></span><span>Computer<strong>🟡 Yellow</strong></span></div>' +
-        '<p class="sc-extra-muted sc-extra-center">Tap a column to drop your disc. The computer looks for winning moves and blocks your winning line.</p>';
+        '<div class="sc-extra-connect">' + connect.board.map((row,r)=>row.map((value,c)=>'<button type="button" class="' + (value==='R'?'red':value==='Y'?'yellow':'') + '" data-connect-col="' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + '"' + (connect.over||connect.turn!=='you'?' disabled':'') + '></button>').join('')).join('') + '</div>' +
+        '<div class="sc-extra-stats"><span>You<strong>🔴 Red</strong></span><span>Computer<strong>🟡 Yellow</strong></span><span>Search depth<strong>'+level.depth+' moves</strong></span></div>' +
+        '<p class="sc-extra-muted sc-extra-center">Tap a column to drop your disc. Higher levels search more future moves, spot winning chances and block your threats. Choose a level before or during a match; it applies to the next computer turn.</p>';
     }
     function playConnect(col) {
       if(connect.over||connect.turn!=='you'||col<0||col>6)return;
       const row=connectDrop(connect.board,col,'R');
       if(row<0)return;
-      if(connectWin(connect.board,row,col,'R')){connect.over=true;paintConnect('You win! Four in a row! 🎉');return;}
-      if(connect.board[0].every(Boolean)){connect.over=true;paintConnect('It’s a draw. Well played!');return;}
-      connect.turn='computer';paintConnect('Computer is thinking…');
+      if(connectWin(connect.board,row,col,'R')){connect.over=true;connect.turn='done';paintConnect('You win! Four in a row! 🎉');return;}
+      if(connect.board[0].every(Boolean)){connect.over=true;connect.turn='done';paintConnect('It’s a draw. Well played!');return;}
+      connect.turn='computer';
+      const config=CONNECT_LEVELS[connect.difficulty]||CONNECT_LEVELS.easy;
+      paintConnect('Computer is thinking… '+config.label+' mode.');
       window.setTimeout(()=>{
-        if(active!=='connect'||connect.over)return;
+        if(active!=='connect'||connect.over||connect.turn!=='computer')return;
         const compCol=chooseConnectMove(),compRow=connectDrop(connect.board,compCol,'Y');
         if(compRow>=0&&connectWin(connect.board,compRow,compCol,'Y')){connect.over=true;connect.turn='done';paintConnect('Computer wins this match. Try again!');}
-        else if(connect.board[0].every(Boolean)){connect.over=true;paintConnect('It’s a draw. Well played!');}
+        else if(connect.board[0].every(Boolean)){connect.over=true;connect.turn='done';paintConnect('It’s a draw. Well played!');}
         else{connect.turn='you';paintConnect('Your turn. Choose a column.');}
-      },350);
+      },config.delay);
     }
 
     section.addEventListener('click', event => {
       const target = event.target;
+      const mathMode=target.closest('[data-math-mode]');
+      if(mathMode&&active==='math'&&math&&!math.over){
+        const currentInput=$(view,'[data-math-answer]');
+        const currentValue=currentInput?currentInput.value:'';
+        clearTimeout(mathSubmitTimer);
+        mathSubmitTimer=0;
+        math.autoSubmit=mathMode.dataset.mathMode==='auto';
+        safeSet('sitecraft-math-submit-mode',math.autoSubmit?'auto':'manual');
+        paintMath(math.autoSubmit?'Auto Submit enabled. It checks after you stop typing.':'Manual mode enabled. Submit with the button or Enter.');
+        const nextInput=$(view,'[data-math-answer]');
+        if(nextInput&&currentValue!==''){
+          nextInput.value=currentValue;
+          nextInput.focus({preventScroll:true});
+          if(math.autoSubmit)queueMathAutoSubmit();
+        }
+        return;
+      }
       if (target.closest('[data-extra-fullscreen]')) {
         const full = document.fullscreenElement || document.webkitFullscreenElement;
         if (full === view) {
@@ -816,8 +1265,37 @@
         if(active==='2048')init2048();
         if(active==='blocks')initBlocks();
         if(active==='typing')initTyping(typing.lang);
-        if(active==='sudoku')initSudoku(sudoku.level);
+        if(active==='sudoku')initSudoku(sudoku.level,sudoku.size);
+        if(active==='math')initMath();
+        if(active!=='math'){clearTimeout(mathSubmitTimer);mathSubmitTimer=0;}
         if(active==='connect')initConnect();
+        if(active==='sky-ball'){
+          const frame=$(view,'[data-sky-ball-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='starfighter'){
+          const frame=$(view,'[data-starfighter-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='brick-breaker'){
+          const frame=$(view,'[data-brick-breaker-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='arrow-escape'){
+          const frame=$(view,'[data-arrow-escape-frame]');
+          if(frame){
+            try{localStorage.removeItem('ae_state');}catch(_){}
+            frame.src=frame.getAttribute('src');
+          }
+        }
+        if(active==='daily-connections'){
+          const frame=$(view,'[data-daily-connections-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='n-queens'){
+          const frame=$(view,'[data-n-queens-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
         return;
       }
       const wordLang=target.closest('[data-word-lang]');
@@ -838,12 +1316,26 @@
       if(blockCell){const parts=blockCell.dataset.blockCell.split(',').map(Number);placeBlock(parts[0],parts[1]);return;}
       const typingLang=target.closest('[data-typing-lang]');
       if(typingLang){initTyping(typingLang.dataset.typingLang);return;}
+      const sudokuSize=target.closest('[data-sudoku-size]');
+      if(sudokuSize){initSudoku(sudoku.level,Number(sudokuSize.dataset.sudokuSize));return;}
       const sudokuLevel=target.closest('[data-sudoku-level]');
-      if(sudokuLevel){initSudoku(sudokuLevel.dataset.sudokuLevel);return;}
+      if(sudokuLevel){initSudoku(sudokuLevel.dataset.sudokuLevel,sudoku.size);return;}
+      if(target.closest('[data-math-restart]')){initMath();return;}
       const sudokuCell=target.closest('[data-sudoku-cell]');
       if(sudokuCell){sudoku.selected=sudokuCell.dataset.sudokuCell.split(',').map(Number);paintSudoku('Cell selected. Choose a number.');return;}
       const sudokuNum=target.closest('[data-sudoku-number]');
       if(sudokuNum){setSudokuNumber(Number(sudokuNum.dataset.sudokuNumber));return;}
+      if(target.closest('[data-math-submit]')){event.preventDefault();submitMath();return;}
+            const connectLevel=target.closest('[data-connect-level]');
+      if(connectLevel&&active==='connect'&&connect){
+        const selected=connectLevel.dataset.connectLevel;
+        if(CONNECT_LEVELS[selected]){
+          connect.difficulty=selected;
+          safeSet('sitecraft-connect-difficulty',selected);
+          paintConnect(connect.turn==='computer'?'Difficulty saved. It will apply to the next computer move.':'Difficulty set to '+CONNECT_LEVELS[selected].label+'.');
+        }
+        return;
+      }
       const connectCol=target.closest('[data-connect-col]');
       if(connectCol){playConnect(Number(connectCol.dataset.connectCol));return;}
     });
@@ -853,17 +1345,24 @@
         word.guess=event.target.value;
       }
       if(active==='typing' && event.target.matches('[data-typing-input]') && !event.isComposing)updateTypingLive();
+      if(active==='math' && event.target.matches('[data-math-answer]'))queueMathAutoSubmit();
     });
     section.addEventListener('keydown', event => {
       if(active==='word' && event.target.matches('[data-word-input]') && event.key==='Enter') {event.preventDefault();submitWord();return;}
       if(active==='2048' && ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(event.key) && !event.target.matches('input,textarea')) {
         event.preventDefault();move2048(event.key.replace('Arrow','').toLowerCase());return;
       }
+      if(active==='math' && event.target.matches('[data-math-answer]') && event.key==='Enter'){
+        event.preventDefault();submitMath();return;
+      }
       if(active==='sudoku' && !event.target.matches('input,textarea')) {
-        if(/^[1-9]$/.test(event.key)){event.preventDefault();setSudokuNumber(Number(event.key));}
+        if(/^[1-9]$/.test(event.key)&&Number(event.key)<=sudoku.size){event.preventDefault();setSudokuNumber(Number(event.key));}
         else if(event.key==='Backspace'||event.key==='Delete'){event.preventDefault();setSudokuNumber(0);}
         else if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(event.key)){
-          event.preventDefault();const r=Math.max(0,Math.min(8,sudoku.selected[0]+(event.key==='ArrowUp'?-1:event.key==='ArrowDown'?1:0)));const c=Math.max(0,Math.min(8,sudoku.selected[1]+(event.key==='ArrowLeft'?-1:event.key==='ArrowRight'?1:0)));sudoku.selected=[r,c];paintSudoku('Cell selected.');
+          event.preventDefault();
+          const r=Math.max(0,Math.min(sudoku.size-1,sudoku.selected[0]+(event.key==='ArrowUp'?-1:event.key==='ArrowDown'?1:0)));
+          const c=Math.max(0,Math.min(sudoku.size-1,sudoku.selected[1]+(event.key==='ArrowLeft'?-1:event.key==='ArrowRight'?1:0)));
+          sudoku.selected=[r,c];paintSudoku('Cell selected.');
         }
       }
     });
@@ -880,5 +1379,11 @@
     },{passive:true});
   }
 
-  window.SiteCraftExtraGames = {append:append};
+  function openGame(root,id) {
+    const section = root && root.querySelector ? root.querySelector('.sc-pg-section') : document.querySelector('.sc-pg-section');
+    if (!section || typeof section.__siteCraftOpenExtraGame !== 'function') return false;
+    section.__siteCraftOpenExtraGame(id);
+    return true;
+  }
+  window.SiteCraftExtraGames = {append:append,openGame:openGame};
 })();

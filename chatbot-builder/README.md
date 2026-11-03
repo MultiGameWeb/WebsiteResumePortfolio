@@ -51,3 +51,11 @@ This preview is not connected to live AI, cloud upload, persistent storage, auth
 ## Rollback
 
 Delete only the new `/chatbot-builder/` folder. No existing files, routes, components, config, styles, DB tables, or navigation items are required by this isolated preview.
+
+## Demo mode (no server, no AI key)
+
+Open `chatbot-builder/demo.html`. It turns on a browser-only fake backend (`demo-api.js`) shared by the owner page (`owner.html`) and the customer page (`../salesbot/?s=demo-shop`). Change a price on the owner page, and the customer page shows it. `?demo=0` turns demo mode off.
+
+## Owner Update mode
+
+`owner.html` has "Update with chat": type, speak or send photos; BotCraft shows the planned changes and the owner confirms. `update-planner.js` is the offline rule-based planner (also the fallback when the AI helper is not available); the AI planner is the `plan_update` action in `backend/sitecraft-ai/botcraft-builder.js`.

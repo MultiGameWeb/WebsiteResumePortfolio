@@ -64,7 +64,7 @@ export function init(root,d={}){
     const mult=(d.vehicleTypes||[]).find(x=>x.name===vehicle)?.multiplier||1;
     const base= num(service?.dataset?.price||0)*num(mult);
     lead.total=base?money(base):'To be confirmed';lead.status='New';lead.createdAt=new Date().toISOString();
-    try{const state=Store.read(),data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#auBookingNotice');if(n)n.textContent='Booking request saved. The workshop will confirm the service, estimate and appointment slot.';form.reset()}catch{const n=root.querySelector('#auBookingNotice');if(n)n.textContent='Could not save the booking in this browser.'}
+    try{const state=Store.read(),data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#auBookingNotice');if(n)n.textContent='Thanks! Please send the WhatsApp message that opened to confirm your request. If it did not open, please call us.';form.reset()}catch{const n=root.querySelector('#auBookingNotice');if(n)n.textContent='Could not save the booking in this browser.'}
     const wa=d.contact?.whatsapp;
     if(wa){const msg=['Automotive service booking',lead.name,lead.phone,lead.email,'Vehicle: '+lead.vehicleType,'Service: '+lead.service,'Package: '+lead.package, 'Date: '+lead.serviceDate,'Slot: '+lead.timeSlot,'Location: '+lead.location,'Pickup/Drop: '+lead.pickupDrop,'Estimate: '+lead.total,lead.message].filter(Boolean).join('\n');window.open('https://wa.me/'+safe(wa)+'?text='+encodeURIComponent(msg),'_blank')}
   });

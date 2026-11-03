@@ -140,3 +140,97 @@ html, body { margin: 0; height: 100%; background: var(--page); color: var(--text
 .cart-field input, .cart-field textarea { font: inherit; font-size: 14px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 9px 10px; }
 .cart-help { margin: 4px 0 0; font-size: 12px; color: var(--soft); }
 #sendCart:disabled { opacity: .5; cursor: default; }
+
+/* =====================================================================
+   Shop page layout (v9): a scrolling page with sections, and the assistant
+   in a sheet that opens from a button. The older rules above still style the
+   chat, products, requests and cart.
+   ===================================================================== */
+html, body { height: auto; }
+body { min-height: 100dvh; }
+body.chat-open { overflow: hidden; }
+.app { display: block; height: auto; max-width: 900px; min-height: 100dvh; padding-bottom: 96px; }
+[hidden] { display: none !important; }
+
+.shop-header { position: relative; padding: 0; border: 0; min-height: 250px; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px; overflow: hidden; color: #fff; background: linear-gradient(135deg, #1b1b2b, #3b2c63); padding: 0 18px 18px; }
+.shop-header .hero { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.hero-shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgb(0 0 0 / 82%) 0%, rgb(0 0 0 / 45%) 45%, rgb(0 0 0 / 8%) 100%); }
+.shop-header .shop-title, .shop-header .contact-row { position: relative; z-index: 2; }
+.shop-title h1 { font-size: clamp(24px, 6vw, 34px); line-height: 1.15; color: #fff; }
+.shop-header .bot-name { color: rgb(255 255 255 / 80%); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 4px; }
+.shop-header .shop-meta { color: rgb(255 255 255 / 85%); font-size: 13.5px; margin-top: 6px; }
+.open-chip { display: inline-block; margin: 8px 0 0; padding: 4px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 700; background: #1f7a4d; color: #fff; }
+.open-chip[data-open="false"] { background: #b42335; }
+.shop-header .contact { background: #fff; color: #0d0d0d; border: 0; }
+.contact-row { gap: 8px; }
+.contact { flex: 0 1 auto; padding: 10px 16px; }
+
+.sections-nav { position: sticky; top: 0; z-index: 20; display: flex; gap: 4px; overflow-x: auto; padding: 0 10px; background: var(--page); border-bottom: 1px solid var(--border); scrollbar-width: none; }
+.sections-nav::-webkit-scrollbar { display: none; }
+.sections-nav a { flex: none; padding: 13px 12px 11px; font-size: 14px; font-weight: 600; color: var(--soft); text-decoration: none; border-bottom: 3px solid transparent; }
+.sections-nav a.active { color: var(--text); border-bottom-color: var(--accent); }
+html { scroll-padding-top: 54px; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+.block { padding: 24px 18px; border-bottom: 1px solid var(--border); }
+.block h2 { margin: 0 0 14px; font-size: 21px; line-height: 1.2; }
+.about-row { display: flex; gap: 14px; align-items: flex-start; }
+.owner-photo { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid var(--border); }
+.about-text { margin: 0 0 6px; font-size: 15px; line-height: 1.6; white-space: pre-wrap; }
+.about-type { margin: 0; color: var(--soft); font-size: 13.5px; }
+.faq { display: grid; gap: 8px; margin-top: 16px; }
+.faq-item { border: 1px solid var(--border); border-radius: 14px; padding: 0 14px; background: var(--surface); }
+.faq-item summary { cursor: pointer; padding: 12px 0; font-weight: 600; font-size: 14.5px; }
+.faq-item p { margin: 0 0 12px; font-size: 14px; color: var(--soft); white-space: pre-wrap; }
+.faq:empty { display: none; }
+
+.product-grid { margin-top: 12px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.cart-bar { position: sticky; bottom: 78px; z-index: 5; }
+.info-list { display: grid; grid-template-columns: max-content 1fr; gap: 10px 16px; margin: 0 0 14px; font-size: 14.5px; }
+.info-list dt { font-weight: 700; color: var(--soft); }
+.info-list dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.info-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.info-actions .contact { background: var(--accent); color: var(--accent-text); }
+.map-frame { width: 100%; height: 240px; border: 1px solid var(--border); border-radius: 16px; margin-top: 14px; background: var(--surface); }
+.requests-panel .request-buttons { margin-top: 0; }
+.page-footer { padding: 26px 18px 10px; text-align: center; color: var(--soft); font-size: 12.5px; }
+.page-footer p { margin: 10px 0 0; }
+.share-button { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer; }
+
+.fab-row { position: fixed; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 30; display: flex; gap: 10px; align-items: center; }
+.fab { border: 0; cursor: pointer; font: inherit; font-weight: 700; box-shadow: 0 8px 24px rgb(0 0 0 / 28%); }
+.fab-chat { display: flex; align-items: center; gap: 8px; background: var(--accent); color: var(--accent-text); border-radius: 999px; padding: 14px 20px; font-size: 15px; max-width: 70vw; }
+.fab-chat span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fab-mic { width: 54px; height: 54px; border-radius: 50%; background: #fff; color: #0d0d0d; font-size: 22px; }
+.fab-mic.active { background: #e53935; color: #fff; }
+body.chat-open .fab-row { display: none; }
+
+.chat-sheet { position: fixed; inset: 0; z-index: 40; display: flex; flex-direction: column; background: var(--page); max-width: 760px; margin: 0 auto; }
+.chat-sheet[hidden] { display: none; }
+.chat-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.chat-head strong { font-size: 16px; }
+.chat-close { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 16px; cursor: pointer; }
+@media (min-width: 900px) {
+  .chat-sheet { inset: auto 24px 24px auto; width: 420px; height: min(680px, calc(100dvh - 48px)); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 20px 60px rgb(0 0 0 / 30%); margin: 0; overflow: hidden; }
+  body.chat-open { overflow: auto; }
+}
+
+/* Talk mode: a calm, large microphone with rings that move while it listens or speaks. */
+.talk-panel { gap: 8px; }
+.talk-stage { position: relative; display: grid; place-items: center; width: 150px; height: 150px; }
+.talk-ring { position: absolute; inset: 24px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0; }
+.talk-panel[data-state="listening"] .talk-ring-1 { animation: talk-ring 1.6s ease-out infinite; }
+.talk-panel[data-state="listening"] .talk-ring-2 { animation: talk-ring 1.6s ease-out .8s infinite; }
+.talk-panel[data-state="speaking"] .talk-ring-1 { animation: talk-ring 2.4s ease-out infinite; border-color: #1f7a4d; }
+.talk-panel[data-state="thinking"] .talk-orb { animation: talk-think 1s ease-in-out infinite; }
+.talk-panel[data-state="listening"] .talk-orb { background: #e53935; color: #fff; animation: none; }
+.talk-panel[data-state="speaking"] .talk-orb { background: #1f7a4d; color: #fff; }
+.talk-orb { position: relative; z-index: 1; }
+@keyframes talk-ring { 0% { transform: scale(.9); opacity: .7; } 100% { transform: scale(1.7); opacity: 0; } }
+@keyframes talk-think { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+.talk-heard { font-size: 16px; color: var(--text); font-weight: 600; max-width: 100%; overflow-wrap: anywhere; }
+.talk-said { margin: 0; max-height: 4.8em; overflow: hidden; font-size: 13.5px; color: var(--soft); text-align: center; overflow-wrap: anywhere; }
+.talk-said:empty { display: none; }
+@media (prefers-reduced-motion: reduce) { .talk-ring { animation: none !important; } }
+.demo-ribbon { background: #fff3c4; color: #5f4300; text-align: center; font-size: 13px; padding: 6px 10px; position: relative; z-index: 60; }
+.demo-ribbon a { color: #5f4300; font-weight: 700; }
