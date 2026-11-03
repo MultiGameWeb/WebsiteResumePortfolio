@@ -303,16 +303,6 @@ function aiScore(i,side){
   }).length;
   score-=threats*(difficulty==='hard'?28:10);
  }
- if(difficulty==='hard'&&side==='yellow'&&old>=0&&old<LANE_START&&newP!==old&&captures===0){
-  const oldSquare=globalPath('yellow',old);
-  const redNearHome=tokens.red.some(rt=>rt.progress>=44&&rt.progress<LANE_START);
-  const blocksRed=redNearHome&&tokens.red.some(rt=>{
-   if(rt.progress<44||rt.progress>=LANE_START)return false;
-   const redSquare=globalPath('red',rt.progress),distance=(oldSquare-redSquare+52)%52;
-   return distance>=1&&distance<=6;
-  });
-  if(blocksRed)score-=115;
- }
  if(difficulty==='hard'&&captures>0&&safeLanding(side,old))score+=180;
  return score+Math.random()*.25;
 }
