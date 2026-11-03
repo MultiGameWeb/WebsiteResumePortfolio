@@ -110,7 +110,7 @@ const glyph={K:'♔',Q:'♕',R:'♖',B:'♗',N:'♘',P:'♙',k:'♚',q:'♛',r:'
 const names={K:'King',Q:'Queen',R:'Rook',B:'Bishop',N:'Knight',P:'Pawn',k:'King',q:'Queen',r:'Rook',b:'Bishop',n:'Knight',p:'Pawn'};
 const values={p:100,n:320,b:335,r:500,q:900,k:20000};
 const boardEl=document.getElementById('board'),statusEl=document.getElementById('status');
-let state,history=[],moveLog=[],selected=-1,pendingPromo=null,difficulty='medium',thinking=false,aiTimer=0,lastMove=null,ended=false,playerColor=1,flipped=false,muted=false,stats={},resultCounted=false,captureLog=[],audioCtx=null,searchDeadline=0;
+let state,history=[],moveLog=[],selected=-1,pendingPromo=null,difficulty='medium',gameDifficulty='medium',thinking=false,aiTimer=0,lastMove=null,ended=false,playerColor=1,flipped=false,muted=false,stats={},resultCounted=false,captureLog=[],audioCtx=null,searchDeadline=0;
 const idx=(r,c)=>r*8+c, row=i=>i>>3, col=i=>i&7, sq=i=>'abcdefgh'[col(i)]+(8-row(i));
 function initial(){return {b:'rnbqkbnrpppppppp................................PPPPPPPPRNBQKBNR'.split(''),turn:1,castle:'KQkq',ep:-1,half:0,full:1};}
 function clone(s){return {b:s.b.slice(),turn:s.turn,castle:s.castle,ep:s.ep,half:s.half,full:s.full};}
@@ -217,7 +217,7 @@ function saveGame(){
  try{
   localStorage.setItem(STORAGE_KEY,JSON.stringify({
    state:clone(state),history:history.map(clone),moveLog:moveLog.slice(),captureLog:captureLog.slice(),
-   difficulty:difficulty,playerColor:playerColor,flipped:flipped,muted:muted,
+   difficulty:difficulty,gameDifficulty:gameDifficulty,playerColor:playerColor,flipped:flipped,muted:muted,
    lastMove:lastMove,resultCounted:resultCounted,ended:ended,stats:stats
   }));
  }catch(e){}
@@ -234,6 +234,7 @@ function loadGame(){
   captureLog=Array.isArray(data.captureLog)?data.captureLog.slice(0,moveLog.length):[];
   while(captureLog.length<moveLog.length)captureLog.push(null);
   difficulty=['easy','medium','hard'].includes(data.difficulty)?data.difficulty:'medium';
+  gameDifficulty=['easy','medium','hard'].includes(data.gameDifficulty)?data.gameDifficulty:difficulty;
   playerColor=data.playerColor===-1?-1:1;flipped=!!data.flipped;muted=!!data.muted;
   lastMove=data.lastMove&&Number.isInteger(data.lastMove.from)&&Number.isInteger(data.lastMove.to)?data.lastMove:null;
   resultCounted=!!data.resultCounted;ended=!!data.ended;thinking=false;selected=-1;pendingPromo=null;
@@ -244,7 +245,7 @@ function loadGame(){
 function recordResult(result){
  if(resultCounted)return;
  resultCounted=true;
- const s=stats[difficulty]||(stats[difficulty]={wins:0,losses:0,draws:0,streak:0,best:0});
+ const s=stats[gameDifficulty]||(stats[gameDifficulty]={wins:0,losses:0,draws:0,streak:0,best:0});
  if(result==='win'){s.wins++;s.streak++;s.best=Math.max(s.best,s.streak);}
  else if(result==='loss'){s.losses++;s.streak=0;}
  else{s.draws++;s.streak=0;}
@@ -331,7 +332,7 @@ function chooseAI(s){
   let best=-Infinity,alpha=-Infinity,scored=[];
   try{
    for(const m of moves){
-    const score=-negamax(apply(s,m),depth-1,-Infinity,-alpha,1,useQ,4);
+    const score=-negamax(apply(s,m),depth-1,-Infinity,-(alpha-1),1,useQ,4);
     scored.push({move:m,score:score});
     if(score>best)best=score;
     if(score>alpha)alpha=score;
@@ -515,7 +516,7 @@ function beginNewGame(nextColor,confirmed){
   if(moveLog.length>=2)recordResult('loss');
  }
  if(aiTimer)clearTimeout(aiTimer);aiTimer=0;
- playerColor=next;flipped=playerColor===-1;state=initial();history=[clone(state)];moveLog=[];captureLog=[];
+ playerColor=next;flipped=playerColor===-1;gameDifficulty=difficulty;state=initial();history=[clone(state)];moveLog=[];captureLog=[];
  lastMove=null;selected=-1;pendingPromo=null;thinking=false;ended=false;resultCounted=false;
  document.getElementById('promotion').classList.remove('show');
  statusEl.textContent=playerColor===1?'Your turn — White moves first.':'Computer is thinking…';
@@ -530,12 +531,10 @@ function undo(){
  while(history.length>1&&history[history.length-1].turn!==playerColor){
   history.pop();if(moveLog.length)moveLog.pop();if(captureLog.length)captureLog.pop();
  }
- if(history.length===1&&playerColor===-1&&history[0].turn!==playerColor){
-  history[0].turn=playerColor;
- }
  state=clone(history[history.length-1]);lastMove=null;selected=-1;pendingPromo=null;thinking=false;ended=false;
  document.getElementById('promotion').classList.remove('show');
  showTerminal();render();saveGame();
+ if(!ended&&state.turn!==playerColor)scheduleComputer();
 }
 function ensureAudio(){
  try{
@@ -560,7 +559,7 @@ function playSound(kind){
 document.getElementById('resetBtn').addEventListener('click',()=>beginNewGame(playerColor,false));
 document.getElementById('undoBtn').addEventListener('click',undo);
 document.querySelectorAll('.diff').forEach(b=>b.addEventListener('click',()=>{
- difficulty=b.dataset.level;render();statusEl.textContent='Computer difficulty set to '+difficulty.toUpperCase()+'.';saveGame();
+ difficulty=b.dataset.level;render();statusEl.textContent='Computer difficulty set to '+difficulty.toUpperCase()+'. Stats will count under '+gameDifficulty.toUpperCase()+' until a new game starts.';saveGame();
 }));
 document.getElementById('flipBtn').addEventListener('click',()=>{flipped=!flipped;render();saveGame();});
 document.getElementById('colorBtn').addEventListener('click',()=>beginNewGame(-playerColor,false));
