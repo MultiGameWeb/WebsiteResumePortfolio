@@ -20,3 +20,11 @@
 @media(max-width:900px){.realestate-01 .re-nav nav{display:none}.realestate-01 .re-hero{grid-template-columns:1fr}.realestate-01 .re-hero-media{min-height:430px}.realestate-01 .re-hero-copy{padding:58px 6%}.realestate-01 .re-about,.realestate-01 .re-enquiry{grid-template-columns:1fr}.realestate-01 .re-property-grid{grid-template-columns:1fr}.realestate-01 .re-agent-grid,.realestate-01 .re-review-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.realestate-01 .re-nav{padding:11px 13px}.realestate-01 .re-brand{min-width:0}.realestate-01 .re-brand strong{font-size:18px}.realestate-01 .re-mini{display:none}.realestate-01 .re-nav-actions{margin-left:auto}.realestate-01 h1{font-size:49px}.realestate-01 h2{font-size:37px}.realestate-01 .re-search-wrap{margin-top:-26px;padding:0 13px}.realestate-01 .re-search-card{padding:17px}.realestate-01 .re-search-card h2{font-size:28px}.realestate-01 .re-search-form{grid-template-columns:1fr}.realestate-01 .re-section{padding:56px 16px}.realestate-01 .re-section-head{display:block}.realestate-01 .re-property-image{height:245px}.realestate-01 .re-property-body h3{font-size:25px}.realestate-01 .re-agent-grid,.realestate-01 .re-review-grid,.realestate-01 .re-service-grid,.realestate-01 .re-landmark-grid{grid-template-columns:1fr}.realestate-01 .re-enquiry-form{grid-template-columns:1fr}.realestate-01 .re-enquiry-form .wide{grid-column:auto}.realestate-01 .re-legal{grid-template-columns:1fr;padding-left:16px;padding-right:16px}.realestate-01 .re-rera{display:block;padding-left:16px;padding-right:16px}.realestate-01 .re-rera>strong{margin-top:18px;text-align:left}.realestate-01 .re-footer{align-items:flex-start;flex-direction:column;padding-left:16px;padding-right:16px}
 }
+
+/* Contrast fix: kicker labels on light sections */
+.realestate-01 .re-about .re-kicker,.realestate-01 .re-team .re-kicker,.realestate-01 .re-faq .re-kicker,.realestate-01 .re-legal.light .re-kicker{color:#7a6531}
+/* Contrast fix: body copy on the mid-grey bands */
+.realestate-01 .re-hero-copy p,.realestate-01 .re-properties .re-section-head p,.realestate-01 .re-location-section .re-section-head p,.realestate-01 .re-enquiry-copy p,.realestate-01 .re-legal:not(.light)>p{color:#f4f2ec}
+
+/* Contrast fixes (WCAG AA) */
+.realestate-01 .re-hero-copy p{color:#fff}

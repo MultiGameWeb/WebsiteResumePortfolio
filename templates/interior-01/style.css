@@ -1,6 +1,6 @@
 .interior-01{--ink:#201d19;--muted:#645d56;--paper:#f4f0e8;--panel:#fffdf8;--line:rgba(32,29,25,.13);--accent:#6e4f26;--accent2:#d8c3a3;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
 .interior-01 *{box-sizing:border-box}
-.interior-01 a{text-decoration:none;color:inherit}
+:where(.interior-01) a{text-decoration:none;color:inherit}
 .interior-01 button,.interior-01 input,.interior-01 textarea,.interior-01 select{font:inherit}
 .id-nav{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:22px;padding:14px 5vw;background:rgba(244,240,232,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .id-brand{display:flex;align-items:center;gap:11px;min-width:210px}
@@ -228,3 +228,6 @@
 .interior-01 .id-payment-list p{font-size:11px;color:var(--muted);margin:0}
 @media (max-width:1050px){.interior-01 .id-package-grid{grid-template-columns:1fr 1fr}.interior-01 .id-transform-grid{grid-template-columns:1fr 1fr}.interior-01 .id-expertise-grid{grid-template-columns:1fr 1fr}.interior-01 .id-expertise-grid article:nth-child(3n){border-right:1px solid var(--line)}.interior-01 .id-expertise-grid article:nth-child(2n){border-right:0}.interior-01 .id-process-timeline{grid-template-columns:repeat(3,1fr)}.interior-01 .id-process-timeline article:nth-child(3n){border-right:0}.interior-01 .id-trust-grid{grid-template-columns:repeat(3,1fr)} }
 @media (max-width:720px){.interior-01 .id-package-grid,.interior-01 .id-expertise-grid,.interior-01 .id-transform-grid,.interior-01 .id-process-timeline,.interior-01 .id-trust-grid{grid-template-columns:1fr}.interior-01 .id-expertise-grid article,.interior-01 .id-expertise-grid article:nth-child(3n),.interior-01 .id-expertise-grid article:nth-child(2n){border-right:0}.interior-01 .id-process-timeline article,.interior-01 .id-process-timeline article:nth-child(3n){border-right:0;border-bottom:1px solid var(--line);min-height:0}.interior-01 .id-process-timeline article:last-child{border-bottom:0}.interior-01 .id-estimator-row.three{grid-template-columns:1fr}.interior-01 .id-payment-list{grid-template-columns:1fr}.interior-01 .id-review-img{height:200px}}
+
+/* Contrast fixes (WCAG AA) */
+.interior-01 .id-package-card.featured .id-package-top span{color:#d8b47c}
