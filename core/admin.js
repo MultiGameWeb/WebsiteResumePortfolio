@@ -71,7 +71,7 @@ function videoField(label,value,target,compact=false){
 }
 function fileField(label,value,fileName,target,compact=false){
  const accept=target.accept||'.pdf,.epub,.docx,.txt,.mp3,.m4a,.wav';
- return '<div class="media-field '+(compact?'compact':'')+'"><div><span class="media-label">'+esc(label)+'</span><small>'+esc(fileName||(value?'File uploaded':'No file selected'))+'</small></div><label class="button ghost small file-upload-btn">Upload file<input type="file" accept="${esc(accept)}" data-file-upload data-section-id="${esc(target.sectionId)}" data-item-id="${esc(target.itemId)}" data-key="${esc(target.key)}"></label></div>';
+ return `<div class="media-field ${compact?'compact':''}"><div><span class="media-label">${esc(label)}</span><small>${esc(fileName||(value?'File uploaded':'No file selected'))}</small></div><label class="button ghost small file-upload-btn">Upload file<input type="file" accept="${esc(accept)}" data-file-upload data-section-id="${esc(target.sectionId)}" data-item-id="${esc(target.itemId)}" data-key="${esc(target.key)}"></label></div>`;
 }
 function collectionField(s,it,i,f){
  const v=it[f.key];
