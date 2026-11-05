@@ -40,7 +40,7 @@
 .cafe-01 .bc-hero-actions{display:flex;flex-wrap:wrap;gap:12px}
 .cafe-01 .bc-hero-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:45px;color:#f7e9d9;font-size:13px;font-weight:600}
 .cafe-01 .bc-hero-foot i{width:4px;height:4px;border-radius:50%;background:#efbd8d}
-.cafe-01 .bc-hero-badge{position:absolute;right:clamp(20px,7vw,100px);bottom:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;width:122px;height:122px;border:1px solid rgba(255,248,237,.65);border-radius:50%;color:#fff8ed;text-align:center;transform:rotate(8deg)}
+.cafe-01 .bc-hero-badge{background:rgba(30,20,15,.72);position:absolute;right:clamp(20px,7vw,100px);bottom:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;width:122px;height:122px;border:1px solid rgba(255,248,237,.65);border-radius:50%;color:#fff8ed;text-align:center;transform:rotate(8deg)}
 .cafe-01 .bc-hero-badge span{font-size:12px;font-weight:700;letter-spacing:.14em}
 .cafe-01 .bc-hero-badge strong{font-family:'Playfair Display',Georgia,serif;font-size:19px}
 .cafe-01 .bc-about{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(28px,7vw,100px);align-items:start;background:var(--bc-paper)}
@@ -191,6 +191,7 @@
  .cafe-01 .sc-connect-icons{margin-left:0}
 }
 @media(max-width:390px){
+ .cafe-01 .bc-nav-cta{display:none}
  .cafe-01 .bc-brand{min-width:0}
  .cafe-01 .bc-brand strong{font-size:17px}
  .cafe-01 .bc-brand small{max-width:185px;font-size:12px}
