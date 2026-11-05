@@ -1,0 +1,677 @@
+{
+  "id": "jewellery-01",
+  "name": "Jewellery — Aurelia Fine Jewels",
+  "category": "Jewellery Stores",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "Our story"
+    },
+    {
+      "id": "products",
+      "label": "Jewellery collections"
+    },
+    {
+      "id": "categories",
+      "label": "Collection filters"
+    },
+    {
+      "id": "search",
+      "label": "Product search"
+    },
+    {
+      "id": "offers",
+      "label": "Offers & bridal services"
+    },
+    {
+      "id": "wishlist",
+      "label": "Wishlist"
+    },
+    {
+      "id": "cart",
+      "label": "Shopping bag"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp ordering & enquiries"
+    },
+    {
+      "id": "appointment",
+      "label": "Book a showroom visit"
+    },
+    {
+      "id": "gallery",
+      "label": "Lookbook gallery"
+    },
+    {
+      "id": "location",
+      "label": "Showroom location & hours"
+    },
+    {
+      "id": "enquiry",
+      "label": "Contact form"
+    },
+    {
+      "id": "privacyPolicy",
+      "label": "Privacy policy"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Jewellery store name",
+      "required": true,
+      "placeholder": "Aurelia Fine Jewels"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / store team"
+    },
+    {
+      "path": "brand.motto",
+      "label": "Store tagline"
+    },
+    {
+      "path": "brand.about",
+      "label": "About the jewellery store",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Hero description",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero image",
+      "type": "media"
+    },
+    {
+      "path": "settings.currency",
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        {
+          "value": "INR",
+          "label": "Indian Rupee (₹)"
+        },
+        {
+          "value": "USD",
+          "label": "US Dollar ($)"
+        },
+        {
+          "value": "EUR",
+          "label": "Euro (€)"
+        }
+      ]
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.call",
+      "label": "Phone number"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email address"
+    },
+    {
+      "path": "contact.location",
+      "label": "Showroom address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Showroom hours"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps link",
+      "type": "url"
+    },
+    {
+      "path": "appointments.note",
+      "label": "Appointment note",
+      "type": "textarea"
+    },
+    {
+      "path": "legal.privacyPolicy",
+      "label": "Privacy policy",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "id": "jewellery-01",
+    "brand": {
+      "businessName": "Aurelia Fine Jewels",
+      "ownerName": "Aurelia Team",
+      "motto": "CRAFTED TO BE TREASURED",
+      "about": "At Aurelia Fine Jewels, every piece tells a story. Discover thoughtfully crafted gold, diamond and precious-stone jewellery for weddings, celebrations and everyday moments. Visit our showroom for personal styling and design guidance."
+    },
+    "home": {
+      "title": "A little brilliance. A lifetime of memories.",
+      "text": "Explore timeless gold, diamond and gemstone jewellery, selected with care and crafted for the moments that matter."
+    },
+    "hero": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1800&q=88",
+    "settings": {
+      "currency": "INR",
+      "showAbout": true,
+      "showGallery": true,
+      "showLocation": true,
+      "showPrivacyPolicy": true
+    },
+    "contact": {
+      "whatsapp": "919876543210",
+      "call": "+91 98765 43210",
+      "email": "hello@aurelia.example",
+      "location": "Road No. ನೆ, Jubilee Hills, Hyderabad, Telangana 500033",
+      "hours": "Monday – Sunday: 10:30 AM – 9:00 PM",
+      "maps": "https://maps.google.com/?q=Jewellery+stores+Jubilee+Hills+Hyderabad"
+    },
+    "appointments": {
+      "note": "Book a private consultation for bridal styling, custom designs or jewellery care. Our team will confirm your preferred slot."
+    },
+    "legal": {
+      "privacyPolicy": "Details shared through this website are used only to respond to your enquiry, coordinate showroom visits and assist with jewellery purchases. Please contact the store with any privacy questions."
+    },
+    "products": [
+      {
+        "id": "au-001",
+        "sku": "AU-G-001",
+        "name": "Temple Gold Necklace",
+        "category": "Gold Jewellery",
+        "metal": "Gold",
+        "purity": "22K",
+        "grossWeight": "38.4 g",
+        "netWeight": "34.8 g",
+        "stoneDetails": "Ruby and green stone accents",
+        "size": "18 inches",
+        "certificate": "Hallmarked",
+        "basePrice": 285000,
+        "salePrice": 279500,
+        "priceOnRequest": false,
+        "description": "A statement temple-inspired necklace with intricate motifs and traditional stone detailing.",
+        "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=88",
+        "featured": true,
+        "stockStatus": "Made to order",
+        "enabled": true
+      },
+      {
+        "id": "au-002",
+        "sku": "AU-D-002",
+        "name": "Solitaire Diamond Ring",
+        "category": "Diamond Jewellery",
+        "metal": "18K White Gold",
+        "purity": "18K",
+        "grossWeight": "4.8 g",
+        "netWeight": "4.2 g",
+        "stoneDetails": "Certified diamond · 0.50 ct",
+        "size": "Adjustable sizing",
+        "certificate": "Diamond certificate included",
+        "basePrice": 165000,
+        "salePrice": 159000,
+        "priceOnRequest": false,
+        "description": "A refined solitaire setting designed to celebrate a moment worth remembering.",
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=88",
+        "featured": true,
+        "stockStatus": "In stock",
+        "enabled": true
+      },
+      {
+        "id": "au-003",
+        "sku": "AU-S-003",
+        "name": "Pearl Drop Earrings",
+        "category": "Silver & Pearl",
+        "metal": "Sterling Silver",
+        "purity": "925 Silver",
+        "grossWeight": "8.2 g",
+        "netWeight": "7.1 g",
+        "stoneDetails": "Freshwater pearls",
+        "size": "One size",
+        "certificate": "Store authenticity card",
+        "basePrice": 12500,
+        "salePrice": 10900,
+        "priceOnRequest": false,
+        "description": "Elegant pearl drops with a graceful silhouette for celebrations and everyday wear.",
+        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=1000&q=88",
+        "featured": false,
+        "stockStatus": "In stock",
+        "enabled": true
+      },
+      {
+        "id": "au-004",
+        "sku": "AU-B-004",
+        "name": "Bridal Kundan Choker",
+        "category": "Bridal Collection",
+        "metal": "Gold finish",
+        "purity": "As described in product certificate",
+        "grossWeight": "Custom",
+        "netWeight": "Custom",
+        "stoneDetails": "Kundan-inspired stones and pearl strings",
+        "size": "Custom fit available",
+        "certificate": "Certificate details on request",
+        "basePrice": 0,
+        "salePrice": 0,
+        "priceOnRequest": true,
+        "description": "A bridal statement choker for wedding celebrations. Ask our team about custom sizing and current pricing.",
+        "image": "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=88",
+        "featured": true,
+        "stockStatus": "Made to order",
+        "enabled": true
+      },
+      {
+        "id": "au-005",
+        "sku": "AU-G-005",
+        "name": "Classic Gold Bangles",
+        "category": "Gold Jewellery",
+        "metal": "Gold",
+        "purity": "22K",
+        "grossWeight": "24 g pair",
+        "netWeight": "22 g pair",
+        "stoneDetails": "Traditional engraved finish",
+        "size": "2.4 / 2.6 / 2.8",
+        "certificate": "Hallmarked",
+        "basePrice": 178000,
+        "salePrice": 174000,
+        "priceOnRequest": false,
+        "description": "A timeless pair of everyday gold bangles with delicate engraved detailing.",
+        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1000&q=88",
+        "featured": false,
+        "stockStatus": "Limited availability",
+        "enabled": true
+      },
+      {
+        "id": "au-006",
+        "sku": "AU-D-006",
+        "name": "Emerald Halo Pendant",
+        "category": "Diamond Jewellery",
+        "metal": "18K Yellow Gold",
+        "purity": "18K",
+        "grossWeight": "5.1 g",
+        "netWeight": "4.5 g",
+        "stoneDetails": "Emerald centre with diamond halo",
+        "size": "Pendant with chain",
+        "certificate": "Gemstone certificate available",
+        "basePrice": 89000,
+        "salePrice": 85000,
+        "priceOnRequest": false,
+        "description": "A vivid emerald-inspired centre framed with a delicate halo of diamonds.",
+        "image": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1000&q=88",
+        "featured": false,
+        "stockStatus": "In stock",
+        "enabled": true
+      }
+    ],
+    "offers": [
+      {
+        "id": "au-o1",
+        "title": "Bridal styling consultation",
+        "description": "Meet our team for a personal bridal jewellery consultation and collection preview.",
+        "code": "",
+        "enabled": true
+      },
+      {
+        "id": "au-o2",
+        "title": "Create a piece that is yours",
+        "description": "Ask about custom designs, sizing and made-to-order jewellery.",
+        "code": "CUSTOMDESIGN",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "au-g1",
+        "title": "Timeless gold craftsmanship",
+        "image": "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=88",
+        "enabled": true
+      },
+      {
+        "id": "au-g2",
+        "title": "Details that shine",
+        "image": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1000&q=88",
+        "enabled": true
+      },
+      {
+        "id": "au-g3",
+        "title": "Made for your moments",
+        "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=88",
+        "enabled": true
+      }
+    ]
+  },
+  "admin": {
+    "storageKey": "sitecraft:jewellery-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.motto",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Store details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Jewellery store name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / team"
+          },
+          {
+            "path": "brand.motto",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the store",
+            "type": "textarea"
+          },
+          {
+            "path": "settings.currency",
+            "label": "Currency",
+            "type": "select",
+            "options": [
+              "INR",
+              "USD",
+              "EUR"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home page",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero description",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "products",
+        "label": "Jewellery inventory",
+        "type": "collection",
+        "itemLabel": "jewellery item",
+        "path": "products",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "sku",
+            "label": "SKU / design code"
+          },
+          {
+            "key": "category",
+            "label": "Collection / category"
+          },
+          {
+            "key": "metal",
+            "label": "Metal / material"
+          },
+          {
+            "key": "purity",
+            "label": "Purity (22K, 18K, 925, etc.)"
+          },
+          {
+            "key": "grossWeight",
+            "label": "Gross weight"
+          },
+          {
+            "key": "netWeight",
+            "label": "Net weight"
+          },
+          {
+            "key": "stoneDetails",
+            "label": "Gemstone / diamond details",
+            "type": "textarea"
+          },
+          {
+            "key": "size",
+            "label": "Size / dimensions"
+          },
+          {
+            "key": "certificate",
+            "label": "Hallmark / certificate details"
+          },
+          {
+            "key": "basePrice",
+            "label": "Original / reference price",
+            "type": "number"
+          },
+          {
+            "key": "salePrice",
+            "label": "Display price",
+            "type": "number"
+          },
+          {
+            "key": "priceOnRequest",
+            "label": "Show price on request",
+            "type": "checkbox"
+          },
+          {
+            "key": "stockStatus",
+            "label": "Availability status"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Product image",
+            "type": "media"
+          },
+          {
+            "key": "featured",
+            "label": "Featured design",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Visible on customer website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New jewellery design",
+          "sku": "",
+          "category": "Gold Jewellery",
+          "metal": "Gold",
+          "purity": "22K",
+          "grossWeight": "",
+          "netWeight": "",
+          "stoneDetails": "",
+          "size": "",
+          "certificate": "",
+          "basePrice": 0,
+          "salePrice": 0,
+          "priceOnRequest": true,
+          "stockStatus": "Enquire for availability",
+          "description": "",
+          "image": "",
+          "featured": false,
+          "enabled": true
+        }
+      },
+      {
+        "id": "offers",
+        "label": "Offers & bridal services",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "offers",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Offer / service title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "code",
+            "label": "Offer code"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New offer",
+          "description": "",
+          "code": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Lookbook gallery",
+        "type": "collection",
+        "itemLabel": "gallery image",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New lookbook image",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "appointments",
+        "label": "Showroom visits",
+        "fields": [
+          {
+            "path": "appointments.note",
+            "label": "Appointment information",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "label": "Contact & showroom",
+        "fields": [
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number with country code"
+          },
+          {
+            "path": "contact.call",
+            "label": "Phone number"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email address"
+          },
+          {
+            "path": "contact.location",
+            "label": "Showroom address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy policy",
+        "fields": [
+          {
+            "path": "legal.privacyPolicy",
+            "label": "Privacy policy text",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Website sections",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "Show About section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Show lookbook gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Show showroom location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPrivacyPolicy",
+            "label": "Show privacy policy",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
