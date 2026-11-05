@@ -41,6 +41,10 @@
       "label": "Customer reviews"
     },
     {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
       "id": "contact",
       "label": "Contact"
     },
@@ -131,6 +135,34 @@
       "path": "contact.maps",
       "label": "Google Maps link",
       "type": "url"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "placeholder": "hello@yourbusiness.com"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening hours",
+      "placeholder": "Mon–Sat · 10:00 AM – 7:00 PM"
     }
   ],
   "demoData": {
@@ -150,7 +182,10 @@
       "whatsapp": "919876543210",
       "call": "+91 98765 43210",
       "location": "Hyderabad, Telangana",
-      "maps": "https://maps.google.com/?q=Hyderabad"
+      "maps": "https://maps.google.com/?q=Hyderabad",
+      "email": "hello@luxecart.example",
+      "instagram": "https://www.instagram.com/",
+      "hours": "Mon–Sat · 10:00 AM – 8:00 PM (WhatsApp replies)"
     },
     "settings": {
       "currency": "INR",
@@ -261,6 +296,32 @@
         "name": "Happy customer",
         "text": "Great collection and helpful service. Ordering was easy.",
         "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I place an order?",
+        "answer": "Choose your products and tap the order button. WhatsApp opens with your order filled in, and we confirm availability, final price and delivery with you.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do you deliver to my area?",
+        "answer": "We deliver across India. Delivery charges and timelines are shared when we confirm your order.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Which payment methods do you accept?",
+        "answer": "UPI, bank transfer and card payments. Payment details are shared after we confirm your order.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Can I return or exchange a product?",
+        "answer": "Message us within 2 days of delivery. Exchange or return options depend on the product and its condition.",
         "enabled": true
       }
     ]
@@ -471,6 +532,35 @@
         }
       },
       {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
         "id": "contact",
         "label": "Contact",
         "fields": [
@@ -490,6 +580,34 @@
             "path": "contact.maps",
             "label": "Google Maps URL",
             "type": "url"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "placeholder": "hello@yourbusiness.com"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours",
+            "placeholder": "Mon–Sat · 10:00 AM – 7:00 PM"
           }
         ]
       },

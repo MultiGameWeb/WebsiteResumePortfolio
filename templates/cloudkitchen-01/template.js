@@ -3,7 +3,7 @@ const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
 const money=(cur,n)=>esc(cur||'₹')+new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.max(0,num(n)));
 const list=v=>Array.isArray(v)?v.filter(x=>x&&x.enabled!==false):[];
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
   const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},cake=d.cake||{},del=d.delivery||{},party=d.party||{},os=d.orderSettings||{},ok=x=>selected.includes(x);
   const menu=list(d.menu),offers=list(d.offers),gallery=list(d.gallery),reviews=list(d.reviews),services=list(d.services),hygiene=list(d.hygiene),faq=list(d.faq),hours=list(d.hours),slots=list(del.slots),partyPackages=list(party.packages),bases=list(cake.bases),sizes=list(cake.sizes),fillings=list(cake.fillings),toppings=list(cake.toppings);
   const cats=[...new Set(menu.map(x=>x.category).filter(Boolean))];
@@ -127,3 +127,31 @@ function scMobileNav(root){
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
   addEventListener('resize',sync);sync();
 }
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=true;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}
