@@ -1,0 +1,529 @@
+{
+  "id": "ecommerce-02",
+  "name": "E-commerce — LuxeCart Store",
+  "category": "E-commerce",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Hero / Home"
+    },
+    {
+      "id": "categories",
+      "label": "Product categories"
+    },
+    {
+      "id": "products",
+      "label": "Product gallery"
+    },
+    {
+      "id": "search",
+      "label": "Product search"
+    },
+    {
+      "id": "quickView",
+      "label": "Product quick view"
+    },
+    {
+      "id": "cart",
+      "label": "Shopping cart"
+    },
+    {
+      "id": "about",
+      "label": "About store"
+    },
+    {
+      "id": "gallery",
+      "label": "Store gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer reviews"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp ordering"
+    },
+    {
+      "id": "location",
+      "label": "Location & directions"
+    },
+    {
+      "id": "sellerPortal",
+      "label": "Seller portal link"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Store name",
+      "required": true,
+      "placeholder": "LuxeCart Store"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / store team"
+    },
+    {
+      "path": "brand.motto",
+      "label": "Store tagline"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Hero text",
+      "type": "textarea"
+    },
+    {
+      "path": "brand.about",
+      "label": "About the store",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero image",
+      "type": "media"
+    },
+    {
+      "path": "settings.currency",
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        {
+          "value": "INR",
+          "label": "Indian Rupee (₹)"
+        },
+        {
+          "value": "USD",
+          "label": "US Dollar ($)"
+        },
+        {
+          "value": "EUR",
+          "label": "Euro (€)"
+        },
+        {
+          "value": "GBP",
+          "label": "British Pound (£)"
+        }
+      ]
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.call",
+      "label": "Call number"
+    },
+    {
+      "path": "contact.location",
+      "label": "Store address / location"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "id": "ecommerce-02",
+    "brand": {
+      "businessName": "LuxeCart",
+      "ownerName": "Store Team",
+      "motto": "Thoughtful finds. Easy shopping.",
+      "about": "Discover a curated collection of everyday essentials, accessories and thoughtful gifts. Browse the collection and contact us for help with your order."
+    },
+    "home": {
+      "title": "Find something you'll love.",
+      "text": "Explore the latest collection, discover customer favourites and order directly from our store."
+    },
+    "hero": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1600&q=85",
+    "contact": {
+      "whatsapp": "919876543210",
+      "call": "+91 98765 43210",
+      "location": "Hyderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Hyderabad"
+    },
+    "settings": {
+      "currency": "INR",
+      "showAbout": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showContact": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    },
+    "products": [
+      {
+        "id": "lux-101",
+        "sku": "LUX-EAR-01",
+        "name": "Pro Wireless Earbuds",
+        "category": "Electronics",
+        "basePrice": 4599,
+        "salePrice": 3299,
+        "description": "Wireless earbuds with a compact charging case for everyday listening.",
+        "image": "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=80",
+        "featured": true,
+        "inStock": true,
+        "enabled": true
+      },
+      {
+        "id": "lux-102",
+        "sku": "LUX-CAS-02",
+        "name": "Artisan Phone Case",
+        "category": "Accessories",
+        "basePrice": 1799,
+        "salePrice": 1299,
+        "description": "A refined protective case with a clean, minimal finish.",
+        "image": "https://images.unsplash.com/photo-1601593346740-925612772716?auto=format&fit=crop&w=800&q=80",
+        "featured": true,
+        "inStock": true,
+        "enabled": true
+      },
+      {
+        "id": "lux-103",
+        "sku": "LUX-WAT-03",
+        "name": "Minimalist Watch",
+        "category": "Accessories",
+        "basePrice": 6999,
+        "salePrice": 5499,
+        "description": "A timeless watch designed for everyday use and special occasions.",
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80",
+        "featured": true,
+        "inStock": true,
+        "enabled": true
+      },
+      {
+        "id": "lux-104",
+        "sku": "LUX-BAG-04",
+        "name": "Urban Commuter Backpack",
+        "category": "Apparel",
+        "basePrice": 3999,
+        "salePrice": 3199,
+        "description": "A practical everyday backpack with room for your daily essentials.",
+        "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80",
+        "featured": false,
+        "inStock": true,
+        "enabled": true
+      },
+      {
+        "id": "lux-105",
+        "sku": "LUX-SPK-05",
+        "name": "Smart Studio Speaker",
+        "category": "Electronics",
+        "basePrice": 8999,
+        "salePrice": 7499,
+        "description": "A compact speaker for music, podcasts and entertainment.",
+        "image": "https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&w=800&q=80",
+        "featured": false,
+        "inStock": true,
+        "enabled": true
+      },
+      {
+        "id": "lux-106",
+        "sku": "LUX-SUN-06",
+        "name": "Classic Sunglasses",
+        "category": "Apparel",
+        "basePrice": 2499,
+        "salePrice": 1899,
+        "description": "A versatile pair of sunglasses for sunny days.",
+        "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+        "featured": false,
+        "inStock": false,
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "lux-g1",
+        "title": "New collection",
+        "image": "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=900&q=80",
+        "enabled": true
+      },
+      {
+        "id": "lux-g2",
+        "title": "Everyday style",
+        "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=80",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "lux-r1",
+        "name": "Happy customer",
+        "text": "Great collection and helpful service. Ordering was easy.",
+        "rating": 5,
+        "enabled": true
+      }
+    ]
+  },
+  "admin": {
+    "storageKey": "sitecraft:ecommerce-02",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.motto",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Business details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Store name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / team"
+          },
+          {
+            "path": "brand.motto",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About",
+            "type": "textarea"
+          },
+          {
+            "path": "settings.currency",
+            "label": "Currency",
+            "type": "select",
+            "options": [
+              "INR",
+              "USD",
+              "EUR",
+              "GBP"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home page",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "products",
+        "label": "Products",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "products",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "sku",
+            "label": "SKU code"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "basePrice",
+            "label": "Original price",
+            "type": "number"
+          },
+          {
+            "key": "salePrice",
+            "label": "Selling price",
+            "type": "number"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Product image",
+            "type": "media"
+          },
+          {
+            "key": "featured",
+            "label": "Featured product",
+            "type": "checkbox"
+          },
+          {
+            "key": "inStock",
+            "label": "In stock",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Visible on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New product",
+          "sku": "",
+          "category": "General",
+          "basePrice": 0,
+          "salePrice": 0,
+          "description": "",
+          "image": "",
+          "featured": false,
+          "inStock": true,
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "gallery image",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New image",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer name"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact",
+        "fields": [
+          {
+            "path": "contact.call",
+            "label": "Call number"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number"
+          },
+          {
+            "path": "contact.location",
+            "label": "Location"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Visibility",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
