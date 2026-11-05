@@ -1,0 +1,803 @@
+{
+  "id": "mobiles-01",
+  "name": "Mobile Store — MobileHub",
+  "category": "Mobile Stores",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "categories",
+      "label": "Phone categories"
+    },
+    {
+      "id": "products",
+      "label": "Phones & accessories"
+    },
+    {
+      "id": "search",
+      "label": "Product search"
+    },
+    {
+      "id": "quickView",
+      "label": "Product specifications / quick view"
+    },
+    {
+      "id": "wishlist",
+      "label": "Wishlist"
+    },
+    {
+      "id": "cart",
+      "label": "Shopping cart"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp ordering & enquiries"
+    },
+    {
+      "id": "offers",
+      "label": "Offers & promotions"
+    },
+    {
+      "id": "warranty",
+      "label": "Warranty & support information"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer reviews"
+    },
+    {
+      "id": "faq",
+      "label": "Frequently asked questions"
+    },
+    {
+      "id": "about",
+      "label": "About the store"
+    },
+    {
+      "id": "gallery",
+      "label": "Store gallery"
+    },
+    {
+      "id": "location",
+      "label": "Store location & directions"
+    },
+    {
+      "id": "contact",
+      "label": "Contact details"
+    },
+    {
+      "id": "privacyPolicy",
+      "label": "Privacy policy"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "categories",
+    "products",
+    "search",
+    "quickView",
+    "wishlist",
+    "cart",
+    "whatsapp",
+    "offers",
+    "warranty",
+    "reviews",
+    "faq",
+    "about",
+    "gallery",
+    "location",
+    "contact",
+    "privacyPolicy"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Store name",
+      "required": true,
+      "placeholder": "MobileHub"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / store team"
+    },
+    {
+      "path": "brand.motto",
+      "label": "Store tagline"
+    },
+    {
+      "path": "brand.about",
+      "label": "About the store",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Hero description",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero image",
+      "type": "media"
+    },
+    {
+      "path": "settings.currency",
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        {
+          "value": "INR",
+          "label": "Indian Rupee (₹)"
+        },
+        {
+          "value": "USD",
+          "label": "US Dollar ($)"
+        },
+        {
+          "value": "EUR",
+          "label": "Euro (€)"
+        },
+        {
+          "value": "GBP",
+          "label": "British Pound (£)"
+        }
+      ]
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.call",
+      "label": "Phone number"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email address"
+    },
+    {
+      "path": "contact.location",
+      "label": "Store address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening hours"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps link",
+      "type": "url"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "id": "mobiles-01",
+    "brand": {
+      "businessName": "MobileHub",
+      "ownerName": "MobileHub Team",
+      "motto": "YOUR WORLD. ONE TAP AWAY.",
+      "about": "MobileHub helps you find a phone that fits your style, needs and budget. Explore smartphone models, compare core specifications and ask our team about availability, warranty and exchange options."
+    },
+    "home": {
+      "title": "Find the phone that keeps up with you.",
+      "text": "Compare the latest smartphones, storage options and everyday mobile essentials. Get personal help before you choose."
+    },
+    "hero": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1800&q=88",
+    "settings": {
+      "currency": "INR",
+      "showAbout": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFAQ": true,
+      "showWarranty": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    },
+    "contact": {
+      "whatsapp": "919876543210",
+      "call": "+91 98765 43210",
+      "email": "hello@example.com",
+      "location": "Hyderabad, Telangana",
+      "hours": "Mon–Sat · 10:00 AM – 8:00 PM",
+      "maps": "https://maps.google.com/?q=Hyderabad",
+      "instagram": "https://instagram.com/"
+    },
+    "products": [
+      {
+        "id": "mh-001",
+        "sku": "MH-IPH-128",
+        "name": "Nova X Pro 128 GB",
+        "brand": "Nova",
+        "model": "X Pro",
+        "category": "Flagship Phones",
+        "basePrice": 79999,
+        "salePrice": 74999,
+        "ram": "8 GB",
+        "storage": "128 GB",
+        "display": "6.7-inch AMOLED · 120 Hz",
+        "camera": "50 MP main · 12 MP ultra-wide",
+        "battery": "5000 mAh · fast charging",
+        "network": "5G · Dual SIM",
+        "processor": "Octa-core flagship chipset",
+        "color": "Graphite",
+        "warranty": "1 year manufacturer warranty",
+        "description": "A premium phone with a bright display, versatile cameras and fast performance.",
+        "image": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1000&q=85",
+        "stockQty": 5,
+        "inStock": true,
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "mh-002",
+        "sku": "MH-ONE-256",
+        "name": "OneCore 5G 256 GB",
+        "brand": "OneCore",
+        "model": "5G Plus",
+        "category": "Android Phones",
+        "basePrice": 32999,
+        "salePrice": 29999,
+        "ram": "12 GB",
+        "storage": "256 GB",
+        "display": "6.6-inch AMOLED · 120 Hz",
+        "camera": "50 MP OIS main camera",
+        "battery": "5500 mAh",
+        "network": "5G · Dual SIM",
+        "processor": "Snapdragon series",
+        "color": "Forest Green",
+        "warranty": "1 year manufacturer warranty",
+        "description": "A balanced 5G smartphone with generous storage and smooth display.",
+        "image": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1000&q=85",
+        "stockQty": 8,
+        "inStock": true,
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "mh-003",
+        "sku": "MH-BUD-001",
+        "name": "Wireless Earbuds Pro",
+        "brand": "SoundPod",
+        "model": "Buds Pro",
+        "category": "Audio & Wearables",
+        "basePrice": 6999,
+        "salePrice": 5999,
+        "ram": "—",
+        "storage": "—",
+        "display": "In-ear · touch controls",
+        "camera": "—",
+        "battery": "Up to 30 hours with case",
+        "network": "Bluetooth 5.3",
+        "processor": "Active noise reduction",
+        "color": "Midnight Black",
+        "warranty": "1 year warranty",
+        "description": "Compact wireless earbuds for calls, music and travel.",
+        "image": "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=1000&q=85",
+        "stockQty": 20,
+        "inStock": true,
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "mh-004",
+        "sku": "MH-WAT-009",
+        "name": "Smartwatch Active",
+        "brand": "Pulse",
+        "model": "Active 9",
+        "category": "Audio & Wearables",
+        "basePrice": 8999,
+        "salePrice": 7999,
+        "ram": "—",
+        "storage": "—",
+        "display": "1.9-inch AMOLED",
+        "camera": "—",
+        "battery": "Up to 7 days (typical use)",
+        "network": "Bluetooth calling",
+        "processor": "Health & activity sensors",
+        "color": "Silver",
+        "warranty": "1 year warranty",
+        "description": "A connected smartwatch for notifications, activity and everyday convenience.",
+        "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=85",
+        "stockQty": 11,
+        "inStock": true,
+        "featured": false,
+        "enabled": true
+      }
+    ],
+    "offers": [
+      {
+        "id": "mh-o1",
+        "title": "Exchange your old phone",
+        "description": "Ask our team whether your device is eligible for an exchange offer.",
+        "code": "EXCHANGE",
+        "enabled": true
+      },
+      {
+        "id": "mh-o2",
+        "title": "Accessories for your new phone",
+        "description": "Explore cases, chargers, screen protection and audio accessories.",
+        "code": "",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rv1",
+        "name": "Verified customer",
+        "rating": 5,
+        "text": "Helpful product guidance and a smooth store experience.",
+        "enabled": true
+      },
+      {
+        "id": "rv2",
+        "name": "Local customer",
+        "rating": 5,
+        "text": "The team explained the product features and warranty clearly.",
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "fq1",
+        "question": "How can I place an order?",
+        "answer": "Add products to your bag and continue on WhatsApp. Our team will confirm the final price and availability.",
+        "enabled": true
+      },
+      {
+        "id": "fq2",
+        "question": "Is the product warranty included?",
+        "answer": "Warranty details are displayed on each product. Please check the product listing and confirm the terms with the store before purchase.",
+        "enabled": true
+      },
+      {
+        "id": "fq3",
+        "question": "Can I visit the store before buying?",
+        "answer": "Yes. Contact the store to confirm availability and showroom timings.",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "gl1",
+        "title": "Explore the store",
+        "image": "https://images.unsplash.com/photo-1511708156?auto=format&fit=crop&w=1800&q=88",
+        "enabled": true
+      },
+      {
+        "id": "gl2",
+        "title": "Product experience",
+        "image": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      }
+    ],
+    "legal": {
+      "privacyPolicy": "Information shared through this website is used only to respond to enquiries and coordinate orders. Please contact the store for questions about your information."
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:mobiles-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.motto",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Store details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Store name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / team"
+          },
+          {
+            "path": "brand.motto",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the store",
+            "type": "textarea"
+          },
+          {
+            "path": "settings.currency",
+            "label": "Currency",
+            "type": "select",
+            "options": [
+              "INR",
+              "USD",
+              "EUR",
+              "GBP"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home page",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "products",
+        "label": "Phones & accessories",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "products",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "sku",
+            "label": "SKU / model code"
+          },
+          {
+            "key": "brand",
+            "label": "Device brand"
+          },
+          {
+            "key": "model",
+            "label": "Model"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "ram",
+            "label": "RAM"
+          },
+          {
+            "key": "storage",
+            "label": "Storage"
+          },
+          {
+            "key": "display",
+            "label": "Display"
+          },
+          {
+            "key": "camera",
+            "label": "Camera"
+          },
+          {
+            "key": "battery",
+            "label": "Battery"
+          },
+          {
+            "key": "network",
+            "label": "Network / connectivity"
+          },
+          {
+            "key": "processor",
+            "label": "Processor / features"
+          },
+          {
+            "key": "color",
+            "label": "Colour"
+          },
+          {
+            "key": "warranty",
+            "label": "Warranty"
+          },
+          {
+            "key": "basePrice",
+            "label": "MRP",
+            "type": "number"
+          },
+          {
+            "key": "salePrice",
+            "label": "Selling price",
+            "type": "number"
+          },
+          {
+            "key": "priceOnRequest",
+            "label": "Price on request",
+            "type": "checkbox"
+          },
+          {
+            "key": "stockQty",
+            "label": "Stock quantity",
+            "type": "number"
+          },
+          {
+            "key": "inStock",
+            "label": "Available",
+            "type": "checkbox"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Product image",
+            "type": "media"
+          },
+          {
+            "key": "featured",
+            "label": "Featured product",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Visible on customer website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New product",
+          "sku": "",
+          "brand": "",
+          "model": "",
+          "category": "Smartphones",
+          "ram": "",
+          "storage": "",
+          "display": "",
+          "camera": "",
+          "battery": "",
+          "network": "",
+          "processor": "",
+          "color": "",
+          "warranty": "",
+          "basePrice": 0,
+          "salePrice": 0,
+          "priceOnRequest": false,
+          "stockQty": 1,
+          "inStock": true,
+          "description": "",
+          "featured": false,
+          "enabled": true,
+          "image": ""
+        }
+      },
+      {
+        "id": "offers",
+        "label": "Offers & promotions",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "offers",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Offer title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "code",
+            "label": "Offer code"
+          },
+          {
+            "key": "enabled",
+            "label": "Show offer",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New offer",
+          "description": "",
+          "code": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer name"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "number"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show review",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer",
+          "rating": 5,
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQs",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show question",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "gallery image",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show image",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New image",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & location",
+        "fields": [
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number"
+          },
+          {
+            "path": "contact.call",
+            "label": "Phone number"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.location",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Website sections",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "About section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFAQ",
+            "label": "FAQ section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWarranty",
+            "label": "Warranty information section",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy policy",
+        "fields": [
+          {
+            "path": "legal.privacyPolicy",
+            "label": "Privacy policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}

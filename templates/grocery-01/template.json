@@ -1,0 +1,677 @@
+{
+  "id": "grocery-01",
+  "name": "Groceries & Supermarket — FreshMart",
+  "category": "Groceries & Supermarkets",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the store"
+    },
+    {
+      "id": "products",
+      "label": "Products / Inventory"
+    },
+    {
+      "id": "categories",
+      "label": "Product categories"
+    },
+    {
+      "id": "search",
+      "label": "Product search"
+    },
+    {
+      "id": "offers",
+      "label": "Offers & weekly deals"
+    },
+    {
+      "id": "cart",
+      "label": "Shopping cart"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp ordering"
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery information"
+    },
+    {
+      "id": "gallery",
+      "label": "Store gallery"
+    },
+    {
+      "id": "location",
+      "label": "Store location & hours"
+    },
+    {
+      "id": "enquiry",
+      "label": "Contact / Enquiry"
+    },
+    {
+      "id": "privacyPolicy",
+      "label": "Privacy policy"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Store name",
+      "required": true,
+      "placeholder": "FreshMart Supermarket"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / store team"
+    },
+    {
+      "path": "brand.motto",
+      "label": "Store tagline"
+    },
+    {
+      "path": "brand.about",
+      "label": "About the store",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Hero description",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero image",
+      "type": "media"
+    },
+    {
+      "path": "settings.currency",
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        {
+          "value": "INR",
+          "label": "Indian Rupee (₹)"
+        },
+        {
+          "value": "USD",
+          "label": "US Dollar ($)"
+        },
+        {
+          "value": "EUR",
+          "label": "Euro (€)"
+        },
+        {
+          "value": "GBP",
+          "label": "British Pound (£)"
+        }
+      ]
+    },
+    {
+      "path": "delivery.enabled",
+      "label": "Enable home delivery",
+      "type": "checkbox"
+    },
+    {
+      "path": "delivery.areas",
+      "label": "Delivery areas",
+      "type": "textarea"
+    },
+    {
+      "path": "delivery.fee",
+      "label": "Delivery fee",
+      "type": "number"
+    },
+    {
+      "path": "delivery.freeAbove",
+      "label": "Free delivery above",
+      "type": "number"
+    },
+    {
+      "path": "delivery.minimumOrder",
+      "label": "Minimum order amount",
+      "type": "number"
+    },
+    {
+      "path": "delivery.estimatedTime",
+      "label": "Estimated delivery time"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.call",
+      "label": "Phone number"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email address"
+    },
+    {
+      "path": "contact.location",
+      "label": "Full store address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Working hours"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps link",
+      "type": "url"
+    },
+    {
+      "path": "legal.privacyPolicy",
+      "label": "Privacy policy text",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "id": "grocery-01",
+    "brand": {
+      "businessName": "FreshMart Supermarket",
+      "ownerName": "FreshMart Team",
+      "motto": "FRESH EVERY DAY · GOODNESS IN EVERY BASKET",
+      "about": "Your neighbourhood supermarket for fresh fruits and vegetables, everyday groceries, dairy, bakery favourites and home essentials. We carefully select quality products and make everyday shopping simple."
+    },
+    "home": {
+      "title": "Fresh groceries, delivered to your doorstep.",
+      "text": "Shop farm-fresh produce, pantry essentials and everyday favourites at great prices. Add to your basket and order directly with our store."
+    },
+    "hero": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=85",
+    "settings": {
+      "currency": "INR",
+      "showAbout": true,
+      "showGallery": true,
+      "showLocation": true,
+      "showPrivacyPolicy": true
+    },
+    "delivery": {
+      "enabled": true,
+      "areas": "Madhapur · Kondapur · Gachibowli · Hitech City",
+      "fee": 30,
+      "freeAbove": 499,
+      "minimumOrder": 99,
+      "estimatedTime": "Same-day delivery · Usually 45–90 minutes"
+    },
+    "contact": {
+      "whatsapp": "919876543210",
+      "call": "+91 98765 43210",
+      "email": "hello@freshmart.example",
+      "location": "Main Road, Madhapur, Hyderabad, Telangana 500081",
+      "hours": "Monday – Sunday: 7:00 AM – 10:00 PM",
+      "maps": "https://maps.google.com/?q=Madhapur+Hyderabad"
+    },
+    "legal": {
+      "privacyPolicy": "We use the details you share only to respond to enquiries and coordinate your grocery order. Please contact the store for questions about your information."
+    },
+    "products": [
+      {
+        "id": "fm-001",
+        "sku": "FRU-001",
+        "name": "Fresh Red Apples",
+        "category": "Fruits",
+        "unit": "1 kg",
+        "basePrice": 220,
+        "salePrice": 189,
+        "description": "Crisp and juicy apples, selected for everyday freshness.",
+        "image": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=900&q=85",
+        "badge": "Bestseller",
+        "featured": true,
+        "inStock": true,
+        "stockQty": 30,
+        "enabled": true
+      },
+      {
+        "id": "fm-002",
+        "sku": "VEG-001",
+        "name": "Farm Fresh Tomatoes",
+        "category": "Vegetables",
+        "unit": "1 kg",
+        "basePrice": 45,
+        "salePrice": 35,
+        "description": "Ripe tomatoes for curries, salads and daily cooking.",
+        "image": "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=900&q=85",
+        "badge": "Fresh today",
+        "featured": true,
+        "inStock": true,
+        "stockQty": 50,
+        "enabled": true
+      },
+      {
+        "id": "fm-003",
+        "sku": "DAI-001",
+        "name": "Full Cream Milk",
+        "category": "Dairy & Eggs",
+        "unit": "1 litre",
+        "basePrice": 74,
+        "salePrice": 70,
+        "description": "Rich, creamy milk for tea, coffee and breakfast.",
+        "image": "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=900&q=85",
+        "badge": "Daily essential",
+        "featured": true,
+        "inStock": true,
+        "stockQty": 40,
+        "enabled": true
+      },
+      {
+        "id": "fm-004",
+        "sku": "PAN-001",
+        "name": "Premium Basmati Rice",
+        "category": "Rice & Staples",
+        "unit": "5 kg bag",
+        "basePrice": 650,
+        "salePrice": 599,
+        "description": "Aromatic long-grain basmati rice for special meals.",
+        "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=85",
+        "badge": "Value pack",
+        "featured": true,
+        "inStock": true,
+        "stockQty": 18,
+        "enabled": true
+      },
+      {
+        "id": "fm-005",
+        "sku": "BAK-001",
+        "name": "Whole Wheat Bread",
+        "category": "Bakery",
+        "unit": "400 g pack",
+        "basePrice": 55,
+        "salePrice": 49,
+        "description": "Soft, freshly baked bread for your breakfast table.",
+        "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=85",
+        "badge": "Fresh bake",
+        "featured": false,
+        "inStock": true,
+        "stockQty": 24,
+        "enabled": true
+      },
+      {
+        "id": "fm-006",
+        "sku": "HOM-001",
+        "name": "Dishwash Liquid",
+        "category": "Home Care",
+        "unit": "500 ml",
+        "basePrice": 110,
+        "salePrice": 95,
+        "description": "Everyday cleaning essential for a sparkling kitchen.",
+        "image": "https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=900&q=85",
+        "badge": "",
+        "featured": false,
+        "inStock": true,
+        "stockQty": 15,
+        "enabled": true
+      }
+    ],
+    "offers": [
+      {
+        "id": "fm-o1",
+        "title": "Fresh picks of the week",
+        "description": "Save more on selected fruits and vegetables. Check the latest prices in the product list.",
+        "code": "FRESHWEEK",
+        "enabled": true
+      },
+      {
+        "id": "fm-o2",
+        "title": "Free delivery on bigger baskets",
+        "description": "Get free delivery on orders above ₹499.",
+        "code": "",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "fm-g1",
+        "title": "Fresh fruits & vegetables",
+        "image": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      },
+      {
+        "id": "fm-g2",
+        "title": "Everyday essentials",
+        "image": "https://images.unsplash.com/photo-1604719312566-8912e9c8a213?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      },
+      {
+        "id": "fm-g3",
+        "title": "Quality you can trust",
+        "image": "https://images.unsplash.com/photo-1543168256-418811576931?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      }
+    ]
+  },
+  "admin": {
+    "storageKey": "sitecraft:grocery-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.motto",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Store details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Store name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / team"
+          },
+          {
+            "path": "brand.motto",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the store",
+            "type": "textarea"
+          },
+          {
+            "path": "settings.currency",
+            "label": "Currency",
+            "type": "select",
+            "options": [
+              "INR",
+              "USD",
+              "EUR",
+              "GBP"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home page",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero description",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "products",
+        "label": "Products & inventory",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "products",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "sku",
+            "label": "SKU / product code"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "unit",
+            "label": "Selling unit (1 kg, 1 litre, 1 pack, etc.)"
+          },
+          {
+            "key": "basePrice",
+            "label": "MRP / original price",
+            "type": "number"
+          },
+          {
+            "key": "salePrice",
+            "label": "Selling price",
+            "type": "number"
+          },
+          {
+            "key": "stockQty",
+            "label": "Available quantity",
+            "type": "number"
+          },
+          {
+            "key": "badge",
+            "label": "Product badge"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Product image",
+            "type": "media"
+          },
+          {
+            "key": "featured",
+            "label": "Featured product",
+            "type": "checkbox"
+          },
+          {
+            "key": "inStock",
+            "label": "In stock",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Visible on customer website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New grocery item",
+          "sku": "",
+          "category": "General",
+          "unit": "1 piece",
+          "basePrice": 0,
+          "salePrice": 0,
+          "stockQty": 10,
+          "badge": "",
+          "description": "",
+          "image": "",
+          "featured": false,
+          "inStock": true,
+          "enabled": true
+        }
+      },
+      {
+        "id": "offers",
+        "label": "Offers & weekly deals",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "offers",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Offer title"
+          },
+          {
+            "key": "description",
+            "label": "Offer description",
+            "type": "textarea"
+          },
+          {
+            "key": "code",
+            "label": "Offer code"
+          },
+          {
+            "key": "enabled",
+            "label": "Show offer",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New weekly offer",
+          "description": "",
+          "code": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "gallery image",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New store image",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "delivery",
+        "label": "Delivery & service area",
+        "fields": [
+          {
+            "path": "delivery.enabled",
+            "label": "Enable home delivery",
+            "type": "checkbox"
+          },
+          {
+            "path": "delivery.areas",
+            "label": "Delivery areas",
+            "type": "textarea"
+          },
+          {
+            "path": "delivery.fee",
+            "label": "Delivery fee",
+            "type": "number"
+          },
+          {
+            "path": "delivery.freeAbove",
+            "label": "Free delivery above",
+            "type": "number"
+          },
+          {
+            "path": "delivery.minimumOrder",
+            "label": "Minimum order amount",
+            "type": "number"
+          },
+          {
+            "path": "delivery.estimatedTime",
+            "label": "Estimated delivery time"
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "label": "Contact & store location",
+        "fields": [
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number with country code"
+          },
+          {
+            "path": "contact.call",
+            "label": "Phone number"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email address"
+          },
+          {
+            "path": "contact.location",
+            "label": "Store address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Working hours"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy policy",
+        "fields": [
+          {
+            "path": "legal.privacyPolicy",
+            "label": "Privacy policy text",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Website sections",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "Show About section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Show gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Show location section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPrivacyPolicy",
+            "label": "Show privacy policy",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
