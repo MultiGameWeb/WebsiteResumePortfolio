@@ -49,7 +49,7 @@ export function render(d={},selected=[]){
   if(ok('whatsapp')&&c.whatsapp)html+='<a class="au-float-wa" target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>';
   return html+'</div>';
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
   let selectedVehicle=root.querySelector('#auVehicleSelect')?.value||'';
   root.querySelectorAll('[data-vehicle]').forEach(b=>b.onclick=()=>{root.querySelectorAll('.au-vehicle-card').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedVehicle=b.dataset.vehicle||'';const v=root.querySelector('#auVehicleSelect');if(v){v.value=selectedVehicle;v.dispatchEvent(new Event('change'))}const out=root.querySelector('#auSelectedVehicle');if(out)out.textContent=selectedVehicle});
   root.querySelectorAll('[data-service]').forEach(b=>b.onclick=()=>{const s=root.querySelector('#auServiceSelect');if(s){s.value=b.dataset.service||'';s.dispatchEvent(new Event('change'))}root.querySelector('#booking')?.scrollIntoView({behavior:'smooth'})});
@@ -68,4 +68,28 @@ export function init(root,d={}){
     const wa=d.contact?.whatsapp;
     if(wa){const msg=['Automotive service booking',lead.name,lead.phone,lead.email,'Vehicle: '+lead.vehicleType,'Service: '+lead.service,'Package: '+lead.package, 'Date: '+lead.serviceDate,'Slot: '+lead.timeSlot,'Location: '+lead.location,'Pickup/Drop: '+lead.pickupDrop,'Estimate: '+lead.total,lead.message].filter(Boolean).join('\n');window.open('https://wa.me/'+safe(wa)+'?text='+encodeURIComponent(msg),'_blank')}
   });
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }

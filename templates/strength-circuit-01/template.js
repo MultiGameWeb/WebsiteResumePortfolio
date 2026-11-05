@@ -96,7 +96,7 @@ export function render(d={},selected=[]){
 
   if(ok('faq'))html+='<section class="gym-section panel" id="faq"><div class="gym-section-head"><div class="gym-kicker">11 · FAQ</div><h2>Questions before joining.</h2></div><div class="gym-faq">'+faq.map((x,i)=>'<article><button type="button" data-faq="'+i+'"><span>'+String(i+1).padStart(2,'0')+'</span><strong>'+esc(x.question)+'</strong><b>+</b></button><div data-answer hidden><p>'+esc(x.answer)+'</p></div></article>').join('')+'</div></section>';
 
-  if(ok('trial'))html+='<section class="gym-trial" id="trial"><div class="gym-trial-copy"><div class="gym-kicker">12 · Free Trial</div><h2>'+esc(trial.heading||'Start with a free trial.')+'</h2><p>'+esc(trial.text||'Tell us your goal and preferred time.')+'</p><a class="gym-guest" href="'+esc(wa(c.whatsapp,(trial.passText||'1-Day Guest Pass')+' — '+(b.businessName||'Gym')))+'" target="_blank" rel="noopener">'+esc(trial.passText||'1-Day Guest Pass · Book on WhatsApp')+'</a></div><form class="gym-trial-form" id="gymTrialForm"><label><span>Your name *</span><input name="name" required placeholder="Full name"></label><label><span>Phone number *</span><input name="phone" type="tel" required placeholder="+91..."></label><label><span>Your goal</span><select name="goal">'+goals.map(g=>'<option value="'+esc(g)+'">'+esc(g)+'</option>').join('')+'</select></label><label><span>Preferred plan</span><select name="plan"><option value="">Not decided</option>'+plans.map(p=>'<option value="'+esc(p.name||'')+'">'+esc(p.name||'')+'</option>').join('')+'</select></label><label><span>Preferred date</span><input name="date" type="date"></label><label><span>Preferred time</span><input name="time" type="time"></label><label class="gym-trial-wide"><span>Message</span><textarea name="message" rows="4" placeholder="Tell us anything the coach should know."></textarea></label><div class="gym-trial-wide"><button class="gym-cta" type="submit">Request Free Trial</button></div><div class="gym-trial-wide"><div id="gymTrialMsg" style="font-size:10px;color:#d8e5df"></div></div></form></section>';
+  if(ok('trial'))html+='<section class="gym-trial" id="trial"><div class="gym-trial-copy"><div class="gym-kicker">12 · Free Trial</div><h2>'+esc(trial.heading||'Start with a free trial.')+'</h2><p>'+esc(trial.text||'Tell us your goal and preferred time.')+'</p><a class="gym-guest" href="'+esc(wa(c.whatsapp,(trial.passText||'1-Day Guest Pass')+' — '+(b.businessName||'Gym')))+'" target="_blank" rel="noopener">'+esc(trial.passText||'1-Day Guest Pass · Book on WhatsApp')+'</a></div><form class="gym-trial-form" id="gymTrialForm"><label><span>Your name *</span><input name="name" required placeholder="Full name"></label><label><span>Phone number *</span><input name="phone" type="tel" required placeholder="+91..."></label><label><span>Your goal</span><select name="goal">'+goals.map(g=>'<option value="'+esc(g)+'">'+esc(g)+'</option>').join('')+'</select></label><label><span>Preferred plan</span><select name="plan"><option value="">Not decided</option>'+plans.map(p=>'<option value="'+esc(p.name||'')+'">'+esc(p.name||'')+'</option>').join('')+'</select></label><label><span>Preferred date</span><input name="date" type="date"></label><label><span>Preferred time</span><input name="time" type="time"></label><label class="gym-trial-wide"><span>Message</span><textarea name="message" rows="4" placeholder="Tell us anything the coach should know."></textarea></label><div class="gym-trial-wide"><button class="gym-cta" type="submit">Request Free Trial</button></div><div class="gym-trial-wide"><div id="gymTrialMsg" style="font-size:12px;color:#d8e5df"></div></div></form></section>';
 
   if(ok('location'))html+='<section class="gym-section dark" id="location"><div class="gym-section-head"><div class="gym-kicker">13 · Location</div><h2>Make the first visit easy.</h2></div><div class="gym-location"><article class="gym-location-card"><h3>Find '+esc(b.businessName||'the gym')+'</h3><p>'+esc(c.address||'')+'</p><p><strong>Parking:</strong> '+esc(c.parking||'')+'</p><p><strong>Landmarks:</strong> '+esc(c.landmarks||'')+'</p><div class="gym-location-links"><a class="gym-cta" target="_blank" rel="noopener" href="'+esc(c.maps||'#')+'">Open Google Maps</a><a class="gym-cta dark" href="'+esc(wa(c.whatsapp,'I want to enquire about joining '+(b.businessName||'the gym')))+'" target="_blank" rel="noopener">Ask on WhatsApp</a></div></article><article class="gym-location-card"><h3>Local training hours</h3><p>'+esc(hours.weekdays||'')+'</p><p>'+esc(hours.weekends||'')+'</p><p></p></article></div></section>';
 
@@ -112,7 +112,7 @@ export function render(d={},selected=[]){
   return html;
 }
 
-export function init(rootEl,d={}){
+export function init(rootEl,d={}){scMobileNav(arguments[0]);
   const root=rootEl.querySelector('.gym-preview-wrap');if(!root)return;
   const slides=root.querySelectorAll('[data-hero-slide]'),dots=root.querySelectorAll('[data-hero-dot]');
   let heroIndex=0,heroTimer=null;
@@ -164,4 +164,28 @@ export function init(rootEl,d={}){
   const modal=root.querySelector('#gymGalleryModal'),modalImg=root.querySelector('#gymModalImg');
   root.querySelectorAll('[data-gallery]').forEach(btn=>btn.addEventListener('click',()=>{if(modalImg)modalImg.src=btn.dataset.src||'';if(modal)modal.hidden=false}));
   root.querySelectorAll('[data-close-modal]').forEach(x=>x.addEventListener('click',()=>{if(modal)modal.hidden=true}));
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }

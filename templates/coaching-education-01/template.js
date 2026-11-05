@@ -47,7 +47,7 @@ export function render(d={},selected=[]){
  if(visible("whatsapp")&&c.whatsapp) html+='<a class="ed-float-wa" target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>';
  return html+'</div>';
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
  const setSelect=(selector,value)=>{const e=root.querySelector(selector);if(e&&value)e.value=value};
  root.querySelectorAll('[data-course-select]').forEach(b=>b.onclick=()=>{setSelect('#edAdmissionCourse',b.dataset.courseSelect);root.querySelector('#admission')?.scrollIntoView({behavior:"smooth"})});
  root.querySelectorAll('[data-fee-plan]').forEach(b=>b.onclick=()=>{root.querySelector('#admission')?.scrollIntoView({behavior:"smooth"});setTimeout(()=>{const e=root.querySelector('#edAdmissionForm textarea[name="message"]');if(e)e.value='Interested in: '+(b.dataset.feePlan||'')},50)});
@@ -60,4 +60,28 @@ export function init(root,d={}){
  };
  const df=root.querySelector('#edDemoForm');if(df)df.addEventListener('submit',e=>{e.preventDefault();const lead=Object.fromEntries(new FormData(df).entries());lead.leadType=d.education?.type==="School"?"Campus Visit / Demo":"Free Demo";saveLead(lead,'#edDemoNotice',df)});
  const af=root.querySelector('#edAdmissionForm');if(af)af.addEventListener('submit',e=>{e.preventDefault();const lead=Object.fromEntries(new FormData(af).entries());lead.leadType="Admission";saveLead(lead,'#edAdmissionNotice',af)});
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }
