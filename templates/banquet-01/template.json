@@ -1,0 +1,1742 @@
+{
+  "id": "banquet-01",
+  "name": "Banquet Hall — Grand Celebration",
+  "category": "Banquet Halls",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "halls",
+      "label": "Banquet halls & spaces"
+    },
+    {
+      "id": "hallSearch",
+      "label": "Hall search & capacity filters"
+    },
+    {
+      "id": "eventTypes",
+      "label": "Events we host"
+    },
+    {
+      "id": "packages",
+      "label": "Hall packages & pricing"
+    },
+    {
+      "id": "catering",
+      "label": "Catering & menu options"
+    },
+    {
+      "id": "services",
+      "label": "Event services"
+    },
+    {
+      "id": "facilities",
+      "label": "Facilities & amenities"
+    },
+    {
+      "id": "availability",
+      "label": "Date availability calendar"
+    },
+    {
+      "id": "enquiry",
+      "label": "Booking / site visit enquiry"
+    },
+    {
+      "id": "gallery",
+      "label": "Photo gallery"
+    },
+    {
+      "id": "videos",
+      "label": "Venue walkthrough videos"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer reviews"
+    },
+    {
+      "id": "about",
+      "label": "About the venue"
+    },
+    {
+      "id": "team",
+      "label": "Events team"
+    },
+    {
+      "id": "faq",
+      "label": "Frequently asked questions"
+    },
+    {
+      "id": "location",
+      "label": "Location & directions"
+    },
+    {
+      "id": "contact",
+      "label": "Contact details"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp enquiries"
+    },
+    {
+      "id": "social",
+      "label": "Social media"
+    },
+    {
+      "id": "policies",
+      "label": "Booking & venue policies"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "halls",
+    "hallSearch",
+    "eventTypes",
+    "packages",
+    "catering",
+    "services",
+    "facilities",
+    "availability",
+    "enquiry",
+    "gallery",
+    "videos",
+    "reviews",
+    "team",
+    "about",
+    "faq",
+    "location",
+    "contact",
+    "whatsapp",
+    "social",
+    "policies"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Banquet hall / venue name",
+      "required": true,
+      "placeholder": "Grand Celebration Banquets"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline"
+    },
+    {
+      "path": "brand.about",
+      "label": "About the venue",
+      "type": "textarea"
+    },
+    {
+      "path": "brand.experienceYears",
+      "label": "Years of experience",
+      "type": "number"
+    },
+    {
+      "path": "brand.eventsHosted",
+      "label": "Events hosted",
+      "type": "number"
+    },
+    {
+      "path": "venue.venueType",
+      "label": "Venue type",
+      "type": "select",
+      "options": [
+        "Banquet Hall",
+        "Convention Centre",
+        "Function Hall",
+        "Wedding Venue",
+        "Resort Event Venue",
+        "Multi-purpose Venue"
+      ]
+    },
+    {
+      "path": "venue.ownership",
+      "label": "Venue style",
+      "type": "select",
+      "options": [
+        "Indoor",
+        "Outdoor",
+        "Indoor + Outdoor",
+        "Multiple halls"
+      ]
+    },
+    {
+      "path": "venue.parkingCapacity",
+      "label": "Parking capacity"
+    },
+    {
+      "path": "venue.powerBackup",
+      "label": "Power backup details"
+    },
+    {
+      "path": "venue.acDetails",
+      "label": "Air conditioning details"
+    },
+    {
+      "path": "venue.accessibility",
+      "label": "Accessibility details"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading"
+    },
+    {
+      "path": "home.text",
+      "label": "Hero description",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero image",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone number"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email"
+    },
+    {
+      "path": "contact.address",
+      "label": "Full venue address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps URL",
+      "type": "url"
+    },
+    {
+      "path": "contact.hoursText",
+      "label": "Enquiry / office hours"
+    },
+    {
+      "path": "social.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    },
+    {
+      "path": "social.facebook",
+      "label": "Facebook URL",
+      "type": "url"
+    },
+    {
+      "path": "social.youtube",
+      "label": "YouTube URL",
+      "type": "url"
+    },
+    {
+      "path": "social.googleReview",
+      "label": "Google reviews URL",
+      "type": "url"
+    },
+    {
+      "path": "policies.advance",
+      "label": "Advance / payment policy",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.cancellation",
+      "label": "Cancellation / rescheduling policy",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.decor",
+      "label": "Decoration / outside vendor policy",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.catering",
+      "label": "Catering / outside food policy",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.time",
+      "label": "Event timing / overtime policy",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.notes",
+      "label": "Other venue rules",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "id": "banquet-01",
+    "brand": {
+      "businessName": "Grand Celebration Banquets",
+      "tagline": "A beautiful setting for every gathering.",
+      "about": "A versatile celebration venue with thoughtfully planned indoor halls, a garden lawn and an experienced events team. From wedding ceremonies and receptions to family celebrations, conferences and community gatherings, our spaces are designed to make every occasion feel special.",
+      "experienceYears": 12,
+      "eventsHosted": 850
+    },
+    "venue": {
+      "venueType": "Banquet Hall",
+      "ownership": "Indoor + Outdoor",
+      "parkingCapacity": "150 cars · 80 two-wheelers",
+      "powerBackup": "Full power backup with generator",
+      "acDetails": "Central air conditioning in indoor halls",
+      "accessibility": "Ramp access, lift access and accessible washroom"
+    },
+    "home": {
+      "title": "Bring everyone together. Make it unforgettable.",
+      "text": "From intimate family functions to grand celebrations, find the right space, thoughtful hospitality and a team that helps every detail come together."
+    },
+    "hero": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2000&q=88",
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "events@grandcelebration.example",
+      "address": "Nanakramguda, Hyderabad, Telangana, India",
+      "maps": "https://maps.google.com/?q=Nanakramguda+Hyderabad",
+      "hoursText": "Venue visits · 10:00 AM–8:00 PM"
+    },
+    "social": {
+      "instagram": "https://instagram.com/",
+      "facebook": "https://facebook.com/",
+      "youtube": "https://youtube.com/",
+      "googleReview": "https://maps.google.com/"
+    },
+    "halls": [
+      {
+        "id": "h1",
+        "name": "Grand Ballroom",
+        "type": "Air-conditioned indoor hall",
+        "capacityMin": "250",
+        "capacityMax": "800",
+        "area": "12,000 sq. ft.",
+        "seating": "Theatre: 800 · Floating: 700 · Banquet: 550 · Cluster: 420",
+        "stage": "Large stage with LED wall provision",
+        "parking": "Valet & on-site parking",
+        "rate": "₹2,50,000 onwards",
+        "status": "Open for enquiries",
+        "description": "A pillar-free grand hall with a generous stage and flexible seating layouts for weddings, receptions and large conferences.",
+        "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "name": "Regal Celebration Hall",
+        "type": "Air-conditioned indoor hall",
+        "capacityMin": "120",
+        "capacityMax": "350",
+        "area": "6,500 sq. ft.",
+        "seating": "Theatre: 350 · Floating: 300 · Banquet: 220 · Cluster: 180",
+        "stage": "Modular stage with lighting rig",
+        "parking": "On-site parking",
+        "rate": "₹1,25,000 onwards",
+        "status": "Open for enquiries",
+        "description": "An elegant mid-sized hall for engagements, birthday celebrations, anniversaries and intimate wedding functions.",
+        "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "name": "The Garden Lawn",
+        "type": "Outdoor landscaped lawn",
+        "capacityMin": "300",
+        "capacityMax": "1200",
+        "area": "25,000 sq. ft.",
+        "seating": "Theatre: 1,200 · Floating: 1,000 · Banquet: 700",
+        "stage": "Outdoor stage area with event lighting",
+        "parking": "Large outdoor parking zone",
+        "rate": "₹2,00,000 onwards",
+        "status": "Open for enquiries",
+        "description": "A landscaped open-air setting for large wedding ceremonies, receptions and evening celebrations.",
+        "image": "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "name": "Boardroom & Conference Suite",
+        "type": "Air-conditioned meeting space",
+        "capacityMin": "20",
+        "capacityMax": "100",
+        "area": "1,800 sq. ft.",
+        "seating": "Boardroom: 30 · Theatre: 100 · Classroom: 60 · U-shape: 28",
+        "stage": "Presentation screen and lectern",
+        "parking": "Guest parking available",
+        "rate": "₹35,000 onwards",
+        "status": "Open for enquiries",
+        "description": "A professional meeting environment for conferences, training sessions, business events and private gatherings.",
+        "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      }
+    ],
+    "eventTypes": [
+      {
+        "id": "e1",
+        "name": "Wedding & Reception",
+        "description": "Ceremony, reception, muhurtham and multi-day wedding celebrations.",
+        "icon": "💍",
+        "enabled": true
+      },
+      {
+        "id": "e2",
+        "name": "Engagement & Haldi",
+        "description": "Pre-wedding functions, engagement ceremonies and family gatherings.",
+        "icon": "✨",
+        "enabled": true
+      },
+      {
+        "id": "e3",
+        "name": "Birthday & Anniversary",
+        "description": "Milestone birthdays, anniversaries, baby showers and private parties.",
+        "icon": "🎂",
+        "enabled": true
+      },
+      {
+        "id": "e4",
+        "name": "Corporate Events",
+        "description": "Annual days, conferences, product launches and team celebrations.",
+        "icon": "🏢",
+        "enabled": true
+      },
+      {
+        "id": "e5",
+        "name": "Seminars & Meetings",
+        "description": "Training sessions, workshops, presentations and association meetings.",
+        "icon": "🎤",
+        "enabled": true
+      },
+      {
+        "id": "e6",
+        "name": "Community & Cultural Events",
+        "description": "Reunions, cultural programmes, award functions and social gatherings.",
+        "icon": "🎭",
+        "enabled": true
+      }
+    ],
+    "packages": [
+      {
+        "id": "p1",
+        "name": "Hall Only",
+        "tier": "Venue",
+        "price": "₹75,000+",
+        "starting": "Starting venue rental",
+        "guestRange": "Depends on hall selected",
+        "summary": "Venue rental for clients arranging their own event requirements, subject to venue policies.",
+        "includes": [
+          "Selected hall access",
+          "Standard seating and tables",
+          "Basic power backup",
+          "Venue coordinator",
+          "Standard cleaning"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Classic Celebration",
+        "tier": "Essential",
+        "price": "₹1,499 / plate",
+        "starting": "Indicative package rate",
+        "guestRange": "100–300 guests",
+        "summary": "A convenient event package with core venue and dining arrangements.",
+        "includes": [
+          "Hall rental (selected slots)",
+          "Welcome drinks",
+          "Standard vegetarian buffet",
+          "Basic stage and backdrop",
+          "Sound system",
+          "Event assistance"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Signature Wedding",
+        "tier": "Popular",
+        "price": "₹2,199 / plate",
+        "starting": "Indicative package rate",
+        "guestRange": "250–600 guests",
+        "summary": "A coordinated celebration package for weddings, receptions and large family functions.",
+        "includes": [
+          "Hall / lawn rental",
+          "Premium vegetarian buffet",
+          "Stage and floral décor allowance",
+          "Welcome area",
+          "Sound and lighting",
+          "Dedicated event manager"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Grand Premium",
+        "tier": "Premium",
+        "price": "₹2,999 / plate",
+        "starting": "Indicative package rate",
+        "guestRange": "400–1,000 guests",
+        "summary": "A flexible premium package for large celebrations with tailored hospitality and production.",
+        "includes": [
+          "Preferred hall / lawn",
+          "Premium multi-cuisine menu",
+          "Enhanced stage and décor",
+          "LED and lighting provision",
+          "Guest hospitality desk",
+          "Event manager and support team"
+        ],
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Corporate & Custom",
+        "tier": "Custom",
+        "price": "Custom quotation",
+        "starting": "Based on event requirements",
+        "guestRange": "Flexible capacity",
+        "summary": "Meeting, conference, exhibition and company event packages tailored to the event brief.",
+        "includes": [
+          "Hall layout planning",
+          "Presentation / AV support",
+          "Tea and meal options",
+          "Registration desk",
+          "Custom event schedule"
+        ],
+        "enabled": true
+      }
+    ],
+    "catering": [
+      {
+        "id": "c1",
+        "name": "Classic Vegetarian Buffet",
+        "type": "Vegetarian",
+        "price": "₹850 per plate onwards",
+        "description": "Welcome drink, starters, rice varieties, breads, curries, dal, dessert and accompaniments.",
+        "items": "Welcome drink, Paneer starter, Veg pulao, Dal, 2 curries, Roti, Dessert, Salad",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Signature Non-Vegetarian Buffet",
+        "type": "Non-vegetarian",
+        "price": "₹1,250 per plate onwards",
+        "description": "A multi-course menu with vegetarian and non-vegetarian starters, mains and desserts.",
+        "items": "Welcome drink, Chicken starter, Veg starter, Biryani, Chicken curry, Veg curry, Roti, Dessert",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Premium Multi-Cuisine Menu",
+        "type": "Premium",
+        "price": "₹1,850 per plate onwards",
+        "description": "An expanded menu with regional favourites and selected multi-cuisine options.",
+        "items": "Live counters, Regional specials, Multi-cuisine starters, Biryani, International dessert selection",
+        "enabled": true
+      },
+      {
+        "id": "c4",
+        "name": "Tea & Conference Menu",
+        "type": "Corporate",
+        "price": "₹350 per person onwards",
+        "description": "Refreshments and light meals for conferences, seminars and training events.",
+        "items": "Tea / Coffee, Cookies, Veg puffs, Sandwiches, Lunch on request",
+        "enabled": true
+      }
+    ],
+    "services": [
+      {
+        "id": "s1",
+        "name": "Wedding & Event Décor",
+        "description": "Stage concepts, floral styling, entrance décor, mandap and themed setups.",
+        "icon": "✿",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "name": "Catering & Live Counters",
+        "description": "Vegetarian, non-vegetarian, regional and multi-cuisine dining options.",
+        "icon": "♨",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "name": "Stage, Sound & Lighting",
+        "description": "Stage production, microphones, speakers, LED and event lighting support.",
+        "icon": "♫",
+        "enabled": true
+      },
+      {
+        "id": "s4",
+        "name": "Event Coordination",
+        "description": "Event schedule, vendor coordination, guest flow and on-ground support.",
+        "icon": "✦",
+        "enabled": true
+      },
+      {
+        "id": "s5",
+        "name": "Photography & Videography",
+        "description": "Photography, video coverage and event documentation through preferred partners.",
+        "icon": "◎",
+        "enabled": true
+      },
+      {
+        "id": "s6",
+        "name": "Guest Hospitality",
+        "description": "Welcome desk, valet coordination and guest assistance.",
+        "icon": "⌂",
+        "enabled": true
+      }
+    ],
+    "facilities": [
+      {
+        "id": "f1",
+        "name": "Central Air Conditioning",
+        "description": "Climate-controlled indoor halls for guest comfort.",
+        "icon": "❄",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "name": "Parking & Valet",
+        "description": "Guest parking and valet coordination subject to event size.",
+        "icon": "P",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "name": "Power Backup",
+        "description": "Backup power arrangements for event continuity.",
+        "icon": "⚡",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "name": "Bridal / Green Rooms",
+        "description": "Private preparation rooms for hosts and performers.",
+        "icon": "⌂",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "name": "Accessible Facilities",
+        "description": "Ramp and lift access in designated venue areas.",
+        "icon": "↗",
+        "enabled": true
+      },
+      {
+        "id": "f6",
+        "name": "Wi-Fi & AV Support",
+        "description": "Wi-Fi and AV assistance for presentations and events.",
+        "icon": "⌁",
+        "enabled": true
+      },
+      {
+        "id": "f7",
+        "name": "Separate Dining / Buffet Area",
+        "description": "Dedicated dining arrangements where available.",
+        "icon": "♨",
+        "enabled": true
+      },
+      {
+        "id": "f8",
+        "name": "Generator & Fire Safety",
+        "description": "Backup generator and venue safety arrangements.",
+        "icon": "✚",
+        "enabled": true
+      }
+    ],
+    "availability": [
+      {
+        "id": "d1",
+        "date": "2026-12-12",
+        "hall": "Grand Ballroom",
+        "status": "Booked",
+        "note": "Wedding reception",
+        "enabled": true
+      },
+      {
+        "id": "d2",
+        "date": "2026-12-18",
+        "hall": "The Garden Lawn",
+        "status": "Available",
+        "note": "Enquiries welcome",
+        "enabled": true
+      },
+      {
+        "id": "d3",
+        "date": "2026-12-20",
+        "hall": "Regal Celebration Hall",
+        "status": "Tentative Hold",
+        "note": "Please call to confirm",
+        "enabled": true
+      },
+      {
+        "id": "d4",
+        "date": "2026-12-25",
+        "hall": "Grand Ballroom",
+        "status": "Available",
+        "note": "Enquiries welcome",
+        "enabled": true
+      },
+      {
+        "id": "d5",
+        "date": "2027-01-01",
+        "hall": "The Garden Lawn",
+        "status": "Booked",
+        "note": "New Year event",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Grand Ballroom",
+        "category": "Halls",
+        "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Wedding Reception Setup",
+        "category": "Weddings",
+        "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Garden Lawn Celebration",
+        "category": "Outdoor",
+        "image": "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Table & Dining Arrangement",
+        "category": "Dining",
+        "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g5",
+        "title": "Stage & Floral Décor",
+        "category": "Décor",
+        "image": "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g6",
+        "title": "Corporate Conference",
+        "category": "Corporate",
+        "image": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      }
+    ],
+    "videos": [
+      {
+        "id": "v1",
+        "title": "Venue walkthrough",
+        "url": "https://www.youtube.com/",
+        "thumbnail": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=86",
+        "description": "Add a video tour of the halls and venue facilities.",
+        "enabled": true
+      },
+      {
+        "id": "v2",
+        "title": "Wedding celebration highlights",
+        "url": "https://www.youtube.com/",
+        "thumbnail": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=1200&q=86",
+        "description": "Showcase a past event setup and guest experience.",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "A family from Hyderabad",
+        "rating": 5,
+        "event": "Wedding reception",
+        "text": "The team coordinated the hall, dining and guest arrangements very smoothly. The space looked beautiful for the reception.",
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Corporate event organiser",
+        "rating": 5,
+        "event": "Annual conference",
+        "text": "The hall layout, sound support and hospitality team helped our programme run to schedule.",
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Family celebration",
+        "rating": 5,
+        "event": "Birthday",
+        "text": "A comfortable venue, helpful staff and good attention to our family requirements.",
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "q1",
+        "question": "How do I check if my event date is available?",
+        "answer": "Send an enquiry with your preferred date, hall and guest count. The venue team will check its current calendar and confirm availability directly.",
+        "enabled": true
+      },
+      {
+        "id": "q2",
+        "question": "Are the package and per-plate prices final?",
+        "answer": "Displayed prices are indicative starting points. Final quotation depends on date, hall, guest count, menu, décor, taxes and selected services.",
+        "enabled": true
+      },
+      {
+        "id": "q3",
+        "question": "Can we visit the venue before booking?",
+        "answer": "Yes. Request a site visit through the enquiry form or contact the venue team to arrange a suitable time.",
+        "enabled": true
+      },
+      {
+        "id": "q4",
+        "question": "Can we bring our own decorator or caterer?",
+        "answer": "Outside vendors and catering are subject to venue approval and the applicable venue policy. Please confirm before finalising.",
+        "enabled": true
+      },
+      {
+        "id": "q5",
+        "question": "Is parking available?",
+        "answer": "Parking details and capacity are listed in the venue facilities. Actual availability may vary by event size and timing.",
+        "enabled": true
+      },
+      {
+        "id": "q6",
+        "question": "How is a booking confirmed?",
+        "answer": "A booking is confirmed only after the venue issues written confirmation and receives the agreed advance payment.",
+        "enabled": true
+      }
+    ],
+    "team": [
+      {
+        "id": "t1",
+        "name": "Venue Manager",
+        "role": "Bookings & Operations",
+        "specialization": "Site visits, hall allocation and event coordination",
+        "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      },
+      {
+        "id": "t2",
+        "name": "Hospitality Lead",
+        "role": "Guest Experience",
+        "specialization": "Guest hospitality and event-day support",
+        "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=84",
+        "enabled": true
+      }
+    ],
+    "enquiry": {
+      "heading": "Tell us about your event.",
+      "text": "Share the date, type of event, preferred hall and guest count. Our team will check availability and prepare a suitable quotation.",
+      "buttonText": "Send booking enquiry"
+    },
+    "policies": {
+      "advance": "The booking is confirmed only after written confirmation and receipt of the agreed advance. Payment milestones are shared in the quotation.",
+      "cancellation": "Cancellation and date-change terms are provided in the booking agreement. Please review the written terms before paying the advance.",
+      "decor": "Outside decorators, rigging, fire effects and installations require prior venue approval. Venue safety rules apply.",
+      "catering": "Menus, per-plate rates, tasting and outside catering permissions must be confirmed in writing before booking.",
+      "time": "Event timing, setup access, pack-down and overtime charges are agreed in the final quotation.",
+      "notes": "Final rates may be subject to applicable taxes, service charges and venue-specific requirements. Confirm all inclusions in writing."
+    },
+    "leads": []
+  },
+  "admin": {
+    "storageKey": "sitecraft:banquet-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "media",
+        "label": "Images / Storage",
+        "type": "media"
+      },
+      {
+        "id": "business",
+        "label": "Venue details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Venue name"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "venue.venueType",
+            "label": "Venue type",
+            "type": "select",
+            "options": [
+              "Banquet Hall",
+              "Convention Centre",
+              "Function Hall",
+              "Wedding Venue",
+              "Resort Event Venue",
+              "Multi-purpose Venue"
+            ]
+          },
+          {
+            "path": "venue.ownership",
+            "label": "Venue style",
+            "type": "select",
+            "options": [
+              "Indoor",
+              "Outdoor",
+              "Indoor + Outdoor",
+              "Multiple halls"
+            ]
+          },
+          {
+            "path": "brand.experienceYears",
+            "label": "Years of experience",
+            "type": "number"
+          },
+          {
+            "path": "brand.eventsHosted",
+            "label": "Events hosted",
+            "type": "number"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the venue",
+            "type": "textarea"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero intro",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "halls",
+        "label": "Halls & spaces",
+        "type": "collection",
+        "itemLabel": "hall / space",
+        "path": "halls",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Hall / space name"
+          },
+          {
+            "key": "type",
+            "label": "Indoor / outdoor type"
+          },
+          {
+            "key": "capacityMin",
+            "label": "Minimum guests"
+          },
+          {
+            "key": "capacityMax",
+            "label": "Maximum guests"
+          },
+          {
+            "key": "area",
+            "label": "Area / square feet"
+          },
+          {
+            "key": "seating",
+            "label": "Seating layout capacities",
+            "type": "textarea"
+          },
+          {
+            "key": "stage",
+            "label": "Stage / AV details"
+          },
+          {
+            "key": "parking",
+            "label": "Parking details"
+          },
+          {
+            "key": "rate",
+            "label": "Starting rental / price"
+          },
+          {
+            "key": "status",
+            "label": "Enquiry status",
+            "type": "select",
+            "options": [
+              "Open for enquiries",
+              "On request",
+              "Not accepting enquiries"
+            ]
+          },
+          {
+            "key": "description",
+            "label": "Hall description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Hall image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New hall",
+          "type": "Indoor hall",
+          "capacityMin": "50",
+          "capacityMax": "200",
+          "area": "",
+          "seating": "",
+          "stage": "",
+          "parking": "",
+          "rate": "Enquire for pricing",
+          "status": "On request",
+          "description": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "eventTypes",
+        "label": "Events hosted",
+        "type": "collection",
+        "itemLabel": "event type",
+        "path": "eventTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Event type"
+          },
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New event type",
+          "icon": "✦",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "packages",
+        "label": "Packages & pricing",
+        "type": "collection",
+        "itemLabel": "package",
+        "path": "packages",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Package name"
+          },
+          {
+            "key": "tier",
+            "label": "Package tier"
+          },
+          {
+            "key": "price",
+            "label": "Price / per plate rate"
+          },
+          {
+            "key": "starting",
+            "label": "Rate details"
+          },
+          {
+            "key": "guestRange",
+            "label": "Guest range"
+          },
+          {
+            "key": "summary",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "includes",
+            "label": "Inclusions (comma separated)",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New package",
+          "tier": "Custom",
+          "price": "Enquire for pricing",
+          "starting": "Based on scope",
+          "guestRange": "As per hall",
+          "summary": "",
+          "includes": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "catering",
+        "label": "Catering & menu options",
+        "type": "collection",
+        "itemLabel": "menu option",
+        "path": "catering",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Menu / catering package"
+          },
+          {
+            "key": "type",
+            "label": "Menu type"
+          },
+          {
+            "key": "price",
+            "label": "Per plate / per person price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "items",
+            "label": "Menu highlights",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New menu",
+          "type": "Vegetarian",
+          "price": "Enquire for price",
+          "description": "",
+          "items": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "services",
+        "label": "Event services",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "description",
+            "label": "Service details",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "icon": "✦",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "facilities",
+        "label": "Facilities & amenities",
+        "type": "collection",
+        "itemLabel": "facility",
+        "path": "facilities",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Facility"
+          },
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "description",
+            "label": "Details",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New facility",
+          "icon": "✦",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "availability",
+        "label": "Date availability",
+        "type": "collection",
+        "itemLabel": "date entry",
+        "path": "availability",
+        "titleKey": "date",
+        "fields": [
+          {
+            "key": "date",
+            "label": "Event date"
+          },
+          {
+            "key": "hall",
+            "label": "Hall / space"
+          },
+          {
+            "key": "status",
+            "label": "Status",
+            "type": "select",
+            "options": [
+              "Available",
+              "Booked",
+              "Tentative Hold",
+              "Closed"
+            ]
+          },
+          {
+            "key": "note",
+            "label": "Note"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "date": "",
+          "hall": "All halls",
+          "status": "Available",
+          "note": "Enquiries welcome",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Photo gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Photo title"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "category": "Venue",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "videos",
+        "label": "Videos & walkthroughs",
+        "type": "collection",
+        "itemLabel": "video",
+        "path": "videos",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Video title"
+          },
+          {
+            "key": "url",
+            "label": "YouTube / video URL",
+            "type": "url"
+          },
+          {
+            "key": "thumbnail",
+            "label": "Thumbnail",
+            "type": "media"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New venue video",
+          "url": "",
+          "thumbnail": "",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer name"
+          },
+          {
+            "key": "event",
+            "label": "Event type"
+          },
+          {
+            "key": "rating",
+            "label": "Rating (1–5)"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer",
+          "event": "Event",
+          "rating": 5,
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "team",
+        "label": "Venue team",
+        "type": "collection",
+        "itemLabel": "team member",
+        "path": "team",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Name"
+          },
+          {
+            "key": "role",
+            "label": "Role"
+          },
+          {
+            "key": "specialization",
+            "label": "Responsibilities",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New team member",
+          "role": "Event coordinator",
+          "specialization": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQs",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "enquiry",
+        "label": "Booking enquiry wording",
+        "fields": [
+          {
+            "path": "enquiry.heading",
+            "label": "Form heading"
+          },
+          {
+            "path": "enquiry.text",
+            "label": "Form introduction",
+            "type": "textarea"
+          },
+          {
+            "path": "enquiry.buttonText",
+            "label": "Submit button"
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "label": "Contact & directions",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hoursText",
+            "label": "Enquiry / office hours"
+          },
+          {
+            "path": "venue.parkingCapacity",
+            "label": "Parking capacity"
+          },
+          {
+            "path": "venue.powerBackup",
+            "label": "Power backup"
+          },
+          {
+            "path": "venue.acDetails",
+            "label": "AC details"
+          },
+          {
+            "path": "venue.accessibility",
+            "label": "Accessibility"
+          }
+        ]
+      },
+      {
+        "id": "social",
+        "label": "Social links",
+        "fields": [
+          {
+            "path": "social.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "social.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "social.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          },
+          {
+            "path": "social.googleReview",
+            "label": "Google reviews URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "policies",
+        "label": "Booking & venue policies",
+        "fields": [
+          {
+            "path": "policies.advance",
+            "label": "Advance / payment policy",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.cancellation",
+            "label": "Cancellation / rescheduling",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.decor",
+            "label": "Decoration / vendor policy",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.catering",
+            "label": "Catering / outside food",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.time",
+            "label": "Event timing / overtime",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.notes",
+            "label": "Other rules",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Website sections",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Show Home",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHalls",
+            "label": "Show Halls",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEventTypes",
+            "label": "Show Event types",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPackages",
+            "label": "Show Packages",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCatering",
+            "label": "Show Catering",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Show Services",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFacilities",
+            "label": "Show Facilities",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAvailability",
+            "label": "Show Availability",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Show Enquiry",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Show Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showVideos",
+            "label": "Show Videos",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Show Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "Show About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "Show FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Show Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Show Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWhatsapp",
+            "label": "Show WhatsApp",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Show Social",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPolicies",
+            "label": "Show Policies",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showTeam",
+            "label": "Show venue team",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "leads",
+        "label": "Event enquiries",
+        "type": "leads",
+        "title": "Event Booking Enquiries",
+        "description": "Website enquiries are saved in this browser and can be exported as CSV. Contact each customer to confirm hall availability and quotation.",
+        "path": "leads",
+        "statusKey": "status",
+        "statuses": [
+          "New",
+          "Contacted",
+          "Quotation Sent",
+          "Site Visit",
+          "Booked",
+          "Completed",
+          "Cancelled"
+        ],
+        "disableActions": true,
+        "columns": [
+          "createdAt",
+          "status",
+          "name",
+          "phone",
+          "email",
+          "eventType",
+          "eventDate",
+          "hall",
+          "package",
+          "guests",
+          "foodType",
+          "budget",
+          "message",
+          "services"
+        ],
+        "labels": {
+          "createdAt": "Received",
+          "status": "Status",
+          "name": "Name",
+          "phone": "Phone",
+          "email": "Email",
+          "eventType": "Event",
+          "eventDate": "Date",
+          "hall": "Preferred Hall",
+          "guests": "Guests",
+          "foodType": "Food",
+          "budget": "Budget",
+          "message": "Requirements",
+          "package": "Package",
+          "services": "Services"
+        }
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
