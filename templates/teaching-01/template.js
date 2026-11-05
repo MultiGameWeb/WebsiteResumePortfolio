@@ -2,7 +2,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const safeUrl=v=>{const x=String(v??'').trim();return /^(https?:\/\/|mailto:|tel:)/i.test(x)?x:''};
 const list=v=>Array.isArray(v)?v.filter(x=>x&&x.enabled!==false):[];
 const digits=v=>String(v??'').replace(/\D/g,'');
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
  const b=d.brand||{},h=d.home||{},t=d.teacher||{},inst=d.institution||{},c=d.contact||{},s=d.settings||{},type=d.teaching?.type||'individual',individual=type!=='institution',ok=x=>selected.includes(x);
  const courses=list(d.courses),batches=list(d.batches),faculty=list(d.faculty),achievements=list(d.achievements),testimonials=list(d.testimonials),resources=list(d.resources),gallery=list(d.gallery),faqs=list(d.faqs);
  const subjects=[...new Set(courses.map(x=>x.subject||x.name).filter(Boolean))];
@@ -22,12 +22,12 @@ export function render(d={},selected=[]){
  if(ok('gallery')&&gallery.length)out+='<section class="tw-section"><div class="tw-section-head"><div><span class="tw-eyebrow">LEARNING MOMENTS</span><h2>A glimpse into our classes.</h2></div></div><div class="tw-gallery">'+gallery.map(x=>'<figure><img src="'+esc(x.image||'')+'" alt="'+esc(x.title||'Learning moment')+'" loading="lazy"><figcaption>'+esc(x.title||'')+'</figcaption></figure>').join('')+'</div></section>';
  if(ok('demo'))out+='<section class="tw-demo" id="tw-demo"><div><span class="tw-eyebrow">TAKE THE FIRST STEP</span><h2>Request a free demo class.</h2><p>Tell us a little about the student and the subject. We will get back to you to discuss a suitable class.</p><ul><li>✓ Discuss subject and current level</li><li>✓ Ask about online or offline options</li><li>✓ Confirm an available demo slot</li></ul></div><form data-tw-demo><label>Student / parent name<input name="name" required placeholder="Full name"></label><label>Phone number<input name="phone" type="tel" required placeholder="+91"></label><label>Class / grade<input name="grade" required placeholder="e.g. Class 8"></label><label>Subject<select name="subject">'+courses.map(x=>'<option>'+esc(x.subject||x.name)+'</option>').join('')+'</select></label><label class="tw-wide">Message<textarea name="message" rows="3" placeholder="Preferred timings or questions"></textarea></label><button class="tw-primary tw-wide" type="submit">Send demo enquiry ↗</button><small class="tw-wide" data-tw-demo-note></small></form></section>';
  if(ok('faq')&&faqs.length)out+='<section class="tw-section"><div class="tw-section-head"><div><span class="tw-eyebrow">GOOD TO KNOW</span><h2>Frequently asked questions.</h2></div></div><div class="tw-faq">'+faqs.map(x=>'<details><summary>'+esc(x.question||'Question')+'</summary><p>'+esc(x.answer||'')+'</p></details>').join('')+'</div></section>';
- if(ok('contact'))out+='<section class="tw-contact" id="tw-contact"><div><span class="tw-eyebrow">LET’S TALK ABOUT LEARNING</span><h2>Questions about tuition or classes?</h2><p>Contact '+esc(individual?(t.name||'your teacher'):(b.businessName||'the institute'))+' for subjects, fees, class timings and availability.</p><p>'+esc(c.address||'Add your teaching location')+'</p><p>'+esc(c.hours||'Contact for class timings')+'</p><div class="tw-contact-links">'+(c.phone?'<a href="tel:'+esc(c.phone.replace(/[^\d+]/g,''))+'">Call ↗</a>':'')+(ok('whatsapp')&&c.whatsapp?'<a target="_blank" rel="noopener noreferrer" href="https://wa.me/'+digits(c.whatsapp)+'">WhatsApp ↗</a>':'')+(safeUrl(c.maps)?'<a href="'+esc(safeUrl(c.maps))+'" target="_blank" rel="noopener noreferrer">Directions ↗</a>':'')+'</div>'+(c.onlineMode?'<small>'+esc(c.onlineMode)+'</small>':'')+'</div><div class="tw-contact-card"><b>'+esc(b.businessName||'TeachSpace Learning')+'</b><span>'+esc(c.email||'')+'</span><span>'+esc(c.phone||'')+'</span><span>'+esc(c.address||'')+'</span>'+(safeUrl(d.social?.youtube)?'<a href="'+esc(safeUrl(d.social.youtube))+'" target="_blank" rel="noopener noreferrer">YouTube ↗</a>':'')+(safeUrl(d.social?.instagram)?'<a href="'+esc(safeUrl(d.social.instagram))+'" target="_blank" rel="noopener noreferrer">Instagram ↗</a>':'')+(safeUrl(d.social?.facebook)?'<a href="'+esc(safeUrl(d.social.facebook))+'" target="_blank" rel="noopener noreferrer">Facebook ↗</a>':'')+'</div></section>';
+ if(ok('contact'))out+='<section class="tw-contact" id="tw-contact"><div><span class="tw-eyebrow">LET’S TALK ABOUT LEARNING</span><h2>Questions about tuition or classes?</h2><p>Contact '+esc(individual?(t.name||'your teacher'):(b.businessName||'the institute'))+' for subjects, fees, class timings and availability.</p>'+(c.address?'<p>'+esc(c.address)+'</p>':'')+'<p>'+esc(c.hours||'Contact for class timings')+'</p><div class="tw-contact-links">'+(c.phone?'<a href="tel:'+esc(c.phone.replace(/[^\d+]/g,''))+'">Call ↗</a>':'')+(ok('whatsapp')&&c.whatsapp?'<a target="_blank" rel="noopener noreferrer" href="https://wa.me/'+digits(c.whatsapp)+'">WhatsApp ↗</a>':'')+(safeUrl(c.maps)?'<a href="'+esc(safeUrl(c.maps))+'" target="_blank" rel="noopener noreferrer">Directions ↗</a>':'')+'</div>'+(c.onlineMode?'<small>'+esc(c.onlineMode)+'</small>':'')+'</div><div class="tw-contact-card"><b>'+esc(b.businessName||'TeachSpace Learning')+'</b><span>'+esc(c.email||'')+'</span><span>'+esc(c.phone||'')+'</span><span>'+esc(c.address||'')+'</span>'+(safeUrl(d.social?.youtube)?'<a href="'+esc(safeUrl(d.social.youtube))+'" target="_blank" rel="noopener noreferrer">YouTube ↗</a>':'')+(safeUrl(d.social?.instagram)?'<a href="'+esc(safeUrl(d.social.instagram))+'" target="_blank" rel="noopener noreferrer">Instagram ↗</a>':'')+(safeUrl(d.social?.facebook)?'<a href="'+esc(safeUrl(d.social.facebook))+'" target="_blank" rel="noopener noreferrer">Facebook ↗</a>':'')+'</div></section>';
  if(ok('privacy')&&d.privacyPolicy)out+='<section class="tw-privacy"><b>Privacy policy</b><p>'+esc(d.privacyPolicy)+'</p></section>';
  out+='<footer class="tw-footer"><b>'+esc(b.businessName||'TeachSpace Learning')+'</b><span>'+esc(individual?(t.name||'Independent Teacher'):'Tuition & Coaching Institution')+'</span><small>© '+new Date().getFullYear()+' '+esc(b.businessName||'TeachSpace Learning')+'. All rights reserved.</small></footer></div>';
  return out;
 }
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
  const site=root.querySelector('[data-tw-site]');if(!site)return;
  const wa=selected.includes('whatsapp')?digits(d.contact?.whatsapp):'';
  let search='',filter='all';
@@ -39,3 +39,55 @@ export function init(root,d={},selected=[]){
  site.querySelector('[data-tw-demo]')?.addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget,f=new FormData(form),get=k=>String(f.get(k)||'').trim(),note=form.querySelector('[data-tw-demo-note]');if(!wa){if(note)note.textContent='Please add a WhatsApp number in the owner dashboard.';return}const msg='FREE DEMO CLASS ENQUIRY — '+(d.brand?.businessName||'Teaching Website')+'\nName: '+get('name')+'\nPhone: '+get('phone')+'\nClass: '+get('grade')+'\nSubject: '+get('subject')+'\nMessage: '+get('message');window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(msg),'_blank','noopener');if(note)note.textContent='WhatsApp opened. Press Send there to submit your enquiry.';});
  site.querySelector('[data-tw-search]')?.addEventListener('input',e=>{search=e.target.value.toLowerCase().trim();apply()});
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=false;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

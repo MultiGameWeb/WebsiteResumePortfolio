@@ -45,6 +45,14 @@
       "label": "Store gallery"
     },
     {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
       "id": "location",
       "label": "Store location & hours"
     },
@@ -174,6 +182,24 @@
       "path": "legal.privacyPolicy",
       "label": "Privacy policy text",
       "type": "textarea"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
@@ -210,7 +236,8 @@
       "email": "hello@freshmart.example",
       "location": "Main Road, Madhapur, Hyderabad, Telangana 500081",
       "hours": "Monday – Sunday: 7:00 AM – 10:00 PM",
-      "maps": "https://maps.google.com/?q=Madhapur+Hyderabad"
+      "maps": "https://maps.google.com/?q=Madhapur+Hyderabad",
+      "instagram": "https://www.instagram.com/"
     },
     "legal": {
       "privacyPolicy": "We use the details you share only to respond to enquiries and coordinate your grocery order. Please contact the store for questions about your information."
@@ -346,6 +373,55 @@
         "id": "fm-g3",
         "title": "Quality you can trust",
         "image": "https://images.unsplash.com/photo-1543168256-418811576931?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Anitha, Kondapur",
+        "text": "Fresh vegetables every time and the WhatsApp order was delivered within the hour.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Ravi, Madhapur",
+        "text": "Good prices on staples and the team always confirms substitutes before packing.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Sowmya, Gachibowli",
+        "text": "My go-to store for weekly groceries — quick replies and careful packing.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I place an order?",
+        "answer": "Add items to your basket and send it on WhatsApp. We confirm availability, total and delivery time before packing.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do you deliver to my area?",
+        "answer": "We deliver to nearby neighbourhoods. Share your location on WhatsApp and we will confirm delivery time and charges.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "What if an item is out of stock?",
+        "answer": "We message you before packing and suggest a similar item, or remove it from your order.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Which payment methods do you accept?",
+        "answer": "Cash on delivery, UPI and card payments.",
         "enabled": true
       }
     ]
@@ -564,6 +640,77 @@
         }
       },
       {
+        "id": "reviews",
+        "label": "Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New customer",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
         "id": "delivery",
         "label": "Delivery & service area",
         "fields": [
@@ -627,6 +774,24 @@
             "path": "contact.maps",
             "label": "Google Maps URL",
             "type": "url"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
           }
         ]
       },

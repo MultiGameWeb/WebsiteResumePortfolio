@@ -4,7 +4,7 @@ const digits=v=>String(v??'').replace(/\D/g,'');
 const num=v=>{const n=Number(String(v??'').replace(/[^\d.-]/g,''));return Number.isFinite(n)?n:0};
 const money=(v,c='INR')=>{try{return new Intl.NumberFormat('en-IN',{style:'currency',currency:c,maximumFractionDigits:0}).format(num(v))}catch{return '₹'+num(v).toLocaleString('en-IN')}};
 const slug=v=>String(v??'').toLowerCase().trim();
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
  const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},legal=d.legal||{},ok=x=>selected.includes(x);
  const products=(d.products||[]).filter(p=>p.enabled!==false),offers=(d.offers||[]).filter(o=>o.enabled!==false),gallery=(d.gallery||[]).filter(g=>g.enabled!==false),currency=s.currency||'INR',wa=digits(c.whatsapp);
  const categories=[...new Set(products.map(p=>String(p.category||'Fine Jewellery').trim()).filter(Boolean))];
@@ -19,15 +19,18 @@ export function render(d={},selected=[]){
  if(ok('about')&&s.showAbout!==false)out+='<section class="aj-about" id="aj-about"><div class="aj-about-image"><img src="'+esc(safeUrl(gallery[0]?.image||d.hero))+'" alt="Jewellery craftsmanship" loading="lazy"></div><div><span class="aj-kicker">OUR PHILOSOPHY</span><h2>Beauty that holds meaning.</h2><p>'+esc(b.about||'We believe every beautiful piece should feel personal, lasting and meaningful.')+'</p><a href="#aj-location" class="aj-text-link">Discover our showroom ↗</a></div></section>';
  if(ok('appointment'))out+='<section class="aj-appointment" id="aj-appointment"><div><span class="aj-kicker">YOUR TIME, YOUR STYLE</span><h2>A private moment with our collection.</h2><p>'+esc(d.appointments?.note||'Book a personal showroom visit and let us help you find the right piece.')+'</p></div><form data-aj-appointment><label>Your name<input name="name" autocomplete="name" required placeholder="Full name"></label><label>Phone number<input name="phone" type="tel" autocomplete="tel" required placeholder="Mobile number"></label><label>Preferred date<input name="date" type="date" required></label><label>Preferred time<select name="time"><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label><label class="aj-wide">What are you looking for?<textarea name="interest" rows="3" placeholder="Bridal collection, gold necklace, custom design…"></textarea></label><button class="aj-primary aj-wide" type="submit">Request a showroom visit ↗</button><small class="aj-wide" data-aj-appointment-note></small></form></section>';
  if(ok('gallery')&&s.showGallery!==false&&gallery.length)out+='<section class="aj-lookbook"><div class="aj-section-intro"><div><span class="aj-kicker">VISUAL STORIES</span><h2>Details worth remembering.</h2></div></div><div class="aj-gallery">'+gallery.map(g=>'<figure><img src="'+esc(safeUrl(g.image))+'" alt="'+esc(g.title||'Jewellery lookbook')+'" loading="lazy"><figcaption>'+esc(g.title||'')+'</figcaption></figure>').join('')+'</div></section>';
- if(ok('location')&&s.showLocation!==false)out+='<section class="aj-location" id="aj-location"><div><span class="aj-kicker">VISIT OUR SHOWROOM</span><h2>'+esc(b.businessName||'Our showroom')+'</h2><p>'+esc(c.location||'Add your showroom address in the owner dashboard.')+'</p><p><b>Opening hours</b><br>'+esc(c.hours||'Contact us for opening hours.')+'</p><div class="aj-location-actions">'+(safeUrl(c.maps)?'<a href="'+esc(safeUrl(c.maps))+'" target="_blank" rel="noopener noreferrer">Get directions ↗</a>':'')+(c.call?'<a href="tel:'+esc(c.call.replace(/[^\d+]/g,''))+'">Call showroom</a>':'')+'</div></div><div class="aj-location-mark">A<span>FINE JEWELS</span></div></section>';
+ if(ok('reviews')&&(d.reviews||[]).some(x=>x.enabled!==false))out+='<section class="aj-reviews sc-extra-section" id="aj-reviews"><span class="aj-kicker">CUSTOMER LOVE</span><h2>What our customers say</h2><div class="sc-review-grid">'+(d.reviews||[]).filter(x=>x.enabled!==false).map(x=>{const r=Math.max(0,Math.min(5,Number(x.rating)||0));return '<figure>'+(r?'<div class="sc-stars" aria-label="'+r+' out of 5">'+'★'.repeat(r)+'</div>':'')+'<blockquote>“'+esc(x.text||'')+'”</blockquote><figcaption>'+esc(x.name||'Customer')+'</figcaption></figure>'}).join('')+'</div></section>';
+ if(ok('faq')&&(d.faqs||[]).some(x=>x.enabled!==false))out+='<section class="aj-faq sc-extra-section" id="aj-faq"><span class="aj-kicker">GOOD TO KNOW</span><h2>Frequently asked questions</h2><div class="sc-faq-list">'+(d.faqs||[]).filter(x=>x.enabled!==false).map(x=>'<details><summary>'+esc(x.question||'Question')+'</summary><p>'+esc(x.answer||'')+'</p></details>').join('')+'</div></section>';
+ if(ok('location')&&s.showLocation!==false)out+='<section class="aj-location" id="aj-location"><div><span class="aj-kicker">VISIT OUR SHOWROOM</span><h2>'+esc(b.businessName||'Our showroom')+'</h2>'+(c.location?'<p>'+esc(c.location)+'</p>':'')+'<p><b>Opening hours</b><br>'+esc(c.hours||'Contact us for opening hours.')+'</p><div class="aj-location-actions">'+(safeUrl(c.maps)?'<a href="'+esc(safeUrl(c.maps))+'" target="_blank" rel="noopener noreferrer">Get directions ↗</a>':'')+(c.call?'<a href="tel:'+esc(c.call.replace(/[^\d+]/g,''))+'">Call showroom</a>':'')+'</div></div><div class="aj-location-mark">A<span>FINE JEWELS</span></div></section>';
  if(ok('enquiry'))out+='<section class="aj-contact"><div><span class="aj-kicker">LET US HELP YOU</span><h2>Every question deserves a personal answer.</h2><p>Ask about a design, availability, custom sizing or jewellery care.</p></div><form data-aj-enquiry><label>Your name<input name="name" required placeholder="Full name"></label><label>Phone number<input name="phone" type="tel" required placeholder="Mobile number"></label><label class="aj-wide">Your message<textarea name="message" rows="3" required placeholder="Tell us how we can help…"></textarea></label><button class="aj-primary aj-wide" type="submit">Send enquiry on WhatsApp ↗</button><small class="aj-wide" data-aj-enquiry-note></small></form></section>';
  if(ok('privacyPolicy')&&s.showPrivacyPolicy!==false&&legal.privacyPolicy)out+='<section class="aj-privacy"><b>Privacy</b><p>'+esc(legal.privacyPolicy)+'</p></section>';
  out+='<footer class="aj-footer"><div><a class="aj-brand" href="#aj-home"><span class="aj-brand-mark">A</span><span><b>'+esc(b.businessName||'Aurelia Fine Jewels')+'</b><small>CRAFTED TO BE TREASURED</small></span></a><p>Fine jewellery, thoughtfully chosen.</p></div><div><b>Contact</b><span>'+esc(c.call||'')+'</span><span>'+esc(c.email||'')+'</span><span>'+esc(c.location||'')+'</span></div><div><b>Showroom hours</b><span>'+esc(c.hours||'')+'</span></div><small class="aj-copyright">© '+new Date().getFullYear()+' '+esc(b.businessName||'Aurelia Fine Jewels')+'. All rights reserved.</small></footer>';
  if(ok('cart'))out+='<div class="aj-cart-backdrop" data-aj-action="cart-close"></div><aside class="aj-cart" data-aj-cart aria-label="Shopping bag"><div class="aj-cart-head"><div><span class="aj-kicker">YOUR SELECTION</span><h2>Your bag</h2></div><button type="button" data-aj-action="cart-close">×</button></div><div data-aj-cart-items class="aj-cart-items"></div><div class="aj-cart-foot"><div><span>Estimated total</span><b data-aj-cart-total>'+money(0,currency)+'</b></div><p>Final metal rates, making charges and availability are confirmed by our team.</p>'+(ok('whatsapp')?'<button type="button" class="aj-primary" data-aj-action="checkout">Enquire on WhatsApp ↗</button>':'<p class="aj-disabled-note">Enable WhatsApp ordering to send your selection to the showroom.</p>')+'</div></aside>';
  out+='<div class="aj-modal-backdrop" data-aj-action="modal-close"></div><section class="aj-product-modal" data-aj-modal aria-label="Jewellery details"><button type="button" class="aj-modal-close" data-aj-action="modal-close">×</button><div data-aj-modal-content></div></section>';
+ if(ok('whatsapp')&&String((d.contact||{}).whatsapp||'').replace(/\D/g,''))out+='<a class="sc-wa-float" href="https://wa.me/'+String(d.contact.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent('Hi, I would like to enquire about your jewellery.')+'" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp</a>';
  return out+'</div>';
 }
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
  const store=root.querySelector('[data-aj-store]');if(!store)return;
  const products=(d.products||[]).filter(p=>p.enabled!==false),currency=d.settings?.currency||'INR',wa=selected.includes('whatsapp')?digits(d.contact?.whatsapp):'';
  const idOf=p=>String(p.id||p.sku||p.name),find=id=>products.find(p=>idOf(p)===String(id));
@@ -62,3 +65,55 @@ export function init(root,d={},selected=[]){
  store.querySelector('[data-aj-enquiry]')?.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget),v=k=>String(f.get(k)||'').trim();waOpen(e.currentTarget,'Jewellery enquiry — '+(d.brand?.businessName||'Jewellery Store')+'\nName: '+v('name')+'\nPhone: '+v('phone')+'\nMessage: '+v('message'),'[data-aj-enquiry-note]')});
  drawCart();drawCounts();
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=false;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

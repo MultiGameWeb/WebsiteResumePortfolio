@@ -49,6 +49,14 @@
       "label": "Lookbook gallery"
     },
     {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
       "id": "location",
       "label": "Showroom location & hours"
     },
@@ -150,6 +158,24 @@
       "path": "legal.privacyPolicy",
       "label": "Privacy policy",
       "type": "textarea"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
@@ -178,7 +204,8 @@
       "email": "hello@aurelia.example",
       "location": "Road No. 36, Jubilee Hills, Hyderabad, Telangana 500033",
       "hours": "Monday – Sunday: 10:30 AM – 9:00 PM",
-      "maps": "https://maps.google.com/?q=Jewellery+stores+Jubilee+Hills+Hyderabad"
+      "maps": "https://maps.google.com/?q=Jewellery+stores+Jubilee+Hills+Hyderabad",
+      "instagram": "https://www.instagram.com/"
     },
     "appointments": {
       "note": "Book a private consultation for bridal styling, custom designs or jewellery care. Our team will confirm your preferred slot."
@@ -347,6 +374,55 @@
         "id": "au-g3",
         "title": "Made for your moments",
         "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=1000&q=88",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Meghana, Hyderabad",
+        "text": "They helped me choose a bridal set within my budget and explained every detail of the gold weight and making charges.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Suresh, Secunderabad",
+        "text": "Beautiful craftsmanship and a very comfortable showroom visit.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Lavanya, Warangal",
+        "text": "Booked an appointment on WhatsApp and the team had pieces ready for me to try.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "Is the gold hallmarked?",
+        "answer": "Please ask our team for hallmark and certification details for any piece before you buy.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "How is the price calculated?",
+        "answer": "Price depends on the day’s gold rate, weight, making charges and stones. We share a full breakup before billing.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Can I book a showroom appointment?",
+        "answer": "Yes. Book on WhatsApp or with the appointment form and we will keep your selected pieces ready.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Do you offer exchange?",
+        "answer": "Ask us about exchange and buy-back options for your old jewellery.",
         "enabled": true
       }
     ]
@@ -589,6 +665,77 @@
         }
       },
       {
+        "id": "reviews",
+        "label": "Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New customer",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
         "id": "appointments",
         "label": "Showroom visits",
         "fields": [
@@ -627,6 +774,24 @@
           {
             "path": "contact.maps",
             "label": "Google Maps URL"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
           }
         ]
       },
