@@ -28,7 +28,7 @@ export function render(d={},selected=[]){
   html+='<footer class="sal-footer"><div><span class="sal-mark">MB</span><div><strong>'+esc(b.businessName||'Maison Belle')+'</strong><small>'+esc(b.tagline||'Beauty & Wellness Studio')+'</small></div></div><div class="sal-footer-links">'+(c.whatsapp?'<a target="_blank" href="'+wa(c.whatsapp)+'">WhatsApp</a>':'')+(c.email?'<a href="mailto:'+esc(c.email)+'">'+esc(c.email)+'</a>':'')+'</div><a class="template-admin-link" href="admin.html?template=salon-01">Admin</a></footer></div>';
   return html;
 }
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
   const c=d.contact||{},business=d.brand?.businessName||'Salon',form=root.querySelector('#salBookingForm');
   const setService=v=>{const s=root.querySelector('select[name="service"]');if(s)s.value=v};
   root.querySelectorAll('[data-book-service]').forEach(x=>x.addEventListener('click',()=>setService(x.dataset.bookService)));
@@ -37,4 +37,28 @@ export function init(root,d={},selected=[]){
   root.querySelectorAll('[data-gallery-image]').forEach(btn=>btn.addEventListener('click',()=>{if(!modal||!img)return;img.src=btn.dataset.galleryImage;modal.hidden=false;document.body.style.overflow='hidden'}));
   root.querySelectorAll('[data-close-sal-modal]').forEach(x=>x.addEventListener('click',()=>{if(modal)modal.hidden=true;document.body.style.overflow=''}));
   form?.addEventListener('submit',e=>{e.preventDefault();const f=new FormData(form),lead={id:crypto.randomUUID(),createdAt:new Date().toLocaleString(),name:f.get('name')||'',phone:f.get('phone')||'',email:f.get('email')||'',service:f.get('service')||'',staff:f.get('staff')||'',date:f.get('date')||'',time:f.get('time')||'',notes:f.get('notes')||''};try{const key='sitecraft:salon-01',saved=JSON.parse(localStorage.getItem(key)||'{}');saved.leads=Array.isArray(saved.leads)?saved.leads:[];saved.leads.unshift(lead);localStorage.setItem(key,JSON.stringify(saved))}catch{}if(!safe(c.whatsapp)){alert('This option is not available right now. Please call the business directly.');return}const msg=['Hello '+business+'!','','New appointment enquiry:','Name: '+lead.name,'Phone: '+lead.phone,'Email: '+(lead.email||'Not specified'),'Service: '+(lead.service||'Not specified'),'Preferred staff: '+(lead.staff||'Any available'),'Date: '+(lead.date||'Not specified'),'Time: '+(lead.time||'Not specified'),'Notes: '+(lead.notes||'')].join('\\n');window.open(wa(c.whatsapp,msg),'_blank')});
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }

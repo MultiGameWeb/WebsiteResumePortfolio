@@ -90,7 +90,7 @@
       "path": "brand.businessName",
       "label": "Gym / Fitness Center Name",
       "required": true,
-      "placeholder": "Forge Fitness Club"
+      "placeholder": "Pulse HIIT Studio"
     },
     {
       "path": "brand.ownerName",
@@ -222,33 +222,33 @@
   ],
   "demoData": {
     "brand": {
-      "businessName": "Forge Fitness Club",
-      "ownerName": "Coach Arjun",
+      "businessName": "Pulse HIIT Studio",
+      "ownerName": "Coach Kiran",
       "tagline": "Short. Intense. Focused.",
-      "about": "Forge Fitness Club is a modern training space built around strength, conditioning, group classes and practical coaching."
+      "about": "Pulse HIIT Studio runs coached 30 and 45-minute high-intensity sessions for busy people who want efficient, measurable workouts."
     },
     "home": {
       "title": "Short. Intense. Focused.",
-      "text": "Specialized hiit coaching, flexible memberships and class schedules designed around your goals.",
+      "text": "Coached 30 and 45-minute interval classes that burn fat, build stamina and fit before work.",
       "badge": "HIIT FREE TRIAL"
     },
     "heroVideo": "",
     "heroSlides": [
       {
         "id": "hs1",
-        "title": "Strength Floor",
+        "title": "HIIT Floor",
         "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=88",
         "enabled": true
       },
       {
         "id": "hs2",
-        "title": "Functional Training",
+        "title": "Interval Circuit",
         "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1800&q=88",
         "enabled": true
       },
       {
         "id": "hs3",
-        "title": "Group Workout",
+        "title": "Group Session",
         "image": "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1800&q=88",
         "enabled": true
       }
@@ -256,53 +256,50 @@
     "plans": [
       {
         "id": "p1",
-        "name": "Silver",
-        "monthly": "₹1,499 / month",
-        "quarterly": "₹3,999 / quarter",
-        "annual": "₹11,999 / year",
-        "offer": "Free 1-day guest pass",
+        "name": "Starter",
+        "monthly": "₹1,299 / month",
+        "quarterly": "₹3,499 / quarter",
+        "annual": "₹10,999 / year",
+        "offer": "8 classes / month",
         "discount": "Save 20% annually",
         "features": [
-          "Gym Access",
-          "Cardio Zone",
-          "Locker Access"
+          "8 HIIT classes",
+          "Heart-rate zone intro",
+          "Locker access"
         ],
         "featured": false,
         "enabled": true
       },
       {
         "id": "p2",
-        "name": "Gold",
-        "monthly": "₹1,999 / month",
-        "quarterly": "₹5,499 / quarter",
-        "annual": "₹15,999 / year",
-        "offer": "1 fitness assessment / month",
+        "name": "Unlimited",
+        "monthly": "₹2,199 / month",
+        "quarterly": "₹5,999 / quarter",
+        "annual": "₹17,999 / year",
+        "offer": "Unlimited classes",
         "discount": "Save 25% annually",
         "features": [
-          "Gym Access",
-          "Cardio Zone",
-          "Group Classes",
-          "Steam Bath",
-          "Fitness Assessment"
+          "Unlimited HIIT classes",
+          "Monthly fitness test",
+          "Open-gym slots",
+          "Recovery stretch class"
         ],
         "featured": true,
         "enabled": true
       },
       {
         "id": "p3",
-        "name": "Platinum",
-        "monthly": "₹3,499 / month",
-        "quarterly": "₹9,499 / quarter",
-        "annual": "₹27,999 / year",
-        "offer": "2 PT sessions / month",
+        "name": "Coached+",
+        "monthly": "₹3,699 / month",
+        "quarterly": "₹9,999 / quarter",
+        "annual": "₹29,999 / year",
+        "offer": "4 small-group PT sessions",
         "discount": "Save 30% annually",
         "features": [
-          "Gym Access",
-          "Cardio Zone",
-          "All Group Classes",
-          "Steam Bath",
-          "Personal Trainer",
-          "Priority Booking"
+          "Unlimited classes",
+          "Small-group coaching",
+          "Nutrition check-ins",
+          "Priority booking"
         ],
         "featured": false,
         "enabled": true
@@ -311,34 +308,34 @@
     "trainers": [
       {
         "id": "t1",
-        "name": "Coach Arjun",
-        "role": "Head Strength Coach",
-        "certification": "Gold's Gym Certified · K11",
-        "specialization": "Muscle Gain · Strength",
-        "bio": "Strength programming, safe lifting technique and progressive training plans.",
-        "availability": "Mon–Sat · 6:00 AM–11:00 AM",
+        "name": "Coach Kiran",
+        "role": "Head HIIT Coach",
+        "certification": "ACE Certified Personal Trainer",
+        "specialization": "Interval Training · Fat Loss",
+        "bio": "Designs interval sessions with clear work-rest timings and scalable options for every level.",
+        "availability": "Mon–Sat · 6:00 AM–10:00 AM",
         "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "t2",
-        "name": "Coach Neha",
-        "role": "Transformation Coach",
-        "certification": "K11 · Certified Personal Trainer",
-        "specialization": "Weight Loss · Conditioning",
-        "bio": "Goal-based conditioning, habit-focused coaching and sustainable progress plans.",
-        "availability": "Mon–Fri · 5:00 PM–9:00 PM",
+        "name": "Coach Sneha",
+        "role": "Conditioning Coach",
+        "certification": "K11 · Group Fitness Instructor",
+        "specialization": "Tabata · Core",
+        "bio": "Keeps classes high-energy while watching form and offering lower-impact alternatives.",
+        "availability": "Mon–Fri · 5:30 PM–9:00 PM",
         "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "t3",
-        "name": "Coach Rahul",
-        "role": "Functional & CrossFit Coach",
-        "certification": "CrossFit Level 1",
-        "specialization": "Functional Fitness · Mobility",
-        "bio": "Functional movement, group coaching and mobility-led performance sessions.",
-        "availability": "Mon–Sat · 7:00 AM–10:00 AM · 5:00 PM–8:00 PM",
+        "name": "Coach Vikram",
+        "role": "Performance Coach",
+        "certification": "NSCA-CPT",
+        "specialization": "Sprint Conditioning · Strength",
+        "bio": "Blends short strength blocks with conditioning for stamina and athletic performance.",
+        "availability": "Tue–Sun · 7:00 AM–11:00 AM",
         "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       }
@@ -348,26 +345,26 @@
         "id": "c1",
         "day": "Monday",
         "time": "6:00 AM",
-        "class": "Yoga",
-        "coach": "Coach Neha",
+        "class": "HIIT Circuit",
+        "coach": "Coach Kiran",
         "level": "All Levels",
         "enabled": true
       },
       {
         "id": "c2",
         "day": "Monday",
-        "time": "7:00 AM",
-        "class": "Zumba",
-        "coach": "Coach Neha",
-        "level": "All Levels",
+        "time": "7:00 PM",
+        "class": "Tabata 30",
+        "coach": "Coach Sneha",
+        "level": "Intermediate",
         "enabled": true
       },
       {
         "id": "c3",
         "day": "Tuesday",
-        "time": "8:00 AM",
-        "class": "CrossFit",
-        "coach": "Coach Rahul",
+        "time": "6:30 AM",
+        "class": "Sprint Conditioning",
+        "coach": "Coach Vikram",
         "level": "Intermediate",
         "enabled": true
       },
@@ -375,70 +372,70 @@
         "id": "c4",
         "day": "Wednesday",
         "time": "6:00 PM",
-        "class": "HIIT",
-        "coach": "Coach Arjun",
-        "level": "Intermediate",
+        "class": "Core Blast",
+        "coach": "Coach Sneha",
+        "level": "All Levels",
         "enabled": true
       },
       {
         "id": "c5",
         "day": "Thursday",
-        "time": "7:00 PM",
-        "class": "Strength Circuit",
-        "coach": "Coach Arjun",
-        "level": "All Levels",
+        "time": "7:00 AM",
+        "class": "Metabolic Conditioning",
+        "coach": "Coach Kiran",
+        "level": "Advanced",
         "enabled": true
       },
       {
         "id": "c6",
         "day": "Saturday",
         "time": "8:00 AM",
-        "class": "Mobility",
-        "coach": "Coach Rahul",
-        "level": "All Levels",
+        "class": "Beginner HIIT",
+        "coach": "Coach Vikram",
+        "level": "Beginner",
         "enabled": true
       }
     ],
     "facilities": [
       {
         "id": "f1",
-        "title": "Strength Floor",
-        "text": "Free weights, racks and strength machines for progressive training.",
+        "title": "HIIT Floor",
+        "text": "Open turf and rig area for timed circuits and partner drills.",
         "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f2",
-        "title": "Cardio Zone",
-        "text": "Treadmills, bikes and cardio machines for warm-ups and conditioning.",
+        "title": "Cardio Sprint Zone",
+        "text": "Air bikes, rowers and treadmills for interval work.",
         "image": "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f3",
         "title": "Functional Area",
-        "text": "Open training area for circuits, mobility and functional workouts.",
+        "text": "Kettlebells, sandbags and boxes for full-body conditioning.",
         "image": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f4",
         "title": "Group Studio",
-        "text": "Dedicated studio for yoga, Zumba, HIIT and class-based workouts.",
+        "text": "Mirrored studio with sound system and class timers.",
         "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f5",
-        "title": "Steam & Recovery",
-        "text": "Please contact us for details.",
+        "title": "Stretch & Recovery",
+        "text": "Mats, foam rollers and a quiet corner for cool-downs.",
         "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f6",
         "title": "Locker Rooms",
-        "text": "Describe your changing rooms, lockers, showers and hygiene practices.",
+        "text": "Lockers, showers and changing rooms for before-work sessions.",
         "image": "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       }
@@ -466,7 +463,7 @@
         "id": "tr3",
         "title": "General fitness journey",
         "period": "3 months",
-        "description": "Use real member progress images only with appropriate permission and accurate context.",
+        "description": "Shared with the member’s permission. Results vary from person to person.",
         "beforeImage": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=84",
         "afterImage": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
@@ -475,19 +472,19 @@
     "products": [
       {
         "id": "m1",
-        "name": "Forge Performance Tee",
+        "name": "Pulse Training Tee",
         "type": "Merchandise",
         "price": "₹799",
-        "text": "Branded training tee.",
+        "text": "Lightweight studio tee.",
         "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "m2",
-        "name": "Training Shaker",
+        "name": "Studio Water Bottle",
         "type": "Accessories",
-        "price": "₹399",
-        "text": "Branded shaker bottle.",
+        "price": "₹349",
+        "text": "Insulated bottle for class.",
         "image": "https://images.unsplash.com/photo-1620843002800-079bf1737f31?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
@@ -495,17 +492,17 @@
         "id": "m3",
         "name": "Protein Product Display",
         "type": "Supplements",
-        "price": "Ask gym",
-        "text": "Show only genuine products sold by your gym and include current manufacturer information.",
+        "price": "Ask studio",
+        "text": "Ask at the front desk for the products currently in stock.",
         "image": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "m4",
-        "name": "Gym Towel",
+        "name": "Sweat Towel",
         "type": "Merchandise",
         "price": "₹249",
-        "text": "Branded towel.",
+        "text": "Quick-dry towel.",
         "image": "https://images.unsplash.com/photo-1600369671236-e74521d4b6ad?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       }
@@ -513,37 +510,37 @@
     "gallery": [
       {
         "id": "g1",
-        "title": "Strength Area",
+        "title": "HIIT Floor",
         "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g2",
-        "title": "Dumbbells",
+        "title": "Kettlebell Station",
         "image": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g3",
-        "title": "Group Class",
+        "title": "Group Session",
         "image": "https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g4",
-        "title": "Functional Training",
+        "title": "Interval Circuit",
         "image": "https://images.unsplash.com/photo-1517964603305-11c0f6f66012?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g5",
-        "title": "Cardio Area",
+        "title": "Bike Sprints",
         "image": "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g6",
-        "title": "Recovery Area",
+        "title": "Stretch Zone",
         "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       }
@@ -553,53 +550,53 @@
         "id": "r1",
         "name": "Member A",
         "rating": 5,
-        "text": "Good equipment, helpful coaches and a simple trial-booking process.",
+        "text": "The 30-minute sessions fit before work and the coaches always show easier options.",
         "enabled": true
       },
       {
         "id": "r2",
         "name": "Member B",
         "rating": 5,
-        "text": "The group classes keep me consistent and the timings are easy to understand.",
+        "text": "Timers, music and coaching keep the class moving — I never feel lost.",
         "enabled": true
       },
       {
         "id": "r3",
         "name": "Member C",
         "rating": 5,
-        "text": "I liked getting a clear goal-based plan before joining a membership.",
+        "text": "Booking a trial on WhatsApp was quick and the first class was beginner friendly.",
         "enabled": true
       }
     ],
     "faq": [
       {
         "id": "q1",
-        "question": "Can I take a free trial before joining?",
-        "answer": "Yes. Use the trial form or WhatsApp guest-pass button to request your trial. Your team can confirm the slot and any trial conditions.",
+        "question": "I am a beginner. Can I join HIIT?",
+        "answer": "Yes. Every exercise has a lower-impact option and coaches help you pick the right intensity. Start with the Beginner HIIT batch.",
         "enabled": true
       },
       {
         "id": "q2",
-        "question": "Which membership is right for me?",
-        "answer": "Use the plan comparison as a starting point, then ask the gym team about your training goal, class access, coaching and current offers.",
+        "question": "How long is each class?",
+        "answer": "Most classes are 30 or 45 minutes, including warm-up and cool-down.",
         "enabled": true
       },
       {
         "id": "q3",
-        "question": "Can I book a personal trainer?",
-        "answer": "Yes, when PT slots are available. Ask the gym for the current trainer availability and applicable pricing.",
+        "question": "Can I take a free trial?",
+        "answer": "Yes. Request a trial class on WhatsApp or with the trial form and the team will confirm your slot.",
         "enabled": true
       },
       {
         "id": "q4",
-        "question": "Are supplements included in membership?",
-        "answer": "Not automatically. Membership benefits and any products or services should be confirmed with the gym.",
+        "question": "What should I bring?",
+        "answer": "Training shoes, a towel and a water bottle. Lockers are available at the studio.",
         "enabled": true
       },
       {
         "id": "q5",
         "question": "How do class timings work?",
-        "answer": "The timetable shows sample batch slots.",
+        "answer": "The timetable shows sample batch slots. Confirm the current schedule with the studio.",
         "enabled": true
       }
     ],
@@ -607,16 +604,16 @@
       "heading": "Start your HIIT journey.",
       "text": "Tell us your goal and preferred time. The team will follow up to confirm your trial pass or membership enquiry.",
       "passText": "1-Day HIIT Guest Pass · Book on WhatsApp",
-      "goalsText": "Weight Loss,Muscle Gain,General Fitness,Strength & Conditioning,Personal Training,Group Classes"
+      "goalsText": "Fat Loss,Stamina,Core Strength,General Fitness,Small-Group Coaching"
     },
     "contact": {
-      "phone": "+91 90000 77001",
-      "whatsapp": "919000077001",
-      "email": "hello@forgefitness.example",
-      "address": "Jubilee Hills, Hyderabad, Telangana",
-      "parking": "Basement parking",
-      "landmarks": "Near the main junction",
-      "maps": "https://maps.google.com/?q=Jubilee%20Hills%2C%20Hyderabad%2C%20Telangana"
+      "phone": "+91 90000 77002",
+      "whatsapp": "919000077002",
+      "email": "hello@pulsehiit.example",
+      "address": "Madhapur, Hyderabad, Telangana",
+      "parking": "Street and basement parking",
+      "landmarks": "Near Madhapur metro station",
+      "maps": "https://maps.google.com/?q=Madhapur%2C%20Hyderabad%2C%20Telangana"
     },
     "hours": {
       "weekdays": "Mon–Sat · 5:30 AM – 10:00 PM",

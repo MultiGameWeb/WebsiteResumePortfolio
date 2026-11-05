@@ -39,7 +39,7 @@ export function render(d={},selected=[]){
 
   if(ok('about')&&s.showAbout!==false)html+='<section class="ck-section ck-about"><div class="ck-head split"><div><span class="ck-kicker">ABOUT THE KITCHEN</span><h2>Small-batch thinking, direct communication.</h2></div><p>'+esc(b.about||"Tell customers how the kitchen started and what you care about.")+'</p></div><div class="ck-about-stats">'+(d.aboutStats||[]).filter(x=>x.enabled!==false).map(x=>'<div><strong>'+esc(x.value||'')+'</strong><span>'+esc(x.label||'')+'</span></div>').join('')+'</div></section>';
 
-  if(ok('hygiene')&&s.showHygiene!==false)html+='<section class="ck-section ck-hygiene"><div class="ck-head split"><div><span class="ck-kicker">KITCHEN TRUST</span><h2>Show the standards behind the food.</h2></div><p>Only publish safety, hygiene, registration, ingredient and packaging claims that are accurate for your business.</p></div><div class="ck-hygiene-grid">'+hygiene.map(x=>'<article><span>✓</span><h3>'+esc(x.title||'Trust')+'</h3><p>'+esc(x.text||'')+'</p></article>').join('')+'</div></section>';
+  if(ok('hygiene')&&s.showHygiene!==false)html+='<section class="ck-section ck-hygiene"><div class="ck-head split"><div><span class="ck-kicker">KITCHEN TRUST</span><h2>Show the standards behind the food.</h2></div><p>Ask us about our kitchen hygiene, food registration, ingredients and packaging.</p></div><div class="ck-hygiene-grid">'+hygiene.map(x=>'<article><span>✓</span><h3>'+esc(x.title||'Trust')+'</h3><p>'+esc(x.text||'')+'</p></article>').join('')+'</div></section>';
 
   if(ok('faq')&&s.showFAQ!==false)html+='<section class="ck-section"><div class="ck-head"><span class="ck-kicker">FAQ</span><h2>Before you place the order.</h2></div><div class="ck-faq">'+faq.map(x=>'<details><summary>'+esc(x.question||"Question")+'<span>+</span></summary><p>'+esc(x.answer||"")+'</p></details>').join('')+'</div></section>';
 
@@ -56,7 +56,7 @@ export function render(d={},selected=[]){
   html+='</div>';
   return html;
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
   const menu=list(d.menu),slots=list(d.delivery?.slots),currency=d.orderSettings?.currency||'₹';
   let cart=[];
   const moneyLocal=n=>currency+new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.max(0,num(n)));
@@ -102,4 +102,28 @@ export function init(root,d={}){
     if(wa){const itemText=cart.map(x=>x.qty+'× '+x.name+' — '+moneyLocal(x.price*x.qty)+(x.meta?' ('+x.meta+')':'')).join('\n');const msg=['Direct order',lead.name,lead.phone,lead.location,lead.deliveryDate,lead.deliverySlot,'Order type: '+lead.orderType,'Party guests: '+lead.partyGuests,'Total: '+lead.total,itemText,lead.message].filter(Boolean).join('\n');window.open('https://wa.me/'+safe(wa)+'?text='+encodeURIComponent(msg),'_blank')}
   });
   renderCart();
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }

@@ -37,9 +37,33 @@ export function render(d={},selected=[]){
   html+='<footer class="cat-footer"><div><strong>'+esc(b.businessName||'Your Catering Business')+'</strong><span>'+esc(b.tagline||'Catering & Events')+'</span></div><div class="cat-footer-links">'+(c.maps?'<a target="_blank" href="'+esc(c.maps)+'">Location ↗</a>':'')+(c.whatsapp?'<a target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>':'')+'</div><a class="template-admin-link" href="admin.html?template=catering-01">Admin</a></footer></div>';
   return html;
 }
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
   const c=d.contact||{};
   root.querySelectorAll('[data-faq-toggle]').forEach(btn=>btn.addEventListener('click',()=>{const a=btn.parentElement?.querySelector('[data-faq-answer]'),open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!open));if(a)a.hidden=open;btn.classList.toggle('open',!open)}));
   root.querySelectorAll('[data-menu-title]').forEach(link=>link.addEventListener('click',()=>{const f=root.querySelector('#cateringEnquiryForm');if(f){const p=f.querySelector('input[name="eventType"]');if(p&&!p.value)p.value='Menu enquiry: '+link.dataset.menuTitle}}));
   root.querySelector('#cateringEnquiryForm')?.addEventListener('submit',ev=>{ev.preventDefault();if(!safe(c.whatsapp)){alert('This option is not available right now. Please call the business directly.');return}const f=new FormData(ev.currentTarget);const msg=['Hello '+(d.brand?.businessName||'Catering Team')+'!','','Catering enquiry:','Name: '+(f.get('name')||''),'Phone: '+(f.get('phone')||''),'Event date: '+(f.get('date')||''),'Guests: '+(f.get('guests')||'Not specified'),'Event type: '+(f.get('eventType')||'Not specified'),'Message: '+(f.get('message')||'')].join('\n');window.open('https://wa.me/'+safe(c.whatsapp)+'?text='+encodeURIComponent(msg),'_blank')});
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }

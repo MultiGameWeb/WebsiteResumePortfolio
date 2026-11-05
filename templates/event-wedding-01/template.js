@@ -18,7 +18,7 @@ export function render(d={},selected=[]){
 
   if(ok('eventTypes')&&s.showEventTypes!==false)html+='<section id="eventTypes" class="ew-section ew-eventtypes"><div class="ew-head split"><div><span class="ew-kicker">EVENT TYPES</span><h2>Different celebrations. One thoughtful planning process.</h2></div><p>Choose the type of event you are planning and use the enquiry form to request a tailored package.</p></div><div class="ew-event-grid">'+eventTypes.map((x,i)=>'<article><span class="ew-event-icon">'+esc(x.icon||"✦")+'</span><small>0'+(i+1)+'</small><h3>'+esc(x.name)+'</h3><p>'+esc(x.description||"")+'</p><a href="#enquiry" data-event-type="'+esc(x.name)+'">Plan this event ↗</a></article>').join('')+'</div></section>';
 
-  if(ok('packages')&&s.showPackages!==false)html+='<section id="packages" class="ew-section"><div class="ew-head split"><div><span class="ew-kicker">PACKAGES & PRICING</span><h2>Clear starting points, tailored to your celebration.</h2></div><p>Displayed pricing is a sample starting point. Final scope, vendor rates and event requirements should be confirmed in the written proposal.</p></div><div class="ew-package-grid">'+packages.map((x,i)=>'<article class="ew-package-card '+(x.tier==="Luxury"?'featured':'')+'"><div class="ew-package-top"><span>'+esc(x.tier||"Package")+'</span><small>0'+(i+1)+'</small></div><h3>'+esc(x.name)+'</h3><strong>'+esc(x.price||"Custom Quote")+'</strong><em>'+esc(x.starting||"Based on scope")+'</em><p>'+esc(x.guestRange||"Custom guest count")+'</p><p class="ew-package-summary">'+esc(x.summary||"")+'</p><ul>'+((Array.isArray(x.includes)?x.includes:String(x.includes||"").split(",").map(y=>y.trim()).filter(Boolean))).map(y=>'<li>✓ '+esc(y)+'</li>').join('')+'</ul><a class="ew-btn '+(x.tier==="Luxury"?'solid':'outline')+'" href="#enquiry" data-package="'+esc(x.name||"")+'">Discuss package <span>↗</span></a></article>').join('')+'</div></section>';
+  if(ok('packages')&&s.showPackages!==false)html+='<section id="packages" class="ew-section"><div class="ew-head split"><div><span class="ew-kicker">PACKAGES & PRICING</span><h2>Clear starting points, tailored to your celebration.</h2></div><p>Prices shown are starting points. Final scope, vendor rates and requirements are confirmed in your written proposal.</p></div><div class="ew-package-grid">'+packages.map((x,i)=>'<article class="ew-package-card '+(x.tier==="Luxury"?'featured':'')+'"><div class="ew-package-top"><span>'+esc(x.tier||"Package")+'</span><small>0'+(i+1)+'</small></div><h3>'+esc(x.name)+'</h3><strong>'+esc(x.price||"Custom Quote")+'</strong><em>'+esc(x.starting||"Based on scope")+'</em><p>'+esc(x.guestRange||"Custom guest count")+'</p><p class="ew-package-summary">'+esc(x.summary||"")+'</p><ul>'+((Array.isArray(x.includes)?x.includes:String(x.includes||"").split(",").map(y=>y.trim()).filter(Boolean))).map(y=>'<li>✓ '+esc(y)+'</li>').join('')+'</ul><a class="ew-btn '+(x.tier==="Luxury"?'solid':'outline')+'" href="#enquiry" data-package="'+esc(x.name||"")+'">Discuss package <span>↗</span></a></article>').join('')+'</div></section>';
 
   if(ok('services')&&s.showServices!==false)html+='<section id="services" class="ew-section ew-dark"><div class="ew-head"><span class="ew-kicker">OUR SERVICES</span><h2>Every moving part, coordinated with intention.</h2></div><div class="ew-service-grid">'+services.map((x,i)=>'<article><span class="ew-service-icon">'+esc(x.icon||"✦")+'</span><small>0'+(i+1)+'</small><h3>'+esc(x.name)+'</h3><p>'+esc(x.description||"")+'</p></article>').join('')+'</div></section>';
 
@@ -52,7 +52,7 @@ export function render(d={},selected=[]){
   if(ok('whatsapp')&&c.whatsapp)html+='<a class="ew-float-wa" target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>';
   return html+'</div>';
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
   let selectedDate="";
   root.querySelectorAll('[data-event-type]').forEach(b=>b.addEventListener('click',()=>{const s=root.querySelector('#ewEventType');if(s)s.value=b.dataset.eventType||''}));
   root.querySelectorAll('[data-package]').forEach(b=>b.addEventListener('click',()=>{const s=root.querySelector('#ewPackage');if(s)s.value=b.dataset.package||''}));
@@ -68,4 +68,28 @@ export function init(root,d={}){
     const wa=d.contact?.whatsapp;
     if(wa){const msg=['Event enquiry',lead.name,lead.phone,lead.email,lead.eventType,lead.eventDate,lead.location,'Guests: '+lead.guests,'Budget: '+lead.budget,'Package: '+lead.package,'Services: '+lead.services,lead.message].filter(Boolean).join('\n');window.open('https://wa.me/'+safe(wa)+'?text='+encodeURIComponent(msg),'_blank')}
   });
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }

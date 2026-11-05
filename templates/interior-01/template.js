@@ -53,7 +53,7 @@ export function render(d={},selected=[]){
 
   if(ok('materials'))html+='<section id="materials" class="id-section id-materials"><div class="id-section-head split"><div><span class="id-kicker">MATERIAL PALETTE</span><h2>Let clients choose the language of the space.</h2></div><p>Select the material scopes you want to discuss during consultation.</p></div><div class="id-material-grid">'+materials.map(m=>'<label class="id-material-card"><input class="js-material" type="checkbox" data-addon="'+num(m.addonPerSqft)+'" checked><span class="id-check">✓</span><span class="id-material-copy"><strong>'+esc(m.name||'Material')+'</strong><small>'+esc(m.quality||'')+'</small><p>'+esc(m.description||'')+'</p></span><em>+'+fmt(m.addonPerSqft||0)+'/sq.ft</em></label>').join('')+'</div></section>';
 
-  if(ok('trust'))html+='<section class="id-section id-trust"><div class="id-section-head split"><div><span class="id-kicker">MATERIAL BRANDS & TRUST</span><h2>Make quality, warranty and specifications easy to understand.</h2></div><p>Only publish partner brands, certifications and warranty claims that your studio can verify and honour.</p></div><div class="id-trust-grid">'+trustBadges.map(x=>'<article><span class="id-trust-seal">✓</span><small>'+esc(x.category||'Quality')+'</small><h3>'+esc(x.brand||'Trust badge')+'</h3><strong>'+esc(x.badge||'Verified quality')+'</strong><p>'+esc(x.note||'')+'</p></article>').join('')+'</div></section>';
+  if(ok('trust'))html+='<section class="id-section id-trust"><div class="id-section-head split"><div><span class="id-kicker">MATERIAL BRANDS & TRUST</span><h2>Make quality, warranty and specifications easy to understand.</h2></div><p>Ask us about the brands we work with and the warranties that apply to your project.</p></div><div class="id-trust-grid">'+trustBadges.map(x=>'<article><span class="id-trust-seal">✓</span><small>'+esc(x.category||'Quality')+'</small><h3>'+esc(x.brand||'Trust badge')+'</h3><strong>'+esc(x.badge||'Verified quality')+'</strong><p>'+esc(x.note||'')+'</p></article>').join('')+'</div></section>';
 
   if(ok('team'))html+='<section class="id-section id-team"><div class="id-section-head"><span class="id-kicker">THE PEOPLE BEHIND THE DETAILS</span><h2>Designers who think in plans, materials and lived experience.</h2></div><div class="id-team-grid">'+team.map(x=>'<article class="id-team-card"><img src="'+esc(x.image||'')+'" alt="'+esc(x.name||'Designer')+'"><div class="id-team-copy"><span>'+esc(x.role||'')+'</span><h3>'+esc(x.name||'Designer')+'</h3><p>'+esc(x.specialization||'')+'</p><small>'+esc(x.credentials||'')+'</small></div></article>').join('')+'</div></section>';
 
@@ -78,7 +78,7 @@ export function render(d={},selected=[]){
   html+='<div class="id-lightbox" id="idLightbox" aria-hidden="true"><button class="id-lightbox-close" type="button">Close</button><img id="idLightboxImage" src="" alt=""><strong id="idLightboxTitle"></strong></div>';
   return html+'</div>';
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
   root.querySelectorAll('.js-lightbox').forEach(btn=>btn.addEventListener('click',()=>{const box=root.querySelector('#idLightbox');const img=root.querySelector('#idLightboxImage');const title=root.querySelector('#idLightboxTitle');img.src=btn.dataset.image||'';title.textContent=btn.dataset.title||'';box.classList.add('open');box.setAttribute('aria-hidden','false')}));
   const close=()=>{const box=root.querySelector('#idLightbox');if(box){box.classList.remove('open');box.setAttribute('aria-hidden','true')}};
   root.querySelectorAll('.id-lightbox-close').forEach(x=>x.addEventListener('click',close));
@@ -114,4 +114,28 @@ export function init(root,d={}){
   [space,bhk].filter(Boolean).forEach(x=>x.addEventListener('change',update));
   root.querySelectorAll('.js-material').forEach(x=>x.addEventListener('change',update));
   update();
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }

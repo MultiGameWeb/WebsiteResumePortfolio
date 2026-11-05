@@ -27,7 +27,7 @@ export function render(d={},selected=[]){
     <footer class="rp2-footer"><strong>${esc(b.businessName||'Your Restaurant')}</strong><span>${esc(b.tagline||'')}</span><a class="template-admin-link" href="admin.html?template=restaurant-02">Admin</a></footer>
   </div>`;
 }
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
   const c=d.contact||{}, menu=(d.menu||[]).filter(x=>x.enabled!==false), ok=x=>selected.includes(x);
   const cart={}; const money=v=>'₹'+Number(v||0).toLocaleString('en-IN');
   const countEl=root.querySelector('[data-cart-count]'),itemsEl=root.querySelector('[data-cart-items]'),totalEl=root.querySelector('[data-cart-total]'),cartEl=root.querySelector('[data-cart]');
@@ -39,4 +39,28 @@ export function init(root,d={},selected=[]){
   root.querySelector('#bookingForm')?.addEventListener('submit',e=>{e.preventDefault();if(!safe(c.whatsapp)){alert('Table booking is not available right now. Please call the restaurant'+(c.phone?' on '+c.phone:'')+'.');return}const f=new FormData(e.currentTarget),text='Hello '+(d.brand?.businessName||'Restaurant')+'!\n\nTable booking request:\nName: '+f.get('name')+'\nDate: '+f.get('date')+'\nTime: '+f.get('time')+'\nGuests: '+f.get('guests');window.open('https://wa.me/'+safe(c.whatsapp)+'?text='+encodeURIComponent(text),'_blank')});
   const dateEl=root.querySelector('#bookingForm [name=date]');if(dateEl){const n=new Date(),m=new Date(n.getTime()-n.getTimezoneOffset()*60000).toISOString().slice(0,10);dateEl.min=m}
   sync();
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }

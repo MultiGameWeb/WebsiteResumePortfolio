@@ -26,7 +26,7 @@ export function render(d={},selected=[]){
 
  if(ok('packages')&&s.showPackages!==false)html+='<section id="packages" class="bm-section bm-packages"><div class="bm-section-heading"><div><span class="bm-kicker">SERVICE PACKAGES & CHARGES</span><h2>Clear rates for every bridal moment.</h2></div><p>Final scope and pricing are confirmed with each client.</p></div><div class="bm-package-table"><div class="bm-package-head"><span>Package</span><span>Includes</span><span>Price</span></div>'+packages.map((x,i)=>'<article class="bm-package-row '+(i===packages.length-1?'bm-package-premium':'')+'"><div><small>'+String(i+1).padStart(2,'0')+'</small><h3>'+esc(x.name||'Bridal Package')+'</h3></div><p>'+esc(x.description||'')+'</p><strong>'+esc(x.price||'Custom quote')+'</strong></article>').join('')+'</div></section>';
 
- if(ok('beforeAfter')&&s.showBeforeAfter!==false)html+='<section id="beforeAfter" class="bm-section bm-ba"><div class="bm-section-heading"><div><span class="bm-kicker">BEFORE / AFTER GALLERY</span><h2>See the transformation, beautifully aligned.</h2></div><p>Use compressed WebP images or Cloudflare Images URLs for fast loading. Open any transformation for a larger view.</p></div><div class="bm-ba-grid">'+transformations.map((x,i)=>'<button type="button" class="bm-ba-card" data-ba-index="'+i+'" aria-label="Open '+esc(x.title||'bridal transformation')+'"><span class="bm-ba-photo before"><img loading="lazy" decoding="async" src="'+esc(safeUrl(x.beforeImage))+'" alt="'+esc((x.title||'Transformation')+' before')+'"><em>BEFORE</em></span><span class="bm-ba-photo after"><img loading="lazy" decoding="async" src="'+esc(safeUrl(x.afterImage))+'" alt="'+esc((x.title||'Transformation')+' after')+'"><em>AFTER</em></span><span class="bm-ba-meta"><strong>'+esc(x.title||'Bridal transformation')+'</strong><small>'+esc(x.caption||'')+'</small></span></button>').join('')+'</div></section>';
+ if(ok('beforeAfter')&&s.showBeforeAfter!==false)html+='<section id="beforeAfter" class="bm-section bm-ba"><div class="bm-section-heading"><div><span class="bm-kicker">BEFORE / AFTER GALLERY</span><h2>See the transformation, beautifully aligned.</h2></div><p>Tap any look to see it larger.</p></div><div class="bm-ba-grid">'+transformations.map((x,i)=>'<button type="button" class="bm-ba-card" data-ba-index="'+i+'" aria-label="Open '+esc(x.title||'bridal transformation')+'"><span class="bm-ba-photo before"><img loading="lazy" decoding="async" src="'+esc(safeUrl(x.beforeImage))+'" alt="'+esc((x.title||'Transformation')+' before')+'"><em>BEFORE</em></span><span class="bm-ba-photo after"><img loading="lazy" decoding="async" src="'+esc(safeUrl(x.afterImage))+'" alt="'+esc((x.title||'Transformation')+' after')+'"><em>AFTER</em></span><span class="bm-ba-meta"><strong>'+esc(x.title||'Bridal transformation')+'</strong><small>'+esc(x.caption||'')+'</small></span></button>').join('')+'</div></section>';
 
  if(ok('reviews')&&s.showReviews!==false)html+='<section id="reviews" class="bm-section bm-reviews"><div class="bm-section-heading"><div><span class="bm-kicker">CLIENT TESTIMONIALS</span><h2>Kind words from past brides.</h2></div></div><div class="bm-review-grid">'+reviews.map(x=>'<article><div class="bm-stars">'+('★'.repeat(Math.max(1,Math.min(5,Number(x.rating)||5))))+'</div><blockquote>“'+esc(x.text||'')+'”</blockquote><strong>'+esc(x.name||'Happy Bride')+'</strong></article>').join('')+'</div></section>';
 
@@ -39,7 +39,7 @@ export function render(d={},selected=[]){
  html+='<div class="bm-lightbox" hidden><div class="bm-lightbox-backdrop" data-close-ba></div><div class="bm-lightbox-panel"><button type="button" class="bm-lightbox-close" data-close-ba aria-label="Close image viewer">×</button><button type="button" class="bm-lightbox-prev" data-ba-prev aria-label="Previous transformation">‹</button><div class="bm-lightbox-grid"><figure><img data-ba-before src="" alt="Before"><figcaption>BEFORE</figcaption></figure><figure><img data-ba-after src="" alt="After"><figcaption>AFTER</figcaption></figure></div><button type="button" class="bm-lightbox-next" data-ba-next aria-label="Next transformation">›</button></div></div>';
  return html+'</div>';
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
  const items=list(d.beforeAfter).filter(x=>safeUrl(x.beforeImage)&&safeUrl(x.afterImage));
  const modal=root.querySelector('.bm-lightbox'),before=root.querySelector('[data-ba-before]'),after=root.querySelector('[data-ba-after]'); let index=0;
  const show=i=>{if(!items.length||!modal||!before||!after)return;index=(i+items.length)%items.length;const x=items[index];before.src=safeUrl(x.beforeImage);after.src=safeUrl(x.afterImage);before.alt=(x.title||'Transformation')+' before';after.alt=(x.title||'Transformation')+' after';modal.hidden=false;document.body.style.overflow='hidden'};
@@ -50,4 +50,28 @@ export function init(root,d={}){
  root.querySelector('[data-ba-next]')?.addEventListener('click',()=>show(index+1));
  const key=e=>{if(!modal||modal.hidden)return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(index-1);if(e.key==='ArrowRight')show(index+1)};
  document.addEventListener('keydown',key);
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }

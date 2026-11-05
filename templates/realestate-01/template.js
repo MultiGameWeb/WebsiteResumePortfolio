@@ -19,7 +19,7 @@ export function render(d={},selected=[]){
 
   if(ok('gallery')&&s.showGallery!==false)html+='<section id="properties" class="re-section re-properties"><div class="re-section-head"><div><span class="re-kicker">PROPERTY LISTINGS</span><h2>Spaces worth seeing.</h2></div><p>Search by location, type, BHK and budget.</p></div><div id="propertyGrid" class="re-property-grid">'+props.map((x,i)=>'<article class="re-property-card" data-property data-id="'+esc(x.id)+'" data-location="'+esc(x.location||'').toLowerCase()+'" data-type="'+esc(x.type||'')+'" data-bhk="'+esc(x.bhk||'')+'" data-price="'+priceValue(x.priceValue||x.price)+'"><div class="re-property-image">'+(x.coverImage?'<img src="'+esc(x.coverImage)+'" alt="'+esc(x.title||'')+'">':'<div class="re-no-image">No image</div>')+'<span class="re-badge">'+esc(x.status||'Available')+'</span>'+(x.featured?'<em>Featured</em>':'')+'</div><div class="re-property-body"><div class="re-property-top"><span>'+esc(x.type||'Property')+'</span><strong>'+esc(x.price||moneyLakhs(x.priceValue)||'Price on request')+'</strong></div><h3>'+esc(x.title||'Property')+'</h3><p class="re-location">⌖ '+esc(x.location||'')+'</p><div class="re-specs"><span>🛏️ '+esc(x.bhk||'—')+'</span><span>🚿 '+esc(x.bathrooms||'—')+'</span><span>📐 '+esc(x.area||'—')+'</span></div><p class="re-description">'+esc(x.description||'')+'</p><a href="#enquiry" class="re-text-link" data-property-enquiry="'+esc(x.title||'')+'">Enquire about this property ↗</a></div></article>').join('')+'</div><div id="noResults" class="re-no-results" hidden>No properties match those filters. Try a broader search or send an enquiry.</div></section>';
 
-  if(ok('services')&&s.showServices!==false)html+='<section id="services" class="re-section re-services"><div class="re-section-head"><div><span class="re-kicker">OUR SERVICES</span><h2>More than a property listing.</h2></div><p>From buying and selling to documentation and loan coordination, show customers how your team supports the full journey.</p></div><div class="re-service-grid">'+services.map((x,i)=>'<article><span class="re-service-no">'+String(i+1).padStart(2,'0')+'</span><h3>'+esc(x.name||'Real estate service')+'</h3><p>'+esc(x.description||'')+'</p></article>').join('')+'</div></section>';
+  if(ok('services')&&s.showServices!==false)html+='<section id="services" class="re-section re-services"><div class="re-section-head"><div><span class="re-kicker">OUR SERVICES</span><h2>More than a property listing.</h2></div><p>From buying and selling to documentation and loan coordination, our team supports you through the full journey.</p></div><div class="re-service-grid">'+services.map((x,i)=>'<article><span class="re-service-no">'+String(i+1).padStart(2,'0')+'</span><h3>'+esc(x.name||'Real estate service')+'</h3><p>'+esc(x.description||'')+'</p></article>').join('')+'</div></section>';
 
   if(ok('agents')&&s.showAgents!==false)html+='<section id="team" class="re-section re-team"><div class="re-section-head"><div><span class="re-kicker">OUR TEAM</span><h2>People behind the shortlist.</h2></div></div><div class="re-agent-grid">'+agents.map(x=>'<article><div class="re-agent-image">'+(x.image?'<img src="'+esc(x.image)+'" alt="'+esc(x.name||'')+'">':'')+'</div><div><span>'+esc(x.role||'Property Consultant')+'</span><h3>'+esc(x.name||'Agent')+'</h3><p>'+esc(x.bio||'')+'</p></div></article>').join('')+'</div></section>';
 
@@ -38,7 +38,7 @@ export function render(d={},selected=[]){
   html+='<footer class="re-footer"><div><strong>'+esc(b.businessName||'Your Realty Agency')+'</strong><span>'+esc(b.tagline||'Property Advisory & Site Visits')+'</span></div><div class="re-footer-links">'+(c.whatsapp?'<a target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>':'')+(c.email?'<a href="mailto:'+esc(c.email)+'">'+esc(c.email)+'</a>':'')+'</div><a class="template-admin-link" href="admin.html?template=realestate-01">Admin</a></footer></div>';
   return html;
 }
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
   const c=d.contact||{},props=(d.properties||[]).filter(x=>x.enabled!==false);
   const fmtBudget=n=>{const v=Number(n)||0;return v>=100?'₹'+(v/100).toFixed(v%100?1:0)+' Cr':'₹'+v+' L';};
   const updateRange=(input,out)=>{if(input&&out)out.textContent=fmtBudget(input.value)};
@@ -56,4 +56,28 @@ export function init(root,d={},selected=[]){
     const msg=['Hello '+(d.brand?.businessName||'Real Estate Team')+'!','','New property enquiry:','Name: '+lead.name,'Phone: '+lead.phone,'Email: '+(lead.email||'Not specified'),'Property: '+(lead.property||'Not specified'),'Property Type: '+(lead.propertyType||'Not specified'),'Budget: '+lead.budget,'Purpose: '+lead.purpose,'Site Visit Date: '+(lead.visitDate||'Not specified'),'Site Visit Time: '+(lead.visitTime||'Not specified'),'Message: '+(lead.message||'')].join('\n');
     window.open('https://wa.me/'+safe(c.whatsapp)+'?text='+encodeURIComponent(msg),'_blank');
   });
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();
 }
