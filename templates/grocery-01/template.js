@@ -4,7 +4,7 @@ const digits=v=>String(v??'').replace(/\D/g,'');
 const num=v=>{const n=Number(String(v??'').replace(/[^\d.-]/g,''));return Number.isFinite(n)?n:0};
 const money=(v,c='INR')=>{try{return new Intl.NumberFormat('en-IN',{style:'currency',currency:c,maximumFractionDigits:0}).format(num(v))}catch{return '₹'+num(v).toLocaleString('en-IN')}};
 const slug=v=>String(v??'').toLowerCase().trim();
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
  const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},del=d.delivery||{},legal=d.legal||{},ok=x=>selected.includes(x);
  const products=(d.products||[]).filter(p=>p.enabled!==false),offers=(d.offers||[]).filter(o=>o.enabled!==false),gallery=(d.gallery||[]).filter(g=>g.enabled!==false);
  const currency=s.currency||'INR',wa=digits(c.whatsapp);
@@ -23,14 +23,17 @@ export function render(d={},selected=[]){
  if(ok('products'))out+='<section class="fm-shop" id="fm-products"><div class="fm-section-heading"><div><span class="fm-eyebrow">THE EVERYDAY MARKET</span><h2>Shop your essentials.</h2><p>Fresh picks and pantry staples, all in one place.</p></div>'+(ok('search')?'<label class="fm-search"><span>⌕</span><input type="search" data-fm-search placeholder="Search fruits, milk, rice…" aria-label="Search products"></label>':'')+'</div>'+(ok('categories')?'<div class="fm-categories"><button type="button" class="active" data-fm-filter="all">All products</button>'+categories.map(x=>'<button type="button" data-fm-filter="'+esc(slug(x))+'">'+esc(x)+'</button>').join('')+'</div>':'')+'<div class="fm-products" data-fm-products>'+products.map(card).join('')+'</div><p class="fm-empty" data-fm-empty hidden>No products match your search. Try another item or category.</p></section>';
  if(ok('about')&&s.showAbout!==false)out+='<section class="fm-about" id="fm-about"><div><span class="fm-eyebrow">A LITTLE ABOUT US</span><h2>Good groceries make a good home.</h2></div><p>'+esc(b.about||'Your neighbourhood store for everyday essentials and fresh favourites.')+'</p></section>';
  if(ok('gallery')&&s.showGallery!==false&&gallery.length)out+='<section class="fm-gallery"><div class="fm-section-heading"><div><span class="fm-eyebrow">A LOOK INSIDE</span><h2>Fresh from our store.</h2></div></div><div class="fm-gallery-grid">'+gallery.map(g=>'<figure><img src="'+esc(safeUrl(g.image))+'" alt="'+esc(g.title||'Store image')+'" loading="lazy"><figcaption>'+esc(g.title||'')+'</figcaption></figure>').join('')+'</div></section>';
- if(ok('location')&&s.showLocation!==false)out+='<section class="fm-location" id="fm-location"><div><span class="fm-eyebrow">COME SAY HELLO</span><h2>'+esc(b.businessName||'Our Store')+'</h2><p>'+esc(c.location||'Add your store address in the owner dashboard.')+'</p><p><b>Opening hours</b><br>'+esc(c.hours||'Please contact us for today’s hours.')+'</p><p><b>Delivery area</b><br>'+esc(del.areas||'Contact us to confirm delivery availability.')+'</p><div class="fm-location-actions">'+(safeUrl(c.maps)?'<a class="fm-outline" href="'+esc(safeUrl(c.maps))+'" target="_blank" rel="noopener noreferrer">Get directions ↗</a>':'')+(c.call?'<a class="fm-outline" href="tel:'+esc(c.call.replace(/[^\d+]/g,''))+'">Call store</a>':'')+'</div></div><div class="fm-location-card"><span>✳</span><b>Neighbourhood shopping, made simple.</b><small>'+esc(c.call||c.email||'We are happy to help')+'</small></div></section>';
+ if(ok('reviews')&&(d.reviews||[]).some(x=>x.enabled!==false))out+='<section class="fm-reviews sc-extra-section" id="fm-reviews"><span class="fm-eyebrow">CUSTOMER LOVE</span><h2>What our customers say</h2><div class="sc-review-grid">'+(d.reviews||[]).filter(x=>x.enabled!==false).map(x=>{const r=Math.max(0,Math.min(5,Number(x.rating)||0));return '<figure>'+(r?'<div class="sc-stars" aria-label="'+r+' out of 5">'+'★'.repeat(r)+'</div>':'')+'<blockquote>“'+esc(x.text||'')+'”</blockquote><figcaption>'+esc(x.name||'Customer')+'</figcaption></figure>'}).join('')+'</div></section>';
+ if(ok('faq')&&(d.faqs||[]).some(x=>x.enabled!==false))out+='<section class="fm-faq sc-extra-section" id="fm-faq"><span class="fm-eyebrow">GOOD TO KNOW</span><h2>Frequently asked questions</h2><div class="sc-faq-list">'+(d.faqs||[]).filter(x=>x.enabled!==false).map(x=>'<details><summary>'+esc(x.question||'Question')+'</summary><p>'+esc(x.answer||'')+'</p></details>').join('')+'</div></section>';
+ if(ok('location')&&s.showLocation!==false)out+='<section class="fm-location" id="fm-location"><div><span class="fm-eyebrow">COME SAY HELLO</span><h2>'+esc(b.businessName||'Our Store')+'</h2>'+(c.location?'<p>'+esc(c.location)+'</p>':'')+'<p><b>Opening hours</b><br>'+esc(c.hours||'Please contact us for today’s hours.')+'</p><p><b>Delivery area</b><br>'+esc(del.areas||'Contact us to confirm delivery availability.')+'</p><div class="fm-location-actions">'+(safeUrl(c.maps)?'<a class="fm-outline" href="'+esc(safeUrl(c.maps))+'" target="_blank" rel="noopener noreferrer">Get directions ↗</a>':'')+(c.call?'<a class="fm-outline" href="tel:'+esc(c.call.replace(/[^\d+]/g,''))+'">Call store</a>':'')+'</div></div><div class="fm-location-card"><span>✳</span><b>Neighbourhood shopping, made simple.</b><small>'+esc(c.call||c.email||'We are happy to help')+'</small></div></section>';
  if(ok('enquiry'))out+='<section class="fm-enquiry"><div><span class="fm-eyebrow">NEED A HAND?</span><h2>We’re happy to help.</h2><p>Ask about product availability, bulk orders or delivery in your area.</p></div><form data-fm-enquiry><label>Your name<input name="name" autocomplete="name" required placeholder="Full name"></label><label>Phone number<input name="phone" autocomplete="tel" type="tel" required placeholder="Mobile number"></label><label>Your message<textarea name="message" rows="3" required placeholder="How can we help?"></textarea></label><button class="fm-primary" type="submit">Send enquiry on WhatsApp →</button><p class="fm-form-note" data-fm-note></p></form></section>';
  if(ok('privacyPolicy')&&s.showPrivacyPolicy!==false&&legal.privacyPolicy)out+='<section class="fm-privacy"><b>Privacy policy</b><p>'+esc(legal.privacyPolicy)+'</p></section>';
  out+='<footer class="fm-footer"><div><a class="fm-brand" href="#fm-home"><span class="fm-brand-icon">✳</span><span><strong>'+esc(b.businessName||'FreshMart')+'</strong><small>GROCERIES & MORE</small></span></a><p>Fresh choices for everyday living.</p></div><div><b>Contact</b><span>'+esc(c.call||'')+'</span><span>'+esc(c.email||'')+'</span><span>'+esc(c.location||'')+'</span></div><div><b>Store hours</b><span>'+esc(c.hours||'')+'</span><span>'+(del.enabled!==false?'Home delivery available':'Visit us in store')+'</span></div><small class="fm-copyright">© '+new Date().getFullYear()+' '+esc(b.businessName||'FreshMart')+'. All rights reserved.</small></footer>';
  if(ok('cart'))out+='<div class="fm-cart-backdrop" data-fm-action="cart-close"></div><aside class="fm-cart" data-fm-cart aria-label="Shopping basket"><div class="fm-cart-head"><div><span class="fm-eyebrow">YOUR BASKET</span><h2>Shopping basket</h2></div><button type="button" data-fm-action="cart-close" aria-label="Close basket">×</button></div><div class="fm-cart-items" data-fm-items></div><div class="fm-cart-summary"><div><span>Subtotal</span><b data-fm-subtotal>'+money(0,currency)+'</b></div><div><span>Delivery</span><b data-fm-delivery>'+money(0,currency)+'</b></div><div class="fm-cart-total"><span>Total</span><b data-fm-total>'+money(0,currency)+'</b></div><small data-fm-minimum></small></div><form class="fm-checkout-form" data-fm-checkout><span class="fm-eyebrow">DELIVERY DETAILS</span><label>Your name<input name="name" autocomplete="name" required placeholder="Full name"></label><label>Mobile number<input name="phone" type="tel" autocomplete="tel" required placeholder="10-digit mobile number"></label><label>Delivery address<textarea name="address" rows="2" required placeholder="House number, street, area"></textarea></label><label>Preferred delivery time<select name="slot"><option>As soon as possible</option><option>Morning</option><option>Afternoon</option><option>Evening</option></select></label><label>Order notes (optional)<textarea name="notes" rows="2" placeholder="Any preferences or instructions"></textarea></label><button class="fm-primary fm-checkout-button" type="submit">Continue on WhatsApp →</button><small class="fm-checkout-note">Your order request will open in WhatsApp. Please press Send there to submit it.</small></form></aside>';
+ if(ok('whatsapp')&&String((d.contact||{}).whatsapp||'').replace(/\D/g,''))out+='<a class="sc-wa-float" href="https://wa.me/'+String(d.contact.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent('Hi, I would like to order groceries.')+'" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">WhatsApp</a>';
  return out+'</div>';
 }
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
  const store=root.querySelector('[data-fm-store]');if(!store)return;
  const products=(d.products||[]).filter(p=>p.enabled!==false),currency=d.settings?.currency||'INR',wa=digits(d.contact?.whatsapp),delivery=d.delivery||{},cartKey='sitecraft:grocery-01:cart';
  const productById=id=>products.find((p,i)=>String(p.id||p.sku||p.name)===String(id));
@@ -83,3 +86,55 @@ export function init(root,d={},selected=[]){
  store.querySelectorAll('[data-fm-product] img').forEach(img=>img.addEventListener('error',()=>{img.style.opacity='.2'}));
  renderCart();
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=false;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

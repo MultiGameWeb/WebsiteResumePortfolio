@@ -45,6 +45,10 @@
       "label": "Talks & interviews"
     },
     {
+      "id": "reviews",
+      "label": "Reader Reviews"
+    },
+    {
       "id": "contact",
       "label": "Contact & enquiries"
     },
@@ -224,7 +228,8 @@
         "fullFileName": "",
         "buyUrl": "https://example.com/book-one",
         "featured": true,
-        "enabled": true
+        "enabled": true,
+        "price": "₹399 paperback · ₹199 eBook"
       },
       {
         "id": "b2",
@@ -245,7 +250,8 @@
         "fullFileName": "",
         "buyUrl": "",
         "featured": false,
-        "enabled": true
+        "enabled": true,
+        "price": "₹349 paperback"
       },
       {
         "id": "b3",
@@ -266,7 +272,8 @@
         "fullFileName": "",
         "buyUrl": "",
         "featured": false,
-        "enabled": true
+        "enabled": true,
+        "price": "₹299 paperback"
       }
     ],
     "works": [
@@ -443,7 +450,39 @@
       "showAbout": true,
       "showPrivacy": true
     },
-    "privacyPolicy": "Reader contact details are used only to respond to the message or enquiry. Do not share private or sensitive information through this website."
+    "privacyPolicy": "Reader contact details are used only to respond to the message or enquiry. Do not share private or sensitive information through this website.",
+    "contact": {
+      "email": "hello@inkandquill.example",
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "address": "Hyderabad, India"
+    },
+    "social": {
+      "instagram": "https://www.instagram.com/"
+    },
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Reader, Bengaluru",
+        "text": "A quiet, beautiful novel that stayed with me for weeks.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Book club, Hyderabad",
+        "text": "Our book club’s favourite this year — every chapter sparked a conversation.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Reader, Delhi",
+        "text": "Honest, warm writing about home and belonging.",
+        "rating": 5,
+        "enabled": true
+      }
+    ]
   },
   "admin": {
     "storageKey": "sitecraft:author-01",
@@ -557,6 +596,10 @@
           {
             "key": "format",
             "label": "Available formats"
+          },
+          {
+            "key": "price",
+            "label": "Price"
           },
           {
             "key": "synopsis",
@@ -885,6 +928,48 @@
         "addDefaults": {
           "title": "New photo",
           "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Reader reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Reader"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New reader",
+          "text": "",
+          "rating": 5,
           "enabled": true
         }
       },
