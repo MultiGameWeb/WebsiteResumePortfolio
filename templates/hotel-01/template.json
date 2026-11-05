@@ -1,0 +1,978 @@
+{
+  "id": "hotel-01",
+  "name": "Hotels & Resorts — The Stillwater Retreat",
+  "category": "Hotels & Resorts",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "rooms",
+      "label": "Rooms & Suites"
+    },
+    {
+      "id": "roomSearch",
+      "label": "Room search & category filters"
+    },
+    {
+      "id": "bookingEnquiry",
+      "label": "Booking enquiry form"
+    },
+    {
+      "id": "amenities",
+      "label": "Property amenities"
+    },
+    {
+      "id": "offers",
+      "label": "Offers & packages"
+    },
+    {
+      "id": "gallery",
+      "label": "Photo gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Guest reviews"
+    },
+    {
+      "id": "about",
+      "label": "About the property"
+    },
+    {
+      "id": "faq",
+      "label": "Frequently asked questions"
+    },
+    {
+      "id": "location",
+      "label": "Location & directions"
+    },
+    {
+      "id": "contact",
+      "label": "Contact details"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp enquiries"
+    },
+    {
+      "id": "policies",
+      "label": "Stay policies"
+    },
+    {
+      "id": "social",
+      "label": "Social media links"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "rooms",
+    "roomSearch",
+    "bookingEnquiry",
+    "amenities",
+    "offers",
+    "gallery",
+    "reviews",
+    "about",
+    "faq",
+    "location",
+    "contact",
+    "whatsapp",
+    "policies",
+    "social"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Hotel / resort name",
+      "required": true,
+      "placeholder": "The Stillwater Retreat"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / property team"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline"
+    },
+    {
+      "path": "brand.about",
+      "label": "About the property",
+      "type": "textarea"
+    },
+    {
+      "path": "property.propertyType",
+      "label": "Property type",
+      "type": "select",
+      "options": [
+        {
+          "value": "Hotel",
+          "label": "Hotel"
+        },
+        {
+          "value": "Resort",
+          "label": "Resort"
+        },
+        {
+          "value": "Boutique stay",
+          "label": "Boutique stay"
+        },
+        {
+          "value": "Homestay",
+          "label": "Homestay"
+        },
+        {
+          "value": "Villa retreat",
+          "label": "Villa retreat"
+        }
+      ]
+    },
+    {
+      "path": "property.starCategory",
+      "label": "Property category / rating"
+    },
+    {
+      "path": "property.checkInTime",
+      "label": "Standard check-in time"
+    },
+    {
+      "path": "property.checkOutTime",
+      "label": "Standard check-out time"
+    },
+    {
+      "path": "property.currency",
+      "label": "Tariff currency",
+      "type": "select",
+      "options": [
+        {
+          "value": "INR",
+          "label": "Indian Rupee (₹)"
+        },
+        {
+          "value": "USD",
+          "label": "US Dollar ($)"
+        },
+        {
+          "value": "EUR",
+          "label": "Euro (€)"
+        }
+      ]
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Hero introduction",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero image",
+      "type": "media"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone number"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email address"
+    },
+    {
+      "path": "contact.address",
+      "label": "Property address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Front desk / contact hours"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps link",
+      "type": "url"
+    },
+    {
+      "path": "social.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    },
+    {
+      "path": "social.facebook",
+      "label": "Facebook URL",
+      "type": "url"
+    },
+    {
+      "path": "social.youtube",
+      "label": "YouTube URL",
+      "type": "url"
+    },
+    {
+      "path": "policies.cancellation",
+      "label": "Cancellation policy",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.children",
+      "label": "Children & extra bed policy",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.pets",
+      "label": "Pet policy",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.notes",
+      "label": "Additional stay information",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "id": "hotel-01",
+    "brand": {
+      "businessName": "The Stillwater Retreat",
+      "ownerName": "Guest Relations",
+      "tagline": "A quieter kind of escape.",
+      "about": "Set between thoughtful design and restful surroundings, The Stillwater Retreat offers considered stays, warm hospitality and spaces to slow down. Discover rooms and suites, dine at your own pace and make time for the moments that matter."
+    },
+    "property": {
+      "propertyType": "Resort",
+      "starCategory": "Premium retreat",
+      "checkInTime": "2:00 PM",
+      "checkOutTime": "11:00 AM",
+      "currency": "INR"
+    },
+    "home": {
+      "title": "Find your space to slow down.",
+      "text": "A considered retreat for unhurried mornings, memorable stays and thoughtful hospitality. Explore our rooms, discover the experiences and plan your next escape."
+    },
+    "hero": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=2000&q=88",
+    "contact": {
+      "whatsapp": "919876543210",
+      "phone": "+91 98765 43210",
+      "email": "stay@stillwater.example",
+      "address": "Gachibowli, Hyderabad, Telangana, India",
+      "hours": "Front desk · 24 hours",
+      "maps": "https://maps.google.com/?q=Gachibowli+Hyderabad"
+    },
+    "social": {
+      "instagram": "https://instagram.com/",
+      "facebook": "https://facebook.com/",
+      "youtube": "https://youtube.com/"
+    },
+    "rooms": [
+      {
+        "id": "r1",
+        "name": "Deluxe Garden Room",
+        "subtitle": "A calm, comfortable stay",
+        "category": "Deluxe Room",
+        "rate": "₹4,500",
+        "maxGuests": "2 Adults",
+        "bed": "King bed",
+        "area": "320 sq. ft.",
+        "view": "Garden view",
+        "amenities": "King bed, Smart TV, Wi-Fi, Work desk, Rain shower, Tea & coffee",
+        "availabilityStatus": "Open for enquiries",
+        "description": "A thoughtfully designed room with warm natural textures, a generous bed and a peaceful garden outlook.",
+        "image": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Premier City Room",
+        "subtitle": "Elevated comfort with city views",
+        "category": "Premier Room",
+        "rate": "₹5,800",
+        "maxGuests": "2 Adults",
+        "bed": "King / Twin beds",
+        "area": "380 sq. ft.",
+        "view": "City view",
+        "amenities": "King or twin beds, Smart TV, Wi-Fi, Mini bar, Rain shower, In-room safe",
+        "availabilityStatus": "Open for enquiries",
+        "description": "A spacious contemporary room with thoughtful amenities for business and leisure travellers.",
+        "image": "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Family Suite",
+        "subtitle": "Space for everyone to unwind",
+        "category": "Suite",
+        "rate": "₹8,900",
+        "maxGuests": "4 Guests",
+        "bed": "King bed + sofa bed",
+        "area": "620 sq. ft.",
+        "view": "Pool / courtyard view",
+        "amenities": "Separate sitting area, Sofa bed, Smart TV, Wi-Fi, Bathtub, Dining corner",
+        "availabilityStatus": "On request",
+        "description": "A generous suite with a separate sitting area, designed for relaxed family stays.",
+        "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "r4",
+        "name": "Private Pool Villa",
+        "subtitle": "A private retreat surrounded by nature",
+        "category": "Villa",
+        "rate": "₹14,500",
+        "maxGuests": "2 Adults + 2 Guests",
+        "bed": "King bed",
+        "area": "900 sq. ft.",
+        "view": "Private garden & pool",
+        "amenities": "Private plunge pool, Outdoor deck, King bed, Lounge, Smart TV, Bath amenities",
+        "availabilityStatus": "On request",
+        "description": "A secluded villa with its own plunge pool and outdoor deck for a slower, more private escape.",
+        "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "r5",
+        "name": "Signature Presidential Suite",
+        "subtitle": "A spacious stay for special occasions",
+        "category": "Presidential Suite",
+        "rate": "₹22,000",
+        "maxGuests": "4 Guests",
+        "bed": "King bed + twin room",
+        "area": "1,450 sq. ft.",
+        "view": "Panoramic resort view",
+        "amenities": "Two bedrooms, Living room, Dining area, Premium bath, Butler assistance, Balcony",
+        "availabilityStatus": "On request",
+        "description": "An expansive signature suite with a separate living space and elevated in-room hospitality.",
+        "image": "https://images.unsplash.com/photo-1601918774946-25832a4be0d6?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      }
+    ],
+    "amenities": [
+      {
+        "id": "a1",
+        "icon": "✦",
+        "name": "All-day Dining",
+        "description": "A relaxed dining space with breakfast, local favourites and seasonal menus.",
+        "enabled": true
+      },
+      {
+        "id": "a2",
+        "icon": "◉",
+        "name": "Pool & Wellness",
+        "description": "Unwind by the pool or enjoy restorative wellness experiences.",
+        "enabled": true
+      },
+      {
+        "id": "a3",
+        "icon": "⌁",
+        "name": "Spa & Fitness",
+        "description": "Dedicated spaces for wellness, movement and relaxation.",
+        "enabled": true
+      },
+      {
+        "id": "a4",
+        "icon": "⌖",
+        "name": "Meeting & Events",
+        "description": "Flexible venues for private celebrations, gatherings and meetings.",
+        "enabled": true
+      },
+      {
+        "id": "a5",
+        "icon": "⌂",
+        "name": "Concierge & Transfers",
+        "description": "Assistance with local experiences, transport and special requests.",
+        "enabled": true
+      },
+      {
+        "id": "a6",
+        "icon": "⌁",
+        "name": "High-speed Wi-Fi",
+        "description": "Stay connected in guest rooms and common areas.",
+        "enabled": true
+      }
+    ],
+    "offers": [
+      {
+        "id": "o1",
+        "title": "Stay a little longer",
+        "description": "Ask about extended-stay rates and added benefits for longer visits.",
+        "details": "Subject to dates and room category. Contact the property for details.",
+        "enabled": true
+      },
+      {
+        "id": "o2",
+        "title": "A special weekend escape",
+        "description": "Plan a restful weekend with a room, dining and wellness experience.",
+        "details": "Custom packages available on enquiry.",
+        "enabled": true
+      },
+      {
+        "id": "o3",
+        "title": "Celebrate together",
+        "description": "Enquire about private celebrations, family occasions and group stays.",
+        "details": "Venue and room options depend on dates and guest count.",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "The arrival experience",
+        "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "A restful guest room",
+        "image": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Poolside moments",
+        "image": "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Dining & gatherings",
+        "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g5",
+        "title": "Quiet corners",
+        "image": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=86",
+        "enabled": true
+      },
+      {
+        "id": "g6",
+        "title": "A private escape",
+        "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=86",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "v1",
+        "name": "A guest from Hyderabad",
+        "rating": "5",
+        "text": "A peaceful stay, warm service and a room that felt thoughtfully prepared.",
+        "enabled": true
+      },
+      {
+        "id": "v2",
+        "name": "Weekend traveller",
+        "rating": "5",
+        "text": "The team made our short break comfortable from arrival through checkout.",
+        "enabled": true
+      },
+      {
+        "id": "v3",
+        "name": "Family guest",
+        "rating": "5",
+        "text": "Spacious accommodation and helpful staff made travelling with family easier.",
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I request a room booking?",
+        "answer": "Choose your preferred room and dates, enter the guest details and send an enquiry on WhatsApp. The property team will confirm availability and the final tariff.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Is the room availability shown live?",
+        "answer": "Room status on this website is maintained by the property and is indicative only. Your stay is not confirmed until the property responds with confirmation.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "What are the check-in and check-out times?",
+        "answer": "Standard check-in is 2:00 PM and check-out is 11:00 AM. Please contact the property for early check-in or late checkout requests.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Can I request airport transfers or special arrangements?",
+        "answer": "Yes. Mention your request in the enquiry and the property team will let you know what can be arranged.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Are children and extra beds allowed?",
+        "answer": "Policies vary by room category. Please share the number and ages of guests before confirming your stay.",
+        "enabled": true
+      }
+    ],
+    "policies": {
+      "cancellation": "Cancellation and refund terms depend on the selected rate plan. Please confirm the applicable terms with the property before payment.",
+      "children": "Children are welcome. Extra beds and occupancy limits depend on the selected room category; please confirm while enquiring.",
+      "pets": "Please contact the property before arrival to confirm its current pet policy.",
+      "notes": "Valid photo identification is required at check-in. Tariffs, taxes and inclusions should be confirmed by the property before booking."
+    },
+    "settings": {
+      "currency": "INR",
+      "showAbout": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFAQ": true,
+      "showPolicies": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:hotel-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "property",
+        "label": "Property details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Property name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Property team"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "property.propertyType",
+            "label": "Property type",
+            "type": "select",
+            "options": [
+              "Hotel",
+              "Resort",
+              "Boutique stay",
+              "Homestay",
+              "Villa retreat"
+            ]
+          },
+          {
+            "path": "property.starCategory",
+            "label": "Property category / rating"
+          },
+          {
+            "path": "property.checkInTime",
+            "label": "Check-in time"
+          },
+          {
+            "path": "property.checkOutTime",
+            "label": "Check-out time"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the property",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home page",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "rooms",
+        "label": "Rooms & suites",
+        "type": "collection",
+        "itemLabel": "room type",
+        "path": "rooms",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Room / suite name"
+          },
+          {
+            "key": "subtitle",
+            "label": "Short description"
+          },
+          {
+            "key": "category",
+            "label": "Room category",
+            "type": "select",
+            "options": [
+              "Deluxe Room",
+              "Premier Room",
+              "Suite",
+              "Villa",
+              "Presidential Suite",
+              "Other"
+            ]
+          },
+          {
+            "key": "rate",
+            "label": "Starting tariff per night"
+          },
+          {
+            "key": "maxGuests",
+            "label": "Maximum occupancy"
+          },
+          {
+            "key": "bed",
+            "label": "Bed configuration"
+          },
+          {
+            "key": "area",
+            "label": "Room size"
+          },
+          {
+            "key": "view",
+            "label": "View"
+          },
+          {
+            "key": "amenities",
+            "label": "In-room amenities (comma separated)",
+            "type": "textarea"
+          },
+          {
+            "key": "availabilityStatus",
+            "label": "Enquiry status",
+            "type": "select",
+            "options": [
+              "Open for enquiries",
+              "On request",
+              "Not accepting enquiries"
+            ]
+          },
+          {
+            "key": "description",
+            "label": "Room description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Room photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New room category",
+          "subtitle": "",
+          "category": "Deluxe Room",
+          "rate": "Ask for tariff",
+          "maxGuests": "2 Guests",
+          "bed": "King bed",
+          "area": "",
+          "view": "",
+          "amenities": "Wi-Fi, Smart TV",
+          "availabilityStatus": "On request",
+          "description": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "amenities",
+        "label": "Amenities & facilities",
+        "type": "collection",
+        "itemLabel": "facility",
+        "path": "amenities",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon / symbol"
+          },
+          {
+            "key": "name",
+            "label": "Facility name"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✦",
+          "name": "New facility",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "offers",
+        "label": "Offers & stay packages",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "offers",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Offer title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "details",
+            "label": "Terms / details",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New stay offer",
+          "description": "",
+          "details": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Photo gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Photo title"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Guest reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Guest name"
+          },
+          {
+            "key": "rating",
+            "label": "Rating (1–5)"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Guest",
+          "rating": "5",
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faqs",
+        "label": "FAQs",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & directions",
+        "fields": [
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number"
+          },
+          {
+            "path": "contact.phone",
+            "label": "Phone number"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Property address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Front desk hours"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "social.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "social.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "social.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "policies",
+        "label": "Stay policies",
+        "fields": [
+          {
+            "path": "policies.cancellation",
+            "label": "Cancellation policy",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.children",
+            "label": "Children & extra bed policy",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.pets",
+            "label": "Pet policy",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.notes",
+            "label": "Additional information",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Website sections",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "About property",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Photo gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Guest reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFAQ",
+            "label": "FAQs",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPolicies",
+            "label": "Stay policies",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
