@@ -5,7 +5,7 @@ const list=a=>(Array.isArray(a)?a:[]).filter(x=>x&&x.enabled!==false);
 const money=x=>esc(x||'Enquire for quotation');
 const dateFmt=x=>{if(!x)return'';const d=new Date(x+'T00:00:00');return Number.isNaN(d.getTime())?esc(x):d.toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})};
 const today=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
  const b=d.brand||{},h=d.home||{},v=d.venue||{},c=d.contact||{},s=d.settings||{},p=d.policies||{},ok=id=>selected.includes(id);
  const halls=list(d.halls),events=list(d.eventTypes),packages=list(d.packages),catering=list(d.catering),services=list(d.services),facilities=list(d.facilities),dates=list(d.availability),gallery=list(d.gallery),videos=list(d.videos),reviews=list(d.reviews),faqs=list(d.faqs),team=list(d.team);
  let out='<div class="banquet-01" data-banquet-site>';
@@ -33,7 +33,7 @@ export function render(d={},selected=[]){
  out+='<footer class="bh-footer"><div><b>'+esc(b.businessName||'Grand Celebration Banquets')+'</b><span>'+esc(b.tagline||'A beautiful setting for every gathering.')+'</span></div><small>© '+new Date().getFullYear()+' '+esc(b.businessName||'Grand Celebration Banquets')+'. All rights reserved.</small></footer></div>';
  return out;
 }
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
  const site=root.querySelector('[data-banquet-site]');if(!site)return;
  let filter='all',query='';
  const apply=()=>{let count=0;site.querySelectorAll('[data-hall-card]').forEach(card=>{const show=(filter==='all'||card.dataset.type===filter)&&(card.dataset.search||'').includes(query);card.hidden=!show;if(show)count++});const empty=site.querySelector('[data-hall-empty]');if(empty)empty.hidden=count>0};
@@ -46,3 +46,55 @@ export function init(root,d={},selected=[]){
  const wa=selected.includes('whatsapp')?digits(d.contact?.whatsapp):'';if(wa){const msg='BANQUET EVENT ENQUIRY — '+(d.brand?.businessName||'Venue')+'\n\nName: '+lead.name+'\nPhone: '+lead.phone+'\nEmail: '+lead.email+'\nEvent: '+lead.eventType+'\nDate: '+lead.eventDate+'\nTime: '+lead.time+'\nPreferred hall: '+lead.hall+'\nPackage: '+lead.package+'\nGuests: '+lead.guests+'\nFood: '+lead.foodType+'\nBudget: '+lead.budget+'\nServices: '+lead.services+'\nRequirements: '+lead.message+'\n\nPlease confirm hall and date availability and share the final quotation.';window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(msg),'_blank','noopener')}
  });}
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=true;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}
