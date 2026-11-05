@@ -79,7 +79,15 @@ function scBaseRender(d={},selected=[]){
   }
 
   if(show.contact||show.social){
-    html+='<section class="bc-contact" id="contact"><div class="bc-contact-main"><span class="bc-kicker">See you soon</span><h2>'+esc(name)+'</h2><p>'+esc(c.address||'Hyderabad, Telangana')+'</p><div class="bc-contact-actions">'+(phone?'<a class="bc-btn bc-btn-cream" href="'+esc(url('tel:'+phone))+'">Call '+esc(c.phone)+'</a>':'')+(waOn?'<a class="bc-btn bc-btn-whatsapp" target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hello Brew Corner Café! I have an enquiry.')))+'">WhatsApp us</a>':'')+'</div></div><div class="bc-contact-side">'+(c.email?'<a href="'+esc(url('mailto:'+c.email))+'">'+esc(c.email)+'</a>':'')+(url(c.maps)?'<a target="_blank" rel="noopener" href="'+esc(url(c.maps))+'">Google Maps directions ↗</a>':'')+(show.social?'<div class="bc-social">'+(url(c.instagram)?'<a target="_blank" rel="noopener" href="'+esc(url(c.instagram))+'">Instagram ↗</a>':'')+(url(c.facebook)?'<a target="_blank" rel="noopener" href="'+esc(url(c.facebook))+'">Facebook ↗</a>':'')+(url(c.youtube)?'<a target="_blank" rel="noopener" href="'+esc(url(c.youtube))+'">YouTube ↗</a>':'')+'</div>':'')+'</div></section>';
+    html+='<section class="bc-contact" id="contact">';
+    if(show.contact){
+      html+='<div class="bc-contact-main"><span class="bc-kicker">See you soon</span><h2>'+esc(name)+'</h2><p>'+esc(c.address||'Hyderabad, Telangana')+'</p><div class="bc-contact-actions">'+(phone?'<a class="bc-btn bc-btn-cream" href="'+esc(url('tel:'+phone))+'">Call '+esc(c.phone)+'</a>':'')+(waOn?'<a class="bc-btn bc-btn-whatsapp" target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hello Brew Corner Café! I have an enquiry.')))+'">WhatsApp us</a>':'')+'</div></div>';
+    }else{
+      html+='<div class="bc-contact-main"><span class="bc-kicker">Stay connected</span><h2>Follow the coffee moments.</h2></div>';
+    }
+    if(show.contact&&c.email)html+='<div class="bc-contact-side"><a href="'+esc(url('mailto:'+c.email))+'">'+esc(c.email)+'</a></div>';
+    if(show.social)html+='<div class="bc-contact-side"><div class="bc-social">'+(url(c.instagram)?'<a target="_blank" rel="noopener" href="'+esc(url(c.instagram))+'">Instagram ↗</a>':'')+(url(c.facebook)?'<a target="_blank" rel="noopener" href="'+esc(url(c.facebook))+'">Facebook ↗</a>':'')+(url(c.youtube)?'<a target="_blank" rel="noopener" href="'+esc(url(c.youtube))+'">YouTube ↗</a>':'')+'</div></div>';
+    html+='</section>';
   }
 
   html+='<footer class="bc-footer"><a href="#top">'+esc(name)+'</a><span>'+esc(b.tagline||'Coffee · Conversations · Community')+'</span><span>© '+new Date().getFullYear()+' · All rights reserved.</span></footer>';
