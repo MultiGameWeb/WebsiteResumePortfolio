@@ -1,0 +1,995 @@
+{
+  "id": "cafe-01",
+  "name": "Café / Coffee Shop — Brew Corner Café",
+  "category": "Cafés & Coffee Shops",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Café"
+    },
+    {
+      "id": "menu",
+      "label": "Menu & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Combo Offers"
+    },
+    {
+      "id": "work",
+      "label": "Wi-Fi & Work-friendly Space"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Reserve a Table / Meet-up Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Café Name",
+      "required": true,
+      "placeholder": "Brew Corner Café"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Café Manager",
+      "placeholder": "Aarav Reddy"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Coffee · Conversations · Community"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "A familiar corner for your favourite cup."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Café",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Good coffee. Better conversations."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Your neighbourhood coffee corner"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "hello@brewcorner.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Café Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Daily · 8:00 AM – 10:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Brew Corner Café",
+      "ownerName": "Aarav Reddy",
+      "tagline": "Coffee · Conversations · Community",
+      "motto": "A familiar corner for your favourite cup.",
+      "about": "Brew Corner Café is a relaxed neighbourhood spot in Kondapur for carefully brewed coffee, comforting tea, fresh snacks and something sweet. Drop in for a quiet solo break, catch up with a friend or bring your team together around a table."
+    },
+    "home": {
+      "eyebrow": "YOUR NEIGHBOURHOOD COFFEE CORNER",
+      "title": "Good coffee. Better conversations.",
+      "text": "Slow down, sip something lovely and make room for the moments that matter. Your everyday café corner in Hyderabad."
+    },
+    "hero": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "m1",
+        "name": "Classic Cappuccino",
+        "category": "Coffee",
+        "price": "₹159",
+        "description": "Double espresso with silky steamed milk and a soft layer of foam.",
+        "tag": "House favourite",
+        "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Cup of freshly prepared coffee",
+        "enabled": true
+      },
+      {
+        "id": "m2",
+        "name": "South Indian Filter Coffee",
+        "category": "Coffee",
+        "price": "₹99",
+        "description": "Strong decoction blended with hot milk, served the traditional way.",
+        "tag": "Local pick",
+        "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Freshly brewed coffee in a cup",
+        "enabled": true
+      },
+      {
+        "id": "m3",
+        "name": "Iced Vanilla Latte",
+        "category": "Coffee",
+        "price": "₹179",
+        "description": "Chilled espresso, milk and a gentle vanilla note.",
+        "tag": "Chilled",
+        "image": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Iced coffee drink",
+        "enabled": true
+      },
+      {
+        "id": "m4",
+        "name": "Ginger Masala Chai",
+        "category": "Tea",
+        "price": "₹89",
+        "description": "Black tea simmered with ginger and warming Indian spices.",
+        "tag": "Freshly brewed",
+        "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "A cup of freshly served tea",
+        "enabled": true
+      },
+      {
+        "id": "m5",
+        "name": "Lemon Mint Iced Tea",
+        "category": "Tea",
+        "price": "₹129",
+        "description": "Black tea poured over ice with lemon and fresh mint.",
+        "tag": "Chilled",
+        "image": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Iced tea served with citrus",
+        "enabled": true
+      },
+      {
+        "id": "m6",
+        "name": "Paneer Cheese Toast",
+        "category": "Snacks",
+        "price": "₹189",
+        "description": "Toasted bread layered with spiced paneer, cheese and herbs.",
+        "tag": "Vegetarian",
+        "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Toasted sandwich served on a plate",
+        "enabled": true
+      },
+      {
+        "id": "m7",
+        "name": "Peri Peri Fries",
+        "category": "Snacks",
+        "price": "₹139",
+        "description": "Crisp fries tossed in a tangy peri peri seasoning.",
+        "tag": "Snack time",
+        "image": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Golden crisp potato fries",
+        "enabled": true
+      },
+      {
+        "id": "m8",
+        "name": "Walnut Brownie",
+        "category": "Desserts",
+        "price": "₹149",
+        "description": "A rich chocolate brownie with crunchy walnut pieces.",
+        "tag": "Sweet treat",
+        "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Chocolate brownie dessert",
+        "enabled": true
+      },
+      {
+        "id": "m9",
+        "name": "Baked Cheesecake",
+        "category": "Desserts",
+        "price": "₹199",
+        "description": "Creamy baked cheesecake with a buttery biscuit base.",
+        "tag": "Bestseller",
+        "image": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Slice of cheesecake on a plate",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Coffee & Catch-up",
+        "description": "Any regular cappuccino with a paneer cheese toast.",
+        "price": "₹319 for two",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Tea-time Pair",
+        "description": "Two masala chais with a freshly prepared snack to share.",
+        "price": "From ₹249",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Sweet Break",
+        "description": "Two hot drinks paired with two walnut brownies.",
+        "price": "₹399",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "⌁",
+        "title": "Complimentary Wi-Fi",
+        "description": "Stay connected while you work, read or catch up on messages.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "⌘",
+        "title": "Power-friendly seating",
+        "description": "Selected tables have easy access to charging points.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "◷",
+        "title": "Work-friendly corners",
+        "description": "Settle in with your laptop during a relaxed café visit.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "✳",
+        "title": "Meet-up tables",
+        "description": "Bring a friend or a small team together over coffee.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "mt1",
+        "name": "Reserve a table",
+        "enabled": true
+      },
+      {
+        "id": "mt2",
+        "name": "Work session",
+        "enabled": true
+      },
+      {
+        "id": "mt3",
+        "name": "Coffee with friends",
+        "enabled": true
+      },
+      {
+        "id": "mt4",
+        "name": "Small group meet-up",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "The café corner",
+        "alt": "Warm and inviting café interior",
+        "image": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "A fresh coffee moment",
+        "alt": "Fresh coffee served at a café table",
+        "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Made for slow mornings",
+        "alt": "Coffee and breakfast served together",
+        "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "A sweet little break",
+        "alt": "Dessert ready to enjoy with coffee",
+        "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Kondapur",
+        "text": "A cosy place to catch up with friends. The cappuccino and brownie are lovely.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Madhapur",
+        "text": "Good coffee, comfortable seating and a calm corner to finish some work.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Gachibowli",
+        "text": "We planned a small team meet-up here and had a relaxed, easy afternoon.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "Is Wi-Fi available for customers?",
+        "answer": "Yes, complimentary Wi-Fi is available for café guests. Please ask our team for the network details when you visit.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Is the café suitable for working on a laptop?",
+        "answer": "Yes. We have work-friendly seating and charging points at selected tables. For a longer work session, message us to check the best time to visit.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Can I reserve a table for a small meet-up?",
+        "answer": "Yes. Send your preferred date, time and group size through the meet-up form. Our team will reply on WhatsApp to confirm.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Do you have vegetarian snacks and desserts?",
+        "answer": "Yes, the menu includes vegetarian snacks and desserts. Please ask our team about ingredients or specific dietary requirements.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Can I order takeaway?",
+        "answer": "Yes. Message us on WhatsApp with the items you would like and we will confirm availability and pickup details.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "8:00 AM",
+        "close": "10:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "9:00 AM",
+        "close": "10:30 PM",
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "9:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@brewcorner.example",
+      "address": "Plot 18, Botanical Garden Road, Kondapur, Hyderabad, Telangana 500084",
+      "maps": "https://maps.google.com/?q=Botanical+Garden+Road+Kondapur+Hyderabad",
+      "hours": "Mon–Fri · 8:00 AM – 10:00 PM | Sat–Sun · 9:00 AM – 10:30 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": "https://www.youtube.com/"
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:cafe-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Café Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Café name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the café",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Menu & Prices",
+        "type": "collection",
+        "itemLabel": "menu item",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Item name"
+          },
+          {
+            "key": "category",
+            "label": "Category",
+            "type": "select",
+            "options": [
+              "Coffee",
+              "Tea",
+              "Snacks",
+              "Desserts"
+            ]
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Menu label"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New menu item",
+          "category": "Coffee",
+          "price": "₹149",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Combo Offers",
+        "type": "collection",
+        "itemLabel": "combo",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Combo name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Combo price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New combo",
+          "description": "",
+          "price": "From ₹299",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Wi-Fi & Work Highlights",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Meet-up Form Options",
+        "type": "collection",
+        "itemLabel": "visit type",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Visit type"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New visit type",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New café photo",
+          "alt": "Café photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "8:00 AM",
+          "close": "10:00 PM",
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Menu",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Combo offers",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Work highlights",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Reserve / meet-up form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
