@@ -95,7 +95,7 @@ function scMobileNav(root){
   btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
   nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
-  addEventListener('resize',sync);sync();
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
 }
 
 /* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
