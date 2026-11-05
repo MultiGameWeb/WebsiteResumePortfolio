@@ -854,6 +854,11 @@
             "label": "Closing time"
           },
           {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
             "key": "enabled",
             "label": "Show",
             "type": "checkbox"
@@ -863,7 +868,8 @@
           "day": "Monday",
           "open": "8:00 AM",
           "close": "10:00 PM",
-          "enabled": true
+          "enabled": true,
+          "closed": false
         }
       },
       {
