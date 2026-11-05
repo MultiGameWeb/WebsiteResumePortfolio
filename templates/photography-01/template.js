@@ -1,6 +1,87 @@
-const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const url=v=>{const x=String(v??'').trim();return /^(https?:|tel:|mailto:|data:image\/)/i.test(x)||/^[\w./-]+$/.test(x)?x:''};const tel=v=>String(v??'').replace(/[^\d+]/g,'');const contactLine=c=>[c.call?'<a class="pg-tel" href="tel:'+esc(tel(c.call))+'">'+esc(c.call)+'</a>':'',c.location?esc(c.location||c.address||''):''].filter(Boolean).join(' · ');
-export function render(d={},selected=[]){const b=d.brand||{},h=d.home||{},c=d.contact||{},ok=x=>selected.includes(x),s=d.settings||{},services=(d.services||[]).filter(x=>x.enabled!==false),gallery=(d.gallery||[]).filter(x=>x.enabled!==false),reviews=(d.reviews||[]).filter(x=>x.enabled!==false),faqs=(d.faqs||[]).filter(x=>x.enabled!==false);return `<div class="site-preview t1"><header><div><strong>${esc(b.businessName||'Your Studio')}</strong></div><div class="template-header-right"><nav>${ok('about')?'<a href="#about">About</a>':''}${ok('services')?'<a href="#services">Services</a>':''}${ok('gallery')?'<a href="#gallery">Gallery</a>':''}${ok('reviews')?'<a href="#reviews">Reviews</a>':''}${ok('contact')?'<a href="#contact">Contact</a>':''}</nav><a class="template-admin-link" href="admin.html?template=photography-01">Admin</a></div></header>${ok('home')?`<section class="hero"><img src="${esc(url(d.hero))}" alt=""><div><small>${esc(b.ownerName||'PHOTOGRAPHY STUDIO')}</small><h1>${esc(h.title||b.businessName||'Your story.')}</h1><p>${esc(h.text||'')}</p>${ok('whatsapp')&&c.whatsapp?`<a class="btn" target="_blank" href="https://wa.me/${String(c.whatsapp).replace(/\D/g,'')}">WhatsApp</a>`:''}</div></section>`:''}${ok('about')&&s.showAbout!==false&&b.about?`<section id="about"><small>ABOUT</small><h2>${esc(b.about)}</h2></section>`:''}${ok('services')&&s.showServices!==false?`<section id="services" class="soft"><small>SERVICES</small><h2>Photography services</h2><div class="grid">${services.map(x=>`<article><h3>${esc(x.name)}</h3><strong>${esc(x.price||'')}</strong><p>${esc(x.description||'')}</p></article>`).join('')}</div></section>`:''}${ok('gallery')&&s.showGallery!==false&&gallery.length?`<section id="gallery"><small>PORTFOLIO</small><h2>Selected work</h2><div class="gallery">${gallery.map(x=>`<figure><img src="${esc(url(x.image))}" alt="${esc(x.title||'')}" loading="lazy" decoding="async"><figcaption>${esc(x.title||'')}</figcaption></figure>`).join('')}</div></section>`:''}${ok('reviews')&&s.showReviews!==false&&reviews.length?`<section id="reviews" class="soft"><small>REVIEWS</small><h2>Kind words</h2><div class="grid">${reviews.map(x=>`<article><b>${'★'.repeat(Number(x.rating)||0)}</b><p>“${esc(x.text||'')}”</p><strong>${esc(x.name||'Customer')}</strong></article>`).join('')}</div></section>`:''}${ok('contact')&&s.showContact!==false?`<section id="contact"><small>CONTACT</small><h2>Let’s create something memorable.</h2><p>${contactLine(c)}</p><div>${ok('location')&&c.maps?`<a class="btn dark" target="_blank" href="${esc(url(c.maps))}">Directions</a>`:''}${ok('whatsapp')&&c.whatsapp?`<a class="btn" target="_blank" href="https://wa.me/${String(c.whatsapp).replace(/\D/g,'')}">WhatsApp</a>`:''}</div></section>`:''}${ok('faq')&&s.showFaq!==false&&faqs.length?`<section id="faq" class="soft"><small>FAQ</small><h2>Questions, answered.</h2>${faqs.map(x=>`<details><summary>${esc(x.question)}</summary><p>${esc(x.answer)}</p></details>`).join('')}</section>`:''}<footer>© ${new Date().getFullYear()} ${esc(b.businessName||'Your Studio')}</footer></div>`}
-export function init(root){scMobileNav(arguments[0]);if(!root||root.__pgLb)return;root.__pgLb=true;root.addEventListener('click',e=>{const img=e.target.closest&&e.target.closest('.gallery img');if(!img)return;const o=document.createElement('div');o.className='pg-lightbox';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.innerHTML='<button type="button" aria-label="Close">×</button><img alt="">';const big=o.querySelector('img');big.src=img.currentSrc||img.src;big.alt=img.alt||'';const k=ev=>{if(ev.key==='Escape')close()};const close=()=>{o.remove();document.removeEventListener('keydown',k)};o.addEventListener('click',close);document.addEventListener('keydown',k);root.appendChild(o)})}
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const url=v=>{const x=String(v??'').trim();return /^(https?:|tel:|mailto:|data:image\/)/i.test(x)||/^[\w./-]+$/.test(x)?x:''};
+const tel=v=>String(v??'').replace(/[^\d+]/g,'');
+const digits=v=>String(v??'').replace(/\D/g,'');
+const wa=(n,msg)=>{const p=digits(n);return p?'https://wa.me/'+p+(msg?'?text='+encodeURIComponent(msg):''):''};
+
+export function render(d={},selected=[]){
+  const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},ok=x=>selected.includes(x);
+  const services=(d.services||[]).filter(x=>x.enabled!==false);
+  const gallery=(d.gallery||[]).filter(x=>x.enabled!==false&&url(x.image));
+  const reviews=(d.reviews||[]).filter(x=>x.enabled!==false);
+  const faqs=(d.faqs||[]).filter(x=>x.enabled!==false);
+  const name=b.businessName||'Your Studio';
+  const waOn=ok('whatsapp')&&digits(c.whatsapp);
+  const enquire=msg=>waOn?wa(c.whatsapp,msg):'';
+  const show={about:ok('about')&&s.showAbout!==false&&b.about,services:ok('services')&&s.showServices!==false&&services.length,gallery:ok('gallery')&&s.showGallery!==false&&gallery.length,
+    reviews:ok('reviews')&&s.showReviews!==false&&reviews.length,faq:ok('faq')&&s.showFaq!==false&&faqs.length,contact:ok('contact')&&s.showContact!==false};
+  const nav=[show.gallery&&['#gallery','Portfolio'],show.services&&['#services','Services'],show.about&&['#about','About'],show.reviews&&['#reviews','Reviews'],show.faq&&['#faq','FAQ'],show.contact&&['#contact','Contact']].filter(Boolean);
+  let html='<div class="site-preview t1">';
+
+  html+='<header class="pg-nav"><a class="pg-brand" href="#top"><strong>'+esc(name)+'</strong>'+(b.motto?'<small>'+esc(b.motto)+'</small>':'')+'</a>'+
+    '<nav aria-label="Main">'+nav.map(([href,label])=>'<a href="'+href+'">'+label+'</a>').join('')+'</nav>'+
+    '<div class="template-header-right">'+(waOn?'<a class="pg-btn dark small" target="_blank" rel="noopener" href="'+esc(enquire('Hi, I would like to check your availability for a shoot.'))+'">Check availability</a>':'')+'<a class="template-admin-link" href="admin.html?template=photography-01">Admin</a></div></header>';
+
+  if(ok('home')){
+    html+='<section class="pg-hero" id="top">'+(url(d.hero)?'<img src="'+esc(url(d.hero))+'" alt="">':'')+'<div class="pg-hero-shade"></div><div class="pg-hero-copy"><span class="pg-eyebrow">'+esc(b.ownerName||'Photography studio')+'</span><h1>'+esc(h.title||name)+'</h1>'+(h.text?'<p>'+esc(h.text)+'</p>':'')+
+      '<div class="pg-actions">'+(show.gallery?'<a class="pg-btn light" href="#gallery">View portfolio</a>':'')+(waOn?'<a class="pg-btn ghost" target="_blank" rel="noopener" href="'+esc(enquire('Hi, I would like to check your availability for a shoot.'))+'">Enquire on WhatsApp</a>':'')+'</div></div></section>';
+  }
+
+  if(show.gallery){
+    html+='<section class="pg-section" id="gallery"><div class="pg-head"><span class="pg-kicker">Portfolio</span><h2>Selected work</h2><p>Tap any photograph to view it larger.</p></div><div class="gallery">'+
+      gallery.map((x,i)=>'<figure><button type="button" class="pg-open" data-index="'+i+'" aria-label="View '+esc(x.title||'photo '+(i+1))+' larger"><img src="'+esc(url(x.image))+'" alt="'+esc(x.title||'Portfolio photograph')+'" loading="lazy" decoding="async"></button>'+(x.title?'<figcaption>'+esc(x.title)+'</figcaption>':'')+'</figure>').join('')+'</div></section>';
+  }
+
+  if(show.services){
+    html+='<section class="pg-section soft" id="services"><div class="pg-head"><span class="pg-kicker">Services</span><h2>Ways we can work together</h2></div><div class="pg-services">'+
+      services.map((x,i)=>'<article><span class="pg-num">'+String(i+1).padStart(2,'0')+'</span><div><h3>'+esc(x.name||'Service')+'</h3>'+(x.description?'<p>'+esc(x.description)+'</p>':'')+'</div><div class="pg-service-end">'+(x.price?'<strong>'+esc(x.price)+'</strong>':'')+
+        (waOn?'<a target="_blank" rel="noopener" href="'+esc(enquire('Hi, I would like to enquire about: '+(x.name||'a shoot')))+'">Enquire →</a>':'')+'</div></article>').join('')+'</div></section>';
+    html+='<section class="pg-section pg-process" aria-label="How it works"><div class="pg-head"><span class="pg-kicker">How it works</span><h2>From first message to final gallery</h2></div><ol>'+
+      [['Enquire','Share your date, location and the kind of shoot you have in mind.'],['Plan','We confirm the package, timeline and the moments that matter most to you.'],['Shoot','Relaxed, candid direction on the day so you can simply be yourselves.'],['Deliver','Your edited photographs, ready to share and keep.']].map((x,i)=>'<li><b>'+(i+1)+'</b><h3>'+x[0]+'</h3><p>'+x[1]+'</p></li>').join('')+'</ol></section>';
+  }
+
+  if(show.about){
+    html+='<section class="pg-section pg-about" id="about"><span class="pg-kicker">About</span><h2>'+esc(b.about)+'</h2>'+(b.ownerName?'<p class="pg-sign">— '+esc(b.ownerName)+'</p>':'')+'</section>';
+  }
+
+  if(show.reviews){
+    html+='<section class="pg-section soft" id="reviews"><div class="pg-head"><span class="pg-kicker">Kind words</span><h2>From our couples and clients</h2></div><div class="pg-reviews">'+
+      reviews.map(x=>{const r=Math.max(0,Math.min(5,Number(x.rating)||0));return '<figure>'+(r?'<div class="pg-stars" aria-label="'+r+' out of 5">'+'★'.repeat(r)+'</div>':'')+'<blockquote>“'+esc(x.text||'')+'”</blockquote><figcaption>'+esc(x.name||'Client')+'</figcaption></figure>'}).join('')+'</div></section>';
+  }
+
+  if(show.faq){
+    html+='<section class="pg-section" id="faq"><div class="pg-head"><span class="pg-kicker">FAQ</span><h2>Questions, answered.</h2></div><div class="pg-faq">'+
+      faqs.map(x=>'<details><summary>'+esc(x.question||'Question')+'</summary><p>'+esc(x.answer||'')+'</p></details>').join('')+'</div></section>';
+  }
+
+  if(show.contact){
+    html+='<section class="pg-contact" id="contact"><div><span class="pg-kicker">Contact</span><h2>Let’s create something memorable.</h2><p>'+[c.location?esc(c.location):'',c.call?'<a href="tel:'+esc(tel(c.call))+'">'+esc(c.call)+'</a>':''].filter(Boolean).join(' · ')+'</p></div>'+
+      '<div class="pg-actions">'+(waOn?'<a class="pg-btn light" target="_blank" rel="noopener" href="'+esc(enquire('Hi, I would like to check your availability for a shoot.'))+'">WhatsApp us</a>':'')+(c.call?'<a class="pg-btn ghost" href="tel:'+esc(tel(c.call))+'">Call</a>':'')+
+      (ok('location')&&url(c.maps)?'<a class="pg-btn ghost" target="_blank" rel="noopener" href="'+esc(url(c.maps))+'">Directions</a>':'')+'</div></section>';
+  }
+
+  html+='<footer class="pg-footer"><strong>'+esc(name)+'</strong><span>© '+new Date().getFullYear()+(b.motto?' · '+esc(b.motto):'')+'</span></footer>';
+  if(waOn)html+='<a class="pg-float" target="_blank" rel="noopener" href="'+esc(enquire('Hi, I would like to check your availability for a shoot.'))+'" aria-label="Enquire on WhatsApp">WhatsApp</a>';
+  return html+'</div>';
+}
+
+export function init(root){
+  scMobileNav(arguments[0]);
+  if(!root||root.__pgLb)return;root.__pgLb=true;
+  // Lightbox with previous / next
+  root.addEventListener('click',e=>{
+    const open=e.target.closest&&e.target.closest('.pg-open');if(!open)return;
+    const imgs=[...root.querySelectorAll('.gallery img')];let i=+open.dataset.index||0;
+    const o=document.createElement('div');o.className='pg-lightbox';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-label','Photo viewer');
+    o.innerHTML='<button type="button" class="pg-lb-close" aria-label="Close">×</button><button type="button" class="pg-lb-prev" aria-label="Previous photo">‹</button><figure><img alt=""><figcaption></figcaption></figure><button type="button" class="pg-lb-next" aria-label="Next photo">›</button>';
+    const big=o.querySelector('img'),cap=o.querySelector('figcaption');
+    const show=n=>{i=(n+imgs.length)%imgs.length;big.src=imgs[i].currentSrc||imgs[i].src;big.alt=imgs[i].alt||'';cap.textContent=imgs[i].alt||'';};
+    const close=()=>{o.remove();document.removeEventListener('keydown',k);open.focus();};
+    const k=ev=>{if(ev.key==='Escape')close();if(ev.key==='ArrowRight')show(i+1);if(ev.key==='ArrowLeft')show(i-1);};
+    o.addEventListener('click',ev=>{if(ev.target.closest('.pg-lb-prev'))return show(i-1);if(ev.target.closest('.pg-lb-next'))return show(i+1);if(ev.target===o||ev.target.closest('.pg-lb-close'))close();});
+    document.addEventListener('keydown',k);root.appendChild(o);show(i);o.querySelector('.pg-lb-close').focus();
+  });
+}
 
 /* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
 function scMobileNav(root){
