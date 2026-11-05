@@ -201,6 +201,24 @@
       "path": "privacyPolicy",
       "label": "Privacy Policy",
       "type": "textarea"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
@@ -659,7 +677,8 @@
       "email": "hello@atelierforma.example",
       "address": "Banjara Hills, Hyderabad, Telangana",
       "maps": "https://maps.google.com/?q=Banjara+Hills+Hyderabad",
-      "hours": "Mon–Sat · 10:00 AM–7:00 PM"
+      "hours": "Mon–Sat · 10:00 AM–7:00 PM",
+      "instagram": "https://www.instagram.com/"
     },
     "termsText": "Design scope, drawings, revisions, material allowances, execution responsibilities, payment milestones and site conditions should be confirmed in the project's written quotation and agreement.",
     "privacyPolicy": "We use enquiry details to respond to consultation requests and project enquiries.",
@@ -1580,6 +1599,24 @@
           {
             "path": "contact.hours",
             "label": "Studio hours"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
           }
         ]
       },

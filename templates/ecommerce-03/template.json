@@ -29,6 +29,14 @@
       "label": "Gallery"
     },
     {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
       "id": "location",
       "label": "Location & directions"
     },
@@ -137,6 +145,24 @@
       "path": "legal.privacyPolicy",
       "label": "Privacy policy text",
       "type": "textarea"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
@@ -165,7 +191,8 @@
       "email": "orders@example.com",
       "location": "Plot 108, Jubilee Hills Road No. 36, Hyderabad, Telangana 500033",
       "hours": "Monday – Sunday: 10:30 AM – 9:00 PM",
-      "maps": "https://maps.google.com/?q=Jubilee+Hills+Hyderabad"
+      "maps": "https://maps.google.com/?q=Jubilee+Hills+Hyderabad",
+      "instagram": "https://www.instagram.com/"
     },
     "legal": {
       "privacyPolicy": "We respect your privacy. Information submitted through this website is used only to respond to your enquiry or help process your order. Please contact the store for questions about your information."
@@ -241,6 +268,55 @@
         "id": "vh-g3",
         "title": "Occasion wear",
         "image": "https://images.unsplash.com/photo-1597983073493-88cd35cf93b0?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Lakshmi, Hyderabad",
+        "text": "The Kanchipuram saree was even more beautiful in person, and they helped me pick the blouse colour on WhatsApp.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Pooja, Bengaluru",
+        "text": "Quick replies, careful packing and the lehenga fit perfectly.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Divya, Vijayawada",
+        "text": "Lovely festive collection and very patient styling help.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I place an order?",
+        "answer": "Add pieces to your bag and tap “Order on WhatsApp”. We confirm availability, final price and delivery with you before you pay.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do you deliver outside Hyderabad?",
+        "answer": "Yes, we ship across India. Delivery charges and timelines are shared when we confirm your order.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Which payment methods do you accept?",
+        "answer": "UPI, bank transfer and card payments. Payment details are shared after we confirm your order.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Can I exchange or return a product?",
+        "answer": "Please message us within 2 days of delivery. Exchange options depend on the product and its condition.",
         "enabled": true
       }
     ]
@@ -409,6 +485,77 @@
         }
       },
       {
+        "id": "reviews",
+        "label": "Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New customer",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
         "id": "contact",
         "label": "Contact & location",
         "fields": [
@@ -437,6 +584,24 @@
             "path": "contact.maps",
             "label": "Google Maps URL",
             "type": "url"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
           }
         ]
       },

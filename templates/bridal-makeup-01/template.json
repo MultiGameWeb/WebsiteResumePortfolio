@@ -58,7 +58,10 @@
     {"path":"contact.location","label":"Studio / Service Area","placeholder":"Hyderabad, Telangana"},
     {"path":"contact.maps","label":"Google Maps Link","type":"url"},
     {"path":"contact.travelPolicy","label":"Travel Policy","type":"textarea","placeholder":"Available for on-venue services across Hyderabad."},
-    {"path":"contact.extraCharge","label":"Travel Extra Charges","placeholder":"Beyond 20 km, travelling charges apply."}
+    {"path":"contact.extraCharge","label":"Travel Extra Charges","placeholder":"Beyond 20 km, travelling charges apply."},
+    {"path":"contact.instagram","label":"Instagram link","type":"url","placeholder":"https://"},
+    {"path":"contact.facebook","label":"Facebook link","type":"url","placeholder":"https://"},
+    {"path":"contact.youtube","label":"YouTube link","type":"url","placeholder":"https://"}
   ],
   "demoData": {
     "brand": {
@@ -96,7 +99,8 @@
       "location":"Hyderabad, Telangana",
       "maps":"https://maps.google.com/?q=Hyderabad+Telangana",
       "travelPolicy":"Available for on-venue services across Hyderabad. For outstation weddings, contact the studio for a travel quote.",
-      "extraCharge":"Beyond a 20 km radius, travelling charges apply."
+      "extraCharge":"Beyond a 20 km radius, travelling charges apply.",
+      "instagram":"https://www.instagram.com/"
     },
     "settings":{
       "showHome":true,
@@ -156,7 +160,10 @@
         {"path":"contact.location","label":"Location"},
         {"path":"contact.maps","label":"Google Maps URL","type":"url"},
         {"path":"contact.travelPolicy","label":"Travel policy","type":"textarea"},
-        {"path":"contact.extraCharge","label":"Extra travel charges"}
+        {"path":"contact.extraCharge","label":"Extra travel charges"},
+        {"path":"contact.instagram","label":"Instagram link","type":"url","placeholder":"https://"},
+        {"path":"contact.facebook","label":"Facebook link","type":"url","placeholder":"https://"},
+        {"path":"contact.youtube","label":"YouTube link","type":"url","placeholder":"https://"}
       ]},
       {"id":"visibility","label":"Visibility","fields":[
         {"path":"settings.showHome","label":"Home","type":"checkbox"},
