@@ -114,6 +114,28 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
 @media(max-width:760px){.av-container{width:calc(100% - 30px)}.av-section{padding:59px 0}.av-hero{padding-top:42px}.av-hero-grid{grid-template-columns:minmax(0,1fr)}.av-hero-stage{min-height:430px;order:-1}.av-hero h1{font-size:clamp(42px,11vw,65px)}.av-hero-actions .av-btn{flex:1}.av-section-heading{display:block}.av-section-heading p{margin-top:13px}.av-service-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.av-service-card{padding:14px;min-height:245px}.av-service-card h3{font-size:13px}.av-service-card p{font-size:10px}.av-process-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.av-deliver-grid{grid-template-columns:minmax(0,1fr)}.av-bottom-cta{grid-template-columns:minmax(0,1fr)}.av-bottom-actions .av-btn{flex:1}}
 @media(max-width:430px){.av-container{width:calc(100% - 24px)}.av-hero-stage{min-height:365px;border-radius:23px}.av-stage-copy{left:15px;right:15px;bottom:16px}.av-floating-stamp{right:11px;top:75px;max-width:130px;padding:10px}.av-floating-stamp strong{font-size:18px}.av-timeline{padding:10px}.av-service-grid{grid-template-columns:minmax(0,1fr)}.av-service-card{min-height:0;padding:17px}.av-service-card .av-card-top{margin-bottom:12px}.av-service-card h3{font-size:15px}.av-service-card p{font-size:11px}.av-process-grid{grid-template-columns:minmax(0,1fr)}.av-process-step{padding:18px}.av-price-row{align-items:flex-start;flex-direction:column}.av-price-note{max-width:none}.av-bottom-actions{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.av-service-card,.av-btn,.av-service-card a span{transition:none}}
+
+/* Sample AI video templates gallery */
+.av-sample-section{background:radial-gradient(ellipse at 8% 10%,rgba(139,92,246,.09),transparent 38%),radial-gradient(ellipse at 92% 80%,rgba(236,72,153,.07),transparent 34%)}
+.av-sample-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.av-sample-card{min-width:0;overflow:hidden;border:1px solid var(--av-line);border-radius:20px;background:linear-gradient(155deg,rgba(255,255,255,.065),rgba(255,255,255,.02));box-shadow:0 15px 42px rgba(0,0,0,.18)}
+.av-sample-preview{width:100%;aspect-ratio:9/16;overflow:hidden;background:#09070f;border-bottom:1px solid var(--av-line)}
+.av-sample-preview iframe{display:block;width:100%;height:100%;border:0;background:#09070f}
+.av-sample-info{padding:15px}
+.av-sample-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.av-sample-category{color:#c7b6ff;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.av-sample-duration{padding:5px 8px;border:1px solid rgba(216,180,254,.2);border-radius:999px;background:rgba(139,92,246,.1);color:#e8d8ff;font-size:9px;font-weight:800;white-space:nowrap}
+.av-sample-info h3{margin:0 0 7px;font:700 15px/1.3 Sora,Inter,sans-serif;letter-spacing:-.03em}
+.av-sample-info p{min-height:38px;margin:0;color:var(--av-muted);font-size:10px;line-height:1.7}
+.av-sample-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.av-sample-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 10px;border:1px solid var(--av-line);border-radius:10px;color:#e8d8ff;font-size:9px;font-weight:800;text-decoration:none}
+.av-sample-actions a.primary{border-color:transparent;background:var(--av-gradient);color:#fff}
+.av-sample-actions a:focus-visible{outline:3px solid #d8b4fe;outline-offset:3px}
+.av-sample-note{margin-top:22px;padding:15px 18px;border:1px solid var(--av-line);border-radius:15px;background:rgba(255,255,255,.025);color:var(--av-muted);font-size:11px;line-height:1.75}
+@media(max-width:1050px){.av-sample-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.av-sample-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.av-sample-info{padding:12px}.av-sample-info h3{font-size:13px}.av-sample-info p{font-size:10px}.av-sample-actions{flex-direction:column}.av-sample-actions a{width:100%}}
+@media(max-width:470px){.av-sample-grid{grid-template-columns:minmax(0,1fr)}.av-sample-card{width:min(100%,370px);margin-inline:auto}.av-sample-info{padding:16px}.av-sample-info h3{font-size:15px}.av-sample-actions{flex-direction:row}.av-sample-actions a{width:auto;flex:1}}
+
 </style>
 </head>
 <body class="sc-ad-video-page">
@@ -126,6 +148,7 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
    <p class="av-lead">Make your next promotion stand out with AI-powered ad videos created for your business. From the first script to the final edit, <strong>we handle the complete video-making process.</strong></p>
    <div class="av-hero-actions">
     <a class="av-btn primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20am%20interested%20in%20an%20AI%20ad%20video.%20Please%20share%20the%20options%20starting%20at%20%E2%82%B9599." target="_blank" rel="noopener noreferrer">Create My Ad Video <span aria-hidden="true">↗</span></a>
+    <a class="av-btn ghost" href="#sample-templates">See 8 sample templates <span aria-hidden="true">↓</span></a>
     <a class="av-btn ghost" href="#video-types">Explore 20 video types <span aria-hidden="true">↓</span></a>
    </div>
    <div class="av-price-row">
@@ -146,6 +169,139 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
     </div>
    </div>
   </div>
+ </div>
+</section>
+
+
+<section class="av-section av-sample-section" id="sample-templates" aria-labelledby="sample-templates-title">
+ <div class="av-container">
+  <div class="av-section-heading">
+   <div><span class="av-kicker">SITECRAFT VIDEO SHOWCASE · 8 SAMPLE TEMPLATES</span><h2 id="sample-templates-title">Watch the styles.<br><span class="av-gradient">Imagine your brand in them.</span></h2></div>
+   <p>Play the previews to explore different visual directions. Tell us which style you like and we can create a similar promotional video for your business.</p>
+  </div>
+  <div class="av-sample-grid">
+   
+  <article class="av-sample-card">
+   <div class="av-sample-preview">
+    <iframe src="./assets/ai-video-templates/iron-pulse-gym-40s.html" title="Iron Pulse Gym — Original Cut sample video preview" loading="lazy" allow="autoplay; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   </div>
+   <div class="av-sample-info">
+    <div class="av-sample-top"><span class="av-sample-category">Fitness &amp; Gym</span><span class="av-sample-duration">40 SEC</span></div>
+    <h3>Iron Pulse Gym — Original Cut</h3>
+    <p>A bold, high-energy gym promotion with a strong fitness feel.</p>
+    <div class="av-sample-actions">
+     <a href="./assets/ai-video-templates/iron-pulse-gym-40s.html" target="_blank" rel="noopener noreferrer">Open full preview ↗</a>
+     <a class="primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20saw%20the%20Iron%20Pulse%20Gym%20original-style%2040-second%20video%20sample%20on%20your%20website.%20I%20want%20a%20similar%20video%20for%20my%20business.%20Please%20share%20the%20details%20and%20price." target="_blank" rel="noopener noreferrer">Request similar ↗</a>
+    </div>
+   </div>
+  </article>
+
+  <article class="av-sample-card">
+   <div class="av-sample-preview">
+    <iframe src="./assets/ai-video-templates/iron-pulse-gym-40s-optimized.html" title="Iron Pulse Gym — Optimised Cut sample video preview" loading="lazy" allow="autoplay; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   </div>
+   <div class="av-sample-info">
+    <div class="av-sample-top"><span class="av-sample-category">Fitness &amp; Gym · Lightweight</span><span class="av-sample-duration">40 SEC</span></div>
+    <h3>Iron Pulse Gym — Optimised Cut</h3>
+    <p>The lighter-loading version of the Iron Pulse gym preview.</p>
+    <div class="av-sample-actions">
+     <a href="./assets/ai-video-templates/iron-pulse-gym-40s-optimized.html" target="_blank" rel="noopener noreferrer">Open full preview ↗</a>
+     <a class="primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20saw%20the%20Iron%20Pulse%20Gym%20lightweight%2040-second%20video%20sample%20on%20your%20website.%20I%20want%20a%20similar%20video%20for%20my%20business.%20Please%20share%20the%20details%20and%20price." target="_blank" rel="noopener noreferrer">Request similar ↗</a>
+    </div>
+   </div>
+  </article>
+
+  <article class="av-sample-card">
+   <div class="av-sample-preview">
+    <iframe src="./assets/ai-video-templates/shine-jewels-40s.html" title="Shine Jewels sample video preview" loading="lazy" allow="autoplay; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   </div>
+   <div class="av-sample-info">
+    <div class="av-sample-top"><span class="av-sample-category">Jewellery &amp; Luxury</span><span class="av-sample-duration">40 SEC</span></div>
+    <h3>Shine Jewels</h3>
+    <p>An elegant jewellery showcase for collections and premium offers.</p>
+    <div class="av-sample-actions">
+     <a href="./assets/ai-video-templates/shine-jewels-40s.html" target="_blank" rel="noopener noreferrer">Open full preview ↗</a>
+     <a class="primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20saw%20the%20Shine%20Jewels-style%2040-second%20jewellery%20video%20sample%20on%20your%20website.%20I%20want%20a%20similar%20video%20for%20my%20business.%20Please%20share%20the%20details%20and%20price." target="_blank" rel="noopener noreferrer">Request similar ↗</a>
+    </div>
+   </div>
+  </article>
+
+  <article class="av-sample-card">
+   <div class="av-sample-preview">
+    <iframe src="./assets/ai-video-templates/palm-paradise-resort-30s.html" title="Palm Paradise Resort sample video preview" loading="lazy" allow="autoplay; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   </div>
+   <div class="av-sample-info">
+    <div class="av-sample-top"><span class="av-sample-category">Travel &amp; Hospitality</span><span class="av-sample-duration">30 SEC</span></div>
+    <h3>Palm Paradise Resort</h3>
+    <p>A resort-style visual promotion for stays, amenities and experiences.</p>
+    <div class="av-sample-actions">
+     <a href="./assets/ai-video-templates/palm-paradise-resort-30s.html" target="_blank" rel="noopener noreferrer">Open full preview ↗</a>
+     <a class="primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20saw%20the%20Palm%20Paradise-style%2030-second%20resort%20video%20sample%20on%20your%20website.%20I%20want%20a%20similar%20video%20for%20my%20business.%20Please%20share%20the%20details%20and%20price." target="_blank" rel="noopener noreferrer">Request similar ↗</a>
+    </div>
+   </div>
+  </article>
+
+  <article class="av-sample-card">
+   <div class="av-sample-preview">
+    <iframe src="./assets/ai-video-templates/marriage-50s.html" title="Marriage Celebration sample video preview" loading="lazy" allow="autoplay; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   </div>
+   <div class="av-sample-info">
+    <div class="av-sample-top"><span class="av-sample-category">Wedding &amp; Events</span><span class="av-sample-duration">50 SEC</span></div>
+    <h3>Marriage Celebration</h3>
+    <p>A cinematic wedding celebration concept for couples and families.</p>
+    <div class="av-sample-actions">
+     <a href="./assets/ai-video-templates/marriage-50s.html" target="_blank" rel="noopener noreferrer">Open full preview ↗</a>
+     <a class="primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20saw%20the%20Marriage%20celebration-style%2050-second%20video%20sample%20on%20your%20website.%20I%20want%20a%20similar%20video%20for%20my%20business.%20Please%20share%20the%20details%20and%20price." target="_blank" rel="noopener noreferrer">Request similar ↗</a>
+    </div>
+   </div>
+  </article>
+
+  <article class="av-sample-card">
+   <div class="av-sample-preview">
+    <iframe src="./assets/ai-video-templates/family-wedding-50s.html" title="Family Wedding Celebration sample video preview" loading="lazy" allow="autoplay; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   </div>
+   <div class="av-sample-info">
+    <div class="av-sample-top"><span class="av-sample-category">Wedding &amp; Family</span><span class="av-sample-duration">50 SEC</span></div>
+    <h3>Family Wedding Celebration</h3>
+    <p>A warm family-focused wedding story with an emotional visual style.</p>
+    <div class="av-sample-actions">
+     <a href="./assets/ai-video-templates/family-wedding-50s.html" target="_blank" rel="noopener noreferrer">Open full preview ↗</a>
+     <a class="primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20saw%20the%20Family%20wedding-style%2050-second%20video%20sample%20on%20your%20website.%20I%20want%20a%20similar%20video%20for%20my%20business.%20Please%20share%20the%20details%20and%20price." target="_blank" rel="noopener noreferrer">Request similar ↗</a>
+    </div>
+   </div>
+  </article>
+
+  <article class="av-sample-card">
+   <div class="av-sample-preview">
+    <iframe src="./assets/ai-video-templates/astrology-english-20s.html" title="Sri Guru Jyothishyalayam sample video preview" loading="lazy" allow="autoplay; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   </div>
+   <div class="av-sample-info">
+    <div class="av-sample-top"><span class="av-sample-category">Astrology · English</span><span class="av-sample-duration">20 SEC</span></div>
+    <h3>Sri Guru Jyothishyalayam</h3>
+    <p>A short astrology service promotion in an English presentation style.</p>
+    <div class="av-sample-actions">
+     <a href="./assets/ai-video-templates/astrology-english-20s.html" target="_blank" rel="noopener noreferrer">Open full preview ↗</a>
+     <a class="primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20saw%20the%20Astrology%20service-style%2020-second%20English%20video%20sample%20on%20your%20website.%20I%20want%20a%20similar%20video%20for%20my%20business.%20Please%20share%20the%20details%20and%20price." target="_blank" rel="noopener noreferrer">Request similar ↗</a>
+    </div>
+   </div>
+  </article>
+
+  <article class="av-sample-card">
+   <div class="av-sample-preview">
+    <iframe src="./assets/ai-video-templates/royal-wedding-50s.html" title="Royal Wedding Planners sample video preview" loading="lazy" allow="autoplay; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+   </div>
+   <div class="av-sample-info">
+    <div class="av-sample-top"><span class="av-sample-category">Wedding &amp; Business</span><span class="av-sample-duration">50 SEC</span></div>
+    <h3>Royal Wedding Planners</h3>
+    <p>A premium wedding-planner promotional concept with a royal look.</p>
+    <div class="av-sample-actions">
+     <a href="./assets/ai-video-templates/royal-wedding-50s.html" target="_blank" rel="noopener noreferrer">Open full preview ↗</a>
+     <a class="primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20saw%20the%20Royal%20wedding%20planner-style%2050-second%20video%20sample%20on%20your%20website.%20I%20want%20a%20similar%20video%20for%20my%20business.%20Please%20share%20the%20details%20and%20price." target="_blank" rel="noopener noreferrer">Request similar ↗</a>
+    </div>
+   </div>
+  </article>
+  </div>
+  <p class="av-sample-note"><strong>Want a different style?</strong> These are sample creative directions. We can adapt the concept, business name, products, language, colours and call to action to suit your brand.</p>
  </div>
 </section>
 
