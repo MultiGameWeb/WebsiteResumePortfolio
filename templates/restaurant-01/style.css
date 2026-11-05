@@ -156,3 +156,12 @@ a.sc-connect-item:hover{text-decoration:underline}
 .sc-connect-icon svg{width:20px;height:20px}
 .sc-connect-wrap{padding:0 clamp(16px,5vw,64px) 28px}
 @media(max-width:560px){.sc-connect-icons{margin-left:0}}
+
+/* FAQ */
+.restaurant-01 .rs-faq-list{display:grid;gap:10px;max-width:860px}
+.restaurant-01 .rs-faq-list details{border-bottom:1px solid var(--line)}
+.restaurant-01 .rs-faq-list summary{position:relative;padding:18px 44px 18px 0;font-family:Georgia,serif;font-size:20px;cursor:pointer;list-style:none}
+.restaurant-01 .rs-faq-list summary::-webkit-details-marker{display:none}
+.restaurant-01 .rs-faq-list summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);color:var(--saffron);font-size:24px}
+.restaurant-01 .rs-faq-list details[open] summary::after{content:"−"}
+.restaurant-01 .rs-faq-list details p{padding:0 0 18px;color:var(--muted)}

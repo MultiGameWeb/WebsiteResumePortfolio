@@ -11,13 +11,14 @@ function scBaseRender(d={},selected=[]){
   const offers=(d.offers||[]).filter(x=>x.enabled!==false);
   const gallery=(d.gallery||[]).filter(x=>x.enabled!==false&&url(x.image));
   const reviews=(d.reviews||[]).filter(x=>x.enabled!==false),hours=d.hours||[];
+  const faqs=(d.faqs||[]).filter(x=>x.enabled!==false);
   const name=b.businessName||'Your Restaurant';
   const waOn=ok('whatsapp')&&safe(c.whatsapp);
   const show={about:ok('about')&&s.showAbout!==false&&b.about,menu:ok('menu')&&s.showMenu!==false&&menu.length,offers:ok('offers')&&s.showOffers!==false&&offers.length,
     gallery:ok('gallery')&&s.showGallery!==false&&gallery.length,reviews:ok('reviews')&&s.showReviews!==false&&reviews.length,social:ok('social')&&s.showSocial!==false&&(url(c.instagram)||url(c.googleReviews)),
     hours:ok('hours')&&s.showHours!==false&&hours.length,reservation:ok('reservation')&&s.showReservation!==false&&(c.phone||c.whatsapp),contact:ok('contact')&&s.showContact!==false};
   const cats=[...new Set(menu.map(x=>x.category).filter(Boolean))];
-  const nav=[show.about&&['#about','About'],show.menu&&['#menu','Menu'],show.offers&&['#offers','Offers'],show.gallery&&['#gallery','Gallery'],show.hours&&['#hours','Hours'],show.contact&&['#contact','Contact']].filter(Boolean);
+  const nav=[show.about&&['#about','About'],show.menu&&['#menu','Menu'],show.offers&&['#offers','Offers'],show.gallery&&['#gallery','Gallery'],show.hours&&['#hours','Hours'],ok('faq')&&faqs.length&&['#faq','FAQ'],show.contact&&['#contact','Contact']].filter(Boolean);
   const rating=Math.max(0,Math.min(5,Math.round(Number(c.googleRating)||0)));
   let html='<div class="site-preview restaurant-01">';
 
@@ -72,6 +73,11 @@ function scBaseRender(d={},selected=[]){
         (c.phone?'<a class="rs-call" href="tel:'+esc(tel(c.phone))+'">Or call '+esc(c.phone)+'</a>':'')+'</div>';
     }
     html+='</section>';
+  }
+
+  if(ok('faq')&&faqs.length){
+    html+='<section id="faq" class="r-section rs-faq"><small>Good to know</small><h2>Questions before you visit</h2><div class="rs-faq-list">'+
+      faqs.map(x=>'<details><summary>'+esc(x.question||'Question')+'</summary><p>'+esc(x.answer||'')+'</p></details>').join('')+'</div></section>';
   }
 
   if(show.social){
