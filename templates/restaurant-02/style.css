@@ -29,3 +29,13 @@ a.sc-connect-item:hover{text-decoration:underline}
 .sc-connect-icon svg{width:20px;height:20px}
 .sc-connect-wrap{padding:0 clamp(16px,5vw,64px) 28px}
 @media(max-width:560px){.sc-connect-icons{margin-left:0}}
+
+/* FAQ */
+.restaurant-02 .rp2-faq h2{margin:6px 0 22px}
+.restaurant-02 .rp2-faq-list{display:grid;gap:10px;max-width:860px}
+.restaurant-02 .rp2-faq-list details{border-radius:16px;background:#fff;border:2px solid #1f2024;box-shadow:4px 4px 0 #1f2024}
+.restaurant-02 .rp2-faq-list summary{position:relative;padding:16px 48px 16px 18px;font-weight:800;font-size:16px;cursor:pointer;list-style:none}
+.restaurant-02 .rp2-faq-list summary::-webkit-details-marker{display:none}
+.restaurant-02 .rp2-faq-list summary::after{content:"+";position:absolute;right:18px;top:50%;transform:translateY(-50%);font-size:22px}
+.restaurant-02 .rp2-faq-list details[open] summary::after{content:"−"}
+.restaurant-02 .rp2-faq-list details p{padding:0 18px 16px;color:#555a5b}

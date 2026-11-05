@@ -73,7 +73,7 @@ function scBaseRender(d={},selected=[]){
   return html+'</div>';
 }
 
-export function init(root){scMobileNav(arguments[0]);}
+export function init(root){scMobileNav(arguments[0]);scBindForms(arguments[0]);}
 
 /* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
 function scMobileNav(root){
@@ -125,4 +125,43 @@ function scConnect(html,d,selected){
   const j=html.lastIndexOf('</div>');
   return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
 }
-export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}
+export function render(d={},selected=[]){return scConnect(scWithForm(scBaseRender(d,selected),d,selected),d,selected);}
+
+/* SiteCraft enquiry form: collects details and opens WhatsApp with them filled in. Shown before the contact section. */
+const SC_FORM={"section": "as-section as-book", "kicker": "as-kicker", "btn": "as-btn gold", "kickerText": "Book a consultation", "title": "Share your details", "text": "Fill in your birth details and we will confirm your consultation slot on WhatsApp.", "submit": "Send booking on WhatsApp", "intro": "Namaste, I would like to book a consultation.", "fields": [["name", "Your name", "text", true], ["phone", "Phone number", "tel", true], ["service", "Consultation", "select:services:name", false], ["dob", "Date of birth", "date", true], ["tob", "Time of birth", "time", false], ["pob", "Place of birth", "text", false], ["date", "Preferred consultation date", "date", false], ["message", "Your question (optional)", "textarea", false]]};
+function scWithForm(html,d,selected){
+  const c=d.contact||{},wa=String(c.whatsapp||'').replace(/\D/g,'');
+  if(!(selected||[]).includes('enquiry')||!wa)return html;
+  const f=SC_FORM,biz=(d.brand||{}).businessName||'';
+  const field=([name,label,type,req])=>{
+    const id='sc-f-'+name,r=req?' required':'',lab='<label for="'+id+'">'+scEsc(label)+(req?' *':'')+'</label>';
+    if(type.indexOf('select:')===0){const [,list,key]=type.split(':');const opts=(d[list]||[]).filter(x=>x&&x.enabled!==false&&x[key]).map(x=>x[key]);
+      if(!opts.length)return '';return '<div class="sc-form-field">'+lab+'<select id="'+id+'" name="'+name+'" data-label="'+scEsc(label)+'"'+r+'><option value="">Select…</option>'+opts.map(o=>'<option>'+scEsc(o)+'</option>').join('')+'<option>Other / not sure</option></select></div>';}
+    if(type==='textarea')return '<div class="sc-form-field wide">'+lab+'<textarea id="'+id+'" name="'+name+'" rows="3" data-label="'+scEsc(label)+'"'+r+'></textarea></div>';
+    const extra=type==='tel'?' autocomplete="tel" inputmode="tel"':name==='name'?' autocomplete="name"':type==='number'?' min="1" inputmode="numeric"':'';
+    return '<div class="sc-form-field">'+lab+'<input id="'+id+'" name="'+name+'" type="'+type+'" data-label="'+scEsc(label)+'"'+extra+r+'></div>';
+  };
+  const block='<section class="'+f.section+' sc-form-section" id="enquire"><div class="sc-form-head"><span class="'+f.kicker+'">'+scEsc(f.kickerText)+'</span><h2>'+scEsc(f.title)+'</h2><p>'+scEsc(f.text)+'</p></div>'+
+    '<form class="sc-form" data-sc-form data-wa="'+wa+'" data-intro="'+scEsc(f.intro)+'" data-biz="'+scEsc(biz)+'" novalidate>'+f.fields.map(field).join('')+
+    '<div class="sc-form-actions wide"><button type="submit" class="'+f.btn+'">'+scEsc(f.submit)+'</button><p class="sc-form-note" role="status" aria-live="polite">Your details are sent only to us, through WhatsApp.</p></div></form></section>';
+  const m=html.search(/<section[^>]*id="contact"/);
+  if(m>=0)return html.slice(0,m)+block+html.slice(m);
+  const i=html.lastIndexOf('<footer');return i>=0?html.slice(0,i)+block+html.slice(i):html+block;
+}
+function scBindForms(root){
+  if(!root)return;
+  root.querySelectorAll('form[data-sc-form]').forEach(form=>{
+    if(form.__scBound)return;form.__scBound=true;
+    form.addEventListener('submit',e=>{
+      e.preventDefault();
+      const note=form.querySelector('.sc-form-note');
+      const bad=[...form.querySelectorAll('[required]')].find(x=>!String(x.value).trim());
+      form.querySelectorAll('[aria-invalid]').forEach(x=>x.removeAttribute('aria-invalid'));
+      if(bad){bad.setAttribute('aria-invalid','true');bad.focus();if(note)note.textContent='Please fill in: '+bad.dataset.label;return;}
+      const lines=[...form.querySelectorAll('input,select,textarea')].filter(x=>String(x.value).trim()).map(x=>x.dataset.label+': '+String(x.value).trim());
+      const msg=(form.dataset.intro||'Hi')+(form.dataset.biz?' ('+form.dataset.biz+')':'')+'\n\n'+lines.join('\n');
+      window.open('https://wa.me/'+form.dataset.wa+'?text='+encodeURIComponent(msg),'_blank','noopener');
+      if(note)note.textContent='WhatsApp has opened with your details. Tap send to share them with us.';
+    });
+  });
+}

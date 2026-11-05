@@ -39,7 +39,7 @@ function scBaseRender(d={},selected=[]){
  html+='<div class="bm-lightbox" hidden><div class="bm-lightbox-backdrop" data-close-ba></div><div class="bm-lightbox-panel"><button type="button" class="bm-lightbox-close" data-close-ba aria-label="Close image viewer">×</button><button type="button" class="bm-lightbox-prev" data-ba-prev aria-label="Previous transformation">‹</button><div class="bm-lightbox-grid"><figure><img data-ba-before src="" alt="Before"><figcaption>BEFORE</figcaption></figure><figure><img data-ba-after src="" alt="After"><figcaption>AFTER</figcaption></figure></div><button type="button" class="bm-lightbox-next" data-ba-next aria-label="Next transformation">›</button></div></div>';
  return html+'</div>';
 }
-export function init(root,d={}){scMobileNav(arguments[0]);
+export function init(root,d={}){scMobileNav(arguments[0]);scBindForms(arguments[0]);
  const items=list(d.beforeAfter).filter(x=>safeUrl(x.beforeImage)&&safeUrl(x.afterImage));
  const modal=root.querySelector('.bm-lightbox'),before=root.querySelector('[data-ba-before]'),after=root.querySelector('[data-ba-after]'); let index=0;
  const show=i=>{if(!items.length||!modal||!before||!after)return;index=(i+items.length)%items.length;const x=items[index];before.src=safeUrl(x.beforeImage);after.src=safeUrl(x.afterImage);before.alt=(x.title||'Transformation')+' before';after.alt=(x.title||'Transformation')+' after';modal.hidden=false;document.body.style.overflow='hidden'};
@@ -102,4 +102,43 @@ function scConnect(html,d,selected){
   const j=html.lastIndexOf('</div>');
   return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
 }
-export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}
+export function render(d={},selected=[]){return scConnect(scWithForm(scBaseRender(d,selected),d,selected),d,selected);}
+
+/* SiteCraft enquiry form: collects details and opens WhatsApp with them filled in. Shown before the contact section. */
+const SC_FORM={"section": "bm-section bm-book", "kicker": "bm-kicker", "btn": "bm-btn bm-btn-primary", "kickerText": "Check availability", "title": "Tell us about your big day", "text": "Share your date and venue and we will confirm availability and the right package on WhatsApp.", "submit": "Check availability on WhatsApp", "intro": "Hi, I would like to check bridal makeup availability.", "fields": [["name", "Your name", "text", true], ["phone", "Phone number", "tel", true], ["package", "Package", "select:packages:name", false], ["date", "Wedding / event date", "date", true], ["venue", "Venue / city", "text", false], ["people", "Number of people for makeup", "number", false], ["message", "Anything else we should know?", "textarea", false]]};
+function scWithForm(html,d,selected){
+  const c=d.contact||{},wa=String(c.whatsapp||'').replace(/\D/g,'');
+  if(!(selected||[]).includes('enquiry')||!wa)return html;
+  const f=SC_FORM,biz=(d.brand||{}).businessName||'';
+  const field=([name,label,type,req])=>{
+    const id='sc-f-'+name,r=req?' required':'',lab='<label for="'+id+'">'+scEsc(label)+(req?' *':'')+'</label>';
+    if(type.indexOf('select:')===0){const [,list,key]=type.split(':');const opts=(d[list]||[]).filter(x=>x&&x.enabled!==false&&x[key]).map(x=>x[key]);
+      if(!opts.length)return '';return '<div class="sc-form-field">'+lab+'<select id="'+id+'" name="'+name+'" data-label="'+scEsc(label)+'"'+r+'><option value="">Select…</option>'+opts.map(o=>'<option>'+scEsc(o)+'</option>').join('')+'<option>Other / not sure</option></select></div>';}
+    if(type==='textarea')return '<div class="sc-form-field wide">'+lab+'<textarea id="'+id+'" name="'+name+'" rows="3" data-label="'+scEsc(label)+'"'+r+'></textarea></div>';
+    const extra=type==='tel'?' autocomplete="tel" inputmode="tel"':name==='name'?' autocomplete="name"':type==='number'?' min="1" inputmode="numeric"':'';
+    return '<div class="sc-form-field">'+lab+'<input id="'+id+'" name="'+name+'" type="'+type+'" data-label="'+scEsc(label)+'"'+extra+r+'></div>';
+  };
+  const block='<section class="'+f.section+' sc-form-section" id="enquire"><div class="sc-form-head"><span class="'+f.kicker+'">'+scEsc(f.kickerText)+'</span><h2>'+scEsc(f.title)+'</h2><p>'+scEsc(f.text)+'</p></div>'+
+    '<form class="sc-form" data-sc-form data-wa="'+wa+'" data-intro="'+scEsc(f.intro)+'" data-biz="'+scEsc(biz)+'" novalidate>'+f.fields.map(field).join('')+
+    '<div class="sc-form-actions wide"><button type="submit" class="'+f.btn+'">'+scEsc(f.submit)+'</button><p class="sc-form-note" role="status" aria-live="polite">Your details are sent only to us, through WhatsApp.</p></div></form></section>';
+  const m=html.search(/<section[^>]*id="contact"/);
+  if(m>=0)return html.slice(0,m)+block+html.slice(m);
+  const i=html.lastIndexOf('<footer');return i>=0?html.slice(0,i)+block+html.slice(i):html+block;
+}
+function scBindForms(root){
+  if(!root)return;
+  root.querySelectorAll('form[data-sc-form]').forEach(form=>{
+    if(form.__scBound)return;form.__scBound=true;
+    form.addEventListener('submit',e=>{
+      e.preventDefault();
+      const note=form.querySelector('.sc-form-note');
+      const bad=[...form.querySelectorAll('[required]')].find(x=>!String(x.value).trim());
+      form.querySelectorAll('[aria-invalid]').forEach(x=>x.removeAttribute('aria-invalid'));
+      if(bad){bad.setAttribute('aria-invalid','true');bad.focus();if(note)note.textContent='Please fill in: '+bad.dataset.label;return;}
+      const lines=[...form.querySelectorAll('input,select,textarea')].filter(x=>String(x.value).trim()).map(x=>x.dataset.label+': '+String(x.value).trim());
+      const msg=(form.dataset.intro||'Hi')+(form.dataset.biz?' ('+form.dataset.biz+')':'')+'\n\n'+lines.join('\n');
+      window.open('https://wa.me/'+form.dataset.wa+'?text='+encodeURIComponent(msg),'_blank','noopener');
+      if(note)note.textContent='WhatsApp has opened with your details. Tap send to share them with us.';
+    });
+  });
+}

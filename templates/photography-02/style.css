@@ -172,3 +172,20 @@ a.sc-connect-item:hover{text-decoration:underline}
 .sc-connect-icon svg{width:20px;height:20px}
 .sc-connect-wrap{padding:0 clamp(16px,5vw,64px) 28px}
 @media(max-width:560px){.sc-connect-icons{margin-left:0}}
+
+/* SiteCraft enquiry form */
+.sc-form-section .sc-form-head{max-width:720px;margin-bottom:26px}
+.sc-form-section .sc-form-head h2{margin:10px 0 10px}
+.sc-form-section .sc-form-head p{opacity:.85}
+.sc-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 18px;max-width:860px;padding:clamp(20px,3vw,32px);border-radius:22px;border:1px solid rgba(128,128,128,.3);background:rgba(128,128,128,.06)}
+.sc-form-field{display:grid;gap:6px;min-width:0}
+.sc-form-field label{font-size:14px;font-weight:600}
+.sc-form-field input,.sc-form-field select,.sc-form-field textarea{width:100%;min-height:48px;padding:10px 14px;border:1px solid rgba(128,128,128,.55);border-radius:12px;background:rgba(255,255,255,.92);color:#1d1c19;font:16px/1.4 Inter,system-ui,sans-serif}
+.sc-form-field textarea{min-height:96px;resize:vertical}
+.sc-form-field input:focus,.sc-form-field select:focus,.sc-form-field textarea:focus{outline:2px solid currentColor;outline-offset:2px}
+.sc-form-field [aria-invalid="true"]{border-color:#c0392b;box-shadow:0 0 0 2px rgba(192,57,43,.25)}
+.sc-form .wide{grid-column:1/-1}
+.sc-form-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.sc-form-actions button{cursor:pointer;border:0;font-family:inherit}
+.sc-form-note{margin:0;font-size:13px;opacity:.85}
+@media(max-width:620px){.sc-form{grid-template-columns:1fr}.sc-form-actions button{width:100%}}
