@@ -187,6 +187,9 @@ function scBindForms(root){
   });
 }
 export function render(d={},selected=[]){
-  const chosen=(selected||[]).filter(x=>x!=='enquiry'||(d.settings||{}).showEnquiry!==false);
-  return scConnect(scWithForm(scBaseRender(d,selected),d,chosen),d,selected);
+  const s=d.settings||{},c=d.contact||{};
+  const chosen=(selected||[]).filter(x=>x!=='enquiry'||s.showEnquiry!==false);
+  const connectSelected=(selected||[]).filter(x=>x!=='social'||s.showSocial!==false);
+  const connectData={...d,contact:{...c,hours:connectSelected.includes('hours')&&s.showHours!==false?c.hours:'',email:connectSelected.includes('contact')&&s.showContact!==false?c.email:''}};
+  return scConnect(scWithForm(scBaseRender(d,selected),d,chosen),connectData,connectSelected);
 }
