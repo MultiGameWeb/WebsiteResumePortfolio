@@ -351,8 +351,8 @@
         }
         .d-btn:active { background: rgba(88, 166, 255, 0.85); color: #000; }
 
+        #mobile-controls.show { display: grid; }
         @media (max-width: 768px), (pointer: coarse) {
-            #mobile-controls { display: grid; }
             .eggs-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -384,6 +384,7 @@
                     <option value="venom">💜 Venom</option>
                     <option value="arctic">❄️ Arctic</option>
                 </select>
+                <button class="small-btn" id="controls-toggle" type="button" title="Show or hide touch buttons" aria-pressed="false">🎮</button>
                 <button class="small-btn" onclick="openRulesModal()" title="Rules & Guide">❓</button>
                 <button class="small-btn" id="pause-btn" onclick="togglePause()">⏸️</button>
             </div>
@@ -484,7 +485,7 @@
                         <ul>
                             <li>❤️❤️❤️ <b>3 Lives System:</b> Crashing into a wall or tail costs 1 Heart and gives a 3-second safe shield instead of instant Game Over!</li>
                             <li>🌀 <b>Moving Portals:</b> Enter one glowing hole to exit from the other. Portals relocate after you pass through!</li>
-                            <li>📱 <b>Controls:</b> Swipe anywhere on the screen, use the floating buttons, or press Arrow Keys / WASD.</li>
+                            <li>📱 <b>Controls:</b> Swipe on the game board, optionally show touch buttons with 🎮, or press Arrow Keys / WASD.</li>
                         </ul>
                     </div>
                 </div>
@@ -2054,6 +2055,14 @@
         function handleMobileDir(nx, ny) {
             queueDirection(nx, ny);
         }
+
+        const mobileControls = document.getElementById('mobile-controls');
+        const controlsToggle = document.getElementById('controls-toggle');
+        controlsToggle.addEventListener('click', () => {
+            const visible = mobileControls.classList.toggle('show');
+            controlsToggle.setAttribute('aria-pressed', String(visible));
+            controlsToggle.title = visible ? 'Hide touch buttons' : 'Show touch buttons';
+        });
 
         window.addEventListener('keydown', e => {
             if ((inCinematicIntro || isRulesOpen) && (e.key === 'Enter' || e.key === ' ')) {
