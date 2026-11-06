@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>40s Luxury Real Estate Commercial | Hyderabad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 16:9 Widescreen Video Container */
+        .video-player {
+            position: relative;
+            width: 100vw;
+            height: 56.25vw; /* 16:9 Aspect Ratio */
+            max-height: 100vh;
+            max-width: 177.78vh;
+            background: #000;
+            overflow: hidden;
+            box-shadow: 0 0 100px rgba(0,0,0,0.9);
+        }
+
+        /* Cinematic Letterbox Bars */
+        .letterbox-top, .letterbox-bottom {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 6%;
+            background: #000;
+            z-index: 20;
+            pointer-events: none;
+        }
+        .letterbox-top { top: 0; }
+        .letterbox-bottom { bottom: 0; }
+
+        /* Slides / Video Scenes */
+        .scene {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth Cinematic Cut/Crossfade */
+            z-index: 1;
+        }
+
+        .scene.active {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        /* Dark Vignette Overlay for Luxury Feel */
+        .scene::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,0.65) 100%),
+                        linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 35%);
+            z-index: 3;
+        }
+
+        .scene img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        /* Different Camera Movements (Ken Burns Effect) for each 8-second scene */
+        .scene.active.anim-zoom-in img {
+            animation: zoomIn 9.5s ease-out forwards;
+        }
+        .scene.active.anim-zoom-out img {
+            animation: zoomOut 9.5s ease-out forwards;
+        }
+        .scene.active.anim-pan-right img {
+            animation: panRight 9.5s ease-out forwards;
+        }
+        .scene.active.anim-pan-left img {
+            animation: panLeft 9.5s ease-out forwards;
+        }
+
+        /* Pause Animations when Paused */
+        .video-player.paused .scene img,
+        .video-player.paused .caption-box {
+            animation-play-state: paused !important;
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.14); }
+        }
+        @keyframes zoomOut {
+            0% { transform: scale(1.14); }
+            100% { transform: scale(1); }
+        }
+        @keyframes panRight {
+            0% { transform: scale(1.12) translateX(-3%); }
+            100% { transform: scale(1.12) translateX(3%); }
+        }
+        @keyframes panLeft {
+            0% { transform: scale(1.12) translateX(3%); }
+            100% { transform: scale(1.12) translateX(-3%); }
+        }
+
+        /* Cinematic Text Overlays */
+        .caption-box {
+            position: absolute;
+            bottom: 12%;
+            left: 6%;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .scene.active .caption-box {
+            animation: textFade 8s ease-in-out forwards;
+        }
+
+        @keyframes textFade {
+            0% { opacity: 0; transform: translateY(20px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+
+        .caption-tag {
+            color: #c5a880;
+            font-size: 0.85vw;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.4vw;
+        }
+
+        .caption-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3vw;
+            font-weight: 400;
+            color: #f4f1ea;
+            letter-spacing: 1px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+        }
+
+        /* Video Controls Bar */
+        .controls-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 6%;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            padding: 0 3%;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #c5a880;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: color 0.2s;
+            min-width: 70px;
+            text-align: left;
+        }
+
+        .control-btn:hover {
+            color: #ffffff;
+        }
+
+        /* Timeline Progress Bar */
+        .timeline-container {
+            flex-grow: 1;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .timeline-progress {
+            height: 100%;
+            width: 0%;
+            background: #c5a880;
+            transition: width 0.1s linear;
+        }
+
+        /* Scene Cut Markers on Timeline */
+        .cut-marker {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2;
+        }
+
+        .time-display {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: #a09d96;
+            min-width: 95px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* End Screen Overlay */
+        .end-screen {
+            position: absolute;
+            inset: 0;
+            background: rgba(5, 5, 5, 0.92);
+            z-index: 25;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+
+        .end-screen.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .end-screen h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5vw;
+            font-weight: 400;
+            color: #f4f1ea;
+            margin-bottom: 0.5rem;
+        }
+
+        .end-screen p {
+            color: #c5a880;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-size: 0.9vw;
+            margin-bottom: 2.5rem;
+        }
+
+        .replay-btn {
+            padding: 12px 32px;
+            border: 1px solid #c5a880;
+            background: transparent;
+            color: #f4f1ea;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .replay-btn:hover {
+            background: #c5a880;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-player" id="player">
+        <div class="letterbox-top"></div>
+
+        <!-- SCENE 1: 0:00 to 0:08 (Exterior Golden Hour) -->
+        <div class="scene active anim-zoom-in">
+            <!-- Swap src with your AI image 1 -->
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=85" alt="Exterior Golden Hour">
+            <div class="caption-box">
+                <span class="caption-tag">Jubilee Hills • Hyderabad</span>
+                <h1 class="caption-title">The Deccan Sanctuary</h1>
+            </div>
+        </div>
+
+        <!-- SCENE 2: 0:08 to 0:16 (Grand Living Room) -->
+        <div class="scene anim-pan-right">
+            <!-- Swap src with your AI image 2 -->
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1920&q=85" alt="Grand Living Room">
+            <div class="caption-box">
+                <span class="caption-tag">Interior Architecture</span>
+                <h1 class="caption-title">Double-Height Formal Living</h1>
+            </div>
+        </div>
+
+        <!-- SCENE 3: 0:16 to 0:24 (Master Bedroom) -->
+        <div class="scene anim-zoom-out">
+            <!-- Swap src with your AI image 3 -->
+            <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1920&q=85" alt="Master Bedroom">
+            <div class="caption-box">
+                <span class="caption-tag">Private Quarters</span>
+                <h1 class="caption-title">The Master Suite Sanctuary</h1>
+            </div>
+        </div>
+
+        <!-- SCENE 4: 0:24 to 0:32 (Outdoor Pool & Lounge) -->
+        <div class="scene anim-pan-left">
+            <!-- Swap src with your AI image 4 -->
+            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1920&q=85" alt="Outdoor Swimming Pool">
+            <div class="caption-box">
+                <span class="caption-tag">Resort-Style Living</span>
+                <h1 class="caption-title">Infinity Pool & Sunken Lounge</h1>
+            </div>
+        </div>
+
+        <!-- SCENE 5: 0:32 to 0:40 (Exterior Blue Hour) -->
+        <div class="scene anim-zoom-in">
+            <!-- Swap src with your AI image 5 -->
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=85" alt="Villa at Blue Hour">
+            <div class="caption-box">
+                <span class="caption-tag">Nocturnal Elegance</span>
+                <h1 class="caption-title">Architectural Glow at Dusk</h1>
+            </div>
+        </div>
+
+        <!-- End Screen at 40 Seconds -->
+        <div class="end-screen" id="endScreen">
+            <p>Private Real Estate Portfolio</p>
+            <h2>The Deccan Sanctuary</h2>
+            <button class="replay-btn" onclick="restartVideo()">Replay Film (0:40)</button>
+        </div>
+
+        <!-- Bottom Letterbox & Video Controls -->
+        <div class="controls-overlay">
+            <button class="control-btn" id="playPauseBtn" onclick="togglePlay()">Pause</button>
+            
+            <div class="timeline-container">
+                <!-- Markers showing the cuts at 8s, 16s, 24s, 32s -->
+                <div class="cut-marker" style="left: 20%;"></div>
+                <div class="cut-marker" style="left: 40%;"></div>
+                <div class="cut-marker" style="left: 60%;"></div>
+                <div class="cut-marker" style="left: 80%;"></div>
+                <div class="timeline-progress" id="progressBar"></div>
+            </div>
+
+            <div class="time-display" id="timeDisplay">00:00 / 00:40</div>
+            <button class="control-btn" style="min-width: auto; text-align: right;" onclick="toggleFullscreen()">Fullscreen</button>
+        </div>
+    </div>
+
+    <script>
+        const TOTAL_DURATION = 40; // 40 seconds total
+        const SCENE_DURATION = 8;  // 8 seconds per image (5 images)
+        
+        const scenes = document.querySelectorAll('.scene');
+        const progressBar = document.getElementById('progressBar');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const endScreen = document.getElementById('endScreen');
+        const player = document.getElementById('player');
+
+        let elapsedTime = 0; // in seconds
+        let isPlaying = true;
+        let currentSceneIndex = 0;
+        let lastTimestamp = performance.now();
+
+        function formatTime(seconds) {
+            const sec = Math.min(Math.floor(seconds), TOTAL_DURATION);
+            return `00:${sec < 10 ? '0' + sec : sec}`;
+        }
+
+        function switchScene(index) {
+            if (index === currentSceneIndex) return;
+            scenes.forEach((scene, i) => {
+                if (i === index) {
+                    // Reset animation cleanly on cut
+                    const img = scene.querySelector('img');
+                    img.style.animation = 'none';
+                    img.offsetHeight; /* trigger reflow */
+                    img.style.animation = null;
+                    scene.classList.add('active');
+                } else {
+                    scene.classList.remove('active');
+                }
+            });
+            currentSceneIndex = index;
+        }
+
+        function updateLoop(timestamp) {
+            const delta = (timestamp - lastTimestamp) / 1000;
+            lastTimestamp = timestamp;
+
+            if (isPlaying && elapsedTime < TOTAL_DURATION) {
+                elapsedTime += delta;
+
+                if (elapsedTime >= TOTAL_DURATION) {
+                    elapsedTime = TOTAL_DURATION;
+                    isPlaying = false;
+                    playPauseBtn.innerText = "Replay";
+                    endScreen.classList.add('visible');
+                }
+
+                // Update Timeline & Clock
+                const percentage = (elapsedTime / TOTAL_DURATION) * 100;
+                progressBar.style.width = `${percentage}%`;
+                timeDisplay.innerText = `${formatTime(elapsedTime)} / 00:40`;
+
+                // Determine which of the 5 scenes should be active (0 to 4)
+                const targetScene = Math.min(
+                    Math.floor(elapsedTime / SCENE_DURATION),
+                    scenes.length - 1
+                );
+                switchScene(targetScene);
+            }
+
+            requestAnimationFrame(updateLoop);
+        }
+
+        function togglePlay() {
+            if (elapsedTime >= TOTAL_DURATION) {
+                restartVideo();
+                return;
+            }
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                playPauseBtn.innerText = "Pause";
+                player.classList.remove('paused');
+            } else {
+                playPauseBtn.innerText = "Play";
+                player.classList.add('paused');
+            }
+        }
+
+        function restartVideo() {
+            elapsedTime = 0;
+            currentSceneIndex = -1;
+            endScreen.classList.remove('visible');
+            player.classList.remove('paused');
+            switchScene(0);
+            isPlaying = true;
+            playPauseBtn.innerText = "Pause";
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                player.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Start the 40-second video loop automatically
+        requestAnimationFrame((timestamp) => {
+            lastTimestamp = timestamp;
+            requestAnimationFrame(updateLoop);
+        });
+    </script>
+</body>
+</html>
