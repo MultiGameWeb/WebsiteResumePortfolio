@@ -1,0 +1,132 @@
+// "Create with AI" chat for the video maker: the customer describes their
+// business, the AI (POST /api/aivideo/chat) asks for what is missing and
+// returns a plan, then one AI picture per scene is made (POST
+// /api/aivideo/image) and the editor renders the video
+// (window.SiteCraftVideoMaker.loadPlan in maker.js).
+(function () {
+  'use strict';
+
+  const API_BASE = window.SITECRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
+  const STYLE_NAMES = { jewel: 'Jewellery luxe', gym: 'Gym power', royal: 'Royal wedding', offer: 'Shop offer', product: 'Product showcase', wedding: 'Wedding / function', birthday: 'Birthday', property: 'Real estate', food: 'Restaurant & food' };
+  const FORMAT_NAMES = { story: 'Status / Reels (9:16)', square: 'Post (1:1)', wide: 'YouTube (16:9)' };
+  const GREETING = 'Hi! 👋 Tell me about your business and what you want to promote — in Telugu, Hindi or English. I will write the scenes, create the pictures and make your video.';
+
+  const $ = (selector) => document.querySelector(selector);
+  const chatBox = $('#aiChat');
+  const form = $('#aiForm');
+  const input = $('#aiInput');
+  const planBox = $('#aiPlan');
+  const messages = [];
+  let busy = false;
+
+  function bubble(role, text) {
+    const node = document.createElement('div');
+    node.className = `vm-msg ${role}`;
+    node.textContent = text;
+    chatBox.append(node);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    return node;
+  }
+
+  async function post(path, body) {
+    const response = await fetch(`${API_BASE}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok || !data.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+    return data;
+  }
+
+  function element(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text) node.textContent = text;
+    return node;
+  }
+
+  function showPlan(plan) {
+    planBox.hidden = false;
+    const list = element('ol', 'vm-ai-scenes');
+    for (const scene of plan.scenes) list.append(element('li', '', [scene.headline, scene.line].filter(Boolean).join(' — ')));
+    const button = element('button', 'vm-btn primary', `✨ Make my AI video (${plan.scenes.length} pictures)`);
+    button.type = 'button';
+    const thumbs = element('div', 'vm-ai-thumbs');
+    const note = element('p', 'vm-ai-meta');
+    button.addEventListener('click', () => makeVideo(plan, button, thumbs, note));
+    planBox.replaceChildren(
+      element('h3', '', plan.title || 'Your video'),
+      element('p', 'vm-ai-meta', `${STYLE_NAMES[plan.style] || plan.style} · ${plan.seconds} seconds · ${FORMAT_NAMES[plan.format] || plan.format}`),
+      list, button, thumbs, note,
+    );
+    planBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function toBlob(image) {
+    const bytes = Uint8Array.from(atob(image.data), (c) => c.charCodeAt(0));
+    return new Blob([bytes], { type: image.mimeType });
+  }
+
+  async function makeVideo(plan, button, thumbs, note) {
+    if (busy) return;
+    busy = true;
+    button.disabled = true;
+    thumbs.replaceChildren(...plan.scenes.map((_, i) => element('span', '', String(i + 1))));
+    const images = [];
+    try {
+      for (const [index, scene] of plan.scenes.entries()) {
+        note.textContent = `Creating picture ${index + 1} of ${plan.scenes.length}…`;
+        const data = await post('/api/aivideo/image', { prompt: scene.imagePrompt, format: plan.format });
+        const blob = toBlob(data.image);
+        images.push(blob);
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(blob);
+        img.alt = `Scene ${index + 1}`;
+        thumbs.children[index].replaceWith(img);
+      }
+      note.textContent = 'All pictures are ready ✓ Playing a preview. Tap “Make my video” to download it, or change any text or photo below.';
+      await window.SiteCraftVideoMaker.loadPlan(plan, images);
+    } catch (error) {
+      note.textContent = images.length
+        ? `${error.message} You can still make the video with the ${images.length} picture${images.length === 1 ? '' : 's'} ready.`
+        : error.message;
+      if (images.length) {
+        const partial = element('button', 'vm-btn ghost', `Use the ${images.length} ready picture${images.length === 1 ? '' : 's'}`);
+        partial.type = 'button';
+        partial.addEventListener('click', () => window.SiteCraftVideoMaker.loadPlan({ ...plan, scenes: plan.scenes.slice(0, images.length) }, images));
+        note.after(partial);
+      }
+      button.disabled = false;
+    } finally {
+      busy = false;
+    }
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const text = input.value.trim();
+    if (!text || busy) return;
+    input.value = '';
+    bubble('user', text);
+    messages.push({ role: 'user', text });
+    busy = true;
+    $('#aiSend').disabled = true;
+    const typing = bubble('ai typing', '…');
+    try {
+      const data = await post('/api/aivideo/chat', { messages });
+      typing.remove();
+      bubble('ai', data.reply);
+      messages.push({ role: 'assistant', text: data.reply });
+      if (data.ready && data.plan) showPlan(data.plan);
+    } catch (error) {
+      typing.remove();
+      bubble('ai', error.message);
+      messages.pop();
+    } finally {
+      busy = false;
+      $('#aiSend').disabled = false;
+      input.focus();
+    }
+  });
+
+  bubble('ai', GREETING);
+  messages.push({ role: 'assistant', text: GREETING });
+  if (new URLSearchParams(window.location.search).has('ai')) input.focus();
+})();
