@@ -57,3 +57,4 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 }
 @media (max-width: 420px) { .vm-photo-fields { grid-template-columns: minmax(0, 1fr); } }
 .vm-icon:disabled { opacity: .3; cursor: default; }
+.vm-premium { justify-self: start; font-size: 11px; font-weight: 800; color: #1a1206; background: linear-gradient(115deg, #f5d27a, #d4af37); border-radius: 999px; padding: 2px 8px; }

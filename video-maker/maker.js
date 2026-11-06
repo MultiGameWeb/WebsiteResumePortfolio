@@ -15,6 +15,9 @@
   const WATERMARK = 'Made with SiteCraft';
   const SANS = 'Poppins, "Noto Sans Telugu", "Noto Sans Devanagari", sans-serif';
   const SERIF = '"Playfair Display", "Noto Sans Telugu", "Noto Sans Devanagari", serif';
+  const LUXE = '"Cormorant Garamond", "Noto Sans Telugu", "Noto Sans Devanagari", serif';
+  const CLEAN = 'Jost, "Noto Sans Telugu", "Noto Sans Devanagari", sans-serif';
+  const IMPACT = 'Anton, "Noto Sans Telugu", "Noto Sans Devanagari", sans-serif';
 
   // Each template: colours, the fonts, how photos move, and a decoration.
   const TEMPLATES = [
@@ -24,6 +27,10 @@
     { id: 'birthday', name: 'Birthday', bg: '#1e1b4b', bg2: '#4c1d95', accent: '#f472b6', text: '#ffffff', font: SANS, motion: 'slide', deco: 'dots' },
     { id: 'property', name: 'Real estate', bg: '#0b2e2a', bg2: '#134e4a', accent: '#5eead4', text: '#f0fdfa', font: SANS, motion: 'pan', deco: 'lines' },
     { id: 'food', name: 'Restaurant & food', bg: '#2b1408', bg2: '#5a2a0f', accent: '#fb923c', text: '#fff7ed', font: SANS, motion: 'zoom', deco: 'burst' },
+    // Premium cinematic templates, in the style of the AI Ad Videos samples.
+    { id: 'jewel', name: 'Jewellery luxe', premium: true, cinema: 'jewel', bg: '#050505', bg2: '#17120a', accent: '#d4af37', text: '#fdf6e3', font: LUXE, motion: 'zoom', deco: 'none' },
+    { id: 'gym', name: 'Gym power', premium: true, cinema: 'gym', bg: '#0a0a0a', bg2: '#2a0c06', accent: '#ff4d1f', text: '#ffffff', font: IMPACT, motion: 'zoom', deco: 'none' },
+    { id: 'royal', name: 'Royal wedding', premium: true, cinema: 'royal', bg: '#1a0306', bg2: '#4a0d18', accent: '#f2c46d', text: '#fff4e0', font: LUXE, motion: 'pan', deco: 'none' },
   ];
 
   const $ = (selector) => document.querySelector(selector);
@@ -307,12 +314,294 @@
     }
   }
 
+  // ---- Premium cinematic templates ----
+  // Full-bleed photos with a dark grade, a brand bar, a scene counter and a
+  // progress line, big scene headlines, and a template effect (gold dust,
+  // corner brackets, falling petals).
+
+  function cinemaEffect(t, local) {
+    const W = canvas.width;
+    const H = canvas.height;
+    const u = Math.min(W, H) / 100;
+    const tpl = state.template;
+    ctx.save();
+    if (tpl.cinema === 'jewel') {
+      for (let i = 0; i < 34; i += 1) {
+        const a = Math.sin(i * 12.9898) * 43758.5453 % 1;
+        const b = Math.sin(i * 78.233) * 12345.678 % 1;
+        const x = Math.abs(a) * W;
+        const y = (Math.abs(b) * H - t * u * (2 + Math.abs(a) * 3)) % H;
+        const twinkle = 0.35 + 0.65 * Math.abs(Math.sin(t * 2 + i));
+        ctx.globalAlpha = 0.55 * twinkle;
+        ctx.fillStyle = tpl.accent;
+        ctx.shadowColor = tpl.accent;
+        ctx.shadowBlur = u * 1.5;
+        ctx.beginPath();
+        ctx.arc(x, y < 0 ? y + H : y, u * (0.25 + Math.abs(b) * 0.45), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else if (tpl.cinema === 'gym') {
+      const k = u * 6;
+      const pad = u * 5;
+      const open = ease(local / 0.5);
+      ctx.strokeStyle = 'rgba(255,255,255,.85)';
+      ctx.lineWidth = u * 0.45;
+      const corners = [[pad, pad + u * 9, 1, 1], [W - pad, pad + u * 9, -1, 1], [pad, H - pad - u * 4, 1, -1], [W - pad, H - pad - u * 4, -1, -1]];
+      for (const [x, y, dx, dy] of corners) {
+        ctx.globalAlpha = open;
+        ctx.beginPath();
+        ctx.moveTo(x, y + dy * k * open);
+        ctx.lineTo(x, y);
+        ctx.lineTo(x + dx * k * open, y);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 0.18 + 0.1 * Math.sin(t * 6);
+      const glow = ctx.createRadialGradient(W * 0.8, H * 0.15, 0, W * 0.8, H * 0.15, W * 0.7);
+      glow.addColorStop(0, tpl.accent);
+      glow.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, W, H);
+    } else if (tpl.cinema === 'royal') {
+      for (let i = 0; i < 22; i += 1) {
+        const a = Math.abs(Math.sin(i * 91.7));
+        const b = Math.abs(Math.sin(i * 37.3));
+        const fall = (b * H + t * u * (5 + a * 6)) % (H + u * 10) - u * 5;
+        const sway = Math.sin(t * 1.4 + i) * u * 4;
+        ctx.save();
+        ctx.translate(a * W + sway, fall);
+        ctx.rotate(t * (0.8 + a) + i);
+        ctx.globalAlpha = 0.75;
+        ctx.fillStyle = i % 3 ? '#f4a3b5' : '#ffd1dc';
+        ctx.beginPath();
+        ctx.ellipse(0, 0, u * 1.6, u * 0.9, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+    ctx.restore();
+  }
+
+  function cinemaGrade() {
+    const W = canvas.width;
+    const H = canvas.height;
+    const top = ctx.createLinearGradient(0, 0, 0, H * 0.3);
+    top.addColorStop(0, 'rgba(0,0,0,.65)');
+    top.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = top;
+    ctx.fillRect(0, 0, W, H * 0.3);
+    const bottom = ctx.createLinearGradient(0, H * 0.45, 0, H);
+    bottom.addColorStop(0, 'rgba(0,0,0,0)');
+    bottom.addColorStop(1, 'rgba(0,0,0,.88)');
+    ctx.fillStyle = bottom;
+    ctx.fillRect(0, H * 0.45, W, H * 0.55);
+    const vignette = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.35, W / 2, H / 2, Math.max(W, H) * 0.75);
+    vignette.addColorStop(0, 'rgba(0,0,0,0)');
+    vignette.addColorStop(1, 'rgba(0,0,0,.55)');
+    ctx.fillStyle = vignette;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // Brand bar, scene counter and progress line.
+  function cinemaChrome(t, sceneLabel) {
+    const W = canvas.width;
+    const H = canvas.height;
+    const u = Math.min(W, H) / 100;
+    const tpl = state.template;
+    const name = text('#titleInput') || 'Your business';
+    const contact = text('#contactInput');
+    const y = u * 6;
+    ctx.save();
+    if (tpl.cinema === 'royal') {
+      ctx.strokeStyle = tpl.accent;
+      ctx.lineWidth = u * 0.25;
+      ctx.globalAlpha = 0.9;
+      ctx.beginPath(); ctx.moveTo(W / 2 - u * 14, y); ctx.lineTo(W / 2 - u * 3, y); ctx.moveTo(W / 2 + u * 3, y); ctx.lineTo(W / 2 + u * 14, y); ctx.stroke();
+      ctx.fillStyle = tpl.accent;
+      ctx.font = `600 ${u * 3}px ${SANS}`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('✦', W / 2, y);
+      ctx.font = `600 ${u * 2.8}px ${CLEAN}`;
+      ctx.fillStyle = '#fff4e0';
+      ctx.fillText(name.toUpperCase().split('').join(' ').slice(0, 60), W / 2, y + u * 4.5);
+    } else {
+      const r = u * 3.2;
+      ctx.fillStyle = tpl.cinema === 'gym' ? tpl.accent : 'rgba(0,0,0,.35)';
+      ctx.strokeStyle = tpl.accent;
+      ctx.lineWidth = u * 0.3;
+      ctx.beginPath(); ctx.arc(u * 5 + r, y, r, 0, Math.PI * 2); ctx.fill(); if (tpl.cinema !== 'gym') ctx.stroke();
+      ctx.fillStyle = tpl.cinema === 'gym' ? '#ffffff' : tpl.accent;
+      ctx.font = `700 ${r * 1.1}px ${tpl.cinema === 'jewel' ? LUXE : SANS}`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText((name.trim()[0] || 'S').toUpperCase(), u * 5 + r, y + r * 0.06);
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `${tpl.cinema === 'jewel' ? 600 : 800} ${u * 3}px ${tpl.cinema === 'jewel' ? LUXE : SANS}`;
+      ctx.fillText((tpl.cinema === 'jewel' ? name.toUpperCase().split('').join(' ') : name.toUpperCase()).slice(0, 34), u * 5 + r * 2 + u * 2, y);
+      if (contact) {
+        ctx.font = `700 ${u * 2.3}px ${SANS}`;
+        ctx.textAlign = 'right';
+        const label = `CALL ${contact}`;
+        const w = ctx.measureText(label).width + u * 3;
+        ctx.strokeStyle = 'rgba(255,255,255,.35)';
+        ctx.lineWidth = u * 0.2;
+        ctx.beginPath(); ctx.roundRect(W - u * 5 - w, y - u * 2.2, w, u * 4.4, u * 2.2); ctx.stroke();
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(label, W - u * 5 - u * 1.5, y + u * 0.1);
+      }
+    }
+    // Progress line and scene label at the bottom.
+    const total = totalSeconds();
+    const barY = H - u * 4.5;
+    ctx.globalAlpha = 0.9;
+    ctx.fillStyle = 'rgba(255,255,255,.18)';
+    ctx.fillRect(u * 5, barY, W - u * 10, u * 0.45);
+    ctx.fillStyle = tpl.accent;
+    ctx.fillRect(u * 5, barY, (W - u * 10) * clamp(t / total, 0, 1), u * 0.45);
+    if (sceneLabel) {
+      ctx.font = `700 ${u * 2.2}px ${SANS}`;
+      ctx.fillStyle = 'rgba(255,255,255,.8)';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(sceneLabel, W - u * 5, barY - u * 1.2);
+    }
+    ctx.restore();
+  }
+
+  // A big headline, styled per template, rising in.
+  function cinemaHeadline(value, y, local, size) {
+    const W = canvas.width;
+    const u = Math.min(W, canvas.height) / 100;
+    const tpl = state.template;
+    const appear = ease((local - 0.25) / 0.7);
+    const rise = (1 - appear) * u * 5;
+    if (tpl.cinema === 'gym') {
+      return drawText(value.toUpperCase(), { x: u * 6, y: y + rise, size: size * 1.35, weight: 400, color: '#ffffff', maxWidth: W - u * 12, align: 'left', alpha: appear, maxLines: 2, font: IMPACT });
+    }
+    if (tpl.cinema === 'jewel') {
+      return drawText(value, { x: W / 2, y: y + rise, size: size * 1.15, weight: 'italic 600', color: tpl.accent, maxWidth: W * 0.86, alpha: appear, maxLines: 2, font: LUXE });
+    }
+    return drawText(value, { x: W / 2, y: y + rise, size: size * 1.1, weight: 700, color: '#fff4e0', maxWidth: W * 0.86, alpha: appear, maxLines: 2, font: LUXE });
+  }
+
+  function cinemaIntro(t) {
+    const W = canvas.width;
+    const H = canvas.height;
+    const u = Math.min(W, H) / 100;
+    const tpl = state.template;
+    background(0.6);
+    cinemaGrade();
+    cinemaEffect(t, t);
+    const title = text('#titleInput') || 'Your business name';
+    const subtitle = text('#subtitleInput');
+    const top = H * (state.format === 'wide' ? 0.3 : 0.38);
+    const used = cinemaHeadline(title, top, t, u * 8);
+    if (subtitle) {
+      const appear = ease((t - 0.8) / 0.7);
+      if (tpl.cinema === 'gym') {
+        ctx.save(); ctx.globalAlpha = appear; ctx.fillStyle = tpl.accent; ctx.fillRect(u * 6, top + used + u * 2, u * 14, u * 0.8); ctx.restore();
+        drawText(subtitle.toUpperCase(), { x: u * 6, y: top + used + u * 4.5, size: u * 3.6, weight: 800, color: tpl.accent, maxWidth: W - u * 12, align: 'left', alpha: appear, maxLines: 2, font: SANS });
+      } else {
+        drawText(subtitle, { x: W / 2, y: top + used + u * 3, size: u * 4, weight: 400, color: '#ffffff', maxWidth: W * 0.8, alpha: appear, maxLines: 2, font: CLEAN });
+      }
+    }
+    cinemaChrome(t, '');
+  }
+
+  function cinemaPhoto(index, local, t) {
+    const W = canvas.width;
+    const H = canvas.height;
+    const u = Math.min(W, H) / 100;
+    const tpl = state.template;
+    const photo = state.photos[index];
+    const previous = index > 0 ? state.photos[index - 1] : null;
+    const fade = clamp(local / 0.9, 0, 1);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+    if (previous && fade < 1) drawPhoto(previous, 1, 1);
+    drawPhoto(photo, local / state.perPhoto, previous ? fade : 1);
+    cinemaGrade();
+    cinemaEffect(t, local);
+    const number = String(index + 1).padStart(2, '0');
+    const headline = photo.caption || '';
+    const line = photo.price || '';
+    const base = H * (state.format === 'wide' ? 0.56 : 0.64);
+    const appear = ease((local - 0.15) / 0.5);
+    if (tpl.cinema === 'gym') {
+      drawText(`${number} • ${line ? line.toUpperCase() : 'TRAIN HARD'}`, { x: u * 6, y: base - u * 5, size: u * 2.6, weight: 800, color: tpl.accent, maxWidth: W - u * 12, align: 'left', alpha: appear, maxLines: 1, font: SANS, shadow: false });
+      cinemaHeadline(headline || 'PUSH', base, local, u * 10);
+    } else {
+      const chip = `${number}${line ? ` / ${line}` : ''}`;
+      ctx.save();
+      ctx.font = `700 ${u * 2.6}px ${SANS}`;
+      const w = ctx.measureText(chip).width + u * 3.2;
+      ctx.globalAlpha = appear;
+      ctx.fillStyle = tpl.accent;
+      ctx.beginPath(); ctx.roundRect((W - w) / 2, base - u * 7, w, u * 4.4, u * 2.2); ctx.fill();
+      ctx.fillStyle = '#1a1206';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(chip, W / 2, base - u * 7 + u * 2.3);
+      ctx.restore();
+      if (headline) cinemaHeadline(headline, base, local, u * 7.5);
+    }
+    cinemaChrome(t, `SCENE ${index + 1} / ${state.photos.length}`);
+  }
+
+  function cinemaOutro(local, t) {
+    const W = canvas.width;
+    const H = canvas.height;
+    const u = Math.min(W, H) / 100;
+    const tpl = state.template;
+    background(0.4);
+    cinemaGrade();
+    cinemaEffect(t, local);
+    const closing = text('#closingInput') || 'Visit us today';
+    const title = text('#titleInput') || 'Your business name';
+    const contact = text('#contactInput');
+    let y = H * (state.format === 'wide' ? 0.26 : 0.36);
+    y += drawText(closing.toUpperCase(), { x: W / 2, y, size: u * 2.8, weight: 700, color: tpl.accent, maxWidth: W * 0.84, alpha: ease(local / 0.6), maxLines: 2, font: SANS }) + u * 2;
+    y += drawText(tpl.cinema === 'gym' ? title.toUpperCase() : title, { x: W / 2, y, size: tpl.cinema === 'gym' ? u * 11 : u * 9, weight: tpl.cinema === 'gym' ? 400 : 700, color: '#ffffff', maxWidth: W * 0.88, alpha: ease((local - 0.2) / 0.7), font: tpl.font }) + u * 4;
+    if (contact) {
+      const appear = ease((local - 0.6) / 0.6);
+      const boxW = W * 0.72;
+      const boxH = u * 13;
+      ctx.save();
+      ctx.globalAlpha = appear;
+      ctx.fillStyle = 'rgba(0,0,0,.45)';
+      ctx.strokeStyle = tpl.accent;
+      ctx.lineWidth = u * 0.3;
+      ctx.beginPath(); ctx.roundRect((W - boxW) / 2, y, boxW, boxH, u * 2.5); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = tpl.accent;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.font = `700 ${u * 2.6}px ${SANS}`;
+      ctx.fillText('CALL NOW', W / 2, y + u * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `800 ${u * 6}px ${SANS}`;
+      ctx.fillText(contact, W / 2, y + u * 5.5);
+      ctx.restore();
+    }
+    cinemaChrome(t, '');
+  }
+
   // Draws the frame at time t (seconds from the start).
   function drawFrame(t) {
     sizeCanvas();
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const photosEnd = INTRO + state.photos.length * state.perPhoto;
-    if (t < INTRO || !state.photos.length) {
+    if (state.template.cinema) {
+      if (t < INTRO || !state.photos.length) {
+        if (t < INTRO) cinemaIntro(t);
+        else cinemaOutro(t - INTRO - state.perPhoto, t);
+      } else if (t < photosEnd) {
+        const index = Math.min(state.photos.length - 1, Math.floor((t - INTRO) / state.perPhoto));
+        cinemaPhoto(index, t - INTRO - index * state.perPhoto, t);
+      } else {
+        cinemaOutro(t - photosEnd, t);
+      }
+    } else if (t < INTRO || !state.photos.length) {
       if (t < INTRO) introScene(t);
       else outroScene(t - INTRO - state.perPhoto);
     } else if (t < photosEnd) {
@@ -404,7 +693,9 @@
 
   async function fontsReady() {
     const font = state.template.font;
-    try { await Promise.all([document.fonts.load(`800 40px ${font}`), document.fonts.load(`600 40px ${SANS}`), document.fonts.ready]); } catch {}
+    const loads = [`800 40px ${font}`, `400 40px ${font}`, `600 40px ${SANS}`, `800 40px ${SANS}`];
+    if (state.template.cinema) loads.push(`italic 600 40px ${LUXE}`, `700 40px ${LUXE}`, `400 40px ${CLEAN}`, `600 40px ${CLEAN}`, `400 40px ${IMPACT}`);
+    try { await Promise.all([...loads.map((spec) => document.fonts.load(spec)), document.fonts.ready]); } catch {}
   }
 
   async function makeVideo() {
@@ -476,13 +767,13 @@
       const fields = document.createElement('div');
       fields.className = 'vm-photo-fields';
       const caption = document.createElement('input');
-      caption.placeholder = 'Caption (optional)';
+      caption.placeholder = state.template.cinema ? 'Big headline, e.g. PUSH or Bridal sets' : 'Caption (optional)';
       caption.maxLength = 50;
       caption.value = photo.caption;
       caption.setAttribute('aria-label', `Caption for photo ${index + 1}`);
       caption.addEventListener('input', () => { photo.caption = caption.value.trim(); showPoster(); });
       const price = document.createElement('input');
-      price.placeholder = 'Price, e.g. ₹499';
+      price.placeholder = state.template.cinema ? 'Small line, e.g. ₹499 or Cardio' : 'Price, e.g. ₹499';
       price.maxLength = 20;
       price.value = photo.price;
       price.setAttribute('aria-label', `Price for photo ${index + 1}`);
@@ -534,10 +825,17 @@
     swatch.className = 'vm-swatch';
     swatch.style.background = `linear-gradient(115deg, ${template.bg}, ${template.bg2} 60%, ${template.accent})`;
     button.append(swatch, document.createTextNode(template.name));
+    if (template.premium) {
+      const badge = document.createElement('span');
+      badge.className = 'vm-premium';
+      badge.textContent = '★ Premium';
+      button.append(badge);
+    }
     button.addEventListener('click', () => {
       state.template = template;
       for (const item of templateList.children) item.setAttribute('aria-checked', String(item === button));
       fontsReady().then(showPoster);
+      renderPhotos();
     });
     return button;
   }));
