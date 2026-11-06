@@ -868,6 +868,35 @@
     CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h) { this.rect(x, y, w, h); };
   }
 
+  // Lets the AI chat (video-maker/ai.js) fill the editor with its plan and
+  // pictures. images: Blobs, one per scene.
+  window.SiteCraftVideoMaker = {
+    async loadPlan(plan, images) {
+      stopPlayback();
+      state.template = TEMPLATES.find((t) => t.id === plan.style) || TEMPLATES[0];
+      for (const [index, item] of Array.from(templateList.children).entries()) item.setAttribute('aria-checked', String(TEMPLATES[index] === state.template));
+      state.format = FORMATS[plan.format] ? plan.format : 'story';
+      for (const item of $('#formatList').children) item.setAttribute('aria-checked', String(item.dataset.format === state.format));
+      const count = Math.max(1, images.length);
+      state.perPhoto = clamp(Math.round(((plan.seconds - INTRO - OUTRO) / count) * 2) / 2, 2, 6);
+      $('#speedInput').value = String(state.perPhoto);
+      $('#speedValue').textContent = String(state.perPhoto);
+      $('#titleInput').value = plan.title || '';
+      $('#subtitleInput').value = plan.subtitle || '';
+      $('#contactInput').value = plan.contact || '';
+      $('#closingInput').value = plan.closing || '';
+      state.photos = [];
+      for (const [index, blob] of images.entries()) {
+        const scene = plan.scenes[index] || {};
+        state.photos.push({ ...(await loadPhoto(blob)), caption: scene.headline || '', price: scene.line || '' });
+      }
+      await fontsReady();
+      renderPhotos();
+      $('.vm-stage').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      preview();
+    },
+  };
+
   fontsReady().then(showPoster);
   showPoster();
 })();

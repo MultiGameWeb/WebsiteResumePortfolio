@@ -2,6 +2,7 @@ import { handleAiBuilderRoute } from "./ai-builder.js";
 import { handleWebsiteChatbotRoute } from "./website-chatbot.js";
 import { handleBotcraftRoute } from "./botcraft-builder.js";
 import { handleAdminRoute } from "./sitecraft-admin.js";
+import { handleAiVideoRoute } from "./ai-video.js";
 import { handleResumeAiRoute } from "./resume-ai.js";
 const MODEL = "gemini-3.8-flash";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
@@ -129,6 +130,8 @@ export default {
     if (botcraftResponse) return botcraftResponse;
     const adminResponse = await handleAdminRoute(request, env, url);
     if (adminResponse) return adminResponse;
+    const aiVideoResponse = await handleAiVideoRoute(request, env, url);
+    if (aiVideoResponse) return aiVideoResponse;
 
     // Resume AI checks the origin itself, including on preflight.
     const resumeAiResponse = await handleResumeAiRoute(request, env, url);
