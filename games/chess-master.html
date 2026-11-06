@@ -323,8 +323,8 @@ function negamax(s,depth,alpha,beta,ply,useQ,qLeft){
 }
 function chooseAI(s){
  const moves=legal(s);if(!moves.length)return null;
- const targetDepth=difficulty==='easy'?1:(difficulty==='medium'?2:3);
- const useQ=difficulty!=='easy',budget=difficulty==='hard'?1225:(difficulty==='medium'?1000:650);
+ const targetDepth=difficulty==='easy'?1:(difficulty==='medium'?3:4);
+ const useQ=difficulty!=='easy',budget=difficulty==='hard'?2400:(difficulty==='medium'?1500:650);
  searchDeadline=nowMs()+budget;nodes=0;
  moves.sort((a,b)=>moveOrder(s,b)-moveOrder(s,a));
  let completed=null;
@@ -332,7 +332,11 @@ function chooseAI(s){
   let best=-Infinity,alpha=-Infinity,scored=[];
   try{
    for(const m of moves){
-    const score=-negamax(apply(s,m),depth-1,-Infinity,-(alpha-1),1,useQ,4);
+    const next=apply(s,m);
+    let score=-negamax(next,depth-1,-Infinity,Infinity,1,useQ,6);
+    const repeated=history.some(position=>posKey(position)===posKey(next));
+    const computerEval=evaluateWhite(next)*next.turn;
+    if(repeated&&computerEval>100)score-=Math.min(120,35+computerEval/20);
     scored.push({move:m,score:score});
     if(score>best)best=score;
     if(score>alpha)alpha=score;
