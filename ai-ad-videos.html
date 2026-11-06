@@ -27,6 +27,8 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
 .av-section{position:relative;padding:clamp(64px,8vw,108px) 0}
 .av-kicker{display:inline-flex;align-items:center;gap:9px;color:#d9c7ff;font-size:10px;font-weight:800;letter-spacing:.19em;text-transform:uppercase}
 .av-kicker:before{content:"";width:23px;height:1px;background:var(--av-gradient)}
+.av-diy{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px;padding:clamp(20px,4vw,36px);border:1px solid rgba(255,255,255,.14);border-radius:24px;background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(236,72,153,.07))}.av-diy h2{margin:10px 0 10px;font:800 clamp(26px,3.6vw,38px)/1.05 Sora,Inter,sans-serif;letter-spacing:-.05em}.av-diy p{margin:0;max-width:640px;color:var(--av-muted);font-size:14px;line-height:1.75}.av-diy ul{margin:12px 0 0;padding-left:18px;color:#ddd3ea;font-size:13px;line-height:1.7}
+@media(max-width:760px){.av-diy{grid-template-columns:minmax(0,1fr)}}
 .av-gradient{background:var(--av-gradient);background-clip:text;-webkit-background-clip:text;color:transparent}
 .av-hero{padding:clamp(48px,7vw,88px) 0 55px}
 .av-hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,5vw,70px);align-items:center}
@@ -126,7 +128,7 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
    <p class="av-lead">Make your next promotion stand out with AI-powered ad videos created for your business. From the first script to the final edit, <strong>we handle the complete video-making process.</strong></p>
    <div class="av-hero-actions">
     <a class="av-btn primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20am%20interested%20in%20an%20AI%20ad%20video.%20Please%20share%20the%20options%20starting%20at%20%E2%82%B9599." target="_blank" rel="noopener noreferrer">Create My Ad Video <span aria-hidden="true">↗</span></a>
-    <a class="av-btn ghost" href="#video-types">Explore 20 video types <span aria-hidden="true">↓</span></a>
+    <a class="av-btn ghost" href="video-maker.html">Make one yourself — free <span aria-hidden="true">↗</span></a>
    </div>
    <div class="av-price-row">
     <div class="av-price-box"><span class="currency">FROM</span><div><strong>₹599</strong><small>Starting price per video</small></div></div>
@@ -149,6 +151,23 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
  </div>
 </section>
 
+<section class="av-section" id="diy-video" aria-labelledby="av-diy-title" style="padding-bottom:0">
+ <div class="av-container">
+  <div class="av-diy">
+   <div>
+    <span class="av-kicker">DO IT YOURSELF · FREE TO TRY</span>
+    <h2 id="av-diy-title">Photo Video Maker</h2>
+    <p>Turn your own photos into a video ad in minutes. Pick a template, add your offer, prices, phone number and music, and download a video for WhatsApp Status, Instagram Reels or YouTube. It runs right in your browser — your photos stay on your phone.</p>
+    <ul>
+     <li>6 templates: shop offer, product showcase, wedding / function, birthday, real estate, restaurant</li>
+     <li>Captions and price tags on every photo, in Telugu, Hindi or English</li>
+     <li>Status / Reels (9:16), post (1:1) and YouTube (16:9) sizes</li>
+    </ul>
+   </div>
+   <a class="av-btn primary" href="video-maker.html">Open Photo Video Maker <span aria-hidden="true">↗</span></a>
+  </div>
+ </div>
+</section>
 <section class="av-section" id="video-types" aria-labelledby="video-types-title">
  <div class="av-container">
   <div class="av-section-heading"><div><span class="av-kicker">ONE STUDIO · TWENTY DIRECTIONS</span><h2 id="video-types-title">What could your next ad <span class="av-gradient">look like?</span></h2></div><p>From a neighbourhood shop to a growing online brand, choose a video style that fits what you sell and the people you want to reach.</p></div>
