@@ -1,0 +1,1389 @@
+(() => {
+  'use strict';
+
+  const CSS = [
+    '.sc-pg-section .sc-extra-gamehead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}',
+    '.sc-pg-section .sc-extra-gamehead small{display:block;margin-bottom:5px;color:#d8b4fe;font-size:9px;font-weight:850;letter-spacing:.13em;text-transform:uppercase}',
+    '.sc-pg-section .sc-extra-gamehead h3{margin:0;color:#fff;font-size:clamp(18px,2.8vw,23px);font-weight:850}',
+    '.sc-pg-section .sc-extra-actions{display:flex;justify-content:flex-end;gap:7px;flex-wrap:wrap;margin:0 0 13px}',
+    '.sc-pg-section .sc-extra-btn{min-height:35px;padding:0 12px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.055);color:#f4effb;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-btn.primary{border-color:transparent;background:linear-gradient(110deg,#7c3aed,#db2777);color:#fff}',
+    '.sc-pg-section .sc-extra-status{min-height:22px;margin:0 0 14px;color:#c9c1d7;font-size:12px;line-height:1.6}',
+    '.sc-pg-section .sc-extra-stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:12px 0;color:#aaa1bd;font-size:10px;text-align:center}',
+    '.sc-pg-section .sc-extra-stats strong{display:block;margin-top:4px;color:#fff;font-size:17px;font-variant-numeric:tabular-nums}',
+    '.sc-pg-section .sc-extra-timer{width:min(100%,720px);margin:14px auto 10px;padding:12px 15px;border:1px solid rgba(216,180,254,.22);border-radius:12px;background:rgba(124,58,237,.1)}',
+    '.sc-pg-section .sc-extra-timer>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}',
+    '.sc-pg-section .sc-extra-timer span{color:#c4b5fd;font-size:10px;font-weight:850;letter-spacing:.1em}',
+    '.sc-pg-section .sc-extra-timer strong{color:#fff;font-size:22px;font-variant-numeric:tabular-nums}',
+    '.sc-pg-section .sc-extra-timer-track{height:7px;overflow:hidden;border-radius:99px;background:rgba(255,255,255,.12)}',
+    '.sc-pg-section .sc-extra-timer-track i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#8b5cf6,#ec4899,#fb923c);transition:width .2s linear}',
+    '.sc-pg-section .sc-extra-typing-prompt{min-height:105px;max-height:170px;overflow:hidden}',
+    '.sc-pg-section .sc-extra-typing-prompt .typing-next{border-bottom:2px solid #f0abfc;color:#fff}',
+    '.sc-pg-section .sc-extra-muted{color:#aaa1bd;font-size:10px;line-height:1.6}.sc-pg-section .sc-extra-center{text-align:center}',
+    '.sc-pg-section .sc-extra-word-input{display:block;width:min(100%,330px);height:48px;margin:16px auto 9px;padding:0 14px;border:1px solid rgba(216,180,254,.38);border-radius:12px;background:#191526;color:#fff;font:750 18px Inter,system-ui,sans-serif;text-align:center;letter-spacing:.12em;outline:none}',
+    '.sc-pg-section .sc-extra-word-input:focus,.sc-pg-section .sc-extra-typing-input:focus{border-color:#c4b5fd;box-shadow:0 0 0 3px rgba(196,181,253,.12)}',
+    '.sc-pg-section .sc-extra-tiles{display:flex;justify-content:center;gap:6px;margin:7px auto;flex-wrap:nowrap}',
+    '.sc-pg-section .sc-extra-tile{display:grid;place-items:center;width:48px;height:48px;border:1px solid rgba(255,255,255,.2);border-radius:8px;background:rgba(255,255,255,.05);color:#fff;font-size:18px;font-weight:850}',
+    '.sc-pg-section .sc-extra-tile.exact{background:#16845b;border-color:#16845b}.sc-pg-section .sc-extra-tile.present{background:#a87519;border-color:#a87519}.sc-pg-section .sc-extra-tile.absent{background:#393445;border-color:#393445}',
+    '.sc-pg-section .sc-extra-toggle{display:flex;justify-content:center;gap:7px;margin:12px 0}.sc-pg-section .sc-extra-toggle button{min-height:34px;padding:0 13px;border:1px solid rgba(255,255,255,.16);border-radius:9px;background:rgba(255,255,255,.04);color:#ddd5e9;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}.sc-pg-section .sc-extra-toggle button[aria-pressed=true]{background:rgba(124,58,237,.25);border-color:#a78bfa;color:#fff}',
+    '.sc-pg-section .sc-extra-board2048{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(100%,390px);aspect-ratio:1;margin:14px auto;padding:9px;border-radius:14px;background:#342d40;touch-action:none}',
+    '.sc-pg-section .sc-extra-2048-cell{display:grid;place-items:center;min-width:0;border-radius:9px;background:rgba(255,255,255,.08);color:#352b42;font-size:clamp(17px,4vw,27px);font-weight:900;font-variant-numeric:tabular-nums}',
+    '.sc-pg-section .sc-extra-2048-cell[data-v="2"]{background:#eee4da}.sc-pg-section .sc-extra-2048-cell[data-v="4"]{background:#ede0c8}.sc-pg-section .sc-extra-2048-cell[data-v="8"]{background:#f2b179;color:#fff}.sc-pg-section .sc-extra-2048-cell[data-v="16"]{background:#f59563;color:#fff}.sc-pg-section .sc-extra-2048-cell[data-v="32"]{background:#f67c5f;color:#fff}.sc-pg-section .sc-extra-2048-cell[data-v="64"]{background:#f65e3b;color:#fff}.sc-pg-section .sc-extra-2048-cell[data-v="128"],.sc-pg-section .sc-extra-2048-cell[data-v="256"],.sc-pg-section .sc-extra-2048-cell[data-v="512"],.sc-pg-section .sc-extra-2048-cell[data-v="1024"],.sc-pg-section .sc-extra-2048-cell[data-v="2048"]{background:#edc850;color:#fff;font-size:clamp(14px,3.4vw,23px)}',
+    '.sc-pg-section .sc-extra-block-wrap{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:14px;align-items:start}',
+    '.sc-pg-section .sc-extra-block-board{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;width:100%;max-width:470px;aspect-ratio:1;margin:0 auto;padding:7px;border-radius:12px;background:#282337;touch-action:manipulation}',
+    '.sc-pg-section .sc-extra-block-cell{min-width:0;padding:0;border:0;border-radius:3px;background:rgba(255,255,255,.055)}.sc-pg-section .sc-extra-block-cell.filled{background:linear-gradient(145deg,#a78bfa,#7c3aed)}',
+    '.sc-pg-section .sc-extra-pieces{display:grid;gap:9px}.sc-pg-section .sc-extra-piece{min-height:70px;padding:8px;border:1px solid rgba(255,255,255,.13);border-radius:11px;background:rgba(255,255,255,.04);cursor:pointer}.sc-pg-section .sc-extra-piece.selected{border-color:#c4b5fd;background:rgba(124,58,237,.2)}.sc-pg-section .sc-extra-piece:disabled{opacity:.25;cursor:default}',
+    '.sc-pg-section .sc-extra-block-board{position:relative}.sc-pg-section .sc-extra-piece{touch-action:none;-webkit-user-select:none;user-select:none}',
+    '.sc-pg-section .sc-extra-block-cell{transition:background .08s}.sc-pg-section .sc-extra-block-cell.ghost-ok{background:rgba(167,139,250,.55);box-shadow:inset 0 0 0 2px #c4b5fd}.sc-pg-section .sc-extra-block-cell.ghost-bad{background:rgba(239,68,68,.35);box-shadow:inset 0 0 0 2px rgba(248,113,113,.8)}.sc-pg-section .sc-extra-block-cell.filled.ghost-clear,.sc-pg-section .sc-extra-block-cell.ghost-ok.ghost-clear{background:linear-gradient(145deg,#f0abfc,#db2777)}',
+    '.sc-pg-section .sc-extra-block-drag{position:fixed;z-index:50;display:grid;pointer-events:none;transform:translate(-50%,-50%);opacity:.92;filter:drop-shadow(0 8px 16px rgba(0,0,0,.45))}.sc-pg-section .sc-extra-block-drag i{border-radius:3px;background:linear-gradient(145deg,#c4b5fd,#7c3aed)}.sc-pg-section .sc-extra-block-drag i.blank{background:transparent}',
+    '.sc-pg-section .sc-extra-block-over{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-radius:12px;background:rgba(17,16,27,.78);backdrop-filter:blur(2px);color:#fff;text-align:center}.sc-pg-section .sc-extra-block-over strong{font-size:22px}.sc-pg-section .sc-extra-block-over span{color:#d8b4fe;font-size:13px}',
+    '.sc-pg-section .sc-extra-piece-grid{display:grid;grid-template-columns:repeat(4,13px);grid-template-rows:repeat(4,13px);gap:2px;justify-content:center}.sc-pg-section .sc-extra-piece-grid i{border-radius:2px;background:#a78bfa}.sc-pg-section .sc-extra-piece-grid i.blank{background:transparent}',
+    '.sc-pg-section .sc-extra-typing-prompt{max-width:720px;margin:14px auto;padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(0,0,0,.16);color:#e5def0;font-size:15px;line-height:1.9;white-space:pre-wrap}',
+    '.sc-pg-section .sc-extra-typing-prompt .typed-ok{color:#86efac}.sc-pg-section .sc-extra-typing-prompt .typed-bad{color:#fca5a5;text-decoration:underline}.sc-pg-section .sc-extra-typing-input{display:block;width:min(100%,720px);min-height:100px;margin:0 auto;padding:12px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:#191526;color:#fff;font:14px/1.7 Inter,system-ui,sans-serif;resize:vertical;outline:none}',
+    '.sc-pg-section .sc-extra-sudoku{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));width:min(100%,450px);margin:14px auto;border:2px solid #a78bfa;border-radius:7px;overflow:hidden;aspect-ratio:1}',
+    '.sc-pg-section .sc-extra-sudoku-cell{display:grid;place-items:center;min-width:0;padding:0;border:0;border-right:1px solid rgba(255,255,255,.13);border-bottom:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.035);color:#f8f5ff;font-size:clamp(13px,3vw,20px);font-weight:650;cursor:pointer}',
+    '.sc-pg-section .sc-extra-sudoku-cell.box-right{border-right:2px solid rgba(196,181,253,.75)}.sc-pg-section .sc-extra-sudoku-cell.box-bottom{border-bottom:2px solid rgba(196,181,253,.75)}',
+    '.sc-pg-section .sc-extra-sudoku-cell.given{color:#aaa1bd;font-weight:900}.sc-pg-section .sc-extra-sudoku-cell.selected{background:rgba(124,58,237,.42)}.sc-pg-section .sc-extra-sudoku-cell.related{background:rgba(255,255,255,.085)}.sc-pg-section .sc-extra-sudoku-cell.conflict{background:rgba(239,68,68,.28);color:#fecaca}',
+    '.sc-pg-section .sc-extra-numberpad{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:12px auto}.sc-pg-section .sc-extra-numberpad button{width:38px;height:39px;border:1px solid rgba(255,255,255,.15);border-radius:9px;background:rgba(255,255,255,.05);color:#fff;font-weight:800;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-mode{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin:0 auto 14px;color:#c9c1d7;font-size:11px}',
+    '.sc-pg-section .sc-extra-math-mode button{min-height:35px;padding:0 13px;border:1px solid rgba(255,255,255,.16);border-radius:10px;background:rgba(255,255,255,.05);color:#ddd5e9;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-mode button[aria-pressed=true]{border-color:rgba(196,181,253,.75);background:rgba(124,58,237,.28);color:#fff;box-shadow:0 0 0 2px rgba(124,58,237,.1)}',
+    '.sc-pg-section .sc-extra-math-card{width:min(100%,650px);margin:12px auto;padding:clamp(16px,3vw,24px);border:1px solid rgba(196,181,253,.25);border-radius:16px;background:linear-gradient(145deg,rgba(124,58,237,.13),rgba(255,255,255,.025));text-align:center}',
+    '.sc-pg-section .sc-extra-math-expression{margin:16px 0 18px;color:#fff;font-size:clamp(30px,7vw,48px);font-weight:900;letter-spacing:.02em;font-variant-numeric:tabular-nums}',
+    '.sc-pg-section .sc-extra-math-answer{display:block;width:min(100%,260px);height:54px;margin:0 auto 10px;padding:0 14px;border:1px solid rgba(196,181,253,.4);border-radius:12px;background:#171323;color:#fff;font:800 22px Inter,system-ui,sans-serif;text-align:center;outline:none}',
+    '.sc-pg-section .sc-extra-math-answer:focus{border-color:#c4b5fd;box-shadow:0 0 0 3px rgba(196,181,253,.12)}',
+    '.sc-pg-section .sc-extra-math-hearts{font-size:22px;letter-spacing:5px}.sc-pg-section .sc-extra-math-submit{min-width:150px;min-height:43px;padding:0 18px;border:0;border-radius:11px;background:linear-gradient(110deg,#7c3aed,#db2777);color:#fff;font:800 12px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-math-over{padding:16px;border:1px solid rgba(248,113,113,.35);border-radius:12px;background:rgba(127,29,29,.12);color:#fecaca;text-align:center}',
+    '.sc-pg-section .sc-extra-connect{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;width:min(100%,490px);margin:14px auto;padding:10px;border-radius:16px;background:#2455a3}',
+    '.sc-pg-section .sc-extra-connect button{display:grid;place-items:center;min-width:0;padding:0;aspect-ratio:1;border:0;border-radius:50%;background:#111b35;cursor:pointer}.sc-pg-section .sc-extra-connect .red:after,.sc-pg-section .sc-extra-connect .yellow:after{content:"";display:block;width:82%;height:82%;border-radius:50%;background:#f87171}.sc-pg-section .sc-extra-connect .yellow:after{background:#facc15}',
+    '.sc-pg-section .sc-extra-connect button:disabled{cursor:default;opacity:.65}',
+    '.sc-pg-section .sc-extra-connect-levels{display:flex;justify-content:center;align-items:center;gap:7px;flex-wrap:wrap;margin:10px auto 13px;color:#c9c1d7;font-size:11px}',
+    '.sc-pg-section .sc-extra-connect-levels button{min-height:32px;padding:0 11px;border:1px solid rgba(255,255,255,.16);border-radius:9px;background:rgba(255,255,255,.05);color:#ddd5e9;font:750 10px Inter,system-ui,sans-serif;cursor:pointer}',
+    '.sc-pg-section .sc-extra-connect-levels button[aria-pressed=true]{border-color:#a78bfa;background:rgba(124,58,237,.3);color:#fff}',
+    '.sc-pg-section .sc-pg-sky-ball-shell{overflow:hidden;border:1px solid rgba(0,229,255,.28);border-radius:14px;background:#0b132b}',
+    '.sc-pg-section .sc-pg-sky-ball-frame{display:block;width:100%;height:clamp(680px,82vh,900px);min-height:620px;border:0;background:#0b132b}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-sky-ball-frame{height:780px;min-height:720px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-sky-ball-frame{height:calc(100vh - 175px);min-height:420px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-sky-ball-frame{height:calc(100vh - 190px);min-height:360px}}',
+    '.sc-pg-section .sc-pg-starfighter-shell{overflow:hidden;border:1px solid rgba(0,242,254,.25);border-radius:14px;background:#050711}',
+    '.sc-pg-section .sc-pg-brick-breaker-shell{overflow:hidden;border:1px solid rgba(255,154,0,.28);border-radius:14px;background:#060811}',
+    '.sc-pg-section .sc-pg-brick-breaker-frame{display:block;width:100%;height:clamp(600px,78vh,850px);min-height:560px;border:0;background:#060811}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-brick-breaker-frame{height:760px;min-height:700px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-brick-breaker-frame{height:calc(100vh - 175px);min-height:420px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-brick-breaker-frame{height:calc(100vh - 190px);min-height:360px}}',
+    '.sc-pg-section .sc-pg-starfighter-frame{display:block;width:100%;height:clamp(600px,78vh,850px);min-height:560px;border:0;background:#04060c}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-starfighter-frame{height:760px;min-height:700px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 175px);min-height:420px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-starfighter-frame{height:calc(100vh - 190px);min-height:360px}}',
+    '.sc-pg-section .sc-pg-arrow-escape-shell{overflow:hidden;border:1px solid rgba(140,224,255,.35);border-radius:14px;background:#1e3c72}',
+    '.sc-pg-section .sc-pg-arrow-escape-frame{display:block;width:100%;height:clamp(700px,88vh,900px);min-height:660px;border:0;background:#1e3c72}',
+    '.sc-pg-section .sc-pg-n-queens-shell{overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#f6eee2}',
+    '.sc-pg-section .sc-pg-n-queens-frame{display:block;width:100%;height:clamp(760px,92vh,1050px);min-height:720px;border:0;background:#f6eee2}',
+    '.sc-pg-section .sc-pg-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:4px 0 20px}',
+    '.sc-pg-section .sc-pg-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;min-width:0;min-height:116px;padding:14px 8px;border:1px solid rgba(216,180,254,.19);border-radius:17px;background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));color:#f5efff;text-align:center;white-space:normal;line-height:1.25;box-shadow:0 8px 20px rgba(0,0,0,.14);transition:transform .16s ease,border-color .16s ease,background .16s ease}',
+    '.sc-pg-section .sc-pg-tab:hover{transform:translateY(-2px);border-color:rgba(216,180,254,.55);background:linear-gradient(145deg,rgba(139,92,246,.18),rgba(255,255,255,.045))}',
+    '.sc-pg-section .sc-pg-tab[aria-selected=true]{border-color:#a78bfa;background:linear-gradient(145deg,rgba(124,58,237,.28),rgba(219,39,119,.13));box-shadow:0 0 0 1px rgba(167,139,250,.15),0 12px 28px rgba(0,0,0,.18)}',
+    '.sc-pg-section .sc-pg-tab .sc-pg-card-icon{display:block;font-size:clamp(25px,3vw,37px);line-height:1.05}',
+    '.sc-pg-section .sc-pg-tab .sc-pg-card-title{display:block;font-size:clamp(10px,1.25vw,13px);font-weight:850;letter-spacing:-.01em;overflow-wrap:anywhere}',
+    '.sc-pg-section .sc-pg-tab:disabled{opacity:.45;filter:saturate(.65);cursor:not-allowed;transform:none}',
+    '.sc-pg-section .sc-pg-gamehead small,.sc-pg-section .sc-extra-gamehead small{display:none!important}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:15px}.sc-pg-section .sc-pg-tab{min-height:91px;padding:10px 4px;border-radius:13px;gap:6px}.sc-pg-section .sc-pg-tab .sc-pg-card-icon{font-size:27px}.sc-pg-section .sc-pg-tab .sc-pg-card-title{font-size:10px;line-height:1.2}.sc-pg-section .sc-pg-panel{padding:14px;border-radius:16px}}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-n-queens-frame{height:1120px;min-height:1040px}}',
+    '.sc-pg-section .sc-pg-daily-connections-shell{overflow:hidden;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#fff}',
+    '.sc-pg-section .sc-pg-daily-connections-frame{display:block;width:100%;height:clamp(760px,92vh,1050px);min-height:720px;border:0;background:#fff}',
+    '@media(max-width:620px){.sc-pg-section .sc-pg-arrow-escape-frame{height:800px;min-height:760px}}',
+    '.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame{height:calc(100vh - 175px);min-height:520px}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame{height:calc(100vh - 190px);min-height:420px}}',
+    '@media(max-width:720px){.sc-pg-section .sc-extra-block-wrap{grid-template-columns:1fr}.sc-pg-section .sc-extra-pieces{grid-template-columns:repeat(3,minmax(0,1fr))}.sc-pg-section .sc-extra-piece{min-height:62px}.sc-pg-section .sc-extra-connect{gap:4px;padding:6px}.sc-pg-section .sc-extra-typing-prompt{font-size:13px;padding:12px}}',
+    '@media(max-width:390px){.sc-pg-section .sc-extra-tile{width:42px;height:44px}.sc-pg-section .sc-extra-connect{gap:3px;padding:5px}}',
+    '.sc-pg-panel:fullscreen,.sc-pg-panel:-webkit-full-screen{position:fixed!important;inset:0!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;gap:4px!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-height:100vh!important;max-height:100dvh!important;min-height:0!important;margin:0!important;padding:8px!important;overflow:hidden!important;overscroll-behavior:none!important;touch-action:pan-x pan-y;border:0!important;border-radius:0!important;background:#11101b!important}',
+    '.sc-pg-panel:fullscreen .sc-extra-gamehead,.sc-pg-panel:-webkit-full-screen .sc-extra-gamehead,.sc-pg-panel:fullscreen .sc-pg-gamehead,.sc-pg-panel:-webkit-full-screen .sc-pg-gamehead{flex:0 0 auto;margin:0 0 3px!important}',
+    '.sc-pg-panel:fullscreen .sc-extra-actions,.sc-pg-panel:-webkit-full-screen .sc-extra-actions,.sc-pg-panel:fullscreen .sc-pg-game-tools,.sc-pg-panel:-webkit-full-screen .sc-pg-game-tools{flex:0 0 auto;margin:0 0 3px!important}',
+    '.sc-pg-panel:fullscreen .sc-extra-status,.sc-pg-panel:-webkit-full-screen .sc-extra-status,.sc-pg-panel:fullscreen .sc-pg-status,.sc-pg-panel:-webkit-full-screen .sc-pg-status{flex:0 0 auto;min-height:0;max-height:2.6em;overflow:hidden;margin:0 0 4px!important;line-height:1.3}',
+    '.sc-pg-panel:fullscreen iframe,.sc-pg-panel:-webkit-full-screen iframe{display:block;flex:1 1 auto;width:100%!important;height:100%!important;min-height:0!important;max-height:100%!important;border:0}',
+    '.sc-pg-panel:fullscreen .sc-pg-snake-shell,.sc-pg-panel:fullscreen .sc-pg-sky-ball-shell,.sc-pg-panel:fullscreen .sc-pg-starfighter-shell,.sc-pg-panel:fullscreen .sc-pg-brick-breaker-shell,.sc-pg-panel:fullscreen .sc-pg-arrow-escape-shell,.sc-pg-panel:fullscreen .sc-pg-n-queens-shell,.sc-pg-panel:fullscreen .sc-pg-daily-connections-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-snake-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-sky-ball-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-starfighter-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-brick-breaker-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-arrow-escape-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-n-queens-shell,.sc-pg-panel:-webkit-full-screen .sc-pg-daily-connections-shell{display:flex;flex:1 1 0;flex-direction:column;min-height:0;height:auto!important;max-height:none;overflow:hidden}',
+    '.sc-pg-panel:fullscreen .sc-pg-snake-frame,.sc-pg-panel:fullscreen .sc-pg-sky-ball-frame,.sc-pg-panel:fullscreen .sc-pg-starfighter-frame,.sc-pg-panel:fullscreen .sc-pg-brick-breaker-frame,.sc-pg-panel:fullscreen .sc-pg-arrow-escape-frame,.sc-pg-panel:fullscreen .sc-pg-n-queens-frame,.sc-pg-panel:fullscreen .sc-pg-daily-connections-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-snake-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-sky-ball-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-starfighter-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-brick-breaker-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-arrow-escape-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-n-queens-frame,.sc-pg-panel:-webkit-full-screen .sc-pg-daily-connections-frame{flex:1 1 auto;width:100%!important;height:100%!important;min-height:0!important;max-height:100%!important}',
+    '.sc-pg-panel:fullscreen .sc-extra-board2048,.sc-pg-panel:-webkit-full-screen .sc-extra-board2048{width:min(100%,calc(100dvh - 170px));max-height:calc(100dvh - 145px)}',
+    '@media(max-width:620px){.sc-pg-panel:fullscreen,.sc-pg-panel:-webkit-full-screen{padding:5px!important;gap:3px!important}.sc-pg-panel:fullscreen .sc-extra-gamehead h3,.sc-pg-panel:fullscreen .sc-pg-gamehead h3{font-size:17px}.sc-pg-panel:fullscreen .sc-extra-actions,.sc-pg-panel:fullscreen .sc-pg-game-tools{margin-bottom:2px!important}.sc-pg-panel:fullscreen .sc-extra-status,.sc-pg-panel:fullscreen .sc-pg-status{font-size:10px;max-height:2.2em}}',
+    '@media(prefers-reduced-motion:reduce){.sc-pg-section .sc-extra-btn,.sc-pg-section .sc-extra-toggle button{transition:none!important}}'
+  ].join('');
+
+
+  const $ = (root, selector) => root.querySelector(selector);
+  const esc = value => String(value == null ? '' : value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function safeGet(key, fallback) {
+    try { const value = localStorage.getItem(key); return value == null ? fallback : JSON.parse(value); }
+    catch (_) { return fallback; }
+  }
+  function safeSet(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (_) {} }
+  function best(key, score) {
+    const old = Number(safeGet('sitecraft-game-best-' + key, 0)) || 0;
+    if (score > old) safeSet('sitecraft-game-best-' + key, score);
+    return Math.max(old, score);
+  }
+  function shuffle(list, random) {
+    const copy = list.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor((random ? random() : Math.random()) * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+  function seeded(seed) {
+    let value = seed >>> 0;
+    return function() {
+      value = (value * 1664525 + 1013904223) >>> 0;
+      return value / 4294967296;
+    };
+  }
+  function dateKey() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function dayNumber() {
+    const parts = dateKey().split('-').map(Number);
+    return Math.floor(Date.UTC(parts[0], parts[1] - 1, parts[2]) / 86400000);
+  }
+  function segmentText(value) {
+    if (window.Intl && Intl.Segmenter) {
+      return Array.from(new Intl.Segmenter('te', {granularity:'grapheme'}).segment(value), part => part.segment);
+    }
+    return Array.from(value.normalize('NFC'));
+  }
+
+  function append(root) {
+    if (!root || !root.querySelector) return null;
+    const section = root.querySelector('.sc-pg-section');
+    if (!section) return null;
+    if (section.dataset.extraGamesReady === 'true') return section;
+    const tabs = $(section, '.sc-pg-tabs');
+    const panel = $(section, '[data-pg-panel]');
+    if (!tabs || !panel) return null;
+
+    const style = document.createElement('style');
+    style.dataset.scExtraStyle = 'true';
+    style.textContent = CSS;
+    section.appendChild(style);
+
+    tabs.insertAdjacentHTML('beforeend',
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="word">🟩 Daily Word</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="2048">🔢 2048</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="blocks">🧩 Block Puzzle</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="typing">⌨️ Typing Test</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sudoku">🔢 Sudoku</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="arrow-escape">🧭 Arrow Escape</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="daily-connections">🔗 Daily Connections · తెలుగు / English</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="n-queens">♛ N-Queens</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="math">➗ Math Challenge</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="connect">🔴 Connect Four</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="sky-ball">🌤️ 3D Sky Ball</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="starfighter">🚀 3D Starfighter</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-extra-tab="brick-breaker">💎 Brick Breaker</button>' +
+      '<button class="sc-pg-tab" type="button" role="tab" aria-selected="false" data-gk-pending disabled title="GK Quiz will be enabled after secure question API integration">🇮🇳 GK Quiz · Soon</button>'
+    );
+
+    const preferredOrder = [
+      // Row 1: Snake, Math, Starfighter
+      'snake','math','starfighter',
+      // Row 2: 3D Sky Ball, Sudoku, 2048
+      'sky-ball','sudoku','2048',
+      // Row 3: Daily Word, Daily Connections, Typing Test
+      'word','daily-connections','typing',
+      // Remaining games: three cards per row
+      'arrow-escape','connect','brick-breaker',
+      'blocks','n-queens','memory',
+      'ttt','rps'
+    ];
+    preferredOrder.forEach(key => {
+      const tab = tabs.querySelector('[data-extra-tab="' + key + '"], [data-pg-tab="' + key + '"]');
+      if (tab) tabs.appendChild(tab);
+    });
+    const pendingTab = tabs.querySelector('[data-gk-pending]');
+    if (pendingTab) tabs.appendChild(pendingTab);
+
+    const gameCardMeta = {
+      'snake':['🐍','3D Snake'], 'math':['➗','Math Challenge'], 'starfighter':['🚀','3D Starfighter'],
+      'sky-ball':['🌤️','3D Sky Ball'], 'sudoku':['🔢','Sudoku'], '2048':['🟨','2048'],
+      'word':['🟩','Daily Word'], 'daily-connections':['🔗','Daily Connections'], 'typing':['⌨️','Typing Test'],
+      'arrow-escape':['🧭','Arrow Escape'], 'connect':['🔴','Connect Four'], 'brick-breaker':['💎','Brick Breaker'],
+      'blocks':['🧩','Block Puzzle'], 'n-queens':['♛','N-Queens'], 'memory':['🧠','Memory Match'],
+      'ttt':['⭕','Tic-Tac-Toe'], 'rps':['✊','Rock Paper Scissors']
+    };
+    tabs.querySelectorAll('.sc-pg-tab').forEach(card => {
+      const key = card.dataset.extraTab || card.dataset.pgTab || '';
+      const meta = gameCardMeta[key];
+      if(meta){
+        card.innerHTML = '<span class="sc-pg-card-icon" aria-hidden="true">'+meta[0]+'</span><span class="sc-pg-card-title">'+meta[1]+'</span>';
+        card.setAttribute('aria-label',meta[1]);
+        card.setAttribute('title',meta[1]);
+      } else if(card.hasAttribute('data-gk-pending')) {
+        card.innerHTML = '<span class="sc-pg-card-icon" aria-hidden="true">🇮🇳</span><span class="sc-pg-card-title">GK Quiz · Soon</span>';
+        card.setAttribute('aria-label','GK Quiz — coming soon');
+      }
+      card.classList.add('sc-pg-game-card');
+    });
+
+    bind(section, tabs, panel);
+    section.dataset.extraGamesReady = 'true';
+    return section;
+  }
+
+  function bind(section, tabs, view) {
+    if (section.dataset.ready === 'true') return;
+    section.dataset.ready = 'true';
+    let active = '';
+    let word = null, puzzle2048 = null, blocks = null, typing = null, sudoku = null, math = null, connect = null;
+    let typingTimer = 0;
+    let mathSubmitTimer = 0;
+    let mathSubmitting = false;
+
+    function commonHead(label, title, resetText) {
+      return '<div class="sc-extra-gamehead"><div><h3>' + title + '</h3></div>' +
+        '<button class="sc-extra-btn" type="button" data-extra-reset>' + resetText + '</button></div>' +
+        '<div class="sc-extra-actions"><button class="sc-extra-btn" type="button" data-extra-fullscreen>⛶ Full Screen</button></div>';
+    }
+    function start(id) {
+      active = id;
+      clearInterval(typingTimer);
+      typingTimer = 0;
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      mathSubmitting = false;
+      view.dataset.extraGameActive = 'true';
+      section.querySelectorAll('.sc-pg-tab').forEach(tab => {
+        tab.setAttribute('aria-selected', String(tab.dataset.extraTab === id));
+      });
+      if (id === 'word') initWord();
+      if (id === '2048') init2048();
+      if (id === 'blocks') initBlocks();
+      if (id === 'typing') initTyping();
+      if (id === 'sudoku') initSudoku('medium',9);
+      if (id === 'math') initMath();
+      if (id === 'connect') initConnect();
+      if (id === 'sky-ball') paintSkyBall();
+      if (id === 'starfighter') paintStarfighter();
+      if (id === 'brick-breaker') paintBrickBreaker();
+      if (id === 'arrow-escape') paintArrowEscape();
+      if (id === 'daily-connections') paintDailyConnections();
+      if (id === 'n-queens') paintNQueens();
+    }
+    section.__siteCraftOpenExtraGame = start;
+    function paintSkyBall() {
+      view.innerHTML = commonHead('3D SKY BALL RUNNER · 3D ARCADE', 'Roll through the skyway. Dodge obstacles and collect diamonds.', '↻ Restart run') +
+        '<p class="sc-extra-status">Drag left or right on mobile to steer the 3D ball. On desktop, use the Left / Right Arrow Keys or A / D. Choose a world, ball skin and difficulty before starting.</p>' +
+        '<div class="sc-pg-sky-ball-shell"><iframe class="sc-pg-sky-ball-frame" data-sky-ball-frame src="games/sky-ball-runner-3d.html" title="3D Sky Ball Runner game" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintStarfighter() {
+      view.innerHTML = commonHead('3D STARFIGHTER · SPACE ARCADE', 'Pilot your fighter. Survive the galaxy.', '↻ Restart mission') +
+        '<p class="sc-extra-status">Drag to steer on touch or mouse. Use Arrow Keys / WASD on desktop. Lasers fire automatically. Collect weapon, shield and life capsules, and defeat the boss dreadnought.</p>' +
+        '<div class="sc-pg-starfighter-shell"><iframe class="sc-pg-starfighter-frame" data-starfighter-frame src="games/starfighter-3d.html" title="3D Starfighter arcade game" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintBrickBreaker() {
+      view.innerHTML = commonHead('3D CRYSTAL BRICK BREAKER · BOSS EDITION', 'Smash the crystals. Defeat the Mecha Boss.', '↻ Restart stage') +
+        '<p class="sc-extra-status">Slide to move the hover-paddle on mobile or mouse. Use Left / Right Arrow Keys or A / D on desktop. Catch Fireball, Multi-Ball, Twin Laser and Wide Paddle capsules. Clear every brick and defeat the boss to advance.</p>' +
+        '<div class="sc-pg-brick-breaker-shell"><iframe class="sc-pg-brick-breaker-frame" data-brick-breaker-frame src="games/crystal-brick-breaker.html" title="3D Crystal Brick Breaker Boss Edition" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintArrowEscape() {
+      view.innerHTML = commonHead('ARROW ESCAPE PUZZLE · LOGIC GAME', 'Clear the grid. Let every arrow escape.', '↻ Restart level') +
+        '<p class="sc-extra-status">Tap arrows only when their pointing path to the board edge is clear. A blocked arrow costs one heart. Use Hint and Bomb tools wisely, collect coins and clear all 15 levels. Your progress is saved on this browser.</p>' +
+        '<div class="sc-pg-arrow-escape-shell"><iframe class="sc-pg-arrow-escape-frame" data-arrow-escape-frame src="games/arrow-escape-puzzle.html" title="Arrow Escape Puzzle" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintDailyConnections() {
+      view.innerHTML = commonHead('DAILY CONNECTIONS · WORD LOGIC', 'Find four groups of four connected words.', '↻ Reload game') +
+        '<p class="sc-extra-status">A daily word-connection challenge in Telugu and English. Select four related words, submit your guess and solve all four groups. Your daily progress is saved in this browser.</p>' +
+        '<div class="sc-pg-daily-connections-shell"><iframe class="sc-pg-daily-connections-frame" data-daily-connections-frame src="games/daily-connections.html" title="Daily Connections Telugu and English game" loading="lazy" allow="clipboard-write" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    function paintNQueens() {
+      view.innerHTML = commonHead('N-QUEENS · CHESS LOGIC', 'Place N queens so none can attack another.', '↻ New challenge') +
+        '<p class="sc-extra-status">Choose a board from 4 × 4 to 12 × 12. Place one queen in every row without sharing a column or diagonal. Use Hint or Show Solution when you need help.</p>' +
+        '<div class="sc-pg-n-queens-shell"><iframe class="sc-pg-n-queens-frame" data-n-queens-frame src="games/n-queens.html" title="N-Queens chess puzzle" loading="lazy" allow="fullscreen" allowfullscreen></iframe></div>';
+    }
+    tabs.querySelectorAll('[data-extra-tab]').forEach(tab => {
+      tab.addEventListener('click', () => start(tab.dataset.extraTab));
+    });
+    function syncFullscreenFrames() {
+      const activeFullscreen = document.fullscreenElement === view || document.webkitFullscreenElement === view;
+      view.querySelectorAll('iframe').forEach(frame => {
+        try {
+          const doc = frame.contentDocument;
+          if (!doc || !doc.head) return;
+          let injected = doc.getElementById('sitecraft-no-scroll-fullscreen');
+          if (activeFullscreen && !injected) {
+            injected = doc.createElement('style');
+            injected.id = 'sitecraft-no-scroll-fullscreen';
+            if (frame.hasAttribute('data-n-queens-frame')) {
+              injected.textContent = [
+                'html,body{height:100%!important;overflow:hidden!important;overscroll-behavior:none!important}',
+                'body{padding:5px!important;align-items:stretch!important}',
+                '.app{height:100%!important;max-height:100%!important;min-height:0!important;display:flex!important;flex-direction:column!important;overflow:hidden!important}',
+                '.hero{flex:0 0 auto;margin:0 auto 5px!important}',
+                '.hero .intro{display:none!important}',
+                '.hero h1{font-size:clamp(20px,3vh,30px)!important;margin:2px 0!important}',
+                '.toolbar{flex:0 0 auto;gap:5px!important;margin:5px auto 7px!important}',
+                '.toolbar select,.toolbar .btn{min-height:34px!important;padding:0 7px!important;font-size:10px!important}',
+                '.layout{flex:1 1 auto!important;min-height:0!important;grid-template-columns:minmax(0,1fr) 112px!important;gap:5px!important;align-items:center!important}',
+                '.board-card{min-height:0!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:5px!important}',
+                '.board-wrap{width:min(100%,calc(100dvh - 150px),calc(100vw - 130px))!important;max-width:min(100%,calc(100dvh - 150px),calc(100vw - 130px))!important;margin:auto!important}',
+                '.side{min-height:0!important;display:grid!important;grid-template-columns:1fr!important;gap:4px!important;overflow:hidden!important}',
+                '.side .help-card,.note{display:none!important}',
+                '.stat-card{padding:6px!important}.stat-row{grid-template-columns:1fr!important;gap:4px!important}',
+                '.stat-label{font-size:8px!important}.stat-value{font-size:17px!important;margin-top:2px!important}',
+                '.status{min-height:0!important;padding:5px!important;font-size:9px!important;line-height:1.3!important}',
+                '.legend{display:none!important}',
+                '@media(max-width:700px){.layout{grid-template-columns:minmax(0,1fr) 92px!important}.board-wrap{width:min(100%,calc(100dvh - 145px),calc(100vw - 105px))!important;max-width:min(100%,calc(100dvh - 145px),calc(100vw - 105px))!important}.stat-row{gap:3px!important}.stat-card{padding:4px!important}.stat-value{font-size:14px!important}.toolbar{gap:3px!important}.toolbar select,.toolbar .btn{font-size:8px!important;padding:0 4px!important}.side{gap:3px!important}}',
+                '@media(max-height:520px){.hero{display:none!important}.toolbar{margin:2px auto!important}.layout{grid-template-columns:minmax(0,1fr) 92px!important}.board-wrap{width:min(100%,calc(100dvh - 90px),calc(100vw - 105px))!important;max-width:min(100%,calc(100dvh - 90px),calc(100vw - 105px))!important}}'
+              ].join('');
+            } else {
+              injected.textContent = 'html,body{height:100%!important;overflow:hidden!important;overscroll-behavior:none!important}body{overscroll-behavior:none!important}';
+            }
+            doc.head.appendChild(injected);
+          } else if (!activeFullscreen && injected) {
+            injected.remove();
+          }
+        } catch (_) {}
+      });
+      const button = $(view, '[data-extra-fullscreen]');
+      const isFullscreen = document.fullscreenElement === view || document.webkitFullscreenElement === view;
+      if (button) button.textContent = isFullscreen ? '⤢ Exit Full Screen' : '⛶ Full Screen';
+    }
+    document.addEventListener('fullscreenchange', syncFullscreenFrames);
+    document.addEventListener('webkitfullscreenchange', syncFullscreenFrames);
+
+    start('2048');
+
+    const englishWords = ['APPLE','BRAVE','CLOUD','DREAM','EARTH','FLAME','GRAPE','HEART','JUICE','KNIFE','LEMON','MUSIC','NIGHT','OCEAN','PEACE','QUEEN','RIVER','SMILE','TRAIN','WATER','YOUTH','BREAD','CHAIR','DANCE','LIGHT','PLANT','SHINE','SPACE','STONE','TIGER','WORLD','MANGO','GREEN','HAPPY','STARS','SWEET','CANDY','BLOOM','CROWN','MAGIC','SOUND','SLEEP','STORM','TRUCK','VOICE','BEACH','CHESS','FRUIT','HORSE','MONEY','ROBOT','SNAKE','TABLE','ZEBRA'];
+    const teluguWords = ['తెలుగు','మనసు','కలలు','వెలుగు','విజయం','ప్రకృతి','నగరం','గెలుపు','చదువు','దేవుడు','పండుగ','కవిత','మాటలు','పాటలు','సమయం','వానలు','మేఘాలు','పుస్తకం','సహాయం','గురువు','బంగారం','తారలు','చెలిమి','హాయిగా','ఆకాశం','ఆశయం','ప్రయాణం','నవోదయం','పరిచయం','కరుణ'];
+    const wordGuesses = [];
+    function initWord() {
+      const lang = safeGet('sitecraft-word-lang', 'en') === 'te' ? 'te' : 'en';
+      word = {lang:lang, attempts:[], over:false, won:false, guess:'', day:dateKey()};
+      const pool = lang === 'te' ? teluguWords : englishWords;
+      const rng = seeded(dayNumber() + (lang === 'te' ? 271 : 0));
+      word.answer = pool[Math.floor(rng() * pool.length)];
+      word.limit = lang === 'te' ? segmentText(word.answer).length : 5;
+      paintWord('Guess the hidden word in six tries.');
+    }
+    function wordParts(value) { return word.lang === 'te' ? segmentText(value.normalize('NFC')) : Array.from(value.toUpperCase()); }
+    function paintWord(message) {
+      const pool = word.lang === 'te' ? teluguWords : englishWords;
+      const length = word.limit;
+      let rows = '';
+      for (let r = 0; r < 6; r++) {
+        const attempt = word.attempts[r];
+        let marks = [];
+        if (attempt) {
+          const target = wordParts(word.answer);
+          const guess = wordParts(attempt);
+          const result = Array(length).fill('absent');
+          const remaining = {};
+          target.forEach((v,i) => { if (guess[i] !== v) remaining[v] = (remaining[v] || 0) + 1; });
+          guess.forEach((v,i) => { if (v === target[i]) result[i] = 'exact'; });
+          guess.forEach((v,i) => {
+            if (result[i] === 'exact') return;
+            if (remaining[v] > 0) { result[i] = 'present'; remaining[v]--; }
+          });
+          marks = result;
+        }
+        const parts = attempt ? wordParts(attempt) : (r === word.attempts.length && !word.over ? wordParts(word.guess || '') : []);
+        rows += '<div class="sc-extra-tiles">' + Array.from({length:length}, (_,i) => {
+          const value = parts[i] || '';
+          return '<span class="sc-extra-tile ' + (attempt ? marks[i] : '') + '">' + esc(value) + '</span>';
+        }).join('') + '</div>';
+      }
+      view.innerHTML = commonHead('DAILY WORD CHALLENGE · ' + (word.lang === 'te' ? 'తెలుగు' : 'ENGLISH'), 'Find today’s word.', '↻ New day') +
+        '<div class="sc-extra-toggle"><button type="button" data-word-lang="en" aria-pressed="' + (word.lang === 'en') + '">English</button><button type="button" data-word-lang="te" aria-pressed="' + (word.lang === 'te') + '">తెలుగు</button></div>' +
+        '<p class="sc-extra-status sc-extra-center" data-word-status>' + esc(message) + '</p>' +
+        rows +
+        '<input class="sc-extra-word-input" data-word-input type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="' + (word.lang === 'te' ? 32 : 5) + '" placeholder="' + (word.lang === 'te' ? 'తెలుగు పదం టైప్ చేయండి' : 'TYPE 5 LETTERS') + '"' + (word.over ? ' disabled' : '') + '>' +
+        '<div class="sc-extra-center"><button class="sc-extra-btn primary" type="button" data-word-submit' + (word.over ? ' disabled' : '') + '>Submit Guess</button></div>' +
+        '<div class="sc-extra-stats"><span>Attempts<strong>' + word.attempts.length + ' / 6</strong></span><span>Challenge<strong>' + esc(word.day) + '</strong></span></div>' +
+        '<p class="sc-extra-muted sc-extra-center">Green = correct place · Amber = in the word, different place · Grey = not in the word. New puzzle each day.</p>' +
+        (word.over ? '<div class="sc-extra-center"><button class="sc-extra-btn" type="button" data-word-share>Share result</button></div>' : '');
+      const input = $(view, '[data-word-input]');
+      if (input && !word.over) input.focus({preventScroll:true});
+    }
+    function submitWord() {
+      if (!word || word.over) return;
+      const input = $(view, '[data-word-input]');
+      const guess = String(input ? input.value : word.guess).trim().normalize('NFC');
+      const parts = wordParts(guess);
+      if (parts.length !== word.limit) {
+        const status = $(view, '[data-word-status]');
+        if (status) status.textContent = word.lang === 'te' ? 'సరైన అక్షరాల సంఖ్యతో పదం టైప్ చేయండి.' : 'Enter exactly ' + word.limit + ' letters.';
+        return;
+      }
+      word.attempts.push(guess);
+      word.guess = '';
+      word.won = guess.toLocaleUpperCase() === word.answer.toLocaleUpperCase();
+      word.over = word.won || word.attempts.length >= 6;
+      const message = word.won ? 'You found it! 🎉' : word.over ? 'Today’s word was ' + word.answer + '. Try again tomorrow!' : 'Good try. Check the colours and guess again.';
+      paintWord(message);
+    }
+
+    function init2048() {
+      puzzle2048 = {board:Array(16).fill(0),score:0,over:false,won:false};
+      addTile2048(); addTile2048(); paint2048('Use arrow keys, swipe or the buttons to move tiles.');
+    }
+    function addTile2048() {
+      const empty = puzzle2048.board.map((v,i) => v ? -1 : i).filter(i => i >= 0);
+      if (!empty.length) return;
+      const index = empty[Math.floor(Math.random() * empty.length)];
+      puzzle2048.board[index] = Math.random() < .9 ? 2 : 4;
+    }
+    function paint2048(message) {
+      view.innerHTML = commonHead('2048 · NUMBER PUZZLE', 'Join the numbers. Reach 2048.', '↻ New game') +
+        '<p class="sc-extra-status sc-extra-center" data-2048-status>' + esc(message) + '</p>' +
+        '<div class="sc-extra-stats"><span>Score<strong>' + puzzle2048.score + '</strong></span><span>Best<strong>' + best('2048',puzzle2048.score) + '</strong></span></div>' +
+        '<div class="sc-extra-board2048" data-2048-board tabindex="0" aria-label="2048 game board">' +
+        puzzle2048.board.map(v => '<div class="sc-extra-2048-cell" data-v="' + (v || '') + '">' + (v || '') + '</div>').join('') +
+        '</div><div class="sc-extra-toggle">' +
+        '<button type="button" data-2048-move="up">↑ Up</button><button type="button" data-2048-move="left">← Left</button><button type="button" data-2048-move="down">↓ Down</button><button type="button" data-2048-move="right">Right →</button></div>' +
+        '<p class="sc-extra-muted sc-extra-center">Combine matching tiles. Each move slides all tiles in one direction. Your best score is saved on this device.</p>';
+      const focusBoard = $(view, '[data-2048-board]');
+      if (focusBoard) focusBoard.focus({preventScroll:true});
+      if (puzzle2048.over) {
+        const status = $(view, '[data-2048-status]');
+        if (status) status.textContent = message + ' Start a new game to play again.';
+      }
+    }
+    function move2048(direction) {
+      if (!puzzle2048 || puzzle2048.over) return;
+      const old = puzzle2048.board.slice();
+      let gained = 0;
+      for (let line = 0; line < 4; line++) {
+        let indices = [];
+        for (let p = 0; p < 4; p++) {
+          if (direction === 'left') indices.push(line * 4 + p);
+          if (direction === 'right') indices.push(line * 4 + (3-p));
+          if (direction === 'up') indices.push(p * 4 + line);
+          if (direction === 'down') indices.push((3-p) * 4 + line);
+        }
+        const values = indices.map(i => puzzle2048.board[i]).filter(Boolean);
+        const merged = [];
+        for (let i = 0; i < values.length; i++) {
+          if (values[i] === values[i+1]) { merged.push(values[i] * 2); gained += values[i] * 2; i++; }
+          else merged.push(values[i]);
+        }
+        while (merged.length < 4) merged.push(0);
+        indices.forEach((index,i) => puzzle2048.board[index] = merged[i]);
+      }
+      if (old.every((v,i) => v === puzzle2048.board[i])) return;
+      puzzle2048.score += gained;
+      addTile2048();
+      if (puzzle2048.board.includes(2048)) puzzle2048.won = true;
+      const canMove = puzzle2048.board.some(v => !v) || puzzle2048.board.some((v,i) => i%4<3 && v===puzzle2048.board[i+1]) || puzzle2048.board.some((v,i) => i<12 && v===puzzle2048.board[i+4]);
+      puzzle2048.over = !canMove;
+      paint2048(puzzle2048.over ? 'Game over. No more moves.' : puzzle2048.won ? '2048 reached! Amazing! You can keep playing.' : '');
+    }
+
+    const blockShapes = [
+      [[0,0]], [[0,0],[0,1]], [[0,0],[0,1],[0,2]], [[0,0],[1,0],[1,1]], [[0,0],[1,0],[2,0],[2,1]],
+      [[0,0],[0,1],[1,0],[1,1]], [[0,0],[0,1],[0,2],[1,1]], [[0,0],[1,0],[2,0]], [[0,0],[1,0],[1,1],[2,1]],
+      [[0,1],[1,0],[1,1],[1,2]], [[0,0],[0,1],[1,1],[1,2]], [[0,0],[1,0],[2,0],[3,0]], [[0,0],[0,1],[0,2],[0,3]]
+    ];
+    let blockDrag = null, blockClickBlockUntil = 0;
+    function randomPiece() { return {shape:blockShapes[Math.floor(Math.random()*blockShapes.length)].map(p=>p.slice())}; }
+    function shapeSize(shape) { return [Math.max.apply(null,shape.map(p=>p[0]))+1, Math.max.apply(null,shape.map(p=>p[1]))+1]; }
+    function firstFreePiece() { const i = blocks.pieces.findIndex(Boolean); return i < 0 ? 0 : i; }
+    function initBlocks() {
+      blocks = {board:Array.from({length:10},()=>Array(10).fill(0)),pieces:[randomPiece(),randomPiece(),randomPiece()],selected:0,score:0,over:false};
+      paintBlocks('Drag a piece onto the board, or select it and tap a spot.');
+    }
+    function canPlaceBlock(shape,row,col) {
+      return shape.every(([r,c]) => row+r>=0 && row+r<10 && col+c>=0 && col+c<10 && !blocks.board[row+r][col+c]);
+    }
+    function anyBlockFit() {
+      return blocks.pieces.some(piece => piece && blocks.board.some((row,r) => row.some((_,c) => canPlaceBlock(piece.shape,r,c))));
+    }
+    // Top-left anchor when the piece's centre sits on cell (row, col).
+    function centredAnchor(shape,row,col) {
+      const size = shapeSize(shape);
+      return [Math.round(row + .5 - size[0]/2), Math.round(col + .5 - size[1]/2)];
+    }
+    // Forgiving snap: try the exact anchor first, then the 8 neighbours.
+    function resolveAnchor(shape,row,col) {
+      const tries = [[0,0],[0,-1],[0,1],[-1,0],[1,0],[-1,-1],[-1,1],[1,-1],[1,1]];
+      for (const [dr,dc] of tries) if (canPlaceBlock(shape,row+dr,col+dc)) return [row+dr,col+dc];
+      return null;
+    }
+    function blockCellEl(r,c) { return $(view, '[data-block-cell="' + r + ',' + c + '"]'); }
+    function clearBlockGhost() {
+      view.querySelectorAll('.sc-extra-block-cell.ghost-ok,.sc-extra-block-cell.ghost-bad,.sc-extra-block-cell.ghost-clear')
+        .forEach(el => el.classList.remove('ghost-ok','ghost-bad','ghost-clear'));
+    }
+    function showBlockGhost(shape,base) {
+      clearBlockGhost();
+      if (!shape || !base) return null;
+      const fit = resolveAnchor(shape,base[0],base[1]);
+      const at = fit || base;
+      const cells = shape.map(([r,c]) => [at[0]+r, at[1]+c]);
+      cells.forEach(([r,c]) => { const el = r>=0&&r<10&&c>=0&&c<10 ? blockCellEl(r,c) : null; if (el) el.classList.add(fit?'ghost-ok':'ghost-bad'); });
+      if (fit) {
+        const filled = (r,c) => blocks.board[r][c] || cells.some(p=>p[0]===r&&p[1]===c);
+        for (let i=0;i<10;i++) {
+          if (Array.from({length:10},(_,c)=>filled(i,c)).every(Boolean)) for (let c=0;c<10;c++) blockCellEl(i,c).classList.add('ghost-clear');
+          if (Array.from({length:10},(_,r)=>filled(r,i)).every(Boolean)) for (let r=0;r<10;r++) blockCellEl(r,i).classList.add('ghost-clear');
+        }
+      }
+      return fit;
+    }
+    function paintBlocks(message) {
+      view.innerHTML = commonHead('BLOCK PUZZLE · 10 × 10', 'Fit the pieces. Clear the board.', '↻ New game') +
+        '<p class="sc-extra-status sc-extra-center" data-block-status>' + esc(message) + '</p>' +
+        '<div class="sc-extra-stats"><span>Score<strong>' + blocks.score + '</strong></span><span>Best<strong>' + best('blocks',blocks.score) + '</strong></span></div>' +
+        '<div class="sc-extra-block-wrap"><div class="sc-extra-block-board" data-block-board>' +
+        blocks.board.map((row,r)=>row.map((v,c)=>'<button class="sc-extra-block-cell ' + (v?'filled':'') + '" type="button" data-block-cell="' + r + ',' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + '"></button>').join('')).join('') +
+        (blocks.over ? '<div class="sc-extra-block-over"><strong>Game over</strong><span>Score ' + blocks.score + '</span><button class="sc-extra-btn primary" type="button" data-extra-reset>↻ Play again</button></div>' : '') +
+        '</div><div><p class="sc-extra-muted sc-extra-center">Drag or tap a piece</p><div class="sc-extra-pieces">' +
+        blocks.pieces.map((piece,i)=>'<button class="sc-extra-piece ' + (blocks.selected===i&&piece?'selected':'') + '" type="button" data-block-piece="' + i + '"' + (!piece?' disabled':'') + ' aria-label="Select piece ' + (i+1) + '">' +
+          (piece?'<span class="sc-extra-piece-grid">' + Array.from({length:16},(_,n)=>'<i class="' + (piece.shape.some(([r,c])=>r*4+c===n)?'':'blank') + '"></i>').join('') + '</span>':'<span class="sc-extra-muted">Used</span>') +
+        '</button>').join('') + '</div></div></div>' +
+        '<p class="sc-extra-muted sc-extra-center">The highlighted shadow shows where the piece lands. Fill a full row or column to clear it — clear several at once for a bigger score.</p>';
+    }
+    function placeBlockAt(index,anchor) {
+      const piece = blocks.pieces[index];
+      if (blocks.over || !piece) return;
+      if (!anchor) { paintBlocks('That piece does not fit there. Try another spot.'); return; }
+      const shape = piece.shape;
+      shape.forEach(([r,c])=>blocks.board[anchor[0]+r][anchor[1]+c]=1);
+      blocks.score += shape.length * 10;
+      const rows = blocks.board.map((line,i)=>line.every(Boolean)?i:-1).filter(i=>i>=0);
+      const cols = Array.from({length:10},(_,c)=>blocks.board.every(row=>row[c])?c:-1).filter(i=>i>=0);
+      rows.forEach(r=>blocks.board[r].fill(0));
+      cols.forEach(c=>blocks.board.forEach(row=>row[c]=0));
+      blocks.score += (rows.length + cols.length) * 100;
+      blocks.pieces[index] = null;
+      if (blocks.pieces.every(p=>!p)) blocks.pieces=[randomPiece(),randomPiece(),randomPiece()];
+      blocks.selected = firstFreePiece();
+      if (!anyBlockFit()) blocks.over=true;
+      paintBlocks(blocks.over?'No more pieces fit. Game over!':(rows.length+cols.length?'Great! Cleared ' + (rows.length+cols.length) + ' line(s).':'Nice placement. Next piece is ready.'));
+    }
+    function placeBlock(row,col) {
+      const piece = blocks.pieces[blocks.selected];
+      if (blocks.over || !piece) return;
+      const base = centredAnchor(piece.shape,row,col);
+      placeBlockAt(blocks.selected, resolveAnchor(piece.shape,base[0],base[1]));
+    }
+    // Board-relative anchor for a piece whose centre is at screen point (x, y).
+    function anchorFromPoint(shape,x,y) {
+      const a = blockCellEl(0,0), b = blockCellEl(9,9);
+      if (!a || !b) return null;
+      const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+      const pitch = (rb.left - ra.left) / 9;
+      if (x < ra.left - pitch*2 || x > rb.right + pitch*2 || y < ra.top - pitch*2 || y > rb.bottom + pitch*2) return null;
+      const size = shapeSize(shape);
+      return [Math.round((y - ra.top) / pitch - size[0]/2), Math.round((x - ra.left) / pitch - size[1]/2)];
+    }
+    function startBlockDrag(event,index) {
+      const piece = blocks.pieces[index];
+      if (!piece || blocks.over) return;
+      const cellEl = blockCellEl(0,0), cellEl2 = blockCellEl(0,1);
+      const cell = cellEl ? cellEl.getBoundingClientRect().width : 30;
+      const pitch = cellEl && cellEl2 ? cellEl2.getBoundingClientRect().left - cellEl.getBoundingClientRect().left : cell + 3;
+      blockDrag = {index:index, id:event.pointerId, x0:event.clientX, y0:event.clientY, moved:false, ghost:null, anchor:null,
+        lift:event.pointerType === 'mouse' ? 0 : Math.max(48, pitch * 1.6), cell:cell, pitch:pitch};
+    }
+    function moveBlockDrag(event) {
+      const d = blockDrag;
+      if (!d || event.pointerId !== d.id) return;
+      if (!d.moved && Math.hypot(event.clientX-d.x0, event.clientY-d.y0) < 6) return;
+      const shape = blocks.pieces[d.index].shape;
+      if (!d.moved) {
+        d.moved = true;
+        blocks.selected = d.index;
+        view.querySelectorAll('[data-block-piece]').forEach(el => el.classList.toggle('selected', Number(el.dataset.blockPiece) === d.index));
+        const size = shapeSize(shape);
+        const ghost = document.createElement('div');
+        ghost.className = 'sc-extra-block-drag';
+        ghost.style.gridTemplateColumns = 'repeat(' + size[1] + ',' + d.cell + 'px)';
+        ghost.style.gridTemplateRows = 'repeat(' + size[0] + ',' + d.cell + 'px)';
+        ghost.style.gap = (d.pitch - d.cell) + 'px';
+        for (let r=0;r<size[0];r++) for (let c=0;c<size[1];c++) {
+          const i = document.createElement('i');
+          if (!shape.some(p=>p[0]===r&&p[1]===c)) i.className = 'blank';
+          ghost.appendChild(i);
+        }
+        view.appendChild(ghost);
+        d.ghost = ghost;
+      }
+      const cx = event.clientX, cy = event.clientY - d.lift;
+      d.ghost.style.left = cx + 'px';
+      d.ghost.style.top = cy + 'px';
+      const base = anchorFromPoint(shape,cx,cy);
+      d.anchor = showBlockGhost(shape,base);
+      d.over = !!base;
+    }
+    function endBlockDrag(event,cancel) {
+      const d = blockDrag;
+      if (!d || event.pointerId !== d.id) return;
+      blockDrag = null;
+      if (!d.moved) return; // plain tap: the click handler selects the piece
+      blockClickBlockUntil = Date.now() + 400;
+      if (d.ghost) d.ghost.remove();
+      clearBlockGhost();
+      if (cancel || !d.over) { paintBlocks('Drop the piece on the board to place it.'); return; }
+      placeBlockAt(d.index, d.anchor);
+    }
+    view.addEventListener('pointerdown', event => {
+      if (active !== 'blocks' || event.button > 0) return;
+      const piece = event.target.closest('[data-block-piece]');
+      if (piece && !piece.disabled) startBlockDrag(event, Number(piece.dataset.blockPiece));
+    });
+    document.addEventListener('pointermove', event => {
+      if (active !== 'blocks' || !blocks) return;
+      if (blockDrag) { moveBlockDrag(event); if (blockDrag && blockDrag.moved) event.preventDefault(); return; }
+      if (event.pointerType !== 'mouse') return;
+      const cellEl = event.target.closest && event.target.closest('[data-block-cell]');
+      const piece = blocks.pieces[blocks.selected];
+      if (!cellEl || !view.contains(cellEl) || !piece || blocks.over) { clearBlockGhost(); return; }
+      const rc = cellEl.dataset.blockCell.split(',').map(Number);
+      showBlockGhost(piece.shape, centredAnchor(piece.shape,rc[0],rc[1]));
+    }, {passive:false});
+    document.addEventListener('pointerup', event => { if (active === 'blocks') endBlockDrag(event,false); });
+    document.addEventListener('pointercancel', event => { if (active === 'blocks') endBlockDrag(event,true); });
+
+    const typingSamples = {
+      en: [
+        'The morning light slowly fills the quiet streets.',
+        'A good idea becomes stronger when we put it into action.',
+        'Learning something new keeps the mind active and curious.',
+        'Take a short pause, breathe deeply, and begin again.',
+        'Small improvements can create a meaningful change over time.',
+        'A clear plan makes difficult tasks easier to complete.',
+        'Practice brings confidence even when progress feels slow.',
+        'Every place has a story waiting for someone to discover it.',
+        'Kind words can make an ordinary day feel special.',
+        'Technology is useful when it solves real problems for people.',
+        'A simple habit can become a powerful routine.',
+        'Focus on the next step instead of worrying about the whole journey.',
+        'Fresh air and a little movement can refresh your attention.',
+        'Good teamwork begins with listening and sharing ideas.',
+        'Books open doors to places we have never visited.',
+        'Curiosity helps us ask better questions and find better answers.',
+        'A steady effort is often more useful than a perfect start.',
+        'Choose your words carefully and make every message clear.',
+        'Creative thinking turns everyday challenges into opportunities.',
+        'Make time to learn, build, explore, and enjoy the process.',
+        'The best way to improve is to keep showing up.',
+        'A thoughtful decision can save time and prevent confusion.',
+        'Beautiful things often grow from patience and care.',
+        'Stay open to feedback and use it to become better.',
+        'A calm mind can notice details that hurry might miss.',
+        'Share useful knowledge and help someone take a first step.',
+        'Simple solutions are powerful when they are easy to use.',
+        'A little progress today is still progress worth celebrating.',
+        'Try a different path when the first idea does not work.',
+        'Finish one task well before moving on to the next.'
+      ],
+      te: [
+        'ప్రతి రోజు కొత్త విషయాన్ని నేర్చుకోవడానికి మంచి అవకాశం.',
+        'చిన్న ప్రయత్నాలు కూడా పెద్ద మార్పుకు దారి చూపిస్తాయి.',
+        'మన లక్ష్యాన్ని చేరుకోవడానికి క్రమశిక్షణ అవసరం.',
+        'కొత్త ఆలోచనలు మన జీవితాన్ని మరింత ఆసక్తికరంగా చేస్తాయి.',
+        'సమయాన్ని సరిగ్గా ఉపయోగిస్తే మంచి ఫలితాలు వస్తాయి.',
+        'పుస్తకాలు మనకు ఎన్నో కొత్త ప్రపంచాలను పరిచయం చేస్తాయి.',
+        'ఆరోగ్యంగా ఉండటానికి తగిన విశ్రాంతి కూడా ముఖ్యం.',
+        'మంచి మాట ఇతరులకు ధైర్యాన్ని అందిస్తుంది.',
+        'ప్రకృతిని గమనిస్తే ఎన్నో విషయాలు అర్థమవుతాయి.',
+        'మన పని మీద శ్రద్ధ పెడితే నైపుణ్యం మెరుగుపడుతుంది.',
+        'సహనం ఉంటే కష్టమైన పనిని కూడా పూర్తి చేయవచ్చు.',
+        'ప్రతి సమస్యలో ఒక కొత్త పరిష్కారం దాగి ఉంటుంది.',
+        'కలిసి పనిచేస్తే మంచి ఆలోచనలు పంచుకోవచ్చు.',
+        'రోజువారీ సాధన మనలో ఆత్మవిశ్వాసాన్ని పెంచుతుంది.',
+        'స్పష్టమైన లక్ష్యం మన ప్రయాణానికి దిశ చూపిస్తుంది.',
+        'ఇతరుల అభిప్రాయాలను గౌరవంగా వినడం మంచి అలవాటు.',
+        'చిన్న సహాయం కూడా ఒకరి రోజును ఆనందంగా మార్చగలదు.',
+        'కొత్త ప్రదేశాలను చూడటం వల్ల మన అనుభవం పెరుగుతుంది.',
+        'ప్రశాంతంగా ఆలోచిస్తే సరైన నిర్ణయం తీసుకోవచ్చు.',
+        'మన సమయాన్ని విలువైన పనులకు కేటాయించాలి.',
+        'ప్రయత్నం కొనసాగిస్తే నైపుణ్యం తప్పకుండా పెరుగుతుంది.',
+        'మన చుట్టూ ఉన్న విషయాలను ఆసక్తిగా గమనించాలి.',
+        'మంచి అలవాట్లు జీవితాన్ని సులభంగా మారుస్తాయి.',
+        'ఒక అడుగు ముందుకు వేయడం కూడా విజయమే.',
+        'నేర్చుకున్న విషయాలను ఆచరణలో పెట్టినప్పుడే ప్రయోజనం.',
+        'సహకారం వల్ల పెద్ద పనులు కూడా సులభంగా పూర్తవుతాయి.',
+        'ప్రతి ఉదయం కొత్త ఉత్సాహంతో పనిని ప్రారంభించండి.',
+        'సరళమైన పరిష్కారం అందరికీ ఉపయోగపడుతుంది.',
+        'ఆలోచించి మాట్లాడితే అపార్థాలు తగ్గుతాయి.',
+        'నిరంతర సాధన మన ప్రయత్నానికి మంచి ఫలితాన్ని ఇస్తుంది.'
+      ]
+    };
+    function typingChars(value, lang) {
+      return lang === 'te' ? segmentText(String(value).normalize('NFC')) : Array.from(String(value));
+    }
+    function initTyping(lang) {
+      clearInterval(typingTimer);
+      typingTimer = 0;
+      lang = lang || 'en';
+      const sentences = shuffle(typingSamples[lang]);
+      typing = {
+        lang:lang,
+        text:sentences.slice(0,8).join('  '),
+        remaining:sentences.slice(8),
+        sentenceCount:sentences.length,
+        value:'',
+        seconds:60,
+        started:false,
+        done:false,
+        startAt:0,
+        wpm:0,
+        accuracy:100
+      };
+      paintTyping();
+    }
+    function extendTypingText() {
+      if (!typing || !typing.remaining.length) return;
+      const typedCount = typingChars(typing.value, typing.lang).length;
+      const targetCount = typingChars(typing.text, typing.lang).length;
+      if (targetCount - typedCount < 180) {
+        const nextSentences = typing.remaining.splice(0,5);
+        typing.text += '  ' + nextSentences.join('  ');
+      }
+    }
+    function typingStats() {
+      const typed = typingChars(typing.value, typing.lang);
+      const target = typingChars(typing.text, typing.lang);
+      let correct = 0;
+      typed.forEach((ch,i)=>{if(ch===target[i])correct++;});
+      const elapsed = typing.started ? Math.max(1,(Date.now()-typing.startAt)/1000) : 1;
+      typing.accuracy = typed.length ? Math.round(correct/typed.length*100) : 100;
+      typing.wpm = Math.round((correct/5)/(elapsed/60));
+      return {typed:typed,correct:correct,target:target,wpm:typing.wpm,accuracy:typing.accuracy};
+    }
+    function typingPromptHtml(stats) {
+      const start = stats.typed.length;
+      const end = Math.min(stats.target.length, start + 180);
+      return stats.target.slice(start,end).map((ch,offset)=>{
+        const index = start + offset;
+        const entered = stats.typed[index];
+        const className = entered == null ? (index===stats.typed.length?'typing-next':'') :
+          entered===ch ? 'typed-ok' : 'typed-bad';
+        const visible = ch === ' ' ? '&nbsp;' : esc(ch);
+        return '<span class="' + className + '">' + visible + '</span>';
+      }).join('');
+    }
+    function paintTyping() {
+      const stats = typingStats();
+      const progress = Math.max(0,Math.min(100,(typing.seconds/60)*100));
+      view.innerHTML = commonHead('TYPING SPEED TEST · 60 SECONDS', 'How fast and accurately can you type?', '↻ Restart test') +
+        '<div class="sc-extra-toggle"><button type="button" data-typing-lang="en" aria-pressed="' + (typing.lang==='en') + '">English</button><button type="button" data-typing-lang="te" aria-pressed="' + (typing.lang==='te') + '">తెలుగు</button></div>' +
+        '<p class="sc-extra-status sc-extra-center" data-typing-status>' + (typing.done?'Time is up! Your result is ready.':typing.started?'Keep going — the clock is running.':'The 60-second timer starts with your first keystroke.') + '</p>' +
+        '<div class="sc-extra-timer"><div><span>TIME REMAINING</span><strong data-typing-time>' + typing.seconds + 's</strong></div><div class="sc-extra-timer-track"><i data-typing-progress style="width:' + progress + '%"></i></div></div>' +
+        '<div class="sc-extra-stats"><span>Speed<strong data-typing-wpm>' + typing.wpm + ' WPM</strong></span><span>Accuracy<strong data-typing-accuracy>' + typing.accuracy + '%</strong></span><span>Best<strong>' + best('typing-'+typing.lang,typing.wpm) + ' WPM</strong></span><span>Sentences<strong>' + typing.sentenceCount + ' unique</strong></span></div>' +
+        '<div class="sc-extra-typing-prompt" aria-label="Text to type" data-typing-prompt>' + typingPromptHtml(stats) + '</div>' +
+        '<textarea class="sc-extra-typing-input" data-typing-input rows="3" placeholder="' + (typing.lang==='te'?'ఇక్కడ టైప్ చేయండి…':'Start typing here…') + '" autocapitalize="off" autocomplete="off" spellcheck="false"' + (typing.done?' disabled':'') + '>' + esc(typing.value) + '</textarea>' +
+        '<p class="sc-extra-muted sc-extra-center">Type continuously until the timer ends. Every round uses a shuffled set of unique sentences, so a sentence will not repeat during that test. Telugu typing works with your device’s Telugu keyboard / input method.</p>';
+      const input = $(view,'[data-typing-input]');
+      if (input && !typing.done) input.focus({preventScroll:true});
+    }
+    function updateTypingLive() {
+      const input = $(view,'[data-typing-input]');
+      if (!input || typing.done) return;
+      typing.value = input.value;
+      extendTypingText();
+      if (!typing.started && typing.value.length) {
+        typing.started = true;
+        typing.startAt = Date.now();
+        typingTimer = window.setInterval(()=>{
+          if (!typing || active!=='typing' || typing.done) { clearInterval(typingTimer); return; }
+          typing.seconds = Math.max(0,60-Math.floor((Date.now()-typing.startAt)/1000));
+          const time = $(view,'[data-typing-time]');
+          if (time) time.textContent = typing.seconds + 's';
+          const progress = $(view,'[data-typing-progress]');
+          if (progress) progress.style.width = (typing.seconds/60*100) + '%';
+          const stats = typingStats();
+          const wpm = $(view,'[data-typing-wpm]');
+          const acc = $(view,'[data-typing-accuracy]');
+          if (wpm) wpm.textContent = stats.wpm + ' WPM';
+          if (acc) acc.textContent = typing.accuracy + '%';
+          if (typing.seconds <= 0) finishTyping();
+        },200);
+      }
+      const stats = typingStats();
+      const prompt = $(view,'[data-typing-prompt]');
+      if (prompt) prompt.innerHTML = typingPromptHtml(stats);
+      const wpm = $(view,'[data-typing-wpm]');
+      const acc = $(view,'[data-typing-accuracy]');
+      if (wpm) wpm.textContent = stats.wpm + ' WPM';
+      if (acc) acc.textContent = typing.accuracy + '%';
+    }
+    function finishTyping() {
+      if (!typing || typing.done) return;
+      typing.done = true;
+      clearInterval(typingTimer);
+      typingTimer = 0;
+      const stats = typingStats();
+      best('typing-'+typing.lang,stats.wpm);
+      paintTyping();
+    }
+
+    function bitCount(n){let count=0;while(n){n&=n-1;count++;}return count;}
+    const sudokuConfigs = {
+      4:{boxRows:2,boxCols:2,holes:{easy:4,medium:6,hard:8}},
+      6:{boxRows:2,boxCols:3,holes:{easy:12,medium:16,hard:20}},
+      9:{boxRows:3,boxCols:3,holes:{easy:34,medium:42,hard:48}}
+    };
+    function sudokuPattern(r,c,size,boxRows,boxCols) {
+      return (r*boxCols + Math.floor(r/boxRows) + c) % size;
+    }
+    function countSolutions(grid,boxRows,boxCols,limit) {
+      const size=grid.length,rows=Array(size).fill(0),cols=Array(size).fill(0),boxes=Array(size).fill(0);
+      const boxIndex=(r,c)=>Math.floor(r/boxRows)*(size/boxCols)+Math.floor(c/boxCols);
+      for(let r=0;r<size;r++)for(let c=0;c<size;c++){
+        const value=grid[r][c];
+        if(value){
+          const bit=1<<value,box=boxIndex(r,c);
+          if((rows[r]&bit)||(cols[c]&bit)||(boxes[box]&bit))return 0;
+          rows[r]|=bit;cols[c]|=bit;boxes[box]|=bit;
+        }
+      }
+      const fullMask=((1<<(size+1))-2);
+      let count=0;
+      function solve(){
+        if(count>=limit)return;
+        let bestR=-1,bestC=-1,bestMask=0,bestN=size+1;
+        for(let r=0;r<size;r++)for(let c=0;c<size;c++)if(!grid[r][c]){
+          const box=boxIndex(r,c);
+          const mask=fullMask & ~(rows[r]|cols[c]|boxes[box]);
+          const n=bitCount(mask);
+          if(n===0)return;
+          if(n<bestN){bestN=n;bestR=r;bestC=c;bestMask=mask;}
+        }
+        if(bestR<0){count++;return;}
+        const box=boxIndex(bestR,bestC);
+        for(let value=1;value<=size;value++){
+          const bit=1<<value;
+          if(bestMask&bit){
+            grid[bestR][bestC]=value;rows[bestR]|=bit;cols[bestC]|=bit;boxes[box]|=bit;
+            solve();
+            grid[bestR][bestC]=0;rows[bestR]^=bit;cols[bestC]^=bit;boxes[box]^=bit;
+            if(count>=limit)return;
+          }
+        }
+      }
+      solve();return count;
+    }
+    function createSudoku(level,size) {
+      const config=sudokuConfigs[size]||sudokuConfigs[9];
+      const boxRows=config.boxRows,boxCols=config.boxCols;
+      const rng=seeded(dayNumber()*31 + size*1009 + ({easy:1,medium:2,hard:3}[level]||2)*7919);
+      const bands=shuffle(Array.from({length:size/boxRows},(_,i)=>i),rng);
+      const stacks=shuffle(Array.from({length:size/boxCols},(_,i)=>i),rng);
+      const rowOrder=bands.flatMap(b=>shuffle(Array.from({length:boxRows},(_,i)=>i),rng).map(r=>b*boxRows+r));
+      const colOrder=stacks.flatMap(b=>shuffle(Array.from({length:boxCols},(_,i)=>i),rng).map(c=>b*boxCols+c));
+      const digits=shuffle(Array.from({length:size},(_,i)=>i+1),rng);
+      const solution=rowOrder.map(r=>colOrder.map(c=>digits[sudokuPattern(r,c,size,boxRows,boxCols)]));
+      const puzzle=solution.map(row=>row.slice());
+      const target=config.holes[level]||config.holes.medium;
+      const cells=shuffle(Array.from({length:size*size},(_,i)=>i),rng);
+      let removed=0;
+      for(const index of cells){
+        if(removed>=target)break;
+        const r=Math.floor(index/size),c=index%size,old=puzzle[r][c];
+        puzzle[r][c]=0;
+        if(countSolutions(puzzle,boxRows,boxCols,2)===1)removed++;
+        else puzzle[r][c]=old;
+      }
+      return {puzzle,solution,boxRows,boxCols};
+    }
+    function initSudoku(level,size) {
+      clearInterval(typingTimer);
+      const selectedSize=Number(size||sudoku&&sudoku.size||9);
+      const generated=createSudoku(level||sudoku&&sudoku.level||'medium',selectedSize);
+      sudoku={
+        size:selectedSize,level:level||sudoku&&sudoku.level||'medium',
+        boxRows:generated.boxRows,boxCols:generated.boxCols,
+        board:generated.puzzle.map(r=>r.slice()),solution:generated.solution,
+        givens:generated.puzzle.map(r=>r.slice()),selected:[0,0],mistakes:0,won:false
+      };
+      paintSudoku('Select an empty cell, then choose a number.');
+    }
+    function sudokuConflict(r,c,value) {
+      if(!value)return false;
+      const size=sudoku.size,boxRows=sudoku.boxRows,boxCols=sudoku.boxCols;
+      for(let i=0;i<size;i++){
+        if(i!==c&&sudoku.board[r][i]===value)return true;
+        if(i!==r&&sudoku.board[i][c]===value)return true;
+      }
+      const br=Math.floor(r/boxRows)*boxRows,bc=Math.floor(c/boxCols)*boxCols;
+      for(let y=br;y<br+boxRows;y++)for(let x=bc;x<bc+boxCols;x++)
+        if((y!==r||x!==c)&&sudoku.board[y][x]===value)return true;
+      return false;
+    }
+    function paintSudoku(message) {
+      const size=sudoku.size,r0=sudoku.selected[0],c0=sudoku.selected[1];
+      const cells=sudoku.board.map((row,r)=>row.map((value,c)=>{
+        const given=!!sudoku.givens[r][c];
+        const related=r===r0||c===c0||Math.floor(r/sudoku.boxRows)===Math.floor(r0/sudoku.boxRows)&&Math.floor(c/sudoku.boxCols)===Math.floor(c0/sudoku.boxCols);
+        const boxRight=c<size-1&&(c+1)%sudoku.boxCols===0;
+        const boxBottom=r<size-1&&(r+1)%sudoku.boxRows===0;
+        const classes=['sc-extra-sudoku-cell',given?'given':'',r===r0&&c===c0?'selected':'',related?'related':'',sudokuConflict(r,c,value)?'conflict':'',boxRight?'box-right':'',boxBottom?'box-bottom':''].filter(Boolean).join(' ');
+        return '<button type="button" class="'+classes+'" data-sudoku-cell="'+r+','+c+'" aria-label="Row '+(r+1)+', column '+(c+1)+', '+(value||'empty')+'"'+(given?' disabled':'')+'>'+(value||'')+'</button>';
+      }).join('')).join('');
+      view.innerHTML=commonHead('SUDOKU · DAILY NUMBER PUZZLE','Fill every row, column and box.','↻ New puzzle')+
+        '<div class="sc-extra-toggle">'+[4,6,9].map(n=>'<button type="button" data-sudoku-size="'+n+'" aria-pressed="'+(size===n)+'">'+n+' × '+n+'</button>').join('')+'</div>'+
+        '<div class="sc-extra-toggle">'+['easy','medium','hard'].map(level=>'<button type="button" data-sudoku-level="'+level+'" aria-pressed="'+(sudoku.level===level)+'">'+level[0].toUpperCase()+level.slice(1)+'</button>').join('')+'</div>'+
+        '<p class="sc-extra-status sc-extra-center" data-sudoku-status>'+esc(message)+'</p>'+
+        '<div class="sc-extra-sudoku" style="grid-template-columns:repeat('+size+',minmax(0,1fr))">'+cells+'</div>'+
+        '<div class="sc-extra-numberpad">'+Array.from({length:size},(_,i)=>i+1).map(n=>'<button type="button" data-sudoku-number="'+n+'">'+n+'</button>').join('')+'<button type="button" data-sudoku-number="0">⌫</button></div>'+
+        '<div class="sc-extra-stats"><span>Board<strong>'+size+' × '+size+'</strong></span><span>Difficulty<strong>'+sudoku.level.toUpperCase()+'</strong></span><span>Filled<strong>'+sudoku.board.flat().filter(Boolean).length+' / '+(size*size)+'</strong></span></div>'+
+        '<p class="sc-extra-muted sc-extra-center">Choose a board size and difficulty. Today’s puzzle is unique and stays the same on this device. Red cells show a number conflict.</p>';
+      const keypadFocus=$(view,'[data-sudoku-number="1"]');
+      if(keypadFocus)keypadFocus.focus({preventScroll:true});
+    }
+    function setSudokuNumber(value) {
+      if(sudoku.won)return;
+      const [r,c]=sudoku.selected;
+      if(sudoku.givens[r][c])return;
+      if(value>sudoku.size)return;
+      sudoku.board[r][c]=value;
+      if(value&&sudokuConflict(r,c,value))sudoku.mistakes++;
+      if(sudoku.board.every((row,y)=>row.every((entry,x)=>entry===sudoku.solution[y][x]))){
+        sudoku.won=true;paintSudoku('Puzzle solved! Excellent work! 🎉');
+      }else paintSudoku(value?'Number placed. Keep going.':'Cell cleared.');
+    }
+
+    function mathRandom(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+    function mathQuestion(expression,answer){return {expression:expression,answer:answer};}
+    function buildMathQuestion(correct,total) {
+      const tier=Math.floor(correct/5);
+      let a,b,n,choice,divisor,quotient;
+      // Each stage stays active until the player answers 5 questions correctly.
+      if(tier===0){
+        a=mathRandom(2,9);b=mathRandom(1,9);
+        if(Math.random()<.5)return mathQuestion(a+' + '+b,a+b);
+        if(a<b){const t=a;a=b;b=t;}
+        return mathQuestion(a+' − '+b,a-b);
+      }
+      if(tier===1){
+        choice=mathRandom(0,2);
+        if(choice===0){a=mathRandom(10,99);b=mathRandom(10,99);return mathQuestion(a+' + '+b,a+b);}
+        if(choice===1){a=mathRandom(20,99);b=mathRandom(10,a);return mathQuestion(a+' − '+b,a-b);}
+        a=mathRandom(2,9);b=mathRandom(2,12);return mathQuestion(a+' × '+b,a*b);
+      }
+      if(tier===2){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(100,999);b=mathRandom(100,999);return mathQuestion(a+' + '+b,a+b);}
+        if(choice===1){a=mathRandom(300,999);b=mathRandom(100,a-100);return mathQuestion(a+' − '+b,a-b);}
+        if(choice===2){a=mathRandom(12,30);b=mathRandom(2,9);return mathQuestion(a+' × '+b,a*b);}
+        divisor=mathRandom(2,9);quotient=mathRandom(2,15);return mathQuestion((divisor*quotient)+' ÷ '+divisor,quotient);
+      }
+      if(tier===3){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(12,35);b=mathRandom(11,25);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===1){n=mathRandom(11,20);return mathQuestion(n+'²',n*n);}
+        if(choice===2){divisor=mathRandom(3,12);quotient=mathRandom(12,30);return mathQuestion((divisor*quotient)+' ÷ '+divisor,quotient);}
+        a=mathRandom(25,60);b=mathRandom(2,9);return mathQuestion(a+' × '+b,a*b);
+      }
+      if(tier===4){
+        choice=mathRandom(0,3);
+        if(choice===0){n=mathRandom(21,35);return mathQuestion(n+'²',n*n);}
+        if(choice===1){n=mathRandom(21,40);return mathQuestion('√'+(n*n),n);}
+        if(choice===2){a=mathRandom(35,75);b=mathRandom(12,25);return mathQuestion(a+' × '+b,a*b);}
+        divisor=mathRandom(5,20);quotient=mathRandom(25,60);return mathQuestion((divisor*quotient)+' ÷ '+divisor,quotient);
+      }
+      if(tier===5){
+        choice=mathRandom(0,3);
+        if(choice===0){const powers=[[2,8],[3,5],[4,4],[5,3]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));}
+        if(choice===1){n=mathRandom(36,55);return mathQuestion(n+'²',n*n);}
+        if(choice===2){n=mathRandom(41,65);return mathQuestion('√'+(n*n),n);}
+        a=mathRandom(60,99);b=mathRandom(20,49);return mathQuestion(a+' × '+b,a*b);
+      }
+      if(tier===6){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(100,999);b=mathRandom(12,99);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===1){n=mathRandom(66,110);return mathQuestion('√'+(n*n),n);}
+        if(choice===2){n=mathRandom(56,90);return mathQuestion(n+'²',n*n);}
+        const powers=[[2,10],[3,6],[4,5],[5,4]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));
+      }
+      if(tier===7){
+        choice=mathRandom(0,3);
+        if(choice===0){a=mathRandom(1000,9999);b=mathRandom(1000,9999);return mathQuestion(a+' + '+b,a+b);}
+        if(choice===1){a=mathRandom(120,999);b=mathRandom(120,999);return mathQuestion(a+' × '+b,a*b);}
+        if(choice===2){n=mathRandom(111,180);return mathQuestion('√'+(n*n),n);}
+        const powers=[[2,12],[3,7],[4,6],[5,5]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));
+      }
+      choice=mathRandom(0,4);
+      if(choice===0){a=mathRandom(10000,999999);b=mathRandom(10000,999999);return mathQuestion(a+' + '+b,a+b);}
+      if(choice===1){a=mathRandom(250,999);b=mathRandom(120,999);return mathQuestion(a+' × '+b,a*b);}
+      if(choice===2){n=mathRandom(181,300);return mathQuestion('√'+(n*n),n);}
+      if(choice===3){n=mathRandom(100,300);return mathQuestion(n+'²',n*n);}
+      const powers=[[2,14],[3,8],[4,7],[5,6]];const p=powers[mathRandom(0,powers.length-1)];return mathQuestion(p[0]+'^'+p[1],Math.pow(p[0],p[1]));
+    }
+    function initMath() {
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      mathSubmitting = false;
+      math={correct:0,total:0,mistakes:0,score:0,over:false,autoSubmit:safeGet('sitecraft-math-submit-mode','manual')==='auto',question:buildMathQuestion(0,0),feedback:'Start with the answer. Only type the number.'};
+      paintMath(math.feedback);
+    }
+    function queueMathAutoSubmit() {
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      if(!math||math.over||!math.autoSubmit||active!=='math')return;
+      const input=$(view,'[data-math-answer]');
+      if(!input||input.value.trim()==='')return;
+      const answer=Number(input.value);
+      if(!Number.isFinite(answer)||!Number.isInteger(answer))return;
+      const status=$(view,'[data-math-status]');
+      if(status)status.textContent='Auto Submit is on. Checking in a moment…';
+      mathSubmitTimer=window.setTimeout(()=>{
+        mathSubmitTimer=0;
+        if(active==='math'&&math&&math.autoSubmit)submitMath();
+      },900);
+    }
+    function paintMath(message) {
+      const tier=Math.floor(math.correct/5);
+      const level=tier+1;
+      const stages=['Warm-up · Easy + / −','Basic · Two-digit sums and ×','Intermediate · 3-digit sums, × and ÷','Multiplication and squares','Squares, roots and larger ×','Powers including 3^5','Advanced calculations','Expert calculations','Extreme calculations'];
+      const stage=stages[Math.min(tier,stages.length-1)];
+      const toNext=5-(math.correct%5);
+      const lives=Math.max(0,3-math.mistakes);
+      const title=math.over?'Three mistakes. Game over!':'Solve the question. Level '+level;
+      const auto=!!math.autoSubmit;
+      view.innerHTML=commonHead('MATH CHALLENGE · LEVEL '+level,title,'↻ Restart game')+
+        '<p class="sc-extra-status sc-extra-center" data-math-status>'+esc(message||'Only type your numerical answer.')+'</p>'+
+        '<div class="sc-extra-stats"><span>Correct<strong>'+math.correct+'</strong></span><span>Level<strong>'+level+'</strong></span><span>Stage<strong>'+esc(stage)+'</strong></span><span>Score<strong>'+math.score+'</strong></span><span>Next level<strong>'+toNext+' correct</strong></span><span>Best<strong>'+best('math',math.score)+'</strong></span></div>'+
+        '<div class="sc-extra-math-card">'+
+          '<div class="sc-extra-math-hearts" aria-label="'+lives+' lives remaining">'+('❤️'.repeat(lives))+('🖤'.repeat(3-lives))+'</div>'+
+          '<div class="sc-extra-math-mode" role="group" aria-label="Answer submission mode"><span>Answer mode:</span><button type="button" data-math-mode="auto" aria-pressed="'+String(auto)+'">⚡ Auto Submit</button><button type="button" data-math-mode="manual" aria-pressed="'+String(!auto)+'">✋ Manual</button></div>'+
+          (math.over?
+            '<div class="sc-extra-math-over"><h3>GAME OVER</h3><p>You made 3 mistakes.</p><p>Correct answers: '+math.correct+' · Final score: '+math.score+'</p><button type="button" class="sc-extra-math-submit" data-math-restart>Play Again</button></div>':
+            '<p class="sc-extra-muted">QUESTION '+(math.total+1)+' · 3 mistakes allowed</p>'+
+            '<div class="sc-extra-math-expression">'+esc(math.question.expression)+'</div>'+
+            '<form data-math-form><input class="sc-extra-math-answer" data-math-answer type="number" inputmode="decimal" step="1" autocomplete="off" placeholder="Answer only" aria-label="Type your answer" required>'+
+            '<button type="submit" data-math-submit class="sc-extra-math-submit">'+(auto?'Check Now':'Check Answer')+'</button></form>'+
+            '<p class="sc-extra-muted sc-extra-center">'+(auto?'Auto Submit checks your answer after you stop typing. You can also tap Check Now.':'Manual mode: tap Check Answer or press Enter when ready.')+'</p>'
+          )+
+        '</div>'+
+        '<p class="sc-extra-muted sc-extra-center">Every 5 correct answers unlocks the next difficulty stage. Wrong answers do not increase your level; 3 mistakes end the game. Answer with numbers only.</p>';
+      const input=$(view,'[data-math-answer]');
+      if(input)input.focus({preventScroll:true});
+    }
+    function submitMath() {
+      clearTimeout(mathSubmitTimer);
+      mathSubmitTimer = 0;
+      if(!math||math.over||mathSubmitting)return;
+      const input=$(view,'[data-math-answer]');
+      if(!input||input.value.trim()==='')return;
+      const answer=Number(input.value);
+      if(!Number.isFinite(answer)||!Number.isInteger(answer))return;
+      mathSubmitting=true;
+      math.total++;
+      let message='';
+      if(answer===math.question.answer){
+        math.correct++;
+        math.score+=10*Math.min(10,Math.floor(math.correct/5)+1);
+        message='Correct! Great job. Next question gets a little harder.';
+      }else{
+        math.mistakes++;
+        message='Not quite. Correct answer: '+math.question.answer+'. Mistakes '+math.mistakes+' / 3.';
+      }
+      if(math.mistakes>=3){
+        math.over=true;
+        best('math',math.score);
+        mathSubmitting=false;
+        paintMath('Game over. Try again and beat your score!');
+        return;
+      }
+      math.question=buildMathQuestion(math.correct,math.total);
+      mathSubmitting=false;
+      paintMath(message);
+    }
+
+    const CONNECT_LEVELS = {
+      easy:{label:'Easy',depth:2,delay:420},
+      medium:{label:'Medium',depth:4,delay:620},
+      hard:{label:'Hard',depth:6,delay:850},
+      veryhard:{label:'Very Hard',depth:8,delay:1100}
+    };
+    function emptyConnectBoard(){return Array.from({length:6},()=>Array(7).fill(''));}
+    function connectDrop(board,col,mark) {
+      for(let r=5;r>=0;r--)if(!board[r][col]){board[r][col]=mark;return r;}
+      return -1;
+    }
+    function connectWin(board,r,c,mark) {
+      const dirs=[[0,1],[1,0],[1,1],[1,-1]];
+      return dirs.some(([dr,dc])=>{
+        let total=1;
+        for(const sign of [-1,1]){let y=r+dr*sign,x=c+dc*sign;while(y>=0&&y<6&&x>=0&&x<7&&board[y][x]===mark){total++;y+=dr*sign;x+=dc*sign;}}
+        return total>=4;
+      });
+    }
+    function initConnect() {
+      const saved=safeGet('sitecraft-connect-difficulty','easy');
+      const difficulty=CONNECT_LEVELS[saved]?saved:'easy';
+      connect={board:emptyConnectBoard(),over:false,turn:'you',you:'R',computer:'Y',difficulty:difficulty};
+      paintConnect('Your turn. Choose a column to drop a red disc.');
+    }
+    function connectScore(board,mark) {
+      const other=mark==='Y'?'R':'Y';
+      let score=0;
+      // Prefer the middle column: it participates in the greatest number of winning lines.
+      for(let r=0;r<6;r++)if(board[r][3]===mark)score+=6;
+      for(let r=0;r<6;r++)for(let c=0;c<7;c++){
+        for(const [dr,dc] of [[0,1],[1,0],[1,1],[1,-1]]){
+          const endR=r+dr*3,endC=c+dc*3;
+          if(endR<0||endR>=6||endC<0||endC>=7)continue;
+          let own=0,opp=0,empty=0;
+          for(let i=0;i<4;i++){
+            const value=board[r+dr*i][c+dc*i];
+            if(value===mark)own++;
+            else if(value===other)opp++;
+            else empty++;
+          }
+          if(own&&opp)continue;
+          if(own===4)score+=100000;
+          else if(own===3&&empty===1)score+=150;
+          else if(own===2&&empty===2)score+=18;
+          if(opp===3&&empty===1)score-=175;
+          else if(opp===2&&empty===2)score-=20;
+        }
+      }
+      return score;
+    }
+    function connectMoveOptions(board){return [3,2,4,1,5,0,6].filter(c=>!board[0][c]);}
+    function connectPositionKey(board,turn){return board.map(row=>row.join('')).join('/')+'|'+turn;}
+    function connectMinimax(board,depth,alpha,beta,turn,ply,table) {
+      const alphaOriginal=alpha,betaOriginal=beta;
+      const key=connectPositionKey(board,turn);
+      const cached=table.get(key);
+      if(cached&&cached.depth>=depth){
+        if(cached.flag==='exact')return cached.score;
+        if(cached.flag==='lower')alpha=Math.max(alpha,cached.score);
+        else if(cached.flag==='upper')beta=Math.min(beta,cached.score);
+        if(alpha>=beta)return cached.score;
+      }
+      if(depth===0||board[0].every(Boolean))return connectScore(board,'Y');
+      const maximizing=turn==='Y';
+      const mark=maximizing?'Y':'R';
+      const options=connectMoveOptions(board);
+      let value=maximizing?-Infinity:Infinity;
+      for(const col of options){
+        const copy=board.map(row=>row.slice());
+        const row=connectDrop(copy,col,mark);
+        if(row<0)continue;
+        let score;
+        if(connectWin(copy,row,col,mark))score=mark==='Y'?1000000-ply:-1000000+ply;
+        else if(copy[0].every(Boolean))score=0;
+        else score=connectMinimax(copy,depth-1,alpha,beta,maximizing?'R':'Y',ply+1,table);
+        if(maximizing){value=Math.max(value,score);alpha=Math.max(alpha,value);}
+        else{value=Math.min(value,score);beta=Math.min(beta,value);}
+        if(alpha>=beta)break;
+      }
+      if(value===-Infinity||value===Infinity)value=0;
+      const flag=value<=alphaOriginal?'upper':value>=betaOriginal?'lower':'exact';
+      if(table.size>60000)table.clear();
+      table.set(key,{depth:depth,score:value,flag:flag});
+      return value;
+    }
+    function chooseConnectMove() {
+      const options=connectMoveOptions(connect.board);
+      if(!options.length)return -1;
+      // Never miss an immediate win.
+      for(const col of options){
+        const copy=connect.board.map(row=>row.slice());
+        const row=connectDrop(copy,col,'Y');
+        if(connectWin(copy,row,col,'Y'))return col;
+      }
+      const config=CONNECT_LEVELS[connect.difficulty]||CONNECT_LEVELS.easy;
+      const table=new Map();
+      let bestCol=options[0],bestScore=-Infinity;
+      for(const col of options){
+        const copy=connect.board.map(row=>row.slice());
+        const row=connectDrop(copy,col,'Y');
+        let score;
+        if(connectWin(copy,row,col,'Y'))score=1000000;
+        else if(copy[0].every(Boolean))score=0;
+        else score=connectMinimax(copy,config.depth-1,-Infinity,Infinity,'R',1,table);
+        // Tiny centre preference breaks equal-score ties consistently.
+        score+= (3-Math.abs(3-col))*0.01;
+        if(score>bestScore){bestScore=score;bestCol=col;}
+      }
+      return bestCol;
+    }
+    function paintConnect(message) {
+      const level=CONNECT_LEVELS[connect.difficulty]||CONNECT_LEVELS.easy;
+      const choices=Object.keys(CONNECT_LEVELS).map(key=>'<button type="button" data-connect-level="'+key+'" aria-pressed="'+String(connect.difficulty===key)+'">'+CONNECT_LEVELS[key].label+'</button>').join('');
+      view.innerHTML=commonHead('CONNECT FOUR · YOU VS COMPUTER','Get four discs in a line before the computer.','↻ New match') +
+        '<div class="sc-extra-connect-levels" role="group" aria-label="Computer difficulty"><span>Computer level:</span>'+choices+'</div>' +
+        '<p class="sc-extra-status sc-extra-center" data-connect-status>' + esc(message) + '</p>' +
+        '<div class="sc-extra-connect">' + connect.board.map((row,r)=>row.map((value,c)=>'<button type="button" class="' + (value==='R'?'red':value==='Y'?'yellow':'') + '" data-connect-col="' + c + '" aria-label="Row ' + (r+1) + ', column ' + (c+1) + '"' + (connect.over||connect.turn!=='you'?' disabled':'') + '></button>').join('')).join('') + '</div>' +
+        '<div class="sc-extra-stats"><span>You<strong>🔴 Red</strong></span><span>Computer<strong>🟡 Yellow</strong></span><span>Search depth<strong>'+level.depth+' moves</strong></span></div>' +
+        '<p class="sc-extra-muted sc-extra-center">Tap a column to drop your disc. Higher levels search more future moves, spot winning chances and block your threats. Choose a level before or during a match; it applies to the next computer turn.</p>';
+    }
+    function playConnect(col) {
+      if(connect.over||connect.turn!=='you'||col<0||col>6)return;
+      const row=connectDrop(connect.board,col,'R');
+      if(row<0)return;
+      if(connectWin(connect.board,row,col,'R')){connect.over=true;connect.turn='done';paintConnect('You win! Four in a row! 🎉');return;}
+      if(connect.board[0].every(Boolean)){connect.over=true;connect.turn='done';paintConnect('It’s a draw. Well played!');return;}
+      connect.turn='computer';
+      const config=CONNECT_LEVELS[connect.difficulty]||CONNECT_LEVELS.easy;
+      paintConnect('Computer is thinking… '+config.label+' mode.');
+      window.setTimeout(()=>{
+        if(active!=='connect'||connect.over||connect.turn!=='computer')return;
+        const compCol=chooseConnectMove(),compRow=connectDrop(connect.board,compCol,'Y');
+        if(compRow>=0&&connectWin(connect.board,compRow,compCol,'Y')){connect.over=true;connect.turn='done';paintConnect('Computer wins this match. Try again!');}
+        else if(connect.board[0].every(Boolean)){connect.over=true;connect.turn='done';paintConnect('It’s a draw. Well played!');}
+        else{connect.turn='you';paintConnect('Your turn. Choose a column.');}
+      },config.delay);
+    }
+
+    section.addEventListener('click', event => {
+      const target = event.target;
+      const mathMode=target.closest('[data-math-mode]');
+      if(mathMode&&active==='math'&&math&&!math.over){
+        const currentInput=$(view,'[data-math-answer]');
+        const currentValue=currentInput?currentInput.value:'';
+        clearTimeout(mathSubmitTimer);
+        mathSubmitTimer=0;
+        math.autoSubmit=mathMode.dataset.mathMode==='auto';
+        safeSet('sitecraft-math-submit-mode',math.autoSubmit?'auto':'manual');
+        paintMath(math.autoSubmit?'Auto Submit enabled. It checks after you stop typing.':'Manual mode enabled. Submit with the button or Enter.');
+        const nextInput=$(view,'[data-math-answer]');
+        if(nextInput&&currentValue!==''){
+          nextInput.value=currentValue;
+          nextInput.focus({preventScroll:true});
+          if(math.autoSubmit)queueMathAutoSubmit();
+        }
+        return;
+      }
+      if (target.closest('[data-extra-fullscreen]')) {
+        const full = document.fullscreenElement || document.webkitFullscreenElement;
+        if (full === view) {
+          const exit = document.exitFullscreen || document.webkitExitFullscreen;
+          if (exit) exit.call(document);
+        } else {
+          const enter = view.requestFullscreen || view.webkitRequestFullscreen;
+          if (enter) { const result = enter.call(view); if(result&&result.catch)result.catch(()=>{}); }
+        }
+        return;
+      }
+      if (target.closest('[data-extra-reset]')) {
+        if(active==='word')initWord();
+        if(active==='2048')init2048();
+        if(active==='blocks')initBlocks();
+        if(active==='typing')initTyping(typing.lang);
+        if(active==='sudoku')initSudoku(sudoku.level,sudoku.size);
+        if(active==='math')initMath();
+        if(active!=='math'){clearTimeout(mathSubmitTimer);mathSubmitTimer=0;}
+        if(active==='connect')initConnect();
+        if(active==='sky-ball'){
+          const frame=$(view,'[data-sky-ball-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='starfighter'){
+          const frame=$(view,'[data-starfighter-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='brick-breaker'){
+          const frame=$(view,'[data-brick-breaker-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='arrow-escape'){
+          const frame=$(view,'[data-arrow-escape-frame]');
+          if(frame){
+            try{localStorage.removeItem('ae_state');}catch(_){}
+            frame.src=frame.getAttribute('src');
+          }
+        }
+        if(active==='daily-connections'){
+          const frame=$(view,'[data-daily-connections-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        if(active==='n-queens'){
+          const frame=$(view,'[data-n-queens-frame]');
+          if(frame)frame.src=frame.getAttribute('src');
+        }
+        return;
+      }
+      const wordLang=target.closest('[data-word-lang]');
+      if(wordLang){safeSet('sitecraft-word-lang',wordLang.dataset.wordLang);initWord();return;}
+      if(target.closest('[data-word-submit]')){submitWord();return;}
+      if(target.closest('[data-word-share]')) {
+        const text='SiteCraft Daily Word Challenge · '+word.day+' · '+(word.lang==='te'?'తెలుగు':'English')+' · '+(word.won?word.attempts.length+'/6':'X/6')+' guesses';
+        if(navigator.share)navigator.share({title:'Daily Word Challenge',text:text}).catch(()=>{});
+        else if(navigator.clipboard)navigator.clipboard.writeText(text).then(()=>{const b=$(view,'[data-word-share]');if(b)b.textContent='Copied!';}).catch(()=>{});
+        return;
+      }
+      const move=target.closest('[data-2048-move]');
+      if(move){move2048(move.dataset['2048Move']);return;}
+      if(active==='blocks'&&Date.now()<blockClickBlockUntil&&target.closest('[data-block-piece],[data-block-cell]'))return;
+      const piece=target.closest('[data-block-piece]');
+      if(piece&&!piece.disabled){blocks.selected=Number(piece.dataset.blockPiece);paintBlocks('Piece selected. Tap the board where its centre should go, or drag it.');return;}
+      const blockCell=target.closest('[data-block-cell]');
+      if(blockCell){const parts=blockCell.dataset.blockCell.split(',').map(Number);placeBlock(parts[0],parts[1]);return;}
+      const typingLang=target.closest('[data-typing-lang]');
+      if(typingLang){initTyping(typingLang.dataset.typingLang);return;}
+      const sudokuSize=target.closest('[data-sudoku-size]');
+      if(sudokuSize){initSudoku(sudoku.level,Number(sudokuSize.dataset.sudokuSize));return;}
+      const sudokuLevel=target.closest('[data-sudoku-level]');
+      if(sudokuLevel){initSudoku(sudokuLevel.dataset.sudokuLevel,sudoku.size);return;}
+      if(target.closest('[data-math-restart]')){initMath();return;}
+      const sudokuCell=target.closest('[data-sudoku-cell]');
+      if(sudokuCell){sudoku.selected=sudokuCell.dataset.sudokuCell.split(',').map(Number);paintSudoku('Cell selected. Choose a number.');return;}
+      const sudokuNum=target.closest('[data-sudoku-number]');
+      if(sudokuNum){setSudokuNumber(Number(sudokuNum.dataset.sudokuNumber));return;}
+      if(target.closest('[data-math-submit]')){event.preventDefault();submitMath();return;}
+            const connectLevel=target.closest('[data-connect-level]');
+      if(connectLevel&&active==='connect'&&connect){
+        const selected=connectLevel.dataset.connectLevel;
+        if(CONNECT_LEVELS[selected]){
+          connect.difficulty=selected;
+          safeSet('sitecraft-connect-difficulty',selected);
+          paintConnect(connect.turn==='computer'?'Difficulty saved. It will apply to the next computer move.':'Difficulty set to '+CONNECT_LEVELS[selected].label+'.');
+        }
+        return;
+      }
+      const connectCol=target.closest('[data-connect-col]');
+      if(connectCol){playConnect(Number(connectCol.dataset.connectCol));return;}
+    });
+
+    section.addEventListener('input', event => {
+      if(active==='word' && event.target.matches('[data-word-input]') && !event.isComposing) {
+        word.guess=event.target.value;
+      }
+      if(active==='typing' && event.target.matches('[data-typing-input]') && !event.isComposing)updateTypingLive();
+      if(active==='math' && event.target.matches('[data-math-answer]'))queueMathAutoSubmit();
+    });
+    section.addEventListener('keydown', event => {
+      if(active==='word' && event.target.matches('[data-word-input]') && event.key==='Enter') {event.preventDefault();submitWord();return;}
+      if(active==='2048' && ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(event.key) && !event.target.matches('input,textarea')) {
+        event.preventDefault();move2048(event.key.replace('Arrow','').toLowerCase());return;
+      }
+      if(active==='math' && event.target.matches('[data-math-answer]') && event.key==='Enter'){
+        event.preventDefault();submitMath();return;
+      }
+      if(active==='sudoku' && !event.target.matches('input,textarea')) {
+        if(/^[1-9]$/.test(event.key)&&Number(event.key)<=sudoku.size){event.preventDefault();setSudokuNumber(Number(event.key));}
+        else if(event.key==='Backspace'||event.key==='Delete'){event.preventDefault();setSudokuNumber(0);}
+        else if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(event.key)){
+          event.preventDefault();
+          const r=Math.max(0,Math.min(sudoku.size-1,sudoku.selected[0]+(event.key==='ArrowUp'?-1:event.key==='ArrowDown'?1:0)));
+          const c=Math.max(0,Math.min(sudoku.size-1,sudoku.selected[1]+(event.key==='ArrowLeft'?-1:event.key==='ArrowRight'?1:0)));
+          sudoku.selected=[r,c];paintSudoku('Cell selected.');
+        }
+      }
+    });
+    let touchStart=null;
+    section.addEventListener('touchstart',event=>{
+      if(active==='2048'&&event.target.closest('[data-2048-board]')&&event.touches.length===1)touchStart=[event.touches[0].clientX,event.touches[0].clientY];
+    },{passive:true});
+    section.addEventListener('touchend',event=>{
+      if(active!=='2048'||!touchStart)return;
+      const end=event.changedTouches[0],dx=end.clientX-touchStart[0],dy=end.clientY-touchStart[1];
+      touchStart=null;
+      if(Math.max(Math.abs(dx),Math.abs(dy))<25)return;
+      move2048(Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up'));
+    },{passive:true});
+  }
+
+  function openGame(root,id) {
+    const section = root && root.querySelector ? root.querySelector('.sc-pg-section') : document.querySelector('.sc-pg-section');
+    if (!section || typeof section.__siteCraftOpenExtraGame !== 'function') return false;
+    section.__siteCraftOpenExtraGame(id);
+    return true;
+  }
+  window.SiteCraftExtraGames = {append:append,openGame:openGame};
+})();

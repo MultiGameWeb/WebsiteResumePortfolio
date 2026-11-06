@@ -1,0 +1,1316 @@
+{
+  "id": "kitchen-01",
+  "name": "Kitchen & Food Services — FreshBite Kitchen",
+  "category": "Kitchen & Food Services",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Introduction"
+    },
+    {
+      "id": "menu",
+      "label": "Food menu & dishes"
+    },
+    {
+      "id": "menuSearch",
+      "label": "Menu search & category filters"
+    },
+    {
+      "id": "mealPlans",
+      "label": "Daily / weekly / monthly meal plans"
+    },
+    {
+      "id": "catering",
+      "label": "Bulk orders & catering packages"
+    },
+    {
+      "id": "services",
+      "label": "Food services"
+    },
+    {
+      "id": "delivery",
+      "label": "Delivery areas & timings"
+    },
+    {
+      "id": "hygiene",
+      "label": "Kitchen hygiene & food safety"
+    },
+    {
+      "id": "gallery",
+      "label": "Food photo gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer reviews"
+    },
+    {
+      "id": "faq",
+      "label": "Frequently asked questions"
+    },
+    {
+      "id": "about",
+      "label": "About the kitchen"
+    },
+    {
+      "id": "enquiry",
+      "label": "Food order / catering enquiry"
+    },
+    {
+      "id": "location",
+      "label": "Kitchen location"
+    },
+    {
+      "id": "contact",
+      "label": "Contact details"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp orders & enquiries"
+    },
+    {
+      "id": "social",
+      "label": "Social media"
+    },
+    {
+      "id": "policies",
+      "label": "Order & delivery policies"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "menu",
+    "menuSearch",
+    "mealPlans",
+    "catering",
+    "services",
+    "delivery",
+    "hygiene",
+    "gallery",
+    "reviews",
+    "faq",
+    "about",
+    "enquiry",
+    "location",
+    "contact",
+    "whatsapp",
+    "social",
+    "policies"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Kitchen / food brand name",
+      "required": true,
+      "placeholder": "FreshBite Kitchen"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline"
+    },
+    {
+      "path": "brand.about",
+      "label": "About the kitchen",
+      "type": "textarea"
+    },
+    {
+      "path": "brand.chefName",
+      "label": "Chef / kitchen lead"
+    },
+    {
+      "path": "brand.experience",
+      "label": "Years of experience"
+    },
+    {
+      "path": "brand.foodLicense",
+      "label": "FSSAI / food licence number"
+    },
+    {
+      "path": "brand.kitchenType",
+      "label": "Kitchen service type"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading"
+    },
+    {
+      "path": "home.text",
+      "label": "Hero introduction",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero image",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone number"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email address"
+    },
+    {
+      "path": "contact.address",
+      "label": "Kitchen address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.deliveryNote",
+      "label": "Delivery / service coverage note",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.hoursText",
+      "label": "Kitchen / order hours"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps URL",
+      "type": "url"
+    },
+    {
+      "path": "social.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    },
+    {
+      "path": "social.facebook",
+      "label": "Facebook URL",
+      "type": "url"
+    },
+    {
+      "path": "social.youtube",
+      "label": "YouTube URL",
+      "type": "url"
+    },
+    {
+      "path": "policies.order",
+      "label": "Order lead time / minimum order",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.delivery",
+      "label": "Delivery charges / service rules",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.payment",
+      "label": "Payment terms",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.refund",
+      "label": "Cancellation / refund policy",
+      "type": "textarea"
+    },
+    {
+      "path": "policies.allergy",
+      "label": "Allergen information",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "id": "kitchen-01",
+    "brand": {
+      "businessName": "FreshBite Kitchen",
+      "tagline": "Freshly prepared. Thoughtfully delivered.",
+      "about": "FreshBite Kitchen prepares everyday meals, lunch boxes and event food with a focus on flavour, consistency and dependable service. Order individual meals, plan weekday subscriptions or speak with our team about office meals and catering for your next gathering.",
+      "chefName": "Kitchen Team",
+      "experience": "8 years",
+      "foodLicense": "FSSAI licence details to be added by owner",
+      "kitchenType": "Cloud Kitchen · Tiffin Service · Catering"
+    },
+    "home": {
+      "title": "Good food, made for your everyday.",
+      "text": "From homestyle tiffins and office lunches to family meal plans and event catering, find food prepared around your day."
+    },
+    "hero": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1800&q=86",
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "orders@freshbite.example",
+      "address": "Madhapur, Hyderabad, Telangana, India",
+      "deliveryNote": "Delivery across selected Hyderabad areas. Confirm your pin code before ordering.",
+      "hoursText": "Orders · 7:00 AM–10:00 PM",
+      "maps": "https://maps.google.com/?q=Madhapur+Hyderabad"
+    },
+    "social": {
+      "instagram": "https://instagram.com/",
+      "facebook": "https://facebook.com/",
+      "youtube": "https://youtube.com/"
+    },
+    "menu": [
+      {
+        "id": "d1",
+        "name": "South Indian Breakfast Combo",
+        "category": "Breakfast",
+        "foodType": "Vegetarian",
+        "price": "₹99",
+        "unit": "per plate",
+        "description": "Idli, dosa, vada, chutney and sambar with a rotating breakfast special.",
+        "availability": "Available",
+        "serving": "1 person",
+        "spice": "Mild",
+        "allergens": "Gluten, nuts (depending on chutney)",
+        "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=1000&q=85",
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "d2",
+        "name": "Veg Mini Meals",
+        "category": "Lunch",
+        "foodType": "Vegetarian",
+        "price": "₹149",
+        "unit": "per box",
+        "description": "Rice, dal, seasonal curry, sambar, rasam, curd, pickle and papad.",
+        "availability": "Available",
+        "serving": "1 person",
+        "spice": "Medium",
+        "allergens": "Dairy",
+        "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85",
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "d3",
+        "name": "Andhra Chicken Meal",
+        "category": "Lunch",
+        "foodType": "Non-vegetarian",
+        "price": "₹229",
+        "unit": "per box",
+        "description": "Andhra-style chicken curry, rice, dal, seasonal side, rasam and curd.",
+        "availability": "Available",
+        "serving": "1 person",
+        "spice": "Spicy",
+        "allergens": "Dairy",
+        "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=1000&q=85",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "d4",
+        "name": "Paneer Biryani",
+        "category": "Dinner",
+        "foodType": "Vegetarian",
+        "price": "₹189",
+        "unit": "per box",
+        "description": "Fragrant basmati rice layered with paneer, herbs, caramelised onions and raita.",
+        "availability": "Available",
+        "serving": "1 person",
+        "spice": "Medium",
+        "allergens": "Dairy",
+        "image": "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=1000&q=85",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "d5",
+        "name": "Chicken Dum Biryani",
+        "category": "Dinner",
+        "foodType": "Non-vegetarian",
+        "price": "₹249",
+        "unit": "per box",
+        "description": "Slow-cooked dum biryani with marinated chicken, aromatic rice and raita.",
+        "availability": "Available",
+        "serving": "1 person",
+        "spice": "Spicy",
+        "allergens": "Dairy",
+        "image": "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=1000&q=85",
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "d6",
+        "name": "Millet & Salad Bowl",
+        "category": "Healthy Meals",
+        "foodType": "Vegetarian",
+        "price": "₹179",
+        "unit": "per bowl",
+        "description": "Seasonal vegetables, millet, sprouts and house dressing.",
+        "availability": "Available",
+        "serving": "1 person",
+        "spice": "Mild",
+        "allergens": "Sesame",
+        "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=85",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "d7",
+        "name": "Kids Lunch Box",
+        "category": "Kids Menu",
+        "foodType": "Vegetarian",
+        "price": "₹119",
+        "unit": "per box",
+        "description": "Mild rice, vegetable curry, fruit portion and a small sweet.",
+        "availability": "Available",
+        "serving": "1 child",
+        "spice": "Mild",
+        "allergens": "Dairy, nuts (depending on menu)",
+        "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1000&q=85",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "d8",
+        "name": "Evening Snacks Box",
+        "category": "Snacks",
+        "foodType": "Vegetarian",
+        "price": "₹89",
+        "unit": "per box",
+        "description": "A rotating selection of savoury snacks with tea or coffee add-on.",
+        "availability": "Pre-order",
+        "serving": "1 person",
+        "spice": "Medium",
+        "allergens": "Gluten",
+        "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=1000&q=85",
+        "featured": false,
+        "enabled": true
+      }
+    ],
+    "mealPlans": [
+      {
+        "id": "p1",
+        "name": "Office Lunch — 5 Day Plan",
+        "frequency": "Weekly",
+        "price": "₹699",
+        "unit": "per person / 5 meals",
+        "description": "A weekday lunch plan with rotating vegetarian home-style meals.",
+        "includes": "5 lunch boxes, Daily menu rotation, Scheduled delivery",
+        "foodType": "Vegetarian",
+        "minOrder": "5 meals",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Everyday Meal Plan",
+        "frequency": "Monthly",
+        "price": "₹3,999",
+        "unit": "per person / month",
+        "description": "A flexible lunch subscription for regular customers and working professionals.",
+        "includes": "26 weekday lunches, Weekly menu choice, Delivery schedule",
+        "foodType": "Vegetarian / Non-veg options",
+        "minOrder": "1 person",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Family Dinner Plan",
+        "frequency": "Weekly",
+        "price": "₹1,499",
+        "unit": "per family / 5 dinners",
+        "description": "Dinner packs for a family with meal portions planned for sharing.",
+        "includes": "5 dinner packs, 3–4 serving portions, Weekly menu confirmation",
+        "foodType": "Custom menu",
+        "minOrder": "1 family",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Custom Diet Meal Plan",
+        "frequency": "Custom",
+        "price": "From ₹199",
+        "unit": "per meal",
+        "description": "Custom meal requests based on preferred ingredients and dietary preferences.",
+        "includes": "Menu consultation, Portion selection, Scheduled preparation",
+        "foodType": "Vegetarian / Non-vegetarian",
+        "minOrder": "Discuss with kitchen",
+        "enabled": true
+      }
+    ],
+    "catering": [
+      {
+        "id": "c1",
+        "name": "Small Gathering Catering",
+        "guestRange": "20–75 guests",
+        "price": "From ₹399 / plate",
+        "foodType": "Veg / Non-veg",
+        "description": "A compact menu for family functions, housewarming events and small celebrations.",
+        "includes": "Welcome drink, 2 starters, rice, breads, 3 mains, dessert, serving team",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Celebration Buffet",
+        "guestRange": "75–250 guests",
+        "price": "From ₹599 / plate",
+        "foodType": "Veg / Non-veg",
+        "description": "A complete buffet arrangement for birthdays, anniversaries and community gatherings.",
+        "includes": "Welcome drinks, starters, live counter option, mains, breads, desserts",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Corporate Meal Boxes",
+        "guestRange": "25–500 boxes",
+        "price": "From ₹179 / box",
+        "foodType": "Veg / Non-veg",
+        "description": "Individually packed meals for meetings, office lunches, training and events.",
+        "includes": "Sealed meal boxes, Cutlery, Labelled menu, Bulk dispatch planning",
+        "enabled": true
+      },
+      {
+        "id": "c4",
+        "name": "Wedding & Large Event Catering",
+        "guestRange": "250+ guests",
+        "price": "Custom quotation",
+        "foodType": "Custom menu",
+        "description": "Multi-course catering with menu consultation, service staff and event coordination.",
+        "includes": "Menu tasting, Buffet counters, Service team, Event-day coordination",
+        "enabled": true
+      }
+    ],
+    "services": [
+      {
+        "id": "s1",
+        "name": "Daily Tiffin & Meal Delivery",
+        "description": "Freshly prepared breakfast, lunch and dinner options for individuals and families.",
+        "icon": "🍱",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "name": "Office & Corporate Meals",
+        "description": "Scheduled meal boxes and recurring office lunch programmes.",
+        "icon": "🏢",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "name": "Party & Event Catering",
+        "description": "Food planning, buffet packages and service staff for private events.",
+        "icon": "🎉",
+        "enabled": true
+      },
+      {
+        "id": "s4",
+        "name": "Bulk & Institutional Orders",
+        "description": "Planned food preparation and dispatch for groups, teams and institutions.",
+        "icon": "🍽",
+        "enabled": true
+      },
+      {
+        "id": "s5",
+        "name": "Custom Meal Preparation",
+        "description": "Discuss ingredient preferences, meal portions and dietary requirements.",
+        "icon": "🥗",
+        "enabled": true
+      }
+    ],
+    "deliveryAreas": [
+      {
+        "id": "z1",
+        "area": "Madhapur",
+        "minimum": "₹99",
+        "fee": "₹20",
+        "time": "30–45 min",
+        "enabled": true
+      },
+      {
+        "id": "z2",
+        "area": "HITEC City",
+        "minimum": "₹99",
+        "fee": "₹25",
+        "time": "30–50 min",
+        "enabled": true
+      },
+      {
+        "id": "z3",
+        "area": "Kondapur",
+        "minimum": "₹149",
+        "fee": "₹30",
+        "time": "35–55 min",
+        "enabled": true
+      },
+      {
+        "id": "z4",
+        "area": "Gachibowli",
+        "minimum": "₹149",
+        "fee": "₹35",
+        "time": "40–60 min",
+        "enabled": true
+      },
+      {
+        "id": "z5",
+        "area": "Jubilee Hills",
+        "minimum": "₹199",
+        "fee": "₹40",
+        "time": "40–60 min",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Freshly prepared meals",
+        "image": "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Daily meal boxes",
+        "image": "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "A spread for sharing",
+        "image": "https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Fresh ingredients",
+        "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&q=85",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Regular lunch customer",
+        "rating": 5,
+        "text": "Consistent portions, fresh food and convenient weekday delivery.",
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Office administrator",
+        "rating": 5,
+        "text": "The team handled our meeting meal boxes neatly and delivered as scheduled.",
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Family customer",
+        "rating": 5,
+        "text": "Helpful menu options and a simple way to arrange meals for the family.",
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I place a food order?",
+        "answer": "Choose dishes or a meal plan, fill in the order enquiry and send the details through WhatsApp. The kitchen will confirm the menu, delivery area, total and payment method.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Can I order food for a group or office?",
+        "answer": "Yes. Share the number of people, date, delivery location and menu preference for a bulk quotation.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Do you provide party and event catering?",
+        "answer": "Catering is available by prior enquiry. Menu, guest count, service staff and venue requirements will be discussed before a quotation is shared.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Can I subscribe to daily or weekly meals?",
+        "answer": "Meal plans can be requested for weekly, monthly or custom schedules. The kitchen will confirm service days, menu rotation and delivery arrangements.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Can you accommodate allergies or dietary preferences?",
+        "answer": "Share all dietary requirements and allergies before placing an order. The kitchen must confirm ingredients and cross-contact precautions for each request.",
+        "enabled": true
+      },
+      {
+        "id": "f6",
+        "question": "Are the listed prices final?",
+        "answer": "Prices are indicative. Final pricing may vary by portion size, customisation, order quantity, delivery distance and taxes. Confirm before payment.",
+        "enabled": true
+      }
+    ],
+    "policies": {
+      "order": "Please place routine meal orders ahead of the selected delivery slot. Bulk and catering enquiries require advance notice and confirmation.",
+      "delivery": "Delivery is subject to serviceable area, order minimums, traffic and availability. Delivery fee is confirmed at order time.",
+      "payment": "Payment mode and any advance amount are confirmed by the kitchen before order acceptance. Do not assume an order is confirmed until the kitchen responds.",
+      "refund": "Cancellations, changes and refunds are subject to preparation status and the kitchen's written policy. Contact the team as soon as possible.",
+      "allergy": "Customers must disclose all allergies. Ingredients and cross-contact risks must be confirmed directly with the kitchen before ordering."
+    },
+    "settings": {
+      "showAbout": true,
+      "showMenu": true,
+      "showMealPlans": true,
+      "showCatering": true,
+      "showServices": true,
+      "showDelivery": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showHygiene": true,
+      "showPolicies": true
+    },
+    "hygiene": {
+      "statement": "Food handling, kitchen cleaning and ingredient storage practices are managed by the kitchen team. Add your current food licence, hygiene certificates and verified process details here.",
+      "standards": "Daily cleaning schedule · Ingredient checks · Safe storage · Staff hygiene procedures",
+      "licence": "FSSAI licence details to be verified and entered by the kitchen owner"
+    },
+    "leads": []
+  },
+  "admin": {
+    "storageKey": "sitecraft:kitchen-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "media",
+        "label": "Images / Storage",
+        "type": "media"
+      },
+      {
+        "id": "business",
+        "label": "Kitchen details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Kitchen name"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.kitchenType",
+            "label": "Kitchen service type"
+          },
+          {
+            "path": "brand.chefName",
+            "label": "Chef / kitchen lead"
+          },
+          {
+            "path": "brand.experience",
+            "label": "Experience"
+          },
+          {
+            "path": "brand.foodLicense",
+            "label": "FSSAI / food licence number"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the kitchen",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Menu & dishes",
+        "type": "collection",
+        "itemLabel": "dish",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Dish name"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "foodType",
+            "label": "Vegetarian / non-vegetarian"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "unit",
+            "label": "Price unit / portion"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "serving",
+            "label": "Serving size"
+          },
+          {
+            "key": "spice",
+            "label": "Spice level"
+          },
+          {
+            "key": "allergens",
+            "label": "Allergens / ingredient note"
+          },
+          {
+            "key": "availability",
+            "label": "Availability",
+            "type": "select",
+            "options": [
+              "Available",
+              "Pre-order",
+              "Sold out",
+              "Seasonal"
+            ]
+          },
+          {
+            "key": "image",
+            "label": "Dish image",
+            "type": "media"
+          },
+          {
+            "key": "featured",
+            "label": "Feature this dish",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New dish",
+          "category": "Lunch",
+          "foodType": "Vegetarian",
+          "price": "Enquire for price",
+          "unit": "per plate",
+          "description": "",
+          "serving": "1 person",
+          "spice": "Mild",
+          "allergens": "",
+          "availability": "Available",
+          "image": "",
+          "featured": false,
+          "enabled": true
+        }
+      },
+      {
+        "id": "mealPlans",
+        "label": "Meal subscriptions",
+        "type": "collection",
+        "itemLabel": "meal plan",
+        "path": "mealPlans",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Plan name"
+          },
+          {
+            "key": "frequency",
+            "label": "Daily / weekly / monthly"
+          },
+          {
+            "key": "price",
+            "label": "Plan price"
+          },
+          {
+            "key": "unit",
+            "label": "Price unit"
+          },
+          {
+            "key": "foodType",
+            "label": "Food preference"
+          },
+          {
+            "key": "minOrder",
+            "label": "Minimum order"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "includes",
+            "label": "Plan inclusions",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New meal plan",
+          "frequency": "Weekly",
+          "price": "Enquire for price",
+          "unit": "per person",
+          "foodType": "Custom",
+          "minOrder": "Discuss",
+          "description": "",
+          "includes": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "catering",
+        "label": "Bulk & catering packages",
+        "type": "collection",
+        "itemLabel": "package",
+        "path": "catering",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Package name"
+          },
+          {
+            "key": "guestRange",
+            "label": "Guest / box count"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "foodType",
+            "label": "Menu type"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "includes",
+            "label": "Inclusions",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New catering package",
+          "guestRange": "Custom quantity",
+          "price": "Custom quotation",
+          "foodType": "Veg / Non-veg",
+          "description": "",
+          "includes": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "services",
+        "label": "Food services",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service"
+          },
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "description",
+            "label": "Details",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "icon": "✦",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "delivery",
+        "label": "Delivery areas",
+        "type": "collection",
+        "itemLabel": "delivery area",
+        "path": "deliveryAreas",
+        "titleKey": "area",
+        "fields": [
+          {
+            "key": "area",
+            "label": "Area / pincode"
+          },
+          {
+            "key": "minimum",
+            "label": "Minimum order"
+          },
+          {
+            "key": "fee",
+            "label": "Delivery fee"
+          },
+          {
+            "key": "time",
+            "label": "Estimated delivery time"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "area": "New area",
+          "minimum": "₹0",
+          "fee": "Confirm at order",
+          "time": "Confirm with kitchen",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Food gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Photo title"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New food photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer name"
+          },
+          {
+            "key": "rating",
+            "label": "Rating (1–5)"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer",
+          "rating": 5,
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faqs",
+        "label": "FAQs",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hygiene",
+        "label": "Hygiene & food safety",
+        "fields": [
+          {
+            "path": "hygiene.statement",
+            "label": "Food safety statement",
+            "type": "textarea"
+          },
+          {
+            "path": "hygiene.standards",
+            "label": "Practices / standards",
+            "type": "textarea"
+          },
+          {
+            "path": "hygiene.licence",
+            "label": "Food licence / certification details",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "label": "Contact & delivery details",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Kitchen address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.deliveryNote",
+            "label": "Delivery coverage",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.hoursText",
+            "label": "Order hours"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "social.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "social.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "social.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "policies",
+        "label": "Order & delivery policies",
+        "fields": [
+          {
+            "path": "policies.order",
+            "label": "Order lead time / minimum",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.delivery",
+            "label": "Delivery charges / rules",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.payment",
+            "label": "Payment terms",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.refund",
+            "label": "Cancellation / refund policy",
+            "type": "textarea"
+          },
+          {
+            "path": "policies.allergy",
+            "label": "Allergen information",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Website sections",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "Show About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Show Menu",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMealPlans",
+            "label": "Show Meal plans",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCatering",
+            "label": "Show Catering",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Show Services",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showDelivery",
+            "label": "Show Delivery areas",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Show Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Show Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "Show FAQs",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHygiene",
+            "label": "Show Hygiene",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPolicies",
+            "label": "Show Policies",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "leads",
+        "label": "Food order enquiries",
+        "type": "leads",
+        "title": "Food Orders & Catering Enquiries",
+        "description": "Enquiries submitted on this site are stored in this browser. Confirm final menu, quantities, price, delivery and payment with the customer.",
+        "path": "leads",
+        "statusKey": "status",
+        "statuses": [
+          "New",
+          "Contacted",
+          "Quotation Sent",
+          "Confirmed",
+          "Preparing",
+          "Dispatched",
+          "Completed",
+          "Cancelled"
+        ],
+        "disableActions": true,
+        "columns": [
+          "createdAt",
+          "status",
+          "name",
+          "phone",
+          "email",
+          "orderType",
+          "date",
+          "time",
+          "items",
+          "quantity",
+          "foodPreference",
+          "deliveryArea",
+          "address",
+          "budget",
+          "message"
+        ],
+        "labels": {
+          "createdAt": "Received",
+          "status": "Status",
+          "name": "Name",
+          "phone": "Phone",
+          "email": "Email",
+          "orderType": "Order type",
+          "date": "Date",
+          "time": "Time",
+          "items": "Items / menu",
+          "quantity": "Quantity / guests",
+          "foodPreference": "Food preference",
+          "deliveryArea": "Delivery area",
+          "address": "Address / venue",
+          "budget": "Budget",
+          "message": "Requirements"
+        }
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}

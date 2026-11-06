@@ -3,7 +3,7 @@ const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
 const list=v=>Array.isArray(v)?v.filter(x=>x&&x.enabled!==false):[];
 const money=(n)=>'₹'+new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.max(0,num(n)));
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
   const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},os=d.pickup||{},ok=x=>selected.includes(x);
   const services=list(d.services),packages=list(d.packages),vehicles=list(d.vehicleTypes),ba=list(d.beforeAfter),gallery=list(d.gallery),specials=list(d.specials),team=list(d.team),trust=list(d.trust),reviews=list(d.reviews),faq=list(d.faq),hours=list(d.hours);
   const cats=[...new Set(gallery.map(x=>x.category).filter(Boolean))];
@@ -16,7 +16,7 @@ export function render(d={},selected=[]){
 
   if(ok('services')&&s.showServices!==false)html+='<section id="services" class="au-section"><div class="au-head split"><div><span class="au-kicker">SERVICES & PRICING</span><h2>Choose the service your vehicle needs.</h2></div><p>Starting prices are indicative. Final pricing depends on vehicle type, parts, labour and inspection findings.</p></div><div class="au-service-grid">'+services.map((x,i)=>'<article><span class="au-service-icon">'+esc(x.icon||"🛠️")+'</span><div><small>'+esc(x.category||"Service")+'</small><h3>'+esc(x.name||"Service")+'</h3><p>'+esc(x.description||"")+'</p></div><strong>'+money(x.basePrice||0)+'+</strong><button type="button" class="au-link-btn" data-service="'+esc(x.name||"")+'">Select ↗</button></article>').join('')+'</div></section>';
 
-  if(ok('packages')&&s.showPackages!==false)html+='<section id="packages" class="au-section au-packages"><div class="au-head split"><div><span class="au-kicker">SERVICE PACKAGES</span><h2>Package the visit around the job.</h2></div><p>Package prices are sample starting points and should be confirmed before work begins.</p></div><div class="au-package-grid">'+packages.map((x,i)=>'<article class="'+(x.tier==="Luxury"?'featured':'')+'"><div class="au-package-top"><span>'+esc(x.tier||"Package")+'</span><small>0'+(i+1)+'</small></div><h3>'+esc(x.name||"Package")+'</h3><strong>'+esc(x.price||"Custom quote")+'</strong><em>'+esc(x.vehicle||"All vehicles")+'</em><p>'+esc(x.summary||"")+'</p><ul>'+((Array.isArray(x.includes)?x.includes:String(x.includes||"").split(",").map(v=>v.trim()).filter(Boolean))).map(v=>'<li>✓ '+esc(v)+'</li>').join('')+'</ul><a class="au-btn '+(x.tier==="Luxury"?'solid':'outline')+'" href="#booking" data-package="'+esc(x.name||"")+'">Book this package <span>↗</span></a></article>').join('')+'</div></section>';
+  if(ok('packages')&&s.showPackages!==false)html+='<section id="packages" class="au-section au-packages"><div class="au-head split"><div><span class="au-kicker">SERVICE PACKAGES</span><h2>Package the visit around the job.</h2></div><p>Prices shown are starting points. We confirm the final quote with you before any work begins.</p></div><div class="au-package-grid">'+packages.map((x,i)=>'<article class="'+(x.tier==="Luxury"?'featured':'')+'"><div class="au-package-top"><span>'+esc(x.tier||"Package")+'</span><small>0'+(i+1)+'</small></div><h3>'+esc(x.name||"Package")+'</h3><strong>'+esc(x.price||"Custom quote")+'</strong><em>'+esc(x.vehicle||"All vehicles")+'</em><p>'+esc(x.summary||"")+'</p><ul>'+((Array.isArray(x.includes)?x.includes:String(x.includes||"").split(",").map(v=>v.trim()).filter(Boolean))).map(v=>'<li>✓ '+esc(v)+'</li>').join('')+'</ul><a class="au-btn '+(x.tier==="Luxury"?'solid':'outline')+'" href="#booking" data-package="'+esc(x.name||"")+'">Book this package <span>↗</span></a></article>').join('')+'</div></section>';
 
   if(ok('vehicle')&&s.showVehicle!==false)html+='<section id="vehicle" class="au-section au-vehicle"><div class="au-head"><span class="au-kicker">VEHICLE TYPE</span><h2>Start with what you drive.</h2></div><div class="au-vehicle-grid">'+vehicles.map((x,i)=>'<button type="button" class="au-vehicle-card '+(i===0?'active':'')+'" data-vehicle="'+esc(x.name)+'" data-multiplier="'+num(x.multiplier)+'"><span>'+esc(x.icon||"🚗")+'</span><strong>'+esc(x.name)+'</strong><small>Pricing guide × '+num(x.multiplier).toFixed(2)+'</small></button>').join('')+'</div><div class="au-vehicle-note"><span>Selected vehicle</span><strong id="auSelectedVehicle">'+esc(vehicles[0]?.name||"Choose vehicle")+'</strong></div></section>';
 
@@ -32,11 +32,11 @@ export function render(d={},selected=[]){
 
   if(ok('team')&&s.showTeam!==false)html+='<section class="au-section au-team"><div class="au-head"><span class="au-kicker">TECHNICIANS & EXPERTS</span><h2>Meet the people working on the vehicle.</h2></div><div class="au-team-grid">'+team.map(x=>'<article><img src="'+esc(x.image||"")+'" alt="'+esc(x.name||"Technician")+'"><div><span>'+esc(x.role||"")+'</span><h3>'+esc(x.name||"Technician")+'</h3><p>'+esc(x.specialization||"")+'</p><small>'+esc(x.credentials||"")+'</small></div></article>').join('')+'</div></section>';
 
-  if(ok('trust')&&s.showTrust!==false)html+='<section class="au-section au-trust"><div class="au-head split"><div><span class="au-kicker">BRANDS, WARRANTY & TRUST</span><h2>Make workshop standards easy to verify.</h2></div><p>Only publish actual parts brands, warranty terms, technician qualifications and workshop claims that apply to your business.</p></div><div class="au-trust-grid">'+trust.map(x=>'<article><span>✓</span><h3>'+esc(x.title||"Trust point")+'</h3><p>'+esc(x.text||"")+'</p></article>').join('')+'</div></section>';
+  if(ok('trust')&&s.showTrust!==false)html+='<section class="au-section au-trust"><div class="au-head split"><div><span class="au-kicker">BRANDS, WARRANTY & TRUST</span><h2>Make workshop standards easy to verify.</h2></div><p>Ask us about the parts brands we use, warranty terms and our technicians’ qualifications.</p></div><div class="au-trust-grid">'+trust.map(x=>'<article><span>✓</span><h3>'+esc(x.title||"Trust point")+'</h3><p>'+esc(x.text||"")+'</p></article>').join('')+'</div></section>';
 
   if(ok('reviews')&&s.showReviews!==false)html+='<section class="au-section au-reviews"><div class="au-head"><span class="au-kicker">CUSTOMER REVIEWS</span><h2>What owners say about the service.</h2></div><div class="au-review-grid">'+reviews.map(x=>'<article>'+(x.image?'<img src="'+esc(x.image)+'" alt="'+esc(x.name||"Customer")+'">':'')+'<div class="au-stars">'+('★'.repeat(Math.max(1,Math.min(5,num(x.rating)||5))))+'</div><p>“'+esc(x.text||"")+'”</p><strong>'+esc(x.name||"Customer")+'</strong><small>'+esc(x.event||"Service")+'</small></article>').join('')+'</div></section>';
 
-  if(ok('about')&&s.showAbout!==false)html+='<section class="au-section au-about"><div class="au-head split"><div><span class="au-kicker">ABOUT THE WORKSHOP</span><h2>'+esc(b.about||"Tell your workshop story here.")+'</h2></div><p>Share the workshop background, experience, service philosophy and what customers can expect.</p></div><div class="au-about-stats"><div><strong>'+esc(b.years||0)+'+</strong><span>years in service</span></div><div><strong>'+esc(b.carsServed||0)+'+</strong><span>cars served</span></div><div><strong>Direct</strong><span>booking & updates</span></div></div></section>';
+  if(ok('about')&&s.showAbout!==false)html+='<section class="au-section au-about"><div class="au-head split"><div><span class="au-kicker">ABOUT THE WORKSHOP</span><h2>'+esc(b.about||"Tell your workshop story here.")+'</h2></div><p>A local workshop focused on honest diagnostics, clear quotes and careful work.</p></div><div class="au-about-stats"><div><strong>'+esc(b.years||0)+'+</strong><span>years in service</span></div><div><strong>'+esc(b.carsServed||0)+'+</strong><span>cars served</span></div><div><strong>Direct</strong><span>booking & updates</span></div></div></section>';
 
   if(ok('faq')&&s.showFAQ!==false)html+='<section class="au-section"><div class="au-head"><span class="au-kicker">FAQ</span><h2>Before you book.</h2></div><div class="au-faq">'+faq.map(x=>'<details><summary>'+esc(x.question||"Question")+'<span>+</span></summary><p>'+esc(x.answer||"")+'</p></details>').join('')+'</div></section>';
 
@@ -49,7 +49,7 @@ export function render(d={},selected=[]){
   if(ok('whatsapp')&&c.whatsapp)html+='<a class="au-float-wa" target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>';
   return html+'</div>';
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
   let selectedVehicle=root.querySelector('#auVehicleSelect')?.value||'';
   root.querySelectorAll('[data-vehicle]').forEach(b=>b.onclick=()=>{root.querySelectorAll('.au-vehicle-card').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedVehicle=b.dataset.vehicle||'';const v=root.querySelector('#auVehicleSelect');if(v){v.value=selectedVehicle;v.dispatchEvent(new Event('change'))}const out=root.querySelector('#auSelectedVehicle');if(out)out.textContent=selectedVehicle});
   root.querySelectorAll('[data-service]').forEach(b=>b.onclick=()=>{const s=root.querySelector('#auServiceSelect');if(s){s.value=b.dataset.service||'';s.dispatchEvent(new Event('change'))}root.querySelector('#booking')?.scrollIntoView({behavior:'smooth'})});
@@ -64,8 +64,60 @@ export function init(root,d={}){
     const mult=(d.vehicleTypes||[]).find(x=>x.name===vehicle)?.multiplier||1;
     const base= num(service?.dataset?.price||0)*num(mult);
     lead.total=base?money(base):'To be confirmed';lead.status='New';lead.createdAt=new Date().toISOString();
-    try{const state=Store.read(),data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#auBookingNotice');if(n)n.textContent='Booking request saved. The workshop will confirm the service, estimate and appointment slot.';form.reset()}catch{const n=root.querySelector('#auBookingNotice');if(n)n.textContent='Could not save the booking in this browser.'}
+    try{const state=Store.read(),data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#auBookingNotice');if(n)n.textContent='Thanks! Please send the WhatsApp message that opened to confirm your request. If it did not open, please call us.';form.reset()}catch{const n=root.querySelector('#auBookingNotice');if(n)n.textContent='Could not save the booking in this browser.'}
     const wa=d.contact?.whatsapp;
     if(wa){const msg=['Automotive service booking',lead.name,lead.phone,lead.email,'Vehicle: '+lead.vehicleType,'Service: '+lead.service,'Package: '+lead.package, 'Date: '+lead.serviceDate,'Slot: '+lead.timeSlot,'Location: '+lead.location,'Pickup/Drop: '+lead.pickupDrop,'Estimate: '+lead.total,lead.message].filter(Boolean).join('\n');window.open('https://wa.me/'+safe(wa)+'?text='+encodeURIComponent(msg),'_blank')}
   });
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=false;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

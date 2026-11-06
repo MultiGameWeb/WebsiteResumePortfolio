@@ -1,0 +1,1940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hashi — Bridges Puzzle</title>
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & THEMING (Light / Dark Mode)
+       ========================================================================== */
+    :root {
+      --bg-page: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-board: #e2e8f0;
+      --bg-subtle: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-color: #cbd5e1;
+
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-soft: #dbeafe;
+
+      --island-fill: #ffffff;
+      --island-stroke: #1e293b;
+      --island-text: #0f172a;
+
+      --satisfied-fill: #dcfce7;
+      --satisfied-stroke: #16a34a;
+      --satisfied-text: #14532d;
+
+      --over-fill: #fee2e2;
+      --over-stroke: #dc2626;
+      --over-text: #7f1d1d;
+
+      --bridge-color: #1e293b;
+      --bridge-glow: #ffffff;
+      --guide-hover: rgba(37, 99, 235, 0.18);
+
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg-page: #0b1120;
+        --bg-card: #1e293b;
+        --bg-board: #0f172a;
+        --bg-subtle: #162032;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --border-color: #334155;
+
+        --accent: #3b82f6;
+        --accent-hover: #60a5fa;
+        --accent-soft: rgba(59, 130, 246, 0.2);
+
+        --island-fill: #1e293b;
+        --island-stroke: #cbd5e1;
+        --island-text: #f8fafc;
+
+        --satisfied-fill: #064e3b;
+        --satisfied-stroke: #34d399;
+        --satisfied-text: #ecfdf5;
+
+        --over-fill: #7f1d1d;
+        --over-stroke: #f87171;
+        --over-text: #fef2f2;
+
+        --bridge-color: #e2e8f0;
+        --bridge-glow: #0f172a;
+        --guide-hover: rgba(96, 165, 250, 0.22);
+
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+        --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg-page: #0b1120;
+      --bg-card: #1e293b;
+      --bg-board: #0f172a;
+      --bg-subtle: #162032;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+
+      --accent: #3b82f6;
+      --accent-hover: #60a5fa;
+      --accent-soft: rgba(59, 130, 246, 0.2);
+
+      --island-fill: #1e293b;
+      --island-stroke: #cbd5e1;
+      --island-text: #f8fafc;
+
+      --satisfied-fill: #064e3b;
+      --satisfied-stroke: #34d399;
+      --satisfied-text: #ecfdf5;
+
+      --over-fill: #7f1d1d;
+      --over-stroke: #f87171;
+      --over-text: #fef2f2;
+
+      --bridge-color: #e2e8f0;
+      --bridge-glow: #0f172a;
+      --guide-hover: rgba(96, 165, 250, 0.22);
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ==========================================================================
+       BASE & LAYOUT
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 12px;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      transition: background-color 0.25s, color 0.25s;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 560px;
+      background: var(--bg-card);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    /* Header & Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .badge-sub {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .icon-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-subtle);
+      color: var(--text-main);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .icon-btn:hover {
+      background: var(--accent-soft);
+    }
+
+    .icon-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Difficulty & Timer Row */
+    .meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .diff-group {
+      display: flex;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .diff-btn {
+      min-height: 40px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .diff-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timer-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 12px;
+      min-height: 44px;
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .penalty-pill {
+      font-size: 0.75rem;
+      color: #dc2626;
+      background: rgba(220, 38, 38, 0.12);
+      padding: 2px 6px;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .penalty-pill.visible {
+      display: inline-block;
+    }
+
+    /* Board Wrapper */
+    .board-container {
+      background: var(--bg-board);
+      border-radius: 14px;
+      padding: 8px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+
+    .board-container.shake {
+      animation: shakeAnim 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    @keyframes shakeAnim {
+      10%, 90% { transform: translate3d(-3px, 0, 0); }
+      20%, 80% { transform: translate3d(5px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+      40%, 60% { transform: translate3d(6px, 0, 0); }
+    }
+
+    svg#game-svg {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      aspect-ratio: 1 / 1;
+      display: block;
+      user-select: none;
+    }
+
+    /* SVG Elements */
+    .edge-hitbox {
+      stroke: transparent;
+      cursor: pointer;
+      stroke-linecap: round;
+      transition: stroke 0.15s;
+    }
+
+    .edge-hitbox:hover {
+      stroke: var(--guide-hover);
+    }
+
+    .bridge-line {
+      stroke: var(--bridge-color);
+      stroke-linecap: round;
+      pointer-events: none;
+      transition: all 0.18s ease;
+    }
+
+    .bridge-bg {
+      stroke: var(--bridge-glow);
+      stroke-linecap: round;
+      pointer-events: none;
+    }
+
+    .island-node {
+      cursor: pointer;
+    }
+
+    .island-circle {
+      fill: var(--island-fill);
+      stroke: var(--island-stroke);
+      transition: fill 0.2s ease, stroke 0.2s ease, transform 0.15s ease;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    .island-node:active .island-circle {
+      transform: scale(0.93);
+    }
+
+    .island-node.satisfied .island-circle {
+      fill: var(--satisfied-fill);
+      stroke: var(--satisfied-stroke);
+    }
+
+    .island-node.over .island-circle {
+      fill: var(--over-fill);
+      stroke: var(--over-stroke);
+    }
+
+    /* Outer selection ring that NEVER hides the island's inner status color */
+    .selection-ring {
+      fill: none;
+      stroke: var(--accent);
+      stroke-dasharray: 5 3;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+    }
+
+    .island-node.selected .selection-ring {
+      opacity: 1;
+      animation: spinRing 8s linear infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    @keyframes spinRing {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .island-label {
+      fill: var(--island-text);
+      font-weight: 800;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+      transition: fill 0.2s ease;
+    }
+
+    .island-node.satisfied .island-label {
+      fill: var(--satisfied-text);
+    }
+
+    .island-node.over .island-label {
+      fill: var(--over-text);
+    }
+
+    /* Status & Toast Bar */
+    .status-bar {
+      margin: 12px 0;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-align: center;
+      color: var(--text-main);
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .status-bar.win {
+      background: var(--satisfied-fill);
+      border-color: var(--satisfied-stroke);
+      color: var(--satisfied-text);
+    }
+
+    .status-bar.warn {
+      background: var(--over-fill);
+      border-color: var(--over-stroke);
+      color: var(--over-text);
+    }
+
+    .status-bar.info {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+    }
+
+    /* Action Buttons Grid (Thumb-friendly >=44px) */
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      min-height: 46px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-subtle);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.15s, transform 0.1s, opacity 0.15s;
+    }
+
+    .btn:hover:not(:disabled) {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--accent-hover);
+      color: #ffffff;
+    }
+
+    /* Collapsible Sections (How to Play & Stats) */
+    details.panel {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    details.panel summary {
+      min-height: 46px;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    details.panel summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.panel summary::after {
+      content: "▾";
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+
+    details.panel[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .panel-body {
+      padding: 0 14px 14px 14px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .panel-body ul {
+      margin: 8px 0 0 0;
+      padding-left: 18px;
+    }
+
+    .panel-body li {
+      margin-bottom: 5px;
+    }
+
+    /* Stats Table */
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .stats-table th, .stats-table td {
+      padding: 8px 6px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .stats-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .stats-actions {
+      margin-top: 12px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-danger {
+      background: rgba(220, 38, 38, 0.1);
+      border-color: #dc2626;
+      color: #dc2626;
+      min-height: 38px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+    }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+  
+    /* Standalone player fullscreen layout: keep the puzzle controls and board inside the viewport. */
+    html.embed-fullscreen, html.embed-fullscreen body {
+      width:100%; height:100%; min-height:0; overflow:hidden;
+    }
+    html.embed-fullscreen body { padding:6px; }
+    html.embed-fullscreen .app-shell {
+      width:min(100%,760px); height:100%; max-height:100%; min-height:0;
+      display:flex; flex-direction:column; gap:6px; padding:10px; overflow:hidden;
+    }
+    html.embed-fullscreen .top-bar, html.embed-fullscreen .meta-bar { flex:0 0 auto; margin-bottom:2px; }
+    html.embed-fullscreen .board-container { flex:1 1 auto; min-height:0; padding:4px; }
+    html.embed-fullscreen svg#game-svg { width:auto; height:100%; max-width:100%; max-height:100%; aspect-ratio:1/1; }
+    html.embed-fullscreen .status-bar { flex:0 0 auto; min-height:34px; margin:4px 0; padding:6px 10px; font-size:.8rem; }
+    html.embed-fullscreen .controls-grid { flex:0 0 auto; gap:5px; margin:0; }
+    html.embed-fullscreen .controls-grid .btn { min-height:36px; padding:5px 7px; font-size:.78rem; }
+    html.embed-fullscreen details.panel { display:none; }
+    @media (max-height:520px) {
+      html.embed-fullscreen .app-shell { padding:5px; gap:3px; }
+      html.embed-fullscreen .top-bar { margin-bottom:0; }
+      html.embed-fullscreen .icon-btn { min-height:32px; min-width:34px; }
+      html.embed-fullscreen .meta-bar { margin-bottom:0; }
+      html.embed-fullscreen .diff-btn { min-height:30px; padding:3px 8px; }
+      html.embed-fullscreen .timer-box { min-height:30px; padding:3px 8px; }
+      html.embed-fullscreen .status-bar { min-height:27px; margin:2px 0; }
+      html.embed-fullscreen .controls-grid .btn { min-height:30px; }
+    }
+
+  </style>
+</head>
+<body>
+  <canvas id="confetti-canvas"></canvas>
+
+  <main class="app-shell">
+    <!-- Top Header -->
+    <header class="top-bar">
+      <div class="brand">
+        <h1>Hashi</h1>
+        <span class="badge-sub">Bridges</span>
+      </div>
+      <div class="icon-actions">
+        <button id="btn-mute" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">🔊</button>
+        <button id="btn-theme" class="icon-btn" title="Toggle Theme" aria-label="Toggle Theme">🌗</button>
+      </div>
+    </header>
+
+    <!-- Difficulty & Live Timer -->
+    <section class="meta-bar">
+      <div class="diff-group" role="group" aria-label="Difficulty">
+        <button class="diff-btn active" data-diff="easy">Easy</button>
+        <button class="diff-btn" data-diff="medium">Medium</button>
+        <button class="diff-btn" data-diff="hard">Hard</button>
+      </div>
+      <div class="timer-box" aria-live="off">
+        <span>⏱️ <span id="timer-display">00:00</span></span>
+        <span id="penalty-badge" class="penalty-pill">+0s</span>
+      </div>
+    </section>
+
+    <!-- Game Board -->
+    <div id="board-wrap" class="board-container">
+      <svg id="game-svg" viewBox="0 0 500 500" aria-label="Hashi Puzzle Board">
+        <g id="layer-guides"></g>
+        <g id="layer-bridges"></g>
+        <g id="layer-hitboxes"></g>
+        <g id="layer-islands"></g>
+      </svg>
+    </div>
+
+    <!-- Status Bar -->
+    <div id="status-bar" class="status-bar" role="status" aria-live="polite">
+      Tap between two aligned islands to build bridges!
+    </div>
+
+    <!-- Action Controls -->
+    <section class="controls-grid">
+      <button id="btn-undo" class="btn" disabled title="Undo (Ctrl+Z)">↩ Undo</button>
+      <button id="btn-redo" class="btn" disabled title="Redo (Ctrl+Y)">↪ Redo</button>
+      <button id="btn-hint" class="btn" title="Reveal 1 bridge (+30s)">💡 Hint</button>
+      <button id="btn-reset" class="btn" title="Clear all bridges">🔄 Reset</button>
+      <button id="btn-solve" class="btn" title="Reveal full solution">👁️ Solve</button>
+      <button id="btn-new" class="btn btn-primary" title="Generate a fresh puzzle">✨ New</button>
+    </section>
+
+    <!-- Statistics Panel -->
+    <details id="stats-panel" class="panel">
+      <summary>🏆 Your Statistics</summary>
+      <div class="panel-body">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Solved</th>
+              <th>Best Time</th>
+              <th>Streak</th>
+              <th>Best Streak</th>
+            </tr>
+          </thead>
+          <tbody id="stats-tbody"></tbody>
+        </table>
+        <div class="stats-actions">
+          <span id="reset-confirm-text" style="display:none; font-size:0.8rem; color:#dc2626; font-weight:600;">Are you sure?</span>
+          <button id="btn-reset-stats" class="btn btn-danger">Reset Stats</button>
+        </div>
+      </div>
+    </details>
+
+    <!-- Collapsible How to Play -->
+    <details class="panel">
+      <summary>📖 How to Play</summary>
+      <div class="panel-body">
+        <ul>
+          <li><strong>Goal:</strong> Connect all islands into a <strong>single connected group</strong> so each island has as many bridges as its number.</li>
+          <li><strong>Build Bridges:</strong> Tap directly between two aligned islands—or tap Island A then Island B—to cycle through <code>1 → 2 → 0</code> bridges.</li>
+          <li><strong>Rules:</strong> Bridges run strictly horizontally or vertically, cannot cross other bridges or islands, and at most <strong>2 bridges</strong> can link any pair.</li>
+          <li><strong>Colors:</strong> <span style="color:#16a34a;font-weight:700;">Green</span> = exact count met, <span style="color:#dc2626;font-weight:700;">Red</span> = too many bridges, <span style="color:#2563eb;font-weight:700;">Blue Ring</span> = currently selected.</li>
+          <li><strong>Hints:</strong> Each hint reveals a correct bridge from the unique solution and adds a <strong>+30s</strong> penalty to your timer.</li>
+        </ul>
+      </div>
+    </details>
+  </main>
+
+  <script>
+    /* ==========================================================================
+       SAFE LOCAL STORAGE WRAPPER
+       ========================================================================== */
+    const Storage = {
+      get(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch (e) {
+          return fallback;
+        }
+      },
+      set(key, val) {
+        try {
+          localStorage.setItem(key, JSON.stringify(val));
+        } catch (e) {
+          // Ignore quota or private-browsing errors
+        }
+      },
+      remove(key) {
+        try {
+          localStorage.removeItem(key);
+        } catch (e) {}
+      }
+    };
+
+    /* ==========================================================================
+       WEB AUDIO SYNTHESIZER (No external files)
+       ========================================================================== */
+    const Sound = {
+      ctx: null,
+      muted: Storage.get('hashi_muted', false),
+
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      },
+
+      tone(freq, type, duration, gainVal = 0.08, delay = 0) {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime + delay;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(gainVal, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + duration);
+        } catch (e) {}
+      },
+
+      bridge(count) {
+        if (count === 1) this.tone(420, 'sine', 0.09, 0.08);
+        else if (count === 2) this.tone(560, 'sine', 0.1, 0.09);
+        else this.tone(280, 'triangle', 0.08, 0.06);
+      },
+
+      error() {
+        this.tone(160, 'sawtooth', 0.14, 0.07);
+        this.tone(130, 'sawtooth', 0.16, 0.07, 0.07);
+      },
+
+      hint() {
+        this.tone(523.25, 'sine', 0.12, 0.08);
+        this.tone(659.25, 'sine', 0.18, 0.08, 0.08);
+      },
+
+      win() {
+        [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+          this.tone(f, 'triangle', 0.24, 0.1, i * 0.09);
+        });
+      }
+    };
+
+    /* ==========================================================================
+       DIFFICULTY CONFIGURATIONS & STATE
+       ========================================================================== */
+    const SAVE_VERSION = 3;
+
+    const DIFFICULTIES = {
+      easy:   { grid: 7,  targetIslands: 8,  minIslands: 6 },
+      medium: { grid: 9,  targetIslands: 14, minIslands: 10 },
+      hard:   { grid: 11, targetIslands: 20, minIslands: 14 }
+    };
+
+    const defaultStats = () => ({
+      easy:   { solved: 0, bestTime: null, currentStreak: 0, bestStreak: 0 },
+      medium: { solved: 0, bestTime: null, currentStreak: 0, bestStreak: 0 },
+      hard:   { solved: 0, bestTime: null, currentStreak: 0, bestStreak: 0 }
+    });
+
+    let stats = Storage.get('hashi_stats', defaultStats());
+
+    let state = {
+      version: SAVE_VERSION,
+      difficulty: 'easy',
+      gridSize: 7,
+      islands: [],     // { id, r, c, val }
+      edges: [],       // { id, u, v, dir: 'H'|'V', count: 0, sol: 0 }
+      undoStack: [],
+      redoStack: [],
+      selectedIsland: null,
+      elapsedSeconds: 0,
+      hintsUsed: 0,
+      timerStarted: false,
+      gameStatus: 'playing' // 'playing' | 'won' | 'revealed'
+    };
+
+    let timerInterval = null;
+
+    /* ==========================================================================
+       HASHI SOLVER (Constraint Propagation + Backtracking, Stops at 2 Solutions)
+       ========================================================================== */
+    function solveHashi(islands, edges) {
+      const K = islands.length;
+      const M = edges.length;
+
+      // Precompute incident edges per island
+      const incident = Array.from({ length: K }, () => []);
+      for (let e = 0; e < M; e++) {
+        incident[edges[e].u].push(e);
+        incident[edges[e].v].push(e);
+      }
+
+      // Precompute geometric crossings between candidate edges
+      const crosses = Array.from({ length: M }, () => []);
+      for (let i = 0; i < M; i++) {
+        const e1 = edges[i];
+        const a = islands[e1.u], b = islands[e1.v];
+        for (let j = i + 1; j < M; j++) {
+          const e2 = edges[j];
+          if (e1.dir === e2.dir) continue;
+          const c = islands[e2.u], d = islands[e2.v];
+
+          let intersects = false;
+          if (e1.dir === 'H') {
+            const minC = Math.min(a.c, b.c), maxC = Math.max(a.c, b.c);
+            const minR = Math.min(c.r, d.r), maxR = Math.max(c.r, d.r);
+            if (c.c > minC && c.c < maxC && a.r > minR && a.r < maxR) intersects = true;
+          } else {
+            const minR = Math.min(a.r, b.r), maxR = Math.max(a.r, b.r);
+            const minC = Math.min(c.c, d.c), maxC = Math.max(c.c, d.c);
+            if (a.c > minC && a.c < maxC && c.r > minR && c.r < maxR) intersects = true;
+          }
+          if (intersects) {
+            crosses[i].push(j);
+            crosses[j].push(i);
+          }
+        }
+      }
+
+      // Initial bounds for every edge: min = 0, max = 2
+      const initMin = new Int8Array(M);
+      const initMax = new Int8Array(M);
+      for (let e = 0; e < M; e++) {
+        const uVal = islands[edges[e].u].val;
+        const vVal = islands[edges[e].v].val;
+        // Static pruning: two islands with target=1 (when K>2) can never connect to each other
+        if (K > 2 && uVal === 1 && vVal === 1) {
+          initMax[e] = 0;
+        } else {
+          initMax[e] = Math.min(2, uVal, vVal);
+        }
+      }
+
+      // Constraint Propagation to fixpoint
+      function propagate(minArr, maxArr) {
+        let changed = true;
+        while (changed) {
+          changed = false;
+
+          // 1. Crossing exclusion: if an edge has min > 0, crossing edges must have max = 0
+          for (let e = 0; e < M; e++) {
+            if (minArr[e] > 0) {
+              const cr = crosses[e];
+              for (let k = 0; k < cr.length; k++) {
+                const cEdge = cr[k];
+                if (minArr[cEdge] > 0) return false;
+                if (maxArr[cEdge] > 0) {
+                  maxArr[cEdge] = 0;
+                  changed = true;
+                }
+              }
+            }
+          }
+
+          // 2. Island capacity constraints (upper & lower bounds)
+          for (let i = 0; i < K; i++) {
+            const target = islands[i].val;
+            const inc = incident[i];
+            let minSum = 0;
+            let maxSum = 0;
+
+            for (let k = 0; k < inc.length; k++) {
+              const e = inc[k];
+              minSum += minArr[e];
+              maxSum += maxArr[e];
+            }
+
+            if (minSum > target || maxSum < target) return false;
+
+            const remNeed = target - minSum;
+            const slack = maxSum - target;
+
+            for (let k = 0; k < inc.length; k++) {
+              const e = inc[k];
+
+              // Upper bound on edge `e`: cannot add more than `remNeed` above `minArr[e]`
+              const allowedMax = minArr[e] + remNeed;
+              if (allowedMax < maxArr[e]) {
+                maxArr[e] = allowedMax;
+                if (maxArr[e] < minArr[e]) return false;
+                changed = true;
+              }
+
+              // Lower bound on edge `e`: forced bridges when other edges at max aren't enough
+              const forcedMin = maxArr[e] - slack;
+              if (forcedMin > minArr[e]) {
+                minArr[e] = forcedMin;
+                if (minArr[e] > maxArr[e]) return false;
+                changed = true;
+              }
+            }
+          }
+
+          // 3. Prevent isolated 2-island saturated pairs when K > 2
+          if (K > 2) {
+            for (let e = 0; e < M; e++) {
+              if (maxArr[e] === 2) {
+                const u = edges[e].u, v = edges[e].v;
+                if (islands[u].val === 2 && islands[v].val === 2) {
+                  maxArr[e] = 1;
+                  if (minArr[e] > 1) return false;
+                  changed = true;
+                }
+              }
+            }
+          }
+        }
+        return true;
+      }
+
+      // Check if all islands can still be connected using edges where edgeCounts[e] > 0
+      function isConnected(edgeCounts) {
+        if (K <= 1) return true;
+        let visitedMask = 1; // Bitmask works up to 30 islands (Hard is 20 islands)
+        const queue = [0];
+        let head = 0;
+
+        while (head < queue.length) {
+          const u = queue[head++];
+          const inc = incident[u];
+          for (let k = 0; k < inc.length; k++) {
+            const e = inc[k];
+            if (edgeCounts[e] > 0) {
+              const v = edges[e].u === u ? edges[e].v : edges[e].u;
+              if ((visitedMask & (1 << v)) === 0) {
+                visitedMask |= (1 << v);
+                queue.push(v);
+              }
+            }
+          }
+        }
+        return queue.length === K;
+      }
+
+      let solutionsFound = 0;
+      let uniqueSolution = null;
+      let nodesExplored = 0;
+      const MAX_NODES = 6000;
+
+      function search(minArr, maxArr) {
+        if (solutionsFound >= 2 || ++nodesExplored > MAX_NODES) return;
+
+        if (!propagate(minArr, maxArr)) return;
+
+        // Prune if even using all potentially positive edges (`maxArr[e] > 0`) the graph is disconnected
+        if (!isConnected(maxArr)) return;
+
+        // Pick an undecided edge (`minArr[e] < maxArr[e]`) using MRV heuristic
+        let bestEdge = -1;
+        let bestScore = 9999;
+
+        for (let e = 0; e < M; e++) {
+          if (minArr[e] < maxArr[e]) {
+            const u = edges[e].u, v = edges[e].v;
+            // Prefer edges with tight range (1 vs 2) and attached to constrained islands
+            const range = maxArr[e] - minArr[e];
+            const score = range * 10 + Math.min(islands[u].val, islands[v].val);
+            if (score < bestScore) {
+              bestScore = score;
+              bestEdge = e;
+            }
+          }
+        }
+
+        // All edges decided -> check if single connected group
+        if (bestEdge === -1) {
+          if (isConnected(minArr)) {
+            solutionsFound++;
+            if (solutionsFound === 1) {
+              uniqueSolution = Array.from(minArr);
+            }
+          }
+          return;
+        }
+
+        const pivotVal = minArr[bestEdge];
+
+        // Branch 1: try setting edge `bestEdge` > pivotVal (i.e. min = pivotVal + 1)
+        {
+          const nextMin = new Int8Array(minArr);
+          const nextMax = new Int8Array(maxArr);
+          nextMin[bestEdge] = pivotVal + 1;
+          search(nextMin, nextMax);
+        }
+
+        if (solutionsFound >= 2 || nodesExplored > MAX_NODES) return;
+        // Branch 2: try fixing edge `bestEdge` = pivotVal (i.e. max = pivotVal)
+        {
+          const nextMin = new Int8Array(minArr);
+          const nextMax = new Int8Array(maxArr);
+          nextMax[bestEdge] = pivotVal;
+          search(nextMin, nextMax);
+        }
+      }
+
+      search(initMin, initMax);
+
+      if (nodesExplored > MAX_NODES) {
+        return { count: 2, solution: null }; // Treat timed-out ambiguous search as non-unique
+      }
+      return { count: solutionsFound, solution: uniqueSolution };
+    }
+
+    /* ==========================================================================
+       PROCEDURAL PUZZLE GENERATOR (Verified Unique Solution, Time-Tier Fallback)
+       ========================================================================== */
+    function buildCandidatePuzzle(N, targetIslands, minIslands) {
+      // 0 = empty, >0 = island (id+1), -1 = horizontal bridge, -2 = vertical bridge
+      const board = Array.from({ length: N }, () => Array(N).fill(0));
+      const islands = [];
+      const solEdges = [];
+
+      const r0 = Math.floor(Math.random() * N);
+      const c0 = Math.floor(Math.random() * N);
+      islands.push({ id: 0, r: r0, c: c0, val: 0 });
+      board[r0][c0] = 1;
+
+      const dirs = [
+        { dr: -1, dc: 0, dir: 'V', mark: -2 },
+        { dr: 1,  dc: 0, dir: 'V', mark: -2 },
+        { dr: 0,  dc: -1, dir: 'H', mark: -1 },
+        { dr: 0,  dc: 1,  dir: 'H', mark: -1 }
+      ];
+
+      let guard = 0;
+      while (islands.length < targetIslands && guard < 240) {
+        guard++;
+        const src = islands[Math.floor(Math.random() * islands.length)];
+        const d = dirs[Math.floor(Math.random() * dirs.length)];
+
+        const candidates = [];
+        let nr = src.r + d.dr;
+        let nc = src.c + d.dc;
+        let dist = 1;
+
+        while (nr >= 0 && nr < N && nc >= 0 && nc < N) {
+          if (board[nr][nc] !== 0) break;
+          if (dist >= 2 || guard > 85) {
+            candidates.push({ r: nr, c: nc, dist });
+          }
+          nr += d.dr;
+          nc += d.dc;
+          dist++;
+        }
+
+        if (candidates.length === 0) continue;
+
+        const pick = candidates[Math.floor(Math.random() * candidates.length)];
+        const newId = islands.length;
+        islands.push({ id: newId, r: pick.r, c: pick.c, val: 0 });
+        board[pick.r][pick.c] = newId + 1;
+
+        let cr = src.r + d.dr;
+        let cc = src.c + d.dc;
+        while (cr !== pick.r || cc !== pick.c) {
+          board[cr][cc] = d.mark;
+          cr += d.dr;
+          cc += d.dc;
+        }
+
+        const bridgeCount = Math.random() < 0.48 ? 2 : 1;
+        solEdges.push({
+          u: Math.min(src.id, newId),
+          v: Math.max(src.id, newId),
+          dir: d.dir,
+          sol: bridgeCount
+        });
+      }
+
+      if (islands.length < minIslands) return null;
+
+      // Compute island numbers ONLY from the generated bridges
+      solEdges.forEach(e => {
+        islands[e.u].val += e.sol;
+        islands[e.v].val += e.sol;
+      });
+
+      // Find all geometrically aligned island pairs with no island in between
+      const allEdges = [];
+      for (let i = 0; i < islands.length; i++) {
+        for (let j = i + 1; j < islands.length; j++) {
+          const a = islands[i];
+          const b = islands[j];
+          if (a.r !== b.r && a.c !== b.c) continue;
+
+          const dr = Math.sign(b.r - a.r);
+          const dc = Math.sign(b.c - a.c);
+          let cr = a.r + dr, cc = a.c + dc;
+          let islandBetween = false;
+          while (cr !== b.r || cc !== b.c) {
+            if (board[cr][cc] > 0) { islandBetween = true; break; }
+            cr += dr; cc += dc;
+          }
+          if (!islandBetween) {
+            allEdges.push({
+              id: allEdges.length,
+              u: a.id,
+              v: a.id === i ? b.id : a.id,
+              dir: dr === 0 ? 'H' : 'V',
+              count: 0,
+              sol: 0
+            });
+          }
+        }
+      }
+
+      return { gridSize: N, islands, edges: allEdges };
+    }
+
+    function generatePuzzle(diffKey) {
+      const cfg = DIFFICULTIES[diffKey];
+      const N = cfg.grid;
+      const startTime = performance.now();
+
+      while (true) {
+        const elapsed = performance.now() - startTime;
+        let currentTarget, currentMin;
+
+        // Fixed time-based tiers computed fresh each iteration
+        if (elapsed <= 1500) {
+          currentTarget = cfg.targetIslands;
+          currentMin = cfg.minIslands;
+        } else if (elapsed <= 3000) {
+          currentTarget = cfg.minIslands;
+          currentMin = Math.max(4, cfg.minIslands - 2);
+        } else {
+          currentTarget = Math.max(5, cfg.minIslands - 4);
+          currentMin = Math.max(4, currentTarget - 2);
+        }
+
+        const candidate = buildCandidatePuzzle(N, currentTarget, currentMin);
+        if (!candidate) continue;
+
+        // Run the solver on the island numbers & geometry ONLY
+        const result = solveHashi(candidate.islands, candidate.edges);
+
+        if (result.count === 1 && result.solution) {
+          // Store the verified unique solution on each edge for Hints & Show Solution
+          for (let i = 0; i < candidate.edges.length; i++) {
+            candidate.edges[i].sol = result.solution[i];
+          }
+          return candidate;
+        }
+      }
+    }
+
+    /* ==========================================================================
+       GAME LOGIC & VALIDATION
+       ========================================================================== */
+    function getIsland(id) {
+      return state.islands[id];
+    }
+
+    function getIslandBridgeSum(id) {
+      let sum = 0;
+      for (const e of state.edges) {
+        if (e.u === id || e.v === id) sum += e.count;
+      }
+      return sum;
+    }
+
+    // Check if edge `edgeIdx` crosses any currently active bridge
+    function findCrossingEdge(edgeIdx) {
+      const e1 = state.edges[edgeIdx];
+      const a = getIsland(e1.u);
+      const b = getIsland(e1.v);
+
+      for (let i = 0; i < state.edges.length; i++) {
+        if (i === edgeIdx || state.edges[i].count === 0) continue;
+        const e2 = state.edges[i];
+        if (e1.dir === e2.dir) continue;
+
+        const c = getIsland(e2.u);
+        const d = getIsland(e2.v);
+
+        if (e1.dir === 'H') {
+          const minC = Math.min(a.c, b.c), maxC = Math.max(a.c, b.c);
+          const minR = Math.min(c.r, d.r), maxR = Math.max(c.r, d.r);
+          if (c.c > minC && c.c < maxC && a.r > minR && a.r < maxR) return e2;
+        } else {
+          const minR = Math.min(a.r, b.r), maxR = Math.max(a.r, b.r);
+          const minC = Math.min(c.c, d.c), maxC = Math.max(c.c, d.c);
+          if (a.c > minC && a.c < maxC && c.r > minR && c.r < maxR) return e2;
+        }
+      }
+      return null;
+    }
+
+    function ensureTimerRunning() {
+      if (!state.timerStarted && state.gameStatus === 'playing') {
+        state.timerStarted = true;
+      }
+    }
+
+    function applyEdgeChange(edgeIdx, newCount) {
+      const edge = state.edges[edgeIdx];
+      if (edge.count === newCount) return;
+
+      ensureTimerRunning();
+      state.undoStack.push({ edgeIdx, prev: edge.count, next: newCount });
+      state.redoStack = [];
+      edge.count = newCount;
+      Sound.bridge(newCount);
+
+      renderBoard();
+      checkWinCondition();
+      saveGameProgress();
+    }
+
+    function cycleEdge(edgeIdx) {
+      if (state.gameStatus !== 'playing') return;
+
+      const edge = state.edges[edgeIdx];
+      if (edge.count === 0 && findCrossingEdge(edgeIdx)) {
+        triggerInvalidMove("Bridges cannot cross each other!");
+        return;
+      }
+
+      const nextCount = (edge.count + 1) % 3;
+      state.selectedIsland = null;
+      applyEdgeChange(edgeIdx, nextCount);
+    }
+
+    function handleIslandTap(id) {
+      if (state.gameStatus !== 'playing') return;
+
+      if (state.selectedIsland === null) {
+        state.selectedIsland = id;
+        setStatus("Now tap an aligned neighbor island to connect.", "info");
+        renderBoard();
+        return;
+      }
+
+      if (state.selectedIsland === id) {
+        state.selectedIsland = null;
+        setStatus("Selection cleared.");
+        renderBoard();
+        return;
+      }
+
+      const a = getIsland(state.selectedIsland);
+      const b = getIsland(id);
+
+      // Check alignment
+      if (a.r !== b.r && a.c !== b.c) {
+        state.selectedIsland = null;
+        renderBoard();
+        triggerInvalidMove("Bridges can only run horizontally or vertically!");
+        return;
+      }
+
+      // Check if they are direct neighbors without an island in between
+      const u = Math.min(a.id, b.id);
+      const v = Math.max(a.id, b.id);
+      const edgeIdx = state.edges.findIndex(e => e.u === u && e.v === v);
+
+      if (edgeIdx === -1) {
+        state.selectedIsland = null;
+        renderBoard();
+        triggerInvalidMove("Bridges cannot pass over another island!");
+        return;
+      }
+
+      state.selectedIsland = null;
+      cycleEdge(edgeIdx);
+    }
+
+    function triggerInvalidMove(msg) {
+      Sound.error();
+      setStatus("⚠️ " + msg, "warn");
+      const wrap = document.getElementById('board-wrap');
+      wrap.classList.remove('shake');
+      void wrap.offsetWidth; // trigger reflow
+      wrap.classList.add('shake');
+    }
+
+    function isSingleConnectedGroup() {
+      if (state.islands.length === 0) return true;
+      const adj = Array.from({ length: state.islands.length }, () => []);
+      for (const e of state.edges) {
+        if (e.count > 0) {
+          adj[e.u].push(e.v);
+          adj[e.v].push(e.u);
+        }
+      }
+      const visited = new Set([0]);
+      const queue = [0];
+      while (queue.length > 0) {
+        const cur = queue.shift();
+        for (const nb of adj[cur]) {
+          if (!visited.has(nb)) {
+            visited.add(nb);
+            queue.push(nb);
+          }
+        }
+      }
+      return visited.size === state.islands.length;
+    }
+
+    function checkWinCondition() {
+      if (state.gameStatus !== 'playing') return;
+
+      let allSatisfied = true;
+      let anyOver = false;
+
+      for (const isl of state.islands) {
+        const sum = getIslandBridgeSum(isl.id);
+        if (sum !== isl.val) allSatisfied = false;
+        if (sum > isl.val) anyOver = true;
+      }
+
+      if (anyOver) {
+        setStatus("An island has too many bridges!", "warn");
+        return;
+      }
+
+      if (allSatisfied) {
+        if (isSingleConnectedGroup()) {
+          handlePuzzleWin();
+        } else {
+          setStatus("All island numbers match, but all islands must be connected in ONE group!", "warn");
+        }
+      } else {
+        setStatus("Keep going! Connect the islands to match their numbers.");
+      }
+    }
+
+    function handlePuzzleWin() {
+      state.gameStatus = 'won';
+      state.selectedIsland = null;
+      Sound.win();
+
+      const finalTime = state.elapsedSeconds + state.hintsUsed * 30;
+      const dStat = stats[state.difficulty];
+      dStat.solved += 1;
+      dStat.currentStreak += 1;
+      if (dStat.currentStreak > dStat.bestStreak) {
+        dStat.bestStreak = dStat.currentStreak;
+      }
+
+      let isNewBest = false;
+      if (dStat.bestTime === null || finalTime < dStat.bestTime) {
+        dStat.bestTime = finalTime;
+        isNewBest = true;
+      }
+
+      Storage.set('hashi_stats', stats);
+      renderStatsTable();
+      renderBoard();
+      saveGameProgress();
+
+      const timeFormatted = formatTime(finalTime);
+      if (isNewBest) {
+        setStatus(`🎉 NEW BEST! Solved in ${timeFormatted}!`, "win");
+        launchConfetti();
+      } else {
+        setStatus(`🎉 Puzzle Solved in ${timeFormatted}!`, "win");
+      }
+    }
+
+    /* ==========================================================================
+       HELP FEATURES: UNDO, REDO, HINT (Unique Solution), SOLVE, RESET
+       ========================================================================== */
+    function undoMove() {
+      if (state.gameStatus !== 'playing' || state.undoStack.length === 0) return;
+      const action = state.undoStack.pop();
+      state.redoStack.push(action);
+      state.edges[action.edgeIdx].count = action.prev;
+      state.selectedIsland = null;
+      Sound.bridge(action.prev);
+      renderBoard();
+      checkWinCondition();
+      saveGameProgress();
+    }
+
+    function redoMove() {
+      if (state.gameStatus !== 'playing' || state.redoStack.length === 0) return;
+      const action = state.redoStack.pop();
+      state.undoStack.push(action);
+      state.edges[action.edgeIdx].count = action.next;
+      state.selectedIsland = null;
+      Sound.bridge(action.next);
+      renderBoard();
+      checkWinCondition();
+      saveGameProgress();
+    }
+
+    function giveHint() {
+      if (state.gameStatus !== 'playing') return;
+
+      // 1. First remove wrong bridges (edges where count > sol, set to sol)
+      let targetIdx = state.edges.findIndex(e => e.count > e.sol);
+      let newCount = 0;
+
+      if (targetIdx !== -1) {
+        newCount = state.edges[targetIdx].sol;
+      } else {
+        // 2. Only if there are none, add a missing solution bridge (count < sol)
+        const missingCandidates = [];
+        state.edges.forEach((e, idx) => {
+          if (e.count < e.sol) missingCandidates.push(idx);
+        });
+        if (missingCandidates.length === 0) return;
+
+        targetIdx = missingCandidates[Math.floor(Math.random() * missingCandidates.length)];
+        // If an incorrect player bridge crosses this unique-solution bridge, clear the crossing bridge first
+        const crossingBlocker = findCrossingEdge(targetIdx);
+        if (crossingBlocker) {
+          targetIdx = crossingBlocker.id;
+          newCount = 0;
+        } else {
+          newCount = state.edges[targetIdx].count + 1;
+        }
+      }
+
+      ensureTimerRunning();
+      state.hintsUsed += 1;
+      Sound.hint();
+      updateTimerUI();
+
+      const edge = state.edges[targetIdx];
+      state.undoStack.push({ edgeIdx: targetIdx, prev: edge.count, next: newCount });
+      state.redoStack = [];
+      edge.count = newCount;
+      state.selectedIsland = null;
+
+      setStatus("💡 Hint applied from unique solution (+30s penalty).", "info");
+      renderBoard();
+      checkWinCondition();
+      saveGameProgress();
+    }
+
+    function showSolution() {
+      if (state.gameStatus !== 'playing') return;
+
+      state.gameStatus = 'revealed';
+      state.selectedIsland = null;
+      state.edges.forEach(e => { e.count = e.sol; });
+
+      // Break current streak for this difficulty
+      stats[state.difficulty].currentStreak = 0;
+      Storage.set('hashi_stats', stats);
+      renderStatsTable();
+
+      setStatus("👁️ Solution revealed (does not count toward stats, streak reset).", "info");
+      renderBoard();
+      saveGameProgress();
+    }
+
+    function resetCurrentPuzzle() {
+      if (state.gameStatus !== 'playing') return;
+      const hadBridges = state.edges.some(e => e.count > 0);
+      if (!hadBridges) return;
+
+      state.edges.forEach(e => { e.count = 0; });
+      state.undoStack = [];
+      state.redoStack = [];
+      state.selectedIsland = null;
+      Sound.bridge(0);
+      setStatus("Board cleared.");
+      renderBoard();
+      saveGameProgress();
+    }
+
+    function confirmAbandon() {
+      if (state.gameStatus === 'playing' && state.edges.some(e => e.count > 0)) {
+        if (!confirm("Leaving this puzzle will reset your streak. Continue?")) {
+          return false;
+        }
+        stats[state.difficulty].currentStreak = 0;
+        Storage.set('hashi_stats', stats);
+        renderStatsTable();
+      }
+      return true;
+    }
+
+    /* ==========================================================================
+       SVG BOARD RENDERER
+       ========================================================================== */
+    function renderBoard() {
+      const N = state.gridSize;
+      const size = 500;
+      const pad = 42;
+      const step = (size - pad * 2) / (N - 1);
+      const radius = Math.max(15, Math.min(24, Math.floor(step * 0.36)));
+
+      const guidesLayer = document.getElementById('layer-guides');
+      const bridgesLayer = document.getElementById('layer-bridges');
+      const hitboxesLayer = document.getElementById('layer-hitboxes');
+      const islandsLayer = document.getElementById('layer-islands');
+
+      guidesLayer.innerHTML = '';
+      bridgesLayer.innerHTML = '';
+      hitboxesLayer.innerHTML = '';
+      islandsLayer.innerHTML = '';
+
+      const coord = (rc) => pad + rc * step;
+
+      // 1. Render Bridges & Hitboxes
+      state.edges.forEach((edge, idx) => {
+        const a = getIsland(edge.u);
+        const b = getIsland(edge.v);
+        const x1 = coord(a.c), y1 = coord(a.r);
+        const x2 = coord(b.c), y2 = coord(b.r);
+
+        // Interactive hitbox (minimum 44px equivalent tap width in SVG space)
+        if (state.gameStatus === 'playing') {
+          const hit = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          hit.setAttribute('x1', x1);
+          hit.setAttribute('y1', y1);
+          hit.setAttribute('x2', x2);
+          hit.setAttribute('y2', y2);
+          hit.setAttribute('stroke-width', Math.max(36, radius * 1.9));
+          hit.setAttribute('class', 'edge-hitbox');
+          hit.addEventListener('click', () => cycleEdge(idx));
+          hitboxesLayer.appendChild(hit);
+        }
+
+        // Active Bridges
+        if (edge.count === 1) {
+          const bg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          bg.setAttribute('x1', x1); bg.setAttribute('y1', y1);
+          bg.setAttribute('x2', x2); bg.setAttribute('y2', y2);
+          bg.setAttribute('stroke-width', 11);
+          bg.setAttribute('class', 'bridge-bg');
+          bridgesLayer.appendChild(bg);
+
+          const ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          ln.setAttribute('x1', x1); ln.setAttribute('y1', y1);
+          ln.setAttribute('x2', x2); ln.setAttribute('y2', y2);
+          ln.setAttribute('stroke-width', 5);
+          ln.setAttribute('class', 'bridge-line');
+          bridgesLayer.appendChild(ln);
+        } else if (edge.count === 2) {
+          const offset = Math.max(4.5, radius * 0.25);
+          const dx = edge.dir === 'V' ? offset : 0;
+          const dy = edge.dir === 'H' ? offset : 0;
+
+          const bg = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+          bg.setAttribute('x1', x1); bg.setAttribute('y1', y1);
+          bg.setAttribute('x2', x2); bg.setAttribute('y2', y2);
+          bg.setAttribute('stroke-width', offset * 2 + 10);
+          bg.setAttribute('class', 'bridge-bg');
+          bridgesLayer.appendChild(bg);
+
+          [-1, 1].forEach(sign => {
+            const ln = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            ln.setAttribute('x1', x1 + sign * dx);
+            ln.setAttribute('y1', y1 + sign * dy);
+            ln.setAttribute('x2', x2 + sign * dx);
+            ln.setAttribute('y2', y2 + sign * dy);
+            ln.setAttribute('stroke-width', 4.5);
+            ln.setAttribute('class', 'bridge-line');
+            bridgesLayer.appendChild(ln);
+          });
+        }
+      });
+
+      // 2. Render Islands
+      state.islands.forEach(isl => {
+        const cx = coord(isl.c);
+        const cy = coord(isl.r);
+        const sum = getIslandBridgeSum(isl.id);
+
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        let cls = 'island-node';
+        if (sum === isl.val) cls += ' satisfied';
+        else if (sum > isl.val) cls += ' over';
+        if (state.selectedIsland === isl.id) cls += ' selected';
+        g.setAttribute('class', cls);
+
+        if (state.gameStatus === 'playing') {
+          g.addEventListener('click', (e) => {
+            e.stopPropagation();
+            handleIslandTap(isl.id);
+          });
+        }
+
+        // Invisible larger tap target for mobile
+        const tapCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        tapCircle.setAttribute('cx', cx);
+        tapCircle.setAttribute('cy', cy);
+        tapCircle.setAttribute('r', Math.max(24, radius + 6));
+        tapCircle.setAttribute('fill', 'transparent');
+        g.appendChild(tapCircle);
+
+        // Main island circle (shows status color: default, green satisfied, red over-limit)
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', cx);
+        circle.setAttribute('cy', cy);
+        circle.setAttribute('r', radius);
+        circle.setAttribute('stroke-width', Math.max(3, radius * 0.16));
+        circle.setAttribute('class', 'island-circle');
+        g.appendChild(circle);
+
+        // Outer blue selection ring (never hides the inner status color)
+        const ring = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        ring.setAttribute('cx', cx);
+        ring.setAttribute('cy', cy);
+        ring.setAttribute('r', radius + 5);
+        ring.setAttribute('stroke-width', 3);
+        ring.setAttribute('class', 'selection-ring');
+        g.appendChild(ring);
+
+        // Island number label
+        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        txt.setAttribute('x', cx);
+        txt.setAttribute('y', cy);
+        txt.setAttribute('font-size', Math.round(radius * 1.05));
+        txt.setAttribute('class', 'island-label');
+        txt.textContent = isl.val;
+        g.appendChild(txt);
+
+        islandsLayer.appendChild(g);
+      });
+
+      // Update button states
+      const playing = state.gameStatus === 'playing';
+      document.getElementById('btn-undo').disabled = !playing || state.undoStack.length === 0;
+      document.getElementById('btn-redo').disabled = !playing || state.redoStack.length === 0;
+      document.getElementById('btn-hint').disabled = !playing;
+      document.getElementById('btn-solve').disabled = !playing;
+      document.getElementById('btn-reset').disabled = !playing || !state.edges.some(e => e.count > 0);
+
+      // Update difficulty active pill
+      document.querySelectorAll('.diff-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.diff === state.difficulty);
+      });
+    }
+
+    /* ==========================================================================
+       TIMER, STATS & AUTO-SAVE
+       ========================================================================== */
+    function formatTime(sec) {
+      if (sec === null || sec === undefined) return '—';
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function updateTimerUI() {
+      document.getElementById('timer-display').textContent = formatTime(state.elapsedSeconds);
+      const badge = document.getElementById('penalty-badge');
+      if (state.hintsUsed > 0) {
+        badge.textContent = `+${state.hintsUsed * 30}s`;
+        badge.classList.add('visible');
+      } else {
+        badge.classList.remove('visible');
+      }
+    }
+
+    function startTimerLoop() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (document.hidden) return;
+        if (state.timerStarted && state.gameStatus === 'playing') {
+          state.elapsedSeconds += 1;
+          updateTimerUI();
+          saveGameProgress();
+        }
+      }, 1000);
+    }
+
+    function setStatus(text, type = '') {
+      const bar = document.getElementById('status-bar');
+      bar.textContent = text;
+      bar.className = 'status-bar' + (type ? ' ' + type : '');
+    }
+
+    function renderStatsTable() {
+      const tbody = document.getElementById('stats-tbody');
+      tbody.innerHTML = '';
+      ['easy', 'medium', 'hard'].forEach(lvl => {
+        const s = stats[lvl] || { solved: 0, bestTime: null, currentStreak: 0, bestStreak: 0 };
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="text-transform:capitalize;font-weight:700;">${lvl}</td>
+          <td>${s.solved}</td>
+          <td>${formatTime(s.bestTime)}</td>
+          <td>${s.currentStreak}</td>
+          <td>${s.bestStreak}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function saveGameProgress() {
+      state.version = SAVE_VERSION;
+      Storage.set('hashi_saved_game', state);
+    }
+
+    function startNewGame(diffKey = state.difficulty) {
+      setStatus("⏳ Generating new puzzle...", "info");
+      document.querySelectorAll('button').forEach(btn => { btn.disabled = true; });
+
+      setTimeout(() => {
+        const puz = generatePuzzle(diffKey);
+        state = {
+          version: SAVE_VERSION,
+          difficulty: diffKey,
+          gridSize: puz.gridSize,
+          islands: puz.islands,
+          edges: puz.edges,
+          undoStack: [],
+          redoStack: [],
+          selectedIsland: null,
+          elapsedSeconds: 0,
+          hintsUsed: 0,
+          timerStarted: false,
+          gameStatus: 'playing'
+        };
+        document.querySelectorAll('button').forEach(btn => { btn.disabled = false; });
+        updateTimerUI();
+        setStatus("Tap between two aligned islands to build bridges!");
+        renderBoard();
+        saveGameProgress();
+      }, 30);
+    }
+
+    /* ==========================================================================
+       CONFETTI CELEBRATION
+       ========================================================================== */
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#2563eb', '#16a34a', '#eab308', '#ec4899', '#8b5cf6', '#06b6d4'];
+      const pieces = Array.from({ length: 85 }, () => ({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * 120,
+        w: 7 + Math.random() * 6,
+        h: 10 + Math.random() * 8,
+        vx: (Math.random() - 0.5) * 4,
+        vy: 3 + Math.random() * 4.5,
+        rot: Math.random() * Math.PI * 2,
+        vrot: (Math.random() - 0.5) * 0.2,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      }));
+
+      let frames = 0;
+      function frame() {
+        frames++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let active = false;
+        for (const p of pieces) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.06;
+          p.rot += p.vrot;
+          if (p.y < canvas.height + 20) active = true;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        }
+        if (active && frames < 200) {
+          requestAnimationFrame(frame);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    /* ==========================================================================
+       INITIALIZATION & EVENT LISTENERS
+       ========================================================================== */
+    function initThemeAndSound() {
+      const savedTheme = Storage.get('hashi_theme', null);
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+
+      document.getElementById('btn-theme').addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isCurrentlyDark = cur === 'dark' || (!cur && prefersDark);
+        const next = isCurrentlyDark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        Storage.set('hashi_theme', next);
+      });
+
+      const muteBtn = document.getElementById('btn-mute');
+      const syncMuteIcon = () => { muteBtn.textContent = Sound.muted ? '🔇' : '🔊'; };
+      syncMuteIcon();
+      muteBtn.addEventListener('click', () => {
+        Sound.muted = !Sound.muted;
+        Storage.set('hashi_muted', Sound.muted);
+        syncMuteIcon();
+      });
+    }
+
+    function initControls() {
+      // Difficulty buttons
+      document.querySelectorAll('.diff-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const diff = btn.dataset.diff;
+          if (diff !== state.difficulty || state.gameStatus !== 'playing') {
+            if (!confirmAbandon()) return;
+            startNewGame(diff);
+          }
+        });
+      });
+
+      document.getElementById('btn-undo').addEventListener('click', undoMove);
+      document.getElementById('btn-redo').addEventListener('click', redoMove);
+      document.getElementById('btn-hint').addEventListener('click', giveHint);
+      document.getElementById('btn-reset').addEventListener('click', resetCurrentPuzzle);
+      document.getElementById('btn-solve').addEventListener('click', showSolution);
+      document.getElementById('btn-new').addEventListener('click', () => {
+        if (!confirmAbandon()) return;
+        startNewGame(state.difficulty);
+      });
+
+      // Keyboard shortcuts (Ctrl+Z / Ctrl+Y)
+      window.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+          e.preventDefault();
+          if (e.shiftKey) redoMove();
+          else undoMove();
+        } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
+          e.preventDefault();
+          redoMove();
+        }
+      });
+
+      // Reset stats with confirmation
+      let confirmResetPending = false;
+      const resetStatsBtn = document.getElementById('btn-reset-stats');
+      const confirmText = document.getElementById('reset-confirm-text');
+
+      resetStatsBtn.addEventListener('click', () => {
+        if (!confirmResetPending) {
+          confirmResetPending = true;
+          confirmText.style.display = 'inline';
+          resetStatsBtn.textContent = 'Confirm Reset';
+          setTimeout(() => {
+            confirmResetPending = false;
+            confirmText.style.display = 'none';
+            resetStatsBtn.textContent = 'Reset Stats';
+          }, 4000);
+        } else {
+          stats = defaultStats();
+          Storage.set('hashi_stats', stats);
+          renderStatsTable();
+          confirmResetPending = false;
+          confirmText.style.display = 'none';
+          resetStatsBtn.textContent = 'Reset Stats';
+          setStatus("Statistics have been reset.");
+        }
+      });
+    }
+
+    // Boot up
+    (function boot() {
+      initThemeAndSound();
+      initControls();
+      renderStatsTable();
+      startTimerLoop();
+
+      // Resume auto-saved game only if SAVE_VERSION matches
+      const saved = Storage.get('hashi_saved_game', null);
+      if (
+        saved &&
+        saved.version === SAVE_VERSION &&
+        saved.islands &&
+        saved.edges &&
+        saved.islands.length > 0
+      ) {
+        state = saved;
+        updateTimerUI();
+        renderBoard();
+        if (state.gameStatus === 'won') {
+          setStatus("🎉 Puzzle Solved! Tap '✨ New' for another puzzle.", "win");
+        } else if (state.gameStatus === 'revealed') {
+          setStatus("👁️ Solution revealed. Tap '✨ New' for a fresh puzzle.", "info");
+        } else {
+          setStatus("Resumed your in-progress puzzle!");
+        }
+      } else {
+        startNewGame('easy');
+      }
+    })();
+
+    // Parent standalone-player fullscreen notification.
+    window.addEventListener('message', (event) => {
+      if (event.origin !== window.location.origin) return;
+      if (!event.data || event.data.type !== 'sitecraft-hashi-fullscreen') return;
+      document.documentElement.classList.toggle('embed-fullscreen', !!event.data.active);
+    });
+  </script>
+</body>
+</html>

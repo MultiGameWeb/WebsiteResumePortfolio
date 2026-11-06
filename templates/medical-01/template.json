@@ -213,6 +213,24 @@
       "type": "mediaCollection",
       "titleKey": "title",
       "imageKey": "image"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
@@ -220,7 +238,7 @@
       "businessName": "CarePoint Dental & Medical",
       "ownerName": "Dr. Sameer Rao",
       "tagline": "Clear care. One welcoming center.",
-      "about": "CarePoint Dental & Medical provides dental and general medical consultations in a welcoming clinical setting. Replace the sample copy with the centre's actual specialties, credentials, services, registrations, policies and patient information before publishing."
+      "about": "CarePoint Dental & Medical provides dental and general medical consultations in a welcoming clinical setting."
     },
     "home": {
       "title": "Care that starts with listening.",
@@ -234,9 +252,10 @@
       "email": "carepoint@example.com",
       "address": "Banjara Hills, Hyderabad, Telangana",
       "floor": "2nd Floor · Suite 204",
-      "parking": "Basement parking available — replace with your actual parking instructions.",
-      "landmarks": "Near a major landmark — replace with your actual navigation notes.",
-      "maps": "https://maps.google.com/?q=Banjara%20Hills%2C%20Hyderabad%2C%20Telangana"
+      "parking": "Basement parking available",
+      "landmarks": "Near a major landmark",
+      "maps": "https://maps.google.com/?q=Banjara%20Hills%2C%20Hyderabad%2C%20Telangana",
+      "instagram": "https://www.instagram.com/"
     },
     "hours": {
       "weekdays": "Mon–Sat · 9:00 AM – 8:00 PM",
@@ -254,7 +273,7 @@
         "name": "Dental Consultation",
         "category": "Dental",
         "duration": "30 min",
-        "fee": "Consultation",
+        "fee": "₹500 consultation",
         "description": "Dental assessment, discussion and treatment-planning consultation.",
         "image": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=900&q=82",
         "featured": true,
@@ -265,7 +284,7 @@
         "name": "Teeth Whitening",
         "category": "Dental",
         "duration": "60 min",
-        "fee": "Starting price",
+        "fee": "From ₹4,500",
         "description": "Professional teeth-whitening consultation and in-clinic treatment where offered.",
         "image": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=900&q=82",
         "featured": true,
@@ -276,9 +295,9 @@
         "name": "Root Canal Treatment (RCT)",
         "category": "Dental",
         "duration": "60–90 min",
-        "fee": "Ask center",
+        "fee": "From ₹3,500",
         "description": "Evaluation and endodontic treatment planning for teeth that may require root-canal care.",
-        "image": "https://images.unsplash.com/photo-1606265752439-1f18756aa7a5?auto=format&fit=crop&w=900&q=82",
+        "image": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=900&q=84",
         "featured": false,
         "enabled": true
       },
@@ -287,7 +306,7 @@
         "name": "Dental Implants",
         "category": "Dental",
         "duration": "Consultation",
-        "fee": "Ask center",
+        "fee": "From ₹25,000",
         "description": "Implant suitability assessment, treatment discussion and referral or procedural planning where offered.",
         "image": "https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=900&q=82",
         "featured": false,
@@ -298,7 +317,7 @@
         "name": "Braces & Aligners",
         "category": "Dental",
         "duration": "Consultation",
-        "fee": "Ask center",
+        "fee": "From ₹35,000",
         "description": "Orthodontic assessment and discussion of suitable braces or aligner options.",
         "image": "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=900&q=82",
         "featured": false,
@@ -309,7 +328,7 @@
         "name": "Smile Makeover Consultation",
         "category": "Dental",
         "duration": "45 min",
-        "fee": "Consultation",
+        "fee": "₹800 consultation",
         "description": "Aesthetic dental consultation for smile-design goals and treatment planning.",
         "image": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=82",
         "featured": false,
@@ -320,7 +339,7 @@
         "name": "General Health Checkup",
         "category": "Medical",
         "duration": "30 min",
-        "fee": "Consultation",
+        "fee": "₹600 consultation",
         "description": "General health assessment and appropriate next-step guidance.",
         "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=82",
         "featured": false,
@@ -331,7 +350,7 @@
         "name": "Pediatrics Consultation",
         "category": "Medical",
         "duration": "30 min",
-        "fee": "Consultation",
+        "fee": "₹700 consultation",
         "description": "Child-health consultation with age-appropriate assessment and guidance.",
         "image": "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=900&q=82",
         "featured": false,
@@ -342,7 +361,7 @@
         "name": "Cardiology Consultation",
         "category": "Medical",
         "duration": "30 min",
-        "fee": "Consultation",
+        "fee": "₹1,000 consultation",
         "description": "Cardiology consultation or referral coordination where the centre provides the specialty.",
         "image": "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=900&q=82",
         "featured": false,
@@ -353,7 +372,7 @@
         "name": "Diagnostic / Blood Test Tie-up",
         "category": "Medical",
         "duration": "Varies",
-        "fee": "Ask center",
+        "fee": "Tests from ₹299",
         "description": "Information and coordination for diagnostics or laboratory tie-ups available through the centre.",
         "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=82",
         "featured": false,
@@ -378,7 +397,7 @@
         "friday": "10:00 AM–2:00 PM · 5:00 PM–8:00 PM",
         "saturday": "10:00 AM–2:00 PM",
         "sunday": "Closed",
-        "leaveNote": "Add leave or unavailable dates in Admin.",
+        "leaveNote": "Please contact us for details.",
         "enabled": true
       },
       {
@@ -398,7 +417,7 @@
         "friday": "9:00 AM–1:00 PM · 5:00 PM–8:00 PM",
         "saturday": "9:00 AM–1:00 PM",
         "sunday": "10:00 AM–1:00 PM",
-        "leaveNote": "Add leave or unavailable dates in Admin.",
+        "leaveNote": "Please contact us for details.",
         "enabled": true
       },
       {
@@ -418,7 +437,7 @@
         "friday": "11:00 AM–2:00 PM",
         "saturday": "11:00 AM–2:00 PM · 5:00 PM–7:00 PM",
         "sunday": "Closed",
-        "leaveNote": "Add leave or unavailable dates in Admin.",
+        "leaveNote": "Please contact us for details.",
         "enabled": true
       }
     ],
@@ -426,13 +445,13 @@
       {
         "id": "f1",
         "title": "Clean clinical environment",
-        "text": "Add your centre's sterilisation and infection-control information here.",
+        "text": "Please contact us for details.",
         "enabled": true
       },
       {
         "id": "f2",
         "title": "Dental & medical rooms",
-        "text": "Describe your consultation and treatment spaces here.",
+        "text": "Comfortable consultation rooms and clean treatment areas.",
         "enabled": true
       },
       {
@@ -529,8 +548,8 @@
         "enabled": true
       }
     ],
-    "termsText": "Appointments, consultation fees, treatment plans, availability and service policies are subject to the centre's final terms and professional assessment. Add your actual cancellation, deposit, refund and patient-visit policies before publishing.",
-    "privacyPolicy": "We use appointment and contact details to respond to enquiries, confirm visits and provide requested clinic communication. Replace this with your final privacy and patient-data handling policy before publishing.",
+    "termsText": "Appointments, consultation fees, treatment plans, availability and service policies are subject to the centre's final terms and professional assessment.",
+    "privacyPolicy": "We use appointment and contact details to respond to enquiries, confirm visits and provide requested clinic communication.",
     "settings": {
       "showAbout": true,
       "showServices": true,
@@ -559,7 +578,7 @@
       {
         "id": "t1",
         "title": "Sterilization & infection control",
-        "text": "Use this badge to describe your actual sterilization, disinfection and clinical-safety practices.",
+        "text": "Ask our team about our sterilisation and clinical-safety practices.",
         "icon": "✦",
         "enabled": true
       },
@@ -580,7 +599,7 @@
       {
         "id": "t4",
         "title": "Patient privacy",
-        "text": "Add your centre's privacy and record-handling practices here.",
+        "text": "Please contact us for details.",
         "icon": "⌁",
         "enabled": true
       }
@@ -589,8 +608,8 @@
       {
         "id": "ba1",
         "title": "Smile treatment example",
-        "description": "Replace with your own genuine before / after patient images and add appropriate permissions.",
-        "beforeImage": "https://images.unsplash.com/photo-1606265752439-1f18756aa7a5?auto=format&fit=crop&w=900&q=82",
+        "description": "Please contact us for details.",
+        "beforeImage": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=1000&q=84",
         "afterImage": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=900&q=82",
         "enabled": true
       },
@@ -613,7 +632,7 @@
       {
         "id": "i2",
         "title": "UPI & card payments",
-        "text": "Add the payment methods your clinic actually accepts.",
+        "text": "Please contact us for details.",
         "enabled": true
       },
       {
@@ -1045,6 +1064,24 @@
             "path": "contact.maps",
             "label": "Google Maps URL",
             "type": "url"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
           }
         ]
       },

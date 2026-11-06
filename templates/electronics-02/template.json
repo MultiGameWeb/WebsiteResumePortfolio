@@ -1,0 +1,827 @@
+{
+  "id": "electronics-02",
+  "name": "Electronics — CircuitHouse",
+  "category": "Electronics Stores",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "categories",
+      "label": "Product categories"
+    },
+    {
+      "id": "products",
+      "label": "Electronics inventory"
+    },
+    {
+      "id": "search",
+      "label": "Product search"
+    },
+    {
+      "id": "quickView",
+      "label": "Product specifications / quick view"
+    },
+    {
+      "id": "cart",
+      "label": "Shopping cart"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp ordering & enquiries"
+    },
+    {
+      "id": "offers",
+      "label": "Offers & promotions"
+    },
+    {
+      "id": "warranty",
+      "label": "Warranty & support information"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer reviews"
+    },
+    {
+      "id": "faq",
+      "label": "Frequently asked questions"
+    },
+    {
+      "id": "about",
+      "label": "About the store"
+    },
+    {
+      "id": "gallery",
+      "label": "Store gallery"
+    },
+    {
+      "id": "location",
+      "label": "Store location & directions"
+    },
+    {
+      "id": "contact",
+      "label": "Contact details"
+    },
+    {
+      "id": "privacyPolicy",
+      "label": "Privacy policy"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "categories",
+    "products",
+    "search",
+    "quickView",
+    "cart",
+    "whatsapp",
+    "offers",
+    "warranty",
+    "reviews",
+    "faq",
+    "about",
+    "gallery",
+    "location",
+    "contact",
+    "privacyPolicy"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Store name",
+      "required": true,
+      "placeholder": "CircuitHouse"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / store team"
+    },
+    {
+      "path": "brand.motto",
+      "label": "Store tagline"
+    },
+    {
+      "path": "brand.about",
+      "label": "About the store",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Hero description",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero image",
+      "type": "media"
+    },
+    {
+      "path": "settings.currency",
+      "label": "Currency",
+      "type": "select",
+      "options": [
+        {
+          "value": "INR",
+          "label": "Indian Rupee (₹)"
+        },
+        {
+          "value": "USD",
+          "label": "US Dollar ($)"
+        },
+        {
+          "value": "EUR",
+          "label": "Euro (€)"
+        },
+        {
+          "value": "GBP",
+          "label": "British Pound (£)"
+        }
+      ]
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.call",
+      "label": "Phone number"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email address"
+    },
+    {
+      "path": "contact.location",
+      "label": "Store address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening hours"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps link",
+      "type": "url"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "id": "electronics-02",
+    "brand": {
+      "businessName": "CircuitHouse",
+      "ownerName": "CircuitHouse Experts",
+      "motto": "GOOD TECHNOLOGY. GREAT CHOICES.",
+      "about": "CircuitHouse makes choosing electronics easier. Browse carefully selected home appliances, audio products, computers and connected devices, then speak with our store team for product guidance."
+    },
+    "home": {
+      "title": "Designed for the way you live.",
+      "text": "From home entertainment to kitchen essentials, discover trusted electronics with clear product information and personal assistance."
+    },
+    "hero": "https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=1800&q=88",
+    "settings": {
+      "currency": "INR",
+      "showAbout": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFAQ": true,
+      "showWarranty": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    },
+    "contact": {
+      "whatsapp": "919876543210",
+      "call": "+91 98765 43210",
+      "email": "hello@example.com",
+      "location": "Hyderabad, Telangana",
+      "hours": "Mon–Sat · 10:00 AM – 8:00 PM",
+      "maps": "https://maps.google.com/?q=Hyderabad",
+      "instagram": "https://instagram.com/"
+    },
+    "products": [
+      {
+        "id": "ch-001",
+        "sku": "CH-REF-280",
+        "name": "Double Door Refrigerator",
+        "brand": "CoolHome",
+        "model": "CH 280 FrostFree",
+        "category": "Home Appliances",
+        "basePrice": 38990,
+        "salePrice": 35990,
+        "processor": "Inverter compressor",
+        "ram": "—",
+        "storage": "280 L capacity",
+        "display": "Digital temperature control",
+        "graphics": "Frost-free cooling",
+        "connectivity": "Energy-efficient operation",
+        "warranty": "1 year product · 10 years compressor (sample)",
+        "description": "A family-size refrigerator with flexible storage and frost-free cooling.",
+        "image": "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=1000&q=85",
+        "stockQty": 4,
+        "inStock": true,
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "ch-002",
+        "sku": "CH-WM-075",
+        "name": "Front Load Washing Machine",
+        "brand": "WashPro",
+        "model": "WP 7.5",
+        "category": "Home Appliances",
+        "basePrice": 42990,
+        "salePrice": 39990,
+        "processor": "Inverter motor",
+        "ram": "—",
+        "storage": "7.5 kg capacity",
+        "display": "Digital control panel",
+        "graphics": "Multiple wash programs",
+        "connectivity": "Smart diagnosis",
+        "warranty": "2 years product warranty",
+        "description": "A front-load washer with useful wash cycles for daily family laundry.",
+        "image": "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=1000&q=85",
+        "stockQty": 3,
+        "inStock": true,
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "ch-003",
+        "sku": "CH-SPK-120",
+        "name": "Home Theatre Soundbar",
+        "brand": "SoundArc",
+        "model": "Cinema 2.1",
+        "category": "Audio",
+        "basePrice": 15990,
+        "salePrice": 13990,
+        "processor": "Dolby audio processing",
+        "ram": "—",
+        "storage": "—",
+        "display": "2.1 channel soundbar",
+        "graphics": "Wireless subwoofer",
+        "connectivity": "Bluetooth · HDMI ARC · Optical",
+        "warranty": "1 year warranty",
+        "description": "Bring fuller sound to your television and living room.",
+        "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=1000&q=85",
+        "stockQty": 9,
+        "inStock": true,
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "ch-004",
+        "sku": "CH-MON-270",
+        "name": "27-inch QHD Monitor",
+        "brand": "ViewPoint",
+        "model": "VP27 QHD",
+        "category": "Computers & Accessories",
+        "basePrice": 21990,
+        "salePrice": 19990,
+        "processor": "Adaptive sync support",
+        "ram": "—",
+        "storage": "—",
+        "display": "27-inch QHD IPS",
+        "graphics": "100 Hz refresh rate",
+        "connectivity": "HDMI · DisplayPort",
+        "warranty": "3 years limited warranty",
+        "description": "A sharp, spacious display for productivity and entertainment.",
+        "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=1000&q=85",
+        "stockQty": 6,
+        "inStock": true,
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "ch-005",
+        "sku": "CH-MIX-500",
+        "name": "Mixer Grinder 750W",
+        "brand": "KitchenMate",
+        "model": "MixPro 750",
+        "category": "Kitchen Appliances",
+        "basePrice": 5990,
+        "salePrice": 5290,
+        "processor": "750W motor",
+        "ram": "—",
+        "storage": "3 stainless steel jars",
+        "display": "Overload protection",
+        "graphics": "3 speed settings",
+        "connectivity": "Pulse function",
+        "warranty": "2 years motor warranty",
+        "description": "A practical kitchen mixer grinder for everyday preparation.",
+        "image": "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&w=1000&q=85",
+        "stockQty": 14,
+        "inStock": true,
+        "featured": false,
+        "enabled": true
+      }
+    ],
+    "offers": [
+      {
+        "id": "ch-o1",
+        "title": "Home upgrade packages",
+        "description": "Ask about pairing appliances and entertainment products for your home.",
+        "code": "",
+        "enabled": true
+      },
+      {
+        "id": "ch-o2",
+        "title": "Installation guidance",
+        "description": "Our team can explain delivery, installation and warranty terms before purchase.",
+        "code": "",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "rv1",
+        "name": "Verified customer",
+        "rating": 5,
+        "text": "Helpful product guidance and a smooth store experience.",
+        "enabled": true
+      },
+      {
+        "id": "rv2",
+        "name": "Local customer",
+        "rating": 5,
+        "text": "The team explained the product features and warranty clearly.",
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "fq1",
+        "question": "How can I place an order?",
+        "answer": "Add products to your bag and continue on WhatsApp. Our team will confirm the final price and availability.",
+        "enabled": true
+      },
+      {
+        "id": "fq2",
+        "question": "Is the product warranty included?",
+        "answer": "Warranty details are displayed on each product. Please check the product listing and confirm the terms with the store before purchase.",
+        "enabled": true
+      },
+      {
+        "id": "fq3",
+        "question": "Can I visit the store before buying?",
+        "answer": "Yes. Contact the store to confirm availability and showroom timings.",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "gl1",
+        "title": "Explore the store",
+        "image": "https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=1800&q=88",
+        "enabled": true
+      },
+      {
+        "id": "gl2",
+        "title": "Product experience",
+        "image": "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      }
+    ],
+    "legal": {
+      "privacyPolicy": "Information shared through this website is used only to respond to enquiries and coordinate orders. Please contact the store for questions about your information."
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:electronics-02",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.motto",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Store details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Store name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / team"
+          },
+          {
+            "path": "brand.motto",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the store",
+            "type": "textarea"
+          },
+          {
+            "path": "settings.currency",
+            "label": "Currency",
+            "type": "select",
+            "options": [
+              "INR",
+              "USD",
+              "EUR",
+              "GBP"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home page",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "products",
+        "label": "Electronics inventory",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "products",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "sku",
+            "label": "SKU / model code"
+          },
+          {
+            "key": "brand",
+            "label": "Brand"
+          },
+          {
+            "key": "model",
+            "label": "Model"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "processor",
+            "label": "Processor / main feature"
+          },
+          {
+            "key": "ram",
+            "label": "RAM"
+          },
+          {
+            "key": "storage",
+            "label": "Storage / capacity"
+          },
+          {
+            "key": "display",
+            "label": "Display / screen"
+          },
+          {
+            "key": "graphics",
+            "label": "Graphics / key feature"
+          },
+          {
+            "key": "connectivity",
+            "label": "Connectivity"
+          },
+          {
+            "key": "warranty",
+            "label": "Warranty details"
+          },
+          {
+            "key": "basePrice",
+            "label": "MRP",
+            "type": "number"
+          },
+          {
+            "key": "salePrice",
+            "label": "Selling price",
+            "type": "number"
+          },
+          {
+            "key": "priceOnRequest",
+            "label": "Price on request",
+            "type": "checkbox"
+          },
+          {
+            "key": "stockQty",
+            "label": "Stock quantity",
+            "type": "number"
+          },
+          {
+            "key": "inStock",
+            "label": "Available",
+            "type": "checkbox"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Product image",
+            "type": "media"
+          },
+          {
+            "key": "featured",
+            "label": "Featured product",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Visible on customer website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New product",
+          "sku": "",
+          "brand": "",
+          "model": "",
+          "category": "Electronics",
+          "processor": "",
+          "ram": "",
+          "storage": "",
+          "display": "",
+          "graphics": "",
+          "connectivity": "",
+          "warranty": "",
+          "basePrice": 0,
+          "salePrice": 0,
+          "priceOnRequest": false,
+          "stockQty": 1,
+          "inStock": true,
+          "description": "",
+          "featured": false,
+          "enabled": true,
+          "image": ""
+        }
+      },
+      {
+        "id": "offers",
+        "label": "Offers & promotions",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "offers",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Offer title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "code",
+            "label": "Offer code"
+          },
+          {
+            "key": "enabled",
+            "label": "Show offer",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New offer",
+          "description": "",
+          "code": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer name"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "number"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show review",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer",
+          "rating": 5,
+          "text": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQs",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show question",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "gallery image",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show image",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New image",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & location",
+        "fields": [
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number"
+          },
+          {
+            "path": "contact.call",
+            "label": "Phone number"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.location",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Website sections",
+        "fields": [
+          {
+            "path": "settings.showAbout",
+            "label": "About section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFAQ",
+            "label": "FAQ section",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWarranty",
+            "label": "Warranty information section",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy policy",
+        "fields": [
+          {
+            "path": "legal.privacyPolicy",
+            "label": "Privacy policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}

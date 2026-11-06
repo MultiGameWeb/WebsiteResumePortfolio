@@ -25,6 +25,10 @@
       "label": "Reviews"
     },
     {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
       "id": "contact",
       "label": "Contact"
     },
@@ -88,6 +92,34 @@
       "path": "contact.maps",
       "label": "Google Maps Link",
       "type": "url"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "placeholder": "hello@yourbusiness.com"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening hours",
+      "placeholder": "Mon–Sat · 10:00 AM – 7:00 PM"
     }
   ],
   "demoData": {
@@ -96,44 +128,47 @@
       "businessName": "Nova Market",
       "ownerName": "Store Team",
       "motto": "Simple shopping, thoughtful products.",
-      "about": "A modern online storefront for showcasing products, collections and easy customer enquiries."
+      "about": "Nova Market brings together thoughtful everyday products, with friendly help on WhatsApp before and after you buy."
     },
     "home": {
-      "title": "A storefront made for your products.",
-      "text": "Show your products, add prices, accept enquiries and guide customers to WhatsApp."
+      "title": "Thoughtful products, ordered the easy way.",
+      "text": "Browse our latest picks and order in seconds on WhatsApp. We confirm price, stock and delivery with you personally."
     },
     "contact": {
       "whatsapp": "919876543210",
       "call": "+91 98765 43210",
       "location": "Hyderabad, Telangana",
-      "maps": "https://maps.google.com/?q=Hyderabad"
+      "maps": "https://maps.google.com/?q=Hyderabad",
+      "email": "hello@novamarket.example",
+      "instagram": "https://www.instagram.com/",
+      "hours": "Mon–Sat · 10:00 AM – 8:00 PM (WhatsApp replies)"
     },
     "hero": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85",
     "products": [
       {
         "id": "p1",
-        "name": "Signature Product",
-        "category": "Featured",
+        "name": "Classic Minimal Watch",
+        "category": "Accessories",
         "price": "₹999",
-        "description": "A sample product ready to customize.",
+        "description": "Clean, minimal design for everyday wear.",
         "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80",
         "enabled": true
       },
       {
         "id": "p2",
-        "name": "Best Seller",
-        "category": "Popular",
+        "name": "Everyday Running Shoes",
+        "category": "Footwear",
         "price": "₹1,499",
-        "description": "Replace this with your own product details.",
+        "description": "Lightweight and cushioned for daily runs and walks.",
         "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
         "enabled": true
       },
       {
         "id": "p3",
         "name": "New Arrival",
-        "category": "New",
+        "category": "New In",
         "price": "₹799",
-        "description": "A new arrival card for your storefront.",
+        "description": "Just landed. Message us for sizes and colours.",
         "image": "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80",
         "enabled": true
       },
@@ -142,7 +177,7 @@
         "name": "Premium Pick",
         "category": "Premium",
         "price": "₹2,499",
-        "description": "Showcase higher-value products here.",
+        "description": "A premium pick from our latest collection.",
         "image": "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=crop&w=900&q=80",
         "enabled": true
       }
@@ -168,6 +203,20 @@
         "text": "Beautiful products and smooth communication.",
         "rating": 5,
         "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Hyderabad",
+        "text": "Ordered on WhatsApp in two minutes and got a quick confirmation.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Secunderabad",
+        "text": "Products looked exactly like the photos and packing was neat.",
+        "rating": 5,
+        "enabled": true
       }
     ],
     "settings": {
@@ -177,7 +226,33 @@
       "showContact": true,
       "passwordProtected": false,
       "adminPassword": ""
-    }
+    },
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I place an order?",
+        "answer": "Choose your products and tap the order button. WhatsApp opens with your order filled in, and we confirm availability, final price and delivery with you.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do you deliver to my area?",
+        "answer": "We deliver across India. Delivery charges and timelines are shared when we confirm your order.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Which payment methods do you accept?",
+        "answer": "UPI, bank transfer and card payments. Payment details are shared after we confirm your order.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Can I return or exchange a product?",
+        "answer": "Message us within 2 days of delivery. Exchange or return options depend on the product and its condition.",
+        "enabled": true
+      }
+    ]
   },
   "admin": {
     "storageKey": "sitecraft:ecommerce-01",
@@ -350,6 +425,35 @@
         }
       },
       {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
         "id": "contact",
         "label": "Contact",
         "fields": [
@@ -369,6 +473,34 @@
             "path": "contact.maps",
             "label": "Maps URL",
             "type": "url"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "placeholder": "hello@yourbusiness.com"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours",
+            "placeholder": "Mon–Sat · 10:00 AM – 7:00 PM"
           }
         ]
       },

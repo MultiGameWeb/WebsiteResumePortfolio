@@ -4,7 +4,7 @@ const priceValue=p=>{const n=Number(p);return Number.isFinite(n)?n:parseFloat(St
 const fmtBudget=n=>{const v=Number(n)||0;return v>=100?'₹'+(v/100).toFixed(v%100?1:0)+' Cr':'₹'+v+' L'};
 const moneyLakhs=v=>{const n=Number(v)||0;if(!n)return '';return n>=10000000?'₹'+(n/10000000).toFixed(2).replace(/\.00$/,'')+' Cr':'₹'+(n/100000).toFixed(0)+' L';};
 
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
   const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},e=d.enquiry||{},ok=x=>selected.includes(x);
   const props=(d.properties||[]).filter(x=>x.enabled!==false),services=(d.services||[]).filter(x=>x.enabled!==false),agents=(d.agents||[]).filter(x=>x.enabled!==false),reviews=(d.reviews||[]).filter(x=>x.enabled!==false),faq=(d.faq||[]).filter(x=>x.enabled!==false),landmarks=(d.landmarks||[]).filter(x=>x.enabled!==false);
   const featured=props.filter(x=>x.featured||x.status==='Featured'),featuredList=featured.length?featured:props.slice(0,2);
@@ -19,9 +19,9 @@ export function render(d={},selected=[]){
 
   if(ok('home')&&props.length)html+='<section class="lux-search"><div class="lux-search-intro"><span class="lux-eyebrow">PRIVATE SEARCH</span><h2>Find the right fit.</h2><p>Filter the collection by location, property type, BHK and budget.</p></div><form id="luxPropertySearch" class="lux-search-form"><label><span>Location</span><input name="location" placeholder="Jubilee Hills"></label><label><span>Property type</span><select name="type"><option value="">Any type</option><option>Apartment</option><option>Villa</option><option>Open Plot</option><option>Commercial Space</option><option>Independent House</option><option>Farm Land</option></select></label><label><span>BHK</span><select name="bhk"><option value="">Any BHK</option><option>1 BHK</option><option>2 BHK</option><option>3 BHK</option><option>4 BHK</option><option>5 BHK</option></select></label><label class="lux-range"><span>Budget up to <b id="luxBudgetValue">₹5 Cr</b></span><input id="luxBudgetRange" name="budget" type="range" min="25" max="500" step="5" value="500"></label><button class="lux-btn dark" type="submit">Search collection <span>↗</span></button></form><div id="luxSearchNote" class="lux-search-note"></div></section>';
 
-  if(ok('about')&&s.showAbout!==false)html+='<section id="about" class="lux-section lux-about"><div class="lux-side"><span class="lux-eyebrow">ABOUT THE FIRM</span><span>01 / 07</span></div><div class="lux-about-main"><h2>'+esc(b.businessName||'Aurum Estates')+' is built around the idea that property advice should feel personal, clear and considered.</h2><p>'+esc(b.about||'Tell your story in Admin > Business.')+'</p><div class="lux-about-sign"><strong>'+esc(b.ownerName||'Principal Advisor')+'</strong><span>Founder / Lead Advisor</span></div></div></section>';
+  if(ok('about')&&s.showAbout!==false)html+='<section id="about" class="lux-section lux-about"><div class="lux-side"><span class="lux-eyebrow">ABOUT THE FIRM</span><span>01 / 07</span></div><div class="lux-about-main"><h2>'+esc(b.businessName||'Aurum Estates')+' is built around the idea that property advice should feel personal, clear and considered.</h2><p>'+esc(b.about||'Welcome! Get in touch to learn more about us.')+'</p><div class="lux-about-sign"><strong>'+esc(b.ownerName||'Principal Advisor')+'</strong><span>Founder / Lead Advisor</span></div></div></section>';
 
-  if(ok('gallery')&&s.showGallery!==false)html+='<section id="properties" class="lux-section lux-properties"><div class="lux-section-head"><div><span class="lux-eyebrow">PROPERTY LISTINGS</span><h2>The private collection</h2></div><p>Every listing is editable in Admin. Use View details to open a focused property profile with photos and enquiry action.</p></div><div id="luxPropertyGrid" class="lux-property-grid">'+props.map((x,i)=>'<article class="lux-property-card" data-property data-location="'+esc((x.location||'').toLowerCase())+'" data-type="'+esc(x.type||'')+'" data-bhk="'+esc(x.bhk||'')+'" data-price="'+priceValue(x.priceValue||x.price)+'"><div class="lux-card-image"><img src="'+esc(x.coverImage||'')+'" alt="'+esc(x.title||'')+'"><span class="lux-card-index">0'+(i+1)+'</span><span class="lux-status">'+esc(x.status||'Available')+'</span></div><div class="lux-card-body"><div class="lux-card-top"><small>'+esc(x.type||'Property')+' · '+esc(x.location||'')+'</small><strong>'+esc(x.price||moneyLakhs(x.priceValue)||'Price on request')+'</strong></div><h3>'+esc(x.title||'Property')+'</h3><div class="lux-specs"><span>'+esc(x.bhk||'—')+'</span><span>'+esc(x.area||'—')+'</span><span>'+esc(x.bathrooms||'—')+' baths</span></div><p>'+esc(x.description||'')+'</p><button type="button" class="lux-line-btn" data-detail-id="'+esc(x.id)+'">View property <span>↗</span></button></div></article>').join('')+'</div><div id="luxNoResults" class="lux-empty" hidden>No properties match those filters. Try a broader search or contact the advisory team.</div></section>';
+  if(ok('gallery')&&s.showGallery!==false)html+='<section id="properties" class="lux-section lux-properties"><div class="lux-section-head"><div><span class="lux-eyebrow">PROPERTY LISTINGS</span><h2>The private collection</h2></div><p>Use View details to open a focused property profile with photos and enquiry action.</p></div><div id="luxPropertyGrid" class="lux-property-grid">'+props.map((x,i)=>'<article class="lux-property-card" data-property data-location="'+esc((x.location||'').toLowerCase())+'" data-type="'+esc(x.type||'')+'" data-bhk="'+esc(x.bhk||'')+'" data-price="'+priceValue(x.priceValue||x.price)+'"><div class="lux-card-image"><img src="'+esc(x.coverImage||'')+'" alt="'+esc(x.title||'')+'"><span class="lux-card-index">0'+(i+1)+'</span><span class="lux-status">'+esc(x.status||'Available')+'</span></div><div class="lux-card-body"><div class="lux-card-top"><small>'+esc(x.type||'Property')+' · '+esc(x.location||'')+'</small><strong>'+esc(x.price||moneyLakhs(x.priceValue)||'Price on request')+'</strong></div><h3>'+esc(x.title||'Property')+'</h3><div class="lux-specs"><span>'+esc(x.bhk||'—')+'</span><span>'+esc(x.area||'—')+'</span><span>'+esc(x.bathrooms||'—')+' baths</span></div><p>'+esc(x.description||'')+'</p><button type="button" class="lux-line-btn" data-detail-id="'+esc(x.id)+'">View property <span>↗</span></button></div></article>').join('')+'</div><div id="luxNoResults" class="lux-empty" hidden>No properties match those filters. Try a broader search or contact the advisory team.</div></section>';
 
   if(ok('services')&&s.showServices!==false)html+='<section id="services" class="lux-section lux-services"><div class="lux-section-head"><div><span class="lux-eyebrow">ADVISORY SERVICES</span><h2>Support beyond the search.</h2></div><p>Show clients how your agency supports the journey before, during and after the property decision.</p></div><div class="lux-service-list">'+services.map((x,i)=>'<article><span>0'+(i+1)+'</span><div><h3>'+esc(x.name||'Advisory service')+'</h3><p>'+esc(x.description||'')+'</p></div><b>↗</b></article>').join('')+'</div></section>';
 
@@ -29,7 +29,7 @@ export function render(d={},selected=[]){
 
   if(ok('reviews')&&s.showReviews!==false)html+='<section id="reviews" class="lux-section lux-reviews"><div class="lux-review-number">02</div><div class="lux-review-content"><span class="lux-eyebrow">CLIENT NOTES</span><h2>Trust is built in the details.</h2><div class="lux-review-grid">'+reviews.map(x=>'<article><b class="lux-stars">'+'★'.repeat(Number(x.rating)||0)+'</b><p>“'+esc(x.text||'')+'”</p><strong>'+esc(x.name||'Client')+'</strong></article>').join('')+'</div></div></section>';
 
-  if(ok('location')&&s.showLocation!==false)html+='<section id="location" class="lux-section lux-location"><div class="lux-section-head"><div><span class="lux-eyebrow">LOCATION & LANDMARKS</span><h2>Context matters.</h2></div><p>'+esc(c.address||'Add your office address in Admin > Contact.')+'</p></div><div class="lux-landmarks">'+landmarks.map((x,i)=>'<article><span>0'+(i+1)+'</span><h3>'+esc(x.name||'Landmark')+'</h3><p>'+esc(x.text||'')+'</p></article>').join('')+'</div><div class="lux-location-actions">'+(c.maps?'<a class="lux-btn dark" target="_blank" href="'+esc(c.maps)+'">Open office location <span>↗</span></a>':'')+(c.phone?'<a class="lux-line-btn" href="tel:'+esc(c.phone)+'">Call '+esc(c.phone)+' <span>↗</span></a>':'')+'</div></section>';
+  if(ok('location')&&s.showLocation!==false)html+='<section id="location" class="lux-section lux-location"><div class="lux-section-head"><div><span class="lux-eyebrow">LOCATION & LANDMARKS</span><h2>Context matters.</h2></div><p>'+esc(c.address||'Please contact us for our address and service area.')+'</p></div><div class="lux-landmarks">'+landmarks.map((x,i)=>'<article><span>0'+(i+1)+'</span><h3>'+esc(x.name||'Landmark')+'</h3><p>'+esc(x.text||'')+'</p></article>').join('')+'</div><div class="lux-location-actions">'+(c.maps?'<a class="lux-btn dark" target="_blank" href="'+esc(c.maps)+'">Open office location <span>↗</span></a>':'')+(c.phone?'<a class="lux-line-btn" href="tel:'+esc(c.phone)+'">Call '+esc(c.phone)+' <span>↗</span></a>':'')+'</div></section>';
 
   if(ok('faq')&&s.showFAQ!==false)html+='<section id="faq" class="lux-section lux-faq"><div class="lux-side"><span class="lux-eyebrow">FAQ</span><span>06 / 07</span></div><div class="lux-faq-list">'+faq.map((x,i)=>'<article><button type="button" data-faq-toggle aria-expanded="false"><span>0'+(i+1)+' '+esc(x.question||'Question')+'</span><b>+</b></button><div data-faq-answer hidden><p>'+esc(x.answer||'')+'</p></div></article>').join('')+'</div></section>';
 
@@ -37,14 +37,14 @@ export function render(d={},selected=[]){
 
   if(ok('terms')&&s.showTerms!==false)html+='<section class="lux-legal"><span class="lux-eyebrow">TERMS & CONDITIONS</span><p>'+esc(d.termsText||'')+'</p></section>';
   if(ok('privacy')&&s.showPrivacy!==false)html+='<section id="privacy" class="lux-legal light"><span class="lux-eyebrow">PRIVACY POLICY</span><p>'+esc(d.privacyPolicy||'')+'</p></section>';
-  if(ok('rera')&&s.showRera!==false)html+='<section id="rera" class="lux-rera"><div><span class="lux-eyebrow">RERA INFORMATION</span><h2>Verify registration details before proceeding.</h2><p>'+esc(d.rera?.text||'')+'</p></div><strong>'+esc(d.rera?.number||'Add RERA / registration number in Admin')+'</strong></section>';
+  if(ok('rera')&&s.showRera!==false)html+='<section id="rera" class="lux-rera"><div><span class="lux-eyebrow">RERA INFORMATION</span><h2>Verify registration details before proceeding.</h2><p>'+esc(d.rera?.text||'')+'</p></div><strong>'+esc(d.rera?.number||'Registration details available on request')+'</strong></section>';
 
   html+='<div id="luxDetailModal" class="lux-modal" hidden><div class="lux-modal-backdrop" data-close-modal></div><div class="lux-modal-panel" role="dialog" aria-modal="true" aria-labelledby="luxModalTitle"><button type="button" class="lux-modal-close" data-close-modal aria-label="Close">×</button><div id="luxModalBody"></div></div></div>';
   html+='<footer class="lux-footer"><div><span class="lux-monogram">AE</span><div><strong>'+esc(b.businessName||'Aurum Estates')+'</strong><small>'+esc(b.tagline||'Private Property Advisory')+'</small></div></div><div class="lux-footer-links">'+(c.whatsapp?'<a target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>':'')+(c.email?'<a href="mailto:'+esc(c.email)+'">'+esc(c.email)+'</a>':'')+'</div><a class="template-admin-link" href="admin.html?template=realestate-02">Admin</a></footer></div>';
   return html;
 }
 
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
   const c=d.contact||{},props=(d.properties||[]).filter(x=>x.enabled!==false);
   const fmt=n=>fmtBudget(n);
   const updateRange=(input,out)=>{if(input&&out)out.textContent=fmt(input.value)};
@@ -73,7 +73,7 @@ export function init(root,d={},selected=[]){
   root.querySelectorAll('[data-faq-toggle]').forEach(btn=>btn.addEventListener('click',()=>{const a=btn.parentElement?.querySelector('[data-faq-answer]'),open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!open));if(a)a.hidden=open;btn.classList.toggle('open',!open)}));
   root.querySelector('#luxEnquiryForm')?.addEventListener('submit',e=>{
     e.preventDefault();const f=new FormData(e.currentTarget);
-    if(!safe(c.whatsapp)){alert('Please add a WhatsApp number in Admin > Contact.');return}
+    if(!safe(c.whatsapp)){alert('This option is not available right now. Please call the business directly.');return}
     const purposes=[...e.currentTarget.querySelectorAll('input[name="purpose"]:checked')].map(x=>x.value).join(', ')||'Not specified';
     const lead={id:crypto.randomUUID(),createdAt:new Date().toLocaleString(),name:f.get('name')||'',phone:f.get('phone')||'',email:f.get('email')||'',property:f.get('property')||'',propertyType:f.get('propertyType')||'',budget:fmt(f.get('budgetValue')),purpose:purposes,visitDate:f.get('visitDate')||'',visitTime:f.get('visitTime')||'',message:f.get('message')||''};
     try{const key='sitecraft:realestate-02',saved=JSON.parse(localStorage.getItem(key)||'{}');saved.leads=Array.isArray(saved.leads)?saved.leads:[];saved.leads.unshift(lead);localStorage.setItem(key,JSON.stringify(saved))}catch{}
@@ -81,3 +81,55 @@ export function init(root,d={},selected=[]){
     window.open('https://wa.me/'+safe(c.whatsapp)+'?text='+encodeURIComponent(msg),'_blank');
   });
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=false;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

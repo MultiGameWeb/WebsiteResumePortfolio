@@ -90,7 +90,7 @@
       "path": "brand.businessName",
       "label": "Gym / Fitness Center Name",
       "required": true,
-      "placeholder": "Forge Fitness Club"
+      "placeholder": "FlexMotion Mobility Studio"
     },
     {
       "path": "brand.ownerName",
@@ -218,91 +218,106 @@
       "path": "privacyPolicy",
       "label": "Privacy Policy",
       "type": "textarea"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
     "brand": {
-      "businessName": "Forge Fitness Club",
-      "ownerName": "Coach Arjun",
+      "businessName": "FlexMotion Mobility Studio",
+      "ownerName": "Dr. Rohan Varma",
       "tagline": "Move better. Feel better.",
-      "about": "Forge Fitness Club is a modern training space built around strength, conditioning, group classes and practical coaching. Replace the sample content with your gym's actual facilities, certifications, pricing, policies and contact details before publishing."
+      "about": "FlexMotion runs guided mobility, stretching and recovery sessions for desk workers, runners and anyone who wants to move without stiffness."
     },
     "home": {
       "title": "Move better. Feel better.",
-      "text": "Specialized mobility coaching, flexible memberships and class schedules designed around your goals.",
+      "text": "Guided mobility and recovery sessions for stiff backs, desk-job aches and runners.",
       "badge": "MOBILITY FREE TRIAL"
     },
     "heroVideo": "",
     "heroSlides": [
       {
         "id": "hs1",
-        "title": "Strength Floor",
-        "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=88",
+        "title": "Mobility Flow",
+        "image": "https://images.unsplash.com/photo-1599447332412-6bc6830c815a?auto=format&fit=crop&w=1800&q=84",
         "enabled": true
       },
       {
         "id": "hs2",
-        "title": "Functional Training",
-        "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1800&q=88",
+        "title": "Stretch & Strength",
+        "image": "https://images.unsplash.com/photo-1591258370814-01609b341790?auto=format&fit=crop&w=1800&q=84",
         "enabled": true
       },
       {
         "id": "hs3",
-        "title": "Group Workout",
-        "image": "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1800&q=88",
+        "title": "Recovery Session",
+        "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1800&q=84",
         "enabled": true
       }
     ],
     "plans": [
       {
         "id": "p1",
-        "name": "Silver",
-        "monthly": "₹1,499 / month",
-        "quarterly": "₹3,999 / quarter",
-        "annual": "₹11,999 / year",
-        "offer": "Free 1-day guest pass",
-        "discount": "Save 20% annually",
+        "name": "Recovery 8",
+        "monthly": "₹1,999 / month",
+        "quarterly": "₹5,499 / quarter",
+        "annual": "",
+        "offer": "8 sessions / month",
+        "discount": "Flexible timings",
         "features": [
-          "Gym Access",
-          "Cardio Zone",
-          "Locker Access"
+          "8 mobility classes",
+          "Movement screen",
+          "Foam-roller session"
         ],
         "featured": false,
         "enabled": true
       },
       {
         "id": "p2",
-        "name": "Gold",
-        "monthly": "₹1,999 / month",
-        "quarterly": "₹5,499 / quarter",
-        "annual": "₹15,999 / year",
-        "offer": "1 fitness assessment / month",
-        "discount": "Save 25% annually",
+        "name": "Mobility Unlimited",
+        "monthly": "₹2,999 / month",
+        "quarterly": "₹8,199 / quarter",
+        "annual": "₹27,999 / year",
+        "offer": "Unlimited classes",
+        "discount": "Save 20% annually",
         "features": [
-          "Gym Access",
-          "Cardio Zone",
-          "Group Classes",
-          "Steam Bath",
-          "Fitness Assessment"
+          "Unlimited mobility classes",
+          "Monthly movement screen",
+          "Recovery stretch",
+          "Posture workshop"
         ],
         "featured": true,
         "enabled": true
       },
       {
         "id": "p3",
-        "name": "Platinum",
-        "monthly": "₹3,499 / month",
-        "quarterly": "₹9,499 / quarter",
-        "annual": "₹27,999 / year",
-        "offer": "2 PT sessions / month",
-        "discount": "Save 30% annually",
+        "name": "One-to-One",
+        "monthly": "₹5,499 / month",
+        "quarterly": "₹14,999 / quarter",
+        "annual": "",
+        "offer": "6 private sessions",
+        "discount": "Personal plan",
         "features": [
-          "Gym Access",
-          "Cardio Zone",
-          "All Group Classes",
-          "Steam Bath",
-          "Personal Trainer",
-          "Priority Booking"
+          "Personal mobility plan",
+          "Private sessions",
+          "Desk-posture advice",
+          "Progress check-ins"
         ],
         "featured": false,
         "enabled": true
@@ -311,34 +326,34 @@
     "trainers": [
       {
         "id": "t1",
-        "name": "Coach Arjun",
-        "role": "Head Strength Coach",
-        "certification": "Gold's Gym Certified · K11",
-        "specialization": "Muscle Gain · Strength",
-        "bio": "Strength programming, safe lifting technique and progressive training plans.",
-        "availability": "Mon–Sat · 6:00 AM–11:00 AM",
-        "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=84",
+        "name": "Dr. Rohan Varma",
+        "role": "Founder · Physiotherapist",
+        "certification": "BPT · Certified Mobility Specialist",
+        "specialization": "Joint Mobility · Posture",
+        "bio": "Builds mobility plans around how you sit, move and train.",
+        "availability": "Mon–Sat · 7:00 AM–11:00 AM",
+        "image": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "t2",
-        "name": "Coach Neha",
-        "role": "Transformation Coach",
-        "certification": "K11 · Certified Personal Trainer",
-        "specialization": "Weight Loss · Conditioning",
-        "bio": "Goal-based conditioning, habit-focused coaching and sustainable progress plans.",
-        "availability": "Mon–Fri · 5:00 PM–9:00 PM",
-        "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=84",
+        "name": "Ishita Gupta",
+        "role": "Mobility Coach",
+        "certification": "FRC Mobility Specialist",
+        "specialization": "Stretching · Desk Recovery",
+        "bio": "Teaches simple daily routines for stiff backs, hips and shoulders.",
+        "availability": "Mon–Fri · 5:30 PM–8:30 PM",
+        "image": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "t3",
-        "name": "Coach Rahul",
-        "role": "Functional & CrossFit Coach",
-        "certification": "CrossFit Level 1",
-        "specialization": "Functional Fitness · Mobility",
-        "bio": "Functional movement, group coaching and mobility-led performance sessions.",
-        "availability": "Mon–Sat · 7:00 AM–10:00 AM · 5:00 PM–8:00 PM",
+        "name": "Manoj Pillai",
+        "role": "Recovery Coach",
+        "certification": "Certified Sports Massage Therapist",
+        "specialization": "Recovery · Runners",
+        "bio": "Helps runners and athletes recover with mobility and soft-tissue work.",
+        "availability": "Tue–Sun · 7:00 AM–10:00 AM",
         "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       }
@@ -347,54 +362,54 @@
       {
         "id": "c1",
         "day": "Monday",
-        "time": "6:00 AM",
-        "class": "Yoga",
-        "coach": "Coach Neha",
+        "time": "7:00 AM",
+        "class": "Mobility Flow",
+        "coach": "Dr. Rohan Varma",
         "level": "All Levels",
         "enabled": true
       },
       {
         "id": "c2",
         "day": "Monday",
-        "time": "7:00 AM",
-        "class": "Zumba",
-        "coach": "Coach Neha",
-        "level": "All Levels",
+        "time": "6:30 PM",
+        "class": "Desk Reset",
+        "coach": "Ishita Gupta",
+        "level": "Beginner",
         "enabled": true
       },
       {
         "id": "c3",
         "day": "Tuesday",
-        "time": "8:00 AM",
-        "class": "CrossFit",
-        "coach": "Coach Rahul",
-        "level": "Intermediate",
+        "time": "7:30 AM",
+        "class": "Hip & Back Release",
+        "coach": "Manoj Pillai",
+        "level": "All Levels",
         "enabled": true
       },
       {
         "id": "c4",
         "day": "Wednesday",
-        "time": "6:00 PM",
-        "class": "HIIT",
-        "coach": "Coach Arjun",
-        "level": "Intermediate",
+        "time": "6:30 PM",
+        "class": "Stretch & Release",
+        "coach": "Ishita Gupta",
+        "level": "All Levels",
         "enabled": true
       },
       {
         "id": "c5",
         "day": "Thursday",
-        "time": "7:00 PM",
-        "class": "Strength Circuit",
-        "coach": "Coach Arjun",
-        "level": "All Levels",
+        "time": "7:00 AM",
+        "class": "Runner Recovery",
+        "coach": "Manoj Pillai",
+        "level": "Intermediate",
         "enabled": true
       },
       {
         "id": "c6",
         "day": "Saturday",
-        "time": "8:00 AM",
-        "class": "Mobility",
-        "coach": "Coach Rahul",
+        "time": "8:30 AM",
+        "class": "Posture Workshop",
+        "coach": "Dr. Rohan Varma",
         "level": "All Levels",
         "enabled": true
       }
@@ -431,14 +446,14 @@
       {
         "id": "f5",
         "title": "Steam & Recovery",
-        "text": "Add your real steam, shower and recovery facilities here.",
+        "text": "Please contact us for details.",
         "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f6",
         "title": "Locker Rooms",
-        "text": "Describe your changing rooms, lockers, showers and hygiene practices.",
+        "text": "Clean changing rooms, lockers and showers for members.",
         "image": "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       }
@@ -448,7 +463,7 @@
         "id": "tr1",
         "title": "12-week weight-loss journey",
         "period": "12 weeks",
-        "description": "Demo placeholder — replace with an authentic member story and consented images.",
+        "description": "Please contact us for details.",
         "beforeImage": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1000&q=84",
         "afterImage": "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
@@ -457,7 +472,7 @@
         "id": "tr2",
         "title": "6-month strength journey",
         "period": "6 months",
-        "description": "Demo placeholder — replace with a verified transformation story and consented images.",
+        "description": "Please contact us for details.",
         "beforeImage": "https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=1000&q=84",
         "afterImage": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
@@ -466,7 +481,7 @@
         "id": "tr3",
         "title": "General fitness journey",
         "period": "3 months",
-        "description": "Use real member progress images only with appropriate permission and accurate context.",
+        "description": "Shared with the member’s permission. Results vary from person to person.",
         "beforeImage": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=84",
         "afterImage": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
@@ -475,37 +490,37 @@
     "products": [
       {
         "id": "m1",
-        "name": "Forge Performance Tee",
-        "type": "Merchandise",
-        "price": "₹799",
-        "text": "Branded training tee. Replace with your actual stock and size details.",
+        "name": "Foam Roller",
+        "type": "Recovery",
+        "price": "₹899",
+        "text": "High-density foam roller.",
         "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "m2",
-        "name": "Training Shaker",
-        "type": "Accessories",
-        "price": "₹399",
-        "text": "Branded shaker bottle. Replace with actual capacity and material details.",
-        "image": "https://images.unsplash.com/photo-1620843002800-079bf1737f31?auto=format&fit=crop&w=900&q=84",
+        "name": "Massage Ball Set",
+        "type": "Recovery",
+        "price": "₹449",
+        "text": "Two-ball trigger point set.",
+        "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "m3",
-        "name": "Protein Product Display",
-        "type": "Supplements",
-        "price": "Ask gym",
-        "text": "Show only genuine products sold by your gym and include current manufacturer information.",
+        "name": "Resistance Band Pack",
+        "type": "Equipment",
+        "price": "₹599",
+        "text": "Three-level mobility bands.",
         "image": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "m4",
-        "name": "Gym Towel",
+        "name": "Studio Tee",
         "type": "Merchandise",
-        "price": "₹249",
-        "text": "Branded towel. Replace with your actual product information.",
+        "price": "₹699",
+        "text": "Soft cotton tee.",
         "image": "https://images.unsplash.com/photo-1600369671236-e74521d4b6ad?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       }
@@ -513,38 +528,38 @@
     "gallery": [
       {
         "id": "g1",
-        "title": "Strength Area",
-        "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=84",
+        "title": "Mobility Flow",
+        "image": "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g2",
-        "title": "Dumbbells",
-        "image": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1000&q=84",
+        "title": "Stretch Session",
+        "image": "https://images.unsplash.com/photo-1599447421416-3414500d18a5?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g3",
-        "title": "Group Class",
-        "image": "https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=1000&q=84",
+        "title": "Core Activation",
+        "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g4",
-        "title": "Functional Training",
-        "image": "https://images.unsplash.com/photo-1517964603305-11c0f6f66012?auto=format&fit=crop&w=1000&q=84",
+        "title": "Group Class",
+        "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g5",
-        "title": "Cardio Area",
-        "image": "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1000&q=84",
+        "title": "Recovery Session",
+        "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g6",
-        "title": "Recovery Area",
-        "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1000&q=84",
+        "title": "Outdoor Mobility",
+        "image": "https://images.unsplash.com/photo-1562088287-bde35a1ea917?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       }
     ],
@@ -553,53 +568,53 @@
         "id": "r1",
         "name": "Member A",
         "rating": 5,
-        "text": "Good equipment, helpful coaches and a simple trial-booking process.",
+        "text": "The Desk Reset class fixed the stiffness I had from long laptop days.",
         "enabled": true
       },
       {
         "id": "r2",
         "name": "Member B",
         "rating": 5,
-        "text": "The group classes keep me consistent and the timings are easy to understand.",
+        "text": "A movement screen first, then a plan that actually fit my routine.",
         "enabled": true
       },
       {
         "id": "r3",
         "name": "Member C",
         "rating": 5,
-        "text": "I liked getting a clear goal-based plan before joining a membership.",
+        "text": "Gentle, well-explained sessions — perfect after my running training.",
         "enabled": true
       }
     ],
     "faq": [
       {
         "id": "q1",
-        "question": "Can I take a free trial before joining?",
-        "answer": "Yes. Use the trial form or WhatsApp guest-pass button to request your trial. Your team can confirm the slot and any trial conditions.",
+        "question": "Who are mobility classes for?",
+        "answer": "Anyone with stiffness, desk-job aches, runners and people returning to exercise. Classes are low-impact.",
         "enabled": true
       },
       {
         "id": "q2",
-        "question": "Which membership is right for me?",
-        "answer": "Use the plan comparison as a starting point, then ask the gym team about your training goal, class access, coaching and current offers.",
+        "question": "Is this physiotherapy?",
+        "answer": "Classes are mobility training, not medical treatment. For pain or injury, please consult a doctor or physiotherapist first.",
         "enabled": true
       },
       {
         "id": "q3",
-        "question": "Can I book a personal trainer?",
-        "answer": "Yes, when PT slots are available. Ask the gym for the current trainer availability and applicable pricing.",
+        "question": "Can I take a trial session?",
+        "answer": "Yes. Request a trial on WhatsApp or with the trial form.",
         "enabled": true
       },
       {
         "id": "q4",
-        "question": "Are supplements included in membership?",
-        "answer": "Not automatically. Membership benefits and any products or services should be confirmed with the gym.",
+        "question": "What should I wear?",
+        "answer": "Comfortable clothes you can stretch in. Mats and rollers are provided.",
         "enabled": true
       },
       {
         "id": "q5",
         "question": "How do class timings work?",
-        "answer": "The timetable shows sample batch slots. Replace them with your actual weekly schedule before publishing.",
+        "answer": "The timetable shows sample batch slots. Confirm current timings with the studio.",
         "enabled": true
       }
     ],
@@ -607,23 +622,24 @@
       "heading": "Start your Mobility journey.",
       "text": "Tell us your goal and preferred time. The team will follow up to confirm your trial pass or membership enquiry.",
       "passText": "1-Day Mobility Guest Pass · Book on WhatsApp",
-      "goalsText": "Weight Loss,Muscle Gain,General Fitness,Strength & Conditioning,Personal Training,Group Classes"
+      "goalsText": "Reduce Stiffness,Desk-Job Recovery,Runner Recovery,Posture,Flexibility,Private Sessions"
     },
     "contact": {
-      "phone": "+91 90000 77001",
-      "whatsapp": "919000077001",
-      "email": "hello@forgefitness.example",
-      "address": "Jubilee Hills, Hyderabad, Telangana",
-      "parking": "Basement parking — replace with your actual parking and bike-parking instructions.",
-      "landmarks": "Near the main junction — replace with your actual landmark and navigation notes.",
-      "maps": "https://maps.google.com/?q=Jubilee%20Hills%2C%20Hyderabad%2C%20Telangana"
+      "phone": "+91 90000 77006",
+      "whatsapp": "919000077006",
+      "email": "care@flexmotion.example",
+      "address": "Gachibowli, Hyderabad, Telangana",
+      "parking": "Building parking for visitors",
+      "landmarks": "Near the financial district junction",
+      "maps": "https://maps.google.com/?q=Gachibowli%2C%20Hyderabad%2C%20Telangana",
+      "instagram": "https://www.instagram.com/"
     },
     "hours": {
       "weekdays": "Mon–Sat · 5:30 AM – 10:00 PM",
       "weekends": "Sun · 7:00 AM – 1:00 PM"
     },
     "termsText": "Membership prices, offers, trial conditions, class schedules, facility availability, refunds, freezes and cancellation rules should be replaced with the gym's actual terms before publishing. Fitness activities carry inherent risks; members should follow gym safety guidance and disclose relevant limitations to qualified professionals where appropriate.",
-    "privacyPolicy": "We use lead and contact details to respond to trial, membership and enquiry requests. Replace this text with the gym's final privacy and data-handling policy before publishing.",
+    "privacyPolicy": "We use lead and contact details to respond to trial, membership and enquiry requests.",
     "settings": {
       "showAbout": true,
       "showMembership": true,
@@ -1328,6 +1344,24 @@
             "path": "contact.maps",
             "label": "Google Maps URL",
             "type": "url"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
           }
         ]
       },

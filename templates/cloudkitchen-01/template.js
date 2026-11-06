@@ -3,7 +3,7 @@ const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
 const money=(cur,n)=>esc(cur||'₹')+new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.max(0,num(n)));
 const list=v=>Array.isArray(v)?v.filter(x=>x&&x.enabled!==false):[];
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
   const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},cake=d.cake||{},del=d.delivery||{},party=d.party||{},os=d.orderSettings||{},ok=x=>selected.includes(x);
   const menu=list(d.menu),offers=list(d.offers),gallery=list(d.gallery),reviews=list(d.reviews),services=list(d.services),hygiene=list(d.hygiene),faq=list(d.faq),hours=list(d.hours),slots=list(del.slots),partyPackages=list(party.packages),bases=list(cake.bases),sizes=list(cake.sizes),fillings=list(cake.fillings),toppings=list(cake.toppings);
   const cats=[...new Set(menu.map(x=>x.category).filter(Boolean))];
@@ -23,7 +23,7 @@ export function render(d={},selected=[]){
 
   if(ok('cake'))html+='<section id="cake" class="ck-section ck-cake"><div class="ck-head split"><div><span class="ck-kicker">CAKE CUSTOMIZER</span><h2>'+esc(cake.title||"Build your cake your way.")+'</h2></div><p>Choose size, base, filling and toppings. The live total updates before you add the cake to your order.</p></div><div class="ck-cake-grid"><div class="ck-cake-form"><label>Size<select id="ckCakeSize">'+sizes.map((x,i)=>'<option value="'+esc(x.id)+'" '+(i===1?'selected':'')+' data-price="'+num(x.price)+'">'+esc(x.name)+'</option>').join('')+'</select></label><label>Cake base<select id="ckCakeBase">'+bases.map((x,i)=>'<option value="'+esc(x.id)+'" '+(i===0?'selected':'')+' data-price="'+num(x.price)+'">'+esc(x.name)+' '+(x.price?'(+'+money(os.currency||'₹',x.price)+')':'')+'</option>').join('')+'</select></label><label>Filling<select id="ckCakeFilling">'+fillings.map((x,i)=>'<option value="'+esc(x.id)+'" '+(i===0?'selected':'')+' data-price="'+num(x.price)+'">'+esc(x.name)+' '+(x.price?'(+'+money(os.currency||'₹',x.price)+')':'')+'</option>').join('')+'</select></label><div><span class="ck-label">Toppings / add-ons</span><div class="ck-option-grid">'+toppings.map(x=>'<label class="ck-option"><input class="ckCakeTop" type="checkbox" value="'+esc(x.id)+'" data-price="'+num(x.price)+'"><span>✓</span><strong>'+esc(x.name)+'</strong><small>'+(x.price?'+ '+money(os.currency||'₹',x.price):'Included')+'</small></label>').join('')+'</div></div><label>Cake message<input id="ckCakeMessage" maxlength="60" placeholder="Happy Birthday!"></label><div class="ck-cake-result"><span>Estimated cake price</span><strong id="ckCakeTotal">'+money(os.currency||'₹',0)+'</strong><button class="ck-btn solid" type="button" id="ckAddCake">Add custom cake to order <span>＋</span></button></div></div><div class="ck-cake-visual"><img src="'+esc((gallery[0]?.image)||d.hero||'')+'" alt="Custom cake"><div><span>Custom</span><strong>Made for your occasion.</strong><p>Pricing is indicative until the kitchen confirms the exact design, weight, topper and delivery details.</p></div></div></div></section>';
 
-  if(ok('delivery')&&s.showDelivery!==false)html+='<section id="delivery" class="ck-section ck-delivery"><div class="ck-head split"><div><span class="ck-kicker">DELIVERY</span><h2>Choose a slot that works for you.</h2></div><p>'+esc(del.sameDayNote||"Delivery availability depends on slot capacity and area.")+'<br>'+esc(del.deliveryFeeText||c.deliveryArea||"Delivery fee confirmed by area.")+'</p></div><div class="ck-delivery-grid"><div><span class="ck-label">Available slots</span><div class="ck-slot-grid">'+slots.map(x=>'<button type="button" class="ck-slot" data-slot="'+esc(x.label)+'">'+esc(x.label)+'</button>').join('')+'</div></div><div class="ck-area-card"><span>DELIVERY AREA</span><strong>'+esc(c.deliveryArea||"Set your delivery area in Admin.")+'</strong><p>Pickup location and service-area notes can be edited from the Admin panel.</p></div></div></section>';
+  if(ok('delivery')&&s.showDelivery!==false)html+='<section id="delivery" class="ck-section ck-delivery"><div class="ck-head split"><div><span class="ck-kicker">DELIVERY</span><h2>Choose a slot that works for you.</h2></div><p>'+esc(del.sameDayNote||"Delivery availability depends on slot capacity and area.")+'<br>'+esc(del.deliveryFeeText||c.deliveryArea||"Delivery fee confirmed by area.")+'</p></div><div class="ck-delivery-grid"><div><span class="ck-label">Available slots</span><div class="ck-slot-grid">'+slots.map(x=>'<button type="button" class="ck-slot" data-slot="'+esc(x.label)+'">'+esc(x.label)+'</button>').join('')+'</div></div><div class="ck-area-card"><span>DELIVERY AREA</span><strong>'+esc(c.deliveryArea||"Contact us to confirm delivery to your area.")+'</strong><p></p></div></div></section>';
 
   if(ok('party')&&s.showParty!==false)html+='<section id="party" class="ck-section ck-party"><div class="ck-head split"><div><span class="ck-kicker">PARTY & BULK ORDERS</span><h2>From family celebrations to office gatherings.</h2></div><p>'+esc(party.leadTimeText||"Share your guest count and requirements for a tailored order.")+'</p></div><div class="ck-party-grid">'+partyPackages.map((x,i)=>'<article><span>0'+(i+1)+'</span><h3>'+esc(x.name||"Party order")+'</h3><strong>'+esc(x.guests||"Custom")+' guests</strong><p>'+esc(x.note||"")+'</p><a class="ck-link" href="#order" data-party="'+esc(x.name||'')+'">Plan this order ↗</a></article>').join('')+'</div><div class="ck-capacity"><span>CAPACITY</span><strong>'+esc(party.capacityText||"Party orders welcome")+'</strong></div></section>';
 
@@ -33,13 +33,13 @@ export function render(d={},selected=[]){
 
   if(ok('services')&&s.showServices!==false)html+='<section class="ck-section ck-services"><div class="ck-head"><span class="ck-kicker">WHAT WE MAKE</span><h2>More than a menu — made for everyday and celebrations.</h2></div><div class="ck-service-grid">'+services.map((x,i)=>'<article><span class="ck-service-icon">'+esc(x.icon||"•")+'</span><small>0'+(i+1)+'</small><h3>'+esc(x.name)+'</h3><p>'+esc(x.description||'')+'</p></article>').join('')+'</div></section>';
 
-  if(ok('gallery')&&s.showGallery!==false)html+='<section class="ck-section"><div class="ck-head split"><div><span class="ck-kicker">FROM THE KITCHEN</span><h2>See what is coming out fresh.</h2></div><p>Replace sample images from the Admin panel with your own food, cake and packaging photos.</p></div><div class="ck-gallery">'+gallery.map(x=>'<figure><img src="'+esc(x.image||'')+'" alt="'+esc(x.title||'')+'"><figcaption>'+esc(x.title||'')+'</figcaption></figure>').join('')+'</div></section>';
+  if(ok('gallery')&&s.showGallery!==false)html+='<section class="ck-section"><div class="ck-head split"><div><span class="ck-kicker">FROM THE KITCHEN</span><h2>See what is coming out fresh.</h2></div><p></p></div><div class="ck-gallery">'+gallery.map(x=>'<figure><img src="'+esc(x.image||'')+'" alt="'+esc(x.title||'')+'"><figcaption>'+esc(x.title||'')+'</figcaption></figure>').join('')+'</div></section>';
 
   if(ok('reviews')&&s.showReviews!==false)html+='<section class="ck-section ck-reviews"><div class="ck-head"><span class="ck-kicker">CUSTOMER NOTES</span><h2>What direct-order customers say.</h2></div><div class="ck-review-grid">'+reviews.map(x=>'<article>'+(x.image?'<img src="'+esc(x.image)+'" alt="'+esc(x.name||'Customer')+'">':'')+'<div class="ck-stars">'+('★'.repeat(Math.max(1,Math.min(5,num(x.rating)||5))))+'</div><p>“'+esc(x.text||'')+'”</p><strong>'+esc(x.name||'Customer')+'</strong></article>').join('')+'</div></section>';
 
   if(ok('about')&&s.showAbout!==false)html+='<section class="ck-section ck-about"><div class="ck-head split"><div><span class="ck-kicker">ABOUT THE KITCHEN</span><h2>Small-batch thinking, direct communication.</h2></div><p>'+esc(b.about||"Tell customers how the kitchen started and what you care about.")+'</p></div><div class="ck-about-stats">'+(d.aboutStats||[]).filter(x=>x.enabled!==false).map(x=>'<div><strong>'+esc(x.value||'')+'</strong><span>'+esc(x.label||'')+'</span></div>').join('')+'</div></section>';
 
-  if(ok('hygiene')&&s.showHygiene!==false)html+='<section class="ck-section ck-hygiene"><div class="ck-head split"><div><span class="ck-kicker">KITCHEN TRUST</span><h2>Show the standards behind the food.</h2></div><p>Only publish safety, hygiene, registration, ingredient and packaging claims that are accurate for your business.</p></div><div class="ck-hygiene-grid">'+hygiene.map(x=>'<article><span>✓</span><h3>'+esc(x.title||'Trust')+'</h3><p>'+esc(x.text||'')+'</p></article>').join('')+'</div></section>';
+  if(ok('hygiene')&&s.showHygiene!==false)html+='<section class="ck-section ck-hygiene"><div class="ck-head split"><div><span class="ck-kicker">KITCHEN TRUST</span><h2>Show the standards behind the food.</h2></div><p>Ask us about our kitchen hygiene, food registration, ingredients and packaging.</p></div><div class="ck-hygiene-grid">'+hygiene.map(x=>'<article><span>✓</span><h3>'+esc(x.title||'Trust')+'</h3><p>'+esc(x.text||'')+'</p></article>').join('')+'</div></section>';
 
   if(ok('faq')&&s.showFAQ!==false)html+='<section class="ck-section"><div class="ck-head"><span class="ck-kicker">FAQ</span><h2>Before you place the order.</h2></div><div class="ck-faq">'+faq.map(x=>'<details><summary>'+esc(x.question||"Question")+'<span>+</span></summary><p>'+esc(x.answer||"")+'</p></details>').join('')+'</div></section>';
 
@@ -56,7 +56,7 @@ export function render(d={},selected=[]){
   html+='</div>';
   return html;
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
   const menu=list(d.menu),slots=list(d.delivery?.slots),currency=d.orderSettings?.currency||'₹';
   let cart=[];
   const moneyLocal=n=>currency+new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.max(0,num(n)));
@@ -97,9 +97,61 @@ export function init(root,d={}){
     const fd=new FormData(form),lead=Object.fromEntries(fd.entries());
     const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
     lead.total=moneyLocal(total);lead.items=cart.map(x=>({name:x.name,qty:x.qty,price:x.price,meta:x.meta}));lead.status='New';lead.createdAt=new Date().toISOString();
-    try{const state=Store.read(),data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#ckOrderNotice');if(n)n.textContent='Order request saved. The kitchen will confirm availability and delivery details.';form.reset()}catch{const n=root.querySelector('#ckOrderNotice');if(n)n.textContent='Could not save the order in this browser.'}
+    try{const state=Store.read(),data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#ckOrderNotice');if(n)n.textContent='Thanks! Please send the WhatsApp message that opened to place your order. If it did not open, please call us.';form.reset()}catch{const n=root.querySelector('#ckOrderNotice');if(n)n.textContent='Could not save the order in this browser.'}
     const wa=d.contact?.whatsapp;
     if(wa){const itemText=cart.map(x=>x.qty+'× '+x.name+' — '+moneyLocal(x.price*x.qty)+(x.meta?' ('+x.meta+')':'')).join('\n');const msg=['Direct order',lead.name,lead.phone,lead.location,lead.deliveryDate,lead.deliverySlot,'Order type: '+lead.orderType,'Party guests: '+lead.partyGuests,'Total: '+lead.total,itemText,lead.message].filter(Boolean).join('\n');window.open('https://wa.me/'+safe(wa)+'?text='+encodeURIComponent(msg),'_blank')}
   });
   renderCart();
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=true;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Arrow Escape Puzzle</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(160deg, #1e3c72 0%, #2a5298 50%, #112240 100%);
+            height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 10px;
+            overflow: hidden;
+        }
+
+        .game-wrapper {
+            width: 100%;
+            max-width: 420px;
+            height: 100dvh;
+            max-height: calc(100dvh - 16px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* Toast Message */
+        .toast {
+            position: absolute;
+            top: 48px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: rgba(20, 20, 20, 0.92);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            z-index: 35;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 6px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .level-btn {
+            background: #2b95d6;
+            border: 2px solid #74c7f7;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+            outline: none;
+            max-width: 165px;
+        }
+
+        .top-right-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sound-btn {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .coin-box {
+            background: rgba(0, 0, 0, 0.45);
+            padding: 4px 11px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .coin-icon {
+            width: 16px;
+            height: 16px;
+            background: radial-gradient(circle, #ffe066, #f59f00);
+            border-radius: 50%;
+            display: inline-block;
+            border: 2px solid #fff3bf;
+        }
+
+        /* Status Card */
+        .status-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border-radius: 14px;
+            padding: 10px 14px;
+            margin: 6px 0;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .hearts-box {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 18px;
+        }
+
+        .heart {
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .heart.lost {
+            opacity: 0.25;
+            transform: scale(0.8);
+            filter: grayscale(100%);
+        }
+
+        .progress-info {
+            font-size: 14px;
+            font-weight: 800;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 4px 12px;
+            border-radius: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Board Container */
+        .board-wrapper {
+            position: relative;
+            flex: 0 0 auto;
+            margin: 0 auto;
+            background: #e9f2f9;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 2px 6px rgba(255,255,255,0.8);
+            padding: 12px;
+            border: 3px solid #8ce0ff;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .board-wrapper.shake {
+            animation: boardShake 0.25s ease-in-out;
+        }
+
+        @keyframes boardShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
+        .arrow-grid {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            gap: 6px;
+        }
+
+        .grid-slot {
+            background: rgba(180, 205, 225, 0.45);
+            border-radius: 12px;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Arrow Tile */
+        .arrow-tile {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.22), 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+            z-index: 2;
+            border: 2px solid rgba(255,255,255,0.65);
+        }
+
+        .arrow-tile:active {
+            transform: scale(0.92);
+        }
+
+        .arrow-tile svg {
+            width: 58%;
+            height: 58%;
+            fill: white;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.25));
+            pointer-events: none;
+        }
+
+        /* Direction Colors */
+        .dir-U { background: linear-gradient(135deg, #ff6b6b, #ee5253); }
+        .dir-D { background: linear-gradient(135deg, #1dd1a1, #10ac84); }
+        .dir-L { background: linear-gradient(135deg, #54a0ff, #2e86de); }
+        .dir-R { background: linear-gradient(135deg, #feca57, #ff9f43); }
+
+        .arrow-tile.blocked-flash {
+            background: #ff3838 !important;
+            border-color: #fff !important;
+            z-index: 5;
+        }
+
+        .arrow-tile.hint-glow {
+            animation: hintPulse 0.8s infinite alternate;
+            z-index: 6;
+        }
+
+        @keyframes hintPulse {
+            0% { transform: scale(0.94); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.8); border-color: #fff; }
+            100% { transform: scale(1.08); box-shadow: 0 0 16px 6px rgba(255, 215, 0, 0.95); border-color: #ffe066; }
+        }
+
+        /* Bottom Bar */
+        .bottom-bar {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 5px 2px;
+            flex-shrink: 0;
+        }
+
+        .tool-btn {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: #2b95d6;
+            border: 3px solid #8ce0ff;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            position: relative;
+            transition: transform 0.1s;
+        }
+
+        .tool-btn:active {
+            transform: scale(0.92);
+        }
+
+        .tool-icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .tool-cost {
+            font-size: 10px;
+            font-weight: 800;
+            background: rgba(0,0,0,0.45);
+            padding: 1px 6px;
+            border-radius: 8px;
+            margin-top: 2px;
+        }
+
+        /* Modals */
+        .modal {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 30;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border-radius: 16px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            width: 82%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content h2 {
+            color: #2b95d6;
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+
+        .action-btn {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 11px 26px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            margin-top: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.4);
+            display: inline-block;
+        }
+
+        .action-btn.secondary {
+            background: #e67e22;
+            box-shadow: 0 4px 10px rgba(230, 126, 34, 0.4);
+            margin-left: 6px;
+        }
+
+        /* Confetti */
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 40;
+            animation: confettiBurst 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes confettiBurst {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper" id="gameWrapper">
+    <div class="toast" id="toast"></div>
+
+    <!-- Top Header -->
+    <div class="top-bar">
+        <select class="level-btn" id="levelSelect" onchange="changeLevel(this.value)"></select>
+        <div class="top-right-group">
+            <button class="sound-btn" id="soundBtn" onclick="toggleSound()" title="Toggle Sound">🔊</button>
+            <div class="coin-box">
+                <span id="coinCount">300</span>
+                <span class="coin-icon"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-card" id="statusCard">
+        <div class="hearts-box" id="heartsBox">
+            <span class="heart">❤️</span>
+            <span class="heart">❤️</span>
+            <span class="heart">❤️</span>
+        </div>
+        <div class="progress-info" id="progressInfo">Arrows: 0/0</div>
+    </div>
+
+    <!-- Main Puzzle Board -->
+    <div class="board-wrapper" id="boardWrapper">
+        <div class="arrow-grid" id="arrowGrid"></div>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="bottom-bar" id="bottomBar">
+        <div class="tool-btn" onclick="useBombPower()" title="Destroy 1 Blocked Arrow">
+            <span class="tool-icon">💣</span>
+            <span class="tool-cost">80 🪙</span>
+        </div>
+        <div class="tool-btn" onclick="restartCurrentLevel()" title="Restart Level">
+            <span class="tool-icon">🔄</span>
+            <span class="tool-cost">FREE</span>
+        </div>
+        <div class="tool-btn" onclick="useHintPower()" title="Highlight Safe Arrow">
+            <span class="tool-icon">💡</span>
+            <span class="tool-cost">40 🪙</span>
+        </div>
+    </div>
+
+    <!-- Win Modal -->
+    <div class="modal" id="winModal">
+        <div class="modal-content">
+            <h2>🎉 SUPER MAWA! 🎉</h2>
+            <p id="winRewardText" style="color:#555; font-weight:600;">All Arrows Escaped! +80 Coins</p>
+            <button class="action-btn" id="nextLevelBtn" onclick="nextLevel()">Next Level ➔</button>
+        </div>
+    </div>
+
+    <!-- Out of Lives Modal -->
+    <div class="modal" id="loseModal">
+        <div class="modal-content">
+            <h2 style="color:#e74c3c;">💔 OUT OF HEARTS!</h2>
+            <p style="color:#555; font-weight:600; font-size:14px;">Blocked arrows cost a heart when tapped.</p>
+            <div>
+                <button class="action-btn" onclick="reviveWithCoins()">+3 ❤️ (60 🪙)</button>
+                <button class="action-btn secondary" onclick="restartCurrentLevel()">Retry 🔄</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const levels = [
+        { size: 4, count: 8,  title: "WARM UP" },
+        { size: 4, count: 11, title: "EASY BREEZE" },
+        { size: 4, count: 14, title: "FOUR BY FOUR" },
+        { size: 5, count: 14, title: "STEPPING UP" },
+        { size: 5, count: 18, title: "TRAFFIC JAM" },
+        { size: 5, count: 21, title: "CROSSROADS" },
+        { size: 5, count: 24, title: "TIGHT PACK" },
+        { size: 6, count: 22, title: "SIX GRID" },
+        { size: 6, count: 26, title: "MAZE RUNNER" },
+        { size: 6, count: 30, title: "GRIDLOCK" },
+        { size: 6, count: 34, title: "BRAIN TEASER" },
+        { size: 7, count: 32, title: "SEVEN HEAVEN" },
+        { size: 7, count: 37, title: "ARROW STORM" },
+        { size: 7, count: 42, title: "RUSH HOUR" },
+        { size: 7, count: 46, title: "GRAND MASTER" }
+    ];
+
+    const DIRS = {
+        U: { dr: -1, dc: 0, rot: -90 },
+        D: { dr: 1,  dc: 0, rot: 90 },
+        L: { dr: 0,  dc: -1, rot: 180 },
+        R: { dr: 0,  dc: 1,  rot: 0 }
+    };
+    const DIR_KEYS = ['U', 'D', 'L', 'R'];
+
+    let currentLevelIdx = 0;
+    let coins = 300;
+    let completedLevels = [];
+    let hearts = 3;
+    let gridSize = 4;
+    let board = []; // 2D array: null or { dir, hinted }
+    let totalArrows = 0;
+    let remainingArrows = 0;
+    let isAnimating = false;
+    let levelWon = false;
+    let soundEnabled = true;
+    let audioCtx = null;
+    let toastTimeout = null;
+    let shakeTimeout = null;
+
+    const gameWrapperEl = document.getElementById('gameWrapper');
+    const statusCardEl = document.getElementById('statusCard');
+    const bottomBarEl = document.getElementById('bottomBar');
+    const boardWrapperEl = document.getElementById('boardWrapper');
+    const arrowGridEl = document.getElementById('arrowGrid');
+    const levelSelectEl = document.getElementById('levelSelect');
+    const soundBtnEl = document.getElementById('soundBtn');
+    const toastEl = document.getElementById('toast');
+    const heartsBoxEl = document.getElementById('heartsBox');
+    const progressInfoEl = document.getElementById('progressInfo');
+
+    function initAudioOnInteraction() {
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            if (!audioCtx) audioCtx = new AudioCtx();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        } catch (e) {}
+    }
+
+    window.addEventListener('pointerdown', initAudioOnInteraction, { passive: true });
+
+    function checkWebAudioSupport() {
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) soundBtnEl.style.display = 'none';
+        } catch (e) {
+            soundBtnEl.style.display = 'none';
+        }
+    }
+
+    function toggleSound() {
+        initAudioOnInteraction();
+        soundEnabled = !soundEnabled;
+        soundBtnEl.innerText = soundEnabled ? '🔊' : '🔇';
+        try {
+            localStorage.setItem('ae_sound', soundEnabled ? '1' : '0');
+        } catch (e) {}
+    }
+
+    function playSound(type) {
+        if (!soundEnabled) return;
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            if (!audioCtx) audioCtx = new AudioCtx();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const now = audioCtx.currentTime;
+            if (type === 'woosh') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(420, now);
+                osc.frequency.exponentialRampToValueAtTime(920, now + 0.14);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } else if (type === 'bonk') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.linearRampToValueAtTime(95, now + 0.15);
+                gain.gain.setValueAtTime(0.16, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.16);
+            } else if (type === 'win') {
+                [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    const start = now + idx * 0.1;
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, start);
+                    gain.gain.setValueAtTime(0.15, start);
+                    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.24);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(start);
+                    osc.stop(start + 0.24);
+                });
+            }
+        } catch (e) {}
+    }
+
+    function showToast(msg) {
+        toastEl.innerText = msg;
+        toastEl.classList.add('show');
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+            toastEl.classList.remove('show');
+        }, 2000);
+    }
+
+    function fitBoard() {
+        const wrapperRect = gameWrapperEl.getBoundingClientRect();
+        const statusRect = statusCardEl.getBoundingClientRect();
+        const bottomRect = bottomBarEl.getBoundingClientRect();
+
+        const availableW = wrapperRect.width;
+        const availableH = Math.max(120, bottomRect.top - statusRect.bottom - 12);
+        const side = Math.floor(Math.min(availableW, availableH));
+
+        boardWrapperEl.style.width = `${side}px`;
+        boardWrapperEl.style.height = `${side}px`;
+    }
+
+    window.addEventListener('resize', fitBoard);
+
+    function refreshLevelSelect() {
+        levelSelectEl.innerHTML = '';
+        levels.forEach((lvl, idx) => {
+            const opt = document.createElement('option');
+            opt.value = idx;
+            const prefix = completedLevels.includes(idx) ? '✓ ' : '';
+            opt.innerText = `${prefix}Level ${idx + 1}: ${lvl.title}`;
+            levelSelectEl.appendChild(opt);
+        });
+        levelSelectEl.value = currentLevelIdx;
+    }
+
+    function loadProgress() {
+        try {
+            const c = localStorage.getItem('ae_coins');
+            const l = localStorage.getItem('ae_level');
+            const comp = localStorage.getItem('ae_completed');
+            const snd = localStorage.getItem('ae_sound');
+
+            if (c !== null && !isNaN(parseInt(c, 10))) coins = parseInt(c, 10);
+            if (l !== null && !isNaN(parseInt(l, 10))) {
+                const pl = parseInt(l, 10);
+                if (pl >= 0 && pl < levels.length) currentLevelIdx = pl;
+            }
+            if (comp !== null) {
+                const parsed = JSON.parse(comp);
+                if (Array.isArray(parsed)) completedLevels = parsed;
+            }
+            if (snd !== null) soundEnabled = snd !== '0';
+        } catch (e) {}
+
+        document.getElementById('coinCount').innerText = coins;
+        soundBtnEl.innerText = soundEnabled ? '🔊' : '🔇';
+        refreshLevelSelect();
+    }
+
+    function saveProgress() {
+        try {
+            localStorage.setItem('ae_coins', String(coins));
+            localStorage.setItem('ae_level', String(currentLevelIdx));
+            localStorage.setItem('ae_completed', JSON.stringify(completedLevels));
+        } catch (e) {}
+    }
+
+    function checkDailyBonus() {
+        try {
+            const now = new Date();
+            const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+            if (localStorage.getItem('ae_last_bonus') !== today) {
+                localStorage.setItem('ae_last_bonus', today);
+                updateCoins(50);
+                setTimeout(() => showToast("Daily bonus +50"), 300);
+            }
+        } catch (e) {}
+    }
+
+    function saveMidState() {
+        try {
+            const state = {
+                levelIdx: currentLevelIdx,
+                hearts,
+                totalArrows,
+                board
+            };
+            localStorage.setItem('ae_state', JSON.stringify(state));
+        } catch (e) {}
+    }
+
+    function clearMidState() {
+        try {
+            localStorage.removeItem('ae_state');
+        } catch (e) {}
+    }
+
+    function tryRestoreMidState(expectedIdx) {
+        try {
+            const raw = localStorage.getItem('ae_state');
+            if (!raw) return false;
+            const st = JSON.parse(raw);
+            if (!st || st.levelIdx !== expectedIdx) return false;
+            if (!Number.isInteger(st.hearts) || st.hearts < 1 || st.hearts > 3) return false;
+            const sz = levels[expectedIdx].size;
+            if (!Array.isArray(st.board) || st.board.length !== sz) return false;
+
+            let rem = 0;
+            for (let r = 0; r < sz; r++) {
+                if (!Array.isArray(st.board[r]) || st.board[r].length !== sz) return false;
+                for (let c = 0; c < sz; c++) {
+                    const cell = st.board[r][c];
+                    if (cell !== null) {
+                        if (!cell || !DIR_KEYS.includes(cell.dir)) return false;
+                        rem++;
+                    }
+                }
+            }
+            if (rem === 0) return false;
+
+            gridSize = sz;
+            board = st.board;
+            hearts = st.hearts;
+            totalArrows = st.totalArrows || rem;
+            remainingArrows = rem;
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Check if path from (r,c) in direction `dir` to edge of board is completely empty
+    function isPathClear(r, c, dir, testBoard = board) {
+        const { dr, dc } = DIRS[dir];
+        let nr = r + dr;
+        let nc = c + dc;
+        while (nr >= 0 && nr < gridSize && nc >= 0 && nc < gridSize) {
+            if (testBoard[nr][nc] !== null) {
+                return { clear: false, blockerR: nr, blockerC: nc };
+            }
+            nr += dr;
+            nc += dc;
+        }
+        return { clear: true };
+    }
+
+    // Reverse Unblocking Generator: guarantees 100% solvable board!
+    // If we place arrows one by one only in positions/directions that currently have a clear path to the exit,
+    // then reversing that placement order is a guaranteed valid escape sequence!
+    function generateSolvableBoard(size, targetCount) {
+        gridSize = size;
+        const tempBoard = Array.from({ length: size }, () => Array(size).fill(null));
+
+        const coords = [];
+        for (let r = 0; r < size; r++) {
+            for (let c = 0; c < size; c++) coords.push({ r, c });
+        }
+
+        let placed = 0;
+        for (let step = 0; step < targetCount; step++) {
+            // Shuffle coords
+            for (let i = coords.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [coords[i], coords[j]] = [coords[j], coords[i]];
+            }
+
+            let foundSpot = false;
+            for (let i = 0; i < coords.length; i++) {
+                const { r, c } = coords[i];
+                if (tempBoard[r][c] !== null) continue;
+
+                // Shuffle directions
+                const dirs = [...DIR_KEYS].sort(() => Math.random() - 0.5);
+                // Prefer directions that point over existing arrows (creates deeper dependency chains!)
+                dirs.sort((a, b) => {
+                    const countBehind = (d) => {
+                        const { dr, dc } = DIRS[d];
+                        let br = r - dr, bc = c - dc, cnt = 0;
+                        while (br >= 0 && br < size && bc >= 0 && bc < size) {
+                            if (tempBoard[br][bc] !== null) cnt++;
+                            br -= dr; bc -= dc;
+                        }
+                        return cnt;
+                    };
+                    return countBehind(b) - countBehind(a);
+                });
+
+                for (const d of dirs) {
+                    if (isPathClear(r, c, d, tempBoard).clear) {
+                        tempBoard[r][c] = { dir: d, hinted: false };
+                        placed++;
+                        foundSpot = true;
+                        break;
+                    }
+                }
+                if (foundSpot) break;
+            }
+        }
+
+        board = tempBoard;
+        totalArrows = placed;
+        remainingArrows = placed;
+    }
+
+    function initLevel(levelIdx, allowRestore = false) {
+        currentLevelIdx = levelIdx;
+        isAnimating = false;
+        levelWon = false;
+        saveProgress();
+        refreshLevelSelect();
+
+        document.getElementById('winModal').style.display = 'none';
+        document.getElementById('loseModal').style.display = 'none';
+
+        const lvl = levels[levelIdx];
+        gridSize = lvl.size;
+
+        let restored = false;
+        if (allowRestore) {
+            restored = tryRestoreMidState(levelIdx);
+        }
+
+        if (!restored) {
+            hearts = 3;
+            generateSolvableBoard(lvl.size, lvl.count);
+            saveMidState();
+        }
+
+        updateUIHeader();
+        fitBoard();
+        renderBoard();
+    }
+
+    function updateUIHeader() {
+        const heartSpans = heartsBoxEl.querySelectorAll('.heart');
+        heartSpans.forEach((h, i) => {
+            if (i < hearts) h.classList.remove('lost');
+            else h.classList.add('lost');
+        });
+        const escaped = totalArrows - remainingArrows;
+        progressInfoEl.innerText = `Escaped: ${escaped}/${totalArrows}`;
+    }
+
+    function getArrowSVG(dir) {
+        const rot = DIRS[dir].rot;
+        return `<svg viewBox="0 0 24 24" style="transform: rotate(${rot}deg)">
+            <path d="M4 10h8V5l8 7-8 7v-5H4z"/>
+        </svg>`;
+    }
+
+    function renderBoard() {
+        arrowGridEl.innerHTML = '';
+        arrowGridEl.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+        arrowGridEl.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+
+        for (let r = 0; r < gridSize; r++) {
+            for (let c = 0; c < gridSize; c++) {
+                const slot = document.createElement('div');
+                slot.className = 'grid-slot';
+                slot.id = `slot-${r}-${c}`;
+
+                const cell = board[r][c];
+                if (cell) {
+                    const tile = document.createElement('div');
+                    tile.className = `arrow-tile dir-${cell.dir}` + (cell.hinted ? ' hint-glow' : '');
+                    tile.id = `tile-${r}-${c}`;
+                    tile.innerHTML = getArrowSVG(cell.dir);
+                    tile.addEventListener('pointerdown', (e) => {
+                        e.preventDefault();
+                        onArrowTap(r, c);
+                    });
+                    slot.appendChild(tile);
+                }
+
+                arrowGridEl.appendChild(slot);
+            }
+        }
+    }
+
+    function onArrowTap(r, c) {
+        if (isAnimating) return;
+        const cell = board[r][c];
+        if (!cell) return;
+
+        const tileEl = document.getElementById(`tile-${r}-${c}`);
+        if (!tileEl) return;
+
+        const check = isPathClear(r, c, cell.dir);
+
+        if (check.clear) {
+            // Fly out!
+            playSound('woosh');
+            try { if (navigator.vibrate) navigator.vibrate(12); } catch (e) {}
+
+            const { dr, dc } = DIRS[cell.dir];
+            const flyDist = boardWrapperEl.clientWidth * 1.1;
+            tileEl.classList.remove('hint-glow');
+            tileEl.style.transform = `translate(${dc * flyDist}px, ${dr * flyDist}px)`;
+            tileEl.style.opacity = '0';
+
+            board[r][c] = null;
+            remainingArrows--;
+            updateCoins(3);
+            updateUIHeader();
+            saveMidState();
+
+            setTimeout(() => {
+                if (tileEl.parentNode) tileEl.parentNode.removeChild(tileEl);
+                checkWinCondition();
+            }, 240);
+        } else {
+            // Blocked! Bonk into blocker and bounce back
+            isAnimating = true;
+            playSound('bonk');
+            try { if (navigator.vibrate) navigator.vibrate(35); } catch (e) {}
+
+            const { dr, dc } = DIRS[cell.dir];
+            const stepsToBlocker = Math.max(Math.abs(check.blockerR - r), Math.abs(check.blockerC - c)) - 1;
+            const slotSize = (arrowGridEl.clientWidth / gridSize);
+            const bumpPx = stepsToBlocker * slotSize + slotSize * 0.32;
+
+            const blockerTile = document.getElementById(`tile-${check.blockerR}-${check.blockerC}`);
+            tileEl.style.transform = `translate(${dc * bumpPx}px, ${dr * bumpPx}px)`;
+            tileEl.classList.add('blocked-flash');
+            if (blockerTile) blockerTile.classList.add('blocked-flash');
+
+            boardWrapperEl.classList.remove('shake');
+            void boardWrapperEl.offsetWidth;
+            boardWrapperEl.classList.add('shake');
+            if (shakeTimeout) clearTimeout(shakeTimeout);
+            shakeTimeout = setTimeout(() => boardWrapperEl.classList.remove('shake'), 250);
+
+            hearts = Math.max(0, hearts - 1);
+            updateUIHeader();
+            saveMidState();
+
+            setTimeout(() => {
+                tileEl.style.transform = 'translate(0, 0)';
+                tileEl.classList.remove('blocked-flash');
+                if (blockerTile) blockerTile.classList.remove('blocked-flash');
+                isAnimating = false;
+
+                if (hearts <= 0) {
+                    setTimeout(() => {
+                        document.getElementById('loseModal').style.display = 'flex';
+                    }, 150);
+                }
+            }, 220);
+        }
+    }
+
+    function useHintPower() {
+        if (isAnimating || remainingArrows === 0) return;
+
+        const clearCandidates = [];
+        for (let r = 0; r < gridSize; r++) {
+            for (let c = 0; c < gridSize; c++) {
+                const cell = board[r][c];
+                if (cell && isPathClear(r, c, cell.dir).clear) {
+                    if (cell.hinted) {
+                        showToast("A safe arrow is already highlighted!");
+                        return;
+                    }
+                    clearCandidates.push({ r, c });
+                }
+            }
+        }
+
+        if (clearCandidates.length === 0) return;
+        if (coins < 40) {
+            showToast("Need 40 coins for Hint Mawa!");
+            return;
+        }
+
+        updateCoins(-40);
+        const pick = clearCandidates[Math.floor(Math.random() * clearCandidates.length)];
+        board[pick.r][pick.c].hinted = true;
+        const tileEl = document.getElementById(`tile-${pick.r}-${pick.c}`);
+        if (tileEl) tileEl.classList.add('hint-glow');
+        saveMidState();
+    }
+
+    function useBombPower() {
+        if (isAnimating || remainingArrows === 0) return;
+
+        const candidates = [];
+        for (let r = 0; r < gridSize; r++) {
+            for (let c = 0; c < gridSize; c++) {
+                const cell = board[r][c];
+                if (cell && isPathClear(r, c, cell.dir).clear === false) {
+                    candidates.push({ r, c });
+                }
+            }
+        }
+
+        if (candidates.length === 0) {
+            showToast("No blocked arrows");
+            return;
+        }
+
+        if (coins < 80) {
+            showToast("Need 80 coins for Bomb Mawa!");
+            return;
+        }
+
+        isAnimating = true;
+        updateCoins(-80);
+        const pick = candidates[Math.floor(Math.random() * candidates.length)];
+        const tileEl = document.getElementById(`tile-${pick.r}-${pick.c}`);
+        board[pick.r][pick.c] = null;
+        remainingArrows--;
+        updateUIHeader();
+        saveMidState();
+
+        playSound('woosh');
+        if (tileEl) {
+            tileEl.style.transform = 'scale(0)';
+            tileEl.style.opacity = '0';
+            setTimeout(() => {
+                if (tileEl.parentNode) tileEl.parentNode.removeChild(tileEl);
+                isAnimating = false;
+                checkWinCondition();
+            }, 220);
+        } else {
+            isAnimating = false;
+            checkWinCondition();
+        }
+    }
+
+    function reviveWithCoins() {
+        if (coins < 60) {
+            showToast("Not enough coins! Tap Retry to restart free.");
+            return;
+        }
+        updateCoins(-60);
+        hearts = 3;
+        updateUIHeader();
+        saveMidState();
+        document.getElementById('loseModal').style.display = 'none';
+    }
+
+    function restartCurrentLevel() {
+        clearMidState();
+        initLevel(currentLevelIdx, false);
+    }
+
+    function updateCoins(amount) {
+        coins += amount;
+        document.getElementById('coinCount').innerText = coins;
+        saveProgress();
+    }
+
+    function spawnConfetti() {
+        const colors = ['#ff6b6b', '#feca57', '#1dd1a1', '#54a0ff', '#ff9ff3', '#ffe066'];
+        for (let i = 0; i < 36; i++) {
+            const div = document.createElement('div');
+            div.className = 'confetti-piece';
+            div.style.background = colors[i % colors.length];
+            div.style.left = '50%';
+            div.style.top = '45%';
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 60 + Math.random() * 140;
+            div.style.setProperty('--dx', `${Math.cos(angle) * dist}px`);
+            div.style.setProperty('--dy', `${Math.sin(angle) * dist + 40}px`);
+            div.style.setProperty('--rot', `${Math.random() * 720 - 360}deg`);
+            gameWrapperEl.appendChild(div);
+            setTimeout(() => { if (div.parentNode) div.parentNode.removeChild(div); }, 1500);
+        }
+    }
+
+    function checkWinCondition() {
+        if (levelWon) return;
+        if (remainingArrows === 0) {
+            levelWon = true;
+            clearMidState();
+            const firstTime = !completedLevels.includes(currentLevelIdx);
+            const reward = firstTime ? 80 : 20;
+            if (firstTime) completedLevels.push(currentLevelIdx);
+
+            updateCoins(reward);
+            refreshLevelSelect();
+            playSound('win');
+            spawnConfetti();
+
+            document.getElementById('winRewardText').innerText = `All Arrows Escaped! +${reward} Coins`;
+            const nextBtn = document.getElementById('nextLevelBtn');
+            nextBtn.innerText = (currentLevelIdx === levels.length - 1) ? 'Play Again' : 'Next Level ➔';
+
+            setTimeout(() => {
+                document.getElementById('winModal').style.display = 'flex';
+            }, 350);
+        }
+    }
+
+    function changeLevel(val) {
+        clearMidState();
+        initLevel(parseInt(val, 10), false);
+    }
+
+    function nextLevel() {
+        clearMidState();
+        const nextIdx = (currentLevelIdx + 1) % levels.length;
+        initLevel(nextIdx, false);
+    }
+
+    window.onload = () => {
+        checkWebAudioSupport();
+        loadProgress();
+        checkDailyBonus();
+        fitBoard();
+        initLevel(currentLevelIdx, true);
+    };
+</script>
+
+</body>
+</html>

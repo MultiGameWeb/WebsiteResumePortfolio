@@ -2,7 +2,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
 const list=v=>Array.isArray(v)?v.filter(x=>x&&x.enabled!==false):[];
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
   const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},ok=x=>selected.includes(x);
   const eventTypes=list(d.eventTypes),packages=list(d.packages),services=list(d.services),gallery=list(d.gallery),videos=list(d.videos),venues=list(d.venues),
         availability=list(d.availability),reviews=list(d.reviews),team=list(d.team),faq=list(d.faq),hours=list(d.hours);
@@ -18,13 +18,13 @@ export function render(d={},selected=[]){
 
   if(ok('eventTypes')&&s.showEventTypes!==false)html+='<section id="eventTypes" class="ew-section ew-eventtypes"><div class="ew-head split"><div><span class="ew-kicker">EVENT TYPES</span><h2>Different celebrations. One thoughtful planning process.</h2></div><p>Choose the type of event you are planning and use the enquiry form to request a tailored package.</p></div><div class="ew-event-grid">'+eventTypes.map((x,i)=>'<article><span class="ew-event-icon">'+esc(x.icon||"✦")+'</span><small>0'+(i+1)+'</small><h3>'+esc(x.name)+'</h3><p>'+esc(x.description||"")+'</p><a href="#enquiry" data-event-type="'+esc(x.name)+'">Plan this event ↗</a></article>').join('')+'</div></section>';
 
-  if(ok('packages')&&s.showPackages!==false)html+='<section id="packages" class="ew-section"><div class="ew-head split"><div><span class="ew-kicker">PACKAGES & PRICING</span><h2>Clear starting points, tailored to your celebration.</h2></div><p>Displayed pricing is a sample starting point. Final scope, vendor rates and event requirements should be confirmed in the written proposal.</p></div><div class="ew-package-grid">'+packages.map((x,i)=>'<article class="ew-package-card '+(x.tier==="Luxury"?'featured':'')+'"><div class="ew-package-top"><span>'+esc(x.tier||"Package")+'</span><small>0'+(i+1)+'</small></div><h3>'+esc(x.name)+'</h3><strong>'+esc(x.price||"Custom Quote")+'</strong><em>'+esc(x.starting||"Based on scope")+'</em><p>'+esc(x.guestRange||"Custom guest count")+'</p><p class="ew-package-summary">'+esc(x.summary||"")+'</p><ul>'+((Array.isArray(x.includes)?x.includes:String(x.includes||"").split(",").map(y=>y.trim()).filter(Boolean))).map(y=>'<li>✓ '+esc(y)+'</li>').join('')+'</ul><a class="ew-btn '+(x.tier==="Luxury"?'solid':'outline')+'" href="#enquiry" data-package="'+esc(x.name||"")+'">Discuss package <span>↗</span></a></article>').join('')+'</div></section>';
+  if(ok('packages')&&s.showPackages!==false)html+='<section id="packages" class="ew-section"><div class="ew-head split"><div><span class="ew-kicker">PACKAGES & PRICING</span><h2>Clear starting points, tailored to your celebration.</h2></div><p>Prices shown are starting points. Final scope, vendor rates and requirements are confirmed in your written proposal.</p></div><div class="ew-package-grid">'+packages.map((x,i)=>'<article class="ew-package-card '+(x.tier==="Luxury"?'featured':'')+'"><div class="ew-package-top"><span>'+esc(x.tier||"Package")+'</span><small>0'+(i+1)+'</small></div><h3>'+esc(x.name)+'</h3><strong>'+esc(x.price||"Custom Quote")+'</strong><em>'+esc(x.starting||"Based on scope")+'</em><p>'+esc(x.guestRange||"Custom guest count")+'</p><p class="ew-package-summary">'+esc(x.summary||"")+'</p><ul>'+((Array.isArray(x.includes)?x.includes:String(x.includes||"").split(",").map(y=>y.trim()).filter(Boolean))).map(y=>'<li>✓ '+esc(y)+'</li>').join('')+'</ul><a class="ew-btn '+(x.tier==="Luxury"?'solid':'outline')+'" href="#enquiry" data-package="'+esc(x.name||"")+'">Discuss package <span>↗</span></a></article>').join('')+'</div></section>';
 
   if(ok('services')&&s.showServices!==false)html+='<section id="services" class="ew-section ew-dark"><div class="ew-head"><span class="ew-kicker">OUR SERVICES</span><h2>Every moving part, coordinated with intention.</h2></div><div class="ew-service-grid">'+services.map((x,i)=>'<article><span class="ew-service-icon">'+esc(x.icon||"✦")+'</span><small>0'+(i+1)+'</small><h3>'+esc(x.name)+'</h3><p>'+esc(x.description||"")+'</p></article>').join('')+'</div></section>';
 
   if(ok('gallery')&&s.showGallery!==false)html+='<section id="gallery" class="ew-section"><div class="ew-head split"><div><span class="ew-kicker">OUR WORK</span><h2>Past celebrations, styled with a point of view.</h2></div><p>Use categories to showcase weddings, engagements, birthdays, corporate events and other work.</p></div><div class="ew-filter-row"><button class="ew-filter active" data-gallery-cat="all">All</button>'+cats.map(x=>'<button class="ew-filter" data-gallery-cat="'+esc(x)+'">'+esc(x)+'</button>').join('')+'</div><div class="ew-gallery">'+gallery.map((x,i)=>'<figure data-gallery-item="'+esc(x.category||"Other")+'"><img src="'+esc(x.image||"")+'" alt="'+esc(x.title||"Event")+'"><figcaption><strong>'+esc(x.title||"Event")+'</strong><span>'+esc(x.category||"Celebration")+'</span></figcaption></figure>').join('')+'</div></section>';
 
-  if(ok('videos')&&videos.length)html+='<section class="ew-section ew-video"><div class="ew-head split"><div><span class="ew-kicker">EVENT FILMS</span><h2>Let future clients see how you work.</h2></div><p>Replace sample URLs with your own wedding reels, setup walkthroughs and behind-the-scenes videos.</p></div><div class="ew-video-grid">'+videos.map((x,i)=>'<article><a target="_blank" href="'+esc(x.url||"#")+'"><div class="ew-video-thumb">'+(x.thumbnail?'<img src="'+esc(x.thumbnail)+'" alt="'+esc(x.title||"Video")+'">':'')+'<span>▶</span></div><strong>'+esc(x.title||"Event video")+'</strong><p>'+esc(x.description||"")+'</p></a></article>').join('')+'</div></section>';
+  if(ok('videos')&&videos.length)html+='<section class="ew-section ew-video"><div class="ew-head split"><div><span class="ew-kicker">EVENT FILMS</span><h2>Let future clients see how you work.</h2></div><p></p></div><div class="ew-video-grid">'+videos.map((x,i)=>'<article><a target="_blank" href="'+esc(x.url||"#")+'"><div class="ew-video-thumb">'+(x.thumbnail?'<img src="'+esc(x.thumbnail)+'" alt="'+esc(x.title||"Video")+'">':'')+'<span>▶</span></div><strong>'+esc(x.title||"Event video")+'</strong><p>'+esc(x.description||"")+'</p></a></article>').join('')+'</div></section>';
 
   if(ok('venues')&&venues.length)html+='<section id="venues" class="ew-section ew-venues"><div class="ew-head split"><div><span class="ew-kicker">VENUE SHOWCASE</span><h2>Help clients imagine where the celebration could happen.</h2></div><p>Show capacity, indoor/outdoor format, parking and location notes for preferred venues.</p></div><div class="ew-venue-grid">'+venues.map(x=>'<article><img src="'+esc(x.image||"")+'" alt="'+esc(x.name||"Venue")+'"><div><div class="ew-venue-meta"><span>'+esc(x.type||"Venue")+'</span><span>'+esc(x.capacity||"")+'</span></div><h3>'+esc(x.name||"Venue")+'</h3><p>'+esc(x.area||"")+'</p><div class="ew-venue-details"><span>Parking: '+esc(x.parking||"—")+'</span><span>'+esc(x.indoorOutdoor||"")+'</span></div>'+(x.maps?'<a class="ew-link" target="_blank" href="'+esc(x.maps)+'">View venue location ↗</a>':'')+'</div></article>').join('')+'</div></section>';
 
@@ -34,11 +34,11 @@ export function render(d={},selected=[]){
 
   if(ok('reviews')&&s.showReviews!==false)html+='<section class="ew-section ew-reviews"><div class="ew-head"><span class="ew-kicker">CLIENT NOTES</span><h2>What clients remember about the planning experience.</h2></div><div class="ew-review-grid">'+reviews.map(x=>'<article>'+(x.image?'<img src="'+esc(x.image)+'" alt="'+esc(x.name||"Client")+'">':'')+'<div class="ew-stars">'+('★'.repeat(Math.max(1,Math.min(5,num(x.rating)||5))))+'</div><p>“'+esc(x.text||"")+'”</p><strong>'+esc(x.name||"Client")+'</strong><small>'+esc(x.event||"Event")+'</small></article>').join('')+'</div></section>';
 
-  if(ok('about')&&s.showAbout!==false)html+='<section class="ew-section ew-about"><div class="ew-head split"><div><span class="ew-kicker">ABOUT THE STUDIO</span><h2>'+esc(b.about||"Tell your story here.")+'</h2></div><p>Build trust with a clear story, transparent planning process and practical event experience.</p></div><div class="ew-about-stats">'+list(d.aboutStats).map(x=>'<div><strong>'+esc(x.value||"")+'</strong><span>'+esc(x.label||"")+'</span></div>').join('')+'</div></section>';
+  if(ok('about')&&s.showAbout!==false)html+='<section class="ew-section ew-about"><div class="ew-head split"><div><span class="ew-kicker">ABOUT THE STUDIO</span><h2>'+esc(b.about||"Welcome! Get in touch to learn more about us.")+'</h2></div><p>Build trust with a clear story, transparent planning process and practical event experience.</p></div><div class="ew-about-stats">'+list(d.aboutStats).map(x=>'<div><strong>'+esc(x.value||"")+'</strong><span>'+esc(x.label||"")+'</span></div>').join('')+'</div></section>';
 
   if(ok('team')&&s.showTeam!==false)html+='<section class="ew-section"><div class="ew-head"><span class="ew-kicker">PLANNING TEAM</span><h2>Meet the people behind the calm on event day.</h2></div><div class="ew-team-grid">'+team.map(x=>'<article><img src="'+esc(x.image||"")+'" alt="'+esc(x.name||"Planner")+'"><div><span>'+esc(x.role||"")+'</span><h3>'+esc(x.name||"Planner")+'</h3><p>'+esc(x.specialization||"")+'</p><small>'+esc(x.credentials||"")+'</small></div></article>').join('')+'</div></section>';
 
-  if(ok('location')||ok('hours'))html+='<section class="ew-section ew-location"><div><span class="ew-kicker">STUDIO / OFFICE</span><h2>Let’s meet and talk through the celebration.</h2><p>'+esc(c.address||"Add your office address here.")+'</p><p>'+esc(c.hoursText||"")+'</p><div class="ew-actions">'+(ok('call')&&c.phone?'<a class="ew-btn solid" href="tel:'+safe(c.phone)+'">Call '+esc(c.phone)+'</a>':'')+(ok('whatsapp')&&c.whatsapp?'<a class="ew-btn outline" target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp</a>':'')+'</div></div>'+(c.maps?'<a class="ew-map" target="_blank" href="'+esc(c.maps)+'"><span>OPEN MAP</span><strong>Studio location ↗</strong><small>'+esc(c.address||"View directions")+'</small></a>':'')+'</section>';
+  if(ok('location')||ok('hours'))html+='<section class="ew-section ew-location"><div><span class="ew-kicker">STUDIO / OFFICE</span><h2>Let’s meet and talk through the celebration.</h2><p>'+esc(c.address||"Please contact us for our address and service area.")+'</p><p>'+esc(c.hoursText||"")+'</p><div class="ew-actions">'+(ok('call')&&c.phone?'<a class="ew-btn solid" href="tel:'+safe(c.phone)+'">Call '+esc(c.phone)+'</a>':'')+(ok('whatsapp')&&c.whatsapp?'<a class="ew-btn outline" target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp</a>':'')+'</div></div>'+(c.maps?'<a class="ew-map" target="_blank" href="'+esc(c.maps)+'"><span>OPEN MAP</span><strong>Studio location ↗</strong><small>'+esc(c.address||"View directions")+'</small></a>':'')+'</section>';
 
   if(ok('hours'))html+='<section class="ew-section ew-hours"><div class="ew-head"><span class="ew-kicker">CONTACT HOURS</span><h2>Reach the planning team.</h2></div><div class="ew-hours-list">'+hours.map(x=>'<div><strong>'+esc(x.day||"Day")+'</strong><span>'+esc(x.enabled!==false?(x.open||"")+" — "+(x.close||""):"Closed")+'</span></div>').join('')+'</div></section>';
 
@@ -52,7 +52,7 @@ export function render(d={},selected=[]){
   if(ok('whatsapp')&&c.whatsapp)html+='<a class="ew-float-wa" target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>';
   return html+'</div>';
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
   let selectedDate="";
   root.querySelectorAll('[data-event-type]').forEach(b=>b.addEventListener('click',()=>{const s=root.querySelector('#ewEventType');if(s)s.value=b.dataset.eventType||''}));
   root.querySelectorAll('[data-package]').forEach(b=>b.addEventListener('click',()=>{const s=root.querySelector('#ewPackage');if(s)s.value=b.dataset.package||''}));
@@ -64,8 +64,60 @@ export function init(root,d={}){
     const fd=new FormData(form),lead=Object.fromEntries(fd.entries());
     lead.services=[...form.querySelector('#ewServices')?.selectedOptions||[]].map(o=>o.value).join(', ');
     lead.status="New";lead.createdAt=new Date().toISOString();
-    try{const state=Store.read(),data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#ewLeadNotice');if(n)n.textContent='Enquiry saved. The planning team can confirm date availability and next steps with you.';form.reset()}catch{const n=root.querySelector('#ewLeadNotice');if(n)n.textContent='Could not save the enquiry in this browser.'}
+    try{const state=Store.read(),data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#ewLeadNotice');if(n)n.textContent='Thanks! Please send the WhatsApp message that opened to confirm your request. If it did not open, please call us.';form.reset()}catch{const n=root.querySelector('#ewLeadNotice');if(n)n.textContent='Could not save the enquiry in this browser.'}
     const wa=d.contact?.whatsapp;
     if(wa){const msg=['Event enquiry',lead.name,lead.phone,lead.email,lead.eventType,lead.eventDate,lead.location,'Guests: '+lead.guests,'Budget: '+lead.budget,'Package: '+lead.package,'Services: '+lead.services,lead.message].filter(Boolean).join('\n');window.open('https://wa.me/'+safe(wa)+'?text='+encodeURIComponent(msg),'_blank')}
   });
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=true;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

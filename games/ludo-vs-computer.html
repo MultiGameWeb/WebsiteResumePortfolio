@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101821">
+<title>Ludo vs Computer | SiteCraft Games</title>
+<style>
+:root{color-scheme:dark;--bg:#101821;--panel:#1a2631;--line:#334556;--text:#f5f8ff;--muted:#a9b7c5;--red:#e44759;--yellow:#f4c342}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;background:radial-gradient(ellipse at 50% -12%,#294051 0,transparent 52%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overscroll-behavior:none}
+button{font:inherit;touch-action:manipulation}
+#app{height:100dvh;width:100%;max-width:980px;margin:auto;padding:clamp(6px,1.2vh,13px) 12px;display:flex;flex-direction:column;align-items:center;gap:6px;overflow:hidden}
+header{width:100%;display:flex;align-items:center;justify-content:space-between;gap:9px;flex:0 0 auto}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:42px;height:42px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#cf5261,#edaa46);font-size:24px;box-shadow:0 8px 24px #e46b4c33;border:1px solid #ffdb9c44}
+h1{margin:0;font-size:clamp(19px,3.5vw,28px);letter-spacing:-.045em}
+.sub{margin-top:3px;color:var(--muted);font-size:10px}
+.btn,.diff{min-height:36px;padding:0 13px;border:1px solid var(--line);border-radius:11px;background:#ffffff09;color:#eaf2ff;font-size:11px;font-weight:850;cursor:pointer}
+.btn.primary{border-color:#ffbc7855;background:linear-gradient(115deg,#df465b,#e49c35);color:#fff;box-shadow:0 7px 20px #d86a3c33}
+.btn:disabled{opacity:.43;cursor:not-allowed}
+.difficulty{display:flex;align-items:center;justify-content:center;gap:7px;flex:0 0 auto}
+.difficulty span{color:var(--muted);font-size:9px;font-weight:900;letter-spacing:.12em}
+.diff{min-height:30px;padding:0 14px;border-radius:999px;background:#ffffff08}
+.diff[aria-pressed=true]{border-color:#f1c66b;background:#eabf5a20;color:#ffe4a0;box-shadow:inset 0 0 0 1px #eabf5a1c}
+.scorebar{width:min(100%,650px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px;flex:0 0 auto}
+.player{display:flex;align-items:center;gap:9px;min-width:0;padding:8px 11px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(145deg,#ffffff0d,#ffffff04);box-shadow:0 5px 18px #0002}
+.player.cpu{justify-content:flex-end;text-align:right}
+.dot{width:17px;height:17px;flex:none;border-radius:50%;background:radial-gradient(circle at 32% 28%,#ffb9b9,#e44759 58%,#9c263b);box-shadow:0 0 0 4px #e4475922,0 2px 5px #0004}
+.dot.yellow{background:radial-gradient(circle at 32% 28%,#fff1b5,#f4c342 58%,#ad7915);box-shadow:0 0 0 4px #f4c34222,0 2px 5px #0004}
+.player b{display:block;font-size:11px;font-weight:900}.player small{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.score-wrap{display:grid;justify-items:center;gap:1px;min-width:58px}
+.score-label{color:var(--muted);font-size:8px;font-weight:900;letter-spacing:.1em}
+.score{font-size:20px;font-weight:950;color:#f4d88e;font-variant-numeric:tabular-nums}
+.status{width:min(100%,680px);min-height:30px;padding:6px 11px;border:1px solid #ffffff12;border-radius:999px;background:#ffffff08;color:#f4e9d6;text-align:center;font-size:11px;font-weight:850;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.status:before{content:"";width:7px;height:7px;margin-right:8px;border-radius:50%;background:#f6c978;box-shadow:0 0 9px #f6c978aa}
+.board-wrap{flex:1 1 auto;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding:2px 0}
+#board{display:block;width:min(94vw,min(650px,calc(100dvh - 265px)));height:auto;max-height:100%;aspect-ratio:1;filter:drop-shadow(0 17px 30px #0008);touch-action:manipulation}
+.controls{width:min(100%,470px);display:flex;align-items:center;justify-content:center;gap:15px;flex:0 0 auto}
+.dice-panel{display:flex;align-items:center;gap:10px;padding:5px 12px 5px 6px;border:1px solid #7d8b9d44;border-radius:17px;background:linear-gradient(145deg,#ffffff12,#ffffff05);min-width:124px}
+.dice{position:relative;width:61px;height:61px;flex:none;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:3px;padding:9px;border:1px solid #ffffff;border-radius:16px;background:linear-gradient(145deg,#fffef4,#e7e5d9 68%,#c6c9ca);box-shadow:inset 0 2px 2px #fff,0 5px 0 #9aa0a5,0 8px 15px #0005;transition:filter .15s}
+.dice:before{content:"";position:absolute;inset:3px;border:1px solid #d8d7ca;border-radius:12px;pointer-events:none}
+.dice .pip{width:8px;height:8px;place-self:center;border-radius:50%;background:radial-gradient(circle at 30% 25%,#435367,#121a26 72%);opacity:0;box-shadow:inset 0 1px 1px #0005}
+.dice .question{position:absolute;inset:0;display:grid;place-items:center;color:#657184;font-size:28px;font-weight:950;text-shadow:0 1px #fff}
+.dice[data-value="1"] .pip:nth-child(6),
+.dice[data-value="2"] .pip:nth-child(2),.dice[data-value="2"] .pip:nth-child(10),
+.dice[data-value="3"] .pip:nth-child(2),.dice[data-value="3"] .pip:nth-child(6),.dice[data-value="3"] .pip:nth-child(10),
+.dice[data-value="4"] .pip:nth-child(2),.dice[data-value="4"] .pip:nth-child(4),.dice[data-value="4"] .pip:nth-child(8),.dice[data-value="4"] .pip:nth-child(10),
+.dice[data-value="5"] .pip:nth-child(2),.dice[data-value="5"] .pip:nth-child(4),.dice[data-value="5"] .pip:nth-child(6),.dice[data-value="5"] .pip:nth-child(8),.dice[data-value="5"] .pip:nth-child(10),
+.dice[data-value="6"] .pip:nth-child(2),.dice[data-value="6"] .pip:nth-child(4),.dice[data-value="6"] .pip:nth-child(5),.dice[data-value="6"] .pip:nth-child(7),.dice[data-value="6"] .pip:nth-child(8),.dice[data-value="6"] .pip:nth-child(10){opacity:1}
+.dice[data-value="0"] .question{display:grid}.dice:not([data-value="0"]) .question{display:none}
+.dice.rolling{animation:diceTumble .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes diceTumble{0%{transform:rotate(0) translateY(0) scale(1)}25%{transform:rotate(100deg) translateY(-8px) scale(1.08)}55%{transform:rotate(230deg) translateY(1px) scale(.94)}100%{transform:rotate(360deg) translateY(0) scale(1)}}
+.dice-caption{display:grid;gap:2px}.dice-caption strong{color:#fff5df;font-size:10px;letter-spacing:.08em}.dice-caption small{color:var(--muted);font-size:8px;font-weight:800}
+.roll-btn{min-width:166px;min-height:66px;padding:0 19px;border:1px solid #ffce8966;border-radius:16px;background:linear-gradient(115deg,#d9485b,#ed9a37);color:#fff;box-shadow:0 8px 22px #d86a3c3b,inset 0 1px #ffffff66;font-size:14px;font-weight:950;letter-spacing:.035em;cursor:pointer}
+.roll-btn:active:not(:disabled){transform:translateY(2px) scale(.98)}.roll-btn:disabled{opacity:.48;cursor:not-allowed;filter:saturate(.5);box-shadow:none}
+.hint{min-height:16px;color:#96a8b8;font-size:9px;text-align:center;flex:0 0 auto}
+#board .token{cursor:pointer;transition:filter .12s}#board .token.available{animation:tokenPulse 1.1s ease-in-out infinite alternate}
+#board .token.available circle:first-child{stroke:#fff5a8;stroke-width:4}#board .token.selected circle:first-child{stroke:#fff;stroke-width:5;filter:drop-shadow(0 0 7px #fff)}
+#board .token text{pointer-events:none;font-family:Inter,system-ui,sans-serif;font-size:13px;font-weight:950;fill:#151821}
+@keyframes tokenPulse{from{filter:drop-shadow(0 0 1px #fff3)}to{filter:drop-shadow(0 0 8px #fff9)}}
+@media(max-height:650px){#app{gap:3px;padding:4px 7px}.logo{width:34px;height:34px}.difficulty{gap:4px}.diff{min-height:25px;padding:0 9px}.player{padding:4px 7px}.status{min-height:24px;font-size:9px}#board{width:min(91vw,min(540px,calc(100dvh - 235px)))}.dice{width:49px;height:49px;padding:7px;border-radius:13px}.dice .pip{width:7px;height:7px}.roll-btn{min-height:53px;min-width:142px;font-size:12px}.dice-panel{min-width:110px;gap:7px}.btn{min-height:28px}}
+@media(max-width:420px){.sub{font-size:8px}.player{gap:6px;padding:6px 7px}.player b{font-size:9px}.player small{font-size:8px}.score{font-size:17px}.difficulty{gap:4px}.difficulty span{font-size:8px}.diff{padding:0 10px;font-size:9px}.controls{gap:8px}.dice-panel{min-width:96px;padding:4px 8px 4px 4px}.dice-caption strong{font-size:8px}.dice-caption small{font-size:7px}.roll-btn{min-width:133px;padding:0 12px}}
+@media(max-height:540px){#app{gap:2px;padding:3px 6px}.board-wrap{padding:0}#board{width:min(88vw,min(460px,calc(100dvh - 190px)))}.controls{gap:7px}.dice{width:42px;height:42px;padding:6px}.dice .pip{width:6px;height:6px}.roll-btn{min-height:44px;min-width:122px}.hint{font-size:8px}.player{padding:3px 5px}}
+
+
+.header-actions{display:flex;align-items:center;gap:6px}
+.mute-btn{min-height:32px;padding:0 9px;font-size:10px}
+.stats-row{width:100%;min-height:19px;display:flex;justify-content:center;align-items:center;flex:0 0 auto}
+.stats-panel{position:relative;z-index:4;color:var(--text);font-size:9px}
+.stats-panel summary{list-style:none;display:flex;align-items:center;gap:4px;min-height:22px;padding:0 11px;border:1px solid var(--line);border-radius:999px;background:#ffffff09;color:#e7d9bb;font-size:9px;font-weight:850;cursor:pointer}
+.stats-panel summary::-webkit-details-marker{display:none}
+#statsDifficulty{color:#f6ce7d}
+#statsContent{position:absolute;top:26px;left:50%;transform:translateX(-50%);width:min(88vw,300px);padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#1a2631;box-shadow:0 12px 30px #0009}
+.stat-line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 0;border-bottom:1px solid #ffffff12;color:var(--muted);font-size:10px}
+.stat-line:last-child{border-bottom:0}
+.stat-line strong{color:#ffe4a0;font-variant-numeric:tabular-nums}
+.reset-stats{display:block;margin:7px auto 0;min-height:25px;padding:0 10px;font-size:9px}
+.dice{cursor:pointer;touch-action:manipulation}
+.dice:focus-visible{outline:3px solid #ffe29a;outline-offset:3px}
+.board-wrap{position:relative}
+#board{width:min(94vw,min(650px,calc(100dvh - 295px)))}
+.game-overlay{position:absolute;inset:8px;z-index:5;display:none;align-items:center;justify-content:center;border-radius:20px;background:#0b111bd9;backdrop-filter:blur(5px)}
+.game-overlay.show{display:flex}
+.overlay-card{width:min(88%,330px);padding:22px 18px;border:1px solid #e9c77e66;border-radius:19px;background:linear-gradient(145deg,#253343,#18232f);box-shadow:0 18px 45px #0009;text-align:center}
+.overlay-card h2{margin:0 0 9px;font-size:clamp(22px,5vw,30px);letter-spacing:-.03em}
+.overlay-card p{margin:0 0 17px;color:#c6d1dc;font-size:12px;line-height:1.5}
+.overlay-card .btn{min-height:42px;padding:0 22px;font-size:12px}
+@media(max-height:650px){.stats-row{min-height:16px}.stats-panel summary{min-height:19px;padding:0 9px;font-size:8px}#statsContent{top:22px}#board{width:min(91vw,min(540px,calc(100dvh - 275px)))}.mute-btn{min-height:27px}}
+@media(max-width:420px){.header-actions{gap:4px}.mute-btn{padding:0 7px;font-size:9px}.stats-panel summary{padding:0 8px}.overlay-card{padding:18px 14px}}
+@media(max-height:540px){#board{width:min(88vw,min(460px,calc(100dvh - 230px)))}.stats-row{min-height:14px}}
+
+</style>
+</head>
+<body>
+<div id="app">
+ <header><div class="brand"><div class="logo" aria-hidden="true">🎲</div><div><h1>Ludo vs Computer</h1><div class="sub">Red starts top-left · Yellow starts bottom-right</div></div></div><div class="header-actions"><button class="btn mute-btn" id="muteBtn" type="button" aria-pressed="false">🔊 Sound on</button><button class="btn" id="newBtn" type="button">↻ New Game</button></div></header>
+ <div class="difficulty"><span>COMPUTER</span><button class="diff" data-level="easy" aria-pressed="false" type="button">Easy</button><button class="diff" data-level="medium" aria-pressed="true" type="button">Medium</button><button class="diff" data-level="hard" aria-pressed="false" type="button">Hard</button></div><div class="stats-row"><details class="stats-panel"><summary>Stats · <span id="statsDifficulty">Difficulty</span></summary><div id="statsContent"></div><button class="btn reset-stats" id="resetStatsBtn" type="button">Reset stats</button></details></div>
+ <section class="scorebar"><div class="player"><span class="dot"></span><div><b>You · Red · Top-left</b><small id="redHome">0 / 4 home</small></div></div><div class="score" id="score">0 – 0</div><div class="player cpu"><div><b>Computer · Yellow · Bottom-right</b><small id="yellowHome">0 / 4 home</small></div><span class="dot yellow"></span></div></section>
+ <div class="status" id="status" aria-live="polite">Your turn. Roll a 6 to bring a token out.</div>
+ <main class="board-wrap"><svg id="board" viewBox="0 0 600 600" role="img" aria-label="Ludo board: Red base top-left, Blue top-right, Green bottom-left, Yellow bottom-right. Red home lane enters the centre from the left; Yellow home lane enters from the right."></svg><div class="game-overlay" id="gameOverlay" aria-live="polite"><div class="overlay-card"><h2 id="overlayTitle">Game complete</h2><p id="overlayDetails"></p><button class="btn primary" id="playAgainBtn" type="button">Play Again</button></div></div></main>
+ <div class="controls">
+  <div class="dice-panel"><div class="dice" id="dice" data-value="0" role="button" tabindex="0" aria-label="Dice ready" title="Tap to roll"><span class="question">?</span><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></div><div class="dice-caption"><strong id="diceReadout">READY</strong><small>LAST ROLL</small></div></div>
+  <button class="roll-btn" id="rollBtn" type="button">🎲 ROLL DICE</button>
+ </div>
+ <div class="hint" id="hint">Roll the dice, then choose one of your highlighted tokens.</div>
+</div>
+<script>(function(){
+'use strict';
+const NS='http://www.w3.org/2000/svg';
+const path=[[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0]];
+const safe=new Set([0,8,13,21,26,34,39,47]);
+const LANE_START=51,HOME=56;
+const homeLane={red:[[7,1],[7,2],[7,3],[7,4],[7,5]],yellow:[[7,13],[7,12],[7,11],[7,10],[7,9]]};
+const yard={red:[[1.3,1.3],[1.3,3.7],[3.7,1.3],[3.7,3.7]],yellow:[[10.3,10.3],[10.3,12.7],[12.7,10.3],[12.7,12.7]]};
+const sideInfo={red:{start:0,color:'#e44759',dark:'#9c263b',light:'#ff9ba4'},yellow:{start:26,color:'#f4c342',dark:'#ad7915',light:'#ffe59a'}};
+const board=document.getElementById('board'),statusEl=document.getElementById('status'),rollBtn=document.getElementById('rollBtn'),diceEl=document.getElementById('dice');
+const STORAGE_KEY='sitecraft-ludo-vs-computer-v3';
+function makeTokens(){return {red:Array.from({length:4},()=>({progress:-1})),yellow:Array.from({length:4},()=>({progress:-1}))};}
+function defaultStats(){return {easy:{gamesPlayed:0,wins:0,losses:0,currentStreak:0,bestStreak:0,totalCaptures:0},medium:{gamesPlayed:0,wins:0,losses:0,currentStreak:0,bestStreak:0,totalCaptures:0},hard:{gamesPlayed:0,wins:0,losses:0,currentStreak:0,bestStreak:0,totalCaptures:0}};}
+function normalizeStats(source){
+ const base=defaultStats();
+ ['easy','medium','hard'].forEach(k=>{const src=source&&source[k]?source[k]:{};Object.keys(base[k]).forEach(field=>{const n=Number(src[field]);base[k][field]=Number.isFinite(n)&&n>=0?Math.floor(n):0;});});
+ return base;
+}
+let tokens=makeTokens(),turn='red',dice=0,legal=[],phase='roll',difficulty='medium',sixStreak=0,selected=-1;
+let timer=0,diceAnimationTimer=0,finished=false,gameStarted=false,resultCounted=false;
+let capturesMadeThisGame=0,capturesSufferedThisGame=0,lastAction='',muted=false,stats=defaultStats(),pendingDice=null,gameDifficulty='medium';
+let audioCtx=null,checkpoint=null,autoRollMessage='';
+function cloneTokens(source){return {red:source.red.map(t=>({progress:t.progress})),yellow:source.yellow.map(t=>({progress:t.progress}))};}
+function snapshot(){return {tokens:cloneTokens(tokens),turn:turn,phase:phase==='over'?'over':'roll',sixStreak:sixStreak,finished:finished,gameStarted:gameStarted,resultCounted:resultCounted,capturesMadeThisGame:capturesMadeThisGame,capturesSufferedThisGame:capturesSufferedThisGame,lastAction:lastAction};}
+function cloneSnapshot(s){return {tokens:cloneTokens(s.tokens),turn:s.turn,phase:s.phase,sixStreak:s.sixStreak,finished:s.finished,gameStarted:s.gameStarted,resultCounted:s.resultCounted,capturesMadeThisGame:s.capturesMadeThisGame,capturesSufferedThisGame:s.capturesSufferedThisGame,lastAction:s.lastAction||''};}
+function saveGame(){
+ try{const stable=(phase==='over'||!checkpoint)?snapshot():cloneSnapshot(checkpoint);stable.pendingDice=pendingDice?{value:pendingDice.value,side:pendingDice.side}:null;localStorage.setItem(STORAGE_KEY,JSON.stringify({game:stable,difficulty:difficulty,gameDifficulty:gameDifficulty,muted:muted,stats:stats}));}catch(e){}
+}
+function saveStable(){checkpoint=snapshot();saveGame();}
+function loadGame(){
+ let data=null;try{const raw=localStorage.getItem(STORAGE_KEY);if(raw)data=JSON.parse(raw);}catch(e){return false;}
+ if(!data||!data.game)return false;
+ try{
+  const g=data.game;
+  if(!g.tokens||!Array.isArray(g.tokens.red)||!Array.isArray(g.tokens.yellow)||g.tokens.red.length!==4||g.tokens.yellow.length!==4)return false;
+  const valid=t=>t&&Number.isInteger(t.progress)&&t.progress>=-1&&t.progress<=HOME;
+  if(!g.tokens.red.every(valid)||!g.tokens.yellow.every(valid)||(g.turn!=='red'&&g.turn!=='yellow'))return false;
+  tokens=cloneTokens(g.tokens);turn=g.turn;sixStreak=Math.max(0,Math.min(2,Number(g.sixStreak)||0));
+  pendingDice=g.pendingDice&&Number.isInteger(g.pendingDice.value)&&g.pendingDice.value>=1&&g.pendingDice.value<=6&&g.pendingDice.side===turn?{value:g.pendingDice.value,side:g.pendingDice.side}:null;
+  finished=!!g.finished;resultCounted=!!g.resultCounted;gameStarted=!!g.gameStarted;
+  capturesMadeThisGame=Math.max(0,Number(g.capturesMadeThisGame)||0);capturesSufferedThisGame=Math.max(0,Number(g.capturesSufferedThisGame)||0);lastAction=String(g.lastAction||'');
+  phase=finished?'over':'roll';dice=0;legal=[];selected=-1;
+  difficulty=['easy','medium','hard'].includes(data.difficulty)?data.difficulty:'medium';gameDifficulty=['easy','medium','hard'].includes(data.gameDifficulty)?data.gameDifficulty:difficulty;muted=!!data.muted;stats=normalizeStats(data.stats);
+  checkpoint=snapshot();return true;
+ }catch(e){return false;}
+}
+function updateMuteButton(){const b=document.getElementById('muteBtn');if(!b)return;b.textContent=muted?'🔇 Sound off':'🔊 Sound on';b.setAttribute('aria-pressed',String(muted));}
+function renderStats(){
+ const levelLabel=document.getElementById('statsDifficulty');if(levelLabel)levelLabel.textContent=difficulty.toUpperCase();
+ const host=document.getElementById('statsContent');if(!host)return;host.replaceChildren();
+ const s=stats[difficulty]||defaultStats()[difficulty];
+ [['Games played',s.gamesPlayed],['Wins',s.wins],['Losses',s.losses],['Current win streak',s.currentStreak],['Best win streak',s.bestStreak],['Total captures',s.totalCaptures]].forEach(([label,value])=>{
+  const row=document.createElement('div');row.className='stat-line';const left=document.createElement('span');left.textContent=label;const right=document.createElement('strong');right.textContent=String(value);row.append(left,right);host.appendChild(row);
+ });
+}
+function recordResult(result){
+ if(resultCounted)return;const s=stats[gameDifficulty];s.gamesPlayed++;
+ if(result==='win'){s.wins++;s.currentStreak++;s.bestStreak=Math.max(s.bestStreak,s.currentStreak);}else{s.losses++;s.currentStreak=0;}
+ s.totalCaptures+=capturesMadeThisGame;resultCounted=true;renderStats();saveGame();
+}
+function el(name,attrs={},parent=board){const n=document.createElementNS(NS,name);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,String(v));parent.appendChild(n);return n;}
+function rectCell(r,c,fill,stroke='#c4b8a7'){el('rect',{x:c*40+1.5,y:r*40+1.5,width:37,height:37,rx:5,fill:fill,stroke:stroke,'stroke-width':1.4});el('rect',{x:c*40+4,y:r*40+4,width:32,height:32,rx:3,fill:'none',stroke:'#ffffff','stroke-opacity':'.22','stroke-width':1});}
+function base(x,y,color){el('rect',{x:x*40,y:y*40,width:240,height:240,rx:20,fill:color,stroke:'#fff4df','stroke-width':4});el('rect',{x:x*40+25,y:y*40+25,width:190,height:190,rx:22,fill:'#faf6eb',stroke:'#ffffff','stroke-width':4});el('rect',{x:x*40+31,y:y*40+31,width:178,height:178,rx:18,fill:'none',stroke:color,'stroke-opacity':'.22','stroke-width':2});}
+function centre(){
+ el('rect',{x:240,y:240,width:120,height:120,fill:'#f5efe1',stroke:'#d9ccb8','stroke-width':2});
+ el('path',{d:'M240 240H360L300 300Z',fill:'#5289bc'});
+ el('path',{d:'M360 240V360L300 300Z',fill:sideInfo.yellow.color});
+ el('path',{d:'M360 360H240L300 300Z',fill:'#378a70'});
+ el('path',{d:'M240 360V240L300 300Z',fill:sideInfo.red.color});
+ el('circle',{cx:300,cy:300,r:19,fill:'#fff3d2',stroke:'#86684c','stroke-width':2});el('circle',{cx:300,cy:300,r:8,fill:'#8b6c53'});el('circle',{cx:300,cy:300,r:4,fill:'#fff5df'});
+}
+function yardPoint(side,i){const [r,c]=yard[side][i];return {x:c*40+20,y:r*40+20};}
+function drawBoard(){
+ board.replaceChildren();el('rect',{x:0,y:0,width:600,height:600,rx:22,fill:'#f7f0e2',stroke:'#90785d','stroke-width':10});
+ base(0,0,sideInfo.red.color);base(9,0,'#5289bc');base(0,9,'#378a70');base(9,9,sideInfo.yellow.color);
+ for(const side of ['red','yellow'])yard[side].forEach((_,i)=>{const p=yardPoint(side,i);el('circle',{cx:p.x,cy:p.y,r:17,fill:'#fffaf0',stroke:sideInfo[side].dark,'stroke-width':3});el('circle',{cx:p.x,cy:p.y,r:10.5,fill:'#fff',stroke:'#ffffff','stroke-width':1});});
+ path.forEach(([r,c],i)=>{
+  let fill=safe.has(i)?'#fff8d9':'#f6f1e8';if(i===0)fill='#f7a3aa';if(i===26)fill='#ffe08a';rectCell(r,c,fill);
+  if(safe.has(i))el('path',{d:'M'+(c*40+20)+' '+(r*40+10)+'l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1Z',fill:'#a88b58',opacity:.7});
+ });
+ homeLane.red.forEach(([r,c],i)=>rectCell(r,c,i===4?sideInfo.red.color:'#f8c9ce'));
+ homeLane.yellow.forEach(([r,c],i)=>rectCell(r,c,i===4?sideInfo.yellow.color:'#ffedbd'));
+ centre();el('rect',{x:3,y:3,width:594,height:594,rx:19,fill:'none',stroke:'#ffffff','stroke-opacity':'.76','stroke-width':2});drawTokens();
+}
+function donePos(side,i){const offsets=[[-7,-7],[7,-7],[-7,7],[7,7]];const [ox,oy]=offsets[i];return {x:(side==='red'?258:342)+ox,y:300+oy,done:true};}
+function getPos(side,i){
+ const t=tokens[side][i];if(t.progress<0)return Object.assign(yardPoint(side,i),{home:true});
+ if(t.progress>=HOME)return donePos(side,i);
+ if(t.progress>=LANE_START){const [r,c]=homeLane[side][t.progress-LANE_START];return {x:c*40+20,y:r*40+20,lane:true};}
+ const p=path[(sideInfo[side].start+t.progress)%52];return {x:p[1]*40+20,y:p[0]*40+20};
+}
+function drawTokens(){
+ const all=[];for(const side of ['yellow','red'])tokens[side].forEach((t,i)=>all.push({side:side,i:i,...getPos(side,i)}));
+ const groups=new Map();for(const a of all){const k=Math.round(a.x)+','+Math.round(a.y);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(a);}
+ for(const list of groups.values())list.forEach((a,j)=>{
+  const offsets=list.length>1?[[0,0],[-7,-7],[7,7],[-7,7],[7,-7]]:[[0,0]];const [ox,oy]=offsets[j%offsets.length],x=a.x+ox,y=a.y+oy;
+  const available=phase==='choose'&&turn==='red'&&legal.includes(a.i)&&a.side==='red';
+  const g=el('g',{class:'token'+(available?' available':'')+(selected===a.i&&a.side==='red'?' selected':''),'data-side':a.side,'data-token':a.i});
+  el('ellipse',{cx:x,cy:y+5,rx:15,ry:8,fill:'#1c2631',opacity:.28},g);
+  el('circle',{cx:x,cy:y,r:a.done?13:15,fill:sideInfo[a.side].color,stroke:'#fff7e8','stroke-width':2.5},g);
+  el('circle',{cx:x,cy:y,r:a.done?9.5:11.5,fill:'none',stroke:sideInfo[a.side].dark,'stroke-width':1.6},g);
+  el('ellipse',{cx:x-4,cy:y-5,rx:5,ry:3,fill:sideInfo[a.side].light,opacity:.9},g);
+  el('text',{x:x,y:y+4.5,'text-anchor':'middle',fill:'#241a1a','font-size':12},g).textContent=String(a.i+1);
+  if(available)el('circle',{cx:x,cy:y,r:18,fill:'none',stroke:'#fff1a8','stroke-width':2,'stroke-dasharray':'3 3'},g);
+ });
+}
+function setDiceFace(value){diceEl.dataset.value=String(value);diceEl.setAttribute('aria-label',value?'Dice shows '+value:'Dice ready to roll');const readout=document.getElementById('diceReadout');if(readout)readout.textContent=value?'ROLLED '+value:'READY';}
+function setRollControls(){
+ const canRoll=phase==='roll'&&turn==='red'&&!finished;rollBtn.disabled=!canRoll;
+ rollBtn.textContent=canRoll?(autoRollMessage||'🎲 ROLL DICE'):(turn==='yellow'?'Computer rolling…':phase==='choose'?'CHOOSE TOKEN':phase==='moving'?'MOVING…':phase==='rolling'?'🎲 ROLLING…':'🎲 ROLL DICE');
+}
+function updateHud(){
+ document.getElementById('redHome').textContent=tokens.red.filter(t=>t.progress>=HOME).length+' / 4 home';
+ document.getElementById('yellowHome').textContent=tokens.yellow.filter(t=>t.progress>=HOME).length+' / 4 home';
+ document.getElementById('score').textContent=tokens.red.filter(t=>t.progress>=HOME).length+' – '+tokens.yellow.filter(t=>t.progress>=HOME).length;
+ document.querySelectorAll('.diff').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===difficulty)));
+ setRollControls();updateMuteButton();renderStats();
+}
+function legalMoves(side,d){return tokens[side].map((t,i)=>({i:i,progress:t.progress})).filter(t=>t.progress<HOME&&((t.progress===-1&&d===6)||(t.progress>=0&&t.progress+d<=HOME))).map(t=>t.i);}
+function globalPath(side,progress){return (sideInfo[side].start+progress)%52;}
+function safeLanding(side,progress){return progress>=0&&progress<LANE_START&&safe.has(globalPath(side,progress));}
+function showOverlay(result){
+ const overlay=document.getElementById('gameOverlay');document.getElementById('overlayTitle').textContent=result==='win'?'🏆 You Win!':'Computer Wins';
+ document.getElementById('overlayDetails').textContent='Captures made: '+capturesMadeThisGame+' · Your tokens captured: '+capturesSufferedThisGame;overlay.classList.add('show');
+}
+function finishGame(side){
+ if(finished)return;finished=true;phase='over';dice=0;legal=[];selected=-1;autoRollMessage='';rollBtn.disabled=true;
+ const won=side==='red';recordResult(won?'win':'loss');playSound(won?'win':'lose');
+ statusEl.textContent=won?'🏆 You win! All four red tokens reached the left centre triangle.':'Computer wins. All four yellow tokens reached the right centre triangle.';
+ document.getElementById('hint').textContent='Game complete · '+capturesMadeThisGame+' captures made.';
+ drawBoard();updateHud();showOverlay(won?'win':'loss');saveStable();
+}
+function passTurn(side,note){pendingDice=null;dice=0;legal=[];selected=-1;phase='roll';sixStreak=0;turn=side==='red'?'yellow':'red';autoRollMessage='';saveStable();nextTurn(note);}
+function nextTurn(note){
+ phase='roll';dice=0;legal=[];selected=-1;autoRollMessage='';drawBoard();updateHud();
+ statusEl.textContent=note||(turn==='red'?'Your turn. Roll the dice.':'Computer turn.');
+ document.getElementById('hint').textContent=lastAction||'Roll a 6 to leave your yard. Exact roll needed to finish.';
+ if(turn==='yellow')timer=setTimeout(computerRoll,650);
+}
+function extraRoll(side,note){
+ pendingDice=null;phase='roll';dice=0;legal=[];selected=-1;autoRollMessage=side==='red'?'🎲 ROLL AGAIN':'';
+ statusEl.textContent=note;document.getElementById('hint').textContent='You rolled a 6, captured a token, or reached home. Roll again.';
+ saveStable();drawBoard();updateHud();if(side==='yellow')timer=setTimeout(computerRoll,650);
+}
+function resolveRoll(side){
+ if(phase!=='roll'||turn!==side||finished)return;
+ if(dice===6){sixStreak++;if(sixStreak>=3){sixStreak=0;const note=side==='red'?'Three sixes — your turn is forfeited.':'Computer rolled three sixes — its turn is forfeited.';passTurn(side,note);return;}}
+ else sixStreak=0;
+ legal=legalMoves(side,dice);
+ if(!legal.length){
+  const rolled=dice;pendingDice=null;dice=0;selected=-1;legal=[];phase='roll';
+  if(rolled===6)extraRoll(side,(side==='red'?'You rolled a 6':'Computer rolled a 6')+' but no token can move. Roll again.');
+  else passTurn(side,side==='red'?'No legal move. Your turn passes.':'Computer has no legal move. Your turn.');
+  return;
+ }
+ phase='choose';autoRollMessage='';
+ if(legal.length===1){
+  statusEl.textContent=(side==='red'?'Only one red token can move.':'Only one yellow token can move.')+' Moving automatically…';
+  document.getElementById('hint').textContent='Auto-moving in 350 ms.';phase='auto';setRollControls();drawBoard();timer=setTimeout(()=>moveToken(side,legal[0]),350);return;
+ }
+ if(side==='red'){
+  statusEl.textContent='You rolled '+dice+'. Choose one of the glowing red tokens.';
+  document.getElementById('hint').textContent=legal.map(i=>'Token '+(i+1)).join(' · ')+' can move.';setRollControls();drawBoard();
+ }else{
+  statusEl.textContent='Computer rolled '+dice+' — choosing a token…';setRollControls();timer=setTimeout(computerChoose,500);
+ }
+}
+function roll(side){
+ if(phase!=='roll'||turn!==side||finished)return;if(timer){clearTimeout(timer);timer=0;}
+ ensureAudio();gameStarted=true;checkpoint=snapshot();saveGame();phase='rolling';setRollControls();
+ diceEl.classList.remove('rolling');void diceEl.offsetWidth;diceEl.classList.add('rolling');playSound('dice');
+ let ticks=0;const finalValue=1+Math.floor(Math.random()*6);
+ diceAnimationTimer=setInterval(()=>{
+  ticks++;setDiceFace(ticks>=8?finalValue:1+Math.floor(Math.random()*6));
+  if(ticks>=8){clearInterval(diceAnimationTimer);diceAnimationTimer=0;diceEl.classList.remove('rolling');dice=finalValue;phase='roll';pendingDice={value:finalValue,side:side};saveGame();resolveRoll(side);}
+ },75);
+}
+function aiScore(i,side){
+ const t=tokens[side][i],old=t.progress,newP=old<0?0:old+dice;let score=old<0?(side==='yellow'?16:12):newP*1.4;
+ if(newP>=HOME)score+=difficulty==='hard'?1000:400;
+ let captures=0;
+ if(newP<LANE_START&&newP>=0&&!safeLanding(side,newP)){
+  const sq=globalPath(side,newP),enemy=side==='red'?'yellow':'red';
+  captures=tokens[enemy].filter(et=>et.progress>=0&&et.progress<LANE_START&&globalPath(enemy,et.progress)===sq).length;
+  score+=captures*(difficulty==='hard'?430:difficulty==='medium'?150:55);
+ }
+ const landsSafe=safeLanding(side,newP);if(landsSafe)score+=difficulty==='hard'?90:30;
+ const leavesSafe=safeLanding(side,old)&&!landsSafe&&captures===0&&newP<HOME;if(leavesSafe)score-=difficulty==='hard'?135:35;
+ const enemy=side==='red'?'yellow':'red';
+ if(newP>=0&&newP<LANE_START&&!landsSafe){
+  const mySq=globalPath(side,newP);
+  const threats=tokens[enemy].filter(et=>{
+   if(et.progress<0||et.progress>=LANE_START)return false;
+   const theirSq=globalPath(enemy,et.progress),behind=(mySq-theirSq+52)%52;
+   return behind>=1&&behind<=6;
+  }).length;
+  score-=threats*(difficulty==='hard'?28:10);
+ }
+ if(difficulty==='hard'&&captures>0&&safeLanding(side,old))score+=180;
+ return score+Math.random()*.25;
+}
+function computerChoose(){
+ if(turn!=='yellow'||phase!=='choose'||finished)return;
+ const chosen=legal.slice().sort((a,b)=>aiScore(b,'yellow')-aiScore(a,'yellow'))[0];if(chosen!==undefined)moveToken('yellow',chosen);
+}
+function computerRoll(){if(!finished&&turn==='yellow'&&phase==='roll')roll('yellow');}
+function moveToken(side,i){
+ if((phase!=='choose'&&phase!=='auto')||turn!==side||finished)return;
+ const old=tokens[side][i].progress,target=old<0?0:old+dice;if(target>HOME||target<0)return;
+ phase='moving';selected=-1;setRollControls();drawBoard();
+ const steps=[];if(old<0)steps.push(0);else for(let p=old+1;p<=target;p++)steps.push(p);
+ let cursor=0;
+ function step(){
+  if(finished||phase!=='moving')return;
+  tokens[side][i].progress=steps[cursor];playSound('step');drawBoard();cursor++;
+  if(cursor<steps.length)timer=setTimeout(step,120);else finishMove(side,i,old,target);
+ }
+ timer=setTimeout(step,120);
+}
+function finishMove(side,i,old,target){
+ timer=0;pendingDice=null;let captured=0,home=target===HOME;
+ if(target>=0&&target<LANE_START&&!safeLanding(side,target)){
+  const square=globalPath(side,target),enemy=side==='red'?'yellow':'red';
+  tokens[enemy].forEach(et=>{if(et.progress>=0&&et.progress<LANE_START&&globalPath(enemy,et.progress)===square){et.progress=-1;captured++;}});
+ }
+ if(side==='red')capturesMadeThisGame+=captured;else capturesSufferedThisGame+=captured;
+ const landedSafe=safeLanding(side,target);if(captured)playSound('capture');if(landedSafe)playSound('safe');if(home)playSound('home');
+ lastAction=(side==='red'?'You':'Computer')+' moved token '+(i+1)+(captured?' · captured '+captured+' token(s)':'')+(home?' · reached home':'');
+ updateHud();drawBoard();
+ if(tokens[side].every(t=>t.progress>=HOME)){finishGame(side);return;}
+ const extra=dice===6||captured>0||home;
+ if(extra){const note=(side==='red'?'You':'Computer')+' get another roll'+(captured?' after a capture':home?' for reaching home':' after rolling a 6')+'.';extraRoll(side,note);}
+ else{const from=side;dice=0;passTurn(from,lastAction);}
+}
+function handleBoardClick(e){
+ const g=e.target.closest('[data-token]');if(!g||turn!=='red'||phase!=='choose')return;
+ const side=g.getAttribute('data-side'),i=Number(g.getAttribute('data-token'));if(side!=='red'||!legal.includes(i))return;moveToken('red',i);
+}
+function ensureAudio(){
+ try{if(!audioCtx){const C=window.AudioContext||window.webkitAudioContext;if(C)audioCtx=new C();}if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume().catch(()=>{});}catch(e){}
+}
+function playSound(kind){
+ if(muted)return;
+ try{
+  ensureAudio();if(!audioCtx)return;
+  const patterns={dice:[[460,.07],[620,.07],[780,.11]],step:[[330,.045]],capture:[[260,.07],[190,.12]],safe:[[680,.08],[880,.12]],home:[[660,.07],[880,.08],[1100,.15]],win:[[523,.1],[659,.1],[784,.1],[1047,.22]],lose:[[440,.12],[349,.12],[262,.22]]};
+  const seq=patterns[kind]||patterns.step;let offset=0;
+  seq.forEach(([hz,dur])=>{
+   const osc=audioCtx.createOscillator(),gain=audioCtx.createGain(),start=audioCtx.currentTime+offset;osc.type='sine';osc.frequency.setValueAtTime(hz,start);
+   gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(kind==='step'?.018:.045,start+.012);gain.gain.exponentialRampToValueAtTime(.0001,start+dur);
+   osc.connect(gain);gain.connect(audioCtx.destination);osc.start(start);osc.stop(start+dur+.01);offset+=dur*.75;
+  });
+ }catch(e){}
+}
+function clearPending(){if(timer)clearTimeout(timer);timer=0;if(diceAnimationTimer)clearInterval(diceAnimationTimer);diceAnimationTimer=0;diceEl.classList.remove('rolling');}
+function setup(skipConfirm){
+ if(!skipConfirm&&gameStarted&&!finished){
+  if(!window.confirm('Start a new game? Your current game will be abandoned.'))return;
+  if(tokens.red.concat(tokens.yellow).some(t=>t.progress>=0))recordResult('loss');
+ }
+ clearPending();tokens=makeTokens();turn='red';dice=0;legal=[];phase='roll';sixStreak=0;selected=-1;pendingDice=null;gameDifficulty=difficulty;
+ finished=false;gameStarted=false;resultCounted=false;capturesMadeThisGame=0;capturesSufferedThisGame=0;lastAction='';autoRollMessage='';
+ setDiceFace(0);statusEl.textContent='Your turn. Tap the dice to roll — you need a 6 to bring a token out.';
+ document.getElementById('hint').textContent='Tap ROLL DICE. Then tap one of your highlighted tokens.';
+ document.getElementById('gameOverlay').classList.remove('show');checkpoint=snapshot();updateHud();drawBoard();saveGame();
+}
+function resetStats(){if(!window.confirm('Reset all Ludo stats for every difficulty?'))return;stats=defaultStats();renderStats();saveGame();}
+board.addEventListener('click',handleBoardClick);
+rollBtn.addEventListener('click',()=>roll('red'));diceEl.addEventListener('click',()=>roll('red'));
+diceEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();roll('red');}});
+document.getElementById('newBtn').addEventListener('click',()=>setup(false));
+document.getElementById('playAgainBtn').addEventListener('click',()=>setup(true));
+document.getElementById('muteBtn').addEventListener('click',()=>{muted=!muted;updateMuteButton();saveGame();if(!muted)playSound('safe');});
+document.getElementById('resetStatsBtn').addEventListener('click',resetStats);
+document.querySelectorAll('.diff').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.level;updateHud();statusEl.textContent='Computer difficulty: '+difficulty.toUpperCase()+'. Stats will count under '+gameDifficulty.toUpperCase()+' until a new game starts.';if(phase==='roll')saveStable();else saveGame();}));
+const resumed=loadGame();
+if(!resumed){stats=defaultStats();muted=false;setup(true);}
+else{
+ setDiceFace(0);updateHud();drawBoard();
+ if(finished){statusEl.textContent=tokens.red.every(t=>t.progress>=HOME)?'🏆 You win! All four red tokens reached home.':'Computer wins. All four yellow tokens reached home.';showOverlay(tokens.red.every(t=>t.progress>=HOME)?'win':'loss');}
+ else if(pendingDice&&pendingDice.side===turn){dice=pendingDice.value;setDiceFace(dice);phase='roll';statusEl.textContent=(turn==='red'?'Your':'Computer')+' roll restored: '+dice+'. Resolving the saved roll…';resolveRoll(pendingDice.side);}
+ else if(turn==='yellow')timer=setTimeout(computerRoll,500);
+ else statusEl.textContent='Game resumed. Your turn — roll the dice.';
+}
+})();</script>
+</body>
+</html>

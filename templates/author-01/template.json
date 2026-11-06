@@ -1,0 +1,1105 @@
+{
+  "id": "author-01",
+  "name": "Author Portfolio — Ink & Quill",
+  "category": "Author Websites",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Introduction"
+    },
+    {
+      "id": "profile",
+      "label": "Author profile"
+    },
+    {
+      "id": "books",
+      "label": "Books & publications"
+    },
+    {
+      "id": "bookSearch",
+      "label": "Book search & filters"
+    },
+    {
+      "id": "works",
+      "label": "Creative works & writings"
+    },
+    {
+      "id": "articles",
+      "label": "Articles & journal"
+    },
+    {
+      "id": "events",
+      "label": "Events & book launches"
+    },
+    {
+      "id": "awards",
+      "label": "Awards & recognition"
+    },
+    {
+      "id": "gallery",
+      "label": "Photo gallery"
+    },
+    {
+      "id": "media",
+      "label": "Talks & interviews"
+    },
+    {
+      "id": "reviews",
+      "label": "Reader Reviews"
+    },
+    {
+      "id": "contact",
+      "label": "Contact & enquiries"
+    },
+    {
+      "id": "social",
+      "label": "Social media"
+    },
+    {
+      "id": "privacy",
+      "label": "Privacy policy"
+    }
+  ],
+  "defaultSelectedFeatures": [
+    "home",
+    "profile",
+    "books",
+    "bookSearch",
+    "works",
+    "articles",
+    "events",
+    "awards",
+    "gallery",
+    "media",
+    "contact",
+    "social",
+    "privacy"
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Author website / brand name",
+      "required": true,
+      "placeholder": "Ink & Quill"
+    },
+    {
+      "path": "author.name",
+      "label": "Author full name",
+      "required": true,
+      "placeholder": "Aarav Sen"
+    },
+    {
+      "path": "author.penName",
+      "label": "Pen name"
+    },
+    {
+      "path": "author.role",
+      "label": "Author title / designation",
+      "placeholder": "Writer · Poet · Storyteller"
+    },
+    {
+      "path": "author.genres",
+      "label": "Genres / subjects"
+    },
+    {
+      "path": "author.languages",
+      "label": "Writing languages"
+    },
+    {
+      "path": "author.location",
+      "label": "Based in"
+    },
+    {
+      "path": "author.bio",
+      "label": "Author biography",
+      "type": "textarea"
+    },
+    {
+      "path": "author.quote",
+      "label": "Author quote / writing philosophy",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Hero introduction",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Author portrait",
+      "type": "media"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email address"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone number"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.address",
+      "label": "Contact / studio address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.website",
+      "label": "Other website / publisher URL",
+      "type": "url"
+    },
+    {
+      "path": "social.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    },
+    {
+      "path": "social.facebook",
+      "label": "Facebook URL",
+      "type": "url"
+    },
+    {
+      "path": "social.youtube",
+      "label": "YouTube URL",
+      "type": "url"
+    },
+    {
+      "path": "social.linkedin",
+      "label": "LinkedIn URL",
+      "type": "url"
+    },
+    {
+      "path": "social.goodreads",
+      "label": "Goodreads / reader profile URL",
+      "type": "url"
+    },
+    {
+      "path": "privacyPolicy",
+      "label": "Privacy policy",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "id": "author-01",
+    "brand": {
+      "businessName": "Ink & Quill"
+    },
+    "author": {
+      "name": "Aarav Sen",
+      "penName": "A. Sen",
+      "role": "Author · Poet · Storyteller",
+      "genres": "Literary fiction, poetry, essays and contemporary writing",
+      "languages": "English, Hindi",
+      "location": "Hyderabad, India",
+      "bio": "Aarav Sen writes about memory, belonging, ordinary lives and the small moments that shape us. His work moves between fiction, poetry and reflective essays, with a particular interest in human connection and place.",
+      "quote": "“A story begins when we learn to pay attention.”"
+    },
+    "home": {
+      "title": "Stories that stay with you.",
+      "text": "Welcome to my writing space — a collection of books, poems, essays and ideas. Explore the work, find a favourite and stay connected for what comes next."
+    },
+    "hero": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1100&q=86",
+    "books": [
+      {
+        "id": "b1",
+        "title": "The Quiet Between Seasons",
+        "subtitle": "A novel about change, memory and coming home",
+        "genre": "Literary Fiction",
+        "language": "English",
+        "publisher": "North Window Press",
+        "published": "2025",
+        "isbn": "978-00-000000-0",
+        "pages": "264",
+        "format": "Paperback · eBook",
+        "synopsis": "When a familiar town begins to change, one family discovers that the stories they have kept quiet may be the ones that bring them back together. A reflective novel about belonging, time and second chances.",
+        "cover": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=900&q=85",
+        "sampleFile": "",
+        "sampleFileName": "",
+        "fullFile": "",
+        "fullFileName": "",
+        "buyUrl": "https://example.com/book-one",
+        "featured": true,
+        "enabled": true,
+        "price": "₹399 paperback · ₹199 eBook"
+      },
+      {
+        "id": "b2",
+        "title": "Small Atlas of Rain",
+        "subtitle": "Poems for the places we carry",
+        "genre": "Poetry",
+        "language": "English",
+        "publisher": "Paper Lantern Books",
+        "published": "2024",
+        "isbn": "",
+        "pages": "112",
+        "format": "Paperback",
+        "synopsis": "A collection of poems about journeys, monsoon afternoons, remembered voices and the landscapes that remain within us long after we leave.",
+        "cover": "https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=900&q=85",
+        "sampleFile": "",
+        "sampleFileName": "",
+        "fullFile": "",
+        "fullFileName": "",
+        "buyUrl": "",
+        "featured": false,
+        "enabled": true,
+        "price": "₹349 paperback"
+      },
+      {
+        "id": "b3",
+        "title": "Notes from the Last Bus",
+        "subtitle": "Stories from everyday journeys",
+        "genre": "Short Stories",
+        "language": "English",
+        "publisher": "Independent",
+        "published": "2023",
+        "isbn": "",
+        "pages": "198",
+        "format": "Paperback · PDF",
+        "synopsis": "Linked stories following passengers, neighbours and strangers whose lives briefly cross on the same routes through a changing city.",
+        "cover": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=900&q=85",
+        "sampleFile": "",
+        "sampleFileName": "",
+        "fullFile": "",
+        "fullFileName": "",
+        "buyUrl": "",
+        "featured": false,
+        "enabled": true,
+        "price": "₹299 paperback"
+      }
+    ],
+    "works": [
+      {
+        "id": "w1",
+        "title": "A Letter to the City",
+        "type": "Essay",
+        "language": "English",
+        "date": "2025",
+        "summary": "A personal essay on how cities become part of our memory, language and sense of home.",
+        "file": "",
+        "fileName": "",
+        "url": "",
+        "image": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=85",
+        "featured": true,
+        "enabled": true
+      },
+      {
+        "id": "w2",
+        "title": "When the Lamps Come On",
+        "type": "Poem",
+        "language": "English",
+        "date": "2024",
+        "summary": "A short poem about evening streets, quiet homes and the familiar glow of a window.",
+        "file": "",
+        "fileName": "",
+        "url": "",
+        "image": "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=85",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "w3",
+        "title": "The Art of Listening",
+        "type": "Short Story",
+        "language": "English",
+        "date": "2024",
+        "summary": "A short story about two strangers who discover that silence can be a form of kindness.",
+        "file": "",
+        "fileName": "",
+        "url": "",
+        "image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=900&q=85",
+        "featured": false,
+        "enabled": true
+      },
+      {
+        "id": "w4",
+        "title": "Memory, Place and Contemporary Fiction",
+        "type": "Research Paper",
+        "language": "English",
+        "date": "2023",
+        "summary": "A research note exploring representations of place and memory in contemporary narrative writing.",
+        "file": "",
+        "fileName": "",
+        "url": "",
+        "image": "https://images.unsplash.com/photo-1453738773917-9c3eff1db985?auto=format&fit=crop&w=900&q=85",
+        "featured": false,
+        "enabled": true
+      }
+    ],
+    "articles": [
+      {
+        "id": "a1",
+        "title": "Finding the first sentence",
+        "category": "Writing Notes",
+        "date": "2025-05-18",
+        "excerpt": "A few thoughts on patience, observation and beginning before every idea feels ready.",
+        "content": "The first sentence rarely arrives as a finished thing. More often, it appears as a question, an image or a small detail worth following. Writing begins when we give that detail enough room to become a story.",
+        "image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=85",
+        "url": "",
+        "enabled": true
+      },
+      {
+        "id": "a2",
+        "title": "Why I keep a notebook",
+        "category": "Behind the Books",
+        "date": "2024-11-09",
+        "excerpt": "Notes, overheard phrases and ordinary moments can become the seeds of a larger work.",
+        "content": "A notebook is a place to keep attention alive. It holds fragments that may not make sense today but can find their place in a poem, essay or story much later.",
+        "image": "https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=1000&q=85",
+        "url": "",
+        "enabled": true
+      }
+    ],
+    "events": [
+      {
+        "id": "e1",
+        "title": "A conversation about stories",
+        "type": "Author Talk",
+        "date": "2026-12-12",
+        "time": "5:00 PM",
+        "venue": "City Literary Forum",
+        "location": "Hyderabad",
+        "description": "An open conversation on fiction, memory and the writing process.",
+        "url": "",
+        "enabled": true
+      },
+      {
+        "id": "e2",
+        "title": "The Quiet Between Seasons — Book Signing",
+        "type": "Book Signing",
+        "date": "2026-12-20",
+        "time": "4:00 PM",
+        "venue": "Readers' Corner",
+        "location": "Hyderabad",
+        "description": "Meet the author, discuss the novel and have your copy signed.",
+        "url": "",
+        "enabled": true
+      }
+    ],
+    "awards": [
+      {
+        "id": "aw1",
+        "title": "Emerging Writer Recognition",
+        "organization": "City Literary Collective",
+        "year": "2025",
+        "description": "Recognition for contributions to contemporary literary writing.",
+        "url": "",
+        "enabled": true
+      },
+      {
+        "id": "aw2",
+        "title": "Shortlist — Annual Poetry Prize",
+        "organization": "Open Verse Foundation",
+        "year": "2024",
+        "description": "Selected for the annual poetry collection shortlist.",
+        "url": "",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "At the writing desk",
+        "image": "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "A reading afternoon",
+        "image": "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Books and notes",
+        "image": "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      }
+    ],
+    "media": [
+      {
+        "id": "m1",
+        "title": "A conversation about the writing process",
+        "type": "Interview",
+        "duration": "18 min",
+        "url": "https://www.youtube.com/",
+        "description": "An interview about ideas, routines and finding a voice.",
+        "thumbnail": "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      },
+      {
+        "id": "m2",
+        "title": "Reading from Small Atlas of Rain",
+        "type": "Reading",
+        "duration": "6 min",
+        "url": "https://www.youtube.com/",
+        "description": "A recorded reading from the poetry collection.",
+        "thumbnail": "https://images.unsplash.com/photo-1474932430478-367dbb6832c1?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      }
+    ],
+    "settings": {
+      "showAbout": true,
+      "showPrivacy": true
+    },
+    "privacyPolicy": "Reader contact details are used only to respond to the message or enquiry. Do not share private or sensitive information through this website.",
+    "contact": {
+      "email": "hello@inkandquill.example",
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "address": "Hyderabad, India"
+    },
+    "social": {
+      "instagram": "https://www.instagram.com/"
+    },
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Reader, Bengaluru",
+        "text": "A quiet, beautiful novel that stayed with me for weeks.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Book club, Hyderabad",
+        "text": "Our book club’s favourite this year — every chapter sparked a conversation.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Reader, Delhi",
+        "text": "Honest, warm writing about home and belonging.",
+        "rating": 5,
+        "enabled": true
+      }
+    ]
+  },
+  "admin": {
+    "storageKey": "sitecraft:author-01",
+    "heroPath": "hero",
+    "overviewNamePath": "author.name",
+    "overviewMottoPath": "author.role",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "profile",
+        "label": "Author profile",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Website / brand name"
+          },
+          {
+            "path": "author.name",
+            "label": "Author name"
+          },
+          {
+            "path": "author.penName",
+            "label": "Pen name"
+          },
+          {
+            "path": "author.role",
+            "label": "Author title"
+          },
+          {
+            "path": "author.genres",
+            "label": "Genres / subjects"
+          },
+          {
+            "path": "author.languages",
+            "label": "Writing languages"
+          },
+          {
+            "path": "author.location",
+            "label": "Based in"
+          },
+          {
+            "path": "author.bio",
+            "label": "Biography",
+            "type": "textarea"
+          },
+          {
+            "path": "author.quote",
+            "label": "Author quote",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Author portrait",
+            "type": "media"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero introduction",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "books",
+        "label": "Books & publications",
+        "type": "collection",
+        "itemLabel": "book",
+        "path": "books",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Book title"
+          },
+          {
+            "key": "subtitle",
+            "label": "Subtitle / tagline"
+          },
+          {
+            "key": "genre",
+            "label": "Genre"
+          },
+          {
+            "key": "language",
+            "label": "Language"
+          },
+          {
+            "key": "publisher",
+            "label": "Publisher"
+          },
+          {
+            "key": "published",
+            "label": "Publication year"
+          },
+          {
+            "key": "isbn",
+            "label": "ISBN"
+          },
+          {
+            "key": "pages",
+            "label": "Page count"
+          },
+          {
+            "key": "format",
+            "label": "Available formats"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "synopsis",
+            "label": "Book description / synopsis",
+            "type": "textarea"
+          },
+          {
+            "key": "cover",
+            "label": "Book cover image",
+            "type": "media"
+          },
+          {
+            "key": "sampleFile",
+            "label": "Sample chapter / preview PDF",
+            "type": "file"
+          },
+          {
+            "key": "fullFile",
+            "label": "Full downloadable book file (optional)",
+            "type": "file"
+          },
+          {
+            "key": "buyUrl",
+            "label": "Purchase / publisher URL",
+            "type": "url"
+          },
+          {
+            "key": "featured",
+            "label": "Feature on home page",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New book",
+          "subtitle": "",
+          "genre": "Fiction",
+          "language": "English",
+          "publisher": "",
+          "published": "",
+          "isbn": "",
+          "pages": "",
+          "format": "Paperback / eBook",
+          "synopsis": "",
+          "cover": "",
+          "sampleFile": "",
+          "sampleFileName": "",
+          "fullFile": "",
+          "fullFileName": "",
+          "buyUrl": "",
+          "featured": false,
+          "enabled": true
+        }
+      },
+      {
+        "id": "works",
+        "label": "Creative works & writings",
+        "type": "collection",
+        "itemLabel": "work",
+        "path": "works",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Work title"
+          },
+          {
+            "key": "type",
+            "label": "Type",
+            "type": "select",
+            "options": [
+              "Poem",
+              "Short Story",
+              "Essay",
+              "Article",
+              "Research Paper",
+              "Screenplay",
+              "Translation",
+              "Audiobook",
+              "Podcast",
+              "Other"
+            ]
+          },
+          {
+            "key": "language",
+            "label": "Language"
+          },
+          {
+            "key": "date",
+            "label": "Year / publication date"
+          },
+          {
+            "key": "summary",
+            "label": "Description / excerpt",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Cover / preview image",
+            "type": "media"
+          },
+          {
+            "key": "file",
+            "label": "Upload work (PDF / EPUB / DOCX / audio)",
+            "type": "file"
+          },
+          {
+            "key": "url",
+            "label": "External reading / listen link",
+            "type": "url"
+          },
+          {
+            "key": "featured",
+            "label": "Feature this work",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New creative work",
+          "type": "Poem",
+          "language": "English",
+          "date": "",
+          "summary": "",
+          "image": "",
+          "file": "",
+          "fileName": "",
+          "url": "",
+          "featured": false,
+          "enabled": true
+        }
+      },
+      {
+        "id": "articles",
+        "label": "Articles & journal",
+        "type": "collection",
+        "itemLabel": "article",
+        "path": "articles",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Article title"
+          },
+          {
+            "key": "category",
+            "label": "Category"
+          },
+          {
+            "key": "date",
+            "label": "Publish date"
+          },
+          {
+            "key": "excerpt",
+            "label": "Short introduction",
+            "type": "textarea"
+          },
+          {
+            "key": "content",
+            "label": "Article content",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Cover image",
+            "type": "media"
+          },
+          {
+            "key": "url",
+            "label": "External full article URL",
+            "type": "url"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New article",
+          "category": "Writing Notes",
+          "date": "",
+          "excerpt": "",
+          "content": "",
+          "image": "",
+          "url": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "events",
+        "label": "Events & book launches",
+        "type": "collection",
+        "itemLabel": "event",
+        "path": "events",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Event name"
+          },
+          {
+            "key": "type",
+            "label": "Event type"
+          },
+          {
+            "key": "date",
+            "label": "Date"
+          },
+          {
+            "key": "time",
+            "label": "Time"
+          },
+          {
+            "key": "venue",
+            "label": "Venue"
+          },
+          {
+            "key": "location",
+            "label": "City / location"
+          },
+          {
+            "key": "description",
+            "label": "Event details",
+            "type": "textarea"
+          },
+          {
+            "key": "url",
+            "label": "Registration / event URL",
+            "type": "url"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New event",
+          "type": "Author Talk",
+          "date": "",
+          "time": "",
+          "venue": "",
+          "location": "",
+          "description": "",
+          "url": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "awards",
+        "label": "Awards & recognition",
+        "type": "collection",
+        "itemLabel": "recognition",
+        "path": "awards",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Award / recognition"
+          },
+          {
+            "key": "organization",
+            "label": "Organization"
+          },
+          {
+            "key": "year",
+            "label": "Year"
+          },
+          {
+            "key": "description",
+            "label": "Details",
+            "type": "textarea"
+          },
+          {
+            "key": "url",
+            "label": "Announcement URL",
+            "type": "url"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New recognition",
+          "organization": "",
+          "year": "",
+          "description": "",
+          "url": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Photo gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Reader reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Reader"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New reader",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "media",
+        "label": "Talks, interviews & audio",
+        "type": "collection",
+        "itemLabel": "media item",
+        "path": "media",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "type",
+            "label": "Type"
+          },
+          {
+            "key": "duration",
+            "label": "Duration"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "thumbnail",
+            "label": "Thumbnail",
+            "type": "media"
+          },
+          {
+            "key": "url",
+            "label": "YouTube / external audio URL",
+            "type": "url"
+          },
+          {
+            "key": "file",
+            "label": "Upload audio (MP3 / M4A / WAV)",
+            "type": "file"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New talk / interview",
+          "type": "Interview",
+          "duration": "",
+          "description": "",
+          "thumbnail": "",
+          "url": "",
+          "file": "",
+          "fileName": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & social links",
+        "fields": [
+          {
+            "path": "contact.email",
+            "label": "Email"
+          },
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.website",
+            "label": "Website / publisher",
+            "type": "url"
+          },
+          {
+            "path": "social.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "social.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "social.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          },
+          {
+            "path": "social.linkedin",
+            "label": "LinkedIn URL",
+            "type": "url"
+          },
+          {
+            "path": "social.goodreads",
+            "label": "Goodreads URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy policy",
+        "fields": [
+          {
+            "path": "privacyPolicy",
+            "label": "Privacy policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}

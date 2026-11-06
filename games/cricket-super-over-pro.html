@@ -1,0 +1,2743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cricket Super Over Pro</title>
+    <style>
+        :root {
+            --bg-grad: linear-gradient(160deg, #0b1622 0%, #162a3a 50%, #1d3b4f 100%);
+            --chrome-bg: rgba(16, 30, 44, 0.88);
+            --chrome-border: rgba(116, 199, 247, 0.45);
+            --card-bg: linear-gradient(135deg, #163059, #1f457a);
+            --text-main: #ffffff;
+            --text-sub: #bfe6ff;
+            --modal-bg: #ffffff;
+            --modal-text: #1c2d3d;
+            --accent: #ffe066;
+            --team-a: #f59f00;
+            --team-b: #2b95d6;
+        }
+
+        body.light-ui {
+            --bg-grad: linear-gradient(160deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+            --chrome-bg: rgba(255, 255, 255, 0.92);
+            --chrome-border: #3b82f6;
+            --card-bg: linear-gradient(135deg, #eff6ff, #dbeafe);
+            --text-main: #0f172a;
+            --text-sub: #1e40af;
+            --modal-bg: #ffffff;
+            --modal-text: #0f172a;
+            --accent: #d97706;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--bg-grad);
+            height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 6px 8px;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .game-wrapper {
+            width: 100%;
+            max-width: 425px;
+            height: 100dvh;
+            max-height: calc(100dvh - 12px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* Toast */
+        .toast {
+            position: absolute;
+            top: 52px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: rgba(15, 23, 42, 0.95);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 800;
+            z-index: 60;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.22s ease, transform 0.22s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 2px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 45;
+        }
+
+        .level-btn {
+            background: var(--chrome-bg);
+            border: 2px solid var(--chrome-border);
+            color: var(--text-main);
+            height: 44px;
+            padding: 0 6px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+            outline: none;
+            flex: 1 1 auto;
+            min-width: 0;
+            text-overflow: ellipsis;
+        }
+
+        .top-right-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .icon-btn {
+            background: var(--chrome-bg);
+            border: 1.5px solid var(--chrome-border);
+            color: var(--text-main);
+            min-width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            padding: 0 6px;
+            font-weight: 800;
+        }
+
+        .icon-btn:active { transform: scale(0.93); }
+
+        .coin-box {
+            background: var(--chrome-bg);
+            height: 44px;
+            padding: 0 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 900;
+            font-size: 13px;
+            color: var(--text-main);
+            border: 1.5px solid var(--chrome-border);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .coin-icon {
+            width: 15px;
+            height: 15px;
+            background: radial-gradient(circle, #ffe066, #f59f00);
+            border-radius: 50%;
+            display: inline-block;
+            border: 2px solid #fff3bf;
+            flex-shrink: 0;
+        }
+
+        /* Top Menu Dropdown Panel */
+        .top-menu-dropdown {
+            position: absolute;
+            top: 48px;
+            right: 0;
+            background: var(--chrome-bg);
+            border: 2px solid var(--chrome-border);
+            border-radius: 14px;
+            padding: 6px;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 185px;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            z-index: 65;
+        }
+
+        .top-menu-dropdown.open { display: flex; }
+
+        .menu-item-btn {
+            min-height: 44px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 800;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        body.light-ui .menu-item-btn {
+            background: rgba(15, 23, 42, 0.06);
+            border-color: rgba(15, 23, 42, 0.15);
+        }
+
+        .menu-item-btn:active { transform: scale(0.97); }
+
+        /* Scoreboard Card */
+        .scoreboard {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 7px 11px;
+            margin: 3px 0;
+            border: 2px solid var(--chrome-border);
+            color: var(--text-main);
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-stripe {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--team-a) 50%, var(--team-b) 50%);
+        }
+
+        .score-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2px;
+            margin-bottom: 4px;
+        }
+
+        .match-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .match-title {
+            font-size: 13px;
+            font-weight: 900;
+            color: var(--accent);
+            letter-spacing: 0.4px;
+        }
+
+        .twist-tag {
+            font-size: 10px;
+            font-weight: 800;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 8px;
+        }
+
+        .score-numbers {
+            font-size: 17px;
+            font-weight: 900;
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            padding: 2px 9px;
+            border-radius: 9px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .score-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .need-Equation {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-sub);
+            white-space: nowrap;
+        }
+
+        .balls-strip {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .extra-balls-badge {
+            font-size: 10px;
+            font-weight: 900;
+            background: rgba(0,0,0,0.4);
+            color: #ffe066;
+            padding: 2px 5px;
+            border-radius: 8px;
+        }
+
+        .ball-dot {
+            width: 21px;
+            height: 21px;
+            border-radius: 50%;
+            background: rgba(120,140,160,0.28);
+            border: 1px solid rgba(255,255,255,0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            font-weight: 900;
+            color: white;
+        }
+
+        .ball-dot.b-6 { background: #9c36b5; border-color: #f3d9fa; }
+        .ball-dot.b-4 { background: #2ecc71; border-color: #d3f9d8; }
+        .ball-dot.b-run { background: #3498db; }
+        .ball-dot.b-0 { background: #64748b; }
+        .ball-dot.b-W { background: #e74c3c; border-color: #ffc9c9; }
+
+        /* Stadium Canvas Container */
+        .stadium-wrapper {
+            position: relative;
+            flex: 0 0 auto;
+            margin: 0 auto;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+            border: 2.5px solid rgba(255,255,255,0.75);
+            background: #1b4332;
+            touch-action: none;
+        }
+
+        .stadium-wrapper.shake { animation: stadiumShake 0.3s ease-in-out; }
+
+        @keyframes stadiumShake {
+            0%, 100% { transform: translate(0, 0); }
+            20% { transform: translate(-8px, 3px); }
+            40% { transform: translate(8px, -3px); }
+            60% { transform: translate(-5px, 2px); }
+            80% { transform: translate(5px, -2px); }
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+
+        /* Overlays inside Stadium */
+        .power-badges {
+            position: absolute;
+            top: 38px;
+            left: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .p-badge {
+            background: rgba(0,0,0,0.78);
+            color: #ffe066;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 10px;
+            border: 1px solid #ffe066;
+            display: none;
+        }
+
+        /* Steal-a-run Overlay */
+        .run-challenge-box {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 86%;
+            background: rgba(15, 23, 42, 0.92);
+            border: 2px solid #ffe066;
+            border-radius: 14px;
+            padding: 8px 12px;
+            z-index: 15;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        }
+
+        .run-bar-track {
+            width: 100%;
+            height: 14px;
+            background: #e74c3c;
+            border-radius: 7px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #fff;
+        }
+
+        .run-bar-safe {
+            position: absolute;
+            top: 0; bottom: 0;
+            left: 24%;
+            width: 52%;
+            background: #2ecc71;
+        }
+
+        .run-bar-cursor {
+            position: absolute;
+            top: -2px; bottom: -2px;
+            width: 6px;
+            background: #ffffff;
+            box-shadow: 0 0 6px #000;
+            left: 50%;
+        }
+
+        .run-tap-btn {
+            width: 100%;
+            min-height: 44px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border: 2px solid #d3f9d8;
+            border-radius: 10px;
+            color: #fff;
+            font-weight: 900;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Bottom Controls */
+        .bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 2px 2px;
+            flex-shrink: 0;
+            gap: 6px;
+        }
+
+        .tool-btn {
+            min-width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--chrome-bg);
+            border: 2px solid var(--chrome-border);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            flex-shrink: 0;
+            padding: 0 6px;
+            transition: transform 0.1s;
+        }
+
+        .tool-btn:active { transform: scale(0.92); }
+
+        .tool-icon { font-size: 17px; line-height: 1; }
+
+        .tool-cost {
+            font-size: 9px;
+            font-weight: 800;
+            background: rgba(0,0,0,0.35);
+            color: #fff;
+            padding: 1px 5px;
+            border-radius: 6px;
+            margin-top: 2px;
+        }
+
+        .swing-btn {
+            flex: 1;
+            height: 48px;
+            background: linear-gradient(135deg, #f59f00, #e67700);
+            border: 2.5px solid #ffe066;
+            border-radius: 24px;
+            color: white;
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: 0.6px;
+            cursor: pointer;
+            box-shadow: 0 5px 14px rgba(245, 159, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.08s;
+        }
+
+        .swing-btn:active { transform: scale(0.95); }
+
+        /* Modals */
+        .modal {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.78);
+            z-index: 50;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border-radius: 14px;
+            padding: 12px;
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            color: var(--modal-text);
+            padding: 20px 18px;
+            border-radius: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 360px;
+            max-height: 90%;
+            overflow-y: auto;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.55);
+            animation: popIn 0.25s ease;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content h2 {
+            color: #1e40af;
+            margin-bottom: 6px;
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .stars-row {
+            font-size: 28px;
+            margin: 6px 0;
+            letter-spacing: 4px;
+        }
+
+        .summary-strip {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .action-btn {
+            min-height: 44px;
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 800;
+            border-radius: 22px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(22, 163, 74, 0.35);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn.secondary {
+            background: #ea580c;
+            box-shadow: 0 4px 10px rgba(234, 88, 12, 0.35);
+        }
+
+        .action-btn.neutral {
+            background: #475569;
+            box-shadow: none;
+        }
+
+        /* Shop & Stats */
+        .shop-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .shop-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 1.5px solid #cbd5e1;
+        }
+
+        .shop-item-info {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .shop-item-sub {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .shop-buy-btn {
+            min-height: 44px;
+            min-width: 78px;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 6px 10px;
+            font-weight: 800;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .shop-buy-btn:disabled {
+            background: #94a3b8;
+            cursor: default;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .stat-box {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+        }
+
+        .stat-val {
+            font-size: 20px;
+            font-weight: 900;
+            color: #0f172a;
+        }
+
+        .stat-lbl {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        /* Confetti */
+        .confetti-piece {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            border-radius: 2px;
+            pointer-events: none;
+            z-index: 70;
+            animation: confettiBurst 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes confettiBurst {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .stadium-wrapper.shake, .confetti-piece, .modal-content { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-wrapper" id="gameWrapper">
+    <div class="toast" id="toast"></div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <select class="level-btn" id="levelSelect" onchange="changeLevel(this.value)" aria-label="Select match"></select>
+        <div class="top-right-group">
+            <button class="icon-btn" id="menuBtn" onclick="toggleTopMenu(event)" title="Menu" aria-label="Menu">☰</button>
+            <button class="icon-btn" id="pauseBtn" onclick="togglePause()" title="Pause and guide" aria-label="Pause">⏸️</button>
+            <div class="coin-box" onclick="openShopModal()" title="Coins">
+                <span id="coinCount">350</span>
+                <span class="coin-icon"></span>
+            </div>
+
+            <div class="top-menu-dropdown" id="topMenuDropdown">
+                <button class="menu-item-btn" onclick="closeTopMenu(); openDailyChallenge();">📅 Daily Challenge</button>
+                <button class="menu-item-btn" onclick="closeTopMenu(); openShopModal();">🛒 Pro Shop</button>
+                <button class="menu-item-btn" onclick="closeTopMenu(); openStatsModal();">📊 Career Stats</button>
+                <button class="menu-item-btn" id="soundMenuBtn" onclick="toggleSound();"><span id="soundBtn">🔊</span> <span id="soundMenuLabel">Sound: ON</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scoreboard -->
+    <div class="scoreboard" id="scoreboard">
+        <div class="team-stripe" id="teamStripe"></div>
+        <div class="score-top">
+            <div class="match-title-wrap">
+                <span class="match-title" id="matchTitle">SRH vs RCB</span>
+                <span class="twist-tag" id="twistTag">PACE</span>
+            </div>
+            <span class="score-numbers" id="scoreNumbers">0/0 (0.0)</span>
+        </div>
+        <div class="score-bottom">
+            <span class="need-Equation" id="needEquation">Need 10 in 6 balls</span>
+            <div class="balls-strip" id="ballsStrip"></div>
+        </div>
+    </div>
+
+    <!-- Stadium Canvas -->
+    <div class="stadium-wrapper" id="stadiumWrapper">
+        <div class="power-badges">
+            <div class="p-badge" id="freeHitBadge">🔥 FREE HIT</div>
+            <div class="p-badge" id="slowMoBadge">🐢 SLOW-MO</div>
+        </div>
+
+        <div class="run-challenge-box" id="runChallengeBox">
+            <div style="color:#ffe066; font-size:11px; font-weight:900;">STEAL EXTRA RUN? (TAP IN GREEN!)</div>
+            <div class="run-bar-track">
+                <div class="run-bar-safe"></div>
+                <div class="run-bar-cursor" id="runBarCursor"></div>
+            </div>
+            <button class="run-tap-btn" id="stealRunBtn">🏃 RUN +1</button>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="bottom-bar" id="bottomBar">
+        <button class="tool-btn" onclick="activateFreeHit()" title="Free Hit (no outs, power boost)">
+            <span class="tool-icon">🔥</span>
+            <span class="tool-cost">50 🪙</span>
+        </button>
+        <button class="swing-btn" id="swingBtn">🏏 SWIPE / HIT</button>
+        <button class="tool-btn" onclick="activateSlowMo()" title="Slow down current or next ball">
+            <span class="tool-icon">🐢</span>
+            <span class="tool-cost">40 🪙</span>
+        </button>
+        <button class="tool-btn" onclick="restartOver()" title="Restart over">
+            <span class="tool-icon">🔄</span>
+            <span class="tool-cost">FREE</span>
+        </button>
+    </div>
+
+    <!-- Win Modal -->
+    <div class="modal" id="winModal">
+        <div class="modal-content">
+            <h2 id="winHeader">🏆 MATCH WON! 🏆</h2>
+            <div class="stars-row" id="winStars">⭐⭐⭐</div>
+            <p id="winRewardText" style="font-weight:700; font-size:14px; color:#334155;">Target Chased! +100 Coins</p>
+            <div class="summary-strip" id="winSummaryStrip"></div>
+            <div class="btn-row">
+                <button class="action-btn neutral" onclick="restartOver()">Replay 🔄</button>
+                <button class="action-btn" id="nextLevelBtn" onclick="nextLevel()">Next Match ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lose Modal -->
+    <div class="modal" id="loseModal">
+        <div class="modal-content">
+            <h2 style="color:#dc2626;" id="loseTitle">💔 MATCH LOST!</h2>
+            <p id="loseDesc" style="font-weight:700; font-size:14px; color:#475569; margin-top:4px;">Fell short of target.</p>
+            <div class="summary-strip" id="loseSummaryStrip"></div>
+            <div class="btn-row">
+                <button class="action-btn" onclick="buyExtraBall()">+1 Ball & 1W (60 🪙)</button>
+                <button class="action-btn secondary" onclick="onLoseRetry()">Retry 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pause / Guide Modal -->
+    <div class="modal" id="pauseModal">
+        <div class="modal-content">
+            <h2>⏸️ PAUSED & GUIDE</h2>
+            <div style="text-align:left; font-size:12px; line-height:1.5; color:#334155; margin:10px 0; background:#f8fafc; padding:10px; border-radius:12px;">
+                <p>🏏 <b>SWIPE</b> on the pitch to aim your shot:<br>
+                   • <b>Swipe Left / Right:</b> Pull or Cut into gaps.<br>
+                   • <b>Swipe Up:</b> Lofted power shot (6s, but can be caught if hit to a fielder!).<br>
+                   • <b>Tap / Button:</b> Straight ground drive.</p>
+                <p style="margin-top:6px;">🎯 <b>DELIVERIES & TELLS:</b><br>
+                   Watch the banner during the run-up! <b>Yorker</b> = swing slightly early; <b>Bouncer</b> = swipe UP or LEFT (pull); <b>Slower</b> = wait for it; <b>Swing/Spin</b> = hit with the turn!</p>
+                <p style="margin-top:6px;">🏃 <b>RUNNING:</b> On 1s & 2s, tap <b>RUN +1</b> when the cursor is in the green bar to steal an extra run!</p>
+            </div>
+            <div class="btn-row">                <button class="action-btn neutral" id="themeToggleBtn" onclick="toggleTheme()">🌗 Light/Dark UI</button>
+                <button class="action-btn secondary" onclick="showTutorial(0)">📖 Tutorial</button>
+                <button class="action-btn" onclick="togglePause()">▶️ Resume</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shop Modal -->
+    <div class="modal" id="shopModal">
+        <div class="modal-content">
+            <h2>🛒 PRO CRICKET SHOP</h2>
+            <p style="font-size:12px; font-weight:700; color:#64748b;">Equip bat skins and buy permanent upgrades</p>
+            <div class="shop-list" id="shopList"></div>
+            <div class="btn-row">
+                <button class="action-btn" onclick="closeModal('shopModal')">Done ✓</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="modal" id="statsModal">
+        <div class="modal-content">
+            <h2>📊 CAREER STATS</h2>
+            <div class="stats-grid" id="statsGrid"></div>
+            <div class="btn-row">
+                <button class="action-btn secondary" onclick="closeModal('statsModal'); showTutorial(0);">How to Play 📖</button>
+                <button class="action-btn" onclick="closeModal('statsModal')">Close ✕</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tutorial Modal -->
+    <div class="modal" id="tutorialModal">
+        <div class="modal-content">
+            <h2 id="tutTitle">Welcome to Super Over!</h2>
+            <div id="tutIcon" style="font-size:42px; margin:10px 0;">🏏</div>
+            <p id="tutText" style="font-size:13px; font-weight:600; color:#334155; line-height:1.45;"></p>
+            <div class="btn-row">
+                <button class="action-btn neutral" onclick="finishTutorial()">Skip</button>
+                <button class="action-btn" id="tutNextBtn" onclick="nextTutorialStep()">Next ➔</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /* =========================================================================
+       0. POLYFILL FOR OLDER PHONES
+       ========================================================================= */
+    if (typeof CanvasRenderingContext2D !== 'undefined' && !CanvasRenderingContext2D.prototype.roundRect) {
+        CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h) {
+            this.rect(x, y, w, h);
+            return this;
+        };
+    }
+
+    /* =========================================================================
+       1. LEVELS, FIELD PLACEMENTS & CONSTANTS
+       ========================================================================= */
+    const FIELD_PRESETS = {
+        BALANCED: [
+            { a: -2.2, d: 0.45 }, { a: -1.8, d: 0.82 }, { a: -1.35, d: 0.80 },
+            { a: -0.95, d: 0.45 }, { a: -0.65, d: 0.78 }
+        ],
+        OFF_PACKED: [
+            { a: -2.3, d: 0.78 }, { a: -1.75, d: 0.42 }, { a: -1.3, d: 0.45 },
+            { a: -1.05, d: 0.82 }, { a: -0.8, d: 0.80 }, { a: -0.55, d: 0.48 }
+        ],
+        LEG_TRAP: [
+            { a: -2.45, d: 0.82 }, { a: -2.15, d: 0.80 }, { a: -1.9, d: 0.44 },
+            { a: -1.55, d: 0.84 }, { a: -1.1, d: 0.45 }, { a: -0.7, d: 0.78 }
+        ],
+        DEATH_RING: [
+            { a: -2.4, d: 0.84 }, { a: -2.0, d: 0.84 }, { a: -1.68, d: 0.42 },
+            { a: -1.45, d: 0.85 }, { a: -1.15, d: 0.84 }, { a: -0.85, d: 0.44 }, { a: -0.6, d: 0.82 }
+        ]
+    };
+
+    const levels = [
+        { title: "SRH vs RCB",      target: 10, speed: 1.00, c1: "#f97316", c2: "#dc2626", night: false, field: "BALANCED",   twist: "FAST PACE",    balls: ["FAST", "FAST", "SLOWER"], reqStars: 0 },
+        { title: "CSK vs MI",       target: 12, speed: 1.04, c1: "#eab308", c2: "#2563eb", night: true,  field: "BALANCED",   twist: "SWING",        balls: ["FAST", "SWING", "SLOWER"], reqStars: 0 },
+        { title: "KKR vs DC",       target: 14, speed: 1.08, c1: "#7e22ce", c2: "#1d4ed8", night: true,  field: "OFF_PACKED", twist: "OFF TRAP",     balls: ["FAST", "SWING", "YORKER"], reqStars: 2 },
+        { title: "RR vs GT",        target: 16, speed: 1.12, c1: "#ec4899", c2: "#1e3a8a", night: false, field: "LEG_TRAP",   twist: "BOUNCERS",     balls: ["FAST", "BOUNCER", "SLOWER"], reqStars: 4 },
+        { title: "IND vs BAN",      target: 18, speed: 1.16, c1: "#0284c7", c2: "#15803d", night: false, field: "BALANCED",   twist: "YORKERS",      balls: ["FAST", "YORKER", "SWING", "SLOWER"], reqStars: 6 },
+        { title: "IND vs SL",       target: 20, speed: 1.20, c1: "#0284c7", c2: "#1e40af", night: true,  field: "OFF_PACKED", twist: "SLOWER MIX",   balls: ["SLOWER", "YORKER", "BOUNCER", "SWING"], reqStars: 8 },
+        { title: "IND vs ENG",      target: 22, speed: 1.24, c1: "#0284c7", c2: "#dc2626", night: false, field: "LEG_TRAP",   twist: "LATE SWING",   balls: ["SWING", "BOUNCER", "YORKER", "FAST"], reqStars: 10 },
+        { title: "IND vs NZ",       target: 24, speed: 1.28, c1: "#0284c7", c2: "#1e293b", night: true,  field: "DEATH_RING", twist: "DEATH RING",   balls: ["YORKER", "BOUNCER", "SLOWER", "SWING"], reqStars: 13 },
+        { title: "IND vs SA",       target: 26, speed: 1.32, c1: "#0284c7", c2: "#16a34a", night: false, field: "DEATH_RING", twist: "EXPRESS",      balls: ["FAST", "BOUNCER", "YORKER", "SWING"], reqStars: 16 },
+        { title: "IND vs AUS",      target: 28, speed: 1.36, c1: "#0284c7", c2: "#eab308", night: true,  field: "OFF_PACKED", twist: "CHIN MUSIC",   balls: ["BOUNCER", "YORKER", "SWING", "SPIN"], reqStars: 19 },
+        { title: "IND vs PAK",      target: 30, speed: 1.40, c1: "#0284c7", c2: "#15803d", night: true,  field: "DEATH_RING", twist: "RIVALRY",      balls: ["YORKER", "SWING", "BOUNCER", "SPIN"], reqStars: 22 },
+        { title: "WORLD CUP FINAL", target: 32, speed: 1.44, c1: "#0284c7", c2: "#f59e0b", night: true,  field: "DEATH_RING", twist: "MYSTERY SPIN", balls: ["SPIN", "YORKER", "BOUNCER", "SLOWER", "SWING"], reqStars: 25 }
+    ];
+
+    const BAT_SKINS = [
+        { id: "classic", name: "Classic Willow",   color: "#d97706", edge: "#92400e", cost: 0 },
+        { id: "neon",    name: "Cyber Neon Blade", color: "#10b981", edge: "#047857", cost: 200 },
+        { id: "gold",    name: "24K Gold Edition", color: "#facc15", edge: "#ca8a04", cost: 400 },
+        { id: "fire",    name: "Inferno Striker",  color: "#ef4444", edge: "#991b1b", cost: 600 }
+    ];
+
+    const COMMENTARY = {
+        SIX:  ["THAT'S GONE ALL THE WAY! HUGE SIX!", "INTO THE SECOND TIER! MAXIMUM!", "CRACKING SHOT! OUT OF THE GROUND!"],
+        FOUR: ["PIERCES THE GAP! SUPERB FOUR!", "RACES AWAY TO THE FENCE! FOUR!", "TIMED TO PERFECTION TO THE ROPE!"],
+        RUNS: ["QUICK RUNNING BETWEEN THE WICKETS!", "PUSHED INTO THE GAP FOR RUNS!", "GOOD PLACEMENT IN THE OUTFIELD!"],
+        DOT:  ["BEATEN! DOT BALL PRESSURE!", "STRAIGHT TO THE FIELDER! NO RUN!", "SWING AND A MISS!"],
+        OUT:  ["BOWLED HIM! TIMBER!", "CAUGHT IN THE DEEP! BIG WICKET!", "GONE! HEARTBREAK FOR THE BATTER!"]
+    };
+
+    const DELIVERY_CATALOG = {
+        FAST:    { name: "FAST",    mult: 1.08, curve: 0,     bounce: 0.25, targetP: 1.00, hint: "⚡ FAST SEAM" },
+        YORKER:  { name: "YORKER",  mult: 1.15, curve: 0.08,  bounce: 0.05, targetP: 0.94, hint: "🎯 TOE YORKER" },
+        BOUNCER: { name: "BOUNCER", mult: 1.02, curve: 0,     bounce: 0.68, targetP: 1.02, hint: "⬆️ SHORT BOUNCER" },
+        SLOWER:  { name: "SLOWER",  mult: 0.78, curve: -0.15, bounce: 0.30, targetP: 1.00, hint: "🐢 SLOWER CUTTER" },
+        SWING:   { name: "SWING",   mult: 0.98, curve: 0.42,  bounce: 0.25, targetP: 1.00, hint: "↩️ BOOMERANG SWING" },
+        SPIN:    { name: "SPIN",    mult: 0.86, curve: -0.52, bounce: 0.38, targetP: 1.00, hint: "🌀 MYSTERY SPIN" }
+    };
+
+    /* =========================================================================
+       2. GAME STATE
+       ========================================================================= */
+    let currentLevelIdx = 0;
+    let isDailyMode = false;
+    let dailyConfig = null;
+
+    let coins = 350;
+    let completedLevels = [];
+    let levelStars = {};
+    let soundEnabled = true;
+    let lightMode = false;
+
+    let ownedBats = ["classic"];
+    let equippedBat = "classic";
+    let sweetSpotLevel = 0;
+    let edgeLuckLevel = 0;
+
+    let stats = { sixes: 0, fours: 0, totalRuns: 0, totalBalls: 0, wins: 0, streak: 0, bestStreak: 0 };
+
+    let runs = 0;
+    let wickets = 0;
+    const MAX_WICKETS = 2;
+    let ballsBowled = 0;
+    let maxBalls = 6;
+    let ballHistory = [];
+    let freeHitActive = false;
+    let slowMoActive = false;
+    let matchEnded = false;
+    let isPaused = false;
+
+    // State machine: 'RUNUP', 'BOWLING', 'HIT_FLY', 'RESULT_PAUSE'
+    let playState = 'RUNUP';
+    let stateTimer = 0;
+    let ballProgress = 0;
+    let baseBallSpeed = 0.015;
+    let currentDelivery = { ...DELIVERY_CATALOG.FAST };
+
+    let batSwingAngle = 0;
+    let isSwinging = false;
+    let batSwingTimer = 0;
+    let chosenShotDir = 'STRAIGHT';
+    let pointerDownPos = null;
+    let swipeTriggered = false;
+    let activePointerId = null;
+
+    let fielders = [];
+    let ballLaunched = false;
+    let hitBall = makeIdleHitBall();
+    let stumpsBroken = false;
+    let bails = [];
+    let floatingPopups = [];
+    let sweetSpotFlash = 0;
+    let cameraZoom = 1.0;
+    let hitStopTimer = 0;
+
+    let runChallengeActive = false;
+    let runCursorPos = 0.5;
+    let runCursorDir = 1;
+
+    let bannerText = "";
+    let bannerColor = "#ffe066";
+    let commentaryLine = "SUPER OVER: 2 WICKETS IN HAND!";
+    let crowdDots = [];
+
+    const gameWrapperEl = document.getElementById('gameWrapper');
+    const scoreboardEl = document.getElementById('scoreboard');
+    const bottomBarEl = document.getElementById('bottomBar');
+    const stadiumWrapperEl = document.getElementById('stadiumWrapper');
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const levelSelectEl = document.getElementById('levelSelect');
+    const soundBtnEl = document.getElementById('soundBtn');
+    const soundMenuBtnEl = document.getElementById('soundMenuBtn');
+    const soundMenuLabelEl = document.getElementById('soundMenuLabel');
+    const topMenuDropdownEl = document.getElementById('topMenuDropdown');
+    const toastEl = document.getElementById('toast');
+    const swingBtnEl = document.getElementById('swingBtn');
+    const runChallengeBoxEl = document.getElementById('runChallengeBox');
+    const runBarCursorEl = document.getElementById('runBarCursor');
+    const stealRunBtnEl = document.getElementById('stealRunBtn');
+
+    let audioCtx = null;
+    let crowdGainNode = null;
+    let toastTimeout = null;
+    let shakeTimeout = null;
+    let lastFrameTime = performance.now();
+    let tutStep = 0;
+
+    function makeIdleHitBall() {
+        return {
+            x: 0, y: 0, z: 0, vx: 0, vy: 0, vz: 0,
+            startX: 0, startY: 0,
+            isSix: false, isFour: false, stopped: true,
+            interceptorIdx: -1, interceptX: 0, interceptY: 0, stopDist: 0
+        };
+    }
+
+    /* =========================================================================
+       3. WEB AUDIO & VISIBILITY
+       ========================================================================= */
+    function initAudioOnInteraction() {
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            if (!audioCtx) {
+                audioCtx = new AudioCtx();
+                setupCrowdAmbience();
+            }
+            if (audioCtx.state === 'suspended' && soundEnabled && !document.hidden) {
+                audioCtx.resume();
+            }
+        } catch (e) {}
+    }
+
+    window.addEventListener('pointerdown', initAudioOnInteraction, { passive: true });
+
+    function checkWebAudioSupport() {
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx && soundMenuBtnEl) soundMenuBtnEl.style.display = 'none';
+        } catch (e) {
+            if (soundMenuBtnEl) soundMenuBtnEl.style.display = 'none';
+        }
+    }
+
+    function updateSoundUI() {
+        soundBtnEl.innerText = soundEnabled ? '🔊' : '🔇';
+        if (soundMenuLabelEl) soundMenuLabelEl.innerText = soundEnabled ? 'Sound: ON' : 'Sound: OFF';
+    }
+
+    function setupCrowdAmbience() {
+        try {
+            if (!audioCtx) return;
+            const bufferSize = audioCtx.sampleRate * 2;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+            noise.loop = true;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 650;
+            filter.Q.value = 0.7;
+
+            crowdGainNode = audioCtx.createGain();
+            crowdGainNode.gain.value = soundEnabled ? 0.025 : 0.0;
+
+            noise.connect(filter);
+            filter.connect(crowdGainNode);
+            crowdGainNode.connect(audioCtx.destination);
+            noise.start();
+        } catch (e) {}
+    }
+
+    function swellCrowdRoar(duration = 1.2) {
+        if (!soundEnabled || !audioCtx || !crowdGainNode) return;
+        try {
+            const now = audioCtx.currentTime;
+            crowdGainNode.gain.cancelScheduledValues(now);
+            crowdGainNode.gain.setValueAtTime(0.03, now);
+            crowdGainNode.gain.linearRampToValueAtTime(0.18, now + 0.15);
+            crowdGainNode.gain.exponentialRampToValueAtTime(0.025, now + duration);
+        } catch (e) {}
+    }
+
+    function toggleSound() {
+        initAudioOnInteraction();
+        soundEnabled = !soundEnabled;
+        updateSoundUI();
+        try {
+            if (crowdGainNode && audioCtx) {
+                crowdGainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+                crowdGainNode.gain.setValueAtTime(soundEnabled ? 0.025 : 0.0, audioCtx.currentTime);
+            }
+            localStorage.setItem('cso_sound', soundEnabled ? '1' : '0');
+        } catch (e) {}
+    }
+
+    function isAnyModalOpen() {
+        return Array.from(document.querySelectorAll('.modal')).some(m => m.style.display === 'flex');
+    }
+
+    // Pause on tab switch, but never stack the pause modal over another open modal
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            try {
+                if (audioCtx && audioCtx.state === 'running') audioCtx.suspend();
+            } catch (e) {}
+            closeTopMenu();
+            if (!matchEnded && !isAnyModalOpen()) {
+                isPaused = true;
+                document.getElementById('pauseModal').style.display = 'flex';
+            }
+        } else {
+            try {
+                if (soundEnabled && audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            } catch (e) {}
+        }
+    });
+
+    function playSound(type) {
+        if (!soundEnabled) return;
+        try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            if (!audioCtx) {
+                audioCtx = new AudioCtx();
+                setupCrowdAmbience();
+            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const now = audioCtx.currentTime;
+            if (type === 'bat_crack') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(620, now);
+                osc.frequency.exponentialRampToValueAtTime(180, now + 0.09);
+                gain.gain.setValueAtTime(0.28, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.11);
+                swellCrowdRoar(1.4);
+            } else if (type === 'bat_soft') {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(320, now);
+                osc.frequency.exponentialRampToValueAtTime(140, now + 0.08);
+                gain.gain.setValueAtTime(0.16, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.09);
+            } else if (type === 'wicket') {
+                [210, 165, 130].forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    const st = now + idx * 0.04;
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(freq, st);
+                    osc.frequency.linearRampToValueAtTime(75, st + 0.12);
+                    gain.gain.setValueAtTime(0.18, st);
+                    gain.gain.exponentialRampToValueAtTime(0.001, st + 0.14);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(st);
+                    osc.stop(st + 0.14);
+                });
+            } else if (type === 'win') {
+                swellCrowdRoar(2.0);
+                [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    const start = now + idx * 0.11;
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, start);
+                    gain.gain.setValueAtTime(0.16, start);
+                    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.25);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(start);
+                    osc.stop(start + 0.25);
+                });
+            }
+        } catch (e) {}
+    }
+
+    /* =========================================================================
+       4. STORAGE & PROGRESSION
+       ========================================================================= */
+    function getTotalStars() {
+        return Object.values(levelStars).reduce((acc, s) => acc + (s || 0), 0);
+    }
+
+    function isLevelUnlocked(idx) {
+        if (idx <= 1) return true;
+        if (completedLevels.includes(idx)) return true;
+        return getTotalStars() >= levels[idx].reqStars;
+    }
+
+    function getTodayDateString() {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    }
+
+    function isDailyDoneToday() {
+        try {
+            return localStorage.getItem('cso_daily_done') === getTodayDateString();
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function loadProgress() {
+        try {
+            const c = localStorage.getItem('cso_coins');
+            const l = localStorage.getItem('cso_level');
+            const comp = localStorage.getItem('cso_completed');
+            const snd = localStorage.getItem('cso_sound');
+            const starsRaw = localStorage.getItem('cso_stars');
+            const upgRaw = localStorage.getItem('cso_upgrades');
+            const statsRaw = localStorage.getItem('cso_stats');
+            const themeRaw = localStorage.getItem('cso_theme');
+
+            if (c !== null && !isNaN(parseInt(c, 10))) coins = parseInt(c, 10);
+            if (comp !== null) {
+                const parsed = JSON.parse(comp);
+                if (Array.isArray(parsed)) {
+                    completedLevels = parsed;
+                    parsed.forEach(idx => { if (!levelStars[idx]) levelStars[idx] = 1; });
+                }
+            }
+            if (starsRaw !== null) {
+                const parsedStars = JSON.parse(starsRaw);
+                if (parsedStars && typeof parsedStars === 'object') levelStars = { ...levelStars, ...parsedStars };
+            }
+            if (l !== null && !isNaN(parseInt(l, 10))) {
+                const pl = parseInt(l, 10);
+                if (pl >= 0 && pl < levels.length && isLevelUnlocked(pl)) currentLevelIdx = pl;
+            }
+            if (upgRaw !== null) {
+                const upg = JSON.parse(upgRaw);
+                if (upg) {
+                    if (Array.isArray(upg.ownedBats)) ownedBats = upg.ownedBats;
+                    if (upg.equippedBat) equippedBat = upg.equippedBat;
+                    if (Number.isInteger(upg.sweetSpotLevel)) sweetSpotLevel = upg.sweetSpotLevel;
+                    if (Number.isInteger(upg.edgeLuckLevel)) edgeLuckLevel = upg.edgeLuckLevel;
+                }
+            }
+            if (statsRaw !== null) {
+                const st = JSON.parse(statsRaw);
+                if (st && typeof st === 'object') stats = { ...stats, ...st };
+            }
+            if (snd !== null) soundEnabled = snd !== '0';
+            if (themeRaw === 'light') {
+                lightMode = true;
+                document.body.classList.add('light-ui');
+            }
+        } catch (e) {}
+
+        document.getElementById('coinCount').innerText = coins;
+        updateSoundUI();
+        refreshLevelSelect();
+    }
+
+    function saveProgress() {
+        try {
+            localStorage.setItem('cso_coins', String(coins));
+            localStorage.setItem('cso_level', String(currentLevelIdx));
+            localStorage.setItem('cso_completed', JSON.stringify(completedLevels));
+            localStorage.setItem('cso_stars', JSON.stringify(levelStars));
+            localStorage.setItem('cso_upgrades', JSON.stringify({ ownedBats, equippedBat, sweetSpotLevel, edgeLuckLevel }));
+            localStorage.setItem('cso_stats', JSON.stringify(stats));
+        } catch (e) {}
+    }
+
+    function checkDailyBonus() {
+        try {
+            const today = getTodayDateString();
+            if (localStorage.getItem('cso_last_bonus') !== today) {
+                localStorage.setItem('cso_last_bonus', today);
+                updateCoins(50);
+                setTimeout(() => showToast("Daily Login Bonus +50 🪙"), 400);
+            }
+        } catch (e) {}
+    }
+
+    function saveMidOverState() {
+        if (isDailyMode) return;
+        try {
+            const st = { levelIdx: currentLevelIdx, runs, wickets, ballsBowled, maxBalls, ballHistory, freeHitActive, slowMoActive };
+            localStorage.setItem('cso_state', JSON.stringify(st));
+        } catch (e) {}
+    }
+
+    function clearMidOverState() {
+        try { localStorage.removeItem('cso_state'); } catch (e) {}
+    }
+
+    function tryRestoreMidOverState(expectedIdx) {
+        try {
+            const raw = localStorage.getItem('cso_state');
+            if (!raw) return false;
+            const st = JSON.parse(raw);
+            if (!st || st.levelIdx !== expectedIdx) return false;
+            if (!Number.isInteger(st.runs) || st.runs < 0) return false;
+            if (!Number.isInteger(st.wickets) || st.wickets < 0 || st.wickets >= MAX_WICKETS) return false;
+            const mb = st.maxBalls || 6;
+            if (!Number.isInteger(st.ballsBowled) || st.ballsBowled < 0 || st.ballsBowled >= mb) return false;
+            if (!Array.isArray(st.ballHistory) || st.ballHistory.length !== st.ballsBowled) return false;
+            if (st.runs >= levels[expectedIdx].target) return false;
+
+            runs = st.runs;
+            wickets = st.wickets;
+            ballsBowled = st.ballsBowled;
+            maxBalls = mb;
+            ballHistory = st.ballHistory;
+            freeHitActive = !!st.freeHitActive;
+            slowMoActive = !!st.slowMoActive;
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    /* =========================================================================
+       5. MATCH SETUP
+       ========================================================================= */
+    function getActiveConfig() {
+        if (isDailyMode && dailyConfig) return dailyConfig;
+        return levels[currentLevelIdx];
+    }
+
+    function refreshLevelSelect() {
+        levelSelectEl.innerHTML = '';
+        levels.forEach((lvl, idx) => {
+            const opt = document.createElement('option');
+            opt.value = idx;
+            const stCount = levelStars[idx] || 0;
+            const starStr = stCount > 0 ? '★'.repeat(stCount) + ' ' : (completedLevels.includes(idx) ? '✓ ' : '');
+            const locked = !isLevelUnlocked(idx);
+            opt.disabled = locked;
+            opt.innerText = locked
+                ? `🔒 M${idx + 1}: ${lvl.title} (${lvl.reqStars}★)`
+                : `${starStr}M${idx + 1}: ${lvl.title} (${lvl.target})`;
+            levelSelectEl.appendChild(opt);
+        });
+        levelSelectEl.value = currentLevelIdx;
+    }
+
+    function initCrowdDots() {
+        crowdDots = [];
+        const colors = ['#f8fafc', '#ffe066', '#38bdf8', '#f43f5e', '#4ade80', '#a855f7'];
+        for (let i = 0; i < 68; i++) {
+            crowdDots.push({
+                angle: Math.PI + (i / 68) * Math.PI,
+                row: i % 3,
+                color: colors[i % colors.length],
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    function setupFieldersForMatch() {
+        const cfg = getActiveConfig();
+        const preset = FIELD_PRESETS[cfg.field] || FIELD_PRESETS.BALANCED;
+        const w = canvas.clientWidth || 340;
+        const h = canvas.clientHeight || 380;
+        const batterCreaseY = h * 0.78;
+        fielders = preset.map(f => {
+            const bx = w / 2 + Math.cos(f.a) * (w * 0.44 * f.d);
+            const by = batterCreaseY + Math.sin(f.a) * (h * 0.52 * f.d);
+            return { angle: f.a, dist: f.d, curX: bx, curY: by, baseX: bx, baseY: by };
+        });
+    }
+
+    function resetMatchState() {
+        runs = 0;
+        wickets = 0;
+        ballsBowled = 0;
+        maxBalls = 6;
+        ballHistory = [];
+        freeHitActive = false;
+        slowMoActive = false;
+    }
+
+    function initMatch(levelIdx, allowRestore = false) {
+        isDailyMode = false;
+        currentLevelIdx = levelIdx;
+        matchEnded = false;
+        isPaused = false;
+        runChallengeActive = false;
+        runChallengeBoxEl.style.display = 'none';
+        closeTopMenu();
+        saveProgress();
+        refreshLevelSelect();
+
+        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+
+        const cfg = getActiveConfig();
+        document.documentElement.style.setProperty('--team-a', cfg.c1);
+        document.documentElement.style.setProperty('--team-b', cfg.c2);
+
+        const restored = allowRestore ? tryRestoreMidOverState(levelIdx) : false;
+        if (!restored) {
+            resetMatchState();
+            saveMidOverState();
+        }
+
+        initCrowdDots();
+        fitStadium();
+        setupFieldersForMatch();
+        updatePowerBadges();
+        updateScoreboardUI();
+        prepareNextDelivery();
+    }
+
+    function openDailyChallenge() {
+        const now = new Date();
+        const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+        const target = 16 + (seed % 14);
+        const fields = Object.keys(FIELD_PRESETS);
+        const alreadyDone = isDailyDoneToday();
+
+        dailyConfig = {
+            title: "DAILY CHALLENGE",
+            target,
+            speed: 1.22,
+            c1: "#10b981",
+            c2: "#6366f1",
+            night: true,
+            field: fields[seed % fields.length],
+            twist: alreadyDone ? "✓ DONE TODAY" : "BONUS +150 🪙",
+            balls: ["FAST", "YORKER", "BOUNCER", "SLOWER", "SWING", "SPIN"]
+        };
+        isDailyMode = true;
+        matchEnded = false;
+        isPaused = false;
+        resetMatchState();
+
+        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+        document.documentElement.style.setProperty('--team-a', dailyConfig.c1);
+        document.documentElement.style.setProperty('--team-b', dailyConfig.c2);
+        setupFieldersForMatch();
+        updatePowerBadges();
+        updateScoreboardUI();
+        prepareNextDelivery();
+        showToast(alreadyDone ? "📅 Daily Challenge (✓ Done today)" : "📅 Daily Challenge Started!");
+    }
+
+    function updatePowerBadges() {
+        document.getElementById('freeHitBadge').style.display = freeHitActive ? 'block' : 'none';
+        document.getElementById('slowMoBadge').style.display = slowMoActive ? 'block' : 'none';
+    }
+
+    function formatOvers(balls) {
+        return `${Math.floor(balls / 6)}.${balls % 6}`;
+    }
+
+    function updateScoreboardUI() {
+        const cfg = getActiveConfig();
+        document.getElementById('matchTitle').innerText = cfg.title;
+        document.getElementById('twistTag').innerText = cfg.twist;
+        document.getElementById('scoreNumbers').innerText = `${runs}/${wickets} (${formatOvers(ballsBowled)})`;
+
+        const remRuns = Math.max(0, cfg.target - runs);
+        const remBalls = Math.max(0, maxBalls - ballsBowled);
+        document.getElementById('needEquation').innerText = `Need ${remRuns} in ${remBalls} ball${remBalls === 1 ? '' : 's'}`;
+
+        renderBallStrip(document.getElementById('ballsStrip'), maxBalls);
+    }
+
+    function renderBallStrip(container, totalSlots) {
+        container.innerHTML = '';
+        const total = Math.max(totalSlots, ballHistory.length);
+        const startIdx = Math.max(0, total - 6);
+
+        if (startIdx > 0) {
+            const badge = document.createElement('span');
+            badge.className = 'extra-balls-badge';
+            badge.innerText = `+${startIdx}`;
+            container.appendChild(badge);
+        }
+
+        for (let i = startIdx; i < total; i++) {
+            const dot = document.createElement('div');
+            const val = ballHistory[i];
+            let cls = 'ball-dot';
+            if (val === '6') cls += ' b-6';
+            else if (val === '4') cls += ' b-4';
+            else if (val === 'W') cls += ' b-W';
+            else if (val === '0') cls += ' b-0';
+            else if (val) cls += ' b-run';
+            dot.className = cls;
+            dot.innerText = val || '';
+            container.appendChild(dot);
+        }
+    }
+
+    /* =========================================================================
+       6. DELIVERY, INPUT & SHOT PHYSICS
+       ========================================================================= */
+    function prepareNextDelivery() {
+        if (matchEnded) return;
+        playState = 'RUNUP';
+        stateTimer = 0;
+        ballProgress = 0;
+        batSwingAngle = 0;
+        isSwinging = false;
+        batSwingTimer = 0;
+        stumpsBroken = false;
+        bails = [];
+        cameraZoom = 1.0;
+        hitStopTimer = 0;
+        ballLaunched = false;
+        hitBall = makeIdleHitBall();
+        runChallengeActive = false;
+        runChallengeBoxEl.style.display = 'none';
+
+        const cfg = getActiveConfig();
+        const pool = cfg.balls || ["FAST", "SLOWER", "SWING"];
+        const pickKey = pool[Math.floor(Math.random() * pool.length)];
+        const template = DELIVERY_CATALOG[pickKey] || DELIVERY_CATALOG.FAST;
+        const sign = Math.random() > 0.5 ? 1 : -1;
+        currentDelivery = { ...template, curve: template.curve * sign };
+
+        baseBallSpeed = 0.0142 * cfg.speed * currentDelivery.mult;
+        bannerText = currentDelivery.hint;
+        bannerColor = "#ffe066";
+    }
+
+    function addFloatingPopup(text, x, y, color = "#ffe066") {
+        floatingPopups.push({ text, x, y, color, alpha: 1.0, vy: -1.6 });
+    }
+
+    function triggerSwing(dir = 'STRAIGHT') {
+        if (matchEnded || isPaused || runChallengeActive) return;
+        if (playState !== 'BOWLING' || isSwinging) return;
+
+        chosenShotDir = dir;
+        isSwinging = true;
+        batSwingTimer = 0;
+        batSwingAngle = -1.25;
+
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        const creaseY = h * 0.78;
+        const diff = Math.abs(ballProgress - currentDelivery.targetP);
+
+        // Very early swing: batter can recover and swing again
+        if (ballProgress < 0.58) {
+            bannerText = "TOO EARLY! WAIT FOR IT...";
+            bannerColor = "#fca5a5";
+            addFloatingPopup("EARLY!", w * 0.5, creaseY - 25, "#fca5a5");
+            return;
+        }
+
+        const windowBoost = 1 + sweetSpotLevel * 0.08;
+        const perfWin = (currentDelivery.name === 'YORKER' ? 0.055 : 0.068) * windowBoost;
+        const goodWin = 0.135 * windowBoost;
+        const okWin   = 0.205 * windowBoost;
+        const edgeWin = 0.265 * windowBoost;
+
+        let shotAngle = -Math.PI / 2;
+        if (dir === 'LEFT') shotAngle = -Math.PI * 0.72;
+        else if (dir === 'RIGHT') shotAngle = -Math.PI * 0.28;
+        else if (dir === 'LOFT') shotAngle = -Math.PI / 2 + (Math.random() - 0.5) * 0.55;
+
+        const nearestFielder = fielders.reduce((best, f, idx) => {
+            const da = Math.abs(f.angle - shotAngle);
+            return da < best.da ? { da, f, idx } : best;
+        }, { da: 999, f: null, idx: -1 });
+        const inGap = nearestFielder.da > 0.22;
+
+        // Bouncer + straight shot = top edge
+        if (currentDelivery.name === 'BOUNCER' && dir === 'STRAIGHT' && diff <= goodWin) {
+            if (!freeHitActive && Math.random() < 0.45) {
+                addFloatingPopup("TOP EDGE! OUT!", w * 0.5, creaseY - 25, "#f87171");
+                launchHitBall(shotAngle + 0.15, 5.2, 6.8, false, false, nearestFielder.idx);
+                registerBallOutcome('W', 0, "TOP EDGE! CAUGHT! 💔", "#ffc9c9", false, true, false);
+            } else {
+                addFloatingPopup("TOP EDGE! +1", w * 0.5, creaseY - 25, "#93c5fd");
+                launchHitBall(shotAngle + 0.2, 4.8, 4.5, false, false, nearestFielder.idx);
+                registerBallOutcome('1', 1, "TOP EDGE SAFE! (1 RUN)", "#74c0fc", false, false, false);
+            }
+            return;
+        }
+
+        if (diff <= perfWin) {
+            sweetSpotFlash = 1.0;
+            if (dir === 'LOFT') {
+                if (inGap || freeHitActive) {
+                    addFloatingPopup("PERFECT! +6", w * 0.5, creaseY - 30, "#ffe066");
+                    hitStopTimer = 7;
+                    cameraZoom = 1.14;                    launchHitBall(shotAngle, 12.5, 9.5, true, false, -1);
+                    registerBallOutcome('6', 6, "MAXIMUM SIX! 🔥", "#f3d9fa", true, false, false);
+                } else if (Math.random() < 0.40) {
+                    addFloatingPopup("CAUGHT ON ROPE!", w * 0.5, creaseY - 25, "#f87171");
+                    launchHitBall(shotAngle, 7.2, 6.2, false, false, nearestFielder.idx);
+                    registerBallOutcome('W', 0, "CAUGHT ON THE BOUNDARY! 💔", "#ffc9c9", false, true, false);
+                } else {
+                    addFloatingPopup("CLEARS HIM! +6", w * 0.5, creaseY - 30, "#ffe066");
+                    hitStopTimer = 7;
+                    cameraZoom = 1.14;
+                    launchHitBall(shotAngle, 12.2, 9.2, true, false, -1);
+                    registerBallOutcome('6', 6, "JUST CLEARS THE FIELDER! SIX! 🔥", "#f3d9fa", true, false, false);
+                }
+            } else if (inGap || freeHitActive) {
+                const fhOnly = freeHitActive && !inGap;
+                addFloatingPopup(fhOnly ? "FREE HIT! +4" : "PERFECT GAP! +4", w * 0.5, creaseY - 25, "#4ade80");
+                launchHitBall(shotAngle, 10.5, 1.8, false, true, -1);
+                registerBallOutcome('4', 4, fhOnly ? "FREE HIT FOUR! 🔥" : "PIERCES THE GAP! FOUR! ⚡", "#d3f9d8", true, false, false);
+            } else {
+                addFloatingPopup("STOPPED! +2", w * 0.5, creaseY - 25, "#38bdf8");
+                launchHitBall(shotAngle, 6.2, 1.2, false, false, nearestFielder.idx);
+                registerBallOutcome('2', 2, "2 RUNS! (FIELDER CUT OFF)", "#74c0fc", false, false, true);
+            }
+        } else if (diff <= goodWin) {
+            if (dir === 'LOFT' && !inGap && !freeHitActive && Math.random() < 0.55) {
+                addFloatingPopup("CAUGHT!", w * 0.5, creaseY - 25, "#f87171");
+                launchHitBall(shotAngle, 6.5, 6.0, false, false, nearestFielder.idx);
+                registerBallOutcome('W', 0, "CAUGHT IN THE DEEP! 💔", "#ffc9c9", false, true, false);
+            } else if (inGap || freeHitActive) {
+                addFloatingPopup("GAP! +4", w * 0.5, creaseY - 25, "#4ade80");
+                launchHitBall(shotAngle, 10.0, 2.2, false, true, -1);
+                registerBallOutcome('4', 4, "SUPER FOUR! ⚡", "#d3f9d8", true, false, false);
+            } else {
+                addFloatingPopup("2 RUNS", w * 0.5, creaseY - 25, "#38bdf8");
+                launchHitBall(shotAngle, 6.0, 1.5, false, false, nearestFielder.idx);
+                registerBallOutcome('2', 2, "2 RUNS! (CUT OFF)", "#74c0fc", false, false, true);
+            }
+        } else if (diff <= okWin) {
+            if (freeHitActive) {
+                launchHitBall(shotAngle, 9.5, 3.0, false, true, -1);
+                registerBallOutcome('4', 4, "FREE HIT FOUR! 🔥", "#d3f9d8", true, false, false);
+            } else {
+                addFloatingPopup("1 RUN", w * 0.5, creaseY - 25, "#38bdf8");
+                launchHitBall(shotAngle, 5.2, 1.4, false, false, nearestFielder.idx);
+                registerBallOutcome('1', 1, "SINGLE (1 RUN)", "#74c0fc", false, false, true);
+            }
+        } else if (diff <= edgeWin) {
+            const surviveChance = 0.52 + edgeLuckLevel * 0.10;
+            if (freeHitActive || Math.random() < surviveChance) {
+                addFloatingPopup("EDGE! +1", w * 0.5, creaseY - 25, "#93c5fd");
+                launchHitBall(shotAngle + 0.25, 4.4, 1.8, false, false, nearestFielder.idx);
+                registerBallOutcome('1', 1, "EDGED & SAFE! (1 RUN)", "#74c0fc", false, false, false);
+            } else {
+                addFloatingPopup("OUT!", w * 0.5, creaseY - 25, "#f87171");
+                launchHitBall(shotAngle - 0.2, 4.5, 5.5, false, false, nearestFielder.idx);
+                registerBallOutcome('W', 0, "CAUGHT BEHIND! 💔", "#ffc9c9", false, true, false);
+            }
+        } else {
+            bannerText = "SWING & MISS!";
+            bannerColor = "#ffa8a8";
+            addFloatingPopup("MISS!", w * 0.5, creaseY - 25, "#fca5a5");
+        }
+    }
+
+    // Launch the hit ball and work out where the intercepting fielder meets it
+    function launchHitBall(angle, speed, vz, isSix, isFour, interceptorIdx = -1) {
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        const startX = w * 0.5;
+        const startY = h * 0.78;
+        const dirX = Math.cos(angle);
+        const dirY = Math.sin(angle);
+
+        let chosenIdx = interceptorIdx;
+        if (!isSix && !isFour && (chosenIdx < 0 || chosenIdx >= fielders.length)) {
+            let bestDa = 99999;
+            fielders.forEach((f, idx) => {
+                const da = Math.abs(f.angle - angle);
+                if (da < bestDa) { bestDa = da; chosenIdx = idx; }
+            });
+        }
+
+        let interceptX = startX + dirX * 110;
+        let interceptY = startY + dirY * 110;
+        let stopDist = 110;
+
+        if (!isSix && !isFour && chosenIdx >= 0 && fielders[chosenIdx]) {
+            const f = fielders[chosenIdx];
+            const proj = (f.curX - startX) * dirX + (f.curY - startY) * dirY;
+            stopDist = Math.max(45, Math.min(Math.min(w, h) * 0.42, proj));
+            interceptX = startX + dirX * stopDist;
+            interceptY = startY + dirY * stopDist;
+        }
+
+        ballLaunched = true;
+        hitBall = {
+            x: startX, y: startY, z: 5,
+            startX, startY,
+            vx: dirX * speed, vy: dirY * speed, vz,
+            isSix, isFour, stopped: false,
+            interceptorIdx: chosenIdx, interceptX, interceptY, stopDist
+        };
+    }
+
+    // Swipe fires the moment the finger passes 25px, but only while the ball is in flight
+    function evaluatePendingSwipe(curX, curY) {
+        if (!pointerDownPos || swipeTriggered || playState !== 'BOWLING') return;
+        const dx = curX - pointerDownPos.x;
+        const dy = curY - pointerDownPos.y;
+        if (Math.hypot(dx, dy) < 25) return;
+
+        swipeTriggered = true;
+        if (dy < 0 && Math.abs(dy) >= Math.abs(dx)) triggerSwing('LOFT');
+        else if (dx < 0) triggerSwing('LEFT');
+        else triggerSwing('RIGHT');
+    }
+
+    function clearPointer() {
+        pointerDownPos = null;
+        swipeTriggered = false;
+        activePointerId = null;
+    }
+
+    canvas.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        closeTopMenu();
+        try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+        activePointerId = e.pointerId;
+        pointerDownPos = { x: e.clientX, y: e.clientY };
+        swipeTriggered = false;
+    });
+
+    canvas.addEventListener('pointermove', (e) => {
+        if (!pointerDownPos || e.pointerId !== activePointerId) return;
+        evaluatePendingSwipe(e.clientX, e.clientY);
+    });
+
+    canvas.addEventListener('pointerup', (e) => {
+        e.preventDefault();
+        try {
+            if (canvas.hasPointerCapture(e.pointerId)) canvas.releasePointerCapture(e.pointerId);
+        } catch (err) {}
+
+        if (pointerDownPos && !swipeTriggered && e.pointerId === activePointerId && playState === 'BOWLING') {
+            const dx = e.clientX - pointerDownPos.x;
+            const dy = e.clientY - pointerDownPos.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 18) triggerSwing('STRAIGHT');
+            else if (dy < 0 && Math.abs(dy) >= Math.abs(dx)) triggerSwing('LOFT');
+            else if (dx < 0) triggerSwing('LEFT');
+            else triggerSwing('RIGHT');
+        }
+        clearPointer();
+    });
+
+    canvas.addEventListener('pointercancel', (e) => {
+        try {
+            if (canvas.hasPointerCapture(e.pointerId)) canvas.releasePointerCapture(e.pointerId);
+        } catch (err) {}
+        clearPointer();
+    });
+
+    swingBtnEl.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        closeTopMenu();
+        triggerSwing('STRAIGHT');
+    });
+
+    stealRunBtnEl.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        if (!runChallengeActive) return;
+        runChallengeActive = false;
+        runChallengeBoxEl.style.display = 'none';
+
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        const cfg = getActiveConfig();
+        const lastIdx = ballHistory.length - 1;
+
+        if (runCursorPos >= 0.24 && runCursorPos <= 0.76) {
+            runs += 1;
+            stats.totalRuns += 1;
+            if (lastIdx >= 0) {
+                const prev = parseInt(ballHistory[lastIdx], 10) || 1;
+                ballHistory[lastIdx] = String(prev + 1);
+            }
+            playSound('bat_soft');
+            updateCoins(3);
+            addFloatingPopup("STOLEN +1 RUN! 🏃", w * 0.5, h * 0.55, "#4ade80");
+            bannerText = "GREAT RUNNING! +1 EXTRA RUN!";
+            bannerColor = "#4ade80";
+            updateScoreboardUI();
+            saveMidOverState();
+            if (runs >= cfg.target) checkMatchEndStatus();
+        } else {
+            wickets += 1;
+            stumpsBroken = true;
+            spawnFlyingBails(w * 0.5, h * 0.84);
+            if (lastIdx >= 0) ballHistory[lastIdx] = 'W';
+            playSound('wicket');
+            triggerStadiumShake();
+            addFloatingPopup("RUN OUT! 💔", w * 0.5, h * 0.55, "#f87171");
+            bannerText = "RUN OUT AT THE CREASE! 💔";
+            bannerColor = "#fca5a5";
+            updateScoreboardUI();
+            saveMidOverState();
+            if (wickets >= MAX_WICKETS) checkMatchEndStatus();
+        }
+    });
+
+    function spawnFlyingBails(x, y) {
+        bails = [
+            { x: x - 5, y: y - 14, vx: -2.8, vy: -4.5, rot: 0, vrot: -0.25 },
+            { x: x + 5, y: y - 14, vx: 3.1,  vy: -5.0, rot: 0, vrot: 0.3 }
+        ];
+    }
+
+    function pickCommentary(cat) {
+        const arr = COMMENTARY[cat] || COMMENTARY.RUNS;
+        commentaryLine = arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function registerBallOutcome(symbol, addedRuns, text, color, isBigHit, isOut = false, canStealRun = false) {
+        // Only show a flying ball if one was actually hit this delivery
+        playState = ballLaunched ? 'HIT_FLY' : 'RESULT_PAUSE';
+        stateTimer = 0;
+        bannerText = text;
+        bannerColor = color;
+        stats.totalBalls += 1;
+
+        if (isOut) {
+            playSound('wicket');
+            pickCommentary('OUT');
+            try { if (navigator.vibrate) navigator.vibrate(45); } catch (e) {}
+            triggerStadiumShake();
+            wickets++;
+        } else if (addedRuns > 0) {
+            playSound(isBigHit ? 'bat_crack' : 'bat_soft');
+            try { if (navigator.vibrate) navigator.vibrate(isBigHit ? 22 : 10); } catch (e) {}
+            runs += addedRuns;
+            stats.totalRuns += addedRuns;
+            if (addedRuns === 6) { stats.sixes++; pickCommentary('SIX'); }
+            else if (addedRuns === 4) { stats.fours++; pickCommentary('FOUR'); }
+            else pickCommentary('RUNS');
+
+            if (addedRuns >= 4) {
+                const coinBonus = addedRuns === 6 ? 6 : 4;
+                updateCoins(coinBonus);
+                showToast(`+${coinBonus} 🪙`);
+            }
+        } else {
+            pickCommentary('DOT');
+        }
+
+        ballsBowled++;
+        ballHistory.push(symbol);
+        freeHitActive = false;
+        slowMoActive = false;
+        updatePowerBadges();
+        updateScoreboardUI();
+        saveMidOverState();
+
+        const cfg = getActiveConfig();
+        if (canStealRun && runs < cfg.target && wickets < MAX_WICKETS) {
+            runChallengeActive = true;
+            runCursorPos = 0.1;
+            runCursorDir = 1;
+            runChallengeBoxEl.style.display = 'flex';
+        }
+    }
+
+    function triggerStadiumShake() {
+        stadiumWrapperEl.classList.remove('shake');
+        void stadiumWrapperEl.offsetWidth;
+        stadiumWrapperEl.classList.add('shake');
+        if (shakeTimeout) clearTimeout(shakeTimeout);
+        shakeTimeout = setTimeout(() => stadiumWrapperEl.classList.remove('shake'), 300);
+    }
+
+    function checkMatchEndStatus() {
+        if (matchEnded) return;
+        runChallengeActive = false;
+        runChallengeBoxEl.style.display = 'none';
+
+        const cfg = getActiveConfig();
+        const target = cfg.target;
+
+        if (runs >= target) {
+            matchEnded = true;
+            clearMidOverState();
+
+            let earnedStars = 1;
+            if (ballsBowled < maxBalls) earnedStars = 2;
+            if (wickets === 0) earnedStars = 3;
+
+            let reward;
+            let rewardMsg;
+            if (isDailyMode) {
+                if (isDailyDoneToday()) {
+                    reward = 20;
+                    rewardMsg = `Already claimed today (+${reward} Coins)`;
+                } else {
+                    reward = 150;
+                    rewardMsg = `Daily Bonus Claimed! +${reward} Coins`;
+                    try { localStorage.setItem('cso_daily_done', getTodayDateString()); } catch (e) {}
+                }
+            } else {
+                const firstTime = !completedLevels.includes(currentLevelIdx);
+                reward = firstTime ? 100 : 30;
+                if (firstTime) completedLevels.push(currentLevelIdx);
+                levelStars[currentLevelIdx] = Math.max(levelStars[currentLevelIdx] || 0, earnedStars);
+                rewardMsg = `Target Chased! +${reward} Coins`;
+            }
+
+            stats.wins++;
+            stats.streak++;
+            if (stats.streak > stats.bestStreak) stats.bestStreak = stats.streak;
+
+            updateCoins(reward);
+            refreshLevelSelect();
+            playSound('win');
+            spawnConfetti();
+
+            document.getElementById('winHeader').innerText = isDailyMode ? "🏆 DAILY CHALLENGE WON!" : "🏆 MATCH WON! 🏆";
+            document.getElementById('winStars').innerText = "⭐".repeat(earnedStars) + "☆".repeat(3 - earnedStars);
+            document.getElementById('winRewardText').innerText = rewardMsg;
+            renderBallStrip(document.getElementById('winSummaryStrip'), ballsBowled);
+            document.getElementById('nextLevelBtn').innerText = isDailyMode
+                ? 'Back to Matches'
+                : (currentLevelIdx === levels.length - 1 ? 'Play Again' : 'Next Match ➔');
+
+            setTimeout(() => { document.getElementById('winModal').style.display = 'flex'; }, 350);
+            return;
+        }
+
+        if (wickets >= MAX_WICKETS || ballsBowled >= maxBalls) {
+            matchEnded = true;
+            stats.streak = 0;
+            saveProgress();
+            const diff = target - runs;
+            document.getElementById('loseTitle').innerText = wickets >= MAX_WICKETS ? "💔 ALL OUT!" : "💔 OVER FINISHED!";
+            document.getElementById('loseDesc').innerText = `Lost by ${diff} run${diff === 1 ? '' : 's'}.`;
+            renderBallStrip(document.getElementById('loseSummaryStrip'), ballsBowled);
+            setTimeout(() => { document.getElementById('loseModal').style.display = 'flex'; }, 350);
+            return;
+        }
+
+        prepareNextDelivery();
+    }
+
+    /* =========================================================================
+       7. GAME LOOP & RENDERING
+       ========================================================================= */
+    function fitCanvasText(text, maxWidth, startSize, minSize = 10, weight = '900') {
+        let size = startSize;
+        while (size > minSize) {
+            ctx.font = `${weight} ${size}px "Segoe UI", sans-serif`;
+            if (ctx.measureText(text).width <= maxWidth) break;
+            size -= 1;
+        }
+        ctx.font = `${weight} ${size}px "Segoe UI", sans-serif`;
+        return size;
+    }
+
+    function updateHitBall(dt, zoomSlow, w) {
+        if (!hitBall.stopped) {
+            // Ones and twos slow down as they reach the fielder, so they arrive together
+            let speedScale = 1;
+            if (!hitBall.isSix && !hitBall.isFour) {
+                const traveled = Math.hypot(hitBall.x - hitBall.startX, hitBall.y - hitBall.startY);
+                const remaining = hitBall.stopDist - traveled;
+                speedScale = Math.max(0.12, Math.min(1, remaining / 45));
+            }
+            const step = dt * zoomSlow * speedScale;
+            hitBall.x += hitBall.vx * step;
+            hitBall.y += hitBall.vy * step;
+            hitBall.z = Math.max(0, hitBall.z + hitBall.vz * dt * zoomSlow);
+            hitBall.vz -= 0.28 * dt * zoomSlow;
+        }
+
+        if (hitBall.isSix || hitBall.isFour) {
+            fielders.forEach(f => {
+                const dx = hitBall.x - f.curX;
+                const dy = hitBall.y - f.curY;
+                const d = Math.hypot(dx, dy);
+                if (d < w * 0.42 && d > 18) {
+                    f.curX += (dx / d) * 2.2 * dt * zoomSlow;
+                    f.curY += (dy / d) * 2.2 * dt * zoomSlow;
+                }
+            });
+            return;
+        }
+
+        const f = fielders[hitBall.interceptorIdx];
+        if (!f) return;
+
+        const toIntX = hitBall.interceptX - f.curX;
+        const toIntY = hitBall.interceptY - f.curY;
+        const distToIntercept = Math.hypot(toIntX, toIntY);
+        const fielderSpeed = 4.6 * dt;
+
+        if (distToIntercept > fielderSpeed) {
+            f.curX += (toIntX / distToIntercept) * fielderSpeed;
+            f.curY += (toIntY / distToIntercept) * fielderSpeed;
+        } else {
+            f.curX = hitBall.interceptX;
+            f.curY = hitBall.interceptY;
+        }
+
+        const traveled = Math.hypot(hitBall.x - hitBall.startX, hitBall.y - hitBall.startY);
+        const ballToFielder = Math.hypot(hitBall.x - f.curX, hitBall.y - f.curY);
+        if (!hitBall.stopped && (ballToFielder <= 10 || traveled >= hitBall.stopDist - 1)) {
+            hitBall.stopped = true;
+            hitBall.x = hitBall.interceptX;
+            hitBall.y = hitBall.interceptY;
+            hitBall.z = 0;
+        }
+    }
+
+    function updateLoop(timestamp) {
+        try {
+            const rawDt = (timestamp - lastFrameTime) / 16.6667;
+            lastFrameTime = timestamp;
+            const dt = Math.min(Math.max(rawDt, 0.1), 3.0);
+
+            const w = canvas.clientWidth;
+            const h = canvas.clientHeight;
+
+            if (!isPaused) {
+                if (hitStopTimer > 0) {
+                    hitStopTimer -= dt;
+                } else {
+                    const slowFactor = slowMoActive ? 0.62 : 1.0;
+
+                    if (playState === 'RUNUP') {
+                        stateTimer += dt;
+                        if (stateTimer > 42) {
+                            playState = 'BOWLING';
+                            // A gesture started during the run-up is discarded, so it can't fire as an instant early swing
+                            clearPointer();
+                        }
+                    } else if (playState === 'BOWLING') {
+                        const flightMod = (currentDelivery.name === 'SLOWER' && ballProgress > 0.45) ? 0.78 : 1.0;
+                        ballProgress += baseBallSpeed * slowFactor * flightMod * dt;
+
+                        if (isSwinging) {
+                            batSwingTimer += dt;
+                            if (batSwingAngle < 1.15) batSwingAngle += 0.34 * dt;
+                            if (batSwingTimer > 15 && ballProgress < 0.88) {
+                                isSwinging = false;
+                                batSwingAngle = 0;
+                            }
+                        }
+
+                        if (ballProgress >= 1.15) {
+                            if (freeHitActive || currentDelivery.name === 'BOUNCER') {
+                                registerBallOutcome('0', 0, freeHitActive ? "FREE HIT DOT BALL" : "BOUNCER LEFT ALONE", "#cbd5e1", false, false, false);
+                            } else {
+                                stumpsBroken = true;
+                                spawnFlyingBails(w * 0.5, h * 0.84);
+                                registerBallOutcome('W', 0, "CLEAN BOWLED! 💔", "#ffc9c9", false, true, false);
+                            }
+                        }
+                    } else if (playState === 'HIT_FLY' || playState === 'RESULT_PAUSE') {
+                        const zoomSlow = (playState === 'HIT_FLY' && hitBall.isSix && stateTimer < 22) ? 0.55 : 1.0;
+                        stateTimer += dt * zoomSlow;
+
+                        if (isSwinging && batSwingAngle < 1.15) batSwingAngle += 0.3 * dt;
+
+                        if (playState === 'HIT_FLY') updateHitBall(dt, zoomSlow, w);
+
+                        if (runChallengeActive) {
+                            runCursorPos += runCursorDir * 0.028 * dt;
+                            if (runCursorPos >= 0.96) { runCursorPos = 0.96; runCursorDir = -1; }
+                            if (runCursorPos <= 0.04) { runCursorPos = 0.04; runCursorDir = 1; }
+                            runBarCursorEl.style.left = `${runCursorPos * 100}%`;
+                        }
+
+                        if (cameraZoom > 1.0) cameraZoom = Math.max(1.0, cameraZoom - 0.0025 * dt);
+
+                        const waitFrames = runChallengeActive ? 92 : 62;
+                        if (stateTimer > waitFrames) checkMatchEndStatus();
+                    }
+                }
+
+                bails.forEach(b => {
+                    b.x += b.vx * dt;
+                    b.y += b.vy * dt;
+                    b.vy += 0.35 * dt;
+                    b.rot += b.vrot * dt;
+                });
+                if (sweetSpotFlash > 0) sweetSpotFlash = Math.max(0, sweetSpotFlash - 0.06 * dt);
+                floatingPopups.forEach(p => {
+                    p.y += p.vy * dt;
+                    p.alpha -= 0.022 * dt;
+                });
+                floatingPopups = floatingPopups.filter(p => p.alpha > 0);
+            }
+
+            drawStadium(w, h, timestamp);
+        } catch (err) {
+            console.error("Game loop error:", err);
+        }
+        requestAnimationFrame(updateLoop);
+    }
+
+    function drawStadium(w, h, timestamp) {
+        ctx.save();
+        ctx.clearRect(0, 0, w, h);
+
+        if (cameraZoom > 1.001) {
+            ctx.translate(w / 2, h * 0.65);
+            ctx.scale(cameraZoom, cameraZoom);
+            ctx.translate(-w / 2, -h * 0.65);
+        }
+
+        const cfg = getActiveConfig();
+
+        // 1. Stand & crowd
+        const standH = h * 0.16;
+        ctx.fillStyle = cfg.night ? '#090d16' : '#1e293b';
+        ctx.fillRect(0, 0, w, standH);
+
+        const crowdCheering = playState === 'HIT_FLY' && hitBall.isSix;
+        crowdDots.forEach(dot => {
+            const cx = w / 2 + Math.cos(dot.angle) * (w * 0.48);
+            const cy = standH * 0.85 + Math.sin(dot.angle) * (standH * 0.65) - dot.row * 6;
+            const bounce = crowdCheering ? Math.sin(timestamp * 0.02 + dot.phase) * 3 : 0;
+            ctx.fillStyle = dot.color;
+            ctx.beginPath();
+            ctx.arc(cx, cy + bounce, 2.2, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        if (cfg.night) {
+            [w * 0.12, w * 0.88].forEach(lx => {
+                const grad = ctx.createRadialGradient(lx, 8, 2, lx, 8, w * 0.35);
+                grad.addColorStop(0, 'rgba(255, 250, 210, 0.45)');
+                grad.addColorStop(1, 'rgba(255, 250, 210, 0)');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, w, h * 0.45);
+            });
+        }
+
+        // 2. Outfield
+        const fieldTop = standH * 0.72;
+        const stripeCount = 8;
+        for (let i = 0; i < stripeCount; i++) {
+            ctx.fillStyle = i % 2 === 0 ? '#2b8a3e' : '#2f9e44';
+            ctx.fillRect(0, fieldTop + ((h - fieldTop) / stripeCount) * i, w, (h - fieldTop) / stripeCount + 1);
+        }
+
+        const centerFieldY = h * 0.54;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,0.32)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([6, 6]);
+        ctx.beginPath();
+        ctx.ellipse(w / 2, centerFieldY, w * 0.28, h * 0.22, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        ctx.ellipse(w / 2, centerFieldY, w * 0.46, h * 0.37, 0, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.lineWidth = 6;
+        [
+            { s: Math.PI * 1.15, e: Math.PI * 1.35, c: cfg.c1 },
+            { s: Math.PI * 1.4,  e: Math.PI * 1.6,  c: '#ffe066' },
+            { s: Math.PI * 1.65, e: Math.PI * 1.85, c: cfg.c2 }
+        ].forEach(seg => {
+            ctx.strokeStyle = seg.c;
+            ctx.beginPath();
+            ctx.ellipse(w / 2, centerFieldY, w * 0.465, h * 0.375, 0, seg.s, seg.e);
+            ctx.stroke();
+        });
+
+        // 3. Pitch
+        const pitchTopY = h * 0.26;
+        const pitchBotY = h * 0.86;
+        const pitchTopW = w * 0.14;
+        const pitchBotW = w * 0.27;
+
+        const pitchGrad = ctx.createLinearGradient(0, pitchTopY, 0, pitchBotY);
+        pitchGrad.addColorStop(0, '#d6b485');
+        pitchGrad.addColorStop(0.5, '#e3c598');
+        pitchGrad.addColorStop(1, '#cfa976');
+        ctx.fillStyle = pitchGrad;
+        ctx.beginPath();
+        ctx.moveTo(w / 2 - pitchTopW / 2, pitchTopY);
+        ctx.lineTo(w / 2 + pitchTopW / 2, pitchTopY);
+        ctx.lineTo(w / 2 + pitchBotW / 2, pitchBotY);
+        ctx.lineTo(w / 2 - pitchBotW / 2, pitchBotY);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(130, 95, 55, 0.22)';
+        ctx.beginPath();
+        ctx.ellipse(w / 2 - 10, pitchTopY + 26, 7, 14, 0.2, 0, Math.PI * 2);
+        ctx.ellipse(w / 2 + 12, pitchBotY - 38, 9, 16, -0.1, 0, Math.PI * 2);
+        ctx.fill();
+
+        const bowlerCreaseY = h * 0.30;
+        const batterCreaseY = h * 0.78;
+        ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(w / 2 - pitchTopW * 0.62, bowlerCreaseY);
+        ctx.lineTo(w / 2 + pitchTopW * 0.62, bowlerCreaseY);
+        ctx.moveTo(w / 2 - pitchBotW * 0.62, batterCreaseY);
+        ctx.lineTo(w / 2 + pitchBotW * 0.62, batterCreaseY);
+        ctx.stroke();
+
+        ctx.fillStyle = '#fff3bf';
+        for (let i = -1; i <= 1; i++) ctx.fillRect(w / 2 + i * 4.5 - 1, pitchTopY - 7, 2, 9);
+
+        // 4. Fielders
+        fielders.forEach(f => {
+            f.baseX = w / 2 + Math.cos(f.angle) * (w * 0.44 * f.dist);
+            f.baseY = batterCreaseY + Math.sin(f.angle) * (h * 0.52 * f.dist);
+            if (playState === 'RUNUP' || playState === 'BOWLING') {
+                f.curX = f.baseX;
+                f.curY = f.baseY;
+            }
+            ctx.fillStyle = 'rgba(0,0,0,0.28)';
+            ctx.beginPath();
+            ctx.ellipse(f.curX, f.curY + 5, 5, 2.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = cfg.c2;
+            ctx.beginPath();
+            ctx.arc(f.curX, f.curY, 4.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#1e293b';
+            ctx.beginPath();
+            ctx.arc(f.curX, f.curY - 3.5, 2.8, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // 5. Sweet-spot ring
+        const targetY = bowlerCreaseY + (batterCreaseY - bowlerCreaseY) * currentDelivery.targetP;
+        const ringRadius = Math.max(17, w * 0.08) * (1 + sweetSpotLevel * 0.05);
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(w / 2, targetY, ringRadius, 0, Math.PI * 2);
+        const inZone = playState === 'BOWLING' && Math.abs(ballProgress - currentDelivery.targetP) <= 0.11;
+        ctx.strokeStyle = sweetSpotFlash > 0 ? '#ffffff' : (inZone ? '#2ecc71' : 'rgba(255, 224, 102, 0.85)');
+        ctx.lineWidth = inZone || sweetSpotFlash > 0 ? 4 : 2.2;
+        ctx.setLineDash([5, 4]);
+        ctx.stroke();
+        if (sweetSpotFlash > 0) {
+            ctx.fillStyle = `rgba(255, 224, 102, ${sweetSpotFlash * 0.45})`;
+            ctx.fill();
+        }
+        ctx.restore();
+
+        // 6. Bowler
+        const runupOffset = playState === 'RUNUP' ? (42 - stateTimer) * 0.55 : 0;
+        const followThrough = playState === 'BOWLING' ? Math.min(12, ballProgress * 18) : 0;
+        const bx = w / 2 + 11;
+        const by = bowlerCreaseY - runupOffset + followThrough;
+
+        ctx.strokeStyle = '#f8fafc';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(bx - 3, by + 2); ctx.lineTo(bx - 4, by + 10);
+        ctx.moveTo(bx + 3, by + 2); ctx.lineTo(bx + 4, by + 10);
+        ctx.stroke();
+
+        ctx.fillStyle = cfg.c2;
+        ctx.beginPath();
+        ctx.roundRect(bx - 5, by - 7, 10, 11, 3);
+        ctx.fill();
+
+        ctx.strokeStyle = cfg.c2;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(bx - 4, by - 4);
+        const armAngle = playState === 'RUNUP' ? (stateTimer * 0.22) : 1.4;
+        ctx.lineTo(bx - 4 + Math.cos(armAngle) * 10, by - 4 + Math.sin(armAngle) * 10);
+        ctx.stroke();
+
+        ctx.fillStyle = '#fcd34d';
+        ctx.beginPath();
+        ctx.arc(bx, by - 10, 4.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 7. Batter
+        const batX = w / 2 - 22;
+        const batY = batterCreaseY - 6;
+
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.beginPath();
+        ctx.ellipse(batX, batY + 14, 10, 4, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(batX - 6, batY + 2, 5, 12);
+        ctx.fillRect(batX + 1, batY + 2, 5, 12);
+
+        ctx.fillStyle = cfg.c1;
+        ctx.beginPath();
+        ctx.roundRect(batX - 7, batY - 10, 14, 14, 4);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(batX + 1, batY - 14, 6.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(batX + 3, batY - 15, 5, 3);
+
+        const skin = BAT_SKINS.find(s => s.id === equippedBat) || BAT_SKINS[0];
+        ctx.save();
+        ctx.translate(batX + 6, batY - 2);
+        ctx.rotate(batSwingAngle);
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(0, -2, 8, 3.5);
+        ctx.fillStyle = skin.color;
+        ctx.strokeStyle = skin.edge;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.roundRect(7, -4, 22, 7.5, 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        // 8. Stumps & bails
+        const stumpY = pitchBotY - 4;
+        ctx.fillStyle = '#fff3bf';
+        for (let i = -1; i <= 1; i++) {
+            ctx.save();
+            ctx.translate(w / 2 + i * 7, stumpY);
+            if (stumpsBroken) ctx.rotate(i * 0.48 + 0.25);
+            ctx.fillRect(-1.5, -16, 3, 16);
+            ctx.restore();
+        }
+        if (!stumpsBroken) {
+            ctx.fillRect(w / 2 - 8, stumpY - 17, 16, 2);
+        } else {
+            ctx.fillStyle = '#ffe066';
+            bails.forEach(b => {
+                ctx.save();
+                ctx.translate(b.x, b.y);
+                ctx.rotate(b.rot);
+                ctx.fillRect(-3.5, -1, 7, 2);
+                ctx.restore();
+            });
+        }
+
+        // 9. Ball
+        if (playState === 'BOWLING') {
+            let curveX = Math.sin(ballProgress * Math.PI) * (currentDelivery.curve * 42);
+            if (currentDelivery.name === 'SPIN' && ballProgress > 0.62) {
+                curveX += (ballProgress - 0.62) * (currentDelivery.curve * 85);
+            }
+            const ballX = w / 2 + curveX;
+            const groundY = bowlerCreaseY + (batterCreaseY - bowlerCreaseY) * ballProgress;
+            const bounceArc = Math.abs(Math.sin(ballProgress * Math.PI * 1.35)) * (22 * (0.4 + currentDelivery.bounce));
+            const ballY = groundY - bounceArc;
+            const radius = 5.5 + bounceArc * 0.08;
+
+            ctx.fillStyle = 'rgba(0,0,0,0.32)';
+            ctx.beginPath();
+            ctx.ellipse(ballX, groundY + 4, 5, 2.8, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = freeHitActive ? '#ff922b' : '#ffffff';
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, radius, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#c92a2a';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        } else if (playState === 'HIT_FLY') {
+            ctx.fillStyle = 'rgba(0,0,0,0.28)';
+            ctx.beginPath();
+            ctx.ellipse(hitBall.x, hitBall.y + 4, 5, 2.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            const r = Math.min(13, 6 + hitBall.z * 0.09);
+            ctx.fillStyle = hitBall.isSix ? '#ffe066' : '#ffffff';
+            ctx.beginPath();
+            ctx.arc(hitBall.x, hitBall.y - hitBall.z, r, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#e03131';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+
+        // 10. Popups
+        const maxPopupWidth = w * 0.72;
+        floatingPopups.forEach(p => {
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            fitCanvasText(p.text, maxPopupWidth, 15, 10, '900');
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#000';
+            ctx.fillText(p.text, p.x + 1, p.y + 1);            ctx.fillStyle = p.color;
+            ctx.fillText(p.text, p.x, p.y);
+            ctx.restore();
+        });
+
+        ctx.restore(); // end camera zoom
+
+        // 11. Banner & commentary
+        if (bannerText) {
+            ctx.save();
+            const boxW = w * 0.78;
+            const boxX = (w - boxW) / 2;
+            ctx.fillStyle = 'rgba(9, 13, 22, 0.76)';
+            ctx.beginPath();
+            ctx.roundRect(boxX, 6, boxW, 26, 8);
+            ctx.fill();
+            fitCanvasText(bannerText, boxW - 14, 13, 10, '900');
+            ctx.textAlign = 'center';
+            ctx.fillStyle = bannerColor;
+            ctx.fillText(bannerText, w / 2, 23);
+            ctx.restore();
+        }
+
+        if (commentaryLine && !runChallengeActive) {
+            ctx.save();
+            ctx.fillStyle = 'rgba(9, 13, 22, 0.68)';
+            ctx.fillRect(0, h - 22, w, 22);
+            const fullComm = `🎙️ ${commentaryLine}`;
+            fitCanvasText(fullComm, w - 12, 11, 10, '700');
+            ctx.textAlign = 'center';
+            ctx.fillStyle = '#e2e8f0';
+            ctx.fillText(fullComm, w / 2, h - 7);
+            ctx.restore();
+        }
+    }
+
+    /* =========================================================================
+       8. UI: MENU, POWER-UPS, SHOP, STATS & TUTORIAL
+       ========================================================================= */
+    function toggleTopMenu(e) {
+        if (e) e.stopPropagation();
+        topMenuDropdownEl.classList.toggle('open');
+    }
+
+    function closeTopMenu() {
+        topMenuDropdownEl.classList.remove('open');
+    }
+
+    window.addEventListener('pointerdown', (e) => {
+        if (!e.target.closest('.top-right-group')) closeTopMenu();
+    });
+
+    function fitStadium() {
+        const wrapperRect = gameWrapperEl.getBoundingClientRect();
+        const scoreRect = scoreboardEl.getBoundingClientRect();
+        const bottomRect = bottomBarEl.getBoundingClientRect();
+
+        const availW = wrapperRect.width;
+        const availH = Math.max(180, bottomRect.top - scoreRect.bottom - 8);
+
+        const w = Math.floor(Math.min(availW, availH * 0.94));
+        const h = Math.floor(availH);
+
+        stadiumWrapperEl.style.width = `${w}px`;
+        stadiumWrapperEl.style.height = `${h}px`;
+
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    window.addEventListener('resize', fitStadium);
+
+    function showToast(msg) {
+        toastEl.innerText = msg;
+        toastEl.classList.add('show');
+        if (toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => toastEl.classList.remove('show'), 2000);
+    }
+
+    function activateFreeHit() {
+        if (matchEnded || isPaused) return;
+        if (freeHitActive) { showToast("Free Hit is already active!"); return; }
+        if (coins < 50) { showToast("Need 50 coins for Free Hit!"); return; }
+        updateCoins(-50);
+        freeHitActive = true;
+        updatePowerBadges();
+        saveMidOverState();
+        showToast("🔥 Free Hit Activated!");
+    }
+
+    function activateSlowMo() {
+        if (matchEnded || isPaused) return;
+        if (slowMoActive) { showToast("Slow-Mo is already active!"); return; }
+        if (coins < 40) { showToast("Need 40 coins for Slow-Mo!"); return; }
+        updateCoins(-40);
+        slowMoActive = true;
+        updatePowerBadges();
+        saveMidOverState();
+        showToast("🐢 Slow-Mo Activated!");
+    }
+
+    function buyExtraBall() {
+        if (coins < 60) { showToast("Not enough coins! Tap Retry for free."); return; }
+        updateCoins(-60);
+        if (wickets >= MAX_WICKETS) wickets = MAX_WICKETS - 1;
+        if (ballsBowled >= maxBalls) maxBalls += 1;
+        matchEnded = false;
+        document.getElementById('loseModal').style.display = 'none';
+        updateScoreboardUI();
+        saveMidOverState();
+        prepareNextDelivery();
+    }
+
+    function onLoseRetry() {
+        clearMidOverState();
+        initMatch(currentLevelIdx, false);
+    }
+
+    function restartOver() {
+        clearMidOverState();
+        if (isDailyMode) openDailyChallenge();
+        else initMatch(currentLevelIdx, false);
+    }
+
+    function updateCoins(amount) {
+        coins += amount;
+        document.getElementById('coinCount').innerText = coins;
+        saveProgress();
+    }
+
+    function changeLevel(val) {
+        const idx = parseInt(val, 10);
+        if (!isLevelUnlocked(idx)) {
+            showToast(`Need ${levels[idx].reqStars} ★ to unlock`);
+            levelSelectEl.value = currentLevelIdx;
+            return;
+        }
+        clearMidOverState();
+        initMatch(idx, false);
+    }
+
+    function nextLevel() {
+        clearMidOverState();
+        if (isDailyMode) {
+            initMatch(currentLevelIdx, false);
+            return;
+        }
+        const nextIdx = (currentLevelIdx + 1) % levels.length;
+        if (!isLevelUnlocked(nextIdx)) {
+            showToast(`Need ${levels[nextIdx].reqStars} ★ to unlock`);
+            initMatch(currentLevelIdx, false);
+            return;
+        }
+        initMatch(nextIdx, false);
+    }
+
+    function togglePause() {
+        closeTopMenu();
+        if (matchEnded) return;
+        isPaused = !isPaused;
+        document.getElementById('pauseModal').style.display = isPaused ? 'flex' : 'none';
+    }
+
+    function toggleTheme() {
+        lightMode = !lightMode;
+        document.body.classList.toggle('light-ui', lightMode);
+        try { localStorage.setItem('cso_theme', lightMode ? 'light' : 'dark'); } catch (e) {}
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
+        isPaused = false;
+    }
+
+    function buildUpgradeRow(list, icon, name, sub, level, cost, onBuy) {
+        const row = document.createElement('div');
+        row.className = 'shop-item';
+        row.innerHTML = `
+            <div>
+                <div class="shop-item-info">${icon} ${name} (Lv ${level}/3)</div>
+                <div class="shop-item-sub">${sub}</div>
+            </div>
+        `;
+        const btn = document.createElement('button');
+        btn.className = 'shop-buy-btn';
+        if (level >= 3) {
+            btn.innerText = "MAXED";
+            btn.disabled = true;
+        } else {
+            btn.innerText = `${cost} 🪙`;
+            btn.onclick = () => {
+                if (coins < cost) { showToast("Not enough coins!"); return; }
+                onBuy();
+                updateCoins(-cost);
+                openShopModal();
+            };
+        }
+        row.appendChild(btn);
+        list.appendChild(row);
+    }
+
+    function openShopModal() {
+        closeTopMenu();
+        isPaused = true;
+        const list = document.getElementById('shopList');
+        list.innerHTML = '';
+
+        buildUpgradeRow(list, '🎯', 'Sweet Spot Boost', '+8% wider timing window per level',
+            sweetSpotLevel, (sweetSpotLevel + 1) * 150, () => { sweetSpotLevel++; });
+        buildUpgradeRow(list, '🍀', 'Edge Protection', '+10% chance edges fall safe',
+            edgeLuckLevel, (edgeLuckLevel + 1) * 140, () => { edgeLuckLevel++; });
+
+        BAT_SKINS.forEach(skin => {
+            const owned = ownedBats.includes(skin.id);
+            const active = equippedBat === skin.id;
+            const row = document.createElement('div');
+            row.className = 'shop-item';
+            row.innerHTML = `
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="width:18px; height:18px; border-radius:4px; background:${skin.color}; border:2px solid ${skin.edge}; display:inline-block;"></span>
+                    <div>
+                        <div class="shop-item-info">${skin.name}</div>
+                        <div class="shop-item-sub">${owned ? 'Owned' : skin.cost + ' Coins'}</div>
+                    </div>
+                </div>
+            `;
+            const btn = document.createElement('button');
+            btn.className = 'shop-buy-btn';
+            if (active) {
+                btn.innerText = "EQUIPPED";
+                btn.disabled = true;
+            } else if (owned) {
+                btn.innerText = "EQUIP";
+                btn.onclick = () => {
+                    equippedBat = skin.id;
+                    saveProgress();
+                    openShopModal();
+                };
+            } else {
+                btn.innerText = `${skin.cost} 🪙`;
+                btn.onclick = () => {
+                    if (coins < skin.cost) { showToast("Not enough coins!"); return; }
+                    ownedBats.push(skin.id);
+                    equippedBat = skin.id;
+                    updateCoins(-skin.cost);
+                    openShopModal();
+                };
+            }
+            row.appendChild(btn);
+            list.appendChild(row);
+        });
+
+        document.getElementById('shopModal').style.display = 'flex';
+    }
+
+    function openStatsModal() {
+        closeTopMenu();
+        isPaused = true;
+        const sr = stats.totalBalls > 0 ? Math.round((stats.totalRuns / stats.totalBalls) * 100) : 0;
+        const maxPossibleStars = levels.length * 3;
+        document.getElementById('statsGrid').innerHTML = `
+            <div class="stat-box"><div class="stat-val">${stats.sixes}</div><div class="stat-lbl">Total Sixes 🔥</div></div>
+            <div class="stat-box"><div class="stat-val">${sr}</div><div class="stat-lbl">Strike Rate ⚡</div></div>
+            <div class="stat-box"><div class="stat-val">${stats.bestStreak}</div><div class="stat-lbl">Best Win Streak 🏆</div></div>
+            <div class="stat-box"><div class="stat-val">${getTotalStars()}/${maxPossibleStars}</div><div class="stat-lbl">Total Stars ⭐</div></div>
+        `;
+        document.getElementById('statsModal').style.display = 'flex';
+    }
+
+    const TUTORIAL_STEPS = [
+        {
+            title: "1/3: Timing the Sweet Spot",
+            icon: "🎯",
+            text: "Watch the ball approach the dashed ring at the batter's crease. Swing when the ring turns GREEN for maximum power! Watch the top banner for Yorker, Bouncer, or Slower tells."
+        },
+        {
+            title: "2/3: Swipe to Aim into Gaps",
+            icon: "👆",
+            text: "SWIPE LEFT, RIGHT, or UP on the stadium! Aim between fielders to hit 4s, or SWIPE UP with perfect timing to launch a 6 over the rope!"
+        },
+        {
+            title: "3/3: Steal Runs & Power-Ups",
+            icon: "🔥",
+            text: "On 1s and 2s, tap RUN +1 in the green bar to steal an extra run! Use 🔥 Free Hit (no outs) or 🐢 Slow-Mo when chasing big targets."
+        }
+    ];
+
+    function showTutorial(stepIdx = 0) {
+        isPaused = true;
+        tutStep = stepIdx;
+        const step = TUTORIAL_STEPS[tutStep];
+        document.getElementById('tutTitle').innerText = step.title;
+        document.getElementById('tutIcon').innerText = step.icon;
+        document.getElementById('tutText').innerText = step.text;
+        document.getElementById('tutNextBtn').innerText = tutStep === TUTORIAL_STEPS.length - 1 ? "Let's Play! 🏏" : "Next ➔";
+        document.getElementById('pauseModal').style.display = 'none';
+        document.getElementById('tutorialModal').style.display = 'flex';
+    }
+
+    function nextTutorialStep() {
+        if (tutStep < TUTORIAL_STEPS.length - 1) showTutorial(tutStep + 1);
+        else finishTutorial();
+    }
+
+    function finishTutorial() {
+        try { localStorage.setItem('cso_tut_done', '1'); } catch (e) {}
+        closeModal('tutorialModal');
+    }
+
+    function spawnConfetti() {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const colors = ['#ff6b6b', '#feca57', '#1dd1a1', '#54a0ff', '#ff9ff3', '#ffe066'];
+        for (let i = 0; i < 36; i++) {
+            const div = document.createElement('div');
+            div.className = 'confetti-piece';
+            div.style.background = colors[i % colors.length];
+            div.style.left = '50%';
+            div.style.top = '45%';
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 60 + Math.random() * 140;
+            div.style.setProperty('--dx', `${Math.cos(angle) * dist}px`);
+            div.style.setProperty('--dy', `${Math.sin(angle) * dist + 40}px`);
+            div.style.setProperty('--rot', `${Math.random() * 720 - 360}deg`);
+            gameWrapperEl.appendChild(div);
+            setTimeout(() => { if (div.parentNode) div.parentNode.removeChild(div); }, 1500);
+        }
+    }
+
+    window.onload = () => {
+        checkWebAudioSupport();
+        loadProgress();
+        checkDailyBonus();
+        fitStadium();
+        initMatch(currentLevelIdx, true);
+        try {
+            if (!localStorage.getItem('cso_tut_done')) showTutorial(0);
+        } catch (e) {}
+        lastFrameTime = performance.now();
+        requestAnimationFrame(updateLoop);
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+const CONFIG={"id":"mobiles-02","theme":"pocket","mobile":true,"title":"PocketTech","eyebrow":"MOBILE & CONNECTED LIVING","action":"Discover devices","productHeading":"Devices made to move with you.","specKeys":["brand","model","ram","storage","display","camera","battery","network","processor","color","warranty"],"labels":{"brand":"Brand","model":"Model","processor":"Processor / main feature","ram":"RAM","storage":"Storage / capacity","display":"Display","graphics":"Graphics","connectivity":"Connectivity","camera":"Camera","battery":"Battery","network":"Network","color":"Colour","warranty":"Warranty"}};
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl=v=>{const x=String(v??'').trim();return /^(https?:\/\/|data:image\/|\/|\.\/|\.\.\/)/i.test(x)?x:''};
+const digits=v=>String(v??'').replace(/\D/g,'');
+const amount=v=>{const n=Number(String(v??'').replace(/[^\d.-]/g,''));return Number.isFinite(n)?n:0};
+const money=(v,c='INR')=>{try{return new Intl.NumberFormat('en-IN',{style:'currency',currency:c,maximumFractionDigits:0}).format(amount(v))}catch{return '₹'+amount(v).toLocaleString('en-IN')}};
+const productsOf=d=>(d.products||[]).filter(p=>p.enabled!==false);
+const pid=p=>String(p.id||p.sku||p.name);
+function scBaseRender(d={},selected=[]){
+ const ok=x=>selected.includes(x),b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},products=productsOf(d),offers=(d.offers||[]).filter(x=>x.enabled!==false),reviews=(d.reviews||[]).filter(x=>x.enabled!==false),faqs=(d.faqs||[]).filter(x=>x.enabled!==false),gallery=(d.gallery||[]).filter(x=>x.enabled!==false),currency=s.currency||'INR';
+ const cats=[...new Set(products.map(p=>String(p.category||'General')).filter(Boolean))];
+ const price=p=>p.priceOnRequest?'Price on request':amount(p.salePrice||p.basePrice)>0?money(p.salePrice||p.basePrice,currency):'Ask for price';
+ const specLine=p=>CONFIG.specKeys.slice(0,4).map(k=>p[k]).filter(v=>v&&v!=='—').join(' · ');
+ const card=p=>'<article class="device-card" data-device-card data-id="'+esc(pid(p))+'" data-category="'+esc(String(p.category||'General').toLowerCase())+'" data-search="'+esc([p.name,p.brand,p.model,p.category,p.description,...CONFIG.specKeys.map(k=>p[k])].join(' ').toLowerCase())+'"><div class="device-image"><img src="'+esc(safeUrl(p.image))+'" alt="'+esc(p.name||'Product')+'" loading="lazy">'+(p.featured?'<span class="device-featured">FEATURED</span>':'')+(ok('wishlist')?'<button type="button" class="device-wish" data-device-action="wish" data-id="'+esc(pid(p))+'">♡</button>':'')+'</div><div class="device-copy"><small>'+esc(p.category||'PRODUCT')+'</small><h3>'+esc(p.name||'Product')+'</h3><p>'+esc(specLine(p)||p.description||'')+'</p><div class="device-card-foot"><b>'+esc(price(p))+'</b><button type="button" data-device-action="details" data-id="'+esc(pid(p))+'">Specifications ↗</button></div>'+(ok('cart')?'<button type="button" class="device-add" data-device-action="add" data-id="'+esc(pid(p))+'" '+(p.inStock===false?'disabled':'')+'>＋ Add to bag</button>':'')+'</div></article>';
+ let out='<div class="device-store '+CONFIG.theme+'" data-device-store>';
+ out+='<div class="device-topline"><span>'+esc(b.motto||CONFIG.title)+'</span><span>PRODUCT GUIDANCE · WARRANTY SUPPORT</span></div>';
+ out+='<header class="device-header"><a class="device-brand" href="#device-home"><span class="device-logo">'+(CONFIG.mobile?'M':'⚡')+'</span><span><b>'+esc(b.businessName||CONFIG.title)+'</b><small>'+esc(b.motto||'TECHNOLOGY STORE')+'</small></span></a><nav>'+(ok('home')?'<a href="#device-home">Home</a>':'')+(ok('products')?'<a href="#device-products">Shop</a>':'')+(ok('offers')?'<a href="#device-offers">Offers</a>':'')+(ok('about')?'<a href="#device-about">About</a>':'')+(ok('contact')?'<a href="#device-contact">Contact</a>':'')+'</nav><div class="device-head-actions">'+(ok('wishlist')?'<button type="button" data-device-action="show-wishlist">♡ <span data-device-wish-count>0</span></button>':'')+(ok('cart')?'<button type="button" class="device-bag" data-device-action="cart-open">Bag <span data-device-count>0</span></button>':'')+'</div></header>';
+ if(ok('home'))out+='<section class="device-hero" id="device-home"><div class="device-hero-copy"><span class="device-eyebrow">'+esc(CONFIG.eyebrow)+'</span><h1>'+esc(h.title||'Discover your next favourite device.')+'</h1><p>'+esc(h.text||'Explore useful technology and friendly expert advice.')+'</p><a class="device-primary" href="#device-products">'+esc(CONFIG.action)+' <span>↗</span></a><div class="device-trust"><span>✓ Product guidance</span><span>✓ Clear specifications</span><span>✓ Warranty information</span></div></div><div class="device-hero-media"><img src="'+esc(safeUrl(d.hero))+'" alt="'+esc(b.businessName||CONFIG.title)+'"></div></section>';
+ if(ok('warranty')&&s.showWarranty!==false)out+='<section class="device-benefits"><article><b>01 / Genuine guidance</b><span>Compare features before you decide.</span></article><article><b>02 / Warranty clarity</b><span>Review warranty details for each product.</span></article><article><b>03 / Personal support</b><span>Ask our team about stock and delivery.</span></article></section>';
+ if(ok('offers')&&offers.length)out+='<section class="device-section device-offers" id="device-offers"><div class="device-section-head"><div><span class="device-eyebrow">STORE HIGHLIGHTS</span><h2>More value with every visit.</h2></div></div><div class="device-offer-grid">'+offers.map(o=>'<article><span>✦</span><div><h3>'+esc(o.title||'Store offer')+'</h3><p>'+esc(o.description||'')+'</p>'+(o.code?'<small>MENTION '+esc(o.code)+'</small>':'')+'</div></article>').join('')+'</div></section>';
+ if(ok('products'))out+='<section class="device-section" id="device-products"><div class="device-section-head"><div><span class="device-eyebrow">THE COLLECTION</span><h2>'+esc(CONFIG.productHeading)+'</h2><p>Explore products, compare specifications and ask us for current availability.</p></div>'+(ok('search')?'<label class="device-search"><span>⌕</span><input data-device-search type="search" placeholder="Search brand, model or product…" aria-label="Search products"></label>':'')+'</div>'+(ok('categories')?'<div class="device-categories"><button class="active" type="button" data-device-filter="all">All products</button>'+cats.map(x=>'<button type="button" data-device-filter="'+esc(x.toLowerCase())+'">'+esc(x)+'</button>').join('')+'</div>':'')+'<div class="device-grid">'+products.map(card).join('')+'</div><p class="device-empty" data-device-empty hidden>No products found. Try another search.</p></section>';
+ if(ok('about')&&s.showAbout!==false)out+='<section class="device-about" id="device-about"><span class="device-eyebrow">ABOUT OUR STORE</span><h2>'+esc(b.businessName||CONFIG.title)+'</h2><p>'+esc(b.about||'Technology and helpful service, all in one place.')+'</p></section>';
+ if(ok('reviews')&&s.showReviews!==false&&reviews.length)out+='<section class="device-section device-reviews"><div class="device-section-head"><div><span class="device-eyebrow">CUSTOMER EXPERIENCES</span><h2>Good advice. Happy customers.</h2></div></div><div class="device-review-grid">'+reviews.map(r=>'<article><b>'+('★'.repeat(Math.max(0,Math.min(5,Number(r.rating)||0))))+'</b><p>“'+esc(r.text||'')+'”</p><small>'+esc(r.name||'Customer')+'</small></article>').join('')+'</div></section>';
+ if(ok('gallery')&&s.showGallery!==false&&gallery.length)out+='<section class="device-section"><div class="device-section-head"><div><span class="device-eyebrow">IN STORE</span><h2>A closer look.</h2></div></div><div class="device-gallery">'+gallery.map(g=>'<figure><img src="'+esc(safeUrl(g.image))+'" alt="'+esc(g.title||'Store image')+'" loading="lazy"><figcaption>'+esc(g.title||'')+'</figcaption></figure>').join('')+'</div></section>';
+ if(ok('faq')&&s.showFAQ!==false&&faqs.length)out+='<section class="device-section device-faq"><span class="device-eyebrow">HELP & INFORMATION</span><h2>Frequently asked questions.</h2><div>'+faqs.map(f=>'<details><summary>'+esc(f.question||'Question')+'</summary><p>'+esc(f.answer||'')+'</p></details>').join('')+'</div></section>';
+ if(ok('location'))out+='<section class="device-location"><div><span class="device-eyebrow">VISIT OUR STORE</span><h2>'+esc(b.businessName||CONFIG.title)+'</h2>'+(c.location?'<p>'+esc(c.location)+'</p>':'')+'<p>'+esc(c.hours||'Contact us for store hours.')+'</p>'+(c.maps&&/^(https?:\/\/)/i.test(c.maps)?'<a href="'+esc(c.maps)+'" target="_blank" rel="noopener noreferrer">Get directions ↗</a>':'')+'</div><div class="device-location-art">'+(CONFIG.mobile?'MOBILE':'TECH')+'<span>EXPERT SUPPORT</span></div></section>';
+ if(ok('contact'))out+='<section class="device-contact" id="device-contact"><div><span class="device-eyebrow">WE ARE HERE TO HELP</span><h2>Need help choosing?</h2><p>Contact our team for product details, availability, warranty or delivery enquiries.</p></div><div class="device-contact-actions">'+(c.call?'<a href="tel:'+esc(String(c.call).replace(/[^\d+]/g,''))+'">Call store ↗</a>':'')+(ok('whatsapp')&&c.whatsapp?'<a target="_blank" rel="noopener noreferrer" href="https://wa.me/'+digits(c.whatsapp)+'">WhatsApp ↗</a>':'')+(c.email?'<a href="mailto:'+esc(c.email)+'">Email us ↗</a>':'')+'</div></section>';
+ if(ok('privacyPolicy')&&d.legal?.privacyPolicy)out+='<section class="device-privacy"><b>Privacy policy</b><p>'+esc(d.legal.privacyPolicy)+'</p></section>';
+ out+='<footer class="device-footer"><b>'+esc(b.businessName||CONFIG.title)+'</b><span>'+esc(b.motto||'TECHNOLOGY & SUPPORT')+'</span><small>© '+new Date().getFullYear()+' '+esc(b.businessName||CONFIG.title)+'. All rights reserved.</small></footer>';
+ if(ok('cart'))out+='<div class="device-cart-shade" data-device-action="cart-close"></div><aside class="device-cart"><div class="device-cart-head"><div><span class="device-eyebrow">YOUR SELECTION</span><h2>Your bag</h2></div><button type="button" data-device-action="cart-close">×</button></div><div class="device-cart-items" data-device-cart-items></div><div class="device-cart-total"><span>Estimated total</span><b data-device-total>'+money(0,currency)+'</b></div><form class="device-checkout" data-device-checkout><label>Your name<input name="name" required autocomplete="name"></label><label>Phone number<input name="phone" type="tel" required autocomplete="tel"></label><label>Delivery / pickup address<textarea name="address" rows="2" required></textarea></label><button class="device-primary" type="submit">Continue on WhatsApp ↗</button><small>Order details open in WhatsApp. Please review and press Send to submit.</small></form></aside>';
+ out+='<div class="device-modal-shade" data-device-action="modal-close"></div><section class="device-modal" aria-label="Product specifications"><button type="button" data-device-action="modal-close" class="device-modal-close">×</button><div data-device-modal-content></div></section>';
+ return out+'</div>';
+}
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
+ const store=root.querySelector('[data-device-store]');if(!store)return;
+ const products=productsOf(d),currency=d.settings?.currency||'INR',wa=selected.includes('whatsapp')?digits(d.contact?.whatsapp):'',key='sitecraft:'+CONFIG.id+':cart',wishKey='sitecraft:'+CONFIG.id+':wishlist';
+ const find=id=>products.find(p=>pid(p)===String(id)),fmt=x=>money(x,currency),price=p=>amount(p.salePrice||p.basePrice);
+ let cart=[],wishlist=[];try{cart=JSON.parse(localStorage.getItem(key)||'[]')}catch{}try{wishlist=JSON.parse(localStorage.getItem(wishKey)||'[]')}catch{}if(!Array.isArray(cart))cart=[];if(!Array.isArray(wishlist))wishlist=[];
+ const persist=()=>{try{localStorage.setItem(key,JSON.stringify(cart));localStorage.setItem(wishKey,JSON.stringify(wishlist))}catch{}};
+ const panel=store.querySelector('.device-cart'),shade=store.querySelector('.device-cart-shade'),modal=store.querySelector('.device-modal'),modalShade=store.querySelector('.device-modal-shade');
+ let filter='all',search='';
+ const renderCounts=()=>{store.querySelectorAll('[data-device-count]').forEach(x=>x.textContent=cart.reduce((n,x)=>n+x.qty,0));store.querySelectorAll('[data-device-wish-count]').forEach(x=>x.textContent=wishlist.length);store.querySelectorAll('[data-device-action="wish"]').forEach(x=>{const on=wishlist.includes(x.dataset.id);x.classList.toggle('active',on);x.textContent=on?'♥':'♡'})};
+ const renderCart=()=>{cart=cart.filter(x=>find(x.id)&&x.qty>0);persist();const area=store.querySelector('[data-device-cart-items]');if(area)area.innerHTML=cart.length?cart.map(x=>{const p=find(x.id);return '<article><img src="'+esc(safeUrl(p.image))+'" alt=""><div><b>'+esc(p.name)+'</b><small>'+esc(price(p)>0?fmt(price(p)):'Price on request')+'</small><div class="device-qty"><button type="button" data-device-action="qty" data-id="'+esc(x.id)+'" data-delta="-1">−</button><b>'+x.qty+'</b><button type="button" data-device-action="qty" data-id="'+esc(x.id)+'" data-delta="1">+</button><button type="button" data-device-action="remove" data-id="'+esc(x.id)+'">Remove</button></div></div></article>'}).join(''):'<p class="device-empty-cart">Your bag is empty.</p>';const total=cart.reduce((n,x)=>n+price(find(x.id))*x.qty,0),el=store.querySelector('[data-device-total]');if(el)el.textContent=fmt(total)+(cart.some(x=>price(find(x.id))===0)?' + quote items':'');renderCounts()};
+ const openCart=()=>{renderCart();panel?.classList.add('open');shade?.classList.add('open')},closeCart=()=>{panel?.classList.remove('open');shade?.classList.remove('open')};
+ const details=id=>{const p=find(id);if(!p||!modal)return;const box=store.querySelector('[data-device-modal-content]');const specs=CONFIG.specKeys.filter(k=>p[k]&&p[k]!=='—').map(k=>'<dt>'+esc(CONFIG.labels[k]||k)+'</dt><dd>'+esc(p[k])+'</dd>').join('');box.innerHTML='<div class="device-modal-layout"><img src="'+esc(safeUrl(p.image))+'" alt="'+esc(p.name)+'"><div><span class="device-eyebrow">'+esc(p.category||'PRODUCT')+'</span><h2>'+esc(p.name)+'</h2><b class="device-modal-price">'+esc(p.priceOnRequest||price(p)===0?'Price on request':fmt(price(p)))+'</b><p>'+esc(p.description||'')+'</p><dl>'+specs+'</dl>'+(selected.includes('whatsapp')?'<button class="device-primary" type="button" data-device-action="enquire" data-id="'+esc(pid(p))+'">Enquire about this product ↗</button>':'')+'</div></div>';modal.classList.add('open');modalShade?.classList.add('open')};
+ const closeModal=()=>{modal?.classList.remove('open');modalShade?.classList.remove('open')};
+ const apply=()=>{let n=0;store.querySelectorAll('[data-device-card]').forEach(card=>{const match=(filter==='all'||(filter==='wishlist'?wishlist.includes(card.dataset.id):card.dataset.category===filter))&&(card.dataset.search||'').includes(search);card.hidden=!match;if(match)n++});const empty=store.querySelector('[data-device-empty]');if(empty)empty.hidden=n>0};
+ store.addEventListener('click',e=>{const el=e.target.closest('[data-device-action],[data-device-filter]');if(!el||!store.contains(el))return;if(el.dataset.deviceFilter!==undefined){filter=el.dataset.deviceFilter;store.querySelectorAll('[data-device-filter]').forEach(x=>x.classList.toggle('active',x===el));apply();return}
+ const a=el.dataset.deviceAction,id=el.dataset.id,p=find(id);
+ if(a==='cart-open')openCart();if(a==='cart-close')closeCart();if(a==='details')details(id);if(a==='modal-close')closeModal();
+ if(a==='wish'){wishlist=wishlist.includes(id)?wishlist.filter(x=>x!==id):[...wishlist,id];persist();renderCounts()}
+ if(a==='show-wishlist'){filter='wishlist';store.querySelector('#device-products')?.scrollIntoView({behavior:'smooth'});apply()}
+ if(a==='add'&&p&&p.inStock!==false){const it=cart.find(x=>x.id===id);if(it)it.qty++;else cart.push({id,qty:1});openCart()}
+ if(a==='qty'){const it=cart.find(x=>x.id===id);if(it){it.qty=Math.max(0,it.qty+(Number(el.dataset.delta)||0));renderCart()}}
+ if(a==='remove'){cart=cart.filter(x=>x.id!==id);renderCart()}
+ if(a==='enquire'&&p&&wa){const msg='Product enquiry — '+(d.brand?.businessName||CONFIG.title)+'\nProduct: '+p.name+'\nBrand / model: '+(p.brand||'')+' '+(p.model||'')+'\nPlease confirm current price, stock and warranty.';window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(msg),'_blank','noopener')}
+ });
+ store.querySelector('[data-device-search]')?.addEventListener('input',e=>{search=e.target.value.toLowerCase().trim();apply()});
+ store.querySelector('[data-device-checkout]')?.addEventListener('submit',e=>{e.preventDefault();if(!wa){alert('Please configure the store WhatsApp number first.');return}if(!cart.length)return;const f=new FormData(e.currentTarget),v=k=>String(f.get(k)||'').trim(),lines=cart.map(x=>{const p=find(x.id);return x.qty+' × '+p.name+' — '+(price(p)>0?fmt(price(p)*x.qty):'Price on request')});const total=cart.reduce((n,x)=>n+price(find(x.id))*x.qty,0);const msg='ORDER REQUEST — '+(d.brand?.businessName||CONFIG.title)+'\n\n'+lines.join('\n')+'\n\nEstimated total: '+fmt(total)+'\nCustomer: '+v('name')+'\nPhone: '+v('phone')+'\nAddress / pickup: '+v('address')+'\n\nPlease confirm final availability, pricing and delivery.';window.open('https://wa.me/'+wa+'?text='+encodeURIComponent(msg),'_blank','noopener')});
+ renderCart();renderCounts();
+}
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=false;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

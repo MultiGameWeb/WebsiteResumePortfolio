@@ -3,7 +3,7 @@ const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
 const fmt=n=>new Intl.NumberFormat('en-IN',{maximumFractionDigits:0}).format(Math.max(0,num(n)));
 const money=(cur,n)=>esc(cur||'₹')+fmt(n);
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
   const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},e=d.consultation||{},est=d.estimator||{},ok=x=>selected.includes(x);
   const projects=(d.projects||[]).filter(x=>x.enabled!==false);
   const packages=(d.packages||[]).filter(x=>x.enabled!==false);
@@ -35,7 +35,7 @@ export function render(d={},selected=[]){
 
   if(ok('home'))html+='<section id="home" class="id-hero"><div class="id-hero-copy"><span class="id-kicker">INTERIOR DESIGN · ARCHITECTURE · CRAFT</span><h1>'+esc(h.title||'Interiors with a point of view.')+'</h1><p>'+esc(h.text||'Thoughtful spaces, carefully specified.')+'</p><div class="id-actions">'+(ok('consultation')?'<a class="id-btn primary" href="#consultation">Book Free Consultation <span>↗</span></a>':'')+(ok('estimator')?'<a class="id-btn ghost" href="#estimator">Explore project budget <span>↓</span></a>':'')+'</div><div class="id-hero-stats"><div><strong>'+projects.length+'</strong><span>featured projects</span></div><div><strong>'+esc(b.completedProjects??projects.length)+'</strong><span>projects completed</span></div><div><strong>'+esc(b.foundedYear||'2016')+'</strong><span>studio founded</span></div></div></div><div class="id-hero-media">'+(h&&d.heroVideo?'<video autoplay muted loop playsinline poster="'+esc(d.hero||'')+'"><source src="'+esc(d.heroVideo)+'" type="video/mp4"></video>':'<img src="'+esc(d.hero||'')+'" alt="'+esc(b.businessName||'Interior studio')+'">')+'<div class="id-hero-badge"><span>DESIGN NOTE</span><strong>Function first.<br>Character always.</strong></div></div></section>';
 
-  if(ok('about'))html+='<section class="id-section id-about"><div class="id-section-head"><span class="id-kicker">ABOUT THE STUDIO</span><h2>We design the feeling of a space — then detail the way it works.</h2></div><div class="id-about-copy"><p>'+esc(b.about||'Add your studio story here.')+'</p><div class="id-about-grid"><div><strong>01</strong><span>Brief & planning</span></div><div><strong>02</strong><span>Design & visualization</span></div><div><strong>03</strong><span>Materials & detailing</span></div><div><strong>04</strong><span>Execution & handover</span></div></div></div></section>';
+  if(ok('about'))html+='<section class="id-section id-about"><div class="id-section-head"><span class="id-kicker">ABOUT THE STUDIO</span><h2>We design the feeling of a space — then detail the way it works.</h2></div><div class="id-about-copy"><p>'+esc(b.about||'Welcome! Get in touch to learn more about us.')+'</p><div class="id-about-grid"><div><strong>01</strong><span>Brief & planning</span></div><div><strong>02</strong><span>Design & visualization</span></div><div><strong>03</strong><span>Materials & detailing</span></div><div><strong>04</strong><span>Execution & handover</span></div></div></div></section>';
 
   if(ok('packages'))html+='<section id="packages" class="id-section id-packages"><div class="id-section-head split"><div><span class="id-kicker">DESIGN PACKAGES</span><h2>Clear starting points for different spaces and scopes.</h2></div><p>Display package pricing transparently, then confirm the exact scope and final quotation during consultation.</p></div><div class="id-package-grid">'+packages.map((p,i)=>'<article class="id-package-card '+(p.tier==='Luxury'||p.tier==='Elite'?'featured':'')+'"><div class="id-package-top"><span>0'+(i+1)+'</span><em>'+esc(p.tier||'Premium')+'</em></div><h3>'+esc(p.name||'Design package')+'</h3><p class="id-package-space">'+esc(p.space||'Custom space')+' · '+esc(p.area||'')+'</p><strong class="id-package-price">'+esc(p.price||'Enquire')+'</strong><small>'+esc(p.starting||'Project based')+'</small><ul></ul></article>').join('')+'</div></section>';
 
@@ -53,7 +53,7 @@ export function render(d={},selected=[]){
 
   if(ok('materials'))html+='<section id="materials" class="id-section id-materials"><div class="id-section-head split"><div><span class="id-kicker">MATERIAL PALETTE</span><h2>Let clients choose the language of the space.</h2></div><p>Select the material scopes you want to discuss during consultation.</p></div><div class="id-material-grid">'+materials.map(m=>'<label class="id-material-card"><input class="js-material" type="checkbox" data-addon="'+num(m.addonPerSqft)+'" checked><span class="id-check">✓</span><span class="id-material-copy"><strong>'+esc(m.name||'Material')+'</strong><small>'+esc(m.quality||'')+'</small><p>'+esc(m.description||'')+'</p></span><em>+'+fmt(m.addonPerSqft||0)+'/sq.ft</em></label>').join('')+'</div></section>';
 
-  if(ok('trust'))html+='<section class="id-section id-trust"><div class="id-section-head split"><div><span class="id-kicker">MATERIAL BRANDS & TRUST</span><h2>Make quality, warranty and specifications easy to understand.</h2></div><p>Only publish partner brands, certifications and warranty claims that your studio can verify and honour.</p></div><div class="id-trust-grid">'+trustBadges.map(x=>'<article><span class="id-trust-seal">✓</span><small>'+esc(x.category||'Quality')+'</small><h3>'+esc(x.brand||'Trust badge')+'</h3><strong>'+esc(x.badge||'Verified quality')+'</strong><p>'+esc(x.note||'')+'</p></article>').join('')+'</div></section>';
+  if(ok('trust'))html+='<section class="id-section id-trust"><div class="id-section-head split"><div><span class="id-kicker">MATERIAL BRANDS & TRUST</span><h2>Make quality, warranty and specifications easy to understand.</h2></div><p>Ask us about the brands we work with and the warranties that apply to your project.</p></div><div class="id-trust-grid">'+trustBadges.map(x=>'<article><span class="id-trust-seal">✓</span><small>'+esc(x.category||'Quality')+'</small><h3>'+esc(x.brand||'Trust badge')+'</h3><strong>'+esc(x.badge||'Verified quality')+'</strong><p>'+esc(x.note||'')+'</p></article>').join('')+'</div></section>';
 
   if(ok('team'))html+='<section class="id-section id-team"><div class="id-section-head"><span class="id-kicker">THE PEOPLE BEHIND THE DETAILS</span><h2>Designers who think in plans, materials and lived experience.</h2></div><div class="id-team-grid">'+team.map(x=>'<article class="id-team-card"><img src="'+esc(x.image||'')+'" alt="'+esc(x.name||'Designer')+'"><div class="id-team-copy"><span>'+esc(x.role||'')+'</span><h3>'+esc(x.name||'Designer')+'</h3><p>'+esc(x.specialization||'')+'</p><small>'+esc(x.credentials||'')+'</small></div></article>').join('')+'</div></section>';
 
@@ -78,7 +78,7 @@ export function render(d={},selected=[]){
   html+='<div class="id-lightbox" id="idLightbox" aria-hidden="true"><button class="id-lightbox-close" type="button">Close</button><img id="idLightboxImage" src="" alt=""><strong id="idLightboxTitle"></strong></div>';
   return html+'</div>';
 }
-export function init(root,d={}){
+export function init(root,d={}){scMobileNav(arguments[0]);
   root.querySelectorAll('.js-lightbox').forEach(btn=>btn.addEventListener('click',()=>{const box=root.querySelector('#idLightbox');const img=root.querySelector('#idLightboxImage');const title=root.querySelector('#idLightboxTitle');img.src=btn.dataset.image||'';title.textContent=btn.dataset.title||'';box.classList.add('open');box.setAttribute('aria-hidden','false')}));
   const close=()=>{const box=root.querySelector('#idLightbox');if(box){box.classList.remove('open');box.setAttribute('aria-hidden','true')}};
   root.querySelectorAll('.id-lightbox-close').forEach(x=>x.addEventListener('click',close));
@@ -90,7 +90,7 @@ export function init(root,d={}){
     ev.preventDefault();
     const fd=new FormData(form),lead=Object.fromEntries(fd.entries());
     lead.createdAt=new Date().toISOString();
-    try{const state=Store.read();const data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#idLeadNotice');if(n)n.textContent='Thanks — your consultation request has been saved. We will contact you to confirm the next step.';form.reset()}catch{const n=root.querySelector('#idLeadNotice');if(n)n.textContent='Your request could not be saved in this browser.'}
+    try{const state=Store.read();const data=structuredClone(state.data||d||{});data.leads=Array.isArray(data.leads)?data.leads:[];data.leads.unshift(lead);Store.update({data});const n=root.querySelector('#idLeadNotice');if(n)n.textContent='Thanks! Please send the WhatsApp message that opened to confirm your request. If it did not open, please call us.';form.reset()}catch{const n=root.querySelector('#idLeadNotice');if(n)n.textContent='Your request could not be saved in this browser.'}
     const wa=d.contact?.whatsapp;
     if(wa){const msg=['Interior consultation enquiry',lead.name,lead.phone,lead.email,lead.location,lead.project,lead.spaceType,lead.area,lead.budget,lead.timeline,lead.package,lead.message].filter(Boolean).join(' | ');window.open('https://wa.me/'+safe(wa)+'?text='+encodeURIComponent(msg),'_blank')}
   });
@@ -115,3 +115,55 @@ export function init(root,d={}){
   root.querySelectorAll('.js-material').forEach(x=>x.addEventListener('change',update));
   update();
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=false;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

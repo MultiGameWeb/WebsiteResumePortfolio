@@ -67,6 +67,9 @@ function blankState(){
  return {lang:"en",role:"organizer",previewMemberId:null,page:"dashboard",chit:chit,members:[],cycles:[],bids:[],payments:[],dividendHistory:[],rulesHtml:rulesHtml,modal:null,toast:null,selectedMonth:1,selectedPaymentMonth:1};
 }
 let state=blankState();
+const CB_KEY="committee-book:auction:v1",CB_KEYS=["lang","role","previewMemberId","page","chit","members","cycles","bids","payments","dividendHistory","rulesHtml","selectedMonth","selectedPaymentMonth"];
+(function(){const saved=window.CBPersist&&CBPersist.load(CB_KEY);if(saved&&saved.chit&&Array.isArray(saved.members)){CB_KEYS.forEach(k=>{if(saved[k]!==undefined)state[k]=saved[k]})}})();
+function cbSave(){if(!window.CBPersist||state.liveWorkspace)return;const o={};CB_KEYS.forEach(k=>{o[k]=state[k]});CBPersist.save(CB_KEY,o,[])}
 
 state.backendConfigured=!!(window.AuctionChitBackend&&window.AuctionChitBackend.configured());
 state.authUser=null;
@@ -181,7 +184,7 @@ function header(){
  const role=state.liveWorkspace?'<span class="badge blue">'+esc(state.role==="member"?t("memberMode"):t("organizerMode"))+'</span>':'<div class="role-preview"><label for="role-select" style="font-size:9px;font-weight:900;color:var(--muted)">'+esc(t("rolePreview"))+'</label><select id="role-select" data-action="role-select"><option value="organizer" '+(state.role==="organizer"?"selected":"")+'>'+esc(t("organizerMode"))+'</option><option value="member" '+(state.role==="member"?"selected":"")+'>'+esc(t("memberMode"))+'</option></select></div>';
  const switcher=state.liveWorkspace&&state.availableChits&&state.availableChits.length>1?'<select class="top-btn" aria-label="'+esc(t("switchChit"))+'" data-action="switch-chit">'+state.availableChits.map(c=>'<option value="'+esc(c.id)+'" '+(c.id===state.dbChitId?"selected":"")+'>'+esc(c.name)+'</option>').join("")+'</select>':"";
   const home='<a class="top-btn" href="committee-book.html">⌂ '+(state.lang==="te"?"హోమ్":"Home")+'</a>';
- const reset="";
+ const reset=state.liveWorkspace?"":'<button class="top-btn" data-action="reset-demo">↻ '+(state.lang==="te"?"రీసెట్":"Reset")+'</button>';
  return '<header class="header"><div class="header-inner"><a class="brand" href="committee-book.html"><span class="brand-mark">C</span><span><span class="brand-name">'+esc(t("brand"))+'</span><span class="brand-sub">'+esc(t("templateTag"))+' · '+esc(t("templateName"))+'</span></span></a><div class="header-actions">'+switcher+role+'<button class="lang-btn" data-action="toggle-lang">文 A · '+esc(t("language"))+'</button>'+home+reset+'</div></div></header>';
 }
 function stat(label,value,foot,icon,cls){return '<article class="stat '+cls+'"><div class="stat-top"><span class="stat-label">'+esc(label)+'</span><span class="stat-icon">'+icon+'</span></div><div class="stat-value">'+esc(value)+'</div><div class="stat-foot">'+esc(foot||"")+'</div></article>';}
@@ -343,7 +346,7 @@ function modalView(){
  const f=(key,label,val,type)=>'<div class="field"><label for="modal-'+key+'">'+esc(label)+'</label><input id="modal-'+key+'" data-modal="'+key+'" type="'+type+'" value="'+esc(val||"")+'"></div>';
  return '<div class="modal-backdrop" data-action="modal-bg"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="member-modal-heading"><div class="modal-head"><h2 id="member-modal-heading">'+esc(existing?t("edit"):t("addMember"))+'</h2><button class="btn small" data-action="close-modal">✕ '+esc(t("close"))+'</button></div><div class="modal-body"><div class="form-grid">'+f("name",t("name"),member.name,"text")+f("phone",t("phone"),member.phone,"tel")+f("email",t("email"),member.email,"email")+'</div></div><div class="modal-foot"><button class="btn" data-action="close-modal">'+esc(t("cancel"))+'</button><button class="btn primary" data-action="save-member">'+esc(t("saveMember"))+'</button></div></section></div>';
 }
-function render(){
+function render(){cbSave();
  document.title=t("pageTitle");document.documentElement.lang=state.lang==="te"?"te":"en";
  const footerStatus=state.liveWorkspace?t("liveConnected"):state.backendLoading?t("loadingData"):state.authUser&&state.backendConfigured?t("noWorkspace"):t("supabaseMissing");
  root.innerHTML=header()+'<div class="shell">'+nav()+'<main class="main">'+pageContent()+'<footer class="footer">'+esc(t("footer"))+' · '+esc(footerStatus)+'</footer></main></div>'+modalView()+'<div class="toast-area" id="toast-area">'+(state.toast?'<div class="toast '+(state.toast.error?"error":"")+'">'+esc(state.toast.message)+'</div>':"")+'</div>';
@@ -512,7 +515,7 @@ root.addEventListener("click",function(e){
  if(!el)return;
  if(el.hasAttribute("data-page")){state.page=el.getAttribute("data-page");state.modal=null;render();return;}
  const a=el.getAttribute("data-action");
- if(a==="toggle-lang"){state.lang=state.lang==="en"?"te":"en";render();return;}
+ if(a==="toggle-lang"){state.lang=state.lang==="en"?"te":"en";render();return;}if(a==="reset-demo"){if(confirm(state.lang==="te"?"ఈ డెమో డేటా మొత్తం తొలగించాలా?":"Clear all data in this demo and start again?")){const lang=state.lang;CBPersist.clear(CB_KEY);const b=blankState();CB_KEYS.forEach(k=>{state[k]=b[k]});state.lang=lang;render()}return;}
  if(a==="sign-in"){
   const backend=window.AuctionChitBackend;if(!backend||!backend.configured()){toast(t("backendSetupMissing"),true);return;}
   backend.signInGoogle().catch(error=>toast(error.message||String(error),true));return;

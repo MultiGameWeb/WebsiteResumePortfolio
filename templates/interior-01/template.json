@@ -201,6 +201,24 @@
       "path": "privacyPolicy",
       "label": "Privacy Policy",
       "type": "textarea"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
@@ -284,7 +302,7 @@
         ],
         "featured": true,
         "enabled": true,
-        "beforeImage": "https://images.unsplash.com/photo-1497366640224-2861ddc3b8b9?auto=format&fit=crop&w=1400&q=84",
+        "beforeImage": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=84",
         "afterImage": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=86"
       },
       {
@@ -659,10 +677,11 @@
       "email": "hello@atelierforma.example",
       "address": "Banjara Hills, Hyderabad, Telangana",
       "maps": "https://maps.google.com/?q=Banjara+Hills+Hyderabad",
-      "hours": "Mon–Sat · 10:00 AM–7:00 PM"
+      "hours": "Mon–Sat · 10:00 AM–7:00 PM",
+      "instagram": "https://www.instagram.com/"
     },
     "termsText": "Design scope, drawings, revisions, material allowances, execution responsibilities, payment milestones and site conditions should be confirmed in the project's written quotation and agreement.",
-    "privacyPolicy": "We use enquiry details to respond to consultation requests and project enquiries. Replace this sample copy with the studio's final privacy and data-handling policy before publishing.",
+    "privacyPolicy": "We use enquiry details to respond to consultation requests and project enquiries.",
     "settings": {
       "showAbout": true,
       "showProjects": true,
@@ -810,7 +829,7 @@
         "brand": "Greenply",
         "category": "Plywood",
         "badge": "Quality Material Partner",
-        "note": "Add the exact grade/specification used by your studio.",
+        "note": "Please contact us for details.",
         "enabled": true
       },
       {
@@ -818,7 +837,7 @@
         "brand": "Hettich",
         "category": "Hardware",
         "badge": "Premium Hardware",
-        "note": "Show only brands and product ranges actually used.",
+        "note": "Ask us about the brands and material ranges we work with.",
         "enabled": true
       },
       {
@@ -826,7 +845,7 @@
         "brand": "Häfele",
         "category": "Hardware & Fittings",
         "badge": "Trusted Fittings",
-        "note": "Replace with your verified hardware partner details.",
+        "note": "Please contact us for details.",
         "enabled": true
       },
       {
@@ -1580,6 +1599,24 @@
           {
             "path": "contact.hours",
             "label": "Studio hours"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
           }
         ]
       },

@@ -3,7 +3,7 @@
   "name": "Bridal Makeup — Luxe Bride",
   "category": "Salon & Spa",
   "price": "₹599",
-  "defaultSelectedFeatures": ["home","about","packages","beforeAfter","reviews","location","contact","whatsapp"],
+  "defaultSelectedFeatures": ["home","about","packages","beforeAfter","reviews","location","contact","whatsapp","enquiry"],
   "features": [
     {"id":"home","label":"Home / Hero"},
     {"id":"about","label":"About the Artist"},
@@ -11,6 +11,7 @@
     {"id":"beforeAfter","label":"Before / After Gallery"},
     {"id":"reviews","label":"Client Testimonials"},
     {"id":"location","label":"Location & Travel Policy"},
+    {"id":"enquiry","label":"Booking / enquiry form"},
     {"id":"contact","label":"Contact"},
     {"id":"whatsapp","label":"WhatsApp Booking"}
   ],
@@ -58,7 +59,10 @@
     {"path":"contact.location","label":"Studio / Service Area","placeholder":"Hyderabad, Telangana"},
     {"path":"contact.maps","label":"Google Maps Link","type":"url"},
     {"path":"contact.travelPolicy","label":"Travel Policy","type":"textarea","placeholder":"Available for on-venue services across Hyderabad."},
-    {"path":"contact.extraCharge","label":"Travel Extra Charges","placeholder":"Beyond 20 km, travelling charges apply."}
+    {"path":"contact.extraCharge","label":"Travel Extra Charges","placeholder":"Beyond 20 km, travelling charges apply."},
+    {"path":"contact.instagram","label":"Instagram link","type":"url","placeholder":"https://"},
+    {"path":"contact.facebook","label":"Facebook link","type":"url","placeholder":"https://"},
+    {"path":"contact.youtube","label":"YouTube link","type":"url","placeholder":"https://"}
   ],
   "demoData": {
     "brand": {
@@ -83,7 +87,7 @@
     "beforeAfter":[
       {"id":"ba1","title":"Soft Glam Bride","beforeImage":"https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80","afterImage":"https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=900&q=80","caption":"HD bridal transformation","enabled":true},
       {"id":"ba2","title":"Classic South Indian Bride","beforeImage":"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=80","afterImage":"https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80","caption":"Traditional bridal finish","enabled":true},
-      {"id":"ba3","title":"Reception Glow","beforeImage":"https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80","afterImage":"https://images.unsplash.com/photo-1507504031003-b7a84f9e1c38?auto=format&fit=crop&w=900&q=80","caption":"Elegant reception look","enabled":true}
+      {"id":"ba3","title":"Reception Glow","beforeImage":"https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80","afterImage":"https://images.unsplash.com/photo-1597983073493-88cd35cf93b0?auto=format&fit=crop&w=900&q=80","caption":"Elegant reception look","enabled":true}
     ],
     "reviews":[
       {"id":"r1","name":"Ramya, Madhapur","text":"My makeup stayed perfect for 10 hours! The look was elegant, comfortable and beautiful in photos.","rating":5,"enabled":true},
@@ -96,7 +100,8 @@
       "location":"Hyderabad, Telangana",
       "maps":"https://maps.google.com/?q=Hyderabad+Telangana",
       "travelPolicy":"Available for on-venue services across Hyderabad. For outstation weddings, contact the studio for a travel quote.",
-      "extraCharge":"Beyond a 20 km radius, travelling charges apply."
+      "extraCharge":"Beyond a 20 km radius, travelling charges apply.",
+      "instagram":"https://www.instagram.com/"
     },
     "settings":{
       "showHome":true,
@@ -156,7 +161,10 @@
         {"path":"contact.location","label":"Location"},
         {"path":"contact.maps","label":"Google Maps URL","type":"url"},
         {"path":"contact.travelPolicy","label":"Travel policy","type":"textarea"},
-        {"path":"contact.extraCharge","label":"Extra travel charges"}
+        {"path":"contact.extraCharge","label":"Extra travel charges"},
+        {"path":"contact.instagram","label":"Instagram link","type":"url","placeholder":"https://"},
+        {"path":"contact.facebook","label":"Facebook link","type":"url","placeholder":"https://"},
+        {"path":"contact.youtube","label":"YouTube link","type":"url","placeholder":"https://"}
       ]},
       {"id":"visibility","label":"Visibility","fields":[
         {"path":"settings.showHome","label":"Home","type":"checkbox"},

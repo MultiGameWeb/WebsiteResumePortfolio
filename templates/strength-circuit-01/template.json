@@ -90,7 +90,7 @@
       "path": "brand.businessName",
       "label": "Gym / Fitness Center Name",
       "required": true,
-      "placeholder": "Forge Fitness Club"
+      "placeholder": "Circuit Strength Lab"
     },
     {
       "path": "brand.ownerName",
@@ -218,37 +218,55 @@
       "path": "privacyPolicy",
       "label": "Privacy Policy",
       "type": "textarea"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook link",
+      "type": "url",
+      "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
     "brand": {
-      "businessName": "Forge Fitness Club",
-      "ownerName": "Coach Arjun",
+      "businessName": "Circuit Strength Lab",
+      "ownerName": "Coach Meera",
       "tagline": "Strength stations. Smarter progress.",
-      "about": "Forge Fitness Club is a modern training space built around strength, conditioning, group classes and practical coaching. Replace the sample content with your gym's actual facilities, certifications, pricing, policies and contact details before publishing."
+      "about": "Circuit Strength Lab runs coached station-based strength circuits with tracked progress for steady, safe gains."
     },
     "home": {
       "title": "Build strength that lasts.",
-      "text": "Specialized strength circuit coaching, flexible memberships and class schedules designed around your goals.",
+      "text": "Station-based strength circuits with coaching on every round and lift tracking every month.",
       "badge": "STRENGTH TRIAL"
     },
     "heroVideo": "",
     "heroSlides": [
       {
         "id": "hs1",
-        "title": "Strength Floor",
+        "title": "Strength Stations",
         "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=88",
         "enabled": true
       },
       {
         "id": "hs2",
-        "title": "Functional Training",
+        "title": "Circuit Session",
         "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1800&q=88",
         "enabled": true
       },
       {
         "id": "hs3",
-        "title": "Group Workout",
+        "title": "Squat Racks",
         "image": "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1800&q=88",
         "enabled": true
       }
@@ -256,53 +274,50 @@
     "plans": [
       {
         "id": "p1",
-        "name": "Silver",
-        "monthly": "₹1,499 / month",
-        "quarterly": "₹3,999 / quarter",
-        "annual": "₹11,999 / year",
-        "offer": "Free 1-day guest pass",
+        "name": "Essential",
+        "monthly": "₹1,699 / month",
+        "quarterly": "₹4,599 / quarter",
+        "annual": "₹13,999 / year",
+        "offer": "12 circuits / month",
         "discount": "Save 20% annually",
         "features": [
-          "Gym Access",
-          "Cardio Zone",
-          "Locker Access"
+          "12 circuit sessions",
+          "Strength assessment",
+          "Locker access"
         ],
         "featured": false,
         "enabled": true
       },
       {
         "id": "p2",
-        "name": "Gold",
-        "monthly": "₹1,999 / month",
-        "quarterly": "₹5,499 / quarter",
-        "annual": "₹15,999 / year",
-        "offer": "1 fitness assessment / month",
+        "name": "Progress",
+        "monthly": "₹2,499 / month",
+        "quarterly": "₹6,799 / quarter",
+        "annual": "₹20,999 / year",
+        "offer": "Unlimited circuits",
         "discount": "Save 25% annually",
         "features": [
-          "Gym Access",
-          "Cardio Zone",
-          "Group Classes",
-          "Steam Bath",
-          "Fitness Assessment"
+          "Unlimited circuits",
+          "Monthly lift tracking",
+          "Technique clinic",
+          "Open-gym slots"
         ],
         "featured": true,
         "enabled": true
       },
       {
         "id": "p3",
-        "name": "Platinum",
-        "monthly": "₹3,499 / month",
-        "quarterly": "₹9,499 / quarter",
-        "annual": "₹27,999 / year",
-        "offer": "2 PT sessions / month",
+        "name": "Coached",
+        "monthly": "₹3,999 / month",
+        "quarterly": "₹10,999 / quarter",
+        "annual": "₹33,999 / year",
+        "offer": "4 PT sessions / month",
         "discount": "Save 30% annually",
         "features": [
-          "Gym Access",
-          "Cardio Zone",
-          "All Group Classes",
-          "Steam Bath",
-          "Personal Trainer",
-          "Priority Booking"
+          "Unlimited circuits",
+          "Personal programming",
+          "Nutrition check-ins",
+          "Priority booking"
         ],
         "featured": false,
         "enabled": true
@@ -311,34 +326,34 @@
     "trainers": [
       {
         "id": "t1",
-        "name": "Coach Arjun",
+        "name": "Coach Meera",
         "role": "Head Strength Coach",
-        "certification": "Gold's Gym Certified · K11",
-        "specialization": "Muscle Gain · Strength",
-        "bio": "Strength programming, safe lifting technique and progressive training plans.",
+        "certification": "NSCA-CSCS",
+        "specialization": "Strength Programming · Technique",
+        "bio": "Builds progressive circuit programmes and tracks every member’s key lifts.",
         "availability": "Mon–Sat · 6:00 AM–11:00 AM",
-        "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=900&q=84",
+        "image": "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "t2",
-        "name": "Coach Neha",
-        "role": "Transformation Coach",
-        "certification": "K11 · Certified Personal Trainer",
-        "specialization": "Weight Loss · Conditioning",
-        "bio": "Goal-based conditioning, habit-focused coaching and sustainable progress plans.",
+        "name": "Coach Arvind",
+        "role": "Circuit Coach",
+        "certification": "ACE Certified Personal Trainer",
+        "specialization": "Kettlebells · Functional Strength",
+        "bio": "Keeps stations moving with clear demos and controlled tempo.",
         "availability": "Mon–Fri · 5:00 PM–9:00 PM",
-        "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=900&q=84",
+        "image": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "t3",
-        "name": "Coach Rahul",
-        "role": "Functional & CrossFit Coach",
-        "certification": "CrossFit Level 1",
-        "specialization": "Functional Fitness · Mobility",
-        "bio": "Functional movement, group coaching and mobility-led performance sessions.",
-        "availability": "Mon–Sat · 7:00 AM–10:00 AM · 5:00 PM–8:00 PM",
+        "name": "Coach Faiz",
+        "role": "Technique Coach",
+        "certification": "K11 · Strength & Conditioning",
+        "specialization": "Deadlift · Squat · Press",
+        "bio": "Runs technique clinics so members lift heavier with confidence.",
+        "availability": "Tue–Sun · 7:00 AM–10:00 AM",
         "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       }
@@ -348,53 +363,53 @@
         "id": "c1",
         "day": "Monday",
         "time": "6:00 AM",
-        "class": "Yoga",
-        "coach": "Coach Neha",
+        "class": "Full-Body Circuit",
+        "coach": "Coach Meera",
         "level": "All Levels",
         "enabled": true
       },
       {
         "id": "c2",
         "day": "Monday",
-        "time": "7:00 AM",
-        "class": "Zumba",
-        "coach": "Coach Neha",
-        "level": "All Levels",
+        "time": "7:00 PM",
+        "class": "Kettlebell Flow",
+        "coach": "Coach Arvind",
+        "level": "Intermediate",
         "enabled": true
       },
       {
         "id": "c3",
         "day": "Tuesday",
-        "time": "8:00 AM",
-        "class": "CrossFit",
-        "coach": "Coach Rahul",
-        "level": "Intermediate",
+        "time": "7:00 AM",
+        "class": "Technique Clinic",
+        "coach": "Coach Faiz",
+        "level": "Beginner",
         "enabled": true
       },
       {
         "id": "c4",
         "day": "Wednesday",
         "time": "6:00 PM",
-        "class": "HIIT",
-        "coach": "Coach Arjun",
-        "level": "Intermediate",
+        "class": "Upper-Body Strength",
+        "coach": "Coach Meera",
+        "level": "All Levels",
         "enabled": true
       },
       {
         "id": "c5",
         "day": "Thursday",
-        "time": "7:00 PM",
-        "class": "Strength Circuit",
-        "coach": "Coach Arjun",
-        "level": "All Levels",
+        "time": "6:30 AM",
+        "class": "Power Circuit",
+        "coach": "Coach Arvind",
+        "level": "Advanced",
         "enabled": true
       },
       {
         "id": "c6",
         "day": "Saturday",
         "time": "8:00 AM",
-        "class": "Mobility",
-        "coach": "Coach Rahul",
+        "class": "Lower-Body Strength",
+        "coach": "Coach Faiz",
         "level": "All Levels",
         "enabled": true
       }
@@ -402,43 +417,43 @@
     "facilities": [
       {
         "id": "f1",
-        "title": "Strength Floor",
-        "text": "Free weights, racks and strength machines for progressive training.",
+        "title": "Strength Stations",
+        "text": "Numbered stations with dumbbells, cables and benches for circuits.",
         "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f2",
-        "title": "Cardio Zone",
-        "text": "Treadmills, bikes and cardio machines for warm-ups and conditioning.",
+        "title": "Squat Racks",
+        "text": "Racks and barbells for squats, presses and pulls.",
         "image": "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f3",
-        "title": "Functional Area",
-        "text": "Open training area for circuits, mobility and functional workouts.",
+        "title": "Kettlebell Zone",
+        "text": "Full kettlebell range for swings, carries and flows.",
         "image": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f4",
-        "title": "Group Studio",
-        "text": "Dedicated studio for yoga, Zumba, HIIT and class-based workouts.",
+        "title": "Cardio Finishers",
+        "text": "Rowers and bikes for short finishers.",
         "image": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f5",
-        "title": "Steam & Recovery",
-        "text": "Add your real steam, shower and recovery facilities here.",
+        "title": "Recovery Area",
+        "text": "Foam rollers and stretching mats.",
         "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "f6",
         "title": "Locker Rooms",
-        "text": "Describe your changing rooms, lockers, showers and hygiene practices.",
+        "text": "Lockers, showers and changing rooms.",
         "image": "https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       }
@@ -448,7 +463,7 @@
         "id": "tr1",
         "title": "12-week weight-loss journey",
         "period": "12 weeks",
-        "description": "Demo placeholder — replace with an authentic member story and consented images.",
+        "description": "Please contact us for details.",
         "beforeImage": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1000&q=84",
         "afterImage": "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
@@ -457,7 +472,7 @@
         "id": "tr2",
         "title": "6-month strength journey",
         "period": "6 months",
-        "description": "Demo placeholder — replace with a verified transformation story and consented images.",
+        "description": "Please contact us for details.",
         "beforeImage": "https://images.unsplash.com/photo-1546483875-ad9014c88eba?auto=format&fit=crop&w=1000&q=84",
         "afterImage": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
@@ -466,7 +481,7 @@
         "id": "tr3",
         "title": "General fitness journey",
         "period": "3 months",
-        "description": "Use real member progress images only with appropriate permission and accurate context.",
+        "description": "Shared with the member’s permission. Results vary from person to person.",
         "beforeImage": "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=84",
         "afterImage": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
@@ -475,37 +490,37 @@
     "products": [
       {
         "id": "m1",
-        "name": "Forge Performance Tee",
+        "name": "Circuit Lab Tee",
         "type": "Merchandise",
         "price": "₹799",
-        "text": "Branded training tee. Replace with your actual stock and size details.",
+        "text": "Studio training tee.",
         "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "m2",
-        "name": "Training Shaker",
+        "name": "Lifting Belt",
         "type": "Accessories",
-        "price": "₹399",
-        "text": "Branded shaker bottle. Replace with actual capacity and material details.",
-        "image": "https://images.unsplash.com/photo-1620843002800-079bf1737f31?auto=format&fit=crop&w=900&q=84",
+        "price": "₹1,499",
+        "text": "Leather support belt.",
+        "image": "https://images.unsplash.com/photo-1557330359-ffb0deed6163?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "m3",
         "name": "Protein Product Display",
         "type": "Supplements",
-        "price": "Ask gym",
-        "text": "Show only genuine products sold by your gym and include current manufacturer information.",
+        "price": "Ask studio",
+        "text": "Ask at the front desk for the products currently in stock.",
         "image": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       },
       {
         "id": "m4",
-        "name": "Gym Towel",
-        "type": "Merchandise",
-        "price": "₹249",
-        "text": "Branded towel. Replace with your actual product information.",
+        "name": "Grip Gloves",
+        "type": "Accessories",
+        "price": "₹449",
+        "text": "Padded training gloves.",
         "image": "https://images.unsplash.com/photo-1600369671236-e74521d4b6ad?auto=format&fit=crop&w=900&q=84",
         "enabled": true
       }
@@ -513,31 +528,31 @@
     "gallery": [
       {
         "id": "g1",
-        "title": "Strength Area",
+        "title": "Strength Stations",
         "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g2",
-        "title": "Dumbbells",
+        "title": "Dumbbell Rack",
         "image": "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g3",
-        "title": "Group Class",
+        "title": "Circuit Session",
         "image": "https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g4",
-        "title": "Functional Training",
+        "title": "Kettlebell Zone",
         "image": "https://images.unsplash.com/photo-1517964603305-11c0f6f66012?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
       {
         "id": "g5",
-        "title": "Cardio Area",
+        "title": "Squat Racks",
         "image": "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1000&q=84",
         "enabled": true
       },
@@ -553,53 +568,53 @@
         "id": "r1",
         "name": "Member A",
         "rating": 5,
-        "text": "Good equipment, helpful coaches and a simple trial-booking process.",
+        "text": "The station format keeps me focused and the coaches check my form every round.",
         "enabled": true
       },
       {
         "id": "r2",
         "name": "Member B",
         "rating": 5,
-        "text": "The group classes keep me consistent and the timings are easy to understand.",
+        "text": "I can actually see my lifts improving on the monthly tracking sheet.",
         "enabled": true
       },
       {
         "id": "r3",
         "name": "Member C",
         "rating": 5,
-        "text": "I liked getting a clear goal-based plan before joining a membership.",
+        "text": "The technique clinic made squats and deadlifts feel safe for the first time.",
         "enabled": true
       }
     ],
     "faq": [
       {
         "id": "q1",
-        "question": "Can I take a free trial before joining?",
-        "answer": "Yes. Use the trial form or WhatsApp guest-pass button to request your trial. Your team can confirm the slot and any trial conditions.",
+        "question": "Is strength training safe for beginners?",
+        "answer": "Yes. Coaches start you with technique work and light loads, then progress weights step by step.",
         "enabled": true
       },
       {
         "id": "q2",
-        "question": "Which membership is right for me?",
-        "answer": "Use the plan comparison as a starting point, then ask the gym team about your training goal, class access, coaching and current offers.",
+        "question": "How does a circuit session work?",
+        "answer": "You rotate through coached stations with set work and rest times, covering the whole body in one session.",
         "enabled": true
       },
       {
         "id": "q3",
-        "question": "Can I book a personal trainer?",
-        "answer": "Yes, when PT slots are available. Ask the gym for the current trainer availability and applicable pricing.",
+        "question": "Can I take a free trial?",
+        "answer": "Yes. Request a trial session on WhatsApp or with the trial form.",
         "enabled": true
       },
       {
         "id": "q4",
-        "question": "Are supplements included in membership?",
-        "answer": "Not automatically. Membership benefits and any products or services should be confirmed with the gym.",
+        "question": "Do you track progress?",
+        "answer": "Progress and Coached members get regular lift tracking and strength check-ins.",
         "enabled": true
       },
       {
         "id": "q5",
         "question": "How do class timings work?",
-        "answer": "The timetable shows sample batch slots. Replace them with your actual weekly schedule before publishing.",
+        "answer": "The timetable shows sample batch slots. Confirm current timings with the studio.",
         "enabled": true
       }
     ],
@@ -607,23 +622,24 @@
       "heading": "Start your Strength Circuit journey.",
       "text": "Tell us your goal and preferred time. The team will follow up to confirm your trial pass or membership enquiry.",
       "passText": "1-Day Strength Circuit Guest Pass · Book on WhatsApp",
-      "goalsText": "Weight Loss,Muscle Gain,General Fitness,Strength & Conditioning,Personal Training,Group Classes"
+      "goalsText": "Build Strength,Muscle Gain,Fat Loss,Technique Coaching,General Fitness"
     },
     "contact": {
-      "phone": "+91 90000 77001",
-      "whatsapp": "919000077001",
-      "email": "hello@forgefitness.example",
-      "address": "Jubilee Hills, Hyderabad, Telangana",
-      "parking": "Basement parking — replace with your actual parking and bike-parking instructions.",
-      "landmarks": "Near the main junction — replace with your actual landmark and navigation notes.",
-      "maps": "https://maps.google.com/?q=Jubilee%20Hills%2C%20Hyderabad%2C%20Telangana"
+      "phone": "+91 90000 77004",
+      "whatsapp": "919000077004",
+      "email": "hello@circuitstrength.example",
+      "address": "Banjara Hills, Hyderabad, Telangana",
+      "parking": "Basement parking",
+      "landmarks": "Near Road No. 12 junction",
+      "maps": "https://maps.google.com/?q=Banjara%20Hills%2C%20Hyderabad%2C%20Telangana",
+      "instagram": "https://www.instagram.com/"
     },
     "hours": {
       "weekdays": "Mon–Sat · 5:30 AM – 10:00 PM",
       "weekends": "Sun · 7:00 AM – 1:00 PM"
     },
     "termsText": "Membership prices, offers, trial conditions, class schedules, facility availability, refunds, freezes and cancellation rules should be replaced with the gym's actual terms before publishing. Fitness activities carry inherent risks; members should follow gym safety guidance and disclose relevant limitations to qualified professionals where appropriate.",
-    "privacyPolicy": "We use lead and contact details to respond to trial, membership and enquiry requests. Replace this text with the gym's final privacy and data-handling policy before publishing.",
+    "privacyPolicy": "We use lead and contact details to respond to trial, membership and enquiry requests.",
     "settings": {
       "showAbout": true,
       "showMembership": true,
@@ -1328,6 +1344,24 @@
             "path": "contact.maps",
             "label": "Google Maps URL",
             "type": "url"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook link",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
           }
         ]
       },

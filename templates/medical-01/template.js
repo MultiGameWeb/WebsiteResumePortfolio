@@ -3,7 +3,7 @@ const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const wa=(n,msg='')=>{const p=safe(n);return p?'https://wa.me/'+p+(msg?'?text='+encodeURIComponent(msg):''):''};
 const dayKeys=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
 
-export function render(d={},selected=[]){
+function scBaseRender(d={},selected=[]){
  const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},hours=d.hours||{},a=d.appointment||{},ok=x=>selected.includes(x);
  const services=(d.services||[]).filter(x=>x.enabled!==false),doctors=(d.doctors||[]).filter(x=>x.enabled!==false),fac=(d.facilities||[]).filter(x=>x.enabled!==false),trust=(d.trustBadges||[]).filter(x=>x.enabled!==false),ba=(d.beforeAfter||[]).filter(x=>x.enabled!==false&&x.beforeImage&&x.afterImage),gallery=(d.gallery||[]).filter(x=>x.enabled!==false&&x.image),reviews=(d.reviews||[]).filter(x=>x.enabled!==false),videos=(d.videoTestimonials||[]).filter(x=>x.enabled!==false&&x.videoUrl),payments=(d.insurancePayments||[]).filter(x=>x.enabled!==false),faq=(d.faq||[]).filter(x=>x.enabled!==false);
  let html='<div class="site-preview medical-01">';
@@ -13,21 +13,21 @@ export function render(d={},selected=[]){
 
  if(ok('home'))html+='<section id="home" class="medical-01-hero"><div class="medical-01-hero-img"><img src="'+esc(d.hero||'')+'" alt="'+esc(b.businessName||'Center')+'"></div><div class="medical-01-hero-over"></div><div class="medical-01-hero-copy"><span class="medical-01-eyebrow">DENTAL · MEDICAL · FAMILY CARE</span><h1>'+esc(h.title||'Care that starts with listening.')+'</h1><p>'+esc(h.text||'')+'</p><div class="medical-01-hero-btns">'+(ok('appointment')?'<a class="medical-01-btn primary" href="#appointment">Book Your Consultation <span>↗</span></a>':'')+(ok('whatsapp')&&c.whatsapp?'<a class="medical-01-btn ghost" target="_blank" href="'+wa(c.whatsapp)+'">WhatsApp the centre <span>↗</span></a>':'')+'</div></div><div class="medical-01-hero-hours"><small>CLINIC HOURS</small><strong>'+esc(hours.morningSlot||hours.weekdays||'Add hours')+'</strong><span>'+esc(hours.eveningSlot||hours.weekends||'Add evening / weekend hours')+'</span></div></section>';
 
- if(ok('about')&&s.showAbout!==false)html+='<section id="about" class="medical-01-section medical-01-about"><div class="medical-01-side"><span class="medical-01-eyebrow">ABOUT THE CENTRE</span><span>01</span></div><div><h2>'+esc(b.businessName||'Your Center')+' is designed around clear information, comfortable visits and professional care.</h2><p>'+esc(b.about||'Tell your story in Admin > Business.')+'</p><div class="medical-01-sign"><strong>'+esc(b.ownerName||'Medical Director')+'</strong><span>Medical Director / Founder</span></div></div></section>';
+ if(ok('about')&&s.showAbout!==false)html+='<section id="about" class="medical-01-section medical-01-about"><div class="medical-01-side"><span class="medical-01-eyebrow">ABOUT THE CENTRE</span><span>01</span></div><div><h2>'+esc(b.businessName||'Your Center')+' is designed around clear information, comfortable visits and professional care.</h2><p>'+esc(b.about||'Welcome! Get in touch to learn more about us.')+'</p><div class="medical-01-sign"><strong>'+esc(b.ownerName||'Medical Director')+'</strong><span>Medical Director / Founder</span></div></div></section>';
 
- if(ok('services')&&s.showServices!==false)html+='<section id="services" class="medical-01-section medical-01-services"><div class="medical-01-head"><div><span class="medical-01-eyebrow">CONSULTATIONS & TREATMENTS</span><h2>Care, clearly explained.</h2></div><p>Show dental and medical services with duration and consultation or starting-fee notes. Medicine ordering is not part of this template.</p></div><div class="medical-01-service-grid">'+services.map((x,i)=>'<article class="'+(x.featured?'featured':'')+'"><div class="medical-01-service-img">'+(x.image?'<img src="'+esc(x.image)+'" alt="'+esc(x.name)+'">':'')+'<span>0'+(i+1)+'</span></div><div class="medical-01-service-body"><small>'+esc(x.category||'CARE')+' · '+esc(x.duration||'')+'</small><h3>'+esc(x.name||'Service')+'</h3><p>'+esc(x.description||'')+'</p><div><strong>'+esc(x.fee||'Ask centre')+'</strong><button type="button" class="medical-01-line" data-book-service="'+esc(x.name)+'">Request ↗</button></div></div></article>').join('')+'</div></section>';
+ if(ok('services')&&s.showServices!==false)html+='<section id="services" class="medical-01-section medical-01-services"><div class="medical-01-head"><div><span class="medical-01-eyebrow">CONSULTATIONS & TREATMENTS</span><h2>Care, clearly explained.</h2></div><p>Consultation fees and starting prices for our dental and medical care. The final treatment cost is confirmed after your consultation.</p></div><div class="medical-01-service-grid">'+services.map((x,i)=>'<article class="'+(x.featured?'featured':'')+'"><div class="medical-01-service-img">'+(x.image?'<img src="'+esc(x.image)+'" alt="'+esc(x.name)+'">':'')+'<span>0'+(i+1)+'</span></div><div class="medical-01-service-body"><small>'+esc(x.category||'CARE')+' · '+esc(x.duration||'')+'</small><h3>'+esc(x.name||'Service')+'</h3><p>'+esc(x.description||'')+'</p><div><strong>'+esc(x.fee||'Ask centre')+'</strong><button type="button" class="medical-01-line" data-book-service="'+esc(x.name)+'">Request ↗</button></div></div></article>').join('')+'</div></section>';
 
- if(ok('doctors')&&s.showDoctors!==false)html+='<section id="doctors" class="medical-01-section medical-01-doctors"><div class="medical-01-head"><div><span class="medical-01-eyebrow">DOCTORS & SPECIALISTS</span><h2>Meet the care team.</h2></div><p>Show qualifications, experience and registration details to help patients understand who they are booking with.</p></div><div class="medical-01-doctor-grid">'+doctors.map((x,i)=>{const schedule=dayKeys.map(k=>x[k]?'<li><b>'+k.slice(0,3).toUpperCase()+'</b> '+esc(x[k])+'</li>':'').join('');return '<article><div class="medical-01-doctor-img">'+(x.image?'<img src="'+esc(x.image)+'" alt="'+esc(x.name)+'">':'')+'<span>0'+(i+1)+'</span></div><div class="medical-01-doctor-body"><small>'+esc(x.role||'Consultant')+'</small><h3>'+esc(x.name||'Doctor')+'</h3><strong>'+esc(x.qualification||'')+'</strong><div class="medical-01-doctor-trust"><span>'+esc(x.experience||'Experience — add in Admin')+'</span>'+(x.registrationNumber?'<span>Reg. '+esc(x.registrationNumber)+'</span>':'')+'</div><p>'+esc(x.bio||'')+'</p><div class="medical-01-schedule"><b>Weekly timings</b><ul>'+schedule+'</ul></div>'+(x.leaveNote?'<small class="medical-01-leave">'+esc(x.leaveNote)+'</small>':'')+'<button type="button" class="medical-01-line" data-book-doctor="'+esc(x.name)+'">Choose doctor ↗</button></div></article>'}).join('')+'</div></section>';
+ if(ok('doctors')&&s.showDoctors!==false)html+='<section id="doctors" class="medical-01-section medical-01-doctors"><div class="medical-01-head"><div><span class="medical-01-eyebrow">DOCTORS & SPECIALISTS</span><h2>Meet the care team.</h2></div><p>Show qualifications, experience and registration details to help patients understand who they are booking with.</p></div><div class="medical-01-doctor-grid">'+doctors.map((x,i)=>{const schedule=dayKeys.map(k=>x[k]?'<li><b>'+k.slice(0,3).toUpperCase()+'</b> '+esc(x[k])+'</li>':'').join('');return '<article><div class="medical-01-doctor-img">'+(x.image?'<img src="'+esc(x.image)+'" alt="'+esc(x.name)+'">':'')+'<span>0'+(i+1)+'</span></div><div class="medical-01-doctor-body"><small>'+esc(x.role||'Consultant')+'</small><h3>'+esc(x.name||'Doctor')+'</h3><strong>'+esc(x.qualification||'')+'</strong><div class="medical-01-doctor-trust"><span>'+esc(x.experience||'Experienced team')+'</span>'+(x.registrationNumber?'<span>Reg. '+esc(x.registrationNumber)+'</span>':'')+'</div><p>'+esc(x.bio||'')+'</p><div class="medical-01-schedule"><b>Weekly timings</b><ul>'+schedule+'</ul></div>'+(x.leaveNote?'<small class="medical-01-leave">'+esc(x.leaveNote)+'</small>':'')+'<button type="button" class="medical-01-line" data-book-doctor="'+esc(x.name)+'">Choose doctor ↗</button></div></article>'}).join('')+'</div></section>';
 
  if(ok('trust')&&s.showTrust!==false)html+='<section id="trust" class="medical-01-section medical-01-trust"><div class="medical-01-side"><span class="medical-01-eyebrow">HYGIENE & TRUST</span><span>04</span></div><div><h2>Show the standards patients want to understand.</h2><div class="medical-01-trust-grid">'+trust.map((x,i)=>'<article><span>'+esc(x.icon||'✓')+'</span><h3>'+esc(x.title||'Trust point')+'</h3><p>'+esc(x.text||'')+'</p></article>').join('')+'</div></div></section>';
 
- if(ok('beforeAfter')&&s.showBeforeAfter!==false)html+='<section id="beforeAfter" class="medical-01-section medical-01-before-after"><div class="medical-01-head"><div><span class="medical-01-eyebrow">BEFORE / AFTER</span><h2>Show genuine treatment outcomes.</h2></div><p>Use only authentic, appropriately consented images and accurate captions. These are demo placeholders.</p></div><div class="medical-01-ba-grid">'+ba.map(x=>'<article class="medical-01-ba-item" data-ba-item><div class="medical-01-ba-stage"><img src="'+esc(x.beforeImage)+'" alt="Before"><div class="medical-01-ba-after" data-ba-after><img src="'+esc(x.afterImage)+'" alt="After"></div><span class="medical-01-ba-label before">Before</span><span class="medical-01-ba-label after">After</span></div><label class="medical-01-ba-control"><span>Drag to compare</span><input type="range" min="0" max="100" value="50" data-ba-range></label><h3>'+esc(x.title||'Treatment comparison')+'</h3><p>'+esc(x.description||'')+'</p></article>').join('')+'</div></section>';
+ if(ok('beforeAfter')&&s.showBeforeAfter!==false)html+='<section id="beforeAfter" class="medical-01-section medical-01-before-after"><div class="medical-01-head"><div><span class="medical-01-eyebrow">BEFORE / AFTER</span><h2>Show genuine treatment outcomes.</h2></div><p></p></div><div class="medical-01-ba-grid">'+ba.map(x=>'<article class="medical-01-ba-item" data-ba-item><div class="medical-01-ba-stage"><img src="'+esc(x.beforeImage)+'" alt="Before"><div class="medical-01-ba-after" data-ba-after><img src="'+esc(x.afterImage)+'" alt="After"></div><span class="medical-01-ba-label before">Before</span><span class="medical-01-ba-label after">After</span></div><label class="medical-01-ba-control"><span>Drag to compare</span><input type="range" min="0" max="100" value="50" data-ba-range></label><h3>'+esc(x.title||'Treatment comparison')+'</h3><p>'+esc(x.description||'')+'</p></article>').join('')+'</div></section>';
 
  if(ok('facilities')&&s.showFacilities!==false)html+='<section id="facilities" class="medical-01-section medical-01-facilities"><div class="medical-01-side"><span class="medical-01-eyebrow">FACILITIES & CARE</span><span>06</span></div><div><h2>A comfortable space for practical care.</h2><div class="medical-01-facility-grid">'+fac.map((x,i)=>'<article><span>0'+(i+1)+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.text)+'</p></article>').join('')+'</div></div></section>';
 
  if(ok('gallery')&&s.showGallery!==false)html+='<section id="gallery" class="medical-01-section medical-01-gallery"><div class="medical-01-head"><div><span class="medical-01-eyebrow">CENTER GALLERY</span><h2>See the space before you visit.</h2></div></div><div class="medical-01-gallery-grid">'+gallery.map(x=>'<button type="button" class="medical-01-gallery-item" data-gallery="'+esc(x.image)+'"><img src="'+esc(x.image)+'" alt="'+esc(x.title)+'"><span>'+esc(x.title)+'</span></button>').join('')+'</div></section>';
 
- if(ok('videoTestimonials')&&s.showVideoTestimonials!==false)html+='<section id="videoTestimonials" class="medical-01-section medical-01-videos"><div class="medical-01-head"><div><span class="medical-01-eyebrow">VIDEO TESTIMONIALS</span><h2>Let patients hear from patients.</h2></div><p>Use genuine testimonials with appropriate consent. Add hosted video URLs in Admin.</p></div><div class="medical-01-video-grid">'+(videos.map(x=>'<article><video controls preload="metadata" '+(x.posterImage?'poster="'+esc(x.posterImage)+'"':'')+' src="'+esc(x.videoUrl)+'"></video><h3>'+esc(x.title||'Patient testimonial')+'</h3></article>').join('')||'<div class="medical-01-empty">Add testimonial video URLs in Admin → Video Testimonials.</div>')+'</div></section>';
+ if(ok('videoTestimonials')&&s.showVideoTestimonials!==false)html+='<section id="videoTestimonials" class="medical-01-section medical-01-videos"><div class="medical-01-head"><div><span class="medical-01-eyebrow">VIDEO TESTIMONIALS</span><h2>Let patients hear from patients.</h2></div><p></p></div><div class="medical-01-video-grid">'+(videos.map(x=>'<article><video controls preload="metadata" '+(x.posterImage?'poster="'+esc(x.posterImage)+'"':'')+' src="'+esc(x.videoUrl)+'"></video><h3>'+esc(x.title||'Patient testimonial')+'</h3></article>').join('')||'<div class="medical-01-empty"></div>')+'</div></section>';
 
  if(ok('reviews')&&s.showReviews!==false)html+='<section id="reviews" class="medical-01-section medical-01-reviews"><div><span class="medical-01-eyebrow">PATIENT REVIEWS</span><h2>Good care is remembered.</h2>'+(d.googleReviewsUrl?'<a class="medical-01-line" target="_blank" href="'+esc(d.googleReviewsUrl)+'">View Google reviews ↗</a>':'')+'</div><div class="medical-01-review-grid">'+reviews.map(x=>'<article><b>'+'★'.repeat(Number(x.rating)||0)+'</b><p>“'+esc(x.text)+'”</p><strong>'+esc(x.name||'Patient')+'</strong></article>').join('')+'</div></section>';
 
@@ -52,7 +52,7 @@ export function render(d={},selected=[]){
  return html;
 }
 
-export function init(root,d={},selected=[]){
+export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
  const c=d.contact||{},business=d.brand?.businessName||'Medical Center',doctors=(d.doctors||[]).filter(x=>x.enabled!==false),form=root.querySelector('#medical-01Form');
  const setVal=(selector,val)=>{const x=root.querySelector(selector);if(x)x.value=val||''};
  root.querySelectorAll('[data-book-service]').forEach(x=>x.addEventListener('click',()=>{setVal('select[name="service"]',x.dataset.bookService);root.querySelector('#appointment')?.scrollIntoView({behavior:'smooth'})}));
@@ -74,8 +74,60 @@ export function init(root,d={},selected=[]){
  form?.addEventListener('submit',e=>{
   e.preventDefault();const f=new FormData(form),lead={id:crypto.randomUUID(),createdAt:new Date().toLocaleString(),status:'New',name:f.get('name')||'',phone:f.get('phone')||'',email:f.get('email')||'',doctor:f.get('doctor')||'',service:f.get('service')||'',date:f.get('date')||'',slot:f.get('slot')||'',time:f.get('time')||'',notes:f.get('notes')||''};
   try{const key='sitecraft:medical-01',saved=JSON.parse(localStorage.getItem(key)||'{}');saved.leads=Array.isArray(saved.leads)?saved.leads:[];saved.leads.unshift(lead);localStorage.setItem(key,JSON.stringify(saved))}catch{}
-  if(!safe(c.whatsapp)){alert('Please add a WhatsApp number in Admin > Contact.');return}
+  if(!safe(c.whatsapp)){alert('This option is not available right now. Please call the business directly.');return}
   const msg=['Hello '+business+'!','','New doctor appointment enquiry:','Patient: '+lead.name,'Mobile: '+lead.phone,'Email: '+(lead.email||'Not specified'),'Doctor: '+(lead.doctor||'Any available'),'Treatment: '+(lead.service||'Not specified'),'Date: '+(lead.date||'Not specified'),'Preferred slot: '+(lead.slot||'Not specified'),'Preferred time: '+(lead.time||'Not specified'),'Notes: '+(lead.notes||'')].join('\\n');
   window.open(wa(c.whatsapp,msg),'_blank');
  });
 }
+
+/* SiteCraft mobile menu: adds a menu button when the header nav is hidden (phones/tablets). */
+function scMobileNav(root){
+  const header=root&&root.querySelector('header');const nav=header&&header.querySelector('nav');
+  if(!nav||header.querySelector('.sc-nav-btn'))return;
+  const btn=document.createElement('button');
+  btn.type='button';btn.className='sc-nav-btn';btn.hidden=true;
+  btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open menu');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  header.appendChild(btn);
+  const setOpen=o=>{header.classList.toggle('sc-nav-open',o);btn.setAttribute('aria-expanded',String(o));btn.setAttribute('aria-label',o?'Close menu':'Open menu');};
+  const bgOf=el=>{for(let x=el;x&&x.nodeType===1;x=x.parentElement){const c=getComputedStyle(x).backgroundColor;const m=c.match(/[\d.]+/g);if(m&&(m.length<4||+m[3]>.5))return 'rgb('+m.slice(0,3).join(',')+')';}return null;};
+  const sync=()=>{
+    const was=header.classList.contains('sc-nav-open');header.classList.remove('sc-nav-open');
+    const hidden=!nav.getClientRects().length||getComputedStyle(nav).display==='none';
+    btn.hidden=!hidden;
+    if(hidden){if(getComputedStyle(header).position==='static')header.style.position='relative';const tc=(getComputedStyle(nav.querySelector('a')||nav).color.match(/[\d.]+/g)||[0,0,0]).slice(0,3).reduce((a,b)=>a+ +b,0)/3;header.style.setProperty('--sc-nav-bg',bgOf(header)||(tc>140?'#111':'#fff'));}
+    header.classList.toggle('sc-nav-open',was&&hidden);if(!hidden)setOpen(false);
+  };
+  btn.addEventListener('click',()=>setOpen(!header.classList.contains('sc-nav-open')));
+  nav.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('sc-nav-open')){setOpen(false);btn.focus();}});
+  addEventListener('resize',sync);sync();[150,600,2000].forEach(t=>setTimeout(sync,t));addEventListener('load',sync);document.querySelectorAll('link[rel="stylesheet"]').forEach(l=>l.addEventListener('load',sync));
+}
+
+/* SiteCraft connect strip: hours, email and social links, shown in the footer only when the page does not already show them. */
+const scEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SC_SOCIAL_FEATURE=false;
+const SC_ICONS={
+  instagram:['Instagram','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor"/></svg>'],
+  facebook:['Facebook','<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v6h4v-6h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg>'],
+  youtube:['YouTube','<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M10 9v6l5-3z"/></svg>']
+};
+function scConnect(html,d,selected){
+  const c=d.contact||{},so=d.social||{};
+  const pick=k=>String(c[k]||so[k]||'').trim();
+  const has=v=>html.indexOf(v)>=0||html.indexOf(scEsc(v))>=0;
+  const parts=[];
+  const hours=typeof c.hours==='string'?c.hours.trim():'';
+  if(hours&&!has(hours))parts.push('<span class="sc-connect-item">🕒 '+scEsc(hours)+'</span>');
+  const mail=pick('email');
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)&&!has(mail))parts.push('<a class="sc-connect-item" href="mailto:'+scEsc(mail)+'">✉ '+scEsc(mail)+'</a>');
+  const icons=[];
+  if(!SC_SOCIAL_FEATURE||(selected||[]).includes('social'))Object.keys(SC_ICONS).forEach(k=>{const u=pick(k);if(/^https?:\/\//i.test(u)&&!has(u))icons.push('<a class="sc-connect-icon" href="'+scEsc(u)+'" target="_blank" rel="noopener" aria-label="'+SC_ICONS[k][0]+'">'+SC_ICONS[k][1]+'</a>');});
+  if(!parts.length&&!icons.length)return html;
+  const block='<div class="sc-connect">'+parts.join('')+(icons.length?'<span class="sc-connect-icons">'+icons.join('')+'</span>':'')+'</div>';
+  const i=html.lastIndexOf('</footer>');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const j=html.lastIndexOf('</div>');
+  return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
+}
+export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}

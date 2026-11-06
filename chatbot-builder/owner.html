@@ -9,9 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./owner.css?v=3">
+  <link rel="stylesheet" href="./owner.css?v=4">
 </head>
 <body>
+  <script src="./demo-api.js"></script>
   <div class="owner-app">
     <header class="owner-header">
       <div>
@@ -25,6 +26,36 @@
     </header>
     <p class="status" id="status" role="status" hidden></p>
     <main id="sections" hidden>
+      <section class="card update-chat" id="updateChat">
+        <h2>💬 Update with chat</h2>
+        <p class="muted">Type, speak or send a photo — for example “Gold chain price 52000” or “Silver anklet out of stock”. You always see the changes first and confirm.</p>
+        <div class="uc-log" aria-live="polite"></div>
+        <div class="uc-chips" aria-label="Examples"></div>
+        <div class="uc-tray" hidden></div>
+        <form class="uc-form">
+          <label class="uc-attach" title="Send a photo" aria-label="Send a photo">📷<input class="uc-file" type="file" accept="image/*" multiple></label>
+          <textarea class="uc-input" rows="1" maxlength="1000" placeholder="Type or speak a change…" aria-label="Describe the change"></textarea>
+          <select class="uc-lang" aria-label="Language you speak"></select>
+          <button class="uc-mic" type="button" aria-label="Speak" aria-pressed="false" title="Speak">🎙️</button>
+          <button class="uc-send btn" type="submit">Check</button>
+        </form>
+      </section>
+
+      <section class="card" id="infoCard">
+        <h2>Shop information</h2>
+        <p class="muted">Shown on your customer page and used by the assistant. You can also change these from the chat above.</p>
+        <form class="info-form" id="infoForm">
+          <label>Timings <input name="timings" maxlength="120" placeholder="10:00 AM – 8:30 PM"></label>
+          <label>Weekly holiday <input name="weekly_holiday" maxlength="60" placeholder="Sunday"></label>
+          <label>Address <input name="address" maxlength="200" placeholder="Shop number, street, landmark, city"></label>
+          <label>Phone <input name="call_number" inputmode="tel" maxlength="20" placeholder="9876543210"></label>
+          <label>WhatsApp <input name="whatsapp_number" inputmode="tel" maxlength="20" placeholder="9876543210"></label>
+          <label>Google Maps link <input name="map_link" type="url" maxlength="300" placeholder="https://maps.google.com/…"></label>
+          <label class="wide">About your shop <textarea name="about" rows="3" maxlength="400" placeholder="Two or three lines about your shop"></textarea></label>
+          <div><button class="btn" type="submit">Save information</button></div>
+        </form>
+      </section>
+
       <section class="card help-card">
         <p><strong>This is your owner page.</strong> Every change you make here shows in your customer bot right away — no need to print the QR code again.</p>
         <details>
@@ -38,7 +69,7 @@
             <li>Customer requests: photos and pre-orders customers send from the Requests tab of your bot. Accept, mark ready or reply — the customer sees it in the bot.</li>
             <li>Order status: add each order by its bill number and update it (received → ready → delivered). Customers check it in the bot.</li>
             <li>Notifications: tap "Turn on notifications" to get an alert on this phone for new customer questions and requests.</li>
-            <li>Offers, timings or any other detail: tell BotCraft in the setup chat (for example "Sunday also open").</li>
+            <li>Timings, holiday, address, offers or any other detail: use "Update with chat" above, or the Shop information form.</li>
           </ol>
         </details>
         <p class="muted">💡 The more detail you give (prices, sizes, materials, policies), the more detailed answers your customers get.</p>
@@ -151,6 +182,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=6"></script>
+  <script type="module" src="./owner.js?v=7"></script>
 </body>
 </html>

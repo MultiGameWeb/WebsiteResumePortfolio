@@ -1,0 +1,907 @@
+{
+  "id": "teaching-01",
+  "name": "Teaching Website — TeachSpace",
+  "category": "Teaching Websites",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Introduction"
+    },
+    {
+      "id": "profile",
+      "label": "Teacher / Institution profile"
+    },
+    {
+      "id": "subjects",
+      "label": "Subjects & courses"
+    },
+    {
+      "id": "batches",
+      "label": "Class timings & batches"
+    },
+    {
+      "id": "faculty",
+      "label": "Teaching team"
+    },
+    {
+      "id": "achievements",
+      "label": "Results & achievements"
+    },
+    {
+      "id": "testimonials",
+      "label": "Student / parent testimonials"
+    },
+    {
+      "id": "resources",
+      "label": "Study resources"
+    },
+    {
+      "id": "gallery",
+      "label": "Photo gallery"
+    },
+    {
+      "id": "demo",
+      "label": "Free demo class enquiry"
+    },
+    {
+      "id": "faq",
+      "label": "Frequently asked questions"
+    },
+    {
+      "id": "contact",
+      "label": "Contact & location"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp & call"
+    },
+    {
+      "id": "privacy",
+      "label": "Privacy policy"
+    }
+  ],
+  "fields": [
+    {
+      "path": "teaching.type",
+      "label": "Website owner type",
+      "type": "select",
+      "options": [
+        {
+          "value": "individual",
+          "label": "Individual tuition teacher"
+        },
+        {
+          "value": "institution",
+          "label": "Tuition / coaching institution"
+        }
+      ]
+    },
+    {
+      "path": "brand.businessName",
+      "label": "Website / teaching brand name",
+      "required": true,
+      "placeholder": "TeachSpace Learning"
+    },
+    {
+      "path": "teacher.name",
+      "label": "Teacher name"
+    },
+    {
+      "path": "teacher.designation",
+      "label": "Teaching title / designation"
+    },
+    {
+      "path": "teacher.qualification",
+      "label": "Qualifications"
+    },
+    {
+      "path": "teacher.experience",
+      "label": "Teaching experience"
+    },
+    {
+      "path": "teacher.specialization",
+      "label": "Main subjects / expertise"
+    },
+    {
+      "path": "teacher.bio",
+      "label": "Teacher profile / introduction",
+      "type": "textarea"
+    },
+    {
+      "path": "institution.director",
+      "label": "Founder / director name"
+    },
+    {
+      "path": "institution.about",
+      "label": "About the institution",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero heading",
+      "required": true
+    },
+    {
+      "path": "home.text",
+      "label": "Hero description",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero / teacher image",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone number"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp number with country code"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email address"
+    },
+    {
+      "path": "contact.address",
+      "label": "Address / teaching location",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Contact / class hours"
+    },
+    {
+      "path": "contact.onlineMode",
+      "label": "Online teaching details"
+    },
+    {
+      "path": "social.youtube",
+      "label": "YouTube channel URL",
+      "type": "url"
+    },
+    {
+      "path": "social.instagram",
+      "label": "Instagram URL",
+      "type": "url"
+    },
+    {
+      "path": "social.facebook",
+      "label": "Facebook URL",
+      "type": "url"
+    },
+    {
+      "path": "privacyPolicy",
+      "label": "Privacy policy",
+      "type": "textarea"
+    }
+  ],
+  "demoData": {
+    "id": "teaching-01",
+    "teaching": {
+      "type": "individual",
+      "mode": "Online + Offline"
+    },
+    "brand": {
+      "businessName": "TeachSpace Learning",
+      "tagline": "LEARN WITH CLARITY · GROW WITH CONFIDENCE"
+    },
+    "teacher": {
+      "name": "Ananya Sharma",
+      "designation": "Mathematics & Science Tutor",
+      "qualification": "M.Sc. Mathematics · B.Ed.",
+      "experience": "8+ years",
+      "specialization": "Mathematics, Science and exam preparation",
+      "bio": "I help students build strong concepts, improve problem-solving confidence and prepare for school examinations through clear explanations, regular practice and individual attention."
+    },
+    "institution": {
+      "director": "Ananya Sharma",
+      "about": "TeachSpace Learning is a friendly tuition and coaching centre focused on concept clarity, small batches and steady academic progress. We support students with structured lessons, practice and personal guidance."
+    },
+    "home": {
+      "title": "Understand the concept. Believe in your ability.",
+      "text": "Personalised tuition, clear explanations and focused practice for students who want to learn with confidence."
+    },
+    "hero": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1600&q=85",
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@teachspace.example",
+      "address": "Madhapur, Hyderabad, Telangana",
+      "maps": "https://maps.google.com/?q=Madhapur+Hyderabad",
+      "hours": "Monday – Saturday · 4:00 PM – 8:00 PM",
+      "onlineMode": "Online live classes and in-person tuition available."
+    },
+    "social": {
+      "youtube": "https://youtube.com/",
+      "instagram": "https://instagram.com/",
+      "facebook": ""
+    },
+    "privacyPolicy": "Information shared through this website is used only to respond to tuition enquiries, arrange demo classes and provide details about courses. Please contact the teacher or institution for any privacy questions.",
+    "courses": [
+      {
+        "id": "ts-c1",
+        "name": "Mathematics Tuition",
+        "subject": "Mathematics",
+        "classes": "Classes 6–10",
+        "board": "CBSE / ICSE / State Board",
+        "mode": "Online + Offline",
+        "schedule": "Mon · Wed · Fri",
+        "duration": "60 minutes",
+        "fee": "₹1,500 / month",
+        "description": "Build strong fundamentals in arithmetic, algebra, geometry and exam problem-solving.",
+        "image": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      },
+      {
+        "id": "ts-c2",
+        "name": "Science Tuition",
+        "subject": "Science",
+        "classes": "Classes 6–10",
+        "board": "CBSE / ICSE / State Board",
+        "mode": "Online + Offline",
+        "schedule": "Tue · Thu · Sat",
+        "duration": "60 minutes",
+        "fee": "₹1,500 / month",
+        "description": "Understand Physics, Chemistry and Biology with visual explanations and practice.",
+        "image": "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      },
+      {
+        "id": "ts-c3",
+        "name": "Exam Preparation",
+        "subject": "Exam Preparation",
+        "classes": "Classes 9–10",
+        "board": "CBSE / State Board",
+        "mode": "Small group",
+        "schedule": "Weekend batches",
+        "duration": "90 minutes",
+        "fee": "₹2,000 / month",
+        "description": "Revision plans, previous-paper practice, chapter tests and exam strategies.",
+        "image": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=85",
+        "enabled": true
+      }
+    ],
+    "batches": [
+      {
+        "id": "ts-b1",
+        "name": "Class 8 Mathematics",
+        "days": "Mon · Wed · Fri",
+        "time": "5:00 PM – 6:00 PM",
+        "mode": "Offline",
+        "seats": "2 seats available",
+        "enabled": true
+      },
+      {
+        "id": "ts-b2",
+        "name": "Class 9 Science",
+        "days": "Tue · Thu · Sat",
+        "time": "6:00 PM – 7:00 PM",
+        "mode": "Online",
+        "seats": "4 seats available",
+        "enabled": true
+      }
+    ],
+    "faculty": [
+      {
+        "id": "ts-f1",
+        "name": "Ananya Sharma",
+        "role": "Founder & Lead Tutor",
+        "qualification": "M.Sc. Mathematics · B.Ed.",
+        "subjects": "Mathematics · Science",
+        "image": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=85",
+        "enabled": true
+      }
+    ],
+    "achievements": [
+      {
+        "id": "ts-a1",
+        "title": "Strong concept foundations",
+        "description": "A focused approach to understanding topics instead of memorising answers.",
+        "metric": "Concept first",
+        "enabled": true
+      },
+      {
+        "id": "ts-a2",
+        "title": "Personal attention",
+        "description": "Small groups and individual doubt-clearing support.",
+        "metric": "Small batches",
+        "enabled": true
+      },
+      {
+        "id": "ts-a3",
+        "title": "Regular practice",
+        "description": "Worksheets, chapter tests and revision support.",
+        "metric": "Practice led",
+        "enabled": true
+      }
+    ],
+    "testimonials": [
+      {
+        "id": "ts-t1",
+        "name": "Parent of a Class 9 student",
+        "role": "Parent",
+        "quote": "The lessons are clear and patient. My child is more confident about asking questions and practising independently.",
+        "rating": "5/5",
+        "enabled": true
+      },
+      {
+        "id": "ts-t2",
+        "name": "Student",
+        "role": "Class 10",
+        "quote": "Difficult topics are explained step by step, and the regular practice helps me prepare better.",
+        "rating": "5/5",
+        "enabled": true
+      }
+    ],
+    "resources": [
+      {
+        "id": "ts-r1",
+        "title": "Mathematics practice worksheet",
+        "description": "Downloadable practice material for revision.",
+        "type": "PDF",
+        "url": "https://example.com/maths-worksheet.pdf",
+        "enabled": true
+      },
+      {
+        "id": "ts-r2",
+        "title": "Science revision notes",
+        "description": "Quick notes for important concepts.",
+        "type": "Study notes",
+        "url": "",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "ts-g1",
+        "title": "Focused learning sessions",
+        "image": "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=85",
+        "enabled": true
+      },
+      {
+        "id": "ts-g2",
+        "title": "Learning together",
+        "image": "https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=900&q=85",
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "ts-q1",
+        "question": "Are online classes available?",
+        "answer": "Yes. Online live classes can be arranged. Contact us to confirm the available schedule.",
+        "enabled": true
+      },
+      {
+        "id": "ts-q2",
+        "question": "Can I attend a demo class?",
+        "answer": "Yes. Send a demo class enquiry with the student's class and subject.",
+        "enabled": true
+      },
+      {
+        "id": "ts-q3",
+        "question": "Which boards do you support?",
+        "answer": "The listed subjects and classes include CBSE, ICSE and State Board support. Please enquire for your specific syllabus.",
+        "enabled": true
+      }
+    ]
+  },
+  "admin": {
+    "storageKey": "sitecraft:teaching-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "type",
+        "label": "Teacher / institution type",
+        "fields": [
+          {
+            "path": "teaching.type",
+            "label": "Website type",
+            "type": "select",
+            "options": [
+              {
+                "value": "individual",
+                "label": "Individual tuition teacher"
+              },
+              {
+                "value": "institution",
+                "label": "Tuition / coaching institution"
+              }
+            ]
+          },
+          {
+            "path": "teaching.mode",
+            "label": "Teaching mode"
+          }
+        ]
+      },
+      {
+        "id": "profile",
+        "label": "Teacher profile",
+        "fields": [
+          {
+            "path": "teacher.name",
+            "label": "Teacher name"
+          },
+          {
+            "path": "teacher.designation",
+            "label": "Designation / title"
+          },
+          {
+            "path": "teacher.qualification",
+            "label": "Qualifications"
+          },
+          {
+            "path": "teacher.experience",
+            "label": "Experience"
+          },
+          {
+            "path": "teacher.specialization",
+            "label": "Subjects / expertise"
+          },
+          {
+            "path": "teacher.bio",
+            "label": "Teacher introduction",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "institution",
+        "label": "Institution details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Institution / website name"
+          },
+          {
+            "path": "institution.director",
+            "label": "Founder / director"
+          },
+          {
+            "path": "institution.about",
+            "label": "About the institution",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Home page",
+        "fields": [
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero description",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero / teacher image",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "courses",
+        "label": "Subjects & courses",
+        "type": "collection",
+        "itemLabel": "course / subject",
+        "path": "courses",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Course / subject name"
+          },
+          {
+            "key": "subject",
+            "label": "Subject"
+          },
+          {
+            "key": "classes",
+            "label": "Classes / student level"
+          },
+          {
+            "key": "board",
+            "label": "Board / syllabus"
+          },
+          {
+            "key": "mode",
+            "label": "Online / offline mode"
+          },
+          {
+            "key": "schedule",
+            "label": "Schedule"
+          },
+          {
+            "key": "duration",
+            "label": "Class duration"
+          },
+          {
+            "key": "fee",
+            "label": "Fee details"
+          },
+          {
+            "key": "description",
+            "label": "Course description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Course image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New subject / course",
+          "subject": "",
+          "classes": "All levels",
+          "board": "",
+          "mode": "Online + Offline",
+          "schedule": "Contact for timing",
+          "duration": "",
+          "fee": "Enquire for fees",
+          "description": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "batches",
+        "label": "Batches & timings",
+        "type": "collection",
+        "itemLabel": "batch",
+        "path": "batches",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Batch / class name"
+          },
+          {
+            "key": "days",
+            "label": "Days"
+          },
+          {
+            "key": "time",
+            "label": "Time"
+          },
+          {
+            "key": "mode",
+            "label": "Online / offline"
+          },
+          {
+            "key": "seats",
+            "label": "Seat availability"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New batch",
+          "days": "",
+          "time": "",
+          "mode": "Online",
+          "seats": "Enquire for seats",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faculty",
+        "label": "Faculty / teaching team",
+        "type": "collection",
+        "itemLabel": "teacher / faculty",
+        "path": "faculty",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Teacher name"
+          },
+          {
+            "key": "role",
+            "label": "Role / designation"
+          },
+          {
+            "key": "qualification",
+            "label": "Qualifications"
+          },
+          {
+            "key": "subjects",
+            "label": "Subjects taught"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New teacher",
+          "role": "Tutor",
+          "qualification": "",
+          "subjects": "",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "achievements",
+        "label": "Teaching strengths & results",
+        "type": "collection",
+        "itemLabel": "achievement",
+        "path": "achievements",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "metric",
+            "label": "Short highlight"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New achievement",
+          "metric": "",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "testimonials",
+        "label": "Student / parent reviews",
+        "type": "collection",
+        "itemLabel": "testimonial",
+        "path": "testimonials",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Student / parent name"
+          },
+          {
+            "key": "role",
+            "label": "Class / relationship"
+          },
+          {
+            "key": "quote",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Student / parent",
+          "role": "Student",
+          "quote": "",
+          "rating": "5/5",
+          "enabled": true
+        }
+      },
+      {
+        "id": "resources",
+        "label": "Study resources",
+        "type": "collection",
+        "itemLabel": "resource",
+        "path": "resources",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Resource title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "type",
+            "label": "File / resource type"
+          },
+          {
+            "key": "url",
+            "label": "Resource link",
+            "type": "url"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New study resource",
+          "description": "",
+          "type": "PDF",
+          "url": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Photo gallery",
+        "type": "collection",
+        "itemLabel": "gallery image",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Image title"
+          },
+          {
+            "key": "image",
+            "label": "Image",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "Learning moments",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "faqs",
+        "label": "Frequently asked questions",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show on website",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & teaching location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone number"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp number with country code"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email address"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Class / contact hours"
+          },
+          {
+            "path": "contact.onlineMode",
+            "label": "Online class details",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "social",
+        "label": "Social media",
+        "fields": [
+          {
+            "path": "social.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          },
+          {
+            "path": "social.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "social.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "privacy",
+        "label": "Privacy policy",
+        "fields": [
+          {
+            "path": "privacyPolicy",
+            "label": "Privacy policy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
