@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100f17">
+<meta name="description" content="Turn your photos into a video for WhatsApp Status, Instagram Reels or YouTube. Pick a template, add your offer, prices and music, and download. Free to try.">
+<title>Photo Video Maker | SiteCraft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;800&family=Playfair+Display:wght@700&family=Noto+Sans+Telugu:wght@600;800&family=Noto+Sans+Devanagari:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="global.css">
+<link rel="stylesheet" href="site-navigation.css">
+<link rel="stylesheet" href="video-maker/maker.css?v=1">
+</head>
+<body class="vm-page">
+<main class="vm-app" id="main-content">
+  <header class="vm-intro">
+    <span class="vm-kicker">PHOTO VIDEO MAKER</span>
+    <h1>Turn your photos into a <span class="vm-gradient">video ad</span> in minutes.</h1>
+    <p>Upload photos, pick a template, add your offer, prices and music. Download a video for WhatsApp Status, Instagram Reels or YouTube. Everything happens on your phone or computer — your photos are not uploaded anywhere.</p>
+  </header>
+
+  <div class="vm-grid">
+    <section class="vm-controls" aria-label="Video settings">
+      <div class="vm-card">
+        <h2><span>1</span> Your photos</h2>
+        <p class="vm-hint">Up to 10 photos. Add a caption or price to any photo.</p>
+        <label class="vm-upload">
+          <input type="file" id="photoInput" accept="image/*" multiple>
+          <span>＋ Add photos</span>
+        </label>
+        <div class="vm-photos" id="photoList"></div>
+      </div>
+
+      <div class="vm-card">
+        <h2><span>2</span> Template</h2>
+        <div class="vm-templates" id="templateList" role="radiogroup" aria-label="Template"></div>
+      </div>
+
+      <div class="vm-card">
+        <h2><span>3</span> Your text</h2>
+        <label>Title <input id="titleInput" maxlength="60" placeholder="For example: Sri Sai Textiles"></label>
+        <label>Offer or message <input id="subtitleInput" maxlength="90" placeholder="For example: Diwali sale — up to 40% off"></label>
+        <label>Phone / WhatsApp <input id="contactInput" maxlength="40" placeholder="For example: 98765 43210"></label>
+        <label>Closing line <input id="closingInput" maxlength="60" placeholder="For example: Visit us today!"></label>
+      </div>
+
+      <div class="vm-card">
+        <h2><span>4</span> Size, speed and music</h2>
+        <div class="vm-formats" id="formatList" role="radiogroup" aria-label="Video size">
+          <button type="button" data-format="story" aria-checked="true" role="radio">📱 Status / Reels<small>9:16</small></button>
+          <button type="button" data-format="square" aria-checked="false" role="radio">◻️ Post<small>1:1</small></button>
+          <button type="button" data-format="wide" aria-checked="false" role="radio">🖥️ YouTube<small>16:9</small></button>
+        </div>
+        <label>Seconds per photo <span class="vm-value" id="speedValue">3</span>
+          <input type="range" id="speedInput" min="2" max="5" step="0.5" value="3">
+        </label>
+        <label>Music <span class="vm-optional">(optional, your own file)</span>
+          <input type="file" id="musicInput" accept="audio/*">
+        </label>
+        <p class="vm-hint">Use music you have the rights to. Film songs can get your video muted on Instagram or YouTube.</p>
+      </div>
+    </section>
+
+    <section class="vm-stage" aria-label="Preview">
+      <div class="vm-preview-wrap">
+        <canvas id="stage" aria-label="Video preview"></canvas>
+      </div>
+      <p class="vm-length" id="lengthNote"></p>
+      <div class="vm-actions">
+        <button type="button" class="vm-btn ghost" id="playBtn">▶ Preview</button>
+        <button type="button" class="vm-btn primary" id="makeBtn">⬇ Make my video</button>
+      </div>
+      <p class="vm-status" id="status" role="status"></p>
+      <div class="vm-result" id="result" hidden>
+        <video id="resultVideo" controls playsinline></video>
+        <a class="vm-btn primary" id="downloadLink" download>⬇ Download video</a>
+      </div>
+      <p class="vm-note">Free videos carry a small “Made with SiteCraft” mark. Watermark-free HD videos are coming soon. Want us to make a professional ad for you? <a href="ai-ad-videos.html">See our ad video service</a>.</p>
+    </section>
+  </div>
+</main>
+<script src="site-navigation.js"></script>
+<script src="video-maker/maker.js?v=1"></script>
+</body>
+</html>
