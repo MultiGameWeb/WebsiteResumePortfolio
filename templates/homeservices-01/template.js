@@ -195,9 +195,9 @@ export function render(d={},selected=[]){
   ...c,
   hours:connectSelected.includes('hours')&&s.showHours!==false?c.hours:'',
   email:connectSelected.includes('contact')&&s.showContact!==false?c.email:'',
-  instagram:connectSelected.includes('social')&&s.showSocial!==false?c.instagram:'',
-  facebook:connectSelected.includes('social')&&s.showSocial!==false?c.facebook:'',
-  youtube:connectSelected.includes('social')&&s.showSocial!==false?c.youtube:''
+  instagram:connectSelected.includes('social')&&selected.includes('social')&&s.showSocial!==false?c.instagram:'',
+  facebook:connectSelected.includes('social')&&selected.includes('social')&&s.showSocial!==false?c.facebook:'',
+  youtube:connectSelected.includes('social')&&selected.includes('social')&&s.showSocial!==false?c.youtube:''
  }};
  return scConnect(scWithForm(scBaseRender(d,selected),d,chosen),connectData,connectSelected);
 }
