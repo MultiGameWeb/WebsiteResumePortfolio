@@ -7,6 +7,8 @@
 //   -> { reply, ready, plan? }
 // POST /api/aivideo/image { prompt, format }
 //   -> { image: { mimeType, data } }
+// POST /api/aivideo/stock { query, format, exclude? }  (free Pexels photo)
+//   -> { image: { mimeType, data }, photo: { id, photographer, url } }
 //
 // Images cost money, so they are limited per address per day and in total per
 // day until payments exist. The Gemini key is a Worker secret
@@ -68,9 +70,10 @@ const PLAN_SCHEMA = {
             properties: {
               headline: { type: "STRING", description: "1-4 words shown big on the scene, in the customer's language" },
               line: { type: "STRING", description: "a short tag such as a price, product or benefit, under 24 characters, or empty" },
-              image_prompt: { type: "STRING", description: "an English description of the photo for this scene" }
+              image_prompt: { type: "STRING", description: "an English description of the photo for this scene" },
+              stock_query: { type: "STRING", description: "2-4 plain English words to search free stock photos for this scene, e.g. 'indian street food'" }
             },
-            required: ["headline", "line", "image_prompt"]
+            required: ["headline", "line", "image_prompt", "stock_query"]
           }
         }
       },
@@ -89,12 +92,13 @@ Collect, asking only for what is missing (two or three things at a time, never a
 - size: Status / Reels (9:16, the default), post (1:1) or YouTube (16:9)
 - the language for the text on the video (default: the language the customer writes in)
 
-When you have enough, briefly summarise the plan (style, length, scenes) and ask them to confirm. When they confirm, set ready true and fill in the plan. After that the customer picks AI pictures or their own photos with buttons, so do not ask for photos in the chat.
+When you have enough, briefly summarise the plan (style, length, scenes) and ask them to confirm. When they confirm, set ready true and fill in the plan. After that the customer picks free online photos, AI pictures or their own photos with buttons, so do not ask for photos in the chat.
 
 Plan rules:
 - scenes: one per 6 seconds, rounded up, at least 2 and at most 10 (10 s: 2, 15 s: 3, 20 s: 4, 30 s: 5, 45 s: 8, 60 s: 10). Use exactly the length the customer asked for.
 - style: jewel (jewellery, luxury), gym (fitness, sports), royal (weddings, events, wedding services), food (restaurants, sweets, bakeries), property (real estate, hotels, resorts), product (shops, electronics, products), offer (sales and discounts), wedding (other functions), birthday (birthdays, kids).
 - headlines and lines in the customer's chosen language; keep them short and punchy.
+- stock_query: 2-4 simple English words that would find a fitting real photo on a stock photo site (for example "biryani plate", "luxury villa pool", "gold necklace"). Add "indian" when people or places should look Indian.
 - image_prompt: a vivid, photorealistic description in English of one scene that fits the business, set in India with Indian people and places where people appear. Describe only the picture: no words, letters, numbers, logos, brand names, watermarks or real or famous people.
 - Never invent prices, discounts, awards or guarantees the customer did not give. No medical or financial promises. Do not copy other brands.
 - If the request is illegal, hateful, adult, or meant to mislead, politely refuse and offer a normal promotional video instead.
@@ -105,7 +109,8 @@ function cleanPlan(plan) {
   const seconds = Math.min(MAX_SECONDS, Math.max(MIN_SECONDS, Math.round(Number(plan.seconds) || 30)));
   const count = sceneCount(seconds);
   const scenes = (Array.isArray(plan.scenes) ? plan.scenes : []).slice(0, count).map(s => ({
-    headline: clip(s?.headline, 40), line: clip(s?.line, 30), imagePrompt: clip(s?.image_prompt, 600)
+    headline: clip(s?.headline, 40), line: clip(s?.line, 30), imagePrompt: clip(s?.image_prompt, 600),
+    stockQuery: clip(s?.stock_query, 60) || clip(s?.image_prompt, 600).split(" ").slice(0, 4).join(" ")
   })).filter(s => s.imagePrompt);
   if (!scenes.length) return null;
   return {
@@ -235,6 +240,50 @@ async function drawImage(env, body, prompt) {
   return { status: 200, data: { ok: true, image: { mimeType: part.inlineData.mimeType || "image/png", data: part.inlineData.data } } };
 }
 
+// ---- Free stock photos (Pexels) ----
+// Pexels photos are free for business use and carry no watermark. The Worker
+// fetches the photo itself so the browser canvas can record it (a picture
+// from another site would block recording). PEXELS_API_KEY is a Worker secret.
+const ORIENTATION = { story: "portrait", square: "square", wide: "landscape" };
+
+async function stock(env, body) {
+  if (!env.PEXELS_API_KEY) return { status: 503, data: { ok: false, error: "Free online photos are not set up yet (PEXELS_API_KEY)." } };
+  const query = clip(body?.query, 60);
+  if (!query) return { status: 400, data: { ok: false, error: "Missing photo search." } };
+  const format = FORMATS[body?.format] ? body.format : "story";
+  const skip = new Set((Array.isArray(body?.exclude) ? body.exclude : []).slice(0, 20).map(String));
+  const search = async q => {
+    const api = `https://api.pexels.com/v1/search?query=${encodeURIComponent(q)}&orientation=${ORIENTATION[format]}&per_page=15`;
+    const response = await fetch(api, { headers: { Authorization: env.PEXELS_API_KEY }, signal: AbortSignal.timeout(15000) });
+    if (!response.ok) throw new Error(`Pexels HTTP ${response.status}`);
+    return (await response.json())?.photos || [];
+  };
+  try {
+    let photos = (await search(query)).filter(p => !skip.has(String(p.id)));
+    // A very specific search can come back empty: try its first two words.
+    if (!photos.length && query.includes(" ")) photos = (await search(query.split(" ").slice(0, 2).join(" "))).filter(p => !skip.has(String(p.id)));
+    if (!photos.length) return { status: 404, data: { ok: false, error: "No free photo found for this scene." } };
+    const photo = photos[Math.floor(Math.random() * Math.min(5, photos.length))];
+    const src = format === "story" ? photo.src?.portrait : format === "wide" ? photo.src?.landscape : photo.src?.large;
+    const file = await fetch(src, { signal: AbortSignal.timeout(20000) });
+    if (!file.ok) throw new Error(`Pexels image HTTP ${file.status}`);
+    const bytes = new Uint8Array(await file.arrayBuffer());
+    let binary = "";
+    for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+    return {
+      status: 200,
+      data: {
+        ok: true,
+        image: { mimeType: file.headers.get("Content-Type") || "image/jpeg", data: btoa(binary) },
+        photo: { id: photo.id, photographer: clip(photo.photographer, 60), url: photo.url }
+      }
+    };
+  } catch (error) {
+    console.error("AI video stock photo failed", error);
+    return { status: 502, data: { ok: false, error: "A free photo could not be loaded. Please try again." } };
+  }
+}
+
 // Short-term limit on chat messages per address (per isolate).
 const recent = new Map();
 function throttled(ip, now, limit) {
@@ -246,15 +295,15 @@ function throttled(ip, now, limit) {
 
 export async function handleAiVideoRoute(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "");
-  if (path !== "/api/aivideo/chat" && path !== "/api/aivideo/image") return null;
+  if (!["/api/aivideo/chat", "/api/aivideo/image", "/api/aivideo/stock"].includes(path)) return null;
   const origin = request.headers.get("Origin") || "";
   if (!allowedOrigins(env).has(origin)) return reply({ ok: false, error: "Origin not allowed." }, 403, origin);
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: headers(origin) });
   if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-  if (throttled(ip, Date.now(), path.endsWith("image") ? 12 : 20)) return reply({ ok: false, error: "Too many requests. Please wait a minute." }, 429, origin);
+  if (throttled(ip, Date.now(), path.endsWith("image") ? 12 : path.endsWith("stock") ? 30 : 20)) return reply({ ok: false, error: "Too many requests. Please wait a minute." }, 429, origin);
   let body;
   try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
-  const result = path.endsWith("chat") ? await chat(env, body) : await image(env, body, ip);
+  const result = path.endsWith("chat") ? await chat(env, body) : path.endsWith("stock") ? await stock(env, body) : await image(env, body, ip);
   return reply(result.data, result.status, origin);
 }
