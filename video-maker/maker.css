@@ -87,6 +87,14 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 .vm-ai-editor .vm-sub h2 { font-size: 1rem; margin: 0; }
 .vm-intro a { color: #f9a8d4; font-weight: 700; }
 .vm-ai-ask { margin: 4px 0 0; font-size: 14px; font-weight: 600; line-height: 1.5; }
-.vm-ai-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.vm-ai-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .vm-ai-own { cursor: pointer; text-align: center; }
 @media (max-width: 520px) { .vm-ai-choices { grid-template-columns: minmax(0, 1fr); } }
+.vm-ai-thumbs { gap: 8px; }
+.vm-ai-thumb { position: relative; margin: 0; }
+.vm-ai-thumb img { width: 72px; height: 96px; display: block; }
+.vm-ai-thumb-tools { position: absolute; inset: auto 3px 3px 3px; display: flex; justify-content: space-between; gap: 3px; }
+.vm-ai-thumb-tools button { flex: 1; min-height: 26px; padding: 0; border: 0; border-radius: 7px; background: rgba(16,15,23,.82); color: #fff; font-size: 13px; cursor: pointer; }
+.vm-ai-thumb-tools button:hover, .vm-ai-thumb-tools button:focus-visible { background: rgba(236,72,153,.85); }
+.vm-ai-credit { margin: 0; font-size: 12px; color: var(--vm-muted); }
+.vm-ai-credit a { color: inherit; }
