@@ -66,6 +66,7 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 .vm-msg.user { justify-self: end; background: var(--vm-gradient); color: #fff; }
 .vm-msg.typing { color: var(--vm-muted); }
 .vm-chat-form { display: grid; grid-template-columns: minmax(0, 1fr) 48px; gap: 8px; }
+.vm-chat-form:has(.vm-attach-btn) { grid-template-columns: 48px minmax(0, 1fr) 48px; }
 .vm-chat-form .vm-btn { padding: 0; }
 .vm-ai-plan { display: grid; gap: 10px; padding: 12px; border: 1px solid var(--vm-line); border-radius: 14px; background: rgba(0,0,0,.25); }
 .vm-ai-plan[hidden] { display: none; }
@@ -98,3 +99,18 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 .vm-ai-thumb-tools button:hover, .vm-ai-thumb-tools button:focus-visible { background: rgba(236,72,153,.85); }
 .vm-ai-credit { margin: 0; font-size: 12px; color: var(--vm-muted); }
 .vm-ai-credit a { color: inherit; }
+
+/* Sharing photos and files in the AI chat */
+.vm-attach-btn { font-size: 22px; font-weight: 600; cursor: pointer; }
+.vm-attach-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.vm-attach-list[hidden] { display: none; }
+.vm-attach { position: relative; display: flex; align-items: center; gap: 6px; max-width: 200px; padding: 4px 26px 4px 4px; border: 1px solid var(--vm-line); border-radius: 10px; background: var(--vm-panel2); font-size: 12px; color: var(--vm-muted); }
+.vm-attach img { width: 40px; height: 40px; object-fit: cover; border-radius: 7px; }
+.vm-attach .vm-file-icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 20px; }
+.vm-attach span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.vm-attach button { position: absolute; top: 2px; right: 2px; width: 22px; height: 22px; border: 0; border-radius: 6px; background: transparent; color: var(--vm-text); cursor: pointer; }
+.vm-msg-files { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.vm-msg-files img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; }
+.vm-msg-files span { padding: 4px 8px; border-radius: 8px; background: rgba(0,0,0,.25); font-size: 12px; }
+.vm-ai.vm-drop { outline: 2px dashed #ec4899; outline-offset: 4px; }
+.vm-ai-shared { grid-column: 1 / -1; }

@@ -7,8 +7,10 @@
 //   -> { reply, ready, plan? }
 // POST /api/aivideo/image { prompt, format }
 //   -> { image: { mimeType, data } }
-// POST /api/aivideo/stock { query, format, exclude? }  (free Pexels photo)
-//   -> { image: { mimeType, data }, photo: { id, photographer, url } }
+// POST /api/aivideo/photos { plan, photos: [{ mimeType, data }] }  (the customer's own photos)
+//   -> { scenes: [{ photo, headline, line }] }  AI looks at each photo, orders them and writes its text
+// POST /api/aivideo/stock { query, format, exclude? }  (free stock photo)
+//   -> { image: { mimeType, data }, photo: { id, photographer, url, source } }
 //
 // Images cost money, so they are limited per address per day and in total per
 // day until payments exist. The Gemini key is a Worker secret
@@ -27,6 +29,9 @@ const MIN_SECONDS = 10;
 const MAX_SECONDS = 60;
 const sceneCount = seconds => Math.min(10, Math.max(2, Math.ceil(seconds / 6)));
 const MAX_MESSAGES = 24;
+const MAX_FILES = 6;
+const MAX_FILE_CHARS = 4 * 1024 * 1024; // base64 characters, about 3 MB
+const FILE_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "application/pdf", "text/plain"]);
 const DEFAULT_IP_DAILY = 12;
 const DEFAULT_TOTAL_DAILY = 150;
 
@@ -92,6 +97,8 @@ Collect, asking only for what is missing (two or three things at a time, never a
 - size: Status / Reels (9:16, the default), post (1:1) or YouTube (16:9)
 - the language for the text on the video (default: the language the customer writes in)
 
+The customer may share photos or files (a menu, price list, brochure, visiting card or shop photo). Read them: details written there (name, phone, products, prices, offers) count as given by the customer, so do not ask for them again. If they shared photos, say their photos can be used in the video.
+
 When you have enough, briefly summarise the plan (style, length, scenes) and ask them to confirm. When they confirm, set ready true and fill in the plan. After that the customer picks free online photos, AI pictures or their own photos with buttons, so do not ask for photos in the chat.
 
 Plan rules:
@@ -131,10 +138,84 @@ function friendlyError(error) {
   return "The AI is busy right now. Please try again in a moment.";
 }
 
+// ---- The customer's own photos ----
+// The AI looks at the customer's photos, puts them in the best order for the
+// ad and writes each scene's text to match what the photo shows.
+const PHOTO_SCHEMA = {
+  type: "OBJECT",
+  properties: {
+    scenes: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          photo: { type: "INTEGER", description: "number of the photo, starting at 1" },
+          headline: { type: "STRING", description: "1-4 words shown big on this photo, in the plan's language, matching what the photo shows" },
+          line: { type: "STRING", description: "a short tag such as a price or benefit the customer gave, under 24 characters, or empty" }
+        },
+        required: ["photo", "headline", "line"]
+      }
+    }
+  },
+  required: ["scenes"]
+};
+
+const PHOTO_RULES = `You direct a short promotional video ad made from the customer's own photos. You get the video plan (business, offer, language, the scene ideas) and the photos, numbered from 1.
+- Use every usable photo exactly once, in the order that tells the best story (best eye-catching photo first, the offer or shop in the middle, a closing-style photo last). Leave out only photos that are blurry, broken or unrelated.
+- For each photo write a headline that fits what the photo really shows, in the same language as the plan's headlines.
+- line: a price, offer or benefit from the plan when it matches the photo, else empty. Never invent prices, discounts or claims.
+- Never mention people's names or identify people in the photos.`;
+
+async function photoScenes(env, body) {
+  const plan = body?.plan || {};
+  const photos = (Array.isArray(body?.photos) ? body.photos : []).slice(0, 10)
+    .filter(p => ["image/jpeg", "image/png", "image/webp"].includes(p?.mimeType) && typeof p?.data === "string" && p.data.length <= MAX_FILE_CHARS && /^[A-Za-z0-9+/=]+$/.test(p.data));
+  if (!photos.length) return { status: 400, data: { ok: false, error: "Please add at least one photo." } };
+  const brief = JSON.stringify({
+    title: clip(plan.title, 60), subtitle: clip(plan.subtitle, 90), closing: clip(plan.closing, 60), style: clip(plan.style, 20),
+    scenes: (Array.isArray(plan.scenes) ? plan.scenes : []).slice(0, 10).map(s => ({ headline: clip(s?.headline, 40), line: clip(s?.line, 30) }))
+  });
+  const parts = [{ text: `Video plan: ${brief}\n\n${photos.length} photos follow, numbered 1 to ${photos.length}.` }];
+  photos.forEach((p, i) => parts.push({ text: `Photo ${i + 1}:` }, { inlineData: { mimeType: p.mimeType, data: p.data } }));
+  let lastError;
+  for (const model of TEXT_MODELS) {
+    try {
+      const result = await callGemini(env, keyName(env), { model, system: PHOTO_RULES, contents: [{ role: "user", parts }], schema: PHOTO_SCHEMA, temperature: 0.4, timeoutMs: 45000, maxAttempts: 2 });
+      const seen = new Set();
+      const scenes = (Array.isArray(result?.scenes) ? result.scenes : [])
+        .map(s => ({ photo: Math.round(Number(s?.photo)) - 1, headline: clip(s?.headline, 40), line: clip(s?.line, 30) }))
+        .filter(s => s.photo >= 0 && s.photo < photos.length && !seen.has(s.photo) && seen.add(s.photo));
+      if (!scenes.length) throw new Error("No scenes for the photos.");
+      return { status: 200, data: { ok: true, scenes } };
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  console.error("AI video photo scenes failed", lastError);
+  return { status: 503, data: { ok: false, error: friendlyError(lastError) } };
+}
+
 async function chat(env, body) {
-  const messages = (Array.isArray(body?.messages) ? body.messages : []).slice(-MAX_MESSAGES)
-    .map(m => ({ role: m?.role === "assistant" ? "model" : "user", parts: [{ text: clip(m?.text, 1500) }] }))
-    .filter(m => m.parts[0].text);
+  const raw = (Array.isArray(body?.messages) ? body.messages : []).slice(-MAX_MESSAGES);
+  // Files the customer shared (photos, a menu or brochure PDF, a text file)
+  // go to the AI as they are; only the newest few are kept to save cost.
+  let fileBudget = MAX_FILES;
+  const messages = raw.slice().reverse().map(m => {
+    const role = m?.role === "assistant" ? "model" : "user";
+    const parts = [];
+    const text = clip(m?.text, 1500);
+    if (text) parts.push({ text });
+    if (role === "user" && Array.isArray(m?.files)) {
+      for (const file of m.files.slice(0, MAX_FILES)) {
+        const mimeType = String(file?.mimeType || "");
+        const data = String(file?.data || "");
+        if (!fileBudget || !FILE_TYPES.has(mimeType) || !data || data.length > MAX_FILE_CHARS || !/^[A-Za-z0-9+/=]+$/.test(data)) continue;
+        parts.push({ inlineData: { mimeType, data } });
+        fileBudget -= 1;
+      }
+    }
+    return { role, parts };
+  }).reverse().filter(m => m.parts.length);
   // Gemini wants the conversation to start with the customer.
   while (messages.length && messages[0].role === "model") messages.shift();
   if (!messages.length || messages[messages.length - 1].role !== "user") return { status: 400, data: { ok: false, error: "Please type a message." } };
@@ -240,48 +321,90 @@ async function drawImage(env, body, prompt) {
   return { status: 200, data: { ok: true, image: { mimeType: part.inlineData.mimeType || "image/png", data: part.inlineData.data } } };
 }
 
-// ---- Free stock photos (Pexels) ----
-// Pexels photos are free for business use and carry no watermark. The Worker
-// fetches the photo itself so the browser canvas can record it (a picture
-// from another site would block recording). PEXELS_API_KEY is a Worker secret.
-const ORIENTATION = { story: "portrait", square: "square", wide: "landscape" };
+// ---- Free stock photos ----
+// Free photos with no watermark, from the first source that is set up:
+// Pixabay (PIXABAY_API_KEY), Pexels (PEXELS_API_KEY), else Openverse, which
+// needs no key (only CC0 / public-domain photos, free for business use).
+// The Worker fetches the photo itself so the browser canvas can record it
+// (a picture loaded from another site would block recording).
+const MAX_PHOTO_BYTES = 6 * 1024 * 1024;
+
+const STOCK_SOURCES = [
+  {
+    name: "Pixabay",
+    ready: env => Boolean(env.PIXABAY_API_KEY),
+    async search(env, query, format) {
+      const orientation = { story: "vertical", square: "all", wide: "horizontal" }[format];
+      const api = `https://pixabay.com/api/?key=${encodeURIComponent(env.PIXABAY_API_KEY)}&q=${encodeURIComponent(query)}&image_type=photo&orientation=${orientation}&safesearch=true&per_page=20`;
+      const response = await fetch(api, { signal: AbortSignal.timeout(15000) });
+      if (!response.ok) throw new Error(`Pixabay HTTP ${response.status}`);
+      return ((await response.json())?.hits || []).map(h => ({ id: `pb${h.id}`, src: h.largeImageURL || h.webformatURL, photographer: h.user, url: h.pageURL }));
+    }
+  },
+  {
+    name: "Pexels",
+    ready: env => Boolean(env.PEXELS_API_KEY),
+    async search(env, query, format) {
+      const orientation = { story: "portrait", square: "square", wide: "landscape" }[format];
+      const api = `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&orientation=${orientation}&per_page=15`;
+      const response = await fetch(api, { headers: { Authorization: env.PEXELS_API_KEY }, signal: AbortSignal.timeout(15000) });
+      if (!response.ok) throw new Error(`Pexels HTTP ${response.status}`);
+      return ((await response.json())?.photos || []).map(p => ({
+        id: `px${p.id}`, photographer: p.photographer, url: p.url,
+        src: format === "story" ? p.src?.portrait : format === "wide" ? p.src?.landscape : p.src?.large
+      }));
+    }
+  },
+  {
+    name: "Openverse",
+    ready: () => true,
+    async search(env, query, format) {
+      const aspect = { story: "tall", square: "square", wide: "wide" }[format];
+      const api = `https://api.openverse.org/v1/images/?q=${encodeURIComponent(query)}&license=cc0,pdm&aspect_ratio=${aspect}&size=medium,large&mature=false&page_size=20`;
+      const response = await fetch(api, { headers: { "User-Agent": "SiteCraftVideoMaker/1.0" }, signal: AbortSignal.timeout(15000) });
+      if (!response.ok) throw new Error(`Openverse HTTP ${response.status}`);
+      return ((await response.json())?.results || []).map(r => ({ id: `ov${r.id}`, src: r.url, photographer: r.creator, url: r.foreign_landing_url }));
+    }
+  }
+];
 
 async function stock(env, body) {
-  if (!env.PEXELS_API_KEY) return { status: 503, data: { ok: false, error: "Free online photos are not set up yet (PEXELS_API_KEY)." } };
   const query = clip(body?.query, 60);
   if (!query) return { status: 400, data: { ok: false, error: "Missing photo search." } };
   const format = FORMATS[body?.format] ? body.format : "story";
   const skip = new Set((Array.isArray(body?.exclude) ? body.exclude : []).slice(0, 20).map(String));
-  const search = async q => {
-    const api = `https://api.pexels.com/v1/search?query=${encodeURIComponent(q)}&orientation=${ORIENTATION[format]}&per_page=15`;
-    const response = await fetch(api, { headers: { Authorization: env.PEXELS_API_KEY }, signal: AbortSignal.timeout(15000) });
-    if (!response.ok) throw new Error(`Pexels HTTP ${response.status}`);
-    return (await response.json())?.photos || [];
-  };
-  try {
-    let photos = (await search(query)).filter(p => !skip.has(String(p.id)));
-    // A very specific search can come back empty: try its first two words.
-    if (!photos.length && query.includes(" ")) photos = (await search(query.split(" ").slice(0, 2).join(" "))).filter(p => !skip.has(String(p.id)));
-    if (!photos.length) return { status: 404, data: { ok: false, error: "No free photo found for this scene." } };
-    const photo = photos[Math.floor(Math.random() * Math.min(5, photos.length))];
-    const src = format === "story" ? photo.src?.portrait : format === "wide" ? photo.src?.landscape : photo.src?.large;
-    const file = await fetch(src, { signal: AbortSignal.timeout(20000) });
-    if (!file.ok) throw new Error(`Pexels image HTTP ${file.status}`);
-    const bytes = new Uint8Array(await file.arrayBuffer());
-    let binary = "";
-    for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-    return {
-      status: 200,
-      data: {
-        ok: true,
-        image: { mimeType: file.headers.get("Content-Type") || "image/jpeg", data: btoa(binary) },
-        photo: { id: photo.id, photographer: clip(photo.photographer, 60), url: photo.url }
+  const queries = [query];
+  // A very specific search can come back empty: try its first two words too.
+  if (query.split(" ").length > 2) queries.push(query.split(" ").slice(0, 2).join(" "));
+  for (const source of STOCK_SOURCES.filter(s => s.ready(env))) {
+    for (const q of queries) {
+      try {
+        const photos = (await source.search(env, q, format)).filter(p => p.src && !skip.has(p.id));
+        // Try a few of the top results: a source photo can be missing or huge.
+        const picks = photos.slice(0, 6).sort(() => Math.random() - 0.5).slice(0, 3);
+        for (const photo of picks) {
+          const file = await fetch(photo.src, { headers: { "User-Agent": "SiteCraftVideoMaker/1.0" }, signal: AbortSignal.timeout(20000) }).catch(() => null);
+          const type = file?.headers.get("Content-Type") || "";
+          if (!file?.ok || !type.startsWith("image/") || Number(file.headers.get("Content-Length") || 0) > MAX_PHOTO_BYTES) continue;
+          const bytes = new Uint8Array(await file.arrayBuffer());
+          if (bytes.length > MAX_PHOTO_BYTES) continue;
+          let binary = "";
+          for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+          return {
+            status: 200,
+            data: {
+              ok: true,
+              image: { mimeType: type.split(";")[0], data: btoa(binary) },
+              photo: { id: photo.id, photographer: clip(photo.photographer, 60), url: photo.url || "", source: source.name }
+            }
+          };
+        }
+      } catch (error) {
+        console.error("AI video stock photo failed", source.name, error);
       }
-    };
-  } catch (error) {
-    console.error("AI video stock photo failed", error);
-    return { status: 502, data: { ok: false, error: "A free photo could not be loaded. Please try again." } };
+    }
   }
+  return { status: 404, data: { ok: false, error: "No free photo found for this scene. Try 🔄 again, AI pictures or your own photos." } };
 }
 
 // Short-term limit on chat messages per address (per isolate).
@@ -295,7 +418,7 @@ function throttled(ip, now, limit) {
 
 export async function handleAiVideoRoute(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "");
-  if (!["/api/aivideo/chat", "/api/aivideo/image", "/api/aivideo/stock"].includes(path)) return null;
+  if (!["/api/aivideo/chat", "/api/aivideo/image", "/api/aivideo/stock", "/api/aivideo/photos"].includes(path)) return null;
   const origin = request.headers.get("Origin") || "";
   if (!allowedOrigins(env).has(origin)) return reply({ ok: false, error: "Origin not allowed." }, 403, origin);
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: headers(origin) });
@@ -304,6 +427,9 @@ export async function handleAiVideoRoute(request, env, url) {
   if (throttled(ip, Date.now(), path.endsWith("image") ? 12 : path.endsWith("stock") ? 30 : 20)) return reply({ ok: false, error: "Too many requests. Please wait a minute." }, 429, origin);
   let body;
   try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
-  const result = path.endsWith("chat") ? await chat(env, body) : path.endsWith("stock") ? await stock(env, body) : await image(env, body, ip);
+  const result = path.endsWith("chat") ? await chat(env, body)
+    : path.endsWith("stock") ? await stock(env, body)
+    : path.endsWith("photos") ? await photoScenes(env, body)
+    : await image(env, body, ip);
   return reply(result.data, result.status, origin);
 }
