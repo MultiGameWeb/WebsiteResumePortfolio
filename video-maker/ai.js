@@ -60,11 +60,11 @@
     planBox.hidden = false;
     const list = element('ol', 'vm-ai-scenes');
     for (const scene of plan.scenes) list.append(element('li', '', [scene.eyebrow, scene.headline, scene.line].filter(Boolean).join(' — ')));
-    const free = element('button', 'vm-btn primary', '🌐 Free online photos');
-    free.type = 'button';
-    const ai = element('button', 'vm-btn ghost', `✨ AI pictures (${plan.scenes.length})`);
+    // AI makes the pictures (the main way), or works with the customer's photos.
+    // Free stock photos only stand in when an AI picture cannot be made.
+    const ai = element('button', 'vm-btn primary', `✨ AI creates the ${plan.scenes.length} pictures`);
     ai.type = 'button';
-    const own = element('label', 'vm-btn ghost vm-ai-own', '🖼️ My photos + AI');
+    const own = element('label', 'vm-btn ghost vm-ai-own', '🖼️ Use my photos');
     const picker = document.createElement('input');
     picker.type = 'file';
     picker.accept = 'image/*';
@@ -72,26 +72,25 @@
     picker.hidden = true;
     own.append(picker);
     const choices = element('div', 'vm-ai-choices');
-    choices.append(free, ai, own);
+    choices.append(ai, own);
     if (sharedPhotos.length) {
       const shared = element('button', 'vm-btn primary vm-ai-shared', `🖼️ Use the ${sharedPhotos.length} photo${sharedPhotos.length === 1 ? '' : 's'} I shared`);
       shared.type = 'button';
       shared.addEventListener('click', () => useFiles(job, sharedPhotos));
-      free.className = 'vm-btn ghost';
+      ai.className = 'vm-btn ghost';
       choices.prepend(shared);
     }
     const thumbs = element('div', 'vm-ai-thumbs');
     const note = element('p', 'vm-ai-meta');
     const credit = element('p', 'vm-ai-credit');
     const job = { plan, original: plan, slots: [], thumbs, note, credit };
-    free.addEventListener('click', () => fill(job, 'stock'));
     ai.addEventListener('click', () => fill(job, 'ai'));
     picker.addEventListener('change', () => useOwnPhotos(job, picker));
     planBox.replaceChildren(
       element('h3', '', plan.title || 'Your video'),
       element('p', 'vm-ai-meta', `${STYLE_NAMES[plan.style] || plan.style} · ${plan.seconds} seconds · ${FORMAT_NAMES[plan.format] || plan.format}`),
       list,
-      element('p', 'vm-ai-ask', `How do you want the ${plan.scenes.length} pictures? Free online photos (no watermark), new AI pictures, or your own photos (AI looks at them, puts them in order and writes the text). You can mix: after the photos load, tap ✨ on any scene to make that one with AI.`),
+      element('p', 'vm-ai-ask', `AI will create ${plan.scenes.length} pictures for these scenes and make the video. Have your own photos? Tap “Use my photos” — AI looks at them, puts them in order and writes the text. Either way your pictures go inside the video and the HTML file.`),
       choices, thumbs, note, credit,
     );
     planBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -218,7 +217,7 @@
     await window.SiteCraftVideoMaker.loadPlan({ ...job.plan, scenes: ready.map(([scene]) => scene) }, ready.map(([, slot]) => slot.blob));
     showEditor();
     const missing = job.plan.scenes.length - ready.length;
-    const parts = [`${job.slots.some((slot) => slot?.source === 'own') && !job.aiError ? 'AI arranged your photos and wrote the scenes. ' : ''}Your video is ready ✓ (${ready.length} picture${ready.length === 1 ? '' : 's'}). Tap “Make my video” to download it.`];
+    const parts = [`${job.slots.some((slot) => slot?.source === 'own') && !job.aiError ? 'AI arranged your photos and wrote the scenes. ' : ''}Your video is ready ✓ (${ready.length} picture${ready.length === 1 ? '' : 's'}). Download it as an HTML video or tap “Make my video” for MP4.`];
     if (job.aiError) parts.push(job.slots.some((slot) => slot?.source === 'own') ? job.aiError : `Some AI pictures could not be made, so free photos were used: ${job.aiError}`);
     if (missing) parts.push(`${missing} scene${missing === 1 ? '' : 's'} had no picture.`);
     job.note.textContent = parts.join(' ');
