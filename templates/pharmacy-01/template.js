@@ -37,7 +37,7 @@ function scBaseRender(d={},selected=[]){
 
   if(ok('home')&&s.showHome!==false&&(h.title||h.text||imageUrl(d.hero))){
     const hero=imageUrl(d.hero);
-    html+='<section class="cm-hero" id="top">'+(hero?'<img class="cm-hero-photo" src="'+esc(hero)+'" alt="CareMeds Pharmacy store shelves and service counter">':'')+'<div class="cm-hero-shade"></div><div class="cm-hero-copy"><span class="cm-eyebrow">'+esc(h.eyebrow||'YOUR NEIGHBOURHOOD PHARMACY')+'</span><h1>'+esc(h.title||'Everyday care, made a little easier.')+'</h1>'+(h.text?'<p>'+esc(h.text)+'</p>':'')+'<div class="cm-actions">'+(show.prescription?'<a class="cm-btn cm-btn-green" target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,prescriptionMsg)))+'">Send your prescription on WhatsApp ↗</a>':'')+(show.products?'<a class="cm-btn cm-btn-light" href="#products">Explore health products</a>':'')+'</div><div class="cm-hero-note"><span aria-hidden="true">✓</span> Medicines dispensed only against a valid prescription.</div></div></section>';
+    html+='<section class="cm-hero" id="top">'+(hero?'<img class="cm-hero-photo" src="'+esc(hero)+'" alt="CareMeds Pharmacy store shelves and service counter">':'')+'<div class="cm-hero-shade"></div><div class="cm-hero-copy"><span class="cm-eyebrow">'+esc(h.eyebrow||'YOUR NEIGHBOURHOOD PHARMACY')+'</span><h1>'+esc(h.title||'Everyday care, made a little easier.')+'</h1>'+(h.text?'<p>'+esc(h.text)+'</p>':'')+'<div class="cm-actions">'+(show.prescription?'<a class="cm-btn cm-btn-green" target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,prescriptionMsg)))+'">Send your prescription on WhatsApp ↗</a>':'')+(show.products?'<a class="cm-btn cm-btn-light" href="#products">Explore health products</a>':'')+(show.contact?'<a class="cm-btn cm-btn-outline" href="#contact">Contact pharmacy</a>':(!show.products&&!show.prescription&&show.categories?'<a class="cm-btn cm-btn-light" href="#categories">Browse categories</a>':''))+'</div><div class="cm-hero-note"><span aria-hidden="true">✓</span> Medicines dispensed only against a valid prescription.</div></div></section>';
   }
 
   if(show.about){
@@ -215,6 +215,6 @@ export function render(d={},selected=[]){
   const s=d.settings||{},c=d.contact||{};
   const chosen=(selected||[]).filter(x=>x!=='enquiry'||s.showEnquiry!==false);
   const connectSelected=(selected||[]).filter(x=>x!=='social'||s.showSocial!==false);
-  const connectData={...d,contact:{...c,hours:connectSelected.includes('hours')&&s.showHours!==false?c.hours:'',email:connectSelected.includes('contact')&&s.showContact!==false?c.email:''}};
+  const connectData={...d,contact:{...c,hours:connectSelected.includes('hours')&&s.showHours!==false?c.hours:'',email:connectSelected.includes('contact')&&s.showContact!==false?c.email:'',instagram:connectSelected.includes('social')&&s.showSocial!==false?c.instagram:'',facebook:connectSelected.includes('social')&&s.showSocial!==false?c.facebook:'',youtube:connectSelected.includes('social')&&s.showSocial!==false?c.youtube:''}};
   return scConnect(scWithForm(scBaseRender(d,selected),d,chosen),connectData,connectSelected);
 }
