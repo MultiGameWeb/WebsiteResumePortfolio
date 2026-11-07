@@ -86,16 +86,16 @@ h1{margin:0;font-size:clamp(19px,3.5vw,28px);letter-spacing:-.045em}
 .dice{cursor:pointer;touch-action:manipulation}
 .dice:focus-visible{outline:3px solid #ffe29a;outline-offset:3px}
 .board-wrap{position:relative}
-#board{width:min(94vw,min(650px,calc(100dvh - 295px)))}
+#board{width:min(94vw,min(650px,calc(100dvh - 335px)))}
 .game-overlay{position:absolute;inset:8px;z-index:5;display:none;align-items:center;justify-content:center;border-radius:20px;background:#0b111bd9;backdrop-filter:blur(5px)}
 .game-overlay.show{display:flex}
 .overlay-card{width:min(88%,330px);padding:22px 18px;border:1px solid #e9c77e66;border-radius:19px;background:linear-gradient(145deg,#253343,#18232f);box-shadow:0 18px 45px #0009;text-align:center}
 .overlay-card h2{margin:0 0 9px;font-size:clamp(22px,5vw,30px);letter-spacing:-.03em}
 .overlay-card p{margin:0 0 17px;color:#c6d1dc;font-size:12px;line-height:1.5}
 .overlay-card .btn{min-height:42px;padding:0 22px;font-size:12px}
-@media(max-height:650px){.stats-row{min-height:16px}.stats-panel summary{min-height:19px;padding:0 9px;font-size:8px}#statsContent{top:22px}#board{width:min(91vw,min(540px,calc(100dvh - 275px)))}.mute-btn{min-height:27px}}
+@media(max-height:650px){.stats-row{min-height:16px}.stats-panel summary{min-height:19px;padding:0 9px;font-size:8px}#statsContent{top:22px}#board{width:min(91vw,min(540px,calc(100dvh - 315px)))}.mute-btn{min-height:27px}}
 @media(max-width:420px){.header-actions{gap:4px}.mute-btn{padding:0 7px;font-size:9px}.stats-panel summary{padding:0 8px}.overlay-card{padding:18px 14px}}
-@media(max-height:540px){#board{width:min(88vw,min(460px,calc(100dvh - 230px)))}.stats-row{min-height:14px}}
+@media(max-height:540px){#board{width:min(88vw,min(460px,calc(100dvh - 270px)))}.stats-row{min-height:14px}}
 
 </style>
 </head>
@@ -141,6 +141,7 @@ function applyColorTheme(){
  document.getElementById('youColor').value=youColorKey;document.getElementById('cpuColor').value=cpuColorKey;
  document.getElementById('youSwatch').style.setProperty('--swatch',you.color);document.getElementById('cpuSwatch').style.setProperty('--swatch',cpu.color);
  document.getElementById('youLabel').textContent='You · '+you.name;document.getElementById('cpuLabel').textContent='Computer · '+cpu.name;
+ const dots=document.querySelectorAll('.player .dot');if(dots[0])dots[0].style.background='radial-gradient(circle at 32% 28%,'+you.light+','+you.color+' 58%,'+you.dark+')';if(dots[1])dots[1].style.background='radial-gradient(circle at 32% 28%,'+cpu.light+','+cpu.color+' 58%,'+cpu.dark+')';
  drawBoard();saveGame();
 }
 function chooseColor(side,key){
@@ -301,8 +302,8 @@ function resolveRoll(side){
   statusEl.textContent=(side==='red'?'Only one red token can move.':'Only one yellow token can move.')+' Moving automatically…';
   document.getElementById('hint').textContent='Auto-moving in 350 ms.';phase='auto';setRollControls();drawBoard();timer=setTimeout(()=>moveToken(side,legal[0]),350);return;
  }
- if(side==='red'&&dice===6&&tokens.red.every(t=>t.progress<0)){
-  const first=legal[0];phase='auto';statusEl.textContent='Six! Your first token is coming out…';
+ if(side==='red'&&dice===6&&tokens.red.some(t=>t.progress<0)){
+  const first=legal.find(i=>tokens.red[i].progress<0);phase='auto';statusEl.textContent='Six! Your token is coming out…';
   document.getElementById('hint').textContent='Launching token from your base.';setRollControls();drawBoard();
   timer=setTimeout(()=>moveToken(side,first),180);return;
  }
