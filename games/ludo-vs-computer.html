@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#101821">
 <title>Ludo vs Computer | SiteCraft Games</title>
 <style>
-:root{color-scheme:dark;--bg:#101821;--panel:#1a2631;--line:#334556;--text:#f5f8ff;--muted:#a9b7c5;--red:#e44759;--yellow:#f4c342}
+:root{color-scheme:dark;--bg:#10151f;--panel:#202438;--line:#41445e;--text:#f7f4ff;--muted:#b9b5cb;--red:#a879ff;--yellow:#2bc7b5}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;overflow:hidden;background:radial-gradient(ellipse at 50% -12%,#294051 0,transparent 52%),var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;overscroll-behavior:none}
 button{font:inherit;touch-action:manipulation}
@@ -64,7 +64,14 @@ h1{margin:0;font-size:clamp(19px,3.5vw,28px);letter-spacing:-.045em}
 @media(max-height:540px){#app{gap:2px;padding:3px 6px}.board-wrap{padding:0}#board{width:min(88vw,min(460px,calc(100dvh - 190px)))}.controls{gap:7px}.dice{width:42px;height:42px;padding:6px}.dice .pip{width:6px;height:6px}.roll-btn{min-height:44px;min-width:122px}.hint{font-size:8px}.player{padding:3px 5px}}
 
 
-.header-actions{display:flex;align-items:center;gap:6px}
+.header-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.color-picks{display:flex;align-items:center;justify-content:center;gap:9px;flex:0 0 auto;flex-wrap:wrap}
+.color-pick{display:flex;align-items:center;gap:6px;padding:4px 8px;border:1px solid var(--line);border-radius:12px;background:#ffffff08}
+.color-pick label{font-size:9px;font-weight:900;color:var(--muted);letter-spacing:.06em}
+.color-pick select{max-width:112px;min-height:28px;border:0;outline:0;background:#25283b;color:#f7f4ff;font:800 10px Inter,system-ui,sans-serif}
+.color-swatch{width:12px;height:12px;border-radius:50%;background:var(--swatch);box-shadow:0 0 0 3px color-mix(in srgb,var(--swatch) 22%,transparent)}
+.fullscreen-btn{min-height:32px;padding:0 9px;font-size:10px}
+@media(max-width:420px){.color-pick{gap:4px;padding:3px 6px}.color-pick select{max-width:96px;font-size:9px}.color-pick label{font-size:8px}.fullscreen-btn{min-height:27px;padding:0 7px;font-size:9px}}
 .mute-btn{min-height:32px;padding:0 9px;font-size:10px}
 .stats-row{width:100%;min-height:19px;display:flex;justify-content:center;align-items:center;flex:0 0 auto}
 .stats-panel{position:relative;z-index:4;color:var(--text);font-size:9px}
@@ -94,9 +101,13 @@ h1{margin:0;font-size:clamp(19px,3.5vw,28px);letter-spacing:-.045em}
 </head>
 <body>
 <div id="app">
- <header><div class="brand"><div class="logo" aria-hidden="true">🎲</div><div><h1>Ludo vs Computer</h1><div class="sub">Red starts top-left · Yellow starts bottom-right</div></div></div><div class="header-actions"><button class="btn mute-btn" id="muteBtn" type="button" aria-pressed="false">🔊 Sound on</button><button class="btn" id="newBtn" type="button">↻ New Game</button></div></header>
+ <header><div class="brand"><div class="logo" aria-hidden="true">🎲</div><div><h1>Ludo vs Computer</h1><div class="sub">Choose your own colours · Play against the computer</div></div></div><div class="header-actions"><button class="btn mute-btn" id="muteBtn" type="button" aria-pressed="false">🔊 Sound on</button><button class="btn fullscreen-btn" id="fullscreenBtn" type="button">⛶ Full Screen</button><button class="btn" id="newBtn" type="button">↻ New Game</button></div></header>
+ <div class="color-picks" aria-label="Choose player colours">
+  <div class="color-pick"><span class="color-swatch" id="youSwatch" style="--swatch:#a879ff"></span><label for="youColor">YOU</label><select id="youColor"><option value="amethyst">Amethyst</option><option value="turquoise">Turquoise</option><option value="coral">Coral</option><option value="orchid">Orchid</option><option value="tangerine">Tangerine</option><option value="cyan">Cyan</option></select></div>
+  <div class="color-pick"><span class="color-swatch" id="cpuSwatch" style="--swatch:#2bc7b5"></span><label for="cpuColor">COMPUTER</label><select id="cpuColor"><option value="turquoise">Turquoise</option><option value="amethyst">Amethyst</option><option value="coral">Coral</option><option value="orchid">Orchid</option><option value="tangerine">Tangerine</option><option value="cyan">Cyan</option></select></div>
+ </div>
  <div class="difficulty"><span>COMPUTER</span><button class="diff" data-level="easy" aria-pressed="false" type="button">Easy</button><button class="diff" data-level="medium" aria-pressed="true" type="button">Medium</button><button class="diff" data-level="hard" aria-pressed="false" type="button">Hard</button></div><div class="stats-row"><details class="stats-panel"><summary>Stats · <span id="statsDifficulty">Difficulty</span></summary><div id="statsContent"></div><button class="btn reset-stats" id="resetStatsBtn" type="button">Reset stats</button></details></div>
- <section class="scorebar"><div class="player"><span class="dot"></span><div><b>You · Red · Top-left</b><small id="redHome">0 / 4 home</small></div></div><div class="score" id="score">0 – 0</div><div class="player cpu"><div><b>Computer · Yellow · Bottom-right</b><small id="yellowHome">0 / 4 home</small></div><span class="dot yellow"></span></div></section>
+ <section class="scorebar"><div class="player"><span class="dot"></span><div><b id="youLabel">You · Amethyst</b><small id="redHome">0 / 4 home</small></div></div><div class="score" id="score">0 – 0</div><div class="player cpu"><div><b id="cpuLabel">Computer · Turquoise</b><small id="yellowHome">0 / 4 home</small></div><span class="dot yellow"></span></div></section>
  <div class="status" id="status" aria-live="polite">Your turn. Roll a 6 to bring a token out.</div>
  <main class="board-wrap"><svg id="board" viewBox="0 0 600 600" role="img" aria-label="Ludo board: Red base top-left, Blue top-right, Green bottom-left, Yellow bottom-right. Red home lane enters the centre from the left; Yellow home lane enters from the right."></svg><div class="game-overlay" id="gameOverlay" aria-live="polite"><div class="overlay-card"><h2 id="overlayTitle">Game complete</h2><p id="overlayDetails"></p><button class="btn primary" id="playAgainBtn" type="button">Play Again</button></div></div></main>
  <div class="controls">
@@ -113,7 +124,31 @@ const safe=new Set([0,8,13,21,26,34,39,47]);
 const LANE_START=51,HOME=56;
 const homeLane={red:[[7,1],[7,2],[7,3],[7,4],[7,5]],yellow:[[7,13],[7,12],[7,11],[7,10],[7,9]]};
 const yard={red:[[1.3,1.3],[1.3,3.7],[3.7,1.3],[3.7,3.7]],yellow:[[10.3,10.3],[10.3,12.7],[12.7,10.3],[12.7,12.7]]};
-const sideInfo={red:{start:0,color:'#e44759',dark:'#9c263b',light:'#ff9ba4'},yellow:{start:26,color:'#f4c342',dark:'#ad7915',light:'#ffe59a'}};
+const palette={
+ amethyst:{name:'Amethyst',color:'#a879ff',dark:'#5833a0',light:'#dfc9ff'},
+ turquoise:{name:'Turquoise',color:'#2bc7b5',dark:'#08796f',light:'#a4fff0'},
+ coral:{name:'Coral',color:'#ff786f',dark:'#a83e4b',light:'#ffd0c9'},
+ orchid:{name:'Orchid',color:'#e477d1',dark:'#913b8d',light:'#ffd0f3'},
+ tangerine:{name:'Tangerine',color:'#f39a52',dark:'#99501e',light:'#ffdab0'},
+ cyan:{name:'Cyan',color:'#56bce9',dark:'#24658c',light:'#c3f0ff'}
+};
+let youColorKey='amethyst',cpuColorKey='turquoise';
+const sideInfo={red:{start:0,color:palette[youColorKey].color,dark:palette[youColorKey].dark,light:palette[youColorKey].light},yellow:{start:26,color:palette[cpuColorKey].color,dark:palette[cpuColorKey].dark,light:palette[cpuColorKey].light}};
+function applyColorTheme(){
+ const you=palette[youColorKey],cpu=palette[cpuColorKey];
+ Object.assign(sideInfo.red,{color:you.color,dark:you.dark,light:you.light});
+ Object.assign(sideInfo.yellow,{color:cpu.color,dark:cpu.dark,light:cpu.light});
+ document.getElementById('youColor').value=youColorKey;document.getElementById('cpuColor').value=cpuColorKey;
+ document.getElementById('youSwatch').style.setProperty('--swatch',you.color);document.getElementById('cpuSwatch').style.setProperty('--swatch',cpu.color);
+ document.getElementById('youLabel').textContent='You · '+you.name;document.getElementById('cpuLabel').textContent='Computer · '+cpu.name;
+ drawBoard();saveGame();
+}
+function chooseColor(side,key){
+ if(!palette[key])return;
+ if(side==='red'){youColorKey=key;if(youColorKey===cpuColorKey)cpuColorKey=Object.keys(palette).find(k=>k!==youColorKey);}
+ else{cpuColorKey=key;if(cpuColorKey===youColorKey)youColorKey=Object.keys(palette).find(k=>k!==cpuColorKey);}
+ applyColorTheme();
+}
 const board=document.getElementById('board'),statusEl=document.getElementById('status'),rollBtn=document.getElementById('rollBtn'),diceEl=document.getElementById('dice');
 const STORAGE_KEY='sitecraft-ludo-vs-computer-v3';
 function makeTokens(){return {red:Array.from({length:4},()=>({progress:-1})),yellow:Array.from({length:4},()=>({progress:-1}))};}
@@ -131,7 +166,7 @@ function cloneTokens(source){return {red:source.red.map(t=>({progress:t.progress
 function snapshot(){return {tokens:cloneTokens(tokens),turn:turn,phase:phase==='over'?'over':'roll',sixStreak:sixStreak,finished:finished,gameStarted:gameStarted,resultCounted:resultCounted,capturesMadeThisGame:capturesMadeThisGame,capturesSufferedThisGame:capturesSufferedThisGame,lastAction:lastAction};}
 function cloneSnapshot(s){return {tokens:cloneTokens(s.tokens),turn:s.turn,phase:s.phase,sixStreak:s.sixStreak,finished:s.finished,gameStarted:s.gameStarted,resultCounted:s.resultCounted,capturesMadeThisGame:s.capturesMadeThisGame,capturesSufferedThisGame:s.capturesSufferedThisGame,lastAction:s.lastAction||''};}
 function saveGame(){
- try{const stable=(phase==='over'||!checkpoint)?snapshot():cloneSnapshot(checkpoint);stable.pendingDice=pendingDice?{value:pendingDice.value,side:pendingDice.side}:null;localStorage.setItem(STORAGE_KEY,JSON.stringify({game:stable,difficulty:difficulty,gameDifficulty:gameDifficulty,muted:muted,stats:stats}));}catch(e){}
+ try{const stable=(phase==='over'||!checkpoint)?snapshot():cloneSnapshot(checkpoint);stable.pendingDice=pendingDice?{value:pendingDice.value,side:pendingDice.side}:null;localStorage.setItem(STORAGE_KEY,JSON.stringify({game:stable,difficulty:difficulty,gameDifficulty:gameDifficulty,muted:muted,stats:stats,youColorKey:youColorKey,cpuColorKey:cpuColorKey}));}catch(e){}
 }
 function saveStable(){checkpoint=snapshot();saveGame();}
 function loadGame(){
@@ -148,6 +183,7 @@ function loadGame(){
   capturesMadeThisGame=Math.max(0,Number(g.capturesMadeThisGame)||0);capturesSufferedThisGame=Math.max(0,Number(g.capturesSufferedThisGame)||0);lastAction=String(g.lastAction||'');
   phase=finished?'over':'roll';dice=0;legal=[];selected=-1;
   difficulty=['easy','medium','hard'].includes(data.difficulty)?data.difficulty:'medium';gameDifficulty=['easy','medium','hard'].includes(data.gameDifficulty)?data.gameDifficulty:difficulty;muted=!!data.muted;stats=normalizeStats(data.stats);
+  youColorKey=palette[data.youColorKey]?data.youColorKey:'amethyst';cpuColorKey=palette[data.cpuColorKey]&&data.cpuColorKey!==youColorKey?data.cpuColorKey:'turquoise';
   checkpoint=snapshot();return true;
  }catch(e){return false;}
 }
@@ -170,23 +206,23 @@ function rectCell(r,c,fill,stroke='#c4b8a7'){el('rect',{x:c*40+1.5,y:r*40+1.5,wi
 function base(x,y,color){el('rect',{x:x*40,y:y*40,width:240,height:240,rx:20,fill:color,stroke:'#fff4df','stroke-width':4});el('rect',{x:x*40+25,y:y*40+25,width:190,height:190,rx:22,fill:'#faf6eb',stroke:'#ffffff','stroke-width':4});el('rect',{x:x*40+31,y:y*40+31,width:178,height:178,rx:18,fill:'none',stroke:color,'stroke-opacity':'.22','stroke-width':2});}
 function centre(){
  el('rect',{x:240,y:240,width:120,height:120,fill:'#f5efe1',stroke:'#d9ccb8','stroke-width':2});
- el('path',{d:'M240 240H360L300 300Z',fill:'#5289bc'});
+ el('path',{d:'M240 240H360L300 300Z',fill:'#42465b'});
  el('path',{d:'M360 240V360L300 300Z',fill:sideInfo.yellow.color});
- el('path',{d:'M360 360H240L300 300Z',fill:'#378a70'});
+ el('path',{d:'M360 360H240L300 300Z',fill:'#42465b'});
  el('path',{d:'M240 360V240L300 300Z',fill:sideInfo.red.color});
  el('circle',{cx:300,cy:300,r:19,fill:'#fff3d2',stroke:'#86684c','stroke-width':2});el('circle',{cx:300,cy:300,r:8,fill:'#8b6c53'});el('circle',{cx:300,cy:300,r:4,fill:'#fff5df'});
 }
 function yardPoint(side,i){const [r,c]=yard[side][i];return {x:c*40+20,y:r*40+20};}
 function drawBoard(){
  board.replaceChildren();el('rect',{x:0,y:0,width:600,height:600,rx:22,fill:'#f7f0e2',stroke:'#90785d','stroke-width':10});
- base(0,0,sideInfo.red.color);base(9,0,'#5289bc');base(0,9,'#378a70');base(9,9,sideInfo.yellow.color);
+ base(0,0,sideInfo.red.color);base(9,0,'#3b4055');base(0,9,'#3b4055');base(9,9,sideInfo.yellow.color);
  for(const side of ['red','yellow'])yard[side].forEach((_,i)=>{const p=yardPoint(side,i);el('circle',{cx:p.x,cy:p.y,r:17,fill:'#fffaf0',stroke:sideInfo[side].dark,'stroke-width':3});el('circle',{cx:p.x,cy:p.y,r:10.5,fill:'#fff',stroke:'#ffffff','stroke-width':1});});
  path.forEach(([r,c],i)=>{
-  let fill=safe.has(i)?'#fff8d9':'#f6f1e8';if(i===0)fill='#f7a3aa';if(i===26)fill='#ffe08a';rectCell(r,c,fill);
+  let fill=safe.has(i)?'#fff8d9':'#f6f1e8';if(i===0)fill=sideInfo.red.light;if(i===26)fill=sideInfo.yellow.light;rectCell(r,c,fill);
   if(safe.has(i))el('path',{d:'M'+(c*40+20)+' '+(r*40+10)+'l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1Z',fill:'#a88b58',opacity:.7});
  });
- homeLane.red.forEach(([r,c],i)=>rectCell(r,c,i===4?sideInfo.red.color:'#f8c9ce'));
- homeLane.yellow.forEach(([r,c],i)=>rectCell(r,c,i===4?sideInfo.yellow.color:'#ffedbd'));
+ homeLane.red.forEach(([r,c],i)=>rectCell(r,c,i===4?sideInfo.red.color:sideInfo.red.light));
+ homeLane.yellow.forEach(([r,c],i)=>rectCell(r,c,i===4?sideInfo.yellow.color:sideInfo.yellow.light));
  centre();el('rect',{x:3,y:3,width:594,height:594,rx:19,fill:'none',stroke:'#ffffff','stroke-opacity':'.76','stroke-width':2});drawTokens();
 }
 function donePos(side,i){const offsets=[[-7,-7],[7,-7],[-7,7],[7,7]];const [ox,oy]=offsets[i];return {x:(side==='red'?258:342)+ox,y:300+oy,done:true};}
@@ -265,8 +301,13 @@ function resolveRoll(side){
   statusEl.textContent=(side==='red'?'Only one red token can move.':'Only one yellow token can move.')+' Moving automatically…';
   document.getElementById('hint').textContent='Auto-moving in 350 ms.';phase='auto';setRollControls();drawBoard();timer=setTimeout(()=>moveToken(side,legal[0]),350);return;
  }
+ if(side==='red'&&dice===6&&tokens.red.every(t=>t.progress<0)){
+  const first=legal[0];phase='auto';statusEl.textContent='Six! Your first token is coming out…';
+  document.getElementById('hint').textContent='Launching token from your base.';setRollControls();drawBoard();
+  timer=setTimeout(()=>moveToken(side,first),180);return;
+ }
  if(side==='red'){
-  statusEl.textContent='You rolled '+dice+'. Choose one of the glowing red tokens.';
+  statusEl.textContent='You rolled '+dice+'. Choose one of your glowing tokens.';
   document.getElementById('hint').textContent=legal.map(i=>'Token '+(i+1)).join(' · ')+' can move.';setRollControls();drawBoard();
  }else{
   statusEl.textContent='Computer rolled '+dice+' — choosing a token…';setRollControls();timer=setTimeout(computerChoose,500);
@@ -340,7 +381,7 @@ function finishMove(side,i,old,target){
  else{const from=side;dice=0;passTurn(from,lastAction);}
 }
 function handleBoardClick(e){
- const g=e.target.closest('[data-token]');if(!g||turn!=='red'||phase!=='choose')return;
+ const g=e.target&&e.target.closest?e.target.closest('[data-token]'):null;if(!g||turn!=='red'||phase!=='choose')return;
  const side=g.getAttribute('data-side'),i=Number(g.getAttribute('data-token'));if(side!=='red'||!legal.includes(i))return;moveToken('red',i);
 }
 function ensureAudio(){
@@ -373,6 +414,17 @@ function setup(skipConfirm){
 }
 function resetStats(){if(!window.confirm('Reset all Ludo stats for every difficulty?'))return;stats=defaultStats();renderStats();saveGame();}
 board.addEventListener('click',handleBoardClick);
+document.getElementById('youColor').addEventListener('change',e=>chooseColor('red',e.target.value));
+document.getElementById('cpuColor').addEventListener('change',e=>chooseColor('yellow',e.target.value));
+const fullscreenBtn=document.getElementById('fullscreenBtn');
+function updateFullscreenButton(){const active=!!document.fullscreenElement;fullscreenBtn.textContent=active?'⤢ Exit Full Screen':'⛶ Full Screen';fullscreenBtn.setAttribute('aria-pressed',String(active));}
+fullscreenBtn.addEventListener('click',async()=>{
+ try{if(!document.fullscreenElement){if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();}
+ else if(document.exitFullscreen)await document.exitFullscreen();}
+ catch(e){statusEl.textContent='Full screen is not available in this browser. You can still play normally.';}
+ updateFullscreenButton();
+});
+document.addEventListener('fullscreenchange',updateFullscreenButton);
 rollBtn.addEventListener('click',()=>roll('red'));diceEl.addEventListener('click',()=>roll('red'));
 diceEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();roll('red');}});
 document.getElementById('newBtn').addEventListener('click',()=>setup(false));
@@ -381,6 +433,8 @@ document.getElementById('muteBtn').addEventListener('click',()=>{muted=!muted;up
 document.getElementById('resetStatsBtn').addEventListener('click',resetStats);
 document.querySelectorAll('.diff').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.level;updateHud();statusEl.textContent='Computer difficulty: '+difficulty.toUpperCase()+'. Stats will count under '+gameDifficulty.toUpperCase()+' until a new game starts.';if(phase==='roll')saveStable();else saveGame();}));
 const resumed=loadGame();
+applyColorTheme();
+updateFullscreenButton();
 if(!resumed){stats=defaultStats();muted=false;setup(true);}
 else{
  setDiceFace(0);updateHud();drawBoard();
