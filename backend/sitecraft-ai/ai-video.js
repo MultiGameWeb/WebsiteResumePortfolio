@@ -22,6 +22,23 @@ import { geminiUsProxy } from "./gemini-proxy.js";
 // The lite model answers in a couple of seconds; the bigger one is the fallback.
 const TEXT_MODELS = ["gemini-3.5-flash-lite", "gemini-3.8-flash"];
 const DEFAULT_IMAGE_MODEL = "gemini-2.5-flash-image";
+// The design building blocks of video-maker/styles.js the AI can mix.
+const DESIGN = {
+  layout: ["playful", "luxe", "bold", "fresh", "clean"],
+  font: ["round", "serif", "jost", "impact", "sans", "play"],
+  motion: ["zoom", "pan", "drift", "punch"],
+  transition: ["fade", "flash", "wipe", "slide", "zoom"],
+  deco: ["none", "sparkles", "confetti", "bubbles", "petals", "bokeh", "streaks"]
+};
+
+function cleanDesign(design) {
+  if (!design || typeof design !== "object") return null;
+  const hex = value => (/^#[0-9a-f]{6}$/i.test(String(value || "")) ? String(value).toLowerCase() : "");
+  const pick = (key) => (DESIGN[key].includes(design[key]) ? design[key] : "");
+  const out = { layout: pick("layout"), accent: hex(design.accent), dark: hex(design.dark), font: pick("font"), motion: pick("motion"), transition: pick("transition"), deco: pick("deco") };
+  return out.layout ? out : null;
+}
+
 const STYLES = ["jewel", "gym", "royal", "offer", "product", "wedding", "birthday", "property", "food"];
 const FORMATS = { story: "9:16", square: "1:1", wide: "16:9" };
 // Any length from 10 to 60 seconds; about one picture per 6 seconds (2-10).
@@ -65,6 +82,20 @@ const PLAN_SCHEMA = {
         contact: { type: "STRING", description: "phone or WhatsApp number exactly as the customer gave it, or empty" },
         closing: { type: "STRING", description: "a short call to action for the end, under 40 characters" },
         badge: { type: "STRING", description: "a short corner badge for the whole video, 1-3 words, e.g. 'ADMISSIONS OPEN', 'DIWALI SALE', or empty" },
+        design: {
+          type: "OBJECT",
+          description: "the look of the video, chosen to suit this business and its customers",
+          properties: {
+            layout: { type: "STRING", enum: DESIGN.layout },
+            accent: { type: "STRING", description: "main colour as #rrggbb, matching the business, brand or occasion" },
+            dark: { type: "STRING", description: "a deep background tint as #rrggbb that goes with the accent" },
+            font: { type: "STRING", enum: DESIGN.font },
+            motion: { type: "STRING", enum: DESIGN.motion },
+            transition: { type: "STRING", enum: DESIGN.transition },
+            deco: { type: "STRING", enum: DESIGN.deco }
+          },
+          required: ["layout", "accent", "dark", "font", "motion", "transition", "deco"]
+        },
         style: { type: "STRING", enum: STYLES },
         format: { type: "STRING", enum: Object.keys(FORMATS) },
         // Gemini allows "enum" on strings only; an INTEGER enum fails every request.
@@ -84,7 +115,7 @@ const PLAN_SCHEMA = {
           }
         }
       },
-      required: ["title", "subtitle", "contact", "closing", "style", "format", "seconds", "scenes"]
+      required: ["title", "subtitle", "contact", "closing", "style", "format", "seconds", "scenes", "design"]
     }
   },
   required: ["reply", "ready"]
@@ -107,6 +138,13 @@ Plan rules:
 - scenes: one per 6 seconds, rounded up, at least 2 and at most 10 (10 s: 2, 15 s: 3, 20 s: 4, 30 s: 5, 45 s: 8, 60 s: 10). Use exactly the length the customer asked for.
 - style: jewel (jewellery, luxury), gym (fitness, sports), royal (weddings, events, wedding services), food (restaurants, sweets, bakeries), property (real estate, hotels, resorts), product (shops, electronics, products), offer (sales and discounts), wedding (other functions), birthday (birthdays, kids).
 - eyebrow, headlines and lines in the customer's chosen language; keep them short and punchy. Each scene tells one selling point (for example a school: the campus, classes and teachers, sports, labs, admissions with the phone number).
+- design: choose the look that best suits THIS business and its customers, so different businesses get different videos.
+  layout: playful (bright and friendly: schools, kids, toys, birthdays, coaching), luxe (elegant: jewellery, weddings, sarees, salons, spas, hotels, perfumes), bold (energetic: gyms, sports, big sales, events, bikes, nightlife), fresh (warm and tasty: restaurants, sweets, bakeries, cafes, grocery, organic), clean (calm and trustworthy: real estate, hospitals, clinics, electronics, finance, offices, services).
+  accent: the colour people link with the business, brand or occasion (e.g. hospital teal, organic green, Diwali orange-gold, wedding red-gold, tech blue); dark: a deep tint of it for the background.
+  font: round (friendly), serif (luxury), play (classic elegant), jost (modern clean), impact (strong uppercase), sans (simple bold).
+  motion: zoom (gentle), pan (calm side move), drift (slow cinematic), punch (fast and strong).
+  transition: fade (soft), flash (energetic), wipe (neat), slide (modern), zoom (lively).
+  deco: none, sparkles (luxury, festive), confetti (celebration, kids, offers), bubbles (spa, laundry, drinks, kids), petals (weddings, flowers, beauty), bokeh (dreamy, events, night), streaks (speed, gym, tech, cars).
 - stock_query: 2-4 simple English words that would find a fitting real photo on a stock photo site (for example "biryani plate", "luxury villa pool", "gold necklace"). Add "indian" when people or places should look Indian.
 - image_prompt: a vivid, photorealistic description in English of one scene that fits the business, set in India with Indian people and places where people appear. Describe only the picture: no words, letters, numbers, logos, brand names, watermarks or real or famous people.
 - Never invent prices, discounts, awards or guarantees the customer did not give. No medical or financial promises. Do not copy other brands.
@@ -125,6 +163,7 @@ function cleanPlan(plan) {
   return {
     title: clip(plan.title, 60), subtitle: clip(plan.subtitle, 90), contact: clip(plan.contact, 40), closing: clip(plan.closing, 60), badge: clip(plan.badge, 30),
     style: STYLES.includes(plan.style) ? plan.style : "offer",
+    design: cleanDesign(plan.design),
     format: FORMATS[plan.format] ? plan.format : "story",
     seconds, scenes
   };
