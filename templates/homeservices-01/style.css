@@ -98,6 +98,8 @@
 .homeservices-01 .fr-hours-card{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(22px,6vw,65px);padding:clamp(23px,5vw,48px);border:1px solid var(--fr-line);border-radius:9px;background:#fff}
 .homeservices-01 .fr-hours-card h2{max-width:430px}
 .homeservices-01 .fr-hours-summary{color:var(--fr-green);font-size:15px;font-weight:700}
+.homeservices-01 .fr-open-badge{display:inline-flex;min-height:32px;align-items:center;margin:2px 0 12px;padding:5px 11px;border-radius:999px;background:#e1f0e5;color:#165a38;font-size:13px;font-weight:800}
+.homeservices-01 .fr-open-badge.is-closed{background:#f5e5e1;color:#852d20}
 .homeservices-01 .fr-hours-list{border-top:1px solid var(--fr-line)}
 .homeservices-01 .fr-hours-row{display:flex;justify-content:space-between;gap:14px;padding:12px 8px;border-bottom:1px solid var(--fr-line);font-size:15px}
 .homeservices-01 .fr-hours-row span{color:var(--fr-muted);text-align:right}
