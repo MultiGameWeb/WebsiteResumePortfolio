@@ -59,6 +59,11 @@
     planBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  function showEditor() {
+    const editor = $('#aiEditor');
+    if (editor) editor.hidden = false;
+  }
+
   function toBlob(image) {
     const bytes = Uint8Array.from(atob(image.data), (c) => c.charCodeAt(0));
     return new Blob([bytes], { type: image.mimeType });
@@ -83,6 +88,7 @@
       }
       note.textContent = 'All pictures are ready ✓ Playing a preview. Tap “Make my video” to download it, or change any text or photo below.';
       await window.SiteCraftVideoMaker.loadPlan(plan, images);
+      showEditor();
     } catch (error) {
       note.textContent = images.length
         ? `${error.message} You can still make the video with the ${images.length} picture${images.length === 1 ? '' : 's'} ready.`
@@ -90,7 +96,7 @@
       if (images.length) {
         const partial = element('button', 'vm-btn ghost', `Use the ${images.length} ready picture${images.length === 1 ? '' : 's'}`);
         partial.type = 'button';
-        partial.addEventListener('click', () => window.SiteCraftVideoMaker.loadPlan({ ...plan, scenes: plan.scenes.slice(0, images.length) }, images));
+        partial.addEventListener('click', async () => { await window.SiteCraftVideoMaker.loadPlan({ ...plan, scenes: plan.scenes.slice(0, images.length) }, images); showEditor(); });
         note.after(partial);
       }
       button.disabled = false;
@@ -128,5 +134,5 @@
 
   bubble('ai', GREETING);
   messages.push({ role: 'assistant', text: GREETING });
-  if (new URLSearchParams(window.location.search).has('ai')) input.focus();
+  input.focus({ preventScroll: true });
 })();
