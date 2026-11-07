@@ -43,7 +43,7 @@
   const $ = (selector) => document.querySelector(selector);
   const canvas = $('#stage');
   const ctx = canvas.getContext('2d');
-  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default' };
+  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null };
   let frameRequest = 0;
   let audioContext = null;
 
@@ -601,10 +601,61 @@
   function spotData(images) {
     const [w, h] = FORMATS[state.format];
     return {
-      layout: state.template.spot, style: state.spotStyle, w, h, intro: INTRO, per: state.perPhoto, outro: OUTRO,
+      layout: state.template.spot, style: state.spotStyle, design: state.design, w, h, intro: INTRO, per: state.perPhoto, outro: OUTRO,
       title: text('#titleInput') || 'Your business name', subtitle: text('#subtitleInput'), contact: text('#contactInput'),
       closing: text('#closingInput') || 'Visit us today', badge: text('#badgeInput'),
       photos: state.photos.map((photo, i) => ({ img: images ? images[i] : photo.bitmap, label: photo.label || '', head: photo.caption || '', line: photo.price || '' })),
+    };
+  }
+
+  // ---- Looks made by code: colours from the photos plus a random mix ----
+  // Finds the strongest colours in the photos (12 hue groups, weighted by
+  // how bright and colourful each pixel is).
+  function photoColours() {
+    const bins = Array.from({ length: 12 }, () => ({ w: 0, r: 0, g: 0, b: 0 }));
+    const c = document.createElement('canvas');
+    c.width = 24; c.height = 24;
+    const x = c.getContext('2d', { willReadFrequently: true });
+    for (const photo of state.photos.slice(0, 6)) {
+      x.drawImage(photo.bitmap, 0, 0, 24, 24);
+      const px = x.getImageData(0, 0, 24, 24).data;
+      for (let i = 0; i < px.length; i += 4) {
+        const r = px[i] / 255; const g = px[i + 1] / 255; const b = px[i + 2] / 255;
+        const max = Math.max(r, g, b); const min = Math.min(r, g, b);
+        const sat = max ? (max - min) / max : 0;
+        if (sat < 0.3 || max < 0.3) continue;
+        let hue = max === r ? (g - b) / (max - min) : max === g ? 2 + (b - r) / (max - min) : 4 + (r - g) / (max - min);
+        hue = ((hue * 60) + 360) % 360;
+        const bin = bins[Math.floor(hue / 30) % 12];
+        const weight = sat * max;
+        bin.w += weight; bin.r += r * weight; bin.g += g * weight; bin.b += b * weight;
+      }
+    }
+    return bins.filter((bin) => bin.w > 0).sort((a, b) => b.w - a.w).slice(0, 3).map((bin) => {
+      // Brighter and more colourful than the average, so it works as an accent.
+      const c3 = [bin.r / bin.w, bin.g / bin.w, bin.b / bin.w];
+      const max = Math.max(...c3);
+      const min = Math.min(...c3);
+      const boosted = c3.map((v) => clamp((min + (v - min) * 1.35) / max * 0.95, 0, 1));
+      return `#${boosted.map((v) => Math.round(v * 255).toString(16).padStart(2, '0')).join('')}`;
+    });
+  }
+
+  const DEFAULT_ACCENTS = ['#ffc92e', '#ff7a1a', '#2dd4bf', '#f472b6', '#38bdf8', '#d4af37', '#22c55e', '#a78bfa', '#ef4444'];
+  const pickOne = (list) => list[Math.floor(Math.random() * list.length)];
+
+  function randomLook(layout) {
+    const fonts = { playful: ['round', 'sans'], luxe: ['serif', 'play'], bold: ['impact', 'sans'], fresh: ['sans', 'round', 'play'], clean: ['jost', 'sans'] }[layout];
+    const decos = { playful: ['none', 'confetti', 'bubbles'], luxe: ['sparkles', 'petals', 'bokeh'], bold: ['streaks', 'none', 'confetti'], fresh: ['none', 'bubbles', 'bokeh'], clean: ['none', 'bokeh', 'streaks'] }[layout];
+    const colours = photoColours();
+    return {
+      layout,
+      accent: pickOne(colours.length ? colours : DEFAULT_ACCENTS),
+      dark: '',
+      font: pickOne(fonts),
+      motion: pickOne(STYLES.CHOICES.motion),
+      transition: pickOne(STYLES.CHOICES.transition),
+      deco: pickOne(decos),
     };
   }
 
@@ -917,6 +968,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     button.addEventListener('click', () => {
       state.template = template;
       if (template.spot && STYLES.layoutFor(state.spotStyle) !== template.spot) state.spotStyle = DEFAULT_STYLE[template.spot];
+      if (template.spot && state.design) state.design = { ...state.design, layout: template.spot };
       for (const item of templateList.children) item.setAttribute('aria-checked', String(item === button));
       fontsReady().then(showPoster);
       renderPhotos();
@@ -944,6 +996,17 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   });
 
   for (const id of ['#titleInput', '#subtitleInput', '#contactInput', '#closingInput', '#badgeInput']) $(id)?.addEventListener('input', showPoster);
+  $('#lookBtn')?.addEventListener('click', async () => {
+    if (!state.template.spot) {
+      state.template = TEMPLATES.find((t) => t.spot === 'playful');
+      for (const [index, item] of Array.from(templateList.children).entries()) item.setAttribute('aria-checked', String(TEMPLATES[index] === state.template));
+    }
+    state.design = randomLook(state.template.spot);
+    await fontsReady();
+    renderPhotos();
+    setStatus(`New look: ${state.design.font} font, ${state.design.motion} motion, ${state.design.transition} transition${state.design.deco !== 'none' ? `, ${state.design.deco}` : ''}. Tap again for another.`);
+    if (state.photos.length) preview();
+  });
   $('#htmlBtn')?.addEventListener('click', async () => {
     if (!state.photos.length) { setStatus('Add at least one photo first.'); return; }
     const html = await spotHtml();
@@ -967,8 +1030,13 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     async loadPlan(plan, images) {
       stopPlayback();
       // AI videos use the AI-style design that fits the business type.
+      // The AI's design (layout, colours, font, motion, transition, effect)
+      // when it gave one; else the layout for the business type and, once
+      // the photos are in, a look made from their colours.
       state.spotStyle = plan.style || 'default';
-      state.template = TEMPLATES.find((t) => t.spot === STYLES.layoutFor(state.spotStyle));
+      const layout = STYLES.CHOICES.layout.includes(plan.design?.layout) ? plan.design.layout : STYLES.layoutFor(state.spotStyle);
+      state.template = TEMPLATES.find((t) => t.spot === layout);
+      state.design = plan.design?.layout ? { ...plan.design, layout } : null;
       for (const [index, item] of Array.from(templateList.children).entries()) item.setAttribute('aria-checked', String(TEMPLATES[index] === state.template));
       state.format = FORMATS[plan.format] ? plan.format : 'story';
       for (const item of $('#formatList').children) item.setAttribute('aria-checked', String(item.dataset.format === state.format));
@@ -986,6 +1054,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
         const scene = plan.scenes[index] || {};
         state.photos.push({ ...(await loadPhoto(blob)), caption: scene.headline || '', price: scene.line || '', label: scene.eyebrow || '' });
       }
+      if (!state.design) state.design = randomLook(layout);
       await fontsReady();
       renderPhotos();
       $('.vm-stage').scrollIntoView({ behavior: 'smooth', block: 'start' });

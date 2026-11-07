@@ -18,6 +18,7 @@
     jost: `Jost, ${SCRIPTS}, sans-serif`,
     impact: `Anton, ${SCRIPTS}, sans-serif`,
     sans: `Poppins, ${SCRIPTS}, sans-serif`,
+    play: `"Playfair Display", ${SCRIPTS}, serif`,
   };
 
   // Which design fits which business type (the AI plan's style).
@@ -47,7 +48,33 @@
 
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const ease = (x) => 1 - Math.pow(1 - clamp(x, 0, 1), 3);
-  const theme = (d) => THEMES[d.style] || THEMES.default;
+  // ---- Colours ----
+  const HEX = /^#[0-9a-f]{6}$/i;
+  const rgb = (hex) => { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+  const toHex = (c) => `#${c.map((v) => clamp(Math.round(v), 0, 255).toString(16).padStart(2, '0')).join('')}`;
+  // k > 0 mixes towards white, k < 0 towards black.
+  const tint = (hex, k) => toHex(rgb(hex).map((c) => (k < 0 ? c * (1 + k) : c + (255 - c) * k)));
+  const lum = (hex) => { const [r, g, b] = rgb(hex); return (0.299 * r + 0.587 * g + 0.114 * b) / 255; };
+
+  // The AI (or "New look") can give its own colours in d.design; otherwise
+  // the colours of the business type are used.
+  function theme(d) {
+    const base = THEMES[d.style] || THEMES.default;
+    const accent = d.design?.accent;
+    if (!HEX.test(accent || '')) return { ...base, light: tint(base.accent, 0.45), pale: tint(base.accent, 0.75), deep: tint(base.accent, -0.4) };
+    const dark = HEX.test(d.design.dark || '') ? d.design.dark : tint(accent, -0.82);
+    return {
+      accent,
+      ink: lum(accent) > 0.6 ? '#111111' : '#ffffff',
+      shade: rgb(dark).join(','),
+      chip: lum(accent) > 0.55 ? tint(accent, -0.45) : accent,
+      light: tint(accent, 0.45), pale: tint(accent, 0.75), deep: tint(accent, -0.4),
+    };
+  }
+
+  // Headline font: the design's choice, else the layout's own.
+  const FONT_KEYS = () => ({ round: F.round, serif: F.serif, jost: F.jost, impact: F.impact, sans: F.sans, play: F.play });
+  const headFont = (d, fallback) => FONT_KEYS()[d.design?.font] || fallback;
   const unit = (d) => Math.min(d.w, d.h) / 100;
   const wide = (d) => d.w > d.h;
 
@@ -167,6 +194,7 @@
 
   // ---- Playful: bright pills, rounded type, call-now card ----
   const playful = {
+    deco: 'none',
     transition: { type: 'fade', dur: 0.9 },
     motion: { zoom: [1, 1.11], focus: 0.42 },
     overlay(ctx, d) {
@@ -183,7 +211,7 @@
       if (seg.kind === 'photo') {
         const x = u * 6;
         const maxWidth = d.w - u * 12;
-        const head = { size: u * (wide(d) ? 6.4 : 7.6), weight: 600, font: F.round, maxWidth, x, maxLines: 3 };
+        const head = { size: u * (wide(d) ? 6.4 : 7.6), weight: 600, font: headFont(d, F.round), maxWidth, x, maxLines: 3 };
         const line = { size: u * 3.6, weight: 700, font: F.round, maxWidth, x, maxLines: 2, color: 'rgba(255,255,255,.92)' };
         const hl = write(ctx, item.line, { ...line, measure: true });
         const hh = write(ctx, item.head, { ...head, measure: true });
@@ -192,14 +220,14 @@
         write(ctx, item.head, { ...head, y, alpha: appear });
         write(ctx, item.line, { ...line, y: y + hh + u * 1.5, alpha: ease((local - 0.35) / 0.6) });
       } else if (seg.kind === 'intro') {
-        const o = { size: u * (wide(d) ? 7.2 : 8.8), weight: 600, font: F.round, maxWidth: d.w * 0.86, x: d.w / 2, align: 'center' };
+        const o = { size: u * (wide(d) ? 7.2 : 8.8), weight: 600, font: headFont(d, F.round), maxWidth: d.w * 0.86, x: d.w / 2, align: 'center' };
         const value = d.subtitle || d.title;
         const y = bottom - write(ctx, value, { ...o, measure: true });
         pill(ctx, `✦ ${d.title} ✦`, { x: d.w / 2, y: y - u * 8, size: u * 2.9, bg: th.accent, color: th.ink, align: 'center', alpha: appear, maxWidth: d.w * 0.9 });
         write(ctx, value, { ...o, y, alpha: appear });
       } else {
         const cardH = d.contact ? u * 15 : 0;
-        const o = { size: u * (wide(d) ? 6.6 : 7.8), weight: 600, font: F.round, maxWidth: d.w * 0.86, x: d.w / 2, align: 'center', maxLines: 2 };
+        const o = { size: u * (wide(d) ? 6.6 : 7.8), weight: 600, font: headFont(d, F.round), maxWidth: d.w * 0.86, x: d.w / 2, align: 'center', maxLines: 2 };
         const hh = write(ctx, d.closing, { ...o, measure: true });
         let y = bottom - cardH - (cardH ? u * 3 : 0) - hh;
         pill(ctx, d.badge || d.title, { x: d.w / 2, y: y - u * 7.5, size: u * 2.7, bg: '#fff', color: th.chip, align: 'center', alpha: appear, maxWidth: d.w * 0.9 });
@@ -239,11 +267,12 @@
   function goldText(ctx, d, y, height) {
     const th = theme(d);
     const g = ctx.createLinearGradient(d.w * 0.2, y, d.w * 0.8, y + height);
-    g.addColorStop(0, '#8a6b17'); g.addColorStop(0.5, th.accent); g.addColorStop(1, '#f7ebc8');
+    g.addColorStop(0, th.deep); g.addColorStop(0.5, th.accent); g.addColorStop(1, th.pale);
     return g;
   }
 
   const luxe = {
+    deco: 'sparkles',
     transition: { type: 'fade', dur: 1.2 },
     motion: { zoom: [1.04, 1.18], pan: 0.02, rise: 0.015, focus: 0.5 },
     overlay(ctx, d) {
@@ -264,7 +293,7 @@
       const eyebrow = seg.kind === 'intro' ? d.title : seg.kind === 'outro' ? (d.badge || 'Special offer') : item.label;
       const head = seg.kind === 'intro' ? (d.subtitle || d.title) : seg.kind === 'outro' ? d.closing : item.head;
       const sub = seg.kind === 'photo' ? item.line : seg.kind === 'outro' ? '' : '';
-      const ho = { size: u * (wide(d) ? 7 : 8.6), weight: 600, font: F.serif, maxWidth, x, align: 'center', lineHeight: 1.02, maxLines: 3, italic: seg.kind === 'outro' };
+      const ho = { size: u * (wide(d) ? 7 : 8.6), weight: 600, font: headFont(d, F.serif), maxWidth, x, align: 'center', lineHeight: 1.02, maxLines: 3, italic: seg.kind === 'outro' };
       const so = { size: u * 3.2, weight: 400, font: F.jost, maxWidth, x, align: 'center', color: 'rgba(255,255,255,.8)', maxLines: 2, lineHeight: 1.4 };
       const hs = write(ctx, sub, { ...so, measure: true });
       const hh = write(ctx, head, { ...ho, measure: true });
@@ -274,7 +303,7 @@
       ctx.fillStyle = th.accent;
       ctx.fillRect(x - u * 5, y - u * 8.2, u * 10 * appear, Math.max(1, u * 0.25));
       ctx.restore();
-      write(ctx, eyebrow, { x, y: y - u * 5.6, size: u * 2.5, weight: 600, font: F.jost, color: '#f3d98b', align: 'center', maxWidth, upper: true, spacing: 0.34, maxLines: 1, alpha: appear });
+      write(ctx, eyebrow, { x, y: y - u * 5.6, size: u * 2.5, weight: 600, font: F.jost, color: th.light, align: 'center', maxWidth, upper: true, spacing: 0.34, maxLines: 1, alpha: appear });
       write(ctx, head, { ...ho, y, alpha: appear, color: seg.kind === 'outro' ? goldText(ctx, d, y, hh) : '#fff' });
       write(ctx, sub, { ...so, y: y + hh + u * 1.6, alpha: ease((local - 0.45) / 0.7) });
       if (cardH) {
@@ -285,7 +314,7 @@
         ctx.save();
         ctx.globalAlpha *= pop;
         ctx.fillStyle = 'rgba(0,0,0,.55)';
-        ctx.strokeStyle = 'rgba(212,175,55,.5)';
+        ctx.strokeStyle = th.accent;
         ctx.lineWidth = Math.max(1, u * 0.2);
         ctx.beginPath(); ctx.roundRect(cx, cy, cw, cardH, u * 3.5); ctx.fill(); ctx.stroke();
         ctx.restore();
@@ -296,40 +325,24 @@
         ctx.globalAlpha *= pop;
         ctx.fillStyle = th.accent;
         ctx.beginPath(); ctx.roundRect(cx + u * 2.5, by, bw, u * 7, u * 3.5); ctx.fill();
-        ctx.strokeStyle = '#f3d98b'; ctx.lineWidth = Math.max(1, u * 0.2);
+        ctx.strokeStyle = th.light; ctx.lineWidth = Math.max(1, u * 0.2);
         ctx.beginPath(); ctx.roundRect(cx + u * 4.5 + bw, by, bw, u * 7, u * 3.5); ctx.stroke();
         ctx.restore();
         write(ctx, 'VISIT NOW', { x: cx + u * 2.5 + bw / 2, y: by + u * 2.2, size: u * 2.5, font: F.jost, weight: 600, color: '#000', align: 'center', maxWidth: bw, spacing: 0.14, maxLines: 1, alpha: pop, shadow: false });
-        write(ctx, 'CALL NOW', { x: cx + u * 4.5 + bw * 1.5, y: by + u * 2.2, size: u * 2.5, font: F.jost, weight: 600, color: '#f7ebc8', align: 'center', maxWidth: bw, spacing: 0.14, maxLines: 1, alpha: pop, shadow: false });
+        write(ctx, 'CALL NOW', { x: cx + u * 4.5 + bw * 1.5, y: by + u * 2.2, size: u * 2.5, font: F.jost, weight: 600, color: th.pale, align: 'center', maxWidth: bw, spacing: 0.14, maxLines: 1, alpha: pop, shadow: false });
       }
     },
     chrome(ctx, d, t, seg) {
       const u = unit(d);
       const th = theme(d);
-      // Sparkles twinkle over the film.
-      ctx.save();
-      for (const [l, top, s, period, delay] of SPARKLES) {
-        const a = Math.max(0, Math.sin(((t + delay) / period) * Math.PI * 2));
-        if (a <= 0.05) continue;
-        const x = (l / 100) * d.w;
-        const y = (top / 100) * d.h;
-        const r = (s / 450) * d.w * (0.6 + 0.6 * a);
-        ctx.globalAlpha = a * 0.9;
-        ctx.fillStyle = '#fff6d5';
-        ctx.shadowColor = th.accent; ctx.shadowBlur = r * 3;
-        ctx.beginPath();
-        ctx.moveTo(x, y - r * 2); ctx.quadraticCurveTo(x, y, x + r * 2, y); ctx.quadraticCurveTo(x, y, x, y + r * 2); ctx.quadraticCurveTo(x, y, x - r * 2, y); ctx.quadraticCurveTo(x, y, x, y - r * 2);
-        ctx.fill();
-      }
-      ctx.restore();
       // Monogram and name.
       const r = u * 3.6;
       ctx.save();
       ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.strokeStyle = th.accent; ctx.lineWidth = Math.max(1, u * 0.22);
       ctx.beginPath(); ctx.arc(u * 5 + r, u * 5 + r, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       ctx.restore();
-      write(ctx, (d.title || 'S').trim().charAt(0).toUpperCase(), { x: u * 5 + r, y: u * 5 + r * 0.38, size: r * 1.25, weight: 600, font: F.serif, color: '#f3d98b', align: 'center', maxWidth: r * 2, maxLines: 1, shadow: false });
-      write(ctx, d.title, { x: u * 7 + r * 2, y: u * 5 + r * 0.25, size: u * 3.6, weight: 600, font: F.serif, color: '#f7ebc8', upper: true, spacing: 0.18, maxWidth: d.w * 0.5, maxLines: 1 });
+      write(ctx, (d.title || 'S').trim().charAt(0).toUpperCase(), { x: u * 5 + r, y: u * 5 + r * 0.38, size: r * 1.25, weight: 600, font: F.serif, color: th.light, align: 'center', maxWidth: r * 2, maxLines: 1, shadow: false });
+      write(ctx, d.title, { x: u * 7 + r * 2, y: u * 5 + r * 0.25, size: u * 3.2, weight: 600, font: F.serif, color: th.pale, upper: true, spacing: 0.14, maxWidth: d.w * 0.62, maxLines: 1 });
       write(ctx, `${Math.round(total(d))} SEC FILM`, { x: d.w - u * 5, y: u * 6.2, size: u * 1.9, weight: 500, font: F.jost, color: 'rgba(255,255,255,.7)', align: 'right', spacing: 0.2, maxWidth: d.w * 0.3, maxLines: 1 });
       // Film bar: time, scene, percent and a gold progress line.
       const by = d.h - u * 6.5;
@@ -341,7 +354,7 @@
       ctx.fillStyle = 'rgba(255,255,255,.25)';
       ctx.beginPath(); ctx.roundRect(u * 5, by + u * 3.6, lw, u * 0.5, u * 0.25); ctx.fill();
       const g = ctx.createLinearGradient(u * 5, 0, u * 5 + lw, 0);
-      g.addColorStop(0, '#8a6b17'); g.addColorStop(0.5, th.accent); g.addColorStop(1, '#f7ebc8');
+      g.addColorStop(0, th.deep); g.addColorStop(0.5, th.accent); g.addColorStop(1, th.pale);
       ctx.fillStyle = g;
       ctx.beginPath(); ctx.roundRect(u * 5, by + u * 3.6, Math.max(u * 0.5, lw * pct), u * 0.5, u * 0.25); ctx.fill();
     },
@@ -349,6 +362,7 @@
 
   // ---- Bold: big uppercase, accent slash, flash cuts, story bars ----
   const bold = {
+    deco: 'streaks',
     transition: { type: 'flash', dur: 0.32 },
     motion: { zoom: [1.02, 1.2], easeIn: true, focus: 0.45 },
     overlay(ctx, d) {
@@ -373,7 +387,7 @@
       const label = seg.kind === 'intro' ? d.title : seg.kind === 'outro' ? (d.badge || 'Limited offer') : item.label;
       const head = seg.kind === 'intro' ? (d.subtitle || d.title) : seg.kind === 'outro' ? d.closing : item.head;
       const line = seg.kind === 'photo' ? item.line : '';
-      const ho = { size: u * (wide(d) ? 9 : 12.5), weight: 400, font: F.impact, maxWidth, x, upper: true, lineHeight: 0.98, maxLines: 3 };
+      const ho = { size: u * (wide(d) ? 9 : 12.5), weight: 400, font: headFont(d, F.impact), maxWidth, x, upper: true, lineHeight: 0.98, maxLines: 3 };
       const hh = write(ctx, head, { ...ho, measure: true });
       const bar = seg.kind === 'outro' && d.contact ? u * 11 : 0;
       const bottom = d.h - u * (wide(d) ? 8 : 12) - bar - (bar ? u * 3 : 0);
@@ -418,6 +432,7 @@
 
   // ---- Fresh: white card slides up, round sticker, warm colours ----
   const fresh = {
+    deco: 'none',
     transition: { type: 'fade', dur: 0.6 },
     motion: { zoom: [1.06, 1.14], pan: 0.03, focus: 0.35 },
     overlay(ctx, d) {
@@ -432,7 +447,7 @@
       const maxWidth = d.w - pad * 2 - (seg.kind === 'photo' && item.line ? u * 4 : 0);
       const label = seg.kind === 'intro' ? d.title : seg.kind === 'outro' ? (d.badge || 'Order now') : item.label;
       const head = seg.kind === 'intro' ? (d.subtitle || d.title) : seg.kind === 'outro' ? d.closing : item.head;
-      const ho = { size: u * (wide(d) ? 6 : 7), weight: 800, font: F.sans, maxWidth, x: pad, color: th.ink, shadow: false, maxLines: 3, lineHeight: 1.08 };
+      const ho = { size: u * (wide(d) ? 6 : 7), weight: 800, font: headFont(d, F.sans), maxWidth, x: pad, color: th.ink, shadow: false, maxLines: 3, lineHeight: 1.08 };
       const hh = write(ctx, head, { ...ho, measure: true });
       const btn = seg.kind === 'outro' && d.contact ? u * 9 : 0;
       const cardH = u * 12 + hh + (btn ? btn + u * 3 : 0);
@@ -497,6 +512,7 @@
 
   // ---- Clean: thin type, scene numbers, wipe transitions ----
   const clean = {
+    deco: 'none',
     transition: { type: 'wipe', dur: 0.8 },
     motion: { zoom: [1.12, 1.12], pan: 0.08, focus: 0.5 },
     overlay(ctx, d) {
@@ -513,7 +529,7 @@
       if (seg.kind === 'outro') {
         // A light panel with the closing line and contact.
         const pw = d.w - u * 12;
-        const ho = { size: u * 6.6, weight: 500, font: F.jost, maxWidth: pw - u * 10, x: d.w / 2, align: 'center', color: '#0f172a', shadow: false, maxLines: 3 };
+        const ho = { size: u * 6.6, weight: 500, font: headFont(d, F.jost), maxWidth: pw - u * 10, x: d.w / 2, align: 'center', color: '#0f172a', shadow: false, maxLines: 3 };
         const hh = write(ctx, d.closing, { ...ho, measure: true });
         const ph = u * 16 + hh + (d.contact ? u * 9 : 0);
         const py = (d.h - ph) / 2 + (1 - appear) * u * 3;
@@ -536,7 +552,7 @@
       const number = seg.kind === 'intro' ? '' : `${String(seg.index + 1).padStart(2, '0')} — ${String(count).padStart(2, '0')}`;
       if (number) write(ctx, number, { x, y: top, size: u * 2.6, weight: 600, font: F.jost, color: th.accent, spacing: 0.2, maxWidth, maxLines: 1, alpha: appear });
       if (label) write(ctx, label, { x, y: top + u * 4.4, size: u * 2.5, weight: 500, font: F.jost, color: 'rgba(255,255,255,.85)', upper: true, spacing: 0.26, maxWidth, maxLines: 1, alpha: appear });
-      const ho = { x, y: top + u * 9 - (1 - appear) * u * 2, size: u * (wide(d) ? 6.4 : 7.8), weight: 500, font: F.jost, maxWidth, maxLines: 3, lineHeight: 1.05, alpha: appear };
+      const ho = { x, y: top + u * 9 - (1 - appear) * u * 2, size: u * (wide(d) ? 6.4 : 7.8), weight: 500, font: headFont(d, F.jost), maxWidth, maxLines: 3, lineHeight: 1.05, alpha: appear };
       const hh = write(ctx, head, ho);
       ctx.save();
       ctx.globalAlpha *= appear;
@@ -560,10 +576,104 @@
 
   const LAYOUTS = { playful, luxe, bold, fresh, clean };
 
+  // ---- Building blocks the design can mix ----
+  const MOTIONS = {
+    zoom: { zoom: [1, 1.12], focus: 0.45 },
+    pan: { zoom: [1.12, 1.12], pan: 0.08, focus: 0.5 },
+    drift: { zoom: [1.04, 1.18], pan: 0.02, rise: 0.015, focus: 0.5 },
+    punch: { zoom: [1.02, 1.2], easeIn: true, focus: 0.45 },
+  };
+  const TRANSITIONS = {
+    fade: { type: 'fade', dur: 0.9 }, flash: { type: 'flash', dur: 0.32 }, wipe: { type: 'wipe', dur: 0.8 },
+    slide: { type: 'slide', dur: 0.7 }, zoom: { type: 'zoom', dur: 0.8 },
+  };
+  const rnd = (i, k) => { const x = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return x - Math.floor(x); };
+
+  // Moving effects over the video.
+  function deco(ctx, d, t, kind) {
+    const th = theme(d);
+    const u = unit(d);
+    ctx.save();
+    if (kind === 'sparkles') {
+      for (const [l, top, s, period, delay] of SPARKLES) {
+        const a = Math.max(0, Math.sin(((t + delay) / period) * Math.PI * 2));
+        if (a <= 0.05) continue;
+        const x = (l / 100) * d.w;
+        const y = (top / 100) * d.h;
+        const r = (s / 450) * d.w * (0.6 + 0.6 * a);
+        ctx.globalAlpha = a * 0.9;
+        ctx.fillStyle = '#fffaf0';
+        ctx.shadowColor = th.accent; ctx.shadowBlur = r * 3;
+        ctx.beginPath();
+        ctx.moveTo(x, y - r * 2); ctx.quadraticCurveTo(x, y, x + r * 2, y); ctx.quadraticCurveTo(x, y, x, y + r * 2); ctx.quadraticCurveTo(x, y, x - r * 2, y); ctx.quadraticCurveTo(x, y, x, y - r * 2);
+        ctx.fill();
+      }
+    } else if (kind === 'confetti') {
+      const colors = [th.accent, '#ffffff', th.light, '#ff5d8f', '#4ade80'];
+      for (let i = 0; i < 28; i += 1) {
+        const speed = 0.08 + rnd(i, 1) * 0.1;
+        const y = (((t * speed + rnd(i, 2)) % 1.1) - 0.05) * d.h;
+        const x = (rnd(i, 3) + Math.sin(t * (0.6 + rnd(i, 4)) + i) * 0.03) * d.w;
+        ctx.save();
+        ctx.translate(x, y); ctx.rotate(t * (1 + rnd(i, 5) * 3) + i);
+        ctx.globalAlpha = 0.85;
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.fillRect(-u * 0.7, -u * 0.35, u * 1.4, u * 0.7);
+        ctx.restore();
+      }
+    } else if (kind === 'bubbles') {
+      ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = Math.max(1, u * 0.18);
+      for (let i = 0; i < 16; i += 1) {
+        const speed = 0.05 + rnd(i, 1) * 0.06;
+        const y = (1.05 - ((t * speed + rnd(i, 2)) % 1.1)) * d.h;
+        const x = (rnd(i, 3) + Math.sin(t * 0.8 + i) * 0.02) * d.w;
+        const r = u * (0.8 + rnd(i, 4) * 2.2);
+        ctx.globalAlpha = 0.7;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke();
+      }
+    } else if (kind === 'petals') {
+      for (let i = 0; i < 18; i += 1) {
+        const speed = 0.04 + rnd(i, 1) * 0.05;
+        const y = (((t * speed + rnd(i, 2)) % 1.1) - 0.05) * d.h;
+        const x = (rnd(i, 3) + Math.sin(t * 0.7 + i * 2) * 0.05) * d.w;
+        ctx.save();
+        ctx.translate(x, y); ctx.rotate(Math.sin(t + i) * 1.2);
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = i % 3 ? th.light : '#ffd1dc';
+        ctx.beginPath(); ctx.ellipse(0, 0, u * 1.3, u * 0.6, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      }
+    } else if (kind === 'bokeh') {
+      for (let i = 0; i < 10; i += 1) {
+        const x = (rnd(i, 1) + Math.sin(t * 0.15 + i) * 0.04) * d.w;
+        const y = (rnd(i, 2) + Math.cos(t * 0.12 + i) * 0.03) * d.h;
+        const r = u * (4 + rnd(i, 3) * 8);
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, `${th.light}66`); g.addColorStop(1, `${th.light}00`);
+        ctx.globalAlpha = 0.5 + 0.4 * Math.sin(t * 0.8 + i);
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+      }
+    } else if (kind === 'streaks') {
+      ctx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < 4; i += 1) {
+        const p = ((t * 0.35 + rnd(i, 1)) % 1.4) - 0.2;
+        const x = p * d.w * 1.4 - d.w * 0.2;
+        const g = ctx.createLinearGradient(x - u * 6, 0, x + u * 6, 0);
+        g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(0.5, 'rgba(255,255,255,.16)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = g;
+        ctx.save();
+        ctx.translate(x, d.h / 2); ctx.rotate(0.35); ctx.fillRect(-u * 6, -d.h, u * 12, d.h * 2);
+        ctx.restore();
+      }
+    }
+    ctx.restore();
+  }
+
   function scene(ctx, d, L, seg, t, segs, alpha) {
     ctx.save();
     ctx.globalAlpha = alpha;
-    photo(ctx, d, seg, t, segs, L.motion);
+    photo(ctx, d, seg, t, segs, MOTIONS[d.design?.motion] || L.motion);
     L.overlay(ctx, d);
     L.text(ctx, d, seg, t - seg.start, segs);
     ctx.restore();
@@ -577,7 +687,7 @@
     if (k < 0) k = segs.length - 1;
     const seg = segs[k];
     const into = t - seg.start;
-    const { type, dur } = L.transition;
+    const { type, dur } = TRANSITIONS[d.design?.transition] || L.transition;
     if (k > 0 && into < dur) {
       const prev = segs[k - 1];
       const p = into / dur;
@@ -590,6 +700,16 @@
         ctx.restore();
         ctx.fillStyle = theme(d).accent;
         ctx.fillRect(edge - unit(d) * 0.3, 0, unit(d) * 0.6, d.h);
+      } else if (type === 'slide') {
+        const q = ease(p);
+        ctx.save(); ctx.translate(-d.w * 0.3 * q, 0); scene(ctx, d, L, prev, t, segs, 1); ctx.restore();
+        ctx.save(); ctx.translate(d.w * (1 - q), 0); scene(ctx, d, L, seg, t, segs, 1); ctx.restore();
+      } else if (type === 'zoom') {
+        scene(ctx, d, L, prev, t, segs, 1);
+        const k = 1.15 - 0.15 * ease(p);
+        ctx.save(); ctx.translate(d.w / 2, d.h / 2); ctx.scale(k, k); ctx.translate(-d.w / 2, -d.h / 2);
+        scene(ctx, d, L, seg, t, segs, ease(p));
+        ctx.restore();
       } else if (type === 'flash') {
         scene(ctx, d, L, p < 0.5 ? prev : seg, t, segs, 1);
         ctx.fillStyle = `rgba(255,255,255,${0.85 * (1 - Math.abs(p * 2 - 1))})`;
@@ -601,13 +721,16 @@
     } else {
       scene(ctx, d, L, seg, t, segs, 1);
     }
+    deco(ctx, d, t, d.design?.deco || L.deco);
     L.chrome(ctx, d, t, seg, segs);
   }
 
   const api = {
     LAYOUT_FOR, NAMES, frame, total, layoutFor: (style) => LAYOUT_FOR[style] || 'playful',
-    fonts: [`600 40px ${F.round}`, `700 40px ${F.round}`, `600 40px ${F.serif}`, `italic 600 40px ${F.serif}`, `400 40px ${F.jost}`, `500 40px ${F.jost}`, `600 40px ${F.jost}`, `400 40px ${F.impact}`, `700 40px ${F.sans}`, `800 40px ${F.sans}`],
-    fontsUrl: 'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Jost:wght@400;500;600&family=Anton&family=Poppins:wght@700;800&family=Noto+Sans+Telugu:wght@600;800&family=Noto+Sans+Devanagari:wght@600;800&display=swap',
+    // The building blocks a design (from the AI or "New look") can choose.
+    CHOICES: { layout: Object.keys(LAYOUTS), font: ['round', 'serif', 'jost', 'impact', 'sans', 'play'], motion: Object.keys(MOTIONS), transition: Object.keys(TRANSITIONS), deco: ['none', 'sparkles', 'confetti', 'bubbles', 'petals', 'bokeh', 'streaks'] },
+    fonts: [`600 40px ${F.round}`, `700 40px ${F.round}`, `600 40px ${F.serif}`, `italic 600 40px ${F.serif}`, `400 40px ${F.jost}`, `500 40px ${F.jost}`, `600 40px ${F.jost}`, `400 40px ${F.impact}`, `700 40px ${F.sans}`, `800 40px ${F.sans}`, `700 40px ${F.play}`],
+    fontsUrl: 'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Jost:wght@400;500;600&family=Anton&family=Poppins:wght@700;800&family=Playfair+Display:wght@700&family=Noto+Sans+Telugu:wght@600;800&family=Noto+Sans+Devanagari:wght@600;800&display=swap',
   };
   if (typeof window !== 'undefined') window.SiteCraftStyles = api;
 })();
