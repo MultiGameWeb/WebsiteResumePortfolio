@@ -1,0 +1,946 @@
+{
+  "id": "homeservices-01",
+  "name": "Home Services — FixRight Home Services",
+  "category": "Home Services & Repairs",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About FixRight"
+    },
+    {
+      "id": "services",
+      "label": "Services & Visit Charges"
+    },
+    {
+      "id": "how",
+      "label": "How It Works"
+    },
+    {
+      "id": "areas",
+      "label": "Service Areas"
+    },
+    {
+      "id": "gallery",
+      "label": "Work Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Technician Booking Form"
+    },
+    {
+      "id": "hours",
+      "label": "Service Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Google Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Business Name",
+      "required": true,
+      "placeholder": "FixRight Home Services"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Service Manager",
+      "placeholder": "FixRight Service Team"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Reliable help around your home"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Good service starts with listening."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Business",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Home repairs, made simple"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "A reliable fix is just one booking away."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "url"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "hello@fixright.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Business Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "FixRight Home Services",
+      "ownerName": "FixRight Service Team",
+      "tagline": "Reliable help around your home",
+      "motto": "Good service starts with listening.",
+      "about": "FixRight Home Services helps households across Kondapur and nearby Hyderabad neighbourhoods with everyday plumbing, electrical, air-conditioning and carpentry work. Tell us what needs attention and our coordinator will arrange a technician visit. The technician checks the issue, explains the work and shares the repair quote for your approval before starting."
+    },
+    "home": {
+      "eyebrow": "HOME REPAIRS, MADE SIMPLE",
+      "title": "A reliable fix is just one booking away.",
+      "text": "From a dripping tap to an AC that needs attention, book a local technician with a clear visit charge and a repair quote before work begins."
+    },
+    "hero": "https://images.unsplash.com/photo-1691351582808-329cde17ffa2?auto=format&fit=crop&w=1800&q=85",
+    "services": [
+      {
+        "id": "s1",
+        "name": "Plumbing",
+        "price": "From ₹199",
+        "badge": "Leaks · Taps · Pipes",
+        "description": "Tap and flush repairs, leak checks, drain issues, pipe fittings and other everyday plumbing work.",
+        "image": "https://images.unsplash.com/photo-1749532125405-70950966b0e5?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Plumber repairing plumbing fixtures in a bathroom",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "name": "Electrical Repairs",
+        "price": "From ₹199",
+        "badge": "Switches · Fans · Wiring",
+        "description": "Switch and socket issues, fan installation, light fittings, MCB checks and household electrical troubleshooting.",
+        "image": "https://images.unsplash.com/photo-1758101755915-462eddc23f57?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Electrician testing an electrical panel with a multimeter",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "name": "AC Repair & Service",
+        "price": "From ₹249",
+        "badge": "Cooling · Cleaning · Service",
+        "description": "AC inspection, filter and unit cleaning, cooling complaints, water leakage checks and servicing enquiries.",
+        "image": "https://images.unsplash.com/photo-1691351582808-329cde17ffa2?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Outdoor air-conditioning unit mounted on a home exterior",
+        "enabled": true
+      },
+      {
+        "id": "s4",
+        "name": "Carpentry",
+        "price": "From ₹249",
+        "badge": "Doors · Furniture · Fittings",
+        "description": "Door and hinge adjustments, shelf fittings, furniture repairs and small carpentry jobs around the home.",
+        "image": "https://images.unsplash.com/photo-1756736668479-334787633abf?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Carpenter working with wood in a workshop",
+        "enabled": true
+      }
+    ],
+    "steps": [
+      {
+        "id": "st1",
+        "title": "Book a technician",
+        "description": "Choose your service, share your locality, preferred date and time slot, then send the request on WhatsApp.",
+        "enabled": true
+      },
+      {
+        "id": "st2",
+        "title": "Technician visits",
+        "description": "The technician checks the issue at your home and explains the repair options and any parts required.",
+        "enabled": true
+      },
+      {
+        "id": "st3",
+        "title": "Approve & pay after work",
+        "description": "You receive the repair quote before work begins. Once you approve and the agreed work is completed, pay the technician.",
+        "enabled": true
+      }
+    ],
+    "serviceAreas": [
+      {
+        "id": "a1",
+        "name": "Kondapur",
+        "note": "Local technician visits",
+        "enabled": true
+      },
+      {
+        "id": "a2",
+        "name": "Madhapur",
+        "note": "Subject to slot confirmation",
+        "enabled": true
+      },
+      {
+        "id": "a3",
+        "name": "Gachibowli",
+        "note": "Subject to technician availability",
+        "enabled": true
+      },
+      {
+        "id": "a4",
+        "name": "Hafeezpet",
+        "note": "Ask us to confirm your street",
+        "enabled": true
+      },
+      {
+        "id": "a5",
+        "name": "Miyapur",
+        "note": "Availability confirmed on booking",
+        "enabled": true
+      },
+      {
+        "id": "a6",
+        "name": "Kukatpally",
+        "note": "Selected localities",
+        "enabled": true
+      },
+      {
+        "id": "a7",
+        "name": "Manikonda",
+        "note": "Subject to slot confirmation",
+        "enabled": true
+      },
+      {
+        "id": "a8",
+        "name": "Nallagandla",
+        "note": "Ask us to confirm coverage",
+        "enabled": true
+      }
+    ],
+    "timeSlots": [
+      {
+        "id": "t1",
+        "name": "9:00 AM – 11:00 AM",
+        "enabled": true
+      },
+      {
+        "id": "t2",
+        "name": "11:00 AM – 1:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "t3",
+        "name": "1:00 PM – 3:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "t4",
+        "name": "3:00 PM – 5:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "t5",
+        "name": "5:00 PM – 7:00 PM",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Plumbing repair",
+        "alt": "Plumber repairing a bathroom plumbing fixture",
+        "image": "https://images.unsplash.com/photo-1749532125405-70950966b0e5?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Electrical inspection",
+        "alt": "Electrician testing a home electrical panel",
+        "image": "https://images.unsplash.com/photo-1758101755915-462eddc23f57?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "AC outdoor unit",
+        "alt": "Outdoor air-conditioning unit fixed to a home exterior",
+        "image": "https://images.unsplash.com/photo-1691351582808-329cde17ffa2?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Carpentry workshop",
+        "alt": "Carpenter working on wood in a workshop",
+        "image": "https://images.unsplash.com/photo-1756736668479-334787633abf?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Kondapur",
+        "text": "The technician checked the tap leak, explained the replacement part and shared the cost before starting.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Madhapur",
+        "text": "Booking on WhatsApp was straightforward and the visit was arranged for a convenient time.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Gachibowli",
+        "text": "The electrician explained the switchboard issue clearly and completed the agreed work.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "What does the “From ₹…” price include?",
+        "answer": "It is the starting visit charge for the listed service. The final repair cost, parts and any additional work are quoted separately after inspection.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Will the technician start work immediately?",
+        "answer": "The technician will first inspect the issue and explain the recommended work and cost. Work starts only after you approve the quote.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "When do I pay?",
+        "answer": "Payment is made after the agreed work is completed. Any visit charge and payment terms are explained when the booking is confirmed.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Can I choose a preferred date and time?",
+        "answer": "Yes. Select a preferred date and time slot in the booking form. Our coordinator will confirm the available technician and visit timing on WhatsApp.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Which areas do you cover?",
+        "answer": "We list Kondapur, Madhapur, Gachibowli, Hafeezpet, Miyapur, Kukatpally, Manikonda and Nallagandla. Exact street coverage and technician availability are confirmed before the visit.",
+        "enabled": true
+      },
+      {
+        "id": "f6",
+        "question": "Do you provide parts and materials?",
+        "answer": "The technician can explain which parts or materials are needed. Their cost is quoted separately and requires your approval before purchase or installation.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "10:00 AM",
+        "close": "5:00 PM",
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@fixright.example",
+      "address": "Shop 2, Botanical Garden Road, Kondapur, Hyderabad, Telangana 500084",
+      "maps": "https://maps.google.com/?q=Botanical+Garden+Road+Kondapur+Hyderabad",
+      "hours": "Mon–Sat · 9:00 AM – 7:00 PM | Sun · 10:00 AM – 5:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": "https://www.youtube.com/"
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showServices": true,
+      "showHow": true,
+      "showAreas": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:homeservices-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Business Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Business name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / service manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the business",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero image URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "services",
+        "label": "Services & Visit Charges",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "services",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "price",
+            "label": "Starting visit charge"
+          },
+          {
+            "key": "badge",
+            "label": "Short service labels"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Unsplash image URL",
+            "type": "url"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Image description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "price": "From ₹199",
+          "badge": "Home repair",
+          "description": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "how",
+        "label": "How It Works",
+        "type": "collection",
+        "itemLabel": "step",
+        "path": "steps",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Step title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New step",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "areas",
+        "label": "Service Areas",
+        "type": "collection",
+        "itemLabel": "area",
+        "path": "serviceAreas",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Locality"
+          },
+          {
+            "key": "note",
+            "label": "Availability note"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New locality",
+          "note": "Ask us to confirm coverage",
+          "enabled": true
+        }
+      },
+      {
+        "id": "timeSlots",
+        "label": "Booking Time Slots",
+        "type": "collection",
+        "itemLabel": "time slot",
+        "path": "timeSlots",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Time slot"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New time slot",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Unsplash image URL",
+            "type": "url"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New work photo",
+          "alt": "Home service photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Service Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "9:00 AM",
+          "close": "7:00 PM",
+          "closed": false,
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Business address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showServices",
+            "label": "Services",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHow",
+            "label": "How it works",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAreas",
+            "label": "Service areas",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Technician booking form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Service hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
