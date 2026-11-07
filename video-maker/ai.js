@@ -59,7 +59,7 @@
   function showPlan(plan) {
     planBox.hidden = false;
     const list = element('ol', 'vm-ai-scenes');
-    for (const scene of plan.scenes) list.append(element('li', '', [scene.headline, scene.line].filter(Boolean).join(' — ')));
+    for (const scene of plan.scenes) list.append(element('li', '', [scene.eyebrow, scene.headline, scene.line].filter(Boolean).join(' — ')));
     const free = element('button', 'vm-btn primary', '🌐 Free online photos');
     free.type = 'button';
     const ai = element('button', 'vm-btn ghost', `✨ AI pictures (${plan.scenes.length})`);
@@ -239,17 +239,17 @@
     try {
       // The AI looks at the photos, orders them and writes each scene's text.
       // If it cannot, the photos are used in the order given with the plan's text.
-      let order = files.map((file, i) => ({ file, headline: job.original.scenes[i]?.headline || '', line: job.original.scenes[i]?.line || '' }));
+      let order = files.map((file, i) => ({ file, eyebrow: job.original.scenes[i]?.eyebrow || '', headline: job.original.scenes[i]?.headline || '', line: job.original.scenes[i]?.line || '' }));
       job.note.textContent = `AI is looking at your ${files.length} photo${files.length === 1 ? '' : 's'} and writing the scenes…`;
       try {
         const photos = await Promise.all(files.map((file) => shrinkImage(file, 768)));
         const data = await post('/api/aivideo/photos', { plan: job.original, photos });
-        order = data.scenes.map((scene) => ({ file: files[scene.photo], headline: scene.headline, line: scene.line }));
+        order = data.scenes.map((scene) => ({ file: files[scene.photo], eyebrow: scene.eyebrow, headline: scene.headline, line: scene.line }));
         job.aiError = '';
       } catch (error) {
         job.aiError = `${error.message} Your photos were used in the order you picked.`;
       }
-      job.plan = { ...job.original, scenes: order.map(({ headline, line }) => ({ headline, line })) };
+      job.plan = { ...job.original, scenes: order.map(({ eyebrow, headline, line }) => ({ eyebrow, headline, line })) };
       job.slots = order.map(({ file }) => ({ blob: file, source: 'own' }));
       renderThumbs(job);
       await play(job);

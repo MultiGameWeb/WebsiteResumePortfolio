@@ -64,6 +64,7 @@ const PLAN_SCHEMA = {
         subtitle: { type: "STRING", description: "the main offer or message, under 60 characters" },
         contact: { type: "STRING", description: "phone or WhatsApp number exactly as the customer gave it, or empty" },
         closing: { type: "STRING", description: "a short call to action for the end, under 40 characters" },
+        badge: { type: "STRING", description: "a short corner badge for the whole video, 1-3 words, e.g. 'ADMISSIONS OPEN', 'DIWALI SALE', or empty" },
         style: { type: "STRING", enum: STYLES },
         format: { type: "STRING", enum: Object.keys(FORMATS) },
         // Gemini allows "enum" on strings only; an INTEGER enum fails every request.
@@ -73,12 +74,13 @@ const PLAN_SCHEMA = {
           items: {
             type: "OBJECT",
             properties: {
-              headline: { type: "STRING", description: "1-4 words shown big on the scene, in the customer's language" },
-              line: { type: "STRING", description: "a short tag such as a price, product or benefit, under 24 characters, or empty" },
+              eyebrow: { type: "STRING", description: "a small label above the headline, 2-5 words, e.g. 'SMART CLASSES • EXPERT TEACHERS', in the customer's language" },
+              headline: { type: "STRING", description: "2-6 words shown big on the scene, in the customer's language" },
+              line: { type: "STRING", description: "a short supporting line: a price, benefit or tagline, under 40 characters, or empty" },
               image_prompt: { type: "STRING", description: "an English description of the photo for this scene" },
               stock_query: { type: "STRING", description: "2-4 plain English words to search free stock photos for this scene, e.g. 'indian street food'" }
             },
-            required: ["headline", "line", "image_prompt", "stock_query"]
+            required: ["eyebrow", "headline", "line", "image_prompt", "stock_query"]
           }
         }
       },
@@ -104,7 +106,7 @@ When you have enough, briefly summarise the plan (style, length, scenes) and ask
 Plan rules:
 - scenes: one per 6 seconds, rounded up, at least 2 and at most 10 (10 s: 2, 15 s: 3, 20 s: 4, 30 s: 5, 45 s: 8, 60 s: 10). Use exactly the length the customer asked for.
 - style: jewel (jewellery, luxury), gym (fitness, sports), royal (weddings, events, wedding services), food (restaurants, sweets, bakeries), property (real estate, hotels, resorts), product (shops, electronics, products), offer (sales and discounts), wedding (other functions), birthday (birthdays, kids).
-- headlines and lines in the customer's chosen language; keep them short and punchy.
+- eyebrow, headlines and lines in the customer's chosen language; keep them short and punchy. Each scene tells one selling point (for example a school: the campus, classes and teachers, sports, labs, admissions with the phone number).
 - stock_query: 2-4 simple English words that would find a fitting real photo on a stock photo site (for example "biryani plate", "luxury villa pool", "gold necklace"). Add "indian" when people or places should look Indian.
 - image_prompt: a vivid, photorealistic description in English of one scene that fits the business, set in India with Indian people and places where people appear. Describe only the picture: no words, letters, numbers, logos, brand names, watermarks or real or famous people.
 - Never invent prices, discounts, awards or guarantees the customer did not give. No medical or financial promises. Do not copy other brands.
@@ -116,12 +118,12 @@ function cleanPlan(plan) {
   const seconds = Math.min(MAX_SECONDS, Math.max(MIN_SECONDS, Math.round(Number(plan.seconds) || 30)));
   const count = sceneCount(seconds);
   const scenes = (Array.isArray(plan.scenes) ? plan.scenes : []).slice(0, count).map(s => ({
-    headline: clip(s?.headline, 40), line: clip(s?.line, 30), imagePrompt: clip(s?.image_prompt, 600),
+    eyebrow: clip(s?.eyebrow, 40), headline: clip(s?.headline, 50), line: clip(s?.line, 50), imagePrompt: clip(s?.image_prompt, 600),
     stockQuery: clip(s?.stock_query, 60) || clip(s?.image_prompt, 600).split(" ").slice(0, 4).join(" ")
   })).filter(s => s.imagePrompt);
   if (!scenes.length) return null;
   return {
-    title: clip(plan.title, 60), subtitle: clip(plan.subtitle, 90), contact: clip(plan.contact, 40), closing: clip(plan.closing, 60),
+    title: clip(plan.title, 60), subtitle: clip(plan.subtitle, 90), contact: clip(plan.contact, 40), closing: clip(plan.closing, 60), badge: clip(plan.badge, 30),
     style: STYLES.includes(plan.style) ? plan.style : "offer",
     format: FORMATS[plan.format] ? plan.format : "story",
     seconds, scenes
@@ -150,10 +152,11 @@ const PHOTO_SCHEMA = {
         type: "OBJECT",
         properties: {
           photo: { type: "INTEGER", description: "number of the photo, starting at 1" },
+          eyebrow: { type: "STRING", description: "a small label above the headline, 2-5 words, in the plan's language" },
           headline: { type: "STRING", description: "1-4 words shown big on this photo, in the plan's language, matching what the photo shows" },
-          line: { type: "STRING", description: "a short tag such as a price or benefit the customer gave, under 24 characters, or empty" }
+          line: { type: "STRING", description: "a short supporting line (price, benefit or tagline from the plan), under 40 characters, or empty" }
         },
-        required: ["photo", "headline", "line"]
+        required: ["photo", "eyebrow", "headline", "line"]
       }
     }
   },
@@ -173,7 +176,7 @@ async function photoScenes(env, body) {
   if (!photos.length) return { status: 400, data: { ok: false, error: "Please add at least one photo." } };
   const brief = JSON.stringify({
     title: clip(plan.title, 60), subtitle: clip(plan.subtitle, 90), closing: clip(plan.closing, 60), style: clip(plan.style, 20),
-    scenes: (Array.isArray(plan.scenes) ? plan.scenes : []).slice(0, 10).map(s => ({ headline: clip(s?.headline, 40), line: clip(s?.line, 30) }))
+    scenes: (Array.isArray(plan.scenes) ? plan.scenes : []).slice(0, 10).map(s => ({ eyebrow: clip(s?.eyebrow, 40), headline: clip(s?.headline, 50), line: clip(s?.line, 50) }))
   });
   const parts = [{ text: `Video plan: ${brief}\n\n${photos.length} photos follow, numbered 1 to ${photos.length}.` }];
   photos.forEach((p, i) => parts.push({ text: `Photo ${i + 1}:` }, { inlineData: { mimeType: p.mimeType, data: p.data } }));
@@ -183,7 +186,7 @@ async function photoScenes(env, body) {
       const result = await callGemini(env, keyName(env), { model, system: PHOTO_RULES, contents: [{ role: "user", parts }], schema: PHOTO_SCHEMA, temperature: 0.4, timeoutMs: 45000, maxAttempts: 2 });
       const seen = new Set();
       const scenes = (Array.isArray(result?.scenes) ? result.scenes : [])
-        .map(s => ({ photo: Math.round(Number(s?.photo)) - 1, headline: clip(s?.headline, 40), line: clip(s?.line, 30) }))
+        .map(s => ({ photo: Math.round(Number(s?.photo)) - 1, eyebrow: clip(s?.eyebrow, 40), headline: clip(s?.headline, 50), line: clip(s?.line, 50) }))
         .filter(s => s.photo >= 0 && s.photo < photos.length && !seen.has(s.photo) && seen.add(s.photo));
       if (!scenes.length) throw new Error("No scenes for the photos.");
       return { status: 200, data: { ok: true, scenes } };
