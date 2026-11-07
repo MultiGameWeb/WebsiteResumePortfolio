@@ -19,10 +19,24 @@
   const messages = [];
   let busy = false;
 
-  function bubble(role, text) {
+  function bubble(role, text, files = []) {
     const node = document.createElement('div');
     node.className = `vm-msg ${role}`;
     node.textContent = text;
+    if (files.length) {
+      const row = element('div', 'vm-msg-files');
+      for (const item of files) {
+        if (item.preview) {
+          const img = document.createElement('img');
+          img.src = item.preview;
+          img.alt = item.file.name || 'Shared photo';
+          row.append(img);
+        } else {
+          row.append(element('span', '', `📄 ${item.file.name || 'File'}`));
+        }
+      }
+      node.append(row);
+    }
     chatBox.append(node);
     chatBox.scrollTop = chatBox.scrollHeight;
     return node;
@@ -50,7 +64,7 @@
     free.type = 'button';
     const ai = element('button', 'vm-btn ghost', `✨ AI pictures (${plan.scenes.length})`);
     ai.type = 'button';
-    const own = element('label', 'vm-btn ghost vm-ai-own', '🖼️ My own photos');
+    const own = element('label', 'vm-btn ghost vm-ai-own', '🖼️ My photos + AI');
     const picker = document.createElement('input');
     picker.type = 'file';
     picker.accept = 'image/*';
@@ -59,6 +73,13 @@
     own.append(picker);
     const choices = element('div', 'vm-ai-choices');
     choices.append(free, ai, own);
+    if (sharedPhotos.length) {
+      const shared = element('button', 'vm-btn primary vm-ai-shared', `🖼️ Use the ${sharedPhotos.length} photo${sharedPhotos.length === 1 ? '' : 's'} I shared`);
+      shared.type = 'button';
+      shared.addEventListener('click', () => useFiles(job, sharedPhotos));
+      free.className = 'vm-btn ghost';
+      choices.prepend(shared);
+    }
     const thumbs = element('div', 'vm-ai-thumbs');
     const note = element('p', 'vm-ai-meta');
     const credit = element('p', 'vm-ai-credit');
@@ -70,7 +91,7 @@
       element('h3', '', plan.title || 'Your video'),
       element('p', 'vm-ai-meta', `${STYLE_NAMES[plan.style] || plan.style} · ${plan.seconds} seconds · ${FORMAT_NAMES[plan.format] || plan.format}`),
       list,
-      element('p', 'vm-ai-ask', `How do you want the ${plan.scenes.length} pictures? Free online photos (no watermark), new AI pictures, or your own photos. You can mix: after the photos load, tap ✨ on any scene to make that one with AI.`),
+      element('p', 'vm-ai-ask', `How do you want the ${plan.scenes.length} pictures? Free online photos (no watermark), new AI pictures, or your own photos (AI looks at them, puts them in order and writes the text). You can mix: after the photos load, tap ✨ on any scene to make that one with AI.`),
       choices, thumbs, note, credit,
     );
     planBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -197,8 +218,8 @@
     await window.SiteCraftVideoMaker.loadPlan({ ...job.plan, scenes: ready.map(([scene]) => scene) }, ready.map(([, slot]) => slot.blob));
     showEditor();
     const missing = job.plan.scenes.length - ready.length;
-    const parts = [`Your video is ready ✓ (${ready.length} picture${ready.length === 1 ? '' : 's'}). Tap “Make my video” to download it.`];
-    if (job.aiError) parts.push(`Some AI pictures could not be made, so free photos were used: ${job.aiError}`);
+    const parts = [`${job.slots.some((slot) => slot?.source === 'own') && !job.aiError ? 'AI arranged your photos and wrote the scenes. ' : ''}Your video is ready ✓ (${ready.length} picture${ready.length === 1 ? '' : 's'}). Tap “Make my video” to download it.`];
+    if (job.aiError) parts.push(job.slots.some((slot) => slot?.source === 'own') ? job.aiError : `Some AI pictures could not be made, so free photos were used: ${job.aiError}`);
     if (missing) parts.push(`${missing} scene${missing === 1 ? '' : 's'} had no picture.`);
     job.note.textContent = parts.join(' ');
   }
@@ -206,15 +227,30 @@
   // The customer's own photos take the place of the pictures, in order;
   // extra photos get no caption.
   async function useOwnPhotos(job, picker) {
-    const files = Array.from(picker.files || []).filter((file) => file.type.startsWith('image/')).slice(0, 10);
+    const files = Array.from(picker.files || []);
     picker.value = '';
+    await useFiles(job, files);
+  }
+
+  async function useFiles(job, list) {
+    const files = list.filter((file) => file.type.startsWith('image/')).slice(0, 10);
     if (!files.length || busy) return;
     busy = true;
     try {
-      const scenes = files.map((_, i) => job.plan.scenes[i] || { headline: '', line: '' });
-      job.plan = { ...job.plan, scenes };
-      job.slots = files.map((file) => ({ blob: file, source: 'own' }));
-      job.aiError = '';
+      // The AI looks at the photos, orders them and writes each scene's text.
+      // If it cannot, the photos are used in the order given with the plan's text.
+      let order = files.map((file, i) => ({ file, headline: job.original.scenes[i]?.headline || '', line: job.original.scenes[i]?.line || '' }));
+      job.note.textContent = `AI is looking at your ${files.length} photo${files.length === 1 ? '' : 's'} and writing the scenes…`;
+      try {
+        const photos = await Promise.all(files.map((file) => shrinkImage(file, 768)));
+        const data = await post('/api/aivideo/photos', { plan: job.original, photos });
+        order = data.scenes.map((scene) => ({ file: files[scene.photo], headline: scene.headline, line: scene.line }));
+        job.aiError = '';
+      } catch (error) {
+        job.aiError = `${error.message} Your photos were used in the order you picked.`;
+      }
+      job.plan = { ...job.original, scenes: order.map(({ headline, line }) => ({ headline, line })) };
+      job.slots = order.map(({ file }) => ({ blob: file, source: 'own' }));
       renderThumbs(job);
       await play(job);
     } catch (error) {
@@ -224,13 +260,112 @@
     }
   }
 
+  // ---- Sharing photos and files (＋ button, paste, drag and drop) ----
+  const MAX_PENDING = 6;
+  const MAX_FILE_BYTES = 3 * 1024 * 1024;
+  const attachList = $('#aiAttachList');
+  const fileInput = $('#aiFiles');
+  const card = $('#aiCard');
+  const sharedPhotos = [];
+  let pending = [];
+
+  function renderPending() {
+    attachList.hidden = !pending.length;
+    attachList.replaceChildren(...pending.map((item, index) => {
+      const chip = element('div', 'vm-attach');
+      if (item.preview) {
+        const img = document.createElement('img');
+        img.src = item.preview;
+        img.alt = '';
+        chip.append(img);
+      } else {
+        chip.append(element('b', 'vm-file-icon', '📄'));
+      }
+      chip.append(element('span', '', item.file.name || 'Pasted photo'));
+      const remove = element('button', '', '✕');
+      remove.type = 'button';
+      remove.setAttribute('aria-label', `Remove ${item.file.name || 'file'}`);
+      remove.addEventListener('click', () => { pending.splice(index, 1); renderPending(); });
+      chip.append(remove);
+      return chip;
+    }));
+  }
+
+  function addFiles(list) {
+    let skipped = 0;
+    for (const file of list) {
+      const isImage = file.type.startsWith('image/');
+      const isDoc = file.type === 'application/pdf' || file.type === 'text/plain';
+      if ((!isImage && !isDoc) || (isDoc && file.size > MAX_FILE_BYTES) || pending.length >= MAX_PENDING) { skipped += 1; continue; }
+      pending.push({ file, preview: isImage ? URL.createObjectURL(file) : '' });
+    }
+    renderPending();
+    if (skipped) bubble('ai', `Some files were skipped. You can share up to ${MAX_PENDING} at a time: photos, PDF or text files (up to 3 MB each).`);
+    input.focus();
+  }
+
+  // Photos are made smaller before they go to the AI (it only needs to see them).
+  function shrinkImage(file, size = 1280) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, size / Math.max(img.naturalWidth, img.naturalHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.naturalWidth * scale);
+        canvas.height = Math.round(img.naturalHeight * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(url);
+        resolve({ mimeType: 'image/jpeg', data: canvas.toDataURL('image/jpeg', 0.82).split(',')[1] });
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('This photo could not be opened.')); };
+      img.src = url;
+    });
+  }
+
+  function readFile(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({ mimeType: file.type, data: String(reader.result).split(',')[1] });
+      reader.onerror = () => reject(new Error('This file could not be read.'));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  fileInput.addEventListener('change', () => { addFiles(Array.from(fileInput.files || [])); fileInput.value = ''; });
+  card.addEventListener('paste', (event) => {
+    const files = Array.from(event.clipboardData?.files || []);
+    if (!files.length) return;
+    event.preventDefault();
+    addFiles(files);
+  });
+  card.addEventListener('dragover', (event) => { event.preventDefault(); card.classList.add('vm-drop'); });
+  card.addEventListener('dragleave', (event) => { if (!card.contains(event.relatedTarget)) card.classList.remove('vm-drop'); });
+  card.addEventListener('drop', (event) => {
+    event.preventDefault();
+    card.classList.remove('vm-drop');
+    addFiles(Array.from(event.dataTransfer?.files || []));
+  });
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const text = input.value.trim();
-    if (!text || busy) return;
+    const typed = input.value.trim();
+    if ((!typed && !pending.length) || busy) return;
+    const sending = pending;
+    let files = [];
+    try {
+      files = await Promise.all(sending.map((item) => (item.preview ? shrinkImage(item.file) : readFile(item.file))));
+    } catch (error) {
+      bubble('ai', error.message);
+      return;
+    }
+    pending = [];
+    renderPending();
+    for (const item of sending) if (item.preview && sharedPhotos.length < 10) sharedPhotos.push(item.file);
+    const text = typed || (sending.some((item) => item.preview) ? 'I shared these photos.' : 'I shared this file.');
     input.value = '';
-    bubble('user', text);
-    messages.push({ role: 'user', text });
+    bubble('user', typed, sending);
+    messages.push({ role: 'user', text, files });
     busy = true;
     $('#aiSend').disabled = true;
     const typing = bubble('ai typing', '…');

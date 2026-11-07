@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;800&family=Playfair+Display:wght@700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Jost:wght@400;600&family=Anton&family=Noto+Sans+Telugu:wght@600;800&family=Noto+Sans+Devanagari:wght@600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="global.css">
 <link rel="stylesheet" href="site-navigation.css">
-<link rel="stylesheet" href="video-maker/maker.css?v=6">
+<link rel="stylesheet" href="video-maker/maker.css?v=7">
 </head>
 <body class="vm-page">
 <main class="vm-app" id="main-content">
@@ -27,11 +27,15 @@
         <h2><span>✨</span> Create with AI</h2>
         <div class="vm-chat" id="aiChat" aria-live="polite"></div>
         <div class="vm-ai-plan" id="aiPlan" hidden></div>
+        <div class="vm-attach-list" id="aiAttachList" hidden></div>
         <form class="vm-chat-form" id="aiForm" autocomplete="off">
-          <input id="aiInput" maxlength="1000" placeholder="For example: Saree shop in Warangal, Diwali offer 30% off" aria-label="Message to the AI">
+          <label class="vm-btn ghost vm-attach-btn" title="Add photos or files (menu, brochure, visiting card)" aria-label="Add photos or files">＋
+            <input type="file" id="aiFiles" accept="image/*,application/pdf,text/plain" multiple hidden>
+          </label>
+          <input id="aiInput" maxlength="1000" placeholder="Type, or paste / drop photos and files" aria-label="Message to the AI">
           <button type="submit" class="vm-btn primary" id="aiSend" aria-label="Send">➤</button>
         </form>
-        <p class="vm-hint">Free to try while in testing (a few AI videos per day). Never share passwords, OTPs or bank details.</p>
+        <p class="vm-hint">Tap ＋ or paste (Ctrl+V) to share photos, a menu or brochure — your photos can go in the video. Free to try while in testing. Never share passwords, OTPs or bank details.</p>
       </div>
       <details class="vm-card vm-ai-editor" id="aiEditor" hidden>
         <summary>✏️ Change text, photos, template or music</summary>
@@ -96,6 +100,6 @@
 </main>
 <script src="site-navigation.js"></script>
 <script src="video-maker/maker.js?v=4"></script>
-<script src="video-maker/ai.js?v=4"></script>
+<script src="video-maker/ai.js?v=5"></script>
 </body>
 </html>
