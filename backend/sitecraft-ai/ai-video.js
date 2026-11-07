@@ -55,7 +55,8 @@ const PLAN_SCHEMA = {
         closing: { type: "STRING", description: "a short call to action for the end, under 40 characters" },
         style: { type: "STRING", enum: STYLES },
         format: { type: "STRING", enum: Object.keys(FORMATS) },
-        seconds: { type: "INTEGER", enum: [15, 30, 60] },
+        // Gemini allows "enum" on strings only; an INTEGER enum fails every request.
+        seconds: { type: "INTEGER", description: "video length in seconds: 15, 30 or 60" },
         scenes: {
           type: "ARRAY",
           items: {
@@ -97,7 +98,8 @@ Plan rules:
 
 function cleanPlan(plan) {
   if (!plan) return null;
-  const seconds = [15, 30, 60].includes(plan.seconds) ? plan.seconds : 30;
+  const asked = Number(plan.seconds) || 30;
+  const seconds = [15, 30, 60].reduce((best, n) => (Math.abs(n - asked) < Math.abs(best - asked) ? n : best), 30);
   const count = LENGTHS[seconds];
   const scenes = (Array.isArray(plan.scenes) ? plan.scenes : []).slice(0, count).map(s => ({
     headline: clip(s?.headline, 40), line: clip(s?.line, 30), imagePrompt: clip(s?.image_prompt, 600)
@@ -109,6 +111,16 @@ function cleanPlan(plan) {
     format: FORMATS[plan.format] ? plan.format : "story",
     seconds, scenes
   };
+}
+
+// Says what went wrong without leaking details, so a setup problem is not
+// mistaken for a busy AI.
+function friendlyError(error) {
+  const text = String(error?.message || "");
+  if (/not configured/i.test(text)) return "The AI is not set up yet (Gemini key missing). Please try again later.";
+  if (/API key|API_KEY_INVALID|PERMISSION_DENIED|HTTP 40[13]/i.test(text)) return "The AI key is not working right now. Please try again later.";
+  if (/HTTP 429|RESOURCE_EXHAUSTED/i.test(text)) return "The AI is busy right now (too many requests). Please try again in a minute.";
+  return "The AI is busy right now. Please try again in a moment.";
 }
 
 async function chat(env, body) {
@@ -129,7 +141,7 @@ async function chat(env, body) {
     }
   }
   console.error("AI video chat failed", lastError);
-  return { status: 503, data: { ok: false, error: "The AI is busy right now. Please try again in a moment." } };
+  return { status: 503, data: { ok: false, error: friendlyError(lastError) } };
 }
 
 // ---- Daily image limits (D1) ----
@@ -178,7 +190,10 @@ async function image(env, body, ip) {
   }
   if (!response.ok) {
     console.error("AI video image failed", response.status, (await response.text()).slice(0, 300));
-    return { status: 502, data: { ok: false, error: "This picture could not be made. Please try again." } };
+    // The code helps the owner tell a wrong model name (404) or a key without
+    // image access or billing (400/403) from a busy AI (429).
+    const why = response.status === 429 ? "The AI is busy right now. Please try again in a minute." : "This picture could not be made. Please try again.";
+    return { status: 502, data: { ok: false, error: `${why} (code ${response.status})` } };
   }
   const payload = await response.json();
   const part = (payload?.candidates?.[0]?.content?.parts || []).find(p => p?.inlineData?.data);

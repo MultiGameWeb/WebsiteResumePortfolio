@@ -29,6 +29,8 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
 .av-kicker:before{content:"";width:23px;height:1px;background:var(--av-gradient)}
 .av-diy{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px;padding:clamp(20px,4vw,36px);border:1px solid rgba(255,255,255,.14);border-radius:24px;background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(236,72,153,.07))}.av-diy h2{margin:10px 0 10px;font:800 clamp(26px,3.6vw,38px)/1.05 Sora,Inter,sans-serif;letter-spacing:-.05em}.av-diy p{margin:0;max-width:640px;color:var(--av-muted);font-size:14px;line-height:1.75}.av-diy ul{margin:12px 0 0;padding-left:18px;color:#ddd3ea;font-size:13px;line-height:1.7}
 @media(max-width:760px){.av-diy{grid-template-columns:minmax(0,1fr)}}
+.av-diy{grid-template-columns:minmax(0,1fr)}.av-diy-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.av-diy-choice{display:grid;gap:8px;align-content:start;padding:22px;border:1px solid rgba(255,255,255,.14);border-radius:20px;background:rgba(16,15,23,.6);color:#fff;text-decoration:none;transition:transform .2s,border-color .2s}.av-diy-choice:hover,.av-diy-choice:focus-visible{transform:translateY(-3px);border-color:rgba(236,72,153,.6)}.av-diy-choice.ai{background:linear-gradient(135deg,rgba(139,92,246,.35),rgba(249,115,22,.22));border-color:rgba(236,72,153,.45)}.av-diy-icon{font-size:28px}.av-diy-choice strong{font:800 22px/1.1 Sora,Inter,sans-serif;letter-spacing:-.03em}.av-diy-choice span{color:#ddd3ea;font-size:14px;line-height:1.6}.av-diy-choice em{font-style:normal;font-weight:700;margin-top:6px;color:#f9a8d4}
+@media(max-width:620px){.av-diy-choices{grid-template-columns:minmax(0,1fr)}}
 .av-gradient{background:var(--av-gradient);background-clip:text;-webkit-background-clip:text;color:transparent}
 .av-hero{padding:clamp(48px,7vw,88px) 0 55px}
 .av-hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,5vw,70px);align-items:center}
@@ -152,7 +154,7 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
    <div class="av-hero-actions">
     <a class="av-btn primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20am%20interested%20in%20an%20AI%20ad%20video.%20Please%20share%20the%20options%20starting%20at%20%E2%82%B9599." target="_blank" rel="noopener noreferrer">Create My Ad Video <span aria-hidden="true">↗</span></a>
     <a class="av-btn ghost" href="#sample-templates">See 13 sample templates <span aria-hidden="true">↓</span></a>
-    <a class="av-btn ghost" href="video-maker.html?ai=1">✨ Create your video with AI <span aria-hidden="true">↗</span></a>
+    <a class="av-btn ghost" href="#diy-video">Make it yourself — with or without AI <span aria-hidden="true">↓</span></a>
     <a class="av-btn ghost" href="#video-types">Explore 20 video types <span aria-hidden="true">↓</span></a>
    </div>
    <div class="av-price-row">
@@ -181,16 +183,28 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
   <div class="av-diy">
    <div>
     <span class="av-kicker">DO IT YOURSELF · FREE TO TRY</span>
-    <h2 id="av-diy-title">Photo Video Maker</h2>
-    <p>Turn your own photos into a video ad in minutes. Pick a template, add your offer, prices, phone number and music, and download a video for WhatsApp Status, Instagram Reels or YouTube. It runs right in your browser — your photos stay on your phone.</p>
+    <h2 id="av-diy-title">Make your video yourself</h2>
+    <p>Two ways to make your own video ad for WhatsApp Status, Instagram Reels or YouTube: let AI create everything from a short chat, or turn your own photos into a video in minutes.</p>
     <ul>
      <li>9 templates: shop offer, product showcase, wedding / function, birthday, real estate, restaurant, plus 3 premium cinematic styles — jewellery luxe, gym power and royal wedding</li>
      <li>Captions and price tags on every photo, in Telugu, Hindi or English</li>
      <li>Status / Reels (9:16), post (1:1) and YouTube (16:9) sizes</li>
     </ul>
    </div>
-   <a class="av-btn primary" href="video-maker.html?ai=1">✨ Create with AI — just type your details <span aria-hidden="true">↗</span></a>
-   <a class="av-btn ghost" href="video-maker.html">Use my own photos <span aria-hidden="true">↗</span></a>
+   <div class="av-diy-choices">
+    <a class="av-diy-choice ai" href="ai-video-maker.html">
+     <span class="av-diy-icon" aria-hidden="true">✨</span>
+     <strong>Create with AI</strong>
+     <span>Just type your business details in a chat. AI writes the scenes, creates the pictures and makes the video.</span>
+     <em>Start with AI ↗</em>
+    </a>
+    <a class="av-diy-choice" href="video-maker.html">
+     <span class="av-diy-icon" aria-hidden="true">🖼️</span>
+     <strong>Without AI</strong>
+     <span>Use your own photos. Pick a template, add your offer and prices, and download.</span>
+     <em>Use my photos ↗</em>
+    </a>
+   </div>
   </div>
  </div>
 </section>

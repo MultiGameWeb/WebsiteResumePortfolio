@@ -75,3 +75,14 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 .vm-ai-thumbs { display: flex; flex-wrap: wrap; gap: 6px; }
 .vm-ai-thumbs img, .vm-ai-thumbs span { width: 54px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid var(--vm-line); background: var(--vm-panel2); }
 .vm-ai-thumbs span { display: grid; place-items: center; font-size: 12px; color: var(--vm-muted); }
+
+/* AI page: the editor opens once the AI video is ready. */
+.vm-ai-editor { display: block; }
+.vm-ai-editor[hidden] { display: none; }
+.vm-ai-editor > summary { cursor: pointer; font-weight: 700; font-size: 1.05rem; list-style: none; }
+.vm-ai-editor > summary::-webkit-details-marker { display: none; }
+.vm-ai-editor > summary::after { content: " ▾"; opacity: .7; }
+.vm-ai-editor[open] > summary::after { content: " ▴"; }
+.vm-ai-editor .vm-sub { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vm-line); display: grid; gap: 12px; }
+.vm-ai-editor .vm-sub h2 { font-size: 1rem; margin: 0; }
+.vm-intro a { color: #f9a8d4; font-weight: 700; }
