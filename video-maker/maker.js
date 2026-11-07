@@ -32,8 +32,12 @@
     { id: 'jewel', name: 'Jewellery luxe', premium: true, cinema: 'jewel', bg: '#050505', bg2: '#17120a', accent: '#d4af37', text: '#fdf6e3', font: LUXE, motion: 'zoom', deco: 'none' },
     { id: 'gym', name: 'Gym power', premium: true, cinema: 'gym', bg: '#0a0a0a', bg2: '#2a0c06', accent: '#ff4d1f', text: '#ffffff', font: IMPACT, motion: 'zoom', deco: 'none' },
     { id: 'royal', name: 'Royal wedding', premium: true, cinema: 'royal', bg: '#1a0306', bg2: '#4a0d18', accent: '#f2c46d', text: '#fff4e0', font: LUXE, motion: 'pan', deco: 'none' },
-    // AI style: full-screen photos with labels and a call-now ending (AI videos use it).
-    { id: 'spotlight', name: 'Spotlight promo (AI style)', spot: true, bg: '#0b4fc0', bg2: '#041a44', accent: '#ffc92e', text: '#ffffff', font: ROUND, motion: 'zoom', deco: 'none' },
+    // AI-style designs (video-maker/styles.js), one per kind of business; AI videos pick the fitting one.
+    { id: 'ai-playful', name: 'AI style · Playful (schools, kids)', spot: 'playful', bg: '#0b4fc0', bg2: '#041a44', accent: '#ffc92e', text: '#ffffff', font: ROUND },
+    { id: 'ai-luxe', name: 'AI style · Luxe (jewellery, weddings)', spot: 'luxe', bg: '#0b0906', bg2: '#2b1d05', accent: '#d4af37', text: '#ffffff', font: LUXE },
+    { id: 'ai-bold', name: 'AI style · Bold (gym, sale)', spot: 'bold', bg: '#0a0a0a', bg2: '#2a0c06', accent: '#ff4d1f', text: '#ffffff', font: IMPACT },
+    { id: 'ai-fresh', name: 'AI style · Fresh (food)', spot: 'fresh', bg: '#fffaf3', bg2: '#ffedd5', accent: '#ff7a1a', text: '#3b1300', font: SANS },
+    { id: 'ai-clean', name: 'AI style · Clean (property, products)', spot: 'clean', bg: '#0f172a', bg2: '#334155', accent: '#2dd4bf', text: '#ffffff', font: CLEAN },
   ];
 
   const $ = (selector) => document.querySelector(selector);
@@ -589,209 +593,23 @@
     cinemaChrome(t, '');
   }
 
-  // ---- Spotlight promo (AI style) ----
-  // Full-screen photos that slowly zoom and cross-fade, a small label pill, a
-  // big headline and a short line, a call-now card at the end, a timer and a
-  // progress bar. The first photo opens with the business name; the last one
-  // ends with the call to action.
-  const SPOT_FADE = 0.9;
-  const SPOT_THEMES = {
-    default: { accent: '#ffc92e', ink: '#0a2e6b', shade: '4,26,68', chip: '#0b4fc0' },
-    offer: { accent: '#ffd400', ink: '#3a2a00', shade: '20,12,0', chip: '#b45309' },
-    food: { accent: '#ffb02e', ink: '#4a1d00', shade: '43,16,4', chip: '#c2410c' },
-    property: { accent: '#5eead4', ink: '#053b36', shade: '3,32,30', chip: '#0f766e' },
-    wedding: { accent: '#f5c97a', ink: '#4a0d18', shade: '40,6,14', chip: '#9f1239' },
-    royal: { accent: '#f2c46d', ink: '#4a0d18', shade: '30,4,10', chip: '#881337' },
-    birthday: { accent: '#f9a8d4', ink: '#4c1d95', shade: '30,12,60', chip: '#7c3aed' },
-    product: { accent: '#7dd3fc', ink: '#0b2540', shade: '6,18,36', chip: '#0369a1' },
-    jewel: { accent: '#e9c46a', ink: '#2b1d05', shade: '12,9,4', chip: '#8a6a1f' },
-    gym: { accent: '#ff7a45', ink: '#2a0c06', shade: '14,6,4', chip: '#c2410c' },
-  };
-  const spotTheme = () => SPOT_THEMES[state.spotStyle] || SPOT_THEMES.default;
+  // ---- AI-style designs (video-maker/styles.js) ----
+  // The same drawing code makes the preview, the MP4 and the HTML video.
+  const STYLES = window.SiteCraftStyles;
+  const DEFAULT_STYLE = { playful: 'default', luxe: 'jewel', bold: 'gym', fresh: 'food', clean: 'property' };
 
-  // The timeline: opening (first photo), each photo, ending (last photo).
-  function spotSegments() {
-    const n = Math.max(1, state.photos.length);
-    const per = state.perPhoto;
-    const segments = [{ kind: 'intro', photo: 0, start: 0, end: INTRO }];
-    for (let i = 0; i < n; i += 1) segments.push({ kind: 'photo', photo: i, start: INTRO + i * per, end: INTRO + (i + 1) * per });
-    segments.push({ kind: 'outro', photo: n - 1, start: INTRO + n * per, end: INTRO + n * per + OUTRO });
-    return segments;
+  function spotData(images) {
+    const [w, h] = FORMATS[state.format];
+    return {
+      layout: state.template.spot, style: state.spotStyle, w, h, intro: INTRO, per: state.perPhoto, outro: OUTRO,
+      title: text('#titleInput') || 'Your business name', subtitle: text('#subtitleInput'), contact: text('#contactInput'),
+      closing: text('#closingInput') || 'Visit us today', badge: text('#badgeInput'),
+      photos: state.photos.map((photo, i) => ({ img: images ? images[i] : photo.bitmap, label: photo.label || '', head: photo.caption || '', line: photo.price || '' })),
+    };
   }
 
-  // Each photo zooms in slowly over the whole time it is on screen.
-  function photoSpan(index, segments) {
-    const uses = segments.filter((seg) => seg.photo === index);
-    return [uses[0].start, uses[uses.length - 1].end];
-  }
-
-  function spotPill(label, { x, y, size, bg, color, align = 'left', alpha = 1 }) {
-    ctx.save();
-    ctx.globalAlpha *= alpha;
-    ctx.font = `700 ${size}px ${ROUND}`;
-    const value = label.toUpperCase();
-    const w = Math.min(ctx.measureText(value).width + size * 1.6, canvas.width * 0.88);
-    const h = size * 2.1;
-    const left = align === 'center' ? x - w / 2 : x;
-    ctx.shadowColor = 'rgba(0,0,0,.25)';
-    ctx.shadowBlur = size * 0.6;
-    ctx.fillStyle = bg;
-    ctx.beginPath();
-    ctx.roundRect(left, y, w, h, h / 2);
-    ctx.fill();
-    ctx.shadowColor = 'transparent';
-    ctx.fillStyle = color;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(value, left + w / 2, y + h / 2 + size * 0.05, w - size * 1.2);
-    ctx.restore();
-    return h;
-  }
-
-  function linesHeight(value, size, weight, font, maxWidth, maxLines) {
-    if (!value) return 0;
-    ctx.save();
-    ctx.font = `${weight} ${size}px ${font}`;
-    const count = wrap(value, maxWidth, maxLines).length;
-    ctx.restore();
-    return count * size * 1.18;
-  }
-
-  function spotScene(seg, t, alpha, segments) {
-    const W = canvas.width;
-    const H = canvas.height;
-    const u = Math.min(W, H) / 100;
-    const theme = spotTheme();
-    const photo = state.photos[seg.photo];
-    ctx.save();
-    ctx.globalAlpha = alpha;
-    if (photo) {
-      const [from, to] = photoSpan(seg.photo, segments);
-      const zoom = 1 + 0.11 * clamp((t - from) / Math.max(0.1, to - from), 0, 1);
-      const img = photo.bitmap;
-      const scale = Math.max(W / img.width, H / img.height) * zoom;
-      const w = img.width * scale;
-      const h = img.height * scale;
-      ctx.drawImage(img, (W - w) / 2, (H - h) * 0.42, w, h);
-    } else {
-      const g = ctx.createLinearGradient(0, 0, W, H);
-      g.addColorStop(0, '#0b4fc0'); g.addColorStop(1, '#041a44');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    }
-    const shade = (a) => `rgba(${theme.shade},${a})`;
-    let g = ctx.createLinearGradient(0, 0, 0, H);
-    g.addColorStop(0, shade(0.55)); g.addColorStop(0.5, shade(0)); g.addColorStop(1, shade(0.78));
-    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
-    g = ctx.createLinearGradient(0, H, 0, H * 0.42);
-    g.addColorStop(0, shade(0.8)); g.addColorStop(1, shade(0));
-    ctx.fillStyle = g; ctx.fillRect(0, H * 0.42, W, H * 0.58);
-
-    const local = t - seg.start;
-    const appear = ease((local - 0.15) / 0.6);
-    const lift = (1 - appear) * u * 4;
-    const bottom = H - u * (state.format === 'wide' ? 9 : 11) + lift;
-    const title = text('#titleInput') || 'Your business name';
-    if (seg.kind === 'photo') {
-      const x = u * 6;
-      const maxW = W - u * 12;
-      const big = u * (state.format === 'wide' ? 6.4 : 7.6);
-      const small = u * 3.6;
-      const label = photo?.label || '';
-      const head = photo?.caption || '';
-      const line = photo?.price || '';
-      const hLine = linesHeight(line, small, 700, ROUND, maxW, 2);
-      const hHead = linesHeight(head, big, 600, ROUND, maxW, 3);
-      let y = bottom - hLine - (hLine ? u * 1.5 : 0) - hHead;
-      if (label) spotPill(label, { x, y: y - u * 7.5, size: u * 2.7, bg: theme.accent, color: theme.ink, alpha: appear });
-      drawText(head, { x, y, size: big, weight: 600, color: '#ffffff', maxWidth: maxW, align: 'left', alpha: appear, font: ROUND });
-      drawText(line, { x, y: y + hHead + u * 1.5, size: small, weight: 700, color: 'rgba(255,255,255,.92)', maxWidth: maxW, align: 'left', alpha: ease((local - 0.35) / 0.6), maxLines: 2, font: ROUND });
-    } else if (seg.kind === 'intro') {
-      const maxW = W * 0.86;
-      const big = u * (state.format === 'wide' ? 7.2 : 8.8);
-      const head = text('#subtitleInput') || title;
-      const hHead = linesHeight(head, big, 600, ROUND, maxW, 3);
-      const y = bottom - hHead;
-      spotPill(`✦ ${title} ✦`, { x: W / 2, y: y - u * 8, size: u * 2.9, bg: theme.accent, color: theme.ink, align: 'center', alpha: appear });
-      drawText(head, { x: W / 2, y, size: big, weight: 600, color: '#ffffff', maxWidth: maxW, alpha: appear, font: ROUND });
-    } else {
-      const maxW = W * 0.86;
-      const contact = text('#contactInput');
-      const closing = text('#closingInput') || 'Visit us today';
-      const big = u * (state.format === 'wide' ? 6.6 : 7.8);
-      const cardH = contact ? u * 15 : 0;
-      const hHead = linesHeight(closing, big, 600, ROUND, maxW, 2);
-      let y = bottom - cardH - (contact ? u * 3 : 0) - hHead;
-      spotPill(text('#badgeInput') || title, { x: W / 2, y: y - u * 7.5, size: u * 2.7, bg: '#ffffff', color: theme.chip, align: 'center', alpha: appear });
-      drawText(closing, { x: W / 2, y, size: big, weight: 600, color: '#ffffff', maxWidth: maxW, alpha: appear, maxLines: 2, font: ROUND });
-      if (contact) {
-        const pop = ease((local - 0.45) / 0.6);
-        const cardW = Math.min(W * 0.78, u * 72);
-        y += hHead + u * 3;
-        ctx.save();
-        ctx.globalAlpha *= pop;
-        ctx.shadowColor = 'rgba(0,0,0,.3)'; ctx.shadowBlur = u * 3; ctx.shadowOffsetY = u;
-        ctx.fillStyle = theme.accent;
-        ctx.beginPath(); ctx.roundRect((W - cardW) / 2, y, cardW, cardH, u * 3.5); ctx.fill();
-        ctx.shadowColor = 'transparent';
-        ctx.fillStyle = theme.ink; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.font = `700 ${u * 2.8}px ${ROUND}`;
-        ctx.fillText('CALL NOW', W / 2, y + cardH * 0.3);
-        ctx.font = `600 ${u * 6.4}px ${ROUND}`;
-        ctx.fillText(`📞 ${contact}`, W / 2, y + cardH * 0.66, cardW - u * 4);
-        ctx.restore();
-      }
-    }
-    ctx.restore();
-  }
-
-  function spotChrome(t) {
-    const W = canvas.width;
-    const H = canvas.height;
-    const u = Math.min(W, H) / 100;
-    const theme = spotTheme();
-    const total = totalSeconds();
-    const clock = (sec) => `${String(Math.floor(sec / 60)).padStart(2, '0')}:${String(Math.floor(sec) % 60).padStart(2, '0')}`;
-    ctx.save();
-    const size = u * 2.9;
-    ctx.font = `600 ${size}px ${ROUND}`;
-    const label = `${clock(t)} / ${clock(total)}`;
-    const w = ctx.measureText(label).width + size * 1.6;
-    ctx.fillStyle = 'rgba(0,0,0,.35)';
-    ctx.beginPath(); ctx.roundRect(u * 5, u * 5, w, size * 2.1, size * 1.05); ctx.fill();
-    ctx.fillStyle = '#ffffff'; ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
-    ctx.fillText(label, u * 5 + size * 0.8, u * 5 + size * 1.08);
-    ctx.restore();
-    const badge = text('#badgeInput');
-    if (badge) {
-      ctx.save();
-      ctx.font = `700 ${u * 2.5}px ${ROUND}`;
-      const bw = ctx.measureText(badge.toUpperCase()).width + u * 4;
-      ctx.restore();
-      spotPill(badge, { x: W - u * 5 - bw, y: u * 5 + size * 0.05, size: u * 2.5, bg: '#ffffff', color: theme.chip });
-    }
-    ctx.fillStyle = 'rgba(255,255,255,.3)';
-    ctx.fillRect(0, H - u * 0.7, W, u * 0.7);
-    ctx.fillStyle = theme.accent;
-    ctx.fillRect(0, H - u * 0.7, W * clamp(t / total, 0, 1), u * 0.7);
-  }
-
-  function spotFrame(t) {
-    const segments = spotSegments();
-    let index = segments.findIndex((seg) => t < seg.end);
-    if (index < 0) index = segments.length - 1;
-    const seg = segments[index];
-    const into = t - seg.start;
-    if (index > 0 && into < SPOT_FADE) {
-      spotScene(segments[index - 1], t, 1, segments);
-      spotScene(seg, t, ease(into / SPOT_FADE), segments);
-    } else {
-      spotScene(seg, t, 1, segments);
-    }
-    spotChrome(t);
-  }
-
-  // A stand-alone HTML video (photos inside the file, no key, works offline
-  // apart from the font) in the Spotlight design.
+  // A stand-alone HTML video: the photos and the drawing code are inside the
+  // file, so it plays in any browser. No key or account is in it.
   async function spotHtml() {
     const images = state.photos.map((photo) => {
       const scale = Math.min(1, 1080 / Math.max(photo.bitmap.width, photo.bitmap.height));
@@ -801,55 +619,33 @@
       c.getContext('2d').drawImage(photo.bitmap, 0, 0, c.width, c.height);
       return c.toDataURL('image/jpeg', 0.85);
     });
-    const data = {
-      title: text('#titleInput') || 'Your business', subtitle: text('#subtitleInput'), contact: text('#contactInput'),
-      closing: text('#closingInput') || 'Visit us today', badge: text('#badgeInput'), theme: spotTheme(),
-      intro: INTRO, outro: OUTRO, per: state.perPhoto, fade: SPOT_FADE, ratio: FORMATS[state.format],
-      scenes: state.photos.map((photo, i) => ({ img: images[i], label: photo.label || '', head: photo.caption || '', line: photo.price || '' })),
-    };
+    const code = await (await fetch(document.querySelector('script[src*="video-maker/styles.js"]').src)).text();
+    const data = spotData(images);
     const json = JSON.stringify(data).replace(/</g, '\\u003c');
+    const title = data.title.replace(/[<&"]/g, '');
     return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${data.title.replace(/[<&"]/g, '')} — video</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<title>${title} — video</title>
+<link href="${STYLES.fontsUrl}" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px;background:#0f0f14;font-family:Fredoka,Poppins,sans-serif;color:#fff}
-.v{position:relative;width:min(100%,calc((100vh - 110px) * var(--r)));aspect-ratio:var(--r);overflow:hidden;border-radius:24px;background:#000;box-shadow:0 24px 60px rgba(0,0,0,.4)}
-.s{position:absolute;inset:0;opacity:0}.s img{width:100%;height:100%;object-fit:cover;transform-origin:center 42%}
-.g{position:absolute;inset:0}.t{position:absolute;inset:auto 0 0 0;padding:0 6% 11%}.c{text-align:center}
-.p{display:inline-block;padding:.45em .9em;border-radius:99px;font-weight:700;font-size:clamp(9px,2.6cqw,15px);letter-spacing:.12em;text-transform:uppercase}
-h2{margin:.35em 0 0;font-weight:600;line-height:1.05;font-size:clamp(20px,7.4cqw,44px);text-shadow:0 2px 12px rgba(0,0,0,.5)}
-.l{margin:.4em 0 0;font-weight:700;font-size:clamp(11px,3.5cqw,20px);opacity:.92;text-shadow:0 2px 10px rgba(0,0,0,.5)}
-.k{margin:.8em auto 0;max-width:78%;padding:.7em 1em;border-radius:18px;font-weight:600}.k small{display:block;font-weight:700;letter-spacing:.18em;font-size:clamp(9px,2.6cqw,14px)}.k b{font-weight:600;font-size:clamp(18px,6cqw,34px)}
-.top{position:absolute;inset:4% 4% auto 4%;display:flex;justify-content:space-between;align-items:center;z-index:5}.clock{background:rgba(0,0,0,.35);padding:.35em .8em;border-radius:99px;font-weight:600;font-size:clamp(10px,2.8cqw,16px)}
-.bar{position:absolute;inset:auto 0 0 0;height:4px;background:rgba(255,255,255,.3);z-index:5}.bar i{display:block;height:100%;width:0}
-.v{container-type:inline-size}.ctl{display:flex;gap:10px}.ctl button{font:inherit;font-weight:600;padding:.7em 1.4em;border-radius:99px;border:0;cursor:pointer}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px;background:#0f0f14;font-family:Poppins,sans-serif}
+canvas{display:block;width:min(100%,calc((100vh - 110px) * ${data.w} / ${data.h}));height:auto;border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.45);background:#000}
+.ctl{display:flex;gap:10px}.ctl button{font:inherit;font-weight:700;padding:.7em 1.4em;border-radius:99px;border:0;cursor:pointer}
 </style></head><body>
-<div class="v" id="v"></div><div class="ctl"><button id="pp">Pause</button><button id="rs">Restart</button></div>
+<canvas id="v" width="${data.w}" height="${data.h}" aria-label="${title} video"></canvas>
+<div class="ctl"><button id="pp">Pause</button><button id="rs">Restart</button></div>
+<script>
+if(!CanvasRenderingContext2D.prototype.roundRect){CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h){this.rect(x,y,w,h)}}
+${code}
+</script>
 <script>
 const D=${json};
-const v=document.getElementById('v');v.style.setProperty('--r',D.ratio[0]+'/'+D.ratio[1]);
-const T=D.theme,sh=a=>'rgba('+T.shade+','+a+')',esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const n=Math.max(1,D.scenes.length),segs=[{k:'intro',p:0,a:0,b:D.intro}];
-D.scenes.forEach((s,i)=>segs.push({k:'photo',p:i,a:D.intro+i*D.per,b:D.intro+(i+1)*D.per}));
-segs.push({k:'outro',p:n-1,a:D.intro+n*D.per,b:D.intro+n*D.per+D.outro});
-const total=segs[segs.length-1].b,span=i=>{const u=segs.filter(s=>s.p===i);return[u[0].a,u[u.length-1].b]};
-const pill=(t,bg,c)=>'<span class="p" style="background:'+bg+';color:'+c+'">'+esc(t)+'</span>';
-segs.forEach(s=>{const sc=D.scenes[s.p]||{},el=document.createElement('div');el.className='s';
-let t;if(s.k==='intro')t='<div class="t c">'+pill('✦ '+D.title+' ✦',T.accent,T.ink)+'<h2>'+esc(D.subtitle||D.title)+'</h2></div>';
-else if(s.k==='photo')t='<div class="t">'+(sc.label?pill(sc.label,T.accent,T.ink):'')+'<h2>'+esc(sc.head)+'</h2>'+(sc.line?'<p class="l">'+esc(sc.line)+'</p>':'')+'</div>';
-else t='<div class="t c">'+pill(D.badge||D.title,'#fff',T.chip)+'<h2>'+esc(D.closing)+'</h2>'+(D.contact?'<div class="k" style="background:'+T.accent+';color:'+T.ink+'"><small>CALL NOW</small><b>📞 '+esc(D.contact)+'</b></div>':'')+'</div>';
-el.innerHTML=(sc.img?'<img alt="" src="'+sc.img+'">':'')+'<div class="g" style="background:linear-gradient('+sh(.55)+',transparent 50%,'+sh(.78)+')"></div><div class="g" style="top:42%;background:linear-gradient(transparent,'+sh(.8)+')"></div>'+t;
-s.el=el;s.img=el.querySelector('img');v.appendChild(el)});
-v.insertAdjacentHTML('beforeend','<div class="top"><span class="clock" id="ck"></span>'+(D.badge?pill(D.badge,'#fff',T.chip):'')+'</div><div class="bar"><i id="br" style="background:'+T.accent+'"></i></div>');
-const ck=document.getElementById('ck'),br=document.getElementById('br'),fmt=x=>String(Math.floor(x/60)).padStart(2,'0')+':'+String(Math.floor(x)%60).padStart(2,'0');
-let t=0,last=performance.now(),on=true;
-function draw(){let k=segs.findIndex(s=>t<s.b);if(k<0)k=segs.length-1;
-segs.forEach((s,i)=>{let o=0;if(i===k)o=k>0&&t-s.a<D.fade?(t-s.a)/D.fade:1;else if(i===k-1&&t-segs[k].a<D.fade)o=1;s.el.style.opacity=o;s.el.style.zIndex=i===k?2:1;
-if(s.img){const[a,b]=span(s.p);s.img.style.transform='scale('+(1+.11*Math.min(1,Math.max(0,(t-a)/(b-a))))+')'}});
-ck.textContent=fmt(t)+' / '+fmt(total);br.style.width=(t/total*100)+'%'}
-function loop(now){if(on){t=(t+(now-last)/1000)%total}last=now;draw();requestAnimationFrame(loop)}requestAnimationFrame(loop);
-document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause':'Play'};document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('pp').textContent='Pause'};
+const S=window.SiteCraftStyles,c=document.getElementById('v'),x=c.getContext('2d'),T=S.total(D);
+let t=0,last=0,on=true;
+Promise.all(D.photos.map(p=>new Promise(r=>{const i=new Image();i.onload=i.onerror=()=>r(i);i.src=p.img;p.img=i}))).then(()=>document.fonts.ready).then(()=>{
+function loop(now){if(last&&on)t=(t+(now-last)/1000)%T;last=now;x.clearRect(0,0,D.w,D.h);S.frame(x,t,D);requestAnimationFrame(loop)}requestAnimationFrame(loop)});
+document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause':'Play'};
+document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('pp').textContent='Pause'};
 </script></body></html>`;
   }
 
@@ -859,7 +655,7 @@ document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause'
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const photosEnd = INTRO + state.photos.length * state.perPhoto;
     if (state.template.spot) {
-      spotFrame(t);
+      STYLES.frame(ctx, t, spotData());
     } else if (state.template.cinema) {
       if (t < INTRO || !state.photos.length) {
         if (t < INTRO) cinemaIntro(t);
@@ -965,7 +761,7 @@ document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause'
   async function fontsReady() {
     const font = state.template.font;
     const loads = [`800 40px ${font}`, `400 40px ${font}`, `600 40px ${SANS}`, `800 40px ${SANS}`];
-    if (state.template.spot) loads.push(`600 40px ${ROUND}`, `700 40px ${ROUND}`);
+    if (state.template.spot) loads.push(...STYLES.fonts);
     if (state.template.cinema) loads.push(`italic 600 40px ${LUXE}`, `700 40px ${LUXE}`, `400 40px ${CLEAN}`, `600 40px ${CLEAN}`, `400 40px ${IMPACT}`);
     try { await Promise.all([...loads.map((spec) => document.fonts.load(spec)), document.fonts.ready]); } catch {}
   }
@@ -1120,6 +916,7 @@ document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause'
     }
     button.addEventListener('click', () => {
       state.template = template;
+      if (template.spot && STYLES.layoutFor(state.spotStyle) !== template.spot) state.spotStyle = DEFAULT_STYLE[template.spot];
       for (const item of templateList.children) item.setAttribute('aria-checked', String(item === button));
       fontsReady().then(showPoster);
       renderPhotos();
@@ -1169,9 +966,9 @@ document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause'
   window.SiteCraftVideoMaker = {
     async loadPlan(plan, images) {
       stopPlayback();
-      // AI videos use the Spotlight (AI style) design, coloured for the business type.
-      state.template = TEMPLATES.find((t) => t.id === 'spotlight');
+      // AI videos use the AI-style design that fits the business type.
       state.spotStyle = plan.style || 'default';
+      state.template = TEMPLATES.find((t) => t.spot === STYLES.layoutFor(state.spotStyle));
       for (const [index, item] of Array.from(templateList.children).entries()) item.setAttribute('aria-checked', String(TEMPLATES[index] === state.template));
       state.format = FORMATS[plan.format] ? plan.format : 'story';
       for (const item of $('#formatList').children) item.setAttribute('aria-checked', String(item.dataset.format === state.format));
