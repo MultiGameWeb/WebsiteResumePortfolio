@@ -9,7 +9,7 @@
   const API_BASE = window.SITECRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
   const STYLE_NAMES = { jewel: 'Jewellery luxe', gym: 'Gym power', royal: 'Royal wedding', offer: 'Shop offer', product: 'Product showcase', wedding: 'Wedding / function', birthday: 'Birthday', property: 'Real estate', food: 'Restaurant & food' };
   const FORMAT_NAMES = { story: 'Status / Reels (9:16)', square: 'Post (1:1)', wide: 'YouTube (16:9)' };
-  const GREETING = 'Hi! 👋 Tell me about your business and what you want to promote — in Telugu, Hindi or English. I will write the scenes, create the pictures and make your video.';
+  const GREETING = 'Hi! 👋 Tell me about your business and what you want to promote — in Telugu, Hindi or English. I will write the scenes and make your video, any length up to 1 minute, with AI pictures or your own photos.';
 
   const $ = (selector) => document.querySelector(selector);
   const chatBox = $('#aiChat');
@@ -46,15 +46,27 @@
     planBox.hidden = false;
     const list = element('ol', 'vm-ai-scenes');
     for (const scene of plan.scenes) list.append(element('li', '', [scene.headline, scene.line].filter(Boolean).join(' — ')));
-    const button = element('button', 'vm-btn primary', `✨ Make my AI video (${plan.scenes.length} pictures)`);
+    const button = element('button', 'vm-btn primary', `✨ Create AI pictures (${plan.scenes.length})`);
     button.type = 'button';
+    const own = element('label', 'vm-btn ghost vm-ai-own', '🖼️ Use my own photos');
+    const picker = document.createElement('input');
+    picker.type = 'file';
+    picker.accept = 'image/*';
+    picker.multiple = true;
+    picker.hidden = true;
+    own.append(picker);
+    const choices = element('div', 'vm-ai-choices');
+    choices.append(button, own);
     const thumbs = element('div', 'vm-ai-thumbs');
     const note = element('p', 'vm-ai-meta');
     button.addEventListener('click', () => makeVideo(plan, button, thumbs, note));
+    picker.addEventListener('change', () => useOwnPhotos(plan, picker, thumbs, note));
     planBox.replaceChildren(
       element('h3', '', plan.title || 'Your video'),
       element('p', 'vm-ai-meta', `${STYLE_NAMES[plan.style] || plan.style} · ${plan.seconds} seconds · ${FORMAT_NAMES[plan.format] || plan.format}`),
-      list, button, thumbs, note,
+      list,
+      element('p', 'vm-ai-ask', `How do you want the pictures? AI can create ${plan.scenes.length}, or you can send your own photos (up to 10).`),
+      choices, thumbs, note,
     );
     planBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
@@ -67,6 +79,30 @@
   function toBlob(image) {
     const bytes = Uint8Array.from(atob(image.data), (c) => c.charCodeAt(0));
     return new Blob([bytes], { type: image.mimeType });
+  }
+
+  // The customer's own photos take the place of the AI pictures, in order;
+  // extra photos get no caption.
+  async function useOwnPhotos(plan, picker, thumbs, note) {
+    const files = Array.from(picker.files || []).filter((file) => file.type.startsWith('image/')).slice(0, 10);
+    picker.value = '';
+    if (!files.length || busy) return;
+    busy = true;
+    try {
+      thumbs.replaceChildren(...files.map((file, i) => {
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.alt = `Photo ${i + 1}`;
+        return img;
+      }));
+      note.textContent = 'Your photos are in ✓ Playing a preview. Tap “Make my video” to download it, or change any text or photo below.';
+      await window.SiteCraftVideoMaker.loadPlan(plan, files);
+      showEditor();
+    } catch (error) {
+      note.textContent = 'These photos could not be opened. Please try other photos.';
+    } finally {
+      busy = false;
+    }
   }
 
   async function makeVideo(plan, button, thumbs, note) {
