@@ -1,0 +1,925 @@
+{
+  "id": "pharmacy-01",
+  "name": "Pharmacy / Medical Store — CareMeds Pharmacy",
+  "category": "Pharmacies & Medical Stores",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Pharmacy"
+    },
+    {
+      "id": "categories",
+      "label": "Product Categories"
+    },
+    {
+      "id": "products",
+      "label": "Non-prescription Health Products & Prices"
+    },
+    {
+      "id": "prescription",
+      "label": "Send Prescription on WhatsApp"
+    },
+    {
+      "id": "enquiry",
+      "label": "Pharmacy Enquiry Form"
+    },
+    {
+      "id": "delivery",
+      "label": "Home Delivery Areas"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "hours",
+      "label": "Store Hours"
+    },
+    {
+      "id": "emergency",
+      "label": "Emergency Contact Information"
+    },
+    {
+      "id": "location",
+      "label": "Location & Google Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Pharmacy Name",
+      "required": true,
+      "placeholder": "CareMeds Pharmacy"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Pharmacist / Store Manager",
+      "placeholder": "Store Manager"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Everyday care, close to home"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "A pharmacy that puts people first."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Pharmacy",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Everyday care, made a little easier."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Your neighbourhood pharmacy"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Pharmacy Phone",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "hello@caremeds.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Store Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "CareMeds Pharmacy",
+      "ownerName": "CareMeds Pharmacy Team",
+      "tagline": "Everyday care, close to home",
+      "motto": "A neighbourhood pharmacy, here when you need us.",
+      "about": "CareMeds Pharmacy is a local medical store serving Kondapur and nearby Hyderabad neighbourhoods. Our team can help customers check availability of non-prescription care essentials, understand store timings and share a valid prescription for pharmacist review. Prescription requests are handled by the pharmacy team; this website does not sell prescription medicines."
+    },
+    "home": {
+      "eyebrow": "YOUR NEIGHBOURHOOD PHARMACY",
+      "title": "Everyday care, made a little easier.",
+      "text": "A convenient local pharmacy for everyday health-care essentials, baby-care products and home health devices. Contact our team for prescription review and local delivery enquiries."
+    },
+    "hero": "https://images.unsplash.com/photo-1758573467057-955f803660a9?auto=format&fit=crop&w=1800&q=82",
+    "products": [
+      {
+        "id": "p1",
+        "name": "Hand Sanitizer · 500 ml",
+        "category": "Wellness",
+        "price": "₹125",
+        "description": "Everyday hand-hygiene essential. Check the pack label for directions and ingredients.",
+        "image": "https://images.unsplash.com/photo-1742631454377-3eb6645b4780?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Personal care and hygiene products displayed on store shelves",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "3-Ply Disposable Masks · Pack",
+        "category": "Wellness",
+        "price": "₹79",
+        "description": "Daily-use face masks. Pack quantity and availability can be confirmed with the pharmacy.",
+        "image": "",
+        "imageAlt": "",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Baby Wipes · Pack",
+        "category": "Baby care",
+        "price": "₹149",
+        "description": "Gentle everyday baby-care wipes. Please check product ingredients and pack details before use.",
+        "image": "https://images.unsplash.com/photo-1769836215168-2c90327d786d?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Baby-care essentials arranged in a nursery storage area",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Baby Care Essentials Kit",
+        "category": "Baby care",
+        "price": "From ₹299",
+        "description": "A selection of everyday baby-care items. Ask the team about brands and pack sizes available.",
+        "image": "",
+        "imageAlt": "",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Digital Thermometer",
+        "category": "Devices",
+        "price": "₹299",
+        "description": "Home temperature-measurement device. Follow the manufacturer’s instructions supplied with the product.",
+        "image": "https://images.unsplash.com/photo-1685660477695-73713eaf512a?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Digital thermometer displayed against a neutral background",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Digital Blood Pressure Monitor",
+        "category": "Devices",
+        "price": "From ₹1,499",
+        "description": "Home blood-pressure monitoring device. Ask the pharmacist about available models and read the manufacturer's instructions.",
+        "image": "",
+        "imageAlt": "",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Pulse Oximeter",
+        "category": "Devices",
+        "price": "From ₹799",
+        "description": "Portable pulse-oximeter device. Availability and model details are confirmed by the store.",
+        "image": "",
+        "imageAlt": "",
+        "enabled": true
+      }
+    ],
+    "requestTypes": [
+      {
+        "id": "rt1",
+        "name": "Prescription medicine request — attach valid prescription in WhatsApp",
+        "enabled": true
+      },
+      {
+        "id": "rt2",
+        "name": "Non-prescription health product enquiry",
+        "enabled": true
+      },
+      {
+        "id": "rt3",
+        "name": "Home delivery availability enquiry",
+        "enabled": true
+      }
+    ],
+    "deliveryAreas": [
+      {
+        "id": "a1",
+        "name": "Kondapur",
+        "note": "Local delivery enquiry",
+        "enabled": true
+      },
+      {
+        "id": "a2",
+        "name": "Hafeezpet",
+        "note": "Availability confirmed by phone",
+        "enabled": true
+      },
+      {
+        "id": "a3",
+        "name": "Madhapur",
+        "note": "Delivery slots subject to confirmation",
+        "enabled": true
+      },
+      {
+        "id": "a4",
+        "name": "Gachibowli",
+        "note": "Contact the store to check coverage",
+        "enabled": true
+      },
+      {
+        "id": "a5",
+        "name": "Miyapur",
+        "note": "Ask the team about delivery options",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Pharmacy service counter",
+        "alt": "A pharmacy staff member checking a product bottle at a pharmacy counter",
+        "image": "https://images.unsplash.com/photo-1758573467057-955f803660a9?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Home health device",
+        "alt": "A digital thermometer shown against a neutral background",
+        "image": "https://images.unsplash.com/photo-1685660477695-73713eaf512a?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Baby-care essentials",
+        "alt": "Baby-care essentials stored in a nursery area",
+        "image": "https://images.unsplash.com/photo-1769836215168-2c90327d786d?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Personal care products",
+        "alt": "Personal care and skincare products on store shelves",
+        "image": "https://images.unsplash.com/photo-1742631454377-3eb6645b4780?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Kondapur",
+        "text": "The team was polite and helped me check whether the item I needed was available.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Madhapur",
+        "text": "Easy to reach and the WhatsApp response made it simple to ask about store timings.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Gachibowli",
+        "text": "A convenient local pharmacy for everyday care essentials.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "Can I order prescription medicines directly through this website?",
+        "answer": "No. This website does not sell prescription medicines online. You can send a clear photo or PDF of a valid prescription in WhatsApp. The pharmacist will review it and confirm availability and dispensing details.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "How do I send my prescription?",
+        "answer": "Choose the prescription request option and continue to WhatsApp. When the chat opens, attach a clear photo or PDF of your valid prescription and send it to the pharmacy team.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Are prescription medicine prices shown here?",
+        "answer": "No. Prescription medicines are not listed with prices and cannot be checked out online. The pharmacy team will review the valid prescription and discuss availability directly.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Can I ask for home delivery?",
+        "answer": "Yes, you can ask the pharmacy to check your locality and available delivery slots. Coverage and timing are confirmed by the store team.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Are the products with prices prescription medicines?",
+        "answer": "No. Prices are shown only for the listed non-prescription health-care essentials and devices. Product availability and current prices should be confirmed with the store.",
+        "enabled": true
+      },
+      {
+        "id": "f6",
+        "question": "Can the pharmacy provide medical advice through WhatsApp?",
+        "answer": "WhatsApp is used for store enquiries and prescription review coordination, not for diagnosis or emergency care. For health concerns, speak with a qualified healthcare professional.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "9:00 AM",
+        "close": "9:00 PM",
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@caremeds.example",
+      "address": "Shop 4, Botanical Garden Road, Kondapur, Hyderabad, Telangana 500084",
+      "maps": "https://maps.google.com/?q=Botanical+Garden+Road+Kondapur+Hyderabad",
+      "hours": "Mon–Sat · 8:00 AM – 10:00 PM | Sun · 9:00 AM – 9:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": "https://www.youtube.com/"
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showCategories": true,
+      "showProducts": true,
+      "showPrescription": true,
+      "showEnquiry": true,
+      "showDelivery": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showHours": true,
+      "showEmergency": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:pharmacy-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Pharmacy Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Pharmacy name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Pharmacist / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the pharmacy",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "products",
+        "label": "Non-prescription Products",
+        "type": "collection",
+        "itemLabel": "health product",
+        "path": "products",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "category",
+            "label": "Category",
+            "type": "select",
+            "options": [
+              "Wellness",
+              "Baby care",
+              "Devices"
+            ]
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New care product",
+          "category": "Wellness",
+          "price": "₹199",
+          "description": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "requestTypes",
+        "label": "WhatsApp Enquiry Types",
+        "type": "collection",
+        "itemLabel": "request type",
+        "path": "requestTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Request type"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New enquiry type",
+          "enabled": true
+        }
+      },
+      {
+        "id": "delivery",
+        "label": "Delivery Areas",
+        "type": "collection",
+        "itemLabel": "area",
+        "path": "deliveryAreas",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Area"
+          },
+          {
+            "key": "note",
+            "label": "Delivery note"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New area",
+          "note": "Ask us to confirm coverage",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New pharmacy photo",
+          "alt": "Pharmacy photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faqs",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Store Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "8:00 AM",
+          "close": "10:00 PM",
+          "closed": false,
+          "enabled": true
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Pharmacy phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Store address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCategories",
+            "label": "Categories",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showProducts",
+            "label": "Non-prescription products",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showPrescription",
+            "label": "Prescription WhatsApp flow",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Enquiry form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showDelivery",
+            "label": "Delivery areas",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Store hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEmergency",
+            "label": "Emergency information",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
