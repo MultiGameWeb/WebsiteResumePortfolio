@@ -86,3 +86,7 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 .vm-ai-editor .vm-sub { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--vm-line); display: grid; gap: 12px; }
 .vm-ai-editor .vm-sub h2 { font-size: 1rem; margin: 0; }
 .vm-intro a { color: #f9a8d4; font-weight: 700; }
+.vm-ai-ask { margin: 4px 0 0; font-size: 14px; font-weight: 600; line-height: 1.5; }
+.vm-ai-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.vm-ai-own { cursor: pointer; text-align: center; }
+@media (max-width: 520px) { .vm-ai-choices { grid-template-columns: minmax(0, 1fr); } }

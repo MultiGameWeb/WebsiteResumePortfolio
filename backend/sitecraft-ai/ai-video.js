@@ -15,11 +15,15 @@ import { allowedOrigins } from "./botcraft-builder.js";
 import { callGemini } from "./ai-engine.js";
 import { geminiUsProxy } from "./gemini-proxy.js";
 
-const TEXT_MODELS = ["gemini-3.8-flash", "gemini-3.5-flash-lite"];
+// The lite model answers in a couple of seconds; the bigger one is the fallback.
+const TEXT_MODELS = ["gemini-3.5-flash-lite", "gemini-3.8-flash"];
 const DEFAULT_IMAGE_MODEL = "gemini-2.5-flash-image";
 const STYLES = ["jewel", "gym", "royal", "offer", "product", "wedding", "birthday", "property", "food"];
 const FORMATS = { story: "9:16", square: "1:1", wide: "16:9" };
-const LENGTHS = { 15: 3, 30: 5, 60: 10 };
+// Any length from 10 to 60 seconds; about one picture per 6 seconds (2-10).
+const MIN_SECONDS = 10;
+const MAX_SECONDS = 60;
+const sceneCount = seconds => Math.min(10, Math.max(2, Math.ceil(seconds / 6)));
 const MAX_MESSAGES = 24;
 const DEFAULT_IP_DAILY = 12;
 const DEFAULT_TOTAL_DAILY = 150;
@@ -56,7 +60,7 @@ const PLAN_SCHEMA = {
         style: { type: "STRING", enum: STYLES },
         format: { type: "STRING", enum: Object.keys(FORMATS) },
         // Gemini allows "enum" on strings only; an INTEGER enum fails every request.
-        seconds: { type: "INTEGER", description: "video length in seconds: 15, 30 or 60" },
+        seconds: { type: "INTEGER", description: "video length in seconds, any whole number from 10 to 60" },
         scenes: {
           type: "ARRAY",
           items: {
@@ -81,14 +85,14 @@ const PLAN_RULES = `You are the SiteCraft AI video assistant. You help an Indian
 Collect, asking only for what is missing (two or three things at a time, never a long form):
 - business name and type, and what to promote (offer, product, service, event)
 - the phone or WhatsApp number to show (optional)
-- video length: 15, 30 or 60 seconds (suggest 30)
+- video length: any number of seconds from 10 to 60 (suggest 30). The price is the same for any length. If they ask for more than 60, explain that the most is 60 seconds (1 minute)
 - size: Status / Reels (9:16, the default), post (1:1) or YouTube (16:9)
 - the language for the text on the video (default: the language the customer writes in)
 
-When you have enough, briefly summarise the plan (style, length, scenes) and ask them to confirm. When they confirm, set ready true and fill in the plan.
+When you have enough, briefly summarise the plan (style, length, scenes) and ask them to confirm. When they confirm, set ready true and fill in the plan. After that the customer picks AI pictures or their own photos with buttons, so do not ask for photos in the chat.
 
 Plan rules:
-- scenes: exactly 3 for 15 seconds, 5 for 30 seconds, 10 for 60 seconds.
+- scenes: one per 6 seconds, rounded up, at least 2 and at most 10 (10 s: 2, 15 s: 3, 20 s: 4, 30 s: 5, 45 s: 8, 60 s: 10). Use exactly the length the customer asked for.
 - style: jewel (jewellery, luxury), gym (fitness, sports), royal (weddings, events, wedding services), food (restaurants, sweets, bakeries), property (real estate, hotels, resorts), product (shops, electronics, products), offer (sales and discounts), wedding (other functions), birthday (birthdays, kids).
 - headlines and lines in the customer's chosen language; keep them short and punchy.
 - image_prompt: a vivid, photorealistic description in English of one scene that fits the business, set in India with Indian people and places where people appear. Describe only the picture: no words, letters, numbers, logos, brand names, watermarks or real or famous people.
@@ -98,9 +102,8 @@ Plan rules:
 
 function cleanPlan(plan) {
   if (!plan) return null;
-  const asked = Number(plan.seconds) || 30;
-  const seconds = [15, 30, 60].reduce((best, n) => (Math.abs(n - asked) < Math.abs(best - asked) ? n : best), 30);
-  const count = LENGTHS[seconds];
+  const seconds = Math.min(MAX_SECONDS, Math.max(MIN_SECONDS, Math.round(Number(plan.seconds) || 30)));
+  const count = sceneCount(seconds);
   const scenes = (Array.isArray(plan.scenes) ? plan.scenes : []).slice(0, count).map(s => ({
     headline: clip(s?.headline, 40), line: clip(s?.line, 30), imagePrompt: clip(s?.image_prompt, 600)
   })).filter(s => s.imagePrompt);
@@ -164,12 +167,33 @@ async function useImageQuota(env, ip) {
   return { ok: true };
 }
 
+// A picture that failed costs nothing, so its count is given back.
+async function refundImageQuota(env, ip) {
+  const db = env.BOTCRAFT_DB;
+  if (!db) return;
+  const day = new Date().toISOString().slice(0, 10);
+  const back = "UPDATE aivideo_usage SET n = MAX(0, n - 1) WHERE day = ? AND who = ?";
+  await db.batch([db.prepare(back).bind(day, `ip:${ip}`), db.prepare(back).bind(day, "all")]).catch(() => {});
+}
+
 async function image(env, body, ip) {
   const prompt = clip(body?.prompt, 600);
   if (!prompt) return { status: 400, data: { ok: false, error: "Missing image description." } };
-  const aspectRatio = FORMATS[body?.format] || "9:16";
   const quota = await useImageQuota(env, ip);
   if (!quota.ok) return { status: 429, data: { ok: false, error: quota.error } };
+  let result;
+  try {
+    result = await drawImage(env, body, prompt);
+  } catch (error) {
+    console.error("AI video image error", error);
+    result = { status: 502, data: { ok: false, error: "This picture could not be made. Please try again." } };
+  }
+  if (result.status !== 200) await refundImageQuota(env, ip);
+  return result;
+}
+
+async function drawImage(env, body, prompt) {
+  const aspectRatio = FORMATS[body?.format] || "9:16";
   const apiKey = env[keyName(env)];
   if (!apiKey) return { status: 503, data: { ok: false, error: "AI images are not set up yet." } };
   const model = env.GEMINI_IMAGE_MODEL || DEFAULT_IMAGE_MODEL;
@@ -183,16 +207,26 @@ async function image(env, body, ip) {
     })
   };
   let response = await fetch(endpoint, { ...init, signal: AbortSignal.timeout(60000) });
+  // A short burst limit clears in a moment: wait and try once more.
+  if (response.status === 429) {
+    await new Promise(resolve => setTimeout(resolve, 2500));
+    response = await fetch(endpoint, { ...init, signal: AbortSignal.timeout(60000) });
+  }
   if (response.status === 400) {
     const detail = await response.clone().text();
     const proxy = geminiUsProxy(env);
     if (proxy && /location is not supported/i.test(detail)) response = await proxy.fetch(endpoint, init);
   }
   if (!response.ok) {
-    console.error("AI video image failed", response.status, (await response.text()).slice(0, 300));
+    const detail = (await response.text()).slice(0, 600);
+    console.error("AI video image failed", response.status, detail);
     // The code helps the owner tell a wrong model name (404) or a key without
-    // image access or billing (400/403) from a busy AI (429).
-    const why = response.status === 429 ? "The AI is busy right now. Please try again in a minute." : "This picture could not be made. Please try again.";
+    // image access or billing (400/403, or 429 with a zero free-tier quota)
+    // from a busy AI (429).
+    const noQuota = response.status === 429 && /limit: ?0\b|free_tier|billing/i.test(detail);
+    const why = noQuota
+      ? "AI pictures are not switched on for this AI key yet (image quota or billing). You can use your own photos instead."
+      : response.status === 429 ? "The AI is busy right now. Please try again in a minute." : "This picture could not be made. Please try again.";
     return { status: 502, data: { ok: false, error: `${why} (code ${response.status})` } };
   }
   const payload = await response.json();
