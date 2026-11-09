@@ -30,7 +30,7 @@
     birthday: 'playful',
   };
 
-  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal' };
+  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal', beat: 'Beat drop', parallax: '3D pop', stack: 'Layer build-up' };
 
   // Colours per business type, used by every design.
   const THEMES = {
@@ -761,7 +761,7 @@
     chrome() {},
   };
 
-  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor };
+
 
   // ---- Building blocks the design can mix ----
   const MOTIONS = {
@@ -775,6 +775,274 @@
     slide: { type: 'slide', dur: 0.7 }, zoom: { type: 'zoom', dur: 0.8 },
   };
   const rnd = (i, k) => { const x = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return x - Math.floor(x); };
+
+  // ---- Shared bits for the fast templates ----
+  // Condensed text on a solid block, optionally wiped in from the left.
+  function blockText(ctx, d, value, o) {
+    if (!value) return 0;
+    const u = unit(d);
+    const size = o.size;
+    ctx.save();
+    ctx.font = `400 ${size}px ${o.font}`;
+    const lines = wrap(ctx, String(value).toUpperCase(), o.maxWidth - size * 0.8, o.maxLines || 2);
+    const lh = size * 1.08;
+    const widths = lines.map((line) => ctx.measureText(line).width + size * 0.8);
+    const total = lines.length * lh + size * 0.3;
+    let top = o.anchor === 'bottom' ? o.y - total : o.y;
+    const reveal = clamp(o.wipe ?? 1, 0, 1);
+    lines.forEach((line, i) => {
+      const w = widths[i];
+      const left = o.align === 'center' ? o.x - w / 2 : o.x;
+      const y = top + i * lh;
+      ctx.save();
+      ctx.beginPath(); ctx.rect(left, y, w * reveal, lh + size * 0.3); ctx.clip();
+      ctx.fillStyle = o.bg;
+      ctx.fillRect(left, y, w, lh + size * 0.3);
+      ctx.fillStyle = o.color;
+      ctx.textBaseline = 'top';
+      ctx.fillText(line, left + size * 0.4, y + size * 0.2);
+      ctx.restore();
+    });
+    ctx.restore();
+    return total + u * 0.5;
+  }
+
+  function coverAt(ctx, img, x, y, w, h, zoom, dx = 0, dy = 0) {
+    if (!img) return;
+    const iw = img.naturalWidth || img.width;
+    const ih = img.naturalHeight || img.height;
+    const s = Math.max(w / iw, h / ih) * zoom;
+    ctx.drawImage(img, x + (w - iw * s) / 2 + dx, y + (h - ih * s) / 2 + dy, iw * s, ih * s);
+  }
+
+  // A soft blurred copy of a photo (drawn small, then stretched), cached.
+  const blurred = new WeakMap();
+  function blurOf(img) {
+    if (!img || typeof document === 'undefined') return img;
+    if (blurred.has(img)) return blurred.get(img);
+    const iw = img.naturalWidth || img.width;
+    const ih = img.naturalHeight || img.height;
+    const c = document.createElement('canvas');
+    c.width = 36; c.height = Math.max(1, Math.round((36 * ih) / iw));
+    c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+    blurred.set(img, c);
+    return c;
+  }
+
+  function ctaBox(ctx, d, local, accent) {
+    const u = unit(d);
+    const appear = ease(local / 0.4);
+    const pw = Math.min(d.w - u * 12, u * 80);
+    const ph = u * (d.contact ? 28 : 18);
+    const px = (d.w - pw) / 2;
+    const py = d.h - ph - u * (wide(d) ? 8 : 16) + (1 - appear) * u * 4;
+    ctx.save();
+    ctx.globalAlpha *= appear;
+    ctx.fillStyle = 'rgba(0,0,0,.85)'; ctx.strokeStyle = YELLOW; ctx.lineWidth = Math.max(2, u * 0.4);
+    ctx.beginPath(); ctx.roundRect(px, py, pw, ph, u * 2); ctx.fill(); ctx.stroke();
+    ctx.restore();
+    write(ctx, d.badge || d.title, { x: d.w / 2, y: py + u * 3.5, size: u * 2.4, weight: 600, font: F.jost, color: accent, align: 'center', upper: true, spacing: 0.2, maxWidth: pw - u * 6, maxLines: 1, shadow: false, alpha: appear });
+    write(ctx, d.closing, { x: d.w / 2, y: py + u * 7.5, size: u * 6, weight: 400, font: headFont(d, F.impact), align: 'center', upper: true, maxWidth: pw - u * 6, maxLines: 2, shadow: false, alpha: appear });
+    if (d.contact) pill(ctx, `Call · ${d.contact}`, { x: d.w / 2, y: py + ph - u * 9.5, size: u * 3, bg: YELLOW, color: '#000', font: F.impact, weight: 400, align: 'center', radius: u * 0.8, spacing: 0.04, alpha: appear, maxWidth: pw - u * 6 });
+  }
+
+  // ---- Beat drop: photos flash by every 0.15 s with a camera shake, then
+  // land on one photo with a big text pop. Cuts only. ----
+  const FLICK = 0.15;
+  const beat = {
+    deco: 'none',
+    transition: { type: 'cut', dur: 0 },
+    motion: { zoom: [1, 1.1] },
+    draw(ctx, d, seg, t) {
+      const u = unit(d);
+      const accent = editorCyan(d);
+      const n = Math.max(1, d.photos.length);
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, d.w, d.h);
+      if (seg.kind === 'intro') {
+        coverAt(ctx, d.photos[0]?.img, 0, 0, d.w, d.h, 1 + 0.05 * (local / dur));
+        gradient(ctx, d, [[0, 'rgba(0,0,0,.55)'], [0.35, 'rgba(0,0,0,0)'], [0.7, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.7)']]);
+        blockText(ctx, d, d.title, { x: d.w / 2, y: d.h * 0.12, size: u * 7, font: headFont(d, F.impact), bg: '#000', color: '#fff', align: 'center', maxWidth: d.w - u * 10 });
+        blockText(ctx, d, d.subtitle, { x: d.w / 2, y: d.h - u * 16, anchor: 'bottom', size: u * 4.6, font: F.impact, bg: YELLOW, color: '#000', align: 'center', maxWidth: d.w - u * 10, wipe: (local - 0.3) / 0.25 });
+        return;
+      }
+      if (seg.kind === 'outro') {
+        coverAt(ctx, d.photos[seg.photo]?.img, 0, 0, d.w, d.h, 1.1);
+        ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(0, 0, d.w, d.h);
+        ctaBox(ctx, d, local, accent);
+        return;
+      }
+      const flick = Math.min(1.2, dur * 0.4);
+      const item = d.photos[seg.photo] || {};
+      if (local < flick) {
+        // The fast montage through the other photos.
+        const k = Math.floor(local / FLICK);
+        const shown = d.photos[(seg.photo + 1 + k) % n];
+        const sx = (rnd(k + seg.photo * 7, 1) - 0.5) * u * 4;
+        const sy = (rnd(k + seg.photo * 7, 2) - 0.5) * u * 4;
+        coverAt(ctx, shown?.img, 0, 0, d.w, d.h, 1.1, sx, sy);
+        if (local - k * FLICK < 0.03) { ctx.fillStyle = 'rgba(255,255,255,.35)'; ctx.fillRect(0, 0, d.w, d.h); }
+        blockText(ctx, d, `${String(seg.photo + 1).padStart(2, '0')}`, { x: d.w - u * 6 - u * 12, y: u * 6, size: u * 6, font: F.impact, bg: accent, color: '#000', maxWidth: u * 20 });
+        return;
+      }
+      // Landing: the scene's photo, a short impact shake, then the text.
+      const land = local - flick;
+      const shake = Math.max(0, 1 - land / 0.3);
+      const sx = Math.sin(land * 70) * u * 2 * shake;
+      coverAt(ctx, item.img, 0, 0, d.w, d.h, 1.04 + 0.08 * (land / Math.max(0.1, dur - flick)), sx, 0);
+      if (land < 0.06) { ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.fillRect(0, 0, d.w, d.h); }
+      gradient(ctx, d, [[0, 'rgba(0,0,0,.45)'], [0.3, 'rgba(0,0,0,0)'], [0.7, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.65)']]);
+      if (item.label) blockText(ctx, d, item.label, { x: u * 6, y: d.h * 0.13, size: u * 3.6, font: F.impact, bg: accent, color: '#000', maxWidth: d.w - u * 12, maxLines: 1, wipe: land / 0.12 });
+      blockText(ctx, d, item.head, { x: u * 6, y: d.h - u * (wide(d) ? 10 : 15), anchor: 'bottom', size: u * (wide(d) ? 6.5 : 8), font: headFont(d, F.impact), bg: '#000', color: '#fff', maxWidth: d.w - u * 12, maxLines: 3, wipe: (land - 0.05) / 0.2 });
+      if (item.line) blockText(ctx, d, item.line, { x: u * 6, y: d.h - u * (wide(d) ? 10 : 15) + u * 1.2, size: u * 3.6, font: F.impact, bg: YELLOW, color: '#000', maxWidth: d.w - u * 12, maxLines: 1, wipe: (land - 0.2) / 0.2 });
+    },
+    chrome() {},
+  };
+
+  // ---- 3D pop: the photo sits on a card over a blurred copy of itself.
+  // On each change the old card flies towards the viewer while the new one
+  // grows from the centre and the background swaps underneath (parallax). ----
+  function popCard(ctx, d, img, scale, alpha) {
+    if (!img || scale <= 0.01) return;
+    const u = unit(d);
+    const cw = (wide(d) ? d.w * 0.5 : d.w * 0.8) * scale;
+    const ch = (wide(d) ? d.h * 0.72 : d.h * 0.56) * scale;
+    const x = (d.w - cw) / 2;
+    const y = (d.h - ch) / 2 - u * 2 * scale;
+    ctx.save();
+    ctx.globalAlpha *= alpha;
+    ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = u * 6; ctx.shadowOffsetY = u * 2;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.roundRect(x - u, y - u, cw + u * 2, ch + u * 2, u * 3); ctx.fill();
+    ctx.shadowColor = 'transparent';
+    ctx.beginPath(); ctx.roundRect(x, y, cw, ch, u * 2.4); ctx.clip();
+    coverAt(ctx, img, x, y, cw, ch, 1.02);
+    ctx.restore();
+  }
+
+  const parallax = {
+    deco: 'none',
+    transition: { type: 'cut', dur: 0 },
+    motion: { zoom: [1, 1.1] },
+    draw(ctx, d, seg, t, segs) {
+      const u = unit(d);
+      const accent = editorCyan(d);
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const item = d.photos[seg.photo] || {};
+      const k = segs.indexOf(seg);
+      const prev = k > 0 ? d.photos[segs[k - 1].photo] : null;
+      const swap = 0.35;
+      const p = clamp(local / swap, 0, 1);
+      // Background: blurred, slowly zooming out (opposite to the card).
+      const bgImg = local < swap * 0.45 && prev ? prev.img : item.img;
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, d.w, d.h);
+      if (bgImg) coverAt(ctx, blurOf(bgImg), 0, 0, d.w, d.h, 1.25 - 0.1 * clamp(local / dur, 0, 1));
+      ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(0, 0, d.w, d.h);
+      // Old card flies forward and fades; new card grows from the centre.
+      if (prev && prev !== item && p < 1) popCard(ctx, d, prev.img, 1.06 + 0.7 * ease(p), 1 - p);
+      const grow = seg.kind === 'outro' ? 1 : (prev === item ? 1 : 1 - Math.pow(1 - p, 3));
+      popCard(ctx, d, item.img, grow * (1 + 0.06 * clamp(local / dur, 0, 1)), 1);
+      if (seg.kind === 'intro') {
+        blockText(ctx, d, d.title, { x: d.w / 2, y: u * 8, size: u * 6.4, font: headFont(d, F.impact), bg: '#000', color: '#fff', align: 'center', maxWidth: d.w - u * 10, wipe: (local - 0.2) / 0.25 });
+        blockText(ctx, d, d.subtitle, { x: d.w / 2, y: d.h - u * 8, anchor: 'bottom', size: u * 4.2, font: F.impact, bg: YELLOW, color: '#000', align: 'center', maxWidth: d.w - u * 10, wipe: (local - 0.4) / 0.25 });
+      } else if (seg.kind === 'outro') {
+        ctaBox(ctx, d, local, accent);
+      } else {
+        if (item.label) blockText(ctx, d, item.label, { x: d.w / 2, y: u * 8, size: u * 3.4, font: F.impact, bg: YELLOW, color: '#000', align: 'center', maxWidth: d.w - u * 10, maxLines: 1, wipe: (local - 0.3) / 0.2 });
+        blockText(ctx, d, item.head, { x: d.w / 2, y: d.h - u * (wide(d) ? 6 : 9), anchor: 'bottom', size: u * (wide(d) ? 5.6 : 6.6), font: headFont(d, F.impact), bg: '#000', color: '#fff', align: 'center', maxWidth: d.w - u * 10, maxLines: 2, wipe: (local - 0.35) / 0.25 });
+        if (item.line) pill(ctx, item.line, { x: d.w / 2, y: d.h - u * (wide(d) ? 6 : 9) + u * 1.5, size: u * 2.8, bg: accent, color: '#000', font: F.impact, weight: 400, align: 'center', radius: u * 0.6, spacing: 0.04, alpha: ease((local - 0.55) / 0.3), maxWidth: d.w - u * 10 });
+      }
+    },
+    chrome() {},
+  };
+
+  // ---- Layer build-up: one photo stays put while layers stack on it one by
+  // one: colour pop, frame, shapes, label, title, price sticker. ----
+  const LAYER_AT = [0.08, 0.22, 0.36, 0.5, 0.64, 0.78];
+  const popIn = (local, at) => { const x = clamp((local - at) / 0.22, 0, 1); return x <= 0 ? 0 : 1 + 0.25 * Math.sin(x * Math.PI) * (1 - x) + (ease(x) - 1); };
+
+  const stack = {
+    deco: 'none',
+    transition: { type: 'cut', dur: 0 },
+    motion: { zoom: [1, 1.03] },
+    draw(ctx, d, seg, t) {
+      const u = unit(d);
+      const accent = editorCyan(d);
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      // The ending keeps the frame and shapes; its call-to-action box replaces the text layers.
+      const item = seg.kind === 'intro' ? { head: d.subtitle || d.title, label: d.title, line: d.badge } : seg.kind === 'outro' ? {} : d.photos[seg.photo] || {};
+      const at = (i) => LAYER_AT[i] * (seg.kind === 'outro' ? 0 : dur);
+      const img = d.photos[seg.photo]?.img;
+      ctx.fillStyle = '#121212'; ctx.fillRect(0, 0, d.w, d.h);
+      coverAt(ctx, img, 0, 0, d.w, d.h, 1 + 0.03 * clamp(local / dur, 0, 1));
+      // 1. Colour pop.
+      const l1 = clamp((local - at(0)) / 0.2, 0, 1);
+      if (l1 > 0) grade(ctx, 0, 0, d.w, d.h, 0, 0, 0.3 * l1);
+      gradient(ctx, d, [[0, 'rgba(0,0,0,.4)'], [0.35, 'rgba(0,0,0,0)'], [0.65, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.65)']]);
+      // 2. Frame.
+      const l2 = popIn(local, at(1));
+      if (l2 > 0) {
+        ctx.save();
+        ctx.globalAlpha *= Math.min(1, l2);
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = Math.max(2, u * 0.5);
+        const m = u * 4 * (2 - Math.min(1, l2));
+        ctx.strokeRect(m, m, d.w - m * 2, d.h - m * 2);
+        ctx.restore();
+      }
+      // 3. Accent shapes.
+      const l3 = popIn(local, at(2));
+      if (l3 > 0) {
+        ctx.save();
+        ctx.fillStyle = accent;
+        ctx.translate(d.w - u * 14, d.h * 0.3); ctx.rotate(0.6); ctx.scale(l3, l3);
+        ctx.fillRect(-u * 9, -u * 0.8, u * 18, u * 1.6);
+        ctx.fillRect(-u * 9, u * 2.4, u * 12, u * 1.6);
+        ctx.restore();
+        ctx.save();
+        ctx.strokeStyle = YELLOW; ctx.lineWidth = Math.max(2, u * 0.5);
+        ctx.beginPath(); ctx.arc(u * 14, d.h * 0.62, u * 5 * l3, 0, Math.PI * 2); ctx.stroke();
+        ctx.restore();
+      }
+      // 4. Label, 5. title, 6. sticker.
+      const l4 = popIn(local, at(3));
+      if (l4 > 0 && item.label) {
+        ctx.save(); ctx.translate(u * 8, d.h * 0.12); ctx.scale(l4, l4); ctx.translate(-u * 8, -d.h * 0.12);
+        blockText(ctx, d, item.label, { x: u * 8, y: d.h * 0.12, size: u * 3.4, font: F.impact, bg: accent, color: '#000', maxWidth: d.w - u * 16, maxLines: 1 });
+        ctx.restore();
+      }
+      const l5 = clamp((local - at(4)) / 0.25, 0, 1);
+      if (l5 > 0) blockText(ctx, d, item.head, { x: u * 8, y: d.h - u * (wide(d) ? 10 : 16), anchor: 'bottom', size: u * (wide(d) ? 6.4 : 7.8), font: headFont(d, F.impact), bg: '#000', color: '#fff', maxWidth: d.w - u * 16, maxLines: 3, wipe: l5 });
+      const l6 = popIn(local, at(5));
+      if (l6 > 0 && item.line) {
+        const r = u * 10;
+        ctx.save();
+        ctx.translate(d.w - u * 16, d.h * 0.66); ctx.rotate(-0.2); ctx.scale(l6, l6);
+        ctx.fillStyle = YELLOW;
+        ctx.beginPath();
+        for (let i = 0; i < 20; i += 1) { const a = (i / 20) * Math.PI * 2; const rr = i % 2 ? r * 0.85 : r; ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); }
+        ctx.closePath(); ctx.fill();
+        write(ctx, item.line, { x: 0, y: -r * 0.42, size: r * 0.3, font: F.impact, weight: 400, color: '#000', align: 'center', maxWidth: r * 1.5, maxLines: 2, lineHeight: 1, upper: true, shadow: false });
+        ctx.restore();
+      }
+      // Layer counter, like an editing app.
+      if (seg.kind !== 'outro') {
+        const done = LAYER_AT.filter((a) => local >= a * dur).length;
+        for (let i = 0; i < 6; i += 1) {
+          ctx.fillStyle = i < done ? accent : 'rgba(255,255,255,.35)';
+          ctx.fillRect(d.w - u * 6 - (6 - i) * u * 2.6, u * 5, u * 2, u * 2);
+        }
+        write(ctx, `Layer ${done}/6`, { x: d.w - u * 6, y: u * 8.2, size: u * 2, weight: 600, font: F.jost, color: '#fff', align: 'right', maxWidth: u * 30, maxLines: 1 });
+      } else {
+        ctaBox(ctx, d, local, accent);
+      }
+    },
+    chrome() {},
+  };
+
+  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor, beat, parallax, stack };
 
   // Moving effects over the video.
   function deco(ctx, d, t, kind) {
