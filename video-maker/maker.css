@@ -16,7 +16,7 @@ body.vm-page { margin: 0; min-height: 100vh; background: var(--vm-bg); color: va
 label { display: grid; gap: 6px; font-size: 13px; font-weight: 600; }
 .vm-optional { color: var(--vm-muted); font-weight: 400; }
 .vm-value { color: #f9a8d4; }
-input[type="text"], input:not([type]), input[type="file"] { font: inherit; font-size: 14px; color: var(--vm-text); background: var(--vm-panel2); border: 1px solid var(--vm-line); border-radius: 11px; padding: 10px 12px; width: 100%; min-width: 0; }
+input[type="text"], input:not([type]), input[type="file"], textarea { font: inherit; font-size: 14px; color: var(--vm-text); background: var(--vm-panel2); border: 1px solid var(--vm-line); border-radius: 11px; padding: 10px 12px; width: 100%; min-width: 0; }
 input[type="range"] { width: 100%; accent-color: #ec4899; }
 input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-within { outline: 2px solid #f0abfc; outline-offset: 2px; }
 .vm-upload { display: flex; align-items: center; justify-content: center; min-height: 64px; border: 1.5px dashed rgba(255,255,255,.28); border-radius: 14px; background: var(--vm-panel2); cursor: pointer; font-weight: 700; }
@@ -116,3 +116,4 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 .vm-ai-shared { grid-column: 1 / -1; }
 .vm-html-btn { width: 100%; margin-top: 10px; } .vm-html-btn[hidden] { display: none; }
 .vm-ai-choices-shared { grid-template-columns: minmax(0, 1fr); }
+textarea { resize: vertical; line-height: 1.4; }

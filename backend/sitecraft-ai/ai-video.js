@@ -24,7 +24,7 @@ const TEXT_MODELS = ["gemini-3.5-flash-lite", "gemini-3.8-flash"];
 const DEFAULT_IMAGE_MODEL = "gemini-2.5-flash-image";
 // The design building blocks of video-maker/styles.js the AI can mix.
 const DESIGN = {
-  layout: ["playful", "luxe", "bold", "fresh", "clean", "editor", "beat", "parallax", "stack", "slide", "frame"],
+  layout: ["playful", "luxe", "bold", "fresh", "clean", "editor", "beat", "parallax", "stack", "slide", "frame", "invite"],
   font: ["round", "serif", "jost", "impact", "sans", "play"],
   motion: ["zoom", "pan", "drift", "punch"],
   transition: ["fade", "flash", "wipe", "slide", "zoom"],
@@ -82,6 +82,7 @@ const PLAN_SCHEMA = {
         contact: { type: "STRING", description: "phone or WhatsApp number exactly as the customer gave it, or empty" },
         closing: { type: "STRING", description: "a short call to action for the end, under 40 characters" },
         badge: { type: "STRING", description: "a short corner badge for the whole video, 1-3 words, e.g. 'ADMISSIONS OPEN', 'DIWALI SALE', or empty" },
+        details: { type: "STRING", description: "for invitations and events: the date, time and venue lines exactly as the customer gave them, separated by ' | ' (e.g. 'Sunday, 12 Dec 2026 | 10:30 AM | Sri Sai Function Hall, Warangal'); else empty" },
         design: {
           type: "OBJECT",
           description: "the look of the video, chosen to suit this business and its customers",
@@ -124,7 +125,7 @@ const PLAN_SCHEMA = {
 const PLAN_RULES = `You are the SiteCraft AI video assistant. You help an Indian small business make a short promotional video ad for WhatsApp Status, Instagram Reels or YouTube by chatting with them.
 
 Collect, asking only for what is missing (two or three things at a time, never a long form):
-- business name and type, and what to promote (offer, product, service, event)
+- business name and type, and what to promote (offer, product, service, event); for an invitation or event, the person's name, the function, and the date, time and venue
 - the phone or WhatsApp number to show (optional)
 - video length: any number of seconds from 10 to 60 (suggest 30). The price is the same for any length. If they ask for more than 60, explain that the most is 60 seconds (1 minute)
 - size: Status / Reels (9:16, the default), post (1:1) or YouTube (16:9)
@@ -139,7 +140,7 @@ Plan rules:
 - style: jewel (jewellery, luxury), gym (fitness, sports), royal (weddings, events, wedding services), food (restaurants, sweets, bakeries), property (real estate, hotels, resorts), product (shops, electronics, products), offer (sales and discounts), wedding (other functions), birthday (birthdays, kids).
 - eyebrow, headlines and lines in the customer's chosen language; keep them short and punchy. Each scene tells one selling point (for example a school: the campus, classes and teachers, sports, labs, admissions with the phone number).
 - design: choose the look that best suits THIS business and its customers, so different businesses get different videos.
-  layout: playful (bright and friendly: schools, kids, toys, birthdays, coaching), luxe (elegant: jewellery, weddings, sarees, salons, spas, hotels, perfumes), bold (energetic: gyms, sports, big sales, events, bikes, nightlife), fresh (warm and tasty: restaurants, sweets, bakeries, cafes, grocery, organic), clean (calm and trustworthy: real estate, hospitals, clinics, electronics, finance, offices, services), editor (a before → after makeover shown inside a photo-editing app: photo studios, editing services, salons and makeup, renovation, interiors, car detailing, cleaning), beat (very fast photo cuts with shake, for many photos: fashion, events, parties, travel, youth brands, launches), parallax (photo cards popping out with 3D depth: products, real estate, cafes, showrooms), stack (one photo at a time with frame, shapes, label, title and price sticker stacking on: offers, menus, shops, services), slide (each photo's centre slides in fast with motion blur and lands on its own background: portraits, fashion, salons, coaching, personal brands), frame (photo in a gold frame with rising golden bokeh, hearts and calligraphy: anniversaries, wedding wishes, birthdays, festival greetings, invitations).
+  layout: playful (bright and friendly: schools, kids, toys, birthdays, coaching), luxe (elegant: jewellery, weddings, sarees, salons, spas, hotels, perfumes), bold (energetic: gyms, sports, big sales, events, bikes, nightlife), fresh (warm and tasty: restaurants, sweets, bakeries, cafes, grocery, organic), clean (calm and trustworthy: real estate, hospitals, clinics, electronics, finance, offices, services), editor (a before → after makeover shown inside a photo-editing app: photo studios, editing services, salons and makeup, renovation, interiors, car detailing, cleaning), beat (very fast photo cuts with shake, for many photos: fashion, events, parties, travel, youth brands, launches), parallax (photo cards popping out with 3D depth: products, real estate, cafes, showrooms), stack (one photo at a time with frame, shapes, label, title and price sticker stacking on: offers, menus, shops, services), slide (each photo's centre slides in fast with motion blur and lands on its own background: portraits, fashion, salons, coaching, personal brands), frame (photo in a gold frame with rising golden bokeh, hearts and calligraphy: anniversaries, wedding wishes, birthdays, festival greetings), invite (traditional invitation with mango-leaf toran, marigold garlands and a golden mandapam arch: half saree / langa voni, naming ceremony, house warming, engagement, wedding and pooja invitations).
   accent: the colour people link with the business, brand or occasion (e.g. hospital teal, organic green, Diwali orange-gold, wedding red-gold, tech blue); dark: a deep tint of it for the background.
   font: round (friendly), serif (luxury), play (classic elegant), jost (modern clean), impact (strong uppercase), sans (simple bold).
   motion: zoom (gentle), pan (calm side move), drift (slow cinematic), punch (fast and strong).
@@ -161,7 +162,7 @@ function cleanPlan(plan) {
   })).filter(s => s.imagePrompt);
   if (!scenes.length) return null;
   return {
-    title: clip(plan.title, 60), subtitle: clip(plan.subtitle, 90), contact: clip(plan.contact, 40), closing: clip(plan.closing, 60), badge: clip(plan.badge, 30),
+    title: clip(plan.title, 60), subtitle: clip(plan.subtitle, 90), contact: clip(plan.contact, 40), closing: clip(plan.closing, 60), badge: clip(plan.badge, 30), details: clip(plan.details, 200),
     style: STYLES.includes(plan.style) ? plan.style : "offer",
     design: cleanDesign(plan.design),
     format: FORMATS[plan.format] ? plan.format : "story",
