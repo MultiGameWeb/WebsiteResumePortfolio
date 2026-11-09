@@ -38,6 +38,7 @@
     { id: 'ai-bold', name: 'AI style · Bold (gym, sale)', spot: 'bold', bg: '#0a0a0a', bg2: '#2a0c06', accent: '#ff4d1f', text: '#ffffff', font: IMPACT },
     { id: 'ai-fresh', name: 'AI style · Fresh (food)', spot: 'fresh', bg: '#fffaf3', bg2: '#ffedd5', accent: '#ff7a1a', text: '#3b1300', font: SANS },
     { id: 'ai-clean', name: 'AI style · Clean (property, products)', spot: 'clean', bg: '#0f172a', bg2: '#334155', accent: '#2dd4bf', text: '#ffffff', font: CLEAN },
+    { id: 'ai-editor', name: 'Editor reveal · before → after (makeovers)', spot: 'editor', bg: '#121212', bg2: '#1e1e1e', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
   ];
 
   const $ = (selector) => document.querySelector(selector);
@@ -608,7 +609,7 @@
   // ---- AI-style designs (video-maker/styles.js) ----
   // The same drawing code makes the preview, the MP4 and the HTML video.
   const STYLES = window.SiteCraftStyles;
-  const DEFAULT_STYLE = { playful: 'default', luxe: 'jewel', bold: 'gym', fresh: 'food', clean: 'property' };
+  const DEFAULT_STYLE = { playful: 'default', luxe: 'jewel', bold: 'gym', fresh: 'food', clean: 'property', editor: 'default' };
 
   function spotData(images) {
     const [w, h] = FORMATS[state.format];
@@ -657,8 +658,8 @@
   const pickOne = (list) => list[Math.floor(Math.random() * list.length)];
 
   function randomLook(layout) {
-    const fonts = { playful: ['round', 'sans'], luxe: ['serif', 'play'], bold: ['impact', 'sans'], fresh: ['sans', 'round', 'play'], clean: ['jost', 'sans'] }[layout];
-    const decos = { playful: ['none', 'confetti', 'bubbles'], luxe: ['sparkles', 'petals', 'bokeh'], bold: ['streaks', 'none', 'confetti'], fresh: ['none', 'bubbles', 'bokeh'], clean: ['none', 'bokeh', 'streaks'] }[layout];
+    const fonts = { playful: ['round', 'sans'], luxe: ['serif', 'play'], bold: ['impact', 'sans'], fresh: ['sans', 'round', 'play'], clean: ['jost', 'sans'], editor: ['impact', 'sans'] }[layout];
+    const decos = { playful: ['none', 'confetti', 'bubbles'], luxe: ['sparkles', 'petals', 'bokeh'], bold: ['streaks', 'none', 'confetti'], fresh: ['none', 'bubbles', 'bokeh'], clean: ['none', 'bokeh', 'streaks'], editor: ['none'] }[layout];
     const colours = photoColours();
     return {
       layout,

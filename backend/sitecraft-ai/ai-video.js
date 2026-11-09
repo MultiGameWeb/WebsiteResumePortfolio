@@ -24,7 +24,7 @@ const TEXT_MODELS = ["gemini-3.5-flash-lite", "gemini-3.8-flash"];
 const DEFAULT_IMAGE_MODEL = "gemini-2.5-flash-image";
 // The design building blocks of video-maker/styles.js the AI can mix.
 const DESIGN = {
-  layout: ["playful", "luxe", "bold", "fresh", "clean"],
+  layout: ["playful", "luxe", "bold", "fresh", "clean", "editor"],
   font: ["round", "serif", "jost", "impact", "sans", "play"],
   motion: ["zoom", "pan", "drift", "punch"],
   transition: ["fade", "flash", "wipe", "slide", "zoom"],
@@ -139,7 +139,7 @@ Plan rules:
 - style: jewel (jewellery, luxury), gym (fitness, sports), royal (weddings, events, wedding services), food (restaurants, sweets, bakeries), property (real estate, hotels, resorts), product (shops, electronics, products), offer (sales and discounts), wedding (other functions), birthday (birthdays, kids).
 - eyebrow, headlines and lines in the customer's chosen language; keep them short and punchy. Each scene tells one selling point (for example a school: the campus, classes and teachers, sports, labs, admissions with the phone number).
 - design: choose the look that best suits THIS business and its customers, so different businesses get different videos.
-  layout: playful (bright and friendly: schools, kids, toys, birthdays, coaching), luxe (elegant: jewellery, weddings, sarees, salons, spas, hotels, perfumes), bold (energetic: gyms, sports, big sales, events, bikes, nightlife), fresh (warm and tasty: restaurants, sweets, bakeries, cafes, grocery, organic), clean (calm and trustworthy: real estate, hospitals, clinics, electronics, finance, offices, services).
+  layout: playful (bright and friendly: schools, kids, toys, birthdays, coaching), luxe (elegant: jewellery, weddings, sarees, salons, spas, hotels, perfumes), bold (energetic: gyms, sports, big sales, events, bikes, nightlife), fresh (warm and tasty: restaurants, sweets, bakeries, cafes, grocery, organic), clean (calm and trustworthy: real estate, hospitals, clinics, electronics, finance, offices, services), editor (a before → after makeover shown inside a photo-editing app: photo studios, editing services, salons and makeup, renovation, interiors, car detailing, cleaning).
   accent: the colour people link with the business, brand or occasion (e.g. hospital teal, organic green, Diwali orange-gold, wedding red-gold, tech blue); dark: a deep tint of it for the background.
   font: round (friendly), serif (luxury), play (classic elegant), jost (modern clean), impact (strong uppercase), sans (simple bold).
   motion: zoom (gentle), pan (calm side move), drift (slow cinematic), punch (fast and strong).
