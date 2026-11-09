@@ -19,6 +19,7 @@
     impact: `Anton, ${SCRIPTS}, sans-serif`,
     sans: `Poppins, ${SCRIPTS}, sans-serif`,
     play: `"Playfair Display", ${SCRIPTS}, serif`,
+    script: `"Great Vibes", "Cormorant Garamond", ${SCRIPTS}, cursive`,
   };
 
   // Which design fits which business type (the AI plan's style).
@@ -30,7 +31,7 @@
     birthday: 'playful',
   };
 
-  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal', beat: 'Beat drop', parallax: '3D pop', stack: 'Layer build-up', slide: 'Slide cut-in' };
+  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal', beat: 'Beat drop', parallax: '3D pop', stack: 'Layer build-up', slide: 'Slide cut-in', frame: 'Golden frame' };
 
   // Colours per business type, used by every design.
   const THEMES = {
@@ -1124,7 +1125,151 @@
     chrome() {},
   };
 
-  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor, beat, parallax, stack, slide };
+  // ---- Golden frame: wishes (anniversaries, weddings, birthdays). The
+  // photo sits in a gold frame over a dark blurred copy of itself, breathing
+  // and swaying gently, with rising golden bokeh and hearts, soft light rays
+  // and calligraphy text with a gold glow; photos cross-fade inside the
+  // frame and the video fades to black at the end. ----
+  const goldOf = (d) => (HEX.test(d.design?.accent || '') ? d.design.accent : '#d4af37');
+  const CREAM = '#fffdd0';
+
+  function heart(ctx, x, y, s) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + s * 0.3);
+    ctx.bezierCurveTo(x, y - s * 0.3, x - s, y - s * 0.3, x - s, y + s * 0.2);
+    ctx.bezierCurveTo(x - s, y + s * 0.7, x, y + s, x, y + s * 1.2);
+    ctx.bezierCurveTo(x, y + s, x + s, y + s * 0.7, x + s, y + s * 0.2);
+    ctx.bezierCurveTo(x + s, y - s * 0.3, x, y - s * 0.3, x, y + s * 0.3);
+    ctx.fill();
+  }
+
+  function frameBox(d) {
+    const fw = wide(d) ? d.h * 0.62 : d.w * 0.74;
+    const fh = wide(d) ? d.h * 0.7 : d.h * 0.5;
+    return { fw, fh, cx: wide(d) ? d.w * 0.32 : d.w / 2, cy: wide(d) ? d.h * 0.48 : d.h * 0.4 };
+  }
+
+  const golden = {
+    deco: 'none',
+    transition: { type: 'cut', dur: 0 },
+    motion: { zoom: [1, 1.04] },
+    draw(ctx, d, seg, t, segs) {
+      const u = unit(d);
+      const gold = goldOf(d);
+      const light = tint(gold, 0.55);
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const k = segs.indexOf(seg);
+      const item = d.photos[seg.photo] || {};
+      const prev = k > 0 ? d.photos[segs[k - 1].photo] : null;
+      const fade = prev && prev.img !== item.img ? clamp(local / 0.7, 0, 1) : 1;
+      // Dark blurred background of the photo.
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, d.w, d.h);
+      if (prev && fade < 1) coverAt(ctx, blurOf(prev.img), 0, 0, d.w, d.h, 1.2);
+      ctx.save(); ctx.globalAlpha *= fade; coverAt(ctx, blurOf(item.img), 0, 0, d.w, d.h, 1.2); ctx.restore();
+      ctx.fillStyle = 'rgba(0,0,0,.58)'; ctx.fillRect(0, 0, d.w, d.h);
+      // Soft light rays from the top.
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < 5; i += 1) {
+        const a = -0.5 + i * 0.25 + Math.sin(t * 0.3 + i) * 0.05;
+        ctx.save();
+        ctx.translate(d.w / 2, -u * 10); ctx.rotate(a);
+        const g = ctx.createLinearGradient(0, 0, 0, d.h);
+        g.addColorStop(0, `${gold}40`); g.addColorStop(1, `${gold}00`);
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.moveTo(-u, 0); ctx.lineTo(u, 0); ctx.lineTo(u * 9, d.h * 1.1); ctx.lineTo(-u * 9, d.h * 1.1); ctx.fill();
+        ctx.restore();
+      }
+      ctx.restore();
+      // The framed photo: scales in at the start, then breathes and sways.
+      const { fw, fh, cx, cy } = frameBox(d);
+      const enter = seg.kind === 'intro' ? 0.9 + 0.1 * ease(local / 1.2) : 1;
+      const breathe = 1 + 0.02 * (1 - Math.cos((t / 15) * Math.PI * 2));
+      const s = enter * breathe;
+      const sx = Math.sin(t * 1.3) * u * 0.3;
+      const sy = Math.cos(t * 1.1) * u * 0.3;
+      const w = fw * s;
+      const h = fh * s;
+      const x = cx - w / 2 + sx;
+      const y = cy - h / 2 + sy;
+      ctx.save();
+      ctx.globalAlpha *= seg.kind === 'intro' ? ease(local / 0.8) : 1;
+      ctx.shadowColor = `${gold}aa`; ctx.shadowBlur = u * 5;
+      ctx.fillStyle = gold;
+      ctx.beginPath(); ctx.roundRect(x - u * 1.4, y - u * 1.4, w + u * 2.8, h + u * 2.8, u * 4); ctx.fill();
+      ctx.shadowColor = 'transparent';
+      ctx.save();
+      ctx.beginPath(); ctx.roundRect(x, y, w, h, u * 3); ctx.clip();
+      if (prev && fade < 1) coverAt(ctx, prev.img, x, y, w, h, 1.02);
+      ctx.globalAlpha *= fade;
+      coverAt(ctx, item.img, x, y, w, h, 1.02);
+      ctx.restore();
+      // Inner fine line and corner gems.
+      ctx.strokeStyle = light; ctx.lineWidth = Math.max(1, u * 0.25);
+      ctx.beginPath(); ctx.roundRect(x + u * 1.2, y + u * 1.2, w - u * 2.4, h - u * 2.4, u * 2.2); ctx.stroke();
+      ctx.fillStyle = light;
+      for (const [gx, gy] of [[x, y], [x + w, y], [x, y + h], [x + w, y + h]]) {
+        ctx.save(); ctx.translate(gx, gy); ctx.rotate(Math.PI / 4); ctx.fillRect(-u * 1.1, -u * 1.1, u * 2.2, u * 2.2); ctx.restore();
+      }
+      ctx.restore();
+      // Text under the frame (beside it on wide videos).
+      const tx = wide(d) ? d.w * 0.74 : d.w / 2;
+      const maxWidth = wide(d) ? d.w * 0.44 : d.w * 0.88;
+      let ty = wide(d) ? d.h * 0.28 : cy + fh / 2 + u * 6;
+      const appear = ease((local - 0.3) / 0.6);
+      const glow = { shadow: false };
+      const script = (value, size) => {
+        if (!value) return 0;
+        ctx.save();
+        ctx.shadowColor = gold; ctx.shadowBlur = size * 0.35;
+        const hgt = write(ctx, value, { x: tx, y: ty, size, weight: 400, font: F.script, color: CREAM, align: 'center', maxWidth, maxLines: 2, lineHeight: 1.05, alpha: appear, ...glow });
+        ctx.restore();
+        return hgt;
+      };
+      if (seg.kind === 'intro') {
+        ty += script(d.subtitle || 'Happy Anniversary', u * (wide(d) ? 8 : 9.5)) + u * 1.5;
+        write(ctx, d.title, { x: tx, y: ty, size: u * 4.2, weight: 600, font: F.serif, color: light, align: 'center', upper: true, spacing: 0.16, maxWidth, maxLines: 2, alpha: ease((local - 0.6) / 0.6), shadow: false });
+      } else if (seg.kind === 'outro') {
+        ty += script(d.closing, u * (wide(d) ? 7 : 8.5)) + u * 1.5;
+        write(ctx, d.title, { x: tx, y: ty, size: u * 3.8, weight: 600, font: F.serif, color: light, align: 'center', upper: true, spacing: 0.16, maxWidth, maxLines: 1, alpha: appear, shadow: false });
+        if (d.contact) write(ctx, d.contact, { x: tx, y: ty + u * 6, size: u * 3, weight: 500, font: F.jost, color: 'rgba(255,255,255,.85)', align: 'center', maxWidth, maxLines: 1, alpha: appear, shadow: false });
+      } else {
+        if (item.label) { write(ctx, item.label, { x: tx, y: ty, size: u * 2.4, weight: 600, font: F.jost, color: light, align: 'center', upper: true, spacing: 0.3, maxWidth, maxLines: 1, alpha: appear, shadow: false }); ty += u * 4.5; }
+        ty += script(item.head || d.subtitle, u * (wide(d) ? 7 : 8.5)) + u * 1.2;
+        write(ctx, item.line, { x: tx, y: ty, size: u * 3.2, weight: 400, font: F.serif, italic: true, color: 'rgba(255,255,255,.9)', align: 'center', maxWidth, maxLines: 2, alpha: ease((local - 0.6) / 0.6), shadow: false });
+      }
+      // Rising golden bokeh with a few hearts.
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < 26; i += 1) {
+        const speed = 0.025 + rnd(i, 1) * 0.04;
+        const py = (1.05 - ((t * speed + rnd(i, 2)) % 1.1)) * d.h;
+        const px = (rnd(i, 3) + Math.sin(t * 0.5 + i) * 0.03) * d.w;
+        const tw = 0.5 + 0.5 * Math.sin(t * (1 + rnd(i, 4)) + i);
+        ctx.globalAlpha = 0.35 + 0.5 * tw;
+        if (i % 6 === 0) {
+          ctx.fillStyle = `${light}cc`;
+          heart(ctx, px, py, u * (0.9 + rnd(i, 5)));
+        } else {
+          const r = u * (0.5 + rnd(i, 5) * 1.8);
+          const g = ctx.createRadialGradient(px, py, 0, px, py, r * 2.2);
+          g.addColorStop(0, `${light}ee`); g.addColorStop(1, `${gold}00`);
+          ctx.fillStyle = g;
+          ctx.beginPath(); ctx.arc(px, py, r * 2.2, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      ctx.restore();
+      // Fade to black at the very end.
+      if (seg.kind === 'outro') {
+        const out = clamp((local - (dur - 1.5)) / 1.5, 0, 1);
+        if (out > 0) { ctx.fillStyle = `rgba(0,0,0,${out})`; ctx.fillRect(0, 0, d.w, d.h); }
+      }
+    },
+    chrome() {},
+  };
+
+  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor, beat, parallax, stack, slide, frame: golden };
 
   // Moving effects over the video.
   function deco(ctx, d, t, kind) {
@@ -1272,8 +1417,8 @@
     LAYOUT_FOR, NAMES, frame, total, layoutFor: (style) => LAYOUT_FOR[style] || 'playful',
     // The building blocks a design (from the AI or "New look") can choose.
     CHOICES: { layout: Object.keys(LAYOUTS), font: ['round', 'serif', 'jost', 'impact', 'sans', 'play'], motion: Object.keys(MOTIONS), transition: Object.keys(TRANSITIONS), deco: ['none', 'sparkles', 'confetti', 'bubbles', 'petals', 'bokeh', 'streaks'] },
-    fonts: [`600 40px ${F.round}`, `700 40px ${F.round}`, `600 40px ${F.serif}`, `italic 600 40px ${F.serif}`, `400 40px ${F.jost}`, `500 40px ${F.jost}`, `600 40px ${F.jost}`, `400 40px ${F.impact}`, `700 40px ${F.sans}`, `800 40px ${F.sans}`, `700 40px ${F.play}`],
-    fontsUrl: 'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Jost:wght@400;500;600&family=Anton&family=Poppins:wght@700;800&family=Playfair+Display:wght@700&family=Noto+Sans+Telugu:wght@600;800&family=Noto+Sans+Devanagari:wght@600;800&display=swap',
+    fonts: [`600 40px ${F.round}`, `700 40px ${F.round}`, `600 40px ${F.serif}`, `italic 600 40px ${F.serif}`, `400 40px ${F.jost}`, `500 40px ${F.jost}`, `600 40px ${F.jost}`, `400 40px ${F.impact}`, `700 40px ${F.sans}`, `800 40px ${F.sans}`, `700 40px ${F.play}`, `400 40px ${F.script}`],
+    fontsUrl: 'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Jost:wght@400;500;600&family=Anton&family=Poppins:wght@700;800&family=Playfair+Display:wght@700&family=Great+Vibes&family=Noto+Sans+Telugu:wght@600;800&family=Noto+Sans+Devanagari:wght@600;800&display=swap',
   };
   if (typeof window !== 'undefined') window.SiteCraftStyles = api;
 })();
