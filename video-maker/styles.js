@@ -30,7 +30,7 @@
     birthday: 'playful',
   };
 
-  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean' };
+  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal' };
 
   // Colours per business type, used by every design.
   const THEMES = {
@@ -574,7 +574,194 @@
     },
   };
 
-  const LAYOUTS = { playful, luxe, bold, fresh, clean };
+  // ---- Editor reveal: a photo-editing app works on each photo step by
+  // step (crop, light, colour, finish), then a hard cut shows the finished
+  // photo full screen with a slow zoom. Before → after, for every photo.
+  const STEPS = ['Crop', 'Light', 'Colour', 'Finish'];
+  const YELLOW = '#ffea00';
+
+  const editorCyan = (d) => (HEX.test(d.design?.accent || '') ? d.design.accent : '#00e5ff');
+
+  function coverIn(ctx, img, x, y, w, h, zoom) {
+    if (!img) { ctx.fillStyle = '#1e1e1e'; ctx.fillRect(x, y, w, h); return; }
+    const iw = img.naturalWidth || img.width;
+    const ih = img.naturalHeight || img.height;
+    const s = Math.max(w / iw, h / ih) * zoom;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+    ctx.drawImage(img, x + (w - iw * s) / 2, y + (h - ih * s) / 2, iw * s, ih * s);
+    ctx.restore();
+  }
+
+  // Black-and-white, darkness and warmth with blend modes (works in every
+  // browser, unlike canvas filters).
+  function grade(ctx, x, y, w, h, gray, dark, warm) {
+    ctx.save();
+    ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+    const a = ctx.globalAlpha;
+    if (gray > 0) { ctx.globalCompositeOperation = 'saturation'; ctx.globalAlpha = a * gray; ctx.fillStyle = '#808080'; ctx.fillRect(x, y, w, h); }
+    if (dark > 0) { ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = a * dark; ctx.fillStyle = '#000'; ctx.fillRect(x, y, w, h); }
+    if (warm > 0) { ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = a * warm; ctx.fillStyle = '#ff9a3c'; ctx.fillRect(x, y, w, h); }
+    ctx.restore();
+  }
+
+  function cursor(ctx, x, y, u) {
+    ctx.save();
+    ctx.fillStyle = '#fff'; ctx.strokeStyle = '#000'; ctx.lineWidth = Math.max(1, u * 0.25);
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + u * 4.2); ctx.lineTo(x + u * 1.1, y + u * 3.1); ctx.lineTo(x + u * 2.1, y + u * 5); ctx.lineTo(x + u * 2.8, y + u * 4.6); ctx.lineTo(x + u * 1.9, y + u * 2.8); ctx.lineTo(x + u * 3.2, y + u * 2.8); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.restore();
+  }
+
+  // The editing app: header, canvas with grid, tool bar, sliders, step pill.
+  function editorApp(ctx, d, item, q, local, intro) {
+    const u = unit(d);
+    const cyan = editorCyan(d);
+    const W = d.w;
+    const H = d.h;
+    ctx.fillStyle = '#121212';
+    ctx.fillRect(0, 0, W, H);
+    const isWide = wide(d);
+    const cx = u * 6;
+    const cy = isWide ? H * 0.2 : H * 0.17;
+    const cw = isWide ? W * 0.56 : W - u * 12;
+    const ch = isWide ? H * 0.66 : H * 0.5;
+    const step = Math.min(3, Math.floor(q * 4));
+    const sp = q * 4 - step;
+    // Header: BEFORE tag and the business name.
+    pill(ctx, intro ? 'New project' : 'Before', { x: cx, y: u * 5, size: u * 2.4, bg: YELLOW, color: '#000', font: F.impact, weight: 400, radius: u * 0.6, spacing: 0.08 });
+    write(ctx, d.title, { x: cx, y: u * 10, size: u * (isWide ? 4.6 : 5.6), weight: 400, font: headFont(d, F.impact), upper: true, maxWidth: isWide ? W * 0.56 : W - u * 12, maxLines: 1, shadow: false });
+    // Canvas with the photo being edited.
+    const gray = intro ? 1 : step < 2 ? 1 : step === 2 ? 1 - ease(sp) : 0;
+    const dark = intro ? 0.55 : step < 1 ? 0.45 : step === 1 ? 0.45 * (1 - ease(sp)) : 0;
+    const warm = intro ? 0 : step < 3 ? 0 : 0.3 * ease(sp);
+    const crop = intro ? 0 : step === 0 ? ease(sp) : 1;
+    const inset = u * 2.2 * crop;
+    coverIn(ctx, item?.img, cx, cy, cw, ch, 1.02 + 0.05 * crop);
+    grade(ctx, cx, cy, cw, ch, gray, dark, warm);
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,.28)'; ctx.lineWidth = Math.max(1, u * 0.12);
+    for (let i = 1; i < 3; i += 1) {
+      ctx.beginPath(); ctx.moveTo(cx + (cw * i) / 3, cy); ctx.lineTo(cx + (cw * i) / 3, cy + ch); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx, cy + (ch * i) / 3); ctx.lineTo(cx + cw, cy + (ch * i) / 3); ctx.stroke();
+    }
+    // Crop corners close in during the first step.
+    ctx.strokeStyle = step === 0 && !intro ? YELLOW : 'rgba(255,255,255,.85)';
+    ctx.lineWidth = Math.max(2, u * 0.5);
+    const L = u * 4;
+    const x0 = cx + inset; const y0 = cy + inset; const x1 = cx + cw - inset; const y1 = cy + ch - inset;
+    for (const [px, py, dx, dy] of [[x0, y0, 1, 1], [x1, y0, -1, 1], [x0, y1, 1, -1], [x1, y1, -1, -1]]) {
+      ctx.beginPath(); ctx.moveTo(px, py + dy * L); ctx.lineTo(px, py); ctx.lineTo(px + dx * L, py); ctx.stroke();
+    }
+    ctx.restore();
+    if (intro) {
+      const fade = ease(local / 0.6);
+      write(ctx, d.subtitle || d.title, { x: cx + cw / 2, y: cy + ch * 0.4, size: u * 6, weight: 400, font: headFont(d, F.impact), align: 'center', upper: true, maxWidth: cw - u * 8, maxLines: 3, alpha: fade });
+    }
+    // Tool bar (crop, light, colour, finish), the active tool lit.
+    const tbY = isWide ? cy : cy + ch + u * 3;
+    const tbX = isWide ? cx + cw + u * 4 : cx;
+    const tbW = isWide ? W - tbX - u * 6 : cw;
+    ctx.fillStyle = '#1e1e1e';
+    ctx.beginPath(); ctx.roundRect(tbX, tbY, tbW, u * 9, u * 2); ctx.fill();
+    STEPS.forEach((name, i) => {
+      const bx = tbX + (tbW / 4) * i + tbW / 8;
+      const on = !intro && i === step;
+      ctx.fillStyle = on ? cyan : 'rgba(255,255,255,.12)';
+      ctx.beginPath(); ctx.arc(bx, tbY + u * 3.4, u * 2, 0, Math.PI * 2); ctx.fill();
+      write(ctx, name, { x: bx, y: tbY + u * 6.2, size: u * 1.8, weight: 600, font: F.jost, color: on ? cyan : 'rgba(255,255,255,.6)', align: 'center', maxWidth: tbW / 4, maxLines: 1, shadow: false });
+    });
+    // Sliders that move as the photo is fixed.
+    const slY = tbY + u * 12;
+    const sliders = [['Light', 0.3 + 0.7 * (intro ? 0 : step > 1 ? 1 : step === 1 ? ease(sp) : 0)], ['Colour', intro ? 0 : step > 2 ? 1 : step === 2 ? ease(sp) : 0], ['Warmth', intro ? 0 : step === 3 ? ease(sp) : 0]];
+    let knob = null;
+    sliders.forEach(([name, v], i) => {
+      const y = slY + i * u * 7;
+      const on = !intro && i + 1 === step;
+      write(ctx, name, { x: tbX, y, size: u * 2.1, weight: 500, font: F.jost, color: on ? cyan : 'rgba(255,255,255,.7)', maxWidth: tbW * 0.3, maxLines: 1, shadow: false });
+      const sx = tbX + tbW * 0.3;
+      const sw = tbW * 0.66;
+      ctx.fillStyle = 'rgba(255,255,255,.18)'; ctx.fillRect(sx, y + u * 1, sw, u * 0.5);
+      ctx.fillStyle = on ? cyan : 'rgba(255,255,255,.55)'; ctx.fillRect(sx, y + u * 1, sw * v, u * 0.5);
+      ctx.beginPath(); ctx.arc(sx + sw * v, y + u * 1.25, u * 1.3, 0, Math.PI * 2); ctx.fill();
+      if (on) knob = [sx + sw * v, y + u * 1.25];
+    });
+    if (!intro) cursor(ctx, ...(knob || [x1 - u * 0.5, y1 - u * 0.5]), u);
+    // Step counter in the lower third, popping in at each new step.
+    const pop = intro ? 1 : 0.7 + 0.3 * ease(sp / 0.25);
+    const label = intro ? (d.badge || 'Watch the magic') : `Step ${step + 1}/4 · ${STEPS[step]}`;
+    ctx.save();
+    const py = isWide ? H - u * 12 : H - u * 15;
+    ctx.translate(W / 2, py); ctx.scale(pop, pop); ctx.translate(-W / 2, -py);
+    pill(ctx, label, { x: W / 2, y: py, size: u * 3, bg: cyan, color: '#000', font: F.impact, weight: 400, align: 'center', radius: u * 0.8, spacing: 0.06, maxWidth: W * 0.9 });
+    ctx.restore();
+    if (item?.label && !intro) write(ctx, item.label, { x: W / 2, y: py + u * 7.4, size: u * 2.4, weight: 600, font: F.jost, color: 'rgba(255,255,255,.75)', align: 'center', upper: true, spacing: 0.18, maxWidth: W * 0.85, maxLines: 1, shadow: false });
+  }
+
+  // The finished photo full screen, slowly zooming, warm, with its caption.
+  function editorReveal(ctx, d, item, q, local, freeze) {
+    const u = unit(d);
+    const cyan = editorCyan(d);
+    coverIn(ctx, item?.img, 0, 0, d.w, d.h, freeze ? 1.15 : 1 + 0.15 * q);
+    grade(ctx, 0, 0, d.w, d.h, 0, 0, 0.25);
+    gradient(ctx, d, [[0, 'rgba(0,0,0,.45)'], [0.3, 'rgba(0,0,0,0)'], [0.6, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.8)']]);
+    if (!freeze) {
+      pill(ctx, 'After', { x: u * 6, y: u * 5, size: u * 2.4, bg: YELLOW, color: '#000', font: F.impact, weight: 400, radius: u * 0.6, spacing: 0.08 });
+      const x = u * 6;
+      const maxWidth = d.w - u * 12;
+      const ho = { x, size: u * (wide(d) ? 7 : 8.5), weight: 400, font: headFont(d, F.impact), upper: true, maxWidth, maxLines: 3, lineHeight: 1 };
+      const hh = write(ctx, item?.head, { ...ho, measure: true });
+      const barH = item?.line ? u * 6 : 0;
+      const y = d.h - u * (wide(d) ? 10 : 14) - barH - (barH ? u * 2 : 0) - hh;
+      write(ctx, item?.head, { ...ho, y, alpha: ease(local / 0.4) });
+      if (item?.line) {
+        const slide = ease((local - 0.2) / 0.4);
+        pill(ctx, item.line, { x, y: y + hh + u * 2, size: u * 2.9, bg: YELLOW, color: '#000', font: F.impact, weight: 400, radius: u * 0.6, spacing: 0.04, alpha: slide, maxWidth });
+      }
+      // A quick flash on the cut.
+      if (local < 0.15) { ctx.fillStyle = `rgba(255,255,255,${0.6 * (1 - local / 0.15)})`; ctx.fillRect(0, 0, d.w, d.h); }
+    }
+    ctx.fillStyle = cyan;
+    ctx.fillRect(0, d.h - u * 0.6, d.w, u * 0.6);
+  }
+
+  const editor = {
+    deco: 'none',
+    transition: { type: 'cut', dur: 0 },
+    motion: { zoom: [1, 1.15] },
+    draw(ctx, d, seg, t) {
+      const local = t - seg.start;
+      const item = d.photos[seg.photo];
+      if (seg.kind === 'intro') { editorApp(ctx, d, item, 0, local, true); return; }
+      if (seg.kind === 'outro') {
+        editorReveal(ctx, d, item, 1, local, true);
+        const u = unit(d);
+        const cyan = editorCyan(d);
+        const appear = ease(local / 0.5);
+        const pw = Math.min(d.w - u * 12, u * 80);
+        const px = (d.w - pw) / 2;
+        const ph = u * (d.contact ? 30 : 20);
+        const py = (d.h - ph) / 2;
+        ctx.save();
+        ctx.globalAlpha *= appear;
+        ctx.fillStyle = 'rgba(18,18,18,.88)'; ctx.strokeStyle = cyan; ctx.lineWidth = Math.max(1, u * 0.3);
+        ctx.beginPath(); ctx.roundRect(px, py, pw, ph, u * 2.5); ctx.fill(); ctx.stroke();
+        ctx.restore();
+        write(ctx, d.badge || d.title, { x: d.w / 2, y: py + u * 4, size: u * 2.4, weight: 600, font: F.jost, color: cyan, align: 'center', upper: true, spacing: 0.2, maxWidth: pw - u * 6, maxLines: 1, shadow: false, alpha: appear });
+        write(ctx, d.closing, { x: d.w / 2, y: py + u * 8, size: u * 6, weight: 400, font: headFont(d, F.impact), align: 'center', upper: true, maxWidth: pw - u * 6, maxLines: 2, shadow: false, alpha: appear });
+        if (d.contact) pill(ctx, `Call now · ${d.contact}`, { x: d.w / 2, y: py + ph - u * 10, size: u * 3, bg: YELLOW, color: '#000', font: F.impact, weight: 400, align: 'center', radius: u * 0.8, spacing: 0.04, alpha: appear, maxWidth: pw - u * 6 });
+        return;
+      }
+      const dur = seg.end - seg.start;
+      const split = 0.55;
+      const p = local / dur;
+      if (p < split) editorApp(ctx, d, item, p / split, local, false);
+      else editorReveal(ctx, d, item, (p - split) / (1 - split), local - dur * split, false);
+    },
+    chrome() {},
+  };
+
+  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor };
 
   // ---- Building blocks the design can mix ----
   const MOTIONS = {
@@ -673,9 +860,14 @@
   function scene(ctx, d, L, seg, t, segs, alpha) {
     ctx.save();
     ctx.globalAlpha = alpha;
-    photo(ctx, d, seg, t, segs, MOTIONS[d.design?.motion] || L.motion);
-    L.overlay(ctx, d);
-    L.text(ctx, d, seg, t - seg.start, segs);
+    if (L.draw) {
+      // A design that draws the whole scene itself.
+      L.draw(ctx, d, seg, t, segs);
+    } else {
+      photo(ctx, d, seg, t, segs, MOTIONS[d.design?.motion] || L.motion);
+      L.overlay(ctx, d);
+      L.text(ctx, d, seg, t - seg.start, segs);
+    }
     ctx.restore();
   }
 
@@ -687,7 +879,8 @@
     if (k < 0) k = segs.length - 1;
     const seg = segs[k];
     const into = t - seg.start;
-    const { type, dur } = TRANSITIONS[d.design?.transition] || L.transition;
+    // The editor design always uses hard cuts (its before/after needs them).
+    const { type, dur } = (L.draw ? null : TRANSITIONS[d.design?.transition]) || L.transition;
     if (k > 0 && into < dur) {
       const prev = segs[k - 1];
       const p = into / dur;
@@ -721,7 +914,7 @@
     } else {
       scene(ctx, d, L, seg, t, segs, 1);
     }
-    deco(ctx, d, t, d.design?.deco || L.deco);
+    deco(ctx, d, t, L.draw ? L.deco : (d.design?.deco || L.deco));
     L.chrome(ctx, d, t, seg, segs);
   }
 
