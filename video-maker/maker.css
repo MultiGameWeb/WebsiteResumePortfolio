@@ -115,3 +115,4 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 .vm-ai.vm-drop { outline: 2px dashed #ec4899; outline-offset: 4px; }
 .vm-ai-shared { grid-column: 1 / -1; }
 .vm-html-btn { width: 100%; margin-top: 10px; } .vm-html-btn[hidden] { display: none; }
+.vm-ai-choices-shared { grid-template-columns: minmax(0, 1fr); }

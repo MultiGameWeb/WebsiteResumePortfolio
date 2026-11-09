@@ -72,12 +72,15 @@
     picker.hidden = true;
     own.append(picker);
     const choices = element('div', 'vm-ai-choices');
-    choices.append(ai, own);
+    choices.append(ai);
+    // Photos already shared in the chat: one button for them, no second picker.
+    if (!sharedPhotos.length) choices.append(own);
     if (sharedPhotos.length) {
       const shared = element('button', 'vm-btn primary vm-ai-shared', `🖼️ Use the ${sharedPhotos.length} photo${sharedPhotos.length === 1 ? '' : 's'} I shared`);
       shared.type = 'button';
       shared.addEventListener('click', () => useFiles(job, sharedPhotos));
       ai.className = 'vm-btn ghost';
+      choices.classList.add('vm-ai-choices-shared');
       choices.prepend(shared);
     }
     const thumbs = element('div', 'vm-ai-thumbs');
@@ -90,7 +93,7 @@
       element('h3', '', plan.title || 'Your video'),
       element('p', 'vm-ai-meta', `${STYLE_NAMES[plan.style] || plan.style} · ${plan.seconds} seconds · ${FORMAT_NAMES[plan.format] || plan.format}`),
       list,
-      element('p', 'vm-ai-ask', `AI will create ${plan.scenes.length} pictures for these scenes and make the video. Have your own photos? Tap “Use my photos” — AI looks at them, puts them in order and writes the text. Either way your pictures go inside the video and the HTML file.`),
+      element('p', 'vm-ai-ask', `AI will create ${plan.scenes.length} pictures for these scenes and make the video. Have your own photos? Share them in the chat (＋ or paste) or tap “Use my photos” — AI looks at them, puts them in order and writes the text. Either way your pictures go inside the video and the HTML file.`),
       choices, thumbs, note, credit,
     );
     planBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -214,7 +217,12 @@
       job.note.textContent = job.lastError || job.aiError || 'The pictures could not be loaded. Please try again, or use your own photos.';
       return;
     }
-    await window.SiteCraftVideoMaker.loadPlan({ ...job.plan, scenes: ready.map(([scene]) => scene) }, ready.map(([, slot]) => slot.blob));
+    try {
+      await window.SiteCraftVideoMaker.loadPlan({ ...job.plan, scenes: ready.map(([scene]) => scene) }, ready.map(([, slot]) => slot.blob));
+    } catch (error) {
+      job.note.textContent = error.message;
+      return;
+    }
     showEditor();
     const missing = job.plan.scenes.length - ready.length;
     const parts = [`${job.slots.some((slot) => slot?.source === 'own') && !job.aiError ? 'AI arranged your photos and wrote the scenes. ' : ''}Your video is ready ✓ (${ready.length} picture${ready.length === 1 ? '' : 's'}). Download it as an HTML video or tap “Make my video” for MP4.`];
