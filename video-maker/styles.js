@@ -30,7 +30,7 @@
     birthday: 'playful',
   };
 
-  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal', beat: 'Beat drop', parallax: '3D pop', stack: 'Layer build-up' };
+  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal', beat: 'Beat drop', parallax: '3D pop', stack: 'Layer build-up', slide: 'Slide cut-in' };
 
   // Colours per business type, used by every design.
   const THEMES = {
@@ -1042,7 +1042,89 @@
     chrome() {},
   };
 
-  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor, beat, parallax, stack };
+  // ---- Slide cut-in: the middle of the next photo, cut out in an arch,
+  // slides in fast from the side with motion blur over the current photo.
+  // The arch holds that photo exactly where the full photo will be, so when
+  // it lands in the centre the background cuts to the same photo (with a
+  // flash) and the arch melts into it, like a cut-out landing in its own
+  // scene. Then a slow zoom out. ----
+  const SLIDE = 0.24;
+  function archPath(ctx, d, dx) {
+    const aw = Math.min(d.w * 0.62, d.h * 0.42);
+    const ah = d.h * 0.8;
+    const left = (d.w - aw) / 2 + dx;
+    const top = d.h - ah;
+    const r = aw / 2;
+    ctx.beginPath();
+    ctx.moveTo(left, d.h);
+    ctx.lineTo(left, top + r);
+    ctx.arc(left + r, top + r, r, Math.PI, 0);
+    ctx.lineTo(left + aw, d.h);
+    ctx.closePath();
+  }
+
+  const slide = {
+    deco: 'none',
+    transition: { type: 'cut', dur: 0 },
+    motion: { zoom: [1.08, 1] },
+    draw(ctx, d, seg, t, segs) {
+      const u = unit(d);
+      const accent = editorCyan(d);
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const k = segs.indexOf(seg);
+      const item = d.photos[seg.photo] || {};
+      const prev = k > 0 ? d.photos[segs[k - 1].photo] : null;
+      const sliding = prev && prev.img !== item.img && local < SLIDE && seg.kind !== 'outro';
+      const after = Math.max(0, local - (prev && prev.img !== item.img ? SLIDE : 0));
+      const zoom = seg.kind === 'intro' ? 1 + 0.05 * (local / dur) : seg.kind === 'outro' ? 1 : 1.08 - 0.08 * clamp(after / Math.max(0.1, dur - SLIDE), 0, 1);
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, d.w, d.h);
+      if (sliding) {
+        coverAt(ctx, prev.img, 0, 0, d.w, d.h, 1);
+        const p = local / SLIDE;
+        const dx = d.w * (1 - (1 - Math.pow(1 - p, 3)));
+        const speed = 3 * Math.pow(1 - p, 2);
+        // Motion blur: fading copies trailing behind the arch.
+        for (let j = 4; j >= 1; j -= 1) {
+          ctx.save();
+          ctx.globalAlpha *= 0.16 * speed;
+          archPath(ctx, d, dx + j * u * 5 * speed); ctx.clip();
+          coverAt(ctx, item.img, 0, 0, d.w, d.h, 1.08, j * u * 5 * speed, 0);
+          ctx.restore();
+        }
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = u * 5;
+        archPath(ctx, d, dx); ctx.fillStyle = '#000'; ctx.fill();
+        ctx.shadowColor = 'transparent';
+        archPath(ctx, d, dx); ctx.clip();
+        coverAt(ctx, item.img, 0, 0, d.w, d.h, 1.08, dx, 0);
+        ctx.restore();
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,255,255,.85)'; ctx.lineWidth = Math.max(2, u * 0.4);
+        archPath(ctx, d, dx); ctx.stroke();
+        ctx.restore();
+        return;
+      }
+      coverAt(ctx, (seg.kind === 'outro' ? d.photos[seg.photo] : item).img, 0, 0, d.w, d.h, zoom);
+      // The landing flash.
+      if (prev && prev.img !== item.img && after < 0.08 && seg.kind !== 'outro') { ctx.fillStyle = `rgba(255,255,255,${0.5 * (1 - after / 0.08)})`; ctx.fillRect(0, 0, d.w, d.h); }
+      gradient(ctx, d, [[0, 'rgba(0,0,0,.45)'], [0.3, 'rgba(0,0,0,0)'], [0.65, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.7)']]);
+      if (seg.kind === 'intro') {
+        blockText(ctx, d, d.title, { x: u * 6, y: d.h * 0.12, size: u * 6.6, font: headFont(d, F.impact), bg: '#000', color: '#fff', maxWidth: d.w - u * 12, wipe: (local - 0.2) / 0.25 });
+        blockText(ctx, d, d.subtitle, { x: u * 6, y: d.h - u * 14, anchor: 'bottom', size: u * 4.4, font: F.impact, bg: YELLOW, color: '#000', maxWidth: d.w - u * 12, wipe: (local - 0.4) / 0.25 });
+      } else if (seg.kind === 'outro') {
+        ctaBox(ctx, d, local, accent);
+      } else {
+        const x = u * 6 - (1 - ease(after / 0.3)) * u * 20;
+        if (item.label) blockText(ctx, d, item.label, { x, y: d.h * 0.12, size: u * 3.4, font: F.impact, bg: YELLOW, color: '#000', maxWidth: d.w - u * 12, maxLines: 1 });
+        blockText(ctx, d, item.head, { x: u * 6, y: d.h - u * (wide(d) ? 10 : 15), anchor: 'bottom', size: u * (wide(d) ? 6.4 : 7.8), font: headFont(d, F.impact), bg: '#000', color: '#fff', maxWidth: d.w - u * 12, maxLines: 3, wipe: (after - 0.1) / 0.25 });
+        if (item.line) pill(ctx, item.line, { x: u * 6, y: d.h - u * (wide(d) ? 10 : 15) + u * 1.5, size: u * 2.8, bg: accent, color: '#000', font: F.impact, weight: 400, radius: u * 0.6, spacing: 0.04, alpha: ease((after - 0.3) / 0.3), maxWidth: d.w - u * 12 });
+      }
+    },
+    chrome() {},
+  };
+
+  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor, beat, parallax, stack, slide };
 
   // Moving effects over the video.
   function deco(ctx, d, t, kind) {
