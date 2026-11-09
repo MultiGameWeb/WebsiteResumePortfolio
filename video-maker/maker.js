@@ -55,6 +55,18 @@
 
   function setStatus(message) { $('#status').textContent = message; }
 
+  // While a video is being recorded every frame is drawn from the current
+  // settings, so nothing may change until it is done (a change would switch
+  // the design half-way through the video).
+  function lockEditor(locked) {
+    for (const node of document.querySelectorAll('.vm-controls, #templateList, #lookBtn, #formatList')) node.inert = locked;
+  }
+  function busyRecording() {
+    if (!state.recording) return false;
+    setStatus('Please wait — your video is being made. You can change it when it is done.');
+    return true;
+  }
+
   function totalSeconds() {
     return INTRO + Math.max(1, state.photos.length) * state.perPhoto + OUTRO;
   }
@@ -839,6 +851,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     recorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); };
     const stopped = new Promise((resolve) => { recorder.onstop = resolve; });
     state.recording = true;
+    lockEditor(true);
     $('#makeBtn').disabled = true;
     $('#playBtn').disabled = true;
     $('#result').hidden = true;
@@ -849,6 +862,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     await stopped;
     stream.getTracks().forEach((track) => track.stop());
     state.recording = false;
+    lockEditor(false);
     $('#makeBtn').disabled = false;
     $('#playBtn').disabled = false;
     const mime = recorder.mimeType || type || 'video/webm';
@@ -921,8 +935,8 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
         return button;
       };
       tools.append(
-        tool('↑', 'Move up', () => { [state.photos[index - 1], state.photos[index]] = [state.photos[index], state.photos[index - 1]]; renderPhotos(); }, index === 0),
-        tool('✕', 'Remove', () => { state.photos.splice(index, 1); renderPhotos(); }, false),
+        tool('↑', 'Move up', () => { if (busyRecording()) return; [state.photos[index - 1], state.photos[index]] = [state.photos[index], state.photos[index - 1]]; renderPhotos(); }, index === 0),
+        tool('✕', 'Remove', () => { if (busyRecording()) return; state.photos.splice(index, 1); renderPhotos(); }, false),
       );
       row.append(img, fields, tools);
       return row;
@@ -931,6 +945,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   }
 
   $('#photoInput').addEventListener('change', async (event) => {
+    if (busyRecording()) { event.target.value = ''; return; }
     const files = Array.from(event.target.files || []).slice(0, MAX_PHOTOS - state.photos.length);
     event.target.value = '';
     if (!files.length) { setStatus(`You can add up to ${MAX_PHOTOS} photos.`); return; }
@@ -966,6 +981,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
       button.append(badge);
     }
     button.addEventListener('click', () => {
+      if (busyRecording()) return;
       state.template = template;
       if (template.spot && STYLES.layoutFor(state.spotStyle) !== template.spot) state.spotStyle = DEFAULT_STYLE[template.spot];
       if (template.spot && state.design) state.design = { ...state.design, layout: template.spot };
@@ -985,6 +1001,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   });
 
   $('#speedInput').addEventListener('input', (event) => {
+    if (busyRecording()) { event.target.value = String(state.perPhoto); return; }
     state.perPhoto = Number(event.target.value);
     $('#speedValue').textContent = String(state.perPhoto);
     showPoster();
@@ -997,6 +1014,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
 
   for (const id of ['#titleInput', '#subtitleInput', '#contactInput', '#closingInput', '#badgeInput']) $(id)?.addEventListener('input', showPoster);
   $('#lookBtn')?.addEventListener('click', async () => {
+    if (busyRecording()) return;
     if (!state.template.spot) {
       state.template = TEMPLATES.find((t) => t.spot === 'playful');
       for (const [index, item] of Array.from(templateList.children).entries()) item.setAttribute('aria-checked', String(TEMPLATES[index] === state.template));
@@ -1028,6 +1046,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   // pictures. images: Blobs, one per scene.
   window.SiteCraftVideoMaker = {
     async loadPlan(plan, images) {
+      if (state.recording) throw new Error('Please wait — your video is being made. Try again when it is done.');
       stopPlayback();
       // AI videos use the AI-style design that fits the business type.
       // The AI's design (layout, colours, font, motion, transition, effect)
