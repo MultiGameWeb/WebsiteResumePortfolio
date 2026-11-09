@@ -44,6 +44,7 @@
     { id: 'ai-stack', name: 'Layer build-up · elements stack on', spot: 'stack', bg: '#121212', bg2: '#1e1e1e', accent: '#ffea00', text: '#ffffff', font: IMPACT },
     { id: 'ai-slide', name: 'Slide cut-in · photo slides in and lands', spot: 'slide', bg: '#000000', bg2: '#1e1e1e', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
     { id: 'ai-frame', name: 'Golden frame · anniversary, wedding, birthday wishes', spot: 'frame', bg: '#1a1206', bg2: '#3b2a0a', accent: '#d4af37', text: '#fffdd0', font: LUXE },
+    { id: 'ai-invite', name: 'Festive invite · half saree, functions, house warming', spot: 'invite', bg: '#ffc107', bg2: '#b0003a', accent: '#d4af37', text: '#fff8e1', font: SERIF },
   ];
 
   const $ = (selector) => document.querySelector(selector);
@@ -614,7 +615,7 @@
   // ---- AI-style designs (video-maker/styles.js) ----
   // The same drawing code makes the preview, the MP4 and the HTML video.
   const STYLES = window.SiteCraftStyles;
-  const DEFAULT_STYLE = { playful: 'default', luxe: 'jewel', bold: 'gym', fresh: 'food', clean: 'property', editor: 'default', beat: 'default', parallax: 'default', stack: 'default', slide: 'default', frame: 'wedding' };
+  const DEFAULT_STYLE = { playful: 'default', luxe: 'jewel', bold: 'gym', fresh: 'food', clean: 'property', editor: 'default', beat: 'default', parallax: 'default', stack: 'default', slide: 'default', frame: 'wedding', invite: 'wedding' };
 
   function spotData(images) {
     const [w, h] = FORMATS[state.format];
@@ -622,6 +623,7 @@
       layout: state.template.spot, style: state.spotStyle, design: state.design, w, h, intro: INTRO, per: state.perPhoto, outro: OUTRO,
       title: text('#titleInput') || 'Your business name', subtitle: text('#subtitleInput'), contact: text('#contactInput'),
       closing: text('#closingInput') || 'Visit us today', badge: text('#badgeInput'),
+      details: text('#detailsInput').split(/\n+/).map((line) => line.trim()).filter(Boolean).slice(0, 4),
       photos: state.photos.map((photo, i) => ({ img: images ? images[i] : photo.bitmap, label: photo.label || '', head: photo.caption || '', line: photo.price || '' })),
     };
   }
@@ -663,8 +665,8 @@
   const pickOne = (list) => list[Math.floor(Math.random() * list.length)];
 
   function randomLook(layout) {
-    const fonts = { playful: ['round', 'sans'], luxe: ['serif', 'play'], bold: ['impact', 'sans'], fresh: ['sans', 'round', 'play'], clean: ['jost', 'sans'], editor: ['impact', 'sans'], beat: ['impact'], parallax: ['impact', 'sans'], stack: ['impact', 'sans'], slide: ['impact', 'sans'], frame: ['serif', 'play'] }[layout];
-    const decos = { playful: ['none', 'confetti', 'bubbles'], luxe: ['sparkles', 'petals', 'bokeh'], bold: ['streaks', 'none', 'confetti'], fresh: ['none', 'bubbles', 'bokeh'], clean: ['none', 'bokeh', 'streaks'], editor: ['none'], beat: ['none'], parallax: ['none'], stack: ['none'], slide: ['none'], frame: ['none'] }[layout];
+    const fonts = { playful: ['round', 'sans'], luxe: ['serif', 'play'], bold: ['impact', 'sans'], fresh: ['sans', 'round', 'play'], clean: ['jost', 'sans'], editor: ['impact', 'sans'], beat: ['impact'], parallax: ['impact', 'sans'], stack: ['impact', 'sans'], slide: ['impact', 'sans'], frame: ['serif', 'play'], invite: ['play', 'serif'] }[layout];
+    const decos = { playful: ['none', 'confetti', 'bubbles'], luxe: ['sparkles', 'petals', 'bokeh'], bold: ['streaks', 'none', 'confetti'], fresh: ['none', 'bubbles', 'bokeh'], clean: ['none', 'bokeh', 'streaks'], editor: ['none'], beat: ['none'], parallax: ['none'], stack: ['none'], slide: ['none'], frame: ['none'], invite: ['none'] }[layout];
     const colours = photoColours();
     return {
       layout,
@@ -1018,7 +1020,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     state.music = file ? { file, buffer: null } : null;
   });
 
-  for (const id of ['#titleInput', '#subtitleInput', '#contactInput', '#closingInput', '#badgeInput']) $(id)?.addEventListener('input', showPoster);
+  for (const id of ['#titleInput', '#subtitleInput', '#contactInput', '#closingInput', '#badgeInput', '#detailsInput']) $(id)?.addEventListener('input', showPoster);
   $('#lookBtn')?.addEventListener('click', async () => {
     if (busyRecording()) return;
     if (!state.template.spot) {
@@ -1074,6 +1076,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
       $('#contactInput').value = plan.contact || '';
       $('#closingInput').value = plan.closing || '';
       if ($('#badgeInput')) $('#badgeInput').value = plan.badge || '';
+      if ($('#detailsInput')) $('#detailsInput').value = String(plan.details || '').split('|').map((line) => line.trim()).filter(Boolean).join('\n');
       state.photos = [];
       for (const [index, blob] of images.entries()) {
         const scene = plan.scenes[index] || {};

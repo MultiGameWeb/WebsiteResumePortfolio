@@ -7,7 +7,7 @@
 // not depend on the page: everything comes in through `d`.
 //
 // d = { layout, style, w, h, intro, per, outro, title, subtitle, contact,
-//       closing, badge, photos: [{ img, label, head, line }] }
+//       closing, badge, details: [lines], photos: [{ img, label, head, line }] }
 (function () {
   'use strict';
 
@@ -31,7 +31,7 @@
     birthday: 'playful',
   };
 
-  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal', beat: 'Beat drop', parallax: '3D pop', stack: 'Layer build-up', slide: 'Slide cut-in', frame: 'Golden frame' };
+  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal', beat: 'Beat drop', parallax: '3D pop', stack: 'Layer build-up', slide: 'Slide cut-in', frame: 'Golden frame', invite: 'Festive invite' };
 
   // Colours per business type, used by every design.
   const THEMES = {
@@ -1269,7 +1269,176 @@
     chrome() {},
   };
 
-  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor, beat, parallax, stack, slide, frame: golden };
+  // ---- Festive invite: a traditional invitation (half saree, house
+  // warming, naming ceremony, wedding). A moving turmeric-to-kumkum
+  // background with a turning mandala, a mango-leaf toran and marigold
+  // garlands that drop in and sway, the photo in a golden mandapam arch,
+  // the name in calligraphy and the event details sliding up one by one. ----
+  function inviteArch(ctx, x, y, w, h) {
+    const r = w / 2;
+    ctx.beginPath();
+    ctx.moveTo(x, y + h);
+    ctx.lineTo(x, y + r);
+    ctx.arc(x + r, y + r, r, Math.PI, 0);
+    ctx.lineTo(x + w, y + h);
+    ctx.closePath();
+  }
+
+  function marigold(ctx, x, y, r) {
+    const g = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.1, x, y, r);
+    g.addColorStop(0, '#ffd23f'); g.addColorStop(0.6, '#ff9f1c'); g.addColorStop(1, '#e85d04');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+  }
+
+  function mangoLeaf(ctx, x, y, len, angle) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(angle);
+    const g = ctx.createLinearGradient(-len * 0.2, 0, len * 0.2, 0);
+    g.addColorStop(0, '#1b5e20'); g.addColorStop(0.5, '#43a047'); g.addColorStop(1, '#1b5e20');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(len * 0.32, len * 0.45, 0, len);
+    ctx.quadraticCurveTo(-len * 0.32, len * 0.45, 0, 0);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,.35)'; ctx.lineWidth = Math.max(1, len * 0.02);
+    ctx.beginPath(); ctx.moveTo(0, len * 0.05); ctx.lineTo(0, len * 0.92); ctx.stroke();
+    ctx.restore();
+  }
+
+  const invite = {
+    deco: 'none',
+    transition: { type: 'cut', dur: 0 },
+    motion: { zoom: [1, 1.08] },
+    draw(ctx, d, seg, t, segs) {
+      const u = unit(d);
+      const gold = goldOf(d);
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const k = segs.indexOf(seg);
+      const item = d.photos[seg.photo] || {};
+      const prev = k > 0 ? d.photos[segs[k - 1].photo] : null;
+      const fade = prev && prev.img !== item.img ? clamp(local / 0.7, 0, 1) : 1;
+      // Moving turmeric-to-kumkum background.
+      const shift = Math.sin(t * 0.25) * d.w * 0.2;
+      const bg = ctx.createLinearGradient(shift, 0, d.w - shift, d.h);
+      bg.addColorStop(0, '#ffc107'); bg.addColorStop(0.5, '#f57c00'); bg.addColorStop(1, '#b0003a');
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, d.w, d.h);
+      // A slowly turning mandala behind the frame.
+      const { fw, fh, cx, cy } = frameBox(d);
+      ctx.save();
+      ctx.translate(cx, cy); ctx.rotate(t * 0.08);
+      ctx.strokeStyle = 'rgba(255,255,255,.18)'; ctx.lineWidth = Math.max(1, u * 0.25);
+      for (let ring = 1; ring <= 4; ring += 1) {
+        const r = fh * 0.22 * ring;
+        const petals = 8 * ring;
+        for (let i = 0; i < petals; i += 1) {
+          const a = (i / petals) * Math.PI * 2;
+          ctx.beginPath(); ctx.ellipse(Math.cos(a) * r, Math.sin(a) * r, u * 2.2 * ring * 0.6, u * 0.9 * ring * 0.6, a, 0, Math.PI * 2); ctx.stroke();
+        }
+        ctx.beginPath(); ctx.arc(0, 0, r * 0.85, 0, Math.PI * 2); ctx.stroke();
+      }
+      ctx.restore();
+      // The photo in a golden mandapam arch, slowly zooming.
+      const enter = seg.kind === 'intro' ? 0.88 + 0.12 * ease((local - 0.6) / 1) : 1;
+      const w = fw * 0.92 * enter;
+      const h = fh * 1.04 * enter;
+      const x = cx - w / 2;
+      const y = cy - h / 2;
+      const zoom = 1 + 0.08 * clamp(local / dur, 0, 1);
+      ctx.save();
+      ctx.globalAlpha *= seg.kind === 'intro' ? ease((local - 0.5) / 0.7) : 1;
+      ctx.shadowColor = 'rgba(80,0,20,.55)'; ctx.shadowBlur = u * 5;
+      ctx.fillStyle = gold;
+      inviteArch(ctx, x - u * 1.8, y - u * 1.8, w + u * 3.6, h + u * 3.6); ctx.fill();
+      ctx.shadowColor = 'transparent';
+      ctx.save();
+      inviteArch(ctx, x, y, w, h); ctx.clip();
+      ctx.fillStyle = '#fff3e0'; ctx.fillRect(x, y, w, h);
+      if (prev && fade < 1) coverAt(ctx, prev.img, x, y, w, h, zoom);
+      ctx.globalAlpha *= fade;
+      coverAt(ctx, item.img, x, y, w, h, zoom);
+      ctx.restore();
+      // Marigold beads along the arch.
+      const r = w / 2;
+      const beads = 22;
+      for (let i = 0; i <= beads; i += 1) {
+        const a = Math.PI + (i / beads) * Math.PI;
+        marigold(ctx, x + r + Math.cos(a) * (r + u * 0.9), y + r + Math.sin(a) * (r + u * 0.9), u * 1.1);
+      }
+      for (let i = 1; i <= 6; i += 1) {
+        const py = y + r + ((h - r) * i) / 6;
+        marigold(ctx, x - u * 0.9, py, u * 1.1); marigold(ctx, x + w + u * 0.9, py, u * 1.1);
+      }
+      ctx.restore();
+      // Toran and side garlands drop in at the start and sway.
+      const drop = (1 - ease(t / 1.2)) * u * 24;
+      const sway = Math.sin(t * 1.4) * 0.06;
+      ctx.save();
+      ctx.translate(0, -drop);
+      ctx.strokeStyle = '#8d6e63'; ctx.lineWidth = Math.max(1, u * 0.3);
+      ctx.beginPath(); ctx.moveTo(0, u * 3); ctx.quadraticCurveTo(d.w / 2, u * 6, d.w, u * 3); ctx.stroke();
+      const leaves = wide(d) ? 15 : 9;
+      for (let i = 0; i < leaves; i += 1) {
+        const lx = ((i + 0.5) / leaves) * d.w;
+        const ly = u * 3 + Math.sin((lx / d.w) * Math.PI) * u * 3;
+        mangoLeaf(ctx, lx, ly, u * 9, sway * (i % 2 ? 1 : -1));
+        marigold(ctx, lx + d.w / leaves / 2, ly + u * 0.6, u * 1.4);
+      }
+      for (const side of [u * 4, d.w - u * 4]) {
+        const strands = wide(d) ? 12 : 16;
+        for (let i = 0; i < strands; i += 1) {
+          const gy = u * 8 + i * u * 2.6;
+          const gx = side + Math.sin(t * 1.2 + i * 0.3) * u * 0.4 * (i / strands);
+          marigold(ctx, gx, gy, u * 1.25);
+        }
+      }
+      ctx.restore();
+      // Text.
+      const tx = wide(d) ? d.w * 0.74 : d.w / 2;
+      const maxWidth = wide(d) ? d.w * 0.44 : d.w * 0.86;
+      let ty = wide(d) ? d.h * 0.22 : cy + fh / 2 + u * 5;
+      const glowText = (value, o) => {
+        if (!value) return 0;
+        ctx.save();
+        ctx.shadowColor = 'rgba(90,0,20,.85)'; ctx.shadowBlur = o.size * 0.3; ctx.shadowOffsetY = o.size * 0.05;
+        const hgt = write(ctx, value, { x: tx, align: 'center', maxWidth, shadow: false, ...o, y: ty });
+        ctx.restore();
+        return hgt;
+      };
+      if (seg.kind === 'intro') {
+        // Heading pops in on the toran.
+        const pop = popIn(local, 1.0);
+        const label = d.badge || 'Invitation';
+        if (pop > 0) {
+          ctx.save();
+          const py = wide(d) ? u * 10 : d.h * 0.12;
+          ctx.translate(d.w / 2, py); ctx.scale(pop, pop); ctx.translate(-d.w / 2, -py);
+          pill(ctx, label, { x: d.w / 2, y: py, size: u * 2.8, bg: '#7b1030', color: '#ffe082', font: F.serif, weight: 600, align: 'center', spacing: 0.2, maxWidth: d.w * 0.8 });
+          ctx.restore();
+        }
+        ty += glowText(d.subtitle || 'You are invited', { size: u * (wide(d) ? 6 : 7), weight: 700, font: headFont(d, F.play), color: '#fff8e1', maxLines: 2, alpha: ease((local - 1.2) / 0.6) }) + u * 1;
+        glowText(d.title, { size: u * (wide(d) ? 7 : 8.5), weight: 400, font: F.script, color: '#ffe082', maxLines: 1, alpha: ease((local - 1.6) / 0.6) });
+        return;
+      }
+      ty += glowText(seg.kind === 'outro' ? d.closing : (item.head || d.title), { size: u * (wide(d) ? 6.6 : 8), weight: 400, font: F.script, color: '#ffe082', maxLines: 2, alpha: ease(local / 0.5) }) + u * 1.5;
+      const lines = (d.details && d.details.length ? d.details : [item.line].filter(Boolean));
+      lines.slice(0, 4).forEach((line, i) => {
+        const p = ease((local - 0.4 - i * 0.35) / 0.45);
+        if (p <= 0) return;
+        ctx.save();
+        ctx.translate(0, (1 - p) * u * 5);
+        glowText(line, { size: u * 3.4, weight: 600, font: F.jost, color: '#ffffff', maxLines: 1, alpha: p });
+        ctx.restore();
+        ty += u * 5;
+      });
+      if (seg.kind === 'outro' && d.contact) glowText(`📞 ${d.contact}`, { size: u * 3.2, weight: 600, font: F.jost, color: '#ffe082', maxLines: 1, alpha: ease((local - 1.6) / 0.5) });
+    },
+    chrome() {},
+  };
+
+  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor, beat, parallax, stack, slide, frame: golden, invite };
 
   // Moving effects over the video.
   function deco(ctx, d, t, kind) {
