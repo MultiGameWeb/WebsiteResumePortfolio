@@ -43,6 +43,7 @@
     { id: 'ai-parallax', name: '3D pop · photo cards with depth', spot: 'parallax', bg: '#121212', bg2: '#334155', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
     { id: 'ai-stack', name: 'Layer build-up · elements stack on', spot: 'stack', bg: '#121212', bg2: '#1e1e1e', accent: '#ffea00', text: '#ffffff', font: IMPACT },
     { id: 'ai-slide', name: 'Slide cut-in · photo slides in and lands', spot: 'slide', bg: '#000000', bg2: '#1e1e1e', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
+    { id: 'ai-frame', name: 'Golden frame · anniversary, wedding, birthday wishes', spot: 'frame', bg: '#1a1206', bg2: '#3b2a0a', accent: '#d4af37', text: '#fffdd0', font: LUXE },
   ];
 
   const $ = (selector) => document.querySelector(selector);
@@ -613,7 +614,7 @@
   // ---- AI-style designs (video-maker/styles.js) ----
   // The same drawing code makes the preview, the MP4 and the HTML video.
   const STYLES = window.SiteCraftStyles;
-  const DEFAULT_STYLE = { playful: 'default', luxe: 'jewel', bold: 'gym', fresh: 'food', clean: 'property', editor: 'default', beat: 'default', parallax: 'default', stack: 'default', slide: 'default' };
+  const DEFAULT_STYLE = { playful: 'default', luxe: 'jewel', bold: 'gym', fresh: 'food', clean: 'property', editor: 'default', beat: 'default', parallax: 'default', stack: 'default', slide: 'default', frame: 'wedding' };
 
   function spotData(images) {
     const [w, h] = FORMATS[state.format];
@@ -662,8 +663,8 @@
   const pickOne = (list) => list[Math.floor(Math.random() * list.length)];
 
   function randomLook(layout) {
-    const fonts = { playful: ['round', 'sans'], luxe: ['serif', 'play'], bold: ['impact', 'sans'], fresh: ['sans', 'round', 'play'], clean: ['jost', 'sans'], editor: ['impact', 'sans'], beat: ['impact'], parallax: ['impact', 'sans'], stack: ['impact', 'sans'], slide: ['impact', 'sans'] }[layout];
-    const decos = { playful: ['none', 'confetti', 'bubbles'], luxe: ['sparkles', 'petals', 'bokeh'], bold: ['streaks', 'none', 'confetti'], fresh: ['none', 'bubbles', 'bokeh'], clean: ['none', 'bokeh', 'streaks'], editor: ['none'], beat: ['none'], parallax: ['none'], stack: ['none'], slide: ['none'] }[layout];
+    const fonts = { playful: ['round', 'sans'], luxe: ['serif', 'play'], bold: ['impact', 'sans'], fresh: ['sans', 'round', 'play'], clean: ['jost', 'sans'], editor: ['impact', 'sans'], beat: ['impact'], parallax: ['impact', 'sans'], stack: ['impact', 'sans'], slide: ['impact', 'sans'], frame: ['serif', 'play'] }[layout];
+    const decos = { playful: ['none', 'confetti', 'bubbles'], luxe: ['sparkles', 'petals', 'bokeh'], bold: ['streaks', 'none', 'confetti'], fresh: ['none', 'bubbles', 'bokeh'], clean: ['none', 'bokeh', 'streaks'], editor: ['none'], beat: ['none'], parallax: ['none'], stack: ['none'], slide: ['none'], frame: ['none'] }[layout];
     const colours = photoColours();
     return {
       layout,
