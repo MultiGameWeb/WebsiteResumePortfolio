@@ -309,8 +309,10 @@
         let audioEnabled = ytCall(y => y.system.isAudioEnabled()) ?? true; // YouTube mute state; SFX checks it before every sound
         let pausedBySystem = false;
         let lastSentScore = 0;
+        let saveLoaded = false; // don't overwrite the cloud save before it has been read
 
         function saveProgress() {
+            if (!saveLoaded) return;
             const data = JSON.stringify({ best: highScore, theme: document.getElementById('theme-select').value });
             ytCall(y => y.game.saveData(data).catch(e => console.warn('[Playables] saveData', e)));
         }
@@ -1516,6 +1518,8 @@
         requestAnimationFrame(now => {
             gameLoop(now);
             ytCall(y => y.game.firstFrameReady());
+            // The intro is playable right away, so signal ready now and load the save in the background.
+            ytCall(y => y.game.gameReady());
             loadProgress();
         });
 
@@ -1524,7 +1528,7 @@
                 const raw = YT ? await YT.game.loadData() : '';
                 if (raw) {
                     const saved = JSON.parse(raw);
-                    highScore = Math.max(0, parseInt(saved.best, 10) || 0);
+                    highScore = Math.max(highScore, parseInt(saved.best, 10) || 0);
                     lastSentScore = highScore;
                     if (saved.theme && PADDLE_THEMES[saved.theme]) {
                         currentTheme = PADDLE_THEMES[saved.theme];
@@ -1535,7 +1539,8 @@
             } catch (err) {
                 console.warn('[Playables] loadData', err);
             }
-            ytCall(y => y.game.gameReady());
+            saveLoaded = true;
+            saveProgress(); // store anything earned (e.g. a theme change) while the save was loading
         }
     </script>
 </body>
