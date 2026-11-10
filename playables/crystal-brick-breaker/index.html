@@ -306,7 +306,7 @@
             if (!YT) return undefined;
             try { return fn(YT); } catch (err) { console.warn('[Playables]', err); return undefined; }
         }
-        let audioEnabled = ytCall(y => y.system.isAudioEnabled()) ?? true; // game has no audio yet; kept in sync for future sounds
+        let audioEnabled = ytCall(y => y.system.isAudioEnabled()) ?? true; // YouTube mute state; SFX checks it before every sound
         let pausedBySystem = false;
         let lastSentScore = 0;
 
@@ -319,6 +319,88 @@
             lastSentScore = value;
             ytCall(y => y.engagement.sendScore({ value }).catch(e => console.warn('[Playables] sendScore', e)));
         }
+
+        // --- SOUND EFFECTS (synthesized with Web Audio; no audio files) ---
+        // Respects YouTube's mute state (audioEnabled) and the system pause.
+        const SFX = (() => {
+            let ac = null, master = null, sysPaused = false;
+            const lastPlayed = {};
+            function ensure() {
+                if (!ac) {
+                    const AC = window.AudioContext || window.webkitAudioContext;
+                    if (!AC) return null;
+                    ac = new AC();
+                    master = ac.createGain();
+                    master.gain.value = 0.35;
+                    master.connect(ac.destination);
+                }
+                if (ac.state === 'suspended' && !sysPaused) ac.resume().catch(() => {});
+                return ac;
+            }
+            function canPlay(name, gapMs) {
+                if (!audioEnabled || sysPaused || !ac || ac.state !== 'running') return false;
+                const t = performance.now();
+                if (lastPlayed[name] && t - lastPlayed[name] < gapMs) return false;
+                lastPlayed[name] = t;
+                return true;
+            }
+            function tone(freq, dur, { type = 'sine', vol = 0.5, slideTo = null, delay = 0 } = {}) {
+                const t0 = ac.currentTime + delay;
+                const o = ac.createOscillator(), g = ac.createGain();
+                o.type = type;
+                o.frequency.setValueAtTime(freq, t0);
+                if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
+                g.gain.setValueAtTime(0.0001, t0);
+                g.gain.exponentialRampToValueAtTime(vol, t0 + 0.008);
+                g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+                o.connect(g); g.connect(master);
+                o.start(t0); o.stop(t0 + dur + 0.02);
+            }
+            function noise(dur, { vol = 0.5, freq = 1200, delay = 0 } = {}) {
+                const t0 = ac.currentTime + delay;
+                const len = Math.max(1, Math.floor(ac.sampleRate * dur));
+                const buf = ac.createBuffer(1, len, ac.sampleRate);
+                const d = buf.getChannelData(0);
+                for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+                const src = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+                src.buffer = buf;
+                f.type = 'lowpass'; f.frequency.value = freq;
+                g.gain.value = vol;
+                src.connect(f); f.connect(g); g.connect(master);
+                src.start(t0);
+            }
+            const sounds = {
+                paddle:  () => tone(320, 0.09, { type: 'triangle', vol: 0.45, slideTo: 480 }),
+                wall:    () => tone(560, 0.04, { type: 'square', vol: 0.12 }),
+                brick:   () => { tone(700 + Math.random() * 300, 0.07, { type: 'square', vol: 0.18 }); noise(0.06, { vol: 0.15, freq: 4000 }); },
+                armor:   () => tone(240, 0.06, { type: 'square', vol: 0.2 }),
+                tnt:     () => { noise(0.45, { vol: 0.8, freq: 900 }); tone(120, 0.4, { type: 'sawtooth', vol: 0.35, slideTo: 40 }); },
+                laser:   () => tone(1400, 0.08, { type: 'sawtooth', vol: 0.1, slideTo: 500 }),
+                bossHit: () => tone(180, 0.12, { type: 'sawtooth', vol: 0.3, slideTo: 110 }),
+                bossDie: () => { noise(0.7, { vol: 0.8, freq: 700 }); [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.18, { type: 'triangle', vol: 0.35, delay: 0.12 + i * 0.09 })); },
+                powerup: () => [660, 880, 1320].forEach((f, i) => tone(f, 0.1, { type: 'sine', vol: 0.4, delay: i * 0.06 })),
+                life:    () => tone(440, 0.45, { type: 'triangle', vol: 0.45, slideTo: 110 }),
+                stage:   () => [523, 659, 784, 1047, 1319].forEach((f, i) => tone(f, 0.16, { type: 'triangle', vol: 0.35, delay: i * 0.08 })),
+                over:    () => [392, 330, 262, 196].forEach((f, i) => tone(f, 0.3, { type: 'triangle', vol: 0.4, delay: i * 0.18 })),
+                start:   () => [392, 523, 784].forEach((f, i) => tone(f, 0.12, { type: 'square', vol: 0.18, delay: i * 0.07 }))
+            };
+            const gaps = { wall: 50, brick: 35, armor: 35, laser: 120, bossHit: 60, paddle: 40 };
+            return {
+                unlock: ensure,
+                play(name) {
+                    if (!canPlay(name, gaps[name] || 0)) return;
+                    try { sounds[name](); } catch (err) { console.warn('[SFX]', err); }
+                },
+                setSystemPaused(paused) {
+                    sysPaused = paused;
+                    if (!ac) return;
+                    (paused ? ac.suspend() : ac.resume()).catch(() => {});
+                }
+            };
+        })();
+        // Browsers only allow audio after a user gesture.
+        ['pointerdown', 'keydown', 'touchstart'].forEach(ev =>
+            window.addEventListener(ev, () => SFX.unlock(), { capture: true, passive: true }));
 
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -506,6 +588,8 @@
         }
 
         function startGameNow() {
+            SFX.unlock();
+            setTimeout(() => SFX.play('start'), 30);
             inIntro = false;
             isPaused = false;
             introModal.style.display = 'none';
@@ -907,6 +991,7 @@
 
         function triggerTNTExplosion(sourceBrick) {
             screenShake = 14;
+            SFX.play('tnt');
             shockwaves.push({
                 x: sourceBrick.x + sourceBrick.w / 2,
                 y: sourceBrick.y + sourceBrick.h / 2,
@@ -940,6 +1025,7 @@
                 const cx = b.x + b.w / 2;
                 const cy = b.y + b.h / 2;
                 score += b.type === 'armor' ? 25 : 15;
+                SFX.play('brick');
                 spawn3DShards(cx, cy, b.pal.top, b.pal.mid, 10);
 
                 // Chance to drop a 3D Powerup Capsule
@@ -957,6 +1043,7 @@
                 updateUI();
             } else {
                 score += 5;
+                SFX.play('armor');
                 updateUI();
             }
         }
@@ -965,6 +1052,7 @@
             if (bricks.length === 0 && !boss) {
                 stage++;
                 score += 100;
+                SFX.play('stage');
                 addFloatingText(canvas.width / 2, canvas.height / 2, `🎉 STAGE ${stage}! +100`, '#7ee787');
                 buildStageBricks(stage);
                 spawnBallOnPaddle();
@@ -1025,6 +1113,7 @@
                 lastLaserShot = now;
                 lasers.push({ x: paddle.x - paddle.w / 2 + 9, y: paddle.y - 14 });
                 lasers.push({ x: paddle.x + paddle.w / 2 - 9, y: paddle.y - 14 });
+                SFX.play('laser');
             }
 
             // Update Lasers
@@ -1039,11 +1128,13 @@
                 if (boss && Math.abs(l.x - boss.x) < boss.w / 2 && Math.abs(l.y - boss.y) < boss.h / 2) {
                     boss.hp--;
                     boss.hitFlash = 3;
+                    if (boss.hp > 0) SFX.play('bossHit');
                     lasers.splice(i, 1);
                     if (boss.hp <= 0) {
                         score += 120;
                         spawn3DShards(boss.x, boss.y, '#ff0055', '#ffd700', 28);
                         addFloatingText(boss.x, boss.y, '💥 +120 BOSS DEFEATED!', '#ffd700');
+                        SFX.play('bossDie');
                         boss = null;
                         updateUI();
                         checkStageComplete();
@@ -1087,9 +1178,9 @@
                 b.y += b.vy;
 
                 // Wall Bounces
-                if (b.x - b.r < 0) { b.x = b.r; b.vx = Math.abs(b.vx); }
-                if (b.x + b.r > canvas.width) { b.x = canvas.width - b.r; b.vx = -Math.abs(b.vx); }
-                if (b.y - b.r < 0) { b.y = b.r; b.vy = Math.abs(b.vy); }
+                if (b.x - b.r < 0) { b.x = b.r; b.vx = Math.abs(b.vx); SFX.play('wall'); }
+                if (b.x + b.r > canvas.width) { b.x = canvas.width - b.r; b.vx = -Math.abs(b.vx); SFX.play('wall'); }
+                if (b.y - b.r < 0) { b.y = b.r; b.vy = Math.abs(b.vy); SFX.play('wall'); }
 
                 // Paddle Bounce
                 if (
@@ -1104,6 +1195,7 @@
                     b.vx = Math.sin(bounceAngle) * b.speed;
                     b.vy = -Math.cos(bounceAngle) * b.speed;
                     b.y = paddle.y - paddle.h / 2 - b.r - 1;
+                    SFX.play('paddle');
                 }
 
                 // Boss Collision
@@ -1117,12 +1209,14 @@
                     b.vy *= -1;
                     boss.hp -= isFire ? 3 : 1;
                     boss.hitFlash = 4;
+                    if (boss.hp > 0) SFX.play('bossHit');
                     spawn3DShards(b.x, b.y, '#ff0055', '#e0aaff', 6);
                     if (boss.hp <= 0) {
                         score += 120;
                         screenShake = 12;
                         spawn3DShards(boss.x, boss.y, '#ff0055', '#ffd700', 30);
                         addFloatingText(boss.x, boss.y, '💥 +120 BOSS DEFEATED!', '#ffd700');
+                        SFX.play('bossDie');
                         boss = null;
                         updateUI();
                         checkStageComplete();
@@ -1164,6 +1258,7 @@
                 updateUI();
                 if (lives <= 0) {
                     isGameOver = true;
+                    SFX.play('over');
                     if (score > highScore) {
                         highScore = score;
                     }
@@ -1174,6 +1269,7 @@
                     document.getElementById('final-best').innerText = highScore;
                     document.getElementById('game-over').style.display = 'block';
                 } else {
+                    SFX.play('life');
                     addFloatingText(paddle.x, paddle.y - 30, `💔 -1 Life! (${lives} Left)`, '#ff4d6d');
                     spawnBallOnPaddle();
                 }
@@ -1220,6 +1316,7 @@
                         addFloatingText(p.x, p.y - 15, '↔️ WIDE PADDLE 10s!', '#7ee787');
                     }
                     score += 25;
+                    SFX.play('powerup');
                     powerups.splice(i, 1);
                     updateUI();
                     continue;
@@ -1400,6 +1497,7 @@
 
         // Pause when YouTube backgrounds the game; only auto-resume if we paused it.
         ytCall(y => y.system.onPause(() => {
+            SFX.setSystemPaused(true);
             endPointerDrag();
             keys.left = keys.right = false;
             if (!inIntro && !isGameOver && !isPaused) {
@@ -1408,6 +1506,7 @@
             }
         }));
         ytCall(y => y.system.onResume(() => {
+            SFX.setSystemPaused(false);
             if (pausedBySystem && isPaused) togglePause();
             pausedBySystem = false;
         }));
