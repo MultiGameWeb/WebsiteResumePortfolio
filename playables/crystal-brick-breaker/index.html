@@ -103,7 +103,8 @@
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* board sits right under the top bar, not centred in a tall frame */
+            padding-top: 6px;
             position: relative;
             overflow: hidden;
         }
@@ -1467,7 +1468,34 @@
             if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
         });
 
-        window.addEventListener('resize', setupResponsiveBoard);
+        // Keep the game playable when the frame changes size (rotate, fullscreen, window resize).
+        function handleResize() {
+            const oldW = canvas.width, oldH = canvas.height;
+            setupResponsiveBoard();
+            const sx = canvas.width / oldW;
+            if (sx === 1 && canvas.height === oldH) return;
+
+            paddle.baseW = Math.round(Math.max(88, Math.min(122, canvas.width * 0.23)));
+            paddle.w = Math.min(paddle.w, paddle.baseW * 1.42);
+            paddle.y = canvas.height - 46;
+            const halfW = paddle.w / 2 + 8;
+            const clampX = x => Math.max(halfW, Math.min(canvas.width - halfW, x * sx));
+            paddle.x = clampX(paddle.x);
+            paddle.targetX = clampX(paddle.targetX);
+            paddle.prevX = paddle.x;
+
+            bricks.forEach(b => { b.x *= sx; b.w *= sx; });
+            if (boss) boss.x = Math.max(boss.w / 2, Math.min(canvas.width - boss.w / 2, boss.x * sx));
+            powerups.forEach(p => { p.x *= sx; });
+            lasers.forEach(l => { l.x *= sx; });
+            balls.forEach(b => {
+                b.x = Math.max(b.r, Math.min(canvas.width - b.r, b.x * sx));
+                b.y = Math.min(b.y, paddle.y - paddle.h / 2 - b.r - 2);
+                b.trail = [];
+            });
+            initBgStars();
+        }
+        window.addEventListener('resize', handleResize);
 
         function gameLoop(now) {
             requestAnimationFrame(gameLoop);
