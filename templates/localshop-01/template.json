@@ -1,0 +1,1052 @@
+{
+  "id": "localshop-01",
+  "name": "Local Shop — Universal (Sri Lakshmi General Store)",
+  "category": "Local Shops & Stores",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Shop"
+    },
+    {
+      "id": "menu",
+      "label": "Products & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Offers & Combos"
+    },
+    {
+      "id": "work",
+      "label": "Why Shop With Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Shopping List Order Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Shop Name",
+      "required": true,
+      "placeholder": "Sri Lakshmi General Store"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Shop Manager",
+      "placeholder": "Ramesh Goud"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Groceries · Household · Daily needs"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Your trusted shop for daily needs."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Shop",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Everything you need, close to home."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Your neighbourhood store"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "orders@srilakshmistore.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Shop Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Daily · 7:00 AM – 10:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Sri Lakshmi General Store",
+      "ownerName": "Ramesh Goud",
+      "tagline": "Groceries · Household · Daily needs",
+      "motto": "Your trusted shop for daily needs.",
+      "about": "Sri Lakshmi General Store is a family-run shop in Kukatpally for groceries, fresh produce, snacks, household and personal care products. Send your list on WhatsApp and we’ll pack it, deliver it nearby or keep it ready for pickup."
+    },
+    "home": {
+      "eyebrow": "YOUR NEIGHBOURHOOD STORE",
+      "title": "Everything you need, close to home.",
+      "text": "Groceries, fresh produce and household essentials. Order on WhatsApp for home delivery or quick pickup."
+    },
+    "hero": "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "Basmati Rice",
+        "category": "Staples",
+        "price": "₹120 / kg",
+        "description": "Long-grain basmati rice, also available in 5 kg and 10 kg bags.",
+        "tag": "Bestseller",
+        "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Uncooked basmati rice grains",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Sunflower Cooking Oil",
+        "category": "Staples",
+        "price": "₹165 / litre",
+        "description": "Refined sunflower oil in 1 litre and 5 litre packs.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Bottle of cooking oil on a table",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Whole Spices",
+        "category": "Staples",
+        "price": "From ₹40",
+        "description": "Cumin, mustard, pepper, cardamom, cinnamon and more, packed fresh.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Assorted whole spices spread on a table",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Fresh Vegetables",
+        "category": "Fresh",
+        "price": "Daily rates",
+        "description": "Tomatoes, onions, greens and seasonal vegetables, restocked every morning.",
+        "tag": "Fresh daily",
+        "image": "https://images.unsplash.com/photo-1607349913338-fca6f7fc42d0?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Shelves of fresh vegetables in crates",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Seasonal Fruits",
+        "category": "Fresh",
+        "price": "Daily rates",
+        "description": "Apples, bananas, oranges and seasonal fruits.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Shop shelves stacked with fresh fruits",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Milk & Dairy",
+        "category": "Fresh",
+        "price": "From ₹30",
+        "description": "Milk, curd, paneer and butter, delivered fresh every morning.",
+        "tag": "Morning stock",
+        "image": "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Bottles and glass of fresh milk",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Potato Chips",
+        "category": "Snacks",
+        "price": "From ₹20",
+        "description": "Salted and masala chips, namkeen and biscuits in many sizes.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Potato chips arranged on a yellow background",
+        "enabled": true
+      },
+      {
+        "id": "p8",
+        "name": "Kitchen Cleaning Supplies",
+        "category": "Household",
+        "price": "From ₹49",
+        "description": "Dishwash liquid, scrubbers, gloves and sprays in popular brands and refill packs.",
+        "tag": "Offer",
+        "image": "https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Gloved hand holding a cleaning spray bottle",
+        "enabled": true
+      },
+      {
+        "id": "p9",
+        "name": "Surface Cleaners",
+        "category": "Household",
+        "price": "From ₹85",
+        "description": "Floor, kitchen and bathroom cleaners, plus refill packs.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Two spray bottles of household cleaner",
+        "enabled": true
+      },
+      {
+        "id": "p10",
+        "name": "Shampoo & Body Wash",
+        "category": "Personal care",
+        "price": "From ₹60",
+        "description": "Shampoos, soaps, body wash and toothpaste for the whole family.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "White bottles of shampoo and body wash",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Monthly Ration Kit",
+        "description": "Rice, dal, oil, sugar, tea powder and spices for a family of four. Customise items on WhatsApp.",
+        "price": "From ₹2,499",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Weekend Veg Basket",
+        "description": "Five kilos of mixed seasonal vegetables, cleaned and packed.",
+        "price": "₹299",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Cleaning Combo",
+        "description": "Floor cleaner, dishwash liquid and detergent together.",
+        "price": "₹349",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "⌂",
+        "title": "Home delivery",
+        "description": "Free delivery nearby on orders above ₹499. Small charge for smaller orders.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "Order on WhatsApp",
+        "description": "Send your list or a photo of it. We’ll confirm prices before packing.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "◷",
+        "title": "Ready in 30 minutes",
+        "description": "Pickup orders are usually packed within half an hour.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Pay your way",
+        "description": "UPI, cash or card, at the store or on delivery.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "d1",
+        "name": "Home delivery",
+        "enabled": true
+      },
+      {
+        "id": "d2",
+        "name": "Pickup from store",
+        "enabled": true
+      }
+    ],
+    "deliveryAreas": [
+      {
+        "id": "a1",
+        "name": "Kukatpally",
+        "enabled": true
+      },
+      {
+        "id": "a2",
+        "name": "KPHB Colony",
+        "enabled": true
+      },
+      {
+        "id": "a3",
+        "name": "Moosapet",
+        "enabled": true
+      },
+      {
+        "id": "a4",
+        "name": "Balanagar",
+        "enabled": true
+      },
+      {
+        "id": "a5",
+        "name": "Nizampet",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Well-stocked aisles",
+        "alt": "Long shop aisle with stocked shelves",
+        "image": "https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Fresh every morning",
+        "alt": "Colourful fresh vegetables and fruits on a table",
+        "image": "https://images.unsplash.com/photo-1610348725531-843dff563e2c?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Packed and ready",
+        "alt": "Shopping bag packed with fruits and vegetables",
+        "image": "https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Daily needs",
+        "alt": "Shelves of packaged groceries and household products",
+        "image": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, KPHB Colony",
+        "text": "I send my list on WhatsApp every week and everything arrives within the hour. Very convenient.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Kukatpally",
+        "text": "Fresh vegetables and fair prices. The owner always helps find what I need.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Moosapet",
+        "text": "The monthly ration kit saves me a lot of time. Easy to change items too.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I order?",
+        "answer": "Send your list in the order form or on WhatsApp. You can also send a photo of a handwritten list. We’ll reply with the total before packing.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do you deliver?",
+        "answer": "Yes, within the areas listed in the order form. Delivery is free on orders above ₹499; a small charge applies to smaller orders.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "How can I pay?",
+        "answer": "UPI, cash or card. For delivery orders you can pay on delivery.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "What if an item is not in stock?",
+        "answer": "We’ll tell you before packing and suggest a similar item. Nothing is added without your okay.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Can I return an item?",
+        "answer": "Sealed, unused packaged items can be exchanged within two days with the bill. Fresh produce and dairy can’t be returned, so please check on delivery.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "7:00 AM",
+        "close": "10:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "7:00 AM",
+        "close": "10:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "7:00 AM",
+        "close": "10:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "7:00 AM",
+        "close": "10:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "7:00 AM",
+        "close": "10:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "7:00 AM",
+        "close": "10:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "7:00 AM",
+        "close": "10:00 PM",
+        "closed": false,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "orders@srilakshmistore.example",
+      "address": "Shop 12, Road No. 3, KPHB Colony, Kukatpally, Hyderabad, Telangana 500072",
+      "maps": "https://maps.google.com/?q=KPHB+Colony+Kukatpally+Hyderabad",
+      "hours": "Daily · 7:00 AM – 10:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:localshop-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Shop Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Shop name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the shop",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Staples, Household)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. Offer, New)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New product",
+          "category": "Staples",
+          "price": "₹100",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Offers & Combos",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "₹499",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Shop With Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Order Form: Delivery Options",
+        "type": "collection",
+        "itemLabel": "option",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Option"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New option",
+          "enabled": true
+        }
+      },
+      {
+        "id": "deliveryAreas",
+        "label": "Order Form: Delivery Areas",
+        "type": "collection",
+        "itemLabel": "area",
+        "path": "deliveryAreas",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Area"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New area",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New store photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "7:00 AM",
+          "close": "10:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Products",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Offers & combos",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why shop with us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Shopping list order form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
