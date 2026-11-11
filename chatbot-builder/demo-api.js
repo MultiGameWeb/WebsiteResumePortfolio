@@ -45,8 +45,18 @@
       ],
       questions: [], answeredQuestions: [], requests: [], orders: [],
       features: { photo: true, preorder: false, orderStatus: true, voice: true, cart: false },
+      onboarding: { done: true, step: 8 },
       savedAt: Date.now()
     };
+  }
+
+  // A blank shop for trying the setup chat from the start.
+  function blank() {
+    var s = seed();
+    s.facts = { shop_name: '', shop_type: '', bot_name: '', address: '', timings: '', weekly_holiday: '', call_number: '', whatsapp_number: '', map_link: '', about: '' };
+    s.products = []; s.photos = []; s.notes = []; s.questions = []; s.answeredQuestions = []; s.requests = []; s.orders = [];
+    s.onboarding = { done: false, step: 0 };
+    return s;
   }
 
   function load() {
@@ -159,6 +169,53 @@
 
   var INFO_KEYS = { timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400 };
 
+  function aboutFrom(facts) {
+    var name = clip(facts.shop_name, 80);
+    if (!name) return '';
+    var kind = clip(facts.shop_type, 60).toLowerCase();
+    var noun = !kind ? 'local shop' : /shop|store|studio|centre|center|clinic|hotel|hall|garage|academy|salon|parlour|school|institute|kitchen/.test(kind) ? kind : kind + ' shop';
+    var area = clip(facts.address, 120).split(',').slice(-2).join(',').trim();
+    return name + ' is a ' + noun + (area ? ' in ' + area : '') + '. Ask our assistant about items, prices and timings in your language.';
+  }
+
+  // The setup chat, scripted: one question at a time, then the bot is ready.
+  var TYPES = ['Jewellery', 'Clothing / Boutique', 'Restaurant', 'Kirana / Grocery', 'Medical / Pharmacy', 'Mobiles / Electronics', 'Other'];
+  var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'No holiday'];
+  function parseItems(text) {
+    var out = [];
+    String(text).split(/\n|;/).forEach(function (line) {
+      var m = /^\s*(.+?)[\s:=\-–]*(?:₹|rs\.?|inr)?\s*(\d[\d,]*)\s*$/i.exec(line);
+      if (m && m[1].trim()) out.push({ name: clip(m[1].replace(/[,:\-–]+$/, ''), 120), price_text: '₹' + Number(m[2].replace(/,/g, '')).toLocaleString('en-IN') });
+    });
+    return out;
+  }
+  function chatStep(state, text) {
+    var o = state.onboarding || (state.onboarding = { done: !!state.facts.shop_name, step: 8 });
+    var f = state.facts, t = clip(text, 400), reply, options = [], bot = null;
+    if (o.done) {
+      reply = 'Your shop assistant is ready. Try an update, for example “Gold chain price 52000”, or open the customer page.';
+    } else {
+      var step = o.step;
+      if (step === 0) { reply = 'Great — let’s build your shop assistant. What is your shop’s name?'; o.step = 1; }
+      else if (step === 1) { f.shop_name = t; reply = 'Nice name! What kind of shop is it?'; options = TYPES; o.step = 2; }
+      else if (step === 2) { f.shop_type = t; reply = 'Where is your shop? Please send the full address with a landmark.'; o.step = 3; }
+      else if (step === 3) { f.address = t; reply = 'What are your opening and closing times? For example 10 am to 8:30 pm.'; o.step = 4; }
+      else if (step === 4) { f.timings = t; reply = 'Which day is your shop closed every week?'; options = DAYS; o.step = 5; }
+      else if (step === 5) { f.weekly_holiday = /no holiday/i.test(t) ? 'No weekly holiday' : t; reply = 'Which phone number should customers call?'; o.step = 6; }
+      else if (step === 6) {
+        f.call_number = t.replace(/\D/g, '').slice(-10); f.whatsapp_number = f.call_number;
+        reply = 'Last step: send your items and prices, one per line, like “Gold chain 48500”. You can add more later by chatting. Type Skip to do it later.'; o.step = 7;
+      } else {
+        parseItems(t).forEach(function (p) { state.products.unshift({ name_key: nameKey(p.name), name: p.name, price_text: p.price_text, details: '', stock_status: 'in_stock', photo_id: '' }); });
+        f.about = aboutFrom(f);
+        o.done = true; o.step = 8;
+        reply = 'Your shop assistant is ready! 🎉 Open the link to try it like a customer. From now on, just tell me what changes — “Gold chain price 52000”, “Silver anklet out of stock”, “Timings 9 to 9” — and I will update your page and your assistant.';
+      }
+    }
+    if (o.done) bot = { publicId: PUBLIC_ID, name: f.shop_name, botName: f.bot_name || defaultBotName(f), wifi: null, openQuestions: state.questions.length, features: state.features };
+    return { ok: true, reply: reply, options: options, questions: [], progress: { answered: Math.min(o.step, 7), total: 7 }, facts: f, answers: {}, bot: bot, bankStatus: 'ready' };
+  }
+
   function handleOwner(state, body) {
     var action = String(body.action || '');
     if (action === 'save_product') {
@@ -217,6 +274,9 @@
     } else if (action === 'save_info') {
       var info = body.info || {};
       Object.keys(INFO_KEYS).forEach(function (k) { if (typeof info[k] === 'string') state.facts[k] = clip(info[k], INFO_KEYS[k]); });
+    } else if (action === 'generate_about') {
+      state.facts.about = aboutFrom(state.facts);
+      if (!state.facts.about) throw new Error('Please add your shop name first.');
     } else if (action === 'plan_update') {
       var err = new Error('The AI helper is not available in the demo.');
       err.status = 501;
@@ -247,8 +307,19 @@
             var view = handleOwner(state, body);
             save(state);
             resolve(json(view));
+          } else if (path === '/api/botcraft/chat') {
+            var out = chatStep(state, body.text || '');
+            save(state);
+            resolve(json(out));
+          } else if (path === '/api/botcraft/shop') {
+            if (state.onboarding && state.onboarding.done) {
+              var pubBot = { publicId: PUBLIC_ID, name: state.facts.shop_name, botName: state.facts.bot_name || defaultBotName(state.facts), wifi: null, openQuestions: state.questions.length, features: state.features };
+              resolve(json({ ok: true, messages: [{ role: 'botcraft', text: 'Your shop assistant is ready. Tell me what changes — for example “Gold chain price 52000” — and I will update your page and your assistant.', created_at: new Date().toISOString() }], progress: { answered: 7, total: 7 }, bot: pubBot }));
+            } else resolve(json({ ok: false, error: 'No saved setup.' }, 404));
+          } else if (path === '/api/botcraft/bank') {
+            resolve(json({ ok: true, name: 'Demo questions', question_count: 12 }));
           } else if (path === '/api/botcraft/public') {
-            if (query.get('s') !== PUBLIC_ID) { resolve(json({ ok: false, error: 'This shop\'s bot was not found.' }, 404)); return; }
+            if (query.get('s') !== PUBLIC_ID || (state.onboarding && !state.onboarding.done)) { resolve(json({ ok: false, error: 'This shop\'s bot was not found.' }, 404)); return; }
             resolve(json(publicView(state)));
           } else if (path === '/api/botcraft/ask') {
             var answer = demoAnswer(state, body.text || '', body.product || '');
@@ -286,6 +357,7 @@
   };
 
   window.BOTCRAFT_DEMO_RESET = function () { try { localStorage.removeItem(STATE_KEY); } catch (e) {} };
+  window.BOTCRAFT_DEMO_START_FRESH = function () { try { localStorage.setItem(STATE_KEY, JSON.stringify(blank())); } catch (e) {} };
 
   // A small ribbon so nobody mistakes the demo for a real shop.
   document.addEventListener('DOMContentLoaded', function () {

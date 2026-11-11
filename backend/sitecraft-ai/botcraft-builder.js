@@ -1,5 +1,5 @@
 import { CORE_QUESTIONS, callWithFallback, generateQuestionBank, toBankRecord } from "./botcraft-question-bank.js";
-import { INFO_FIELDS, PLAN_SCHEMA, buildPlanPrompt, cleanPlan } from "./botcraft-owner-update.js";
+import { ABOUT_SCHEMA, INFO_FIELDS, PLAN_SCHEMA, buildAboutPrompt, buildPlanPrompt, cleanAbout, cleanPlan, templateAbout } from "./botcraft-owner-update.js";
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
@@ -699,6 +699,8 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
     if (questions.length < MAX_FORM_QUESTIONS && !questions.some(asked => asked.id === q.id)) questions.push(q);
   }
   const bot = saved && coreComplete(merged) ? { publicId: await ensurePublicId(env, shopId).catch(() => null), name: merged.shop_name || "", botName: botName(merged), wifi: posterWifi(merged), openQuestions: (await countOpenQuestions(env, shopId).catch(() => 0)) + (await countNewRequests(env, shopId).catch(() => 0)), features: shopFeatures(merged.shop_type, await loadSettings(env, shopId).catch(() => ({}))) } : null;
+  // The first time the basics are complete, write the "About us" text for the shop page.
+  if (bot?.publicId && !merged.about && !saved?.facts?.about_auto_tried) await later(ctx, writeAbout(env, shopId));
   const nextPhoto = sameBank && text !== FINISH_OPTION ? nextStep(merged, mergedAnswers, mergedBank).photo : null;
   const allowSkip = questions.length ? questions.every(q => !q.mandatory) : !nextQuestion || nextQuestion.priority !== "mandatory";
 
@@ -1034,6 +1036,38 @@ async function handlePush(request, env, origin) {
 
 // Owner Update mode: turn the owner's message (and photos) into a list of
 // changes. Nothing is saved here; the owner confirms on the owner page.
+// Writes the shop's "About us" text from its facts (once automatically when the
+// bot first becomes ready; again whenever the owner asks). Never overwrites
+// text the owner wrote unless force is true.
+async function writeAbout(env, shopId, { force = false } = {}) {
+  const saved = await loadShop(env, shopId, 0);
+  if (!saved) return false;
+  const facts = cleanFacts(saved.facts);
+  if (!force && (facts.about || saved.facts?.about_auto_tried)) return false;
+  const products = await listProducts(env, shopId);
+  let about = "";
+  const modelErrors = [];
+  try {
+    const { result } = await callWithFallback(env, {
+      system: buildAboutPrompt(facts, products),
+      contents: [{ role: "user", parts: [{ text: "Write the About text." }] }],
+      schema: ABOUT_SCHEMA,
+      models: CHAT_MODELS,
+      temperature: 0.5,
+      timeoutMs: 30000,
+      maxAttempts: 1,
+      log: message => modelErrors.push(message.slice(0, 160))
+    });
+    about = cleanAbout(result?.about);
+  } catch (error) {
+    console.error("BotCraft about text failed", error, modelErrors);
+  }
+  if (!about) about = templateAbout(facts, shopTypeName(facts.shop_type));
+  if (!about) return false;
+  await updateFacts(env, shopId, { about, about_auto_tried: "1" });
+  return true;
+}
+
 async function handlePlanUpdate(env, shopId, body, origin) {
   const text = clip(body?.text, 1500);
   const images = (Array.isArray(body?.images) ? body.images : [])
@@ -1142,6 +1176,8 @@ async function handleOwner(request, env, origin, ctx) {
       patch[key] = value;
     }
     if (Object.keys(patch).length) await updateFacts(env, shopId, patch);
+  } else if (action === "generate_about") {
+    if (!(await writeAbout(env, shopId, { force: true }))) return reply({ ok: false, error: "Could not write the text right now. Please try again or write it yourself." }, 503, origin);
   } else if (action === "plan_update") {
     return handlePlanUpdate(env, shopId, body, origin);
   } else if (action !== "load") {

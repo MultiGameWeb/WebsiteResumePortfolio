@@ -202,6 +202,44 @@ export function QuestionForm(message) {
 }
 
 // Link, QR code and poster download for the shop's customer bot.
+// An owner update waiting for Confirm (or already saved / cancelled).
+export function PlanCard(message) {
+  const plan = message.plan;
+  const card = makeElement('div', 'plan-card');
+  const list = makeElement('ul', 'plan-list');
+  for (const line of plan.lines) {
+    const item = makeElement('li', line.danger ? 'plan-danger' : '');
+    item.append(makeElement('span', 'plan-icon', line.icon), document.createTextNode(` ${line.text}`));
+    list.append(item);
+  }
+  card.append(list);
+  if (plan.unclear) card.append(makeElement('p', 'plan-note', plan.unclear));
+  const actions = makeElement('div', 'plan-actions');
+  const button = (label, action, className = 'quick-chip') => {
+    const node = makeElement('button', className, label);
+    node.type = 'button';
+    node.dataset.action = action;
+    node.dataset.messageId = message.id;
+    return node;
+  };
+  if (plan.status === 'pending') actions.append(button('✅ Confirm & update', 'plan-confirm', 'quick-chip plan-confirm'), button('Cancel', 'plan-cancel'));
+  else if (plan.status === 'saving') actions.append(makeElement('span', 'plan-status', 'Saving…'));
+  else if (plan.status === 'cancelled') actions.append(makeElement('span', 'plan-status', 'Cancelled — nothing was changed.'));
+  else if (plan.status === 'done') {
+    actions.append(makeElement('span', plan.failed ? 'plan-status plan-warn' : 'plan-status plan-ok', plan.resultText));
+    if (plan.undo?.length && plan.undoable) actions.append(button('↩ Undo', 'plan-undo'));
+    if (plan.pageUrl) {
+      const link = makeElement('a', 'quick-chip', 'See customer page');
+      link.href = plan.pageUrl;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      actions.append(link);
+    }
+  } else if (plan.status === 'undone') actions.append(makeElement('span', 'plan-status plan-ok', '↩ Undone — everything is back as it was.'));
+  card.append(actions);
+  return card;
+}
+
 export function BotReadyCard(message) {
   const card = makeElement('div', 'bot-ready-card');
   if (typeof window.qrcode === 'function') {
@@ -399,6 +437,7 @@ export function MessageBubble(message) {
     column.append(buttons);
   }
   if (message.botCard) column.append(BotReadyCard(message));
+  if (message.plan) column.append(PlanCard(message));
   if (message.questions?.length) column.append(QuestionForm(message));
 
   if (message.options?.length) {

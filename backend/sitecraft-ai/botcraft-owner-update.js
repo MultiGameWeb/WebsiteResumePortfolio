@@ -125,3 +125,41 @@ export function cleanPlan(raw, products, imageCount = 0) {
   const unclear = clip(raw?.unclear, 300) || (dropped.length ? `I could not find ${dropped.map(n => `“${n}”`).join(", ")} in your items. Please check the name.` : "");
   return { summary: clip(raw?.summary, 300), ops, unclear };
 }
+
+// ---- "About us" text written from what the owner already told BotCraft ----
+
+export const ABOUT_SCHEMA = {
+  type: "OBJECT",
+  properties: { about: { type: "STRING", description: "2 or 3 short, friendly sentences about the shop for its web page" } },
+  required: ["about"]
+};
+
+export function buildAboutPrompt(facts, products) {
+  const known = Object.entries(facts || {})
+    .filter(([key, value]) => value && ["shop_name", "shop_type", "address", "timings", "weekly_holiday", "owner_name"].includes(key))
+    .map(([key, value]) => `- ${key}: ${value}`).join("\n");
+  const items = (products || []).slice(0, 12).map(p => `- ${p.name}${p.price_text ? ` (${p.price_text})` : ""}`).join("\n") || "- (no items yet)";
+  return [
+    "Write the 'About us' text for a small shop's web page, from the facts below.",
+    "Rules: 2 or 3 short, warm, simple sentences, in English. Use ONLY the facts below. Never invent years, awards, offers, prices, numbers, certificates or promises.",
+    "Do not repeat the timings or the full address word for word. Do not use markdown, quotes or emojis.",
+    "",
+    "Shop facts:", known || "- (very little is known)",
+    "",
+    "Some items:", items
+  ].join("\n");
+}
+
+export function cleanAbout(raw) {
+  return clip(String(raw ?? "").replace(/[*_#>`]/g, "").replace(/\s+/g, " "), 400);
+}
+
+// Used when the AI is not available: a plain sentence from the facts, nothing invented.
+export function templateAbout(facts, typeName) {
+  const name = clip(facts?.shop_name, 80);
+  if (!name) return "";
+  const kind = clip(typeName || facts?.shop_type, 60).replace(/_/g, " ");
+  const area = clip(facts?.address, 120).split(",").slice(-2).join(",").trim();
+  const noun = !kind ? "local shop" : /shop|store|studio|centre|center|clinic|hotel|hall|garage|academy|salon|parlour|school|institute|kitchen/i.test(kind) ? kind.toLowerCase() : `${kind.toLowerCase()} shop`;
+  return cleanAbout(`${name} is a ${noun}${area ? ` in ${area}` : ""}. Ask our assistant about items, prices and timings in your language.`);
+}
