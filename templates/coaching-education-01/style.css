@@ -55,3 +55,25 @@ a.sc-connect-item:hover{text-decoration:underline}
 .sc-connect-icon svg{width:20px;height:20px}
 .sc-connect-wrap{padding:0 clamp(16px,5vw,64px) 28px}
 @media(max-width:560px){.sc-connect-icons{margin-left:0}}
+
+/* SiteCraft payments */
+.sc-pay{padding:clamp(40px,6vw,72px) clamp(16px,5vw,64px);background:#f3f5f8;color:#1b2430;font-family:inherit}
+.sc-pay *{box-sizing:border-box}
+.sc-pay-card{max-width:880px;margin:0 auto;display:flex;flex-wrap:wrap;gap:28px;align-items:center;padding:clamp(20px,4vw,36px);background:#fff;border:1px solid #d9dee6;border-radius:16px;box-shadow:0 10px 30px rgba(20,30,50,.06)}
+.sc-pay-qr{width:180px;height:180px;object-fit:contain;border-radius:10px;border:1px solid #d9dee6;background:#fff;padding:8px;flex:0 0 auto}
+.sc-pay-body{flex:1 1 300px;min-width:0}
+.sc-pay-kicker{display:block;margin-bottom:6px;color:#0b5394;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.sc-pay h2{margin:0 0 10px;color:#1b2430;font-size:clamp(24px,3.4vw,34px);line-height:1.2}
+.sc-pay p{margin:0 0 16px;color:#3c4654;font-size:16px;line-height:1.6}
+.sc-pay-id{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 16px;padding:10px 12px;background:#f3f5f8;border:1px dashed #9aa6b6;border-radius:10px}
+.sc-pay-id span{color:#3c4654;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.sc-pay-id strong{color:#1b2430;font-size:17px;word-break:break-all}
+.sc-pay-copy{margin-left:auto;min-height:44px;min-width:72px;padding:8px 14px;border:1px solid #0b5394;border-radius:8px;background:#fff;color:#0b5394;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.sc-pay-copy:hover{background:#eaf2fb}
+.sc-pay-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.sc-pay a.sc-pay-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border-radius:10px;background:#0b5394;color:#fff;font-size:16px;font-weight:700;text-decoration:none}
+.sc-pay a.sc-pay-btn:hover{background:#08406f}
+.sc-pay a.sc-pay-btn-alt{background:#fff;color:#0b5394;border:1px solid #0b5394}
+.sc-pay a.sc-pay-btn-alt:hover{background:#eaf2fb}
+.sc-pay .sc-pay-small{margin:0;color:#4a5462;font-size:14px}
+@media(max-width:560px){.sc-pay-qr{width:160px;height:160px;margin:0 auto}.sc-pay-copy{margin-left:0}.sc-pay a.sc-pay-btn{width:100%}}

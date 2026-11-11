@@ -33,7 +33,7 @@ function scBaseRender(d={},selected=[]){
  out+='<footer class="bh-footer"><div><b>'+esc(b.businessName||'Grand Celebration Banquets')+'</b><span>'+esc(b.tagline||'A beautiful setting for every gathering.')+'</span></div><small>© '+new Date().getFullYear()+' '+esc(b.businessName||'Grand Celebration Banquets')+'. All rights reserved.</small></footer></div>';
  return out;
 }
-export function init(root,d={},selected=[]){scMobileNav(arguments[0]);
+function scPreUpiInit(root,d={},selected=[]){scMobileNav(arguments[0]);
  const site=root.querySelector('[data-banquet-site]');if(!site)return;
  let filter='all',query='';
  const apply=()=>{let count=0;site.querySelectorAll('[data-hall-card]').forEach(card=>{const show=(filter==='all'||card.dataset.type===filter)&&(card.dataset.search||'').includes(query);card.hidden=!show;if(show)count++});const empty=site.querySelector('[data-hall-empty]');if(empty)empty.hidden=count>0};
@@ -97,4 +97,46 @@ function scConnect(html,d,selected){
   const j=html.lastIndexOf('</div>');
   return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
 }
-export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}
+function scPreUpiRender(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}
+
+/* SiteCraft payments: optional UPI / payment link section. Shown only when the owner adds payment details. */
+const scPayEsc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function scPay(html,d,selected){
+  if(!(selected||[]).includes('upi'))return html;
+  const p=d.payment||{},b=d.brand||{};
+  const upi=String(p.upiId||'').trim(),okUpi=/^[a-z0-9._-]{2,256}@[a-z][a-z0-9.-]{1,63}$/i.test(upi);
+  const link=/^https:\/\/[^\s"'<>]+$/i.test(String(p.link||'').trim())?String(p.link).trim():'';
+  const qr=String(p.qr||'').trim(),okQr=/^https:\/\/[^\s"'<>]+$/i.test(qr)||/^data:image\/(png|jpe?g|webp|gif);base64,[a-z0-9+\/=]+$/i.test(qr);
+  if(!okUpi&&!link&&!okQr)return html;
+  const name=String(p.payeeName||b.businessName||b.name||d.businessName||'').trim();
+  const intent='upi://pay?pa='+encodeURIComponent(upi)+(name?'&pn='+encodeURIComponent(name):'')+'&cu=INR';
+  const block='<section class="sc-pay" id="pay" aria-labelledby="sc-pay-title"><div class="sc-pay-card">'+
+    (okQr?'<img class="sc-pay-qr" src="'+scPayEsc(qr)+'" alt="UPI QR code for '+scPayEsc(name||'this business')+'" loading="lazy">':'')+
+    '<div class="sc-pay-body"><span class="sc-pay-kicker">Pay online</span><h2 id="sc-pay-title">'+scPayEsc(p.title||'Pay with UPI')+'</h2>'+
+    '<p>'+scPayEsc(p.note||'Pay with Google Pay, PhonePe, Paytm, BHIM or any UPI app. Please share the payment screenshot on WhatsApp after paying.')+'</p>'+
+    (okUpi?'<div class="sc-pay-id"><span>UPI ID</span><strong data-sc-upi>'+scPayEsc(upi)+'</strong><button type="button" class="sc-pay-copy" data-sc-copy="'+scPayEsc(upi)+'">Copy</button></div>':'')+
+    '<div class="sc-pay-actions">'+(okUpi?'<a class="sc-pay-btn" href="'+scPayEsc(intent)+'">Pay with UPI app</a>':'')+(link?'<a class="sc-pay-btn sc-pay-btn-alt" href="'+scPayEsc(link)+'" target="_blank" rel="noopener">'+scPayEsc(p.linkLabel||'Pay by card / net banking')+' ↗</a>':'')+'</div>'+
+    (okUpi?'<p class="sc-pay-small">The UPI app button works on phones. On a computer, scan the QR code or copy the UPI ID.</p>':'')+
+    '</div></div></section>';
+  const m=html.search(/<section[^>]*id="contact"/);
+  if(m>=0)return html.slice(0,m)+block+html.slice(m);
+  const i=html.lastIndexOf('<footer');
+  if(i>=0)return html.slice(0,i)+block+html.slice(i);
+  const k=html.search(/<(section|div)[^>]*class="[^"]*footer[^"]*"/);
+  if(k>=0)return html.slice(0,k)+block+html.slice(k);
+  const j=html.lastIndexOf('</div>');return j>=0?html.slice(0,j)+block+html.slice(j):html+block;
+}
+function scBindPay(root){
+  if(!root||!root.querySelectorAll)return;
+  root.querySelectorAll('[data-sc-copy]').forEach(btn=>{
+    if(btn.__scBound)return;btn.__scBound=true;
+    btn.addEventListener('click',async()=>{
+      const v=btn.dataset.scCopy;let ok=false;
+      try{await navigator.clipboard.writeText(v);ok=true;}catch(e){
+        try{const t=document.createElement('textarea');t.value=v;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();ok=document.execCommand('copy');t.remove();}catch(_){}}
+      btn.textContent=ok?'Copied':'Copy failed';setTimeout(()=>{btn.textContent='Copy';},1800);
+    });
+  });
+}
+export function render(d={},selected=[]){return scPay(scPreUpiRender(d,selected),d,selected);}
+export function init(root,...rest){const r=scPreUpiInit(root,...rest);try{scBindPay(root);}catch(e){}return r;}
