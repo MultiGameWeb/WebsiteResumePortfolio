@@ -1,0 +1,1095 @@
+{
+  "id": "wholesale-01",
+  "name": "Wholesale / Distributor — Balaji Traders",
+  "category": "Wholesalers & Distributors",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Business"
+    },
+    {
+      "id": "menu",
+      "label": "Products & Rates"
+    },
+    {
+      "id": "combos",
+      "label": "Schemes & Bulk Offers"
+    },
+    {
+      "id": "work",
+      "label": "Why Buy From Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Price List Request Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Business Name",
+      "required": true,
+      "placeholder": "Balaji Traders"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Business Manager",
+      "placeholder": "Suresh Agarwal"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "FMCG · Groceries · Bulk supply"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Reliable supply for retailers since day one."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Business",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Bulk supply for your business."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Wholesale & distribution"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "orders@balajitraders.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Business Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Mon–Sat · 8:00 AM – 8:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Balaji Traders",
+      "ownerName": "Suresh Agarwal",
+      "tagline": "FMCG · Groceries · Bulk supply",
+      "motto": "Reliable supply for retailers since day one.",
+      "about": "Balaji Traders is a wholesaler and distributor in Begum Bazaar supplying rice, pulses, edible oils, spices and FMCG products to kirana stores, supermarkets, hotels and resellers. We keep ready stock and deliver across Hyderabad."
+    },
+    "home": {
+      "eyebrow": "WHOLESALE & DISTRIBUTION",
+      "title": "Bulk supply for your business.",
+      "text": "Staples, edible oils and FMCG products at wholesale rates, delivered to your shop. Send your requirement on WhatsApp."
+    },
+    "hero": "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "Rice (25 kg bags)",
+        "category": "Staples",
+        "price": "Rate on request",
+        "description": "Sona masoori and basmati in 25 kg and 50 kg bags.",
+        "tag": "Fast moving",
+        "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Close-up of uncooked rice grains",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Wheat & Atta",
+        "category": "Staples",
+        "price": "Rate on request",
+        "description": "Whole wheat and chakki atta in 10 kg to 50 kg packs.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Pile of whole wheat grains",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Edible Oils",
+        "category": "Staples",
+        "price": "Rate on request",
+        "description": "Sunflower, groundnut and palm oil in 15 litre tins and cartons.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Bottle of cooking oil",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Whole & Ground Spices",
+        "category": "Staples",
+        "price": "Rate on request",
+        "description": "Chilli, turmeric, coriander and whole spices in bulk packs.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Assorted whole spices on a table",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Packaged Snacks",
+        "category": "FMCG",
+        "price": "Carton rates",
+        "description": "Chips, namkeen and biscuits from popular brands by the carton.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Potato chips on a yellow background",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Cleaning Products",
+        "category": "Household",
+        "price": "Carton rates",
+        "description": "Detergents, dishwash and floor cleaners in carton packs.",
+        "tag": "Scheme",
+        "image": "https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Gloved hand holding a cleaning spray",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Personal Care",
+        "category": "Household",
+        "price": "Carton rates",
+        "description": "Soaps, shampoos and toothpaste for retail shelves.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Bottles of shampoo and body wash",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Monthly Volume Scheme",
+        "description": "Extra discount when monthly purchases cross ₹1 lakh.",
+        "price": "Up to 2% off",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "New Retailer Offer",
+        "description": "Free delivery on your first three orders.",
+        "price": "Free delivery",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Festive Stock-up",
+        "description": "Special rates on oils, sugar and dry fruits before festivals.",
+        "price": "Ask for rates",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "▣",
+        "title": "Ready stock",
+        "description": "Large warehouse with stock of fast-moving products.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "Fair wholesale rates",
+        "description": "Rates updated daily. Ask for today’s price list.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "⌂",
+        "title": "Doorstep delivery",
+        "description": "Delivery to shops across Hyderabad, same day for orders before 2 PM.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Credit for regulars",
+        "description": "Credit terms for regular buyers after the first few orders.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "x1",
+        "name": "Kirana store",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Supermarket",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "Hotel / restaurant",
+        "enabled": true
+      },
+      {
+        "id": "x4",
+        "name": "Reseller / distributor",
+        "enabled": true
+      }
+    ],
+    "deliveryAreas": [
+      {
+        "id": "x1",
+        "name": "Begum Bazaar",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Abids",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "Secunderabad",
+        "enabled": true
+      },
+      {
+        "id": "x4",
+        "name": "Mehdipatnam",
+        "enabled": true
+      },
+      {
+        "id": "x5",
+        "name": "Malakpet",
+        "enabled": true
+      },
+      {
+        "id": "x6",
+        "name": "Kukatpally",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Our warehouse",
+        "alt": "Warehouse with stacked cartons on racks",
+        "image": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Packed for dispatch",
+        "alt": "Cardboard boxes packed and ready to dispatch",
+        "image": "https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Delivered to you",
+        "alt": "Delivery person handing over a cardboard box",
+        "image": "https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "On the road",
+        "alt": "Delivery truck on a highway",
+        "image": "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Malakpet",
+        "text": "I run a kirana shop and order every week on WhatsApp. Rates are fair and delivery comes the same day.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Secunderabad",
+        "text": "Good stock of oils and staples for our restaurant. Billing is clear with GST invoices.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Kukatpally",
+        "text": "Reliable supplier. Even in festival season they managed our full order.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "What is the minimum order?",
+        "answer": "Minimum order is ₹5,000 for delivery. Smaller orders can be picked up from the warehouse.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "How do I get today’s rates?",
+        "answer": "Send your product list in the enquiry form or on WhatsApp. Rates change daily, so we confirm them with each order.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Do you give GST invoices?",
+        "answer": "Yes, we provide GST invoices for all orders. Add your GST number in the form.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Do you offer credit?",
+        "answer": "Regular buyers can get credit terms after a few orders. Talk to us about your requirement.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "How do I pay?",
+        "answer": "Bank transfer, UPI or cheque for regular buyers. Cash is accepted at the warehouse.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "8:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "8:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "8:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "8:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "8:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "8:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "8:00 AM",
+        "close": "8:00 PM",
+        "closed": true,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "orders@balajitraders.example",
+      "address": "4-2-61, Begum Bazaar, Hyderabad, Telangana 500012",
+      "maps": "https://maps.google.com/?q=Begum+Bazaar+Hyderabad",
+      "hours": "Mon–Sat · 8:00 AM – 8:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    },
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:wholesale-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Business Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Business name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the business",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Staples, FMCG, Household)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. New, Offer)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New product",
+          "category": "Staples",
+          "price": "Ask for rate",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Schemes & Bulk Offers",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "Ask for price",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Enquiry Form: Business Types",
+        "type": "collection",
+        "itemLabel": "business type",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Business type"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New business type",
+          "enabled": true
+        }
+      },
+      {
+        "id": "deliveryAreas",
+        "label": "Enquiry Form: Delivery Areas",
+        "type": "collection",
+        "itemLabel": "area",
+        "path": "deliveryAreas",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Area"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New area",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "10:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Products",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Schemes",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why buy from us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Price list request form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
