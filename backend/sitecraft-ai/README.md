@@ -147,3 +147,17 @@ Optional variables:
 | `HOSTING_ALLOWED_ORIGINS` | Extra origins allowed to call the publish API (BotCraft's allowed origins are always allowed). |
 
 Switch a site off or on: owner dashboard (`control/`) → **Published sites** → Switch off / Switch on.
+
+### One-year hosting
+
+Each published site gets `expires_at` = first publish + 365 days. After that the site keeps
+working for a 7-day grace week (the customer only learns about the grace week once the year has
+ended), then visitors see "not available" and updates are refused until it is renewed. Renew in
+the owner dashboard: Published sites → **Extend 1 year** (extends from the later of today or the
+current end date). The checkout's hosting price is `HOSTING_COST_PER_YEAR × 1.75` in `core/checkout.js`.
+
+## Executive call requests
+
+`callbacks.js`: `POST /api/requests/callback` is sent by the success page when the customer asked for
+a domain or online payments at checkout (and by the renewal button). Owner dashboard → **Call
+requests** lists them newest first, refreshes every minute, and shows a count in the tab title.

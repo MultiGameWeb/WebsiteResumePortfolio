@@ -9,9 +9,12 @@
 // POST /api/admin/bot  { id, action: "set_features" | "set_status", features?, status? }
 // GET  /api/admin/sites?offset=
 // GET  /api/admin/hosted?q=&offset=         websites published with auto hosting
-// POST /api/admin/hosted  { slug, action: "block" | "unblock" }
+// POST /api/admin/hosted  { slug, action: "block" | "unblock" | "extend" }
+// GET  /api/admin/callbacks?status=&offset=  executive call-back requests (domain, online payment, renewal)
+// POST /api/admin/callbacks { id, status: "new" | "called" | "done" }
 import { allowedOrigins, shopFeatures } from "./botcraft-builder.js";
-import { siteUrls } from "./hosting.js";
+import { siteUrls, hostingInfo, extendedExpiry } from "./hosting.js";
+import { ensureCallbackSchema } from "./callbacks.js";
 
 const PAGE = 50;
 const SHOP_ID_PATTERN = /^[A-Za-z0-9-]{16,64}$/;
@@ -86,7 +89,10 @@ async function summary(env) {
       count(env.DB, "SELECT COUNT(*) AS n FROM hosted_sites WHERE created_at > ?", week),
       count(env.DB, "SELECT COALESCE(SUM(size_bytes), 0) AS n FROM hosted_sites")
     ]);
-    hosted = { total, live: total - blocked, blocked, newThisWeek: newSites, sizeBytes: bytes };
+    const soon = new Date(Date.now() + 30 * 86400000).toISOString();
+    const expiring = await count(env.DB, "SELECT COUNT(*) AS n FROM hosted_sites WHERE status = 'live' AND COALESCE(expires_at, datetime(created_at, '+365 days')) < ?", soon);
+    const callbacksNew = await count(env.DB, "SELECT COUNT(*) AS n FROM callback_requests WHERE status = 'new'");
+    hosted = { total, live: total - blocked, blocked, newThisWeek: newSites, sizeBytes: bytes, expiringSoon: expiring, callbacksNew };
   }
   return { ok: true, botcraft: { bots, live, newBots, products, openQuestions, newRequests, ownerDevices, types }, websites: { sites, leads }, hosted };
 }
@@ -181,12 +187,12 @@ async function listHosted(env, url) {
   const like = `%${q.replace(/[%_]/g, "")}%`;
   try {
     const rows = await all(env.DB,
-      `SELECT slug, template_id, business_name, status, size_bytes, created_at, updated_at,
+      `SELECT slug, template_id, business_name, status, size_bytes, created_at, updated_at, expires_at,
          (SELECT COUNT(*) FROM hosted_files f WHERE f.slug = s.slug) AS files
        FROM hosted_sites s
        WHERE (? = '' OR slug LIKE ? OR LOWER(business_name) LIKE ? OR template_id LIKE ?)
        ORDER BY created_at DESC LIMIT ? OFFSET ?`, q, like, like, like, PAGE + 1, offset);
-    const sites = rows.slice(0, PAGE).map(r => ({ ...r, url: siteUrls(env, url, r.slug).url }));
+    const sites = rows.slice(0, PAGE).map(r => ({ ...r, url: siteUrls(env, url, r.slug).url, hosting: hostingInfo(r) }));
     return { ok: true, sites, more: rows.length > PAGE, offset, configured: true };
   } catch {
     // The table is created on the first publish.
@@ -198,11 +204,40 @@ async function updateHosted(env, url, body) {
   if (!env.DB) return { status: 503, data: { ok: false, error: "Hosting storage is not configured." } };
   const slug = String(body?.slug || "");
   if (!HOSTED_SLUG.test(slug)) return { status: 400, data: { ok: false, error: "Unknown website." } };
+  if (body?.action === "extend") {
+    const row = await env.DB.prepare("SELECT created_at, expires_at FROM hosted_sites WHERE slug = ?").bind(slug).first().catch(() => null);
+    if (!row) return { status: 404, data: { ok: false, error: "Website not found." } };
+    const expiresAt = extendedExpiry(row);
+    await env.DB.prepare("UPDATE hosted_sites SET expires_at = ?, updated_at = ? WHERE slug = ?").bind(expiresAt, new Date().toISOString(), slug).run();
+    return { status: 200, data: { ok: true, slug, expiresAt } };
+  }
   const status = body?.action === "block" ? "blocked" : body?.action === "unblock" ? "live" : null;
   if (!status) return { status: 400, data: { ok: false, error: "Unknown action." } };
   const result = await env.DB.prepare("UPDATE hosted_sites SET status = ?, updated_at = ? WHERE slug = ?").bind(status, new Date().toISOString(), slug).run().catch(() => null);
   if (!result?.meta?.changes) return { status: 404, data: { ok: false, error: "Website not found." } };
   return { status: 200, data: { ok: true, slug, status } };
+}
+
+async function listCallbacks(env, url) {
+  if (!env.DB) return { ok: true, requests: [], more: false };
+  await ensureCallbackSchema(env.DB);
+  const status = ["new", "called", "done"].includes(url.searchParams.get("status")) ? url.searchParams.get("status") : "";
+  const offset = Math.max(0, Number(url.searchParams.get("offset")) || 0);
+  const rows = await all(env.DB,
+    `SELECT id, created_at, updated_at, status, name, phone, business, template_id, wants_domain, wants_online_payment, site_url, note
+     FROM callback_requests WHERE (? = '' OR status = ?) ORDER BY (status = 'new') DESC, created_at DESC LIMIT ? OFFSET ?`, status, status, PAGE + 1, offset);
+  return { ok: true, requests: rows.slice(0, PAGE), more: rows.length > PAGE, offset };
+}
+
+async function updateCallback(env, body) {
+  if (!env.DB) return { status: 503, data: { ok: false, error: "Storage is not configured." } };
+  await ensureCallbackSchema(env.DB);
+  const id = String(body?.id || "");
+  const status = ["new", "called", "done"].includes(body?.status) ? body.status : null;
+  if (!/^[0-9a-f-]{36}$/.test(id) || !status) return { status: 400, data: { ok: false, error: "Unknown request." } };
+  const result = await env.DB.prepare("UPDATE callback_requests SET status = ?, updated_at = ? WHERE id = ?").bind(status, new Date().toISOString(), id).run();
+  if (!result?.meta?.changes) return { status: 404, data: { ok: false, error: "Request not found." } };
+  return { status: 200, data: { ok: true, id, status } };
 }
 
 export async function handleAdminRoute(request, env, url) {
@@ -238,6 +273,13 @@ export async function handleAdminRoute(request, env, url) {
   }
   if (request.method === "GET" && path === "/api/admin/sites") return reply(await listSites(env, url), 200, origin);
   if (request.method === "GET" && path === "/api/admin/hosted") return reply(await listHosted(env, url), 200, origin);
+  if (request.method === "GET" && path === "/api/admin/callbacks") return reply(await listCallbacks(env, url), 200, origin);
+  if (request.method === "POST" && path === "/api/admin/callbacks") {
+    let body;
+    try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
+    const result = await updateCallback(env, body);
+    return reply(result.data, result.status, origin);
+  }
   if (request.method === "POST" && path === "/api/admin/hosted") {
     let body;
     try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }

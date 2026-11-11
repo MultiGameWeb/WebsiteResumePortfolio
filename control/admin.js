@@ -17,6 +17,8 @@ let apiBase = DEFAULT_API;
 let botOffset = 0;
 let siteOffset = 0;
 let hostedOffset = 0;
+let callOffset = 0;
+let callTimer = null;
 let currentBot = null;
 
 function read(storage, name) { try { return storage.getItem(name) || ''; } catch { return ''; } }
@@ -35,6 +37,7 @@ function element(tag, className, text) {
 }
 
 const when = (iso) => (iso ? new Date(iso).toLocaleString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—');
+const day = (iso) => (iso ? new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—');
 const number = (value) => (value === null || value === undefined ? '—' : Number(value).toLocaleString('en-IN'));
 
 async function api(path, options = {}) {
@@ -60,11 +63,13 @@ function lock(message = '') {
 
 function selectTab(name) {
   for (const button of document.querySelectorAll('#tabs [data-tab]')) button.setAttribute('aria-pressed', String(button.dataset.tab === name));
-  for (const id of ['overview', 'bots', 'hosted', 'sites']) $(`#${id}`).hidden = id !== name;
+  for (const id of ['overview', 'bots', 'calls', 'hosted', 'sites']) $(`#${id}`).hidden = id !== name;
   if (name === 'overview') loadSummary();
   if (name === 'bots' && !$('#botRows').children.length) loadBots(true);
   if (name === 'sites' && !$('#siteRows').children.length) loadSites(true);
   if (name === 'hosted' && !$('#hostedRows').children.length) loadHosted(true);
+  clearInterval(callTimer);
+  if (name === 'calls') { loadCalls(true); callTimer = setInterval(() => loadCalls(true), 60000); }
 }
 
 // ---- Overview ----
@@ -77,7 +82,7 @@ async function loadSummary() {
       ['BotCraft bots', b.bots], ['Live bots (QR ready)', b.live], ['New bots this week', b.newBots], ['Items added', b.products],
       ['Open customer questions', b.openQuestions], ['New customer requests', b.newRequests], ['Owner phones with alerts', b.ownerDevices],
       ['Websites', data.websites.sites], ['Website leads', data.websites.leads],
-      ...(data.hosted ? [['Published sites', data.hosted.total], ['Published this week', data.hosted.newThisWeek], ['Sites switched off', data.hosted.blocked], ['Hosting storage', `${(data.hosted.sizeBytes / 1048576).toFixed(1)} MB`]] : []),
+      ...(data.hosted ? [['New call requests', data.hosted.callbacksNew], ['Hosting ending in 30 days', data.hosted.expiringSoon], ['Published sites', data.hosted.total], ['Published this week', data.hosted.newThisWeek], ['Sites switched off', data.hosted.blocked], ['Hosting storage', `${(data.hosted.sizeBytes / 1048576).toFixed(1)} MB`]] : []),
     ];
     $('#stats').replaceChildren(...tiles.map(([label, value]) => {
       const tile = element('div', 'stat');
@@ -92,8 +97,16 @@ async function loadSummary() {
       row.append(element('span', '', t.shop_type || '(not chosen yet)'), bar, element('span', 'num', number(t.n)));
       return row;
     }) : [element('p', 'empty', 'No bots yet.')]));
+    setCallBadge(data.hosted ? data.hosted.callbacksNew : 0);
     showStatus('');
   } catch (error) { showStatus(error.message); }
+}
+
+function setCallBadge(n) {
+  const badge = $('#callBadge');
+  badge.hidden = !n;
+  badge.textContent = n ? String(n) : '';
+  document.title = n ? `(${n}) SiteCraft Admin` : 'SiteCraft Admin';
 }
 
 // ---- Bots ----
@@ -268,10 +281,23 @@ async function loadHosted(reset) {
           loadHosted(true);
         } catch (error) { showStatus(error.message); toggle.disabled = false; }
       });
-      const action = element('td');
-      action.append(toggle);
+      const extend = element('button', 'btn small', 'Extend 1 year');
+      extend.type = 'button';
+      extend.addEventListener('click', async () => {
+        if (!window.confirm(`Extend hosting for ${site.business_name || site.slug} by one year?`)) return;
+        extend.disabled = true;
+        try {
+          const out = await api('/api/admin/hosted', { method: 'POST', body: JSON.stringify({ slug: site.slug, action: 'extend' }) });
+          showStatus(`Hosting extended till ${day(out.expiresAt)}.`);
+          loadHosted(true);
+        } catch (error) { showStatus(error.message); extend.disabled = false; }
+      });
+      const action = element('td', 'row-actions');
+      action.append(extend, toggle);
+      const h = site.hosting || {};
+      const till = element('td', h.state === 'active' ? '' : 'alert', day(h.expiresAt) + (h.state === 'grace' ? ' (grace week)' : h.state === 'ended' ? ' (ended)' : ''));
       row.append(
-        element('td', 'shop-name', site.business_name || '(no name)'), address, element('td', '', site.template_id), state,
+        element('td', 'shop-name', site.business_name || '(no name)'), address, element('td', '', site.template_id), state, till,
         element('td', 'num', `${(site.size_bytes / 1048576).toFixed(2)} MB`), element('td', '', when(site.created_at)), element('td', '', when(site.updated_at)), action,
       );
       return row;
@@ -279,13 +305,59 @@ async function loadHosted(reset) {
     if (reset && !rows.length) {
       const empty = element('tr');
       const cell = element('td', 'empty', query ? 'No published sites match this search.' : 'No websites published yet.');
-      cell.colSpan = 8;
+      cell.colSpan = 9;
       empty.append(cell);
       rows.push(empty);
     }
     $('#hostedRows').append(...rows);
     hostedOffset += data.sites.length;
     $('#moreHosted').hidden = !data.more;
+    showStatus('');
+  } catch (error) { showStatus(error.message); }
+}
+
+// ---- Call requests ----
+
+async function loadCalls(reset) {
+  if (reset) callOffset = 0;
+  try {
+    const data = await api(`/api/admin/callbacks?status=${encodeURIComponent($('#callFilter').value)}&offset=${callOffset}`);
+    const rows = data.requests.map((r) => {
+      const row = element('tr', r.status === 'new' ? 'is-new' : '');
+      const needs = [r.wants_domain ? 'Domain' : '', r.wants_online_payment ? 'Online payment' : '', r.note || ''].filter(Boolean).join(' + ');
+      const phone = element('td');
+      const digits = String(r.phone).replace(/[^\d]/g, '');
+      const tel = element('a', '', r.phone); tel.href = `tel:${digits.length === 10 ? '+91' + digits : '+' + digits}`;
+      const wa = element('a', 'wa', 'WhatsApp'); wa.href = `https://wa.me/${digits.length === 10 ? '91' + digits : digits}`; wa.target = '_blank'; wa.rel = 'noopener';
+      phone.append(tel, document.createTextNode(' · '), wa);
+      const site = element('td');
+      site.append(document.createTextNode(r.template_id || '—'));
+      if (r.site_url) { const a = element('a', '', ' ↗ site'); a.href = r.site_url; a.target = '_blank'; a.rel = 'noopener'; site.append(a); }
+      const minutes = Math.round((Date.now() - Date.parse(r.created_at)) / 60000);
+      const age = minutes < 60 ? `${minutes} min ago` : when(r.created_at);
+      const state = element('td');
+      state.append(element('span', `pill ${r.status === 'new' ? 'paused' : r.status === 'called' ? 'setup' : 'live'}`, r.status === 'new' ? 'New' : r.status === 'called' ? 'Called' : 'Done'));
+      const actions = element('td', 'row-actions');
+      for (const [status, label] of [['called', 'Mark called'], ['done', 'Mark done']]) {
+        if (r.status === status) continue;
+        const b = element('button', 'btn small', label); b.type = 'button';
+        b.addEventListener('click', async () => {
+          b.disabled = true;
+          try { await api('/api/admin/callbacks', { method: 'POST', body: JSON.stringify({ id: r.id, status }) }); loadCalls(true); loadSummary(); }
+          catch (error) { showStatus(error.message); b.disabled = false; }
+        });
+        actions.append(b);
+      }
+      row.append(element('td', minutes <= 20 && r.status === 'new' ? 'alert' : '', age), element('td', 'shop-name', `${r.name || '(no name)'}${r.business ? ' · ' + r.business : ''}`), phone, element('td', '', needs || '—'), site, state, actions);
+      return row;
+    });
+    if (reset) $('#callRows').replaceChildren();
+    if (reset && !rows.length) {
+      const empty = element('tr'); const cell = element('td', 'empty', 'No call requests.'); cell.colSpan = 7; empty.append(cell); rows.push(empty);
+    }
+    $('#callRows').append(...rows);
+    callOffset += data.requests.length;
+    $('#moreCalls').hidden = !data.more;
     showStatus('');
   } catch (error) { showStatus(error.message); }
 }
@@ -325,6 +397,8 @@ $('#moreBots').addEventListener('click', () => loadBots(false));
 $('#moreSites').addEventListener('click', () => loadSites(false));
 $('#hostedSearch').addEventListener('submit', (event) => { event.preventDefault(); loadHosted(true); });
 $('#moreHosted').addEventListener('click', () => loadHosted(false));
+$('#callFilter').addEventListener('change', () => loadCalls(true));
+$('#moreCalls').addEventListener('click', () => loadCalls(false));
 $('#closeDrawer').addEventListener('click', () => $('#botDrawer').close());
 
 apiBase = $('#apiBase').value || DEFAULT_API;
