@@ -1,10 +1,12 @@
-import { createBot, currentBotId, enableFeature, loadSavedConversation, myBots, openBot, prepareQuestionBank, rememberBotName, sendChatAction } from './chatApi.js?v=20261031b';
+import { createBot, currentBotId, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261031c';
+import { applyPlan, runUndo } from './plan-apply.js?v=1';
+import { describeOp, planLocally } from './update-planner.js?v=1';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261031b';
+} from './components.js?v=20261031c';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -228,6 +230,11 @@ async function handleSend({ text = '', option = null, attachments = null, retryM
     state.inputError = '';
     const actionType = option ? 'quick-option' : (outgoingAttachments.length && !cleanText ? 'attachment' : 'message');
     render({ forceBottom: true });
+    // Once the bot is ready, "Gold chain price 52000" is an update: show it for Confirm instead of chatting.
+    if (!option && cleanText && isBotReady()) {
+      const plan = await planOwnerUpdate(cleanText, outgoingAttachments, userMessage);
+      if (plan) { userMessage.status = 'sent'; showPlan(plan); return; }
+    }
     await runMockAction({ type: actionType, text: cleanText, option: option ?? undefined, attachments: outgoingAttachments, formAnswers: formAnswers ?? undefined }, userMessage);
   } else {
     retryMessage.status = 'sending';
@@ -236,6 +243,75 @@ async function handleSend({ text = '', option = null, attachments = null, retryM
     const actionType = retryMessage.attachments?.length && !retryMessage.text ? 'attachment' : 'retry';
     await runMockAction({ type: actionType, text: retryMessage.text, attachments: retryMessage.attachments ?? [], formAnswers: retryMessage.formAnswers }, retryMessage);
   }
+}
+
+// ---- Owner updates inside the chat (price, stock, timings, new items, photos) ----
+
+const isBotReady = () => state.messages.some((message) => message.botCard);
+
+// Plans an update message, or returns null when it is just a normal chat message.
+async function planOwnerUpdate(text, attachments, userMessage) {
+  if (text.length > 400) return null;
+  state.pendingCount += 1;
+  render({ forceBottom: true });
+  try {
+    if (!ownerViewLoaded()) await loadOwnerView();
+    const view = getOwnerView();
+    const images = await prepareImages(attachments);
+    let plan = planLocally(text, { products: view.products || [], imageCount: images.length });
+    let source = 'basic';
+    if (!plan.ops.length) {
+      const ai = await requestUpdatePlan(text, images);
+      if (ai?.ops?.length) { plan = ai; source = 'ai'; }
+    }
+    if (!plan.ops.length) return null;
+    return { ...plan, source, images };
+  } catch {
+    return null;
+  } finally {
+    state.pendingCount = Math.max(0, state.pendingCount - 1);
+    render({ forceBottom: true });
+  }
+}
+
+function showPlan(plan) {
+  const view = getOwnerView();
+  const card = state.messages.find((message) => message.botCard)?.botCard;
+  state.messages.push({
+    id: makeId('message'), role: 'assistant', time: new Date(),
+    text: plan.source === 'basic' ? 'I will make these changes (please check each line):' : 'I will make these changes:',
+    plan: {
+      ops: plan.ops, images: plan.images, source: plan.source, unclear: plan.unclear || '', status: 'pending',
+      lines: plan.ops.map((op) => describeOp(op, view.products || [], view.info || {})),
+      pageUrl: card?.url || '',
+    },
+  });
+  render({ forceBottom: true });
+}
+
+async function confirmPlan(messageId) {
+  const message = state.messages.find((item) => item.id === messageId);
+  if (!message?.plan || message.plan.status !== 'pending') return;
+  message.plan.status = 'saving';
+  render();
+  const result = await applyPlan({ ops: message.plan.ops, images: message.plan.images, call: ownerCall, getView: getOwnerView });
+  Object.assign(message.plan, {
+    status: 'done', failed: result.failed, undo: result.undo, undoable: result.undoable,
+    resultText: result.failed
+      ? `Saved ${result.done}. ${result.failed} could not be saved — please check the item names.`
+      : `✅ Done — ${result.done} change${result.done === 1 ? '' : 's'} saved. Your customers see it right away.`,
+  });
+  render({ forceBottom: true });
+}
+
+async function undoPlan(messageId) {
+  const message = state.messages.find((item) => item.id === messageId);
+  if (!message?.plan?.undo) return;
+  message.plan.status = 'saving';
+  render();
+  await runUndo(message.plan.undo, ownerCall);
+  message.plan.status = 'undone';
+  render();
 }
 
 async function runMockAction(action, userMessage) {
@@ -586,6 +662,13 @@ app.addEventListener('click', (event) => {
     handleSend({ text: 'Skip', formAnswers: [{ id: button.dataset.key, value: 'skipped' }] });
     return;
   }
+  if (action === 'plan-confirm') { confirmPlan(button.dataset.messageId); return; }
+  if (action === 'plan-cancel') {
+    const message = state.messages.find((item) => item.id === button.dataset.messageId);
+    if (message?.plan) { message.plan.status = 'cancelled'; render(); }
+    return;
+  }
+  if (action === 'plan-undo') { undoPlan(button.dataset.messageId); return; }
   if (action === 'copy-bot-link') { copyBotLink(button.dataset.messageId, button); return; }
   if (action === 'download-poster') { downloadPoster(button.dataset.messageId); return; }
   if (action === 'form-choice') { chooseFormOption(button); return; }

@@ -44,10 +44,12 @@
       <li>Go to the customer page: the new price is already there. Ask the assistant “gold chain price?”.</li>
     </ol>
     <p class="muted">In demo mode the assistant answers by simple word matching. With the real AI key the answers are written by Gemini.</p>
+    <a class="btn" href="./index.html?demo=1" id="fresh">Create a new demo shop from scratch</a>
     <button class="btn light" id="reset" type="button">Reset the demo shop</button>
     <a class="btn light" href="./demo.html?demo=0" id="off">Turn demo mode off</a>
   </section>
 </main>
+<script>try { if (new URLSearchParams(location.search).get('demo') !== '0') localStorage.setItem('botcraft:demo', '1'); } catch (e) {}</script>
 <script src="./demo-api.js"></script>
 <script>
   document.querySelector('#reset').addEventListener('click', () => {
@@ -55,8 +57,7 @@
     try { localStorage.removeItem('botcraft:demo:v1'); } catch (e) {}
     alert('Done. The demo shop is back to the start.');
   });
-  // Opening this page turns demo mode on.
-  try { localStorage.setItem('botcraft:demo', '1'); } catch (e) {}
+  document.querySelector('#fresh').addEventListener('click', () => { if (window.BOTCRAFT_DEMO_START_FRESH) window.BOTCRAFT_DEMO_START_FRESH(); });
 </script>
 </body>
 </html>

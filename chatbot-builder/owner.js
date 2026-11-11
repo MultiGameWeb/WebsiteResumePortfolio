@@ -327,6 +327,14 @@ $('#infoForm').addEventListener('submit', (event) => {
   call('save_info', { info: Object.fromEntries(INFO_KEYS.map((key) => [key, form.elements[key].value.trim()])) });
 });
 
+$('#aboutWrite').addEventListener('click', async () => {
+  const note = $('#aboutNote');
+  note.textContent = 'Writing…';
+  const ok = await call('generate_about');
+  note.textContent = ok ? 'Done — read it and edit if you like.' : '';
+  if (ok) { const area = $('#infoForm').elements.about; area.value = view.info?.about || ''; }
+});
+
 function render() {
   $('#sections').hidden = false;
   $('#shopName').textContent = view.shopName || 'Your shop';

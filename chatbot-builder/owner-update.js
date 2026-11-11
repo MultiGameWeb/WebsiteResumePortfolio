@@ -6,6 +6,7 @@
 // (no key yet, offline, busy, or demo mode) the rule-based planner in
 // update-planner.js is used instead, and the screen says so.
 
+import { applyPlan, runUndo } from './plan-apply.js';
 import { describeOp, planLocally } from './update-planner.js';
 
 const EXAMPLES = ['Gold chain price 52000', 'Silver anklet out of stock', 'Add Silk saree 3500', 'Timings 10 am to 8 pm', 'Closed on Sunday'];
@@ -168,63 +169,8 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
   }
 
   // ---- Applying a confirmed plan ----
-  const findProduct = (key, name) => {
-    const products = getView().products || [];
-    return products.find((p) => p.name_key === key) || products.find((p) => p.name.toLowerCase() === String(name || '').toLowerCase());
-  };
-  const productFields = (product, patch) => ({
-    key: product.name_key, name: product.name, price_text: product.price_text || '', details: product.details || '', stock_status: product.stock_status || 'in_stock', ...patch,
-  });
-
   async function apply(ops, images, card) {
-    const undo = [];
-    let undoable = true;
-    let done = 0;
-    let failed = 0;
-    const infoPatch = {};
-    const infoBefore = {};
-    const created = new Map(); // item name (lower) → key
-    for (const op of ops) {
-      let ok = true;
-      const product = findProduct(op.key, op.name);
-      if (op.type === 'set_price' && product) {
-        undo.push({ action: 'save_product', data: productFields(product, { key: product.name_key }) });
-        ok = await call('save_product', productFields(product, { price_text: op.price }));
-      } else if (op.type === 'set_stock' && product) {
-        undo.push({ action: 'save_product', data: productFields(product, { key: product.name_key }) });
-        ok = await call('save_product', productFields(product, { stock_status: op.out_of_stock ? 'out_of_stock' : 'in_stock' }));
-      } else if (op.type === 'set_details' && product) {
-        undo.push({ action: 'save_product', data: productFields(product, { key: product.name_key }) });
-        ok = await call('save_product', productFields(product, { details: op.details }));
-      } else if (op.type === 'add_item') {
-        ok = await call('save_product', { key: '', name: op.name, price_text: op.price || '', details: op.details || '', stock_status: 'in_stock' });
-        const made = ok ? findProduct('', op.name) : null;
-        if (made) { created.set(op.name.toLowerCase(), made.name_key); undo.push({ action: 'delete_product', data: { key: made.name_key } }); }
-      } else if (op.type === 'delete_item' && product) {
-        undoable = false;
-        ok = await call('delete_product', { key: product.name_key });
-      } else if (op.type === 'set_info') {
-        infoBefore[op.field] = getView().info?.[op.field] || '';
-        infoPatch[op.field] = op.value;
-        continue; // saved together below
-      } else if (op.type === 'rename_bot') {
-        undo.push({ action: 'set_bot_name', data: { name: getView().customBotName || '' } });
-        ok = await call('set_bot_name', { name: op.value });
-      } else if (op.type === 'attach_photo') {
-        undoable = false;
-        const image = images[op.image];
-        const key = op.kind === 'product' ? (op.key || created.get(String(op.name || '').toLowerCase()) || findProduct('', op.name)?.name_key || '') : '';
-        if (!image || (op.kind === 'product' && !key)) ok = false;
-        else ok = await call('upload_photo', { kind: op.kind, productKey: key, image });
-      } else {
-        ok = false;
-      }
-      if (ok) done += 1; else failed += 1;
-    }
-    if (Object.keys(infoPatch).length) {
-      const ok = await call('save_info', { info: infoPatch });
-      if (ok) { done += Object.keys(infoPatch).length; undo.push({ action: 'save_info', data: { info: infoBefore } }); } else failed += Object.keys(infoPatch).length;
-    }
+    const { done, failed, undo, undoable } = await applyPlan({ ops, images, call, getView });
     card.remove();
     pending = null;
     const result = el('div', 'uc-msg uc-bot uc-result');
@@ -240,12 +186,12 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
       link.rel = 'noopener';
       actions.append(link);
     }
-    if (undoable && undo.length && done) {
+    if (undoable) {
       const button = el('button', 'btn btn-light', '↩ Undo');
       button.type = 'button';
       button.addEventListener('click', async () => {
         button.disabled = true;
-        for (const step of undo.reverse()) await call(step.action, step.data);
+        await runUndo(undo, call);
         result.replaceChildren(el('div', 'uc-ok', '↩ Undone. Everything is back as it was.'));
       });
       actions.append(button);

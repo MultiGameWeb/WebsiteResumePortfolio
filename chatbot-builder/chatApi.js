@@ -53,6 +53,51 @@ export async function enableFeature(key) {
   if (!response.ok || !data.ok) throw new Error(data.error || 'Could not save. Please try again.');
   return data.features || {};
 }
+// ---- Owner actions from this chat (update plans, saving changes) ----
+let ownerView = { products: [], info: {}, customBotName: '' };
+let ownerLoaded = false;
+export const getOwnerView = () => ownerView;
+export const ownerViewLoaded = () => ownerLoaded;
+export async function ownerCall(action, data = {}) {
+  try {
+    const response = await fetch(`${API_BASE}/api/botcraft/owner`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ shopId, action, ...data }),
+    });
+    const result = await response.json();
+    if (!response.ok || !result.ok) return false;
+    ownerView = result;
+    ownerLoaded = true;
+    return true;
+  } catch { return false; }
+}
+export const loadOwnerView = () => ownerCall('load');
+
+// The AI helper's plan for an update message; null when it is not available.
+export async function requestUpdatePlan(text, images, timeoutMs = 9000) {
+  if (window.BOTCRAFT_DEMO) return null;
+  try {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+    const response = await fetch(`${API_BASE}/api/botcraft/owner`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: controller.signal,
+      body: JSON.stringify({ shopId, action: 'plan_update', text, images }),
+    });
+    window.clearTimeout(timer);
+    const data = await response.json();
+    return response.ok && data.ok && data.plan ? data.plan : null;
+  } catch { return null; }
+}
+
+export async function prepareImages(attachments) {
+  const images = [];
+  for (const attachment of attachments || []) {
+    if (!attachment.isImage) continue;
+    const image = await prepareImage(attachment.file);
+    if (image) images.push(image);
+  }
+  return images;
+}
+
 export const myBots = () => readBots();
 
 export function rememberBotName(name) {
