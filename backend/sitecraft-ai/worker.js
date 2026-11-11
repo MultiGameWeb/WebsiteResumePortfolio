@@ -4,6 +4,7 @@ import { handleBotcraftRoute } from "./botcraft-builder.js";
 import { handleAdminRoute } from "./sitecraft-admin.js";
 import { handleAiVideoRoute } from "./ai-video.js";
 import { handleResumeAiRoute } from "./resume-ai.js";
+import { handleHostingRoute } from "./hosting.js";
 const MODEL = "gemini-3.8-flash";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 const corsHeaders = {
@@ -124,6 +125,10 @@ export { GeminiUsProxy } from "./gemini-proxy.js";
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+
+    // Hosted customer websites (/s/<slug>/) and the publish API check the origin themselves.
+    const hostingResponse = await handleHostingRoute(request, env, url);
+    if (hostingResponse) return hostingResponse;
 
     // BotCraft checks the origin itself, including on preflight.
     const botcraftResponse = await handleBotcraftRoute(request, env, url, ctx);
