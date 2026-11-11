@@ -151,9 +151,25 @@
         }
         renderThumbs(job);
       }
+      await frameSlots(job);
       await play(job);
     } finally {
       busy = false;
+    }
+  }
+
+  // Smart framing: the AI looks at the pictures and says where the subject
+  // is and what light / colour fix each needs. Skipped quietly on errors.
+  async function frameSlots(job, only) {
+    const todo = job.slots.map((slot, i) => [slot, i]).filter(([slot, i]) => slot && !slot.look && (only === undefined || only === i));
+    if (!todo.length) return;
+    job.note.textContent = 'AI is framing the pictures…';
+    try {
+      const photos = await Promise.all(todo.map(([slot]) => shrinkImage(slot.blob, 512)));
+      const data = await post('/api/aivideo/analyze', { photos });
+      todo.forEach(([slot], k) => { if (data.looks?.[k]) slot.look = data.looks[k]; });
+    } catch {
+      // Framing is a bonus; the video works without it.
     }
   }
 
@@ -202,6 +218,7 @@
     try {
       job.slots[index] = mode === 'ai' ? await aiPicture(job, job.plan.scenes[index]) : await stockPicture(job, job.plan.scenes[index]);
       renderThumbs(job);
+      await frameSlots(job, index);
       await play(job);
     } catch (error) {
       job.note.textContent = error.message;
@@ -218,17 +235,89 @@
       return;
     }
     try {
-      await window.SiteCraftVideoMaker.loadPlan({ ...job.plan, scenes: ready.map(([scene]) => scene) }, ready.map(([, slot]) => slot.blob));
+      await window.SiteCraftVideoMaker.loadPlan({ ...job.plan, scenes: ready.map(([scene, slot]) => ({ ...scene, look: slot.look })) }, ready.map(([, slot]) => slot.blob));
     } catch (error) {
       job.note.textContent = error.message;
       return;
     }
     showEditor();
+    showVersions(job, ready).catch(() => {});
     const missing = job.plan.scenes.length - ready.length;
     const parts = [`${job.slots.some((slot) => slot?.source === 'own') && !job.aiError ? 'AI arranged your photos and wrote the scenes. ' : ''}Your video is ready ✓ (${ready.length} picture${ready.length === 1 ? '' : 's'}). Download it as an HTML video or tap “Make my video” for MP4.`];
     if (job.aiError) parts.push(job.slots.some((slot) => slot?.source === 'own') ? job.aiError : `Some AI pictures could not be made, so free photos were used: ${job.aiError}`);
     if (missing) parts.push(`${missing} scene${missing === 1 ? '' : 's'} had no picture.`);
     job.note.textContent = parts.join(' ');
+  }
+
+  // ---- Three versions ----
+  // The AI's design plus two other ad templates that suit the business, as
+  // small live previews; tapping one loads it into the editor. The video is
+  // drawn in the browser, so extra versions cost nothing.
+  const VERSION_LAYOUTS = {
+    offer: ['sale', 'kinetic', 'story'], product: ['product', 'cinema', 'countdown'], food: ['story', 'sale', 'kinetic'],
+    property: ['cinema', 'product', 'countdown'], jewel: ['cinema', 'product', 'story'], wedding: ['cinema', 'event', 'kinetic'],
+    royal: ['cinema', 'event', 'story'], gym: ['beat', 'sale', 'countdown'], birthday: ['story', 'event', 'kinetic'], default: ['kinetic', 'story', 'countdown'],
+  };
+  let versionTimer = 0;
+
+  async function showVersions(job, ready) {
+    const S = window.SiteCraftStyles;
+    const VM = window.SiteCraftVideoMaker;
+    if (!S || !VM?.variantData) return;
+    cancelAnimationFrame(versionTimer);
+    job.versions?.remove();
+    const plan = { ...job.plan, scenes: ready.map(([scene]) => scene) };
+    const first = S.CHOICES.layout.includes(plan.design?.layout) ? plan.design.layout : S.layoutFor(plan.style);
+    const others = (VERSION_LAYOUTS[plan.style] || VERSION_LAYOUTS.default).filter((layout) => layout !== first).slice(0, 2);
+    const colours = plan.design?.accent ? { accent: plan.design.accent, dark: plan.design.dark || '' } : {};
+    const versions = [
+      { layout: first, design: plan.design?.layout ? plan.design : null },
+      ...others.map((layout) => ({ layout, design: { layout, ...colours } })),
+    ];
+    const bitmaps = await Promise.all(ready.map(async ([, slot]) => {
+      const bitmap = await createImageBitmap(slot.blob, { resizeWidth: 480, resizeQuality: 'medium' }).catch(() => createImageBitmap(slot.blob));
+      if (slot.look) bitmap.__look = slot.look;
+      return bitmap;
+    }));
+    const box = element('div', 'vm-versions');
+    box.append(element('p', 'vm-ai-ask', '✨ 3 versions — tap the one you like best:'));
+    const row = element('div', 'vm-version-row');
+    const items = versions.map((version, i) => {
+      const d = VM.variantData(plan, bitmaps, version.layout, version.design);
+      const canvas = document.createElement('canvas');
+      canvas.width = 160; canvas.height = Math.round((160 * d.h) / d.w);
+      const card = element('button', `vm-version${i === 0 ? ' on' : ''}`);
+      card.type = 'button';
+      card.setAttribute('aria-label', `Version ${i + 1}: ${VM.templateName(version.layout)}`);
+      card.append(canvas, element('span', '', `${i + 1}. ${VM.templateName(version.layout)}`));
+      card.addEventListener('click', async () => {
+        if (busy) return;
+        for (const node of row.children) node.classList.toggle('on', node === card);
+        try {
+          await VM.loadPlan({ ...plan, design: version.design || { layout: version.layout }, scenes: ready.map(([scene, slot]) => ({ ...scene, look: slot.look })) }, ready.map(([, slot]) => slot.blob));
+          job.note.textContent = `Version ${i + 1} (${VM.templateName(version.layout)}) is in the editor ✓ Download it as an HTML video or tap “Make my video” for MP4.`;
+        } catch (error) {
+          job.note.textContent = error.message;
+        }
+      });
+      row.append(card);
+      return { d, ctx: canvas.getContext('2d'), scale: canvas.width / d.w, total: S.total(d) };
+    });
+    box.append(row);
+    job.note.after(box);
+    job.versions = box;
+    const start = performance.now();
+    const tick = (now) => {
+      if (!box.isConnected) return;
+      const t = ((now - start) / 1000);
+      for (const item of items) {
+        item.ctx.setTransform(item.scale, 0, 0, item.scale, 0, 0);
+        item.ctx.clearRect(0, 0, item.d.w, item.d.h);
+        S.frame(item.ctx, t % item.total, item.d);
+      }
+      versionTimer = requestAnimationFrame(tick);
+    };
+    versionTimer = requestAnimationFrame(tick);
   }
 
   // The customer's own photos take the place of the pictures, in order;
@@ -251,13 +340,13 @@
       try {
         const photos = await Promise.all(files.map((file) => shrinkImage(file, 768)));
         const data = await post('/api/aivideo/photos', { plan: job.original, photos });
-        order = data.scenes.map((scene) => ({ file: files[scene.photo], eyebrow: scene.eyebrow, headline: scene.headline, line: scene.line }));
+        order = data.scenes.map((scene) => ({ file: files[scene.photo], eyebrow: scene.eyebrow, headline: scene.headline, line: scene.line, look: scene.look }));
         job.aiError = '';
       } catch (error) {
         job.aiError = `${error.message} Your photos were used in the order you picked.`;
       }
       job.plan = { ...job.original, scenes: order.map(({ eyebrow, headline, line }) => ({ eyebrow, headline, line })) };
-      job.slots = order.map(({ file }) => ({ blob: file, source: 'own' }));
+      job.slots = order.map(({ file, look }) => ({ blob: file, source: 'own', look }));
       renderThumbs(job);
       await play(job);
     } catch (error) {

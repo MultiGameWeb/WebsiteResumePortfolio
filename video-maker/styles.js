@@ -153,6 +153,33 @@
     ctx.fillRect(0, Math.min(y0, y1), d.w, Math.abs(y1 - y0));
   }
 
+  // ---- Smart framing ----
+  // The AI can tag each picture (img.__look) with where the main subject is
+  // (fx, fy: 0-1) and small light and warmth fixes. Every design draws
+  // pictures through placeImage, which keeps the subject in view (and zooms
+  // towards it) and applies the fixes.
+  function placeImage(ctx, img, x, y, w, h, s, dx = 0, dy = 0, fyDefault = 0.5) {
+    const iw = (img.naturalWidth || img.width) * s;
+    const ih = (img.naturalHeight || img.height) * s;
+    const look = img.__look;
+    let ox = x + (w - iw) / 2;
+    let oy = y + (h - ih) * fyDefault;
+    if (look && Number.isFinite(look.fx) && Number.isFinite(look.fy)) {
+      ox = clamp(x + w / 2 - look.fx * iw, x + w - iw, x);
+      oy = clamp(y + h * 0.45 - look.fy * ih, y + h - ih, y);
+    }
+    ctx.drawImage(img, ox + dx, oy + dy, iw, ih);
+    if (look && (look.light || look.warm)) {
+      ctx.save();
+      ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
+      const a = ctx.globalAlpha;
+      if (look.light > 0) { ctx.globalCompositeOperation = 'screen'; ctx.globalAlpha = a * Math.min(0.35, look.light * 0.5); ctx.fillStyle = '#fff'; ctx.fillRect(x, y, w, h); }
+      if (look.light < 0) { ctx.globalCompositeOperation = 'multiply'; ctx.globalAlpha = a * Math.min(0.35, -look.light * 0.5); ctx.fillStyle = '#555'; ctx.fillRect(x, y, w, h); }
+      if (look.warm) { ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = a * Math.min(0.4, Math.abs(look.warm) * 0.5); ctx.fillStyle = look.warm > 0 ? '#ff9a3c' : '#3c9aff'; ctx.fillRect(x, y, w, h); }
+      ctx.restore();
+    }
+  }
+
   // ---- Timeline ----
   // Opening (first photo), each photo, ending (last photo).
   function segments(d) {
@@ -184,11 +211,9 @@
     const dir = seg.photo % 2 ? 1 : -1;
     const zoom = motion.zoom[0] + (motion.zoom[1] - motion.zoom[0]) * (motion.easeIn ? ease(p) : p);
     const scale = Math.max(d.w / iw, d.h / ih) * zoom;
-    const w = iw * scale;
-    const h = ih * scale;
     const dx = dir * (p - 0.5) * (motion.pan || 0) * d.w;
     const dy = -p * (motion.rise || 0) * d.h;
-    ctx.drawImage(img, (d.w - w) / 2 + dx, (d.h - h) * (motion.focus ?? 0.5) + dy, w, h);
+    placeImage(ctx, img, 0, 0, d.w, d.h, scale, dx, dy, motion.focus ?? 0.5);
   }
 
   // ======================= Designs =======================
@@ -590,7 +615,7 @@
     const s = Math.max(w / iw, h / ih) * zoom;
     ctx.save();
     ctx.beginPath(); ctx.rect(x, y, w, h); ctx.clip();
-    ctx.drawImage(img, x + (w - iw * s) / 2, y + (h - ih * s) / 2, iw * s, ih * s);
+    placeImage(ctx, img, x, y, w, h, s);
     ctx.restore();
   }
 
@@ -813,7 +838,7 @@
     const iw = img.naturalWidth || img.width;
     const ih = img.naturalHeight || img.height;
     const s = Math.max(w / iw, h / ih) * zoom;
-    ctx.drawImage(img, x + (w - iw * s) / 2 + dx, y + (h - ih * s) / 2 + dy, iw * s, ih * s);
+    placeImage(ctx, img, x, y, w, h, s, dx, dy);
   }
 
   // A soft blurred copy of a photo (drawn small, then stretched), cached.

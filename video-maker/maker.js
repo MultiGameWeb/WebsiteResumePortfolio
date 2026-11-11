@@ -45,18 +45,18 @@
     { id: 'gym', name: 'Gym power', premium: true, cinema: 'gym', bg: '#0a0a0a', bg2: '#2a0c06', accent: '#ff4d1f', text: '#ffffff', font: IMPACT, motion: 'zoom', deco: 'none' },
     { id: 'royal', name: 'Royal wedding', premium: true, cinema: 'royal', bg: '#1a0306', bg2: '#4a0d18', accent: '#f2c46d', text: '#fff4e0', font: LUXE, motion: 'pan', deco: 'none' },
     // AI-style designs (video-maker/styles.js), one per kind of business; AI videos pick the fitting one.
-    { id: 'ai-playful', name: 'AI style · Playful (schools, kids)', spot: 'playful', bg: '#0b4fc0', bg2: '#041a44', accent: '#ffc92e', text: '#ffffff', font: ROUND },
-    { id: 'ai-luxe', name: 'AI style · Luxe (jewellery, weddings)', spot: 'luxe', bg: '#0b0906', bg2: '#2b1d05', accent: '#d4af37', text: '#ffffff', font: LUXE },
-    { id: 'ai-bold', name: 'AI style · Bold (gym, sale)', spot: 'bold', bg: '#0a0a0a', bg2: '#2a0c06', accent: '#ff4d1f', text: '#ffffff', font: IMPACT },
-    { id: 'ai-fresh', name: 'AI style · Fresh (food)', spot: 'fresh', bg: '#fffaf3', bg2: '#ffedd5', accent: '#ff7a1a', text: '#3b1300', font: SANS },
-    { id: 'ai-clean', name: 'AI style · Clean (property, products)', spot: 'clean', bg: '#0f172a', bg2: '#334155', accent: '#2dd4bf', text: '#ffffff', font: CLEAN },
-    { id: 'ai-editor', name: 'Editor reveal · before → after (makeovers)', spot: 'editor', bg: '#121212', bg2: '#1e1e1e', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
-    { id: 'ai-beat', name: 'Beat drop · fast cuts and shake', spot: 'beat', bg: '#000000', bg2: '#121212', accent: '#ffea00', text: '#ffffff', font: IMPACT },
-    { id: 'ai-parallax', name: '3D pop · photo cards with depth', spot: 'parallax', bg: '#121212', bg2: '#334155', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
-    { id: 'ai-stack', name: 'Layer build-up · elements stack on', spot: 'stack', bg: '#121212', bg2: '#1e1e1e', accent: '#ffea00', text: '#ffffff', font: IMPACT },
-    { id: 'ai-slide', name: 'Slide cut-in · photo slides in and lands', spot: 'slide', bg: '#000000', bg2: '#1e1e1e', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
-    { id: 'ai-frame', name: 'Golden frame · anniversary, wedding, birthday wishes', spot: 'frame', bg: '#1a1206', bg2: '#3b2a0a', accent: '#d4af37', text: '#fffdd0', font: LUXE },
-    { id: 'ai-invite', name: 'Festive invite · half saree, functions, house warming', spot: 'invite', bg: '#ffc107', bg2: '#b0003a', accent: '#d4af37', text: '#fff8e1', font: SERIF },
+    { group: 'ai', id: 'ai-playful', name: 'AI style · Playful (schools, kids)', spot: 'playful', bg: '#0b4fc0', bg2: '#041a44', accent: '#ffc92e', text: '#ffffff', font: ROUND },
+    { group: 'ai', id: 'ai-luxe', name: 'AI style · Luxe (jewellery, weddings)', spot: 'luxe', bg: '#0b0906', bg2: '#2b1d05', accent: '#d4af37', text: '#ffffff', font: LUXE },
+    { group: 'ai', id: 'ai-bold', name: 'AI style · Bold (gym, sale)', spot: 'bold', bg: '#0a0a0a', bg2: '#2a0c06', accent: '#ff4d1f', text: '#ffffff', font: IMPACT },
+    { group: 'ai', id: 'ai-fresh', name: 'AI style · Fresh (food)', spot: 'fresh', bg: '#fffaf3', bg2: '#ffedd5', accent: '#ff7a1a', text: '#3b1300', font: SANS },
+    { group: 'ai', id: 'ai-clean', name: 'AI style · Clean (property, products)', spot: 'clean', bg: '#0f172a', bg2: '#334155', accent: '#2dd4bf', text: '#ffffff', font: CLEAN },
+    { group: 'ai', id: 'ai-editor', name: 'Editor reveal · before → after (makeovers)', spot: 'editor', bg: '#121212', bg2: '#1e1e1e', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
+    { group: 'ai', id: 'ai-beat', name: 'Beat drop · fast cuts and shake', spot: 'beat', bg: '#000000', bg2: '#121212', accent: '#ffea00', text: '#ffffff', font: IMPACT },
+    { group: 'ai', id: 'ai-parallax', name: '3D pop · photo cards with depth', spot: 'parallax', bg: '#121212', bg2: '#334155', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
+    { group: 'ai', id: 'ai-stack', name: 'Layer build-up · elements stack on', spot: 'stack', bg: '#121212', bg2: '#1e1e1e', accent: '#ffea00', text: '#ffffff', font: IMPACT },
+    { group: 'ai', id: 'ai-slide', name: 'Slide cut-in · photo slides in and lands', spot: 'slide', bg: '#000000', bg2: '#1e1e1e', accent: '#00e5ff', text: '#ffffff', font: IMPACT },
+    { group: 'ai', id: 'ai-frame', name: 'Golden frame · anniversary, wedding, birthday wishes', spot: 'frame', bg: '#1a1206', bg2: '#3b2a0a', accent: '#d4af37', text: '#fffdd0', font: LUXE },
+    { group: 'ai', id: 'ai-invite', name: 'Festive invite · half saree, functions, house warming', spot: 'invite', bg: '#ffc107', bg2: '#b0003a', accent: '#d4af37', text: '#fff8e1', font: SERIF },
   ];
 
   const $ = (selector) => document.querySelector(selector);
@@ -660,7 +660,7 @@
         const photo = state.photos[i % n];
         if (!photo) return { img: null, label: '', head: '', line: '' };
         const first = i < n;
-        return { img: images ? images[i % n] : photo.bitmap, label: photo.label || '', head: first ? photo.caption || '' : '', line: photo.price || '' };
+        return { img: images ? images[i % n] : photo.bitmap, look: photo.bitmap.__look || null, label: photo.label || '', head: first ? photo.caption || '' : '', line: photo.price || '' };
       }),
     };
   }
@@ -750,7 +750,7 @@ ${code}
 const D=${json};
 const S=window.SiteCraftStyles,c=document.getElementById('v'),x=c.getContext('2d'),T=S.total(D);
 let t=0,last=0,on=true;
-Promise.all(D.photos.map(p=>new Promise(r=>{const i=new Image();i.onload=i.onerror=()=>r(i);i.src=p.img;p.img=i}))).then(()=>document.fonts.ready).then(()=>{
+Promise.all(D.photos.map(p=>new Promise(r=>{const i=new Image();i.onload=i.onerror=()=>r(i);i.src=p.img;if(p.look)i.__look=p.look;p.img=i}))).then(()=>document.fonts.ready).then(()=>{
 function loop(now){if(last&&on)t=(t+(now-last)/1000)%T;last=now;x.clearRect(0,0,D.w,D.h);S.frame(x,t,D);requestAnimationFrame(loop)}requestAnimationFrame(loop)});
 document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause':'Play'};
 document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('pp').textContent='Pause'};
@@ -1043,11 +1043,15 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     });
     return button;
   });
+  // AI-exclusive designs are offered on the AI page only; the free page has
+  // the ten ad templates and the basic ones.
+  const onAiPage = Boolean($('#aiCard'));
   templateList.replaceChildren(
     groupTitle('🔥 Ad templates'),
     ...templateNodes.filter((_, i) => TEMPLATES[i].group === 'ad'),
+    ...(onAiPage ? [groupTitle('✨ AI exclusive'), ...templateNodes.filter((_, i) => TEMPLATES[i].group === 'ai')] : []),
     groupTitle('More styles'),
-    ...templateNodes.filter((_, i) => TEMPLATES[i].group !== 'ad'),
+    ...templateNodes.filter((_, i) => !TEMPLATES[i].group),
   );
 
   $('#lengthList')?.addEventListener('click', (event) => {
@@ -1114,6 +1118,23 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   // Lets the AI chat (video-maker/ai.js) fill the editor with its plan and
   // pictures. images: Blobs, one per scene.
   window.SiteCraftVideoMaker = {
+    // The data for a small live preview of a version (AI page), using the
+    // same timing as the real video.
+    variantData(plan, bitmaps, layout, design) {
+      const template = TEMPLATES.find((t) => t.spot === layout) || TEMPLATES[0];
+      const n = Math.max(1, bitmaps.length);
+      const length = clamp(Math.round(Number(plan.seconds) || 30), 10, 60);
+      const body = Math.max(3, length - INTRO - OUTRO);
+      const slots = Math.max(1, Math.round(body / (template.per || 3.5)), Math.min(n, Math.floor(body / 1.2)));
+      const [w, h] = FORMATS[plan.format] || FORMATS.story;
+      return {
+        layout, style: plan.style || 'default', design, w, h, intro: INTRO, per: body / slots, outro: OUTRO,
+        title: plan.title || 'Your business', subtitle: plan.subtitle || '', contact: plan.contact || '', closing: plan.closing || 'Visit us today', badge: plan.badge || '',
+        details: String(plan.details || '').split('|').map((line) => line.trim()).filter(Boolean).slice(0, 4),
+        photos: Array.from({ length: slots }, (_, i) => { const scene = plan.scenes[i % n] || {}; return { img: bitmaps[i % n], label: scene.eyebrow || '', head: i < n ? scene.headline || '' : '', line: scene.line || '' }; }),
+      };
+    },
+    templateName: (layout) => (TEMPLATES.find((t) => t.spot === layout)?.name || layout).replace(/^AI style · /, '').split(' · ')[0].replace(/\s*\(.*\)$/, ''),
     async loadPlan(plan, images) {
       if (state.recording) throw new Error('Please wait — your video is being made. Try again when it is done.');
       stopPlayback();
@@ -1141,7 +1162,9 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
       state.photos = [];
       for (const [index, blob] of images.entries()) {
         const scene = plan.scenes[index] || {};
-        state.photos.push({ ...(await loadPhoto(blob)), caption: scene.headline || '', price: scene.line || '', label: scene.eyebrow || '' });
+        const photo = await loadPhoto(blob);
+        if (scene.look) photo.bitmap.__look = scene.look;
+        state.photos.push({ ...photo, caption: scene.headline || '', price: scene.line || '', label: scene.eyebrow || '' });
       }
       if (!state.design) state.design = randomLook(layout);
       await fontsReady();
