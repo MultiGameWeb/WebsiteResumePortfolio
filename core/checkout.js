@@ -56,8 +56,9 @@
     q('#hostingPrice').textContent = HOSTING_PRICE ? rupees(HOSTING_PRICE) : 'Included';
     q('#storagePrice').textContent = storage === 'yes' ? rupees(STORAGE_PRICE) : '₹0';
     q('#grandTotal').textContent = rupees(total());
-    const blocked = needsCall() && !phoneOk();
-    q('#callPhoneError').hidden = !blocked || !phoneInput.value;
+    const agreed = Boolean(q('#agreeTerms') && q('#agreeTerms').checked);
+    const blocked = (needsCall() && !phoneOk()) || !agreed;
+    q('#callPhoneError').hidden = !(needsCall() && !phoneOk()) || !phoneInput.value;
     q('#payBtn').disabled = blocked;
     save();
   }
@@ -67,13 +68,15 @@
   document.querySelectorAll('[data-storage]').forEach(b => b.onclick = () => { storage = b.dataset.storage; sync(); });
   document.querySelectorAll('[data-method]').forEach(b => b.onclick = () => { method = b.dataset.method; sync(); });
   if (phoneInput) phoneInput.addEventListener('input', sync);
+  if (q('#agreeTerms')) q('#agreeTerms').addEventListener('change', sync);
 
   q('#payBtn').onclick = () => {
     if (needsCall() && !phoneOk()) { q('#callPhoneError').hidden = false; phoneInput.focus(); return; }
+    if (!q('#agreeTerms').checked) { q('#agreeTerms').focus(); return; }
     const b = q('#payBtn');
     b.disabled = true;
     b.textContent = 'Processing…';
-    save({ paid: true, paidAt: new Date().toISOString(), callbackSent: false });
+    save({ paid: true, paidAt: new Date().toISOString(), callbackSent: false, agreedNoRefundAt: new Date().toISOString() });
     setTimeout(() => { location.href = 'success.html'; }, 700);
   };
   q('#checkoutName').textContent = t.name;
