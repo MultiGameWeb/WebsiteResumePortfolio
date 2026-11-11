@@ -1,0 +1,1013 @@
+{
+  "id": "localservice-01",
+  "name": "Local Service — Universal (Sparkle Laundry & Dry Clean)",
+  "category": "Local Service Businesses",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Business"
+    },
+    {
+      "id": "menu",
+      "label": "Services & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Packages"
+    },
+    {
+      "id": "work",
+      "label": "Why Choose Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Booking Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Business Name",
+      "required": true,
+      "placeholder": "Sparkle Laundry & Dry Clean"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Business Manager",
+      "placeholder": "Srinivas Yadav"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Quality service · Fair prices"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Done right, on time, every time."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Business",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Reliable service, right in your area."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Trusted local service"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "hello@sparklelaundry.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Business Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Mon–Sat · 8:00 AM – 9:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Sparkle Laundry & Dry Clean",
+      "ownerName": "Srinivas Yadav",
+      "tagline": "Quality service · Fair prices",
+      "motto": "Done right, on time, every time.",
+      "about": "Sparkle Laundry & Dry Clean handles everyday laundry, ironing and dry cleaning for homes and offices in Miyapur and nearby areas. Book a free pickup on WhatsApp and get your clothes back clean, pressed and folded."
+    },
+    "home": {
+      "eyebrow": "TRUSTED LOCAL SERVICE",
+      "title": "Reliable service, right in your area.",
+      "text": "Laundry, ironing and dry cleaning with free pickup and delivery. Book on WhatsApp in a minute."
+    },
+    "hero": "https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "s1",
+        "name": "Wash & Fold",
+        "category": "Washing",
+        "price": "₹70 / kg",
+        "description": "Everyday clothes washed, dried and neatly folded. Ready in 24 hours.",
+        "tag": "Popular",
+        "image": "https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Person folding freshly washed clothes",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "name": "Wash & Iron",
+        "category": "Washing",
+        "price": "₹99 / kg",
+        "description": "Washed, dried and pressed, returned on hangers or folded.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Stack of neatly folded knitwear held in hands",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "name": "Blanket & Curtain Wash",
+        "category": "Washing",
+        "price": "From ₹199",
+        "description": "Heavy items like blankets, quilts and curtains, cleaned in large machines.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Laundry basket filled with linens",
+        "enabled": true
+      },
+      {
+        "id": "s4",
+        "name": "Steam Ironing",
+        "category": "Ironing",
+        "price": "₹12 / piece",
+        "description": "Shirts, trousers, kurtas and dresses pressed with steam.",
+        "tag": "Same day",
+        "image": "https://images.unsplash.com/photo-1489274495757-95c7c837b101?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Steam iron resting on an ironing board",
+        "enabled": true
+      },
+      {
+        "id": "s5",
+        "name": "Dry Cleaning",
+        "category": "Dry cleaning",
+        "price": "From ₹150 / piece",
+        "description": "Suits, sarees, lehengas and delicate fabrics cleaned with care.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Row of professional washing machines",
+        "enabled": true
+      },
+      {
+        "id": "s6",
+        "name": "Stain Treatment",
+        "category": "Dry cleaning",
+        "price": "From ₹50",
+        "description": "Spot treatment for oil, food and ink stains before washing.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Clothes inside a washing machine drum",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Monthly Family Plan",
+        "description": "Up to 30 kg of wash & fold each month with four free pickups.",
+        "price": "₹1,899 / month",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Office Uniform Plan",
+        "description": "Weekly wash and iron for staff uniforms. Price depends on the number of pieces.",
+        "price": "Ask for a quote",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Festive Wear Care",
+        "description": "Dry cleaning for three sarees or suits with gentle packing.",
+        "price": "₹549",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "✓",
+        "title": "Clear prices",
+        "description": "Prices are listed upfront. We confirm the total before we start.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "◷",
+        "title": "On time",
+        "description": "Pickup and delivery at the time you choose.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "⌂",
+        "title": "Free pickup & delivery",
+        "description": "Free on orders above ₹300 within our service areas.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Pay after service",
+        "description": "Pay by UPI or cash when your order is delivered.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "t1",
+        "name": "Morning (8 AM – 12 PM)",
+        "enabled": true
+      },
+      {
+        "id": "t2",
+        "name": "Afternoon (12 PM – 4 PM)",
+        "enabled": true
+      },
+      {
+        "id": "t3",
+        "name": "Evening (4 PM – 9 PM)",
+        "enabled": true
+      }
+    ],
+    "serviceAreas": [
+      {
+        "id": "a1",
+        "name": "Miyapur",
+        "enabled": true
+      },
+      {
+        "id": "a2",
+        "name": "Chandanagar",
+        "enabled": true
+      },
+      {
+        "id": "a3",
+        "name": "Hafeezpet",
+        "enabled": true
+      },
+      {
+        "id": "a4",
+        "name": "Bachupally",
+        "enabled": true
+      },
+      {
+        "id": "a5",
+        "name": "Nizampet",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Our cleaning unit",
+        "alt": "Laundromat with rows of washing machines and carts",
+        "image": "https://images.unsplash.com/photo-1521656693074-0ef32e80a5d5?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Careful washing",
+        "alt": "Clothes tumbling inside a washing machine",
+        "image": "https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Neatly folded",
+        "alt": "Freshly washed clothes being folded",
+        "image": "https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Pressed and ready",
+        "alt": "Steam iron on an ironing board",
+        "image": "https://images.unsplash.com/photo-1489274495757-95c7c837b101?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Miyapur",
+        "text": "Pickup came on time and the clothes were back the next day, neatly folded. Very easy on WhatsApp.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Chandanagar",
+        "text": "They dry cleaned my silk sarees carefully. Clear pricing, no surprises.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Hafeezpet",
+        "text": "The monthly plan is great for our family. Saves a lot of time every week.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I book?",
+        "answer": "Use the booking form or message us on WhatsApp with the service, your area and a convenient time. We’ll confirm quickly.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do you charge for pickup?",
+        "answer": "Pickup and delivery are free on orders above ₹300 within our service areas. A small charge applies to smaller orders.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "How long does it take?",
+        "answer": "Wash & fold and ironing are usually ready in 24 hours. Dry cleaning takes two to three days.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "How do I pay?",
+        "answer": "Pay by UPI or cash on delivery. Monthly plans are paid at the start of the month.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "What if something is damaged?",
+        "answer": "We check every item at pickup and note any existing damage. If anything goes wrong at our end, tell us within 24 hours and we’ll make it right.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": true,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@sparklelaundry.example",
+      "address": "Shop 7, Main Road, Miyapur, Hyderabad, Telangana 500049",
+      "maps": "https://maps.google.com/?q=Miyapur+Hyderabad",
+      "hours": "Mon–Sat · 8:00 AM – 9:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:localservice-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Business Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Business name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the business",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Services & Prices",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Washing, Dry cleaning)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. Popular)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "category": "Services",
+          "price": "From ₹199",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Packages",
+        "type": "collection",
+        "itemLabel": "package",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Package name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Package price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New package",
+          "description": "",
+          "price": "From ₹999",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Booking Form: Time Slots",
+        "type": "collection",
+        "itemLabel": "time slot",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Time slot"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New time slot",
+          "enabled": true
+        }
+      },
+      {
+        "id": "serviceAreas",
+        "label": "Booking Form: Service Areas",
+        "type": "collection",
+        "itemLabel": "area",
+        "path": "serviceAreas",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Area"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New area",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Work photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "8:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Services",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Packages",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why choose us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Booking form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
