@@ -1,6 +1,6 @@
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const url=v=>{const x=String(v??'').trim();return /^(https?:\/\/|tel:|mailto:)/i.test(x)?x:''};
-const imageUrl=v=>{const x=String(v??'').trim();return /^https:\/\/images\.unsplash\.com\//i.test(x)?x:''};
+const imageUrl=v=>{const x=String(v??'').trim();return /^https:\/\/[^\s"'<>]+$/i.test(x)||/^data:image\/(png|jpe?g|webp|gif);base64,[a-z0-9+\/=]+$/i.test(x)?x:'';};
 const digits=v=>String(v??'').replace(/\D/g,'');
 const tel=v=>String(v??'').replace(/[^\d+]/g,'');
 const wa=(n,msg)=>{const p=digits(n);return p?'https://wa.me/'+p+(msg?'?text='+encodeURIComponent(msg):''):'';};
