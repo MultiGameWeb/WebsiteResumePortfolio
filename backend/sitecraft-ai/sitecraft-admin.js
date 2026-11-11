@@ -8,7 +8,10 @@
 // GET  /api/admin/bot?id=<shopId>
 // POST /api/admin/bot  { id, action: "set_features" | "set_status", features?, status? }
 // GET  /api/admin/sites?offset=
+// GET  /api/admin/hosted?q=&offset=         websites published with auto hosting
+// POST /api/admin/hosted  { slug, action: "block" | "unblock" }
 import { allowedOrigins, shopFeatures } from "./botcraft-builder.js";
+import { siteUrls } from "./hosting.js";
 
 const PAGE = 50;
 const SHOP_ID_PATTERN = /^[A-Za-z0-9-]{16,64}$/;
@@ -75,7 +78,17 @@ async function summary(env) {
   try { types = await all(db, "SELECT shop_type, COUNT(*) AS n FROM botcraft_shops GROUP BY shop_type ORDER BY n DESC LIMIT 12"); } catch {}
   const sites = env.DB ? await count(env.DB, "SELECT COUNT(*) AS n FROM sites") : null;
   const leads = env.DB ? await count(env.DB, "SELECT COUNT(*) AS n FROM leads") : null;
-  return { ok: true, botcraft: { bots, live, newBots, products, openQuestions, newRequests, ownerDevices, types }, websites: { sites, leads } };
+  let hosted = null;
+  if (env.DB) {
+    const [total, blocked, newSites, bytes] = await Promise.all([
+      count(env.DB, "SELECT COUNT(*) AS n FROM hosted_sites"),
+      count(env.DB, "SELECT COUNT(*) AS n FROM hosted_sites WHERE status != 'live'"),
+      count(env.DB, "SELECT COUNT(*) AS n FROM hosted_sites WHERE created_at > ?", week),
+      count(env.DB, "SELECT COALESCE(SUM(size_bytes), 0) AS n FROM hosted_sites")
+    ]);
+    hosted = { total, live: total - blocked, blocked, newThisWeek: newSites, sizeBytes: bytes };
+  }
+  return { ok: true, botcraft: { bots, live, newBots, products, openQuestions, newRequests, ownerDevices, types }, websites: { sites, leads }, hosted };
 }
 
 async function listBots(env, url) {
@@ -159,6 +172,39 @@ async function listSites(env, url) {
   }
 }
 
+const HOSTED_SLUG = /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])$/;
+
+async function listHosted(env, url) {
+  if (!env.DB) return { ok: true, sites: [], more: false, configured: false };
+  const q = String(url.searchParams.get("q") || "").trim().toLowerCase().slice(0, 80);
+  const offset = Math.max(0, Number(url.searchParams.get("offset")) || 0);
+  const like = `%${q.replace(/[%_]/g, "")}%`;
+  try {
+    const rows = await all(env.DB,
+      `SELECT slug, template_id, business_name, status, size_bytes, created_at, updated_at,
+         (SELECT COUNT(*) FROM hosted_files f WHERE f.slug = s.slug) AS files
+       FROM hosted_sites s
+       WHERE (? = '' OR slug LIKE ? OR LOWER(business_name) LIKE ? OR template_id LIKE ?)
+       ORDER BY created_at DESC LIMIT ? OFFSET ?`, q, like, like, like, PAGE + 1, offset);
+    const sites = rows.slice(0, PAGE).map(r => ({ ...r, url: siteUrls(env, url, r.slug).url }));
+    return { ok: true, sites, more: rows.length > PAGE, offset, configured: true };
+  } catch {
+    // The table is created on the first publish.
+    return { ok: true, sites: [], more: false, offset, configured: true };
+  }
+}
+
+async function updateHosted(env, url, body) {
+  if (!env.DB) return { status: 503, data: { ok: false, error: "Hosting storage is not configured." } };
+  const slug = String(body?.slug || "");
+  if (!HOSTED_SLUG.test(slug)) return { status: 400, data: { ok: false, error: "Unknown website." } };
+  const status = body?.action === "block" ? "blocked" : body?.action === "unblock" ? "live" : null;
+  if (!status) return { status: 400, data: { ok: false, error: "Unknown action." } };
+  const result = await env.DB.prepare("UPDATE hosted_sites SET status = ?, updated_at = ? WHERE slug = ?").bind(status, new Date().toISOString(), slug).run().catch(() => null);
+  if (!result?.meta?.changes) return { status: 404, data: { ok: false, error: "Website not found." } };
+  return { status: 200, data: { ok: true, slug, status } };
+}
+
 export async function handleAdminRoute(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "");
   if (!path.startsWith("/api/admin/")) return null;
@@ -191,5 +237,12 @@ export async function handleAdminRoute(request, env, url) {
     return reply(result.data, result.status, origin);
   }
   if (request.method === "GET" && path === "/api/admin/sites") return reply(await listSites(env, url), 200, origin);
+  if (request.method === "GET" && path === "/api/admin/hosted") return reply(await listHosted(env, url), 200, origin);
+  if (request.method === "POST" && path === "/api/admin/hosted") {
+    let body;
+    try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
+    const result = await updateHosted(env, url, body);
+    return reply(result.data, result.status, origin);
+  }
   return reply({ ok: false, error: "Unknown admin route." }, 404, origin);
 }
