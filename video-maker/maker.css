@@ -117,3 +117,9 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 .vm-html-btn { width: 100%; margin-top: 10px; } .vm-html-btn[hidden] { display: none; }
 .vm-ai-choices-shared { grid-template-columns: minmax(0, 1fr); }
 textarea { resize: vertical; line-height: 1.4; }
+
+/* Template groups and the length picker */
+.vm-template-group { grid-column: 1 / -1; margin: 6px 0 0; font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--vm-muted); }
+.vm-lengths { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 420px) { .vm-lengths { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+label[hidden] { display: none; }

@@ -22,6 +22,18 @@
 
   // Each template: colours, the fonts, how photos move, and a decoration.
   const TEMPLATES = [
+    // The ten ad templates (video-maker/styles.js), built on the editing
+    // techniques most used in social media ads. per = ideal seconds a scene.
+    { id: 'ad-sale', group: 'ad', name: 'Flash Sale · offers and discounts', spot: 'sale', per: 2.5, bg: '#1a0006', bg2: '#ff1744', accent: '#ffd600', text: '#ffffff', font: IMPACT },
+    { id: 'ad-beat', group: 'ad', name: 'Beat Montage · fast cuts', spot: 'beat', per: 2.6, bg: '#000000', bg2: '#121212', accent: '#ffea00', text: '#ffffff', font: IMPACT },
+    { id: 'ad-product', group: 'ad', name: 'Product Spotlight · features', spot: 'product', per: 4, bg: '#05070d', bg2: '#0b2540', accent: '#38bdf8', text: '#ffffff', font: SANS },
+    { id: 'ad-compare', group: 'ad', name: 'Before / After · slider', spot: 'compare', per: 4, bg: '#000000', bg2: '#334155', accent: '#22d3ee', text: '#ffffff', font: IMPACT },
+    { id: 'ad-review', group: 'ad', name: 'Customer Love · real reviews', spot: 'review', per: 4.5, bg: '#fdf2f8', bg2: '#f9a8d4', accent: '#f472b6', text: '#1f1235', font: SANS },
+    { id: 'ad-countdown', group: 'ad', name: 'Top 5 Countdown · reasons', spot: 'countdown', per: 3, bg: '#0b0b0f', bg2: '#1f2937', accent: '#a3e635', text: '#ffffff', font: IMPACT },
+    { id: 'ad-story', group: 'ad', name: 'Story Ad · stickers and poll', spot: 'story', per: 3.5, bg: '#feda75', bg2: '#e1306c', accent: '#4f5bd5', text: '#ffffff', font: SANS },
+    { id: 'ad-cinema', group: 'ad', name: 'Cinematic Luxury · film look', spot: 'cinema', per: 4.5, bg: '#000000', bg2: '#3b2a0a', accent: '#e9c46a', text: '#ffffff', font: LUXE },
+    { id: 'ad-kinetic', group: 'ad', name: 'Kinetic Text · words in motion', spot: 'kinetic', per: 3, bg: '#6d28d9', bg2: '#4c1d95', accent: '#fde047', text: '#ffffff', font: IMPACT },
+    { id: 'ad-event', group: 'ad', name: 'Grand Opening · events', spot: 'event', per: 3.5, bg: '#05050a', bg2: '#dc2626', accent: '#fbbf24', text: '#ffffff', font: IMPACT },
     { id: 'offer', name: 'Shop offer', bg: '#111111', bg2: '#2a2100', accent: '#ffcc00', text: '#ffffff', font: SANS, motion: 'zoom', deco: 'burst' },
     { id: 'product', name: 'Product showcase', bg: '#0b1222', bg2: '#12324a', accent: '#38bdf8', text: '#f8fafc', font: SANS, motion: 'pan', deco: 'lines' },
     { id: 'wedding', name: 'Wedding / function', bg: '#3b0d1e', bg2: '#5c1a30', accent: '#f5c97a', text: '#fff7e6', font: SERIF, motion: 'zoom', deco: 'frame' },
@@ -50,7 +62,7 @@
   const $ = (selector) => document.querySelector(selector);
   const canvas = $('#stage');
   const ctx = canvas.getContext('2d');
-  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null };
+  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null, length: 0, userPer: 3, slots: 0 };
   let frameRequest = 0;
   let audioContext = null;
 
@@ -74,8 +86,25 @@
     return true;
   }
 
+  // Video length: Auto (seconds per photo from the slider) or a fixed 15,
+  // 30, 45 or 60 seconds. With a fixed length an ad template repeats the
+  // photos at its own rhythm to fill the time, so 5 photos can make a
+  // 1-minute video.
+  function applyLength() {
+    const n = Math.max(1, state.photos.length);
+    if (!state.length) { state.slots = n; state.perPhoto = state.userPer; return; }
+    const body = Math.max(3, state.length - INTRO - OUTRO);
+    if (state.template.spot) {
+      const ideal = state.template.per || 3.5;
+      state.slots = Math.max(1, Math.round(body / ideal), Math.min(n, Math.floor(body / 1.2)));
+    } else {
+      state.slots = n;
+    }
+    state.perPhoto = body / state.slots;
+  }
+
   function totalSeconds() {
-    return INTRO + Math.max(1, state.photos.length) * state.perPhoto + OUTRO;
+    return INTRO + Math.max(1, state.slots || state.photos.length) * state.perPhoto + OUTRO;
   }
 
   function sizeCanvas() {
@@ -615,7 +644,7 @@
   // ---- AI-style designs (video-maker/styles.js) ----
   // The same drawing code makes the preview, the MP4 and the HTML video.
   const STYLES = window.SiteCraftStyles;
-  const DEFAULT_STYLE = { playful: 'default', luxe: 'jewel', bold: 'gym', fresh: 'food', clean: 'property', editor: 'default', beat: 'default', parallax: 'default', stack: 'default', slide: 'default', frame: 'wedding', invite: 'wedding' };
+  const DEFAULT_STYLE = { playful: 'default', luxe: 'jewel', bold: 'gym', fresh: 'food', clean: 'property', sale: 'offer', product: 'product', compare: 'default', review: 'default', countdown: 'default', story: 'default', cinema: 'jewel', kinetic: 'default', event: 'default', editor: 'default', beat: 'default', parallax: 'default', stack: 'default', slide: 'default', frame: 'wedding', invite: 'wedding' };
 
   function spotData(images) {
     const [w, h] = FORMATS[state.format];
@@ -624,7 +653,15 @@
       title: text('#titleInput') || 'Your business name', subtitle: text('#subtitleInput'), contact: text('#contactInput'),
       closing: text('#closingInput') || 'Visit us today', badge: text('#badgeInput'),
       details: text('#detailsInput').split(/\n+/).map((line) => line.trim()).filter(Boolean).slice(0, 4),
-      photos: state.photos.map((photo, i) => ({ img: images ? images[i] : photo.bitmap, label: photo.label || '', head: photo.caption || '', line: photo.price || '' })),
+      // One entry per scene; repeated photos keep their label and line but not
+      // the headline, so the text does not repeat word for word.
+      photos: Array.from({ length: Math.max(1, state.slots || state.photos.length) }, (_, i) => {
+        const n = Math.max(1, state.photos.length);
+        const photo = state.photos[i % n];
+        if (!photo) return { img: null, label: '', head: '', line: '' };
+        const first = i < n;
+        return { img: images ? images[i % n] : photo.bitmap, label: photo.label || '', head: first ? photo.caption || '' : '', line: photo.price || '' };
+      }),
     };
   }
 
@@ -665,8 +702,8 @@
   const pickOne = (list) => list[Math.floor(Math.random() * list.length)];
 
   function randomLook(layout) {
-    const fonts = { playful: ['round', 'sans'], luxe: ['serif', 'play'], bold: ['impact', 'sans'], fresh: ['sans', 'round', 'play'], clean: ['jost', 'sans'], editor: ['impact', 'sans'], beat: ['impact'], parallax: ['impact', 'sans'], stack: ['impact', 'sans'], slide: ['impact', 'sans'], frame: ['serif', 'play'], invite: ['play', 'serif'] }[layout];
-    const decos = { playful: ['none', 'confetti', 'bubbles'], luxe: ['sparkles', 'petals', 'bokeh'], bold: ['streaks', 'none', 'confetti'], fresh: ['none', 'bubbles', 'bokeh'], clean: ['none', 'bokeh', 'streaks'], editor: ['none'], beat: ['none'], parallax: ['none'], stack: ['none'], slide: ['none'], frame: ['none'], invite: ['none'] }[layout];
+    const fonts = { playful: ['round', 'sans'], luxe: ['serif', 'play'], bold: ['impact', 'sans'], fresh: ['sans', 'round', 'play'], clean: ['jost', 'sans'], editor: ['impact', 'sans'], beat: ['impact'], parallax: ['impact', 'sans'], stack: ['impact', 'sans'], slide: ['impact', 'sans'], frame: ['serif', 'play'], invite: ['play', 'serif'] }[layout] || ['impact', 'sans', 'serif', 'round'];
+    const decos = { playful: ['none', 'confetti', 'bubbles'], luxe: ['sparkles', 'petals', 'bokeh'], bold: ['streaks', 'none', 'confetti'], fresh: ['none', 'bubbles', 'bokeh'], clean: ['none', 'bokeh', 'streaks'], editor: ['none'], beat: ['none'], parallax: ['none'], stack: ['none'], slide: ['none'], frame: ['none'], invite: ['none'] }[layout] || ['none'];
     const colours = photoColours();
     return {
       layout,
@@ -754,6 +791,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   }
 
   function showPoster() {
+    if (!state.recording) applyLength();
     const htmlBtn = $('#htmlBtn');
     if (htmlBtn) htmlBtn.hidden = !state.template.spot || !state.photos.length;
     if (state.playing || state.recording) return;
@@ -810,6 +848,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   }
 
   async function preview() {
+    applyLength();
     if (state.recording) return;
     if (state.playing) { stopPlayback(); showPoster(); return; }
     if (!state.photos.length) { setStatus('Add at least one photo first.'); return; }
@@ -838,6 +877,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   }
 
   async function makeVideo() {
+    applyLength();
     if (state.recording) return;
     if (!state.photos.length) { setStatus('Add at least one photo first.'); return; }
     if (!window.MediaRecorder || !canvas.captureStream) { setStatus('This browser cannot make videos. Please use Chrome on Android or a computer.'); return; }
@@ -966,8 +1006,12 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   });
 
   const templateList = $('#templateList');
-  templateList.replaceChildren(...TEMPLATES.map((template) => {
+  const templateButtons = () => templateList.querySelectorAll('.vm-template');
+  const markTemplate = () => { for (const item of templateButtons()) item.setAttribute('aria-checked', String(item.dataset.id === state.template.id)); };
+  const groupTitle = (label) => { const node = document.createElement('p'); node.className = 'vm-template-group'; node.textContent = label; return node; };
+  const templateNodes = TEMPLATES.map((template) => {
     const button = document.createElement('button');
+    button.dataset.id = template.id;
     button.type = 'button';
     button.className = 'vm-template';
     button.setAttribute('role', 'radio');
@@ -976,7 +1020,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     swatch.className = 'vm-swatch';
     swatch.style.background = `linear-gradient(115deg, ${template.bg}, ${template.bg2} 60%, ${template.accent})`;
     button.append(swatch, document.createTextNode(template.name));
-    if (template.spot) {
+    if (template.spot && template.group !== 'ad') {
       const badge = document.createElement('span');
       badge.className = 'vm-premium';
       badge.textContent = '✨ AI style';
@@ -993,12 +1037,28 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
       state.template = template;
       if (template.spot && STYLES.layoutFor(state.spotStyle) !== template.spot) state.spotStyle = DEFAULT_STYLE[template.spot];
       if (template.spot && state.design) state.design = { ...state.design, layout: template.spot };
-      for (const item of templateList.children) item.setAttribute('aria-checked', String(item === button));
+      markTemplate();
       fontsReady().then(showPoster);
       renderPhotos();
     });
     return button;
-  }));
+  });
+  templateList.replaceChildren(
+    groupTitle('🔥 Ad templates'),
+    ...templateNodes.filter((_, i) => TEMPLATES[i].group === 'ad'),
+    groupTitle('More styles'),
+    ...templateNodes.filter((_, i) => TEMPLATES[i].group !== 'ad'),
+  );
+
+  $('#lengthList')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-length]');
+    if (!button || busyRecording()) return;
+    state.length = Number(button.dataset.length);
+    for (const item of $('#lengthList').children) item.setAttribute('aria-checked', String(item === button));
+    const speed = $('#speedInput').closest('label');
+    if (speed) speed.hidden = Boolean(state.length);
+    showPoster();
+  });
 
   $('#formatList').addEventListener('click', (event) => {
     const button = event.target.closest('[data-format]');
@@ -1010,7 +1070,8 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
 
   $('#speedInput').addEventListener('input', (event) => {
     if (busyRecording()) { event.target.value = String(state.perPhoto); return; }
-    state.perPhoto = Number(event.target.value);
+    state.userPer = Number(event.target.value);
+    state.perPhoto = state.userPer;
     $('#speedValue').textContent = String(state.perPhoto);
     showPoster();
   });
@@ -1025,7 +1086,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     if (busyRecording()) return;
     if (!state.template.spot) {
       state.template = TEMPLATES.find((t) => t.spot === 'playful');
-      for (const [index, item] of Array.from(templateList.children).entries()) item.setAttribute('aria-checked', String(TEMPLATES[index] === state.template));
+      markTemplate();
     }
     state.design = randomLook(state.template.spot);
     await fontsReady();
@@ -1064,13 +1125,13 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
       const layout = STYLES.CHOICES.layout.includes(plan.design?.layout) ? plan.design.layout : STYLES.layoutFor(state.spotStyle);
       state.template = TEMPLATES.find((t) => t.spot === layout);
       state.design = plan.design?.layout ? { ...plan.design, layout } : null;
-      for (const [index, item] of Array.from(templateList.children).entries()) item.setAttribute('aria-checked', String(TEMPLATES[index] === state.template));
+      markTemplate();
       state.format = FORMATS[plan.format] ? plan.format : 'story';
       for (const item of $('#formatList').children) item.setAttribute('aria-checked', String(item.dataset.format === state.format));
-      const count = Math.max(1, images.length);
-      state.perPhoto = clamp(Math.round(((plan.seconds - INTRO - OUTRO) / count) * 2) / 2, 2, 6);
-      $('#speedInput').value = String(state.perPhoto);
-      $('#speedValue').textContent = String(state.perPhoto);
+      // The length the customer asked for, filled at the template's rhythm.
+      state.length = clamp(Math.round(Number(plan.seconds) || 30), 10, 60);
+      for (const item of $('#lengthList')?.children || []) item.setAttribute('aria-checked', String(Number(item.dataset.length) === state.length));
+      if ($('#speedInput').closest('label')) $('#speedInput').closest('label').hidden = true;
       $('#titleInput').value = plan.title || '';
       $('#subtitleInput').value = plan.subtitle || '';
       $('#contactInput').value = plan.contact || '';

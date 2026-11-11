@@ -31,7 +31,7 @@
     birthday: 'playful',
   };
 
-  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal', beat: 'Beat drop', parallax: '3D pop', stack: 'Layer build-up', slide: 'Slide cut-in', frame: 'Golden frame', invite: 'Festive invite' };
+  const NAMES = { playful: 'Playful', luxe: 'Luxe', bold: 'Bold', fresh: 'Fresh', clean: 'Clean', editor: 'Editor reveal', beat: 'Beat drop', parallax: '3D pop', stack: 'Layer build-up', slide: 'Slide cut-in', frame: 'Golden frame', invite: 'Festive invite', sale: 'Flash Sale', product: 'Product Spotlight', compare: 'Before / After', review: 'Customer Love', countdown: 'Top 5 Countdown', story: 'Story Ad', cinema: 'Cinematic Luxury', kinetic: 'Kinetic Text', event: 'Grand Opening' };
 
   // Colours per business type, used by every design.
   const THEMES = {
@@ -1438,7 +1438,686 @@
     chrome() {},
   };
 
-  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor, beat, parallax, stack, slide, frame: golden, invite };
+  // ===================== Ad templates =====================
+  // Ten designs built on the editing techniques most used in social media
+  // ads. Each draws whole scenes itself (`draw`) and handles its own
+  // transitions, so the timeline only cuts between segments.
+  const acc = (d, fallback) => (HEX.test(d.design?.accent || '') ? d.design.accent : fallback);
+  const prevOf = (d, segs, seg) => { const k = segs.indexOf(seg); return k > 0 ? d.photos[segs[k - 1].photo] : null; };
+  const words = (value) => String(value || '').split(/\s+/).filter(Boolean);
+
+  function starburst(ctx, x, y, r, spikes, color, rot = 0) {
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(rot);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    for (let i = 0; i < spikes * 2; i += 1) {
+      const a = (i / (spikes * 2)) * Math.PI * 2;
+      const rr = i % 2 ? r * 0.78 : r;
+      ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr);
+    }
+    ctx.closePath(); ctx.fill();
+    ctx.restore();
+  }
+
+  // Text on a tilted tape (sale stickers).
+  function tape(ctx, d, value, x, y, angle, bg, color, size) {
+    if (!value) return;
+    ctx.save();
+    ctx.translate(x, y); ctx.rotate(angle);
+    ctx.font = `400 ${size}px ${F.impact}`;
+    const w = ctx.measureText(String(value).toUpperCase()).width + size * 1.4;
+    ctx.fillStyle = bg;
+    ctx.fillRect(-w / 2, -size * 0.8, w, size * 1.6);
+    ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(String(value).toUpperCase(), 0, size * 0.05);
+    ctx.restore();
+  }
+
+  function confettiBurst(ctx, d, local, colors) {
+    const u = unit(d);
+    if (local < 0 || local > 3) return;
+    ctx.save();
+    for (let i = 0; i < 46; i += 1) {
+      const a = rnd(i, 1) * Math.PI * 2;
+      const v = (0.35 + rnd(i, 2) * 0.55) * d.h;
+      const x = d.w / 2 + Math.cos(a) * v * local * 0.6;
+      const y = d.h * 0.45 + Math.sin(a) * v * local * 0.6 + 0.5 * d.h * 0.5 * local * local;
+      ctx.globalAlpha = clamp(1 - local / 3, 0, 1);
+      ctx.save(); ctx.translate(x, y); ctx.rotate(local * 6 + i);
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fillRect(-u * 0.8, -u * 0.4, u * 1.6, u * 0.8);
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  function grain(ctx, d, t, amount) {
+    const u = unit(d);
+    ctx.save();
+    const frameNo = Math.floor(t * 24);
+    for (let i = 0; i < 160; i += 1) {
+      ctx.globalAlpha = amount * rnd(i, frameNo);
+      ctx.fillStyle = rnd(i + 3, frameNo) > 0.5 ? '#fff' : '#000';
+      ctx.fillRect(rnd(i, frameNo + 1) * d.w, rnd(i, frameNo + 2) * d.h, u * 0.3, u * 0.3);
+    }
+    ctx.restore();
+  }
+
+  // ---- 1. Flash Sale: zoom punch, shake, flash cut, tapes, price burst,
+  // pulsing shop-now button. ----
+  const sale = {
+    deco: 'none', transition: { type: 'cut', dur: 0 }, motion: { zoom: [1, 1.1] },
+    draw(ctx, d, seg, t) {
+      const u = unit(d);
+      const red = acc(d, '#ff1744');
+      const yellow = '#ffd600';
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const item = d.photos[seg.photo] || {};
+      const punch = 1.25 - 0.2 * ease(local / 0.3) + 0.05 * clamp(local / dur, 0, 1);
+      const shake = Math.max(0, 1 - local / 0.3);
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, d.w, d.h);
+      coverAt(ctx, item.img, 0, 0, d.w, d.h, punch, Math.sin(local * 80) * u * 2 * shake, Math.cos(local * 70) * u * 1.5 * shake);
+      gradient(ctx, d, [[0, 'rgba(0,0,0,.35)'], [0.4, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.75)']]);
+      if (local < 0.08) { ctx.fillStyle = `rgba(255,255,255,${0.8 * (1 - local / 0.08)})`; ctx.fillRect(0, 0, d.w, d.h); }
+      // Diagonal sale stripes along the bottom.
+      ctx.save();
+      ctx.globalAlpha = 0.9;
+      ctx.translate(0, d.h * 0.82); ctx.rotate(-0.08);
+      ctx.fillStyle = red; ctx.fillRect(-d.w * 0.1, -u * 2, d.w * 1.2, u * 1.6);
+      ctx.fillStyle = yellow; ctx.fillRect(-d.w * 0.1, u * 0.2, d.w * 1.2, u * 0.8);
+      ctx.restore();
+      if (seg.kind === 'intro') {
+        const slam = Math.max(1, 2.4 - 1.4 * ease(local / 0.35));
+        ctx.save();
+        ctx.translate(d.w / 2, d.h * 0.42); ctx.scale(slam, slam); ctx.translate(-d.w / 2, -d.h * 0.42);
+        blockText(ctx, d, d.subtitle || 'Big Sale', { x: d.w / 2, y: d.h * 0.36, size: u * (wide(d) ? 9 : 11), font: headFont(d, F.impact), bg: red, color: '#fff', align: 'center', maxWidth: d.w - u * 8, maxLines: 3 });
+        ctx.restore();
+        tape(ctx, d, d.badge || 'Limited time', d.w * 0.34, d.h * 0.18, -0.12, yellow, '#000', u * 3.4);
+        blockText(ctx, d, d.title, { x: d.w / 2, y: d.h - u * 22, size: u * 4, font: F.impact, bg: '#000', color: '#fff', align: 'center', maxWidth: d.w - u * 10, maxLines: 1, wipe: (local - 0.4) / 0.25 });
+        return;
+      }
+      if (seg.kind === 'outro') {
+        blockText(ctx, d, d.closing, { x: d.w / 2, y: d.h * 0.34, size: u * 8.5, font: headFont(d, F.impact), bg: red, color: '#fff', align: 'center', maxWidth: d.w - u * 8, maxLines: 2, wipe: local / 0.3 });
+        const pulse = 1 + 0.06 * Math.sin(local * 8);
+        const by = d.h * 0.58;
+        ctx.save();
+        ctx.translate(d.w / 2, by); ctx.scale(pulse, pulse); ctx.translate(-d.w / 2, -by);
+        pill(ctx, 'Shop now', { x: d.w / 2, y: by, size: u * 4.4, bg: yellow, color: '#000', font: F.impact, weight: 400, align: 'center', radius: u * 1.2, spacing: 0.06 });
+        ctx.restore();
+        // A tapping finger pointer.
+        ctx.save();
+        ctx.font = `${u * 7}px sans-serif`; ctx.textAlign = 'center';
+        ctx.fillText('👆', d.w / 2 + u * 14, by + u * 13 + Math.sin(local * 8) * u);
+        ctx.restore();
+        if (d.contact) blockText(ctx, d, `Call ${d.contact}`, { x: d.w / 2, y: by + u * 22, size: u * 4, font: F.impact, bg: '#000', color: '#fff', align: 'center', maxWidth: d.w - u * 10, maxLines: 1 });
+        return;
+      }
+      tape(ctx, d, item.label || d.badge || 'Hot deal', u * 26, d.h * 0.15, -0.1, yellow, '#000', u * 3.2);
+      blockText(ctx, d, item.head, { x: u * 6, y: d.h * 0.78, anchor: 'bottom', size: u * (wide(d) ? 7 : 9), font: headFont(d, F.impact), bg: red, color: '#fff', maxWidth: d.w - u * 12, maxLines: 3, wipe: (local - 0.1) / 0.25 });
+      if (item.line) {
+        const pop = popIn(local, 0.35);
+        if (pop > 0) {
+          const r = u * 13 * pop * (1 + 0.04 * Math.sin(local * 6));
+          const cx = d.w - u * 17;
+          const cy = d.h * 0.32;
+          starburst(ctx, cx, cy, r, 14, yellow, local * 0.4);
+          starburst(ctx, cx, cy, r * 0.86, 14, red, local * 0.4);
+          ctx.save(); ctx.translate(cx, cy); ctx.rotate(-0.15);
+          write(ctx, item.line, { x: 0, y: -r * 0.36, size: r * 0.28, font: F.impact, weight: 400, color: '#fff', align: 'center', maxWidth: r * 1.4, maxLines: 2, lineHeight: 1, upper: true, shadow: false });
+          ctx.restore();
+        }
+      }
+    },
+    chrome() {},
+  };
+
+  // ---- 3. Product Spotlight: the photo on a tilting card over light rays,
+  // with callout lines pointing at it, swiping between products. ----
+  const product = {
+    deco: 'none', transition: { type: 'cut', dur: 0 }, motion: { zoom: [1, 1.05] },
+    draw(ctx, d, seg, t, segs) {
+      const u = unit(d);
+      const glow = acc(d, '#38bdf8');
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const item = d.photos[seg.photo] || {};
+      const prev = prevOf(d, segs, seg);
+      // Dark stage with a glow and turning rays.
+      const bg = ctx.createRadialGradient(d.w / 2, d.h * 0.4, 0, d.w / 2, d.h * 0.4, Math.max(d.w, d.h) * 0.8);
+      bg.addColorStop(0, tint(glow, -0.55)); bg.addColorStop(1, '#05070d');
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, d.w, d.h);
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.translate(d.w / 2, d.h * 0.4); ctx.rotate(t * 0.15);
+      for (let i = 0; i < 12; i += 1) {
+        ctx.rotate(Math.PI / 6);
+        ctx.fillStyle = `${glow}14`;
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-u * 6, -d.h); ctx.lineTo(u * 6, -d.h); ctx.fill();
+      }
+      ctx.restore();
+      const cw = wide(d) ? d.h * 0.62 : d.w * 0.78;
+      const ch = cw * 1.08;
+      const cx = wide(d) ? d.w * 0.34 : d.w / 2;
+      const cy = wide(d) ? d.h * 0.48 : d.h * 0.4;
+      const card = (img, offsetX, alpha, s) => {
+        if (!img) return;
+        const tilt = Math.sin(t * 1.2) * 0.04;
+        ctx.save();
+        ctx.globalAlpha *= alpha;
+        ctx.translate(cx + offsetX, cy); ctx.transform(1, tilt * 0.5, tilt, 1, 0, 0); ctx.scale(s, s);
+        ctx.shadowColor = `${glow}88`; ctx.shadowBlur = u * 8; ctx.shadowOffsetY = u * 3;
+        ctx.fillStyle = '#fff';
+        ctx.beginPath(); ctx.roundRect(-cw / 2, -ch / 2, cw, ch, u * 3); ctx.fill();
+        ctx.shadowColor = 'transparent';
+        ctx.beginPath(); ctx.roundRect(-cw / 2 + u, -ch / 2 + u, cw - u * 2, ch - u * 2, u * 2.4); ctx.clip();
+        coverAt(ctx, img, -cw / 2 + u, -ch / 2 + u, cw - u * 2, ch - u * 2, 1 + 0.05 * clamp(local / dur, 0, 1));
+        ctx.restore();
+      };
+      const swap = prev && prev.img !== item.img ? ease(local / 0.45) : 1;
+      if (swap < 1) card(prev.img, -d.w * swap, 1 - swap, 1);
+      const rise = seg.kind === 'intro' ? ease(local / 0.8) : 1;
+      card(item.img, d.w * (1 - swap), 1, 0.85 + 0.15 * rise);
+      const tx = wide(d) ? d.w * 0.74 : d.w / 2;
+      const maxWidth = wide(d) ? d.w * 0.42 : d.w - u * 10;
+      const ty = wide(d) ? d.h * 0.3 : cy + ch / 2 + u * 7;
+      if (seg.kind === 'intro') {
+        pill(ctx, d.badge || 'New arrival', { x: tx, y: ty, size: u * 2.8, bg: glow, color: '#000', font: F.sans, weight: 800, align: 'center', spacing: 0.12 });
+        write(ctx, d.title, { x: tx, y: ty + u * 8, size: u * 7, weight: 800, font: headFont(d, F.sans), align: 'center', maxWidth, maxLines: 2, alpha: ease((local - 0.4) / 0.5) });
+        write(ctx, d.subtitle, { x: tx, y: ty + u * 17, size: u * 3.4, weight: 500, font: F.jost, color: 'rgba(255,255,255,.8)', align: 'center', maxWidth, maxLines: 2, alpha: ease((local - 0.7) / 0.5) });
+        return;
+      }
+      if (seg.kind === 'outro') { ctaBox(ctx, d, local, glow); return; }
+      // Callouts: dots on the card with lines to the feature labels.
+      const callout = (value, side, at, py) => {
+        if (!value) return;
+        const p = clamp((local - at) / 0.4, 0, 1);
+        if (p <= 0) return;
+        const dotX = cx + side * cw * 0.18;
+        const dotY = cy + py * ch;
+        const endX = wide(d) ? dotX + side * u * 12 : cx + side * (cw / 2 + u * 2);
+        const endY = dotY - u * 6;
+        ctx.save();
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = Math.max(1, u * 0.3);
+        ctx.beginPath(); ctx.moveTo(dotX, dotY);
+        const mx = dotX + (endX - dotX) * Math.min(1, p * 2);
+        const my = dotY + (endY - dotY) * Math.min(1, p * 2);
+        ctx.lineTo(mx, my); ctx.stroke();
+        ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(dotX, dotY, u * (1 + 0.3 * Math.sin(local * 6)), 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+        if (p > 0.5) pill(ctx, value, { x: endX, y: endY - u * 3, size: u * 2.4, bg: 'rgba(255,255,255,.95)', color: '#0b1222', font: F.sans, weight: 800, align: side > 0 ? 'right' : 'left', spacing: 0.04, alpha: ease((p - 0.5) * 2), maxWidth: d.w * 0.5 });
+      };
+      callout(item.label, -1, 0.3, -0.18);
+      callout(item.line, 1, 0.6, 0.15);
+      write(ctx, item.head, { x: tx, y: ty, size: u * (wide(d) ? 6 : 7), weight: 800, font: headFont(d, F.sans), align: 'center', maxWidth, maxLines: 2, alpha: ease((local - 0.2) / 0.4) });
+      ctx.fillStyle = glow;
+      ctx.fillRect(tx - u * 6 * ease((local - 0.4) / 0.4), ty - u * 1.6, u * 12 * ease((local - 0.4) / 0.4), Math.max(2, u * 0.5));
+    },
+    chrome() {},
+  };
+
+  // ---- 4. Before / After: a slider sweeps across the photo, from a flat
+  // "before" look to the bright "after". Pairs of photos are used as real
+  // before and after when the photo count is even. ----
+  const compare = {
+    deco: 'none', transition: { type: 'cut', dur: 0 }, motion: { zoom: [1, 1.05] },
+    draw(ctx, d, seg, t) {
+      const u = unit(d);
+      const mint = acc(d, '#22d3ee');
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const n = d.photos.length;
+      const pairs = n >= 2 && n % 2 === 0;
+      const i = seg.photo;
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, d.w, d.h);
+      const labelChip = (text, x, align, bg, color) => pill(ctx, text, { x, y: u * 6, size: u * 2.8, bg, color, font: F.impact, weight: 400, align, radius: u * 0.6, spacing: 0.08 });
+      if (seg.kind === 'intro' || seg.kind === 'outro') {
+        coverAt(ctx, d.photos[seg.photo]?.img, 0, 0, d.w, d.h, 1.05);
+        ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fillRect(0, 0, d.w, d.h);
+        if (seg.kind === 'intro') {
+          blockText(ctx, d, d.subtitle || 'See the difference', { x: d.w / 2, y: d.h * 0.4, size: u * 8, font: headFont(d, F.impact), bg: '#000', color: '#fff', align: 'center', maxWidth: d.w - u * 10, maxLines: 3, wipe: local / 0.3 });
+          pill(ctx, `${d.title}`, { x: d.w / 2, y: d.h * 0.62, size: u * 3, bg: mint, color: '#000', font: F.impact, weight: 400, align: 'center', radius: u * 0.6, spacing: 0.06 });
+        } else ctaBox(ctx, d, local, mint);
+        return;
+      }
+      if (pairs && i % 2 === 1) {
+        // The "after" photo of a pair, held with its caption.
+        const item = d.photos[i];
+        coverAt(ctx, item.img, 0, 0, d.w, d.h, 1 + 0.08 * clamp(local / dur, 0, 1));
+        gradient(ctx, d, [[0.55, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.75)']]);
+        labelChip('After ✓', d.w - u * 6, 'right', mint, '#000');
+        blockText(ctx, d, item.head || d.photos[i - 1]?.head, { x: u * 6, y: d.h - u * 14, anchor: 'bottom', size: u * 7.5, font: headFont(d, F.impact), bg: '#000', color: '#fff', maxWidth: d.w - u * 12, maxLines: 3, wipe: local / 0.3 });
+        if (item.line) pill(ctx, item.line, { x: u * 6, y: d.h - u * 12.5, size: u * 2.8, bg: mint, color: '#000', font: F.impact, weight: 400, radius: u * 0.6 });
+        return;
+      }
+      const before = d.photos[i];
+      const after = pairs ? d.photos[i + 1] : before;
+      const sweep = 1 - ease(clamp((local - 0.5) / Math.max(0.8, dur * 0.55), 0, 1));
+      const edge = d.w * sweep;
+      // After underneath, before on the left of the line.
+      coverAt(ctx, after?.img, 0, 0, d.w, d.h, 1.05);
+      if (!pairs) grade(ctx, 0, 0, d.w, d.h, 0, 0, 0.3);
+      ctx.save();
+      ctx.beginPath(); ctx.rect(0, 0, edge, d.h); ctx.clip();
+      coverAt(ctx, before?.img, 0, 0, d.w, d.h, 1.05);
+      if (!pairs) grade(ctx, 0, 0, d.w, d.h, 0.85, 0.25, 0);
+      ctx.restore();
+      // The slider handle.
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(edge - u * 0.3, 0, u * 0.6, d.h);
+      ctx.beginPath(); ctx.arc(edge, d.h / 2, u * 4, 0, Math.PI * 2); ctx.fill();
+      write(ctx, '‹ ›', { x: edge, y: d.h / 2 - u * 2.6, size: u * 4, weight: 700, font: F.sans, color: '#000', align: 'center', maxWidth: u * 8, maxLines: 1, shadow: false });
+      if (edge > u * 20) labelChip('Before', u * 6, 'left', '#000', '#fff');
+      if (edge < d.w - u * 20) labelChip('After', d.w - u * 6, 'right', mint, '#000');
+      if (!pairs && sweep < 0.05) {
+        gradient(ctx, d, [[0.55, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.75)']]);
+        blockText(ctx, d, before?.head, { x: u * 6, y: d.h - u * 14, anchor: 'bottom', size: u * 7.5, font: headFont(d, F.impact), bg: '#000', color: '#fff', maxWidth: d.w - u * 12, maxLines: 3 });
+      } else if (before?.label) {
+        pill(ctx, before.label, { x: d.w / 2, y: d.h - u * 16, size: u * 3, bg: '#000', color: '#fff', font: F.impact, weight: 400, align: 'center', radius: u * 0.6, spacing: 0.06 });
+      }
+    },
+    chrome() {},
+  };
+
+  // ---- 5. Customer Love: photo card, five stars popping one by one and the
+  // customer's words in a quote bubble. Only for real reviews. ----
+  const review = {
+    deco: 'none', transition: { type: 'cut', dur: 0 }, motion: { zoom: [1, 1.05] },
+    draw(ctx, d, seg, t) {
+      const u = unit(d);
+      const pink = acc(d, '#f472b6');
+      const local = t - seg.start;
+      const item = d.photos[seg.photo] || {};
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, d.w, d.h);
+      if (item.img) { ctx.save(); ctx.globalAlpha *= 0.55; coverAt(ctx, blurOf(item.img), 0, 0, d.w, d.h, 1.2); ctx.restore(); }
+      ctx.fillStyle = `${tint(pink, 0.8)}cc`; ctx.fillRect(0, 0, d.w, d.h);
+      const pw = wide(d) ? d.h * 0.6 : d.w * 0.84;
+      const ph = wide(d) ? pw : pw * 1.05;
+      const px = wide(d) ? d.w * 0.06 : (d.w - pw) / 2;
+      const py = wide(d) ? (d.h - ph) / 2 : d.h * 0.07;
+      const lift = (1 - ease(local / 0.5)) * u * 4;
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,.2)'; ctx.shadowBlur = u * 5;
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.roundRect(px - u, py - u + lift, pw + u * 2, ph + u * 2, u * 3); ctx.fill();
+      ctx.shadowColor = 'transparent';
+      ctx.beginPath(); ctx.roundRect(px, py + lift, pw, ph, u * 2.4); ctx.clip();
+      coverAt(ctx, item.img, px, py + lift, pw, ph, 1.04);
+      ctx.restore();
+      const bx = wide(d) ? px + pw + u * 6 : u * 6;
+      const bw = wide(d) ? d.w - bx - u * 6 : d.w - u * 12;
+      const by = wide(d) ? d.h * 0.2 : py + ph + u * 6;
+      if (seg.kind === 'intro' || seg.kind === 'outro') {
+        if (seg.kind === 'outro') { ctaBox(ctx, d, local, pink); return; }
+        write(ctx, d.subtitle || 'Loved by our customers', { x: bx + bw / 2, y: by, size: u * 6.4, weight: 800, font: headFont(d, F.sans), color: '#1f1235', align: 'center', maxWidth: bw, maxLines: 2, shadow: false, alpha: ease(local / 0.5) });
+        write(ctx, d.title, { x: bx + bw / 2, y: by + u * 16, size: u * 3.6, weight: 700, font: F.sans, color: tint(pink, -0.45), align: 'center', upper: true, spacing: 0.12, maxWidth: bw, maxLines: 1, shadow: false });
+        return;
+      }
+      // Stars.
+      for (let s = 0; s < 5; s += 1) {
+        const pop = popIn(local, 0.25 + s * 0.12);
+        if (pop <= 0) continue;
+        ctx.save();
+        ctx.translate(bx + bw / 2 + (s - 2) * u * 6.4, by + u * 2.5); ctx.scale(pop, pop);
+        ctx.fillStyle = '#fbbf24';
+        ctx.beginPath();
+        for (let k = 0; k < 10; k += 1) { const a = -Math.PI / 2 + (k * Math.PI) / 5; const rr = k % 2 ? u * 1.2 : u * 2.8; ctx.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); }
+        ctx.closePath(); ctx.fill();
+        ctx.restore();
+      }
+      // Quote bubble.
+      const qy = by + u * 7;
+      const appear = ease((local - 0.9) / 0.5);
+      ctx.save();
+      ctx.globalAlpha *= appear;
+      const qh = write(ctx, item.head, { x: bx + bw / 2, y: qy + u * 5, size: u * 5.2, weight: 700, font: F.sans, color: '#1f1235', align: 'center', maxWidth: bw - u * 8, maxLines: 4, shadow: false, measure: true });
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.roundRect(bx, qy, bw, qh + u * 10, u * 3); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(bx + bw / 2 - u * 3, qy); ctx.lineTo(bx + bw / 2, qy - u * 2.5); ctx.lineTo(bx + bw / 2 + u * 3, qy); ctx.fill();
+      ctx.restore();
+      write(ctx, '“', { x: bx + u * 3, y: qy - u * 2, size: u * 10, weight: 800, font: F.serif, color: pink, maxWidth: u * 10, maxLines: 1, shadow: false, alpha: appear });
+      write(ctx, item.head, { x: bx + bw / 2, y: qy + u * 5, size: u * 5.2, weight: 700, font: F.sans, color: '#1f1235', align: 'center', maxWidth: bw - u * 8, maxLines: 4, shadow: false, alpha: appear });
+      const who = [item.label, item.line].filter(Boolean).join(' · ');
+      write(ctx, who ? `— ${who}` : '', { x: bx + bw / 2, y: qy + qh + u * 12, size: u * 3, weight: 700, font: F.sans, color: tint(pink, -0.45), align: 'center', maxWidth: bw, maxLines: 1, shadow: false, alpha: ease((local - 1.3) / 0.5) });
+    },
+    chrome() {},
+  };
+
+  // ---- 6. Top 5 Countdown: big numbers slam in counting down, each photo
+  // whips in from the side with motion blur. ----
+  const countdown = {
+    deco: 'none', transition: { type: 'cut', dur: 0 }, motion: { zoom: [1, 1.08] },
+    draw(ctx, d, seg, t, segs) {
+      const u = unit(d);
+      const hot = acc(d, '#a3e635');
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const item = d.photos[seg.photo] || {};
+      const prev = prevOf(d, segs, seg);
+      const count = segs.filter((s) => s.kind === 'photo').length;
+      ctx.fillStyle = '#0b0b0f'; ctx.fillRect(0, 0, d.w, d.h);
+      if (seg.kind === 'intro') {
+        coverAt(ctx, item.img, 0, 0, d.w, d.h, 1.1);
+        ctx.fillStyle = 'rgba(0,0,0,.6)'; ctx.fillRect(0, 0, d.w, d.h);
+        const slam = Math.max(1, 2 - ease(local / 0.35));
+        ctx.save(); ctx.translate(d.w / 2, d.h * 0.4); ctx.scale(slam, slam); ctx.translate(-d.w / 2, -d.h * 0.4);
+        write(ctx, `Top ${count}`, { x: d.w / 2, y: d.h * 0.28, size: u * 16, weight: 400, font: F.impact, color: hot, align: 'center', upper: true, maxWidth: d.w - u * 8, maxLines: 1 });
+        ctx.restore();
+        blockText(ctx, d, d.subtitle || `Reasons to choose ${d.title}`, { x: d.w / 2, y: d.h * 0.5, size: u * 5.4, font: headFont(d, F.impact), bg: '#fff', color: '#000', align: 'center', maxWidth: d.w - u * 10, maxLines: 3, wipe: (local - 0.4) / 0.3 });
+        return;
+      }
+      if (seg.kind === 'outro') { coverAt(ctx, item.img, 0, 0, d.w, d.h, 1.08); ctx.fillStyle = 'rgba(0,0,0,.4)'; ctx.fillRect(0, 0, d.w, d.h); ctaBox(ctx, d, local, hot); return; }
+      // Whip pan in.
+      const whip = clamp(local / 0.3, 0, 1);
+      const dx = d.w * (1 - ease(whip));
+      if (prev && whip < 1) coverAt(ctx, prev.img, 0, 0, d.w, d.h, 1.08, dx - d.w, 0);
+      for (let j = 3; j >= 1 && whip < 1; j -= 1) {
+        ctx.save(); ctx.globalAlpha *= 0.2; coverAt(ctx, item.img, 0, 0, d.w, d.h, 1.08, dx + j * u * 8, 0); ctx.restore();
+      }
+      coverAt(ctx, item.img, 0, 0, d.w, d.h, 1.08 + 0.06 * clamp(local / dur, 0, 1), dx, 0);
+      gradient(ctx, d, [[0, 'rgba(0,0,0,.4)'], [0.35, 'rgba(0,0,0,0)'], [0.6, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.8)']]);
+      // The number.
+      const number = count - (seg.index || 0);
+      const pop = popIn(local, 0.25);
+      if (pop > 0) {
+        ctx.save();
+        ctx.translate(u * 16, d.h * 0.18); ctx.rotate(-0.12 * (1 - Math.min(1, pop))); ctx.scale(pop, pop);
+        ctx.fillStyle = hot; ctx.beginPath(); ctx.arc(0, 0, u * 10, 0, Math.PI * 2); ctx.fill();
+        write(ctx, `#${number}`, { x: 0, y: -u * 6.4, size: u * 11, weight: 400, font: F.impact, color: '#000', align: 'center', maxWidth: u * 20, maxLines: 1, shadow: false });
+        ctx.restore();
+      }
+      if (item.label) pill(ctx, item.label, { x: d.w - u * 6, y: d.h * 0.16, size: u * 2.8, bg: '#fff', color: '#000', font: F.impact, weight: 400, align: 'right', radius: u * 0.6, spacing: 0.06, alpha: ease((local - 0.4) / 0.3) });
+      blockText(ctx, d, item.head, { x: u * 6, y: d.h - u * 15, anchor: 'bottom', size: u * (wide(d) ? 6.6 : 8), font: headFont(d, F.impact), bg: hot, color: '#000', maxWidth: d.w - u * 12, maxLines: 3, wipe: (local - 0.45) / 0.3 });
+      if (item.line) write(ctx, item.line, { x: u * 6, y: d.h - u * 13, size: u * 3.4, weight: 600, font: F.jost, maxWidth: d.w - u * 12, maxLines: 2, alpha: ease((local - 0.7) / 0.3) });
+      // Progress dots.
+      for (let k = 0; k < count; k += 1) {
+        ctx.fillStyle = k <= (seg.index || 0) ? hot : 'rgba(255,255,255,.35)';
+        ctx.beginPath(); ctx.arc(d.w / 2 + (k - (count - 1) / 2) * u * 3, d.h - u * 5, u * 0.9, 0, Math.PI * 2); ctx.fill();
+      }
+    },
+    chrome() {},
+  };
+
+  // ---- 7. Story Ad: the look of a social story: progress bars, profile row,
+  // tilted text stickers, an emoji, a poll sticker and a swipe-up ending. ----
+  const STORY_EMOJI = ['🔥', '😍', '✨', '💯', '🎉', '👌'];
+  const story = {
+    deco: 'none', transition: { type: 'cut', dur: 0 }, motion: { zoom: [1, 1.08] },
+    draw(ctx, d, seg, t, segs) {
+      const u = unit(d);
+      const grad = acc(d, '#e1306c');
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const item = d.photos[seg.photo] || {};
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, d.w, d.h);
+      coverAt(ctx, item.img, 0, 0, d.w, d.h, 1 + 0.08 * clamp(local / dur, 0, 1));
+      gradient(ctx, d, [[0, 'rgba(0,0,0,.45)'], [0.2, 'rgba(0,0,0,0)'], [0.75, 'rgba(0,0,0,0)'], [1, 'rgba(0,0,0,.55)']]);
+      // Progress bars and profile row.
+      const n = segs.length;
+      const gap = u * 0.8;
+      const bw = (d.w - u * 6 - gap * (n - 1)) / n;
+      segs.forEach((s, i) => {
+        const fill = clamp((t - s.start) / (s.end - s.start), 0, 1);
+        ctx.fillStyle = 'rgba(255,255,255,.4)'; ctx.beginPath(); ctx.roundRect(u * 3 + i * (bw + gap), u * 2.5, bw, u * 0.6, u * 0.3); ctx.fill();
+        ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.roundRect(u * 3 + i * (bw + gap), u * 2.5, Math.max(0.1, bw * fill), u * 0.6, u * 0.3); ctx.fill();
+      });
+      const ring = ctx.createLinearGradient(u * 3, u * 5, u * 10, u * 12);
+      ring.addColorStop(0, '#feda75'); ring.addColorStop(0.5, grad); ring.addColorStop(1, '#4f5bd5');
+      ctx.fillStyle = ring; ctx.beginPath(); ctx.arc(u * 7, u * 8.6, u * 3.2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#222'; ctx.beginPath(); ctx.arc(u * 7, u * 8.6, u * 2.6, 0, Math.PI * 2); ctx.fill();
+      write(ctx, (d.title || 'S').charAt(0).toUpperCase(), { x: u * 7, y: u * 6.9, size: u * 3, weight: 800, font: F.sans, align: 'center', maxWidth: u * 6, maxLines: 1, shadow: false });
+      write(ctx, d.title, { x: u * 11.5, y: u * 6.4, size: u * 2.6, weight: 700, font: F.sans, maxWidth: d.w * 0.55, maxLines: 1 });
+      write(ctx, 'Sponsored', { x: u * 11.5, y: u * 9.4, size: u * 2, weight: 500, font: F.sans, color: 'rgba(255,255,255,.8)', maxWidth: d.w * 0.4, maxLines: 1 });
+      const sticker = (value, x, y, angle, at, bg, color, size) => {
+        if (!value) return;
+        const pop = popIn(local, at);
+        if (pop <= 0) return;
+        ctx.save();
+        ctx.translate(x, y); ctx.rotate(angle); ctx.scale(pop, pop);
+        ctx.font = `800 ${size}px ${F.sans}`;
+        const lines = wrap(ctx, value, d.w * 0.7, 3);
+        const w = Math.max(...lines.map((l) => ctx.measureText(l).width)) + size * 1.2;
+        const h = lines.length * size * 1.2 + size * 0.7;
+        ctx.fillStyle = bg; ctx.beginPath(); ctx.roundRect(-w / 2, -h / 2, w, h, size * 0.4); ctx.fill();
+        ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+        lines.forEach((l, i) => ctx.fillText(l, 0, -h / 2 + size * 0.35 + i * size * 1.2));
+        ctx.restore();
+      };
+      if (seg.kind === 'intro') {
+        sticker(d.subtitle || d.title, d.w / 2, d.h * 0.45, -0.04, 0.3, '#fff', '#111', u * 5.6);
+        sticker(d.badge || 'New ✨', d.w * 0.62, d.h * 0.58, 0.08, 0.6, grad, '#fff', u * 3.4);
+        return;
+      }
+      if (seg.kind === 'outro') {
+        sticker(d.closing, d.w / 2, d.h * 0.42, -0.03, 0.2, '#fff', '#111', u * 5.6);
+        const bounce = Math.abs(Math.sin(local * 4)) * u * 2;
+        write(ctx, '⌃', { x: d.w / 2, y: d.h - u * 24 - bounce, size: u * 7, weight: 800, font: F.sans, align: 'center', maxWidth: u * 10, maxLines: 1 });
+        pill(ctx, d.contact ? `Tap to call · ${d.contact}` : 'Tap to order', { x: d.w / 2, y: d.h - u * 16, size: u * 3, bg: '#fff', color: '#111', font: F.sans, weight: 800, align: 'center', spacing: 0.02, maxWidth: d.w * 0.9 });
+        // Reply box like a story.
+        ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = Math.max(1, u * 0.25);
+        ctx.beginPath(); ctx.roundRect(u * 4, d.h - u * 8, d.w - u * 8, u * 5.4, u * 2.7); ctx.stroke();
+        write(ctx, 'Send message', { x: u * 7, y: d.h - u * 6.6, size: u * 2.4, weight: 500, font: F.sans, maxWidth: d.w * 0.5, maxLines: 1 });
+        return;
+      }
+      const idx = seg.index || 0;
+      sticker(item.head, d.w / 2, d.h * (idx % 2 ? 0.3 : 0.64), idx % 2 ? 0.05 : -0.05, 0.25, idx % 2 ? grad : '#fff', idx % 2 ? '#fff' : '#111', u * 5.2);
+      sticker(item.line || item.label, d.w * (idx % 2 ? 0.34 : 0.66), d.h * (idx % 2 ? 0.42 : 0.76), idx % 2 ? -0.08 : 0.08, 0.6, '#111', '#fff', u * 3);
+      // An emoji that bounces in.
+      const ep = popIn(local, 0.9);
+      if (ep > 0) {
+        ctx.save();
+        ctx.translate(d.w * (idx % 2 ? 0.78 : 0.22), d.h * (idx % 2 ? 0.22 : 0.54)); ctx.scale(ep, ep); ctx.rotate(Math.sin(local * 4) * 0.15);
+        ctx.font = `${u * 9}px sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(STORY_EMOJI[idx % STORY_EMOJI.length], 0, 0);
+        ctx.restore();
+      }
+      // A poll sticker on the second scene.
+      if (idx === 1) {
+        const pp = popIn(local, 1.2);
+        if (pp > 0) {
+          const pw = d.w * 0.64;
+          const px = (d.w - pw) / 2;
+          const py = d.h * 0.5;
+          ctx.save(); ctx.translate(d.w / 2, py); ctx.scale(pp, pp); ctx.translate(-d.w / 2, -py);
+          ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.roundRect(px, py, pw, u * 17, u * 2.5); ctx.fill();
+          write(ctx, 'Would you try it? 👀', { x: d.w / 2, y: py + u * 2, size: u * 3, weight: 800, font: F.sans, color: '#111', align: 'center', maxWidth: pw - u * 4, maxLines: 1, shadow: false });
+          ['Yes! 😍', 'Wow 🔥'].forEach((opt, k) => {
+            const oy = py + u * 7 + k * u * 5;
+            const fill = ease((local - 1.6 - k * 0.2) / 0.8) * (k ? 0.45 : 0.8);
+            ctx.fillStyle = '#eee'; ctx.beginPath(); ctx.roundRect(px + u * 2, oy, pw - u * 4, u * 4, u * 2); ctx.fill();
+            ctx.fillStyle = `${grad}88`; ctx.beginPath(); ctx.roundRect(px + u * 2, oy, Math.max(u * 4, (pw - u * 4) * fill), u * 4, u * 2); ctx.fill();
+            write(ctx, opt, { x: px + u * 4, y: oy + u * 0.7, size: u * 2.4, weight: 700, font: F.sans, color: '#111', maxWidth: pw, maxLines: 1, shadow: false });
+          });
+          ctx.restore();
+        }
+      }
+    },
+    chrome() {},
+  };
+
+  // ---- 8. Cinematic Luxury: letterbox bars, slow drift, light leaks, film
+  // grain, spaced serif titles and long dissolves. ----
+  const cinema = {
+    deco: 'none', transition: { type: 'cut', dur: 0 }, motion: { zoom: [1.04, 1.16] },
+    draw(ctx, d, seg, t, segs) {
+      const u = unit(d);
+      const gold = acc(d, '#e9c46a');
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const item = d.photos[seg.photo] || {};
+      const prev = prevOf(d, segs, seg);
+      const fade = prev && prev.img !== item.img ? ease(local / 1.1) : 1;
+      const drift = (img, p, a) => { ctx.save(); ctx.globalAlpha *= a; coverAt(ctx, img, 0, 0, d.w, d.h, 1.04 + 0.12 * p, (p - 0.5) * u * 4, -p * u * 2); ctx.restore(); };
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, d.w, d.h);
+      if (prev && fade < 1) drift(prev.img, 1, 1);
+      drift(item.img, clamp(local / dur, 0, 1), fade);
+      grade(ctx, 0, 0, d.w, d.h, 0.15, 0.12, 0.18);
+      // Light leak sweeping across.
+      ctx.save();
+      ctx.globalCompositeOperation = 'screen';
+      const lx = ((t * 0.12) % 1.6 - 0.3) * d.w;
+      const leak = ctx.createRadialGradient(lx, d.h * 0.3, 0, lx, d.h * 0.3, d.w * 0.7);
+      leak.addColorStop(0, 'rgba(255,140,60,.35)'); leak.addColorStop(1, 'rgba(255,60,90,0)');
+      ctx.fillStyle = leak; ctx.fillRect(0, 0, d.w, d.h);
+      ctx.restore();
+      const vig = ctx.createRadialGradient(d.w / 2, d.h / 2, Math.min(d.w, d.h) * 0.35, d.w / 2, d.h / 2, Math.max(d.w, d.h) * 0.75);
+      vig.addColorStop(0, 'rgba(0,0,0,0)'); vig.addColorStop(1, 'rgba(0,0,0,.55)');
+      ctx.fillStyle = vig; ctx.fillRect(0, 0, d.w, d.h);
+      grain(ctx, d, t, 0.25);
+      // Letterbox bars slide in at the start.
+      const bar = d.h * (wide(d) ? 0.08 : 0.1) * ease(t / 1.2);
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, d.w, bar); ctx.fillRect(0, d.h - bar, d.w, bar);
+      const appear = ease((local - 0.5) / 0.9);
+      const y = d.h - bar - u * (wide(d) ? 16 : 22);
+      const spaced = (value, yy, size, color, a, spacing) => write(ctx, value, { x: d.w / 2, y: yy, size, weight: 600, font: F.serif, color, align: 'center', upper: true, spacing, maxWidth: d.w * 0.86, maxLines: 2, alpha: a });
+      if (seg.kind === 'intro') {
+        spaced(d.title, d.h * 0.42, u * 6.4, '#fff', ease((local - 0.6) / 1), 0.12 + 0.08 * ease(local / 2.5));
+        write(ctx, d.subtitle, { x: d.w / 2, y: d.h * 0.42 + u * 10, size: u * 3.6, weight: 600, italic: true, font: headFont(d, F.serif), color: gold, align: 'center', maxWidth: d.w * 0.8, maxLines: 2, alpha: ease((local - 1.1) / 0.8) });
+      } else if (seg.kind === 'outro') {
+        spaced(d.closing, d.h * 0.42, u * 5.6, '#fff', appear, 0.14);
+        if (d.contact) spaced(d.contact, d.h * 0.42 + u * 10, u * 3, gold, ease((local - 0.9) / 0.8), 0.2);
+        const out = clamp((local - (dur - 1.2)) / 1.2, 0, 1);
+        if (out > 0) { ctx.fillStyle = `rgba(0,0,0,${out})`; ctx.fillRect(0, 0, d.w, d.h); }
+      } else {
+        spaced(item.label, y - u * 5, u * 2.4, gold, appear, 0.36);
+        write(ctx, item.head, { x: d.w / 2, y, size: u * (wide(d) ? 6 : 7.4), weight: 600, font: headFont(d, F.serif), color: '#fff', align: 'center', maxWidth: d.w * 0.84, maxLines: 2, alpha: appear });
+        write(ctx, item.line, { x: d.w / 2, y: y + u * 10, size: u * 3, weight: 400, italic: true, font: F.serif, color: 'rgba(255,255,255,.85)', align: 'center', maxWidth: d.w * 0.8, maxLines: 1, alpha: ease((local - 1) / 0.8) });
+      }
+    },
+    chrome() {},
+  };
+
+  // ---- 9. Kinetic Text: split screen of photo and colour block; the words
+  // pop in one by one, the last one highlighted. Panels swap sides. ----
+  const kinetic = {
+    deco: 'none', transition: { type: 'cut', dur: 0 }, motion: { zoom: [1, 1.08] },
+    draw(ctx, d, seg, t) {
+      const u = unit(d);
+      const block = acc(d, '#6d28d9');
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const item = d.photos[seg.photo] || {};
+      const flip = (seg.index || 0) % 2 === 1;
+      const head = seg.kind === 'intro' ? (d.subtitle || d.title) : seg.kind === 'outro' ? d.closing : item.head;
+      ctx.fillStyle = block; ctx.fillRect(0, 0, d.w, d.h);
+      // Photo panel slides in.
+      const slideIn = ease(local / 0.35);
+      const isWide = wide(d);
+      const panel = isWide ? { w: d.w * 0.5, h: d.h } : { w: d.w, h: d.h * 0.56 };
+      const px = isWide ? (flip ? d.w * 0.5 : 0) + (flip ? 1 : -1) * (1 - slideIn) * panel.w : 0;
+      const py = isWide ? 0 : (flip ? d.h - panel.h : 0) + (flip ? 1 : -1) * (1 - slideIn) * panel.h;
+      if (seg.kind !== 'intro') {
+        ctx.save(); ctx.beginPath(); ctx.rect(px, py, panel.w, panel.h); ctx.clip();
+        coverAt(ctx, item.img, px, py, panel.w, panel.h, 1 + 0.08 * clamp(local / dur, 0, 1));
+        ctx.restore();
+      }
+      // Text area.
+      const area = seg.kind === 'intro' ? { x: u * 6, y: d.h * 0.28, w: d.w - u * 12 } : isWide
+        ? { x: (flip ? 0 : d.w * 0.5) + u * 5, y: d.h * 0.24, w: d.w * 0.5 - u * 10 }
+        : { x: u * 6, y: (flip ? 0 : panel.h) + u * 12, w: d.w - u * 12 };
+      const size = u * (seg.kind === 'intro' ? 13 : isWide ? 8 : 11);
+      ctx.save();
+      ctx.font = `400 ${size}px ${headFont(d, F.impact)}`;
+      const list = words(String(head || '').toUpperCase());
+      let x = area.x;
+      let y = area.y;
+      list.forEach((word, i) => {
+        const w = ctx.measureText(word).width;
+        if (x > area.x && x + w > area.x + area.w) { x = area.x; y += size * 1.05; }
+        const pop = popIn(local, 0.25 + i * 0.16);
+        if (pop > 0) {
+          const last = i === list.length - 1;
+          ctx.save();
+          ctx.translate(x + w / 2, y + size / 2); ctx.scale(pop, pop); ctx.translate(-(x + w / 2), -(y + size / 2));
+          if (last) { ctx.fillStyle = '#fde047'; ctx.fillRect(x - size * 0.1, y - size * 0.02, w + size * 0.2, size * 1.04); }
+          ctx.fillStyle = last ? '#000' : '#fff'; ctx.textBaseline = 'top';
+          ctx.fillText(word, x, y + size * 0.05);
+          ctx.restore();
+        }
+        x += w + size * 0.28;
+      });
+      ctx.restore();
+      const after = y + size * 1.3;
+      if (seg.kind === 'intro') write(ctx, d.title, { x: area.x, y: after, size: u * 3.6, weight: 600, font: F.jost, color: 'rgba(255,255,255,.9)', upper: true, spacing: 0.16, maxWidth: area.w, maxLines: 1, alpha: ease((local - 0.9) / 0.4) });
+      else if (seg.kind === 'outro') {
+        if (d.contact) pill(ctx, `📞 ${d.contact}`, { x: area.x, y: after, size: u * 3.2, bg: '#fde047', color: '#000', font: F.sans, weight: 800, spacing: 0.02, alpha: ease((local - 0.8) / 0.4) });
+      } else {
+        if (item.label) pill(ctx, item.label, { x: area.x, y: area.y - u * 6, size: u * 2.4, bg: 'rgba(0,0,0,.35)', color: '#fff', font: F.jost, weight: 600, spacing: 0.2, maxWidth: area.w });
+        write(ctx, item.line, { x: area.x, y: after, size: u * 3.4, weight: 500, font: F.jost, color: 'rgba(255,255,255,.92)', maxWidth: area.w, maxLines: 2, alpha: ease((local - 0.25 - list.length * 0.16) / 0.4) });
+      }
+    },
+    chrome() {},
+  };
+
+  // ---- 10. Grand Opening / Event: spotlight beams, a ribbon, confetti
+  // bursts and the date, time and venue as chips. ----
+  const event = {
+    deco: 'none', transition: { type: 'cut', dur: 0 }, motion: { zoom: [1, 1.08] },
+    draw(ctx, d, seg, t, segs) {
+      const u = unit(d);
+      const gold = acc(d, '#fbbf24');
+      const ribbon = '#dc2626';
+      const local = t - seg.start;
+      const dur = seg.end - seg.start;
+      const item = d.photos[seg.photo] || {};
+      const prev = prevOf(d, segs, seg);
+      const fade = prev && prev.img !== item.img ? ease(local / 0.5) : 1;
+      ctx.fillStyle = '#05050a'; ctx.fillRect(0, 0, d.w, d.h);
+      if (prev && fade < 1) coverAt(ctx, prev.img, 0, 0, d.w, d.h, 1.08);
+      ctx.save(); ctx.globalAlpha *= fade; coverAt(ctx, item.img, 0, 0, d.w, d.h, 1 + 0.08 * clamp(local / dur, 0, 1)); ctx.restore();
+      ctx.fillStyle = 'rgba(0,0,10,.45)'; ctx.fillRect(0, 0, d.w, d.h);
+      // Two sweeping spotlights.
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      for (const [bx, phase] of [[d.w * 0.15, 0], [d.w * 0.85, Math.PI]]) {
+        const a = Math.sin(t * 0.9 + phase) * 0.35;
+        ctx.save(); ctx.translate(bx, d.h); ctx.rotate(a);
+        const g = ctx.createLinearGradient(0, 0, 0, -d.h);
+        g.addColorStop(0, `${gold}55`); g.addColorStop(1, `${gold}00`);
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.moveTo(-u * 2, 0); ctx.lineTo(u * 2, 0); ctx.lineTo(u * 18, -d.h * 1.1); ctx.lineTo(-u * 18, -d.h * 1.1); ctx.fill();
+        ctx.restore();
+      }
+      ctx.restore();
+      const chips = (y) => {
+        (d.details || []).slice(0, 3).forEach((line, i) => {
+          const p = ease((local - 0.6 - i * 0.25) / 0.4);
+          if (p > 0) pill(ctx, line, { x: d.w / 2, y: y + i * u * 6.4 + (1 - p) * u * 3, size: u * 2.8, bg: 'rgba(255,255,255,.95)', color: '#111', font: F.sans, weight: 800, align: 'center', spacing: 0.02, alpha: p, maxWidth: d.w * 0.9 });
+        });
+      };
+      const ribbonBand = (text, y) => {
+        const p = ease(local / 0.4);
+        ctx.save();
+        ctx.translate(d.w / 2, y); ctx.rotate(-0.05);
+        ctx.fillStyle = ribbon; ctx.fillRect(-d.w * 0.6 * p, -u * 4.5, d.w * 1.2 * p, u * 9);
+        ctx.fillStyle = gold; ctx.fillRect(-d.w * 0.6 * p, -u * 4.5, d.w * 1.2 * p, u * 0.6); ctx.fillRect(-d.w * 0.6 * p, u * 3.9, d.w * 1.2 * p, u * 0.6);
+        ctx.restore();
+        if (p > 0.6) write(ctx, text, { x: d.w / 2, y: y - u * 3.2, size: u * 5.6, weight: 400, font: F.impact, color: '#fff', align: 'center', upper: true, spacing: 0.06, maxWidth: d.w * 0.9, maxLines: 1, alpha: ease((p - 0.6) / 0.4) });
+      };
+      const colors = [gold, '#ffffff', ribbon, '#60a5fa', '#34d399'];
+      if (seg.kind === 'intro') {
+        ribbonBand(d.badge || 'Grand opening', d.h * 0.22);
+        write(ctx, d.title, { x: d.w / 2, y: d.h * 0.36, size: u * 8, weight: 400, font: headFont(d, F.impact), color: gold, align: 'center', upper: true, maxWidth: d.w * 0.88, maxLines: 2, alpha: ease((local - 0.5) / 0.5) });
+        write(ctx, d.subtitle, { x: d.w / 2, y: d.h * 0.52, size: u * 3.8, weight: 700, font: F.sans, align: 'center', maxWidth: d.w * 0.86, maxLines: 2, alpha: ease((local - 0.8) / 0.5) });
+        chips(d.h * 0.64);
+        confettiBurst(ctx, d, local - 0.4, colors);
+        return;
+      }
+      if (seg.kind === 'outro') {
+        ribbonBand(d.closing, d.h * 0.3);
+        chips(d.h * 0.42);
+        if (d.contact) pill(ctx, `📞 ${d.contact}`, { x: d.w / 2, y: d.h * 0.66, size: u * 3.4, bg: gold, color: '#000', font: F.sans, weight: 800, align: 'center', alpha: ease((local - 1.2) / 0.4) });
+        confettiBurst(ctx, d, local - 0.2, colors);
+        return;
+      }
+      if (item.label) pill(ctx, item.label, { x: d.w / 2, y: d.h * 0.14, size: u * 2.8, bg: ribbon, color: '#fff', font: F.impact, weight: 400, align: 'center', radius: u * 0.6, spacing: 0.08, alpha: ease((local - 0.2) / 0.3) });
+      write(ctx, item.head, { x: d.w / 2, y: d.h * 0.66, size: u * (wide(d) ? 6.4 : 7.6), weight: 400, font: headFont(d, F.impact), color: '#fff', align: 'center', upper: true, maxWidth: d.w * 0.88, maxLines: 2, alpha: ease((local - 0.3) / 0.4) });
+      if (item.line) pill(ctx, item.line, { x: d.w / 2, y: d.h * 0.66 + u * 18, size: u * 2.8, bg: gold, color: '#000', font: F.sans, weight: 800, align: 'center', alpha: ease((local - 0.6) / 0.4), maxWidth: d.w * 0.9 });
+    },
+    chrome() {},
+  };
+
+  const LAYOUTS = { playful, luxe, bold, fresh, clean, editor, beat, parallax, stack, slide, frame: golden, invite, sale, product, compare, review, countdown, story, cinema, kinetic, event };
 
   // Moving effects over the video.
   function deco(ctx, d, t, kind) {
