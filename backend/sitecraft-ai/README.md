@@ -122,3 +122,28 @@ Daily calls are counted in D1 (table `resume_ai_usage`, created on first use). W
 Access is decided in one function, `checkAiAccess` in `resume-ai.js`. When login and payment exist, replace it (check the signed-in user and take a credit); the rest of the file stays the same.
 
 To test: set the three secrets, open `/api/resume-ai/health` and check all values are `true`, then open the Resume Builder, choose "Create with AI" and enter the access code.
+
+## Auto hosting (customer websites)
+
+`hosting.js` publishes a customer's website from the success page and serves it at
+`https://<worker-host>/s/<slug>/`. Uses the existing `DB` (sitecraft-db) binding. Tables
+(`hosted_sites`, `hosted_files`, `hosted_publish_log`) are created on first use.
+
+- `POST /api/hosting/publish` `{templateId, data, selected, slug, editKey?}` → `{slug, url, editKey}`.
+  The template code is fetched by the Worker from `HOSTING_SOURCE_BASE` (default: this repo's
+  `main` branch on raw.githubusercontent.com). The browser never sends HTML or code.
+- `GET /api/hosting/check?slug=...` → whether an address is free, with a suggestion.
+- Uploaded photos (data: URLs in the details) are stored as files, max 1.9 MB each, 40 files, 20 MB per site.
+- First publish returns a secret edit key; only its hash is stored. Updates need the key.
+
+Optional variables:
+
+| Variable | Meaning |
+|---|---|
+| `HOSTING_DOMAIN` | e.g. `mysites.in`. With a wildcard route `*.mysites.in/*` to this Worker, sites also open at `https://<slug>.mysites.in/`. |
+| `HOSTING_DAILY_LIMIT` | New sites per IP per day (default 10). |
+| `HOSTING_DISABLED` | `true` switches publishing off. |
+| `HOSTING_REQUIRE_PAYMENT` | `true` refuses publishing (402) until payment verification is added. |
+| `HOSTING_ALLOWED_ORIGINS` | Extra origins allowed to call the publish API (BotCraft's allowed origins are always allowed). |
+
+Switch a site off: `UPDATE hosted_sites SET status = 'blocked' WHERE slug = '...'` in the D1 console.
