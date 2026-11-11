@@ -228,15 +228,39 @@ export function extractUploads(data) {
 const escHtml = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const jsonForScript = v => JSON.stringify(v).replace(/</g, "\\u003c").replace(/>/g, "\\u003e").replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
 
-export function buildIndexHtml(templateId, data, selected, templateName) {
+// The photo shown when the website link is shared (WhatsApp, Facebook): the hero photo, else the
+// first photo in the details. Uploaded photos are made absolute with the site's own address.
+const IMAGE_URL = /^(https:\/\/[^\s"'<>]+\.(?:jpe?g|png|webp|gif)(?:\?[^\s"'<>]*)?|https:\/\/images\.unsplash\.com\/[^\s"'<>]+|assets\/uploads\/file-\d+\.(?:jpg|png|webp|gif))$/i;
+export function pickShareImage(data, siteUrl) {
+  const abs = v => (/^assets\//.test(v) ? (siteUrl ? new URL(v, siteUrl).href : "") : v);
+  const hero = data && data.hero;
+  const heroUrl = typeof hero === "string" ? hero : hero && typeof hero === "object" ? (hero.image || hero.src || "") : "";
+  if (heroUrl && IMAGE_URL.test(heroUrl)) return abs(heroUrl);
+  let found = "";
+  const walk = (v, depth) => {
+    if (found || depth > 12) return;
+    if (typeof v === "string") { if (IMAGE_URL.test(v)) found = v; return; }
+    if (Array.isArray(v)) { for (const x of v) walk(x, depth + 1); return; }
+    if (v && typeof v === "object") for (const k of Object.keys(v)) walk(v[k], depth + 1);
+  };
+  walk(data, 0);
+  return found ? abs(found) : "";
+}
+
+export function buildIndexHtml(templateId, data, selected, templateName, siteUrl) {
   const brand = (data && data.brand) || {};
   const title = String(brand.businessName || templateName || "Website").slice(0, 120);
   const description = String(brand.tagline || (data && data.home && (data.home.subtitle || data.home.text)) || "").slice(0, 300);
+  const image = pickShareImage(data, siteUrl);
   return '<!doctype html><html lang="en"><head><meta charset="utf-8">'
     + '<meta name="viewport" content="width=device-width,initial-scale=1">'
     + '<title>' + escHtml(title) + '</title>'
     + (description ? '<meta name="description" content="' + escHtml(description) + '">' : '')
+    + '<meta property="og:type" content="website">'
     + '<meta property="og:title" content="' + escHtml(title) + '">'
+    + (description ? '<meta property="og:description" content="' + escHtml(description) + '">' : '')
+    + (siteUrl ? '<meta property="og:url" content="' + escHtml(siteUrl) + '">' : '')
+    + (image ? '<meta property="og:image" content="' + escHtml(image) + '"><meta name="twitter:card" content="summary_large_image">' : '')
     + '<link rel="stylesheet" href="templates/' + templateId + '/style.css">'
     + '<style>body{margin:0}#site .template-admin-link{display:none!important}.sc-loading{font:16px/1.5 system-ui,sans-serif;padding:48px 20px;text-align:center;color:#444}</style>'
     + '</head><body><div id="site"><p class="sc-loading">Loading ' + escHtml(title) + '…</p></div>'
@@ -341,7 +365,7 @@ async function handlePublish(request, env, url, origin) {
     ...extracted.files
   ];
   if (files.some(f => f.bytes.length > MAX_FILE_BYTES)) return reply({ ok: false, error: "The template is too large to host." }, 413, origin);
-  const total = files.reduce((n, f) => n + f.bytes.length, 0);
+  let total = files.reduce((n, f) => n + f.bytes.length, 0);
   if (total > MAX_SITE_BYTES) return reply({ ok: false, error: "Your website is larger than 20 MB. Please use smaller photos." }, 413, origin);
 
   const ip = clientIp(request);
@@ -369,6 +393,10 @@ async function handlePublish(request, env, url, origin) {
     slug = await pickFreeSlug(db, base);
     createdKey = newEditKey();
   }
+
+  // Now that the address is known, add the share preview (og:url, og:image) to the home page.
+  files[0].bytes = enc.encode(buildIndexHtml(templateId, extracted.data, selected, manifest.name, siteUrls(env, url, slug).url));
+  total = files.reduce((n, f) => n + f.bytes.length, 0);
 
   const statements = [];
   if (createdKey) {
