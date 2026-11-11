@@ -2,23 +2,381 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#17181d"><title>SiteCraft — Website Templates</title>
+<meta name="theme-color" content="#100f17">
+<title>SiteCraft — Website Templates</title>
+<meta name="description" content="Ready-made websites for Indian shops and services: restaurants, kirana, salons, clinics, gyms and more. WhatsApp orders, UPI and one year of hosting included.">
 <style>
-:root{--bg:#f3f5f7;--surface:#fff;--text:#171a20;--muted:#68717d;--line:#dde2e8;--accent:#5f5cf3;--shadow:0 18px 48px rgba(23,26,32,.08)}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",system-ui,sans-serif}body{font-size:14px;line-height:1.55}a{color:inherit;text-decoration:none}button,input{font:inherit}.header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.header-inner{max-width:1240px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:12px}.back{min-height:42px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-weight:900}.logo{font-weight:900;display:flex;align-items:center;gap:9px;margin-right:auto}.mark{width:36px;height:36px;border-radius:11px;background:#171a20;color:#fff;display:grid;place-items:center}.nav{display:flex;gap:20px;color:var(--muted);font-size:12px;font-weight:900}.nav a:hover{color:var(--text)}main{max-width:1240px;margin:auto;padding:55px 20px 80px}.intro{display:flex;justify-content:space-between;align-items:end;gap:20px}.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:900}.intro h1{font-size:clamp(34px,5vw,58px);letter-spacing:-.05em;line-height:1.02;margin:10px 0}.intro p{max-width:650px;color:var(--muted);margin:0}.tools{margin:30px 0 22px;display:flex;gap:10px;flex-wrap:wrap}.chip{min-height:40px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:12px;font-weight:900}.chip.active{background:#171a20;color:#fff;border-color:#171a20}.search{margin-left:auto;min-width:min(320px,100%);min-height:42px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:0 12px;color:var(--text)}.groups{display:grid;gap:28px}.group h2{font-size:20px;margin:0}.group-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.count{font-size:12px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{border:1px solid var(--line);border-radius:18px;background:var(--surface);overflow:hidden;box-shadow:0 12px 32px rgba(23,26,32,.05);transition:transform .2s ease,box-shadow .2s ease}.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.card img{display:block;width:100%;aspect-ratio:1.55;object-fit:cover;background:#e9edf1}.card-body{padding:16px}.meta{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:900}.card h3{font-size:18px;line-height:1.2;margin:7px 0}.card p{font-size:12px;color:var(--muted);margin:0 0 14px}.actions{display:flex;gap:8px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border-radius:10px;font-size:12px;font-weight:900}.primary{background:#171a20;color:#fff}.ghost{border:1px solid var(--line);background:var(--surface)}.empty{padding:40px;border:1px dashed var(--line);border-radius:16px;text-align:center;color:var(--muted)}.footer{border-top:1px solid var(--line);padding:22px;text-align:center;color:var(--muted);font-size:12px}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.intro{display:block}.search{margin-left:0;width:100%}}
-@media(max-width:620px){.header-inner{flex-wrap:wrap}.nav{width:100%;justify-content:space-between}.grid{grid-template-columns:1fr}.tools{display:grid}.search{margin-top:2px}.card-body{padding:14px}}
-@media(prefers-color-scheme:dark){:root{--bg:#0d0f12;--surface:#15181d;--text:#f4f5f7;--muted:#adb5bf;--line:#2a3037;--shadow:0 18px 48px rgba(0,0,0,.28)}.mark{background:#f4f5f7;color:#111}.chip.active,.primary{background:#f4f5f7;color:#111}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:root{--bg:#100f17;--surface:#17161f;--surface-2:#1e1d28;--text:#f4f3fa;--muted:#bdb8cc;--line:#2d2b3a;--accent:#c9a7ff;--grad:linear-gradient(135deg,#8b5cf6,#ec4899 55%,#fb923c)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+body{font-size:15px;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+.tp-main{max-width:1320px;margin:0 auto;padding:36px 20px 80px}
+.tp-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.tp-kicker{margin:0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:var(--accent)}
+.tp-intro h1{font-size:clamp(32px,4.6vw,54px);letter-spacing:-.04em;line-height:1.04;margin:8px 0 10px}
+.tp-intro p{margin:0;max-width:640px;color:var(--muted);font-size:16px}
+.tp-perks{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.tp-perks li{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:13px;font-weight:700;color:var(--text)}
+.tp-tools{position:sticky;top:var(--tp-sticky,76px);z-index:15;margin:26px -20px 18px;padding:12px 20px;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid transparent}
+.tp-tools.is-stuck{border-bottom-color:var(--line)}
+.tp-search{position:relative;display:block}
+.tp-search svg{position:absolute;left:16px;top:50%;width:20px;height:20px;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.tp-search input{width:100%;min-height:52px;padding:0 44px 0 48px;border:1px solid #3d3a4f;border-radius:14px;background:var(--surface);font-size:16px;outline:none}
+.tp-search input::placeholder{color:#9893aa}
+.tp-search input:focus{border-color:#a78bfa;box-shadow:0 0 0 3px rgba(167,139,250,.25)}
+.tp-clear{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:36px;height:36px;border:0;border-radius:10px;background:transparent;font-size:20px;color:var(--muted);cursor:pointer}
+.tp-clear:hover{background:var(--surface-2)}
+.tp-chips{display:flex;gap:8px;margin-top:10px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.tp-chips::-webkit-scrollbar{display:none}
+.tp-chip{flex:0 0 auto;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:14px;font-weight:700;color:var(--text);cursor:pointer;white-space:nowrap}
+.tp-chip:hover{border-color:#4a4660}
+.tp-chip[aria-pressed="true"]{background:#f4f3fa;border-color:#f4f3fa;color:#14131b}
+.tp-chip.more{border-style:dashed}
+.tp-status{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 14px;color:var(--muted);font-size:14px}
+.tp-status strong{color:var(--text)}
+.tp-reset{border:0;background:none;color:var(--accent);font-weight:700;cursor:pointer;text-decoration:underline;font-size:14px;padding:6px 0}
+.tp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.tp-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:18px;background:var(--surface);overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.tp-card:hover{transform:translateY(-3px);border-color:#46425a;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.tp-thumb{position:relative;display:block;aspect-ratio:16/10;background:#22202d;overflow:hidden}
+.tp-thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.tp-card:hover .tp-thumb img{transform:scale(1.04)}
+.tp-badge{position:absolute;left:10px;top:10px;padding:5px 9px;border-radius:999px;background:rgba(16,15,23,.82);color:#fff;font-size:12px;font-weight:800;letter-spacing:.02em}
+.tp-badge.pop{background:#f4f3fa;color:#14131b}
+.tp-body{display:flex;flex-direction:column;gap:6px;flex:1;padding:14px 16px 16px}
+.tp-cat{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--accent)}
+.tp-card h2{margin:0;font-size:19px;line-height:1.25;letter-spacing:-.01em}
+.tp-variant{margin:0;font-size:14px;color:var(--muted)}
+.tp-desc{margin:2px 0 0;font-size:14px;color:#d6d2e2}
+.tp-tags{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 2px;padding:0;list-style:none}
+.tp-tags li{padding:4px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);font-size:12px;font-weight:700;color:#e4e1ee}
+.tp-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:12px}
+.tp-price{display:grid;line-height:1.2}
+.tp-price strong{font-size:20px}
+.tp-price span{font-size:12px;color:var(--muted)}
+.tp-actions{display:flex;gap:8px}
+.tp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 14px;border-radius:12px;font-size:14px;font-weight:800;white-space:nowrap}
+.tp-btn.ghost{border:1px solid #403c52;background:transparent}
+.tp-btn.ghost:hover{background:var(--surface-2)}
+.tp-btn.primary{background:var(--grad);color:#fff;box-shadow:0 8px 22px rgba(196,65,193,.28)}
+.tp-btn:focus-visible,.tp-chip:focus-visible,.tp-thumb:focus-visible{outline:3px solid #a78bfa;outline-offset:2px}
+.tp-empty{grid-column:1/-1;padding:28px;border:1px dashed #403c52;border-radius:16px;text-align:center;color:var(--muted)}
+.tp-empty strong{display:block;color:var(--text);font-size:18px;margin-bottom:4px}
+.tp-help{margin-top:36px;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px;align-items:stretch}
+.tp-help>div{padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.tp-help h2{margin:0 0 6px;font-size:22px;letter-spacing:-.02em}
+.tp-help p{margin:0;color:var(--muted);font-size:14px}
+.tp-help a.tp-help-card{display:flex;flex-direction:column;gap:6px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface-2)}
+.tp-help a.tp-help-card:hover{border-color:#5a5570}
+.tp-help a.tp-help-card strong{font-size:17px}
+.tp-help a.tp-help-card span{font-size:14px;color:var(--muted)}
+.tp-help a.tp-help-card em{font-style:normal;font-weight:800;color:var(--accent);margin-top:auto}
+.tp-sheet{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(5,5,10,.7)}
+.tp-sheet[hidden]{display:none}
+.tp-sheet-panel{width:min(860px,100%);max-height:min(80vh,720px);overflow:auto;border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:20px}
+.tp-sheet-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.tp-sheet-head h2{margin:0;font-size:20px}
+.tp-sheet-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.tp-sheet-grid button{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:46px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);font-size:14px;font-weight:700;text-align:left;cursor:pointer}
+.tp-sheet-grid button span{color:var(--muted);font-weight:600}
+.tp-sheet-grid button[aria-pressed="true"]{border-color:#f4f3fa}
+.tp-close{width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:transparent;font-size:20px;cursor:pointer}
+.tp-foot-links{margin-top:40px;text-align:center;font-size:13px;color:var(--muted)}
+.tp-foot-links a{text-decoration:underline;margin:0 6px}
+@media(max-width:900px){.tp-help{grid-template-columns:1fr}}
+@media(max-width:620px){
+.tp-main{padding:22px 16px 64px}.tp-tools{margin:18px -16px 12px;padding:10px 16px}.tp-intro p{font-size:15px}.tp-perks li{font-size:12px;padding:7px 10px}
+.tp-grid{grid-template-columns:1fr;gap:12px}
+.tp-card{display:grid;grid-template-columns:112px minmax(0,1fr)}
+.tp-thumb{aspect-ratio:auto;height:100%;min-height:156px}
+.tp-badge{left:6px;top:6px;padding:4px 7px}
+.tp-body{padding:12px 12px 12px 14px;gap:3px}
+.tp-cat{font-size:12px;letter-spacing:.06em}
+.tp-card h2{font-size:17px}
+.tp-variant{font-size:13px}
+.tp-desc{font-size:13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tp-tags{display:none}
+.tp-foot{flex-direction:column;align-items:stretch;gap:8px;padding-top:8px}
+.tp-price{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.tp-price strong{font-size:18px}
+.tp-actions .tp-btn{flex:1;min-height:42px;padding:0 10px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <link rel="stylesheet" href="site-navigation.css">
 </head>
-<body>
-<header class="header"><div class="header-inner"><a class="back" href="index.html">← Home</a><a class="logo" href="index.html"><span class="mark">✦</span>SiteCraft</a><nav class="nav"><a href="templates.html" aria-current="page">Templates</a><a href="portfolio-creator.html">Portfolio Creator</a><a href="resume-builder.html">Resume Builder</a><a href="ai-websites.html">AI Websites</a></nav></div></header>
-<main><section class="intro"><div><div class="eyebrow">Website Templates</div><h1>Pick a ready-made starting point.</h1><p>Choose a design, select features, enter your details, preview the website, and continue to checkout.</p></div></section><div class="tools" aria-label="Template filters"><div id="chips"></div><input id="search" class="search" type="search" placeholder="Search templates…" aria-label="Search templates"></div><div id="groups" class="groups"></div></main>
-<footer class="footer">© 2026 SiteCraft · Website Templates</footer>
+<body data-page="templates">
+<main class="tp-main">
+  <section class="tp-intro">
+    <div>
+      <p class="tp-kicker">Website templates</p>
+      <h1>Pick a ready-made website for your business.</h1>
+      <p>Choose a design, add your details and see your website live. Takes about 10 minutes.</p>
+    </div>
+    <ul class="tp-perks" aria-label="Included with every website">
+      <li>WhatsApp orders</li><li>UPI payments</li><li>1-year hosting</li><li>Mobile-ready</li>
+    </ul>
+  </section>
+
+  <div class="tp-tools" id="tools">
+    <label class="tp-search">
+      <span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search templates</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input id="search" type="search" autocomplete="off" placeholder="Search your business: kirana, salon, tiffin, xerox, clinic…" aria-describedby="status">
+      <button class="tp-clear" id="clear" type="button" aria-label="Clear search" hidden>×</button>
+    </label>
+    <div class="tp-chips" id="chips" role="group" aria-label="Business type"></div>
+  </div>
+
+  <div class="tp-status"><span id="status" role="status" aria-live="polite"></span><button class="tp-reset" id="reset" type="button" hidden>Show all</button></div>
+  <div class="tp-grid" id="grid"></div>
+
+  <section class="tp-help" aria-labelledby="helpTitle">
+    <div>
+      <h2 id="helpTitle">Business not listed?</h2>
+      <p>These two work for almost any business. Change the name, products or services, photos and colours to match yours.</p>
+    </div>
+    <a class="tp-help-card" href="features.html?template=localshop-01"><strong>Any shop</strong><span>Kirana, stationery, gifts, footwear, toys, fancy store and more.</span><em>Use Local Shop →</em></a>
+    <a class="tp-help-card" href="features.html?template=localservice-01"><strong>Any service</strong><span>Laundry, repairs, tutors, drivers, pest control, tailoring and more.</span><em>Use Local Service →</em></a>
+  </section>
+
+  <p class="tp-foot-links"><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="refund-policy.html">Refund Policy</a> · <a href="contact.html">Contact</a></p>
+</main>
+
+<div class="tp-sheet" id="sheet" hidden>
+  <div class="tp-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+    <div class="tp-sheet-head"><h2 id="sheetTitle">All business types</h2><button class="tp-close" id="sheetClose" type="button" aria-label="Close">×</button></div>
+    <div class="tp-sheet-grid" id="sheetGrid"></div>
+  </div>
+</div>
+
 <script src="core/registry.js"></script>
 <script>
-(function(){'use strict';const list=[...window.SITECRAFT_TEMPLATES].sort((a,b)=>(a.groupOrder??999)-(b.groupOrder??999));const chips=document.querySelector('#chips'),groups=document.querySelector('#groups'),search=document.querySelector('#search');let category='All',q='';const cats=['All',...new Set(list.map(t=>t.category||t.group).filter(Boolean))];chips.innerHTML=cats.map(c=>'<button class="chip '+(c==='All'?'active':'')+'" type="button" data-cat="'+c.replace(/"/g,'&quot;')+'">'+c+'</button>').join('');function norm(v){return String(v||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}function render(){const needle=norm(q);const filtered=list.filter(t=>{const cat=t.category||t.group||'';if(category!=='All'&&cat!==category)return false;const hay=norm([t.name,t.variant,t.category,t.group,t.id].join(' '));return !needle||needle.split(/\s+/).every(w=>hay.includes(w))});const map=new Map();filtered.forEach(t=>{const k=t.group||t.category||'Templates';if(!map.has(k))map.set(k,[]);map.get(k).push(t)});groups.innerHTML=map.size?[...map.entries()].map(([name,items])=>'<section class="group"><div class="group-head"><h2>'+name+'</h2><span class="count">'+items.length+' design'+(items.length===1?'':'s')+'</span></div><div class="grid">'+items.map(t=>'<article class="card"><img loading="lazy" src="'+t.thumbnail+'" alt="'+t.name.replace(/"/g,'&quot;')+'"><div class="card-body"><div class="meta">'+t.category+'</div><h3>'+t.name+'</h3><p>Customize the content and features for your website.</p><div class="actions"><a class="btn ghost" href="builder.html?template='+encodeURIComponent(t.id)+'">Live preview</a><a class="btn primary" href="features.html?template='+encodeURIComponent(t.id)+'">Select →</a></div></div></article>').join('')+'</div></section>').join(''):'<div class="empty"><strong>No templates found.</strong><br>Try another category or search.</div>'}document.addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;category=b.dataset.cat;document.querySelectorAll('[data-cat]').forEach(x=>x.classList.toggle('active',x===b));render()});search.addEventListener('input',()=>{q=search.value;render()});render()})();
+(function () {
+  'use strict';
+  var list = window.SITECRAFT_TEMPLATES.slice().sort(function (a, b) { return (a.groupOrder || 999) - (b.groupOrder || 999); });
+
+  // One line and three highlights per business type.
+  var INFO = {
+    'Restaurants': ['Menu with prices, table booking and WhatsApp orders.', ['Menu & prices', 'Table booking', 'WhatsApp orders']],
+    'Local Shops & Stores': ['Works for any shop: kirana, stationery, gifts, footwear and more.', ['Product list', 'Order on WhatsApp', 'Home delivery']],
+    'Local Service Businesses': ['Works for any service: laundry, repairs, tutors and more.', ['Service prices', 'Booking form', 'WhatsApp']],
+    'Cafés & Coffee Shops': ['Menu, combos and table reservations for your café.', ['Menu & combos', 'Reservations', 'Gallery']],
+    'Groceries & Supermarkets': ['Grocery list with basket, offers and WhatsApp orders.', ['Basket', 'Offers', 'Home delivery']],
+    'Bakeries & Cake Shops': ['Cakes and bakes with custom cake orders.', ['Cake orders', 'Menu & prices', 'WhatsApp']],
+    'E-commerce': ['Online store with products, cart and WhatsApp checkout.', ['Products & cart', 'WhatsApp checkout', 'Offers']],
+    'Clothing & Fashion Stores': ['Show your collection with sizes and festive offers.', ['Collection', 'Size enquiry', 'Offers']],
+    'Tailors & Boutiques': ['Stitching prices and measurement booking.', ['Stitching prices', 'Measurement booking', 'Bridal']],
+    'Salon & Spa': ['Services, packages and appointment booking.', ['Service menu', 'Appointments', 'Packages']],
+    'Dental & Medical Centers': ['Doctors, treatments and appointment requests.', ['Doctors', 'Appointments', 'Treatments']],
+    'Pharmacies & Medical Stores': ['Medicine orders by photo of prescription.', ['Prescription orders', 'Home delivery', 'WhatsApp']],
+    'Optical Stores': ['Frames, lenses and free eye test booking.', ['Eye test booking', 'Frames & lenses', 'Offers']],
+    'Cloud Kitchen & Home Bakers': ['Direct food orders without app commission.', ['Menu', 'Direct orders', 'WhatsApp']],
+    'Home Services & Repairs': ['Plumbing, electrical, AC and repair bookings.', ['Service list', 'Booking form', 'Areas served']],
+    'Printing & Xerox Shops': ['Xerox, cards, banners and gift printing orders.', ['Price list', 'Send your file', 'Bulk rates']],
+    'Mobile Stores': ['Phones, accessories and repair enquiries.', ['Phone catalogue', 'Repairs', 'EMI enquiry']],
+    'Electronics Stores': ['TVs, laptops and appliances with enquiry buttons.', ['Product catalogue', 'Offers', 'WhatsApp']],
+    'Hardware, Paints & Sanitary': ['Tools, paints and plumbing with quote requests.', ['Product list', 'Quote request', 'Site delivery']],
+    'Jewellery Stores': ['Gold and diamond collections with visit booking.', ['Collections', 'Store visit', 'Offers']],
+    'Furniture Stores': ['Sofas, beds and custom furniture orders.', ['Collection', 'Custom orders', 'Showroom visit']],
+    'Schools, Colleges & Coaching': ['Courses, batches, results and admission enquiries.', ['Courses', 'Admissions', 'Results']],
+    'Wholesalers & Distributors': ['Bulk price lists and orders for retailers.', ['Price list request', 'Bulk orders', 'Delivery areas']],
+    'Gyms & Fitness Centers': ['Plans, classes, trainers and free trial booking.', ['Membership plans', 'Free trial', 'Class schedule']],
+    'Agri Inputs & Seeds': ['Seeds, fertilisers and crop advice for farmers.', ['Products', 'Crop advice', 'Village delivery']],
+    'Real Estate Agencies & Brokers': ['Property listings with site visit booking.', ['Listings', 'Site visits', 'Enquiries']],
+    'Interior Designers & Architects': ['Projects, services and a cost estimator.', ['Portfolio', 'Cost estimate', 'Consultation']],
+    'Automotive Services': ['Car and bike service, detailing and bookings.', ['Service menu', 'Booking', 'Pick-up & drop']],
+    'Catering Services': ['Menus and packages for events and functions.', ['Menu packages', 'Event enquiry', 'Gallery']],
+    'Kitchen & Food Services': ['Daily meals, tiffin and lunch box orders.', ['Daily menu', 'Tiffin plans', 'WhatsApp orders']],
+    'Event & Wedding Planners': ['Wedding and event packages with enquiries.', ['Packages', 'Portfolio', 'Enquiry form']],
+    'Function Halls': ['Hall details, capacity, packages and date enquiry.', ['Hall details', 'Packages', 'Date enquiry']],
+    'Banquet Halls': ['Banquet spaces, menus and booking enquiries.', ['Halls', 'Menus', 'Booking enquiry']],
+    'Photography': ['Portfolio, packages and shoot booking.', ['Portfolio', 'Packages', 'Booking']],
+    'Hotels & Resorts': ['Rooms, amenities and booking enquiries.', ['Rooms', 'Amenities', 'Booking enquiry']],
+    'Teaching Websites': ['Classes, subjects and student enquiries for tutors.', ['Subjects', 'Batches', 'Enquiry']],
+    'Astrology': ['Consultations, services and appointment booking.', ['Services', 'Consultation', 'Booking']],
+    'Author Websites': ['Books, writing and reader contact for authors.', ['Books', 'Blog', 'Contact']]
+  };
+  var POPULAR = ['Restaurants', 'Local Shops & Stores', 'Groceries & Supermarkets', 'Salon & Spa', 'Dental & Medical Centers', 'Gyms & Fitness Centers', 'Clothing & Fashion Stores', 'Bakeries & Cake Shops', 'Mobile Stores', 'Local Service Businesses'];
+  var SHORT = { 'Local Shops & Stores': 'Shops & Kirana', 'Groceries & Supermarkets': 'Grocery', 'Dental & Medical Centers': 'Clinics', 'Gyms & Fitness Centers': 'Gyms', 'Clothing & Fashion Stores': 'Clothing', 'Bakeries & Cake Shops': 'Bakery', 'Local Service Businesses': 'Services', 'Mobile Stores': 'Mobiles' };
+  // Everyday words people type, mapped to business types.
+  var WORDS = [
+    [['kirana', 'general store', 'provision', 'shop', 'store', 'dukan', 'kottu', 'stationery', 'gift', 'footwear', 'toys', 'fancy'], ['Local Shops & Stores', 'Groceries & Supermarkets']],
+    [['grocery', 'groceries', 'supermarket', 'vegetables', 'fruits', 'mart'], ['Groceries & Supermarkets']],
+    [['tiffin', 'mess', 'meals', 'lunch box', 'lunchbox', 'home food', 'tiffins'], ['Kitchen & Food Services', 'Cloud Kitchen & Home Bakers']],
+    [['restaurant', 'hotel food', 'biryani', 'dhaba', 'food', 'family restaurant', 'veg', 'non veg'], ['Restaurants']],
+    [['xerox', 'photocopy', 'print', 'printing', 'flex', 'banner', 'visiting card', 'wedding card'], ['Printing & Xerox Shops']],
+    [['parlour', 'parlor', 'beauty', 'salon', 'spa', 'hair', 'makeup', 'bridal', 'mehendi'], ['Salon & Spa']],
+    [['doctor', 'clinic', 'hospital', 'dental', 'dentist', 'physio', 'diagnostic', 'lab'], ['Dental & Medical Centers']],
+    [['chemist', 'medical shop', 'medical store', 'pharmacy', 'medicine', 'medicines'], ['Pharmacies & Medical Stores']],
+    [['spectacles', 'specs', 'glasses', 'eye', 'optician', 'optical', 'lens', 'lenses'], ['Optical Stores']],
+    [['tailor', 'tailoring', 'stitching', 'boutique', 'darzi', 'blouse'], ['Tailors & Boutiques']],
+    [['tuition', 'tution', 'coaching', 'school', 'college', 'institute', 'academy', 'classes'], ['Schools, Colleges & Coaching', 'Teaching Websites']],
+    [['tutor', 'teacher', 'home tuition'], ['Teaching Websites']],
+    [['lodge', 'resort', 'rooms', 'homestay', 'hotel'], ['Hotels & Resorts']],
+    [['marriage', 'wedding', 'kalyana mandapam', 'mandapam', 'function', 'hall', 'party hall'], ['Function Halls', 'Banquet Halls', 'Event & Wedding Planners']],
+    [['mobile', 'phone', 'cell', 'smartphone', 'recharge'], ['Mobile Stores']],
+    [['electronics', 'tv', 'laptop', 'appliances', 'computer'], ['Electronics Stores']],
+    [['hardware', 'paint', 'paints', 'plumbing', 'sanitary', 'tiles', 'electrical shop'], ['Hardware, Paints & Sanitary']],
+    [['jewellery', 'jewelry', 'gold', 'silver', 'diamond', 'jewellers'], ['Jewellery Stores']],
+    [['furniture', 'sofa', 'bed', 'carpenter', 'wood'], ['Furniture Stores']],
+    [['seeds', 'fertiliser', 'fertilizer', 'pesticide', 'agri', 'farm', 'farmer', 'rythu'], ['Agri Inputs & Seeds']],
+    [['laundry', 'dry clean', 'dryclean', 'ironing', 'service', 'pest control', 'driver', 'cleaning'], ['Local Service Businesses', 'Home Services & Repairs']],
+    [['plumber', 'electrician', 'ac repair', 'repair', 'repairs', 'carpentry', 'painting work'], ['Home Services & Repairs']],
+    [['gym', 'fitness', 'yoga', 'zumba', 'crossfit', 'workout', 'trainer'], ['Gyms & Fitness Centers']],
+    [['real estate', 'plots', 'flats', 'property', 'villa', 'builder', 'broker'], ['Real Estate Agencies & Brokers']],
+    [['interior', 'architect', 'modular kitchen', 'home design'], ['Interior Designers & Architects']],
+    [['car', 'bike', 'garage', 'mechanic', 'service center', 'detailing', 'car wash'], ['Automotive Services']],
+    [['cake', 'cakes', 'bakery', 'bakes', 'sweets', 'sweet shop'], ['Bakeries & Cake Shops']],
+    [['tea', 'coffee', 'chai', 'cafe', 'café', 'juice'], ['Cafés & Coffee Shops']],
+    [['online store', 'online shop', 'ecommerce', 'e commerce', 'sell online'], ['E-commerce']],
+    [['clothes', 'clothing', 'garments', 'saree', 'sarees', 'fashion', 'readymade'], ['Clothing & Fashion Stores']],
+    [['photographer', 'photography', 'studio', 'video', 'videography'], ['Photography']],
+    [['astrologer', 'astrology', 'jyothishyam', 'horoscope', 'vastu'], ['Astrology']],
+    [['author', 'writer', 'books', 'poet'], ['Author Websites']],
+    [['catering', 'caterer', 'caterers'], ['Catering Services']],
+    [['event', 'events', 'planner', 'decoration', 'decorators'], ['Event & Wedding Planners']],
+    [['wholesale', 'wholesaler', 'distributor', 'distribution', 'traders', 'bulk'], ['Wholesalers & Distributors']],
+    [['cloud kitchen', 'home baker', 'home kitchen'], ['Cloud Kitchen & Home Bakers']]
+  ];
+
+  var grid = document.getElementById('grid'), chips = document.getElementById('chips'), search = document.getElementById('search');
+  var statusEl = document.getElementById('status'), resetBtn = document.getElementById('reset'), clearBtn = document.getElementById('clear');
+  var sheet = document.getElementById('sheet'), sheetGrid = document.getElementById('sheetGrid');
+  var esc = function (v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var norm = function (v) { return String(v || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); };
+  var counts = {};
+  list.forEach(function (t) { counts[t.category] = (counts[t.category] || 0) + 1; });
+  var cats = Object.keys(counts).sort(function (a, b) {
+    var oa = list.find(function (t) { return t.category === a; }).groupOrder || 999, ob = list.find(function (t) { return t.category === b; }).groupOrder || 999;
+    return oa - ob;
+  });
+  var params = new URLSearchParams(location.search);
+  var state = { cat: cats.indexOf(params.get('cat')) >= 0 ? params.get('cat') : 'All', q: params.get('q') || '' };
+  search.value = state.q;
+
+  function splitName(t) {
+    var parts = String(t.name).split(' — ');
+    var title = parts[0];
+    var variant = (parts[1] || t.variant || '').replace(/^Universal \((.*)\)$/, 'Universal · $1');
+    return { title: title, variant: variant };
+  }
+
+  // Whole words first ("car" means car, not carpenter); if none, words that start with what was typed ("kir" → kirana).
+  function synonymCats(needle) {
+    var exact = [], prefix = {}, padded = ' ' + needle + ' ', out = {};
+    if (!needle) return out;
+    WORDS.forEach(function (row) {
+      row[0].forEach(function (w) {
+        var nw = norm(w);
+        if (padded.indexOf(' ' + nw + ' ') >= 0) exact.push([nw, row[1]]);
+        else if (needle.length >= 3 && nw.indexOf(needle) === 0) row[1].forEach(function (c) { prefix[c] = true; });
+      });
+    });
+    if (!exact.length) return prefix;
+    // A longer phrase wins over the words inside it ("medical shop" is a pharmacy, not any shop).
+    exact.forEach(function (m) {
+      var inside = exact.some(function (o) { return o[0] !== m[0] && o[0].length > m[0].length && (' ' + o[0] + ' ').indexOf(' ' + m[0] + ' ') >= 0; });
+      if (!inside) m[1].forEach(function (c) { out[c] = true; });
+    });
+    out.__exact = true;
+    return out;
+  }
+
+  function matches(t, needle, syn) {
+    if (!needle) return true;
+    if (syn[t.category]) return true;
+    if (syn.__exact) return false;
+    var info = INFO[t.category] || ['', []];
+    var hay = ' ' + norm([t.name, t.variant, t.category, t.group, info[0], info[1].join(' ')].join(' '));
+    return needle.split(' ').every(function (w) { return w.length <= 3 ? (hay + ' ').indexOf(' ' + w + ' ') >= 0 : hay.indexOf(' ' + w) >= 0; });
+  }
+
+  function card(t) {
+    var n = splitName(t), info = INFO[t.category] || ['Customise the content and features for your business.', []];
+    var popular = POPULAR.indexOf(t.category) >= 0 && list.find(function (x) { return x.category === t.category; }) === t;
+    var many = counts[t.category] > 1;
+    return '<article class="tp-card">'
+      + '<a class="tp-thumb" href="builder.html?template=' + encodeURIComponent(t.id) + '" aria-label="Preview ' + esc(t.name) + '">'
+      + '<img loading="lazy" decoding="async" src="' + esc(t.thumbnail) + '" alt="">'
+      + (popular ? '<span class="tp-badge pop">Popular</span>' : many ? '<span class="tp-badge">' + counts[t.category] + ' designs</span>' : '')
+      + '</a><div class="tp-body">'
+      + '<span class="tp-cat">' + esc(t.category) + '</span>'
+      + '<h2>' + esc(n.title) + '</h2>'
+      + (n.variant ? '<p class="tp-variant">' + esc(n.variant) + '</p>' : '')
+      + '<p class="tp-desc">' + esc(info[0]) + '</p>'
+      + (info[1].length ? '<ul class="tp-tags">' + info[1].map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '')
+      + '<div class="tp-foot"><div class="tp-price"><strong>' + esc(t.price || '₹599') + '</strong><span>1-year hosting included</span></div>'
+      + '<div class="tp-actions"><a class="tp-btn ghost" href="builder.html?template=' + encodeURIComponent(t.id) + '">Preview</a>'
+      + '<a class="tp-btn primary" href="features.html?template=' + encodeURIComponent(t.id) + '">Select →</a></div></div>'
+      + '</div></article>';
+  }
+
+  function renderChips() {
+    var shown = ['All'].concat(POPULAR.filter(function (c) { return counts[c]; }));
+    if (state.cat !== 'All' && shown.indexOf(state.cat) < 0) shown.splice(1, 0, state.cat);
+    chips.innerHTML = shown.map(function (c) {
+      return '<button class="tp-chip" type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === state.cat) + '">' + esc(c === 'All' ? 'All (' + list.length + ')' : (SHORT[c] || c)) + '</button>';
+    }).join('') + '<button class="tp-chip more" type="button" id="moreCats" aria-haspopup="dialog">All business types ▾</button>';
+  }
+
+  function renderSheet() {
+    sheetGrid.innerHTML = ['All'].concat(cats).map(function (c) {
+      return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === state.cat) + '">' + esc(c) + '<span>' + (c === 'All' ? list.length : counts[c]) + '</span></button>';
+    }).join('');
+  }
+
+  function render() {
+    var needle = norm(state.q), syn = synonymCats(needle);
+    var items = list.filter(function (t) { return (state.cat === 'All' || t.category === state.cat) && matches(t, needle, syn); });
+    if (items.length) {
+      grid.innerHTML = items.map(card).join('');
+    } else {
+      var fall = list.filter(function (t) { return t.id === 'localshop-01' || t.id === 'localservice-01'; });
+      grid.innerHTML = '<div class="tp-empty"><strong>No exact match for “' + esc(state.q) + '”.</strong>These two templates work for almost any shop or service:</div>' + fall.map(card).join('');
+    }
+    var label = state.cat === 'All' ? 'all business types' : state.cat;
+    statusEl.innerHTML = items.length
+      ? '<strong>' + items.length + '</strong> website' + (items.length === 1 ? '' : 's') + (state.q ? ' for “' + esc(state.q) + '”' : '') + ' in ' + esc(label)
+      : 'No templates found';
+    resetBtn.hidden = state.cat === 'All' && !state.q;
+    clearBtn.hidden = !state.q;
+    renderChips();
+    var url = new URL(location.href);
+    url.searchParams.delete('cat'); url.searchParams.delete('q');
+    if (state.cat !== 'All') url.searchParams.set('cat', state.cat);
+    if (state.q) url.searchParams.set('q', state.q);
+    try { history.replaceState(null, '', url); } catch (e) {}
+  }
+
+  function setCat(c) { state.cat = c; render(); }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cat]');
+    if (b) { setCat(b.dataset.cat); if (!sheet.hidden) closeSheet(); return; }
+    if (e.target.closest('#moreCats')) openSheet();
+  });
+  var lastFocus = null;
+  function openSheet() { lastFocus = document.activeElement; renderSheet(); sheet.hidden = false; var f = sheetGrid.querySelector('[aria-pressed="true"]') || sheetGrid.querySelector('button'); if (f) f.focus(); }
+  function closeSheet() { sheet.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  document.getElementById('sheetClose').addEventListener('click', closeSheet);
+  sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) closeSheet(); });
+  var timer = null;
+  search.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { state.q = search.value.trim(); render(); }, 120); });
+  clearBtn.addEventListener('click', function () { search.value = ''; state.q = ''; render(); search.focus(); });
+  resetBtn.addEventListener('click', function () { search.value = ''; state.q = ''; state.cat = 'All'; render(); });
+
+  // Keep the search bar just under the site menu bar.
+  var tools = document.getElementById('tools');
+  function stickyTop() { var nav = document.getElementById('sitecraftGlobalNav'); var h = nav ? nav.getBoundingClientRect().height : 0; document.documentElement.style.setProperty('--tp-sticky', Math.round(h) + 'px'); }
+  window.addEventListener('resize', stickyTop);
+  window.addEventListener('scroll', function () { tools.classList.toggle('is-stuck', tools.getBoundingClientRect().top <= parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--tp-sticky') || 0) + 1); }, { passive: true });
+  render();
+  setTimeout(stickyTop, 0);
+})();
 </script>
 <script src="site-navigation.js"></script>
-</body></html>
+</body>
+</html>
