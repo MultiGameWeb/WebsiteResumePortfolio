@@ -1,0 +1,1062 @@
+{
+  "id": "furniture-01",
+  "name": "Furniture Store — Woodcraft Furniture",
+  "category": "Furniture Stores",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Showroom"
+    },
+    {
+      "id": "menu",
+      "label": "Collection & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Offers"
+    },
+    {
+      "id": "work",
+      "label": "Why Choose Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Visit / Custom Order Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Showroom Name",
+      "required": true,
+      "placeholder": "Woodcraft Furniture"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Showroom Manager",
+      "placeholder": "Imran Khan"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Sofas · Beds · Dining · Custom-made"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Built to last, made for your home."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Showroom",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Furniture made to live with."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Furniture for every home"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "hello@woodcraftfurniture.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Showroom Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Daily · 10:30 AM – 9:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Woodcraft Furniture",
+      "ownerName": "Imran Khan",
+      "tagline": "Sofas · Beds · Dining · Custom-made",
+      "motto": "Built to last, made for your home.",
+      "about": "Woodcraft Furniture is a showroom and workshop in Attapur making sofas, beds, dining sets, wardrobes and office furniture. Choose from ready stock or get furniture made to your size, fabric and finish."
+    },
+    "home": {
+      "eyebrow": "FURNITURE FOR EVERY HOME",
+      "title": "Furniture made to live with.",
+      "text": "Sofas, beds, dining sets and custom-made furniture with free delivery and fitting in Hyderabad."
+    },
+    "hero": "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "3-Seater Leather Sofa",
+        "category": "Sofas",
+        "price": "₹42,999",
+        "description": "Tan leatherette sofa with solid wood frame and deep seats.",
+        "tag": "Bestseller",
+        "image": "https://images.unsplash.com/photo-1540574163026-643ea20ade25?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Tan leather three-seater sofa",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Velvet Sofa",
+        "category": "Sofas",
+        "price": "₹36,999",
+        "description": "Emerald velvet sofa with slim wooden legs. Many colours.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Green velvet sofa in a bright room",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Accent Armchair",
+        "category": "Sofas",
+        "price": "₹12,499",
+        "description": "Cushioned armchair for reading corners and bedrooms.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Yellow armchair beside a floor lamp",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Upholstered King Bed",
+        "category": "Beds",
+        "price": "₹38,999",
+        "description": "Tufted headboard king bed with storage option.",
+        "tag": "Storage option",
+        "image": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "King bed with a tufted headboard in a bedroom",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Queen Bed with Side Tables",
+        "category": "Beds",
+        "price": "₹29,999",
+        "description": "Panel headboard bed with two matching side tables.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Queen bed with side tables and lamps",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "6-Seater Dining Set",
+        "category": "Dining",
+        "price": "₹48,999",
+        "description": "Solid wood table with six upholstered chairs.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Dining table with green upholstered chairs",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Open Wardrobe Unit",
+        "category": "Storage",
+        "price": "₹24,999",
+        "description": "Wardrobe with open shelves, made to your wall size.",
+        "tag": "Custom size",
+        "image": "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Wooden open wardrobe unit with shelves",
+        "enabled": true
+      },
+      {
+        "id": "p8",
+        "name": "Tufted Accent Chair",
+        "category": "Chairs",
+        "price": "₹8,999",
+        "description": "Button-tufted chair for bedrooms and living rooms.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "White tufted accent chair",
+        "enabled": true
+      },
+      {
+        "id": "p9",
+        "name": "Wooden Bar Stool",
+        "category": "Chairs",
+        "price": "₹3,499",
+        "description": "Simple solid wood stool for kitchens and counters.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Light wooden bar stool",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Living Room Combo",
+        "description": "3-seater sofa, armchair and centre table together.",
+        "price": "From ₹54,999",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Bedroom Set",
+        "description": "Bed, two side tables and wardrobe at a combo price.",
+        "price": "From ₹74,999",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Free Delivery & Fitting",
+        "description": "Free delivery and installation within Hyderabad on orders above ₹15,000.",
+        "price": "Free",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "✿",
+        "title": "Solid materials",
+        "description": "Seasoned wood frames and quality foam that last for years.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "Custom sizes",
+        "description": "Made to fit your room, with your choice of fabric and finish.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "⌂",
+        "title": "Free delivery & fitting",
+        "description": "Free within Hyderabad on orders above ₹15,000.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Easy payment",
+        "description": "UPI, card or bank transfer. Ask about EMI options.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "x1",
+        "name": "Showroom visit",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Custom-made order",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "Home measurement visit",
+        "enabled": true
+      },
+      {
+        "id": "x4",
+        "name": "Price enquiry",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Living spaces",
+        "alt": "Living room with sofa and cushions",
+        "image": "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Dining corners",
+        "alt": "Dining area with table and chairs",
+        "image": "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Lounge seating",
+        "alt": "Lounge with sofas and armchairs",
+        "image": "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Office furniture",
+        "alt": "Bright office with lounge chairs and desks",
+        "image": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Attapur",
+        "text": "We got our sofa and dining set made to size. Great finish and they delivered on the promised date.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Mehdipatnam",
+        "text": "Visited the showroom, sat on everything and chose a bed. Fitting was quick and clean.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Tolichowki",
+        "text": "Good quality for the price. They helped plan furniture for our whole flat.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "Can you make furniture to my size?",
+        "answer": "Yes. Share your room size or book a home measurement visit. Custom pieces take about 2–3 weeks.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Is delivery free?",
+        "answer": "Delivery and fitting are free within Hyderabad on orders above ₹15,000. A small charge applies below that or outside the city.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "What warranty do you give?",
+        "answer": "One year on manufacturing defects and five years on solid wood frames.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "How do I pay?",
+        "answer": "Pay an advance to confirm custom orders and the balance on delivery. UPI, card and bank transfer accepted.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Can I see fabric samples?",
+        "answer": "Yes, visit the showroom to see fabrics and finishes, or ask us to share photos on WhatsApp.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "10:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "10:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "10:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "10:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "10:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "10:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "10:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@woodcraftfurniture.example",
+      "address": "Pillar 140, PVNR Expressway Road, Attapur, Hyderabad, Telangana 500048",
+      "maps": "https://maps.google.com/?q=Attapur+Hyderabad",
+      "hours": "Daily · 10:30 AM – 9:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    },
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:furniture-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Showroom Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Showroom name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the showroom",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Sofas, Beds, Dining)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. New, Offer)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New product",
+          "category": "Sofas",
+          "price": "₹19,999",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Offers",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "Ask for price",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Request Form: Request Types",
+        "type": "collection",
+        "itemLabel": "request type",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Request type"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New request type",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "10:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Collection",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Offers",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why choose us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Visit / custom order form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}

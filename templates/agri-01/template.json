@@ -1,0 +1,1116 @@
+{
+  "id": "agri-01",
+  "name": "Agri Inputs — Kisan Agro Centre",
+  "category": "Agri Inputs & Seeds",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Shop"
+    },
+    {
+      "id": "menu",
+      "label": "Products & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Season Offers"
+    },
+    {
+      "id": "work",
+      "label": "Why Farmers Trust Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Crop Advice / Order Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Store Name",
+      "required": true,
+      "placeholder": "Kisan Agro Centre"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Store Manager",
+      "placeholder": "Narsimha Rao"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Seeds · Fertilisers · Crop care"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Helping farmers grow more, season after season."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Store",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Good inputs for a good harvest."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Seeds · Fertilisers · Crop care"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "help@kisanagro.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Store Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Daily · 7:00 AM – 8:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Kisan Agro Centre",
+      "ownerName": "Narsimha Rao",
+      "tagline": "Seeds · Fertilisers · Crop care",
+      "motto": "Helping farmers grow more, season after season.",
+      "about": "Kisan Agro Centre in Shadnagar supplies certified seeds, fertilisers, crop protection products and drip irrigation supplies. Our agri expert gives free advice on what to use for your crop and soil, and we deliver to nearby villages."
+    },
+    "home": {
+      "eyebrow": "SEEDS · FERTILISERS · CROP CARE",
+      "title": "Good inputs for a good harvest.",
+      "text": "Certified seeds, fertilisers and crop care with free expert advice. Ask on WhatsApp in Telugu, Hindi or English."
+    },
+    "hero": "https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "Paddy Seeds",
+        "category": "Seeds",
+        "price": "From ₹60 / kg",
+        "description": "Certified paddy varieties for kharif and rabi. Ask which suits your area.",
+        "tag": "Kharif",
+        "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Close-up of paddy rice grains",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Wheat & Maize Seeds",
+        "category": "Seeds",
+        "price": "From ₹45 / kg",
+        "description": "High-yield wheat and hybrid maize seeds.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Pile of wheat seeds",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Vegetable Seedlings",
+        "category": "Seeds",
+        "price": "From ₹2 / plant",
+        "description": "Tomato, chilli and brinjal seedlings from our nursery.",
+        "tag": "Nursery",
+        "image": "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Young seedlings growing in black pots",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Seed Trays & Coco Peat",
+        "category": "Seeds",
+        "price": "From ₹25",
+        "description": "Pro trays and coco peat for raising healthy seedlings.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Hand planting seedlings in a tray",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Fertilisers",
+        "category": "Fertilisers",
+        "price": "Govt. rates",
+        "description": "Urea, DAP, potash and complex fertilisers at government rates.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Gloved hands holding a young plant in soil",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Organic Compost",
+        "category": "Fertilisers",
+        "price": "From ₹12 / kg",
+        "description": "Vermicompost and organic manure for better soil health.",
+        "tag": "Organic",
+        "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Dark compost soil with a garden trowel",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Crop Protection Sprays",
+        "category": "Crop care",
+        "price": "Ask for price",
+        "description": "Insecticides, fungicides and weedicides. Use only as advised.",
+        "tag": "Expert advice",
+        "image": "https://images.unsplash.com/photo-1581578017093-cd30fce4eeb7?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Man in a mask and gloves preparing a crop spray",
+        "enabled": true
+      },
+      {
+        "id": "p8",
+        "name": "Drip Irrigation Kits",
+        "category": "Irrigation",
+        "price": "From ₹18,000 / acre",
+        "description": "Drip lines, filters and fittings. Subsidy help available.",
+        "tag": "Subsidy help",
+        "image": "https://images.unsplash.com/photo-1508857650881-64475119d798?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Greenhouse rows of crops with an irrigation hose",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Kharif Seed Booking",
+        "description": "Book paddy and cotton seeds early and get them before sowing.",
+        "price": "Book early",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Soil Health Pack",
+        "description": "Organic compost with micronutrients for one acre.",
+        "price": "₹1,499",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Drip Subsidy Help",
+        "description": "We help with paperwork for government drip irrigation subsidy.",
+        "price": "Free help",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "✿",
+        "title": "Certified products",
+        "description": "Seeds and inputs from licensed, trusted companies with bills.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "Free expert advice",
+        "description": "Our agri expert suggests what to use for your crop and soil.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "⌂",
+        "title": "Village delivery",
+        "description": "Delivery to nearby villages for bulk orders.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Fair prices",
+        "description": "Fertilisers at government rates. Clear prices on everything.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "x1",
+        "name": "Seeds",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Fertilisers",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "Crop protection",
+        "enabled": true
+      },
+      {
+        "id": "x4",
+        "name": "Drip irrigation",
+        "enabled": true
+      },
+      {
+        "id": "x5",
+        "name": "Crop advice",
+        "enabled": true
+      }
+    ],
+    "crops": [
+      {
+        "id": "x1",
+        "name": "Paddy",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Cotton",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "Maize",
+        "enabled": true
+      },
+      {
+        "id": "x4",
+        "name": "Chilli",
+        "enabled": true
+      },
+      {
+        "id": "x5",
+        "name": "Vegetables",
+        "enabled": true
+      },
+      {
+        "id": "x6",
+        "name": "Red gram",
+        "enabled": true
+      },
+      {
+        "id": "x7",
+        "name": "Groundnut",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "In the paddy fields",
+        "alt": "Woman farmer holding seedlings in a field",
+        "image": "https://images.unsplash.com/photo-1530507629858-e4977d30e9e0?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Field preparation",
+        "alt": "Tractors working in a green field",
+        "image": "https://images.unsplash.com/photo-1563201515-adbe35c669c5?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Healthy maize",
+        "alt": "Rows of young maize plants",
+        "image": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Harvest time",
+        "alt": "Farm workers carrying crates in a field",
+        "image": "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Shadnagar",
+        "text": "They told me exactly which spray to use for my chilli crop. The problem was solved in a week.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Kothur",
+        "text": "Good quality paddy seeds and fertiliser at fair rates. Delivery to our village saved a trip.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Farooqnagar",
+        "text": "They helped me apply for the drip irrigation subsidy. Very helpful people.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "Can you suggest what to use for my crop?",
+        "answer": "Yes. Send a photo of the crop and its problem on WhatsApp, or visit the shop. Our agri expert gives free advice.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Are your seeds certified?",
+        "answer": "Yes. We sell seeds only from licensed companies, with bills and lot numbers.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Do you deliver to villages?",
+        "answer": "Yes, for bulk orders in nearby mandals. Message us your village and order.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Can you help with subsidies?",
+        "answer": "We help with paperwork for drip irrigation and other government schemes. Bring your Aadhaar, pattadar passbook and bank details.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "How do I pay?",
+        "answer": "Cash, UPI or card. Fertilisers need Aadhaar as per government rules.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "7:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "7:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "7:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "7:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "7:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "7:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "7:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "help@kisanagro.example",
+      "address": "Main Road, near Bus Stand, Shadnagar, Rangareddy, Telangana 509216",
+      "maps": "https://maps.google.com/?q=Shadnagar+Telangana",
+      "hours": "Daily · 7:00 AM – 8:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    },
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:agri-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Store Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Store name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the store",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "product",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Product name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Seeds, Fertilisers, Crop care)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. New, Offer)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New product",
+          "category": "Seeds",
+          "price": "Ask for price",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Season Offers",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "Ask for price",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Advice Form: Needs",
+        "type": "collection",
+        "itemLabel": "need",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Need"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New need",
+          "enabled": true
+        }
+      },
+      {
+        "id": "crops",
+        "label": "Advice Form: Crops",
+        "type": "collection",
+        "itemLabel": "crop",
+        "path": "crops",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Crop"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New crop",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "10:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Products",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Season offers",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why farmers trust us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Crop advice / order form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
