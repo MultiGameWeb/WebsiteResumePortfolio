@@ -233,3 +233,5 @@
 .sc-pay a.sc-pay-btn-alt:hover{background:#eaf2fb}
 .sc-pay .sc-pay-small{margin:0;color:#4a5462;font-size:14px}
 @media(max-width:560px){.sc-pay-qr{width:160px;height:160px;margin:0 auto}.sc-pay-copy{margin-left:0}.sc-pay a.sc-pay-btn{width:100%}}
+/* Four photos: the last one fills the row so there is no empty cell */
+.agri-01 .ag-gallery-grid>:nth-child(4):last-child{grid-column:span 2}

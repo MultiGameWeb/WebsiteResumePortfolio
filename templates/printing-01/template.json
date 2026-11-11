@@ -1,0 +1,1046 @@
+{
+  "id": "printing-01",
+  "name": "Printing & Xerox — Sri Ganesh Printers",
+  "category": "Printing & Xerox Shops",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Shop"
+    },
+    {
+      "id": "menu",
+      "label": "Services & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Offers & Bulk Rates"
+    },
+    {
+      "id": "work",
+      "label": "Why Choose Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Print Order Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Shop Name",
+      "required": true,
+      "placeholder": "Sri Ganesh Printers"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Shop Manager",
+      "placeholder": "Ramesh Goud"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Xerox · Printing · Cards · Gifts"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Your neighbourhood print shop."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Shop",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Print anything. Ready today."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Xerox · printing · design"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "print@sriganeshprinters.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Shop Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Mon–Sat · 8:30 AM – 9:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Sri Ganesh Printers",
+      "ownerName": "Ramesh Goud",
+      "tagline": "Xerox · Printing · Cards · Gifts",
+      "motto": "Your neighbourhood print shop.",
+      "about": "Sri Ganesh Printers near Koti has served students, offices and families for 12 years. We do xerox, colour printing, visiting cards, wedding cards, banners and custom gifts like T-shirts and mugs. Send your file on WhatsApp and most jobs are ready the same day."
+    },
+    "home": {
+      "eyebrow": "XEROX · PRINTING · DESIGN",
+      "title": "Print anything. Ready today.",
+      "text": "Xerox, colour prints, visiting cards, wedding cards, banners and custom gifts. Send your file on WhatsApp for a quick quote."
+    },
+    "hero": "https://images.unsplash.com/photo-1572044162444-ad60f128bdea?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "Xerox & Printouts",
+        "category": "Printing",
+        "price": "From ₹2 / page",
+        "description": "B/W ₹2 and colour ₹10 per page. A4 and A3 from your phone, pen drive or email.",
+        "tag": "Same day",
+        "image": "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Colour laser printer in a print shop",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Visiting Cards & Logo Design",
+        "category": "Cards",
+        "price": "100 cards from ₹299",
+        "description": "Free design help. Matte, glossy and textured card options.",
+        "tag": "Free design",
+        "image": "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Tablet showing a letter design next to a red booklet",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Wedding & Event Cards",
+        "category": "Cards",
+        "price": "From ₹18 per card",
+        "description": "Wedding, housewarming and function cards in many designs.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Bride and groom walking in a field at sunset",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Custom T-shirt Printing",
+        "category": "Gifts",
+        "price": "From ₹349",
+        "description": "Your photo, logo or text on cotton T-shirts. Bulk rates for teams.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Person wearing a plain white T-shirt",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Photo Mug Printing",
+        "category": "Gifts",
+        "price": "₹299",
+        "description": "Your photo or message on a white mug. Ready in 2 hours.",
+        "tag": "Gift idea",
+        "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Plain white mug on a table",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Printed Tote Bags",
+        "category": "Gifts",
+        "price": "From ₹120",
+        "description": "Cloth bags with your shop name or event logo.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Brown tote bag hanging on a wall",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Spiral Binding & Lamination",
+        "category": "Binding",
+        "price": "From ₹40",
+        "description": "Project reports, records and certificates bound or laminated while you wait.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1531346878377-a5be20888e57?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Spiral notebook with a pen on a white desk",
+        "enabled": true
+      },
+      {
+        "id": "p8",
+        "name": "Printed Paper Cups",
+        "category": "Business",
+        "price": "Ask for price",
+        "description": "Paper cups with your logo for shops, offices and events.",
+        "tag": "Bulk",
+        "image": "https://images.unsplash.com/photo-1577937927133-66ef06acdf18?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Printed paper cups on a table",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Student Project Pack",
+        "description": "Printout, spiral binding and front-page design for your project report.",
+        "price": "From ₹149",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Shop Starter Kit",
+        "description": "500 visiting cards, 100 pamphlets and one flex banner.",
+        "price": "₹1,999",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Bulk Xerox Rate",
+        "description": "Special per-page rate for 500 pages or more.",
+        "price": "₹1.50 / page",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "⎙",
+        "title": "Sharp prints",
+        "description": "Laser and digital printing with clear, bright colours.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "Proof before print",
+        "description": "We send a proof on WhatsApp so there are no mistakes.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "⏱",
+        "title": "Same-day jobs",
+        "description": "Most xerox, cards and gifts are ready the same day.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Bulk rates",
+        "description": "Lower prices for offices, schools and bulk orders.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "x1",
+        "name": "Pickup from shop",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Delivery nearby",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "I will send the file on WhatsApp",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Planning your print job",
+        "alt": "Hands writing in a planner with sticky notes next to a laptop",
+        "image": "https://images.unsplash.com/photo-1523289333742-be1143f6b766?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Cut, fold and finish",
+        "alt": "Cutting tools, tapes and sticky notes on a blue desk",
+        "image": "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Office printing",
+        "alt": "Notebook, pens and a laptop on a wooden desk",
+        "image": "https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Binding work",
+        "alt": "Stacks of colourful bound books",
+        "image": "https://images.unsplash.com/photo-1550399105-c4db5fb85c18?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Koti",
+        "text": "Got my project report printed and bound in 20 minutes. Very reasonable rates.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Abids",
+        "text": "They designed our shop’s visiting cards for free and the print quality is excellent.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Sultan Bazar",
+        "text": "Ordered 200 wedding cards here. They sent a proof first and delivered before the date.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I send my file?",
+        "answer": "Send it on WhatsApp or email, or bring it on a pen drive. PDF works best for printing.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Will I see the design before printing?",
+        "answer": "Yes. For cards, banners and gifts we send a proof on WhatsApp and print only after you approve.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "How soon will my order be ready?",
+        "answer": "Xerox and prints are ready while you wait. Visiting cards take 1 day and wedding cards 3–5 days.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Do you give bulk rates?",
+        "answer": "Yes. Offices, schools and shops get lower rates on bulk orders. Ask us for a quote.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "How do I pay?",
+        "answer": "UPI, cash or card at the shop. Pay an advance for large orders.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "8:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "8:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "8:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "8:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "8:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "8:30 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "8:30 AM",
+        "close": "9:00 PM",
+        "closed": true,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "print@sriganeshprinters.example",
+      "address": "Shop 7, Bank Street, Koti, Hyderabad, Telangana 500095",
+      "maps": "https://maps.google.com/?q=Koti+Hyderabad",
+      "hours": "Mon–Sat · 8:30 AM – 9:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:printing-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Shop Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Shop name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the shop",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Printing, Cards, Gifts)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. New, Offer)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "category": "Printing",
+          "price": "Ask for price",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Offers & Bulk Rates",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "Ask for price",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Order Form: Pickup Options",
+        "type": "collection",
+        "itemLabel": "option",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Option"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New option",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "10:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Services & prices",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Offers & bulk rates",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why choose us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Print order form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
