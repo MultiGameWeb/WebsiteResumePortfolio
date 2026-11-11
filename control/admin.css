@@ -64,3 +64,9 @@ tbody tr:hover { background: var(--page); }
 .list div { border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; }
 .empty { color: var(--soft); font-size: 13px; }
 @media (max-width: 600px) { .kv { grid-template-columns: 1fr; } .kv dt { margin-top: 6px; } }
+.badge { display: inline-block; min-width: 20px; padding: 1px 6px; margin-left: 4px; border-radius: 999px; background: var(--danger); color: #fff; font-size: 12px; line-height: 18px; text-align: center; }
+.row-actions { white-space: nowrap; }
+.row-actions .btn + .btn { margin-left: 6px; }
+tr.is-new td { background: color-mix(in srgb, var(--danger) 6%, transparent); }
+td.alert { color: var(--danger); font-weight: 600; }
+.toolbar label { display: inline-flex; gap: 8px; align-items: center; }

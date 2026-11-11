@@ -74,9 +74,34 @@ const SCHEMA = [
 let schemaReady = null;
 function ensureSchema(db) {
   if (!schemaReady) {
-    schemaReady = db.batch(SCHEMA.map(sql => db.prepare(sql))).catch(error => { schemaReady = null; throw error; });
+    schemaReady = db.batch(SCHEMA.map(sql => db.prepare(sql)))
+      // Added after the first release: one year of hosting per site.
+      .then(() => db.prepare("ALTER TABLE hosted_sites ADD COLUMN expires_at TEXT").run().catch(() => null))
+      .catch(error => { schemaReady = null; throw error; });
   }
   return schemaReady;
+}
+
+// One year of hosting from the first publish. After it ends the site keeps working for a grace
+// week; the customer is told about the grace week only once the year has ended.
+const HOSTING_DAYS = 365;
+const GRACE_DAYS = 7;
+const DAY_MS = 86400000;
+export function hostingTerm(row, now = Date.now()) {
+  const expires = row?.expires_at ? Date.parse(row.expires_at) : Date.parse(row?.created_at || new Date(now).toISOString()) + HOSTING_DAYS * DAY_MS;
+  const graceEnds = expires + GRACE_DAYS * DAY_MS;
+  const state = now < expires ? "active" : now < graceEnds ? "grace" : "ended";
+  return { expires, graceEnds, state };
+}
+export function hostingInfo(row, now = Date.now()) {
+  const t = hostingTerm(row, now);
+  const info = { state: t.state, expiresAt: new Date(t.expires).toISOString() };
+  if (t.state !== "active") info.graceEndsAt = new Date(t.graceEnds).toISOString();
+  return info;
+}
+export function extendedExpiry(row, now = Date.now()) {
+  const t = hostingTerm(row, now);
+  return new Date(Math.max(now, t.expires) + HOSTING_DAYS * DAY_MS).toISOString();
 }
 
 const nowIso = () => new Date().toISOString();
@@ -325,13 +350,16 @@ async function handlePublish(request, env, url, origin) {
   const editKey = String(body.editKey || "");
   let slug;
   let createdKey = null;
+  let hostingRow = null;
 
   if (editKey) {
     // Update an existing site.
     if (!SLUG.test(requestedSlug)) return reply({ ok: false, error: "Website address is missing." }, 400, origin);
-    const site = await db.prepare("SELECT slug, edit_key_hash, status FROM hosted_sites WHERE slug = ?").bind(requestedSlug).first();
+    const site = await db.prepare("SELECT slug, edit_key_hash, status, created_at, expires_at FROM hosted_sites WHERE slug = ?").bind(requestedSlug).first();
     if (!site || !safeEqual(site.edit_key_hash, await sha256(editKey))) return reply({ ok: false, error: "This edit key does not match the website address." }, 403, origin);
     if (site.status === "blocked") return reply({ ok: false, error: "This website has been switched off. Please contact SiteCraft support." }, 403, origin);
+    if (hostingTerm(site).state === "ended") return reply({ ok: false, error: "HOSTING_ENDED", message: "Your one-year hosting has ended. Please renew to bring your website back online.", hosting: hostingInfo(site) }, 403, origin);
+    hostingRow = site;
     if (!(await bumpCounter(db, ip, "update", DAILY_UPDATES))) return reply({ ok: false, error: "Too many updates today. Please try again tomorrow." }, 429, origin);
     slug = site.slug;
   } else {
@@ -345,8 +373,9 @@ async function handlePublish(request, env, url, origin) {
   const statements = [];
   if (createdKey) {
     statements.push(db.prepare(
-      "INSERT INTO hosted_sites (slug, template_id, business_name, edit_key_hash, status, size_bytes, created_ip, created_at, updated_at) VALUES (?, ?, ?, ?, 'live', ?, ?, ?, ?)"
-    ).bind(slug, templateId, businessName, await sha256(createdKey), total, ip, now, now));
+      "INSERT INTO hosted_sites (slug, template_id, business_name, edit_key_hash, status, size_bytes, created_ip, created_at, updated_at, expires_at) VALUES (?, ?, ?, ?, 'live', ?, ?, ?, ?, ?)"
+    ).bind(slug, templateId, businessName, await sha256(createdKey), total, ip, now, now, new Date(Date.parse(now) + HOSTING_DAYS * DAY_MS).toISOString()));
+    hostingRow = { created_at: now, expires_at: new Date(Date.parse(now) + HOSTING_DAYS * DAY_MS).toISOString() };
   } else {
     statements.push(db.prepare("UPDATE hosted_sites SET template_id = ?, business_name = ?, size_bytes = ?, updated_at = ? WHERE slug = ?")
       .bind(templateId, businessName, total, now, slug));
@@ -371,7 +400,8 @@ async function handlePublish(request, env, url, origin) {
     created: Boolean(createdKey),
     ...(createdKey ? { editKey: createdKey } : {}),
     sizeBytes: total,
-    files: files.length
+    files: files.length,
+    hosting: hostingInfo(hostingRow)
   }, createdKey ? 201 : 200, origin);
 }
 
@@ -385,9 +415,9 @@ async function handleVerify(request, env, url, origin) {
   if (!SLUG.test(slug) || !editKey || editKey.length > 100) return reply({ ok: false, error: "Please enter your website address and edit key." }, 400, origin);
   await ensureSchema(env.DB);
   if (!(await bumpCounter(env.DB, clientIp(request), "verify", 30))) return reply({ ok: false, error: "Too many tries today. Please try again tomorrow." }, 429, origin);
-  const site = await env.DB.prepare("SELECT slug, template_id, edit_key_hash FROM hosted_sites WHERE slug = ?").bind(slug).first();
+  const site = await env.DB.prepare("SELECT slug, template_id, edit_key_hash, created_at, expires_at FROM hosted_sites WHERE slug = ?").bind(slug).first();
   if (!site || !safeEqual(site.edit_key_hash, await sha256(editKey))) return reply({ ok: false, error: "This edit key does not match the website address." }, 403, origin);
-  return reply({ ok: true, slug: site.slug, templateId: site.template_id, url: siteUrls(env, url, site.slug).url }, 200, origin);
+  return reply({ ok: true, slug: site.slug, templateId: site.template_id, url: siteUrls(env, url, site.slug).url, hosting: hostingInfo(site) }, 200, origin);
 }
 
 async function handleCheck(env, url, origin) {
@@ -424,9 +454,9 @@ async function serveFile(request, env, slug, filePath) {
   if (!env.DB) return page(503, "Website unavailable", "Hosting storage is not configured.");
   if (!SLUG.test(slug)) return page(404, "Website not found", "Please check the address and try again.");
   await ensureSchema(env.DB);
-  const site = await env.DB.prepare("SELECT status FROM hosted_sites WHERE slug = ?").bind(slug).first();
+  const site = await env.DB.prepare("SELECT status, created_at, expires_at FROM hosted_sites WHERE slug = ?").bind(slug).first();
   if (!site) return page(404, "Website not found", "Please check the address and try again.");
-  if (site.status !== "live") return page(410, "Website unavailable", "This website is not available right now.");
+  if (site.status !== "live" || hostingTerm(site).state === "ended") return page(410, "Website unavailable", "This website is not available right now.");
   let path = filePath || "index.html";
   if (path.endsWith("/")) path += "index.html";
   if (path.includes("..") || path.length > 200) return page(404, "Not found", "This page does not exist.");

@@ -5,6 +5,7 @@ import { handleAdminRoute } from "./sitecraft-admin.js";
 import { handleAiVideoRoute } from "./ai-video.js";
 import { handleResumeAiRoute } from "./resume-ai.js";
 import { handleHostingRoute } from "./hosting.js";
+import { handleCallbackRoute } from "./callbacks.js";
 const MODEL = "gemini-3.8-flash";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 const corsHeaders = {
@@ -129,6 +130,8 @@ export default {
     // Hosted customer websites (/s/<slug>/) and the publish API check the origin themselves.
     const hostingResponse = await handleHostingRoute(request, env, url);
     if (hostingResponse) return hostingResponse;
+    const callbackResponse = await handleCallbackRoute(request, env, url);
+    if (callbackResponse) return callbackResponse;
 
     // BotCraft checks the origin itself, including on preflight.
     const botcraftResponse = await handleBotcraftRoute(request, env, url, ctx);
