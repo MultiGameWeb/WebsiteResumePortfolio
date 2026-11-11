@@ -18,3 +18,25 @@
 @media(max-width:1000px){.kb-header nav{gap:11px}.kb-plan-grid{grid-template-columns:repeat(2,1fr)}.kb-dish{grid-template-columns:.7fr 1.3fr}}
 @media(max-width:650px){.kb-strip{padding:7px 12px;font-size:6px}.kb-strip span:last-child{display:none}.kb-header{padding:11px 13px;gap:8px;flex-wrap:wrap}.kb-brand{min-width:0}.kb-brand b{font-size:15px}.kb-head-actions a{padding:8px;font-size:6px}.kb-header nav{order:3;width:100%;overflow:auto;white-space:nowrap;gap:17px;padding-top:5px}.kb-hero{display:flex;flex-direction:column-reverse;align-items:stretch;gap:23px;padding:24px 16px 43px}.kb-hero-image{height:300px;width:calc(100% - 15px);margin-left:auto}.kb-image-stamp{right:-9px;bottom:13px;padding:12px;font-size:14px}.kb-hero h1{font-size:54px}.kb-hero-copy>p{font-size:14px}.kb-hero-points{margin-top:35px;gap:10px}.kb-about{grid-template-columns:1fr;gap:10px;padding:48px 16px}.kb-about h2{font-size:39px}.kb-about>div:nth-child(2)>p{font-size:14px}.kb-section{padding:51px 14px}.kb-section-head{display:block}.kb-section-head h2{font-size:38px}.kb-search{width:100%;margin-top:14px}.kb-filters{margin-right:-14px}.kb-menu-grid{grid-template-columns:1fr}.kb-dish{grid-template-columns:1fr}.kb-dish-image{height:210px;min-height:210px}.kb-dish-copy{padding:15px}.kb-plan-grid{grid-template-columns:1fr}.kb-catering{padding:49px 14px}.kb-catering-grid{grid-template-columns:1fr}.kb-services{padding:49px 14px}.kb-service-grid{grid-template-columns:1fr 1fr}.kb-delivery{padding:47px 15px;grid-template-columns:1fr;gap:12px}.kb-area-grid{grid-template-columns:1fr 1fr}.kb-hygiene{padding:48px 15px;grid-template-columns:1fr;gap:14px}.kb-gallery-grid{grid-template-columns:1fr 1fr;gap:7px}.kb-gallery-grid figure{height:150px}.kb-reviews{padding:48px 14px}.kb-review-grid{grid-template-columns:1fr}.kb-policy-grid{grid-template-columns:1fr}.kb-order{padding:48px 14px;grid-template-columns:1fr;gap:18px}.kb-order-copy{padding:0}.kb-order-copy h2{font-size:43px}.kb-form{padding:15px}.kb-form-grid{gap:8px}.kb-form-grid input,.kb-form-grid select,.kb-form-grid textarea{padding:9px 8px}.kb-location{grid-template-columns:1fr;padding:36px 15px}.kb-location h2{font-size:35px}.kb-location-card{min-height:120px}.kb-contact{display:grid;gap:12px;padding:34px 15px}.kb-contact h2{font-size:32px}.kb-footer{display:grid;gap:7px;padding:18px 14px}}
 @media(prefers-reduced-motion:reduce){.kitchen-01 *{transition:none!important;scroll-behavior:auto!important}}
+
+/* SiteCraft payments */
+.sc-pay{padding:clamp(40px,6vw,72px) clamp(16px,5vw,64px);background:#f3f5f8;color:#1b2430;font-family:inherit}
+.sc-pay *{box-sizing:border-box}
+.sc-pay-card{max-width:880px;margin:0 auto;display:flex;flex-wrap:wrap;gap:28px;align-items:center;padding:clamp(20px,4vw,36px);background:#fff;border:1px solid #d9dee6;border-radius:16px;box-shadow:0 10px 30px rgba(20,30,50,.06)}
+.sc-pay-qr{width:180px;height:180px;object-fit:contain;border-radius:10px;border:1px solid #d9dee6;background:#fff;padding:8px;flex:0 0 auto}
+.sc-pay-body{flex:1 1 300px;min-width:0}
+.sc-pay-kicker{display:block;margin-bottom:6px;color:#0b5394;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.sc-pay h2{margin:0 0 10px;color:#1b2430;font-size:clamp(24px,3.4vw,34px);line-height:1.2}
+.sc-pay p{margin:0 0 16px;color:#3c4654;font-size:16px;line-height:1.6}
+.sc-pay-id{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 16px;padding:10px 12px;background:#f3f5f8;border:1px dashed #9aa6b6;border-radius:10px}
+.sc-pay-id span{color:#3c4654;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.sc-pay-id strong{color:#1b2430;font-size:17px;word-break:break-all}
+.sc-pay-copy{margin-left:auto;min-height:44px;min-width:72px;padding:8px 14px;border:1px solid #0b5394;border-radius:8px;background:#fff;color:#0b5394;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.sc-pay-copy:hover{background:#eaf2fb}
+.sc-pay-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.sc-pay a.sc-pay-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 20px;border-radius:10px;background:#0b5394;color:#fff;font-size:16px;font-weight:700;text-decoration:none}
+.sc-pay a.sc-pay-btn:hover{background:#08406f}
+.sc-pay a.sc-pay-btn-alt{background:#fff;color:#0b5394;border:1px solid #0b5394}
+.sc-pay a.sc-pay-btn-alt:hover{background:#eaf2fb}
+.sc-pay .sc-pay-small{margin:0;color:#4a5462;font-size:14px}
+@media(max-width:560px){.sc-pay-qr{width:160px;height:160px;margin:0 auto}.sc-pay-copy{margin-left:0}.sc-pay a.sc-pay-btn{width:100%}}

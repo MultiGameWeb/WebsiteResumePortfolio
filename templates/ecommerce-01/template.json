@@ -39,6 +39,10 @@
     {
       "id": "location",
       "label": "Location"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
     }
   ],
   "fields": [
@@ -120,6 +124,22 @@
       "path": "contact.hours",
       "label": "Opening hours",
       "placeholder": "Mon–Sat · 10:00 AM – 7:00 PM"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
@@ -252,7 +272,12 @@
         "answer": "Message us within 2 days of delivery. Exchange or return options depend on the product and its condition.",
         "enabled": true
       }
-    ]
+    ],
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    }
   },
   "admin": {
     "storageKey": "sitecraft:ecommerce-01",
@@ -501,6 +526,42 @@
             "path": "contact.hours",
             "label": "Opening hours",
             "placeholder": "Mon–Sat · 10:00 AM – 7:00 PM"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
           }
         ]
       },
