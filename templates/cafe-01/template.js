@@ -157,7 +157,7 @@ function scConnect(html,d,selected){
 }
 
 /* SiteCraft enquiry form: collects table / meet-up details and opens WhatsApp with them filled in. */
-const SC_FORM={"section":"bc-section bc-booking","kicker":"bc-kicker","btn":"bc-btn bc-btn-dark","kickerText":"Make a plan","title":"Reserve a table / plan a meet-up","text":"Tell us when you’d like to visit. Our café team will reply on WhatsApp to confirm the details.","submit":"Send request on WhatsApp","intro":"Hello Brew Corner Café, I would like to reserve a table or plan a meet-up.","fields":[["name","Your name","text",true],["phone","Phone number","tel",true],["meetup","Visit type","select:meetupTypes:name",true],["date","Preferred date","date",true],["time","Preferred time","time",true],["guests","Number of people","number",true],["message","Any seating or meet-up details (optional)","textarea",false]]};
+const SC_FORM={"section":"bc-section bc-booking","kicker":"bc-kicker","btn":"bc-btn bc-btn-dark","kickerText":"Make a plan","title":"Reserve a table / plan a meet-up","text":"Tell us when you’d like to visit. Our café team will reply on WhatsApp to confirm the details.","submit":"Send request on WhatsApp","intro":"Hello, I would like to reserve a table or plan a meet-up.","fields":[["name","Your name","text",true],["phone","Phone number","tel",true],["meetup","Visit type","select:meetupTypes:name",true],["date","Preferred date","date",true],["time","Preferred time","time",true],["guests","Number of people","number",true],["message","Any seating or meet-up details (optional)","textarea",false]]};
 function scWithForm(html,d,selected){
   const c=d.contact||{},wa=String(c.whatsapp||'').replace(/\D/g,'');
   if(!(selected||[]).includes('enquiry')||!wa)return html;
