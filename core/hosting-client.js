@@ -34,6 +34,16 @@
     input.disabled = true;
     q('#hostPreviewSlug').textContent = saved.slug;
     btn.textContent = 'Update live website';
+    q('#hostConnect').hidden = true;
+  }
+
+  function resetCard() {
+    result.hidden = true;
+    input.disabled = false;
+    input.value = slugify(state.data && state.data.brand && state.data.brand.businessName) || '';
+    preview();
+    btn.textContent = 'Publish website';
+    q('#hostConnect').hidden = false;
   }
 
   const saved = readSaved();
@@ -84,6 +94,40 @@
   }
 
   btn.addEventListener('click', publish);
+
+  q('#hostConnectBtn').addEventListener('click', async () => {
+    const slug = slugify(q('#hostConnectSlug').value.replace(/^.*\/s\//, '').replace(/\/.*$/, ''));
+    const editKey = q('#hostConnectKey').value.trim();
+    if (slug.length < 3 || !editKey) { setStatus('Please enter your website address and edit key.', 'error'); return; }
+    const b = q('#hostConnectBtn');
+    b.disabled = true;
+    setStatus('Checking your edit key…');
+    try {
+      const res = await fetch(API + '/api/hosting/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ slug, editKey }) });
+      const out = await res.json().catch(() => ({}));
+      if (!res.ok || !out.ok) throw new Error(out.error || ('Could not check the key (' + res.status + ').'));
+      if (out.templateId && out.templateId !== templateId) {
+        setStatus('This website was made with a different template (' + out.templateId + '). Open that template in the builder, then come back here to update it.', 'error');
+        return;
+      }
+      const next = { slug: out.slug, url: out.url, editKey, publishedAt: new Date().toISOString() };
+      writeSaved(next);
+      showResult(next, false);
+      setStatus('Connected. Edit your details in the builder, then tap Update live website.', 'success');
+    } catch (e) {
+      setStatus(e.message === 'Failed to fetch' ? 'Could not reach the SiteCraft server. Please check your internet and try again.' : e.message, 'error');
+    } finally {
+      b.disabled = false;
+    }
+  });
+
+  q('#hostForget').addEventListener('click', () => {
+    if (!confirm('Publish as a new website with a new address? Your current website stays online. Keep its edit key if you want to update it later.')) return;
+    try { localStorage.removeItem(KEY); } catch {}
+    Store.update({ hostedSlug: null, hostedUrl: null });
+    resetCard();
+    setStatus('');
+  });
   input.addEventListener('input', () => { const c = input.selectionStart; input.value = input.value.toLowerCase().replace(/[^a-z0-9-]/g, '-'); try { input.setSelectionRange(c, c); } catch {} preview(); });
   q('#hostCopy').addEventListener('click', async () => {
     const link = q('#hostLink').href;

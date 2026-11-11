@@ -375,6 +375,21 @@ async function handlePublish(request, env, url, origin) {
   }, createdKey ? 201 : 200, origin);
 }
 
+// Lets a customer connect a website they published from another phone or computer, using its edit key.
+async function handleVerify(request, env, url, origin) {
+  if (!env.DB) return reply({ ok: false, error: "Hosting storage is not configured." }, 503, origin);
+  let body;
+  try { body = await request.json(); } catch { return reply({ ok: false, error: "Request must be valid JSON." }, 400, origin); }
+  const slug = String(body?.slug || "").trim().toLowerCase();
+  const editKey = String(body?.editKey || "").trim();
+  if (!SLUG.test(slug) || !editKey || editKey.length > 100) return reply({ ok: false, error: "Please enter your website address and edit key." }, 400, origin);
+  await ensureSchema(env.DB);
+  if (!(await bumpCounter(env.DB, clientIp(request), "verify", 30))) return reply({ ok: false, error: "Too many tries today. Please try again tomorrow." }, 429, origin);
+  const site = await env.DB.prepare("SELECT slug, template_id, edit_key_hash FROM hosted_sites WHERE slug = ?").bind(slug).first();
+  if (!site || !safeEqual(site.edit_key_hash, await sha256(editKey))) return reply({ ok: false, error: "This edit key does not match the website address." }, 403, origin);
+  return reply({ ok: true, slug: site.slug, templateId: site.template_id, url: siteUrls(env, url, site.slug).url }, 200, origin);
+}
+
 async function handleCheck(env, url, origin) {
   if (!env.DB) return reply({ ok: false, error: "Hosting storage is not configured." }, 503, origin);
   await ensureSchema(env.DB);
@@ -467,6 +482,10 @@ export async function handleHostingRoute(request, env, url) {
   if (path === "/api/hosting/publish") {
     if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
     return handlePublish(request, env, url, origin);
+  }
+  if (path === "/api/hosting/verify") {
+    if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
+    return handleVerify(request, env, url, origin);
   }
   if (path === "/api/hosting/check") {
     if (request.method !== "GET") return reply({ ok: false, error: "Use GET." }, 405, origin);
