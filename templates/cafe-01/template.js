@@ -10,7 +10,7 @@ const rows=(d,key)=>(Array.isArray(d[key])?d[key]:[]).filter(x=>x&&x.enabled!==f
 function scBaseRender(d={},selected=[]){
   const b=d.brand||{},h=d.home||{},c=d.contact||{},s=d.settings||{},ok=x=>selected.includes(x);
   const menu=rows(d,'menu'),combos=rows(d,'combos'),highlights=rows(d,'highlights'),gallery=rows(d,'gallery').filter(x=>imageUrl(x.image)),reviews=rows(d,'reviews'),faqs=rows(d,'faqs'),hours=rows(d,'hours');
-  const name=b.businessName||'Brew Corner Café',phone=tel(c.phone),waOn=ok('whatsapp')&&!!digits(c.whatsapp);
+  const name=b.businessName||'Brew Corner Café',mark=(String(name).match(/[A-Za-z0-9]+/g)||['b','c']).slice(0,2).map(w=>w[0].toLowerCase()).join('')+'.',phone=tel(c.phone),waOn=ok('whatsapp')&&!!digits(c.whatsapp);
   const show={
     about:ok('about')&&s.showAbout!==false&&!!b.about,
     menu:ok('menu')&&s.showMenu!==false&&menu.length>0,
@@ -27,7 +27,7 @@ function scBaseRender(d={},selected=[]){
   };
   const nav=[['about','About'],['menu','Menu'],['combos','Combos'],['work','Work here'],['gallery','Gallery'],['reviews','Reviews'],['faq','FAQ'],['hours','Hours'],['location','Visit']].filter(([k])=>show[k]);
   let html='<div class="cafe-01">';
-  html+='<header class="bc-nav"><a class="bc-brand" href="#top" aria-label="'+esc(name)+' home"><span class="bc-brand-mark" aria-hidden="true">bc.</span><span><strong>'+esc(name)+'</strong><small>'+esc(b.tagline||'Coffee · Conversations · Community')+'</small></span></a><nav aria-label="Main navigation">'+nav.map(([k,label])=>'<a href="#'+k+'">'+label+'</a>').join('')+'</nav><div class="bc-nav-action">'+(show.reservation?'<a class="bc-btn bc-btn-dark bc-nav-cta" href="#enquire">Find a table</a>':'')+'</div></header>';
+  html+='<header class="bc-nav"><a class="bc-brand" href="#top" aria-label="'+esc(name)+' home"><span class="bc-brand-mark" aria-hidden="true">'+esc(mark)+'</span><span><strong>'+esc(name)+'</strong><small>'+esc(b.tagline||'Coffee · Conversations · Community')+'</small></span></a><nav aria-label="Main navigation">'+nav.map(([k,label])=>'<a href="#'+k+'">'+label+'</a>').join('')+'</nav><div class="bc-nav-action">'+(show.reservation?'<a class="bc-btn bc-btn-dark bc-nav-cta" href="#enquire">Find a table</a>':'')+'</div></header>';
 
   if(ok('home')&&s.showHome!==false&&(h.title||h.text||imageUrl(d.hero))){
     const hero=imageUrl(d.hero);
@@ -39,15 +39,15 @@ function scBaseRender(d={},selected=[]){
   }
 
   if(show.menu){
-    const cats=['Coffee','Tea','Snacks','Desserts'];
+    const cats=[...new Set(menu.map(x=>String(x.category||'').trim()).filter(Boolean))];
     html+='<section class="bc-section bc-menu" id="menu"><div class="bc-section-head"><div><span class="bc-kicker">Made to sip & savour</span><h2>On the menu</h2><p>Everyday favourites, made fresh and served with care.</p></div><span class="bc-head-note">GOOD THINGS<br>BREW HERE</span></div><div class="bc-tabs" role="group" aria-label="Filter menu by category"><button type="button" class="is-active" data-menu-filter="all" aria-pressed="true">All</button>'+cats.map(x=>'<button type="button" data-menu-filter="'+esc(slug(x))+'" aria-pressed="false">'+esc(x)+'</button>').join('')+'</div><div class="bc-menu-grid">'+menu.map(x=>{
       const image=imageUrl(x.image),category=slug(x.category);
-      return '<article class="bc-menu-card" data-menu-card data-category="'+esc(category)+'">'+(image?'<div class="bc-menu-image"><img src="'+esc(image)+'" alt="'+esc(x.imageAlt||x.name||'Café menu item')+'" loading="lazy"></div>':'')+'<div class="bc-menu-content"><div class="bc-menu-meta"><span>'+esc(x.category||'Café favourite')+'</span>'+(x.tag?'<b>'+esc(x.tag)+'</b>':'')+'</div><h3>'+esc(x.name||'House favourite')+'</h3>'+(x.description?'<p>'+esc(x.description)+'</p>':'')+'<div class="bc-menu-price"><strong>'+esc(x.price||'Ask our team')+'</strong>'+(waOn?'<a target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hi Brew Corner Café, I would like to order '+(x.name||'a menu item')+'. Please confirm availability.')))+'">Order ↗</a>':'')+'</div></div></article>';
+      return '<article class="bc-menu-card" data-menu-card data-category="'+esc(category)+'">'+(image?'<div class="bc-menu-image"><img src="'+esc(image)+'" alt="'+esc(x.imageAlt||x.name||'Café menu item')+'" loading="lazy"></div>':'')+'<div class="bc-menu-content"><div class="bc-menu-meta"><span>'+esc(x.category||'Café favourite')+'</span>'+(x.tag?'<b>'+esc(x.tag)+'</b>':'')+'</div><h3>'+esc(x.name||'House favourite')+'</h3>'+(x.description?'<p>'+esc(x.description)+'</p>':'')+'<div class="bc-menu-price"><strong>'+esc(x.price||'Ask our team')+'</strong>'+(waOn?'<a target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hi '+name+', I would like to order '+(x.name||'a menu item')+'. Please confirm availability.')))+'">Order ↗</a>':'')+'</div></div></article>';
     }).join('')+'</div></section>';
   }
 
   if(show.combos){
-    html+='<section class="bc-section bc-combos" id="combos"><div class="bc-section-head"><div><span class="bc-kicker">A little extra joy</span><h2>Combo moments</h2><p>Good pairings for solo breaks, catch-ups and sharing.</p></div></div><div class="bc-combo-grid">'+combos.map((x,i)=>'<article class="bc-combo-card"><span class="bc-combo-number">0'+(i+1)+'</span><div><h3>'+esc(x.name||'Café combo')+'</h3>'+(x.description?'<p>'+esc(x.description)+'</p>':'')+'<strong>'+esc(x.price||'Ask in café')+'</strong></div>'+(waOn?'<a target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hi Brew Corner Café, please tell me more about the '+(x.name||'combo')+'.')))+'" aria-label="Ask about '+esc(x.name||'combo')+'">Ask about combo ↗</a>':'')+'</article>').join('')+'</div></section>';
+    html+='<section class="bc-section bc-combos" id="combos"><div class="bc-section-head"><div><span class="bc-kicker">A little extra joy</span><h2>Combo moments</h2><p>Good pairings for solo breaks, catch-ups and sharing.</p></div></div><div class="bc-combo-grid">'+combos.map((x,i)=>'<article class="bc-combo-card"><span class="bc-combo-number">0'+(i+1)+'</span><div><h3>'+esc(x.name||'Café combo')+'</h3>'+(x.description?'<p>'+esc(x.description)+'</p>':'')+'<strong>'+esc(x.price||'Ask in café')+'</strong></div>'+(waOn?'<a target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hi '+name+', please tell me more about the '+(x.name||'combo')+'.')))+'" aria-label="Ask about '+esc(x.name||'combo')+'">Ask about combo ↗</a>':'')+'</article>').join('')+'</div></section>';
   }
 
   if(show.work){
@@ -55,7 +55,7 @@ function scBaseRender(d={},selected=[]){
   }
 
   if(show.gallery){
-    html+='<section class="bc-section bc-gallery" id="gallery"><div class="bc-section-head"><div><span class="bc-kicker">The café mood</span><h2>A peek around our corner</h2></div><span class="bc-gallery-flower" aria-hidden="true">✿</span></div><div class="bc-gallery-grid">'+gallery.map((x,i)=>'<figure class="bc-gallery-item bc-gallery-'+(i%4+1)+'"><img src="'+esc(imageUrl(x.image))+'" alt="'+esc(x.alt||x.title||'Brew Corner Café')+'" loading="lazy">'+(x.title?'<figcaption>'+esc(x.title)+'</figcaption>':'')+'</figure>').join('')+'</div></section>';
+    html+='<section class="bc-section bc-gallery" id="gallery"><div class="bc-section-head"><div><span class="bc-kicker">The café mood</span><h2>A peek around our corner</h2></div><span class="bc-gallery-flower" aria-hidden="true">✿</span></div><div class="bc-gallery-grid">'+gallery.map((x,i)=>'<figure class="bc-gallery-item bc-gallery-'+(i%4+1)+'"><img src="'+esc(imageUrl(x.image))+'" alt="'+esc(x.alt||x.title||name)+'" loading="lazy">'+(x.title?'<figcaption>'+esc(x.title)+'</figcaption>':'')+'</figure>').join('')+'</div></section>';
   }
 
   if(show.reviews){
@@ -81,7 +81,7 @@ function scBaseRender(d={},selected=[]){
   if(show.contact||show.social){
     html+='<section class="bc-contact" id="contact">';
     if(show.contact){
-      html+='<div class="bc-contact-main"><span class="bc-kicker">See you soon</span><h2>'+esc(name)+'</h2><p>'+esc(c.address||'Hyderabad, Telangana')+'</p><div class="bc-contact-actions">'+(phone?'<a class="bc-btn bc-btn-cream" href="'+esc(url('tel:'+phone))+'">Call '+esc(c.phone)+'</a>':'')+(waOn?'<a class="bc-btn bc-btn-whatsapp" target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hello Brew Corner Café! I have an enquiry.')))+'">WhatsApp us</a>':'')+'</div></div>';
+      html+='<div class="bc-contact-main"><span class="bc-kicker">See you soon</span><h2>'+esc(name)+'</h2><p>'+esc(c.address||'Hyderabad, Telangana')+'</p><div class="bc-contact-actions">'+(phone?'<a class="bc-btn bc-btn-cream" href="'+esc(url('tel:'+phone))+'">Call '+esc(c.phone)+'</a>':'')+(waOn?'<a class="bc-btn bc-btn-whatsapp" target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hello '+name+'! I have an enquiry.')))+'">WhatsApp us</a>':'')+'</div></div>';
     }else{
       html+='<div class="bc-contact-main"><span class="bc-kicker">Stay connected</span><h2>Follow the coffee moments.</h2></div>';
     }
@@ -91,7 +91,7 @@ function scBaseRender(d={},selected=[]){
   }
 
   html+='<footer class="bc-footer"><a href="#top">'+esc(name)+'</a><span>'+esc(b.tagline||'Coffee · Conversations · Community')+'</span><span>© '+new Date().getFullYear()+' · All rights reserved.</span></footer>';
-  if(waOn)html+='<a class="bc-float" target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hello Brew Corner Café!')))+'" aria-label="Chat with Brew Corner Café on WhatsApp">WhatsApp</a>';
+  if(waOn)html+='<a class="bc-float" target="_blank" rel="noopener" href="'+esc(url(wa(c.whatsapp,'Hello '+name+'!')))+'" aria-label="Chat with '+esc(name)+' on WhatsApp">WhatsApp</a>';
   return html+'</div>';
 }
 

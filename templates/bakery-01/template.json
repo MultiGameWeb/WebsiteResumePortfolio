@@ -1,0 +1,1184 @@
+{
+  "id": "bakery-01",
+  "name": "Bakery / Cake Shop — Sugar Bloom Bakery",
+  "category": "Bakeries & Cake Shops",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Bakery"
+    },
+    {
+      "id": "menu",
+      "label": "Cakes, Breads & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Celebration Boxes"
+    },
+    {
+      "id": "work",
+      "label": "Why Order From Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Custom Cake Order Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Bakery Name",
+      "required": true,
+      "placeholder": "Sugar Bloom Bakery"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Bakery Manager",
+      "placeholder": "Meera Rao"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Cakes · Breads · Bakes"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Baked fresh, every single morning."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Bakery",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Cakes made for your moments."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Freshly baked in Hyderabad"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "orders@sugarbloom.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Bakery Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Daily · 8:00 AM – 10:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Sugar Bloom Bakery",
+      "ownerName": "Meera Rao",
+      "tagline": "Cakes · Breads · Bakes",
+      "motto": "Baked fresh, every single morning.",
+      "about": "Sugar Bloom Bakery is a neighbourhood bakery in Manikonda for celebration cakes, soft breads, buttery pastries and cookies. Every cake can be made eggless, and we bake custom designs for birthdays, anniversaries and office parties."
+    },
+    "home": {
+      "eyebrow": "FRESHLY BAKED IN HYDERABAD",
+      "title": "Cakes made for your moments.",
+      "text": "Celebration cakes, fresh breads and pastries from our oven to your table. Eggless options on every cake."
+    },
+    "hero": "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "m1",
+        "name": "Chocolate Truffle Cake",
+        "category": "Cakes",
+        "price": "₹650 / ½ kg",
+        "description": "Moist chocolate sponge layered with rich dark chocolate ganache.",
+        "tag": "Bestseller",
+        "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Chocolate cake topped with ganache and chocolate swirls",
+        "enabled": true
+      },
+      {
+        "id": "m2",
+        "name": "Black Forest Cake",
+        "category": "Cakes",
+        "price": "₹550 / ½ kg",
+        "description": "Chocolate sponge, whipped cream and cherries, finished with chocolate shavings.",
+        "tag": "Eggless available",
+        "image": "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Layered black forest cake with cherries on top",
+        "enabled": true
+      },
+      {
+        "id": "m3",
+        "name": "Fresh Strawberry Cream Cake",
+        "category": "Cakes",
+        "price": "₹700 / ½ kg",
+        "description": "Vanilla sponge with fresh cream and seasonal strawberries.",
+        "tag": "Seasonal",
+        "image": "https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "White cream cake topped with strawberries and blueberries",
+        "enabled": true
+      },
+      {
+        "id": "m4",
+        "name": "Rainbow Sprinkle Drip Cake",
+        "category": "Cakes",
+        "price": "From ₹1,200 / kg",
+        "description": "Vanilla sprinkle sponge with a pink drip, made for birthdays.",
+        "tag": "Kids’ favourite",
+        "image": "https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Pink drip cake with sprinkles on a cake stand",
+        "enabled": true
+      },
+      {
+        "id": "m5",
+        "name": "Chocolate Pastry",
+        "category": "Pastries",
+        "price": "₹110",
+        "description": "A single slice of layered chocolate sponge and cream.",
+        "tag": "Everyday treat",
+        "image": "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Slice of layered chocolate cream pastry",
+        "enabled": true
+      },
+      {
+        "id": "m6",
+        "name": "Butter Croissant",
+        "category": "Pastries",
+        "price": "₹90",
+        "description": "Flaky, golden layers baked fresh every morning.",
+        "tag": "Morning bake",
+        "image": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Golden croissants dusted with flour",
+        "enabled": true
+      },
+      {
+        "id": "m7",
+        "name": "Mixed Berry Tart",
+        "category": "Pastries",
+        "price": "₹160",
+        "description": "Crisp tart shell filled with berry compote and a lattice top.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Berry tarts with a lattice crust and fresh berries",
+        "enabled": true
+      },
+      {
+        "id": "m8",
+        "name": "Whole Wheat Bread",
+        "category": "Breads",
+        "price": "₹70",
+        "description": "Soft whole wheat loaf, sliced fresh for sandwiches and toast.",
+        "tag": "Daily fresh",
+        "image": "https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Sliced whole wheat loaf on a wooden board",
+        "enabled": true
+      },
+      {
+        "id": "m9",
+        "name": "Multigrain Seeded Loaf",
+        "category": "Breads",
+        "price": "₹120",
+        "description": "Hearty loaf with oats, sunflower seeds and flax.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Round seeded bread loaves with wheat stalks",
+        "enabled": true
+      },
+      {
+        "id": "m10",
+        "name": "Choco Chip Cookies",
+        "category": "Cookies & Cupcakes",
+        "price": "₹240 / box of 6",
+        "description": "Crisp edges, soft centres and plenty of chocolate chips.",
+        "tag": "Eggless",
+        "image": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Chocolate chip cookies on baking paper",
+        "enabled": true
+      },
+      {
+        "id": "m11",
+        "name": "Chocolate Cupcakes",
+        "category": "Cookies & Cupcakes",
+        "price": "₹60 each",
+        "description": "Chocolate cupcakes with a swirl of chocolate frosting.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1550617931-e17a7b70dce2?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Chocolate cupcakes with piped frosting",
+        "enabled": true
+      },
+      {
+        "id": "m12",
+        "name": "Vanilla Sprinkle Cupcakes",
+        "category": "Cookies & Cupcakes",
+        "price": "₹55 each",
+        "description": "Light vanilla cupcakes topped with mint frosting and sprinkles.",
+        "tag": "Party pack",
+        "image": "https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Row of cupcakes with mint frosting and sprinkles",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Birthday Party Box",
+        "description": "1 kg celebration cake of your choice with 12 cupcakes and candles.",
+        "price": "From ₹1,899",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Tea-time Box",
+        "description": "Four assorted pastries with a box of six choco chip cookies.",
+        "price": "₹649",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Weekend Bread Basket",
+        "description": "Whole wheat loaf, multigrain loaf and four butter croissants.",
+        "price": "₹499",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "✿",
+        "title": "Eggless on request",
+        "description": "Every cake on our menu can be baked eggless. Just tell us when you order.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✎",
+        "title": "Custom designs",
+        "description": "Share a theme, photo or colour idea and we’ll design the cake around it.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "◷",
+        "title": "Ready on time",
+        "description": "Order a day ahead for custom cakes. Ask us about same-day options.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "✳",
+        "title": "Baked fresh daily",
+        "description": "Breads, pastries and cookies come out of our oven every morning.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "o1",
+        "name": "Birthday",
+        "enabled": true
+      },
+      {
+        "id": "o2",
+        "name": "Anniversary",
+        "enabled": true
+      },
+      {
+        "id": "o3",
+        "name": "Engagement / Wedding",
+        "enabled": true
+      },
+      {
+        "id": "o4",
+        "name": "Baby shower",
+        "enabled": true
+      },
+      {
+        "id": "o5",
+        "name": "Office party",
+        "enabled": true
+      }
+    ],
+    "flavours": [
+      {
+        "id": "fl1",
+        "name": "Chocolate truffle",
+        "enabled": true
+      },
+      {
+        "id": "fl2",
+        "name": "Black forest",
+        "enabled": true
+      },
+      {
+        "id": "fl3",
+        "name": "Vanilla",
+        "enabled": true
+      },
+      {
+        "id": "fl4",
+        "name": "Butterscotch",
+        "enabled": true
+      },
+      {
+        "id": "fl5",
+        "name": "Pineapple",
+        "enabled": true
+      },
+      {
+        "id": "fl6",
+        "name": "Red velvet",
+        "enabled": true
+      },
+      {
+        "id": "fl7",
+        "name": "Fresh fruit",
+        "enabled": true
+      }
+    ],
+    "sizes": [
+      {
+        "id": "s1",
+        "name": "½ kg",
+        "enabled": true
+      },
+      {
+        "id": "s2",
+        "name": "1 kg",
+        "enabled": true
+      },
+      {
+        "id": "s3",
+        "name": "1½ kg",
+        "enabled": true
+      },
+      {
+        "id": "s4",
+        "name": "2 kg",
+        "enabled": true
+      },
+      {
+        "id": "s5",
+        "name": "3 kg or more",
+        "enabled": true
+      }
+    ],
+    "eggOptions": [
+      {
+        "id": "e1",
+        "name": "Eggless",
+        "enabled": true
+      },
+      {
+        "id": "e2",
+        "name": "With egg",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Fresh from the oven",
+        "alt": "Bakery shelves filled with breads and pastries",
+        "image": "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Made by hand",
+        "alt": "Baker kneading dough on a floured table",
+        "image": "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Today’s counter",
+        "alt": "Glass display counter with assorted pastries",
+        "image": "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Party cupcakes",
+        "alt": "Cupcakes topped with pink cream and strawberries",
+        "image": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Manikonda",
+        "text": "Ordered an eggless chocolate truffle cake for my daughter’s birthday. It looked lovely and tasted even better.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Gachibowli",
+        "text": "The whole wheat bread and croissants are fresh every morning. Our regular breakfast stop.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Kondapur",
+        "text": "They designed a theme cake from a photo I shared on WhatsApp. Delivered on time for our office party.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "Can every cake be made eggless?",
+        "answer": "Yes. Every cake on the menu can be baked eggless. Choose “Eggless” in the order form or mention it on WhatsApp.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "How early should I order a custom cake?",
+        "answer": "Please order at least one day in advance. For tiered or theme cakes, two to three days helps us get the design right. Message us about same-day options.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Do you deliver?",
+        "answer": "Yes, we deliver within nearby areas for a small charge based on distance. You can also pick up from the bakery.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "How do I pay for my order?",
+        "answer": "Custom cakes are confirmed with an advance on UPI. The balance can be paid by UPI, card or cash at pickup or delivery.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Can you write a message or add a photo on the cake?",
+        "answer": "Yes. Add the message in the order form. For photo cakes, send the picture on WhatsApp after placing your order.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true,
+        "closed": false
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true,
+        "closed": false
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true,
+        "closed": false
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true,
+        "closed": false
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true,
+        "closed": false
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true,
+        "closed": false
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "8:00 AM",
+        "close": "10:00 PM",
+        "enabled": true,
+        "closed": false
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "orders@sugarbloom.example",
+      "address": "Shop 4, Main Road, Manikonda, Hyderabad, Telangana 500089",
+      "maps": "https://maps.google.com/?q=Manikonda+Hyderabad",
+      "hours": "Daily · 8:00 AM – 10:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:bakery-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Bakery Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Bakery name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the bakery",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Cakes, Breads & Prices",
+        "type": "collection",
+        "itemLabel": "bakery item",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Item name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Cakes, Breads)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. Eggless)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New bakery item",
+          "category": "Cakes",
+          "price": "₹500",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Celebration Boxes",
+        "type": "collection",
+        "itemLabel": "box",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Box name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Box price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New box",
+          "description": "",
+          "price": "From ₹499",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Order From Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Order Form: Occasions",
+        "type": "collection",
+        "itemLabel": "occasion",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Occasion"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New occasion",
+          "enabled": true
+        }
+      },
+      {
+        "id": "flavours",
+        "label": "Order Form: Flavours",
+        "type": "collection",
+        "itemLabel": "flavour",
+        "path": "flavours",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Flavour"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New flavour",
+          "enabled": true
+        }
+      },
+      {
+        "id": "sizes",
+        "label": "Order Form: Cake Sizes",
+        "type": "collection",
+        "itemLabel": "size",
+        "path": "sizes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Size"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New size",
+          "enabled": true
+        }
+      },
+      {
+        "id": "eggOptions",
+        "label": "Order Form: Egg Options",
+        "type": "collection",
+        "itemLabel": "option",
+        "path": "eggOptions",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Option"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New option",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New bakery photo",
+          "alt": "Bakery photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "8:00 AM",
+          "close": "10:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Menu",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Celebration boxes",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why order from us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Custom cake order form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
