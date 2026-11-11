@@ -9,6 +9,7 @@
 //   -> { image: { mimeType, data } }
 // POST /api/aivideo/photos { plan, photos: [{ mimeType, data }] }  (the customer's own photos)
 //   -> { scenes: [{ photo, headline, line }] }  AI looks at each photo, orders them and writes its text
+// POST /api/aivideo/analyze { photos }  -> { looks: [{ fx, fy, light, warm } | null] }  (smart framing)
 // POST /api/aivideo/stock { query, format, exclude? }  (free stock photo)
 //   -> { image: { mimeType, data }, photo: { id, photographer, url, source } }
 //
@@ -194,6 +195,10 @@ const PHOTO_SCHEMA = {
         properties: {
           photo: { type: "INTEGER", description: "number of the photo, starting at 1" },
           eyebrow: { type: "STRING", description: "a small label above the headline, 2-5 words, in the plan's language" },
+          fx: { type: "NUMBER", description: "horizontal position of the main subject (face, person or product), 0 = left edge, 1 = right edge" },
+          fy: { type: "NUMBER", description: "vertical position of the main subject, 0 = top, 1 = bottom" },
+          light: { type: "NUMBER", description: "brightness fix from -0.5 (make darker) to 0.5 (make brighter); 0 if the photo is well lit" },
+          warm: { type: "NUMBER", description: "colour fix from -0.5 (cooler) to 0.5 (warmer); 0 if the colours look right" },
           headline: { type: "STRING", description: "1-4 words shown big on this photo, in the plan's language, matching what the photo shows" },
           line: { type: "STRING", description: "a short supporting line (price, benefit or tagline from the plan), under 40 characters, or empty" }
         },
@@ -208,7 +213,60 @@ const PHOTO_RULES = `You direct a short promotional video ad made from the custo
 - Use every usable photo exactly once, in the order that tells the best story (best eye-catching photo first, the offer or shop in the middle, a closing-style photo last). Leave out only photos that are blurry, broken or unrelated.
 - For each photo write a headline that fits what the photo really shows, in the same language as the plan's headlines.
 - line: a price, offer or benefit from the plan when it matches the photo, else empty. Never invent prices, discounts or claims.
-- Never mention people's names or identify people in the photos.`;
+- Never mention people's names or identify people in the photos.
+- For each photo also give fx, fy (where the main subject is, so the camera can frame it) and small light / warm fixes (0 when the photo already looks good).`;
+
+// Where the subject is and small light / colour fixes, kept in safe ranges.
+function cleanLook(s) {
+  const num = (v, lo, hi, dflt) => (Number.isFinite(Number(v)) ? Math.min(hi, Math.max(lo, Number(v))) : dflt);
+  return { fx: num(s?.fx, 0, 1, 0.5), fy: num(s?.fy, 0, 1, 0.45), light: num(s?.light, -0.5, 0.5, 0), warm: num(s?.warm, -0.5, 0.5, 0) };
+}
+
+// ---- Smart framing for any pictures (AI-made or stock) ----
+const LOOK_SCHEMA = {
+  type: "OBJECT",
+  properties: {
+    looks: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          photo: { type: "INTEGER", description: "number of the photo, starting at 1" },
+          fx: { type: "NUMBER", description: "horizontal position of the main subject (face, person or product), 0 = left edge, 1 = right edge" },
+          fy: { type: "NUMBER", description: "vertical position of the main subject, 0 = top, 1 = bottom" },
+          light: { type: "NUMBER", description: "brightness fix from -0.5 (make darker) to 0.5 (make brighter); 0 if the photo is well lit" },
+          warm: { type: "NUMBER", description: "colour fix from -0.5 (cooler) to 0.5 (warmer); 0 if the colours look right" },
+        },
+        required: ["photo", "fx", "fy", "light", "warm"]
+      }
+    }
+  },
+  required: ["looks"]
+};
+
+async function analyzePhotos(env, body) {
+  const photos = (Array.isArray(body?.photos) ? body.photos : []).slice(0, 10)
+    .filter(p => ["image/jpeg", "image/png", "image/webp"].includes(p?.mimeType) && typeof p?.data === "string" && p.data.length <= MAX_FILE_CHARS && /^[A-Za-z0-9+/=]+$/.test(p.data));
+  if (!photos.length) return { status: 400, data: { ok: false, error: "Please add at least one photo." } };
+  const parts = [{ text: `${photos.length} photos follow, numbered 1 to ${photos.length}. For each, give where the main subject is (fx, fy from 0 to 1) and small light / warm fixes (0 if it already looks good).` }];
+  photos.forEach((p, i) => parts.push({ text: `Photo ${i + 1}:` }, { inlineData: { mimeType: p.mimeType, data: p.data } }));
+  let lastError;
+  for (const model of TEXT_MODELS) {
+    try {
+      const result = await callGemini(env, keyName(env), { model, system: "You help frame photos for a video ad. Be precise about where the main subject (a face, a person or the product) is.", contents: [{ role: "user", parts }], schema: LOOK_SCHEMA, temperature: 0.2, timeoutMs: 30000, maxAttempts: 2 });
+      const looks = Array.from({ length: photos.length }, () => null);
+      for (const item of Array.isArray(result?.looks) ? result.looks : []) {
+        const i = Math.round(Number(item?.photo)) - 1;
+        if (i >= 0 && i < photos.length && !looks[i]) looks[i] = cleanLook(item);
+      }
+      return { status: 200, data: { ok: true, looks } };
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  console.error("AI video analyze failed", lastError);
+  return { status: 503, data: { ok: false, error: friendlyError(lastError) } };
+}
 
 async function photoScenes(env, body) {
   const plan = body?.plan || {};
@@ -227,7 +285,7 @@ async function photoScenes(env, body) {
       const result = await callGemini(env, keyName(env), { model, system: PHOTO_RULES, contents: [{ role: "user", parts }], schema: PHOTO_SCHEMA, temperature: 0.4, timeoutMs: 45000, maxAttempts: 2 });
       const seen = new Set();
       const scenes = (Array.isArray(result?.scenes) ? result.scenes : [])
-        .map(s => ({ photo: Math.round(Number(s?.photo)) - 1, eyebrow: clip(s?.eyebrow, 40), headline: clip(s?.headline, 50), line: clip(s?.line, 50) }))
+        .map(s => ({ photo: Math.round(Number(s?.photo)) - 1, eyebrow: clip(s?.eyebrow, 40), headline: clip(s?.headline, 50), line: clip(s?.line, 50), look: cleanLook(s) }))
         .filter(s => s.photo >= 0 && s.photo < photos.length && !seen.has(s.photo) && seen.add(s.photo));
       if (!scenes.length) throw new Error("No scenes for the photos.");
       return { status: 200, data: { ok: true, scenes } };
@@ -462,7 +520,7 @@ function throttled(ip, now, limit) {
 
 export async function handleAiVideoRoute(request, env, url) {
   const path = url.pathname.replace(/\/+$/, "");
-  if (!["/api/aivideo/chat", "/api/aivideo/image", "/api/aivideo/stock", "/api/aivideo/photos"].includes(path)) return null;
+  if (!["/api/aivideo/chat", "/api/aivideo/image", "/api/aivideo/stock", "/api/aivideo/photos", "/api/aivideo/analyze"].includes(path)) return null;
   const origin = request.headers.get("Origin") || "";
   if (!allowedOrigins(env).has(origin)) return reply({ ok: false, error: "Origin not allowed." }, 403, origin);
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: headers(origin) });
@@ -474,6 +532,7 @@ export async function handleAiVideoRoute(request, env, url) {
   const result = path.endsWith("chat") ? await chat(env, body)
     : path.endsWith("stock") ? await stock(env, body)
     : path.endsWith("photos") ? await photoScenes(env, body)
+    : path.endsWith("analyze") ? await analyzePhotos(env, body)
     : await image(env, body, ip);
   return reply(result.data, result.status, origin);
 }

@@ -123,3 +123,10 @@ textarea { resize: vertical; line-height: 1.4; }
 .vm-lengths { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 @media (max-width: 420px) { .vm-lengths { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 label[hidden] { display: none; }
+
+/* Three versions on the AI page */
+.vm-versions { display: grid; gap: 8px; }
+.vm-version-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.vm-version { display: grid; gap: 6px; padding: 6px; border: 2px solid var(--vm-line); border-radius: 14px; background: var(--vm-panel2); color: var(--vm-text); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; }
+.vm-version canvas { width: 100%; height: auto; border-radius: 9px; background: #000; }
+.vm-version.on { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,.25); }
