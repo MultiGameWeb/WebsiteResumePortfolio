@@ -146,4 +146,4 @@ Optional variables:
 | `HOSTING_REQUIRE_PAYMENT` | `true` refuses publishing (402) until payment verification is added. |
 | `HOSTING_ALLOWED_ORIGINS` | Extra origins allowed to call the publish API (BotCraft's allowed origins are always allowed). |
 
-Switch a site off: `UPDATE hosted_sites SET status = 'blocked' WHERE slug = '...'` in the D1 console.
+Switch a site off or on: owner dashboard (`control/`) → **Published sites** → Switch off / Switch on.

@@ -16,6 +16,7 @@ let adminKey = '';
 let apiBase = DEFAULT_API;
 let botOffset = 0;
 let siteOffset = 0;
+let hostedOffset = 0;
 let currentBot = null;
 
 function read(storage, name) { try { return storage.getItem(name) || ''; } catch { return ''; } }
@@ -59,10 +60,11 @@ function lock(message = '') {
 
 function selectTab(name) {
   for (const button of document.querySelectorAll('#tabs [data-tab]')) button.setAttribute('aria-pressed', String(button.dataset.tab === name));
-  for (const id of ['overview', 'bots', 'sites']) $(`#${id}`).hidden = id !== name;
+  for (const id of ['overview', 'bots', 'hosted', 'sites']) $(`#${id}`).hidden = id !== name;
   if (name === 'overview') loadSummary();
   if (name === 'bots' && !$('#botRows').children.length) loadBots(true);
   if (name === 'sites' && !$('#siteRows').children.length) loadSites(true);
+  if (name === 'hosted' && !$('#hostedRows').children.length) loadHosted(true);
 }
 
 // ---- Overview ----
@@ -75,10 +77,11 @@ async function loadSummary() {
       ['BotCraft bots', b.bots], ['Live bots (QR ready)', b.live], ['New bots this week', b.newBots], ['Items added', b.products],
       ['Open customer questions', b.openQuestions], ['New customer requests', b.newRequests], ['Owner phones with alerts', b.ownerDevices],
       ['Websites', data.websites.sites], ['Website leads', data.websites.leads],
+      ...(data.hosted ? [['Published sites', data.hosted.total], ['Published this week', data.hosted.newThisWeek], ['Sites switched off', data.hosted.blocked], ['Hosting storage', `${(data.hosted.sizeBytes / 1048576).toFixed(1)} MB`]] : []),
     ];
     $('#stats').replaceChildren(...tiles.map(([label, value]) => {
       const tile = element('div', 'stat');
-      tile.append(element('span', '', label), element('strong', '', number(value)));
+      tile.append(element('span', '', label), element('strong', '', typeof value === 'string' ? value : number(value)));
       return tile;
     }));
     const max = Math.max(1, ...b.types.map((t) => t.n));
@@ -238,6 +241,55 @@ async function loadSites(reset) {
   } catch (error) { showStatus(error.message); }
 }
 
+// ---- Published sites (auto hosting) ----
+
+async function loadHosted(reset) {
+  if (reset) { hostedOffset = 0; $('#hostedRows').replaceChildren(); }
+  try {
+    const query = $('#hostedQuery').value.trim();
+    const data = await api(`/api/admin/hosted?q=${encodeURIComponent(query)}&offset=${hostedOffset}`);
+    const rows = data.sites.map((site) => {
+      const row = element('tr');
+      const live = site.status === 'live';
+      const link = element('a', '', site.slug);
+      link.href = site.url; link.target = '_blank'; link.rel = 'noopener';
+      const address = element('td');
+      address.append(link);
+      const state = element('td');
+      state.append(element('span', `pill ${live ? 'live' : 'paused'}`, live ? 'Live' : 'Switched off'));
+      const toggle = element('button', live ? 'btn danger small' : 'btn small', live ? 'Switch off' : 'Switch on');
+      toggle.type = 'button';
+      toggle.addEventListener('click', async () => {
+        if (live && !window.confirm(`Switch off ${site.business_name || site.slug}? Visitors will see that the website is not available.`)) return;
+        toggle.disabled = true;
+        try {
+          await api('/api/admin/hosted', { method: 'POST', body: JSON.stringify({ slug: site.slug, action: live ? 'block' : 'unblock' }) });
+          showStatus(live ? 'Website switched off.' : 'Website switched on.');
+          loadHosted(true);
+        } catch (error) { showStatus(error.message); toggle.disabled = false; }
+      });
+      const action = element('td');
+      action.append(toggle);
+      row.append(
+        element('td', 'shop-name', site.business_name || '(no name)'), address, element('td', '', site.template_id), state,
+        element('td', 'num', `${(site.size_bytes / 1048576).toFixed(2)} MB`), element('td', '', when(site.created_at)), element('td', '', when(site.updated_at)), action,
+      );
+      return row;
+    });
+    if (reset && !rows.length) {
+      const empty = element('tr');
+      const cell = element('td', 'empty', query ? 'No published sites match this search.' : 'No websites published yet.');
+      cell.colSpan = 8;
+      empty.append(cell);
+      rows.push(empty);
+    }
+    $('#hostedRows').append(...rows);
+    hostedOffset += data.sites.length;
+    $('#moreHosted').hidden = !data.more;
+    showStatus('');
+  } catch (error) { showStatus(error.message); }
+}
+
 // ---- Start ----
 
 async function unlock() {
@@ -271,6 +323,8 @@ $('#signOut').addEventListener('click', () => lock('Locked.'));
 $('#botSearch').addEventListener('submit', (event) => { event.preventDefault(); loadBots(true); });
 $('#moreBots').addEventListener('click', () => loadBots(false));
 $('#moreSites').addEventListener('click', () => loadSites(false));
+$('#hostedSearch').addEventListener('submit', (event) => { event.preventDefault(); loadHosted(true); });
+$('#moreHosted').addEventListener('click', () => loadHosted(false));
 $('#closeDrawer').addEventListener('click', () => $('#botDrawer').close());
 
 apiBase = $('#apiBase').value || DEFAULT_API;
