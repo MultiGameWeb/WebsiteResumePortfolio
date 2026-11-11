@@ -6,7 +6,7 @@ const lastPart=pathParts[pathParts.length-1]||"index.html";
 const leaf=(lastPart.indexOf(".")===-1?"index.html":lastPart).toLowerCase();
 const isHome=leaf==="index.html";
 // Focus pages use the whole screen for the work: no site menu bar, only the page's own slim header.
-const focusPages=new Set(["builder.html"]);
+const focusPages=new Set(["features.html","builder.html","checkout.html"]);
 if(focusPages.has(leaf)){document.body.classList.add("sc-focus-page");return;}
 const workspacePages=new Set(["portfolio-creator.html","resume-builder.html","presentation-maker.html"]);
 if(workspacePages.has(leaf))document.body.classList.add("sc-workspace-page");
