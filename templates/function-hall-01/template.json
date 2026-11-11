@@ -236,6 +236,12 @@
       "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
       "type": "url",
       "placeholder": "https://"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube link",
+      "type": "url",
+      "placeholder": "https://"
     }
   ],
   "demoData": {
@@ -1293,6 +1299,12 @@
           {
             "path": "venue.power",
             "label": "Power backup details"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube link",
+            "type": "url",
+            "placeholder": "https://"
           }
         ]
       },
