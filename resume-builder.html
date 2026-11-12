@@ -521,7 +521,7 @@ function redo(){flushTyping();if(!future.length)return;history.push(snapshot());
 function sectionMeta(id){return SECTION_LABELS[id]||'Custom'}
 function sectionIcon(id){return ({header:'✦',summary:'≡',experience:'◷',education:'▤',skills:'◇',projects:'▦',certifications:'✓',awards:'★',languages:'文',volunteering:'♥',publications:'▤',references:'↗',hobbies:'♡',declaration:'✍'})[id]||'✦'}
 function safeDate(v){return norm(v).replace(/[<>]/g,'')}
-function dateParts(v){var s=safeDate(v),p={day:'',month:'',year:''};if(!s||/^present|ongoing|current$/i.test(s))return p;var iso=s.match(/^(19|20|21)\d{2}(?:-(0[1-9]|1[0-2]))?(?:-(0[1-9]|[12]\d|3[01]))?$/);if(iso){var b=s.split('-');p.year=b[0];p.month=b[1]||'';p.day=b[2]||'';return p}var m=s.match(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[ ,\-/]+(\d{1,2})?,?[ ]*(\d{4})$/i);if(m){var map={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};p.month=map[m[1].slice(0,3).toLowerCase()];p.day=m[2]?String(parseInt(m[2],10)).padStart(2,'0'):'';p.year=m[3];return p}var sl=s.match(/^(?:(\d{1,2})\/)?(0?[1-9]|1[0-2])\/((?:19|20|21)\d{2})$/);if(sl){p.day=sl[1]?String(parseInt(sl[1],10)).padStart(2,'0'):'';p.month=String(parseInt(sl[2],10)).padStart(2,'0');p.year=sl[3];return p}var y=s.match(/^(19|20|21)\d{2}$/);if(y)p.year=y[0];return p}
+function dateParts(v){var s=safeDate(v),p={day:'',month:'',year:''};if(!s||/^(present|ongoing|current)$/i.test(s))return p;var iso=s.match(/^(19|20|21)\d{2}(?:-(0[1-9]|1[0-2]))?(?:-(0[1-9]|[12]\d|3[01]))?$/);if(iso){var b=s.split('-');p.year=b[0];p.month=b[1]||'';p.day=b[2]||'';return p}var m=s.match(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*[ ,\-/]+(\d{1,2})?,?[ ]*(\d{4})$/i);if(m){var map={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};p.month=map[m[1].slice(0,3).toLowerCase()];p.day=m[2]?String(parseInt(m[2],10)).padStart(2,'0'):'';p.year=m[3];return p}var sl=s.match(/^(?:(\d{1,2})\/)?(0?[1-9]|1[0-2])\/((?:19|20|21)\d{2})$/);if(sl){p.day=sl[1]?String(parseInt(sl[1],10)).padStart(2,'0'):'';p.month=String(parseInt(sl[2],10)).padStart(2,'0');p.year=sl[3];return p}var y=s.match(/^(19|20|21)\d{2}$/);if(y)p.year=y[0];return p}
 function dateFromParts(day,month,year){day=norm(day);month=norm(month);year=norm(year);if(!year||!/^(19|20|21)\d{2}$/.test(year))return '';if(!month)return year;if(!/^(0[1-9]|1[0-2])$/.test(month))return year;if(!day)return year+'-'+month;if(!/^(0[1-9]|[12]\d|3[01])$/.test(day))return year+'-'+month;return year+'-'+month+'-'+day}
 function dateIsValid(v){var p=dateParts(v);if(!p.year||!p.month||!p.day)return true;var d=new Date(Date.UTC(+p.year,+p.month-1,+p.day));return d.getUTCFullYear()===+p.year&&d.getUTCMonth()===+p.month-1&&d.getUTCDate()===+p.day}
 function dateCompare(a,b){var pa=dateParts(a),pb=dateParts(b);if(!pa.year||!pb.year)return 0;var ak=pa.year+(pa.month||'00')+(pa.day||'00'),bk=pb.year+(pb.month||'00')+(pb.day||'00');return ak===bk?0:(ak<bk?-1:1)}
@@ -843,7 +843,7 @@ function updateBulletCount(i,n){var c=$('[data-bullet-count="'+i+'"]');if(c){c.t
 function validPhone(v){v=norm(v);if(!v)return true;var d=v.replace(/\D/g,'');return /^[+\d\s().-]+$/.test(v)&&d.length>=6&&d.length<=15}
 function validatePhone(el){var good=validPhone(el.value);el.classList.toggle('invalid',!good);var er=el.id&&$('#'+el.id+'-err');if(er)er.textContent=good?'':'Enter a phone number with 6 to 15 digits, for example +91 98765 43210.';return good}
 function validateEmail(el){var good=!norm(el.value)||validEmail(el.value);el.classList.toggle('invalid',!good);var er=$('#'+el.id+'-err');if(er)er.textContent=good?'':'Enter a valid email address.';return good}
-function validateUrl(el){var good=!norm(el.value)||!!safeUrl(el.value);el.classList.toggle('invalid',!good);var er=el.id&&$('#'+el.id+'-err');if(er)er.textContent=good?'':'Enter a web address, for example linkedin.com/in/yourname.';return good}
+function validateUrl(el){var good=!norm(el.value)||!!safeUrl(el.value);el.classList.toggle('invalid',!good);var er=el.id&&$('#'+el.id+'-err');if(er)var ex=/github/.test(el.id)?'github.com/yourname':/linkedin/.test(el.id)?'linkedin.com/in/yourname':'yourwebsite.com';er.textContent=good?'':'Enter a web address, for example '+ex+'.';return good}
 function updateCounters(){var c=$('[data-counter="summary.text"]'),t=norm(state.sections.summary.text||'');if(c)c.textContent=t.length+' / '+(state.sections.summary.max||700)}
 function swapIn(arr,i,j){if(i<0||j<0||i>=arr.length||j>=arr.length)return;var v=arr.splice(i,1)[0];arr.splice(j,0,v)}
 function arrayForKey(key){return state.sections[key]&&Array.isArray(state.sections[key].items)?state.sections[key].items:null}
@@ -871,7 +871,7 @@ function handleMoveSection(id,dir){
 function removeCustom(i){var before=snapshot(),id='custom-'+(i+1);state.custom.splice(i,1);state.order=state.order.filter(function(x){return x!==id}).map(function(x){if(/^custom-\d+$/.test(x)){var n=Number(x.split('-')[1]);return n>i+1?'custom-'+(n-1):x}return x});pushHistory(before);setDirty(true);renderEditor();renderPreview();renderHealth()}
 function syncCustomLink(el){var i=Number(el.dataset.index);var arr=state.sections.header.customLinks;var before=snapshot();if(el.hasAttribute('data-custom-link-name'))arr[i].name=el.value;else arr[i].url=el.value;queueTyping(before);setDirty(true);queuePreviewRender();renderHealth()}
 function addOrRemoveCustomLink(action,index){var before=snapshot();var arr=state.sections.header.customLinks;if(action==='add')arr.push({name:'',url:''});else arr.splice(index,1);pushHistory(before);setDirty(true);renderEditor();renderPreview();renderHealth()}
-function saveImage(file){return new Promise(function(resolve,reject){if(!file||!file.type||file.type.indexOf('image/')!==0)return reject(new Error('Please choose an image file.'));var rd=new FileReader();rd.onerror=function(){reject(new Error('Could not read the image.'))};rd.onload=function(){var img=new Image();img.onerror=function(){reject(new Error('Could not decode the image.'))};img.onload=function(){var w=img.naturalWidth||img.width,h=img.naturalHeight||img.height;if(!w||!h)return reject(new Error('Image has no usable dimensions.'));var scale=Math.min(1,1200/Math.max(w,h)),cw=Math.max(1,Math.round(w*scale)),ch=Math.max(1,Math.round(h*scale)),canvas=document.createElement('canvas');canvas.width=cw;canvas.height=ch;var ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,cw,ch);resolve(canvas.toDataURL('image/jpeg',.82))};img.src=String(rd.result||'')};rd.readAsDataURL(file)})}
+function saveImage(file){return new Promise(function(resolve,reject){if(!file||!file.type||file.type.indexOf('image/')!==0)return reject(new Error('Please choose an image file.'));var rd=new FileReader();rd.onerror=function(){reject(new Error('Could not read the image.'))};rd.onload=function(){var img=new Image();img.onerror=function(){reject(new Error('Could not decode the image.'))};img.onload=function(){var w=img.naturalWidth||img.width,h=img.naturalHeight||img.height;if(!w||!h)return reject(new Error('Image has no usable dimensions.'));var scale=Math.min(1,1200/Math.max(w,h)),cw=Math.max(1,Math.round(w*scale)),ch=Math.max(1,Math.round(h*scale)),canvas=document.createElement('canvas');canvas.width=cw;canvas.height=ch;var ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,cw,ch);ctx.drawImage(img,0,0,cw,ch);resolve(canvas.toDataURL('image/jpeg',.82))};img.src=String(rd.result||'')};rd.readAsDataURL(file)})}
 function resetPhotoCropState(){
  photoCropState.zoom=1;photoCropState.x=50;photoCropState.y=50;photoCropState.pointers={};photoCropState.dragStart=null;photoCropState.pinchStart=null;
  if($('#photoCropZoom'))$('#photoCropZoom').value='1';if($('#photoCropX'))$('#photoCropX').value='50';if($('#photoCropY'))$('#photoCropY').value='50';
@@ -930,7 +930,7 @@ function applyPhotoCrop(){
  var cropW=Math.min(w,g.vw/g.scale),cropH=Math.min(h,g.vh/g.scale),sx=(w-cropW)*photoCropState.x/100,sy=(h-cropH)*photoCropState.y/100;
  var canvas=document.createElement('canvas');canvas.width=444;canvas.height=552;var ctx=canvas.getContext('2d');
  if(!ctx){toast('Photo cropping is not available in this browser.','error');return}
- ctx.drawImage(img,sx,sy,cropW,cropH,0,0,canvas.width,canvas.height);
+ ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,sx,sy,cropW,cropH,0,0,canvas.width,canvas.height);
  var src=canvas.toDataURL('image/jpeg',.86);mutate(function(){state.sections.header.photo=src;if(photoCapable())state.photoEnabled=true},true);
  closePhotoCrop();updateTopControls();renderEditor();renderPreview();toast('Photo added');
 }
@@ -1236,7 +1236,7 @@ function keywordHelper(){
 }
 
 function exportJson(){
-  flushTyping();var out={app:'SiteCraft Resume Builder',version:1,state:persistedStateClone()};downloadBlob(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}),'resume-data.json');clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved');toast('JSON exported')
+  flushTyping();var out={app:'SiteCraft Resume Builder',version:1,state:persistedStateClone()};downloadBlob(new Blob([JSON.stringify(out,null,2)],{type:'application/json'}),'resume-data.json');saveAfterExport();toast('JSON exported')
 }
 function isRecord(v){return !!v&&typeof v==='object'&&!Array.isArray(v)}
 function validSectionObject(v){return v===undefined||isRecord(v)}
@@ -1392,6 +1392,9 @@ function deleteSavedState(){
 function warnAutosaveFailure(err){
   autosaveReady=false;clearTimeout(autosaveTimer);autosaveTimer=null;setSaveStatus('Not saved — Export JSON','error');toast('Your resume could not be autosaved. Please use Export JSON.','error');
 }
+function saveAfterExport(){clearTimeout(autosaveTimer);autosaveTimer=null;if(dirty)autosaveNow()}
+function flushAutosave(){if(dirty&&autosaveReady){flushTyping();clearTimeout(autosaveTimer);autosaveTimer=null;autosaveNow()}}
+window.addEventListener('pagehide',flushAutosave);document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')flushAutosave()});
 function autosaveNow(){
   if(!autosaveReady||!dirty)return;
   setSaveStatus('Saving...','saving');
@@ -1542,14 +1545,14 @@ function standaloneDocument(){
   pages.forEach(function(p){doc+=p.replace('class="page-wrap"','class="page"')});
   doc+='</body></html>';return doc
 }
-function downloadHtml(){flushTyping();var blob=new Blob([standaloneDocument()],{type:'text/html;charset=utf-8'});downloadBlob(blob,fileBase()+'.html');clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved');toast('Standalone HTML downloaded')}
+function downloadHtml(){flushTyping();var blob=new Blob([standaloneDocument()],{type:'text/html;charset=utf-8'});downloadBlob(blob,fileBase()+'.html');saveAfterExport();toast('Standalone HTML downloaded')}
 function downloadPdf(){
  flushTyping();var fullText=allResumeText(),hits=[];
  if(/\[[^\]]+\]/.test(fullText))hits.push('bracketed placeholder');
  if(/\b(lorem ipsum|replace this|your full name|sample@example\.com|sample company|demonstration content only|sample resume)\b/i.test(fullText))hits.push('sample or placeholder text');
  var meaningful=!!(norm(state.sections.header.name)||norm(state.sections.header.email)||norm(state.sections.header.phone)||norm(state.sections.summary.text)||(state.sections.experience.items||[]).some(function(x){return norm(x.role)||norm(x.company)||(x.bullets||[]).some(function(b){return norm(b)})})||(state.sections.education.items||[]).some(function(x){return norm(x.degree)||norm(x.institution)})||(state.sections.skills.groups||[]).some(function(g){return (g.items||[]).some(function(v){return norm(v)})}));
  if(!meaningful||hits.length){var msg=!meaningful?'This resume looks empty. Download it anyway?':'This resume contains sample or placeholder text ('+hits.join(', ')+'). Download it anyway?';if(!window.confirm(msg))return}
- buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);clearTimeout(autosaveTimer);autosaveTimer=null;dirty=false;setSaveStatus('Saved');
+ buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);saveAfterExport();
 }
 
 function handleNav(target,e){if(target==='resume-builder.html')return;if(dirty){e.preventDefault();leaveTarget=target;$('#leaveModal').classList.add('show');$('#leaveStay').focus()}}
