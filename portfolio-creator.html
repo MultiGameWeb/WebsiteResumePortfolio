@@ -97,7 +97,7 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
 </style>
 <style id="portfolioLayoutFixes">
 .topbar a,.top-left-nav a{color:inherit;text-decoration:none}.topbar a:hover,.top-left-nav a:hover{text-decoration:none;color:var(--text)}.topbar a:focus-visible,.top-left-nav a:focus-visible{outline:3px solid rgba(109,94,252,.25);outline-offset:3px;border-radius:8px}
-.resume-helper-link{margin:10px 0 6px;font-size:12px}.resume-helper-link a{color:#6658ed;text-decoration:none;font-weight:800}.resume-helper-link a:hover{text-decoration:underline}
+.resume-helper-link{margin:10px 0 6px;font-size:12px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}.resume-import-btn{min-height:36px;font-size:12px;font-weight:900}.resume-helper-link a{color:#6658ed;text-decoration:none;font-weight:800}.resume-helper-link a:hover{text-decoration:underline}
 .editor-tools-row{width:100%;margin:12px 0 14px}.editor-tools-stack{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;width:100%}.width-presets{display:flex;align-items:center;gap:3px;padding:3px;border:1px solid var(--line);border-radius:12px;background:var(--surface);white-space:nowrap}.width-presets>span{font-size:10px;color:var(--muted);padding:0 5px;font-weight:900}.width-presets button{border:0;background:transparent;color:var(--muted);min-height:28px;padding:0 7px;border-radius:8px;font-size:11px;font-weight:900}.width-presets button.active,.width-presets button:hover{background:var(--surface2);color:var(--text)}.editor-tool-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
 .divider{position:relative;min-width:16px;touch-action:none;cursor:col-resize;background:transparent;display:flex;align-items:center;justify-content:center;z-index:40}.divider::before{content:"";width:4px;height:100%;background:#9da7b2;border-radius:99px;transition:background .16s,box-shadow .16s}.divider::after{content:"";position:absolute;width:12px;height:44px;border-radius:99px;background-color:#616b77;background-image:radial-gradient(circle,#fff 1.3px,transparent 1.5px);background-size:4px 7px;background-position:center;box-shadow:0 3px 12px rgba(23,29,36,.2);opacity:1}.divider:hover::before,.divider:focus-visible::before,.divider-dragging .divider::before{background:#6658ed;box-shadow:0 0 0 2px rgba(102,88,237,.12)}.divider:hover::after,.divider:focus-visible::after,.divider-dragging .divider::after{background-color:#4f46e5;box-shadow:0 5px 16px rgba(79,70,229,.28)}
 .divider-dragging{user-select:none!important}.divider-dragging .preview-area{pointer-events:none!important}.divider-dragging #preview{pointer-events:none!important}
@@ -529,7 +529,7 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
 <aside class="editor" id="editor">
   
   <div class="editor-head"><div><div class="kicker">BUILD YOUR PORTFOLIO</div><h1 id="step2Title">Build your content</h1><p>Enter your content, arrange sections, and watch the portfolio adapt.</p></div></div><div class="editor-tools-row" id="editorTools"></div>
-  <div class="resume-helper-link"><a href="resume-builder.html" data-leave-link="resume-builder.html">Need a resume? Open Resume Builder →</a></div>
+  <div class="resume-helper-link"><button type="button" class="btn soft resume-import-btn" id="importFromResumeBtn">⇄ Import from my resume</button><a href="resume-builder.html" data-leave-link="resume-builder.html">Need a resume? Open Resume Builder →</a></div>
   <div class="sample-banner" id="sampleBanner" hidden><div><strong>This is a sample portfolio.</strong><span>Replace the sample details, or start with an empty portfolio.</span></div><div class="sample-banner-actions"><button class="btn primary" id="startBlankBtn" type="button">Start blank</button><button class="btn soft" id="keepSampleBtn" type="button">Edit sample</button></div></div>
   <div class="suggestion-banner" id="suggestionBanner" hidden></div>
   <div class="accordion" id="accordion"></div>
@@ -551,7 +551,7 @@ input[type=file]{position:absolute!important;width:1px!important;height:1px!impo
   <div class="modal-card narrow"><div class="modal-step">Reset portfolio</div><h2 id="confirmTitle">Start over?</h2><p class="confirm-copy">Your current edits will be replaced with the default Working Professional demo and your saved portfolio data will be cleared.</p><div class="modal-bottom"><button class="btn soft" id="cancelReset" type="button">Cancel</button><button class="btn danger" id="confirmReset" type="button">Reset portfolio</button></div></div>
 </div>
 <div class="modal" id="importModal" role="dialog" aria-modal="true" aria-labelledby="importTitle" aria-hidden="true">
-  <div class="modal-card narrow"><div class="modal-step">Import portfolio</div><h2 id="importTitle">Replace current portfolio?</h2><p class="confirm-copy">Importing this file will replace the current in-memory portfolio. Your current data will remain available through Undo.</p><div class="modal-bottom"><button class="btn soft" id="cancelImport" type="button">Cancel</button><button class="btn primary" id="confirmImport" type="button">Import portfolio</button></div></div>
+  <div class="modal-card narrow"><div class="modal-step">Import portfolio</div><h2 id="importTitle">Replace current portfolio?</h2><p class="confirm-copy">Importing will replace the details in your current portfolio. Your design and theme stay the same, and Undo brings the old details back.</p><div class="modal-bottom"><button class="btn soft" id="cancelImport" type="button">Cancel</button><button class="btn primary" id="confirmImport" type="button">Import portfolio</button></div></div>
 </div>
 <div class="modal" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="demoTitle" aria-hidden="true">
   <div class="modal-card narrow"><div class="modal-step">Before you download</div><h2 id="demoTitle">Sample details are still in your portfolio</h2><p class="confirm-modal-copy">Visitors would see these sample details on your website:</p><ul class="demo-list" id="demoList"></ul><div class="leave-modal-actions"><button class="btn soft" id="demoDownloadAnyway" type="button">Download anyway</button><button class="btn primary" id="demoEdit" type="button">Go back and edit</button></div></div>
@@ -724,7 +724,7 @@ function nearestSkillLevel(v){
 }
 function normalizeExperienceEntry(x){
   x=isRecord(x)?x:{};
-  var oldStart=monthValue(x.start),oldEnd=monthValue(x.end),currently=x.currently===true||/^present|ongoing|current$/i.test(norm(x.end));
+  var oldStart=monthValue(x.start),oldEnd=monthValue(x.end),currently=x.currently===true||/^(present|ongoing|current)$/i.test(norm(x.end));
   var bullets=Array.isArray(x.bullets)?x.bullets.map(norm).filter(Boolean):[];
   if(!bullets.length&&norm(x.description))bullets=[norm(x.description)];
   return{company:norm(x.company),role:norm(x.role),location:norm(x.location),start:oldStart,end:currently?"":oldEnd,currently:currently,bullets:bullets.slice(0,8).map(function(v){return v.slice(0,200)})};
@@ -930,6 +930,35 @@ function openThemeGallery(){
  (function next(){if(i>=thumbs.length||!wrap.isConnected)return;var el=thumbs[i++];el.innerHTML='<div class="pg-scale" aria-hidden="true">'+themeThumbHtml(el.dataset.pgThumb)+'</div>';$$("img",el).forEach(function(im){im.loading="lazy"});var sc=el.firstElementChild;sc.style.transform="scale("+(el.clientWidth/1200)+")";setTimeout(next,0)})();
  var first=wrap.querySelector(".pg-item.active")||wrap.querySelector(".pg-item");if(first)first.focus();
 }
+
+// ---- Resume -> Portfolio: reads the resume saved by Resume Builder in this browser (no server).
+function loadResumeFromBrowser(){return new Promise(function(resolve){
+ if(!window.indexedDB)return resolve(null);var req;try{req=indexedDB.open("sitecraft-resume")}catch(e){return resolve(null)}
+ req.onupgradeneeded=function(){try{req.transaction.abort()}catch(e){}};
+ req.onerror=function(){resolve(null)};req.onblocked=function(){resolve(null)};
+ req.onsuccess=function(){var db=req.result;try{if(!db.objectStoreNames.contains("state")){db.close();return resolve(null)}var g=db.transaction("state","readonly").objectStore("state").get("current");g.onsuccess=function(){db.close();var v=g.result;resolve(v&&v.state!==undefined?v.state:v||null)};g.onerror=function(){db.close();resolve(null)}}catch(e){try{db.close()}catch(_){}resolve(null)}};
+})}
+function resumeMonth(v){var s=norm(v),m=s.match(/^(\d{4})-(\d{2})/);if(m)return m[1]+"-"+m[2];return monthValue(s)}
+function resumeToPortfolio(r){
+ var sec=isRecord(r)&&isRecord(r.sections)?r.sections:null;if(!sec)throw new Error("No resume details were found.");
+ var h=isRecord(sec.header)?sec.header:{},items=function(k){return isRecord(sec[k])&&Array.isArray(sec[k].items)?sec[k].items.filter(isRecord):[]},next=clone(state),seen={};
+ next.personal=Object.assign({},next.personal,{name:norm(h.name),title:norm(h.headline),bio:norm(sec.summary&&sec.summary.text).slice(0,600),location:norm(h.location),email:norm(h.email),phone:norm(h.phone),photo:safeImage(h.photo)||next.personal.photo||""});
+ var links=[];function link(label,url){var u=safeUrl(url);if(u&&!seen[u]){seen[u]=1;links.push({label:label,url:u})}}
+ link("LinkedIn",h.linkedin);link("GitHub",h.github);link("Website",h.website);(Array.isArray(h.customLinks)?h.customLinks:[]).forEach(function(x){if(isRecord(x))link(norm(x.name)||"Link",x.url)});
+ next.social=Object.assign({},next.social,{customLinks:links});
+ var skills=[],skillSeen={};((isRecord(sec.skills)&&Array.isArray(sec.skills.groups))?sec.skills.groups:[]).forEach(function(g){if(!isRecord(g))return;(Array.isArray(g.items)?g.items:[]).forEach(function(v){var n=norm(v);if(n&&!skillSeen[n.toLowerCase()]){skillSeen[n.toLowerCase()]=1;skills.push({name:n.slice(0,60),level:"",category:norm(g.name)})}})});
+ next.skills=skills.slice(0,40);
+ next.experience=items("experience").map(function(e){var cur=e.currently===true;return{company:norm(e.company),role:norm(e.role),location:norm(e.location),start:resumeMonth(e.start),end:cur?"":resumeMonth(e.end),currently:cur,bullets:(Array.isArray(e.bullets)?e.bullets:[]).map(norm).filter(Boolean).slice(0,8)}});
+ next.education=items("education").map(function(e){var on=e.ongoing===true;return{institution:norm(e.institution),degree:norm(e.degree),field:norm(e.field),start:yearValue(e.start),end:on?"":yearValue(e.end),ongoing:on,grade:norm(e.score),notes:norm(e.notes)}});
+ next.projects=items("projects").map(function(x){var u=safeUrl(x.link),gh=/github\.com/i.test(u);return{title:norm(x.name),description:(Array.isArray(x.bullets)?x.bullets:[]).map(norm).filter(Boolean).join(" "),tech:(Array.isArray(x.tech)?x.tech:[]).map(norm).filter(Boolean).slice(0,12),live:gh?"":u,github:gh?u:"",image:""}});
+ next.certifications=items("certifications").map(function(c){return{name:norm(c.name),issuer:norm(c.issuer),year:yearValue(c.date),link:safeUrl(c.link)}});
+ var langs=items("languages").filter(function(x){return norm(x.name)}).map(function(x){return{name:norm(x.name),level:norm(x.level)}});
+ next.optionalSections=Object.assign({},next.optionalSections);if(langs.length)next.optionalSections.languages=langs;
+ if(norm(h.email))next.contact=Object.assign({},next.contact,{email:norm(h.email)});
+ if(!norm(h.name)&&!next.experience.length&&!next.education.length&&!skills.length)throw new Error("Your saved resume is empty. Add your details in Resume Builder first.");
+ return next;
+}
+function importFromResume(){loadResumeFromBrowser().then(function(r){if(!r){toast("No resume found in this browser. Make one in Resume Builder first, on this same device.","error");return}var next;try{next=resumeToPortfolio(r)}catch(e){toast(e.message,"error");return}showImportConfirm(next)})}
 function updateThemePicker(){
   var select=$("#headerTemplateSelect");
   if(select&&THEMES[state.design.theme])select.value=state.design.theme;
@@ -1044,7 +1073,7 @@ function setupTools(){
   $("#demoEdit").onclick=function(){closeModal("demoModal")};$("#demoDownloadAnyway").onclick=function(){closeModal("demoModal");downloadPortfolio(true)};
   $("#publishClose").onclick=function(){try{if($("#publishHide").checked)localStorage.setItem("pc-hide-publish-help","1")}catch(e){}closeModal("publishModal")};
   $$("[data-editor-preset]").forEach(function(b){b.onclick=function(){var v=+b.dataset.editorPreset;setEditorWidth(v);$$("[data-editor-preset]").forEach(function(x){x.classList.toggle("active",+x.dataset.editorPreset===editorWidth)})}});
-  $("#importJson").onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)return;f.text().then(function(txt){var x;try{x=JSON.parse(txt)}catch(err){throw new Error("That file is not valid JSON.")}var next=validateImported(x);showImportConfirm(next)}).catch(function(err){toast(err.message||"Import failed.","error")});e.target.value=""}
+  $("#importJson").onchange=function(e){var f=e.target.files&&e.target.files[0];if(!f)return;f.text().then(function(txt){var x;try{x=JSON.parse(txt)}catch(err){throw new Error("That file is not valid JSON.")}var next=(x&&(x.app==="SiteCraft Resume Builder"||isRecord(x.sections)))?resumeToPortfolio(x.state!==undefined?x.state:x):validateImported(x);showImportConfirm(next)}).catch(function(err){toast(err.message||"Import failed.","error")});e.target.value=""}
 }
 
 function setupPreviewScroll(){var shell=$("#previewShell");if(!shell)return;shell.addEventListener("scroll",function(){updateScrollSpy();$("#backTop")?.classList.toggle("show",shell.scrollTop>260)},{passive:true});shell.addEventListener("keydown",function(e){if((e.target.closest&&e.target.closest("input,textarea,select,button,a"))&&e.target!==shell)return;var step=Math.max(180,Math.round(shell.clientHeight*.82));if(e.key==="PageDown"||(e.key===" "&&!e.shiftKey)){e.preventDefault();shell.scrollBy({top:step,behavior:reduced()?"auto":"smooth"})}else if(e.key==="PageUp"||(e.key===" "&&e.shiftKey)){e.preventDefault();shell.scrollBy({top:-step,behavior:reduced()?"auto":"smooth"})}else if(e.key==="Home"&&e.ctrlKey){e.preventDefault();shell.scrollTo({top:0,behavior:reduced()?"auto":"smooth"})}else if(e.key==="End"&&e.ctrlKey){e.preventDefault();shell.scrollTo({top:shell.scrollHeight,behavior:reduced()?"auto":"smooth"})}});$("#backTop").onclick=function(){shell.scrollTo({top:0,behavior:reduced()?"auto":"smooth"})}}
@@ -1054,7 +1083,7 @@ function setupTop(){
   $("#editorThemeBtn").onclick=function(){document.body.classList.toggle("editor-dark")};
   $("#editTab").onclick=function(){document.body.classList.remove("mobile-preview");$("#editTab").classList.add("active");$("#previewTab").classList.remove("active")};
   $("#previewTab").onclick=function(){document.body.classList.add("mobile-preview");$("#previewTab").classList.add("active");$("#editTab").classList.remove("active")};
-  var templateSelect=$("#headerTemplateSelect");if(templateSelect)templateSelect.addEventListener("change",function(e){applyTheme(e.target.value,true)});var galleryBtn=$("#themeGalleryBtn");if(galleryBtn)galleryBtn.addEventListener("click",openThemeGallery);
+  var templateSelect=$("#headerTemplateSelect");if(templateSelect)templateSelect.addEventListener("change",function(e){applyTheme(e.target.value,true)});var galleryBtn=$("#themeGalleryBtn");if(galleryBtn)galleryBtn.addEventListener("click",openThemeGallery);var resumeBtn=$("#importFromResumeBtn");if(resumeBtn)resumeBtn.addEventListener("click",importFromResume);
   $("#moreBtn")?.addEventListener("click",function(){var m=$("#moreMenu"),open=m.hasAttribute("hidden");if(open)m.removeAttribute("hidden");else m.setAttribute("hidden","");this.setAttribute("aria-expanded",String(open))});
   $$('[data-more-action]').forEach(function(b){b.onclick=function(){var a=b.dataset.moreAction;$("#moreMenu").setAttribute("hidden","");$("#moreBtn").setAttribute("aria-expanded","false");if(a==="undo")undo();else if(a==="redo")redo();else if(a==="editor")$("#editorThemeBtn").click();else if(a==="focus"){var focused=$("#app").classList.toggle("focus");toast(focused?"Focus preview enabled":"Focus preview closed")}else if(a==="preview")previewNewTab();else if(a==="json")exportJson();else if(a==="reset")showResetConfirm();else if(a==="blank")startBlank()}});
   document.addEventListener("click",function(e){var m=$("#moreMenu");if(m&&!e.target.closest(".more-wrap")){m.setAttribute("hidden","");$("#moreBtn")?.setAttribute("aria-expanded","false")}});
