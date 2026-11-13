@@ -29,7 +29,7 @@ main{max-width:1200px;margin:auto;padding:46px 20px 72px}.hero{display:grid;grid
 <body>
 <header class="header"><div class="header-inner"><a class="logo" href="index.html"><span class="logo-mark">✦</span><span>SiteCraft</span></a><nav class="nav" aria-label="Primary"><a href="templates.html">Templates</a><a href="portfolio-creator.html">Portfolio Creator</a><a href="resume-builder.html">Resume Builder</a><a href="pdf-tools.html">PDF Tools</a></nav></div></header>
 <main>
-<section class="hero"><div><div class="eyebrow">Document utility suite</div><h1>PDF tools, all in one place.</h1><p>Convert, organize, optimize, and prepare PDF files without creating an account.</p></div><div class="privacy"><strong>Privacy first.</strong><br>PDFs and images are processed in your browser; this page does not upload them to a SiteCraft server. PDF.js, PDF-Lib, DOCX, and XLSX libraries load from third-party CDNs, so an internet connection is needed for those tools. Text in Telugu, Hindi and other Indian languages also downloads a font (only the language you use) the first time.</div></section>
+<section class="hero"><div><div class="eyebrow">Document utility suite</div><h1>PDF tools, all in one place.</h1><p>Convert, organize, optimize, and prepare PDF files without creating an account.</p></div><div class="privacy"><strong>Privacy first.</strong><br>PDFs and images are processed in your browser; this page does not upload them to a SiteCraft server. All the libraries and fonts these tools need are served from this website, so nothing is sent anywhere and no third-party CDN is needed. Text in Telugu, Hindi and other Indian languages loads a font (only the language you use) the first time.</div></section>
 <section class="grid" aria-label="PDF tools">
 <article class="tool" data-tool="editor"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg></div><h2>PDF Editor</h2><p>Open a PDF, view pages, add text or images, rotate, delete, and save.</p><button type="button" data-open="editor">Use tool</button></article><article class="tool" data-tool="image"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg></div><h2>PDF → JPG / PNG</h2><p>Convert each PDF page into an image.</p><button type="button" data-open="image" >Use tool</button></article><article class="tool" data-tool="word"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="m7 12 2 6 2-4 2 4 2-6"/></svg></div><h2>PDF → Word</h2><p>Turn text-rich PDFs into editable Word documents.</p><button type="button" data-open="word">Use tool</button></article><article class="tool" data-tool="excel"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div><h2>PDF → Excel</h2><p>Extract tables/data into editable spreadsheets.</p><button type="button" data-open="excel">Use tool</button></article><article class="tool" data-tool="html"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 4l-4 16"/></svg></div><h2>HTML → PDF</h2><p>Needs a server-side browser renderer; unavailable in this no-backend build.</p><button type="button" data-open="html" disabled>Backend required</button></article><article class="tool" data-tool="compress"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/><path d="M9 9h6v6H9z"/></svg></div><h2>Optimize PDF</h2><p>Rewrite PDF objects; deep image compression is not included.</p><button type="button" data-open="compress" >Use tool</button></article><article class="tool" data-tool="protect"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><rect x="9" y="10" width="6" height="5" rx="1"/><path d="M10 10V8a2 2 0 1 1 4 0v2"/></svg></div><h2>Protect PDF</h2><p>Real encrypted password protection is not available in this browser-only build.</p><button type="button" data-open="protect" disabled>Backend required</button></article><article class="tool" data-tool="unlock"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><rect x="9" y="10" width="6" height="5" rx="1"/><path d="M10 10V8a2 2 0 0 1 4 0"/></svg></div><h2>Unlock PDF</h2><p>Password-based decryption is not available in this browser-only build.</p><button type="button" data-open="unlock" disabled>Backend required</button></article><article class="tool" data-tool="split"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="m8.1 8.1 12 12M8.1 15.9 20 4M12 12l2-2"/></svg></div><h2>Split PDF</h2><p>Create a new PDF from selected pages.</p><button type="button" data-open="split" >Use tool</button></article><article class="tool" data-tool="delete"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13l6 6M15 13l-6 6"/></svg></div><h2>Delete Pages</h2><p>Remove unwanted pages from a PDF.</p><button type="button" data-open="delete" >Use tool</button></article><article class="tool" data-tool="rotate"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5"/></svg></div><h2>Rotate PDF</h2><p>Rotate selected pages by 90° steps.</p><button type="button" data-open="rotate" >Use tool</button></article><article class="tool" data-tool="watermark"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/><circle cx="12" cy="12" r="7"/></svg></div><h2>Watermark</h2><p>Add an adjustable-opacity text overlay to every page.</p><button type="button" data-open="watermark" >Use tool</button></article>
 <article class="tool" data-tool="imagepdf"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="m21 15-5-5-6 6"/><path d="M12 2v5M9.5 4.5 12 7l2.5-2.5"/></svg></div><h2>Image → PDF</h2><p>Convert a single JPG, PNG or WebP image into a PDF.</p><button type="button" data-open="imagepdf">Use tool</button></article><article class="tool" data-tool="imagespdf"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="13" height="13" rx="2"/><path d="m3 12 4-4 4 4M8 16v3a2 2 0 0 0 2 2h8a3 3 0 0 0 3-3v-8a2 2 0 0 0-2-2h-2"/></svg></div><h2>Images → PDF</h2><p>Merge multiple images into one PDF, one image per page.</p><button type="button" data-open="imagespdf">Use tool</button></article><article class="tool" data-tool="textpdf"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></div><h2>Text → PDF</h2><p>Turn typed text into a clean downloadable PDF.</p><button type="button" data-open="textpdf">Use tool</button></article><article class="tool" data-tool="merge"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M12 11v6M9 14h6"/></svg></div><h2>Merge PDF</h2><p>Merge multiple PDF files into a single PDF.</p><button type="button" data-open="merge">Use tool</button></article></section>
@@ -48,9 +48,7 @@ main{max-width:1200px;margin:auto;padding:46px 20px 72px}.hero{display:grid;grid
 </main>
 <footer class="footer">© 2026 SiteCraft · PDF Tools · Use only files you are authorized to process.</footer>
 
-<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/docx@9.9.0/dist/index.umd.cjs"></script>
+<script src="vendor/pdf-lib.min.js"></script>
 <script type="module">
 const $=s=>document.getElementById(s)||document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 
@@ -65,10 +63,10 @@ function friendlyMessage(error){
  const raw=String(error&&error.message||error||"Unknown error");
  if(/encrypted/i.test(raw))return "This PDF is password-protected, so it cannot be opened here. Open it in a PDF viewer, save a copy without the password, and try again.";
  if(/Failed to parse PDF|Invalid PDF|No PDF header|bad XRef|Expected instance of PDF|Unexpected end of PDF|Invalid object ref/i.test(raw))return "This PDF looks damaged and could not be read. Open and re-save it in another PDF viewer, then try the new copy.";
- if(/PDFLib is not defined|PDFLib is undefined/.test(raw))return "The PDF library could not load. Check your internet connection and reload the page.";
- if(/dynamically imported module|Importing a module script failed/i.test(raw))return "The PDF viewer library could not load. Check your internet connection and reload the page.";
- if(/^LIB:/.test(raw))return "A library needed for this tool could not load. Check your internet connection and try again.";
- if(/^FONT:/.test(raw))return "The font for "+raw.slice(5)+" text could not load. Check your internet connection and try again.";
+ if(/PDFLib is not defined|PDFLib is undefined/.test(raw))return "The PDF library could not load. Reload the page and try again.";
+ if(/dynamically imported module|Importing a module script failed/i.test(raw))return "The PDF viewer could not load. Reload the page and try again. A very old browser may not support it.";
+ if(/^LIB:/.test(raw))return "A library needed for this tool could not load. Reload the page and try again.";
+ if(/^FONT:/.test(raw))return "The font for "+raw.slice(5)+" text could not load. Reload the page and try again.";
  return raw;
 }
 function showError(error){
@@ -187,17 +185,47 @@ function parsePages(text,max,options={}){
  }
  if(!selected.size)throw new Error("No pages were selected.");return [...selected].sort((a,b)=>a-b);
 }
+
+// ---- Minimal .xlsx writer (one sheet, numbers and text) with a stored (uncompressed) zip. No library needed.
+const CRC_TABLE=(()=>{const t=[];for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(u){let c=0xFFFFFFFF;for(let i=0;i<u.length;i++)c=CRC_TABLE[(c^u[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
+function zipStore(files,type){
+ const enc=new TextEncoder(),parts=[],central=[];let offset=0;
+ const u16=v=>[v&255,(v>>>8)&255],u32=v=>[v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255];
+ for(const f of files){const name=enc.encode(f.name),data=typeof f.data==="string"?enc.encode(f.data):f.data,crc=crc32(data);
+  const head=[...u32(0x04034b50),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(data.length),...u32(data.length),...u16(name.length),...u16(0)];
+  parts.push(new Uint8Array(head),name,data);
+  central.push(new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(crc),...u32(data.length),...u32(data.length),...u16(name.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(offset)]),name);
+  offset+=head.length+name.length+data.length}
+ const size=central.reduce((s,b)=>s+b.length,0);
+ return new Blob([...parts,...central,new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(size),...u32(offset),...u16(0)])],{type});
+}
+function buildXlsx(rows,sheetName){
+ const esc=v=>String(v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+ const col=i=>{let s="";i++;while(i){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26)}return s};
+ const sheetRows=rows.map((r,ri)=>'<row r="'+(ri+1)+'">'+r.map((v,ci)=>{const ref=col(ci)+(ri+1);return typeof v==="number"&&isFinite(v)?'<c r="'+ref+'"'+(ri===0?' s="1"':'')+'><v>'+v+'</v></c>':'<c r="'+ref+'" t="inlineStr"'+(ri===0?' s="1"':'')+'><is><t xml:space="preserve">'+esc(String(v).slice(0,32000))+'</t></is></c>'}).join("")+'</row>').join("");
+ const x='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ return zipStore([
+  {name:"[Content_Types].xml",data:x+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'},
+  {name:"_rels/.rels",data:x+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'},
+  {name:"xl/workbook.xml",data:x+'<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="'+esc(sheetName).slice(0,31)+'" sheetId="1" r:id="rId1"/></sheets></workbook>'},
+  {name:"xl/_rels/workbook.xml.rels",data:x+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'},
+  {name:"xl/styles.xml",data:x+'<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="2"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/></cellXfs></styleSheet>'},
+  {name:"xl/worksheets/sheet1.xml",data:x+'<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><cols><col min="1" max="2" width="8" customWidth="1"/><col min="3" max="3" width="100" customWidth="1"/></cols><sheetData>'+sheetRows+'</sheetData></worksheet>'}
+ ],"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+}
 // ---- Text in any supported language: Latin uses the built-in PDF font, Indian scripts load a Noto font on demand.
-const FONT_CDN="https://cdn.jsdelivr.net/npm/@expo-google-fonts/";
-const FONTKIT_URL="https://unpkg.com/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js",REGEN_URL="https://unpkg.com/regenerator-runtime@0.14.1/runtime.js";
+const FONT_DIR="vendor/fonts/";
+const FONTKIT_URL="vendor/fontkit.umd.min.js",REGEN_URL="vendor/regenerator-runtime.js",DOCX_URL="vendor/docx.min.js";
+const PDFJS_URL=new URL("vendor/pdfjs/pdf.min.mjs",location.href).href,PDFJS_WORKER_URL=new URL("vendor/pdfjs/pdf.worker.min.mjs",location.href).href;
 const SCRIPTS=[
- {id:"telugu",name:"Telugu",test:/[ఀ-౿]/,url:FONT_CDN+"noto-sans-telugu@0.4.2/400Regular/NotoSansTelugu_400Regular.ttf"},
- {id:"devanagari",name:"Hindi or Marathi",test:/[ऀ-ॿ꣠-ꣿ]/,url:FONT_CDN+"noto-sans-devanagari@0.4.2/400Regular/NotoSansDevanagari_400Regular.ttf"},
- {id:"tamil",name:"Tamil",test:/[஀-௿]/,url:FONT_CDN+"noto-sans-tamil@0.4.3/400Regular/NotoSansTamil_400Regular.ttf"},
- {id:"kannada",name:"Kannada",test:/[ಀ-೿]/,url:FONT_CDN+"noto-sans-kannada@0.4.3/400Regular/NotoSansKannada_400Regular.ttf"},
- {id:"malayalam",name:"Malayalam",test:/[ഀ-ൿ]/,url:FONT_CDN+"noto-sans-malayalam@0.4.2/400Regular/NotoSansMalayalam_400Regular.ttf"},
- {id:"gujarati",name:"Gujarati",test:/[઀-૿]/,url:FONT_CDN+"noto-sans-gujarati@0.4.2/400Regular/NotoSansGujarati_400Regular.ttf"},
- {id:"gurmukhi",name:"Punjabi",test:/[਀-੿]/,url:FONT_CDN+"noto-sans-gurmukhi@0.4.1/400Regular/NotoSansGurmukhi_400Regular.ttf"}
+ {id:"telugu",name:"Telugu",test:/[ఀ-౿]/,url:FONT_DIR+"NotoSansTelugu_400Regular.ttf"},
+ {id:"devanagari",name:"Hindi or Marathi",test:/[ऀ-ॿ꣠-ꣿ]/,url:FONT_DIR+"NotoSansDevanagari_400Regular.ttf"},
+ {id:"tamil",name:"Tamil",test:/[஀-௿]/,url:FONT_DIR+"NotoSansTamil_400Regular.ttf"},
+ {id:"kannada",name:"Kannada",test:/[ಀ-೿]/,url:FONT_DIR+"NotoSansKannada_400Regular.ttf"},
+ {id:"malayalam",name:"Malayalam",test:/[ഀ-ൿ]/,url:FONT_DIR+"NotoSansMalayalam_400Regular.ttf"},
+ {id:"gujarati",name:"Gujarati",test:/[઀-૿]/,url:FONT_DIR+"NotoSansGujarati_400Regular.ttf"},
+ {id:"gurmukhi",name:"Punjabi",test:/[਀-੿]/,url:FONT_DIR+"NotoSansGurmukhi_400Regular.ttf"}
 ];
 const JOINERS=/[​-‍⁠︎️]/;
 // Mark positioning (GPOS) crashes in this fontkit build; letter shaping (GSUB) is what Indian scripts need.
@@ -335,8 +363,8 @@ function linesFromItems(items){
  }).filter(Boolean);
 }
 async function getPdfText(file){
- const pdfjs=await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs");
- pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+ const pdfjs=await import(PDFJS_URL);
+ pdfjs.GlobalWorkerOptions.workerSrc=PDFJS_WORKER_URL;
  const pdf=await pdfjs.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;
  if(pdf.numPages>MAX_TEXT_PAGES)throw new Error("This conversion is limited to "+MAX_TEXT_PAGES+" pages per file to protect browser memory.");
  const pages=[];
@@ -353,8 +381,8 @@ function resetEditorState(){
  if(old&&typeof old.destroy==="function")old.destroy().catch(()=>{});
 }
 async function initEditor(file){
- const pdfjs=await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs");
- pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+ const pdfjs=await import(PDFJS_URL);
+ pdfjs.GlobalWorkerOptions.workerSrc=PDFJS_WORKER_URL;
  const bytes=new Uint8Array(await file.arrayBuffer()),pdf=await pdfjs.getDocument({data:bytes}).promise;
  if(pdf.numPages>MAX_RENDER_PAGES)throw new Error("The visual editor is limited to "+MAX_RENDER_PAGES+" pages per PDF to avoid freezing the browser.");
  editorState={pdf,pages:[],selected:0,scale:1.15,overlays:new Map()};
@@ -478,8 +506,8 @@ async function run(){
  try{
   if(state.tool==="editor"){await initEditor(state.files[0]);return}
   if(state.tool==="image"){
-   const pdfjs=await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs");
-   pdfjs.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+   const pdfjs=await import(PDFJS_URL);
+   pdfjs.GlobalWorkerOptions.workerSrc=PDFJS_WORKER_URL;
    const pdf=await pdfjs.getDocument({data:new Uint8Array(await state.files[0].arrayBuffer())}).promise;
    if(pdf.numPages>MAX_RENDER_PAGES)throw new Error("Image conversion is limited to "+MAX_RENDER_PAGES+" pages per PDF to avoid freezing your browser.");
    const ext=$("imageFormat").value,requestedScale=parseFloat($("imageScale").value)||1;
@@ -506,15 +534,14 @@ async function run(){
    const made=await makeTextPdf($("textContent").value.trim());await makeDownload(made.bytes,"text-to-pdf.pdf");
    if(made.unsupported)showNote(made.unsupported+" character"+(made.unsupported===1?"":"s")+" could not be included (emoji or a language that is not supported yet) and show as “?”. "+LANGUAGES_NOTE);
   }else if(state.tool==="word"){
-   const pages=await getPdfText(state.files[0]);if(!window.docx)throw new Error("The Word export library could not load. Check your internet connection and try again.");
+   const pages=await getPdfText(state.files[0]);try{await loadScriptOnce(DOCX_URL)}catch(e){}if(!window.docx)throw new Error("The Word export library could not load. Reload the page and try again.");
    const children=[];pages.forEach(function(lines,pi){children.push(new docx.Paragraph({text:"Page "+(pi+1),heading:docx.HeadingLevel.HEADING_2}));lines.forEach(line=>children.push(new docx.Paragraph({text:line})))});
    const documentFile=new docx.Document({sections:[{children}]});
    await makeDownload(await docx.Packer.toBlob(documentFile),filename(state.files[0].name,"-converted","docx"),"application/vnd.openxmlformats-officedocument.wordprocessingml.document");
   }else if(state.tool==="excel"){
-   const pages=await getPdfText(state.files[0]);if(!window.XLSX)throw new Error("The Excel export library could not load. Check your internet connection and try again.");
+   const pages=await getPdfText(state.files[0]);
    const rows=[["Page","Line","Extracted text"]];pages.forEach((lines,pi)=>lines.forEach((line,i)=>rows.push([pi+1,i+1,line])));
-   const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(rows);XLSX.utils.book_append_sheet(wb,ws,"PDF Text");
-   await makeDownload(XLSX.write(wb,{bookType:"xlsx",type:"array"}),filename(state.files[0].name,"-converted","xlsx"),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+   await makeDownload(buildXlsx(rows,"PDF Text"),filename(state.files[0].name,"-converted","xlsx"),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
   }else{
    const doc=await loadPdf(state.files[0]),count=doc.getPageCount();if(count>MAX_OPERATION_PAGES)throw new Error("This operation is limited to "+MAX_OPERATION_PAGES+" pages in the browser-only tool.");
    if(state.tool==="compress"){

@@ -103,8 +103,8 @@ button:disabled{cursor:not-allowed}
 }
 
 </style>
-<script src="https://cdn.jsdelivr.net/npm/docx@9.9.0/dist/index.umd.cjs" onerror="window.docxLoadFailed=true"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" onerror="window.html2canvasLoadFailed=true"></script>
+<script defer src="vendor/docx.min.js" onerror="window.docxLoadFailed=true"></script>
+<script defer src="vendor/html2canvas.min.js" onerror="window.html2canvasLoadFailed=true"></script>
 <link rel="stylesheet" href="site-navigation.css">
 </head>
 <body>
@@ -691,7 +691,7 @@ $("#imageBtn").addEventListener("click",async function(){
     },"image/png");
    }catch(error){reject(error)}
   });
- }catch(_){showSaveStatus("PNG export failed. Check browser permissions and internet connection, then try again.");alert("PNG export failed. Please try again, or use Print / Save PDF.")}
+ }catch(_){showSaveStatus("PNG export failed. Reload the page and try again.");alert("PNG export failed. Please try again, or use Print / Save PDF.")}
 });
 $("#fieldsToggle").addEventListener("click",function(){setFieldsPanelOpen(!fieldsPanelOpen);queueSave()});
 $("#reapplyFields").addEventListener("click",applyFieldsToDocument);
@@ -892,7 +892,7 @@ $("#wordBtn").addEventListener("click",async function(){
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
   showSaveStatus("Word file downloaded. Page backgrounds may look different in Word.");
   setTimeout(()=>{if($("#saveState"))showSaveStatus("Auto-save on")},4000);
- }catch(err){showSaveStatus("Word export failed. Check your internet connection and try again, or use Print / Save PDF.");try{console.error(err)}catch(_){}}
+ }catch(err){showSaveStatus("Word export failed. Reload the page and try again, or use Print / Save PDF.");try{console.error(err)}catch(_){}}
  finally{btn.disabled=false}
 });
 $("#clearBtn").addEventListener("click",function(){
