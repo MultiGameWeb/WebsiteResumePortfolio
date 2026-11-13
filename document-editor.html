@@ -127,7 +127,7 @@ button:disabled{cursor:not-allowed}
 <main class="main">
   <div class="topbar"><div class="doc-title" id="docTitle">NOC Undertaking</div><div class="save-state" id="saveState">Auto-save on</div></div>
   <div class="actions" aria-label="Document actions">
-    <button class="btn primary" id="pdfBtn" aria-label="Print document or save as PDF">Print / Save PDF</button><button class="btn" id="wordBtn" aria-label="Download document as Word file">Download Word</button>
+    <button class="btn primary" id="pdfBtn" aria-label="Download document as a PDF file">Download PDF</button><button class="btn" id="printBtn" type="button" aria-label="Print document">Print</button><button class="btn" id="wordBtn" aria-label="Download document as Word file">Download Word</button>
     <label class="action-control">Paper size <select id="paperSize" aria-label="Paper size"><option value="A3">A3</option><option value="A4" selected>A4</option><option value="A5">A5</option><option value="B5">B5</option><option value="Letter">Letter</option><option value="Legal">Legal</option><option value="Tabloid">Tabloid</option><option value="Custom">Custom</option></select></label>
     <button class="btn" id="orientationBtn" type="button" aria-pressed="false">Portrait</button>
     <label class="action-control">Margins <select id="paperMargins" aria-label="Page margins"><option value="normal">Normal</option><option value="narrow">Narrow</option><option value="wide">Wide</option></select></label>
@@ -685,7 +685,7 @@ $("#imageBtn").addEventListener("click",async function(){
      try{
       if(!blob)throw new Error("The browser could not encode the PNG image.");
       const url=URL.createObjectURL(blob),a=document.createElement("a");
-      a.href=url;a.download=(blankMode?"document":(templates[current]?.title||"document")).replace(/\s+/g,"-").toLowerCase()+".png";
+      a.href=url;a.download=documentFileBase()+".png";
       document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);resolve();
      }catch(error){reject(error)}
     },"image/png");
@@ -733,7 +733,32 @@ $("#page").addEventListener("paste",function(event){
  hasManualEdits=true;rememberSelection();queueSave();updateToolbarState();
 });
 try{document.execCommand("defaultParagraphSeparator",false,"p")}catch(_){}
-$("#pdfBtn").addEventListener("click",function(){try{save();window.print()}catch(_){showSaveStatus("Could not open Print / Save PDF. Please try your browser print menu.");alert("Print / Save PDF could not be opened. Please use your browser’s Print command.")}});
+function openPrint(){try{save();window.print()}catch(_){showSaveStatus("Could not open Print. Please try your browser print menu.");alert("Print could not be opened. Please use your browser’s Print command.")}}
+$("#printBtn").addEventListener("click",openPrint);
+// File name from the document itself: the first heading or line, else the template name.
+function documentFileBase(){
+ const page=$("#page"),first=page&&(page.querySelector("h1,h2,h3")||page.querySelector("p,div"));let name=(first&&first.innerText||"").trim().split(/\n/)[0].slice(0,60);
+ if(!name)name=blankMode?"document":(templates[current]?.title||"document");
+ return name.normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9]+/g,"-").replace(/^-+|-+$/g,"").toLowerCase()||(blankMode?"document":String(templates[current]?.title||"document").replace(/[^A-Za-z0-9]+/g,"-").toLowerCase())||"document";
+}
+$("#pdfBtn").addEventListener("click",async function(){
+ const btn=this,label=btn.textContent;let host=null;
+ try{
+  save();btn.disabled=true;btn.textContent="Preparing PDF…";showSaveStatus("Preparing PDF…");
+  if(!window.SiteCraftPdf)throw new Error("PDF writer missing");
+  const page=$("#page"),dims=currentPaperDimensions(),pxW=dims.width*96/25.4,pxH=dims.height*96/25.4,margin=(PAPER_MARGINS[paperSettings.margin]||PAPER_MARGINS.normal)*96/25.4;
+  const cs=getComputedStyle(page),bg=pageBackground||cs.backgroundColor||"#ffffff",accent=getComputedStyle(document.documentElement).getPropertyValue("--doc-accent-color").trim()||"#17181d";
+  host=document.createElement("div");host.setAttribute("aria-hidden","true");host.style.cssText="position:fixed;left:-30000px;top:0;width:"+pxW+"px;pointer-events:none;z-index:-1";
+  const clone=page.cloneNode(true);clone.removeAttribute("id");clone.setAttribute("contenteditable","false");
+  clone.querySelectorAll("[data-editor-ui],.table-move-handle,.table-resize-handle,.row-drag-handle,.col-drag-handle,.drop-indicator").forEach(n=>n.remove());
+  clone.style.cssText+=";width:"+pxW+"px!important;min-height:"+pxH+"px!important;padding:"+margin+"px!important;margin:0!important;zoom:1!important;transform:none!important;box-shadow:none!important;border:0!important;box-sizing:border-box!important;font-size:14px";
+  host.appendChild(clone);document.body.appendChild(host);
+  const blob=await SiteCraftPdf.capture(clone,{pageW:pxW,pageH:pxH,margin:margin,background:bg,title:documentFileBase(),border:pageBorder?{width:1,color:accent,inset:3*96/25.4}:null,onProgress:(i,n)=>{btn.textContent="Page "+i+" of "+n+"…"}});
+  const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=documentFileBase()+".pdf";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+  showSaveStatus("PDF downloaded.");setTimeout(()=>{if($("#saveState"))showSaveStatus("Auto-save on")},4000);
+ }catch(err){try{console.warn(err)}catch(_){}showSaveStatus("Could not make the PDF here, so Print is opening. Choose “Save as PDF”.");openPrint()}
+ finally{if(host)host.remove();btn.disabled=false;btn.textContent=label}
+});
 function buildWordDocument(){
  const D=window.docx;
  if(!D||typeof D.Packer?.toBlob!=="function")throw new Error("The Word export library could not be loaded.");
@@ -888,7 +913,7 @@ $("#wordBtn").addEventListener("click",async function(){
   const blob=await buildWordDocument();
   if(!blob)throw new Error("The Word export library returned an empty document.");
   const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;
-  a.download=(blankMode?"document":(templates[current]?.title||"document")).replace(/\s+/g,"-").toLowerCase()+".docx";
+  a.download=documentFileBase()+".docx";
   document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
   showSaveStatus("Word file downloaded. Page backgrounds may look different in Word.");
   setTimeout(()=>{if($("#saveState"))showSaveStatus("Auto-save on")},4000);
@@ -913,6 +938,7 @@ $("#page").addEventListener("keydown",function(event){
 if(!loadSaved()){renderFields();renderDoc(false);setActive();}
 applyPaperSettings();applyDocumentTheme();setFieldsPanelOpen(fieldsPanelOpen);updatePaperScale();decorateTables();initHistory();
 </script>
+<script src="core/pdf-export.js"></script>
 <script src="site-navigation.js"></script>
 </body>
 </html>
