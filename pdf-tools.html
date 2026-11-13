@@ -252,7 +252,25 @@ async function makeFontSet(doc,texts,options){
   doc.registerFontkit(window.fontkit);
   for(const s of need)fonts[s.id]=await doc.embedFont(new Uint8Array(await fetchFontBytes(s)),{subset:true,features:GPOS_OFF});
  }
- return {fonts,latinSet};
+ const faces={};
+ for(const s of need){try{const fam="SCPDF_"+s.id;if(!loadedFaces.has(fam)){const ff=new FontFace(fam,(await fetchFontBytes(s)).slice(0));await ff.load();document.fonts.add(ff);loadedFaces.add(fam)}faces[s.id]=fam}catch(e){/* fall back to drawing with the embedded font */}}
+ return {fonts,latinSet,faces,images:new Map()};
+}
+const loadedFaces=new Set(),measureCtx=document.createElement("canvas").getContext("2d");
+function faceWidth(fam,text,size){measureCtx.font=(size*4)+'px "'+fam+'"';return measureCtx.measureText(text).width/4}
+const runWidth=(set,r,size)=>set.faces&&set.faces[r.kind]?faceWidth(set.faces[r.kind],r.text,size):set.fonts[r.kind].widthOfTextAtSize(r.text,size);
+// Indian-language text is drawn by the browser (correct vowel signs and conjuncts) into a sharp PNG,
+// with the same text underneath, invisible, so it can still be selected, copied and searched.
+async function runImage(doc,set,fam,text,size,color){
+ const c=color&&color.type==="RGB"?color:{red:.1,green:.1,blue:.1},key=fam+"|"+text+"|"+size.toFixed(2)+"|"+c.red+","+c.green+","+c.blue;
+ if(set.images.has(key))return set.images.get(key);
+ const S=4,px=size*S,canvas=document.createElement("canvas"),ctx=canvas.getContext("2d");ctx.font=px+'px "'+fam+'"';
+ const m=ctx.measureText(text),pad=Math.ceil(px*.25),asc=Math.ceil(Math.max(m.actualBoundingBoxAscent||0,px*.95)),desc=Math.ceil(Math.max(m.actualBoundingBoxDescent||0,px*.35));
+ const left=Math.ceil(Math.max(0,m.actualBoundingBoxLeft||0)),right=Math.ceil(Math.max(m.width,m.actualBoundingBoxRight||0));
+ canvas.width=Math.max(1,left+right+pad*2);canvas.height=Math.max(1,asc+desc+pad*2);
+ ctx.font=px+'px "'+fam+'"';ctx.fillStyle="rgb("+Math.round(c.red*255)+","+Math.round(c.green*255)+","+Math.round(c.blue*255)+")";ctx.textBaseline="alphabetic";ctx.fillText(text,pad+left,pad+asc);
+ const data=atob(canvas.toDataURL("image/png").split(",")[1]),bytes=new Uint8Array(data.length);for(let i=0;i<data.length;i++)bytes[i]=data.charCodeAt(i);
+ const out={ref:await doc.embedPng(bytes),w:canvas.width/S,h:canvas.height/S,offX:(pad+left)/S,descent:(desc+pad)/S};set.images.set(key,out);return out;
 }
 // Split text into runs that each use one font. Digits, spaces and punctuation stay with Latin; characters no font covers become "?".
 function splitRuns(text,latinSet){
@@ -267,14 +285,21 @@ function splitRuns(text,latinSet){
  }
  return {runs,unsupported};
 }
-const runsWidth=(set,runs,size)=>runs.reduce((w,r)=>w+set.fonts[r.kind].widthOfTextAtSize(r.text,size),0);
+const runsWidth=(set,runs,size)=>runs.reduce((w,r)=>w+runWidth(set,r,size),0);
 // Draw runs one after another along the (possibly rotated) baseline; returns the total advance.
-function drawRuns(page,set,runs,x,y,size,opts){
+async function drawRuns(page,set,runs,x,y,size,opts){
  const deg=opts&&opts.rotate||0,rad=deg*Math.PI/180,cos=Math.cos(rad),sin=Math.sin(rad);let advance=0;
  for(const r of runs){
-  const font=set.fonts[r.kind];
-  page.drawText(r.text,{x:x+advance*cos,y:y+advance*sin,size,font,color:opts&&opts.color,opacity:opts&&opts.opacity,rotate:PDFLib.degrees(deg)});
-  advance+=font.widthOfTextAtSize(r.text,size);
+  const font=set.fonts[r.kind],fam=set.faces&&set.faces[r.kind],ax=x+advance*cos,ay=y+advance*sin;
+  if(fam){
+   const img=await runImage(page.doc,set,fam,r.text,size,opts&&opts.color);
+   page.drawText(r.text,{x:ax,y:ay,size,font,opacity:0,rotate:PDFLib.degrees(deg)});
+   page.drawImage(img.ref,{x:ax-img.offX*cos+img.descent*sin,y:ay-img.offX*sin-img.descent*cos,width:img.w,height:img.h,rotate:PDFLib.degrees(deg),opacity:opts&&opts.opacity});
+   advance+=faceWidth(fam,r.text,size);
+  }else{
+   page.drawText(r.text,{x:ax,y:ay,size,font,color:opts&&opts.color,opacity:opts&&opts.opacity,rotate:PDFLib.degrees(deg)});
+   advance+=font.widthOfTextAtSize(r.text,size);
+  }
  }
  return advance;
 }
@@ -300,26 +325,26 @@ async function makeTextPdf(text){
  for(const paragraph of text.replace(/\r\n?/g,"\n").replace(/\t/g,"    ").split("\n")){
   if(!paragraph.trim()){nextLine();continue}
   let line=[],lineW=0;
-  const drawLine=()=>{let x=M;line.forEach((word,i)=>{x+=drawRuns(page,set,word.runs,x,y,size,{color:ink});if(i<line.length-1)x+=spaceW});line=[];lineW=0;nextLine()};
+  const drawLine=async()=>{let x=M;for(let i=0;i<line.length;i++){x+=await drawRuns(page,set,line[i].runs,x,y,size,{color:ink});if(i<line.length-1)x+=spaceW}line=[];lineW=0;nextLine()};
   for(const word of paragraph.split(/ +/)){
    if(!word)continue;
    const split=splitRuns(word,set.latinSet);unsupported+=split.unsupported;
    const w=runsWidth(set,split.runs,size);
    if(w>maxW){
     // A word wider than the line: cut it between characters (never inside a letter with its marks).
-    if(line.length)drawLine();
+    if(line.length)await drawLine();
     let piece="";
     for(const g of graphemesOf(word)){
      const candidate=piece+g;
-     if(piece&&runsWidth(set,runsFor(candidate),size)>maxW){line=[{runs:runsFor(piece)}];drawLine();piece=g}else piece=candidate;
+     if(piece&&runsWidth(set,runsFor(candidate),size)>maxW){line=[{runs:runsFor(piece)}];await drawLine();piece=g}else piece=candidate;
     }
     if(piece){const runs=runsFor(piece);line=[{runs}];lineW=runsWidth(set,runs,size)}
     continue;
    }
-   if(line.length&&lineW+spaceW+w>maxW)drawLine();
+   if(line.length&&lineW+spaceW+w>maxW)await drawLine();
    lineW+=(line.length?spaceW:0)+w;line.push({runs:split.runs});
   }
-  if(line.length)drawLine();
+  if(line.length)await drawLine();
  }
  return {bytes:await doc.save(),unsupported};
 }
@@ -484,7 +509,7 @@ async function saveEditorPdf(){
      if(o.type==="text"){
        const size=o.size||18,split=splitRuns(o.text,set.latinSet);unsupported+=split.unsupported;
        const at=viewToUser(v,dx,Math.min(v.dispH-2,dy+size*.95));
-       drawRuns(page,set,split.runs,at.x,at.y,size,{rotate:v.rot,color:PDFLib.rgb(.1,.1,.1)});
+       await drawRuns(page,set,split.runs,at.x,at.y,size,{rotate:v.rot,color:PDFLib.rgb(.1,.1,.1)});
      }else if(o.type==="image"){
        let img=images.get(o.src);
        if(!img){const data=atob(o.src.split(",")[1]),bytes=new Uint8Array(data.length);for(let j=0;j<data.length;j++)bytes[j]=data.charCodeAt(j);img=await out.embedPng(bytes);images.set(o.src,img)}
@@ -569,12 +594,12 @@ async function run(){
     const watermarkText=$("watermarkText").value.trim()||"SiteCraft",rawOpacity=$("watermarkOpacity").value.trim();
     let opacity=rawOpacity===""?.35:Number(rawOpacity);if(!Number.isFinite(opacity))opacity=.35;opacity=Math.max(.1,Math.min(1,opacity));
     const set=await makeFontSet(doc,[watermarkText],{bold:true}),split=splitRuns(watermarkText,set.latinSet),per100=runsWidth(set,split.runs,100)||1,theta=30,rad=theta*Math.PI/180;
-    doc.getPages().forEach(function(page){
+    for(const page of doc.getPages()){
      const v=pageView(page),size=Math.max(14,Math.min(64,v.dispW*.62/(per100/100))),width=per100/100*size;
      // The text is centred on the page as the viewer sees it, tilted 30 degrees, and follows the page rotation.
      const sx=v.dispW/2-(width/2)*Math.cos(rad)+.35*size*Math.sin(rad),sy=v.dispH/2+(width/2)*Math.sin(rad)+.35*size*Math.cos(rad),at=viewToUser(v,sx,sy);
-     drawRuns(page,set,split.runs,at.x,at.y,size,{rotate:v.rot+theta,color:PDFLib.rgb(.22,.24,.28),opacity});
-    });
+     await drawRuns(page,set,split.runs,at.x,at.y,size,{rotate:v.rot+theta,color:PDFLib.rgb(.22,.24,.28),opacity});
+    }
     if(split.unsupported)showNote(split.unsupported+" character"+(split.unsupported===1?"":"s")+" could not be included in the watermark and show as “?”. "+LANGUAGES_NOTE);
     await makeDownload(await doc.save(),filename(state.files[0].name,"-watermarked"));
    }
