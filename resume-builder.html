@@ -20,7 +20,7 @@
 <title>Resume Builder — SiteCraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lato:wght@400;700;900&family=Merriweather:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+<link crossorigin="anonymous" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Lato:wght@400;700;900&family=Merriweather:wght@400;700;900&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#eef1f5;--surface:#fff;--surface2:#f7f8fa;--surface3:#e9edf2;--text:#171b21;--muted:#5d6672;
@@ -299,7 +299,7 @@ body.preview-section-dragging{user-select:none!important;cursor:grabbing!importa
 </head>
 <body class="sc-workspace-page edit-mode">
 <div class="app-shell" id="appShell">
-<header class="topbar" aria-label="Resume builder controls"><div class="topbar-left"><button class="back-link" id="resumeBackBtn" type="button" aria-label="Go back" title="Back"><span aria-hidden="true">←</span><span class="nav-label"> Back</span></button><a class="back-link home-link" href="index.html" data-nav="index.html" aria-label="Go to home" title="Home"><span aria-hidden="true">⌂</span><span class="nav-label"> Home</span></a><a class="brand" href="resume-builder.html" aria-label="Resume Builder home"><span class="brand-mark" aria-hidden="true">▤</span><span class="brand-copy"><strong>Resume Builder</strong><span>Create a professional resume</span></span></a></div><div class="topbar-right"><div class="saved" id="savedStatus"><i></i><span>Saved</span></div><button class="btn soft icon-btn" id="undoBtn" type="button" aria-label="Undo" title="Undo">↶</button><button class="btn soft icon-btn" id="redoBtn" type="button" aria-label="Redo" title="Redo">↷</button><button class="btn primary download-pdf-btn" id="downloadPdfBtn" type="button" aria-label="Download PDF">↓ <span>Download PDF</span></button><div class="more-wrap"><button class="btn soft more-btn" id="moreBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="moreMenu">More <span aria-hidden="true">⌄</span></button><div class="more-menu" id="moreMenu" role="menu" hidden><button type="button" role="menuitem" data-more-action="html">Download HTML</button><button type="button" role="menuitem" data-more-action="export">Save backup file</button><button type="button" role="menuitem" data-more-action="import">Restore from backup</button><button type="button" role="menuitem" data-more-action="portfolio">Use my Portfolio details</button><button type="button" role="menuitem" data-more-action="reset">Reset</button></div></div><input id="importJson" type="file" accept="application/json" hidden><button id="exportJsonBtn" type="button" hidden>Export JSON</button><button id="importPortfolioBtn" type="button" hidden>Import from Portfolio</button><input id="portfolioImportJson" type="file" accept="application/json" hidden></div></header>
+<header class="topbar" aria-label="Resume builder controls"><div class="topbar-left"><button class="back-link" id="resumeBackBtn" type="button" aria-label="Go back" title="Back"><span aria-hidden="true">←</span><span class="nav-label"> Back</span></button><a class="back-link home-link" href="index.html" data-nav="index.html" aria-label="Go to home" title="Home"><span aria-hidden="true">⌂</span><span class="nav-label"> Home</span></a><a class="brand" href="resume-builder.html" aria-label="Resume Builder home"><span class="brand-mark" aria-hidden="true">▤</span><span class="brand-copy"><strong>Resume Builder</strong><span>Create a professional resume</span></span></a></div><div class="topbar-right"><div class="saved" id="savedStatus"><i></i><span>Saved</span></div><button class="btn soft icon-btn" id="undoBtn" type="button" aria-label="Undo" title="Undo">↶</button><button class="btn soft icon-btn" id="redoBtn" type="button" aria-label="Redo" title="Redo">↷</button><button class="btn primary download-pdf-btn" id="downloadPdfBtn" type="button" aria-label="Download PDF">↓ <span>Download PDF</span></button><div class="more-wrap"><button class="btn soft more-btn" id="moreBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="moreMenu">More <span aria-hidden="true">⌄</span></button><div class="more-menu" id="moreMenu" role="menu" hidden><button type="button" role="menuitem" data-more-action="docx">Download Word (.docx)</button><button type="button" role="menuitem" data-more-action="print">Print / Save as PDF</button><button type="button" role="menuitem" data-more-action="html">Download HTML</button><button type="button" role="menuitem" data-more-action="export">Save backup file</button><button type="button" role="menuitem" data-more-action="import">Restore from backup</button><button type="button" role="menuitem" data-more-action="portfolio">Use my Portfolio details</button><button type="button" role="menuitem" data-more-action="reset">Reset</button></div></div><input id="importJson" type="file" accept="application/json" hidden><button id="exportJsonBtn" type="button" hidden>Export JSON</button><button id="importPortfolioBtn" type="button" hidden>Import from Portfolio</button><input id="portfolioImportJson" type="file" accept="application/json" hidden></div></header>
 <div class="mobile-tabs" id="mobileTabs" role="tablist" aria-label="Resume workspace"><button id="mobileEditTab" class="active" type="button" role="tab" aria-selected="true">Edit</button><button id="mobilePreviewTab" type="button" role="tab" aria-selected="false">Preview</button></div>
 <aside class="editor" id="editor" aria-label="Resume editor">
 <div class="editor-mode-tabs" role="tablist" aria-label="Resume workspace"><button id="editModeBtn" type="button" role="tab" class="active" aria-selected="true">Build resume</button><button id="designModeBtn" type="button" role="tab" aria-selected="false">Design</button></div>
@@ -1488,14 +1488,155 @@ function standaloneDocument(){
   doc+='</body></html>';return doc
 }
 function downloadHtml(){flushTyping();var blob=new Blob([standaloneDocument()],{type:'text/html;charset=utf-8'});downloadBlob(blob,fileBase()+'.html');saveAfterExport();toast('Standalone HTML downloaded')}
-function downloadPdf(){
+// ---- Direct downloads, all in the browser: PDF (page image + invisible text layer + links) and Word (.docx).
+function exportPrecheck(){
  flushTyping();var fullText=allResumeText(),hits=[];
  if(/\[[^\]]+\]/.test(fullText))hits.push('bracketed placeholder');
  if(/\b(lorem ipsum|replace this|your full name|sample@example\.com|sample company|demonstration content only|sample resume)\b/i.test(fullText))hits.push('sample or placeholder text');
  var meaningful=!!(norm(state.sections.header.name)||norm(state.sections.header.email)||norm(state.sections.header.phone)||norm(state.sections.summary.text)||(state.sections.experience.items||[]).some(function(x){return norm(x.role)||norm(x.company)||(x.bullets||[]).some(function(b){return norm(b)})})||(state.sections.education.items||[]).some(function(x){return norm(x.degree)||norm(x.institution)})||(state.sections.skills.groups||[]).some(function(g){return (g.items||[]).some(function(v){return norm(v)})}));
- if(!meaningful||hits.length){var msg=!meaningful?'This resume looks empty. Download it anyway?':'This resume contains sample or placeholder text ('+hits.join(', ')+'). Download it anyway?';if(!window.confirm(msg))return}
- buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);saveAfterExport();
+ if(!meaningful||hits.length){var msg=!meaningful?'This resume looks empty. Download it anyway?':'This resume contains sample or placeholder text ('+hits.join(', ')+'). Download it anyway?';if(!window.confirm(msg))return false}
+ return true;
 }
+function printResume(){if(!exportPrecheck())return;buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);saveAfterExport()}
+function loadScriptOnce(src,globalName){return new Promise(function(resolve,reject){if(window[globalName])return resolve(window[globalName]);var s=document.createElement('script');s.src=src;s.async=true;s.onload=function(){window[globalName]?resolve(window[globalName]):reject(new Error('Could not start '+src))};s.onerror=function(){reject(new Error('Could not load '+src))};document.head.appendChild(s)})}
+function withTimeout(p,ms){return new Promise(function(resolve,reject){var t=setTimeout(function(){reject(new Error('Timed out'))},ms);p.then(function(v){clearTimeout(t);resolve(v)},function(e){clearTimeout(t);reject(e)})})}
+function setExportBusy(on,label){['#downloadPdfBtn','#mobileDownloadPdfBtn'].forEach(function(sel){var b=$(sel);if(!b)return;if(on){if(!b.dataset.label)b.dataset.label=b.innerHTML;b.disabled=true;b.innerHTML=label||'Preparing PDF…'}else{if(b.dataset.label){b.innerHTML=b.dataset.label;delete b.dataset.label}b.disabled=false}})}
+function latin1Bytes(s){var u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i)&255;return u}
+function pdfText(str){
+ var map={8212:151,8211:150,8226:149,8216:145,8217:146,8220:147,8221:148,8230:133,8364:128,183:183},out='';
+ for(var i=0;i<str.length;i++){var c=str.charCodeAt(i),b=c<128?c:(map[c]||(c>=160&&c<=255?c:-1));if(b<0)continue;if(b===40||b===41||b===92)out+='\\'+String.fromCharCode(b);else if(b<32||b>126)out+='\\'+('00'+b.toString(8)).slice(-3);else out+=String.fromCharCode(b)}
+ return out;
+}
+function buildPdf(pages,wPt,hPt,title){
+ var objs=[],n=function(){objs.push(null);return objs.length};
+ var catalog=n(),pagesId=n(),font=n(),info=n(),pageIds=[];
+ pages.forEach(function(pg){
+  var pageId=n(),contentId=n(),imgId=n(),annIds=pg.links.map(function(){return n()});pageIds.push(pageId);
+  var c='q '+wPt.toFixed(2)+' 0 0 '+hPt.toFixed(2)+' 0 0 cm /Im0 Do Q\nBT 3 Tr\n';
+  pg.texts.forEach(function(t){c+='/F1 '+t.size.toFixed(2)+' Tf '+t.tz.toFixed(1)+' Tz 1 0 0 1 '+t.x.toFixed(2)+' '+t.y.toFixed(2)+' Tm ('+pdfText(t.str)+') Tj\n'});
+  c+='ET';
+  objs[contentId-1]={dict:'<< /Length '+c.length+' >>',stream:latin1Bytes(c)};
+  objs[imgId-1]={dict:'<< /Type /XObject /Subtype /Image /Width '+pg.iw+' /Height '+pg.ih+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+pg.jpeg.length+' >>',stream:pg.jpeg};
+  pg.links.forEach(function(l,i){objs[annIds[i]-1]={dict:'<< /Type /Annot /Subtype /Link /Rect ['+[l.x1,l.y1,l.x2,l.y2].map(function(v){return v.toFixed(2)}).join(' ')+'] /Border [0 0 0] /A << /S /URI /URI ('+pdfText(l.url)+') >> >>'}});
+  objs[pageId-1]={dict:'<< /Type /Page /Parent '+pagesId+' 0 R /MediaBox [0 0 '+wPt.toFixed(2)+' '+hPt.toFixed(2)+'] /Resources << /Font << /F1 '+font+' 0 R >> /XObject << /Im0 '+imgId+' 0 R >> >> /Contents '+contentId+' 0 R'+(annIds.length?' /Annots ['+annIds.map(function(a){return a+' 0 R'}).join(' ')+']':'')+' >>'};
+ });
+ objs[catalog-1]={dict:'<< /Type /Catalog /Pages '+pagesId+' 0 R >>'};
+ objs[pagesId-1]={dict:'<< /Type /Pages /Kids ['+pageIds.map(function(p){return p+' 0 R'}).join(' ')+'] /Count '+pageIds.length+' >>'};
+ objs[font-1]={dict:'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>'};
+ objs[info-1]={dict:'<< /Title ('+pdfText(title)+') /Producer (SiteCraft Resume Builder) >>'};
+ var chunks=[],len=0,offsets=[];function add(x){var b=typeof x==='string'?latin1Bytes(x):x;chunks.push(b);len+=b.length}
+ add('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
+ objs.forEach(function(o,i){offsets.push(len);add((i+1)+' 0 obj\n'+o.dict+'\n');if(o.stream){add('stream\n');add(o.stream);add('\nendstream\n')}add('endobj\n')});
+ var xref=len,x='xref\n0 '+(objs.length+1)+'\n0000000000 65535 f \n';offsets.forEach(function(o){x+=('0000000000'+o).slice(-10)+' 00000 n \n'});
+ add(x+'trailer\n<< /Size '+(objs.length+1)+' /Root '+catalog+' 0 R /Info '+info+' 0 R >>\nstartxref\n'+xref+'\n%%EOF');
+ return new Blob(chunks,{type:'application/pdf'});
+}
+function dataUrlBytes(u){var b=atob(u.split(',')[1]),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+function pageTextLayer(page,k,hPt){
+ var base=page.getBoundingClientRect(),texts=[],links=[],walker=document.createTreeWalker(page,NodeFilter.SHOW_TEXT,null),node;
+ while((node=walker.nextNode())){
+  var el=node.parentElement;if(!el||!node.nodeValue.trim())continue;var cs=getComputedStyle(el);if(cs.visibility==='hidden'||cs.display==='none'||el.closest('.flow-title-hidden,.skill-sep'))continue;
+  var size=parseFloat(cs.fontSize)||12,re=/\S+/g,m,txt=node.nodeValue;
+  if(cs.textTransform==='uppercase')txt=txt.toUpperCase();
+  while((m=re.exec(node.nodeValue))){var r=document.createRange();r.setStart(node,m.index);r.setEnd(node,m.index+m[0].length);var b=r.getBoundingClientRect();if(!b.width)continue;
+   var word=txt.substr(m.index,m[0].length),fs=size*k,natural=word.length*fs*.5,tz=Math.max(40,Math.min(250,(b.width*k)/Math.max(1,natural)*100));
+   texts.push({str:word+' ',size:fs,tz:tz,x:(b.left-base.left)*k,y:hPt-((b.bottom-base.top)-b.height*.22)*k})}
+ }
+ $$('a[href]',page).forEach(function(a){var href=a.getAttribute('href')||'';if(!/^(https?:|mailto:)/i.test(href))return;Array.prototype.forEach.call(a.getClientRects(),function(b){links.push({url:href,x1:(b.left-base.left)*k,y1:hPt-(b.bottom-base.top)*k,x2:(b.right-base.left)*k,y2:hPt-(b.top-base.top)*k})})});
+ return{texts:texts,links:links};
+}
+function downloadPdf(){
+ if(!exportPrecheck())return;
+ var d=paperDims(),wPt=d.w*.75,hPt=d.h*.75,k=.75,host=null,lib;
+ setExportBusy(true);
+ withTimeout(loadScriptOnce('vendor/html-to-image.min.js','htmlToImage'),15000).then(function(l){
+  lib=l;host=document.createElement('div');host.setAttribute('aria-hidden','true');
+  host.style.cssText='position:fixed;left:-20000px;top:0;width:'+d.w+'px;pointer-events:none;z-index:-1;--zoom:1';
+  host.innerHTML=paginateResume(state.template).join('');document.body.appendChild(host);
+  var pages=$$('.resume-page',host),out=[];
+  pages.forEach(function(p){p.style.transform='none';p.style.boxShadow='none'});
+  return pages.reduce(function(chain,p){return chain.then(function(){
+   var opts={pixelRatio:2,backgroundColor:'#ffffff',width:Math.round(d.w),height:Math.round(d.h),cacheBust:false};
+   return withTimeout(lib.toCanvas(p,opts),30000).catch(function(){return withTimeout(lib.toCanvas(p,Object.assign({skipFonts:true},opts)),30000)}).then(function(cv){
+    var layer=pageTextLayer(p,k,hPt);out.push({jpeg:dataUrlBytes(cv.toDataURL('image/jpeg',.92)),iw:cv.width,ih:cv.height,texts:layer.texts,links:layer.links});
+   });
+  })},Promise.resolve()).then(function(){return out});
+ }).then(function(pages){
+  var name=norm(state.sections.header.name)||'Resume';
+  downloadBlob(buildPdf(pages,wPt,hPt,name+' - Resume'),fileBase()+'.pdf');saveAfterExport();toast('PDF downloaded');
+ }).catch(function(err){
+  toast('Could not make the PDF file here, so the print window is opening. Choose "Save as PDF".','error');
+  buildPrintHintStyle();$('#printHint').style.display='block';setTimeout(function(){window.print();setTimeout(function(){$('#printHint').style.display='none'},500)},50);saveAfterExport();
+ }).then(function(){if(host)host.remove();setExportBusy(false)});
+}
+// ---- Word (.docx): written by hand (no library) as a simple, ATS-friendly document.
+var CRC_TABLE=(function(){var t=[];for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(u){var c=0xFFFFFFFF;for(var i=0;i<u.length;i++)c=CRC_TABLE[(c^u[i])&255]^(c>>>8);return(c^0xFFFFFFFF)>>>0}
+function zipStore(files){
+ var enc=new TextEncoder(),parts=[],central=[],offset=0;
+ function u16(v){return[v&255,(v>>>8)&255]}function u32(v){return[v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255]}
+ files.forEach(function(f){var name=enc.encode(f.name),data=typeof f.data==='string'?enc.encode(f.data):f.data,crc=crc32(data);
+  var head=[].concat(u32(0x04034b50),u16(20),u16(0x0800),u16(0),u16(0),u16(0x21),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0));
+  parts.push(new Uint8Array(head),name,data);
+  central.push(new Uint8Array([].concat(u32(0x02014b50),u16(20),u16(20),u16(0x0800),u16(0),u16(0),u16(0x21),u32(crc),u32(data.length),u32(data.length),u16(name.length),u16(0),u16(0),u16(0),u16(0),u32(0),u32(offset))),name);
+  offset+=head.length+name.length+data.length});
+ var csize=central.reduce(function(s,b){return s+b.length},0);
+ return new Blob(parts.concat(central,[new Uint8Array([].concat(u32(0x06054b50),u16(0),u16(0),u16(files.length),u16(files.length),u32(csize),u32(offset),u16(0)))]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+}
+function xmlEsc(v){return String(v==null?'':v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function buildDocx(){
+ var sec=state.sections,h=sec.header||{},tpl=state.template,acc=(/^#[0-9a-f]{6}$/i.test(state.accent)?state.accent:'#334155').slice(1).toUpperCase(),rels=[],relId=0;
+ var serif=['classic','elegant','executive','indian'].indexOf(tpl)>=0,font=serif?'Georgia':'Calibri',colorName=['modern','banner','campus','slate','sidebar'].indexOf(tpl)>=0?acc:'111827';
+ var paper={A4:[11906,16838],Letter:[12240,15840],Legal:[12240,20160],A5:[8391,11906],B5:[9979,14175],Executive:[10440,15120]}[state.paper]||[11906,16838],mar=marginPx()*15,right=paper[0]-mar*2;
+ function run(t,o){o=o||{};return '<w:r><w:rPr>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.caps?'<w:caps/>':'')+(o.u?'<w:u w:val="single"/>':'')+(o.color?'<w:color w:val="'+o.color+'"/>':'')+(o.sz?'<w:sz w:val="'+o.sz+'"/><w:szCs w:val="'+o.sz+'"/>':'')+(o.sp?'<w:spacing w:val="'+o.sp+'"/>':'')+'</w:rPr>'+String(t).split('\t').map(function(x){return '<w:t xml:space="preserve">'+xmlEsc(x)+'</w:t>'}).join('<w:tab/>')+'</w:r>'}
+ function link(url,label){var id='rIdL'+(++relId);rels.push('<Relationship Id="'+id+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink" Target="'+xmlEsc(url)+'" TargetMode="External"/>');return '<w:hyperlink r:id="'+id+'"><w:r><w:rPr><w:color w:val="1D4ED8"/><w:u w:val="single"/><w:sz w:val="19"/></w:rPr><w:t xml:space="preserve">'+xmlEsc(label)+'</w:t></w:r></w:hyperlink>'}
+ function para(inner,o){o=o||{};return '<w:p><w:pPr>'+(o.style?'<w:pStyle w:val="'+o.style+'"/>':'')+(o.list?'<w:numPr><w:ilvl w:val="0"/><w:numId w:val="1"/></w:numPr>':'')+(o.tabs?'<w:tabs><w:tab w:val="'+(o.tabs.val||'right')+'" w:pos="'+o.tabs.pos+'"/></w:tabs>':'')+(o.border?'<w:pBdr><w:bottom w:val="single" w:sz="8" w:space="2" w:color="'+o.border+'"/></w:pBdr>':'')+(o.top?'<w:pBdr><w:top w:val="single" w:sz="6" w:space="2" w:color="111827"/></w:pBdr>':'')+(o.shade?'<w:shd w:val="clear" w:color="auto" w:fill="'+o.shade+'"/>':'')+'<w:spacing w:before="'+(o.before||0)+'" w:after="'+(o.after==null?40:o.after)+'"/>'+(o.jc?'<w:jc w:val="'+o.jc+'"/>':'')+(o.keep?'<w:keepNext/>':'')+'</w:pPr>'+inner+'</w:p>'}
+ var body=[];
+ if(tpl==='indian')body.push(para(run('RESUME',{b:true,u:true,sz:26,sp:60}),{jc:'center',after:160}));
+ var centered=['executive','elegant'].indexOf(tpl)>=0?'center':null;
+ body.push(para(run(norm(h.name)||'Your Name',{b:true,sz:48,color:colorName,caps:tpl==='executive'||tpl==='indian'}),{jc:centered,after:20}));
+ if(norm(h.headline))body.push(para(run(h.headline,{sz:24,color:'4B5563'}),{jc:centered,after:60}));
+ var contact=[];['email','phone','location'].forEach(function(key){var v=norm(h[key]);if(v)contact.push(key==='email'&&validEmail(v)?link('mailto:'+v,v):run(v,{sz:19,color:'4B5563'}))});
+ [h.linkedin,h.github,h.website].concat((h.customLinks||[]).map(function(x){return x&&x.url})).forEach(function(u){var s=safeUrl(u);if(s)contact.push(link(s,displayUrl(s)))});
+ if(contact.length)body.push(para(contact.join(run('  |  ',{sz:19,color:'9CA3AF'})),{jc:centered,after:60,border:tpl==='indian'?'111827':null}));
+ var personal=[['dateOfBirth','Date of Birth'],['gender','Gender'],['maritalStatus','Marital Status'],['nationality','Nationality'],['fathersName',"Father's Name"],['fullAddress','Address']].filter(function(p){return norm(h[p[0]])});
+ if(personal.length&&tpl!=='indian')body.push(para(personal.map(function(p){return run(p[1]+': ',{b:true,sz:18})+run(norm(h[p[0]]),{sz:18})}).join(run('   ',{sz:18})),{jc:centered,after:60}));
+ function heading(title){body.push(para(run(title,{b:true,caps:true,sz:22,color:tpl==='indian'?'111827':acc,sp:20}),{before:220,after:80,border:tpl==='indian'?null:acc,shade:tpl==='indian'?'E5E7EB':null,keep:true}))}
+ function titleDate(title,date,sub,extra){body.push(para(run(title,{b:true,sz:21})+(date?run('\t'+date,{sz:19,color:'4B5563'}):''),{tabs:{pos:right},before:80,after:0,keep:true}));if(sub)body.push(para(run(sub,{sz:20,color:'374151'}),{after:0}));if(extra)body.push(para(run(extra,{sz:18,color:'6B7280'}),{after:0}))}
+ function bullets(arr){(arr||[]).filter(function(x){return norm(x)}).forEach(function(b){body.push(para(run(norm(b),{sz:20}),{list:true,after:20}))})}
+ function entry(x){var d=x.data||x;
+  if(x.type==='summary')body.push(para(run(x.text,{sz:20}),{after:60}));
+  else if(x.type==='skills'){var all=[];((d.groups)||[]).forEach(function(g){(g.items||[]).forEach(function(v){if(norm(v))all.push(norm(v))})});body.push(para(run(all.join('  ·  '),{sz:20}),{after:60}))}
+  else if(x.type==='hobbies')body.push(para(run((d.tags||[]).join('  ·  '),{sz:20}),{after:60}));
+  else if(x.type==='experience'){titleDate(norm(d.role),datePair(d.start,d.currently?'Present':d.end),norm(d.company),norm(d.location));bullets(d.bullets)}
+  else if(x.type==='education')titleDate(norm(d.degree)||'Degree',datePair(d.start,d.ongoing?'Present':d.end),[d.institution,d.field].map(norm).filter(Boolean).join(' · '),[norm(d.score)?'Score: '+norm(d.score):'',norm(d.notes)].filter(Boolean).join(' · '));
+  else if(x.type==='project'){titleDate(norm(d.name)||'Project','',(d.tech||[]).join(' · '),'');if(safeUrl(d.link))body.push(para(link(safeUrl(d.link),displayUrl(d.link)),{after:0}));bullets(d.bullets)}
+  else if(x.type==='certification'||x.type==='award'||x.type==='publication'){titleDate(norm(d.name||d.title),formatDate(d.date),norm(d.issuer||d.venue),norm(d.note));if(safeUrl(d.link))body.push(para(link(safeUrl(d.link),displayUrl(d.link)),{after:0}))}
+  else if(x.type==='language')body.push(para(run(norm(d.name),{b:true,sz:20})+(norm(d.level)?run(' · '+norm(d.level),{sz:20}):''),{after:20}));
+  else if(x.type==='volunteer')titleDate(norm(d.role)||'Volunteer',datePair(d.start,d.ongoing?'Present':d.end),norm(d.org),norm(d.description));
+  else if(x.type==='reference')titleDate(norm(d.name),[d.email,d.phone].map(norm).filter(Boolean).join(' · '),norm(d.role),'');
+  else if(x.type==='references')body.push(para(run(x.text,{sz:20}),{after:60}));
+  else if(x.type==='declaration'){if(norm(d.sentence))body.push(para(run(d.sentence,{sz:20}),{after:80}));var meta=[norm(d.place)?'Place: '+norm(d.place):'',norm(d.date)?'Date: '+norm(d.date):''].filter(Boolean);if(meta.length)body.push(para(run(meta.join('     '),{sz:20}),{after:60}));if(d.signatureLine===true){body.push(para(run(' ',{sz:20}),{before:360,after:0}));body.push(para(run('Signature',{sz:18}),{jc:'right',top:true,after:0}))}}
+ }
+ var personalDone=false;
+ function personalBlock(){if(personalDone||tpl!=='indian'||!personal.length)return;personalDone=true;heading('Personal Details');personal.forEach(function(p){body.push(para(run(p[1],{b:true,sz:20})+run('\t:  '+norm(h[p[0]]),{sz:20}),{tabs:{val:'left',pos:2400},after:20}))})}
+ state.order.forEach(function(id){
+  if(id==='header')return;var items,title;
+  if(/^custom-\d+$/.test(id)){var ci=Number(id.split('-')[1])-1,c=state.custom[ci];items=customItems(ci);title=c?(c.title||'Custom section'):''}
+  else{items=textItemsForSection(id,sec[id]);title=(tpl==='indian'&&id==='summary')?'Career Objective':sectionMeta(id)}
+  if(!items.length)return;if(id==='declaration')personalBlock();heading(title);items.forEach(entry);
+ });
+ personalBlock();
+ var doc='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><w:body>'+body.join('')+'<w:sectPr><w:pgSz w:w="'+paper[0]+'" w:h="'+paper[1]+'"/><w:pgMar w:top="'+mar+'" w:right="'+mar+'" w:bottom="'+mar+'" w:left="'+mar+'" w:header="0" w:footer="0" w:gutter="0"/></w:sectPr></w:body></w:document>';
+ var styles='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="'+font+'" w:hAnsi="'+font+'" w:cs="'+font+'" w:eastAsia="'+font+'"/><w:sz w:val="20"/><w:szCs w:val="20"/><w:color w:val="111827"/><w:lang w:val="en-IN"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="40" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style></w:styles>';
+ var numbering='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:numbering xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:abstractNum w:abstractNumId="0"><w:multiLevelType w:val="singleLevel"/><w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="bullet"/><w:lvlText w:val="•"/><w:lvlJc w:val="left"/><w:pPr><w:ind w:left="360" w:hanging="240"/></w:pPr></w:lvl></w:abstractNum><w:num w:numId="1"><w:abstractNumId w:val="0"/></w:num></w:numbering>';
+ var docRels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdS" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/><Relationship Id="rIdN" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering" Target="numbering.xml"/>'+rels.join('')+'</Relationships>';
+ var ct='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/><Override PartName="/word/numbering.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml"/><Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>';
+ var root='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>';
+ var core='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:title>'+xmlEsc((norm(h.name)||'Resume')+' - Resume')+'</dc:title><dc:creator>'+xmlEsc(norm(h.name))+'</dc:creator></cp:coreProperties>';
+ return zipStore([{name:'[Content_Types].xml',data:ct},{name:'_rels/.rels',data:root},{name:'word/document.xml',data:doc},{name:'word/styles.xml',data:styles},{name:'word/numbering.xml',data:numbering},{name:'word/_rels/document.xml.rels',data:docRels},{name:'docProps/core.xml',data:core}]);
+}
+function downloadDocx(){if(!exportPrecheck())return;try{downloadBlob(buildDocx(),fileBase()+'.docx');saveAfterExport();toast('Word file downloaded')}catch(e){toast('Could not make the Word file.','error')}}
 
 function handleNav(target,e){if(target==='resume-builder.html')return;if(dirty){e.preventDefault();leaveTarget=target;$('#leaveModal').classList.add('show');$('#leaveStay').focus()}}
 function setupDivider(){
@@ -1660,6 +1801,8 @@ safeStep('mobile More menu',function(){
       else if(a==='redo')redo();
       else if(a==='pdf')downloadPdf();
       else if(a==='html')downloadHtml();
+      else if(a==='docx')downloadDocx();
+      else if(a==='print')printResume();
       else if(a==='import'){var f=$('#importJson');if(f)f.click();}
       else if(a==='export')exportJson();
       else if(a==='portfolio')beginPortfolioImport();
