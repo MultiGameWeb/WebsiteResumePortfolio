@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Website preview</title>
+<!-- Same page structure as a hosted SiteCraft website (backend/sitecraft-ai/hosting.js), so the builder
+     preview looks exactly like the live site: only the template's own CSS, real phone/tablet widths. -->
+<style>body{margin:0}#site .template-admin-link{display:none!important}.sc-loading{font:16px/1.5 system-ui,sans-serif;padding:48px 20px;text-align:center;color:#444}</style>
+</head>
+<body>
+<div id="site"><p class="sc-loading">Loading preview…</p></div>
+<script src="core/pack.js"></script>
+<script type="module">
+const id = new URLSearchParams(location.search).get('template') || '';
+const el = document.getElementById('site');
+if (!/^[a-z0-9][a-z0-9-]{1,40}$/.test(id)) {
+  el.innerHTML = '<p class="sc-loading">Template not found.</p>';
+} else {
+  const css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = 'templates/' + id + '/style.css';
+  document.head.appendChild(css);
+  try {
+    const m = await import('./templates/' + id + '/template.js');
+    let timer = null, next = null;
+    const draw = () => {
+      timer = null;
+      const msg = next; if (!msg) return;
+      const y = window.scrollY;
+      el.innerHTML = m.render(msg.data, msg.selected);
+      if (window.SiteCraftPack) window.SiteCraftPack.sanitize(el);
+      if (typeof m.init === 'function') m.init(el, msg.data, msg.selected);
+      document.title = (msg.data && msg.data.brand && msg.data.brand.businessName) || 'Website preview';
+      window.scrollTo(0, y);
+    };
+    window.addEventListener('message', e => {
+      if (e.origin !== location.origin || e.source !== window.parent) return;
+      const d = e.data;
+      if (!d || d.type !== 'sitecraft-preview') return;
+      next = d;
+      // Typing sends many updates: draw at most every 120 ms.
+      if (!timer) timer = setTimeout(draw, el.querySelector('.sc-loading') ? 0 : 120);
+    });
+    window.parent.postMessage({ type: 'sitecraft-preview-ready' }, location.origin);
+  } catch (e) {
+    console.error(e);
+    el.innerHTML = '<p class="sc-loading">Sorry, this preview could not load. Please refresh the page.</p>';
+  }
+}
+</script>
+</body>
+</html>

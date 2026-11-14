@@ -1,3 +1,5 @@
+// Logo letters come from the customer's business name (not the demo name).
+const scMark=(d,count,only)=>{const n=String((d&&d.brand&&d.brand.businessName)||'').trim();const words=n.split(/\s+/).filter(w=>/[\p{L}\p{N}]/u.test(w)&&!/^the$/i.test(w));const letters=words.map(w=>(Array.from(w.replace(/^[^\p{L}\p{N}]+/u,''))[0]||'').toUpperCase());const pick=letters.slice(0,count||2);if(pick.length<(count||2)&&words[0]){const extra=Array.from(words[0].replace(/^[^\p{L}\p{N}]+/u,'')).slice(1,2).join('').toUpperCase();if(count!==1&&extra&&pick.length===1)pick.push(extra)}const out=(only!=null?(pick[only]||''):pick.join(''));return out.replace(/[&<>"']/g,'')||'•'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
@@ -8,7 +10,7 @@ function scBaseRender(d={},selected=[]){
   const menu=list(d.menu),offers=list(d.offers),gallery=list(d.gallery),reviews=list(d.reviews),services=list(d.services),hygiene=list(d.hygiene),faq=list(d.faq),hours=list(d.hours),slots=list(del.slots),partyPackages=list(party.packages),bases=list(cake.bases),sizes=list(cake.sizes),fillings=list(cake.fillings),toppings=list(cake.toppings);
   const cats=[...new Set(menu.map(x=>x.category).filter(Boolean))];
   let html='<div class="site-preview cloudkitchen-01">';
-  html+='<header class="ck-nav"><a class="ck-brand" href="#home"><span class="ck-mark">CK</span><span><strong>'+esc(b.businessName||"Your Kitchen")+'</strong><small>'+esc(b.tagline||"DIRECT ORDERS · FRESHLY MADE")+'</small></span></a><nav>';
+  html+='<header class="ck-nav"><a class="ck-brand" href="#home"><span class="ck-mark">'+scMark(d,2)+'</span><span><strong>'+esc(b.businessName||"Your Kitchen")+'</strong><small>'+esc(b.tagline||"DIRECT ORDERS · FRESHLY MADE")+'</small></span></a><nav>';
   if(ok('home'))html+='<a href="#home">Home</a>';
   if(ok('menu'))html+='<a href="#menu">Menu</a>';
   if(ok('cake'))html+='<a href="#cake">Custom Cake</a>';

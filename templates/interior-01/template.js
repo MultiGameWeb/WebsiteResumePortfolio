@@ -1,3 +1,5 @@
+// Logo letters come from the customer's business name (not the demo name).
+const scMark=(d,count,only)=>{const n=String((d&&d.brand&&d.brand.businessName)||'').trim();const words=n.split(/\s+/).filter(w=>/[\p{L}\p{N}]/u.test(w)&&!/^the$/i.test(w));const letters=words.map(w=>(Array.from(w.replace(/^[^\p{L}\p{N}]+/u,''))[0]||'').toUpperCase());const pick=letters.slice(0,count||2);if(pick.length<(count||2)&&words[0]){const extra=Array.from(words[0].replace(/^[^\p{L}\p{N}]+/u,'')).slice(1,2).join('').toUpperCase();if(count!==1&&extra&&pick.length===1)pick.push(extra)}const out=(only!=null?(pick[only]||''):pick.join(''));return out.replace(/[&<>"']/g,'')||'•'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
@@ -20,7 +22,7 @@ function scBaseRender(d={},selected=[]){
   const bhkOptions=Array.isArray(est.bhkOptions)&&est.bhkOptions.length?est.bhkOptions:[{id:'1BHK',label:'1 BHK',multiplier:.92},{id:'2BHK',label:'2 BHK',multiplier:1},{id:'3BHK',label:'3 BHK',multiplier:1.08},{id:'VillaOffice',label:'Full Villa / Office',multiplier:1.28}];
   const projectTypes=Array.isArray(est.projectTypes)&&est.projectTypes.length?est.projectTypes:[{id:'Apartment',label:'Apartment',multiplier:1},{id:'Villa',label:'Villa',multiplier:1.15},{id:'Office',label:'Office',multiplier:1.05}];
   let html='<div class="site-preview interior-01">';
-  html+='<header class="id-nav"><a class="id-brand" href="#home"><span class="id-brand-mark">AF</span><span><strong>'+esc(b.businessName||'Your Design Studio')+'</strong><small>'+esc(b.tagline||'INTERIOR DESIGN · ARCHITECTURE · EXECUTION')+'</small></span></a><nav>';
+  html+='<header class="id-nav"><a class="id-brand" href="#home"><span class="id-brand-mark">'+scMark(d,2)+'</span><span><strong>'+esc(b.businessName||'Your Design Studio')+'</strong><small>'+esc(b.tagline||'INTERIOR DESIGN · ARCHITECTURE · EXECUTION')+'</small></span></a><nav>';
   if(ok('home'))html+='<a href="#home">Home</a>';
   if(ok('packages'))html+='<a href="#packages">Packages</a>';
   if(ok('expertise'))html+='<a href="#expertise">Expertise</a>';
