@@ -1,0 +1,1063 @@
+{
+  "id": "lab-01",
+  "name": "Diagnostic Lab — Sri Sai Diagnostics",
+  "category": "Diagnostic Labs",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Lab"
+    },
+    {
+      "id": "menu",
+      "label": "Tests & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Offers & Health Camps"
+    },
+    {
+      "id": "work",
+      "label": "Why Choose Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Test Booking Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Lab Name",
+      "required": true,
+      "placeholder": "Sri Sai Diagnostics"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Lab Manager",
+      "placeholder": "Dr. Ravi Kumar"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Blood tests · Health packages · X-ray"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Care and accuracy, every test."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Lab",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Accurate tests. Reports on WhatsApp."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Pathology · X-ray · home collection"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "care@srisaidiagnostics.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Lab Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Mon–Sat · 6:30 AM – 8:30 PM · Sun 7:00 AM – 2:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Sri Sai Diagnostics",
+      "ownerName": "Dr. Ravi Kumar",
+      "tagline": "Blood tests · Health packages · X-ray",
+      "motto": "Care and accuracy, every test.",
+      "about": "Sri Sai Diagnostics in LB Nagar offers blood tests, health packages and digital X-rays. Our experienced technicians collect samples with care, most reports are ready the same day, and you can get them on WhatsApp. Home sample collection is available nearby."
+    },
+    "home": {
+      "eyebrow": "PATHOLOGY · X-RAY · HOME COLLECTION",
+      "title": "Accurate tests. Reports on WhatsApp.",
+      "text": "Blood tests, full-body checkups and X-rays at fair prices. Book a test or ask for home sample collection on WhatsApp."
+    },
+    "hero": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "Full Body Checkup · 70+ tests",
+        "category": "Health Packages",
+        "price": "₹1,499",
+        "description": "CBC, sugar, lipid, liver, kidney and thyroid tests with a doctor’s review.",
+        "tag": "Popular",
+        "image": "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Smiling doctor going through a report with a patient",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Diabetes Package",
+        "category": "Health Packages",
+        "price": "₹699",
+        "description": "Fasting sugar, HbA1c and kidney screening.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Blood sample tubes in a yellow rack",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Heart Health Package",
+        "category": "Health Packages",
+        "price": "₹1,999",
+        "description": "ECG, lipid profile and cardiac risk markers.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Model of a human heart",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Senior Citizen Package",
+        "category": "Health Packages",
+        "price": "₹1,299",
+        "description": "BP, sugar, bones, heart and kidney checks for seniors.",
+        "tag": "Seniors",
+        "image": "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Nurse checking a patient’s blood pressure",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Complete Blood Count (CBC)",
+        "category": "Blood Tests",
+        "price": "₹250",
+        "description": "Haemoglobin, WBC, platelets and more. Report in 4 hours.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Lab technician looking through a microscope",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Thyroid Profile",
+        "category": "Blood Tests",
+        "price": "₹350",
+        "description": "T3, T4 and TSH with a same-day report.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1579165466741-7f35e4755660?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Scientist adding liquid with a pipette",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Fever Panel",
+        "category": "Blood Tests",
+        "price": "₹799",
+        "description": "Dengue, malaria, typhoid and viral fever tests together.",
+        "tag": "Monsoon special",
+        "image": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Pipette dropping liquid onto a sample tray",
+        "enabled": true
+      },
+      {
+        "id": "p8",
+        "name": "Vitamin D & B12",
+        "category": "Blood Tests",
+        "price": "₹899",
+        "description": "Checks for common vitamin deficiency.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1583912267550-d974311a9a6e?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Laboratory reagent bottles on a shelf",
+        "enabled": true
+      },
+      {
+        "id": "p9",
+        "name": "Digital X-Ray",
+        "category": "Scans & X-Ray",
+        "price": "From ₹300",
+        "description": "Chest, bone and joint X-rays with quick reports.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "X-ray image of a hand",
+        "enabled": true
+      },
+      {
+        "id": "p10",
+        "name": "Home Sample Collection",
+        "category": "Home Collection",
+        "price": "Free above ₹500",
+        "description": "Our technician collects the sample at home. Reports on WhatsApp.",
+        "tag": "At your door",
+        "image": "https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Technician drawing blood from a patient’s arm",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Family Health Pack",
+        "description": "Full body checkup for two adults at a special price.",
+        "price": "₹2,599 for 2",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Senior Citizen Offer",
+        "description": "15% off on all health packages for those above 60.",
+        "price": "15% off",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Monsoon Fever Camp",
+        "description": "Fever panel with a free doctor consultation during monsoon months.",
+        "price": "₹799",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "♥",
+        "title": "Accurate reports",
+        "description": "Careful sample handling and double-checked results.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "Home collection",
+        "description": "We collect samples at your home, free above ₹500.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "⏱",
+        "title": "Fast reports",
+        "description": "Most reports are ready the same day, on WhatsApp.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Fair prices",
+        "description": "Clear prices with no hidden charges.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "x1",
+        "name": "Visit the lab",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Home sample collection",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Quality-checked reagents",
+        "alt": "Medical vials and reagent bottles on a dark surface",
+        "image": "https://images.unsplash.com/photo-1576671081837-49000212a370?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Careful testing",
+        "alt": "Lab technician looking through a microscope",
+        "image": "https://images.unsplash.com/photo-1582719471384-894fbb16e074?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Safe sample collection",
+        "alt": "Technician drawing blood from a patient’s arm",
+        "image": "https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Accurate analysis",
+        "alt": "Pipette dropping liquid onto a sample tray",
+        "image": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, LB Nagar",
+        "text": "Booked the full body checkup. Samples were collected gently and I got my reports on WhatsApp the same evening.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Kothapet",
+        "text": "The technician came to our home for my father’s blood tests. Very polite and on time.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Dilsukhnagar",
+        "text": "Clear prices and quick reports. Our family gets all tests done here.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I get my reports?",
+        "answer": "Most reports are sent on WhatsApp the same day. You can also collect a printed copy from the lab.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do I need to fast before the test?",
+        "answer": "For sugar and lipid tests, fast for 10–12 hours and drink only water. We tell you at booking if fasting is needed.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Is home sample collection available?",
+        "answer": "Yes, in nearby areas. Choose “Home sample collection” in the booking form. It is free above ₹500.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Do I need a doctor’s prescription?",
+        "answer": "Not for health packages and common tests. For some specialised tests we may ask for a doctor’s advice.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "How do I pay?",
+        "answer": "UPI, card or cash at the lab. For home collection, pay by UPI or cash to our technician.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "6:30 AM",
+        "close": "8:30 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "6:30 AM",
+        "close": "8:30 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "6:30 AM",
+        "close": "8:30 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "6:30 AM",
+        "close": "8:30 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "6:30 AM",
+        "close": "8:30 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "6:30 AM",
+        "close": "8:30 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "7:00 AM",
+        "close": "2:00 PM",
+        "closed": false,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "care@srisaidiagnostics.example",
+      "address": "Shop 8, Main Road, LB Nagar, Hyderabad, Telangana 500074",
+      "maps": "https://maps.google.com/?q=LB+Nagar+Hyderabad",
+      "hours": "Mon–Sat · 6:30 AM – 8:30 PM · Sun 7:00 AM – 2:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:lab-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Lab Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Lab name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the lab",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "test",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Test name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Health Packages, Blood Tests, Scans)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. New, Offer)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New test",
+          "category": "Health Packages",
+          "price": "₹499",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Offers & Health Camps",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "Ask for price",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Booking Form: Visit Types",
+        "type": "collection",
+        "itemLabel": "visit type",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Visit type"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New visit type",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "10:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Tests & prices",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Offers & health camps",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why choose us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Test booking form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}

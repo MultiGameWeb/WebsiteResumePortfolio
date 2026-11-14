@@ -1,0 +1,1073 @@
+{
+  "id": "tenthouse-01",
+  "name": "Tent House & Decorators — Shubhakarya",
+  "category": "Tent House & Decorators",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About Us"
+    },
+    {
+      "id": "menu",
+      "label": "Services & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Event Packages"
+    },
+    {
+      "id": "work",
+      "label": "Why Book With Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Quote Request Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Office Name",
+      "required": true,
+      "placeholder": "Shubhakarya Tent House & Decorators"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Office Manager",
+      "placeholder": "M. Lakshman"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Tents · Stage · Lights · Sound · Decoration"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "From tents to flowers, we set it all up."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Office",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Make every function unforgettable."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Tents · décor · lights · sound"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "events@shubhakarya.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Office Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Daily · 8:00 AM – 9:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Shubhakarya Tent House & Decorators",
+      "ownerName": "M. Lakshman",
+      "tagline": "Tents · Stage · Lights · Sound · Decoration",
+      "motto": "From tents to flowers, we set it all up.",
+      "about": "Shubhakarya Tent House & Decorators in Nacharam has set up weddings, engagements, birthdays and religious functions for over 18 years. We provide tents, stage and flower décor, chairs and tables, lights, sound and table setups, delivered on time and fitted by our own team."
+    },
+    "home": {
+      "eyebrow": "TENTS · DÉCOR · LIGHTS · SOUND",
+      "title": "Make every function unforgettable.",
+      "text": "Tents, stage and flower décor, seating, lights and sound for weddings and functions. Share your date and venue on WhatsApp for a quote."
+    },
+    "hero": "https://images.unsplash.com/photo-1510076857177-7470076d4098?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "Wedding Stage & Mandap Décor",
+        "category": "Decoration",
+        "price": "From ₹25,000",
+        "description": "Flower stage, mandap, entrance arch and backdrop.",
+        "tag": "Weddings",
+        "image": "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Wedding aisle with large flower arrangements and a white arch",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Garden Pavilion Décor",
+        "category": "Decoration",
+        "price": "From ₹35,000",
+        "description": "Floral pillars and drapes for engagement and reception stages.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Garden pavilion with flower-covered pillars and a decorated table",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Birthday & Party Décor",
+        "category": "Decoration",
+        "price": "From ₹4,999",
+        "description": "Balloon décor, cake table and theme setups.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1478146059778-26028b07395a?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Cake table with flowers, candles and a brick wall",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Welcome Boards & Name Signs",
+        "category": "Decoration",
+        "price": "From ₹1,200",
+        "description": "Welcome boards, Mr & Mrs signs and entrance décor.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Wooden Mr and Mrs sign hanging from a tree",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Tent & Pandal",
+        "category": "Tents & Seating",
+        "price": "From ₹8,000",
+        "description": "Waterproof tents and pandals for 50 to 2,000 guests.",
+        "tag": "Most booked",
+        "image": "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Striped marquee ceiling over white table settings",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Chairs & Tables on Rent",
+        "category": "Tents & Seating",
+        "price": "From ₹8 / chair",
+        "description": "Banquet chairs, round tables, sofas and VIP seating.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Banquet hall with round tables and gold chairs",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Couple Chairs & Sofas",
+        "category": "Tents & Seating",
+        "price": "From ₹1,500",
+        "description": "Decorated couple chairs and sofas for the stage.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Two decorated wedding chairs on a lawn",
+        "enabled": true
+      },
+      {
+        "id": "p8",
+        "name": "Fairy Lights & Lighting",
+        "category": "Lights & Sound",
+        "price": "From ₹6,000",
+        "description": "String lights, chandeliers and LED décor for evening functions.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "People toasting under string lights in a hall",
+        "enabled": true
+      },
+      {
+        "id": "p9",
+        "name": "Sound System & DJ",
+        "category": "Lights & Sound",
+        "price": "From ₹7,000",
+        "description": "Speakers, microphones and a DJ with dance-floor lights.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Crowd in front of a bright stage light",
+        "enabled": true
+      },
+      {
+        "id": "p10",
+        "name": "Table Setup & Décor",
+        "category": "Party & Catering",
+        "price": "From ₹150 / table",
+        "description": "Table cloths, plates, flowers and centrepieces.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1522413452208-996ff3f3e740?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Dining table with plates, greenery and candles",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Wedding Complete Package",
+        "description": "Tent, stage and mandap décor, seating, lights and sound for 300 guests.",
+        "price": "From ₹95,000",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Engagement Package",
+        "description": "Stage décor, couple chairs, lights and 100 chairs.",
+        "price": "From ₹35,000",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Birthday Party Package",
+        "description": "Balloon décor, cake table, lights and music for up to 50 guests.",
+        "price": "From ₹12,999",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "✿",
+        "title": "Complete setup",
+        "description": "Tents, décor, lights and sound from one team.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "On-time delivery",
+        "description": "We deliver and set up well before your event.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "⏱",
+        "title": "Free venue visit",
+        "description": "We visit your venue to plan the layout before you book.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Fair prices",
+        "description": "A clear written quote with no hidden charges.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "x1",
+        "name": "Wedding",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Engagement or reception",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "Birthday or party",
+        "enabled": true
+      },
+      {
+        "id": "x4",
+        "name": "Religious or corporate event",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Floral table décor",
+        "alt": "Dining table decorated with colourful flowers",
+        "image": "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Garden pavilion",
+        "alt": "Garden pavilion with flower-covered pillars",
+        "image": "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Grand halls",
+        "alt": "Banquet hall with round tables and gold chairs",
+        "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Aisle décor",
+        "alt": "Wedding aisle with large flower arrangements",
+        "image": "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Nacharam",
+        "text": "Our daughter’s wedding stage looked stunning. The team arrived early, set up everything and finished on time.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Uppal",
+        "text": "Reasonable price for tent, chairs and lighting. They visited our venue first and suggested a better layout.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Habsiguda",
+        "text": "Booked the birthday décor for my son. Everyone loved the balloons and the cake table.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How much advance do I need to pay?",
+        "answer": "We take an advance to block your date and the balance before or on the event day. The amount is written in your quote.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do you visit the venue before the event?",
+        "answer": "Yes, a free visit nearby so we can plan the layout, power and tent size.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Can I choose the theme and colours?",
+        "answer": "Yes. Share a photo or idea and we’ll make the décor in your colours.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Do you work outside Hyderabad?",
+        "answer": "Yes, within about 150 km. Transport charges are added to the quote.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "What if it rains?",
+        "answer": "Our tents are waterproof, and we keep extra covers ready for outdoor functions.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "8:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "events@shubhakarya.example",
+      "address": "Plot 22, Main Road, Nacharam, Hyderabad, Telangana 500076",
+      "maps": "https://maps.google.com/?q=Nacharam+Hyderabad",
+      "hours": "Daily · 8:00 AM – 9:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:tenthouse-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Office Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Office name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the office",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Decoration, Tents & Seating, Lights & Sound)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. New, Offer)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "category": "Decoration",
+          "price": "From ₹5,000",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Event Packages",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "Ask for price",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Quote Form: Event Types",
+        "type": "collection",
+        "itemLabel": "event type",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Event type"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New event type",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "10:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Services & prices",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Event packages",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why book with us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Quote request form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
