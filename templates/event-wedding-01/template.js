@@ -1,3 +1,5 @@
+// Logo letters come from the customer's business name (not the demo name).
+const scMark=(d,count,only)=>{const n=String((d&&d.brand&&d.brand.businessName)||'').trim();const words=n.split(/\s+/).filter(w=>/[\p{L}\p{N}]/u.test(w)&&!/^the$/i.test(w));const letters=words.map(w=>(Array.from(w.replace(/^[^\p{L}\p{N}]+/u,''))[0]||'').toUpperCase());const pick=letters.slice(0,count||2);if(pick.length<(count||2)&&words[0]){const extra=Array.from(words[0].replace(/^[^\p{L}\p{N}]+/u,'')).slice(1,2).join('').toUpperCase();if(count!==1&&extra&&pick.length===1)pick.push(extra)}const out=(only!=null?(pick[only]||''):pick.join(''));return out.replace(/[&<>"']/g,'')||'•'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
@@ -8,7 +10,7 @@ function scBaseRender(d={},selected=[]){
         availability=list(d.availability),reviews=list(d.reviews),team=list(d.team),faq=list(d.faq),hours=list(d.hours);
   const cats=[...new Set(gallery.map(x=>x.category).filter(Boolean))];
   let html='<div class="site-preview event-wedding-01">';
-  html+='<header class="ew-nav"><a class="ew-brand" href="#home"><span class="ew-mark">CE</span><span><strong>'+esc(b.businessName||"Your Events Studio")+'</strong><small>'+esc(b.tagline||"EVENTS · WEDDINGS · CELEBRATIONS")+'</small></span></a><nav>';
+  html+='<header class="ew-nav"><a class="ew-brand" href="#home"><span class="ew-mark">'+scMark(d,2)+'</span><span><strong>'+esc(b.businessName||"Your Events Studio")+'</strong><small>'+esc(b.tagline||"EVENTS · WEDDINGS · CELEBRATIONS")+'</small></span></a><nav>';
   if(ok('home'))html+='<a href="#home">Home</a>';if(ok('eventTypes'))html+='<a href="#eventTypes">Events</a>';if(ok('packages'))html+='<a href="#packages">Packages</a>';
   if(ok('services'))html+='<a href="#services">Services</a>';if(ok('gallery'))html+='<a href="#gallery">Work</a>';if(ok('venues'))html+='<a href="#venues">Venues</a>';
   if(ok('availability'))html+='<a href="#availability">Dates</a>';if(ok('enquiry'))html+='<a href="#enquiry">Enquiry</a>';

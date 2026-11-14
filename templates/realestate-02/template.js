@@ -1,3 +1,5 @@
+// Logo letters come from the customer's business name (not the demo name).
+const scMark=(d,count,only)=>{const n=String((d&&d.brand&&d.brand.businessName)||'').trim();const words=n.split(/\s+/).filter(w=>/[\p{L}\p{N}]/u.test(w)&&!/^the$/i.test(w));const letters=words.map(w=>(Array.from(w.replace(/^[^\p{L}\p{N}]+/u,''))[0]||'').toUpperCase());const pick=letters.slice(0,count||2);if(pick.length<(count||2)&&words[0]){const extra=Array.from(words[0].replace(/^[^\p{L}\p{N}]+/u,'')).slice(1,2).join('').toUpperCase();if(count!==1&&extra&&pick.length===1)pick.push(extra)}const out=(only!=null?(pick[only]||''):pick.join(''));return out.replace(/[&<>"']/g,'')||'•'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const priceValue=p=>{const n=Number(p);return Number.isFinite(n)?n:parseFloat(String(p??'').replace(/[^0-9.]/g,''))||0};
@@ -9,7 +11,7 @@ function scBaseRender(d={},selected=[]){
   const props=(d.properties||[]).filter(x=>x.enabled!==false),services=(d.services||[]).filter(x=>x.enabled!==false),agents=(d.agents||[]).filter(x=>x.enabled!==false),reviews=(d.reviews||[]).filter(x=>x.enabled!==false),faq=(d.faq||[]).filter(x=>x.enabled!==false),landmarks=(d.landmarks||[]).filter(x=>x.enabled!==false);
   const featured=props.filter(x=>x.featured||x.status==='Featured'),featuredList=featured.length?featured:props.slice(0,2);
   let html='<div class="site-preview realestate-02">';
-  html+='<header class="lux-nav"><a class="lux-brand" href="#home"><span class="lux-monogram">AE</span><span><strong>'+esc(b.businessName||'Aurum Estates')+'</strong><small>'+esc(b.tagline||'PRIVATE PROPERTY ADVISORY')+'</small></span></a><nav>';
+  html+='<header class="lux-nav"><a class="lux-brand" href="#home"><span class="lux-monogram">'+scMark(d,2)+'</span><span><strong>'+esc(b.businessName||'Aurum Estates')+'</strong><small>'+esc(b.tagline||'PRIVATE PROPERTY ADVISORY')+'</small></span></a><nav>';
   if(ok('home'))html+='<a href="#home">Home</a>';if(ok('gallery'))html+='<a href="#properties">Collection</a>';if(ok('services'))html+='<a href="#services">Services</a>';if(ok('agents'))html+='<a href="#team">Advisors</a>';if(ok('reviews'))html+='<a href="#reviews">Reviews</a>';if(ok('faq'))html+='<a href="#faq">FAQ</a>';if(ok('enquiry'))html+='<a href="#enquiry">Contact</a>';
   html+='</nav><div class="lux-nav-actions">'+(ok('whatsapp')&&c.whatsapp?'<a class="lux-whatsapp" target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp</a>':'')+'<a class="template-admin-link" href="admin.html?template=realestate-02">Admin</a></div></header>';
 
@@ -40,7 +42,7 @@ function scBaseRender(d={},selected=[]){
   if(ok('rera')&&s.showRera!==false)html+='<section id="rera" class="lux-rera"><div><span class="lux-eyebrow">RERA INFORMATION</span><h2>Verify registration details before proceeding.</h2><p>'+esc(d.rera?.text||'')+'</p></div><strong>'+esc(d.rera?.number||'Registration details available on request')+'</strong></section>';
 
   html+='<div id="luxDetailModal" class="lux-modal" hidden><div class="lux-modal-backdrop" data-close-modal></div><div class="lux-modal-panel" role="dialog" aria-modal="true" aria-labelledby="luxModalTitle"><button type="button" class="lux-modal-close" data-close-modal aria-label="Close">×</button><div id="luxModalBody"></div></div></div>';
-  html+='<footer class="lux-footer"><div><span class="lux-monogram">AE</span><div><strong>'+esc(b.businessName||'Aurum Estates')+'</strong><small>'+esc(b.tagline||'Private Property Advisory')+'</small></div></div><div class="lux-footer-links">'+(c.whatsapp?'<a target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>':'')+(c.email?'<a href="mailto:'+esc(c.email)+'">'+esc(c.email)+'</a>':'')+'</div><a class="template-admin-link" href="admin.html?template=realestate-02">Admin</a></footer></div>';
+  html+='<footer class="lux-footer"><div><span class="lux-monogram">'+scMark(d,2)+'</span><div><strong>'+esc(b.businessName||'Aurum Estates')+'</strong><small>'+esc(b.tagline||'Private Property Advisory')+'</small></div></div><div class="lux-footer-links">'+(c.whatsapp?'<a target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp ↗</a>':'')+(c.email?'<a href="mailto:'+esc(c.email)+'">'+esc(c.email)+'</a>':'')+'</div><a class="template-admin-link" href="admin.html?template=realestate-02">Admin</a></footer></div>';
   return html;
 }
 

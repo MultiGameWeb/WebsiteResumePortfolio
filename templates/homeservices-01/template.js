@@ -1,3 +1,5 @@
+// Logo letters come from the customer's business name (not the demo name).
+const scMark=(d,count,only)=>{const n=String((d&&d.brand&&d.brand.businessName)||'').trim();const words=n.split(/\s+/).filter(w=>/[\p{L}\p{N}]/u.test(w)&&!/^the$/i.test(w));const letters=words.map(w=>(Array.from(w.replace(/^[^\p{L}\p{N}]+/u,''))[0]||'').toUpperCase());const pick=letters.slice(0,count||2);if(pick.length<(count||2)&&words[0]){const extra=Array.from(words[0].replace(/^[^\p{L}\p{N}]+/u,'')).slice(1,2).join('').toUpperCase();if(count!==1&&extra&&pick.length===1)pick.push(extra)}const out=(only!=null?(pick[only]||''):pick.join(''));return out.replace(/[&<>"']/g,'')||'•'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const url=v=>{const x=String(v??'').trim();return /^(https?:\/\/|tel:|mailto:)/i.test(x)?x:'';};
 const imageUrl=v=>{const x=String(v??'').trim();return /^https:\/\/[^\s"'<>]+$/i.test(x)||/^data:image\/(png|jpe?g|webp|gif);base64,[a-z0-9+\/=]+$/i.test(x)?x:'';};
@@ -27,7 +29,7 @@ function scBaseRender(d={},selected=[]){
  };
  const nav=[['about','About'],['services','Services'],['how','How it works'],['areas','Service areas'],['reviews','Reviews'],['faq','FAQ'],['hours','Hours'],['location','Location'],['contact','Contact']].filter(([k])=>show[k]);
  let html='<div class="homeservices-01">';
- html+='<header class="fr-nav"><a class="fr-brand" href="#top" aria-label="'+esc(name)+' home"><span class="fr-brand-mark" aria-hidden="true">FR</span><span><strong>'+esc(name)+'</strong><small>'+esc(b.tagline||'Reliable help around your home')+'</small></span></a><nav aria-label="Main navigation">'+nav.map(([id,label])=>'<a href="#'+id+'">'+label+'</a>').join('')+'</nav><div class="fr-nav-actions">'+(show.enquiry?'<a class="fr-btn fr-btn-dark fr-nav-cta" href="#enquire">Book a technician</a>':'')+'</div></header>';
+ html+='<header class="fr-nav"><a class="fr-brand" href="#top" aria-label="'+esc(name)+' home"><span class="fr-brand-mark" aria-hidden="true">'+scMark(d,2)+'</span><span><strong>'+esc(name)+'</strong><small>'+esc(b.tagline||'Reliable help around your home')+'</small></span></a><nav aria-label="Main navigation">'+nav.map(([id,label])=>'<a href="#'+id+'">'+label+'</a>').join('')+'</nav><div class="fr-nav-actions">'+(show.enquiry?'<a class="fr-btn fr-btn-dark fr-nav-cta" href="#enquire">Book a technician</a>':'')+'</div></header>';
 
  if(ok('home')&&s.showHome!==false&&(h.title||h.text||imageUrl(d.hero))){
   const hero=imageUrl(d.hero);

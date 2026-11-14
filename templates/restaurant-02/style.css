@@ -61,3 +61,7 @@ a.sc-connect-item:hover{text-decoration:underline}
 .sc-pay a.sc-pay-btn-alt:hover{background:#eaf2fb}
 .sc-pay .sc-pay-small{margin:0;color:#4a5462;font-size:14px}
 @media(max-width:560px){.sc-pay-qr{width:160px;height:160px;margin:0 auto}.sc-pay-copy{margin-left:0}.sc-pay a.sc-pay-btn{width:100%}}
+
+/* WhatsApp chat button */
+.r2-wa-float{position:fixed;right:16px;bottom:16px;z-index:60;display:inline-flex;align-items:center;min-height:46px;padding:0 20px;border-radius:999px;background:#167a43;color:#fff;font:700 14px/1 system-ui,sans-serif;text-decoration:none;box-shadow:0 10px 26px rgba(0,0,0,.22)}
+.r2-wa-float:hover{background:#11653a}

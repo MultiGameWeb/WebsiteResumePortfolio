@@ -1,3 +1,5 @@
+// Logo letters come from the customer's business name (not the demo name).
+const scMark=(d,count,only)=>{const n=String((d&&d.brand&&d.brand.businessName)||'').trim();const words=n.split(/\s+/).filter(w=>/[\p{L}\p{N}]/u.test(w)&&!/^the$/i.test(w));const letters=words.map(w=>(Array.from(w.replace(/^[^\p{L}\p{N}]+/u,''))[0]||'').toUpperCase());const pick=letters.slice(0,count||2);if(pick.length<(count||2)&&words[0]){const extra=Array.from(words[0].replace(/^[^\p{L}\p{N}]+/u,'')).slice(1,2).join('').toUpperCase();if(count!==1&&extra&&pick.length===1)pick.push(extra)}const out=(only!=null?(pick[only]||''):pick.join(''));return out.replace(/[&<>"']/g,'')||'•'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safe=v=>String(v??'').replace(/[^0-9]/g,'');
 const num=v=>{const n=Number(v);return Number.isFinite(n)?n:0};
@@ -8,7 +10,7 @@ function scBaseRender(d={},selected=[]){
   const services=list(d.services),packages=list(d.packages),vehicles=list(d.vehicleTypes),ba=list(d.beforeAfter),gallery=list(d.gallery),specials=list(d.specials),team=list(d.team),trust=list(d.trust),reviews=list(d.reviews),faq=list(d.faq),hours=list(d.hours);
   const cats=[...new Set(gallery.map(x=>x.category).filter(Boolean))];
   let html='<div class="site-preview automotive-01">';
-  html+='<header class="au-nav"><a class="au-brand" href="#home"><span class="au-mark">DC</span><span><strong>'+esc(b.businessName||"Your Auto Studio")+'</strong><small>'+esc(b.tagline||"SERVICE · DETAILING · CARE")+'</small></span></a><nav>';
+  html+='<header class="au-nav"><a class="au-brand" href="#home"><span class="au-mark">'+scMark(d,2)+'</span><span><strong>'+esc(b.businessName||"Your Auto Studio")+'</strong><small>'+esc(b.tagline||"SERVICE · DETAILING · CARE")+'</small></span></a><nav>';
   if(ok('home'))html+='<a href="#home">Home</a>';if(ok('services'))html+='<a href="#services">Services</a>';if(ok('packages'))html+='<a href="#packages">Packages</a>';if(ok('vehicle'))html+='<a href="#vehicle">Vehicle</a>';if(ok('booking'))html+='<a href="#booking">Book</a>';if(ok('beforeAfter'))html+='<a href="#beforeAfter">Results</a>';if(ok('location'))html+='<a href="#location">Location</a>';
   html+='</nav><div class="au-nav-actions">'+(ok('whatsapp')&&c.whatsapp?'<a class="au-mini au-wa" target="_blank" href="https://wa.me/'+safe(c.whatsapp)+'">WhatsApp</a>':'')+'<a class="template-admin-link" href="admin.html?template=automotive-01">Admin</a></div></header>';
 

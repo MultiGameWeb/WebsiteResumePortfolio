@@ -1,3 +1,5 @@
+// Logo letters come from the customer's business name (not the demo name).
+const scMark=(d,count,only)=>{const n=String((d&&d.brand&&d.brand.businessName)||'').trim();const words=n.split(/\s+/).filter(w=>/[\p{L}\p{N}]/u.test(w)&&!/^the$/i.test(w));const letters=words.map(w=>(Array.from(w.replace(/^[^\p{L}\p{N}]+/u,''))[0]||'').toUpperCase());const pick=letters.slice(0,count||2);if(pick.length<(count||2)&&words[0]){const extra=Array.from(words[0].replace(/^[^\p{L}\p{N}]+/u,'')).slice(1,2).join('').toUpperCase();if(count!==1&&extra&&pick.length===1)pick.push(extra)}const out=(only!=null?(pick[only]||''):pick.join(''));return out.replace(/[&<>"']/g,'')||'•'};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=v=>{const s=String(v??'').trim();if(/^https?:\/\//i.test(s))return s;if(/^data:image\/(?:png|jpe?g|webp|gif);base64,[a-z0-9+/=]+$/i.test(s))return s;return ''};
 const digits=v=>String(v??'').replace(/[^0-9]/g,'');
@@ -11,7 +13,7 @@ function scBaseRender(d={},selected=[]){
  const packages=list(d.packages), transformations=list(d.beforeAfter).filter(x=>safeUrl(x.beforeImage)&&safeUrl(x.afterImage)),reviews=list(d.reviews);
  const whatsappHref=wa(c.whatsapp,bookingMessage(b.businessName||'your studio',dateText(h.eventDate)));
  let html='<div class="site-preview bridal-makeup-01">';
- html+='<header class="bm-nav"><a class="bm-brand" href="#home"><span class="bm-mark">LB</span><span><strong>'+esc(b.businessName||'Your Bridal Studio')+'</strong><small>'+esc(b.ownerName||'Bridal Makeup Artist')+'</small></span></a><nav>';
+ html+='<header class="bm-nav"><a class="bm-brand" href="#home"><span class="bm-mark">'+scMark(d,2)+'</span><span><strong>'+esc(b.businessName||'Your Bridal Studio')+'</strong><small>'+esc(b.ownerName||'Bridal Makeup Artist')+'</small></span></a><nav>';
  if(ok('home'))html+='<a href="#home">Home</a>';
  if(ok('about')&&s.showAbout!==false)html+='<a href="#about">About</a>';
  if(ok('packages')&&s.showPackages!==false)html+='<a href="#packages">Packages</a>';
