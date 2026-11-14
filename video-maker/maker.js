@@ -1000,6 +1000,14 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
         { img: 'cinema-3.webp', label: 'The showroom', head: 'An experience in gold', line: 'Visit us in Jubilee Hills' },
       ],
     },
+    'ad-kinetic': {
+      title: 'PixelRise Digital', subtitle: 'Grow your business online', contact: '98765 43210', closing: 'Let us build your brand', badge: '',
+      scenes: [
+        { img: 'kinetic-1.webp', label: 'Results that show', head: 'Double your sales', line: '+18.5% growth for our clients' },
+        { img: 'kinetic-2.webp', label: 'A team that cares', head: 'Ideas that work', line: 'Strategy, design and ads' },
+        { img: 'kinetic-3.webp', label: 'Happy clients', head: 'Leads on your phone', line: 'Reports every week' },
+      ],
+    },
   };
   const exampleImages = new Map();
   function exampleImage(name) {
