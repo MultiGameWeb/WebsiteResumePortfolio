@@ -64,6 +64,7 @@
   const ctx = canvas.getContext('2d');
   const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null, length: 0, userPer: 3, slots: 0 };
   let frameRequest = 0;
+  let example = null; // the template example playing on the stage, if any
   let audioContext = null;
 
   // ---- Helpers ----
@@ -792,6 +793,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
 
   function showPoster() {
     if (!state.recording) applyLength();
+    if (example) return;
     const htmlBtn = $('#htmlBtn');
     if (htmlBtn) htmlBtn.hidden = !state.template.spot || !state.photos.length;
     if (state.playing || state.recording) return;
@@ -848,6 +850,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   }
 
   async function preview() {
+    stopExample();
     applyLength();
     if (state.recording) return;
     if (state.playing) { stopPlayback(); showPoster(); return; }
@@ -877,6 +880,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   }
 
   async function makeVideo() {
+    stopExample();
     applyLength();
     if (state.recording) return;
     if (!state.photos.length) { setStatus('Add at least one photo first.'); return; }
@@ -924,6 +928,92 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     $('#result').hidden = false;
     setStatus(ext === 'mp4' ? 'Your video is ready ✓' : 'Your video is ready ✓ (WebM format: if WhatsApp does not accept it, open this page in the latest Chrome for MP4.)');
     showPoster();
+  }
+
+  // ---- Template examples ----
+  // Sample photos and text for each ad template, played on the stage so
+  // people can see what a template does before adding their own photos.
+  const EXAMPLE_DIR = 'assets/video-examples/';
+  const EXAMPLES = {
+    'ad-sale': {
+      title: 'Zariya Fashions', subtitle: 'Festive Flash Sale', contact: '98765 43210', closing: 'Shop today!', badge: 'Up to 50% off · 3 days',
+      scenes: [
+        { img: 'sale-1.webp', label: 'Sarees & kurtas', head: 'Festive collection', line: 'Up to 50% off' },
+        { img: 'sale-2.webp', label: 'Happy shoppers', head: 'Shop more, save more', line: 'Extra 10% off' },
+        { img: 'sale-3.webp', label: 'Bags & footwear', head: 'Bags and shoes', line: 'From ₹499' },
+      ],
+    },
+  };
+  const exampleImages = new Map();
+  function exampleImage(name) {
+    if (!exampleImages.has(name)) {
+      exampleImages.set(name, new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => { exampleImages.delete(name); reject(new Error('The example could not be loaded. Please try again.')); };
+        img.src = EXAMPLE_DIR + name;
+      }));
+    }
+    return exampleImages.get(name);
+  }
+
+  function stopExample() {
+    if (!example) return;
+    cancelAnimationFrame(example.request);
+    example.button.textContent = '▶ Example';
+    example = null;
+    showPoster();
+  }
+
+  async function playExample(template, button) {
+    if (busyRecording()) return;
+    const same = example?.template === template;
+    stopExample();
+    if (same) return;
+    stopPlayback();
+    const data = EXAMPLES[template.id];
+    button.textContent = 'Loading…';
+    let images;
+    try {
+      images = await Promise.all(data.scenes.map((scene) => exampleImage(scene.img)));
+      await Promise.all(STYLES.fonts.map((spec) => document.fonts.load(spec))).catch(() => {});
+    } catch (error) {
+      button.textContent = '▶ Example';
+      setStatus(error.message);
+      return;
+    }
+    const n = data.scenes.length;
+    const body = 15 - INTRO - OUTRO;
+    const slots = Math.max(n, Math.round(body / (template.per || 3.5)));
+    const d = {
+      layout: template.spot, style: DEFAULT_STYLE[template.spot] || 'default', design: null, w: 720, h: 1280, intro: INTRO, per: body / slots, outro: OUTRO,
+      title: data.title, subtitle: data.subtitle, contact: data.contact, closing: data.closing, badge: data.badge, details: data.details || [],
+      photos: Array.from({ length: slots }, (_, i) => { const scene = data.scenes[i % n]; return { img: images[i % n], label: scene.label, head: i < n ? scene.head : '', line: scene.line }; }),
+    };
+    example = { template, button, request: 0 };
+    button.textContent = '■ Stop';
+    canvas.width = d.w; canvas.height = d.h;
+    $('.vm-stage').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    setStatus(`Example of “${template.name.split(' · ')[0]}” (15 seconds). Add your photos and text to make your own.`);
+    const total = STYLES.total(d);
+    const start = performance.now();
+    const tick = (now) => {
+      if (example?.template !== template) return;
+      const t = (now - start) / 1000;
+      if (t >= total) { stopExample(); return; }
+      ctx.clearRect(0, 0, d.w, d.h);
+      STYLES.frame(ctx, t, d);
+      // An "Example" tag so it is not mistaken for the user's own video.
+      ctx.save();
+      ctx.font = `800 ${d.w * 0.028}px ${SANS}`;
+      ctx.fillStyle = 'rgba(0,0,0,.55)';
+      ctx.beginPath(); ctx.roundRect(d.w / 2 - d.w * 0.09, d.h - d.w * 0.12, d.w * 0.18, d.w * 0.05, d.w * 0.025); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('EXAMPLE', d.w / 2, d.h - d.w * 0.095);
+      ctx.restore();
+      example.request = requestAnimationFrame(tick);
+    };
+    example.request = requestAnimationFrame(tick);
   }
 
   // ---- Inputs ----
@@ -1034,6 +1124,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     }
     button.addEventListener('click', () => {
       if (busyRecording()) return;
+      stopExample();
       state.template = template;
       if (template.spot && STYLES.layoutFor(state.spotStyle) !== template.spot) state.spotStyle = DEFAULT_STYLE[template.spot];
       if (template.spot && state.design) state.design = { ...state.design, layout: template.spot };
@@ -1041,7 +1132,18 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
       fontsReady().then(showPoster);
       renderPhotos();
     });
-    return button;
+    if (!EXAMPLES[template.id]) return button;
+    // A "▶ Example" button next to the template plays a 15-second sample.
+    const wrap = document.createElement('div');
+    wrap.className = 'vm-template-wrap';
+    const play = document.createElement('button');
+    play.type = 'button';
+    play.className = 'vm-example-btn';
+    play.textContent = '▶ Example';
+    play.setAttribute('aria-label', `Play an example of ${template.name}`);
+    play.addEventListener('click', () => playExample(template, play));
+    wrap.append(button, play);
+    return wrap;
   });
   // AI-exclusive designs are offered on the AI page only; the free page has
   // the ten ad templates and the basic ones.

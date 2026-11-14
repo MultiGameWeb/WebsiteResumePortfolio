@@ -1557,7 +1557,7 @@
         const slam = Math.max(1, 2.4 - 1.4 * ease(local / 0.35));
         ctx.save();
         ctx.translate(d.w / 2, d.h * 0.42); ctx.scale(slam, slam); ctx.translate(-d.w / 2, -d.h * 0.42);
-        blockText(ctx, d, d.subtitle || 'Big Sale', { x: d.w / 2, y: d.h * 0.36, size: u * (wide(d) ? 9 : 11), font: headFont(d, F.impact), bg: red, color: '#fff', align: 'center', maxWidth: d.w - u * 8, maxLines: 3 });
+        blockText(ctx, d, d.subtitle || 'Big Sale', { x: d.w / 2, y: d.h * 0.33, size: u * (wide(d) ? 8 : 10), font: headFont(d, F.impact), bg: red, color: '#fff', align: 'center', maxWidth: d.w - u * 8, maxLines: 4 });
         ctx.restore();
         tape(ctx, d, d.badge || 'Limited time', d.w * 0.34, d.h * 0.18, -0.12, yellow, '#000', u * 3.4);
         blockText(ctx, d, d.title, { x: d.w / 2, y: d.h - u * 22, size: u * 4, font: F.impact, bg: '#000', color: '#fff', align: 'center', maxWidth: d.w - u * 10, maxLines: 1, wipe: (local - 0.4) / 0.25 });
