@@ -524,3 +524,12 @@ html body .builder-panel .builder-media-controls .btn.ghost.small:hover{backgrou
 body.sc-focus-page{background:var(--sc-bg,#100f17)}
 .storage-note strong{font-size:14px!important;color:#20231f!important}.storage-note span{font-size:13px!important;color:#4f544d!important}
 body.sc-focus-page{min-height:100vh}html:has(body.sc-focus-page){background:var(--sc-bg,#100f17)}
+
+/* Contrast fixes (WCAG AA): muted text on the light builder/checkout/success panels, and on the dark page */
+.feature-intro p:last-child,.lead-small{color:#a9ada5}
+.builder-block>p:not(.eyebrow),.builder-media-collection-head>small,.builder-media-preview>span,details[data-sec]>summary>span,.builder-panel .tip{color:#5c6058}
+.setup-question .question-step{color:#4f534c}
+.setup-question button>span{color:#5c6058}
+.demo-note{color:#5c6058}
+.success-card .muted{color:#5c6058}
+.feature-card.locked{cursor:default}.feature-card.locked:hover{transform:none;box-shadow:inset 0 0 0 1px #20231f}

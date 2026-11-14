@@ -161,3 +161,15 @@ body:has(.groups) .footer,body:has(.four-template-grid) .footer{background:rgba(
  #sitecraftGlobalNav .sc-menu a{padding-inline:7px;font-size:11.5px}
  #sitecraftGlobalNav .sc-menu a[data-menu-key="ad-videos"]{color:#f5c8ff!important;background:rgba(236,72,153,.10);border-color:rgba(236,72,153,.25)}
 }
+
+/* Light panels inside the dark pages (builder form, checkout questions, success card): the dark-theme
+   ghost buttons and eyebrows were light-on-light there (e.g. Reset details, Open preview, Admin panel). */
+body:not(:has(.app)):not(:has(.app-shell)):not(:has(.pm-app)):not(.cb-page) :is(.builder-panel,.success-card,.setup-question,.pay-card,.host-card) :where(.btn.ghost,.btn.soft,.btn-ghost){background:#fff!important;color:#1f211c!important;border:1px solid #cfcfc6!important}
+body:not(:has(.app)):not(:has(.app-shell)):not(:has(.pm-app)):not(.cb-page) :is(.builder-panel,.success-card,.setup-question,.pay-card,.host-card) :where(.btn.ghost,.btn.soft,.btn-ghost):hover{background:#f1f1ea!important}
+body:not(:has(.app)):not(:has(.app-shell)):not(:has(.pm-app)):not(.cb-page) :is(.builder-panel,.success-card,.setup-question,.pay-card,.host-card) :where(.eyebrow){color:#6d28d9!important}
+body:not(:has(.app)):not(:has(.app-shell)):not(:has(.pm-app)):not(.cb-page) .success-card ~ * .progress span:not(.on),body[data-page=success] .progress span:not(.on){color:#4f534c}
+/* Checkout: the chosen answer and payment method must be obvious; a disabled Pay button must look disabled */
+body:not(:has(.app)):not(:has(.app-shell)):not(:has(.pm-app)):not(.cb-page) :is(.choice,.method){position:relative}
+body:not(:has(.app)):not(:has(.app-shell)):not(:has(.pm-app)):not(.cb-page) :is(.choice,.method).active{background:#f3eeff!important;border-color:#7c3aed!important;box-shadow:0 0 0 2px #7c3aed!important;color:#17181d!important}
+body:not(:has(.app)):not(:has(.app-shell)):not(:has(.pm-app)):not(.cb-page) .choice.active::after{content:'✓';position:absolute;top:10px;right:12px;width:22px;height:22px;border-radius:50%;background:#7c3aed;color:#fff;font:700 13px/22px Inter,system-ui,sans-serif;text-align:center}
+body:not(:has(.app)):not(:has(.app-shell)):not(:has(.pm-app)):not(.cb-page) #payBtn:disabled{opacity:.5!important;cursor:not-allowed!important;transform:none!important;box-shadow:none!important}
