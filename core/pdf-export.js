@@ -90,5 +90,30 @@ function capture(root,opts){
   });
  });
 }
-window.SiteCraftPdf={loadScript:loadScript,buildPdf:buildPdf,collectWords:collectWords,capture:capture,helvWidth:helvWidth};
+/* Fixed-size pages (slides): each element in els is already laid out at opts.width x opts.height CSS px.
+ * renderCanvas draws one of them; captureSlides makes a PDF with one page per element. */
+function renderCanvas(el,opts){
+ return withTimeout(loadScript(opts.libSrc||"vendor/html-to-image.min.js","htmlToImage"),15000).then(function(lib){
+  var filter=function(n){return !(n.nodeType===1&&n.hasAttribute&&n.hasAttribute("data-editor-ui"))};
+  var fontP=opts.fontEmbedCSS!=null?Promise.resolve(opts.fontEmbedCSS):withTimeout(lib.getFontEmbedCSS(el,{filter:filter}),20000).catch(function(){return ""});
+  return fontP.then(function(fontCss){
+   var o={pixelRatio:opts.pixelRatio||2,backgroundColor:opts.background||"#ffffff",width:Math.round(opts.width),height:Math.round(opts.height),cacheBust:false,filter:filter,style:{margin:"0",transform:"none",boxShadow:"none"}};
+   if(fontCss)o.fontEmbedCSS=fontCss;else o.skipFonts=true;
+   return withTimeout(lib.toCanvas(el,o),45000).catch(function(){return withTimeout(lib.toCanvas(el,Object.assign({},o,{skipFonts:true,fontEmbedCSS:undefined})),45000)}).then(function(c){c.fontEmbedCSS=fontCss;return c});
+  });
+ });
+}
+function captureSlides(els,opts){
+ var w=opts.width,h=opts.height,k=.75,pages=[],fontCss=null;
+ return els.reduce(function(chain,el,i){return chain.then(function(){
+  return renderCanvas(el,{width:w,height:h,pixelRatio:opts.pixelRatio||1.5,background:opts.background,fontEmbedCSS:fontCss}).then(function(cv){
+   fontCss=cv.fontEmbedCSS||"";var info=collectWords(el),texts=[],links=[];
+   info.words.forEach(function(wd){if(wd.top<0||wd.bottom>h+2)return;var fs=wd.size*k,natural=helvWidth(wd.str)*fs,tz=Math.max(40,Math.min(250,(wd.width*k)/Math.max(1,natural)*100));texts.push({str:wd.str+" ",size:fs,tz:tz,x:wd.left*k,y:h*k-(wd.bottom-wd.height*.22)*k})});
+   info.links.forEach(function(l){links.push({url:l.url,x1:l.left*k,y1:(h-l.bottom)*k,x2:l.right*k,y2:(h-l.top)*k})});
+   pages.push({jpeg:dataUrlBytes(cv.toDataURL("image/jpeg",.9)),iw:cv.width,ih:cv.height,texts:texts,links:links});cv.width=cv.height=1;
+   if(opts.onProgress)opts.onProgress(i+1,els.length);
+  });
+ })},Promise.resolve()).then(function(){return buildPdf(pages,w*k,h*k,opts.title)});
+}
+window.SiteCraftPdf={loadScript:loadScript,buildPdf:buildPdf,collectWords:collectWords,capture:capture,captureSlides:captureSlides,renderCanvas:renderCanvas,helvWidth:helvWidth};
 })();
