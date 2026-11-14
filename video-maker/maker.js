@@ -984,6 +984,14 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
         { img: 'story-3.webp', label: 'Baked today', head: 'Croissants & more', line: 'From ₹79' },
       ],
     },
+    'ad-countdown': {
+      title: 'Success Coaching', subtitle: 'Reasons toppers choose us', contact: '98765 43210', closing: 'Admissions open', badge: 'JEE · NEET',
+      scenes: [
+        { img: 'countdown-1.webp', label: 'Smart classrooms', head: 'Focused batches', line: 'Only 30 students' },
+        { img: 'countdown-2.webp', label: 'Expert faculty', head: 'Teachers who care', line: 'Daily doubt sessions' },
+        { img: 'countdown-3.webp', label: 'Proven results', head: 'Toppers every year', line: '98.6 percentile' },
+      ],
+    },
   };
   const exampleImages = new Map();
   function exampleImage(name) {
