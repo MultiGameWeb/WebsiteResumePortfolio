@@ -53,6 +53,9 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 @media (max-width: 860px) {
   .vm-grid { grid-template-columns: minmax(0, 1fr); }
   .vm-stage { position: static; order: -1; }
+  /* On the AI page the chat comes first on phones; the preview follows. */
+  .vm-grid:has(#aiCard) .vm-stage { order: 0; }
+  .vm-ai { height: clamp(480px, 80svh, 760px); }
   #stage { max-height: 52vh; }
 }
 @media (max-width: 420px) { .vm-photo-fields { grid-template-columns: minmax(0, 1fr); } }
@@ -61,6 +64,15 @@ input:focus-visible, button:focus-visible, a:focus-visible, .vm-upload:focus-wit
 
 .vm-ai { border-color: rgba(240,171,252,.45); background: linear-gradient(160deg, rgba(139,92,246,.18), rgba(236,72,153,.08) 60%, var(--vm-panel)); }
 .vm-chat { display: grid; gap: 8px; max-height: 360px; overflow-y: auto; padding-right: 2px; }
+/* Chat panel with a fixed height, like a chat app: only the messages
+   scroll; the plan card is a message; the input stays at the bottom. */
+.vm-ai { display: flex; flex-direction: column; height: clamp(520px, 78vh, 820px); }
+.vm-ai > :not(.vm-chat) { flex: none; }
+.vm-ai .vm-chat { flex: 1 1 auto; min-height: 0; max-height: none; align-content: start; overscroll-behavior: contain; scroll-behavior: smooth; }
+.vm-ai .vm-chat .vm-ai-plan { width: 100%; }
+.vm-suggest { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.vm-suggest button { padding: 8px 12px; border: 1px solid var(--vm-line); border-radius: 999px; background: var(--vm-panel2); color: var(--vm-text); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.vm-suggest button:hover, .vm-suggest button:focus-visible { border-color: #ec4899; }
 .vm-msg { max-width: 88%; padding: 10px 12px; border-radius: 14px; font-size: 14px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
 .vm-msg.ai { justify-self: start; background: var(--vm-panel2); border: 1px solid var(--vm-line); }
 .vm-msg.user { justify-self: end; background: var(--vm-gradient); color: #fff; }
