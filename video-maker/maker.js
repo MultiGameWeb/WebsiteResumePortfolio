@@ -992,6 +992,14 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
         { img: 'countdown-3.webp', label: 'Proven results', head: 'Toppers every year', line: '98.6 percentile' },
       ],
     },
+    'ad-cinema': {
+      title: 'Aarna Jewels', subtitle: 'The heritage collection', contact: '98765 43210', closing: 'Crafted for forever', badge: '',
+      scenes: [
+        { img: 'cinema-1.webp', label: 'Ruby heritage', head: 'Where rubies meet gold', line: 'Handcrafted since 1962' },
+        { img: 'cinema-2.webp', label: 'The bridal edit', head: 'Made for her moment', line: 'Kundan & pearl sets' },
+        { img: 'cinema-3.webp', label: 'The showroom', head: 'An experience in gold', line: 'Visit us in Jubilee Hills' },
+      ],
+    },
   };
   const exampleImages = new Map();
   function exampleImage(name) {
