@@ -134,9 +134,12 @@ function scBindPay(root){
     });
   });
 }
-export function render(d={},selected=[]){let h=scPay(scPreUpiRender(d,selected),d,selected);
+function scSeoBaseRender(d={},selected=[]){let h=scPay(scPreUpiRender(d,selected),d,selected);
  // A WhatsApp chat button like the other templates (this one only had WhatsApp booking/order buttons).
  const n=String((d.contact&&d.contact.whatsapp)||'').replace(/\D/g,'');
  if(n&&(!Array.isArray(selected)||!selected.length||selected.includes('whatsapp'))&&!/wa\.me\//.test(h))h+='<a class="r2-wa-float" href="https://wa.me/'+n+'?text='+encodeURIComponent('Hello '+((d.brand&&d.brand.businessName)||'')+'!')+'" target="_blank" rel="noopener">WhatsApp</a>';
  return h}
 export function init(root,...rest){const r=scPreUpiInit(root,...rest);try{scBindPay(root);}catch(e){}return r;}
+
+// SEO: page title, description, business details for Google and tab icon (core/pack.js).
+export function render(d={},selected=[]){const h=scSeoBaseRender(d,selected);try{if(typeof window!=="undefined"&&window.SiteCraftPack&&window.SiteCraftPack.seo)window.SiteCraftPack.seo(d,"Restaurants")}catch(e){}return h}

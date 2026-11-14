@@ -135,4 +135,7 @@ function scConnect(html,d,selected){
   const j=html.lastIndexOf('</div>');
   return j>=0?html.slice(0,j)+'<div class="sc-connect-wrap">'+block+'</div>'+html.slice(j):html+block;
 }
-export function render(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}
+function scSeoBaseRender(d={},selected=[]){return scConnect(scBaseRender(d,selected),d,selected);}
+
+// SEO: page title, description, business details for Google and tab icon (core/pack.js).
+export function render(d={},selected=[]){const h=scSeoBaseRender(d,selected);try{if(typeof window!=="undefined"&&window.SiteCraftPack&&window.SiteCraftPack.seo)window.SiteCraftPack.seo(d,"Kitchen & Food Services")}catch(e){}return h}
