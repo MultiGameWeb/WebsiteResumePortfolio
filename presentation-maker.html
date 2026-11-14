@@ -6,8 +6,7 @@
 <meta name="theme-color" content="#17181d">
 <title>Presentation Maker — SiteCraft</title>
 <link rel="stylesheet" href="site-navigation.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+<script src="core/pdf-export.js" defer></script>
 <style>
 :root{--pm-ink:#17181d;--pm-muted:#667080;--pm-line:#e1e5eb;--pm-soft:#f5f6f8;--pm-paper:#fff;--pm-purple:#6158e8;--pm-shadow:0 16px 44px rgba(23,24,29,.08)}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;background:#f5f6f8;color:var(--pm-ink)}body{font-size:14px;line-height:1.5}button,input,select,textarea{font:inherit}button,a,input,select,textarea,[contenteditable="true"]{outline-offset:2px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[contenteditable="true"]:focus-visible{outline:3px solid #2563eb;outline-offset:2px}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}a{color:inherit}
@@ -23,11 +22,11 @@
 .pm-edit-grid{display:grid;grid-template-columns:205px minmax(0,1fr) 250px;gap:12px;align-items:stretch;min-width:0}.pm-slide-panel,.pm-inspector{min-width:0;padding:12px;background:#fff;border:1px solid var(--pm-line);border-radius:15px;align-self:start}.pm-slide-panel-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:10px}.pm-slide-panel-head strong{font-size:12px}.pm-slide-list{display:grid;gap:9px;max-height:calc(100vh - 255px);overflow:auto;padding:2px}.pm-thumb{border:1px solid #dfe3e8;border-radius:10px;padding:6px;background:#fff;text-align:left;position:relative;min-width:0;cursor:grab}.pm-thumb[aria-current="true"]{border:2px solid #6259e8;padding:5px;box-shadow:0 0 0 3px #efedff}.pm-thumb.pm-touch-drag-ready{touch-action:none;opacity:.72;outline:2px dashed #6158e8}.pm-thumb-select{display:block;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:0;cursor:pointer}.pm-thumb-select:focus-visible{outline:2px solid #2563eb;outline-offset:2px}.pm-thumb canvas,.pm-thumb-view{aspect-ratio:16/9;width:100%;display:block;border-radius:5px;overflow:hidden;position:relative}.pm-thumb-number{font-size:10px;font-weight:900;color:#5d6470;display:flex;justify-content:space-between;gap:4px;margin-top:4px}.pm-thumb-actions{display:flex;gap:3px;position:absolute;right:5px;top:5px;opacity:0;transition:opacity .15s}.pm-thumb:hover .pm-thumb-actions,.pm-thumb:focus-within .pm-thumb-actions{opacity:1}.pm-thumb-actions button{width:24px;height:24px;border:0;border-radius:6px;background:#17181d;color:#fff;font-size:12px}.pm-stage-panel{min-width:0;display:flex;flex-direction:column;gap:9px}.pm-stage-head{display:flex;align-items:center;gap:8px;justify-content:space-between;flex-wrap:wrap}.pm-stage-head strong{font-size:12px}.pm-stage-wrap{padding:clamp(8px,1.8vw,22px);border:1px solid var(--pm-line);border-radius:15px;background:linear-gradient(135deg,#f5f6f9,#eceef3);min-width:0;display:flex;align-items:center;justify-content:center;min-height:260px;overflow:hidden}.pm-slide-canvas{width:100%;max-width:1100px;aspect-ratio:16/9;position:relative;overflow:hidden;background:#fff;box-shadow:0 15px 40px rgba(22,27,38,.16);isolation:isolate;flex:0 0 auto}.pm-object{position:absolute;box-sizing:border-box;min-width:1%;min-height:1%;user-select:text}.pm-object.pm-selected{outline:1.5px solid #6158e8;outline-offset:2px;z-index:999!important;touch-action:none}.pm-object-body{width:100%;height:100%;min-width:0;min-height:0;overflow:hidden;overflow-wrap:anywhere}.pm-text-body{white-space:pre-wrap;cursor:text;outline:none}.pm-object-body[contenteditable="true"]:focus{outline:none}.pm-object.pm-shape .pm-object-body{width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}.pm-object img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}.pm-object table{border-collapse:collapse;width:100%;height:100%;table-layout:fixed;font-family:inherit;font-size:clamp(7px,1.1vw,16px)}.pm-object td,.pm-object th{border:1px solid #b8c0cc;padding:2px 4px;overflow-wrap:anywhere}.pm-object td[contenteditable],.pm-object th[contenteditable]{outline:none}.pm-object td:focus,.pm-object th:focus{box-shadow:inset 0 0 0 2px #6158e8}.pm-chart-svg{width:100%;height:100%;display:block}.pm-object-handle{position:absolute;z-index:1001;border:1px solid #6158e8;background:#fff;color:#17181d;border-radius:6px;box-shadow:0 2px 6px #0002;padding:2px;line-height:1;font-size:11px;touch-action:none}.pm-move-handle{top:-12px;left:-12px;cursor:grab}.pm-resize-handle{right:-9px;bottom:-9px;width:16px;height:16px;cursor:nwse-resize}.pm-rotate-handle{top:-19px;left:50%;transform:translateX(-50%);cursor:grab}.pm-snap-guide{position:absolute;display:none;z-index:1000;pointer-events:none;background:#ef4444}.pm-snap-guide.v{top:0;bottom:0;width:1px}.pm-snap-guide.h{left:0;right:0;height:1px}.pm-stage-foot{display:flex;gap:7px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:11px;color:var(--pm-muted)}.pm-notes{padding:12px;background:#fff;border:1px solid var(--pm-line);border-radius:13px}.pm-notes label{display:block;font-size:11px;font-weight:900;margin-bottom:6px}.pm-notes textarea{width:100%;min-height:74px;resize:vertical;padding:9px;border:1px solid #dce1e8;border-radius:9px;font-size:12px;line-height:1.5}
 .pm-inspector{display:grid;gap:11px}.pm-inspector h3{font-size:12px;margin:0}.pm-control{display:grid;gap:5px;min-width:0}.pm-control>label{font-size:10px;font-weight:900;color:#586171}.pm-control textarea{min-height:70px;resize:vertical}.pm-control input[type=range]{width:100%}.pm-control-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.pm-check-row{display:flex;flex-wrap:wrap;gap:7px}.pm-chip-btn{border:1px solid var(--pm-line);border-radius:8px;background:#fff;padding:6px 8px;font-size:11px;font-weight:800}.pm-chip-btn[aria-pressed="true"]{background:#eeedff;border-color:#c9c4ff;color:#37318b}.pm-divider{height:1px;background:var(--pm-line);margin:1px 0}.pm-notice{padding:10px 12px;border-radius:11px;background:#f0efff;color:#3e3a80;font-size:11px}.pm-hidden{display:none!important}
 .pm-present-overlay{position:fixed;z-index:20000;inset:0;background:#050608;color:#fff;display:flex;flex-direction:column;padding:16px;opacity:0;transition:opacity .22s}.pm-present-overlay.open{opacity:1}.pm-present-top{display:flex;align-items:center;gap:10px}.pm-present-title{font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pm-present-slide.pm-slide-arrive{animation:pmSlideArrive .22s ease-out}@keyframes pmSlideArrive{from{opacity:.45;transform:translateX(7px)}to{opacity:1;transform:none}}.pm-present-counter{margin-left:auto;color:#ccd0d8;font-size:12px}.pm-present-close{border:1px solid #444954;border-radius:10px;background:#20232a;color:#fff;padding:7px 12px;font-weight:800}.pm-present-slide-area{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:18px 0}.pm-present-slide{aspect-ratio:16/9;width:min(100%,calc((100vh - 130px)*16/9));max-height:calc(100vh - 130px);position:relative;overflow:hidden;background:#fff;color:#17181d;box-shadow:0 12px 42px #0005}.pm-present-bottom{display:flex;align-items:center;gap:10px;min-height:32px}.pm-progress{flex:1;height:4px;border-radius:9px;background:#292c34;overflow:hidden}.pm-progress span{display:block;height:100%;width:0;background:#a5a0ff;transition:width .2s}.pm-present-bottom .pm-btn{background:#20232a;border-color:#454954;color:#fff}.pm-presenter-grid{display:none;grid-template-columns:minmax(0,2fr) minmax(180px,.8fr);gap:15px;flex:1;min-height:0;padding:18px 0}.pm-present-overlay.presenter .pm-presenter-grid{display:grid}.pm-present-overlay.presenter .pm-present-slide-area{display:none}.pm-presenter-main{display:flex;flex-direction:column;min-height:0;gap:8px}.pm-presenter-main .pm-present-slide{width:100%;max-height:100%;flex:1}.pm-presenter-side{display:flex;flex-direction:column;min-height:0;gap:10px}.pm-presenter-side .pm-present-slide{width:100%;max-height:none}.pm-present-notes{white-space:pre-wrap;overflow:auto;color:#e3e6eb;background:#161920;border:1px solid #30343e;border-radius:12px;padding:12px;flex:1;min-height:90px}.pm-timer{font-variant-numeric:tabular-nums;font-size:20px;font-weight:900}
-#pmPrintDeck{display:none}
+#pmPrintDeck{display:none}.pm-project-row{flex-wrap:wrap}.pm-row-menu{flex-basis:100%;display:flex;gap:6px;flex-wrap:wrap}.pm-row-menu.pm-hidden{display:none}.pm-thumb-actions button[data-thumb-action="left"],.pm-thumb-actions button[data-thumb-action="right"]{font-weight:800}.pm-export-host{position:fixed;left:-20000px;top:0;pointer-events:none}.pm-export-host .pm-print-slide{position:relative;overflow:hidden;color:#17181d}
 @media print{#site-nav,#editor-toolbar,#thumbnails,#inspector,#sitecraftGlobalNav,.pm-toolbar-wrap,.pm-slide-panel,#pmSlideList,.pm-inspector{display:none!important}#slide-canvas,#pmSlideCanvas{position:static!important;transform:none!important}html,body{background:#fff!important;margin:0!important;padding:0!important}body.pm-printing>*:not(#pmPrintDeck){display:none!important;visibility:hidden!important}body.pm-printing #pmPrintDeck{display:block!important;visibility:visible!important}#pmPrintDeck .pm-print-slide{width:100vw;height:100vh;aspect-ratio:auto;page-break-after:always;break-after:page;position:relative;overflow:hidden;background:#fff;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}#pmPrintDeck .pm-print-slide:last-child{page-break-after:auto;break-after:auto}#pmPrintDeck *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}@page{size:landscape;margin:0}}
 @media(max-width:1180px){.pm-edit-grid{grid-template-columns:180px minmax(0,1fr) 220px;gap:9px}.pm-template-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:930px){.pm-edit-grid{grid-template-columns:minmax(0,1fr) 225px}.pm-slide-panel{grid-column:1/-1;grid-row:2;order:3}.pm-slide-list{display:flex;max-height:none;overflow-x:auto;gap:9px;padding-bottom:4px}.pm-thumb{flex:0 0 150px}.pm-stage-panel{grid-column:1;grid-row:1}.pm-inspector{grid-column:2;grid-row:1}.pm-template-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:650px){.pm-page-nav{margin-bottom:12px}.pm-page-nav button,.pm-page-nav a{min-height:36px;padding:0 11px}.pm-thumb-actions{opacity:1}.pm-app{padding:14px 8px 24px}.pm-intro{align-items:flex-start;flex-direction:column;gap:12px}.pm-start-grid{grid-template-columns:1fr}.pm-template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pm-toolbar-wrap{flex-wrap:nowrap;overflow-x:auto;align-items:stretch;overscroll-behavior-x:contain}.pm-tool-group{flex:0 0 auto}.pm-edit-grid{grid-template-columns:minmax(0,1fr)}.pm-slide-panel{grid-row:3;grid-column:1;order:3}.pm-slide-list{display:flex;overflow-x:auto}.pm-thumb{flex-basis:135px}.pm-stage-panel{grid-row:1;grid-column:1}.pm-inspector{grid-row:2;grid-column:1}.pm-stage-wrap{min-height:170px;padding:8px}.pm-stage-foot{gap:5px}.pm-work-head{align-items:flex-start}.pm-project-title{max-width:150px}.pm-presenter-grid{grid-template-columns:1fr;overflow:auto}.pm-presenter-side{display:grid;grid-template-columns:1fr 1fr}.pm-presenter-side .pm-present-slide{grid-column:1/-1}.pm-present-title{max-width:35vw}}
+@media(max-width:650px){.pm-page-nav{margin-bottom:12px}.pm-page-nav button,.pm-page-nav a{min-height:36px;padding:0 11px}.pm-thumb-actions{opacity:1}.pm-app{padding:14px 8px 24px}.pm-intro{align-items:flex-start;flex-direction:column;gap:12px}.pm-start-grid{grid-template-columns:1fr}.pm-template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pm-toolbar-wrap{flex-wrap:wrap;align-items:stretch}.pm-tool-group{flex:0 1 auto;flex-wrap:wrap}.pm-edit-grid{grid-template-columns:minmax(0,1fr)}.pm-slide-panel{grid-row:2;grid-column:1;order:2}.pm-stage-foot>span{display:none}.pm-slide-list{display:flex;overflow-x:auto}.pm-thumb{flex-basis:135px}.pm-stage-panel{grid-row:1;grid-column:1}.pm-inspector{grid-row:3;grid-column:1}.pm-stage-wrap{min-height:170px;padding:8px}.pm-stage-foot{gap:5px}.pm-work-head{align-items:flex-start}.pm-project-title{max-width:150px}.pm-presenter-grid{grid-template-columns:1fr;overflow:auto}.pm-presenter-side{display:grid;grid-template-columns:1fr 1fr}.pm-presenter-side .pm-present-slide{grid-column:1/-1}.pm-present-title{max-width:35vw}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -90,7 +89,7 @@
     <div class="pm-divider"></div>
     <div class="pm-control-row"><button class="pm-btn small" id="pmLayerUp">Bring forward</button><button class="pm-btn small" id="pmLayerDown">Send backward</button></div>
     <div class="pm-control-row"><button class="pm-btn small" id="pmDuplicateObject">Duplicate object</button><button class="pm-btn small danger" id="pmDeleteObject">Delete object</button></div>
-    <div id="pmTableSettings" class="pm-hidden"><div class="pm-control-row"><button class="pm-btn small" id="pmAddRow">＋ Add row</button><button class="pm-btn small" id="pmDeleteRow">− Delete row</button></div><div class="pm-control-row"><button class="pm-btn small" id="pmAddCol">＋ Add column</button><button class="pm-btn small" id="pmDeleteCol">− Delete column</button></div></div>
+    <div id="pmChartSettings" class="pm-hidden"><div class="pm-control"><label for="pmChartKind">Chart type</label><select id="pmChartKind"><option value="bar">Bar</option><option value="line">Line</option><option value="pie">Pie</option></select></div><div class="pm-control"><label for="pmChartLabels">Labels (separate with commas)</label><input id="pmChartLabels" type="text" autocomplete="off"></div><div class="pm-control"><label for="pmChartValues">Values (numbers, separate with commas)</label><input id="pmChartValues" type="text" inputmode="decimal" autocomplete="off"></div><div class="pm-muted" id="pmChartMsg" role="status" style="font-size:11px;min-height:14px"></div></div><div id="pmTableSettings" class="pm-hidden"><div class="pm-control-row"><button class="pm-btn small" id="pmAddRow">＋ Add row</button><button class="pm-btn small" id="pmDeleteRow">− Delete row</button></div><div class="pm-control-row"><button class="pm-btn small" id="pmAddCol">＋ Add column</button><button class="pm-btn small" id="pmDeleteCol">− Delete column</button></div></div>
    </div>
    <div class="pm-divider"></div>
    <div class="pm-notice">Everything stays in your browser unless you choose to download or export it. Large images are resized before saving.</div>
@@ -134,6 +133,12 @@ let suppressThumbClickUntil=0;
 const uid=function(prefix){return (prefix||"id")+"-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8)};
 const clone=function(x){if(typeof structuredClone==="function")return structuredClone(x);return JSON.parse(JSON.stringify(x))};
 const escapeHtml=function(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")};
+const slugName=function(s,fallback){const v=String(s||"").normalize("NFKD").replace(/[^\x00-\x7F]/g,"").replace(/[^a-z0-9]+/gi,"-").replace(/^-+|-+$/g,"").toLowerCase().slice(0,60);return v||fallback||"presentation"};
+const COLOR_RE=/^(#[0-9a-f]{3,8}|transparent|rgba?\(\s*[\d.]+%?\s*,\s*[\d.]+%?\s*,\s*[\d.]+%?\s*(,\s*[\d.]+\s*)?\))$/i;
+const safeColor=function(c,fb){return typeof c==="string"&&COLOR_RE.test(c.trim())?c.trim():fb};
+const GRAD_RE=/^linear-gradient\(\s*-?\d+deg\s*(,\s*#[0-9a-f]{3,8}(\s+\d+%)?\s*)+\)$/i;
+const safeSrc=function(v){return typeof v==="string"&&(/^data:image\/(png|jpe?g|gif|webp);base64,[a-z0-9+\/=\s]+$/i.test(v)||/^https:\/\/[^\s"'()<>\\]+$/i.test(v))?v:""};
+const safeId=function(v,prefix){const t=String(v==null?"":v).replace(/[^\w-]/g,"").slice(0,80);return t||uid(prefix)};
 const plain=function(s){return String(s||"").replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim()};
 const currentSlide=function(){return deck&&deck.slides.find(s=>s.id===activeSlideId)||deck&&deck.slides[0]||null};
 const currentObject=function(){const s=currentSlide();return s&&s.elements.find(e=>e.id===selectedObjectId)||null};
@@ -186,7 +191,27 @@ function seedDeck(key){
  }
  return {id:uid("presentation"),name:info.name+" presentation",template:key,ratio:"16:9",coordinateVersion:2,palette:info.palette,font:info.bodyFont||info.font,fontHead:info.headFont||info.font,fontBody:info.bodyFont||info.font,slides:slides,createdAt:Date.now(),updatedAt:Date.now()};
 }
-function normalizeDeckModel(input){const model=clone(input||{});if(model.coordinateVersion!==2){(model.slides||[]).forEach(slide=>(slide.elements||[]).forEach(obj=>["x","y","w","h"].forEach(key=>{const n=Number(obj[key]);obj[key]=Number.isFinite(n)?Math.max(0,Math.min(1,n/100)):0})));model.coordinateVersion=2}(model.slides||[]).forEach(slide=>(slide.elements||[]).forEach(obj=>{if(obj&&obj.type&&obj.type!=="text"&&obj.text==="Your Title")obj.text=""}));return model}
+function normalizeDeckModel(input){const model=clone(input||{});if(model.coordinateVersion!==2){(model.slides||[]).forEach(slide=>(slide.elements||[]).forEach(obj=>["x","y","w","h"].forEach(key=>{const n=Number(obj[key]);obj[key]=Number.isFinite(n)?Math.max(0,Math.min(1,n/100)):0})));model.coordinateVersion=2}(model.slides||[]).forEach(slide=>(slide.elements||[]).forEach(obj=>{if(obj&&obj.type&&obj.type!=="text"&&obj.text==="Your Title")obj.text=""}));
+ // Imported or old files are cleaned so nothing in them can break the page (colours, pictures, ids, numbers).
+ model.slides=(Array.isArray(model.slides)?model.slides:[]).filter(sl=>sl&&typeof sl==="object");
+ model.slides.forEach(slide=>{
+  slide.id=safeId(slide.id,"slide");slide.notes=typeof slide.notes==="string"?slide.notes:"";slide.layout=String(slide.layout||"content").replace(/[^\w-]/g,"").slice(0,20);
+  slide.elements=(Array.isArray(slide.elements)?slide.elements:[]).filter(o=>o&&typeof o==="object"&&["text","shape","image","table","chart"].includes(o.type));
+  slide.elements.forEach(o=>{
+   o.id=safeId(o.id,"obj");["color","fill","border","highlight"].forEach(k=>{if(o[k]!=null)o[k]=safeColor(o[k],k==="fill"||k==="highlight"?"transparent":"#17181d")});
+   ["x","y","w","h","fontSize","rotate","opacity","borderWidth","radius","z","lineSpacing"].forEach(k=>{if(o[k]!=null&&!Number.isFinite(Number(o[k])))delete o[k];else if(o[k]!=null)o[k]=Number(o[k])});
+   o.font=String(o.font||"Arial").replace(/[^\w\s-]/g,"").slice(0,40)||"Arial";if(o.text!=null)o.text=String(o.text);
+   if(o.type==="image")o.src=safeSrc(o.src);
+   if(o.type==="shape"&&!["rect","circle","arrow","line","star"].includes(o.shape))o.shape="rect";
+   if(o.type==="chart"){o.chartType=["bar","line","pie"].includes(o.chartType)?o.chartType:"bar";o.labels=(Array.isArray(o.labels)?o.labels:[]).map(String);o.values=(Array.isArray(o.values)?o.values:[]).map(Number).map(v=>Number.isFinite(v)?v:0)}
+   if(o.type==="table")o.rows=(Array.isArray(o.rows)&&o.rows.length?o.rows:[[""]]).map(r=>(Array.isArray(r)?r:[r]).map(c=>String(c==null?"":c)));
+  });
+  const bg=slide.background&&typeof slide.background==="object"?slide.background:{type:"color",color:"#ffffff"};slide.background=bg;
+  bg.type=["color","gradient","image"].includes(bg.type)?bg.type:"color";bg.color=safeColor(bg.color,"#ffffff");bg.gradient=typeof bg.gradient==="string"&&GRAD_RE.test(bg.gradient)?bg.gradient:"";bg.image=safeSrc(bg.image);
+  if(bg.type==="gradient"&&!bg.gradient)bg.type="color";if(bg.type==="image"&&!bg.image)bg.type="color";
+ });
+ model.id=safeId(model.id,"presentation");model.ratio=model.ratio==="4:3"?"4:3":"16:9";if(!palette[model.palette])model.palette="classic";
+ return model}
 function selectedIndex(){return Math.max(0,deck?deck.slides.findIndex(s=>s.id===activeSlideId):0)}
 function setStatus(text){const el=$("#saveStatus");if(el)el.textContent=text}
 function compactHistorySnapshot(){
@@ -237,9 +262,34 @@ function applySnapshot(index){
 function undo(){if(historyIndex>0)applySnapshot(historyIndex-1)}
 function redo(){if(historyIndex<history.length-1)applySnapshot(historyIndex+1)}
 function projectLabel(){return deck?deck.name||"Untitled presentation":"Untitled presentation"}
-function safeLoadStored(){
- try{const raw=localStorage.getItem(STORE_KEY);projects=raw?JSON.parse(raw):[];if(!Array.isArray(projects))projects=[]}catch(_){projects=[];setStatus("Local storage unavailable");}
+// Presentations are kept in IndexedDB (room for pictures; nothing is removed to make space).
+// Old copies in localStorage are moved over once. localStorage is used only if IndexedDB is not available.
+const IDB_NAME="sitecraft-presentation",IDB_STORE="projects";let idb=null,idbFailed=false,storageMode="idb",pendingSave=null,saveFailed=false;
+function openIdb(){
+ if(idb)return Promise.resolve(idb);if(idbFailed||!window.indexedDB)return Promise.reject(new Error("IndexedDB unavailable"));
+ return new Promise(function(resolve,reject){let r;try{r=indexedDB.open(IDB_NAME,1)}catch(e){idbFailed=true;reject(e);return}
+  r.onupgradeneeded=function(){const db=r.result;if(!db.objectStoreNames.contains(IDB_STORE))db.createObjectStore(IDB_STORE,{keyPath:"id"});if(!db.objectStoreNames.contains("meta"))db.createObjectStore("meta")};
+  r.onsuccess=function(){idb=r.result;idb.onversionchange=function(){idb.close();idb=null};resolve(idb)};r.onerror=function(){idbFailed=true;reject(r.error)};r.onblocked=function(){reject(new Error("blocked"))}});
 }
+function idbRun(store,mode,fn){return openIdb().then(db=>new Promise(function(resolve,reject){const tx=db.transaction(store,mode),q=fn(tx.objectStore(store));let out;if(q)q.onsuccess=function(){out=q.result};tx.oncomplete=function(){resolve(out)};tx.onerror=tx.onabort=function(){const e=tx.error||new Error("Could not save");reject(e)}}))}
+const idbAll=()=>idbRun(IDB_STORE,"readonly",st=>st.getAll()),idbPut=p=>idbRun(IDB_STORE,"readwrite",st=>st.put(p)),idbDel=id=>idbRun(IDB_STORE,"readwrite",st=>st.delete(id));
+const metaGet=k=>idbRun("meta","readonly",st=>st.get(k)),metaSet=(k,v)=>idbRun("meta","readwrite",st=>st.put(v,k));
+async function loadProjects(){
+ let legacy=[];try{const raw=localStorage.getItem(STORE_KEY);legacy=raw?JSON.parse(raw):[];if(!Array.isArray(legacy))legacy=[]}catch(_){legacy=[]}
+ let list;
+ try{
+  list=await idbAll();storageMode="idb";
+  if(legacy.length){const have=new Set(list.map(p=>p.id));for(const p of legacy){if(p&&p.id&&!have.has(p.id)){await idbPut(p);list.push(p)}}try{localStorage.removeItem(STORE_KEY)}catch(_){}}
+ }catch(_){list=legacy;storageMode="local"}
+ // keep anything made while the list was loading
+ const loaded=new Set(list.map(p=>p.id));projects=list.concat(projects.filter(p=>!loaded.has(p.id)));
+}
+function saveProject(p,isCurrent){
+ if(storageMode==="idb")return idbPut(p).then(()=>isCurrent?metaSet("current",p.id).catch(()=>{}):0);
+ return new Promise(function(resolve,reject){try{writeProjectsToStorage(p.id);if(isCurrent){try{localStorage.setItem(CURRENT_KEY,p.id)}catch(_){}}resolve()}catch(e){reject(e)}});
+}
+function removeProject(id){projects=projects.filter(x=>x.id!==id);if(storageMode==="idb")return idbDel(id);return new Promise(function(resolve,reject){try{writeProjectsToStorage(null);resolve()}catch(e){reject(e)}})}
+function saveErrorText(error){return error&&error.name==="QuotaExceededError"?"Storage full — use Export .json to keep your work.":"Could not save — use Export .json to keep your work."}
 function safeStorageSetItem(key,value){
  const textValue=String(value),blobSize=new Blob([textValue]).size,estimate=Math.max(blobSize,textValue.length*2);
  if(estimate>STORAGE_BUDGET){const error=new Error("Storage is full. Export the presentation JSON to keep your work.");error.name="QuotaExceededError";throw error}
@@ -250,16 +300,19 @@ function writeProjectsToStorage(preferredId){
  if(preferredId){const ix=candidate.findIndex(p=>p.id===preferredId);if(ix>0)candidate.unshift(candidate.splice(ix,1)[0])}
  if(candidate.length>40)candidate=candidate.slice(0,40);const originalCount=projects.length;
  while(true){const json=JSON.stringify(candidate),blobSize=new Blob([json]).size,estimate=Math.max(blobSize,json.length*2);
-  if(estimate>STORAGE_BUDGET){const oldest=candidate.findIndex(p=>p.id!==preferredId);if(oldest<0){const error=new Error("This presentation is too large for local storage.");error.name="QuotaExceededError";throw error}candidate.splice(oldest,1);continue}
-  try{safeStorageSetItem(STORE_KEY,json);projects=candidate;return{evicted:Math.max(0,originalCount-candidate.length),bytes:blobSize}}
-  catch(error){if(error&&error.name==="QuotaExceededError"){const oldest=candidate.findIndex(p=>p.id!==preferredId);if(oldest>=0){candidate.splice(oldest,1);continue}}throw error}
+  // Never delete other presentations to make room: report that storage is full instead.
+  if(estimate>STORAGE_BUDGET){const error=new Error("Storage is full.");error.name="QuotaExceededError";throw error}
+  safeStorageSetItem(STORE_KEY,json);return{evicted:0,bytes:blobSize}
  }
 }
 function persist(force){
- if(!deck)return;clearTimeout(saveTimer);setStatus("Saving…");
- saveTimer=setTimeout(function(){try{deck.updatedAt=Date.now();deck.coordinateVersion=2;const saved=clone(deck);projects=[saved].concat(projects.filter(p=>p.id!==saved.id));const result=writeProjectsToStorage(deck.id);safeStorageSetItem(CURRENT_KEY,deck.id);dirty=false;setStatus(result.evicted?"Saved · older presentations removed":"Saved on this device");renderProjectList()}
- catch(error){dirty=true;setStatus(error&&error.name==="QuotaExceededError"?"Storage limit reached — export JSON.":"Could not save — export your project file.")}},force?0:800);
+ if(!deck)return Promise.resolve();clearTimeout(saveTimer);setStatus("Saving…");
+ const target=deck;
+ const run=function(){pendingSave=null;if(deck!==target)return Promise.resolve();target.updatedAt=Date.now();target.coordinateVersion=2;const saved=clone(target);projects=[saved].concat(projects.filter(p=>p.id!==saved.id));
+  return saveProject(saved,true).then(function(){if(deck===target){dirty=false;saveFailed=false;setStatus("Saved on this device")}renderProjectList()}).catch(function(error){dirty=true;saveFailed=true;setStatus(saveErrorText(error))})};
+ if(force)return run();pendingSave=run;saveTimer=setTimeout(run,800);return Promise.resolve();
 }
+function flushSave(){if(pendingSave){clearTimeout(saveTimer);pendingSave()}}
 
 function markChanged(pushHistory){
  if(!deck)return;
@@ -271,7 +324,7 @@ function formatDate(t){try{return new Date(t).toLocaleDateString(undefined,{mont
 function renderProjectList(){
  const box=$("#pmProjectList"),count=$("#pmProjectCount");count.textContent=projects.length+" saved";
  if(!projects.length){box.innerHTML='<div class="pm-empty">Your saved presentations will appear here.</div>';return}
- box.innerHTML=projects.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).map(p=>'<div class="pm-project-row"><div class="pm-project-info"><strong title="'+escapeHtml(p.name)+'">'+escapeHtml(p.name||"Untitled presentation")+'</strong><span>'+((p.slides||[]).length)+' slides · '+escapeHtml(formatDate(p.updatedAt||p.createdAt))+'</span></div><div class="pm-row-actions"><button class="pm-btn small" data-project-action="open" data-id="'+escapeHtml(p.id)+'" aria-label="Open '+escapeHtml(p.name)+'">Open</button><button class="pm-btn small" data-project-action="more" data-id="'+escapeHtml(p.id)+'" aria-label="More options for '+escapeHtml(p.name)+'" title="Rename, duplicate, or delete">⋯</button></div></div>').join("");
+ box.innerHTML=projects.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).map(p=>'<div class="pm-project-row"><div class="pm-project-info"><strong title="'+escapeHtml(p.name)+'">'+escapeHtml(p.name||"Untitled presentation")+'</strong><span>'+((p.slides||[]).length)+' slides · '+escapeHtml(formatDate(p.updatedAt||p.createdAt))+'</span></div><div class="pm-row-actions"><button class="pm-btn small" data-project-action="open" data-id="'+escapeHtml(p.id)+'" aria-label="Open '+escapeHtml(p.name)+'">Open</button><button class="pm-btn small" data-project-action="more" data-id="'+escapeHtml(p.id)+'" aria-expanded="false" aria-label="More options for '+escapeHtml(p.name)+'" title="Rename, duplicate, or delete">⋯</button></div><div class="pm-row-menu pm-hidden"><button class="pm-btn small" data-project-action="rename" data-id="'+escapeHtml(p.id)+'">Rename</button><button class="pm-btn small" data-project-action="duplicate" data-id="'+escapeHtml(p.id)+'">Duplicate</button><button class="pm-btn small danger" data-project-action="delete" data-id="'+escapeHtml(p.id)+'">Delete</button></div></div>').join("");
 }
 function showStart(){projectOpen=false;$("#pmStartIntro").classList.remove("pm-hidden");$("#pmStart").classList.remove("pm-hidden");$("#pmWorkspace").classList.add("pm-hidden");renderProjectList();window.scrollTo({top:0,behavior:"smooth"})}
 function openProject(p){deck=normalizeDeckModel(p);if(!deck.slides||!deck.slides.length)deck.slides=[makeSlide("blank","Your Title","",templateInfo.minimal,0)];activeSlideId=deck.slides[0].id;selectedObjectId=null;projectOpen=true;$("#pmStartIntro").classList.add("pm-hidden");$("#pmStart").classList.add("pm-hidden");$("#pmWorkspace").classList.remove("pm-hidden");$("#pmProjectTitle").value=deck.name||"Untitled presentation";$("#pmRatio").value=deck.ratio||"16:9";$("#pmThemePalette").value=deck.palette||"classic";$("#pmFontPair").value=(deck.fontHead||deck.font||"Arial")+"|"+(deck.fontBody||deck.font||"Arial");setStatus("Saved on this device");resetHistory();refreshWorkspace();persist(true);window.scrollTo({top:0,behavior:"smooth"})}
@@ -279,9 +332,9 @@ function createProject(key){const p=key==="blank"?{id:uid("presentation"),name:"
 function activeSlide(){return currentSlide()}
 function setSlideBackground(slide){const canvas=$("#pmSlideCanvas");if(!canvas||!slide)return;const bg=slide.background||{type:"color",color:"#ffffff"};canvas.style.backgroundColor=bg.color||"#fff";canvas.style.backgroundImage=bg.type==="gradient"?bg.gradient:bg.type==="image"&&bg.image?'url("'+bg.image+'")':"none";canvas.style.backgroundSize="cover";canvas.style.backgroundPosition="center";canvas.style.aspectRatio=deck.ratio==="4:3"?"4 / 3":"16 / 9"}
 function shapeInner(e){
- if(e.shape==="line")return '<div style="position:absolute;left:0;top:50%;width:100%;height:'+Math.max(1,e.borderWidth||2)+'px;background:'+escapeHtml(e.fill||e.border||"#17181d")+'"></div>';
+ if(e.shape==="line")return '<div style="position:absolute;left:0;top:50%;width:100%;height:'+Math.max(1,e.borderWidth||2)+'px;transform:translateY(-50%);background:'+escapeHtml(e.fill||e.border||"#17181d")+'"></div>';
  if(e.shape==="arrow")return '<svg viewBox="0 0 100 60" preserveAspectRatio="none" style="width:100%;height:100%;display:block"><path d="M2 20 H62 V3 L98 30 62 57 V40 H2 Z" fill="'+escapeHtml(e.fill||"#6158e8")+'" stroke="'+escapeHtml(e.border||"none")+'" stroke-width="'+escapeHtml(e.borderWidth||0)+'"/></svg>';
- if(e.shape==="star")return '<div style="font-size:100%;line-height:1;color:'+escapeHtml(e.color||"#fff")+'">★</div>';
+ if(e.shape==="star")return '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%;height:100%;display:block"><polygon points="50,3 61.8,37 97.6,37.6 69,59.4 79.4,93.8 50,73.2 20.6,93.8 31,59.4 2.4,37.6 38.2,37" fill="'+escapeHtml(e.fill||"#6158e8")+'" stroke="'+escapeHtml(e.border||"none")+'" stroke-width="'+escapeHtml(e.borderWidth||0)+'" vector-effect="non-scaling-stroke"/></svg>';
  return "";
 }
 function renderChart(e){
@@ -303,17 +356,18 @@ function renderChart(e){
 }
 function renderElement(e,container,editable){
  const node=document.createElement("div");node.className="pm-object"+(e.type==="shape"?" pm-shape":"");node.dataset.objectId=e.id;node.style.left=(e.x*100)+"%";node.style.top=(e.y*100)+"%";node.style.width=(e.w*100)+"%";node.style.height=(e.h*100)+"%";node.style.transform="rotate("+(e.rotate||0)+"deg)";node.style.opacity=Math.max(0.1,Math.min(1,(e.opacity||100)/100));node.style.zIndex=String(e.z||1);
- const body=document.createElement("div");body.className="pm-object-body";body.style.fontFamily=e.font||"Arial";const slideHeight=container.clientHeight||container.getBoundingClientRect().height||720;body.style.fontSize=Math.max(6,slideHeight*(Math.max(6,Math.min(120,e.fontSize||18))/540))+"px";body.style.lineHeight=String(e.lineSpacing||1.2);body.style.color=e.color||"#17181d";body.style.textAlign=e.align||"left";body.style.fontWeight=e.bold?"800":"400";body.style.fontStyle=e.italic?"italic":"normal";body.style.textDecoration=e.underline?"underline":"none";body.style.backgroundColor=e.highlight&&e.highlight!=="transparent"?e.highlight:"transparent";body.style.border=e.type==="shape"?(Math.max(0,e.borderWidth||0)+"px solid "+(e.border||"transparent")):"0";body.style.borderRadius=e.type==="shape"?(e.shape==="circle"?"50%":(e.radius||0)+"px"):"0";
+ const body=document.createElement("div");body.className="pm-object-body";body.style.fontFamily=e.font||"Arial";const slideHeight=container.clientHeight||container.getBoundingClientRect().height||720;body.dataset.fs=String(Math.max(6,Math.min(120,e.fontSize||18)));body.style.fontSize=Math.max(3,slideHeight*(Number(body.dataset.fs)/540))+"px";body.style.lineHeight=String(e.lineSpacing||1.2);body.style.color=e.color||"#17181d";body.style.textAlign=e.align||"left";body.style.fontWeight=e.bold?"800":"400";body.style.fontStyle=e.italic?"italic":"normal";body.style.textDecoration=e.underline?"underline":"none";body.style.backgroundColor=e.highlight&&e.highlight!=="transparent"?e.highlight:"transparent";body.style.border=e.type==="shape"?(Math.max(0,e.borderWidth||0)+"px solid "+(e.border||"transparent")):"0";body.style.borderRadius=e.type==="shape"?(e.shape==="circle"?"50%":(slideHeight*(e.radius||0)/540)+"px"):"0";if(e.type==="shape"&&e.shape!=="circle")body.dataset.radius=String(e.radius||0);
  if(e.type==="text"){body.classList.add("pm-text-body");body.textContent=displayText(e);if(editable){body.contentEditable="true";body.spellcheck=true;body.setAttribute("aria-label","Edit slide text")}}
  else if(e.type==="shape"){
   body.style.background=e.shape==="line"?"transparent":(e.fill||"#6158e8");
   if(e.shape==="circle")body.style.borderRadius="50%";
-  if(e.shape==="star"||e.shape==="arrow"){body.style.background="transparent";body.innerHTML=shapeInner(e)}
-  if(e.text){body.textContent=e.text}
+  if(e.shape==="star"||e.shape==="arrow"||e.shape==="line"){body.style.background="transparent";body.style.border="0";body.innerHTML=shapeInner(e)}
+  if(e.text){const label=document.createElement("span");label.textContent=e.text;label.style.cssText="position:relative;padding:4%;white-space:pre-wrap;text-align:"+(e.align||"center");body.appendChild(label)}
  }else if(e.type==="image"){
-  const img=document.createElement("img");img.crossOrigin="anonymous";img.src=e.src||"";img.alt=e.alt||"Slide image";img.draggable=false;body.appendChild(img)
+  if(e.src){const img=document.createElement("img");if(/^https:/i.test(e.src))img.crossOrigin="anonymous";img.src=e.src;img.alt=e.alt||"Slide image";img.draggable=false;body.appendChild(img)}
+  else{body.textContent="Picture missing";body.style.cssText+=";display:flex;align-items:center;justify-content:center;background:#eef0f4;color:#6b7280;font-size:12px"}
  }else if(e.type==="table"){
-  const tbl=document.createElement("table");const slideHeight=container.clientHeight||container.getBoundingClientRect().height||720;tbl.style.fontSize=Math.max(7,slideHeight*((e.fontSize||12)/540))+"px";const rows=e.rows||[["Header 1","Header 2","Header 3"],["","",""],["","",""]];
+  const tbl=document.createElement("table");const slideHeight=container.clientHeight||container.getBoundingClientRect().height||720;tbl.dataset.fs=String(e.fontSize||12);tbl.style.fontSize=Math.max(3,slideHeight*((e.fontSize||12)/540))+"px";const rows=e.rows||[["Header 1","Header 2","Header 3"],["","",""],["","",""]];
   rows.forEach((row,ri)=>{const tr=document.createElement("tr");row.forEach((val,ci)=>{const cell=document.createElement(ri===0?"th":"td");cell.textContent=val;cell.contentEditable=editable?"true":"false";cell.dataset.row=String(ri);cell.dataset.col=String(ci);cell.style.background=ri===0?(e.fill||"#eef0ff"):"#fff";cell.style.color=ri===0?(e.color||"#17181d"):"#343944";tr.appendChild(cell)});tbl.appendChild(tr)});body.appendChild(tbl)
  }else if(e.type==="chart"){body.innerHTML=renderChart(e)}
  node.appendChild(body);
@@ -328,7 +382,6 @@ function renderElement(e,container,editable){
    if(eve.pointerType==="touch"&&window.matchMedia("(max-width: 650px)").matches){let moved=false;const sx=eve.clientX,sy=eve.clientY;const watchMove=function(ev){if(Math.hypot(ev.clientX-sx,ev.clientY-sy)>8){moved=true;clearTimeout(timer);document.removeEventListener("pointermove",watchMove)}};const timer=setTimeout(function(){document.removeEventListener("pointermove",watchMove);if(!moved)beginDrag()},300);document.addEventListener("pointermove",watchMove);return}
    beginDrag();
   });
-  node.addEventListener("contextmenu",function(eve){eve.preventDefault();selectObject(e.id);const act=prompt("Object actions: type D to duplicate, X to delete, F to bring forward, B to send backward","D");if(!act)return;if(act.toLowerCase()==="d")duplicateObject();else if(act.toLowerCase()==="x")deleteObject();else if(act.toLowerCase()==="f")layerObject(1);else if(act.toLowerCase()==="b")layerObject(-1)});
   node.addEventListener("focusin",function(){if(selectedObjectId!==e.id)selectObject(e.id)});
   body.addEventListener("input",function(eve){
    const ob=currentObject();if(!ob||ob.id!==e.id)return;
@@ -340,7 +393,14 @@ function renderElement(e,container,editable){
  container.appendChild(node);
  return node;
 }
-function renderSlideTo(container,slide,editable){
+function rescaleSlide(container){
+ const h=container.clientHeight;if(!h)return;
+ container.querySelectorAll("[data-fs]").forEach(el=>{el.style.fontSize=Math.max(3,h*(Number(el.dataset.fs)/540))+"px"});
+ container.querySelectorAll("[data-radius]").forEach(el=>{el.style.borderRadius=(h*Number(el.dataset.radius)/540)+"px"});
+}
+const slideResizer=typeof ResizeObserver==="function"?new ResizeObserver(entries=>entries.forEach(en=>rescaleSlide(en.target))):null;
+function watchSlideSize(container){if(slideResizer&&!container.dataset.watched){container.dataset.watched="1";slideResizer.observe(container)}}
+function renderSlideTo(container,slide,editable){watchSlideSize(container);
  container.innerHTML="";
  const bg=slide.background||{type:"color",color:"#fff"};
  container.style.position="relative";container.style.overflow="hidden";container.style.aspectRatio=deck.ratio==="4:3"?"4 / 3":"16 / 9";container.style.backgroundColor=bg.color||"#fff";
@@ -360,13 +420,13 @@ function selectObject(id){selectedObjectId=id;updateSelectionUI();syncInspector(
 function scheduleThumbs(){clearTimeout(window.pmThumbTimer);window.pmThumbTimer=setTimeout(renderThumbnails,250)}
 function miniMarkup(slide){
  const bg=slide.background||{type:"color",color:"#fff"};
- let html='<div class="pm-thumb-view" style="background:'+(bg.type==="gradient"?bg.gradient:escapeHtml(bg.color||"#fff"))+'">';
+ let html='<div class="pm-thumb-view" style="background:'+(bg.type==="gradient"?escapeHtml(bg.gradient):bg.type==="image"&&bg.image?escapeHtml(bg.color||"#fff")+' url(&quot;'+escapeHtml(bg.image)+'&quot;) center/cover':escapeHtml(bg.color||"#fff"))+'">';
  const elems=(slide.elements||[]).slice().sort((a,b)=>(a.z||1)-(b.z||1));
  elems.forEach(e=>{
   const style='position:absolute;left:'+(e.x*100)+'%;top:'+(e.y*100)+'%;width:'+(e.w*100)+'%;height:'+(e.h*100)+'%;overflow:hidden;transform:rotate('+(e.rotate||0)+'deg);color:'+escapeHtml(e.color||"#17181d")+';background:'+(e.type==="shape"?escapeHtml(e.fill||"transparent"):"transparent")+';font-family:'+escapeHtml(e.font||"Arial")+';font-size:'+Math.max(3,Math.min(9,(e.fontSize||12)/4))+'px;font-weight:'+(e.bold?"800":"400")+';line-height:1.1;';
   if(e.type==="text")html+='<div style="'+style+'white-space:pre-wrap">'+escapeHtml(e.text||"")+'</div>';
-  else if(e.type==="image")html+='<div style="'+style+'background:#e5e7eb url(&quot;'+escapeHtml(e.src||"")+'&quot;) center/contain no-repeat"></div>';
-  else if(e.type==="shape")html+='<div style="'+style+'border:'+Math.max(0,e.borderWidth||0)+'px solid '+escapeHtml(e.border||"transparent")+';border-radius:'+(e.shape==="circle"?"50%":Math.max(0,e.radius||0))+'px"></div>';
+  else if(e.type==="image")html+='<div style="'+style+'background:transparent url(&quot;'+escapeHtml(e.src||"")+'&quot;) center/contain no-repeat"></div>';
+  else if(e.type==="shape")html+=(e.shape==="star"||e.shape==="arrow"||e.shape==="line")?'<div style="'+style+'background:transparent">'+shapeInner(e)+'</div>':'<div style="'+style+'border:'+Math.max(0,e.borderWidth||0)+'px solid '+escapeHtml(e.border||"transparent")+';border-radius:'+(e.shape==="circle"?"50%":Math.max(0,(e.radius||0)/5))+'px"></div>';
   else if(e.type==="table")html+='<div style="'+style+'border:1px solid #cbd5e1;background:#eef0ff"></div>';
   else if(e.type==="chart")html+='<div style="'+style+'background:#e7e9ff"></div>';
  });
@@ -377,7 +437,7 @@ function renderThumbnails(){
  const list=$("#pmSlideList");list.innerHTML="";
  deck.slides.forEach((s,i)=>{
   const b=document.createElement("div");b.className="pm-thumb";b.draggable=true;b.dataset.slideId=s.id;
-  b.innerHTML='<button type="button" class="pm-thumb-select" aria-current="'+String(s.id===activeSlideId)+'" aria-label="Select slide '+(i+1)+'">'+miniMarkup(s)+'<div class="pm-thumb-number"><span>'+String(i+1).padStart(2,"0")+'</span><span>'+escapeHtml(s.layout||"slide")+'</span></div></button><div class="pm-thumb-actions"><button type="button" data-thumb-action="duplicate" data-id="'+s.id+'" aria-label="Duplicate slide '+(i+1)+'" title="Duplicate">⧉</button><button type="button" data-thumb-action="delete" data-id="'+s.id+'" aria-label="Delete slide '+(i+1)+'" title="Delete">×</button></div>';
+  b.innerHTML='<button type="button" class="pm-thumb-select" aria-current="'+String(s.id===activeSlideId)+'" aria-label="Select slide '+(i+1)+'">'+miniMarkup(s)+'<div class="pm-thumb-number"><span>'+String(i+1).padStart(2,"0")+'</span><span>'+escapeHtml(s.layout||"slide")+'</span></div></button><div class="pm-thumb-actions"><button type="button" data-thumb-action="left" data-id="'+s.id+'" aria-label="Move slide '+(i+1)+' earlier" title="Move earlier"'+(i===0?" disabled":"")+'>‹</button><button type="button" data-thumb-action="right" data-id="'+s.id+'" aria-label="Move slide '+(i+1)+' later" title="Move later"'+(i===deck.slides.length-1?" disabled":"")+'>›</button><button type="button" data-thumb-action="duplicate" data-id="'+s.id+'" aria-label="Duplicate slide '+(i+1)+'" title="Duplicate">⧉</button><button type="button" data-thumb-action="delete" data-id="'+s.id+'" aria-label="Delete slide '+(i+1)+'" title="Delete">×</button></div>';
   if(window.matchMedia("(max-width: 650px)").matches){
    let holdTimer=null,holdStartX=0,holdStartY=0,touchReorderReady=false;
    const clearHold=function(){clearTimeout(holdTimer);holdTimer=null;touchReorderReady=false;b.classList.remove("pm-touch-drag-ready")};
@@ -387,12 +447,11 @@ function renderThumbnails(){
    b.addEventListener("pointercancel",clearHold);
   }
   b.addEventListener("click",function(e){if(Date.now()<suppressThumbClickUntil||e.target.closest("[data-thumb-action]"))return;activeSlideId=s.id;selectedObjectId=null;renderStage()});
-  b.querySelectorAll("[data-thumb-action]").forEach(function(action){action.draggable=false;action.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();activeSlideId=s.id;selectedObjectId=null;if(action.dataset.thumbAction==="duplicate")duplicateSlide();else if(action.dataset.thumbAction==="delete")deleteSlide()})});
+  b.querySelectorAll("[data-thumb-action]").forEach(function(action){action.draggable=false;action.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();activeSlideId=s.id;selectedObjectId=null;if(action.dataset.thumbAction==="duplicate")duplicateSlide();else if(action.dataset.thumbAction==="delete")deleteSlide();else if(action.dataset.thumbAction==="left")moveSlide(-1);else if(action.dataset.thumbAction==="right")moveSlide(1)})});
   b.addEventListener("dragstart",function(e){e.dataTransfer.setData("text/slide-id",s.id);e.dataTransfer.effectAllowed="move"});
   b.addEventListener("dragover",function(e){e.preventDefault();b.classList.add("pm-drop-target")});
   b.addEventListener("dragleave",function(){b.classList.remove("pm-drop-target")});
   b.addEventListener("drop",function(e){e.preventDefault();b.classList.remove("pm-drop-target");const from=e.dataTransfer.getData("text/slide-id"),a=deck.slides.findIndex(x=>x.id===from),to=deck.slides.findIndex(x=>x.id===s.id);if(a<0||to<0||a===to)return;const moved=deck.slides.splice(a,1)[0];deck.slides.splice(to,0,moved);activeSlideId=moved.id;markChanged(true);renderStage()});
-  b.addEventListener("contextmenu",function(e){e.preventDefault();activeSlideId=s.id;selectedObjectId=null;const action=prompt("Slide actions: D to duplicate, X to delete, R to rename deck","D");if(action&&action.toLowerCase()==="d")duplicateSlide();else if(action&&action.toLowerCase()==="x")deleteSlide();else if(action&&action.toLowerCase()==="r")renameDeck()});
   list.appendChild(b);
  });
 }
@@ -404,18 +463,24 @@ function syncInspector(){
   const bg=s.background||{type:"color",color:"#fff"};$("#pmBgKind").value=bg.type||"color";$("#pmBgColor").value=bg.color||"#ffffff";$("#pmBgColorBox").classList.toggle("pm-hidden",bg.type!=="color");$("#pmGradientBox").classList.toggle("pm-hidden",bg.type!=="gradient");$("#pmBgImageBox").classList.toggle("pm-hidden",bg.type!=="image");$("#pmThemePalette").value=deck.palette||"classic";$("#pmFontPair").value=(deck.fontHead||deck.font||"Arial")+"|"+(deck.fontBody||deck.font||"Arial");return;
  }
  $("#pmTextValue").value=obj.type==="text"?obj.text||"":obj.type==="shape"?obj.text||"":obj.type==="table"?"Table content is edited directly in each cell.":obj.type==="chart"?"Chart data: "+(obj.labels||[]).join(", ")+" / "+(obj.values||[]).join(", "):"Image selected";
- $("#pmTextValue").disabled=obj.type==="image"||obj.type==="table"||obj.type==="chart";
+ $("#pmTextValue").disabled=obj.type==="image"||obj.type==="table"||obj.type==="chart";$("#pmTextValue").placeholder=obj.type==="shape"?"Optional text inside the shape":"Type your text";
  $("#pmFontFamily").value=obj.font||deck.font||"Arial";$("#pmFontSize").value=obj.fontSize||28;$("#pmTextColor").value=obj.color||"#17181d";$("#pmHighlightColor").value=obj.highlight&&/^#[0-9a-f]{6}$/i.test(obj.highlight)?obj.highlight:"#fff2a8";$("#pmTextAlign").value=obj.align||"left";$("#pmLineSpacing").value=String(obj.lineSpacing||1.2);
  $("#pmBold").setAttribute("aria-pressed",String(!!obj.bold));$("#pmItalic").setAttribute("aria-pressed",String(!!obj.italic));$("#pmUnderline").setAttribute("aria-pressed",String(!!obj.underline));$("#pmBullet").setAttribute("aria-pressed",String(!!obj.bullets));$("#pmNumbered").setAttribute("aria-pressed",String(!!obj.numbered));
  $("#pmShapeFill").value=toHex(obj.fill||"#6158e8");$("#pmShapeBorder").value=toHex(obj.border||"#17181d");$("#pmBorderWidth").value=obj.borderWidth||0;$("#pmOpacity").value=obj.opacity||100;$("#pmRadius").value=obj.radius||0;$("#pmRotation").value=obj.rotate||0;$("#pmObjX").value=Math.round(obj.x*100);$("#pmObjY").value=Math.round(obj.y*100);$("#pmObjW").value=Math.round(obj.w*100);$("#pmObjH").value=Math.round(obj.h*100);
- $("#pmTableSettings").classList.toggle("pm-hidden",obj.type!=="table");
+ $("#pmTableSettings").classList.toggle("pm-hidden",obj.type!=="table");$("#pmChartSettings").classList.toggle("pm-hidden",obj.type!=="chart");
+ if(obj.type==="chart"){$("#pmChartKind").value=obj.chartType||"bar";if(document.activeElement!==$("#pmChartLabels"))$("#pmChartLabels").value=(obj.labels||[]).join(", ");if(document.activeElement!==$("#pmChartValues"))$("#pmChartValues").value=(obj.values||[]).join(", ");$("#pmShapeFill").value=toHex(obj.color||"#6158e8")}
+ // Show only the settings that do something for this kind of object.
+ Object.keys(CONTROL_TYPES).forEach(id=>{const el=$("#"+id);if(!el)return;const box=el.closest(".pm-control")||el;box.classList.toggle("pm-hidden",!CONTROL_TYPES[id].split(" ").includes(obj.type))});
+ $$(".pm-control-row,.pm-check-row",$("#pmObjectSettings")).forEach(row=>{const kids=Array.from(row.children);if(kids.some(k=>k.matches(".pm-control,.pm-chip-btn")))row.classList.toggle("pm-hidden",kids.every(k=>k.classList.contains("pm-hidden")))});
 }
+const CONTROL_TYPES={pmTextValue:"text shape",pmFontFamily:"text shape table",pmFontSize:"text shape table",pmBold:"text shape",pmItalic:"text shape",pmUnderline:"text shape",pmBullet:"text",pmNumbered:"text",pmTextColor:"text shape table",pmHighlightColor:"text",pmTextAlign:"text shape",pmLineSpacing:"text",pmShapeFill:"shape table chart",pmShapeBorder:"shape table",pmBorderWidth:"shape table",pmRadius:"shape"};
 function toHex(c){if(/^#[0-9a-f]{6}$/i.test(c||""))return c;return "#ffffff"}
 function setObj(key,value){
  const obj=currentObject();if(!obj)return;
+ if(obj.type==="chart"&&key==="fill")key="color";
  if(["x","y","w","h"].includes(key)){const pct=Number(value);if(!Number.isFinite(pct))return;value=pct/100;if(key==="x")value=Math.max(0,Math.min(1-obj.w,value));if(key==="y")value=Math.max(0,Math.min(1-obj.h,value));if(key==="w")value=Math.max(.01,Math.min(1-obj.x,value));if(key==="h")value=Math.max(.01,Math.min(1-obj.y,value))}
  if(key==="rotate")value=Math.max(-180,Math.min(180,Number(value)||0));if(key==="fontSize")value=Math.max(6,Math.min(120,Number(value)||28));if(key==="opacity")value=Math.max(10,Math.min(100,Number(value)||100));obj[key]=value;
- const node=$('.pm-object[data-object-id="'+obj.id+'"]',$("#pmSlideCanvas"));if(node){node.style.left=(obj.x*100)+"%";node.style.top=(obj.y*100)+"%";node.style.width=(obj.w*100)+"%";node.style.height=(obj.h*100)+"%";node.style.transform="rotate("+(obj.rotate||0)+"deg)";node.style.opacity=(obj.opacity||100)/100;const body=$(".pm-object-body",node);if(body){if(key==="text"&&obj.type==="text")body.textContent=displayText(obj);if((key==="bullets"||key==="numbered")&&obj.type==="text")body.textContent=displayText(obj);if(["color","font","fontSize","bold","italic","underline","align","lineSpacing","highlight"].includes(key)){body.style.color=obj.color||"#17181d";body.style.fontFamily=obj.font||"Arial";const slideHeight=$("#pmSlideCanvas").clientHeight||$("#pmSlideCanvas").getBoundingClientRect().height||720;body.style.fontSize=Math.max(6,slideHeight*(Math.max(6,Math.min(120,obj.fontSize||18))/540))+"px";body.style.fontWeight=obj.bold?"800":"400";body.style.fontStyle=obj.italic?"italic":"normal";body.style.textDecoration=obj.underline?"underline":"none";body.style.textAlign=obj.align||"left";body.style.lineHeight=String(obj.lineSpacing||1.2);body.style.backgroundColor=obj.highlight||"transparent"}if(key==="fill")body.style.background=obj.fill;if(key==="border")body.style.borderColor=obj.border;if(key==="borderWidth")body.style.borderWidth=value+"px";if(key==="radius")body.style.borderRadius=(obj.shape==="circle"?"50%":value+"px")}}
+ const node=$('.pm-object[data-object-id="'+obj.id+'"]',$("#pmSlideCanvas"));if(node){node.style.left=(obj.x*100)+"%";node.style.top=(obj.y*100)+"%";node.style.width=(obj.w*100)+"%";node.style.height=(obj.h*100)+"%";node.style.transform="rotate("+(obj.rotate||0)+"deg)";node.style.opacity=(obj.opacity||100)/100;const body=$(".pm-object-body",node);if(body){if(key==="text"&&obj.type==="text")body.textContent=displayText(obj);if((key==="bullets"||key==="numbered")&&obj.type==="text")body.textContent=displayText(obj);if(["color","font","fontSize","bold","italic","underline","align","lineSpacing","highlight"].includes(key)){body.style.color=obj.color||"#17181d";body.style.fontFamily=obj.font||"Arial";const slideHeight=$("#pmSlideCanvas").clientHeight||$("#pmSlideCanvas").getBoundingClientRect().height||720;body.dataset.fs=String(Math.max(6,Math.min(120,obj.fontSize||18)));body.style.fontSize=Math.max(3,slideHeight*(Number(body.dataset.fs)/540))+"px";body.style.fontWeight=obj.bold?"800":"400";body.style.fontStyle=obj.italic?"italic":"normal";body.style.textDecoration=obj.underline?"underline":"none";body.style.textAlign=obj.align||"left";body.style.lineHeight=String(obj.lineSpacing||1.2);body.style.backgroundColor=obj.highlight||"transparent"}if(key==="fill")body.style.background=obj.fill;if(key==="border")body.style.borderColor=obj.border;if(key==="borderWidth")body.style.borderWidth=value+"px";if(key==="radius"){body.dataset.radius=String(value);body.style.borderRadius=(obj.shape==="circle"?"50%":($("#pmSlideCanvas").clientHeight*value/540)+"px")}if(obj.type==="shape"&&["fill","border","borderWidth"].includes(key)&&["star","arrow","line"].includes(obj.shape))body.innerHTML=shapeInner(obj);if(obj.type==="chart"&&key==="color")body.innerHTML=renderChart(obj)}}
  syncInspector();updateSelectionUI();markChanged(true);scheduleThumbs();
 }
 
@@ -429,7 +494,14 @@ function addImage(){ $("#pmImageFile").click() }
 function compressImage(file){
  return new Promise(function(resolve,reject){
   const reader=new FileReader();reader.onerror=function(){reject(new Error("Could not read that image."))};
-  reader.onload=function(){const im=new Image();im.crossOrigin="anonymous";im.onerror=function(){reject(new Error("That image could not be opened."))};im.onload=function(){try{const max=1800,scale=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight)),w=Math.max(1,Math.round(im.naturalWidth*scale)),h=Math.max(1,Math.round(im.naturalHeight*scale)),canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;const ctx=canvas.getContext("2d");ctx.drawImage(im,0,0,w,h);try{resolve(canvas.toDataURL("image/jpeg",.84))}catch(_){resolve(reader.result)}}catch(_){resolve(reader.result)}};im.src=reader.result};
+  reader.onload=function(){const im=new Image();im.onerror=function(){reject(new Error("That image could not be opened. Choose a JPG, PNG, WebP or GIF picture."))};im.onload=function(){
+   const done=function(src,w,h){resolve({src:src,w:w,h:h})};
+   try{const max=1800,scale=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight)),w=Math.max(1,Math.round(im.naturalWidth*scale)),h=Math.max(1,Math.round(im.naturalHeight*scale)),canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;const ctx=canvas.getContext("2d");ctx.drawImage(im,0,0,w,h);
+    // Pictures with see-through parts (logos, cut-outs) stay PNG; others become JPEG on white.
+    let alpha=false;if(/png|webp|gif/i.test(file.type||"")){const d=ctx.getImageData(0,0,w,h).data;for(let i=3;i<d.length;i+=16){if(d[i]<250){alpha=true;break}}}
+    if(alpha){let png=canvas.toDataURL("image/png");if(png.length>3.5e6&&Math.max(w,h)>1000){const f=1000/Math.max(w,h),c2=document.createElement("canvas");c2.width=Math.round(w*f);c2.height=Math.round(h*f);c2.getContext("2d").drawImage(canvas,0,0,c2.width,c2.height);png=c2.toDataURL("image/png");done(png,c2.width,c2.height);return}done(png,w,h);return}
+    const c3=document.createElement("canvas");c3.width=w;c3.height=h;const g=c3.getContext("2d");g.fillStyle="#ffffff";g.fillRect(0,0,w,h);g.drawImage(canvas,0,0);done(c3.toDataURL("image/jpeg",.86),w,h);
+   }catch(_){done(reader.result,im.naturalWidth||1,im.naturalHeight||1)}};im.src=reader.result};
   reader.readAsDataURL(file);
  });
 }
@@ -448,13 +520,11 @@ function duplicateSlide(){const s=currentSlide();if(!s)return;const cp=clone(s);
 function deleteSlide(){if(deck.slides.length<=1){alert("A presentation must have at least one slide.");return}const i=selectedIndex();deck.slides.splice(i,1);activeSlideId=deck.slides[Math.max(0,i-1)].id;selectedObjectId=null;markChanged(true);renderStage()}
 function renameDeck(){const val=prompt("Presentation name",deck.name||"Untitled presentation");if(val&&val.trim()){$("#pmProjectTitle").value=val.trim();deck.name=val.trim();markChanged(true);renderProjectList()}}
 function moveSlide(delta){const i=selectedIndex(),to=i+delta;if(to<0||to>=deck.slides.length)return;const s=deck.slides.splice(i,1)[0];deck.slides.splice(to,0,s);markChanged(true);renderStage()}
+function goSlide(delta){const i=selectedIndex()+delta;if(!deck||i<0||i>=deck.slides.length)return;activeSlideId=deck.slides[i].id;selectedObjectId=null;renderStage()}
 function refreshWorkspace(){if(!deck)return;renderStage();renderThumbnails();updateUndoButtons()}
 function addTable(){const rows=[["Header 1","Header 2","Header 3"],["Item 1","Item 2","Item 3"],["Item 4","Item 5","Item 6"]];insertObject(newEl("table",{type:"table",x:8,y:28,w:84,h:48,rows:rows,fill:(palette[deck.palette]||palette.classic).light,color:(palette[deck.palette]||palette.classic).dark,font:deck.font,fontSize:14,border:(palette[deck.palette]||palette.classic).main,borderWidth:1}))}
 function addChart(){
- const type=$("#pmChartType").value,labels=prompt("Category labels, separated by commas","Q1, Q2, Q3, Q4");if(labels===null)return;
- const nums=prompt("Values, separated by commas","35, 52, 45, 76");if(nums===null)return;
- const vals=nums.split(",").map(x=>Number(x.trim())).filter(Number.isFinite);const labs=labels.split(",").map(x=>x.trim()).filter(Boolean);
- if(!labs.length||!vals.length||labs.length!==vals.length){alert("Enter the same number of labels and numeric values.");return}
+ const type=$("#pmChartType").value,labs=["Q1","Q2","Q3","Q4"],vals=[35,52,45,76];
  insertObject(newEl("chart",{x:18,y:20,w:64,h:58,chartType:type,labels:labs,values:vals,color:(palette[deck.palette]||palette.classic).main,fill:(palette[deck.palette]||palette.classic).light,border:"transparent",font:deck.font,fontSize:12}));
 }
 function updateBg(){
@@ -496,21 +566,30 @@ function bindEvents(){
  $("#pmLibraryBtn").addEventListener("click",function(){persist(true);showStart()});
  $("#pmAddSlideBtn").addEventListener("click",addSlide);$("#pmSlideAddMini").addEventListener("click",addSlide);$("#pmDuplicateSlideBtn").addEventListener("click",duplicateSlide);$("#pmDeleteSlideBtn").addEventListener("click",deleteSlide);
  $("#pmAddTextBtn").addEventListener("click",addText);$("#pmAddShapeBtn").addEventListener("click",addShape);$("#pmAddImageBtn").addEventListener("click",addImage);$("#pmAddTableBtn").addEventListener("click",addTable);$("#pmAddChartBtn").addEventListener("click",addChart);
- $("#pmImageFile").addEventListener("change",async function(){const f=this.files&&this.files[0];if(!f)return;try{if(f.size>25*1024*1024)throw new Error("File is too large. Choose an image smaller than 25 MB.");const src=await compressImage(f);rememberOriginalImageBlob(src,f);insertObject(newEl("image",{x:24,y:16,w:52,h:65,src:src,alt:f.name,fill:"transparent",border:"transparent"}))}catch(e){alert(e.message||"Could not add that image.")}this.value=""});
+ $("#pmImageFile").addEventListener("change",async function(){const f=this.files&&this.files[0];if(!f)return;try{if(f.size>25*1024*1024)throw new Error("File is too large. Choose an image smaller than 25 MB.");const pic=await compressImage(f),src=pic.src;rememberOriginalImageBlob(src,f);
+  const A=deck.ratio==="4:3"?4/3:16/9,r=pic.w/Math.max(1,pic.h);let wf=.5,hf=wf*A/r;if(hf>.7){hf=.7;wf=hf*r/A}
+  insertObject(newEl("image",{x:(1-wf)/2*100,y:(1-hf)/2*100,w:wf*100,h:hf*100,src:src,alt:f.name,fill:"transparent",border:"transparent"}))}catch(e){alert(e.message||"Could not add that image.")}this.value=""});
  $("#pmRatio").addEventListener("change",function(){deck.ratio=this.value;deck.coordinateVersion=2;markChanged(true);renderStage()});
  $("#pmQuickBg").addEventListener("input",function(){const s=currentSlide();if(!s)return;s.background={type:"color",color:this.value};$("#pmBgKind").value="color";$("#pmBgColor").value=this.value;renderStage();markChanged(false)});
  $("#pmBgKind").addEventListener("change",updateBg);$("#pmBgColor").addEventListener("input",function(){const s=currentSlide();if(!s)return;s.background={type:"color",color:this.value};renderSlideTo($("#pmSlideCanvas"),s,true);markChanged(false)});
  $("#pmGradient").addEventListener("change",function(){const s=currentSlide();if(!s)return;s.background={type:"gradient",gradient:this.value,color:(this.value.match(/#[0-9a-f]{6}/i)||[])[0]||"#ffffff"};renderStage();markChanged(true)});
  $("#pmChooseBgImage").addEventListener("click",function(){$("#pmBgImageFile").click()});
- $("#pmBgImageFile").addEventListener("change",async function(){const f=this.files&&this.files[0];if(!f)return;try{const src=await compressImage(f);rememberOriginalImageBlob(src,f);const s=currentSlide();s.background={type:"image",image:src,color:"#ffffff"};renderStage();markChanged(true)}catch(_){alert("Could not use that background image.")}this.value=""});
+ $("#pmBgImageFile").addEventListener("change",async function(){const f=this.files&&this.files[0];if(!f)return;try{const src=(await compressImage(f)).src;rememberOriginalImageBlob(src,f);const s=currentSlide();s.background={type:"image",image:src,color:"#ffffff"};renderStage();markChanged(true)}catch(_){alert("Could not use that background image.")}this.value=""});
  $("#pmThemePalette").addEventListener("change",function(){applyPalette(this.value)});$("#pmFontPair").addEventListener("change",function(){const pair=this.value.split("|"),head=pair[0]||"Arial",body=pair[1]||"Arial";deck.font=head===body?head:body;deck.fontHead=head;deck.fontBody=body;deck.slides.forEach(s=>s.elements.forEach(e=>{if(e.type==="text")e.font=Number(e.fontSize||18)>=24?head:body;else if(e.type==="table"||e.type==="chart")e.font=body}));renderStage();markChanged(true)});
  $("#pmNotes").addEventListener("input",function(){const s=currentSlide();if(!s)return;s.notes=this.value;markChanged(false)});
- $("#pmBackSlideBtn").addEventListener("click",function(){moveSlide(-1)});$("#pmNextSlideBtn").addEventListener("click",function(){moveSlide(1)});
+ $("#pmBackSlideBtn").addEventListener("click",function(){goSlide(-1)});$("#pmNextSlideBtn").addEventListener("click",function(){goSlide(1)});
  $("#pmUndoBtn").addEventListener("click",undo);$("#pmRedoBtn").addEventListener("click",redo);
  setTextControl("#pmTextValue","text");setTextControl("#pmFontFamily","font");setTextControl("#pmFontSize","fontSize",Number);setTextControl("#pmTextColor","color");setTextControl("#pmHighlightColor","highlight");setTextControl("#pmTextAlign","align");setTextControl("#pmLineSpacing","lineSpacing",Number);setTextControl("#pmShapeFill","fill");setTextControl("#pmShapeBorder","border");setTextControl("#pmBorderWidth","borderWidth",Number);setTextControl("#pmRadius","radius",Number);setTextControl("#pmRotation","rotate",Number);
  $("#pmOpacity").addEventListener("input",function(){setObj("opacity",Number(this.value))});
  [["#pmBold","bold"],["#pmItalic","italic"],["#pmUnderline","underline"],["#pmBullet","bullets"],["#pmNumbered","numbered"]].forEach(function(pair){$(pair[0]).addEventListener("click",function(){const o=currentObject();if(!o)return;if(pair[1]==="bullets"&&!o.bullets&&o.numbered)o.numbered=false;if(pair[1]==="numbered"&&!o.numbered&&o.bullets)o.bullets=false;setObj(pair[1],!o[pair[1]]);$("#pmBullet").setAttribute("aria-pressed",String(!!o.bullets));$("#pmNumbered").setAttribute("aria-pressed",String(!!o.numbered));this.setAttribute("aria-pressed",String(!!o[pair[1]]))})});
  [["#pmObjX","x"],["#pmObjY","y"],["#pmObjW","w"],["#pmObjH","h"]].forEach(function(pair){$(pair[0]).addEventListener("change",function(){setObj(pair[1],Number(this.value))})});
+ const chartData=function(){const o=currentObject();if(!o||o.type!=="chart")return;const labs=$("#pmChartLabels").value.split(",").map(x=>x.trim()).filter(Boolean),raw=$("#pmChartValues").value.split(",").map(x=>x.trim()).filter(x=>x!==""),vals=raw.map(x=>Number(x.replace(/[^0-9.+-]/g,"")));
+  const msg=$("#pmChartMsg");if(!labs.length||!raw.length){msg.textContent="Add at least one label and one value.";return}if(vals.some(v=>!Number.isFinite(v))){msg.textContent="Values must be numbers, for example: 35, 52, 45.";return}
+  if(labs.length!==vals.length){msg.textContent=labs.length+" labels and "+vals.length+" values — use the same number of each.";return}
+  if(labs.length>12){msg.textContent="Use 12 values or fewer so the chart stays readable.";return}
+  msg.textContent="";o.labels=labs;o.values=vals;markChanged(true);renderStage()};
+ $("#pmChartLabels").addEventListener("input",chartData);$("#pmChartValues").addEventListener("input",chartData);
+ $("#pmChartKind").addEventListener("change",function(){const o=currentObject();if(!o||o.type!=="chart")return;o.chartType=this.value;markChanged(true);renderStage()});
  $("#pmDuplicateObject").addEventListener("click",duplicateObject);$("#pmDeleteObject").addEventListener("click",deleteObject);$("#pmLayerUp").addEventListener("click",function(){layerObject(1)});$("#pmLayerDown").addEventListener("click",function(){layerObject(-1)});
  $("#pmAddRow").addEventListener("click",function(){const o=currentObject();if(!o||o.type!=="table")return;const count=Math.max(1,...o.rows.map(r=>r.length));o.rows.push(Array(count).fill(""));markChanged(true);renderStage()});
  $("#pmDeleteRow").addEventListener("click",function(){const o=currentObject();if(!o||o.type!=="table")return;if(o.rows.length<=1){alert("A table needs at least one row.");return}o.rows.pop();markChanged(true);renderStage()});
@@ -521,7 +600,12 @@ function bindEvents(){
  $("#pmPresentSlide").addEventListener("click",function(){presentStep(1)});let touchX=0;
  $("#pmPresentSlide").addEventListener("touchstart",function(e){touchX=e.touches[0].clientX},{passive:true});$("#pmPresentSlide").addEventListener("touchend",function(e){const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)presentStep(dx<0?1:-1)},{passive:true});
  $("#pmTourSkip").addEventListener("click",endTour);$("#pmTourNext").addEventListener("click",nextTour);
- $("#pmProjectList").addEventListener("click",function(e){const b=e.target.closest("[data-project-action]");if(!b)return;const p=projects.find(x=>x.id===b.dataset.id);if(!p)return;if(b.dataset.projectAction==="open")openProject(p);else{const a=prompt("Presentation options: R rename, D duplicate, X delete","R");if(!a)return;if(a.toLowerCase()==="r"){const name=prompt("New presentation name",p.name);if(name&&name.trim()){p.name=name.trim();persistLibrary();renderProjectList()}}else if(a.toLowerCase()==="d"){const cp=clone(p);cp.id=uid("presentation");cp.name=p.name+" copy";cp.createdAt=Date.now();cp.updatedAt=Date.now();projects.unshift(cp);persistLibrary();renderProjectList()}else if(a.toLowerCase()==="x"&&confirm("Delete '"+p.name+"' from this device?")){projects=projects.filter(x=>x.id!==p.id);persistLibrary();renderProjectList()}}});
+ $("#pmProjectList").addEventListener("click",function(e){const b=e.target.closest("[data-project-action]");if(!b)return;const p=projects.find(x=>x.id===b.dataset.id);if(!p)return;const act=b.dataset.projectAction,done=function(){setStatus("Saved on this device");renderProjectList()},fail=function(e){setStatus(saveErrorText(e));alert(saveErrorText(e))};
+  if(act==="open")openProject(p);
+  else if(act==="more"){const row=b.closest(".pm-project-row"),menu=row&&row.querySelector(".pm-row-menu");if(menu){menu.classList.toggle("pm-hidden");b.setAttribute("aria-expanded",String(!menu.classList.contains("pm-hidden")))}}
+  else if(act==="rename"){const name=prompt("New presentation name",p.name);if(name&&name.trim()){p.name=name.trim().slice(0,120);p.updatedAt=Date.now();saveProject(p).then(done,fail)}}
+  else if(act==="duplicate"){const cp=clone(p);cp.id=uid("presentation");cp.name=(p.name||"Presentation")+" copy";cp.createdAt=Date.now();cp.updatedAt=Date.now();projects.unshift(cp);saveProject(cp).then(done,fail)}
+  else if(act==="delete"&&confirm("Delete “"+(p.name||"this presentation")+"” from this device? This cannot be undone.")){removeProject(p.id).then(done,fail)}});
  document.addEventListener("keydown",function(e){
   if(presenting){if(e.key==="Escape"){e.preventDefault();exitPresent();return}if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault();presentStep(1);return}if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();presentStep(-1);return}return}
   const mod=e.ctrlKey||e.metaKey,key=e.key.toLowerCase(),editing=e.target.closest("input,textarea,select,[contenteditable='true']");
@@ -531,13 +615,14 @@ function bindEvents(){
   if(!editing&&deck&&(e.key==="Delete"||e.key==="Backspace")&&selectedObjectId){e.preventDefault();deleteObject();return}
   if(!editing&&deck&&selectedObjectId&&["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.key)){const active=document.activeElement;if(active&&(active.isContentEditable===true||["INPUT","TEXTAREA"].includes(active.tagName)))return;e.preventDefault();const o=currentObject(),d=e.shiftKey ? .02 : .005;if(!o)return;if(e.key==="ArrowLeft")o.x=Math.max(0,o.x-d);if(e.key==="ArrowRight")o.x=Math.min(1-o.w,o.x+d);if(e.key==="ArrowUp")o.y=Math.max(0,o.y-d);if(e.key==="ArrowDown")o.y=Math.min(1-o.h,o.y+d);renderStage();markChanged(true)}
  });
- window.addEventListener("beforeunload",function(e){if(dirty){e.preventDefault();e.returnValue=""}});
+ window.addEventListener("beforeunload",function(e){flushSave();if(saveFailed&&dirty){e.preventDefault();e.returnValue=""}});
+ window.addEventListener("pagehide",flushSave);document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden")flushSave()});
 }
-function persistLibrary(){try{const result=writeProjectsToStorage(null);setStatus(result.evicted?"Saved · older presentations removed":"Saved on this device");renderProjectList()}catch(error){setStatus(error&&error.name==="QuotaExceededError"?"Storage limit reached — export JSON.":"Could not save — export your project file.")}}
+
 
 function exportJson(){
  if(!deck)return;
- try{const blob=new Blob([JSON.stringify(deck,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},60000)}catch(_){alert("Could not export the project file. Please try again.")}
+ try{const blob=new Blob([JSON.stringify(deck,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=slugName(deck.name)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},60000)}catch(_){alert("Could not export the project file. Please try again.")}
 }
 function downloadBlob(blob,name,revokeDelay){const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},Number(revokeDelay)||60000)}
 function resolvePptxHex(value,fallback){
@@ -563,16 +648,24 @@ function pptxTextRuns(raw,defaultHighlight){
  }
  if(!runs.length)return null;plainRun(source.slice(last));return runs;
 }
+// Libraries live in this site (vendor/), loaded only when needed.
+function loadLib(src,globalName){return new Promise(function(resolve,reject){if(window[globalName])return resolve(window[globalName]);const sc=document.createElement("script");sc.src=src;sc.onload=function(){window[globalName]?resolve(window[globalName]):reject(new Error("Could not start "+src))};sc.onerror=function(){reject(new Error("Could not load "+src))};document.head.appendChild(sc)})}
+function imageSize(src){return new Promise(function(resolve){const im=new Image();im.onload=function(){resolve({w:im.naturalWidth||1,h:im.naturalHeight||1})};im.onerror=function(){resolve(null)};im.src=src})}
+// The two colours of a preset gradient drawn as a picture, so PPTX keeps the gradient look.
+function gradientPng(css,w,h){const m=String(css||"").match(/(-?\d+)deg/),cols=String(css||"").match(/#[0-9a-f]{3,8}/gi)||["#ffffff","#ffffff"],c=document.createElement("canvas");c.width=w;c.height=h;const g=c.getContext("2d"),a=((m?Number(m[1]):135)-90)*Math.PI/180,cx=w/2,cy=h/2,r=Math.abs(w/2*Math.cos(a))+Math.abs(h/2*Math.sin(a));const gr=g.createLinearGradient(cx-Math.cos(a)*r,cy-Math.sin(a)*r,cx+Math.cos(a)*r,cy+Math.sin(a)*r);cols.forEach((col,i)=>gr.addColorStop(cols.length>1?i/(cols.length-1):0,col));g.fillStyle=gr;g.fillRect(0,0,w,h);return c.toDataURL("image/png")}
 async function exportPptx(){
  if(!deck)return;
+ const btn=$("#pmPptxExport"),label=btn?btn.textContent:"";
  try{
-  if(!window.PptxGenJS)throw new Error("PPTX export library did not load.");
+  if(btn){btn.disabled=true;btn.textContent="Preparing PPTX…"}setStatus("Preparing PPTX…");
+  await loadLib("vendor/pptxgen.bundle.js","PptxGenJS");
   const pptx=new window.PptxGenJS();const wide=deck.ratio!=="4:3",sw=wide?13.333:10,sh=7.5;
   pptx.defineLayout({name:"SITECraft_CUSTOM",width:sw,height:sh});pptx.layout="SITECraft_CUSTOM";pptx.author="SiteCraft";pptx.subject="Created in SiteCraft Presentation Maker";pptx.title=deck.name||"Presentation";pptx.company="SiteCraft";pptx.lang="en-US";pptx.theme={headFontFace:deck.fontHead||deck.font||"Arial",bodyFontFace:deck.fontBody||deck.font||"Arial",lang:"en-US"};
   const conv=function(v,base){return v*base};
   for(const s of deck.slides){
    const sl=pptx.addSlide(),bg=s.background||{type:"color",color:"#ffffff"};
    if(bg.type==="color"||bg.type==="gradient")sl.background={color:resolvePptxHex(bg.color||"#ffffff","#ffffff")};
+   if(bg.type==="gradient"&&bg.gradient)sl.addImage({data:gradientPng(bg.gradient,wide?1333:1000,750),x:0,y:0,w:sw,h:sh});
    if(bg.type==="image"&&bg.image)sl.addImage({data:bg.image,x:0,y:0,w:sw,h:sh});
    const elements=(s.elements||[]).slice().sort((a,b)=>(a.z||1)-(b.z||1));
    for(const e of elements){
@@ -581,123 +674,91 @@ async function exportPptx(){
      const marked=pptxTextRuns(e.text,e.highlight&&e.highlight!=="transparent"?e.highlight:null);
      let txt=marked||e.text||"";if(!marked&&e.bullets)txt=String(txt).split("\n").map(x=>({text:x,options:{bullet:{indent:14}}}));else if(!marked&&e.numbered)txt=String(txt).split("\n").map(x=>({text:x,options:{bullet:{type:"number",indent:14}}}));
      const hi=e.highlight&&e.highlight!=="transparent"?{color:resolvePptxHex(e.highlight,"#fff2a8")}:undefined;
-     sl.addText(txt,Object.assign({},o,{fontFace:e.font||deck.fontBody||deck.font||"Arial",fontSize:e.fontSize||18,bold:!!e.bold,italic:!!e.italic,underline:!!e.underline,color:resolvePptxHex(e.color||"#17181d","#17181d"),align:e.align||"left",valign:"mid",breakLine:false,paraSpaceAfterPt:6,lineSpacingMultiple:e.lineSpacing||1.2,fill:marked?undefined:hi}));
+     sl.addText(txt,Object.assign({},o,{fontFace:e.font||deck.fontBody||deck.font||"Arial",fontSize:e.fontSize||18,bold:!!e.bold,italic:!!e.italic,underline:!!e.underline,color:resolvePptxHex(e.color||"#17181d","#17181d"),align:e.align||"left",valign:"top",breakLine:false,paraSpaceAfterPt:0,lineSpacingMultiple:e.lineSpacing||1.2,fill:marked?undefined:hi}));
     }else if(e.type==="shape"){
      const types={rect:pptx.ShapeType.rect,circle:pptx.ShapeType.ellipse,arrow:pptx.ShapeType.rightArrow,line:pptx.ShapeType.line,star:pptx.ShapeType.star5};
-     const opts=Object.assign({},o,{fill:{color:resolvePptxHex(e.fill||"#ffffff","#ffffff"),transparency:e.opacity?100-e.opacity:0},line:{color:resolvePptxHex(e.border||"#ffffff","#ffffff"),width:e.borderWidth||0,transparency:e.borderWidth?0:100},radius:e.radius||0});
-     sl.addShape(types[e.shape]||pptx.ShapeType.rect,opts);
-    }else if(e.type==="image"&&e.src)sl.addImage(Object.assign({},o,{data:e.src,sizingCrop:true}));
+     const opts=Object.assign({},o,{fill:{color:resolvePptxHex(e.fill||"#ffffff","#ffffff"),transparency:e.opacity?100-e.opacity:0},line:{color:resolvePptxHex(e.border||"#ffffff","#ffffff"),width:e.borderWidth||0,transparency:e.borderWidth?0:100}});
+     let kind=types[e.shape]||pptx.ShapeType.rect;
+     if(e.shape==="line"){opts.y=o.y+o.h/2;opts.h=0;opts.line={color:resolvePptxHex(e.fill||e.border||"#17181d","#17181d"),width:Math.max(1,e.borderWidth||2)};delete opts.fill}
+     else if(e.shape==="rect"&&e.radius>0){kind=pptx.ShapeType.roundRect;opts.rectRadius=Math.min(o.w,o.h)/2*Math.min(1,(e.radius/72)/(Math.min(o.w,o.h)/2))}
+     if(e.text&&e.shape!=="line")sl.addText(e.text,Object.assign({},opts,{shape:kind,fontFace:e.font||deck.fontBody||"Arial",fontSize:e.fontSize||18,color:resolvePptxHex(e.color||"#ffffff","#ffffff"),bold:!!e.bold,italic:!!e.italic,align:e.align||"center",valign:"mid"}));
+     else sl.addShape(kind,opts);
+    }else if(e.type==="image"&&e.src){
+     // Same as on the slide: the whole picture fits inside its box (no stretching).
+     const nat=await imageSize(e.src);let fit={x:o.x,y:o.y,w:o.w,h:o.h};if(nat){const r=nat.w/nat.h;if(o.w/o.h>r){fit.w=o.h*r;fit.x=o.x+(o.w-fit.w)/2}else{fit.h=o.w/r;fit.y=o.y+(o.h-fit.h)/2}}
+     sl.addImage(Object.assign({},o,fit,{data:e.src}));
+    }
     else if(e.type==="table"){
      const rows=(e.rows||[]).map((row,ri)=>row.map(cell=>({text:String(cell==null?"":cell),options:{fill:{color:resolvePptxHex(ri===0?(e.fill||"#EEF0FF"):"#FFFFFF","#FFFFFF")},color:resolvePptxHex(ri===0?(e.color||"#17181D"):"#343944","#343944"),bold:ri===0,fontFace:e.font||deck.fontBody||deck.font||"Arial",fontSize:e.fontSize||12}})));
-     sl.addTable(rows,Object.assign({},o,{border:{type:"solid",color:resolvePptxHex(e.border||"#BFC5CE","#BFC5CE"),pt:Math.max(.5,e.borderWidth||.5)},fill:{color:"FFFFFF"},color:resolvePptxHex(e.color||"#17181D","#17181D"),fontFace:e.font||deck.fontBody||deck.font||"Arial",fontSize:e.fontSize||12,margin:.05,autoFit:false,breakLine:false}));
+     sl.addTable(rows,Object.assign({},o,{border:{type:"solid",color:"B8C0CC",pt:.75},fill:{color:"FFFFFF"},color:resolvePptxHex(e.color||"#17181D","#17181D"),fontFace:e.font||deck.fontBody||deck.font||"Arial",fontSize:e.fontSize||12,margin:.05,autoFit:false,breakLine:false}));
     }else if(e.type==="chart"){
      const ct=e.chartType==="pie"?pptx.ChartType.pie:e.chartType==="line"?pptx.ChartType.line:pptx.ChartType.bar;
      const data=[{name:"Series 1",labels:e.labels||[],values:e.values||[]}];
-     sl.addChart(ct,data,Object.assign({},o,{showTitle:false,showLegend:false,showValue:true,catAxisLabelFontFace:deck.fontBody||deck.font||"Arial",catAxisLabelFontSize:10,valAxisLabelFontSize:10,chartColors:[resolvePptxHex(e.color||"#6158e8","#6158e8")],showCatName:false,showValAxisTitle:false,showCatAxisTitle:false}));
+     sl.addChart(ct,data,Object.assign({},o,{showTitle:false,showValue:true,catAxisLabelFontFace:deck.fontBody||deck.font||"Arial",catAxisLabelFontSize:10,valAxisLabelFontSize:10,chartColors:e.chartType==="pie"?[resolvePptxHex(e.color||"#6158e8","#6158e8"),"63B8A4","E9B45B","D56B87","8F8AE8","6A84A8"]:[resolvePptxHex(e.color||"#6158e8","#6158e8")],showLegend:e.chartType==="pie",legendPos:"r",showCatName:false,showValAxisTitle:false,showCatAxisTitle:false}));
     }
    }
    if(typeof sl.addNotes==="function"&&s.notes)sl.addNotes(s.notes);
   }
-  await pptx.writeFile({fileName:(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+".pptx"});
-  setStatus("PPTX downloaded");alert("PPTX note: gradients export as a solid-color fallback. Some text wrapping, shape opacity/rounded corners or chart/table styling can differ. Speaker notes are included.");
- }catch(error){setStatus("PPTX export failed");alert("Could not export PPTX. "+(error&&error.message||"Check your connection and try again."))}
+  await pptx.writeFile({fileName:slugName(deck.name)+".pptx"});
+  setStatus("PPTX downloaded · open it in PowerPoint, Google Slides or Keynote");
+ }catch(error){setStatus("PPTX export failed");alert("Could not make the PPTX file. Reload the page and try again."+(error&&error.message?" ("+error.message+")":""))}
+ finally{if(btn){btn.disabled=false;btn.textContent=label||"Download PPTX"}}
 }
 
-function dataUrlToBlob(dataUrl){
- const parts=String(dataUrl||"").split(","),header=parts[0]||"",mime=(header.match(/data:([^;]+)/)||[])[1]||"application/octet-stream",binary=atob(parts[1]||""),bytes=new Uint8Array(binary.length);
- for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
- return new Blob([bytes],{type:mime});
+// Full-size copies of the slides, off screen, for PDF and PNG files.
+function slideSizePx(){return deck.ratio==="4:3"?{w:960,h:720}:{w:1280,h:720}}
+function buildExportHost(){
+ const size=slideSizePx(),host=document.createElement("div");host.className="pm-export-host";host.setAttribute("aria-hidden","true");document.body.appendChild(host);
+ const els=deck.slides.map(function(sl){const el=document.createElement("div");el.className="pm-print-slide";el.style.width=size.w+"px";el.style.height=size.h+"px";host.appendChild(el);renderSlideTo(el,sl,false);return el});
+ return {host:host,els:els,size:size};
 }
-async function originalBlobForSlide(slide){
- const sources=[];
- (slide.elements||[]).forEach(function(e){if(e.type==="image"&&e.src)sources.push(e.src)});
- if(slide.background&&slide.background.type==="image"&&slide.background.image)sources.push(slide.background.image);
- for(const src of sources){
-  const retained=originalImageBlobs.get(src);if(retained)return retained;
-  if(/^data:image\//i.test(src)){try{return dataUrlToBlob(src)}catch(_){}}
-  else if(/^https?:\/\//i.test(src)){try{const response=await fetch(src,{mode:"cors",credentials:"omit"});if(response.ok)return await response.blob()}catch(_){}}
- }
- return null;
+async function waitForPictures(root){await Promise.race([Promise.all(Array.from(root.querySelectorAll("img")).map(im=>im.complete?0:new Promise(r=>{im.onload=im.onerror=r}))),new Promise(r=>setTimeout(r,6000))]);if(document.fonts&&document.fonts.ready)await Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,2000))])}
+function busy(btn,text){const old=btn?btn.textContent:"";if(btn){btn.disabled=true;btn.textContent=text}return function(){if(btn){btn.disabled=false;btn.textContent=old}}}
+async function exportPdf(){
+ if(!deck)return;
+ const done=busy($("#pmPdfExport"),"Preparing PDF…");let job=null;
+ try{
+  if(!window.SiteCraftPdf)await loadLib("core/pdf-export.js","SiteCraftPdf");
+  job=buildExportHost();await waitForPictures(job.host);
+  const blob=await window.SiteCraftPdf.captureSlides(job.els,{width:job.size.w,height:job.size.h,pixelRatio:1.5,title:deck.name||"Presentation",onProgress:function(i,n){setStatus("Making PDF: slide "+i+" of "+n+"…")}});
+  downloadBlob(blob,slugName(deck.name)+".pdf");setStatus("PDF downloaded");
+ }catch(error){
+  setStatus("Could not make the PDF — opening Print instead");
+  if(confirm("The PDF could not be made here. Open Print instead? (Choose “Save as PDF” there.)"))printDeck();
+ }finally{if(job)job.host.remove();done()}
 }
-function safePngBlob(canvas,slide){
- return new Promise(function(resolve,reject){
-  const fallback=async function(error){
-   try{const blob=await originalBlobForSlide(slide);if(blob){resolve({blob:blob,sourceFallback:true,mime:blob.type||"application/octet-stream"});return}}catch(_){}
-   reject(error||new Error("PNG encoding failed"));
-  };
-  try{
-   canvas.toBlob(function(blob){
-    if(blob){resolve({blob:blob,sourceFallback:false,mime:"image/png"});return}
-    try{resolve({blob:dataUrlToBlob(canvas.toDataURL("image/png")),sourceFallback:false,mime:"image/png"})}catch(error){fallback(error)}
-   },"image/png");
-  }catch(error){
-   try{resolve({blob:dataUrlToBlob(canvas.toDataURL("image/png")),sourceFallback:false,mime:"image/png"})}catch(taintError){fallback(taintError)}
-  }
- });
+// ---- Store-only ZIP (no compression; PNGs are already compressed). No library needed.
+const CRC_TABLE=(function(){const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(b){let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=CRC_TABLE[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+function zipStore(files){
+ const parts=[],central=[];let offset=0;const enc=new TextEncoder();
+ files.forEach(function(f){const name=enc.encode(f.name),crc=crc32(f.data),h=new DataView(new ArrayBuffer(30));
+  h.setUint32(0,0x04034b50,true);h.setUint16(4,20,true);h.setUint16(8,0,true);h.setUint16(12,0x21,true);h.setUint32(14,crc,true);h.setUint32(18,f.data.length,true);h.setUint32(22,f.data.length,true);h.setUint16(26,name.length,true);
+  parts.push(new Uint8Array(h.buffer),name,f.data);
+  const c=new DataView(new ArrayBuffer(46));c.setUint32(0,0x02014b50,true);c.setUint16(4,20,true);c.setUint16(6,20,true);c.setUint16(14,0x21,true);c.setUint32(16,crc,true);c.setUint32(20,f.data.length,true);c.setUint32(24,f.data.length,true);c.setUint16(28,name.length,true);c.setUint32(42,offset,true);
+  central.push(new Uint8Array(c.buffer),name);offset+=30+name.length+f.data.length});
+ const size=central.reduce((a,b)=>a+b.length,0),e=new DataView(new ArrayBuffer(22));e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,size,true);e.setUint32(16,offset,true);
+ return new Blob(parts.concat(central,[new Uint8Array(e.buffer)]),{type:"application/zip"});
 }
-
 async function exportPngs(){
  if(!deck)return;
- if(!window.html2canvas){alert("PNG export library is loading. Please try again.");return}
- const previous=activeSlideId,files=[],fallbackFiles=[];
- let failed=0;
+ const done=busy($("#pmPngExport"),"Preparing PNGs…");let job=null;
  try{
-  for(let i=0;i<deck.slides.length;i++){
-   const slide=deck.slides[i];
-   activeSlideId=slide.id;
-   renderStage();
-   try{
-    await new Promise(function(resolve){requestAnimationFrame(resolve)});
-    const canvas=await window.html2canvas($("#pmSlideCanvas"),{
-     scale:2,useCORS:true,allowTaint:false,backgroundColor:null,logging:false,
-     ignoreElements:function(el){return !!(el.classList&&el.classList.contains("pm-object-handle"))},
-     onclone:function(doc){
-      const c=doc.querySelector(".pm-slide-canvas");
-      if(c){
-       c.querySelectorAll(".pm-object-handle").forEach(function(n){n.remove()});
-       c.querySelectorAll(".pm-selected").forEach(function(n){n.classList.remove("pm-selected")});
-      }
-     }
-    });
-    const result=await safePngBlob(canvas,slide);
-    const base=(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+"-slide-"+String(i+1).padStart(2,"0");
-    if(result.sourceFallback){
-     const ext=(result.mime.split("/")[1]||"bin").replace("jpeg","jpg").replace(/[^a-z0-9]/gi,"");
-     fallbackFiles.push({name:base+"-source-image."+ext,blob:result.blob});
-     failed++;
-    }else{
-     files.push({name:base+".png",blob:result.blob});
-    }
-   }catch(error){
-    const blob=await originalBlobForSlide(slide).catch(function(){return null});
-    if(blob){
-     const ext=(blob.type.split("/")[1]||"bin").replace("jpeg","jpg").replace(/[^a-z0-9]/gi,"");
-     fallbackFiles.push({name:"slide-"+String(i+1).padStart(2,"0")+"-source-image."+ext,blob:blob});
-    }
-    failed++;
-   }
+  if(!window.SiteCraftPdf)await loadLib("core/pdf-export.js","SiteCraftPdf");
+  job=buildExportHost();await waitForPictures(job.host);
+  const files=[],base=slugName(deck.name);let fontCss=null;
+  for(let i=0;i<job.els.length;i++){
+   setStatus("Making PNG: slide "+(i+1)+" of "+job.els.length+"…");
+   const cv=await window.SiteCraftPdf.renderCanvas(job.els[i],{width:job.size.w,height:job.size.h,pixelRatio:1.5,fontEmbedCSS:fontCss});fontCss=cv.fontEmbedCSS||"";
+   const blob=await new Promise(r=>cv.toBlob(r,"image/png"));cv.width=cv.height=1;if(!blob)throw new Error("PNG");
+   files.push({name:base+"-slide-"+String(i+1).padStart(2,"0")+".png",data:new Uint8Array(await blob.arrayBuffer()),blob:blob});
   }
-  activeSlideId=previous;
-  renderStage();
-  if(!files.length&&!fallbackFiles.length)throw new Error("No slides could be encoded.");
-  if(window.JSZip){
-   const zip=new window.JSZip();
-   files.concat(fallbackFiles).forEach(function(file){zip.file(file.name,file.blob)});
-   const blob=await zip.generateAsync({type:"blob"});
-   downloadBlob(blob,(deck.name||"presentation").replace(/[^a-z0-9-_]+/gi,"-").toLowerCase()+"-slides.zip",60000);
-  }else{
-   files.concat(fallbackFiles).forEach(function(file){downloadBlob(file.blob,file.name,60000)});
-  }
-  setStatus(failed?"PNG export partial · original-image fallback included":"PNG export ready");
- }catch(error){
-  activeSlideId=previous;
-  renderStage();
-  setStatus("PNG export failed");
-  alert("Could not export PNG slides. "+(error&&error.message||"Please try again."));
- }
+  if(files.length===1)downloadBlob(files[0].blob,files[0].name);else downloadBlob(zipStore(files),base+"-slides.zip");
+  setStatus(files.length===1?"PNG downloaded":"PNG slides downloaded (ZIP)");
+ }catch(error){setStatus("PNG export failed");alert("Could not make the PNG pictures. Reload the page and try again.")}
+ finally{if(job)job.host.remove();done()}
 }
-
-function exportPdf(){
+function printDeck(){
  if(!deck)return;
  const oldDeck=$("#pmPrintDeck");
  const reset=function(){document.body.classList.remove("pm-printing");oldDeck.innerHTML="";window.removeEventListener("afterprint",reset)};
@@ -710,8 +771,8 @@ function exportPdf(){
   document.body.classList.add("pm-printing");
   window.addEventListener("afterprint",reset);window.print();setTimeout(reset,2000);
  }catch(_){
-  reset();setStatus("PDF export failed");
-  alert("Could not prepare Print / Save PDF. Please try again or check your browser's print settings.");
+  reset();setStatus("Print failed");
+  alert("Could not open Print. Please try again.");
  }
 }
 function clearPresenterTimer(){if(presenterInterval!==null){clearInterval(presenterInterval);presenterInterval=null}}
@@ -721,10 +782,10 @@ function startPresent(presenter){
  presenterInterval=setInterval(updateTimer,1000);updateTimer();
 }
 function exitPresent(){presenting=false;presenterMode=false;clearPresenterTimer();$("#pmPresentOverlay").classList.remove("open");$("#pmPresentOverlay").classList.add("pm-hidden");$("#pmPresentOverlay").classList.remove("presenter");if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(function(){});$("#pmPresentBtn").focus()}
-document.addEventListener("fullscreenchange",function(){if(!document.fullscreenElement)clearPresenterTimer()});
+
 
 function drawPresent(){
- if(!presenting||!deck)return;const s=currentSlide();renderSlideTo($("#pmPresentSlide"),s,false);const animated=$("#pmPresentSlide");animated.classList.remove("pm-slide-arrive");void animated.offsetWidth;animated.classList.add("pm-slide-arrive");renderSlideTo($("#pmPresenterCurrent"),s,false);const next=deck.slides[selectedIndex()+1]||s;renderSlideTo($("#pmPresenterNext"),next,false);$("#pmPresentTitle").textContent=deck.name||"Presentation";$("#pmPresentCounter").textContent=(selectedIndex()+1)+" / "+deck.slides.length;$("#pmPresentProgress").style.width=((selectedIndex()+1)/deck.slides.length*100)+"%";$("#pmPresenterNotes").textContent=s.notes||"No notes for this slide.";$("#pmPresenterViewBtn").textContent=presenterMode?"Audience view":"Presenter view";
+ if(!presenting||!deck)return;const s=currentSlide();$("#pmPresentSlide").style.width="min(100%, calc((100vh - 130px) * "+(deck.ratio==="4:3"?"4 / 3":"16 / 9")+"))";renderSlideTo($("#pmPresentSlide"),s,false);const animated=$("#pmPresentSlide");animated.classList.remove("pm-slide-arrive");void animated.offsetWidth;animated.classList.add("pm-slide-arrive");renderSlideTo($("#pmPresenterCurrent"),s,false);const next=deck.slides[selectedIndex()+1]||s;renderSlideTo($("#pmPresenterNext"),next,false);$("#pmPresentTitle").textContent=deck.name||"Presentation";$("#pmPresentCounter").textContent=(selectedIndex()+1)+" / "+deck.slides.length;$("#pmPresentProgress").style.width=((selectedIndex()+1)/deck.slides.length*100)+"%";$("#pmPresenterNotes").textContent=s.notes||"No notes for this slide.";$("#pmPresenterViewBtn").textContent=presenterMode?"Audience view":"Presenter view";
 }
 function presentStep(delta){const i=selectedIndex()+delta;if(i<0||i>=deck.slides.length)return;activeSlideId=deck.slides[i].id;selectedObjectId=null;drawPresent()}
 function togglePresenterView(){presenterMode=!presenterMode;$("#pmPresentOverlay").classList.toggle("presenter",presenterMode);drawPresent()}
@@ -736,21 +797,22 @@ function showTour(){$("#pmTourOverlay").classList.remove("pm-hidden");$("#pmTour
 function nextTour(){if(tourIndex>=3){endTour();return}tourIndex++;showTour()}
 function endTour(){$("#pmTourOverlay").classList.add("pm-hidden");$("#pmTourOverlay").classList.remove("open");try{safeStorageSetItem("sitecraft-presentation-tour-seen","1")}catch(_){}}
 function init(){
- safeLoadStored();renderProjectList();bindEvents();
- $("#pmAddSlideBtn").addEventListener("contextmenu",function(e){e.preventDefault();addSlide()});
+ renderProjectList();bindEvents();
  const seen=(function(){try{return localStorage.getItem("sitecraft-presentation-tour-seen")}catch(_){return "1"}})();
  if(!seen)setTimeout(startTour,450);
 }
 init();
 window.pmExportPptx=exportPptx;window.pmExportPdf=exportPdf;window.pmExportPngs=exportPngs;window.pmExportJson=exportJson;
-const exportGroup=document.createElement("div");exportGroup.className="pm-tool-group";exportGroup.innerHTML='<button class="pm-btn small" id="pmPptxExport">Download PPTX</button><button class="pm-btn small" id="pmPdfExport">Download PDF</button><button class="pm-btn small" id="pmPngExport">Download PNGs</button>';
+const exportGroup=document.createElement("div");exportGroup.className="pm-tool-group";exportGroup.innerHTML='<button class="pm-btn small" id="pmPptxExport">Download PPTX</button><button class="pm-btn small" id="pmPdfExport">Download PDF</button><button class="pm-btn small" id="pmPngExport">Download PNGs</button><button class="pm-btn small" id="pmPrintBtn">Print</button>';
 $("#pmExportProjectBtn").parentElement.appendChild(exportGroup);
-const pptxButton=$("#pmPptxExport"),pdfButton=$("#pmPdfExport"),pngButton=$("#pmPngExport");[pptxButton,pngButton].forEach(btn=>btn.disabled=true);pptxButton.textContent="Loading export engine...";
-pptxButton.addEventListener("click",exportPptx);pdfButton.addEventListener("click",exportPdf);pngButton.addEventListener("click",exportPngs);
-function loadPptxEngine(){const script=document.createElement("script");script.src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js";script.onload=function(){if(window.PptxGenJS){pptxButton.disabled=false;pptxButton.textContent="Download PPTX";pdfButton.disabled=false;pngButton.disabled=false;setStatus("Export engine ready")}else{pptxButton.textContent="PPTX unavailable";pngButton.disabled=false;setStatus("PPTX engine did not initialize")}};script.onerror=function(){pptxButton.textContent="PPTX unavailable";pngButton.disabled=false;setStatus("Could not load PPTX export; PDF and PNG still work. Check your connection to retry.")};document.head.appendChild(script)}loadPptxEngine();
+$("#pmPptxExport").addEventListener("click",exportPptx);$("#pmPdfExport").addEventListener("click",exportPdf);$("#pmPngExport").addEventListener("click",exportPngs);$("#pmPrintBtn").addEventListener("click",printDeck);
 $("#pmSlideCanvas").addEventListener("click",function(e){if(e.target.id==="pmSlideCanvas"){selectedObjectId=null;updateSelectionUI();syncInspector()}});
-const savedId=(function(){try{return localStorage.getItem(CURRENT_KEY)}catch(_){return null}})();
-if(savedId){const p=projects.find(x=>x.id===savedId);if(p)openProject(p)}
+(async function(){
+ await loadProjects();renderProjectList();if(projectOpen)return;
+ let savedId=null;if(storageMode==="idb"){try{savedId=await metaGet("current")}catch(_){}}
+ if(!savedId){try{savedId=localStorage.getItem(CURRENT_KEY)}catch(_){}}
+ if(savedId&&!projectOpen){const p=projects.find(x=>x.id===savedId);if(p)openProject(p)}
+})();
 })();
 </script>
 <script>
