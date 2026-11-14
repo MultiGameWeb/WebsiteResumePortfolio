@@ -976,6 +976,14 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
         { img: 'review-3.webp', label: 'Ravi', line: 'Happy customer', head: 'Best price in town and genuine service.' },
       ],
     },
+    'ad-story': {
+      title: 'Brew & Bloom Cafe', subtitle: 'Your new coffee spot ☕', contact: '98765 43210', closing: 'Come say hi!', badge: 'Now open',
+      scenes: [
+        { img: 'story-1.webp', label: 'Fresh every morning', head: 'Latte with love', line: '₹149' },
+        { img: 'story-2.webp', label: 'Cozy corners', head: 'Catch up over coffee', line: 'Free wifi' },
+        { img: 'story-3.webp', label: 'Baked today', head: 'Croissants & more', line: 'From ₹79' },
+      ],
+    },
   };
   const exampleImages = new Map();
   function exampleImage(name) {
