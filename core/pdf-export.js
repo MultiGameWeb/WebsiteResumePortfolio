@@ -20,13 +20,13 @@ function buildPdf(pages,wPt,hPt,title){
  var catalog=n(),pagesId=n(),font=n(),info=n(),pageIds=[];
  pages.forEach(function(pg){
   var pageId=n(),contentId=n(),imgId=n(),annIds=pg.links.map(function(){return n()});pageIds.push(pageId);
-  var c="q "+wPt.toFixed(2)+" 0 0 "+hPt.toFixed(2)+" 0 0 cm /Im0 Do Q\nBT 3 Tr\n";
-  pg.texts.forEach(function(t){c+="/F1 "+t.size.toFixed(2)+" Tf "+t.tz.toFixed(1)+" Tz 1 0 0 1 "+t.x.toFixed(2)+" "+t.y.toFixed(2)+" Tm ("+pdfText(t.str)+") Tj\n"});
+  var pw=pg.w||wPt,ph=pg.h||hPt,c="q "+pw.toFixed(2)+" 0 0 "+ph.toFixed(2)+" 0 0 cm /Im0 Do Q\nBT 3 Tr\n";
+  pg.texts.forEach(function(t){c+="/F1 "+t.size.toFixed(2)+" Tf "+t.tz.toFixed(1)+" Tz "+(t.m?t.m.map(function(v){return (+v.toFixed(4)).toString()}).join(" "):"1 0 0 1")+" "+t.x.toFixed(2)+" "+t.y.toFixed(2)+" Tm ("+pdfText(t.str)+") Tj\n"});
   c+="ET";
   objs[contentId-1]={dict:"<< /Length "+c.length+" >>",stream:latin1Bytes(c)};
   objs[imgId-1]={dict:"<< /Type /XObject /Subtype /Image /Width "+pg.iw+" /Height "+pg.ih+" /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length "+pg.jpeg.length+" >>",stream:pg.jpeg};
   pg.links.forEach(function(l,i){objs[annIds[i]-1]={dict:"<< /Type /Annot /Subtype /Link /Rect ["+[l.x1,l.y1,l.x2,l.y2].map(function(v){return v.toFixed(2)}).join(" ")+"] /Border [0 0 0] /A << /S /URI /URI ("+pdfText(l.url)+") >> >>"}});
-  objs[pageId-1]={dict:"<< /Type /Page /Parent "+pagesId+" 0 R /MediaBox [0 0 "+wPt.toFixed(2)+" "+hPt.toFixed(2)+"] /Resources << /Font << /F1 "+font+" 0 R >> /XObject << /Im0 "+imgId+" 0 R >> >> /Contents "+contentId+" 0 R"+(annIds.length?" /Annots ["+annIds.map(function(a){return a+" 0 R"}).join(" ")+"]":"")+" >>"};
+  objs[pageId-1]={dict:"<< /Type /Page /Parent "+pagesId+" 0 R /MediaBox [0 0 "+pw.toFixed(2)+" "+ph.toFixed(2)+"] /Resources << /Font << /F1 "+font+" 0 R >> /XObject << /Im0 "+imgId+" 0 R >> >> /Contents "+contentId+" 0 R"+(annIds.length?" /Annots ["+annIds.map(function(a){return a+" 0 R"}).join(" ")+"]":"")+" >>"};
  });
  objs[catalog-1]={dict:"<< /Type /Catalog /Pages "+pagesId+" 0 R >>"};
  objs[pagesId-1]={dict:"<< /Type /Pages /Kids ["+pageIds.map(function(p){return p+" 0 R"}).join(" ")+"] /Count "+pageIds.length+" >>"};
@@ -90,5 +90,5 @@ function capture(root,opts){
   });
  });
 }
-window.SiteCraftPdf={loadScript:loadScript,buildPdf:buildPdf,collectWords:collectWords,capture:capture};
+window.SiteCraftPdf={loadScript:loadScript,buildPdf:buildPdf,collectWords:collectWords,capture:capture,helvWidth:helvWidth};
 })();
