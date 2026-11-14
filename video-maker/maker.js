@@ -968,6 +968,14 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
         { img: 'compare-4.webp', label: '', head: 'Salon-smooth hair', line: '₹1,499' },
       ],
     },
+    'ad-review': {
+      title: 'GlowRenew Skincare', subtitle: 'Loved by 10,000+ customers', contact: '98765 43210', closing: 'Try it yourself', badge: 'Rated 4.9★',
+      scenes: [
+        { img: 'review-1.webp', label: 'Priya', line: 'Hyderabad', head: 'My skin has never felt this fresh. Ordering again!' },
+        { img: 'review-2.webp', label: 'The Sharma family', line: 'Regulars', head: 'Every weekend ends here. The kids love it!' },
+        { img: 'review-3.webp', label: 'Ravi', line: 'Happy customer', head: 'Best price in town and genuine service.' },
+      ],
+    },
   };
   const exampleImages = new Map();
   function exampleImage(name) {
