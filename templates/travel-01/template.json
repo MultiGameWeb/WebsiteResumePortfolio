@@ -1,0 +1,1073 @@
+{
+  "id": "travel-01",
+  "name": "Travel Agency — Sri Venkateswara Tours & Travels",
+  "category": "Travel & Tours",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Agency"
+    },
+    {
+      "id": "menu",
+      "label": "Tour Packages & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Offers & Deals"
+    },
+    {
+      "id": "work",
+      "label": "Why Travel With Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Trip Planning Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Office Name",
+      "required": true,
+      "placeholder": "Sri Venkateswara Tours & Travels"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Office Manager",
+      "placeholder": "K. Srinivas Rao"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Holidays · Flights · Hotels · Visa"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Trips planned with care, from Hyderabad."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Office",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Your next holiday, planned for you."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Tours · flights · hotels"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "trips@svtours.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Office Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Mon–Sat · 10:00 AM – 8:00 PM · Sun 11:00 AM – 3:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Sri Venkateswara Tours & Travels",
+      "ownerName": "K. Srinivas Rao",
+      "tagline": "Holidays · Flights · Hotels · Visa",
+      "motto": "Trips planned with care, from Hyderabad.",
+      "about": "Sri Venkateswara Tours & Travels in Secunderabad has planned holidays for families, couples and groups for 14 years. We book flights, hotels, transfers and sightseeing in one go, help with visas, and stay in touch with you during the trip."
+    },
+    "home": {
+      "eyebrow": "TOURS · FLIGHTS · HOTELS",
+      "title": "Your next holiday, planned for you.",
+      "text": "Beaches, hills, heritage tours and international holidays at honest prices. Tell us your dates and budget on WhatsApp."
+    },
+    "hero": "https://images.unsplash.com/photo-1473625247510-8ceb1760943f?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "Goa Beach Holiday · 4N/5D",
+        "category": "Domestic",
+        "price": "From ₹12,999",
+        "description": "Beach stay, sightseeing and water sports. Flights optional.",
+        "tag": "Bestseller",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Golden sunset over a calm sandy beach",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Kashmir Valley Tour · 6N/7D",
+        "category": "Domestic",
+        "price": "From ₹24,999",
+        "description": "Srinagar, Gulmarg and Pahalgam with sightseeing and stays.",
+        "tag": "Honeymoon",
+        "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Snow mountains rising above the clouds at sunset",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Rajasthan Heritage Tour · 6N/7D",
+        "category": "Domestic",
+        "price": "From ₹18,999",
+        "description": "Jaipur, Jodhpur and Udaipur forts and palaces with a driver.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Pink palace façade in Jaipur with decorated horses in the street",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Golden Triangle · 5N/6D",
+        "category": "Domestic",
+        "price": "From ₹15,999",
+        "description": "Delhi, Agra and Jaipur with the Taj Mahal visit.",
+        "tag": "Popular",
+        "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Taj Mahal reflected in the long garden pool",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Island Getaway · 5N/6D",
+        "category": "Domestic",
+        "price": "From ₹27,999",
+        "description": "Island hopping, beaches and snorkelling. Flights extra.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Green rocky island in clear blue water",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Bali Holiday · 5N/6D",
+        "category": "International",
+        "price": "From ₹39,999",
+        "description": "Temples, beaches and island tours with airport transfers.",
+        "tag": "New",
+        "image": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Temple on a lake in Bali with flowers in front",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Dubai Tour · 4N/5D",
+        "category": "International",
+        "price": "From ₹42,999",
+        "description": "City tour, desert safari and Burj Khalifa visit. Visa help included.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Dubai skyline with the Burj Khalifa at dusk",
+        "enabled": true
+      },
+      {
+        "id": "p8",
+        "name": "Malaysia Holiday · 5N/6D",
+        "category": "International",
+        "price": "From ₹44,999",
+        "description": "Kuala Lumpur and Genting Highlands with city and theme park tours.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Petronas Towers lit up at dusk",
+        "enabled": true
+      },
+      {
+        "id": "p9",
+        "name": "Hotel & Resort Booking",
+        "category": "Stays & Flights",
+        "price": "From ₹2,499 / night",
+        "description": "Hotels and resorts across India at the best available rates.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Wooden resort with a pool and sun loungers",
+        "enabled": true
+      },
+      {
+        "id": "p10",
+        "name": "Flight Tickets & Visa Help",
+        "category": "Stays & Flights",
+        "price": "Service fee ₹499",
+        "description": "Domestic and international tickets, plus visa and passport guidance.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Aeroplane wing above the clouds",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Honeymoon Special",
+        "description": "Candle-light dinner, flower bed decoration and a private cab on selected packages.",
+        "price": "From ₹29,999 / couple",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Family Group Offer",
+        "description": "Kids under 5 travel free. 10% off for groups of 6 or more.",
+        "price": "10% off",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Early Bird Deal",
+        "description": "Book 60 days before travel and save up to 15% on selected packages.",
+        "price": "Up to 15% off",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "✈",
+        "title": "Best price",
+        "description": "We compare flights and hotels so you pay a fair price.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "Complete planning",
+        "description": "Flights, stay, transfers and sightseeing in one booking.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "☎",
+        "title": "Trip support",
+        "description": "Call us any time during your trip.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Pay in parts",
+        "description": "Pay a small advance and the rest before you travel.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "x1",
+        "name": "Domestic holiday",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "International holiday",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "Flights and hotels only",
+        "enabled": true
+      },
+      {
+        "id": "x4",
+        "name": "Group or corporate tour",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Heritage tours",
+        "alt": "Taj Mahal seen through a carved stone arch",
+        "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Beach breaks",
+        "alt": "Palm tree and umbrella on a white sand beach",
+        "image": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Mountain escapes",
+        "alt": "Small boat on a turquoise mountain lake",
+        "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Road trips",
+        "alt": "Empty road winding through red desert rocks",
+        "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Kukatpally",
+        "text": "Our Goa trip was perfectly planned. Hotel, cabs and sightseeing were all on time and the price was fair.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Madhapur",
+        "text": "They arranged our Dubai visa and tickets within a week. Very helpful and always picked up our calls.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Secunderabad",
+        "text": "Booked a Kashmir honeymoon package. Everything was smooth and they even called to check on us during the trip.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "Are flights included in the packages?",
+        "answer": "Packages are shown with and without flights. Tell us your departure city and we’ll quote both ways.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Do you help with visas?",
+        "answer": "Yes, for Dubai, Malaysia, Bali and other countries. Our service fee depends on the country.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "How do I pay?",
+        "answer": "Pay a small advance by UPI or bank transfer to confirm. The balance is due before travel. You get a written receipt.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Can you plan a custom trip?",
+        "answer": "Yes. Share your dates, budget and what you like, and we’ll plan a trip just for you.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "What if I need to cancel?",
+        "answer": "Cancellation charges depend on the airline, hotel and package. We explain them in writing before you pay.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "10:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "10:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "10:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "10:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "10:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "10:00 AM",
+        "close": "8:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "11:00 AM",
+        "close": "3:00 PM",
+        "closed": false,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "trips@svtours.example",
+      "address": "Shop 5, SD Road, Secunderabad, Telangana 500003",
+      "maps": "https://maps.google.com/?q=SD+Road+Secunderabad",
+      "hours": "Mon–Sat · 10:00 AM – 8:00 PM · Sun 11:00 AM – 3:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:travel-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Office Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Office name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the office",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "package",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Package name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Domestic, International, Stays & Flights)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. New, Offer)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New package",
+          "category": "Domestic",
+          "price": "From ₹9,999",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Offers & Deals",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "Ask for price",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Planning Form: Trip Types",
+        "type": "collection",
+        "itemLabel": "trip type",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Trip type"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New trip type",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "10:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Packages",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Offers & deals",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why travel with us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Trip planning form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
