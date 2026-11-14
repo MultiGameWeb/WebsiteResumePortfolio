@@ -12,6 +12,7 @@ loaded only when a feature needs them.
 | `regenerator-runtime.js` | 0.14.1 | MIT | needed by fontkit |
 | `pdfjs/pdf.min.mjs`, `pdfjs/pdf.worker.min.mjs` | pdfjs-dist 4.4.168 | Apache-2.0 | PDF Tools (read PDFs) |
 | `docx.min.js` | docx 9.9.0, minified with terser | MIT | Document Editor and PDF Tools Word export |
+| `pdf-lib-secure.min.js` | @cantoo/pdf-lib 2.11.1 (pdf-lib fork with encryption) | MIT | PDF Tools Protect / Unlock PDF (loaded only for those tools) |
 | `pptxgen.bundle.js` | pptxgenjs 3.12.0 (bundle, includes JSZip) | MIT | Presentation Maker PPTX export |
 | `html2canvas.min.js` | 1.4.1 | MIT | Document Editor PNG export |
 | `fonts/NotoSans*_400Regular.ttf` | @expo-google-fonts 0.4.x | SIL Open Font License 1.1 (Noto fonts) | PDF Tools (Indian-language text) |
