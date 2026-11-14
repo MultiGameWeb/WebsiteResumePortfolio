@@ -259,5 +259,8 @@ function scBindPay(root){
     });
   });
 }
-export function render(d={},selected=[]){return scPay(scPreUpiRender(d,selected),d,selected);}
+function scSeoBaseRender(d={},selected=[]){return scPay(scPreUpiRender(d,selected),d,selected);}
 export function init(root,...rest){const r=scPreUpiInit(root,...rest);try{scBindPay(root);}catch(e){}return r;}
+
+// SEO: page title, description, business details for Google and tab icon (core/pack.js).
+export function render(d={},selected=[]){const h=scSeoBaseRender(d,selected);try{if(typeof window!=="undefined"&&window.SiteCraftPack&&window.SiteCraftPack.seo)window.SiteCraftPack.seo(d,"Gyms & Fitness Centers")}catch(e){}return h}
