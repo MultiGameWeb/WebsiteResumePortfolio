@@ -1008,6 +1008,15 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
         { img: 'kinetic-3.webp', label: 'Happy clients', head: 'Leads on your phone', line: 'Reports every week' },
       ],
     },
+    'ad-event': {
+      title: 'Annapurna Supermarket', subtitle: 'Now open in your neighbourhood', contact: '98765 43210', closing: 'Visit us this weekend', badge: 'Grand opening',
+      details: ['Sunday, 24 Nov', '9:00 AM onwards', 'Main Road, Warangal'],
+      scenes: [
+        { img: 'event-1.webp', label: 'We are open!', head: 'A new store for your family', line: '20% off today' },
+        { img: 'event-2.webp', label: 'The big moment', head: 'Celebrate with us', line: 'Free samples & sweets' },
+        { img: 'event-3.webp', label: 'Everything fresh', head: 'Groceries to gifts', line: 'Weekly savings' },
+      ],
+    },
   };
   const exampleImages = new Map();
   function exampleImage(name) {
