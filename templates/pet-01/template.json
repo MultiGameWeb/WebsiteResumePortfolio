@@ -1,0 +1,1073 @@
+{
+  "id": "pet-01",
+  "name": "Pet Shop & Clinic — Happy Paws",
+  "category": "Pet Shops & Clinics",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Shop"
+    },
+    {
+      "id": "menu",
+      "label": "Services & Prices"
+    },
+    {
+      "id": "combos",
+      "label": "Offers & Care Packs"
+    },
+    {
+      "id": "work",
+      "label": "Why Pet Parents Trust Us"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Pet Booking Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Shop Name",
+      "required": true,
+      "placeholder": "Happy Paws Pet Shop & Clinic"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Shop Manager",
+      "placeholder": "Dr. Anitha Reddy"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Grooming · Vet · Food · Accessories"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Everything your pet needs, in one place."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Shop",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Happy pets, happy families."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Pet shop · clinic · grooming"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "hello@happypaws.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Shop Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Daily · 9:00 AM – 9:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Happy Paws Pet Shop & Clinic",
+      "ownerName": "Dr. Anitha Reddy",
+      "tagline": "Grooming · Vet · Food · Accessories",
+      "motto": "Everything your pet needs, in one place.",
+      "about": "Happy Paws in Madhapur is a pet shop and clinic run by a qualified veterinary doctor. We offer grooming, vaccination, boarding and training, and stock quality food, treats and accessories for dogs, cats and small pets."
+    },
+    "home": {
+      "eyebrow": "PET SHOP · CLINIC · GROOMING",
+      "title": "Happy pets, happy families.",
+      "text": "Grooming, vet care, boarding, training, food and accessories for your dog, cat or small pet. Book on WhatsApp."
+    },
+    "hero": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "Dog Bath & Grooming",
+        "category": "Grooming",
+        "price": "From ₹599",
+        "description": "Bath, haircut, nail clipping and ear cleaning for small, medium and large dogs.",
+        "tag": "Most booked",
+        "image": "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Golden retriever being groomed by its handler",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Vet Consultation",
+        "category": "Vet",
+        "price": "₹400",
+        "description": "Check-ups, tests and treatment by our veterinary doctor. Walk-in or by appointment.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Man hugging a golden retriever outdoors",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Vaccination & Deworming",
+        "category": "Vet",
+        "price": "From ₹350",
+        "description": "Puppy and adult vaccines with a vaccination card and reminders.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1561037404-61cd46aa615b?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Jack Russell terrier looking at the camera",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Kitten & Cat Care",
+        "category": "Grooming",
+        "price": "From ₹499",
+        "description": "Cat grooming, nail trim and flea treatment in a calm room.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Kitten reaching up against a mint background",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Day Care & Boarding",
+        "category": "Care",
+        "price": "From ₹399 / day",
+        "description": "A safe play area, walks and meals while you are away.",
+        "tag": "Safe & clean",
+        "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Two small dogs running along a path at sunset",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Training Classes",
+        "category": "Care",
+        "price": "From ₹3,500 / month",
+        "description": "Basic obedience and puppy training with a certified trainer.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Smiling beagle looking up at the camera",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Puppies & Kittens",
+        "category": "Pets & Supplies",
+        "price": "Ask for price",
+        "description": "Healthy, vaccinated and dewormed puppies and kittens. Visit to meet them.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1546527868-ccb7ee7dfa6a?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Tiny Yorkshire terrier puppy on a colourful rug",
+        "enabled": true
+      },
+      {
+        "id": "p8",
+        "name": "Dog Food & Treats",
+        "category": "Pets & Supplies",
+        "price": "From ₹149",
+        "description": "Dry food, wet food and treats from trusted brands.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Brown dog licking its lips",
+        "enabled": true
+      },
+      {
+        "id": "p9",
+        "name": "Clothes & Accessories",
+        "category": "Pets & Supplies",
+        "price": "From ₹199",
+        "description": "Collars, leashes, jackets, beds and toys for dogs and cats.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "French bulldog wearing a yellow sweatshirt",
+        "enabled": true
+      },
+      {
+        "id": "p10",
+        "name": "Hamsters & Rabbits",
+        "category": "Pets & Supplies",
+        "price": "From ₹250",
+        "description": "Small pets with cages, food and care tips.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Hamster standing on a white surface",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Grooming + Vaccination Pack",
+        "description": "Bath, haircut and the annual vaccine on one visit.",
+        "price": "From ₹999",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Monthly Care Plan",
+        "description": "Two grooming sessions and one health check every month.",
+        "price": "₹1,499 / month",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "First Visit Offer",
+        "description": "10% off your first grooming or consultation.",
+        "price": "10% off",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "♥",
+        "title": "Qualified vet",
+        "description": "Check-ups and treatment by a registered veterinary doctor.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "Gentle grooming",
+        "description": "Calm, trained groomers who handle pets with patience.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "⌂",
+        "title": "Safe boarding",
+        "description": "A clean play area with staff watching at all times.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Clear prices",
+        "description": "Prices confirmed before we start.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "x1",
+        "name": "Dog",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Cat",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "Rabbit or hamster",
+        "enabled": true
+      },
+      {
+        "id": "x4",
+        "name": "Other pet",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Best friends",
+        "alt": "Dog and cat cuddling together on grass",
+        "image": "https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Bright eyes",
+        "alt": "Husky with blue eyes",
+        "image": "https://images.unsplash.com/photo-1568572933382-74d440642117?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Fluffy cloud",
+        "alt": "Fluffy white Samoyed on a pink background",
+        "image": "https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Cool dude",
+        "alt": "French bulldog in a hoodie",
+        "image": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Madhapur",
+        "text": "Our Labrador loves the groomers here. He comes out clean, calm and happy every time.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Gachibowli",
+        "text": "The doctor explained my cat’s treatment clearly and the price was fair. I trust them now.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Kondapur",
+        "text": "Boarded our dog for a week. We got photo updates every day and he came back healthy and happy.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "Do I need an appointment?",
+        "answer": "Walk-ins are welcome for the shop and consultations. For grooming and boarding, please book so we can keep time for your pet.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "Are your puppies vaccinated?",
+        "answer": "Yes. Puppies are vaccinated and dewormed with a health card. Visit us to meet them before deciding.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Do you treat cats and small pets?",
+        "answer": "Yes, we treat dogs, cats, rabbits and hamsters. Ask us about other pets.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Is boarding safe?",
+        "answer": "Yes. Pets stay in a clean play area with staff watching them, and we send photo updates on WhatsApp.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "Do you offer home service?",
+        "answer": "Home grooming and vet visits are available nearby on request, with a small visit charge.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "9:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "9:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "9:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "9:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "9:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "9:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "9:00 AM",
+        "close": "9:00 PM",
+        "closed": false,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@happypaws.example",
+      "address": "Plot 18, Image Hospital Road, Madhapur, Hyderabad, Telangana 500081",
+      "maps": "https://maps.google.com/?q=Madhapur+Hyderabad",
+      "hours": "Daily · 9:00 AM – 9:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:pet-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Shop Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Shop name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the shop",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "service",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Service name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Grooming, Vet, Care, Pets & Supplies)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. New, Offer)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New service",
+          "category": "Grooming",
+          "price": "From ₹399",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Offers & Care Packs",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "Ask for price",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Booking Form: Pet Types",
+        "type": "collection",
+        "itemLabel": "pet type",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Pet type"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New pet type",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "10:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Services & prices",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Offers & care packs",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "Why pet parents trust us",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Pet booking form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
