@@ -943,6 +943,31 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
         { img: 'sale-3.webp', label: 'Bags & footwear', head: 'Bags and shoes', line: 'From ₹499' },
       ],
     },
+    'ad-beat': {
+      title: 'Urban Kicks', subtitle: 'New street collection', contact: '98765 43210', closing: 'Grab yours now', badge: 'Drop 02',
+      scenes: [
+        { img: 'beat-1.webp', label: 'Street style', head: 'Own the street', line: '' },
+        { img: 'beat-2.webp', label: 'New sneakers', head: 'Fresh kicks', line: '₹1,999' },
+        { img: 'beat-3.webp', label: 'Squad goals', head: 'Made for the crew', line: '' },
+      ],
+    },
+    'ad-product': {
+      title: 'Nova Electronics', subtitle: 'Festive tech deals', contact: '98765 43210', closing: 'Order today', badge: 'New arrivals',
+      scenes: [
+        { img: 'product-1.webp', label: '108MP camera', head: 'Nova X5 smartphone', line: 'From ₹13,999' },
+        { img: 'product-2.webp', label: '40h battery', head: 'Bass Pro headphones', line: '₹2,499' },
+        { img: 'product-3.webp', label: 'Health tracking', head: 'Fit smartwatch', line: '₹3,299' },
+      ],
+    },
+    'ad-compare': {
+      title: 'SparkleClean Services', subtitle: 'See the difference', contact: '98765 43210', closing: 'Book a makeover', badge: 'Home & salon',
+      scenes: [
+        { img: 'compare-1.webp', label: 'Deep home cleaning', head: '', line: '' },
+        { img: 'compare-2.webp', label: '', head: 'Spotless in 3 hours', line: 'From ₹999' },
+        { img: 'compare-3.webp', label: 'Hair spa & styling', head: '', line: '' },
+        { img: 'compare-4.webp', label: '', head: 'Salon-smooth hair', line: '₹1,499' },
+      ],
+    },
   };
   const exampleImages = new Map();
   function exampleImage(name) {
