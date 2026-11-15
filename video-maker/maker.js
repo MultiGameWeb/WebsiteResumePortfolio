@@ -967,10 +967,43 @@ if(au)setInterval(()=>{if(on&&sn.dataset.on&&Math.abs(au.currentTime-t%au.durati
     $('#resultVideo').src = url;
     $('#downloadLink').href = url;
     $('#downloadLink').download = `${name}.${ext}`;
+    shareState.file = new File([blob], `${name}.${ext}`, { type: mime.split(';')[0] });
+    shareState.title = text('#titleInput') || 'My video';
+    shareState.contact = text('#contactInput');
+    $('#shareNote').textContent = '';
     $('#result').hidden = false;
     setStatus(ext === 'mp4' ? 'Your video is ready ✓' : 'Your video is ready ✓ (WebM format: if WhatsApp does not accept it, open this page in the latest Chrome for MP4.)');
     showPoster();
   }
+
+  // ---- Share on WhatsApp ----
+  // On phones the share sheet takes the video file itself, so it lands in
+  // WhatsApp (a chat, a group or Status) with no download step. Where files
+  // cannot be shared, the video is downloaded and WhatsApp opens with a ready
+  // message to attach it to.
+  const shareState = { file: null, title: '', contact: '' };
+
+  async function shareOnWhatsApp() {
+    const note = $('#shareNote');
+    const file = shareState.file;
+    if (!file) { note.textContent = 'Make your video first.'; return; }
+    const message = [shareState.title, shareState.contact ? `📞 ${shareState.contact}` : ''].filter(Boolean).join('\n');
+    try {
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file], title: shareState.title, text: message });
+        note.textContent = 'Shared ✓';
+        return;
+      }
+    } catch (error) {
+      if (error?.name === 'AbortError') return; // the person closed the share sheet
+    }
+    // Fallback: save the file, then open WhatsApp with the message.
+    const link = $('#downloadLink');
+    link.click();
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+    note.textContent = 'Your video was downloaded. In WhatsApp, tap 📎 and attach it (WhatsApp Status: open Status → My status → pick the video).';
+  }
+  $('#shareBtn')?.addEventListener('click', shareOnWhatsApp);
 
   // ---- Template examples ----
   // Sample photos and text for each ad template, played on the stage so
