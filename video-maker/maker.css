@@ -149,3 +149,9 @@ label[hidden] { display: none; }
 .vm-example-btn:hover, .vm-example-btn:focus-visible { border-color: #ec4899; background: rgba(236,72,153,.12); }
 .vm-example-canvas { width: 100%; height: auto; border-radius: 12px; background: #000; border: 1px solid var(--vm-line); }
 .vm-example-canvas[hidden] { display: none; }
+
+/* Music picker */
+.vm-music { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.vm-music button { padding: 9px 4px; }
+.vm-music-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.vm-music-row .vm-btn { min-height: 38px; padding: 0 14px; }
