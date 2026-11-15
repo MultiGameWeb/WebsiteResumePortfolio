@@ -2284,6 +2284,18 @@
     }
     deco(ctx, d, t, L.draw ? L.deco : (d.design?.deco || L.deco));
     L.chrome(ctx, d, t, seg, segs);
+    // Free videos carry a small mark (the editor draws its own for the
+    // preview and the MP4; this is for the stand-alone HTML video).
+    if (d.watermark) {
+      const size = Math.round(Math.min(d.w, d.h) * 0.028);
+      ctx.save();
+      ctx.font = `600 ${size}px ${F.sans}`;
+      ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+      ctx.globalAlpha = 0.75; ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = size * 0.4;
+      ctx.fillText('Made with SiteCraft', d.w - size, d.h - size * 0.8);
+      ctx.restore();
+    }
   }
 
   const api = {
