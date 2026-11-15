@@ -62,7 +62,7 @@
   const $ = (selector) => document.querySelector(selector);
   const canvas = $('#stage');
   const ctx = canvas.getContext('2d');
-  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null, length: 0, userPer: 3, slots: 0 };
+  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null, length: 0, userPer: 3, slots: 0, musicStyle: 'auto' };
   let frameRequest = 0;
   let example = null; // the template example playing on the stage, if any
   let audioContext = null;
@@ -730,6 +730,18 @@
     });
     const code = await (await fetch(document.querySelector('script[src*="video-maker/styles.js"]').src)).text();
     const data = spotData(images);
+    // The music goes inside the file too (a mono WAV, loops with the video).
+    let audio = '';
+    const choice = musicChoice();
+    if (choice && !(choice.kind === 'file' && state.music.file.size > 6e6)) {
+      try {
+        const buffer = await musicBuffer(choice);
+        const bytes = new Uint8Array(MUSIC.toWav(buffer));
+        let binary = '';
+        for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+        audio = `data:audio/wav;base64,${btoa(binary)}`;
+      } catch { audio = ''; }
+    }
     const json = JSON.stringify(data).replace(/</g, '\\u003c');
     const title = data.title.replace(/[<&"]/g, '');
     return `<!doctype html>
@@ -742,7 +754,8 @@ canvas{display:block;width:min(100%,calc((100vh - 110px) * ${data.w} / ${data.h}
 .ctl{display:flex;gap:10px}.ctl button{font:inherit;font-weight:700;padding:.7em 1.4em;border-radius:99px;border:0;cursor:pointer}
 </style></head><body>
 <canvas id="v" width="${data.w}" height="${data.h}" aria-label="${title} video"></canvas>
-<div class="ctl"><button id="pp">Pause</button><button id="rs">Restart</button></div>
+${audio ? `<audio id="au" src="${audio}" loop preload="auto"></audio>` : ''}
+<div class="ctl"><button id="pp">Pause</button><button id="rs">Restart</button>${audio ? '<button id="sn">🔇 Sound</button>' : ''}</div>
 <script>
 if(!CanvasRenderingContext2D.prototype.roundRect){CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h){this.rect(x,y,w,h)}}
 ${code}
@@ -753,8 +766,11 @@ const S=window.SiteCraftStyles,c=document.getElementById('v'),x=c.getContext('2d
 let t=0,last=0,on=true;
 Promise.all(D.photos.map(p=>new Promise(r=>{const i=new Image();i.onload=i.onerror=()=>r(i);i.src=p.img;if(p.look)i.__look=p.look;p.img=i}))).then(()=>document.fonts.ready).then(()=>{
 function loop(now){if(last&&on)t=(t+(now-last)/1000)%T;last=now;x.clearRect(0,0,D.w,D.h);S.frame(x,t,D);requestAnimationFrame(loop)}requestAnimationFrame(loop)});
-document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause':'Play'};
-document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('pp').textContent='Pause'};
+const au=document.getElementById('au'),sn=document.getElementById('sn'),sync=()=>{if(!au)return;if(on&&sn.dataset.on){au.currentTime=t%au.duration||0;au.play().catch(()=>{})}else au.pause()};
+if(sn)sn.onclick=()=>{sn.dataset.on=sn.dataset.on?'':'1';sn.textContent=sn.dataset.on?'🔊 Sound on':'🔇 Sound';sync()};
+document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause':'Play';sync()};
+document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('pp').textContent='Pause';sync()};
+if(au)setInterval(()=>{if(on&&sn.dataset.on&&Math.abs(au.currentTime-t%au.duration)>0.4)au.currentTime=t%au.duration},2000);
 </script></body></html>`;
   }
 
@@ -805,14 +821,41 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
 
   // ---- Playback and recording ----
 
+  // Which music plays: the customer's own file, a made-in-code style (Auto
+  // picks one that suits the template) or none. The made-in-code track is
+  // rendered for the exact length of the video and cached per style and length.
+  const MUSIC = window.SiteCraftMusic;
+  const musicCache = new Map();
+
+  function musicChoice() {
+    if (state.music?.file) return { kind: 'file' };
+    const pick = state.musicStyle;
+    if (!MUSIC || pick === 'off') return null;
+    const id = pick === 'auto' ? MUSIC.forTemplate(state.template.spot || state.template.id) : pick;
+    return { kind: 'style', id };
+  }
+
+  async function musicBuffer(choice) {
+    audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+    if (choice.kind === 'file') {
+      if (!state.music.buffer) state.music.buffer = await audioContext.decodeAudioData(await state.music.file.arrayBuffer());
+      return state.music.buffer;
+    }
+    const seconds = Math.ceil(totalSeconds());
+    const key = `${choice.id}:${seconds}`;
+    if (!musicCache.has(key)) musicCache.set(key, MUSIC.render(choice.id, seconds, audioContext, 11));
+    return musicCache.get(key);
+  }
+
   async function musicSource(destination) {
-    if (!state.music) return null;
+    const choice = musicChoice();
+    if (!choice) return null;
     audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
     if (audioContext.state === 'suspended') await audioContext.resume();
-    if (!state.music.buffer) state.music.buffer = await audioContext.decodeAudioData(await state.music.file.arrayBuffer());
+    const buffer = await musicBuffer(choice);
     const source = audioContext.createBufferSource();
-    source.buffer = state.music.buffer;
-    source.loop = true;
+    source.buffer = buffer;
+    source.loop = choice.kind === 'file';
     const gain = audioContext.createGain();
     const total = totalSeconds();
     const now = audioContext.currentTime;
@@ -889,7 +932,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     const type = pickType();
     const stream = canvas.captureStream(FPS);
     let source = null;
-    if (state.music) {
+    if (musicChoice()) {
       try {
         audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
         const destination = audioContext.createMediaStreamDestination();
@@ -1202,6 +1245,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
       if (template.spot && STYLES.layoutFor(state.spotStyle) !== template.spot) state.spotStyle = DEFAULT_STYLE[template.spot];
       if (template.spot && state.design) state.design = { ...state.design, layout: template.spot };
       markTemplate();
+      refreshMusicNote?.();
       fontsReady().then(showPoster);
       renderPhotos();
     });
@@ -1262,7 +1306,48 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   $('#musicInput').addEventListener('change', (event) => {
     const file = event.target.files?.[0];
     state.music = file ? { file, buffer: null } : null;
+    refreshMusicNote();
   });
+
+  // Music choices: Auto, one of the made-in-code styles, or Off.
+  const musicList = $('#musicList');
+  function refreshMusicNote() {
+    const note = $('#musicNote');
+    if (!note) return;
+    const choice = musicChoice();
+    note.textContent = state.music?.file ? `Using your file “${state.music.file.name}”.`
+      : !choice ? 'No music.'
+      : `Music: ${MUSIC.STYLES[choice.id].name}, made for this video — no copyright problem.`;
+  }
+  musicList?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-music]');
+    if (!button || busyRecording()) return;
+    state.musicStyle = button.dataset.music;
+    state.music = null;
+    $('#musicInput').value = '';
+    for (const item of musicList.children) item.setAttribute('aria-checked', String(item === button));
+    refreshMusicNote();
+  });
+  $('#musicTry')?.addEventListener('click', async () => {
+    const button = $('#musicTry');
+    if (state.musicAudio) { try { state.musicAudio.stop(); } catch {} state.musicAudio = null; button.textContent = '🔊 Listen'; return; }
+    const choice = musicChoice();
+    if (!choice) { refreshMusicNote(); return; }
+    button.textContent = 'Making…';
+    try {
+      audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioContext.state === 'suspended') await audioContext.resume();
+      const buffer = await musicBuffer(choice);
+      const source = audioContext.createBufferSource();
+      source.buffer = buffer;
+      source.connect(audioContext.destination);
+      source.onended = () => { state.musicAudio = null; button.textContent = '🔊 Listen'; };
+      source.start();
+      state.musicAudio = source;
+      button.textContent = '■ Stop';
+    } catch { button.textContent = '🔊 Listen'; }
+  });
+  refreshMusicNote();
 
   for (const id of ['#titleInput', '#subtitleInput', '#contactInput', '#closingInput', '#badgeInput', '#detailsInput']) $(id)?.addEventListener('input', showPoster);
   $('#lookBtn')?.addEventListener('click', async () => {
