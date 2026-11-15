@@ -42,6 +42,61 @@
     window.setTimeout(() => $('#amDetails').focus({ preventScroll: true }), 450);
   }
 
+  // Large videos can live on YouTube or Google Drive: an entry may give a
+  // full link or just the id in `youtube` or `drive` instead of an MP4 `src`.
+  function youtubeId(value) {
+    const text = String(value || '').trim();
+    const match = text.match(/(?:youtu\.be\/|youtube\.com\/(?:shorts\/|embed\/|live\/|watch\?(?:.*&)?v=))([A-Za-z0-9_-]{11})/) || text.match(/^([A-Za-z0-9_-]{11})$/);
+    return match ? match[1] : '';
+  }
+  function driveId(value) {
+    const text = String(value || '').trim();
+    const match = text.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:.*&)?id=)([A-Za-z0-9_-]{10,})/) || text.match(/^([A-Za-z0-9_-]{20,})$/);
+    return match ? match[1] : '';
+  }
+
+  // A play button on a picture; the video itself loads only when tapped.
+  function embedPlayer(title, embedUrl, posterUrl) {
+    const box = make('div', 'am-embed');
+    const open = make('button', 'am-embed-play');
+    open.type = 'button';
+    open.setAttribute('aria-label', `Play ${title}`);
+    if (posterUrl) {
+      const img = document.createElement('img');
+      img.src = posterUrl;
+      img.alt = '';
+      img.loading = 'lazy';
+      open.append(img);
+    }
+    open.append(make('span', 'am-embed-icon', '▶'));
+    open.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = embedUrl;
+      frame.title = title;
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      frame.allowFullscreen = true;
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      box.replaceChildren(frame);
+    });
+    box.append(open);
+    return box;
+  }
+
+  function playerFor(video) {
+    const yt = youtubeId(video.youtube);
+    if (yt) return embedPlayer(video.title, `https://www.youtube-nocookie.com/embed/${yt}?autoplay=1&rel=0&playsinline=1&modestbranding=1`, video.poster || `https://i.ytimg.com/vi/${yt}/hqdefault.jpg`);
+    const drive = driveId(video.drive);
+    if (drive) return embedPlayer(video.title, `https://drive.google.com/file/d/${drive}/preview`, video.poster || '');
+    const player = document.createElement('video');
+    player.src = video.src;
+    if (video.poster) player.poster = video.poster;
+    player.controls = true;
+    player.playsInline = true;
+    player.preload = 'none';
+    player.title = video.title;
+    return player;
+  }
+
   function renderTabs() {
     const used = new Set(data.videos.map((video) => video.category));
     const list = [{ id: 'all', name: 'All' }, ...data.categories.filter((category) => used.has(category.id))];
@@ -57,16 +112,10 @@
 
   function renderGrid() {
     const names = Object.fromEntries(data.categories.map((category) => [category.id, category.name]));
-    const shown = data.videos.filter((video) => filter === 'all' || video.category === filter);
+    const shown = data.videos.filter((video) => (video.src || youtubeId(video.youtube) || driveId(video.drive)) && (filter === 'all' || video.category === filter));
     grid.replaceChildren(...shown.map((video) => {
       const card = make('article', 'am-card');
-      const player = document.createElement('video');
-      player.src = video.src;
-      if (video.poster) player.poster = video.poster;
-      player.controls = true;
-      player.playsInline = true;
-      player.preload = 'none';
-      player.title = video.title;
+      const player = playerFor(video);
       const body = make('div', 'am-card-body');
       const meta = make('div', 'am-meta');
       meta.append(make('span', '', names[video.category] || video.category), make('span', '', video.length || ''));
