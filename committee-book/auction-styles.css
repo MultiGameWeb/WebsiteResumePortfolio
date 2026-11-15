@@ -14,3 +14,9 @@
 @media print{body{background:#fff!important}.header,.sidebar,.demo-banner,.heading-actions,.btn,.lang-btn,.top-btn,.rule-toolbar,.bid-entry,.toast-area{display:none!important}.shell{display:block;max-width:none;padding:0;margin:0}.main{width:100%}.panel,.stat{box-shadow:none;break-inside:avoid}.table-wrap{overflow:visible}table{min-width:0;font-size:11px}td,th{padding:5px 4px}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(4,1fr)}}
 
 .grid2>*,.grid3>*,.main>*,.panel{min-width:0}
+
+/* Links the site navigation replaces (duplicate Back/Home) stay hidden */
+[hidden]{display:none!important}
+
+/* Contrast (WCAG AA) */
+.empty{color:#625b70!important}

@@ -2,6 +2,7 @@
 "use strict";
 window.CHIT_SUITE_I18N={
 en:{
+newChit:"New chit",newChitConfirm:"Start a new, empty chit? The current records in this browser will be replaced. (Export a CSV first if you need them.)",newChitReady:"New chit ready. Rename the members, check the amounts and dates, then save.",potDivisible:"The pot must divide equally among the members (for example ₹1,00,000 for 10 members = ₹10,000 each).",
 pageTitleLottery:"Committee Book — Lottery Chit Manager",pageTitleRotation:"Committee Book — Fixed Rotation BC Chit Manager",brand:"Committee Book",templateLottery:"Lottery Chit / Kuri Chit Manager",templateRotation:"Committee Chit / BC Chit — Fixed Rotation Manager",template03:"TEMPLATE 03 · LOTTERY / KURI",template04:"TEMPLATE 04 · FIXED ROTATION",
 language:"తెలుగు",sitecraftHome:"SiteCraft Home",backTemplates:"All Chit Templates",demoNotice:"Front-end demo only",demoText:"This template saves your records in this browser only (use Reset demo to restore the sample); Google sign-in, shared database storage and verified payments are not active.",
 dashboard:"Dashboard",setup:"Chit Setup",members:"Members",draw:"Lucky Draw",timeline:"Fixed Timeline",payments:"Payments",rules:"Rules",reports:"Reports",overview:"Overview",resetDemo:"Reset demo",resetConfirm:"Reset this template to its original sample data?",
@@ -13,6 +14,7 @@ reportsTitle:"Reports & downloads",reportHelp:"Export member payments, draw/rota
 te:"placeholder",
 },
 te:{
+newChit:"కొత్త చిట్",newChitConfirm:"కొత్త ఖాళీ చిట్ ప్రారంభించాలా? ఈ బ్రౌజర్‌లోని ప్రస్తుత రికార్డులు మారిపోతాయి. (కావాలంటే ముందు CSV ఎగుమతి చేయండి.)",newChitReady:"కొత్త చిట్ సిద్ధం. సభ్యుల పేర్లు మార్చి, మొత్తాలు, తేదీలు చూసి సేవ్ చేయండి.",potDivisible:"పాట్ సభ్యులందరికీ సమానంగా భాగించబడాలి (ఉదా: 10 మందికి ₹1,00,000 = ఒక్కొక్కరికి ₹10,000).",
 pageTitleLottery:"కమిటీ బుక్ — లాటరీ చిట్ మేనేజర్",pageTitleRotation:"కమిటీ బుక్ — ఫిక్స్‌డ్ రొటేషన్ BC చిట్ మేనేజర్",brand:"కమిటీ బుక్",templateLottery:"లాటరీ చిట్ / కురి చిట్ మేనేజర్",templateRotation:"కమిటీ చిట్ / BC చిట్ — ఫిక్స్‌డ్ రొటేషన్ మేనేజర్",template03:"టెంప్లేట్ 03 · లాటరీ / కురి",template04:"టెంప్లేట్ 04 · ఫిక్స్‌డ్ రొటేషన్",
 language:"English",sitecraftHome:"SiteCraft హోమ్",backTemplates:"అన్ని చిట్ టెంప్లేట్లు",demoNotice:"ఫ్రంట్-ఎండ్ డెమో మాత్రమే",demoText:"ఈ టెంప్లేట్ మీ రికార్డులను ఈ బ్రౌజర్‌లో మాత్రమే సేవ్ చేస్తుంది (నమూనా కోసం రీసెట్ నొక్కండి); Google సైన్-ఇన్, షేర్డ్ డేటాబేస్, ధృవీకరించిన చెల్లింపులు ఇంకా యాక్టివ్ కావు.",
 dashboard:"డ్యాష్‌బోర్డ్",setup:"చిట్ సెటప్",members:"సభ్యులు",draw:"లక్కీ డ్రా",timeline:"ఫిక్స్‌డ్ టైమ్‌లైన్",payments:"చెల్లింపులు",rules:"నియమాలు",reports:"రిపోర్టులు",overview:"అవలోకనం",resetDemo:"డెమో రీసెట్",resetConfirm:"ఈ టెంప్లేట్‌ను అసలు నమూనా డేటాకు రీసెట్ చేయాలా?",
