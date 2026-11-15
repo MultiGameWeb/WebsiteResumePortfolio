@@ -159,3 +159,10 @@ label[hidden] { display: none; }
 /* Share on WhatsApp */
 .vm-whatsapp { background: #25d366; border-color: #25d366; color: #052e16; }
 .vm-whatsapp:hover, .vm-whatsapp:focus-visible { background: #1ebe5a; }
+
+/* Watermark unlock */
+.vm-unlock { display: grid; gap: 8px; padding: 14px; border: 1px solid var(--vm-line); border-radius: 16px; background: var(--vm-panel2); }
+.vm-unlock-status { margin: 0; font-weight: 700; font-size: 14px; }
+.vm-unlock [hidden] { display: none !important; }
+.vm-unlock-code { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+.vm-link { background: none; border: 0; padding: 4px 0; margin-right: 14px; color: #f9a8d4; font: inherit; font-size: 13px; font-weight: 700; text-decoration: underline; cursor: pointer; }

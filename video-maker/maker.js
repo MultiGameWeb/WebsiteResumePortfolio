@@ -62,7 +62,7 @@
   const $ = (selector) => document.querySelector(selector);
   const canvas = $('#stage');
   const ctx = canvas.getContext('2d');
-  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null, length: 0, userPer: 3, slots: 0, musicStyle: 'auto' };
+  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null, length: 0, userPer: 3, slots: 0, musicStyle: 'auto', clean: false, pass: null };
   let frameRequest = 0;
   let example = null; // the template example playing on the stage, if any
   let audioContext = null;
@@ -653,6 +653,7 @@
       layout: state.template.spot, style: state.spotStyle, design: state.design, w, h, intro: INTRO, per: state.perPhoto, outro: OUTRO,
       title: text('#titleInput') || 'Your business name', subtitle: text('#subtitleInput'), contact: text('#contactInput'),
       closing: text('#closingInput') || 'Visit us today', badge: text('#badgeInput'),
+      watermark: Boolean(images) && !state.clean,
       details: text('#detailsInput').split(/\n+/).map((line) => line.trim()).filter(Boolean).slice(0, 4),
       // One entry per scene; repeated photos keep their label and line but not
       // the headline, so the text does not repeat word for word.
@@ -804,7 +805,7 @@ if(au)setInterval(()=>{if(on&&sn.dataset.on&&Math.abs(au.currentTime-t%au.durati
     const total = totalSeconds();
     const edge = Math.max(clamp(1 - t / 0.4, 0, 1), clamp((t - (total - 0.6)) / 0.6, 0, 1));
     if (edge > 0) { ctx.fillStyle = `rgba(0,0,0,${edge})`; ctx.fillRect(0, 0, canvas.width, canvas.height); }
-    watermark();
+    if (!state.clean) watermark();
   }
 
   function showPoster() {
@@ -924,6 +925,7 @@ if(au)setInterval(()=>{if(on&&sn.dataset.on&&Math.abs(au.currentTime-t%au.durati
   async function makeVideo() {
     stopExample();
     applyLength();
+    await PASS.beginExport();
     if (state.recording) return;
     if (!state.photos.length) { setStatus('Add at least one photo first.'); return; }
     if (!window.MediaRecorder || !canvas.captureStream) { setStatus('This browser cannot make videos. Please use Chrome on Android or a computer.'); return; }
@@ -972,9 +974,156 @@ if(au)setInterval(()=>{if(on&&sn.dataset.on&&Math.abs(au.currentTime-t%au.durati
     shareState.contact = text('#contactInput');
     $('#shareNote').textContent = '';
     $('#result').hidden = false;
+    PASS.afterExport();
     setStatus(ext === 'mp4' ? 'Your video is ready ✓' : 'Your video is ready ✓ (WebM format: if WhatsApp does not accept it, open this page in the latest Chrome for MP4.)');
     showPoster();
   }
+
+  // ---- Watermark-free pass (₹99) ----
+  // Free videos carry a small mark. A pass (paid with Razorpay, or a code the
+  // owner gives) allows watermark-free exports for a day. The page only talks
+  // to the server when a pass is in use or the person opens the unlock panel,
+  // so the free tools still work fully offline.
+  const API_BASE = window.SITECRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
+  const PASS_KEY = 'sitecraft_video_pass';
+  const ORDER_KEY = 'sitecraft_video_order';
+  const store = {
+    get(key) { try { return localStorage.getItem(key) || ''; } catch { return ''; } },
+    set(key, value) { try { if (value) localStorage.setItem(key, value); else localStorage.removeItem(key); } catch {} },
+  };
+  const api = async (path, body) => {
+    const response = await fetch(`${API_BASE}/api/aivideo/pay/${path}`, body === undefined ? {} : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await response.json().catch(() => ({}));
+    return { status: response.status, ...data };
+  };
+
+  const PASS = {
+    config: null,
+    async loadConfig() {
+      if (this.config) return this.config;
+      try { this.config = await api('config'); } catch { this.config = { enabled: false, amount: 9900, exports: 5, hours: 24 }; }
+      return this.config;
+    },
+    show(message) { const note = $('#unlockNote'); if (note) note.textContent = message || ''; },
+    render() {
+      const box = $('#unlockBox');
+      if (!box) return;
+      const pass = state.pass;
+      $('#unlockStatus').textContent = pass?.valid ? `✓ Watermark-free · ${pass.left} export${pass.left === 1 ? '' : 's'} left · valid ${hoursLeft(pass.expiresAt)}` : 'Free videos carry a small “Made with SiteCraft” mark.';
+      $('#unlockPay').hidden = Boolean(pass?.valid);
+      $('#unlockPay').textContent = `🔓 Remove watermark · ₹${Math.round((this.config?.amount || 9900) / 100)}`;
+      $('#unlockMore').hidden = Boolean(pass?.valid);
+    },
+    // Checks the saved pass with the server (only when one is saved).
+    async refresh() {
+      const token = store.get(PASS_KEY);
+      if (!token) { state.pass = null; state.clean = false; this.render(); return; }
+      try {
+        const status = await api('status', { token });
+        state.pass = status.valid ? { token, valid: true, left: status.left, expiresAt: status.expiresAt } : null;
+        if (!status.valid && status.ok) store.set(PASS_KEY, '');
+      } catch { /* offline: keep the free watermark */ state.pass = null; }
+      state.clean = Boolean(state.pass?.valid);
+      this.render();
+      showPoster();
+    },
+    // Counts one export for a pass; without a valid pass the video is free
+    // (with the mark). The mark stays on while the export is recorded.
+    async beginExport() {
+      state.clean = false;
+      const token = store.get(PASS_KEY);
+      if (!token || !state.pass?.valid) { this.exporting = false; return; }
+      try {
+        const result = await api('redeem', { token });
+        if (result.ok) { state.pass.left = result.left; state.clean = true; this.exporting = true; return; }
+        this.show(result.error || 'This pass cannot be used.');
+        state.pass = null; store.set(PASS_KEY, '');
+      } catch { this.show('Could not reach the server, so this video has the free mark.'); }
+      this.exporting = false;
+    },
+    afterExport() {
+      if (this.exporting) {
+        this.exporting = false;
+        if (state.pass.left <= 0) { state.pass = null; store.set(PASS_KEY, ''); state.clean = false; }
+      }
+      state.clean = Boolean(state.pass?.valid);
+      this.render();
+    },
+    async apply(token, message) {
+      const status = await api('status', { token });
+      if (!status.valid) { this.show('That code is not valid, or it is used up or has expired.'); return false; }
+      store.set(PASS_KEY, token);
+      state.pass = { token, valid: true, left: status.left, expiresAt: status.expiresAt };
+      state.clean = true;
+      this.show(message || '');
+      this.render();
+      showPoster();
+      return true;
+    },
+    async applyCode() {
+      const code = ($('#unlockCode').value || '').trim().toLowerCase();
+      if (!/^[a-f0-9]{32}$/.test(code)) { this.show('Please enter the 32-character code you received.'); return; }
+      this.show('Checking…');
+      try { if (await this.apply(code, 'Unlocked ✓')) $('#unlockCode').value = ''; } catch { this.show('Could not reach the server. Please try again.'); }
+    },
+    loadCheckout() {
+      if (window.Razorpay) return Promise.resolve();
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('checkout'));
+        document.head.append(script);
+      });
+    },
+    async pay() {
+      const button = $('#unlockPay');
+      button.disabled = true;
+      this.show('Opening payment…');
+      try {
+        await this.loadConfig();
+        if (!this.config.enabled) {
+          this.show('Online payment starts very soon. If you already have a code from us, enter it below.');
+          $('#unlockCodeBox').hidden = false;
+          return;
+        }
+        const order = await api('order', {});
+        if (!order.ok) { this.show(order.error || 'Payments are not available right now.'); return; }
+        store.set(ORDER_KEY, order.orderId);
+        await this.loadCheckout();
+        const checkout = new window.Razorpay({
+          key: order.keyId, amount: order.amount, currency: order.currency, order_id: order.orderId,
+          name: 'SiteCraft', description: 'Watermark-free video pass',
+          handler: async (response) => {
+            this.show('Confirming your payment…');
+            const done = await api('verify', { orderId: response.razorpay_order_id, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature });
+            if (done.ok && await this.apply(done.token, 'Payment received ✓ Watermark-free exports are on.')) { store.set(ORDER_KEY, ''); return; }
+            this.show(done.error || 'We could not confirm the payment. Tap “I paid but it is not unlocked”.');
+          },
+          modal: { ondismiss: () => this.show('') },
+          theme: { color: '#ec4899' },
+        });
+        checkout.open();
+      } catch { this.show('Payment could not start. Please check your internet and try again.'); } finally { button.disabled = false; }
+    },
+    async recover() {
+      const orderId = store.get(ORDER_KEY);
+      if (!orderId) { this.show('No recent payment found on this device. Please send your payment details on WhatsApp.'); return; }
+      this.show('Checking your payment…');
+      try {
+        const result = await api('recover', { orderId });
+        if (result.ok && await this.apply(result.token, 'Found your payment ✓ Watermark-free exports are on.')) { store.set(ORDER_KEY, ''); return; }
+        this.show(result.error || 'No payment found yet.');
+      } catch { this.show('Could not reach the server. Please try again.'); }
+    },
+  };
+  const hoursLeft = (iso) => { const h = Math.max(0, Math.round((new Date(iso).getTime() - Date.now()) / 3600000)); return h >= 1 ? `for ${h} more hour${h === 1 ? '' : 's'}` : 'for under an hour'; };
+  $('#unlockPay')?.addEventListener('click', () => PASS.pay());
+  $('#unlockApply')?.addEventListener('click', () => PASS.applyCode());
+  $('#unlockRecover')?.addEventListener('click', () => PASS.recover());
+  $('#unlockToggle')?.addEventListener('click', () => { const row = $('#unlockCodeBox'); row.hidden = !row.hidden; });
+  PASS.render();
+  PASS.refresh();
 
   // ---- Share on WhatsApp ----
   // On phones the share sheet takes the video file itself, so it lands in
@@ -1397,11 +1546,13 @@ if(au)setInterval(()=>{if(on&&sn.dataset.on&&Math.abs(au.currentTime-t%au.durati
   });
   $('#htmlBtn')?.addEventListener('click', async () => {
     if (!state.photos.length) { setStatus('Add at least one photo first.'); return; }
+    await PASS.beginExport();
     const html = await spotHtml();
     const link = document.createElement('a');
     link.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
     link.download = `${(text('#titleInput') || 'my-video').replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '').slice(0, 40) || 'my-video'}.html`;
     link.click();
+    PASS.afterExport();
     setStatus('HTML video downloaded ✓ Open it in any browser — the photos are inside the file.');
   });
   $('#playBtn').addEventListener('click', preview);
