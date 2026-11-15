@@ -19,6 +19,9 @@
       : (Array.isArray(manifest.defaultSelectedFeatures)
         ? [...manifest.defaultSelectedFeatures]
         : (manifest.features || []).map(feature => feature.id)).filter(featureId => featureId !== 'play-games');
+    // The first section (Home) is part of the base layout and is always kept.
+    const base = (manifest.features || []).find(feature => feature.id !== 'play-games');
+    if (base && !selected.includes(base.id)) selected.unshift(base.id);
     Store.update({
       templateId: id,
       data: store.templateId === id && store.data ? store.data : clone(manifest.demoData || {}),
@@ -37,12 +40,12 @@
     const grid = document.querySelector('#featureGrid');
     const features = (manifest.features || []).filter(feature => feature.id !== 'play-games');
     grid.innerHTML = features.map((feature, index) => {
-      const checked = selected.includes(feature.id);
-      return '<label class="feature-card ' + (checked ? 'selected' : '') + '">' +
-        '<input type="checkbox" data-feature="' + esc(feature.id) + '" ' + (checked ? 'checked' : '') + '>' +
+      const locked = index === 0, checked = locked || selected.includes(feature.id);
+      return '<label class="feature-card ' + (checked ? 'selected' : '') + (locked ? ' locked' : '') + '"' + (locked ? ' title="Always included"' : '') + '>' +
+        '<input type="checkbox" data-feature="' + esc(feature.id) + '" ' + (checked ? 'checked' : '') + (locked ? ' disabled aria-describedby="baseNote"' : '') + '>' +
         '<span class="feature-check">' + (checked ? '✓' : '') + '</span>' +
         '<span><strong>' + esc(feature.label) + '</strong><small>' +
-        (index === 0 ? 'Included in the base layout' : 'Optional section') +
+        (index === 0 ? '<span id="baseNote">Always included</span>' : 'Optional section') +
         '</small></span></label>';
     }).join('');
     grid.querySelectorAll('[data-feature]').forEach(input => {
