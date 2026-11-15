@@ -793,7 +793,6 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
 
   function showPoster() {
     if (!state.recording) applyLength();
-    if (example) return;
     const htmlBtn = $('#htmlBtn');
     if (htmlBtn) htmlBtn.hidden = !state.template.spot || !state.photos.length;
     if (state.playing || state.recording) return;
@@ -1035,16 +1034,17 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     if (!example) return;
     cancelAnimationFrame(example.request);
     example.button.textContent = '▶ Example';
+    example.canvas.hidden = true;
     example = null;
-    showPoster();
   }
 
-  async function playExample(template, button) {
+  // Plays right in the template list, on the card's own small canvas, so it
+  // is visible where the person taps it (important on phones).
+  async function playExample(template, button, inline) {
     if (busyRecording()) return;
     const same = example?.template === template;
     stopExample();
     if (same) return;
-    stopPlayback();
     const data = EXAMPLES[template.id];
     button.textContent = 'Loading…';
     let images;
@@ -1064,27 +1064,26 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
       title: data.title, subtitle: data.subtitle, contact: data.contact, closing: data.closing, badge: data.badge, details: data.details || [],
       photos: Array.from({ length: slots }, (_, i) => { const scene = data.scenes[i % n]; return { img: images[i % n], label: scene.label, head: i < n ? scene.head : '', line: scene.line }; }),
     };
-    example = { template, button, request: 0 };
+    example = { template, button, canvas: inline, request: 0 };
     button.textContent = '■ Stop';
-    canvas.width = d.w; canvas.height = d.h;
-    $('.vm-stage').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    setStatus(`Example of “${template.name.split(' · ')[0]}” (15 seconds). Add your photos and text to make your own.`);
+    inline.width = d.w; inline.height = d.h;
+    inline.hidden = false;
+    const ictx = inline.getContext('2d');
     const total = STYLES.total(d);
     const start = performance.now();
     const tick = (now) => {
       if (example?.template !== template) return;
-      const t = (now - start) / 1000;
-      if (t >= total) { stopExample(); return; }
-      ctx.clearRect(0, 0, d.w, d.h);
-      STYLES.frame(ctx, t, d);
+      const t = ((now - start) / 1000) % total;
+      ictx.clearRect(0, 0, d.w, d.h);
+      STYLES.frame(ictx, t, d);
       // An "Example" tag so it is not mistaken for the user's own video.
-      ctx.save();
-      ctx.font = `800 ${d.w * 0.028}px ${SANS}`;
-      ctx.fillStyle = 'rgba(0,0,0,.55)';
-      ctx.beginPath(); ctx.roundRect(d.w / 2 - d.w * 0.09, d.h - d.w * 0.12, d.w * 0.18, d.w * 0.05, d.w * 0.025); ctx.fill();
-      ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('EXAMPLE', d.w / 2, d.h - d.w * 0.095);
-      ctx.restore();
+      ictx.save();
+      ictx.font = `800 ${d.w * 0.028}px ${SANS}`;
+      ictx.fillStyle = 'rgba(0,0,0,.55)';
+      ictx.beginPath(); ictx.roundRect(d.w / 2 - d.w * 0.09, d.h - d.w * 0.12, d.w * 0.18, d.w * 0.05, d.w * 0.025); ictx.fill();
+      ictx.fillStyle = '#fff'; ictx.textAlign = 'center'; ictx.textBaseline = 'middle';
+      ictx.fillText('EXAMPLE', d.w / 2, d.h - d.w * 0.095);
+      ictx.restore();
       example.request = requestAnimationFrame(tick);
     };
     example.request = requestAnimationFrame(tick);
@@ -1215,8 +1214,12 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     play.className = 'vm-example-btn';
     play.textContent = '▶ Example';
     play.setAttribute('aria-label', `Play an example of ${template.name}`);
-    play.addEventListener('click', () => playExample(template, play));
-    wrap.append(button, play);
+    const inline = document.createElement('canvas');
+    inline.className = 'vm-example-canvas';
+    inline.hidden = true;
+    inline.setAttribute('aria-label', `Example of ${template.name}`);
+    play.addEventListener('click', () => playExample(template, play, inline));
+    wrap.append(button, play, inline);
     return wrap;
   });
   // AI-exclusive designs are offered on the AI page only; the free page has
