@@ -62,8 +62,9 @@
   const $ = (selector) => document.querySelector(selector);
   const canvas = $('#stage');
   const ctx = canvas.getContext('2d');
-  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null, length: 0, userPer: 3, slots: 0 };
+  const state = { photos: [], template: TEMPLATES[0], format: 'story', perPhoto: 3, music: null, playing: false, recording: false, spotStyle: 'default', design: null, length: 0, userPer: 3, slots: 0, musicStyle: 'auto', clean: false, pass: null };
   let frameRequest = 0;
+  let example = null; // the template example playing on the stage, if any
   let audioContext = null;
 
   // ---- Helpers ----
@@ -652,6 +653,7 @@
       layout: state.template.spot, style: state.spotStyle, design: state.design, w, h, intro: INTRO, per: state.perPhoto, outro: OUTRO,
       title: text('#titleInput') || 'Your business name', subtitle: text('#subtitleInput'), contact: text('#contactInput'),
       closing: text('#closingInput') || 'Visit us today', badge: text('#badgeInput'),
+      watermark: Boolean(images) && !state.clean,
       details: text('#detailsInput').split(/\n+/).map((line) => line.trim()).filter(Boolean).slice(0, 4),
       // One entry per scene; repeated photos keep their label and line but not
       // the headline, so the text does not repeat word for word.
@@ -729,6 +731,18 @@
     });
     const code = await (await fetch(document.querySelector('script[src*="video-maker/styles.js"]').src)).text();
     const data = spotData(images);
+    // The music goes inside the file too (a mono WAV, loops with the video).
+    let audio = '';
+    const choice = musicChoice();
+    if (choice && !(choice.kind === 'file' && state.music.file.size > 6e6)) {
+      try {
+        const buffer = await musicBuffer(choice);
+        const bytes = new Uint8Array(MUSIC.toWav(buffer));
+        let binary = '';
+        for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+        audio = `data:audio/wav;base64,${btoa(binary)}`;
+      } catch { audio = ''; }
+    }
     const json = JSON.stringify(data).replace(/</g, '\\u003c');
     const title = data.title.replace(/[<&"]/g, '');
     return `<!doctype html>
@@ -741,7 +755,8 @@ canvas{display:block;width:min(100%,calc((100vh - 110px) * ${data.w} / ${data.h}
 .ctl{display:flex;gap:10px}.ctl button{font:inherit;font-weight:700;padding:.7em 1.4em;border-radius:99px;border:0;cursor:pointer}
 </style></head><body>
 <canvas id="v" width="${data.w}" height="${data.h}" aria-label="${title} video"></canvas>
-<div class="ctl"><button id="pp">Pause</button><button id="rs">Restart</button></div>
+${audio ? `<audio id="au" src="${audio}" loop preload="auto"></audio>` : ''}
+<div class="ctl"><button id="pp">Pause</button><button id="rs">Restart</button>${audio ? '<button id="sn">🔇 Sound</button>' : ''}</div>
 <script>
 if(!CanvasRenderingContext2D.prototype.roundRect){CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h){this.rect(x,y,w,h)}}
 ${code}
@@ -752,8 +767,11 @@ const S=window.SiteCraftStyles,c=document.getElementById('v'),x=c.getContext('2d
 let t=0,last=0,on=true;
 Promise.all(D.photos.map(p=>new Promise(r=>{const i=new Image();i.onload=i.onerror=()=>r(i);i.src=p.img;if(p.look)i.__look=p.look;p.img=i}))).then(()=>document.fonts.ready).then(()=>{
 function loop(now){if(last&&on)t=(t+(now-last)/1000)%T;last=now;x.clearRect(0,0,D.w,D.h);S.frame(x,t,D);requestAnimationFrame(loop)}requestAnimationFrame(loop)});
-document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause':'Play'};
-document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('pp').textContent='Pause'};
+const au=document.getElementById('au'),sn=document.getElementById('sn'),sync=()=>{if(!au)return;if(on&&sn.dataset.on){au.currentTime=t%au.duration||0;au.play().catch(()=>{})}else au.pause()};
+if(sn)sn.onclick=()=>{sn.dataset.on=sn.dataset.on?'':'1';sn.textContent=sn.dataset.on?'🔊 Sound on':'🔇 Sound';sync()};
+document.getElementById('pp').onclick=e=>{on=!on;e.target.textContent=on?'Pause':'Play';sync()};
+document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('pp').textContent='Pause';sync()};
+if(au)setInterval(()=>{if(on&&sn.dataset.on&&Math.abs(au.currentTime-t%au.duration)>0.4)au.currentTime=t%au.duration},2000);
 </script></body></html>`;
   }
 
@@ -787,7 +805,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     const total = totalSeconds();
     const edge = Math.max(clamp(1 - t / 0.4, 0, 1), clamp((t - (total - 0.6)) / 0.6, 0, 1));
     if (edge > 0) { ctx.fillStyle = `rgba(0,0,0,${edge})`; ctx.fillRect(0, 0, canvas.width, canvas.height); }
-    watermark();
+    if (!state.clean) watermark();
   }
 
   function showPoster() {
@@ -804,14 +822,41 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
 
   // ---- Playback and recording ----
 
+  // Which music plays: the customer's own file, a made-in-code style (Auto
+  // picks one that suits the template) or none. The made-in-code track is
+  // rendered for the exact length of the video and cached per style and length.
+  const MUSIC = window.SiteCraftMusic;
+  const musicCache = new Map();
+
+  function musicChoice() {
+    if (state.music?.file) return { kind: 'file' };
+    const pick = state.musicStyle;
+    if (!MUSIC || pick === 'off') return null;
+    const id = pick === 'auto' ? MUSIC.forTemplate(state.template.spot || state.template.id) : pick;
+    return { kind: 'style', id };
+  }
+
+  async function musicBuffer(choice) {
+    audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+    if (choice.kind === 'file') {
+      if (!state.music.buffer) state.music.buffer = await audioContext.decodeAudioData(await state.music.file.arrayBuffer());
+      return state.music.buffer;
+    }
+    const seconds = Math.ceil(totalSeconds());
+    const key = `${choice.id}:${seconds}`;
+    if (!musicCache.has(key)) musicCache.set(key, MUSIC.render(choice.id, seconds, audioContext, 11));
+    return musicCache.get(key);
+  }
+
   async function musicSource(destination) {
-    if (!state.music) return null;
+    const choice = musicChoice();
+    if (!choice) return null;
     audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
     if (audioContext.state === 'suspended') await audioContext.resume();
-    if (!state.music.buffer) state.music.buffer = await audioContext.decodeAudioData(await state.music.file.arrayBuffer());
+    const buffer = await musicBuffer(choice);
     const source = audioContext.createBufferSource();
-    source.buffer = state.music.buffer;
-    source.loop = true;
+    source.buffer = buffer;
+    source.loop = choice.kind === 'file';
     const gain = audioContext.createGain();
     const total = totalSeconds();
     const now = audioContext.currentTime;
@@ -848,6 +893,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   }
 
   async function preview() {
+    stopExample();
     applyLength();
     if (state.recording) return;
     if (state.playing) { stopPlayback(); showPoster(); return; }
@@ -877,7 +923,9 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   }
 
   async function makeVideo() {
+    stopExample();
     applyLength();
+    await PASS.beginExport();
     if (state.recording) return;
     if (!state.photos.length) { setStatus('Add at least one photo first.'); return; }
     if (!window.MediaRecorder || !canvas.captureStream) { setStatus('This browser cannot make videos. Please use Chrome on Android or a computer.'); return; }
@@ -886,7 +934,7 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     const type = pickType();
     const stream = canvas.captureStream(FPS);
     let source = null;
-    if (state.music) {
+    if (musicChoice()) {
       try {
         audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
         const destination = audioContext.createMediaStreamDestination();
@@ -921,9 +969,349 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     $('#resultVideo').src = url;
     $('#downloadLink').href = url;
     $('#downloadLink').download = `${name}.${ext}`;
+    shareState.file = new File([blob], `${name}.${ext}`, { type: mime.split(';')[0] });
+    shareState.title = text('#titleInput') || 'My video';
+    shareState.contact = text('#contactInput');
+    $('#shareNote').textContent = '';
     $('#result').hidden = false;
+    PASS.afterExport();
     setStatus(ext === 'mp4' ? 'Your video is ready ✓' : 'Your video is ready ✓ (WebM format: if WhatsApp does not accept it, open this page in the latest Chrome for MP4.)');
     showPoster();
+  }
+
+  // ---- Watermark-free pass (₹99) ----
+  // Free videos carry a small mark. A pass (paid with Razorpay, or a code the
+  // owner gives) allows watermark-free exports for a day. The page only talks
+  // to the server when a pass is in use or the person opens the unlock panel,
+  // so the free tools still work fully offline.
+  const API_BASE = window.SITECRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
+  const PASS_KEY = 'sitecraft_video_pass';
+  const ORDER_KEY = 'sitecraft_video_order';
+  const store = {
+    get(key) { try { return localStorage.getItem(key) || ''; } catch { return ''; } },
+    set(key, value) { try { if (value) localStorage.setItem(key, value); else localStorage.removeItem(key); } catch {} },
+  };
+  const api = async (path, body) => {
+    const response = await fetch(`${API_BASE}/api/aivideo/pay/${path}`, body === undefined ? {} : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const data = await response.json().catch(() => ({}));
+    return { status: response.status, ...data };
+  };
+
+  const PASS = {
+    config: null,
+    async loadConfig() {
+      if (this.config) return this.config;
+      try { this.config = await api('config'); } catch { this.config = { enabled: false, amount: 9900, exports: 5, hours: 24 }; }
+      return this.config;
+    },
+    show(message) { const note = $('#unlockNote'); if (note) note.textContent = message || ''; },
+    render() {
+      const box = $('#unlockBox');
+      if (!box) return;
+      const pass = state.pass;
+      $('#unlockStatus').textContent = pass?.valid ? `✓ Watermark-free · ${pass.left} export${pass.left === 1 ? '' : 's'} left · valid ${hoursLeft(pass.expiresAt)}` : 'Free videos carry a small “Made with SiteCraft” mark.';
+      $('#unlockPay').hidden = Boolean(pass?.valid);
+      $('#unlockPay').textContent = `🔓 Remove watermark · ₹${Math.round((this.config?.amount || 9900) / 100)}`;
+      $('#unlockMore').hidden = Boolean(pass?.valid);
+    },
+    // Checks the saved pass with the server (only when one is saved).
+    async refresh() {
+      const token = store.get(PASS_KEY);
+      if (!token) { state.pass = null; state.clean = false; this.render(); return; }
+      try {
+        const status = await api('status', { token });
+        state.pass = status.valid ? { token, valid: true, left: status.left, expiresAt: status.expiresAt } : null;
+        if (!status.valid && status.ok) store.set(PASS_KEY, '');
+      } catch { /* offline: keep the free watermark */ state.pass = null; }
+      state.clean = Boolean(state.pass?.valid);
+      this.render();
+      showPoster();
+    },
+    // Counts one export for a pass; without a valid pass the video is free
+    // (with the mark). The mark stays on while the export is recorded.
+    async beginExport() {
+      state.clean = false;
+      const token = store.get(PASS_KEY);
+      if (!token || !state.pass?.valid) { this.exporting = false; return; }
+      try {
+        const result = await api('redeem', { token });
+        if (result.ok) { state.pass.left = result.left; state.clean = true; this.exporting = true; return; }
+        this.show(result.error || 'This pass cannot be used.');
+        state.pass = null; store.set(PASS_KEY, '');
+      } catch { this.show('Could not reach the server, so this video has the free mark.'); }
+      this.exporting = false;
+    },
+    afterExport() {
+      if (this.exporting) {
+        this.exporting = false;
+        if (state.pass.left <= 0) { state.pass = null; store.set(PASS_KEY, ''); state.clean = false; }
+      }
+      state.clean = Boolean(state.pass?.valid);
+      this.render();
+    },
+    async apply(token, message) {
+      const status = await api('status', { token });
+      if (!status.valid) { this.show('That code is not valid, or it is used up or has expired.'); return false; }
+      store.set(PASS_KEY, token);
+      state.pass = { token, valid: true, left: status.left, expiresAt: status.expiresAt };
+      state.clean = true;
+      this.show(message || '');
+      this.render();
+      showPoster();
+      return true;
+    },
+    async applyCode() {
+      const code = ($('#unlockCode').value || '').trim().toLowerCase();
+      if (!/^[a-f0-9]{32}$/.test(code)) { this.show('Please enter the 32-character code you received.'); return; }
+      this.show('Checking…');
+      try { if (await this.apply(code, 'Unlocked ✓')) $('#unlockCode').value = ''; } catch { this.show('Could not reach the server. Please try again.'); }
+    },
+    loadCheckout() {
+      if (window.Razorpay) return Promise.resolve();
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('checkout'));
+        document.head.append(script);
+      });
+    },
+    async pay() {
+      const button = $('#unlockPay');
+      button.disabled = true;
+      this.show('Opening payment…');
+      try {
+        await this.loadConfig();
+        if (!this.config.enabled) {
+          this.show('Online payment starts very soon. If you already have a code from us, enter it below.');
+          $('#unlockCodeBox').hidden = false;
+          return;
+        }
+        const order = await api('order', {});
+        if (!order.ok) { this.show(order.error || 'Payments are not available right now.'); return; }
+        store.set(ORDER_KEY, order.orderId);
+        await this.loadCheckout();
+        const checkout = new window.Razorpay({
+          key: order.keyId, amount: order.amount, currency: order.currency, order_id: order.orderId,
+          name: 'SiteCraft', description: 'Watermark-free video pass',
+          handler: async (response) => {
+            this.show('Confirming your payment…');
+            const done = await api('verify', { orderId: response.razorpay_order_id, paymentId: response.razorpay_payment_id, signature: response.razorpay_signature });
+            if (done.ok && await this.apply(done.token, 'Payment received ✓ Watermark-free exports are on.')) { store.set(ORDER_KEY, ''); return; }
+            this.show(done.error || 'We could not confirm the payment. Tap “I paid but it is not unlocked”.');
+          },
+          modal: { ondismiss: () => this.show('') },
+          theme: { color: '#ec4899' },
+        });
+        checkout.open();
+      } catch { this.show('Payment could not start. Please check your internet and try again.'); } finally { button.disabled = false; }
+    },
+    async recover() {
+      const orderId = store.get(ORDER_KEY);
+      if (!orderId) { this.show('No recent payment found on this device. Please send your payment details on WhatsApp.'); return; }
+      this.show('Checking your payment…');
+      try {
+        const result = await api('recover', { orderId });
+        if (result.ok && await this.apply(result.token, 'Found your payment ✓ Watermark-free exports are on.')) { store.set(ORDER_KEY, ''); return; }
+        this.show(result.error || 'No payment found yet.');
+      } catch { this.show('Could not reach the server. Please try again.'); }
+    },
+  };
+  const hoursLeft = (iso) => { const h = Math.max(0, Math.round((new Date(iso).getTime() - Date.now()) / 3600000)); return h >= 1 ? `for ${h} more hour${h === 1 ? '' : 's'}` : 'for under an hour'; };
+  $('#unlockPay')?.addEventListener('click', () => PASS.pay());
+  $('#unlockApply')?.addEventListener('click', () => PASS.applyCode());
+  $('#unlockRecover')?.addEventListener('click', () => PASS.recover());
+  $('#unlockToggle')?.addEventListener('click', () => { const row = $('#unlockCodeBox'); row.hidden = !row.hidden; });
+  PASS.render();
+  PASS.refresh();
+
+  // ---- Share on WhatsApp ----
+  // On phones the share sheet takes the video file itself, so it lands in
+  // WhatsApp (a chat, a group or Status) with no download step. Where files
+  // cannot be shared, the video is downloaded and WhatsApp opens with a ready
+  // message to attach it to.
+  const shareState = { file: null, title: '', contact: '' };
+
+  async function shareOnWhatsApp() {
+    const note = $('#shareNote');
+    const file = shareState.file;
+    if (!file) { note.textContent = 'Make your video first.'; return; }
+    const message = [shareState.title, shareState.contact ? `📞 ${shareState.contact}` : ''].filter(Boolean).join('\n');
+    try {
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file], title: shareState.title, text: message });
+        note.textContent = 'Shared ✓';
+        return;
+      }
+    } catch (error) {
+      if (error?.name === 'AbortError') return; // the person closed the share sheet
+    }
+    // Fallback: save the file, then open WhatsApp with the message.
+    const link = $('#downloadLink');
+    link.click();
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+    note.textContent = 'Your video was downloaded. In WhatsApp, tap 📎 and attach it (WhatsApp Status: open Status → My status → pick the video).';
+  }
+  $('#shareBtn')?.addEventListener('click', shareOnWhatsApp);
+
+  // ---- Template examples ----
+  // Sample photos and text for each ad template, played on the stage so
+  // people can see what a template does before adding their own photos.
+  const EXAMPLE_DIR = 'assets/video-examples/';
+  const EXAMPLES = {
+    'ad-sale': {
+      title: 'Zariya Fashions', subtitle: 'Festive Flash Sale', contact: '98765 43210', closing: 'Shop today!', badge: 'Up to 50% off · 3 days',
+      scenes: [
+        { img: 'sale-1.webp', label: 'Sarees & kurtas', head: 'Festive collection', line: 'Up to 50% off' },
+        { img: 'sale-2.webp', label: 'Happy shoppers', head: 'Shop more, save more', line: 'Extra 10% off' },
+        { img: 'sale-3.webp', label: 'Bags & footwear', head: 'Bags and shoes', line: 'From ₹499' },
+      ],
+    },
+    'ad-beat': {
+      title: 'Urban Kicks', subtitle: 'New street collection', contact: '98765 43210', closing: 'Grab yours now', badge: 'Drop 02',
+      scenes: [
+        { img: 'beat-1.webp', label: 'Street style', head: 'Own the street', line: '' },
+        { img: 'beat-2.webp', label: 'New sneakers', head: 'Fresh kicks', line: '₹1,999' },
+        { img: 'beat-3.webp', label: 'Squad goals', head: 'Made for the crew', line: '' },
+      ],
+    },
+    'ad-product': {
+      title: 'Nova Electronics', subtitle: 'Festive tech deals', contact: '98765 43210', closing: 'Order today', badge: 'New arrivals',
+      scenes: [
+        { img: 'product-1.webp', label: '108MP camera', head: 'Nova X5 smartphone', line: 'From ₹13,999' },
+        { img: 'product-2.webp', label: '40h battery', head: 'Bass Pro headphones', line: '₹2,499' },
+        { img: 'product-3.webp', label: 'Health tracking', head: 'Fit smartwatch', line: '₹3,299' },
+      ],
+    },
+    'ad-compare': {
+      title: 'SparkleClean Services', subtitle: 'See the difference', contact: '98765 43210', closing: 'Book a makeover', badge: 'Home & salon',
+      scenes: [
+        { img: 'compare-1.webp', label: 'Deep home cleaning', head: '', line: '' },
+        { img: 'compare-2.webp', label: '', head: 'Spotless in 3 hours', line: 'From ₹999' },
+        { img: 'compare-3.webp', label: 'Hair spa & styling', head: '', line: '' },
+        { img: 'compare-4.webp', label: '', head: 'Salon-smooth hair', line: '₹1,499' },
+      ],
+    },
+    'ad-review': {
+      title: 'GlowRenew Skincare', subtitle: 'Loved by 10,000+ customers', contact: '98765 43210', closing: 'Try it yourself', badge: 'Rated 4.9★',
+      scenes: [
+        { img: 'review-1.webp', label: 'Priya', line: 'Hyderabad', head: 'My skin has never felt this fresh. Ordering again!' },
+        { img: 'review-2.webp', label: 'The Sharma family', line: 'Regulars', head: 'Every weekend ends here. The kids love it!' },
+        { img: 'review-3.webp', label: 'Ravi', line: 'Happy customer', head: 'Best price in town and genuine service.' },
+      ],
+    },
+    'ad-story': {
+      title: 'Brew & Bloom Cafe', subtitle: 'Your new coffee spot ☕', contact: '98765 43210', closing: 'Come say hi!', badge: 'Now open',
+      scenes: [
+        { img: 'story-1.webp', label: 'Fresh every morning', head: 'Latte with love', line: '₹149' },
+        { img: 'story-2.webp', label: 'Cozy corners', head: 'Catch up over coffee', line: 'Free wifi' },
+        { img: 'story-3.webp', label: 'Baked today', head: 'Croissants & more', line: 'From ₹79' },
+      ],
+    },
+    'ad-countdown': {
+      title: 'Success Coaching', subtitle: 'Reasons toppers choose us', contact: '98765 43210', closing: 'Admissions open', badge: 'JEE · NEET',
+      scenes: [
+        { img: 'countdown-1.webp', label: 'Smart classrooms', head: 'Focused batches', line: 'Only 30 students' },
+        { img: 'countdown-2.webp', label: 'Expert faculty', head: 'Teachers who care', line: 'Daily doubt sessions' },
+        { img: 'countdown-3.webp', label: 'Proven results', head: 'Toppers every year', line: '98.6 percentile' },
+      ],
+    },
+    'ad-cinema': {
+      title: 'Aarna Jewels', subtitle: 'The heritage collection', contact: '98765 43210', closing: 'Crafted for forever', badge: '',
+      scenes: [
+        { img: 'cinema-1.webp', label: 'Ruby heritage', head: 'Where rubies meet gold', line: 'Handcrafted since 1962' },
+        { img: 'cinema-2.webp', label: 'The bridal edit', head: 'Made for her moment', line: 'Kundan & pearl sets' },
+        { img: 'cinema-3.webp', label: 'The showroom', head: 'An experience in gold', line: 'Visit us in Jubilee Hills' },
+      ],
+    },
+    'ad-kinetic': {
+      title: 'PixelRise Digital', subtitle: 'Grow your business online', contact: '98765 43210', closing: 'Let us build your brand', badge: '',
+      scenes: [
+        { img: 'kinetic-1.webp', label: 'Results that show', head: 'Double your sales', line: '+18.5% growth for our clients' },
+        { img: 'kinetic-2.webp', label: 'A team that cares', head: 'Ideas that work', line: 'Strategy, design and ads' },
+        { img: 'kinetic-3.webp', label: 'Happy clients', head: 'Leads on your phone', line: 'Reports every week' },
+      ],
+    },
+    'ad-event': {
+      title: 'Annapurna Supermarket', subtitle: 'Now open in your neighbourhood', contact: '98765 43210', closing: 'Visit us this weekend', badge: 'Grand opening',
+      details: ['Sunday, 24 Nov', '9:00 AM onwards', 'Main Road, Warangal'],
+      scenes: [
+        { img: 'event-1.webp', label: 'We are open!', head: 'A new store for your family', line: '20% off today' },
+        { img: 'event-2.webp', label: 'The big moment', head: 'Celebrate with us', line: 'Free samples & sweets' },
+        { img: 'event-3.webp', label: 'Everything fresh', head: 'Groceries to gifts', line: 'Weekly savings' },
+      ],
+    },
+  };
+  const exampleImages = new Map();
+  function exampleImage(name) {
+    if (!exampleImages.has(name)) {
+      exampleImages.set(name, new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => { exampleImages.delete(name); reject(new Error('The example could not be loaded. Please try again.')); };
+        img.src = EXAMPLE_DIR + name;
+      }));
+    }
+    return exampleImages.get(name);
+  }
+
+  function stopExample() {
+    if (!example) return;
+    cancelAnimationFrame(example.request);
+    example.button.textContent = '▶ Example';
+    example.canvas.hidden = true;
+    example = null;
+  }
+
+  // Plays right in the template list, on the card's own small canvas, so it
+  // is visible where the person taps it (important on phones).
+  async function playExample(template, button, inline) {
+    if (busyRecording()) return;
+    const same = example?.template === template;
+    stopExample();
+    if (same) return;
+    const data = EXAMPLES[template.id];
+    button.textContent = 'Loading…';
+    let images;
+    try {
+      images = await Promise.all(data.scenes.map((scene) => exampleImage(scene.img)));
+      await Promise.all(STYLES.fonts.map((spec) => document.fonts.load(spec))).catch(() => {});
+    } catch (error) {
+      button.textContent = '▶ Example';
+      setStatus(error.message);
+      return;
+    }
+    const n = data.scenes.length;
+    const body = 15 - INTRO - OUTRO;
+    const slots = Math.max(n, Math.round(body / (template.per || 3.5)));
+    const d = {
+      layout: template.spot, style: DEFAULT_STYLE[template.spot] || 'default', design: null, w: 720, h: 1280, intro: INTRO, per: body / slots, outro: OUTRO,
+      title: data.title, subtitle: data.subtitle, contact: data.contact, closing: data.closing, badge: data.badge, details: data.details || [],
+      photos: Array.from({ length: slots }, (_, i) => { const scene = data.scenes[i % n]; return { img: images[i % n], label: scene.label, head: i < n ? scene.head : '', line: scene.line }; }),
+    };
+    example = { template, button, canvas: inline, request: 0 };
+    button.textContent = '■ Stop';
+    inline.width = d.w; inline.height = d.h;
+    inline.hidden = false;
+    const ictx = inline.getContext('2d');
+    const total = STYLES.total(d);
+    const start = performance.now();
+    const tick = (now) => {
+      if (example?.template !== template) return;
+      const t = ((now - start) / 1000) % total;
+      ictx.clearRect(0, 0, d.w, d.h);
+      STYLES.frame(ictx, t, d);
+      // An "Example" tag so it is not mistaken for the user's own video.
+      ictx.save();
+      ictx.font = `800 ${d.w * 0.028}px ${SANS}`;
+      ictx.fillStyle = 'rgba(0,0,0,.55)';
+      ictx.beginPath(); ictx.roundRect(d.w / 2 - d.w * 0.09, d.h - d.w * 0.12, d.w * 0.18, d.w * 0.05, d.w * 0.025); ictx.fill();
+      ictx.fillStyle = '#fff'; ictx.textAlign = 'center'; ictx.textBaseline = 'middle';
+      ictx.fillText('EXAMPLE', d.w / 2, d.h - d.w * 0.095);
+      ictx.restore();
+      example.request = requestAnimationFrame(tick);
+    };
+    example.request = requestAnimationFrame(tick);
   }
 
   // ---- Inputs ----
@@ -1034,14 +1422,31 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
     }
     button.addEventListener('click', () => {
       if (busyRecording()) return;
+      stopExample();
       state.template = template;
       if (template.spot && STYLES.layoutFor(state.spotStyle) !== template.spot) state.spotStyle = DEFAULT_STYLE[template.spot];
       if (template.spot && state.design) state.design = { ...state.design, layout: template.spot };
       markTemplate();
+      refreshMusicNote?.();
       fontsReady().then(showPoster);
       renderPhotos();
     });
-    return button;
+    if (!EXAMPLES[template.id]) return button;
+    // A "▶ Example" button next to the template plays a 15-second sample.
+    const wrap = document.createElement('div');
+    wrap.className = 'vm-template-wrap';
+    const play = document.createElement('button');
+    play.type = 'button';
+    play.className = 'vm-example-btn';
+    play.textContent = '▶ Example';
+    play.setAttribute('aria-label', `Play an example of ${template.name}`);
+    const inline = document.createElement('canvas');
+    inline.className = 'vm-example-canvas';
+    inline.hidden = true;
+    inline.setAttribute('aria-label', `Example of ${template.name}`);
+    play.addEventListener('click', () => playExample(template, play, inline));
+    wrap.append(button, play, inline);
+    return wrap;
   });
   // AI-exclusive designs are offered on the AI page only; the free page has
   // the ten ad templates and the basic ones.
@@ -1083,7 +1488,48 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   $('#musicInput').addEventListener('change', (event) => {
     const file = event.target.files?.[0];
     state.music = file ? { file, buffer: null } : null;
+    refreshMusicNote();
   });
+
+  // Music choices: Auto, one of the made-in-code styles, or Off.
+  const musicList = $('#musicList');
+  function refreshMusicNote() {
+    const note = $('#musicNote');
+    if (!note) return;
+    const choice = musicChoice();
+    note.textContent = state.music?.file ? `Using your file “${state.music.file.name}”.`
+      : !choice ? 'No music.'
+      : `Music: ${MUSIC.STYLES[choice.id].name}, made for this video — no copyright problem.`;
+  }
+  musicList?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-music]');
+    if (!button || busyRecording()) return;
+    state.musicStyle = button.dataset.music;
+    state.music = null;
+    $('#musicInput').value = '';
+    for (const item of musicList.children) item.setAttribute('aria-checked', String(item === button));
+    refreshMusicNote();
+  });
+  $('#musicTry')?.addEventListener('click', async () => {
+    const button = $('#musicTry');
+    if (state.musicAudio) { try { state.musicAudio.stop(); } catch {} state.musicAudio = null; button.textContent = '🔊 Listen'; return; }
+    const choice = musicChoice();
+    if (!choice) { refreshMusicNote(); return; }
+    button.textContent = 'Making…';
+    try {
+      audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioContext.state === 'suspended') await audioContext.resume();
+      const buffer = await musicBuffer(choice);
+      const source = audioContext.createBufferSource();
+      source.buffer = buffer;
+      source.connect(audioContext.destination);
+      source.onended = () => { state.musicAudio = null; button.textContent = '🔊 Listen'; };
+      source.start();
+      state.musicAudio = source;
+      button.textContent = '■ Stop';
+    } catch { button.textContent = '🔊 Listen'; }
+  });
+  refreshMusicNote();
 
   for (const id of ['#titleInput', '#subtitleInput', '#contactInput', '#closingInput', '#badgeInput', '#detailsInput']) $(id)?.addEventListener('input', showPoster);
   $('#lookBtn')?.addEventListener('click', async () => {
@@ -1100,11 +1546,13 @@ document.getElementById('rs').onclick=()=>{t=0;on=true;document.getElementById('
   });
   $('#htmlBtn')?.addEventListener('click', async () => {
     if (!state.photos.length) { setStatus('Add at least one photo first.'); return; }
+    await PASS.beginExport();
     const html = await spotHtml();
     const link = document.createElement('a');
     link.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
     link.download = `${(text('#titleInput') || 'my-video').replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, '').slice(0, 40) || 'my-video'}.html`;
     link.click();
+    PASS.afterExport();
     setStatus('HTML video downloaded ✓ Open it in any browser — the photos are inside the file.');
   });
   $('#playBtn').addEventListener('click', preview);

@@ -3,6 +3,7 @@ import { handleWebsiteChatbotRoute } from "./website-chatbot.js";
 import { handleBotcraftRoute } from "./botcraft-builder.js";
 import { handleAdminRoute } from "./sitecraft-admin.js";
 import { handleAiVideoRoute } from "./ai-video.js";
+import { handleAiVideoPayRoute } from "./ai-video-pay.js";
 import { handleResumeAiRoute } from "./resume-ai.js";
 import { handleHostingRoute } from "./hosting.js";
 import { handleCallbackRoute } from "./callbacks.js";
@@ -138,6 +139,8 @@ export default {
     if (botcraftResponse) return botcraftResponse;
     const adminResponse = await handleAdminRoute(request, env, url);
     if (adminResponse) return adminResponse;
+    const aiVideoPayResponse = await handleAiVideoPayRoute(request, env, url);
+    if (aiVideoPayResponse) return aiVideoPayResponse;
     const aiVideoResponse = await handleAiVideoRoute(request, env, url);
     if (aiVideoResponse) return aiVideoResponse;
 

@@ -141,6 +141,18 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
 @media(max-width:760px){.av-sample-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.av-sample-info{padding:12px}.av-sample-info h3{font-size:13px}.av-sample-info p{font-size:10px}.av-sample-actions{flex-direction:column}.av-sample-actions a{width:100%}}
 @media(max-width:470px){.av-sample-grid{grid-template-columns:minmax(0,1fr)}.av-sample-card{width:min(100%,370px);margin-inline:auto}.av-sample-info{padding:16px}.av-sample-info h3{font-size:15px}.av-sample-actions{flex-direction:row}.av-sample-actions a{width:auto;flex:1}}
 
+
+/* AI-made videos: samples and the WhatsApp brief */
+.am-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.am-tab{padding:9px 14px;border:1px solid var(--av-line);border-radius:999px;background:rgba(255,255,255,.04);color:#e9e2f5;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}.am-tab[aria-pressed="true"]{border-color:transparent;background:var(--av-gradient);color:#fff}
+.am-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.am-card{min-width:0;overflow:hidden;border:1px solid var(--av-line);border-radius:20px;background:linear-gradient(155deg,rgba(255,255,255,.065),rgba(255,255,255,.02))}.am-card video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;background:#09070f}.am-card-body{display:grid;gap:8px;padding:14px}.am-card h3{margin:0;font:800 16px/1.2 Sora,Inter,sans-serif}.am-card p{margin:0;color:var(--av-muted);font-size:12.5px;line-height:1.6}.am-meta{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#d8d0e5}
+.am-kinds{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.am-kind{display:grid;gap:8px;align-content:start;padding:16px;border:1px solid var(--av-line);border-radius:18px;background:linear-gradient(155deg,rgba(255,255,255,.065),rgba(255,255,255,.02));color:#fff;font:inherit;text-align:left;cursor:pointer}.am-kind:hover,.am-kind:focus-visible{border-color:rgba(236,107,181,.6)}.am-kind b{font:800 16px/1.2 Sora,Inter,sans-serif}.am-kind span{color:var(--av-muted);font-size:12px;line-height:1.55}.am-kind i{font-style:normal;font-size:26px}
+.am-brief{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:22px;align-items:start;margin-top:26px;padding:clamp(18px,3vw,30px);border:1px solid rgba(255,255,255,.14);border-radius:24px;background:linear-gradient(135deg,rgba(139,92,246,.14),rgba(236,72,153,.07))}.am-brief h3{margin:0 0 8px;font:800 clamp(22px,3vw,30px)/1.1 Sora,Inter,sans-serif;letter-spacing:-.04em}.am-brief p{margin:0;color:var(--av-muted);font-size:13.5px;line-height:1.75}
+.am-form{display:grid;gap:12px}.am-form label{display:grid;gap:6px;font-size:12px;font-weight:800;color:#e9e2f5}.am-form input,.am-form select,.am-form textarea{width:100%;padding:11px 12px;border:1px solid var(--av-line);border-radius:12px;background:#171421;color:#fff;font:inherit;font-size:14px}.am-form textarea{min-height:104px;resize:vertical;line-height:1.5}.am-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.am-ref{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 12px;border:1px dashed rgba(236,107,181,.6);border-radius:12px;font-size:12.5px}.am-ref[hidden]{display:none}.am-ref button{background:none;border:0;color:#f9a8d4;font:inherit;font-weight:800;cursor:pointer}.am-error{margin:0;color:#fda4af;font-size:12.5px;min-height:1em}
+.am-tabs[hidden],.am-grid[hidden]{display:none}
+.am-embed{position:relative;aspect-ratio:9/16;background:#09070f;overflow:hidden}.am-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.am-embed-play{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:#09070f;cursor:pointer}.am-embed-play img{width:100%;height:100%;object-fit:cover;display:block}.am-embed-icon{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;display:grid;place-items:center;border-radius:50%;background:rgba(0,0,0,.6);border:2px solid rgba(255,255,255,.85);color:#fff;font-size:20px;padding-left:4px}.am-embed-play:hover .am-embed-icon,.am-embed-play:focus-visible .am-embed-icon{background:var(--av-pink)}
+.am-empty{margin:0 0 18px;color:var(--av-muted);font-size:13.5px;line-height:1.7}
+@media(max-width:1000px){.am-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.am-kinds{grid-template-columns:repeat(2,minmax(0,1fr))}.am-brief{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:520px){.am-grid{grid-template-columns:minmax(0,1fr)}.am-row{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body class="sc-ad-video-page">
@@ -153,6 +165,7 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
    <p class="av-lead">Make your next promotion stand out with AI-powered ad videos created for your business. From the first script to the final edit, <strong>we handle the complete video-making process.</strong></p>
    <div class="av-hero-actions">
     <a class="av-btn primary" href="https://wa.me/917981587505?text=Hi%20SiteCraft%2C%20I%20am%20interested%20in%20an%20AI%20ad%20video.%20Please%20share%20the%20options%20starting%20at%20%E2%82%B9599." target="_blank" rel="noopener noreferrer">Create My Ad Video <span aria-hidden="true">↗</span></a>
+    <a class="av-btn ghost" href="#ai-made">AI-made videos <span aria-hidden="true">↓</span></a>
     <a class="av-btn ghost" href="#sample-templates">See 14 sample videos <span aria-hidden="true">↓</span></a>
     <a class="av-btn ghost" href="#diy-video">Make it yourself — with or without AI <span aria-hidden="true">↓</span></a>
     <a class="av-btn ghost" href="#video-types">Explore 20 video types <span aria-hidden="true">↓</span></a>
@@ -174,6 +187,50 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
      <div class="av-timeline-row"><span>EDIT</span><span class="av-timeline-track"><i style="width:84%"></i></span></div>
     </div>
    </div>
+  </div>
+ </div>
+</section>
+
+
+<section class="av-section" id="ai-made" aria-labelledby="am-title" style="padding-bottom:0">
+ <div class="av-container">
+  <div class="av-section-heading">
+   <div><span class="av-kicker">AI-MADE VIDEOS · ADS · PROMOTIONS · WEDDINGS</span><h2 id="am-title">Real AI videos,<br><span class="av-gradient">made for your story.</span></h2></div>
+   <p>Cinematic AI-generated videos made by our team for ads, promotions, weddings, birthdays and festivals. Pick what you need, tell us the details and we will take it from there.</p>
+  </div>
+  <div class="am-tabs" id="amTabs" role="group" aria-label="Video type"></div>
+  <p class="am-empty" id="amEmpty" hidden></p>
+  <div class="am-grid" id="amGrid" aria-live="polite"></div>
+  <p class="am-empty" style="margin:22px 0 12px;font-weight:700;color:#e9e2f5">What would you like us to make?</p>
+  <div class="am-kinds" id="amKinds"></div>
+  <div class="am-brief" id="amBrief">
+   <div>
+    <span class="av-kicker">TELL US WHAT YOU NEED</span>
+    <h3>Describe your video.<br><span class="av-gradient">We reply on WhatsApp.</span></h3>
+    <p>Choose the type, add a few details such as the occasion, names, offer, date, language and length. Tap the button and your request opens in WhatsApp, ready to send to us.</p>
+   </div>
+   <form class="am-form" id="amForm" novalidate>
+    <div class="am-ref" id="amRef" hidden><span id="amRefText"></span><button type="button" id="amRefClear">Remove</button></div>
+    <label>Video type
+     <select id="amType" name="type"></select>
+    </label>
+    <div class="am-row">
+     <label>Language
+      <select id="amLang" name="lang"><option>Telugu</option><option>Hindi</option><option>English</option><option>Telugu + English</option></select>
+     </label>
+     <label>Length
+      <select id="amLen" name="len"><option>15 seconds</option><option selected>30 seconds</option><option>45 seconds</option><option>60 seconds</option><option>Not sure</option></select>
+     </label>
+    </div>
+    <label>Your name <span style="font-weight:600;color:var(--av-muted)">(optional)</span>
+     <input id="amName" name="name" maxlength="60" autocomplete="name">
+    </label>
+    <label>Your requirement
+     <textarea id="amDetails" name="details" maxlength="800" placeholder="For example: Wedding invitation video for Ravi weds Sita, 12 Dec, Sri Sai Function Hall, Warangal. Telugu, traditional style."></textarea>
+    </label>
+    <p class="am-error" id="amError" role="alert"></p>
+    <button class="av-btn primary" type="submit">Send on WhatsApp <span aria-hidden="true">↗</span></button>
+   </form>
   </div>
  </div>
 </section>
@@ -588,5 +645,6 @@ body.sc-ad-video-page:before{content:"";position:fixed;inset:0;z-index:-2;pointe
 </main>
 <footer class="av-footer"><div class="av-container av-footer-inner"><a href="index.html">✦ SiteCraft</a><span>© 2026 SiteCraft · AI Ad Videos</span><a href="index.html#free-tools">Explore SiteCraft tools</a></div></footer>
 <script src="site-navigation.js"></script>
+<script src="./assets/ai-made/ai-made.js?v=2" defer></script>
 </body>
 </html>

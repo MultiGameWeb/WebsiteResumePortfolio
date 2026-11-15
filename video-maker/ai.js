@@ -9,7 +9,7 @@
   const API_BASE = window.SITECRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
   const STYLE_NAMES = { jewel: 'Jewellery luxe', gym: 'Gym power', royal: 'Royal wedding', offer: 'Shop offer', product: 'Product showcase', wedding: 'Wedding / function', birthday: 'Birthday', property: 'Real estate', food: 'Restaurant & food' };
   const FORMAT_NAMES = { story: 'Status / Reels (9:16)', square: 'Post (1:1)', wide: 'YouTube (16:9)' };
-  const GREETING = 'Hi! 👋 Tell me about your business and what you want to promote — in Telugu, Hindi or English. I will write the scenes and make your video, any length up to 1 minute, with free online photos, AI pictures or your own photos.';
+  const GREETING = 'Hi! 👋 Tell me about your business and what you want to promote — in Telugu, Hindi or English. I will write the scenes and make your video, any length up to 1 minute, with AI pictures or your own photos. Tap an example below to start.';
 
   const $ = (selector) => document.querySelector(selector);
   const chatBox = $('#aiChat');
@@ -57,6 +57,8 @@
   }
 
   function showPlan(plan) {
+    // The plan card is a message in the chat.
+    chatBox.append(planBox);
     planBox.hidden = false;
     const list = element('ol', 'vm-ai-scenes');
     for (const scene of plan.scenes) list.append(element('li', '', [scene.eyebrow, scene.headline, scene.line].filter(Boolean).join(' — ')));
@@ -96,7 +98,7 @@
       element('p', 'vm-ai-ask', `AI will create ${plan.scenes.length} pictures for these scenes and make the video. Have your own photos? Share them in the chat (＋ or paste) or tap “Use my photos” — AI looks at them, puts them in order and writes the text. Either way your pictures go inside the video and the HTML file.`),
       choices, thumbs, note, credit,
     );
-    planBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    chatBox.scrollTop = planBox.offsetTop - chatBox.offsetTop - 8;
   }
 
   function showEditor() {
@@ -243,7 +245,7 @@
     showEditor();
     showVersions(job, ready).catch(() => {});
     const missing = job.plan.scenes.length - ready.length;
-    const parts = [`${job.slots.some((slot) => slot?.source === 'own') && !job.aiError ? 'AI arranged your photos and wrote the scenes. ' : ''}Your video is ready ✓ (${ready.length} picture${ready.length === 1 ? '' : 's'}). Download it as an HTML video or tap “Make my video” for MP4.`];
+    const parts = [`${job.slots.some((slot) => slot?.source === 'own') && !job.aiError ? 'AI arranged your photos and wrote the scenes. ' : ''}Your video is ready ✓ (${ready.length} picture${ready.length === 1 ? '' : 's'}). Tap “Make my video” for an MP4 you can share on WhatsApp, or download the HTML video.`];
     if (job.aiError) parts.push(job.slots.some((slot) => slot?.source === 'own') ? job.aiError : `Some AI pictures could not be made, so free photos were used: ${job.aiError}`);
     if (missing) parts.push(`${missing} scene${missing === 1 ? '' : 's'} had no picture.`);
     job.note.textContent = parts.join(' ');
@@ -295,7 +297,7 @@
         for (const node of row.children) node.classList.toggle('on', node === card);
         try {
           await VM.loadPlan({ ...plan, design: version.design || { layout: version.layout }, scenes: ready.map(([scene, slot]) => ({ ...scene, look: slot.look })) }, ready.map(([, slot]) => slot.blob));
-          job.note.textContent = `Version ${i + 1} (${VM.templateName(version.layout)}) is in the editor ✓ Download it as an HTML video or tap “Make my video” for MP4.`;
+          job.note.textContent = `Version ${i + 1} (${VM.templateName(version.layout)}) is in the editor ✓ Tap “Make my video” for an MP4 you can share on WhatsApp, or download the HTML video.`;
         } catch (error) {
           job.note.textContent = error.message;
         }
@@ -484,5 +486,17 @@
 
   bubble('ai', GREETING);
   messages.push({ role: 'assistant', text: GREETING });
+
+  // Example requests to start from; they go away after the first message.
+  const EXAMPLES = ['Saree shop in Warangal — Diwali offer 30% off, 30 seconds', 'Gym — New year offer ₹999/month, Reels', 'Half saree function invitation for my daughter', 'Bakery — new cakes launch, Telugu, 15 seconds'];
+  const suggest = element('div', 'vm-suggest');
+  for (const example of EXAMPLES) {
+    const chip = element('button', '', example);
+    chip.type = 'button';
+    chip.addEventListener('click', () => { input.value = example; input.focus(); });
+    suggest.append(chip);
+  }
+  chatBox.append(suggest);
+  form.addEventListener('submit', () => suggest.remove(), { once: true });
   input.focus({ preventScroll: true });
 })();

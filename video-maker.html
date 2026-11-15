@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Playfair+Display:wght@700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Jost:wght@400;500;600&family=Anton&family=Fredoka:wght@500;600;700&family=Great+Vibes&family=Noto+Sans+Telugu:wght@600;800&family=Noto+Sans+Devanagari:wght@600;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="global.css">
 <link rel="stylesheet" href="site-navigation.css">
-<link rel="stylesheet" href="video-maker/maker.css?v=14">
+<link rel="stylesheet" href="video-maker/maker.css?v=21">
 </head>
 <body class="vm-page">
 <main class="vm-app" id="main-content">
@@ -68,10 +68,21 @@
         <label>Seconds per photo <span class="vm-value" id="speedValue">3</span>
           <input type="range" id="speedInput" min="2" max="6" step="0.5" value="3">
         </label>
-        <label>Music <span class="vm-optional">(optional, your own file)</span>
+        <p class="vm-hint">Music — made for your video in the app, so there is no copyright problem.</p>
+        <div class="vm-formats vm-music" id="musicList" role="radiogroup" aria-label="Music">
+          <button type="button" data-music="auto" aria-checked="true" role="radio">✨ Auto<small>fits template</small></button>
+          <button type="button" data-music="upbeat" aria-checked="false" role="radio">Upbeat</button>
+          <button type="button" data-music="energy" aria-checked="false" role="radio">Energy</button>
+          <button type="button" data-music="luxury" aria-checked="false" role="radio">Luxury</button>
+          <button type="button" data-music="festive" aria-checked="false" role="radio">Festive</button>
+          <button type="button" data-music="chill" aria-checked="false" role="radio">Chill</button>
+          <button type="button" data-music="off" aria-checked="false" role="radio">Off</button>
+        </div>
+        <div class="vm-music-row"><button type="button" class="vm-btn ghost" id="musicTry">🔊 Listen</button><span class="vm-hint" id="musicNote"></span></div>
+        <label>Or use your own music <span class="vm-optional">(optional file)</span>
           <input type="file" id="musicInput" accept="audio/*">
         </label>
-        <p class="vm-hint">Use music you have the rights to. Film songs can get your video muted on Instagram or YouTube.</p>
+        <p class="vm-hint">Film songs can get your video muted on Instagram or YouTube. Use only music you have the rights to.</p>
       </div>
     </section>
 
@@ -89,13 +100,30 @@
       <div class="vm-result" id="result" hidden>
         <video id="resultVideo" controls playsinline></video>
         <a class="vm-btn primary" id="downloadLink" download>⬇ Download video</a>
+        <button type="button" class="vm-btn vm-whatsapp" id="shareBtn">📲 Share on WhatsApp</button>
+        <p class="vm-hint" id="shareNote" role="status"></p>
       </div>
-      <p class="vm-note">Free videos carry a small “Made with SiteCraft” mark. ★ Premium templates are free to try for now; watermark-free videos (₹99, premium ₹199) are coming soon. Want us to make a professional ad for you? <a href="ai-ad-videos.html">See our ad video service</a>.</p>
+      <div class="vm-unlock" id="unlockBox">
+        <p class="vm-unlock-status" id="unlockStatus">Free videos carry a small “Made with SiteCraft” mark.</p>
+        <button type="button" class="vm-btn primary" id="unlockPay">🔓 Remove watermark · ₹99</button>
+        <div id="unlockMore">
+          <button type="button" class="vm-link" id="unlockToggle">Have a code?</button>
+          <button type="button" class="vm-link" id="unlockRecover">I paid but it is not unlocked</button>
+        </div>
+        <div class="vm-unlock-code" id="unlockCodeBox" hidden>
+          <input id="unlockCode" maxlength="40" placeholder="Paste your 32-character code" aria-label="Pass code" autocomplete="off">
+          <button type="button" class="vm-btn ghost" id="unlockApply">Apply</button>
+        </div>
+        <p class="vm-hint" id="unlockNote" role="status"></p>
+        <p class="vm-hint">₹99 = watermark-free videos for 24 hours (up to 5 exports: MP4 or HTML). Premium styles are included.</p>
+      </div>
+      <p class="vm-note">Want us to make a professional ad for you? <a href="ai-ad-videos.html">See our ad video service</a>.</p>
     </section>
   </div>
 </main>
 <script src="site-navigation.js"></script>
-<script src="video-maker/styles.js?v=9"></script>
-<script src="video-maker/maker.js?v=15"></script>
+<script src="video-maker/styles.js?v=11"></script>
+<script src="video-maker/music.js?v=1"></script>
+<script src="video-maker/maker.js?v=28"></script>
 </body>
 </html>

@@ -1557,7 +1557,7 @@
         const slam = Math.max(1, 2.4 - 1.4 * ease(local / 0.35));
         ctx.save();
         ctx.translate(d.w / 2, d.h * 0.42); ctx.scale(slam, slam); ctx.translate(-d.w / 2, -d.h * 0.42);
-        blockText(ctx, d, d.subtitle || 'Big Sale', { x: d.w / 2, y: d.h * 0.36, size: u * (wide(d) ? 9 : 11), font: headFont(d, F.impact), bg: red, color: '#fff', align: 'center', maxWidth: d.w - u * 8, maxLines: 3 });
+        blockText(ctx, d, d.subtitle || 'Big Sale', { x: d.w / 2, y: d.h * 0.33, size: u * (wide(d) ? 8 : 10), font: headFont(d, F.impact), bg: red, color: '#fff', align: 'center', maxWidth: d.w - u * 8, maxLines: 4 });
         ctx.restore();
         tape(ctx, d, d.badge || 'Limited time', d.w * 0.34, d.h * 0.18, -0.12, yellow, '#000', u * 3.4);
         blockText(ctx, d, d.title, { x: d.w / 2, y: d.h - u * 22, size: u * 4, font: F.impact, bg: '#000', color: '#fff', align: 'center', maxWidth: d.w - u * 10, maxLines: 1, wipe: (local - 0.4) / 0.25 });
@@ -2284,6 +2284,18 @@
     }
     deco(ctx, d, t, L.draw ? L.deco : (d.design?.deco || L.deco));
     L.chrome(ctx, d, t, seg, segs);
+    // Free videos carry a small mark (the editor draws its own for the
+    // preview and the MP4; this is for the stand-alone HTML video).
+    if (d.watermark) {
+      const size = Math.round(Math.min(d.w, d.h) * 0.028);
+      ctx.save();
+      ctx.font = `600 ${size}px ${F.sans}`;
+      ctx.textAlign = 'right'; ctx.textBaseline = 'bottom';
+      ctx.globalAlpha = 0.75; ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = size * 0.4;
+      ctx.fillText('Made with SiteCraft', d.w - size, d.h - size * 0.8);
+      ctx.restore();
+    }
   }
 
   const api = {
