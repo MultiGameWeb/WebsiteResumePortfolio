@@ -147,3 +147,5 @@ label[hidden] { display: none; }
 .vm-template-wrap { display: grid; gap: 4px; }
 .vm-example-btn { padding: 6px 8px; border: 1px solid var(--vm-line); border-radius: 10px; background: transparent; color: #f9a8d4; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
 .vm-example-btn:hover, .vm-example-btn:focus-visible { border-color: #ec4899; background: rgba(236,72,153,.12); }
+.vm-example-canvas { width: 100%; height: auto; border-radius: 12px; background: #000; border: 1px solid var(--vm-line); }
+.vm-example-canvas[hidden] { display: none; }
