@@ -5,3 +5,9 @@
 @media print{.wheel-stage,.draw-actions,.order-controls,.order-editor,.search-input{break-inside:avoid}.order-controls{display:none!important}}
 
 .grid2>*,.grid3>*,.main>*,.panel{min-width:0}
+
+/* Links the site navigation replaces (duplicate Back/Home) stay hidden */
+[hidden]{display:none!important}
+
+/* Contrast (WCAG AA) */
+.empty{color:#625b70!important}

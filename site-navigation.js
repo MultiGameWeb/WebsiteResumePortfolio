@@ -45,6 +45,7 @@ function cleanLegacyHeader(header){
  const pageNavs=header.querySelectorAll("nav");
  pageNavs.forEach(n=>{n.classList.add("sc-legacy-site-nav");n.setAttribute("aria-hidden","true")});
  header.querySelectorAll("a").forEach(a=>{
+  if(a.hasAttribute("data-sc-keep"))return;
   const label=(a.textContent||"").replace(/\s+/g," ").trim().toLowerCase();
   const cls=(a.className&&String(a.className))||"";
   const href=(a.getAttribute("href")||"").toLowerCase();

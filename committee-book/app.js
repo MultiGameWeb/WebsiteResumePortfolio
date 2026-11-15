@@ -82,6 +82,12 @@ function buildDemoState(lang){
 function nextDateForSeed(start,n,due){
  const dt=new Date(start+"T00:00:00");dt.setMonth(dt.getMonth()+n-1);dt.setDate(Math.min(due,new Date(dt.getFullYear(),dt.getMonth()+1,0).getDate()));return dateISO(dt);
 }
+function makeCycles(n){return Array.from({length:Math.max(2,Number(n)||2)},(_,i)=>({no:i+1,completed:false,winnerId:null}));}
+// A fresh chit for real use: setup is open (nothing completed yet), no sample members or payments.
+function blankChitState(lang){
+  const chit={name:"My Chit",potPaise:10000000,membersCount:10,discountPaise:1000000,commissionEnabled:false,commissionPct:0,distributionRule:"allMembers",winnerMethod:"fixedOrder",startDate:dateISO(new Date()),dueDay:10,finePerDayPaise:0,maxFineCapPaise:0,rulesHtml:"<h3>Member rules</h3><ul><li>Each member pays the fixed monthly installment on or before the due date.</li><li>The fixed discount and prize amount follow the terms recorded at the start of the chit.</li><li>Any payment correction is recorded as a reversal; original entries are kept.</li></ul>"};
+  return {lang:lang||"en",chit:chit,members:[],cycles:makeCycles(10),payments:[],page:"setup",selectedWinnerId:null,modal:null,toast:null,paymentCycleNo:null,isBlank:true};
+}
 let state;state=buildDemoState("en");
 const CB_KEY="committee-book:fixed-discount:v1",CB_SKIP=["toast","toastTimer","modal","selectedWinnerId"];
 (function(){const saved=window.CBPersist&&CBPersist.load(CB_KEY);if(saved&&Array.isArray(saved.members)&&Array.isArray(saved.cycles)&&Array.isArray(saved.payments)&&saved.chit){state=Object.assign(buildDemoState(saved.lang||"en"),saved,{toast:null,modal:null})}})();
@@ -113,10 +119,10 @@ function statusClass(s){return ({paid:"green",active:"green",winner:"blue",pendi
 function badge(s){return '<span class="badge '+statusClass(s)+'"><span class="status-dot"></span>'+esc(statusLabel(s))+'</span>';}
 function paidToggle(m,c,d){const checked=d.payment.status==="paid"||d.remaining===0;const label=checked?t("yes"):t("no");return '<label class="toggle"><input class="paid-toggle" type="checkbox" data-action="toggle-paid" data-id="'+m.id+'" '+(checked?"checked":"")+' aria-label="'+esc(t("paidQuestion"))+'"><span>'+esc(label)+'</span></label>'+(d.payment.status==="partial"?'<div style="margin-top:4px">'+badge("partial")+'</div>':"");}
 function heading(title,desc,actions){return '<section class="page-heading"><div><h1>'+esc(title)+'</h1><p>'+esc(desc||"")+'</p></div><div class="heading-actions">'+(actions||"")+'</div></section>';}
-function demoBanner(){return '<div class="demo-banner"><span class="demo-banner-icon">i</span><div><strong>'+esc(t("demoNotice"))+'</strong><span>'+esc(t("demoNoticeText"))+'</span></div></div>';}
+function demoBanner(){if(state.isBlank)return '<div class="demo-banner"><span class="demo-banner-icon">i</span><div><strong>'+esc(t("ownChitNotice"))+'</strong><span>'+esc(t("ownChitNoticeText"))+'</span></div></div>';return '<div class="demo-banner"><span class="demo-banner-icon">i</span><div><strong>'+esc(t("demoNotice"))+'</strong><span>'+esc(t("demoNoticeText"))+'</span></div></div>';}
 function pageIcon(page){return ({dashboard:"◫",setup:"⚙",members:"♙",cycles:"◷",payments:"↗",rules:"≡",reports:"▤"})[page]||"•";}
 function navigation(){const items=["dashboard","setup","members","cycles","payments","rules","reports"];return '<aside class="sidebar"><div class="side-label">'+esc(t("overview"))+'</div><nav class="nav-list">'+items.map(k=>'<button class="nav-item '+(state.page===k?"active":"")+'" data-page="'+k+'"><span class="nav-icon">'+pageIcon(k)+'</span><span>'+esc(t(k))+'</span></button>').join("")+'</nav><div class="sidebar-note"><strong>'+esc(t("copyMode"))+'</strong>'+esc(t("fixedDiscountIntro"))+'</div></aside>';}
-function header(){return '<header class="app-header"><div class="header-inner"><a class="brand" href="index.html" aria-label="'+esc(t("brand"))+'"><span class="brand-mark">C</span><span><span class="brand-name">'+esc(t("brand"))+'</span><span class="brand-sub">'+esc(t("templateTag"))+' · '+esc(t("templateName"))+'</span></span></a><div class="header-actions"><a class="back-link" href="committee-book.html">← '+esc(t("backToTemplates"))+'</a><a class="back-link sitecraft-link" href="index.html">⌂ '+esc(t("sitecraftHome"))+'</a><button type="button" class="language-btn" data-action="toggle-lang" aria-label="'+esc(t("languageLabel"))+'">文 A · '+esc(t("language"))+'</button><button type="button" class="reset-btn" data-action="reset-demo">↻ '+esc(t("resetDemo"))+'</button></div></div></header>';}
+function header(){return '<header class="app-header"><div class="header-inner"><a class="brand" data-sc-keep href="committee-book.html" aria-label="'+esc(t("brand"))+'"><span class="brand-mark">C</span><span><span class="brand-name">'+esc(t("brand"))+'</span><span class="brand-sub">'+esc(t("templateTag"))+' · '+esc(t("templateName"))+'</span></span></a><div class="header-actions"><a class="back-link" href="committee-book.html">← '+esc(t("backToTemplates"))+'</a><a class="back-link sitecraft-link" href="index.html">⌂ '+esc(t("sitecraftHome"))+'</a><button type="button" class="language-btn" data-action="toggle-lang" aria-label="'+esc(t("languageLabel"))+'">文 A · '+esc(t("language"))+'</button><button type="button" class="reset-btn" data-action="new-chit">＋ '+esc(t("newChit"))+'</button><button type="button" class="reset-btn" data-action="reset-demo">↻ '+esc(t("resetDemo"))+'</button></div></div></header>';}
 function statCard(label,value,foot,icon,color){return '<article class="stat-card '+color+'"><div class="stat-top"><span class="stat-label">'+esc(label)+'</span><span class="stat-icon">'+icon+'</span></div><div class="stat-value">'+esc(value)+'</div><div class="stat-foot">'+esc(foot||"")+'</div></article>';}
 function dashboardView(){
   const c=currentCycle(),math=c?cycleMath(c):null;
@@ -130,9 +136,9 @@ function dashboardView(){
     statCard(t("collectedThisMonth"),money(collected),c?cycleLabel(c.no):"—","↗","blue")+
     statCard(t("dividendDistributed"),money(dividend),t("completed")+" "+state.cycles.filter(x=>x.completed).length+" "+t("cycles"),"₹","amber")+'</div>';
   const winRows=state.cycles.filter(x=>x.completed).slice().reverse().map(x=>'<tr><td><strong>'+esc(cycleLabel(x.no))+'</strong><div class="subtle">'+esc(t("monthNo"))+' '+x.no+'</div></td><td>'+esc(memberName(x.winnerId))+'</td><td class="money">'+money(x.prizePaise||state.chit.potPaise-state.chit.discountPaise)+'</td><td class="money">'+money(x.dividendPerHeadPaise||0)+'</td><td>'+badge("completed")+'</td></tr>').join("");
-  const winnersTable='<div class="panel"><div class="panel-header"><div><h2>'+esc(t("winnerHistory"))+'</h2><p>'+esc(t("monthHistory"))+'</p></div><button class="btn small" data-page="cycles">'+esc(t("cycles"))+' →</button></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("month"))+'</th><th>'+esc(t("winner"))+'</th><th>'+esc(t("prize"))+'</th><th>'+esc(t("dividendPerHead"))+'</th><th>'+esc(t("status"))+'</th></tr></thead><tbody>'+(winRows||'<tr><td colspan="5" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div>';
+  const winnersTable='<div class="panel"><div class="panel-header"><div><h2>'+esc(t("winnerHistory"))+'</h2><p>'+esc(t("monthHistory"))+'</p></div><button class="btn small" data-page="cycles">'+esc(t("cycles"))+' →</button></div><div class="panel-body flush"><div class="table-wrap" tabindex="0"><table><thead><tr><th>'+esc(t("month"))+'</th><th>'+esc(t("winner"))+'</th><th>'+esc(t("prize"))+'</th><th>'+esc(t("dividendPerHead"))+'</th><th>'+esc(t("status"))+'</th></tr></thead><tbody>'+(winRows||'<tr><td colspan="5" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div>';
   const statusRows=c?active.map(m=>{const d=dueFor(m,c),p=d.payment;return '<tr><td>'+memberCell(m)+'</td><td class="money">'+money(d.remaining+d.fine)+'</td><td>'+paidToggle(m,c,d)+'</td><td>'+esc(p.paidDate?fmtDate(p.paidDate):"—")+'</td><td><select data-action="payment-mode" data-id="'+m.id+'" aria-label="'+esc(t("paymentMode"))+'"><option value="upi" '+(p.mode==="upi"?"selected":"")+'>'+esc(t("upi"))+'</option><option value="cash" '+(p.mode==="cash"?"selected":"")+'>'+esc(t("cash"))+'</option></select></td><td class="money">'+money(d.fine)+'</td></tr>';}).join(""):"";
-  const statusTable='<div class="panel"><div class="panel-header"><div><h2>'+esc(t("paymentStatus"))+'</h2><p>'+esc(t("currentCycle"))+(c?" · "+esc(cycleLabel(c.no)):"")+'</p></div><button class="btn small" data-page="payments">'+esc(t("payments"))+' →</button></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("memberName"))+'</th><th>'+esc(t("amountDue"))+'</th><th>'+esc(t("paidQuestion"))+'</th><th>'+esc(t("paidDate"))+'</th><th>'+esc(t("paymentMode"))+'</th><th>'+esc(t("lateFine"))+'</th></tr></thead><tbody>'+(statusRows||'<tr><td colspan="6" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div>';
+  const statusTable='<div class="panel"><div class="panel-header"><div><h2>'+esc(t("paymentStatus"))+'</h2><p>'+esc(t("currentCycle"))+(c?" · "+esc(cycleLabel(c.no)):"")+'</p></div><button class="btn small" data-page="payments">'+esc(t("payments"))+' →</button></div><div class="panel-body flush"><div class="table-wrap" tabindex="0"><table><thead><tr><th>'+esc(t("memberName"))+'</th><th>'+esc(t("amountDue"))+'</th><th>'+esc(t("paidQuestion"))+'</th><th>'+esc(t("paidDate"))+'</th><th>'+esc(t("paymentMode"))+'</th><th>'+esc(t("lateFine"))+'</th></tr></thead><tbody>'+(statusRows||'<tr><td colspan="6" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div>';
   const pending= c?active.filter(m=>{const d=dueFor(m,c);return d.remaining>0;}).map(m=>{const d=dueFor(m,c),late=daysLate(nextDate(c.no));const cl=late>0?"red":"amber";return '<div class="pending-item '+cl+'"><span class="pending-icon">'+(late>0?"!":"◷")+'</span><div><div class="pending-title">'+esc(m.name)+'</div><div class="pending-desc">'+esc(late>0?t("reminderOverdue"):t("reminderDue"))+' · '+esc(late>0?(t("fineDays")+": "+late):fmtDate(nextDate(c.no)))+'</div></div><span class="pending-amount">'+money(d.remaining+d.fine)+'</span></div>';}).join(""):"";
   const pendingPanel='<div class="panel"><div class="panel-header"><div><h2>'+esc(t("pendingList"))+'</h2><p>'+esc(t("reminderText"))+'</p></div></div><div class="panel-body"><div class="pending-list">'+(pending||'<div class="empty-state">'+esc(t("noPending"))+'</div>')+'</div></div></div>';
   const mathPanel=math?'<div class="panel"><div class="panel-header"><div><h2>'+esc(t("howCalculationWorks"))+'</h2><p>'+esc(t("fixedDiscountIntro"))+'</p></div></div><div class="panel-body"><div class="calc-grid">'+
@@ -166,7 +172,7 @@ function setupView(){
     commissionBlock+percentBlock+
     select("distributionRule",t("dividendRule"),c.distributionRule,[["allMembers",t("allMembersRule")],["notWonYet",t("notWonRule")]],locked)+
     select("winnerMethod",t("winnerMethod"),c.winnerMethod,[["fixedOrder",t("fixedOrder")],["luckyDraw",t("luckyDraw")],["manual",t("leaderSelects")]],locked)+
-    input("startDate",t("startDate"),c.startDate,"date",false)+
+    input("startDate",t("startDate"),c.startDate,"date",locked)+
     input("dueDay",t("monthlyDueDate"),c.dueDay,"number",false,"", 'min="1" max="31" step="1"')+
     input("finePerDay",t("finePerDay"),(c.finePerDayPaise/100).toFixed(2),"number",false,"", 'min="0" step="0.01"')+
     input("maxFineCap",t("maxFineCap"),c.maxFineCapPaise>0?(c.maxFineCapPaise/100).toFixed(2):"","number",false,"", 'min="0" step="0.01"')+
@@ -200,7 +206,7 @@ function membersView(){
   }).join("");
   const canAdd=activeCount()<state.chit.membersCount;
   return heading(t("members"),t("membersSubtitle"),'<button class="btn primary" data-action="add-member" '+(!canAdd?'disabled title="'+esc(t("noMemberSlots"))+'"':"")+'">＋ '+esc(t("addMember"))+'</button>')+
-    '<div class="panel"><div class="panel-header"><div><h2>'+esc(t("members"))+' · '+state.members.length+'</h2><p>'+esc(t("membersCountHint"))+'</p></div><div class="table-toolbar">'+search+'</div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("serialNo"))+'</th><th>'+esc(t("memberName"))+'</th><th>'+esc(t("phone"))+'</th><th>'+esc(t("email"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("dueAmount"))+'</th><th>'+esc(t("documents"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+(rows||'<tr><td colspan="10" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div><div class="info-box">'+esc(t("removedNotice"))+'</div>';
+    '<div class="panel"><div class="panel-header"><div><h2>'+esc(t("members"))+' · '+state.members.length+'</h2><p>'+esc(t("membersCountHint"))+'</p></div><div class="table-toolbar">'+search+'</div></div><div class="panel-body flush"><div class="table-wrap" tabindex="0"><table><thead><tr><th>'+esc(t("serialNo"))+'</th><th>'+esc(t("memberName"))+'</th><th>'+esc(t("phone"))+'</th><th>'+esc(t("email"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("dueAmount"))+'</th><th>'+esc(t("documents"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+(rows||'<tr><td colspan="10" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div><div class="info-box">'+esc(t("removedNotice"))+'</div>';
 }
 function cyclesView(){
   const cur=currentCycle(),all=state.cycles;
@@ -211,10 +217,10 @@ function cyclesView(){
   const eligible=activeMembers().filter(m=>m.status!=="removed"&&(state.chit.distributionRule!=="notWonYet"||(m.wonMonths||[]).length===0));
   const choices=eligible.map(m=>'<option value="'+m.id+'" '+(state.selectedWinnerId===m.id?"selected":"")+'>'+esc(m.name)+'</option>').join("");
   const drawControls=cur?'<div class="panel"><div class="panel-header"><div><h2>'+esc(t("currentCycle"))+' · '+esc(cycleLabel(cur.no))+'</h2><p>'+esc(t("startNew"))+'</p></div>'+badge("upcoming")+'</div><div class="panel-body"><div class="cycle-action"><div class="form-field"><label for="winner-select">'+esc(t("selectWinner"))+'</label><select id="winner-select" data-action="winner-select">'+choices+'</select></div><div class="row-actions"><button class="btn" data-action="pick-winner">'+esc(t("chooseWinner"))+'</button><button class="btn primary" data-action="complete-cycle">✓ '+esc(t("recordCycle"))+'</button></div></div><div class="calc-grid" style="margin-top:16px">'+calcItem(t("prizeAmount"),money(state.chit.potPaise-state.chit.discountPaise),t("potAmount")+" − "+t("discount"))+calcItem(t("dividendPerHead"),money(cycleMath(cur).dividendPerHeadPaise),t("eligibleMembers")+": "+cycleMath(cur).eligibleIds.length)+calcItem(t("eachMemberPays"),money(cycleMath(cur).paysByMember[state.selectedWinnerId]||contribution()),t("amountFormula"))+'</div></div></div>':'<div class="info-box">'+esc(t("noEligibleWinner"))+'</div>';
-  return heading(t("cycles"),t("monthlyCollection")+" = "+t("numberMembers")+" × "+t("monthlyContribution"))+demoBanner()+drawControls+'<div class="panel"><div class="panel-header"><div><h2>'+esc(t("monthHistory"))+'</h2><p>'+esc(t("cycleStatus"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("monthNo"))+'</th><th>'+esc(t("month"))+'</th><th>'+esc(t("winner"))+'</th><th>'+esc(t("discount"))+'</th><th>'+esc(t("commission"))+'</th><th>'+esc(t("dividendPerHead"))+'</th><th>'+esc(t("eachMemberPays"))+'</th><th>'+esc(t("cycleStatus"))+'</th></tr></thead><tbody>'+cycleRows+'</tbody></table></div></div></div>';
+  return heading(t("cycles"),t("monthlyCollection")+" = "+t("numberMembers")+" × "+t("monthlyContribution"))+demoBanner()+drawControls+'<div class="panel"><div class="panel-header"><div><h2>'+esc(t("monthHistory"))+'</h2><p>'+esc(t("cycleStatus"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap" tabindex="0"><table><thead><tr><th>'+esc(t("monthNo"))+'</th><th>'+esc(t("month"))+'</th><th>'+esc(t("winner"))+'</th><th>'+esc(t("discount"))+'</th><th>'+esc(t("commission"))+'</th><th>'+esc(t("dividendPerHead"))+'</th><th>'+esc(t("eachMemberPays"))+'</th><th>'+esc(t("cycleStatus"))+'</th></tr></thead><tbody>'+cycleRows+'</tbody></table></div></div></div>';
 }
 function paymentsView(){
-  const c=currentCycle();
+  const c=payCycle();
   if(!c)return heading(t("payments"),t("noCompletedCycles"))+demoBanner();
   const list=activeMembers();
   const rows=list.map((m,i)=>{
@@ -225,7 +231,8 @@ function paymentsView(){
   }).join("");
   const sums=list.reduce((a,m)=>{const d=dueFor(m,c);a.paid+=d.paid;a.remaining+=d.remaining;a.fine+=d.fine;return a;},{paid:0,remaining:0,fine:0});
   const ledger=state.payments.filter(p=>p.cycleNo===c.no).map(p=>{const m=memberById(p.memberId);return (p.history||[]).map(h=>'<tr><td>'+esc(m?m.name:"—")+'</td><td>'+esc(h.type==="Reversal"?t("reversal"):t("paidStatus"))+'</td><td>'+esc(fmtDate(h.date))+'</td><td class="money">'+(h.type==="Reversal"?"−":"")+money(h.amountPaise)+'</td><td>'+esc(h.mode==="cash"?t("cash"):t("upi"))+'</td><td>'+esc(h.reference||"—")+'</td></tr>').join("");}).join("");
-  return heading(t("payments"),t("currentCycle")+" · "+cycleLabel(c.no),'<button class="btn" data-action="export-csv">⇩ '+esc(t("exportExcel"))+'</button>')+demoBanner()+'<div class="stat-grid">'+statCard(t("collectedThisMonth"),money(sums.paid),cycleLabel(c.no),"↗","green")+statCard(t("amountDue"),money(sums.remaining),t("pendingList"),"!","red")+statCard(t("lateFine"),money(sums.fine),t("fineCalculated"),"◷","amber")+statCard(t("totalPaidMembers"),String(list.filter(m=>dueFor(m,c).payment.status==="paid").length),t("currentCycle"),"✓","blue")+'</div><div class="panel"><div class="panel-header"><div><h2>'+esc(t("paymentStatus"))+'</h2><p>'+esc(t("currentCycle"))+' · '+esc(cycleLabel(c.no))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("serialNo"))+'</th><th>'+esc(t("memberName"))+'</th><th>'+esc(t("amountDue"))+'</th><th>'+esc(t("paidQuestion"))+'</th><th>'+esc(t("paidDate"))+'</th><th>'+esc(t("paymentMode"))+'</th><th>'+esc(t("lateFine"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div></div><div class="panel"><div class="panel-header"><div><h2>'+esc(t("paymentHistory"))+'</h2><p>'+esc(t("reversalRecorded"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("memberName"))+'</th><th>'+esc(t("entry"))+'</th><th>'+esc(t("date"))+'</th><th>'+esc(t("amount"))+'</th><th>'+esc(t("paymentMode"))+'</th><th>'+esc(t("reference"))+'</th></tr></thead><tbody>'+(ledger||'<tr><td colspan="6" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div>';
+  const cur=currentCycle(),monthPick='<label class="month-pick">'+esc(t("month"))+' <select data-action="payment-month" aria-label="'+esc(t("month"))+'">'+payableCycles().map(x=>'<option value="'+x.no+'" '+(x.no===c.no?"selected":"")+'>'+esc(cycleLabel(x.no))+' · '+esc(x===cur?t("currentCycle"):t("completed"))+'</option>').join("")+'</select></label>';
+  return heading(t("payments"),(c===cur?t("currentCycle"):t("completed"))+" · "+cycleLabel(c.no),monthPick+'<button class="btn" data-action="export-csv">⇩ '+esc(t("exportExcel"))+'</button>')+demoBanner()+'<div class="stat-grid">'+statCard(t("collectedThisMonth"),money(sums.paid),cycleLabel(c.no),"↗","green")+statCard(t("amountDue"),money(sums.remaining),t("pendingList"),"!","red")+statCard(t("lateFine"),money(sums.fine),t("fineCalculated"),"◷","amber")+statCard(t("totalPaidMembers"),String(list.filter(m=>dueFor(m,c).payment.status==="paid").length),t("currentCycle"),"✓","blue")+'</div><div class="panel"><div class="panel-header"><div><h2>'+esc(t("paymentStatus"))+'</h2><p>'+esc(t("currentCycle"))+' · '+esc(cycleLabel(c.no))+'</p></div></div><div class="panel-body flush"><div class="table-wrap" tabindex="0"><table><thead><tr><th>'+esc(t("serialNo"))+'</th><th>'+esc(t("memberName"))+'</th><th>'+esc(t("amountDue"))+'</th><th>'+esc(t("paidQuestion"))+'</th><th>'+esc(t("paidDate"))+'</th><th>'+esc(t("paymentMode"))+'</th><th>'+esc(t("lateFine"))+'</th><th>'+esc(t("action"))+'</th></tr></thead><tbody>'+rows+'</tbody></table></div></div></div><div class="panel"><div class="panel-header"><div><h2>'+esc(t("paymentHistory"))+'</h2><p>'+esc(t("reversalRecorded"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap" tabindex="0"><table><thead><tr><th>'+esc(t("memberName"))+'</th><th>'+esc(t("entry"))+'</th><th>'+esc(t("date"))+'</th><th>'+esc(t("amount"))+'</th><th>'+esc(t("paymentMode"))+'</th><th>'+esc(t("reference"))+'</th></tr></thead><tbody>'+(ledger||'<tr><td colspan="6" class="empty-state">'+esc(t("noRows"))+'</td></tr>')+'</tbody></table></div></div></div>';
 }
 function rulesView(){
   const math=cycleMath(currentCycle()||{winnerId:null});
@@ -245,7 +252,7 @@ function reportsView(){
   const totalCollected=state.payments.reduce((s,p)=>s+(p.amountPaidPaise||0),0);
   const totalPrize=c.reduce((s,x)=>s+(x.prizePaise||0),0);
   const memberRows=members.map(m=>{const v=memberMath(m);return '<tr><td>'+memberCell(m)+'</td><td>'+badge(m.status)+'</td><td class="money">'+money(v.paid)+'</td><td class="money">'+money(v.dividend)+'</td><td class="money">'+money(v.prize)+'</td><td class="money">'+money(v.profitLoss)+'</td></tr>';}).join("");
-  return heading(t("reports"),t("reportsSubtitle"),'<button class="btn" data-action="export-csv">⇩ '+esc(t("exportExcel"))+'</button><button class="btn primary" data-action="print-pdf">▤ '+esc(t("printPdf"))+'</button>')+demoBanner()+'<div class="stat-grid">'+statCard(t("collected"),money(totalCollected),t("paymentLedger"),"↗","green")+statCard(t("dividendDistributed"),money(totalDiv),t("completed")+" "+c.length,"₹","amber")+statCard(t("prizePayout"),money(totalPrize),t("winnerHistory"),"★","blue")+statCard(t("members"),String(members.length),t("shareCount"),"♙","red")+'</div><div class="panel"><div class="panel-header"><div><h2>'+esc(t("fullLedger"))+'</h2><p>'+esc(t("memberStatement"))+' · '+esc(t("profitLoss"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("memberName"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("prizeReceived"))+'</th><th>'+esc(t("profitLossShort"))+'</th></tr></thead><tbody>'+memberRows+'</tbody></table></div></div></div><div class="panel"><div class="panel-header"><div><h2>'+esc(t("paymentLedger"))+'</h2><p>'+esc(t("fullLedger"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap"><table><thead><tr><th>'+esc(t("monthNo"))+'</th><th>'+esc(t("month"))+'</th><th>'+esc(t("memberName"))+'</th><th>'+esc(t("amountPaid"))+'</th><th>'+esc(t("dividend"))+'</th><th>'+esc(t("profitLossShort"))+'</th><th>'+esc(t("status"))+'</th></tr></thead><tbody>'+state.cycles.map(cy=>members.map(m=>{const d=dueFor(m,cy),v=memberMath(m),dv=cy.dividendByMember?cy.dividendByMember[m.id]||0:0;return '<tr><td>'+cy.no+'</td><td>'+esc(cycleLabel(cy.no))+'</td><td>'+esc(m.name)+'</td><td class="money">'+money(d.paid)+'</td><td class="money">'+money(dv)+'</td><td class="money">'+money(v.profitLoss)+'</td><td>'+badge(cy.completed?"completed":"upcoming")+'</td></tr>';}).join("")).join("")+'</tbody></table></div></div></div>';
+  return heading(t("reports"),t("reportsSubtitle"),'<button class="btn" data-action="export-csv">⇩ '+esc(t("exportExcel"))+'</button><button class="btn primary" data-action="print-pdf">▤ '+esc(t("printPdf"))+'</button>')+demoBanner()+'<div class="stat-grid">'+statCard(t("collected"),money(totalCollected),t("paymentLedger"),"↗","green")+statCard(t("dividendDistributed"),money(totalDiv),t("completed")+" "+c.length,"₹","amber")+statCard(t("prizePayout"),money(totalPrize),t("winnerHistory"),"★","blue")+statCard(t("members"),String(members.length),t("shareCount"),"♙","red")+'</div><div class="panel"><div class="panel-header"><div><h2>'+esc(t("fullLedger"))+'</h2><p>'+esc(t("memberStatement"))+' · '+esc(t("profitLoss"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap" tabindex="0"><table><thead><tr><th>'+esc(t("memberName"))+'</th><th>'+esc(t("status"))+'</th><th>'+esc(t("totalPaid"))+'</th><th>'+esc(t("totalDividend"))+'</th><th>'+esc(t("prizeReceived"))+'</th><th>'+esc(t("profitLossShort"))+'</th></tr></thead><tbody>'+memberRows+'</tbody></table></div></div></div><div class="panel"><div class="panel-header"><div><h2>'+esc(t("paymentLedger"))+'</h2><p>'+esc(t("fullLedger"))+'</p></div></div><div class="panel-body flush"><div class="table-wrap" tabindex="0"><table><thead><tr><th>'+esc(t("monthNo"))+'</th><th>'+esc(t("month"))+'</th><th>'+esc(t("memberName"))+'</th><th>'+esc(t("amountPaid"))+'</th><th>'+esc(t("dividend"))+'</th><th>'+esc(t("profitLossShort"))+'</th><th>'+esc(t("status"))+'</th></tr></thead><tbody>'+state.cycles.map(cy=>members.map(m=>{const d=dueFor(m,cy),v=memberMath(m),dv=cy.dividendByMember?cy.dividendByMember[m.id]||0:0;return '<tr><td>'+cy.no+'</td><td>'+esc(cycleLabel(cy.no))+'</td><td>'+esc(m.name)+'</td><td class="money">'+money(d.paid)+'</td><td class="money">'+money(dv)+'</td><td class="money">'+money(v.profitLoss)+'</td><td>'+badge(cy.completed?"completed":"upcoming")+'</td></tr>';}).join("")).join("")+'</tbody></table></div></div></div>';
 }
 function pageContent(){switch(state.page){case"setup":return setupView();case"members":return membersView();case"cycles":return cyclesView();case"payments":return paymentsView();case"rules":return rulesView();case"reports":return reportsView();default:return dashboardView();}}
 function modalView(){
@@ -265,7 +272,7 @@ function render(){
   root.innerHTML=header()+'<div class="shell">'+navigation()+'<main class="main">'+pageContent()+'<footer class="footer">'+esc(t("footerText"))+'</footer></main></div>'+modalView()+'<div class="toast-area" id="toast-area">'+(state.toast?'<div class="toast '+(state.toast.error?"error":"")+'">'+esc(state.toast.message)+'</div>':"")+'</div>';
 }
 function showToast(message,error){
-  state.toast={message:message,error:!!error};render();
+  state.toast={message:message,error:!!error};const area=document.getElementById("toast-area");if(error&&area){area.innerHTML='<div class="toast error" role="alert">'+esc(message)+'</div>';}else render();
   clearTimeout(state.toastTimer);
   state.toastTimer=setTimeout(()=>{state.toast=null;const box=document.getElementById("toast-area");if(box)box.innerHTML="";},2600);
 }
@@ -277,7 +284,7 @@ function saveSetup(){
   const start=val("startDate"),due=Number(val("dueDay")),fine=parseMoney(val("finePerDay")),cap=val("maxFineCap")===""?0:parseMoney(val("maxFineCap"));
   if(!name){showToast(t("chitName"),true);return;}
   if(!Number.isInteger(due)||due<1||due>31){showToast(t("validationDueDate"),true);return;}
-  let next={...state.chit,name:name,startDate:start||state.chit.startDate,dueDay:due,finePerDayPaise:Math.max(0,fine),maxFineCapPaise:Math.max(0,cap)};
+  let next={...state.chit,name:name,startDate:locked?state.chit.startDate:(start||state.chit.startDate),dueDay:due,finePerDayPaise:Math.max(0,fine),maxFineCapPaise:Math.max(0,cap)};
   if(!locked){
     next.potPaise=parseMoney(val("pot"));
     next.membersCount=Number(val("membersCount"));
@@ -287,12 +294,17 @@ function saveSetup(){
     next.distributionRule=val("distributionRule");
     next.winnerMethod=val("winnerMethod");
   }
-  if(next.membersCount<2){showToast(t("validationMembers"),true);return;}
+  if(!Number.isInteger(next.membersCount)||next.membersCount<2){showToast(t("validationMembers"),true);return;}
+  if(!locked&&next.membersCount<activeCount()){showToast(t("validationMembersBelowActive"),true);return;}
+  if(next.potPaise>0&&next.potPaise%next.membersCount!==0){showToast(t("validationPotDivisible"),true);return;}
   if(next.discountPaise>=next.potPaise){showToast(t("validationDiscount"),true);return;}
   const fee=Math.floor(next.potPaise*next.commissionPct/100);
   if(fee>next.discountPaise){showToast(t("validationCommission"),true);return;}
   if(next.potPaise<=0){showToast(t("validationDiscount"),true);return;}
+  const monthsChanged=!locked&&next.membersCount!==state.chit.membersCount;
   state.chit=next;
+  // One month per member: the number of months follows the number of members (only before any month is completed).
+  if(monthsChanged||(!locked&&state.cycles.length!==next.membersCount)){state.cycles=makeCycles(next.membersCount);state.payments=state.payments.filter(p=>p.cycleNo<=next.membersCount);}
   const ruleEl=document.querySelector("[data-rule-content]");
   if(ruleEl)state.chit.rulesHtml=sanitizeRules(ruleEl.innerHTML);
   showToast(t("saved"));
@@ -336,6 +348,7 @@ function pickWinner(){
 }
 function completeCycle(){
   const c=currentCycle();if(!c){showToast(t("noEligibleWinner"),true);return;}
+  if(activeCount()<state.chit.membersCount){showToast(t("needAllMembers").replace("{n}",state.chit.membersCount),true);return;}
   let winner=memberById(state.selectedWinnerId);
   if(state.chit.winnerMethod==="fixedOrder"){const first=selectEligibleForWinner().slice().sort((a,b)=>Number(a.id.replace(/\D/g,""))-Number(b.id.replace(/\D/g,"")))[0];if(first){winner=first;state.selectedWinnerId=first.id;}}
   if(!winner||winner.status==="removed"||(winner.wonMonths||[]).length){showToast(t("cannotComplete"),true);return;}
@@ -349,30 +362,34 @@ function completeCycle(){
   const next=currentCycle();state.selectedWinnerId=next?((selectEligibleForWinner()[0]||{}).id||null):null;
   showToast(t("cycleComplete"));
 }
-function payCurrent(id,kind){
-  const c=currentCycle();if(!c)return;
+function payableCycles(){const cur=currentCycle();return state.cycles.filter(c=>c.completed||c===cur);}
+function payCycle(){const list=payableCycles(),sel=list.find(c=>c.no===Number(state.paymentCycleNo));return sel||currentCycle()||list[list.length-1]||null;}
+function payCurrent(id,kind,useCurrent){
+  const c=useCurrent?currentCycle():payCycle();if(!c)return;
   const m=memberById(id);if(!m||m.status==="removed")return;
   const d=dueFor(m,c),p=d.payment;let amount=0;
-  if(kind==="paid")amount=d.remaining;
+  // "Paid" settles the installment and any late fine shown with it.
+  if(kind==="paid")amount=d.remaining+d.fine;
   else{
     const answer=window.prompt(t("payAmount")+" ("+money(d.remaining)+")",String(Math.max(0,d.remaining/2/100).toFixed(2)));
     if(answer===null)return;amount=parseMoney(answer);
-    if(amount<=0||amount>=d.remaining){showToast(t("invalidMember"),true);return;}
+    if(amount<=0||amount>=d.remaining){showToast(t("invalidAmount"),true);return;}
   }
   if(amount<=0){showToast(t("saved"));return;}
   p.amountPaidPaise+=amount;p.paidDate=todayISO();p.mode=p.mode||"upi";
   p.status=p.amountPaidPaise>=d.base?"paid":"partial";
-  p.history.push({type:"Payment",amountPaise:amount,date:p.paidDate,mode:p.mode,reference:"DEMO-"+c.no+"-"+m.id.toUpperCase()+"-"+(p.history.length+1)});
+  const finePart=kind==="paid"?d.fine:0;if(finePart)p.finePaidPaise=(p.finePaidPaise||0)+finePart;
+  p.history.push({type:"Payment",amountPaise:amount,finePaise:finePart,date:p.paidDate,mode:p.mode,reference:"PAY-"+c.no+"-"+m.id.toUpperCase()+"-"+(p.history.length+1)});
   showToast(t("paymentRecorded"));
 }
-function reversePayment(id){
-  const c=currentCycle();if(!c)return;
+function reversePayment(id,useCurrent){
+  const c=useCurrent?currentCycle():payCycle();if(!c)return;
   const p=getPayment(id,c.no);
   if(p.amountPaidPaise<=0)return;
   if(!window.confirm(t("reverseConfirm")))return;
   const amount=p.amountPaidPaise;
   p.history.push({type:"Reversal",amountPaise:amount,date:todayISO(),mode:p.mode,reference:"REV-"+c.no+"-"+id.toUpperCase()+"-"+(p.history.length+1)});
-  p.amountPaidPaise=0;p.status="pending";p.paidDate="";
+  p.amountPaidPaise=0;p.finePaidPaise=0;p.status="pending";p.paidDate="";
   showToast(t("reversalRecorded"));
 }
 function csvCell(x){let s=String(x==null?"":x);if(/[",\r\n]/.test(s))s='"'+s.replace(/"/g,'""')+'"';return s;}
@@ -399,6 +416,7 @@ root.addEventListener("click",function(e){
   if(el.hasAttribute("data-page")){state.page=el.getAttribute("data-page");state.modal=null;state.toast=null;render();return;}
   const action=el.getAttribute("data-action");
   if(action==="toggle-lang"){state.lang=state.lang==="en"?"te":"en";render();return;}
+  if(action==="new-chit"){if(window.confirm(t("newChitConfirm"))){const lang=state.lang;state=blankChitState(lang);render();showToast(t("newChitReady"));}return;}
   if(action==="reset-demo"){if(window.confirm(t("resetConfirm"))){const lang=state.lang;if(window.CBPersist)CBPersist.clear(CB_KEY);state=buildDemoState(lang);render();}return;}
   if(action==="save-setup"){saveSetup();return;}
   if(action==="add-member"){if(activeCount()>=state.chit.membersCount){showToast(t("noMemberSlots"),true);return;}openMember(null);return;}
@@ -420,8 +438,9 @@ root.addEventListener("click",function(e){
 root.addEventListener("change",function(e){
   const el=e.target;
   if(el.getAttribute("data-action")==="winner-select"){state.selectedWinnerId=el.value;render();return;}
-  if(el.getAttribute("data-action")==="payment-mode"){const c=currentCycle(),p=getPayment(el.getAttribute("data-id"),c.no);p.mode=el.value;render();return;}
-  if(el.getAttribute("data-action")==="toggle-paid"){if(el.checked)payCurrent(el.getAttribute("data-id"),"paid");else reversePayment(el.getAttribute("data-id"));return;}
+  if(el.getAttribute("data-action")==="payment-mode"){const c=state.page==="payments"?payCycle():currentCycle();if(!c)return;const p=getPayment(el.getAttribute("data-id"),c.no);p.mode=el.value;render();return;}
+  if(el.getAttribute("data-action")==="toggle-paid"){const onPayments=state.page==="payments";if(el.checked)payCurrent(el.getAttribute("data-id"),"paid",!onPayments);else reversePayment(el.getAttribute("data-id"),!onPayments);if(!el.isConnected)return;render();return;}
+  if(el.getAttribute("data-action")==="payment-month"){state.paymentCycleNo=Number(el.value);render();return;}
   if(el.id==="f-commissionEnabled"){const wrap=document.getElementById("commissionRateWrap");if(wrap)wrap.hidden=!el.checked;const label=document.getElementById("commissionToggleLabel");if(label)label.textContent=el.checked?t("commissionOn"):t("commissionOff");return;}
 });
 root.addEventListener("input",function(e){

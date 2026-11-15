@@ -157,3 +157,15 @@ tbody tr:hover td{background:#fbfdfb}
 @media print{.back-link{display:none!important}}
 
 .grid2>*,.grid3>*,.main>*,.panel{min-width:0}
+
+/* Calculation cards: numbers fit; month picker on Payments */
+.calc-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.calc-item strong{overflow-wrap:normal;word-break:keep-all;font-size:clamp(13px,1.4vw,15px)}
+.month-pick{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
+.month-pick select{min-height:38px;border-radius:10px;padding:0 10px}
+
+/* Links the site navigation replaces (duplicate Back/Home) stay hidden */
+[hidden]{display:none!important}
+
+/* Contrast (WCAG AA) */
+.badge.amber{color:#845000}

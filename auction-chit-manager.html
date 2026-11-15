@@ -7,14 +7,15 @@
 <meta name="description" content="Auction Chit Manager demo template inside Committee Book.">
 <title>Committee Book — Auction Chit Manager</title>
 <link rel="stylesheet" href="committee-book/auction-styles.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+<script src="vendor/qrcode-generator.js"></script>
 <link rel="stylesheet" href="site-navigation.css">
 </head>
 <body class="cb-page">
 <div id="auction-app"></div>
 <script src="committee-book/auction-i18n.js"></script>
 <script src="committee-book/auction-supabase-config.js"></script>
+<script>/* The Supabase library is only needed once a project is configured (committee-book/README.md). */if((window.COMMITTEE_BOOK_SUPABASE_CONFIG||{}).url){document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"><\/script>')}</script>
 <script src="committee-book/auction-supabase.js"></script>
 <script src="committee-book/persist.js"></script><script src="committee-book/auction-app.js"></script>
 <script src="site-navigation.js"></script>

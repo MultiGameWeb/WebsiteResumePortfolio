@@ -1,6 +1,7 @@
 (function(){
   window.CHIT_I18N = {
     en: {
+      newChit:"New chit",needAllMembers:"Add all {n} members before recording a month.",newChitConfirm:"Start a new, empty chit? The current records in this browser will be replaced. (Export a CSV first if you need them.)",newChitReady:"New chit ready. Enter the pot, members and dates, then save.",ownChitNotice:"Your chit — saved in this browser only",ownChitNoticeText:"Records stay on this device. Export a CSV regularly as a backup.",validationMembersBelowActive:"Number of members cannot be less than the members already added.",validationPotDivisible:"The pot must divide equally among the members (for example ₹1,00,000 for 10 members = ₹10,000 each).",invalidAmount:"Enter an amount more than ₹0 and less than the amount due.",
       pageTitle:"Committee Book — Fixed Discount Chit Manager",
       brand:"Committee Book",
       backToTemplates:"Home",
@@ -213,6 +214,7 @@
       monthHistory:"Month history"
     },
     te: {
+      newChit:"కొత్త చిట్",needAllMembers:"నెలను నమోదు చేసే ముందు మొత్తం {n} మంది సభ్యులను చేర్చండి.",newChitConfirm:"కొత్త ఖాళీ చిట్ ప్రారంభించాలా? ఈ బ్రౌజర్‌లోని ప్రస్తుత రికార్డులు మారిపోతాయి. (కావాలంటే ముందు CSV ఎగుమతి చేయండి.)",newChitReady:"కొత్త చిట్ సిద్ధం. పాట్, సభ్యులు, తేదీలు నమోదు చేసి సేవ్ చేయండి.",ownChitNotice:"మీ చిట్ — ఈ బ్రౌజర్‌లో మాత్రమే సేవ్ అవుతుంది",ownChitNoticeText:"రికార్డులు ఈ పరికరంలోనే ఉంటాయి. బ్యాకప్‌గా తరచుగా CSV ఎగుమతి చేయండి.",validationMembersBelowActive:"ఇప్పటికే చేర్చిన సభ్యుల కంటే సభ్యుల సంఖ్య తక్కువ ఉండకూడదు.",validationPotDivisible:"పాట్ సభ్యులందరికీ సమానంగా భాగించబడాలి (ఉదా: 10 మందికి ₹1,00,000 = ఒక్కొక్కరికి ₹10,000).",invalidAmount:"₹0 కంటే ఎక్కువ, బాకీ మొత్తం కంటే తక్కువ మొత్తం నమోదు చేయండి.",
       pageTitle:"కమిటీ బుక్ — ఫిక్స్‌డ్ డిస్కౌంట్ చిట్ మేనేజర్",
       brand:"కమిటీ బుక్",
       backToTemplates:"హోమ్",

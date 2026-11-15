@@ -1,7 +1,7 @@
 # Vendored libraries and fonts
 
 These files are copied into the repository so the browser-only tools (Resume
-Builder, PDF Tools, Document Editor, Presentation Maker) work without any CDN or backend. They are
+Builder, PDF Tools, Document Editor, Presentation Maker, chit managers) work without any CDN or backend. They are
 loaded only when a feature needs them.
 
 | File | Version | License | Used by |
@@ -14,6 +14,7 @@ loaded only when a feature needs them.
 | `docx.min.js` | docx 9.9.0, minified with terser | MIT | Document Editor and PDF Tools Word export |
 | `pdf-lib-secure.min.js` | @cantoo/pdf-lib 2.11.1 (pdf-lib fork with encryption) | MIT | PDF Tools Protect / Unlock PDF (loaded only for those tools) |
 | `pptxgen.bundle.js` | pptxgenjs 3.12.0 (bundle, includes JSZip) | MIT | Presentation Maker PPTX export |
+| `qrcode-generator.js` | qrcode-generator 1.4.4 + a small `QRCode.toCanvas` helper | MIT | Chit managers (UPI QR) |
 | `html2canvas.min.js` | 1.4.1 | MIT | Document Editor PNG export |
 | `fonts/NotoSans*_400Regular.ttf` | @expo-google-fonts 0.4.x | SIL Open Font License 1.1 (Noto fonts) | PDF Tools (Indian-language text) |
 
