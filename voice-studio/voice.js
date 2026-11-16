@@ -1,4 +1,4 @@
-// AI Voice Studio page. Talks to the Worker routes in backend/sitecraft-ai/voice-studio.js.
+// AI Text to Voice page. Talks to the Worker routes in backend/sitecraft-ai/voice-studio.js.
 (function () {
   'use strict';
   const API = (window.SITECRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev').replace(/\/+$/, '') + '/api/voice/';
@@ -29,7 +29,9 @@
   };
   const STYLE_NOTES = { normal: 'Clear & neutral', narration: 'Story / audiobook', news: 'Formal & crisp', conversational: 'Like a friend', emotional: 'Heartfelt', comedy: 'Fun & timing', motivational: 'Energetic', whisper: 'Soft & close' };
 
-  const state = { config: FALLBACK, token: store.get(WALLET_KEY), words: null, audioUrl: '', lastText: '', undoText: '' };
+  const state = { config: FALLBACK, token: store.get(WALLET_KEY), words: null, urls: [], job: null, running: false, stop: false, lastText: '', undoText: '' };
+  // ~5–6 minutes of speech per part; must stay under the server's 800-word limit.
+  const PART_WORDS = 750;
 
   // Same rule as the server: each word once, and 8 letters count as at least one word.
   function billableWords(text) {
@@ -119,28 +121,30 @@
     });
   }
 
+  const fmt = (n) => Number(n).toLocaleString('en-IN');
+
   function updateCount() {
-    const words = billableWords($('#script').value);
-    const max = state.config.maxWordsPerGeneration;
+    const text = $('#script').value;
+    const words = billableWords(text);
+    const parts = words ? splitParts(text).length : 0;
     const info = $('#wordInfo');
-    info.textContent = words ? `${words} word${words === 1 ? '' : 's'}` : '0 words';
-    info.classList.toggle('over', words > max);
+    info.textContent = !words ? '0 words' : parts > 1 ? `${fmt(words)} words · ${parts} parts (~5–6 min each)` : `${fmt(words)} word${words === 1 ? '' : 's'}`;
     const btn = $('#generateBtn');
-    btn.textContent = words ? `🎙️ Make voice · uses ${words} word${words === 1 ? '' : 's'}` : '🎙️ Make voice';
-    btn.disabled = !state.config.enabled || !words || words > max;
+    if (state.running) return;
+    btn.textContent = !words ? '🎙️ Make voice' : parts > 1 ? `🎙️ Make ${parts} parts · uses ${fmt(words)} words` : `🎙️ Make voice · uses ${fmt(words)} word${words === 1 ? '' : 's'}`;
+    btn.disabled = !state.config.enabled || !words;
   }
 
   function applyConfig() {
     const c = state.config;
     $('#freeWordsChip').textContent = c.freeWords;
-    $('#maxWords').textContent = c.maxWordsPerGeneration;
     renderStyles();
     renderDialects();
     renderPacks();
     $('#textTools').hidden = !c.textTools;
     const banner = $('#offBanner');
     banner.hidden = c.enabled;
-    banner.textContent = c.enabled ? '' : 'Voice Studio is opening very soon. You can try the page now; making voices will switch on shortly.';
+    banner.textContent = c.enabled ? '' : 'Text to Voice is opening very soon. You can try the page now; making voices will switch on shortly.';
     updateCount();
   }
 
@@ -175,55 +179,250 @@
 
   const selected = (name) => document.querySelector(`input[name="${name}"]:checked`)?.value;
 
+  // ---------- long scripts: split into ~5–6 minute parts ----------
+
+  // Splits at sentence ends (then spaces) so each part stays under PART_WORDS.
+  function splitParts(text) {
+    const t = String(text || '').trim();
+    if (!t) return [];
+    if (billableWords(t) <= state.config.maxWordsPerGeneration) return [t];
+    const limit = PART_WORDS;
+    const sentences = t.match(/[^.!?।॥\n]+[.!?।॥]*\s*|\n+/g) || [t];
+    const pieces = [];
+    sentences.forEach((sentence) => {
+      if (billableWords(sentence) <= limit) { pieces.push(sentence); return; }
+      let current = '';
+      sentence.split(/(\s+)/).forEach((w) => {
+        if (current && billableWords(current + w) > limit) { pieces.push(current); current = ''; }
+        current += w;
+      });
+      if (current) pieces.push(current);
+    });
+    const parts = [];
+    let current = '';
+    pieces.forEach((piece) => {
+      if (current.trim() && billableWords(current + piece) > limit) { parts.push(current.trim()); current = ''; }
+      current += piece;
+    });
+    if (current.trim()) parts.push(current.trim());
+    return parts.filter((p) => billableWords(p) > 0);
+  }
+
+  function fileBase() {
+    const raw = ($('#fileName').value || '').trim() || 'voice';
+    return raw.replace(/\.wav$/i, '').replace(/[\\/:*?"<>|#%]+/g, '').replace(/\s+/g, '-').slice(0, 60) || 'voice';
+  }
+
+  function partRow(job, index) {
+    const row = document.createElement('div');
+    row.className = 'vs-part';
+    row.innerHTML = '<div class="vs-part-head"><strong></strong><span class="vs-part-state"></span></div><audio controls preload="none" hidden></audio><a class="vs-btn small" hidden>⬇ Download</a>';
+    row.querySelector('strong').textContent = job.parts.length > 1 ? `Part ${index + 1} of ${job.parts.length}` : 'Your voice';
+    return row;
+  }
+
+  function setPartState(job, index, text, kind) {
+    const el = job.rows[index].querySelector('.vs-part-state');
+    el.textContent = text;
+    el.className = 'vs-part-state' + (kind ? ' ' + kind : '');
+  }
+
+  async function makePart(job, index) {
+    const part = job.parts[index];
+    const response = await fetch(API + 'generate', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: state.token, text: part.text, style: job.style, voice: job.voice, dialect: job.dialect }),
+    });
+    const type = response.headers.get('Content-Type') || '';
+    if (!response.ok || !type.includes('audio')) {
+      const data = await response.json().catch(() => ({}));
+      if (data.code === 'NO_WORDS') setWords(data.words);
+      throw Object.assign(new Error(data.error || 'The voice could not be made.'), { code: data.code });
+    }
+    const blob = await response.blob();
+    part.url = URL.createObjectURL(blob);
+    state.urls.push(part.url);
+    const row = job.rows[index];
+    const audio = row.querySelector('audio');
+    audio.src = part.url;
+    audio.hidden = false;
+    const link = row.querySelector('a');
+    link.href = part.url;
+    link.download = part.fileName;
+    link.textContent = `⬇ ${part.fileName}`;
+    link.hidden = false;
+    setWords(response.headers.get('X-Words-Left'));
+    setPartState(job, index, 'Ready ✓', 'ok');
+    audio.addEventListener('loadedmetadata', () => {
+      const m = Math.floor(audio.duration / 60);
+      const sec = String(Math.round(audio.duration % 60)).padStart(2, '0');
+      if (Number.isFinite(audio.duration)) setPartState(job, index, `Ready ✓ ${m}:${sec}`, 'ok');
+    }, { once: true });
+    part.done = true;
+  }
+
+  async function runJob(job) {
+    state.running = true;
+    state.stop = false;
+    $('#continueBtn').hidden = true;
+    $('#stopBtn').hidden = job.parts.length < 2;
+    const btn = $('#generateBtn');
+    btn.disabled = true;
+    try {
+      for (let i = 0; i < job.parts.length; i += 1) {
+        if (job.parts[i].done) continue;
+        if (state.stop) { status(`Stopped. ${job.parts.filter((p) => p.done).length} of ${job.parts.length} parts are ready.`, 'error'); showContinue(job); return; }
+        const label = job.parts.length > 1 ? `Making part ${i + 1} of ${job.parts.length}…` : 'Making your voice…';
+        btn.textContent = '⏳ ' + label;
+        status(label + ' This can take 10–60 seconds.');
+        setPartState(job, i, 'Making…');
+        try {
+          await makePart(job, i);
+          if (i === 0) job.rows[0].querySelector('audio').play().catch(() => {});
+        } catch (error) {
+          setPartState(job, i, 'Not made', 'error');
+          status(error.code === 'NO_WORDS'
+            ? `Words finished at part ${i + 1}. Buy a pack, then tap “Continue”.`
+            : `${error.message || 'Part ' + (i + 1) + ' failed.'} Tap “Continue” to try again from part ${i + 1}.`, 'error');
+          showContinue(job);
+          if (error.code === 'NO_WORDS') $('#packs').scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+      }
+      const total = job.parts.reduce((sum, p) => sum + p.words, 0);
+      status(job.parts.length > 1 ? `All ${job.parts.length} parts are ready ✓ Used ${fmt(total)} words.` : `Done ✓ Used ${fmt(total)} words.`, 'ok');
+      $('#downloadAll').hidden = job.parts.length < 2;
+      $('#mergeBtn').hidden = job.parts.length < 2;
+    } finally {
+      state.running = false;
+      $('#stopBtn').hidden = true;
+      updateCount();
+    }
+  }
+
+  function showContinue(job) {
+    state.job = job;
+    $('#continueBtn').hidden = false;
+  }
+
   async function generate() {
     const text = $('#script').value.trim();
-    const words = billableWords(text);
     if (!text) { status('Please type or paste some text first.', 'error'); return; }
-    if (state.words !== null && words > state.words) {
-      status(`This needs ${words} words but you have ${state.words}. Buy a pack below to continue.`, 'error');
+    const texts = splitParts(text);
+    const total = texts.reduce((sum, t) => sum + billableWords(t), 0);
+    if (state.words !== null && total > state.words) {
+      let fitCount = 0;
+      texts.reduce((sum, t) => { sum += billableWords(t); if (sum <= state.words) fitCount += 1; return sum; }, 0);
+      const fit = texts.length > 1 && fitCount ? ` (enough for ${fitCount} part${fitCount === 1 ? '' : 's'})` : '';
+      status(`This needs ${fmt(total)} words but you have ${fmt(state.words)}${fit}. Buy a pack below to continue.`, 'error');
       $('#packs').scrollIntoView({ behavior: 'smooth' });
       return;
     }
-    const btn = $('#generateBtn');
-    btn.disabled = true;
-    status('Making your voice… this can take 10–40 seconds.');
-    try {
-      const response = await fetch(API + 'generate', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: state.token, text, style: selected('style'), voice: selected('voice'), dialect: $('#dialect').value }),
-      });
-      const type = response.headers.get('Content-Type') || '';
-      if (!response.ok || !type.includes('audio')) {
-        const data = await response.json().catch(() => ({}));
-        status(data.error || 'The voice could not be made. Please try again.', 'error');
-        if (data.code === 'NO_WORDS') { setWords(data.words); $('#packs').scrollIntoView({ behavior: 'smooth' }); }
-        return;
+    state.urls.forEach((u) => URL.revokeObjectURL(u));
+    state.urls = [];
+    const base = fileBase();
+    const job = {
+      style: selected('style'), voice: selected('voice'), dialect: $('#dialect').value,
+      parts: texts.map((t, i) => ({ text: t, words: billableWords(t), done: false, fileName: texts.length > 1 ? `${base}-${i + 1}.wav` : `${base}.wav` })),
+      rows: [],
+    };
+    const list = $('#parts');
+    list.innerHTML = '';
+    job.parts.forEach((p, i) => { const row = partRow(job, i); job.rows.push(row); list.append(row); setPartState(job, i, 'Waiting'); });
+    $('#result').hidden = false;
+    $('#reportForm').hidden = true;
+    $('#downloadAll').hidden = true;
+    $('#mergeBtn').hidden = true;
+    $('#mergedBox').hidden = true;
+    state.lastText = text.slice(0, 2000);
+    state.job = job;
+    await runJob(job);
+  }
+
+  // ---------- merge parts into one WAV (in the browser, free) ----------
+
+  function readWav(buffer) {
+    const bytes = new Uint8Array(buffer);
+    const view = new DataView(buffer);
+    const tag = (at) => String.fromCharCode(bytes[at], bytes[at + 1], bytes[at + 2], bytes[at + 3]);
+    if (tag(0) !== 'RIFF' || tag(8) !== 'WAVE') throw new Error('not wav');
+    let at = 12;
+    let fmt = null;
+    while (at + 8 <= bytes.length) {
+      const id = tag(at);
+      let size = view.getUint32(at + 4, true);
+      const start = at + 8;
+      if (id === 'fmt ') fmt = { audioFormat: view.getUint16(start, true), channels: view.getUint16(start + 2, true), sampleRate: view.getUint32(start + 4, true), bitsPerSample: view.getUint16(start + 14, true) };
+      if (id === 'data' && fmt) {
+        if (start + size > bytes.length) size = bytes.length - start;
+        return { ...fmt, data: bytes.subarray(start, start + size) };
       }
-      const blob = await response.blob();
-      if (state.audioUrl) URL.revokeObjectURL(state.audioUrl);
-      state.audioUrl = URL.createObjectURL(blob);
-      state.lastText = text;
-      const player = $('#player');
-      player.src = state.audioUrl;
-      const stamp = new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-');
-      const link = $('#downloadBtn');
-      link.href = state.audioUrl;
-      link.download = `sitecraft-voice-${selected('style') || 'voice'}-${stamp}.wav`;
-      $('#result').hidden = false;
-      $('#reportForm').hidden = true;
-      setWords(response.headers.get('X-Words-Left'));
-      status(`Done ✓ Used ${response.headers.get('X-Words-Used') || words} words.`, 'ok');
-      player.play().catch(() => {});
+      at = start + size + (size % 2);
+    }
+    throw new Error('no data');
+  }
+
+  function buildWav(parts, gapMs) {
+    const { audioFormat, channels, sampleRate, bitsPerSample } = parts[0];
+    if (parts.some((p) => p.sampleRate !== sampleRate || p.channels !== channels || p.bitsPerSample !== bitsPerSample)) throw new Error('format');
+    const block = channels * (bitsPerSample / 8);
+    const gap = Math.round((sampleRate * gapMs) / 1000) * block;
+    const size = parts.reduce((sum, p) => sum + p.data.length, 0) + gap * (parts.length - 1);
+    const header = new ArrayBuffer(44);
+    const v = new DataView(header);
+    const w = (at, t) => { for (let i = 0; i < 4; i += 1) v.setUint8(at + i, t.charCodeAt(i)); };
+    w(0, 'RIFF'); v.setUint32(4, 36 + size, true); w(8, 'WAVE'); w(12, 'fmt ');
+    v.setUint32(16, 16, true); v.setUint16(20, audioFormat, true); v.setUint16(22, channels, true);
+    v.setUint32(24, sampleRate, true); v.setUint32(28, sampleRate * block, true);
+    v.setUint16(32, block, true); v.setUint16(34, bitsPerSample, true); w(36, 'data'); v.setUint32(40, size, true);
+    const pieces = [header];
+    const silence = new Uint8Array(gap);
+    parts.forEach((p, i) => { pieces.push(p.data); if (i < parts.length - 1) pieces.push(silence); });
+    return new Blob(pieces, { type: 'audio/wav' });
+  }
+
+  async function mergeParts() {
+    const job = state.job;
+    if (!job || job.parts.some((p) => !p.url)) { status('All parts must be ready before merging.', 'error'); return; }
+    const btn = $('#mergeBtn');
+    btn.disabled = true;
+    status('Joining all parts into one file…');
+    try {
+      const parts = [];
+      for (const part of job.parts) parts.push(readWav(await (await fetch(part.url)).arrayBuffer()));
+      const blob = buildWav(parts, 400);
+      const url = URL.createObjectURL(blob);
+      state.urls.push(url);
+      const name = `${fileBase()}-full.wav`;
+      const box = $('#mergedBox');
+      box.querySelector('audio').src = url;
+      const link = box.querySelector('a');
+      link.href = url;
+      link.download = name;
+      link.textContent = `⬇ ${name}`;
+      box.hidden = false;
+      status(`Merged ✓ One file with all ${parts.length} parts (${(blob.size / 1048576).toFixed(1)} MB).`, 'ok');
     } catch {
-      status('Could not reach the server. Please check your internet and try again.', 'error');
+      status('Could not join the parts on this device. Please download them one by one.', 'error');
     } finally {
-      updateCount();
+      btn.disabled = false;
+    }
+  }
+
+  async function downloadAll() {
+    const job = state.job;
+    if (!job) return;
+    for (const part of job.parts.filter((p) => p.url)) {
+      const a = Object.assign(document.createElement('a'), { href: part.url, download: part.fileName });
+      document.body.append(a); a.click(); a.remove();
+      await new Promise((r) => setTimeout(r, 700));
     }
   }
 
   async function textTool(action, button) {
     const text = $('#script').value.trim();
     if (!text) { status('Please type or paste some text first.', 'error'); return; }
+    if (text.length > 8000) { status('Text tools work on about 1,000 words at a time. Paste a shorter part, use the tool, then add the rest.', 'error'); return; }
     button.disabled = true;
     status(action === 'rewrite' ? 'Making it sound spoken…' : 'Translating…');
     try {
@@ -263,7 +462,7 @@
     if (!state.config.payments) {
       payStatus('Online payment starts very soon. To buy words today, ', 'error');
       const link = Object.assign(document.createElement('a'), {
-        href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Voice Studio ${pack.label} pack (${rupees(pack.paise)}). My wallet code: ${state.token}`),
+        href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Text to Voice ${pack.label} pack (${rupees(pack.paise)}). My wallet code: ${state.token}`),
         target: '_blank', rel: 'noopener noreferrer', textContent: 'message us on WhatsApp ↗',
       });
       link.style.color = '#fcd34d';
@@ -280,7 +479,7 @@
       await loadCheckout();
       new window.Razorpay({
         key: order.keyId, amount: order.amount, currency: order.currency, order_id: order.orderId,
-        name: 'SiteCraft', description: `Voice Studio · ${pack.label}`,
+        name: 'SiteCraft', description: `Text to Voice · ${pack.label}`,
         handler: async (r) => {
           payStatus('Confirming your payment…');
           const done = await post('verify', { token: state.token, orderId: r.razorpay_order_id, paymentId: r.razorpay_payment_id, signature: r.razorpay_signature });
@@ -326,6 +525,10 @@
 
   $('#script').addEventListener('input', updateCount);
   $('#generateBtn').addEventListener('click', generate);
+  $('#stopBtn').addEventListener('click', () => { state.stop = true; status('Stopping after this part…'); });
+  $('#continueBtn').addEventListener('click', () => { if (state.job && !state.running) runJob(state.job); });
+  $('#downloadAll').addEventListener('click', downloadAll);
+  $('#mergeBtn').addEventListener('click', mergeParts);
   $('#rewriteBtn').addEventListener('click', (e) => textTool('rewrite', e.currentTarget));
   $('#translateBtn').addEventListener('click', (e) => textTool('translate', e.currentTarget));
   $('#undoBtn').addEventListener('click', () => { $('#script').value = state.undoText; $('#undoBtn').hidden = true; updateCount(); status(''); });

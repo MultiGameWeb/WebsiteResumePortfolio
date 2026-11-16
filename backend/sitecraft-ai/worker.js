@@ -149,7 +149,7 @@ export default {
     const resumeAiResponse = await handleResumeAiRoute(request, env, url);
     if (resumeAiResponse) return resumeAiResponse;
 
-    // Voice Studio checks the origin itself, including on preflight.
+    // Text to Voice checks the origin itself, including on preflight.
     const voiceResponse = await handleVoiceStudioRoute(request, env, url, ctx);
     if (voiceResponse) return voiceResponse;
 

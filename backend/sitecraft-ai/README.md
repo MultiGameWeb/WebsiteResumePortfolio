@@ -123,7 +123,7 @@ Access is decided in one function, `checkAiAccess` in `resume-ai.js`. When login
 
 To test: set the three secrets, open `/api/resume-ai/health` and check all values are `true`, then open the Resume Builder, choose "Create with AI" and enter the access code.
 
-## AI Voice Studio (`voice-studio.html`)
+## AI Text to Voice (`voice-studio.html`)
 
 Telugu-first text to speech for creators. The voice comes out in the language the user pastes. Code: `voice-studio.js`, routes under `/api/voice/`.
 

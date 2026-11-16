@@ -20,7 +20,7 @@ const menuItems=[
  ["Slides","presentation-maker.html","presentation"],
  ["Chit Manager","committee-book.html","committee"],
  ["AI Ad Videos","ai-ad-videos.html","ad-videos"],
- ["AI Voice","voice-studio.html","voice"],
+ ["Text to Voice","voice-studio.html","voice"],
  ["Play Games","games.html","play-games"],
  ["Contact","index.html#contact","contact"]
 ];
