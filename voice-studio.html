@@ -51,8 +51,8 @@
   <section class="vs-studio" aria-label="Text to voice">
    <div class="vs-card vs-editor">
     <label class="vs-label" for="script">Your script</label>
-    <textarea id="script" rows="12" maxlength="8000" placeholder="ఇక్కడ మీ script paste చేయండి… / Paste your script here…"></textarea>
-    <div class="vs-meta"><span id="wordInfo">0 words</span><span>Max <b id="maxWords">800</b> words per voice</span></div>
+    <textarea id="script" rows="12" maxlength="200000" placeholder="ఇక్కడ మీ script paste చేయండి… / Paste your script here…"></textarea>
+    <div class="vs-meta"><span id="wordInfo">0 words</span><span>Long scripts are split into 5–6 min parts</span></div>
     <div class="vs-tools" id="textTools">
      <button type="button" class="vs-btn ghost" id="rewriteBtn" title="Turns bookish text into the way people really talk">✨ Make it spoken</button>
      <div class="vs-translate">
@@ -84,13 +84,17 @@
      </div>
     </div>
     <p class="vs-hint" id="engineHint">Normal, Narration and News use a native Indian voice. Acting styles and accents use our expressive voice.</p>
+    <label class="vs-label vs-file" for="fileName">File name</label>
+    <input id="fileName" maxlength="60" placeholder="e.g. episode-12" autocomplete="off">
+    <p class="vs-hint">Parts download as <b>name-1.wav</b>, <b>name-2.wav</b>…</p>
     <button type="button" class="vs-btn primary big" id="generateBtn">🎙️ Make voice</button>
+    <div class="vs-run-actions"><button type="button" class="vs-btn ghost small" id="stopBtn" hidden>■ Stop after this part</button><button type="button" class="vs-btn small" id="continueBtn" hidden>▶ Continue</button></div>
     <p class="vs-status" id="status" role="status" aria-live="polite"></p>
 
     <div class="vs-result" id="result" hidden>
-     <audio id="player" controls preload="auto"></audio>
+     <div class="vs-parts" id="parts"></div>
      <div class="vs-result-actions">
-      <a class="vs-btn primary" id="downloadBtn" download="voice.wav">⬇ Download</a>
+      <button type="button" class="vs-btn primary" id="downloadAll" hidden>⬇ Download all parts</button>
       <button type="button" class="vs-btn ghost" id="reportToggle">🚩 Report</button>
      </div>
      <form class="vs-report" id="reportForm" hidden>
@@ -119,6 +123,7 @@
   <section class="vs-faq" aria-labelledby="faqTitle">
    <h2 id="faqTitle">Good to know</h2>
    <details><summary>Which languages work?</summary><p>Telugu, Hindi, English, Tamil, Kannada, Malayalam, Bengali, Marathi, Gujarati, Punjabi and Odia. The voice comes out in the language you paste. Write Indian languages in their own script for the best result.</p></details>
+   <details><summary>How long can my script be?</summary><p>Any length. Long scripts are split at sentence ends into parts of about 5–6 minutes (around 750 words). Each part is made one after another and downloads as name-1.wav, name-2.wav and so on. If your words run out in the middle, buy a pack and tap Continue: the finished parts stay.</p></details>
    <details><summary>How are words counted?</summary><p>Each word counts once. Very long words count a little more (every 8 letters count as at least one word), because they make longer audio. You see the exact count before you make the voice. If a voice fails, your words are given back.</p></details>
    <details><summary>Can I use the voice in my videos?</summary><p>Yes, you can use voices you make in your own videos, ads and social media posts.</p></details>
    <details><summary>What is not allowed?</summary><p>Do not make voices that pretend to be a real person, cheat people, spread hate or harm anyone. Use 🚩 Report if a voice sounds wrong or offensive.</p></details>

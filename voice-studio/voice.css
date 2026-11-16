@@ -69,6 +69,15 @@ textarea:focus,select:focus,input:focus{outline:2px solid rgba(245,158,11,.7);ou
 
 .vs-result{margin-top:14px;padding-top:14px;border-top:1px solid var(--vs-line)}
 .vs-result audio{width:100%}
+.vs-file{margin-top:16px}
+.vs-run-actions{display:flex;gap:8px;margin-top:8px}
+.vs-parts{display:grid;gap:10px}
+.vs-part{display:grid;gap:8px;padding:12px;border:1px solid var(--vs-line);border-radius:14px;background:var(--vs-panel2)}
+.vs-part-head{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.vs-part-state{color:var(--vs-muted);font-size:13px;font-weight:700}
+.vs-part-state.ok{color:#86efac}
+.vs-part-state.error{color:#fca5a5}
+.vs-part .vs-btn{justify-self:start;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .vs-result-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 .vs-report{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;margin-top:12px}
 .vs-report .vs-label{grid-column:1/-1;margin:0}
