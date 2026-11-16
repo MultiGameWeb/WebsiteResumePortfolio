@@ -25,7 +25,7 @@
 - Kept template flow navigation aligned with `templates.html` from `features.html` and the admin marketplace link.
 - Assumed the existing marketplace `index.html` should become the Home page, and therefore used `templates.html` as the dedicated Website Templates page name.
 
-## v4.x — AI Voice Studio
+## v4.x — AI Text to Voice
 - Added `voice-studio.html`: Telugu-first text to speech. Paste text in 11 languages, get audio in the same language.
 - Styles: Normal, Narration, News (Sarvam Bulbul native voice) and Conversational, Emotional, Comedy, Motivational, Whisper (Gemini TTS acting voice). Telangana, Godavari, Rayalaseema and Hyderabadi accents.
 - Free text tools: "Make it spoken" rewrite and Translate (Gemini).
