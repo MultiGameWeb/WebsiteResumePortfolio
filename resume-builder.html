@@ -2143,10 +2143,27 @@ function init(){
   });
 }
 var resumeBackBtn=document.getElementById("resumeBackBtn");
-if(resumeBackBtn)resumeBackBtn.addEventListener("click",function(){var sameOriginReferrer=false;try{sameOriginReferrer=!!document.referrer&&new URL(document.referrer).origin===location.origin}catch(_){}if(history.length>1&&sameOriginReferrer)history.back();else location.href="index.html"});
+if(resumeBackBtn)resumeBackBtn.addEventListener("click",function(){var sameOriginReferrer=false;try{sameOriginReferrer=!!document.referrer&&new URL(document.referrer).origin===location.origin}catch(_){}if(window.history.length>1&&sameOriginReferrer)window.history.back();else location.href="index.html"});
+// Small API for core/resume-extras.js (job examples, cover letter, saved resumes, phone guided steps).
+window.SCResume={
+  get:function(){flushTyping();return persistedStateClone()},
+  replace:function(next,label){applyImportedState(normalizeResumeState(next),label)},
+  mutate:function(fn,label){mutate(function(){fn(state)});if(label)toast(label)},
+  empty:function(){applyEmptyState()},
+  openSection:function(id){openEditorSection(id)},
+  editorSections:function(){return $$('[data-editor-section]',$('#accordion')).map(function(c){return c.dataset.editorSection})},
+  sectionLabel:function(id){var el=$('[data-editor-section="'+CSS.escape(id)+'"] .section-label strong');return el?el.textContent:(SECTION_LABELS[id]||id)},
+  toast:toast,esc:esc,
+  save:function(){flushAutosave()},
+  ready:function(){return !restoreInProgress},
+  showPreview:function(){var b=$('#mobilePreviewTab');if(b)b.click()},
+  showEdit:function(){var b=$('#mobileEditTab');if(b)b.click()},
+  downloadPdf:function(){downloadPdf()}
+};
 init();
 })();
 </script>
+<script src="core/resume-extras.js" defer></script>
 
 </body>
 </html>
