@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f1016">
+<meta name="description" content="AI Text to Voice: paste text in Telugu, Hindi, English and 8 more languages and get a natural voice in the same language. Emotional, comedy, narration and Telangana, Godavari, Rayalaseema accents. 300 words free.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://multigameweb.github.io/WebsiteResumePortfolio/voice-studio.html">
+<meta property="og:title" content="AI Text to Voice | SiteCraft">
+<meta property="og:description" content="Your script, in your accent. Natural AI voices in Telugu, Hindi, English and more. 300 words free.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://multigameweb.github.io/WebsiteResumePortfolio/voice-studio.html">
+<title>AI Text to Voice | SiteCraft — Telugu Text to Speech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&family=Noto+Sans+Telugu:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="global.css">
+<link rel="stylesheet" href="site-navigation.css">
+<link rel="stylesheet" href="voice-studio/voice.css">
+</head>
+<body class="vs-page">
+
+<main id="main">
+ <section class="vs-hero vs-wrap">
+  <span class="vs-pill"><i aria-hidden="true"></i>New · AI Text to Voice</span>
+  <h1>Your script. <span class="vs-grad">Your accent.</span></h1>
+  <p class="vs-lead">Paste text in Telugu, Hindi, English or 8 more languages. Get a natural voice in the same language, ready to download for your Reels, Shorts and YouTube videos.</p>
+  <ul class="vs-chips" aria-label="Highlights">
+   <li><b id="freeWordsChip">300</b> words free</li>
+   <li>11 languages</li>
+   <li>Telangana · Godavari · Rayalaseema accents</li>
+   <li>No login</li>
+  </ul>
+ </section>
+
+ <div class="vs-wrap">
+  <div class="vs-wallet" aria-live="polite">
+   <div><span class="vs-wallet-label">Words left</span> <strong id="wordsLeft">…</strong></div>
+   <details class="vs-code">
+    <summary>Wallet code</summary>
+    <p>Your words are saved on this device with this code. Copy it to use your words on another phone or browser.</p>
+    <div class="vs-code-row"><code id="walletCode">…</code><button type="button" class="vs-btn small" id="copyCode">Copy</button></div>
+    <div class="vs-code-row"><input id="useCode" maxlength="32" placeholder="Paste a wallet code" aria-label="Wallet code to use" autocomplete="off" spellcheck="false"><button type="button" class="vs-btn small" id="applyCode">Use</button></div>
+   </details>
+   <a class="vs-btn small ghost" href="#packs">Buy words</a>
+  </div>
+
+  <p class="vs-banner" id="offBanner" hidden></p>
+
+  <section class="vs-studio" aria-label="Text to voice">
+   <div class="vs-card vs-editor">
+    <label class="vs-label" for="script">Your script</label>
+    <textarea id="script" rows="12" maxlength="200000" placeholder="Type or paste your script here, in any language…"></textarea>
+    <div class="vs-meta"><span id="wordInfo">0 words</span><span>Long scripts are split into 5–6 min parts</span></div>
+    <div class="vs-tools" id="textTools">
+     <button type="button" class="vs-btn ghost" id="rewriteBtn" title="Turns bookish text into the way people really talk">✨ Make it spoken</button>
+     <div class="vs-translate">
+      <label class="sr-only" for="translateTo">Translate to</label>
+      <select id="translateTo"><option value="en">English</option><option value="te">Telugu</option><option value="hi">Hindi</option><option value="ta">Tamil</option><option value="kn">Kannada</option><option value="ml">Malayalam</option></select>
+      <button type="button" class="vs-btn ghost" id="translateBtn">🌐 Translate</button>
+     </div>
+     <button type="button" class="vs-btn ghost" id="undoBtn" hidden>↶ Undo</button>
+    </div>
+    <p class="vs-hint">Tip: write the way people actually speak, not formal written language, for a more natural voice. The text tools are free.</p>
+   </div>
+
+   <div class="vs-card vs-settings">
+    <fieldset>
+     <legend class="vs-label">Style</legend>
+     <div class="vs-styles" id="styles" role="radiogroup"></div>
+    </fieldset>
+    <div class="vs-row">
+     <fieldset>
+      <legend class="vs-label">Voice</legend>
+      <div class="vs-seg" role="radiogroup">
+       <label><input type="radio" name="voice" value="female" checked><span>Female</span></label>
+       <label><input type="radio" name="voice" value="male"><span>Male</span></label>
+      </div>
+     </fieldset>
+     <div>
+      <label class="vs-label" for="dialect">Telugu accent</label>
+      <select id="dialect"></select>
+     </div>
+    </div>
+    <p class="vs-hint" id="engineHint">Normal, Narration and News use a native Indian voice. Acting styles and accents use our expressive voice.</p>
+    <label class="vs-label vs-file" for="fileName">File name</label>
+    <input id="fileName" maxlength="60" placeholder="e.g. episode-12" autocomplete="off">
+    <p class="vs-hint">Parts download as <b>name-1.wav</b>, <b>name-2.wav</b>…</p>
+    <button type="button" class="vs-btn primary big" id="generateBtn">🎙️ Make voice</button>
+    <div class="vs-run-actions"><button type="button" class="vs-btn ghost small" id="stopBtn" hidden>■ Stop after this part</button><button type="button" class="vs-btn small" id="continueBtn" hidden>▶ Continue</button></div>
+    <p class="vs-status" id="status" role="status" aria-live="polite"></p>
+
+    <div class="vs-result" id="result" hidden>
+     <div class="vs-parts" id="parts"></div>
+     <div class="vs-part vs-merged" id="mergedBox" hidden><div class="vs-part-head"><strong>Full audio (all parts)</strong><span class="vs-part-state ok">Free</span></div><audio controls preload="none"></audio><a class="vs-btn small primary">⬇ Download</a></div>
+     <div class="vs-result-actions">
+      <button type="button" class="vs-btn primary" id="downloadAll" hidden>⬇ Download all parts</button>
+      <button type="button" class="vs-btn primary" id="mergeBtn" hidden>🔗 Merge into one file</button>
+      <button type="button" class="vs-btn ghost" id="reportToggle">🚩 Report</button>
+     </div>
+     <form class="vs-report" id="reportForm" hidden>
+      <label class="vs-label" for="reportReason">What is wrong?</label>
+      <select id="reportReason">
+       <option value="offensive">Offensive or hateful</option>
+       <option value="harmful">Harmful or misleading</option>
+       <option value="wrong_language">Wrong language</option>
+       <option value="bad_pronunciation">Bad pronunciation</option>
+       <option value="other">Something else</option>
+      </select>
+      <button type="submit" class="vs-btn small">Send report</button>
+     </form>
+    </div>
+   </div>
+  </section>
+
+  <section class="vs-packs" id="packs" aria-labelledby="packsTitle">
+   <h2 id="packsTitle">Buy words. <span class="vs-grad">Use them any time.</span></h2>
+   <p class="vs-sub">Bigger packs cost less per word. Words never expire. Pay with UPI, cards or netbanking.</p>
+   <div class="vs-pack-grid" id="packGrid"></div>
+   <p class="vs-status" id="payStatus" role="status" aria-live="polite"></p>
+   <button type="button" class="vs-link" id="recoverBtn">I paid but words did not come</button>
+  </section>
+
+  <section class="vs-faq" aria-labelledby="faqTitle">
+   <h2 id="faqTitle">Good to know</h2>
+   <details><summary>Which languages work?</summary><p>Telugu, Hindi, English, Tamil, Kannada, Malayalam, Bengali, Marathi, Gujarati, Punjabi and Odia. The voice comes out in the language you paste. Write Indian languages in their own script for the best result.</p></details>
+   <details><summary>How long can my script be?</summary><p>Any length. Long scripts are split at sentence ends into parts of about 5–6 minutes (around 750 words). Each part is made one after another and downloads as name-1.wav, name-2.wav and so on. Tap “Merge into one file” to get name-full.wav with everything joined; merging is free and happens on your device. If your words run out in the middle, buy a pack and tap Continue: the finished parts stay.</p></details>
+   <details><summary>How are words counted?</summary><p>Each word counts once. Very long words count a little more (every 8 letters count as at least one word), because they make longer audio. You see the exact count before you make the voice. If a voice fails, your words are given back.</p></details>
+   <details><summary>Can I use the voice in my videos?</summary><p>Yes, you can use voices you make in your own videos, ads and social media posts.</p></details>
+   <details><summary>What is not allowed?</summary><p>Do not make voices that pretend to be a real person, cheat people, spread hate or harm anyone. Use 🚩 Report if a voice sounds wrong or offensive.</p></details>
+   <details><summary>Is my text saved?</summary><p>Your text is sent to our voice partners (Sarvam AI or Google) only to make the audio. We do not store it, unless you send it with a report. See our <a href="privacy.html">privacy policy</a>.</p></details>
+  </section>
+ </div>
+</main>
+
+<script src="site-navigation.js"></script>
+<script src="voice-studio/voice.js" defer></script>
+</body>
+</html>

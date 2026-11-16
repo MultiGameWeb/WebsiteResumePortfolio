@@ -7,6 +7,7 @@ import { handleAiVideoPayRoute } from "./ai-video-pay.js";
 import { handleResumeAiRoute } from "./resume-ai.js";
 import { handleHostingRoute } from "./hosting.js";
 import { handleCallbackRoute } from "./callbacks.js";
+import { handleVoiceStudioRoute } from "./voice-studio.js";
 const MODEL = "gemini-3.8-flash";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 const corsHeaders = {
@@ -147,6 +148,10 @@ export default {
     // Resume AI checks the origin itself, including on preflight.
     const resumeAiResponse = await handleResumeAiRoute(request, env, url);
     if (resumeAiResponse) return resumeAiResponse;
+
+    // Text to Voice checks the origin itself, including on preflight.
+    const voiceResponse = await handleVoiceStudioRoute(request, env, url, ctx);
+    if (voiceResponse) return voiceResponse;
 
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders });
