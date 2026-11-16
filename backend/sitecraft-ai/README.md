@@ -123,6 +123,35 @@ Access is decided in one function, `checkAiAccess` in `resume-ai.js`. When login
 
 To test: set the three secrets, open `/api/resume-ai/health` and check all values are `true`, then open the Resume Builder, choose "Create with AI" and enter the access code.
 
+## AI Voice Studio (`voice-studio.html`)
+
+Telugu-first text to speech for creators. The voice comes out in the language the user pastes. Code: `voice-studio.js`, routes under `/api/voice/`.
+
+- `GET /api/voice/config` styles, accents, packs, whether payments are on
+- `POST /api/voice/wallet` `{ token?, lookupOnly? }` gets or creates the browser's wallet (new wallets get free words)
+- `POST /api/voice/generate` `{ token, text, style, voice, dialect }` returns `audio/wav`; headers `X-Words-Used`, `X-Words-Left`
+- `POST /api/voice/rewrite` / `translate` free text tools (40 per wallet per day)
+- `POST /api/voice/report` saves a report about a voice (Play Store AI content rule)
+- `POST /api/voice/order` / `verify` / `recover` Razorpay word packs
+- `POST /api/voice/grant` (`Authorization: Bearer ADMIN_TOKEN`) `{ token?, words }` adds words, e.g. after a WhatsApp/UPI payment
+
+Engines: Normal, Narration and News use Sarvam Bulbul for Indian scripts; acting styles and accents use Gemini 3.8 Flash TTS; English/other scripts use Gemini Flash-Lite TTS. If one key is missing the other engine is used where it can.
+
+| Name | Kind | Purpose |
+|---|---|---|
+| `SARVAM_API_KEY` | secret | Sarvam Bulbul voice |
+| `VOICE_GEMINI_API_KEY` | secret | Gemini voice + rewrite/translate (separate key so its cost is separate) |
+| `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` | secret | buying packs (free words work without them) |
+| `VOICE_FREE_WORDS` | variable | free words per new wallet, default 300 |
+| `VOICE_DAILY_WORD_LIMIT` | variable | words per day across everyone, default 20000 (spending cap) |
+| `VOICE_FREE_WALLETS_PER_IP` | variable | free wallets per IP per day, default 2 |
+| `VOICE_DISABLED` | variable | `true` switches the studio off |
+| `VOICE_TTS_MODEL_FLASH`, `VOICE_TTS_MODEL_LITE`, `VOICE_TEXT_MODEL`, `SARVAM_TTS_MODEL` | variable | optional model overrides |
+
+Prices are set only in `PACKS` in `voice-studio.js`. Words: each word counts once, and every 8 letters count as at least one word. Max 800 words per voice. Failed voices give the words back. Tables (`voice_*` in `DB`) are created on first use. The text is not stored, except text attached to a report.
+
+To switch on: `wrangler secret put SARVAM_API_KEY` and `wrangler secret put VOICE_GEMINI_API_KEY`, deploy, then open `/api/voice/config` and check `enabled: true`.
+
 ## Auto hosting (customer websites)
 
 `hosting.js` publishes a customer's website from the success page and serves it at
