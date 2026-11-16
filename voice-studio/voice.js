@@ -292,6 +292,7 @@
       const total = job.parts.reduce((sum, p) => sum + p.words, 0);
       status(job.parts.length > 1 ? `All ${job.parts.length} parts are ready ✓ Used ${fmt(total)} words.` : `Done ✓ Used ${fmt(total)} words.`, 'ok');
       $('#downloadAll').hidden = job.parts.length < 2;
+      $('#mergeBtn').hidden = job.parts.length < 2;
     } finally {
       state.running = false;
       $('#stopBtn').hidden = true;
@@ -331,9 +332,81 @@
     $('#result').hidden = false;
     $('#reportForm').hidden = true;
     $('#downloadAll').hidden = true;
+    $('#mergeBtn').hidden = true;
+    $('#mergedBox').hidden = true;
     state.lastText = text.slice(0, 2000);
     state.job = job;
     await runJob(job);
+  }
+
+  // ---------- merge parts into one WAV (in the browser, free) ----------
+
+  function readWav(buffer) {
+    const bytes = new Uint8Array(buffer);
+    const view = new DataView(buffer);
+    const tag = (at) => String.fromCharCode(bytes[at], bytes[at + 1], bytes[at + 2], bytes[at + 3]);
+    if (tag(0) !== 'RIFF' || tag(8) !== 'WAVE') throw new Error('not wav');
+    let at = 12;
+    let fmt = null;
+    while (at + 8 <= bytes.length) {
+      const id = tag(at);
+      let size = view.getUint32(at + 4, true);
+      const start = at + 8;
+      if (id === 'fmt ') fmt = { audioFormat: view.getUint16(start, true), channels: view.getUint16(start + 2, true), sampleRate: view.getUint32(start + 4, true), bitsPerSample: view.getUint16(start + 14, true) };
+      if (id === 'data' && fmt) {
+        if (start + size > bytes.length) size = bytes.length - start;
+        return { ...fmt, data: bytes.subarray(start, start + size) };
+      }
+      at = start + size + (size % 2);
+    }
+    throw new Error('no data');
+  }
+
+  function buildWav(parts, gapMs) {
+    const { audioFormat, channels, sampleRate, bitsPerSample } = parts[0];
+    if (parts.some((p) => p.sampleRate !== sampleRate || p.channels !== channels || p.bitsPerSample !== bitsPerSample)) throw new Error('format');
+    const block = channels * (bitsPerSample / 8);
+    const gap = Math.round((sampleRate * gapMs) / 1000) * block;
+    const size = parts.reduce((sum, p) => sum + p.data.length, 0) + gap * (parts.length - 1);
+    const header = new ArrayBuffer(44);
+    const v = new DataView(header);
+    const w = (at, t) => { for (let i = 0; i < 4; i += 1) v.setUint8(at + i, t.charCodeAt(i)); };
+    w(0, 'RIFF'); v.setUint32(4, 36 + size, true); w(8, 'WAVE'); w(12, 'fmt ');
+    v.setUint32(16, 16, true); v.setUint16(20, audioFormat, true); v.setUint16(22, channels, true);
+    v.setUint32(24, sampleRate, true); v.setUint32(28, sampleRate * block, true);
+    v.setUint16(32, block, true); v.setUint16(34, bitsPerSample, true); w(36, 'data'); v.setUint32(40, size, true);
+    const pieces = [header];
+    const silence = new Uint8Array(gap);
+    parts.forEach((p, i) => { pieces.push(p.data); if (i < parts.length - 1) pieces.push(silence); });
+    return new Blob(pieces, { type: 'audio/wav' });
+  }
+
+  async function mergeParts() {
+    const job = state.job;
+    if (!job || job.parts.some((p) => !p.url)) { status('All parts must be ready before merging.', 'error'); return; }
+    const btn = $('#mergeBtn');
+    btn.disabled = true;
+    status('Joining all parts into one file…');
+    try {
+      const parts = [];
+      for (const part of job.parts) parts.push(readWav(await (await fetch(part.url)).arrayBuffer()));
+      const blob = buildWav(parts, 400);
+      const url = URL.createObjectURL(blob);
+      state.urls.push(url);
+      const name = `${fileBase()}-full.wav`;
+      const box = $('#mergedBox');
+      box.querySelector('audio').src = url;
+      const link = box.querySelector('a');
+      link.href = url;
+      link.download = name;
+      link.textContent = `⬇ ${name}`;
+      box.hidden = false;
+      status(`Merged ✓ One file with all ${parts.length} parts (${(blob.size / 1048576).toFixed(1)} MB).`, 'ok');
+    } catch {
+      status('Could not join the parts on this device. Please download them one by one.', 'error');
+    } finally {
+      btn.disabled = false;
+    }
   }
 
   async function downloadAll() {
@@ -455,6 +528,7 @@
   $('#stopBtn').addEventListener('click', () => { state.stop = true; status('Stopping after this part…'); });
   $('#continueBtn').addEventListener('click', () => { if (state.job && !state.running) runJob(state.job); });
   $('#downloadAll').addEventListener('click', downloadAll);
+  $('#mergeBtn').addEventListener('click', mergeParts);
   $('#rewriteBtn').addEventListener('click', (e) => textTool('rewrite', e.currentTarget));
   $('#translateBtn').addEventListener('click', (e) => textTool('translate', e.currentTarget));
   $('#undoBtn').addEventListener('click', () => { $('#script').value = state.undoText; $('#undoBtn').hidden = true; updateCount(); status(''); });
