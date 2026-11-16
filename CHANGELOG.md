@@ -24,3 +24,11 @@
 - Added the Assistant Director theme to the Portfolio Creator theme picker and retained the Actor theme.
 - Kept template flow navigation aligned with `templates.html` from `features.html` and the admin marketplace link.
 - Assumed the existing marketplace `index.html` should become the Home page, and therefore used `templates.html` as the dedicated Website Templates page name.
+
+## v4.x — AI Voice Studio
+- Added `voice-studio.html`: Telugu-first text to speech. Paste text in 11 languages, get audio in the same language.
+- Styles: Normal, Narration, News (Sarvam Bulbul native voice) and Conversational, Emotional, Comedy, Motivational, Whisper (Gemini TTS acting voice). Telangana, Godavari, Rayalaseema and Hyderabadi accents.
+- Free text tools: "Make it spoken" rewrite and Translate (Gemini).
+- 300 free words per new browser wallet; word packs ₹49 (1K), ₹79 (2K), ₹179 (5K), ₹349 (10K), ₹849 (25K) through Razorpay.
+- In-app Report button for AI voices; daily word cap protects API spending.
+- Backend: `backend/sitecraft-ai/voice-studio.js`, routes under `/api/voice/`.
