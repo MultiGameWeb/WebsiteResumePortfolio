@@ -1,4 +1,4 @@
-// AI Voice Studio: text to speech for creators, Telugu first.
+// AI Text to Voice: text to speech for creators, Telugu first.
 //
 // Paste text in any language and get audio in the same language. Optional
 // helpers rewrite bookish text into spoken style (with a dialect) or translate
@@ -567,9 +567,9 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
 
   if (action === "config" && request.method === "GET") return reply(configReply(env), 200, origin);
   if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
-  if (env?.VOICE_DISABLED === "true") return reply({ ok: false, error: "Voice Studio is switched off for now." }, 503, origin);
+  if (env?.VOICE_DISABLED === "true") return reply({ ok: false, error: "Text to Voice is switched off for now." }, 503, origin);
   const db = env?.DB;
-  if (!db?.prepare) return reply({ ok: false, error: "Voice Studio is not available right now." }, 503, origin);
+  if (!db?.prepare) return reply({ ok: false, error: "Text to Voice is not available right now." }, 503, origin);
 
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
   const limits = { generate: 6, rewrite: 10, translate: 10, report: 10, wallet: 20 };
@@ -614,7 +614,7 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
       }
       if (!(await reserveDaily(db, env, words))) {
         await giveWords(db, token, words);
-        return reply({ ok: false, error: "Voice Studio is very busy today. Please try again tomorrow." }, 429, origin);
+        return reply({ ok: false, error: "Text to Voice is very busy today. Please try again tomorrow." }, 429, origin);
       }
 
       let wav;
@@ -686,7 +686,7 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
       if (!pack) return reply({ ok: false, error: "Choose a pack." }, 400, origin);
       const order = await razorpay(env, "/orders", {
         method: "POST",
-        body: JSON.stringify({ amount: pack.paise, currency: "INR", receipt: `voice_${Date.now().toString(36)}`, notes: { product: `Voice Studio ${pack.label}` } })
+        body: JSON.stringify({ amount: pack.paise, currency: "INR", receipt: `voice_${Date.now().toString(36)}`, notes: { product: `Text to Voice ${pack.label}` } })
       });
       await db.prepare("INSERT INTO voice_orders (order_id, token, pack, words, amount, status, created_at) VALUES (?, ?, ?, ?, ?, 'created', ?)")
         .bind(order.id, token, body.pack, pack.words, pack.paise, new Date().toISOString()).run();
@@ -720,7 +720,7 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
       return reply({ ok: true, token: order.token, words: await walletWords(db, order.token) }, 200, origin);
     }
   } catch (error) {
-    console.error("Voice Studio failed", action, error);
+    console.error("Text to Voice failed", action, error);
     return reply({ ok: false, error: "Something went wrong. Please try again." }, 502, origin);
   }
   return reply({ ok: false, error: "Unknown route." }, 404, origin);

@@ -1,4 +1,4 @@
-// AI Voice Studio page. Talks to the Worker routes in backend/sitecraft-ai/voice-studio.js.
+// AI Text to Voice page. Talks to the Worker routes in backend/sitecraft-ai/voice-studio.js.
 (function () {
   'use strict';
   const API = (window.SITECRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev').replace(/\/+$/, '') + '/api/voice/';
@@ -140,7 +140,7 @@
     $('#textTools').hidden = !c.textTools;
     const banner = $('#offBanner');
     banner.hidden = c.enabled;
-    banner.textContent = c.enabled ? '' : 'Voice Studio is opening very soon. You can try the page now; making voices will switch on shortly.';
+    banner.textContent = c.enabled ? '' : 'Text to Voice is opening very soon. You can try the page now; making voices will switch on shortly.';
     updateCount();
   }
 
@@ -263,7 +263,7 @@
     if (!state.config.payments) {
       payStatus('Online payment starts very soon. To buy words today, ', 'error');
       const link = Object.assign(document.createElement('a'), {
-        href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Voice Studio ${pack.label} pack (${rupees(pack.paise)}). My wallet code: ${state.token}`),
+        href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Text to Voice ${pack.label} pack (${rupees(pack.paise)}). My wallet code: ${state.token}`),
         target: '_blank', rel: 'noopener noreferrer', textContent: 'message us on WhatsApp ↗',
       });
       link.style.color = '#fcd34d';
@@ -280,7 +280,7 @@
       await loadCheckout();
       new window.Razorpay({
         key: order.keyId, amount: order.amount, currency: order.currency, order_id: order.orderId,
-        name: 'SiteCraft', description: `Voice Studio · ${pack.label}`,
+        name: 'SiteCraft', description: `Text to Voice · ${pack.label}`,
         handler: async (r) => {
           payStatus('Confirming your payment…');
           const done = await post('verify', { token: state.token, orderId: r.razorpay_order_id, paymentId: r.razorpay_payment_id, signature: r.razorpay_signature });
