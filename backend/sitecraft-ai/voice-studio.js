@@ -53,7 +53,7 @@ export const MAX_WORDS_PER_GENERATION = 800;
 const MAX_TEXT_CHARS = 8000;
 const CHUNK_CHARS = 1800;
 const CHUNK_GAP_MS = 250;
-const CHUNK_CONCURRENCY = 3;
+const CHUNK_CONCURRENCY = 2;
 const DEFAULT_FREE_WORDS = 300;
 const DEFAULT_DAILY_WORDS = 20000;
 const DEFAULT_FREE_WALLETS_PER_IP = 2;
@@ -343,17 +343,40 @@ const LOCATION_ERROR = /location is not supported/i;
 const RETRYABLE = new Set([429, 500, 502, 503, 504]);
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-async function fetchWithRetry(doFetch, attempts = 3) {
+// How long Google asks us to wait on a 429 (Retry-After header or the
+// "retryDelay": "23s" field in the error body), capped at 30 seconds.
+async function retryDelayMs(response) {
+  const header = Number(response.headers.get("Retry-After"));
+  if (Number.isFinite(header) && header > 0) return Math.min(header * 1000, 30000);
+  const body = await response.clone().text().catch(() => "");
+  const match = /"retryDelay"\s*:\s*"(\d+(?:\.\d+)?)s"/.exec(body);
+  return match ? Math.min(Number(match[1]) * 1000, 30000) : 0;
+}
+
+async function fetchWithRetry(doFetch, attempts = 4) {
   let last;
   for (let i = 0; i < attempts; i += 1) {
     last = await doFetch(i);
     if (last.ok || !RETRYABLE.has(last.status) || i === attempts - 1) return last;
-    await sleep(400 * (2 ** i) + Math.floor(Math.random() * 200));
+    const asked = last.status === 429 ? await retryDelayMs(last) : 0;
+    await sleep(Math.max(asked, (last.status === 429 ? 3000 : 600) * (2 ** i)) + Math.floor(Math.random() * 400));
   }
   return last;
 }
 
+// Gemini TTS sometimes answers 200 with no audio; try that chunk again.
 async function geminiTts(env, plan, text) {
+  for (let attempt = 0; ; attempt += 1) {
+    try {
+      return await geminiTtsOnce(env, plan, text);
+    } catch (error) {
+      if (!error.noAudio || attempt >= 2) throw error;
+      await sleep(1500 * (attempt + 1));
+    }
+  }
+}
+
+async function geminiTtsOnce(env, plan, text) {
   const model = plan.engine === "gemini-flash"
     ? env?.VOICE_TTS_MODEL_FLASH || DEFAULT_MODELS.flash
     : env?.VOICE_TTS_MODEL_LITE || DEFAULT_MODELS.lite;
@@ -381,7 +404,7 @@ async function geminiTts(env, plan, text) {
   if (!response.ok) throw new Error(`Gemini TTS HTTP ${response.status}: ${(await response.text()).slice(0, 500)}`);
   const payload = await response.json();
   const parts = (payload?.candidates?.[0]?.content?.parts || []).filter(p => p.inlineData?.data);
-  if (!parts.length) throw new Error(`Gemini TTS returned no audio (finishReason=${payload?.candidates?.[0]?.finishReason || "unknown"}).`);
+  if (!parts.length) throw Object.assign(new Error(`Gemini TTS returned no audio (finishReason=${payload?.candidates?.[0]?.finishReason || "unknown"}).`), { noAudio: true });
   const pieces = parts.map(p => readAudio(base64ToBytes(p.inlineData.data), p.inlineData.mimeType));
   return pieces.length === 1 ? pieces[0] : readAudio(joinWav(pieces, 0));
 }
@@ -630,7 +653,14 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
       } catch (error) {
         console.error("Voice generate failed", plan.engine, error);
         await Promise.all([giveWords(db, token, words), releaseDaily(db, words)]);
-        return reply({ ok: false, error: "The voice could not be made right now. Your words were not used. Please try again." }, 502, origin);
+        const busy = /HTTP 429|RESOURCE_EXHAUSTED/i.test(String(error?.message));
+        return reply({
+          ok: false,
+          code: busy ? "BUSY" : "FAILED",
+          error: busy
+            ? "The voice service is busy right now. Your words were not used."
+            : "The voice could not be made right now. Your words were not used."
+        }, busy ? 503 : 502, origin);
       }
 
       const log = db.prepare("INSERT INTO voice_generations (token, words, chars, engine, style, lang, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
