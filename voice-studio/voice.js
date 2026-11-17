@@ -32,6 +32,7 @@
   const state = { config: FALLBACK, token: store.get(WALLET_KEY), words: null, urls: [], job: null, running: false, stop: false, lastText: '', undoText: '' };
   // ~5–6 minutes of speech per part; must stay under the server's 800-word limit.
   const PART_WORDS = 750;
+  const AUTO_RETRIES = 3;
 
   // Same rule as the server: each word once, and 8 letters count as at least one word.
   function billableWords(text) {
@@ -229,10 +230,15 @@
 
   async function makePart(job, index) {
     const part = job.parts[index];
-    const response = await fetch(API + 'generate', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: state.token, text: part.text, style: job.style, voice: job.voice, dialect: job.dialect }),
-    });
+    let response;
+    try {
+      response = await fetch(API + 'generate', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: state.token, text: part.text, style: job.style, voice: job.voice, dialect: job.dialect }),
+      });
+    } catch {
+      throw Object.assign(new Error('Could not reach the server.'), { code: 'NETWORK' });
+    }
     const type = response.headers.get('Content-Type') || '';
     if (!response.ok || !type.includes('audio')) {
       const data = await response.json().catch(() => ({}));
@@ -270,7 +276,8 @@
     btn.disabled = true;
     try {
       for (let i = 0; i < job.parts.length; i += 1) {
-        if (job.parts[i].done) continue;
+        const part = job.parts[i];
+        if (part.done) continue;
         if (state.stop) { status(`Stopped. ${job.parts.filter((p) => p.done).length} of ${job.parts.length} parts are ready.`, 'error'); showContinue(job); return; }
         const label = job.parts.length > 1 ? `Making part ${i + 1} of ${job.parts.length}…` : 'Making your voice…';
         btn.textContent = '⏳ ' + label;
@@ -279,7 +286,20 @@
         try {
           await makePart(job, i);
           if (i === 0) job.rows[0].querySelector('audio').play().catch(() => {});
+          part.retries = 0;
         } catch (error) {
+          // Busy or a hiccup: wait and try the same part again, up to 3 times.
+          if ((error.code === 'BUSY' || error.code === 'FAILED' || error.code === 'NETWORK') && (part.retries || 0) < AUTO_RETRIES && !state.stop) {
+            part.retries = (part.retries || 0) + 1;
+            const wait = error.code === 'BUSY' ? 30 : 15;
+            for (let left = wait; left > 0 && !state.stop; left -= 1) {
+              setPartState(job, i, `Retrying in ${left}s`);
+              status(`Part ${i + 1} hit a hiccup. Trying again automatically in ${left}s (try ${part.retries} of ${AUTO_RETRIES})…`);
+              await new Promise((r) => setTimeout(r, 1000));
+            }
+            i -= 1; // run this part again
+            continue;
+          }
           setPartState(job, i, 'Not made', 'error');
           status(error.code === 'NO_WORDS'
             ? `Words finished at part ${i + 1}. Buy a pack, then tap “Continue”.`
@@ -532,7 +552,7 @@
   $('#script').addEventListener('input', updateCount);
   $('#generateBtn').addEventListener('click', generate);
   $('#stopBtn').addEventListener('click', () => { state.stop = true; status('Stopping after this part…'); });
-  $('#continueBtn').addEventListener('click', () => { if (state.job && !state.running) runJob(state.job); });
+  $('#continueBtn').addEventListener('click', () => { if (state.job && !state.running) { state.job.parts.forEach((p) => { p.retries = 0; }); runJob(state.job); } });
   $('#downloadAll').addEventListener('click', downloadAll);
   $('#mergeBtn').addEventListener('click', mergeParts);
   $('#rewriteBtn').addEventListener('click', (e) => textTool('rewrite', e.currentTarget));
