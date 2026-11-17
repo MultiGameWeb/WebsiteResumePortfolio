@@ -66,35 +66,121 @@ const DEFAULT_MODELS = {
   sarvam: "bulbul:v3"
 };
 
-// Prices live here only. Same on the website and (later) the app.
+// Prices live here only, in the smallest unit of each currency (paise,
+// cents, pence). The visitor's country picks the currency (see currencyFor).
 export const PACKS = {
-  w1k: { words: 1000, paise: 4900, label: "1K words" },
-  w2k: { words: 2000, paise: 7900, label: "2K words" },
-  w5k: { words: 5000, paise: 17900, label: "5K words", badge: "Most popular" },
-  w10k: { words: 10000, paise: 34900, label: "10K words" },
-  w25k: { words: 25000, paise: 84900, label: "25K words", badge: "Best value" }
+  w1k: { words: 1000, label: "1K words" },
+  w2k: { words: 2000, label: "2K words" },
+  w5k: { words: 5000, label: "5K words", badge: "Most popular" },
+  w10k: { words: 10000, label: "10K words" },
+  w25k: { words: 25000, label: "25K words", badge: "Best value" }
 };
+export const PRICES = {
+  INR: { w1k: 4900, w2k: 7900, w5k: 17900, w10k: 34900, w25k: 84900 },
+  USD: { w1k: 99, w2k: 179, w5k: 399, w10k: 699, w25k: 1499 },
+  GBP: { w1k: 89, w2k: 149, w5k: 349, w10k: 599, w25k: 1299 },
+  EUR: { w1k: 99, w2k: 169, w5k: 379, w10k: 649, w25k: 1399 }
+};
+const EURO_COUNTRIES = new Set("AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE IS LI NO".split(" "));
 
-// engine "auto": Sarvam for Indian scripts, Gemini Flash-Lite otherwise.
-// engine "acting": Gemini Flash (the stronger actor).
+// India pays in rupees, the UK in pounds, Europe in euros, everyone else in dollars.
+export function currencyFor(country) {
+  const c = String(country || "").toUpperCase();
+  if (c === "IN") return "INR";
+  if (c === "GB") return "GBP";
+  if (EURO_COUNTRIES.has(c)) return "EUR";
+  return "USD";
+}
+export const packPrice = (id, currency) => PRICES[currency]?.[id] ?? PRICES.USD[id];
+
+// engine "auto": Sarvam for Indian scripts when its key is set, otherwise
+// Gemini Flash-Lite. engine "acting": Gemini Flash (the stronger actor).
+const style = (group, label, note, prompt, engine = "acting") => ({ group, label, note, prompt, engine });
 export const STYLES = {
-  normal: { label: "Normal", engine: "auto", prompt: "clear, natural and neutral, at an even pace" },
-  narration: { label: "Narration", engine: "auto", prompt: "a warm storyteller narrating an audiobook, unhurried, with natural pauses" },
-  news: { label: "News", engine: "auto", prompt: "a confident news presenter, crisp and formal, steady pace" },
-  conversational: { label: "Conversational", engine: "acting", prompt: "casual and friendly, like chatting with a close friend" },
-  emotional: { label: "Emotional", engine: "acting", prompt: "deeply emotional and heartfelt, gentle, with real feeling in every line" },
-  comedy: { label: "Comedy", engine: "acting", prompt: "playful and funny, energetic, with comic timing and expressive reactions" },
-  motivational: { label: "Motivational", engine: "acting", prompt: "powerful and inspiring, with rising energy, like a motivational speaker" },
-  whisper: { label: "Whisper", engine: "acting", prompt: "a soft, intimate whisper, quiet and close" }
+  normal: style("Basic", "Normal", "Clear & neutral", "clear, natural and neutral, at an even pace", "auto"),
+  narration: style("Basic", "Narration", "Story / audiobook", "a warm storyteller narrating an audiobook, unhurried, with natural pauses", "auto"),
+  news: style("Basic", "News", "Formal & crisp", "a confident news presenter, crisp and formal, steady pace", "auto"),
+  conversational: style("Basic", "Conversational", "Like a friend", "casual and friendly, like chatting with a close friend"),
+
+  reel_hook: style("Instagram & creators", "Reel hook", "Grabs attention fast", "a fast, punchy social media reel voice-over that hooks the listener in the first second, upbeat, confident and energetic"),
+  genz: style("Instagram & creators", "Gen Z creator", "Trendy & expressive", "a trendy young social media creator, casual, expressive and full of personality, natural and relatable"),
+  podcast: style("Instagram & creators", "Podcast", "Relaxed host", "a relaxed, warm podcast host talking to listeners, natural and engaging"),
+  ad: style("Instagram & creators", "Ad / promo", "Sells with energy", "a persuasive advertisement voice-over, warm and energetic, building excitement towards a clear call to action"),
+  explainer: style("Instagram & creators", "Explainer", "Teacher style", "a clear, friendly teacher explaining step by step, patient and easy to follow"),
+  review: style("Instagram & creators", "Product review", "Honest & friendly", "an honest, friendly product reviewer sharing real opinions, conversational and trustworthy"),
+
+  emotional: style("Emotions", "Emotional", "Heartfelt", "deeply emotional and heartfelt, gentle, with real feeling in every line"),
+  happy: style("Emotions", "Happy", "Cheerful & bright", "happy and cheerful, smiling while speaking, bright and positive"),
+  sad: style("Emotions", "Sad", "Soft & heavy", "sad and sorrowful, soft and slow, with a heavy heart"),
+  angry: style("Emotions", "Angry", "Fiery & intense", "angry and intense, forceful and fiery, but still clear"),
+  romantic: style("Emotions", "Romantic", "Warm & tender", "romantic, warm and tender, affectionate and soft"),
+  motivational: style("Emotions", "Motivational", "Energetic", "powerful and inspiring, with rising energy, like a motivational speaker"),
+  sarcastic: style("Emotions", "Sarcastic", "Dry & witty", "dry and sarcastic, witty, with playful exaggeration"),
+
+  comedy: style("Genres", "Comedy", "Fun & timing", "playful and funny, energetic, with comic timing and expressive reactions"),
+  suspense: style("Genres", "Suspense story", "Gripping & dramatic", "a gripping storyteller building suspense, with dramatic pauses and rising tension"),
+  horror: style("Genres", "Horror", "Spooky & eerie", "spooky and eerie, slow and chilling, like a horror story told at night"),
+  documentary: style("Genres", "Documentary", "Deep & measured", "a deep, measured documentary narrator, calm and authoritative"),
+  trailer: style("Genres", "Movie trailer", "Epic & bold", "an epic movie trailer voice, deep, bold and dramatic"),
+  sports: style("Genres", "Sports commentary", "Fast & thrilling", "a fast, thrilling sports commentator, excited and full of energy"),
+  devotional: style("Genres", "Devotional", "Calm & reverent", "calm, reverent and devotional, peaceful and sincere"),
+  kids: style("Genres", "Kids story", "Fun for children", "a cheerful, animated storyteller for young children, playful and gentle"),
+  meditation: style("Genres", "Calm / meditation", "Slow & soothing", "a slow, soothing meditation guide, very calm and relaxing"),
+  whisper: style("Genres", "Whisper", "Soft & close", "a soft, intimate whisper, quiet and close")
 };
 
-// Dialects need acting control, so they always use Gemini Flash.
+// Accents need acting control, so they always use Gemini Flash. They change
+// how the words sound, not the words; "Make it spoken" can change the words.
+const accent = (group, label, desc) => ({ group, label, prompt: `Speak with an authentic ${desc} accent, rhythm and intonation.` });
 export const DIALECTS = {
-  none: { label: "Standard", prompt: "" },
-  telangana: { label: "Telangana", prompt: "Speak with an authentic Telangana Telugu accent and rhythm." },
-  andhra: { label: "Godavari / Coastal Andhra", prompt: "Speak with an authentic Godavari (coastal Andhra) Telugu accent and rhythm." },
-  rayalaseema: { label: "Rayalaseema", prompt: "Speak with an authentic Rayalaseema Telugu accent and rhythm." },
-  hyderabadi: { label: "Hyderabadi", prompt: "Speak in a casual Hyderabadi style with its typical accent and rhythm." }
+  none: { group: "", label: "Standard (no accent)", prompt: "" },
+  telangana: accent("Telugu", "Telangana", "Telangana Telugu"),
+  andhra: accent("Telugu", "Godavari / Coastal Andhra", "Godavari (coastal Andhra) Telugu"),
+  rayalaseema: accent("Telugu", "Rayalaseema", "Rayalaseema Telugu"),
+  uttarandhra: accent("Telugu", "Uttarandhra (Srikakulam, Vizag)", "Uttarandhra (north coastal Andhra, Srikakulam and Vizag) Telugu"),
+  hyderabadi: accent("Telugu", "Hyderabadi (Dakhni)", "casual Hyderabadi Dakhni"),
+  delhi: accent("Hindi & North India", "Delhi Hindi", "Delhi Hindi"),
+  bambaiya: accent("Hindi & North India", "Mumbai (Bambaiya)", "Mumbai Bambaiya Hindi"),
+  bihari: accent("Hindi & North India", "Bihari / Bhojpuri style", "Bihari, Bhojpuri-flavoured Hindi"),
+  haryanvi: accent("Hindi & North India", "Haryanvi", "Haryanvi"),
+  rajasthani: accent("Hindi & North India", "Rajasthani", "Rajasthani-flavoured Hindi"),
+  lucknowi: accent("Hindi & North India", "Lucknowi (polite)", "polite Lucknowi Awadhi-flavoured Hindi"),
+  hinglish: accent("Hindi & North India", "Hinglish (city youth)", "urban Indian Hinglish, the way young people in Delhi and Mumbai talk,"),
+  chennai: accent("Tamil", "Chennai Tamil", "Chennai Tamil"),
+  madurai: accent("Tamil", "Madurai Tamil", "Madurai Tamil"),
+  kongu: accent("Tamil", "Kongu (Coimbatore)", "Kongu (Coimbatore) Tamil"),
+  bengaluru: accent("Kannada", "Bengaluru Kannada", "Bengaluru Kannada"),
+  north_karnataka: accent("Kannada", "North Karnataka (Dharwad)", "North Karnataka (Dharwad) Kannada"),
+  mangaluru: accent("Kannada", "Mangaluru (coastal)", "coastal Mangaluru Kannada"),
+  thrissur: accent("Malayalam", "Thrissur (Central Kerala)", "Thrissur (central Kerala) Malayalam"),
+  malabar: accent("Malayalam", "Malabar (Kozhikode)", "Malabar (Kozhikode) Malayalam"),
+  trivandrum: accent("Malayalam", "Thiruvananthapuram", "Thiruvananthapuram (south Kerala) Malayalam"),
+  puneri: accent("Marathi", "Puneri", "Puneri Marathi"),
+  mumbai_marathi: accent("Marathi", "Mumbai Marathi", "Mumbai Marathi"),
+  varhadi: accent("Marathi", "Varhadi (Vidarbha)", "Varhadi (Vidarbha) Marathi"),
+  kolkata: accent("Bengali", "Kolkata Bengali", "Kolkata Bengali"),
+  bangal: accent("Bengali", "Bangal (East Bengal)", "Bangal (East Bengal) Bengali"),
+  ahmedabad: accent("Gujarati", "Ahmedabad Gujarati", "Ahmedabad Gujarati"),
+  kathiawadi: accent("Gujarati", "Kathiawadi", "Kathiawadi Gujarati"),
+  majhi: accent("Punjabi", "Majhi (Amritsar)", "Majhi (Amritsar) Punjabi"),
+  malwai: accent("Punjabi", "Malwai", "Malwai Punjabi"),
+  cuttack: accent("Odia", "Cuttack Odia", "Cuttack Odia"),
+  sambalpuri: accent("Odia", "Sambalpuri", "Sambalpuri"),
+  indian_english: accent("English (India)", "Indian English", "neutral Indian English"),
+  south_indian_english: accent("English (India)", "South Indian English", "South Indian English"),
+  us_general: accent("English (US)", "American (neutral)", "neutral General American English"),
+  us_southern: accent("English (US)", "Southern US", "Southern American English"),
+  us_newyork: accent("English (US)", "New York", "New York City English"),
+  us_california: accent("English (US)", "California (casual)", "casual Californian West Coast English"),
+  us_midwest: accent("English (US)", "Midwest", "Midwestern American English"),
+  uk_rp: accent("English (UK & more)", "British (BBC / RP)", "British Received Pronunciation (BBC English)"),
+  uk_london: accent("English (UK & more)", "London (Cockney / Estuary)", "London Cockney and Estuary English"),
+  uk_northern: accent("English (UK & more)", "Northern English (Manchester)", "Northern English (Manchester)"),
+  uk_scottish: accent("English (UK & more)", "Scottish", "Scottish English"),
+  uk_irish: accent("English (UK & more)", "Irish", "Irish English"),
+  uk_welsh: accent("English (UK & more)", "Welsh", "Welsh English"),
+  australian: accent("English (UK & more)", "Australian", "Australian English"),
+  canadian: accent("English (UK & more)", "Canadian", "Canadian English")
 };
 
 const VOICES = {
@@ -455,14 +541,23 @@ export async function synthesize(env, plan, text) {
 
 // ---------- database ----------
 
+let migrated = false;
 async function tables(db) {
+  await createTables(db);
+  if (migrated) return;
+  // Orders tables made before currencies existed get the column once.
+  await db.prepare("ALTER TABLE voice_orders ADD COLUMN currency TEXT NOT NULL DEFAULT 'INR'").run().catch(() => {});
+  migrated = true;
+}
+
+async function createTables(db) {
   await db.batch([
     db.prepare("CREATE TABLE IF NOT EXISTS voice_wallets (token TEXT PRIMARY KEY, words INTEGER NOT NULL, source TEXT NOT NULL, created_at TEXT NOT NULL)"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_free_claims (day TEXT NOT NULL, ip_hash TEXT NOT NULL, claims INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, ip_hash))"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_daily (day TEXT PRIMARY KEY, words INTEGER NOT NULL DEFAULT 0)"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_text_usage (day TEXT NOT NULL, token TEXT NOT NULL, calls INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, token))"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_generations (id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT NOT NULL, words INTEGER NOT NULL, chars INTEGER NOT NULL, engine TEXT NOT NULL, style TEXT NOT NULL, lang TEXT, created_at TEXT NOT NULL)"),
-    db.prepare("CREATE TABLE IF NOT EXISTS voice_orders (order_id TEXT PRIMARY KEY, token TEXT NOT NULL, pack TEXT NOT NULL, words INTEGER NOT NULL, amount INTEGER NOT NULL, status TEXT NOT NULL, payment_id TEXT, credited INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL)"),
+    db.prepare("CREATE TABLE IF NOT EXISTS voice_orders (order_id TEXT PRIMARY KEY, token TEXT NOT NULL, pack TEXT NOT NULL, words INTEGER NOT NULL, amount INTEGER NOT NULL, status TEXT NOT NULL, payment_id TEXT, credited INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL, currency TEXT NOT NULL DEFAULT 'INR')"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_reports (id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT, reason TEXT NOT NULL, text TEXT, created_at TEXT NOT NULL)")
   ]);
 }
@@ -539,7 +634,7 @@ async function rewriteSpoken(env, text, dialect) {
       "You rewrite scripts for voice-overs so they sound like natural spoken language, the way people really talk.",
       "Keep the same language as the input and the same meaning. Do not add new facts.",
       "Write Indian languages in their own script (Telugu in Telugu script, Hindi in Devanagari).",
-      d ? `Use the everyday ${d} way of speaking Telugu where the text is Telugu.` : "Use simple everyday spoken words instead of bookish ones.",
+      d ? `Use everyday ${d} words and expressions where they fit the text's language; otherwise just make it natural and spoken.` : "Use simple everyday spoken words instead of bookish ones.",
       "Return only the script to be read aloud: no titles, notes, stage directions or emojis.",
       "Return JSON: {\"text\": \"...\"}."
     ].join(" "),
@@ -568,8 +663,9 @@ async function translateText(env, text, to) {
 
 // ---------- routes ----------
 
-function configReply(env) {
+function configReply(env, country) {
   const e = engines(env);
+  const currency = currencyFor(country);
   const s = settings(env);
   return {
     ok: true,
@@ -580,9 +676,10 @@ function configReply(env) {
     maxWordsPerGeneration: MAX_WORDS_PER_GENERATION,
     payments: razorpayReady(env),
     keyId: razorpayReady(env) ? env.RAZORPAY_KEY_ID : "",
-    packs: Object.entries(PACKS).map(([id, p]) => ({ id, ...p })),
-    styles: Object.entries(STYLES).map(([id, st]) => ({ id, label: st.label, acting: st.engine === "acting" })),
-    dialects: Object.entries(DIALECTS).map(([id, d]) => ({ id, label: d.label })),
+    currency,
+    packs: Object.entries(PACKS).map(([id, p]) => ({ id, ...p, amount: packPrice(id, currency), currency })),
+    styles: Object.entries(STYLES).map(([id, st]) => ({ id, label: st.label, note: st.note, group: st.group, acting: st.engine === "acting" })),
+    dialects: Object.entries(DIALECTS).map(([id, d]) => ({ id, label: d.label, group: d.group })),
     languages: Object.entries(LANGUAGES).map(([id, label]) => ({ id, label }))
   };
 }
@@ -595,7 +692,8 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: headers(origin) });
   const action = path.slice(PREFIX.length);
 
-  if (action === "config" && request.method === "GET") return reply(configReply(env), 200, origin);
+  const country = request.cf?.country || request.headers.get("CF-IPCountry") || "";
+  if (action === "config" && request.method === "GET") return reply(configReply(env, country), 200, origin);
   if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
   if (env?.VOICE_DISABLED === "true") return reply({ ok: false, error: "Text to Voice is switched off for now." }, 503, origin);
   const db = env?.DB;
@@ -729,13 +827,16 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
     if (action === "order") {
       const pack = PACKS[body.pack];
       if (!pack) return reply({ ok: false, error: "Choose a pack." }, 400, origin);
+      // The server picks the currency from the visitor's country, never the browser.
+      const currency = currencyFor(country);
+      const amount = packPrice(body.pack, currency);
       const order = await razorpay(env, "/orders", {
         method: "POST",
-        body: JSON.stringify({ amount: pack.paise, currency: "INR", receipt: `voice_${Date.now().toString(36)}`, notes: { product: `Text to Voice ${pack.label}` } })
+        body: JSON.stringify({ amount, currency, receipt: `voice_${Date.now().toString(36)}`, notes: { product: `Text to Voice ${pack.label}` } })
       });
-      await db.prepare("INSERT INTO voice_orders (order_id, token, pack, words, amount, status, created_at) VALUES (?, ?, ?, ?, ?, 'created', ?)")
-        .bind(order.id, token, body.pack, pack.words, pack.paise, new Date().toISOString()).run();
-      return reply({ ok: true, orderId: order.id, amount: pack.paise, currency: "INR", keyId: env.RAZORPAY_KEY_ID, words: pack.words }, 200, origin);
+      await db.prepare("INSERT INTO voice_orders (order_id, token, pack, words, amount, currency, status, created_at) VALUES (?, ?, ?, ?, ?, ?, 'created', ?)")
+        .bind(order.id, token, body.pack, pack.words, amount, currency, new Date().toISOString()).run();
+      return reply({ ok: true, orderId: order.id, amount, currency, keyId: env.RAZORPAY_KEY_ID, words: pack.words }, 200, origin);
     }
 
     if (action === "verify") {

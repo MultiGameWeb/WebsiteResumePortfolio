@@ -44,6 +44,9 @@ textarea:focus,select:focus,input:focus{outline:2px solid rgba(245,158,11,.7);ou
 
 .vs-styles{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
 .vs-style{position:relative}
+.vs-style-group{margin:14px 0 8px;color:var(--vs-muted);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.vs-style-group:first-child{margin-top:0}
+#styles{max-height:420px;overflow:auto;padding-right:4px}
 .vs-style input,.vs-seg input{position:absolute;opacity:0;pointer-events:none}
 .vs-style span{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border:1px solid var(--vs-line);border-radius:12px;background:var(--vs-panel2);cursor:pointer;font-weight:700;font-size:14px;transition:border-color .15s,background .15s}
 .vs-style small{color:var(--vs-muted);font-size:11px;font-weight:600}
