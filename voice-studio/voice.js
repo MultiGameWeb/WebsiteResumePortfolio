@@ -458,22 +458,28 @@
     });
   }
 
+  function whatsappBuy(pack) {
+    payStatus('Online payment starts very soon. To buy words today, ', 'error');
+    const link = Object.assign(document.createElement('a'), {
+      href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Text to Voice ${pack.label} pack (${rupees(pack.paise)}). My wallet code: ${state.token}`),
+      target: '_blank', rel: 'noopener noreferrer', textContent: 'message us on WhatsApp ↗',
+    });
+    link.style.color = '#fcd34d';
+    $('#payStatus').append(link);
+  }
+
   async function buy(pack, button) {
-    if (!state.config.payments) {
-      payStatus('Online payment starts very soon. To buy words today, ', 'error');
-      const link = Object.assign(document.createElement('a'), {
-        href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Text to Voice ${pack.label} pack (${rupees(pack.paise)}). My wallet code: ${state.token}`),
-        target: '_blank', rel: 'noopener noreferrer', textContent: 'message us on WhatsApp ↗',
-      });
-      link.style.color = '#fcd34d';
-      $('#payStatus').append(link);
-      return;
-    }
     if (!state.token) { payStatus('Please reload the page and try again.', 'error'); return; }
     button.disabled = true;
     payStatus('Opening payment…');
     try {
       const order = await post('order', { token: state.token, pack: pack.id });
+      if (order.ok && order.test) {
+        setWords(order.words);
+        payStatus(`Test purchase ✓ Added ${fmt(order.added)} words, no money charged. You now have ${fmt(order.words)} words.`, 'ok');
+        return;
+      }
+      if (order.code === 'PAYMENTS_OFF') { whatsappBuy(pack); return; }
       if (!order.ok) { payStatus(order.error || 'Payments are not available right now.', 'error'); return; }
       store.set(ORDER_KEY, order.orderId);
       await loadCheckout();
