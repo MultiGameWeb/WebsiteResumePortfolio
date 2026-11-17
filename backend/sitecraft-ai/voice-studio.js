@@ -34,6 +34,7 @@
 //   VOICE_FREE_WALLETS_PER_IP  free wallets per IP per day, default 2
 //   VOICE_DISABLED          "true" switches the studio off
 //   VOICE_PAYMENTS          "off" holds buying packs (free words and /grant still work)
+//   VOICE_TEST_WALLETS      wallet codes (comma separated) whose "Buy" adds words free, for testing
 //   VOICE_TTS_MODEL_FLASH / VOICE_TTS_MODEL_LITE / VOICE_TEXT_MODEL / SARVAM_TTS_MODEL  optional
 //
 // Privacy: the text is sent to Sarvam or Google to make the audio and is not
@@ -127,6 +128,9 @@ const settings = env => ({
 const engines = env => ({ sarvam: Boolean(env?.SARVAM_API_KEY), gemini: Boolean(env?.VOICE_GEMINI_API_KEY) });
 // VOICE_PAYMENTS = "off" holds buying (e.g. while testing) without touching
 // the Razorpay keys that other features share.
+// Owner's own wallets: "Buy" adds the pack free, no Razorpay. Works even with
+// VOICE_PAYMENTS = "off". Codes are 32 hex letters; anything else is ignored.
+const testWallets = env => new Set(String(env?.VOICE_TEST_WALLETS || "").toLowerCase().split(/[\s,]+/).filter(t => TOKEN_PATTERN.test(t)));
 const razorpayReady = env => env?.VOICE_PAYMENTS !== "off" && Boolean(env?.RAZORPAY_KEY_ID && env?.RAZORPAY_KEY_SECRET);
 const today = () => new Date().toISOString().slice(0, 10);
 const randomToken = () => [...crypto.getRandomValues(new Uint8Array(16))].map(b => b.toString(16).padStart(2, "0")).join("");
@@ -681,7 +685,15 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
     }
 
     // Buying words
-    if (!razorpayReady(env)) return reply({ ok: false, error: "Online payment starts very soon." }, 503, origin);
+    if (action === "order" && testWallets(env).has(token) && (await walletWords(db, token)) !== null) {
+      const pack = PACKS[body.pack];
+      if (!pack) return reply({ ok: false, error: "Choose a pack." }, 400, origin);
+      await db.prepare("INSERT INTO voice_orders (order_id, token, pack, words, amount, status, credited, created_at) VALUES (?, ?, ?, ?, 0, 'test', 1, ?)")
+        .bind(`test_${randomToken()}`, token, body.pack, pack.words, new Date().toISOString()).run();
+      await giveWords(db, token, pack.words);
+      return reply({ ok: true, test: true, added: pack.words, words: await walletWords(db, token) }, 200, origin);
+    }
+    if (!razorpayReady(env)) return reply({ ok: false, error: "Online payment starts very soon.", code: "PAYMENTS_OFF" }, 503, origin);
     if ((await walletWords(db, token)) === null) return reply({ ok: false, error: "Your wallet was not found. Please reload the page." }, 401, origin);
 
     if (action === "order") {
