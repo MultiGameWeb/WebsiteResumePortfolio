@@ -193,6 +193,78 @@
     return true;
   }
 
+  // ---------- keep the current job across refreshes (IndexedDB) ----------
+  // Finished parts are saved with their audio, so a refresh or closed tab
+  // never loses them; Continue makes only the parts that are left.
+
+  function idb() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open('sc_voice', 1);
+      req.onupgradeneeded = () => req.result.createObjectStore('kv');
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+  async function idbDo(mode, fn) {
+    const db = await idb();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('kv', mode);
+      const req = fn(tx.objectStore('kv'));
+      tx.oncomplete = () => { db.close(); resolve(req?.result); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    });
+  }
+  const idbGet = (key) => idbDo('readonly', (st) => st.get(key));
+  const idbSet = (key, value) => idbDo('readwrite', (st) => st.put(value, key));
+  const idbDel = (key) => idbDo('readwrite', (st) => st.delete(key));
+
+  async function saveJob(job) {
+    try {
+      await idbSet('job', {
+        savedAt: Date.now(), fullText: job.fullText, base: job.base, style: job.style, voice: job.voice, dialect: job.dialect,
+        parts: job.parts.map((p) => ({ text: p.text, words: p.words, fileName: p.fileName, done: p.done, blob: p.blob || null })),
+      });
+    } catch { /* private mode or storage full: the job still works, it just is not kept */ }
+  }
+
+  function buildRows(job) {
+    const list = $('#parts');
+    list.innerHTML = '';
+    job.rows = [];
+    job.parts.forEach((p, i) => { const row = partRow(job, i); job.rows.push(row); list.append(row); setPartState(job, i, p.done ? 'Ready ✓' : 'Waiting', p.done ? 'ok' : ''); });
+    $('#result').hidden = false;
+    $('#reportForm').hidden = true;
+    $('#mergedBox').hidden = true;
+  }
+
+  async function restoreJob() {
+    let saved;
+    try { saved = await idbGet('job'); } catch { return; }
+    if (!saved || !Array.isArray(saved.parts) || !saved.parts.length) return;
+    const job = { ...saved, parts: saved.parts.map((p) => ({ ...p, done: Boolean(p.done && p.blob) })), rows: [] };
+    if (!$('#script').value && job.fullText) $('#script').value = job.fullText;
+    if (!$('#fileName').value && job.base && job.base !== 'voice') $('#fileName').value = job.base;
+    const styleInput = document.querySelector(`input[name="style"][value="${job.style}"]`);
+    if (styleInput) styleInput.checked = true;
+    const voiceInput = document.querySelector(`input[name="voice"][value="${job.voice}"]`);
+    if (voiceInput) voiceInput.checked = true;
+    if (job.dialect) $('#dialect').value = job.dialect;
+    buildRows(job);
+    job.parts.forEach((p, i) => { if (p.done) showPartReady(job, i, p.blob); });
+    state.job = job;
+    state.lastText = String(job.fullText || '').slice(0, 2000);
+    const ready = job.parts.filter((p) => p.done).length;
+    const allDone = ready === job.parts.length;
+    $('#downloadAll').hidden = !allDone || job.parts.length < 2;
+    $('#mergeBtn').hidden = !allDone || job.parts.length < 2;
+    $('#clearJob').hidden = false;
+    if (!allDone) {
+      showContinue(job);
+      status(`Welcome back! Your last script has ${ready} of ${job.parts.length} parts ready. Tap “Continue” to make the rest.`, 'ok');
+    }
+    updateCount();
+  }
+
   async function init() {
     renderStyles(); renderDialects(); renderPacks(); updateCount();
     $('#walletCode').textContent = state.token || '—';
@@ -207,6 +279,7 @@
     } else {
       setWords(null);
     }
+    await restoreJob();
   }
 
   // ---------- actions ----------
@@ -279,6 +352,15 @@
       throw Object.assign(new Error(data.error || 'The voice could not be made.'), { code: data.code });
     }
     const blob = await response.blob();
+    part.blob = blob;
+    part.done = true;
+    showPartReady(job, index, blob);
+    setWords(response.headers.get('X-Words-Left'));
+    await saveJob(job);
+  }
+
+  function showPartReady(job, index, blob) {
+    const part = job.parts[index];
     part.url = URL.createObjectURL(blob);
     state.urls.push(part.url);
     const row = job.rows[index];
@@ -290,14 +372,12 @@
     link.download = part.fileName;
     link.textContent = `⬇ ${part.fileName}`;
     link.hidden = false;
-    setWords(response.headers.get('X-Words-Left'));
     setPartState(job, index, 'Ready ✓', 'ok');
     audio.addEventListener('loadedmetadata', () => {
       const m = Math.floor(audio.duration / 60);
       const sec = String(Math.round(audio.duration % 60)).padStart(2, '0');
       if (Number.isFinite(audio.duration)) setPartState(job, index, `Ready ✓ ${m}:${sec}`, 'ok');
     }, { once: true });
-    part.done = true;
   }
 
   async function runJob(job) {
@@ -375,20 +455,19 @@
     state.urls = [];
     const base = fileBase();
     const job = {
+      fullText: text, base,
       style: selected('style'), voice: selected('voice'), dialect: $('#dialect').value,
       parts: texts.map((t, i) => ({ text: t, words: billableWords(t), done: false, fileName: texts.length > 1 ? `${base}-${i + 1}.wav` : `${base}.wav` })),
       rows: [],
     };
-    const list = $('#parts');
-    list.innerHTML = '';
-    job.parts.forEach((p, i) => { const row = partRow(job, i); job.rows.push(row); list.append(row); setPartState(job, i, 'Waiting'); });
-    $('#result').hidden = false;
-    $('#reportForm').hidden = true;
+    buildRows(job);
     $('#downloadAll').hidden = true;
     $('#mergeBtn').hidden = true;
-    $('#mergedBox').hidden = true;
+    $('#continueBtn').hidden = true;
+    $('#clearJob').hidden = false;
     state.lastText = text.slice(0, 2000);
     state.job = job;
+    await saveJob(job);
     await runJob(job);
   }
 
@@ -588,6 +667,18 @@
   $('#continueBtn').addEventListener('click', () => { if (state.job && !state.running) { state.job.parts.forEach((p) => { p.retries = 0; }); runJob(state.job); } });
   $('#downloadAll').addEventListener('click', downloadAll);
   $('#mergeBtn').addEventListener('click', mergeParts);
+  $('#clearJob').addEventListener('click', async () => {
+    if (state.running) return;
+    try { await idbDel('job'); } catch {}
+    state.urls.forEach((u) => URL.revokeObjectURL(u));
+    state.urls = [];
+    state.job = null;
+    $('#parts').innerHTML = '';
+    $('#result').hidden = true;
+    $('#continueBtn').hidden = true;
+    $('#clearJob').hidden = true;
+    status('Cleared. Paste a new script to start.');
+  });
   $('#rewriteBtn').addEventListener('click', (e) => textTool('rewrite', e.currentTarget));
   $('#translateBtn').addEventListener('click', (e) => textTool('translate', e.currentTarget));
   $('#undoBtn').addEventListener('click', () => { $('#script').value = state.undoText; $('#undoBtn').hidden = true; updateCount(); status(''); });
