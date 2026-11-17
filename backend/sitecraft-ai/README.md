@@ -146,6 +146,7 @@ Engines: Normal, Narration and News use Sarvam Bulbul for Indian scripts; acting
 | `VOICE_DAILY_WORD_LIMIT` | variable | words per day across everyone, default 20000 (spending cap) |
 | `VOICE_FREE_WALLETS_PER_IP` | variable | free wallets per IP per day, default 2 |
 | `VOICE_DISABLED` | variable | `true` switches the studio off |
+| `VOICE_PAYMENTS` | variable | `off` holds buying packs while testing (free words and `/grant` still work) |
 | `VOICE_TTS_MODEL_FLASH`, `VOICE_TTS_MODEL_LITE`, `VOICE_TEXT_MODEL`, `SARVAM_TTS_MODEL` | variable | optional model overrides |
 
 Prices are set only in `PACKS` in `voice-studio.js`. Words: each word counts once, and every 8 letters count as at least one word. Max 800 words per voice. Failed voices give the words back. Tables (`voice_*` in `DB`) are created on first use. The text is not stored, except text attached to a report.
