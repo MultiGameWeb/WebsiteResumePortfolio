@@ -33,6 +33,7 @@
 //   VOICE_DAILY_WORD_LIMIT  words per day across everyone, default 20000 (spending cap)
 //   VOICE_FREE_WALLETS_PER_IP  free wallets per IP per day, default 2
 //   VOICE_DISABLED          "true" switches the studio off
+//   VOICE_PAYMENTS          "off" holds buying packs (free words and /grant still work)
 //   VOICE_TTS_MODEL_FLASH / VOICE_TTS_MODEL_LITE / VOICE_TEXT_MODEL / SARVAM_TTS_MODEL  optional
 //
 // Privacy: the text is sent to Sarvam or Google to make the audio and is not
@@ -124,7 +125,9 @@ const settings = env => ({
   freeWalletsPerIp: num(env?.VOICE_FREE_WALLETS_PER_IP, DEFAULT_FREE_WALLETS_PER_IP, 0)
 });
 const engines = env => ({ sarvam: Boolean(env?.SARVAM_API_KEY), gemini: Boolean(env?.VOICE_GEMINI_API_KEY) });
-const razorpayReady = env => Boolean(env?.RAZORPAY_KEY_ID && env?.RAZORPAY_KEY_SECRET);
+// VOICE_PAYMENTS = "off" holds buying (e.g. while testing) without touching
+// the Razorpay keys that other features share.
+const razorpayReady = env => env?.VOICE_PAYMENTS !== "off" && Boolean(env?.RAZORPAY_KEY_ID && env?.RAZORPAY_KEY_SECRET);
 const today = () => new Date().toISOString().slice(0, 10);
 const randomToken = () => [...crypto.getRandomValues(new Uint8Array(16))].map(b => b.toString(16).padStart(2, "0")).join("");
 
