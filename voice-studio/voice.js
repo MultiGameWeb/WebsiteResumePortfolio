@@ -21,13 +21,13 @@
       { id: 'whisper', label: 'Whisper', acting: true },
     ],
     dialects: [{ id: 'none', label: 'Standard' }, { id: 'telangana', label: 'Telangana' }, { id: 'andhra', label: 'Godavari / Coastal Andhra' }, { id: 'rayalaseema', label: 'Rayalaseema' }, { id: 'hyderabadi', label: 'Hyderabadi' }],
+    currency: 'INR',
     packs: [
-      { id: 'w1k', words: 1000, paise: 4900, label: '1K words' }, { id: 'w2k', words: 2000, paise: 7900, label: '2K words' },
-      { id: 'w5k', words: 5000, paise: 17900, label: '5K words', badge: 'Most popular' },
-      { id: 'w10k', words: 10000, paise: 34900, label: '10K words' }, { id: 'w25k', words: 25000, paise: 84900, label: '25K words', badge: 'Best value' },
+      { id: 'w1k', words: 1000, amount: 4900, currency: 'INR', label: '1K words' }, { id: 'w2k', words: 2000, amount: 7900, currency: 'INR', label: '2K words' },
+      { id: 'w5k', words: 5000, amount: 17900, currency: 'INR', label: '5K words', badge: 'Most popular' },
+      { id: 'w10k', words: 10000, amount: 34900, currency: 'INR', label: '10K words' }, { id: 'w25k', words: 25000, amount: 84900, currency: 'INR', label: '25K words', badge: 'Best value' },
     ],
   };
-  const STYLE_NOTES = { normal: 'Clear & neutral', narration: 'Story / audiobook', news: 'Formal & crisp', conversational: 'Like a friend', emotional: 'Heartfelt', comedy: 'Fun & timing', motivational: 'Energetic', whisper: 'Soft & close' };
 
   const state = { config: FALLBACK, token: store.get(WALLET_KEY), words: null, urls: [], job: null, running: false, stop: false, lastText: '', undoText: '' };
   // ~5–6 minutes of speech per part; must stay under the server's 800-word limit.
@@ -75,17 +75,31 @@
     const box = $('#styles');
     const current = box.querySelector('input:checked')?.value || 'normal';
     box.innerHTML = '';
+    let group = null;
+    let grid = null;
     state.config.styles.forEach((s) => {
+      if (!grid || (s.group || '') !== group) {
+        group = s.group || '';
+        if (group) {
+          const head = document.createElement('p');
+          head.className = 'vs-style-group';
+          head.textContent = group;
+          box.append(head);
+        }
+        grid = document.createElement('div');
+        grid.className = 'vs-styles';
+        box.append(grid);
+      }
       const label = document.createElement('label');
       label.className = 'vs-style';
       const input = Object.assign(document.createElement('input'), { type: 'radio', name: 'style', value: s.id, checked: s.id === current });
       const span = document.createElement('span');
       span.append(s.label);
       const small = document.createElement('small');
-      small.textContent = (STYLE_NOTES[s.id] || '') + (s.acting ? ' · acting' : '');
+      small.textContent = s.note || '';
       span.append(small);
       label.append(input, span);
-      box.append(label);
+      grid.append(label);
     });
   }
 
@@ -93,30 +107,49 @@
     const select = $('#dialect');
     const current = select.value || 'none';
     select.innerHTML = '';
-    state.config.dialects.forEach((d) => select.append(new Option(d.label, d.id, false, d.id === current)));
+    const groups = new Map();
+    state.config.dialects.forEach((d) => {
+      const option = new Option(d.label, d.id, false, d.id === current);
+      if (!d.group) { select.append(option); return; }
+      if (!groups.has(d.group)) {
+        const og = document.createElement('optgroup');
+        og.label = d.group;
+        groups.set(d.group, og);
+        select.append(og);
+      }
+      groups.get(d.group).append(option);
+    });
   }
 
-  const rupees = (paise) => '₹' + Math.round(paise / 100).toLocaleString('en-IN');
+  // amount is in the smallest unit of the currency (1/100).
+  function money(amount, currency) {
+    const value = amount / 100;
+    try {
+      return new Intl.NumberFormat(currency === 'INR' ? 'en-IN' : 'en', { style: 'currency', currency, minimumFractionDigits: currency === 'INR' ? 0 : 2, maximumFractionDigits: 2 }).format(value);
+    } catch {
+      return `${currency} ${value.toFixed(2)}`;
+    }
+  }
 
   function renderPacks() {
     const grid = $('#packGrid');
     grid.innerHTML = '';
     const base = state.config.packs[0];
-    const basePer1k = base ? base.paise / (base.words / 1000) : 0;
+    const basePer1k = base ? base.amount / (base.words / 1000) : 0;
     state.config.packs.forEach((p) => {
-      const per1k = p.paise / (p.words / 1000);
+      const per1k = p.amount / (p.words / 1000);
       const save = basePer1k && per1k < basePer1k ? Math.round((1 - per1k / basePer1k) * 100) : 0;
       const card = document.createElement('div');
       card.className = 'vs-pack' + (p.badge === 'Most popular' ? ' hot' : '');
       card.innerHTML = (p.badge ? '<span class="badge"></span>' : '') + '<h3></h3><div class="price"></div><div class="per"></div><div class="save"></div><button type="button" class="vs-btn primary">Buy</button>';
       if (p.badge) card.querySelector('.badge').textContent = p.badge;
       card.querySelector('h3').textContent = p.label;
-      card.querySelector('.price').textContent = rupees(p.paise);
-      card.querySelector('.per').textContent = '₹' + (per1k / 100).toFixed(1).replace(/\.0$/, '') + ' per 1K words';
+      card.querySelector('.price').textContent = money(p.amount, p.currency);
+      card.querySelector('.per').textContent = money(Math.round(per1k), p.currency) + ' per 1K words';
       card.querySelector('.save').textContent = save ? `Save ${save}%` : '';
       const button = card.querySelector('button');
       button.dataset.pack = p.id;
-      button.setAttribute('aria-label', `Buy ${p.label} for ${rupees(p.paise)}`);
+      button.setAttribute('aria-label', `Buy ${p.label} for ${money(p.amount, p.currency)}`);
       button.addEventListener('click', () => buy(p, button));
       grid.append(card);
     });
@@ -481,7 +514,7 @@
   function whatsappBuy(pack) {
     payStatus('Online payment starts very soon. To buy words today, ', 'error');
     const link = Object.assign(document.createElement('a'), {
-      href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Text to Voice ${pack.label} pack (${rupees(pack.paise)}). My wallet code: ${state.token}`),
+      href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Text to Voice ${pack.label} pack (${money(pack.amount, pack.currency)}). My wallet code: ${state.token}`),
       target: '_blank', rel: 'noopener noreferrer', textContent: 'message us on WhatsApp ↗',
     });
     link.style.color = '#fcd34d';

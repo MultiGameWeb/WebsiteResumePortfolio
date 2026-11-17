@@ -150,7 +150,7 @@ Engines: Normal, Narration and News use Sarvam Bulbul for Indian scripts; acting
 | `VOICE_TEST_WALLETS` | variable | wallet codes (comma separated) whose "Buy" adds the pack free, for the owner's testing |
 | `VOICE_TTS_MODEL_FLASH`, `VOICE_TTS_MODEL_LITE`, `VOICE_TEXT_MODEL`, `SARVAM_TTS_MODEL` | variable | optional model overrides |
 
-Prices are set only in `PACKS` in `voice-studio.js`. Words: each word counts once, and every 8 letters count as at least one word. Max 800 words per voice. Failed voices give the words back. Tables (`voice_*` in `DB`) are created on first use. The text is not stored, except text attached to a report.
+Prices are set only in `PRICES` in `voice-studio.js`, per currency: India pays INR, the UK GBP, EU/EEA countries EUR and everyone else USD (from Cloudflare's visitor country; the server picks it, not the browser). Non-INR payments need International Payments switched on in the Razorpay dashboard. 27 styles in 4 groups and 47 accents (Indian regions, US, UK and more) are listed in `STYLES` and `DIALECTS`. Words: each word counts once, and every 8 letters count as at least one word. Max 800 words per voice. Failed voices give the words back. Tables (`voice_*` in `DB`) are created on first use. The text is not stored, except text attached to a report.
 
 To switch on: `wrangler secret put SARVAM_API_KEY` and `wrangler secret put VOICE_GEMINI_API_KEY`, deploy, then open `/api/voice/config` and check `enabled: true`.
 
