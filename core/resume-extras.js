@@ -186,6 +186,70 @@ function resumesModal(){
  draw();openModal(m);
 }
 
+/* ------------------------------------------------------------------ 5. Match a job (keywords from a job ad) */
+var STOP=('a an the and or of to in on for with at by from as is are be been being was were will would can could should must may might '+
+ 'this that these those it its we our you your they their them he she his her who whom which what when where why how all any each '+
+ 'more most other some such no not only own same so than too very just also into over under about across through within without per '+
+ 'job role position candidate candidates applicant company team teams work working years year experience experienced required requirement requirements '+
+ 'responsibilities responsibility preferred plus good strong excellent ability able knowledge understanding skills skill etc including include includes '+
+ 'looking join apply salary location full time part based day days week month months new using use used make making well high level').split(/\s+/);
+var STOPSET={};STOP.forEach(function(w){STOPSET[w]=1});
+function keyText(v){return String(v||'').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9+#.\s\/-]/g,' ').replace(/\s+/g,' ').trim()}
+function resumeText(s){var out=[];(function walk(v){if(typeof v==='string')out.push(v);else if(Array.isArray(v))v.forEach(walk);else if(v&&typeof v==='object')Object.keys(v).forEach(function(k){if(k!=='photo')walk(v[k])})})(s.sections);(s.custom||[]).forEach(function(c){out.push(c.title||'',c.content||'');(c.bullets||[]).forEach(function(b){out.push(b)})});return ' '+keyText(out.join(' '))+' '}
+// Common verbs and describing words are not keywords; they also mark where a skill phrase ends.
+var SOFT=('provide provides providing maintain maintains maintaining follow follows following assist assists assisting administer administers educate educates monitor monitors monitoring '+
+ 'ensure ensures manage manages managing handle handles handling support supports supporting prepare prepares perform performs develop develops create creates build builds '+
+ 'deliver delivers coordinate coordinates help helps conduct conducts review reviews track tracks plan plans lead leads drive drives own owns write writes design designs '+
+ 'implement implements identify identifies improve improves deliver deliverables meet meets achieve achieves collaborate collaborates communicate willing ready need needs want '+
+ 'accurate valid caring general every various relevant basic proven minimum maximum excellent effective efficient strong good great best key main daily weekly monthly '+
+ 'prescribed during while via like etc ie eg hyderabad bangalore bengaluru chennai mumbai delhi pune india telangana remote onsite hybrid immediate urgent opening openings hiring').split(/\s+/);
+SOFT.forEach(function(w){STOPSET[w]=1});
+function jobKeywords(ad){
+ var known={};JOBS.forEach(function(j){j.skills.forEach(function(sk){known[keyText(sk.replace(/\(.*?\)/g,''))]=sk.replace(/\s*\(.*?\)/g,'')})});
+ var text=keyText(ad),score={},label={},isKnown={};
+ // acronyms such as ICU, BLS, GST, SQL, HTML (2-6 capitals) are strong keywords
+ (String(ad||'').match(/\b[A-Z][A-Z0-9+#]{1,5}\b/g)||[]).forEach(function(a){var k=a.toLowerCase();if(STOPSET[k])return;score[k]=(score[k]||0)+3;label[k]=a});
+ // runs of words between common words: "vital signs", "patient records", "infection control"
+ // names of tools written with a capital in the middle of a sentence: TypeScript, Redux, Jest, Excel
+ (String(ad||'').match(/[a-z,]\s+[A-Z][A-Za-z0-9]*(?:\.[a-z]+)?[A-Za-z0-9+#]/g)||[]).forEach(function(m){var w=m.replace(/^[a-z,]\s+/,''),k=keyText(w);if(!k||STOPSET[k]||k.length<3||/^[A-Z0-9+#]+$/.test(w))return;score[k]=(score[k]||0)+2.5;label[k]=w});
+ String(ad||'').split(/\.(?=\s|$)|[\n;:!?•·|,()–—]+|\s-\s/).forEach(function(chunk){
+  var run=[];keyText(chunk).split(' ').concat(['the']).forEach(function(w){
+   if(!w||STOPSET[w]||/^\d+$/.test(w)){
+    if(run.length>=1&&run.length<=3){var k=run.join(' ');if(run.length>1||k.length>=4)score[k]=(score[k]||0)+(run.length===1?1:2.5)}
+    run=[];return;
+   }
+   run.push(w);
+  });
+ });
+ Object.keys(known).forEach(function(k){if(k&&text.indexOf(k)>=0){score[k]=(score[k]||0)+6;label[k]=known[k];isKnown[k]=1}});
+ var keys=Object.keys(score).filter(function(k){return score[k]>=2.5||label[k]}).sort(function(a,b){return score[b]-score[a]||b.length-a.length});
+ // keep the longer phrase when a short word is part of it
+ var chosen=[];keys.forEach(function(k){if(chosen.length>=20)return;if(chosen.some(function(c){return (' '+c+' ').indexOf(' '+k+' ')>=0}))return;if(label[k]&&!isKnown[k]&&keys.some(function(o){return o!==k&&(' '+o+' ').indexOf(' '+k+' ')>=0&&score[o]>=2.5}))return;chosen=chosen.filter(function(c){return (' '+k+' ').indexOf(' '+c+' ')<0||isKnown[c]});chosen.push(k)});
+ return chosen.map(function(k){return {key:k,label:label[k]||k}});
+}
+function matchModal(){
+ var m=modal('scMatchModal','Match a job','Paste the job advertisement. See which important words your resume already has and which are missing.');
+ var body=m.querySelector('.sc-x-body');
+ body.innerHTML='<label class="sc-x-wide">Job advertisement<textarea class="sc-x-letter sc-x-ad" rows="8" placeholder="Paste the full job post here…"></textarea></label><div class="sc-x-actions sc-x-left"><button type="button" class="btn primary" data-check>Check my resume</button></div><div class="sc-x-result" aria-live="polite"></div>';
+ var ad=body.querySelector('.sc-x-ad'),out=body.querySelector('.sc-x-result');
+ try{ad.value=sessionStorage.getItem('sc-job-ad')||''}catch(e){}
+ function check(){
+  var v=ad.value;try{sessionStorage.setItem('sc-job-ad',v)}catch(e){}
+  if(norm(v).split(/\s+/).length<15){out.innerHTML='<p class="sc-x-muted">Paste a longer job post (at least a few lines) to get useful results.</p>';return}
+  var kws=jobKeywords(v),text=resumeText(R.get()),have=[],miss=[];
+  kws.forEach(function(k){var words=k.key.split(' '),hit=text.indexOf(' '+k.key+' ')>=0||words.every(function(w){return text.indexOf(' '+w+' ')>=0||text.indexOf(' '+w.replace(/s$/,'')+' ')>=0||text.indexOf(' '+w+'s ')>=0});(hit?have:miss).push(k)});
+  var pct=kws.length?Math.round(have.length/kws.length*100):0,tone=pct>=70?'#15803d':pct>=40?'#b45309':'#b91c1c';
+  out.innerHTML='<div class="sc-x-score"><b style="color:'+tone+'">'+pct+'%</b><span>of the important words in this job post are in your resume ('+have.length+' of '+kws.length+').</span></div>'+
+   '<h3 class="sc-x-h">Already in your resume</h3><div class="sc-x-chips">'+(have.map(function(k){return '<span class="sc-x-chip ok">✓ '+esc(k.label)+'</span>'}).join('')||'<span class="sc-x-muted">None yet.</span>')+'</div>'+
+   '<h3 class="sc-x-h">Missing — add only what you really know or did</h3><div class="sc-x-chips">'+(miss.map(function(k){return '<button type="button" class="sc-x-chip add" data-add-skill="'+esc(k.label)+'" title="Add to Skills">＋ '+esc(k.label)+'</button>'}).join('')||'<span class="sc-x-muted">Nothing important is missing.</span>')+'</div>'+
+   '<p class="sc-x-note">Tip: use the same words as the job post in your summary and work points, not only in Skills. Never add skills you do not have.</p>';
+ }
+ body.querySelector('[data-check]').onclick=check;
+ out.addEventListener('click',function(e){var b=e.target.closest('[data-add-skill]');if(!b)return;var sk=b.dataset.addSkill;R.mutate(function(s){addSkills(s.sections.skills,[sk.charAt(0).toUpperCase()+sk.slice(1)]);s.sections.skills.show=true},'Added “'+sk+'” to Skills');b.className='sc-x-chip ok';b.disabled=true;b.textContent='✓ '+sk});
+ if(norm(ad.value))check();
+ openModal(m,ad);
+}
+
 /* ------------------------------------------------------------------ 4. Phone guide */
 var GUIDE_OFF='sc-resume-guide-off',phone=window.matchMedia('(max-width: 760px)');
 function guideOn(){try{return localStorage.getItem(GUIDE_OFF)!=='1'}catch(e){return true}}
@@ -234,6 +298,7 @@ var css=document.createElement('style');css.textContent=
  '.sc-x-list{display:grid;gap:8px}.sc-x-row{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px;flex-wrap:wrap}.sc-x-row.cur{border-color:#111827}.sc-x-row strong{font-size:14px}.sc-x-row small{display:block;color:#4b5563;font-size:12px;margin-top:2px}.sc-x-badge{font-size:11px;background:#111827;color:#fff;border-radius:999px;padding:2px 8px;margin-left:4px}.sc-x-rowbtns{display:flex;gap:6px;flex-wrap:wrap}.sc-x-rowbtns .btn{min-height:36px;padding:0 10px}.sc-x-danger{color:#b91c1c!important}'+
  '.sc-x-steplabel{position:absolute;left:10px;right:10px;bottom:calc(100% + 6px);background:#111827;color:#fff;border-radius:999px;padding:7px 12px;font-size:13px;display:flex;gap:6px;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.18)}.sc-x-steplabel[hidden]{display:none}.sc-x-steplabel .sc-x-link{color:#c7d2fe;margin-left:auto}'+
  'body.sc-guide #mobileBottomBar{grid-template-columns:1fr 1fr 1.35fr!important;grid-auto-flow:column}body.sc-guide #mobileBottomBar button{min-height:46px!important}#scGuideBack,#scGuideNext{background:#fff!important;color:#171b21!important;border:1px solid #cfd5dd!important}#scGuideBack:disabled{opacity:.45}body:has(.modal.show) #mobileBottomBar{display:none!important}#mobileBottomBar [hidden]{display:none!important}body:not(.sc-guide) #mobileDownloadPdfBtn{grid-column:1/-1}body.sc-guide #editor{padding-bottom:150px}'+
+ '.sc-x-score{display:flex;gap:12px;align-items:center;background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:12px 14px;margin-top:6px}.sc-x-score b{font-size:30px;line-height:1}.sc-x-score span{font-size:13px;color:#374151}.sc-x-h{font-size:14px;margin:16px 0 8px}.sc-x-chips{display:flex;flex-wrap:wrap;gap:6px}.sc-x-chip{border-radius:999px;padding:6px 11px;font-size:13px;font-weight:700;border:1px solid #d1d5db;background:#fff;color:#111827}.sc-x-chip.ok{background:#ecfdf5;border-color:#a7f3d0;color:#065f46}button.sc-x-chip.add{cursor:pointer;background:#fff7ed;border-color:#fed7aa;color:#9a3412}button.sc-x-chip.add:hover{border-color:#9a3412}'+
  '@media(max-width:560px){.sc-x-grid{grid-template-columns:1fr}.sc-x-card{padding:16px}.sc-x-actions .btn{flex:1 1 auto}}';
 document.head.appendChild(css);
 
@@ -242,12 +307,12 @@ function addLinks(){
  var row=$('.editor-quiet-actions');if(!row||$('#scJobsBtn'))return;
  var mk=function(id,label,fn){var b=document.createElement('button');b.type='button';b.className='quiet-link';b.id=id;b.textContent=label;b.onclick=fn;return b};
  row.insertBefore(mk('scJobsBtn','Job examples',jobsModal),row.firstChild);
- row.appendChild(mk('scCoverBtn','Cover letter',coverModal));
+ row.appendChild(mk('scMatchBtn','Match a job',matchModal));row.appendChild(mk('scCoverBtn','Cover letter',coverModal));
  row.appendChild(mk('scResumesBtn','My resumes',resumesModal));
  var g=mk('scGuideBtn','Step guide',function(){try{localStorage.removeItem(GUIDE_OFF)}catch(_){}updateGuide();var l=steps();if(l.length)R.openSection(openId()||l[0]);updateGuide();R.toast('Step guide on: use Back and Next at the bottom.')});g.classList.add('sc-x-phoneonly');row.appendChild(g);
  var st=document.createElement('style');st.textContent='@media(min-width:761px){.sc-x-phoneonly{display:none}}';document.head.appendChild(st);
  // also offer them in the More menu
- var more=$('#moreMenu');if(more&&!more.querySelector('[data-sc-x]')){[['Cover letter',coverModal],['My resumes',resumesModal],['Job examples',jobsModal]].forEach(function(p){var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');b.setAttribute('data-sc-x','');b.textContent=p[0];b.onclick=function(){more.hidden=true;var mb=$('#moreBtn');if(mb)mb.setAttribute('aria-expanded','false');p[1]()};more.insertBefore(b,more.firstChild)})}
+ var more=$('#moreMenu');if(more&&!more.querySelector('[data-sc-x]')){[['Match a job',matchModal],['Cover letter',coverModal],['My resumes',resumesModal],['Job examples',jobsModal]].forEach(function(p){var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');b.setAttribute('data-sc-x','');b.textContent=p[0];b.onclick=function(){more.hidden=true;var mb=$('#moreBtn');if(mb)mb.setAttribute('aria-expanded','false');p[1]()};more.insertBefore(b,more.firstChild)})}
 }
 function start(){
  addLinks();buildGuide();updateGuide();
@@ -261,5 +326,5 @@ function start(){
  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')syncCurrent().catch(function(){})});
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
-window.SCResumeExtras={JOBS:JOBS,makeLetter:makeLetter,letterDocx:letterDocx,syncCurrent:syncCurrent,lib:Lib};
+window.SCResumeExtras={jobKeywords:jobKeywords,JOBS:JOBS,makeLetter:makeLetter,letterDocx:letterDocx,syncCurrent:syncCurrent,lib:Lib};
 })();
