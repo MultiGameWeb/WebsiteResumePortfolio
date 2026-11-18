@@ -184,11 +184,33 @@
 
   // ---------- wallet ----------
 
+  // Only wallets listed in VOICE_TEST_WALLETS get `owner` and `health` back.
+  function renderOwner(result) {
+    const box = $('#ownerBanner');
+    state.owner = Boolean(result && result.owner);
+    if (!state.owner) { box.hidden = true; return; }
+    box.hidden = false;
+    box.innerHTML = '';
+    const head = document.createElement('strong');
+    const list = Array.isArray(result.health) ? result.health : [];
+    head.textContent = list.length ? '⚠ Owner alert (last 24 hours)' : '✓ Owner: no voice problems in the last 24 hours';
+    box.append(head);
+    box.classList.toggle('ok', !list.length);
+    list.forEach((h) => {
+      const line = document.createElement('div');
+      const mins = Math.max(1, Math.round((Date.now() - Date.parse(h.lastAt)) / 60000));
+      const ago = mins < 60 ? `${mins} min ago` : `${Math.round(mins / 60)} h ago`;
+      line.textContent = `${h.message} Failed voices today: ${h.count}. Last: ${ago}.`;
+      box.append(line);
+    });
+  }
+
   async function loadWallet(token) {
     const result = await post('wallet', { token });
     if (!result.ok) { setWords(null); return false; }
     setToken(result.token);
     setWords(result.words);
+    renderOwner(result);
     if (result.isNew && result.freeGiven) status(`Welcome! ${result.words} free words are added. Try it now.`, 'ok');
     return true;
   }
@@ -402,6 +424,7 @@
           part.retries = 0;
         } catch (error) {
           // Busy or a hiccup: wait and try the same part again, up to 3 times.
+          if (state.owner) post('wallet', { token: state.token }).then(renderOwner).catch(() => {});
           if ((error.code === 'BUSY' || error.code === 'FAILED' || error.code === 'NETWORK') && (part.retries || 0) < AUTO_RETRIES && !state.stop) {
             part.retries = (part.retries || 0) + 1;
             const wait = error.code === 'BUSY' ? 30 : 15;

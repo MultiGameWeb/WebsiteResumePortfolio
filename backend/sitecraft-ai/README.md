@@ -135,7 +135,7 @@ Telugu-first text to speech for creators. The voice comes out in the language th
 - `POST /api/voice/order` / `verify` / `recover` Razorpay word packs
 - `POST /api/voice/grant` (`Authorization: Bearer ADMIN_TOKEN`) `{ token?, words }` adds words, e.g. after a WhatsApp/UPI payment
 
-Engines: Normal, Narration and News use Sarvam Bulbul for Indian scripts; acting styles and accents use Gemini 3.8 Flash TTS; English/other scripts use Gemini Flash-Lite TTS. If one key is missing the other engine is used where it can.
+Engines: Normal, Narration and News use Sarvam Bulbul for Indian scripts; acting styles and accents use Gemini 3.8 Flash TTS; English/other scripts use Gemini Flash-Lite TTS. If one key is missing the other engine is used where it can. If a Gemini model fails (busy, down, no audio), the other Gemini TTS model (Flash ↔ Flash-Lite, separate limits) makes that chunk. When credits run out it stops at once instead of retrying. Wallets in `VOICE_TEST_WALLETS` see an owner banner with problems from the last 24 hours.
 
 | Name | Kind | Purpose |
 |---|---|---|
@@ -148,6 +148,7 @@ Engines: Normal, Narration and News use Sarvam Bulbul for Indian scripts; acting
 | `VOICE_DISABLED` | variable | `true` switches the studio off |
 | `VOICE_PAYMENTS` | variable | `off` holds buying packs while testing (free words and `/grant` still work) |
 | `VOICE_TEST_WALLETS` | variable | wallet codes (comma separated) whose "Buy" adds the pack free, for the owner's testing |
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | secret | optional: voice problems (credits ran out, rate limit, Google down) are sent to Telegram, at most every 30 min per kind |
 | `VOICE_TTS_MODEL_FLASH`, `VOICE_TTS_MODEL_LITE`, `VOICE_TEXT_MODEL`, `SARVAM_TTS_MODEL` | variable | optional model overrides |
 
 Prices are set only in `PRICES` in `voice-studio.js`, per currency: India pays INR, the UK GBP, EU/EEA countries EUR and everyone else USD (from Cloudflare's visitor country; the server picks it, not the browser). Non-INR payments need International Payments switched on in the Razorpay dashboard. 27 styles in 4 groups and 47 accents (Indian regions, US, UK and more) are listed in `STYLES` and `DIALECTS`. Words: each word counts once, and every 8 letters count as at least one word. Max 800 words per voice. Failed voices give the words back. Tables (`voice_*` in `DB`) are created on first use. The text is not stored, except text attached to a report.
