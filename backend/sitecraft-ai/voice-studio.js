@@ -34,7 +34,9 @@
 //   VOICE_FREE_WALLETS_PER_IP  free wallets per IP per day, default 2
 //   VOICE_DISABLED          "true" switches the studio off
 //   VOICE_PAYMENTS          "off" holds buying packs (free words and /grant still work)
-//   VOICE_TEST_WALLETS      wallet codes (comma separated) whose "Buy" adds words free, for testing
+//   VOICE_TEST_WALLETS      wallet codes (comma separated) whose "Buy" adds words free, for testing;
+//                           these wallets also see the owner alert banner (service problems)
+//   TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID  optional: service problems are also sent to Telegram
 //   VOICE_TTS_MODEL_FLASH / VOICE_TTS_MODEL_LITE / VOICE_TEXT_MODEL / SARVAM_TTS_MODEL  optional
 //
 // Privacy: the text is sent to Sarvam or Google to make the audio and is not
@@ -444,17 +446,46 @@ async function fetchWithRetry(doFetch, attempts = 4) {
   for (let i = 0; i < attempts; i += 1) {
     last = await doFetch(i);
     if (last.ok || !RETRYABLE.has(last.status) || i === attempts - 1) return last;
+    // Out of credits will not fix itself in a few seconds.
+    if (last.status === 429 && /credit|prepa|billing/i.test(await last.clone().text().catch(() => ""))) return last;
     const asked = last.status === 429 ? await retryDelayMs(last) : 0;
     await sleep(Math.max(asked, (last.status === 429 ? 3000 : 600) * (2 ** i)) + Math.floor(Math.random() * 400));
   }
   return last;
 }
 
-// Gemini TTS sometimes answers 200 with no audio; try that chunk again.
+// What went wrong with Google, in words the owner understands.
+//   CREDITS     prepaid credits ran out / billing problem (retrying will not help)
+//   RATE_LIMIT  too many requests for the current tier (429)
+//   DOWN        Google error 5xx or timeouts
+//   OTHER       anything else
+export function classifyFailure(error) {
+  const text = String(error?.message || error || "");
+  if (/credit|prepa(y|id)|billing|payment required|insufficient.*(fund|balance)/i.test(text)) return "CREDITS";
+  if (/HTTP 429|RESOURCE_EXHAUSTED|quota/i.test(text)) return "RATE_LIMIT";
+  if (/HTTP 5\d\d|timeout|timed out|aborted|network/i.test(text)) return "DOWN";
+  return "OTHER";
+}
+
+// One chunk with Gemini. If the chosen model fails (busy, down, no audio),
+// the other TTS model is tried: Flash and Flash-Lite have separate limits.
 async function geminiTts(env, plan, text) {
+  const primary = plan.engine === "gemini-flash" ? "flash" : "lite";
+  const backup = primary === "flash" ? "lite" : "flash";
+  try {
+    return await geminiTtsModel(env, plan, text, primary, 2);
+  } catch (error) {
+    if (classifyFailure(error) === "CREDITS" || error.badRequest) throw error;
+    plan.usedBackup = true;
+    return geminiTtsModel(env, plan, text, backup, 4);
+  }
+}
+
+// Gemini TTS sometimes answers 200 with no audio; try that chunk again.
+async function geminiTtsModel(env, plan, text, which, attempts) {
   for (let attempt = 0; ; attempt += 1) {
     try {
-      return await geminiTtsOnce(env, plan, text);
+      return await geminiTtsOnce(env, plan, text, which, attempts);
     } catch (error) {
       if (!error.noAudio || attempt >= 2) throw error;
       await sleep(1500 * (attempt + 1));
@@ -462,8 +493,8 @@ async function geminiTts(env, plan, text) {
   }
 }
 
-async function geminiTtsOnce(env, plan, text) {
-  const model = plan.engine === "gemini-flash"
+async function geminiTtsOnce(env, plan, text, which, attempts = 4) {
+  const model = which === "flash"
     ? env?.VOICE_TTS_MODEL_FLASH || DEFAULT_MODELS.flash
     : env?.VOICE_TTS_MODEL_LITE || DEFAULT_MODELS.lite;
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
@@ -479,15 +510,21 @@ async function geminiTtsOnce(env, plan, text) {
   };
   const proxy = geminiUsProxy(env);
   let viaProxy = false;
-  let response = await fetchWithRetry(() => (viaProxy ? proxy.fetch(endpoint, init) : fetch(endpoint, { ...init, signal: AbortSignal.timeout(90000) })));
+  let response = await fetchWithRetry(() => (viaProxy ? proxy.fetch(endpoint, init) : fetch(endpoint, { ...init, signal: AbortSignal.timeout(90000) })), attempts);
   if (!response.ok && response.status === 400 && proxy) {
     const detail = await response.clone().text();
     if (LOCATION_ERROR.test(detail)) {
       viaProxy = true;
-      response = await fetchWithRetry(() => proxy.fetch(endpoint, init));
+      response = await fetchWithRetry(() => proxy.fetch(endpoint, init), attempts);
     }
   }
-  if (!response.ok) throw new Error(`Gemini TTS HTTP ${response.status}: ${(await response.text()).slice(0, 500)}`);
+  if (!response.ok) {
+    const detail = (await response.text()).slice(0, 500);
+    const error = new Error(`Gemini TTS HTTP ${response.status}: ${detail}`);
+    // A plain 400 (bad text, blocked content) fails the same on the other model.
+    if (response.status === 400 && !/credit|billing|prepa/i.test(detail)) error.badRequest = true;
+    throw error;
+  }
   const payload = await response.json();
   const parts = (payload?.candidates?.[0]?.content?.parts || []).filter(p => p.inlineData?.data);
   if (!parts.length) throw Object.assign(new Error(`Gemini TTS returned no audio (finishReason=${payload?.candidates?.[0]?.finishReason || "unknown"}).`), { noAudio: true });
@@ -558,7 +595,8 @@ async function createTables(db) {
     db.prepare("CREATE TABLE IF NOT EXISTS voice_text_usage (day TEXT NOT NULL, token TEXT NOT NULL, calls INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, token))"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_generations (id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT NOT NULL, words INTEGER NOT NULL, chars INTEGER NOT NULL, engine TEXT NOT NULL, style TEXT NOT NULL, lang TEXT, created_at TEXT NOT NULL)"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_orders (order_id TEXT PRIMARY KEY, token TEXT NOT NULL, pack TEXT NOT NULL, words INTEGER NOT NULL, amount INTEGER NOT NULL, status TEXT NOT NULL, payment_id TEXT, credited INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL, currency TEXT NOT NULL DEFAULT 'INR')"),
-    db.prepare("CREATE TABLE IF NOT EXISTS voice_reports (id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT, reason TEXT NOT NULL, text TEXT, created_at TEXT NOT NULL)")
+    db.prepare("CREATE TABLE IF NOT EXISTS voice_reports (id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT, reason TEXT NOT NULL, text TEXT, created_at TEXT NOT NULL)"),
+    db.prepare("CREATE TABLE IF NOT EXISTS voice_health (kind TEXT PRIMARY KEY, count_day TEXT NOT NULL, count INTEGER NOT NULL DEFAULT 0, last_at TEXT NOT NULL, detail TEXT, alerted_at TEXT)")
   ]);
 }
 
@@ -618,6 +656,40 @@ async function razorpay(env, path, init = {}) {
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(`Razorpay HTTP ${response.status}: ${data?.error?.description || ""}`);
   return data;
+}
+
+// ---------- owner alerts ----------
+
+const FAILURE_WORDS = {
+  CREDITS: "Google AI credits ran out (or billing has a problem). Voices stop until credits are added.",
+  RATE_LIMIT: "Google rate limit reached (too many voices at once for your Gemini tier).",
+  DOWN: "Google's voice service had errors or timed out.",
+  OTHER: "A voice failed for another reason."
+};
+
+// Counts failures per kind per day and pings Telegram at most every 30 min per kind.
+async function recordFailure(db, env, kind, detail) {
+  const now = new Date().toISOString();
+  const day = now.slice(0, 10);
+  const row = await db.prepare(`INSERT INTO voice_health (kind, count_day, count, last_at, detail) VALUES (?1, ?2, 1, ?3, ?4)
+    ON CONFLICT(kind) DO UPDATE SET count = CASE WHEN count_day = ?2 THEN count + 1 ELSE 1 END, count_day = ?2, last_at = ?3, detail = ?4
+    RETURNING count, alerted_at`).bind(kind, day, now, String(detail || "").slice(0, 300)).first();
+  const last = row?.alerted_at ? Date.parse(row.alerted_at) : 0;
+  if (!env?.TELEGRAM_BOT_TOKEN || !env?.TELEGRAM_CHAT_ID || Date.now() - last < 30 * 60 * 1000) return;
+  await db.prepare("UPDATE voice_health SET alerted_at = ? WHERE kind = ?").bind(now, kind).run();
+  await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: `⚠️ SiteCraft Text to Voice\n${FAILURE_WORDS[kind]}\nFailed voices today: ${row?.count || 1}` }),
+    signal: AbortSignal.timeout(8000)
+  }).catch(() => {});
+}
+
+// Problems in the last 24 hours, for the owner banner.
+async function healthReport(db) {
+  const since = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
+  const { results = [] } = await db.prepare("SELECT kind, count, last_at FROM voice_health WHERE last_at >= ? ORDER BY last_at DESC").bind(since).all();
+  return results.map(r => ({ kind: r.kind, message: FAILURE_WORDS[r.kind] || r.kind, count: Number(r.count), lastAt: r.last_at }));
 }
 
 // ---------- text helpers (Gemini) ----------
@@ -712,7 +784,10 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
   try {
     if (action === "wallet") {
       const words = await walletWords(db, token);
-      if (words !== null) return reply({ ok: true, token, words, isNew: false }, 200, origin);
+      if (words !== null) {
+        const owner = testWallets(env).has(token);
+        return reply({ ok: true, token, words, isNew: false, ...(owner ? { owner: true, health: await healthReport(db) } : {}) }, 200, origin);
+      }
       // "Use a code" only switches to an existing wallet; it never makes one.
       if (body.lookupOnly) return reply({ ok: false, error: "That code was not found." }, 404, origin);
       const s = settings(env);
@@ -751,14 +826,17 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
       } catch (error) {
         console.error("Voice generate failed", plan.engine, error);
         await Promise.all([giveWords(db, token, words), releaseDaily(db, words)]);
-        const busy = /HTTP 429|RESOURCE_EXHAUSTED/i.test(String(error?.message));
-        return reply({
-          ok: false,
-          code: busy ? "BUSY" : "FAILED",
-          error: busy
-            ? "The voice service is busy right now. Your words were not used."
-            : "The voice could not be made right now. Your words were not used."
-        }, busy ? 503 : 502, origin);
+        const kind = classifyFailure(error);
+        const note = recordFailure(db, env, kind, error?.message).catch(() => {});
+        if (ctx?.waitUntil) ctx.waitUntil(note); else await note;
+        const replies = {
+          CREDITS: ["PAUSED", 503, "Voices are paused for a short while. Your words were not used. Please try again later."],
+          RATE_LIMIT: ["BUSY", 503, "The voice service is busy right now. Your words were not used."],
+          DOWN: ["BUSY", 503, "The voice service is busy right now. Your words were not used."],
+          OTHER: ["FAILED", 502, "The voice could not be made right now. Your words were not used."]
+        };
+        const [code, status, message] = replies[kind];
+        return reply({ ok: false, code, error: message }, status, origin);
       }
 
       const log = db.prepare("INSERT INTO voice_generations (token, words, chars, engine, style, lang, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
@@ -772,7 +850,7 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
           "Content-Disposition": "attachment; filename=\"voice.wav\"",
           "X-Words-Used": String(words),
           "X-Words-Left": String(left ?? 0),
-          "X-Voice-Engine": plan.fallback ? `${plan.engine} (fallback)` : plan.engine
+          "X-Voice-Engine": plan.fallback || plan.usedBackup ? `${plan.engine} (backup model)` : plan.engine
         })
       });
     }
