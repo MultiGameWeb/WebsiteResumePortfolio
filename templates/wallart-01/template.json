@@ -1,0 +1,1100 @@
+{
+  "id": "wallart-01",
+  "name": "Wall Artist & Mural Painter — Colour Canvas",
+  "category": "Wall Artists & Murals",
+  "price": "₹599",
+  "features": [
+    {
+      "id": "home",
+      "label": "Home / Hero"
+    },
+    {
+      "id": "about",
+      "label": "About the Artist"
+    },
+    {
+      "id": "menu",
+      "label": "Our Work (Portfolio)"
+    },
+    {
+      "id": "combos",
+      "label": "Commission Packages"
+    },
+    {
+      "id": "work",
+      "label": "How It Works"
+    },
+    {
+      "id": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "id": "reviews",
+      "label": "Customer Reviews"
+    },
+    {
+      "id": "faq",
+      "label": "FAQ"
+    },
+    {
+      "id": "enquiry",
+      "label": "Book a Wall Form"
+    },
+    {
+      "id": "hours",
+      "label": "Opening Hours"
+    },
+    {
+      "id": "location",
+      "label": "Location & Maps"
+    },
+    {
+      "id": "contact",
+      "label": "Contact"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp"
+    },
+    {
+      "id": "social",
+      "label": "Social Links"
+    },
+    {
+      "id": "upi",
+      "label": "UPI & Online Payments"
+    }
+  ],
+  "fields": [
+    {
+      "path": "brand.businessName",
+      "label": "Studio Name",
+      "required": true,
+      "placeholder": "Colour Canvas Wall Arts"
+    },
+    {
+      "path": "brand.ownerName",
+      "label": "Owner / Studio Manager",
+      "placeholder": "Your name"
+    },
+    {
+      "path": "brand.tagline",
+      "label": "Tagline",
+      "placeholder": "Murals · Portraits · Animals · Lettering"
+    },
+    {
+      "path": "brand.motto",
+      "label": "About Heading",
+      "placeholder": "Every wall tells a story."
+    },
+    {
+      "path": "brand.about",
+      "label": "About the Studio",
+      "type": "textarea"
+    },
+    {
+      "path": "home.title",
+      "label": "Hero Heading",
+      "required": true,
+      "placeholder": "Your walls, painted as art."
+    },
+    {
+      "path": "home.text",
+      "label": "Hero Text",
+      "type": "textarea"
+    },
+    {
+      "path": "home.eyebrow",
+      "label": "Hero Eyebrow",
+      "placeholder": "Wall art · murals · hand-painted"
+    },
+    {
+      "path": "hero",
+      "label": "Hero Photo",
+      "type": "media"
+    },
+    {
+      "path": "contact.phone",
+      "label": "Phone Number",
+      "type": "tel",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "path": "contact.whatsapp",
+      "label": "WhatsApp Number",
+      "type": "tel",
+      "placeholder": "919876543210"
+    },
+    {
+      "path": "contact.email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "hello@colourcanvas.example"
+    },
+    {
+      "path": "contact.address",
+      "label": "Studio Address",
+      "type": "textarea"
+    },
+    {
+      "path": "contact.maps",
+      "label": "Google Maps Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.hours",
+      "label": "Opening Hours Summary",
+      "placeholder": "Mon–Sat · 9:00 AM – 7:00 PM"
+    },
+    {
+      "path": "contact.instagram",
+      "label": "Instagram Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.facebook",
+      "label": "Facebook Link",
+      "type": "url"
+    },
+    {
+      "path": "contact.youtube",
+      "label": "YouTube Link",
+      "type": "url"
+    },
+    {
+      "path": "payment.upiId",
+      "label": "UPI ID for payments (optional)",
+      "placeholder": "yourshop@okaxis"
+    },
+    {
+      "path": "payment.qr",
+      "label": "UPI QR code image (optional)",
+      "type": "media"
+    },
+    {
+      "path": "payment.link",
+      "label": "Payment link (optional, e.g. Razorpay or PhonePe link)",
+      "type": "url",
+      "placeholder": "https://"
+    }
+  ],
+  "demoData": {
+    "brand": {
+      "businessName": "Colour Canvas Wall Arts",
+      "ownerName": "Your name",
+      "tagline": "Murals · Portraits · Animals · Lettering",
+      "motto": "Every wall tells a story.",
+      "about": "I am a wall artist who paints murals, portraits, animals, forests, designs and hand-painted lettering on walls for homes, kids’ rooms, restaurants, shops and offices. Tell me your idea and the size of your wall, and I will send a sketch and a price before I start."
+    },
+    "home": {
+      "eyebrow": "WALL ART · MURALS · HAND-PAINTED",
+      "title": "Your walls, painted as art.",
+      "text": "Hand-painted murals, portraits, animals, forests and lettering for homes, kids’ rooms, restaurants and shops. Send a photo of your wall on WhatsApp."
+    },
+    "hero": "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?auto=format&fit=crop&w=1800&q=85",
+    "menu": [
+      {
+        "id": "p1",
+        "name": "Jungle Theme Wall",
+        "category": "Nature & Forest",
+        "price": "",
+        "description": "A full-wall forest scene for living rooms and kids’ rooms.",
+        "tag": "Popular",
+        "image": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Sunlit path through a green forest",
+        "enabled": true
+      },
+      {
+        "id": "p2",
+        "name": "Misty Forest Scene",
+        "category": "Nature & Forest",
+        "price": "",
+        "description": "Calm, deep forest scenes for bedrooms and offices.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Misty forest with soft light",
+        "enabled": true
+      },
+      {
+        "id": "p3",
+        "name": "Mountain Sunrise",
+        "category": "Nature & Forest",
+        "price": "",
+        "description": "Sunrise and mountain landscapes in warm colours.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1500964757637-c85e8a162699?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Layers of pink and orange mountains at sunrise",
+        "enabled": true
+      },
+      {
+        "id": "p4",
+        "name": "Tiger Portrait",
+        "category": "Animals",
+        "price": "",
+        "description": "Life-size animal portraits with fine detail.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Tiger face looking at the camera",
+        "enabled": true
+      },
+      {
+        "id": "p5",
+        "name": "Lion Wall",
+        "category": "Animals",
+        "price": "",
+        "description": "A bold lion for living rooms, gyms and offices.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Lion walking in tall grass",
+        "enabled": true
+      },
+      {
+        "id": "p6",
+        "name": "Fox & Wildlife",
+        "category": "Animals",
+        "price": "",
+        "description": "Wildlife scenes painted in rich natural colours.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Red fox standing on a rock",
+        "enabled": true
+      },
+      {
+        "id": "p7",
+        "name": "Panda & Bamboo",
+        "category": "Kids Rooms",
+        "price": "",
+        "description": "Friendly animals and cartoon themes for nurseries and play rooms.",
+        "tag": "Kids",
+        "image": "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Panda eating bamboo leaves",
+        "enabled": true
+      },
+      {
+        "id": "p8",
+        "name": "Portrait Mural",
+        "category": "Portraits",
+        "price": "",
+        "description": "Portraits of family, leaders and icons painted on walls.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Street-art style face with bright blue eyes",
+        "enabled": true
+      },
+      {
+        "id": "p9",
+        "name": "Geometric Colour Wall",
+        "category": "Designs",
+        "price": "",
+        "description": "Modern geometric designs for restaurants, shops and offices.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1554188248-986adbb73be4?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Bold geometric pattern in bright colours",
+        "enabled": true
+      },
+      {
+        "id": "p10",
+        "name": "Abstract Flow",
+        "category": "Designs",
+        "price": "",
+        "description": "Flowing abstract colours for feature walls.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1557672172-298e090bd0f1?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Pink and blue swirling abstract colours",
+        "enabled": true
+      },
+      {
+        "id": "p11",
+        "name": "Birds & Flowers",
+        "category": "Designs",
+        "price": "",
+        "description": "Traditional bird and flower art in classic style.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1579762715118-a6f1d4b934f1?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Illustration of birds on a flowering branch",
+        "enabled": true
+      },
+      {
+        "id": "p12",
+        "name": "Lettering & Quotes",
+        "category": "Lettering",
+        "price": "",
+        "description": "Names, quotes and shop boards in hand-painted lettering.",
+        "tag": "",
+        "image": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=900&q=82",
+        "imageAlt": "Paintbrushes and bright paint",
+        "enabled": true
+      }
+    ],
+    "combos": [
+      {
+        "id": "c1",
+        "name": "Accent Wall Mural",
+        "description": "One feature wall in the theme of your choice.",
+        "price": "From ₹80 / sq ft",
+        "enabled": true
+      },
+      {
+        "id": "c2",
+        "name": "Full Room Theme",
+        "description": "A complete themed room with walls and ceiling art.",
+        "price": "From ₹60 / sq ft",
+        "enabled": true
+      },
+      {
+        "id": "c3",
+        "name": "Shop & Restaurant Walls",
+        "description": "Brand artwork, logo and hand-painted lettering for businesses.",
+        "price": "Price after site visit",
+        "enabled": true
+      }
+    ],
+    "highlights": [
+      {
+        "id": "h1",
+        "icon": "✎",
+        "title": "Share your idea",
+        "description": "Send a photo of the wall and your theme on WhatsApp.",
+        "enabled": true
+      },
+      {
+        "id": "h2",
+        "icon": "✓",
+        "title": "Get a sketch",
+        "description": "You see a rough sketch and colours before we start.",
+        "enabled": true
+      },
+      {
+        "id": "h3",
+        "icon": "⏱",
+        "title": "Painting days",
+        "description": "Most walls take 2 to 5 days, depending on size and detail.",
+        "enabled": true
+      },
+      {
+        "id": "h4",
+        "icon": "₹",
+        "title": "Clear price",
+        "description": "The price per sq ft is agreed before the work starts.",
+        "enabled": true
+      }
+    ],
+    "meetupTypes": [
+      {
+        "id": "x1",
+        "name": "Home",
+        "enabled": true
+      },
+      {
+        "id": "x2",
+        "name": "Kids room or nursery",
+        "enabled": true
+      },
+      {
+        "id": "x3",
+        "name": "Shop or restaurant",
+        "enabled": true
+      },
+      {
+        "id": "x4",
+        "name": "School, office or hospital",
+        "enabled": true
+      },
+      {
+        "id": "x5",
+        "name": "Temple or other place",
+        "enabled": true
+      }
+    ],
+    "gallery": [
+      {
+        "id": "g1",
+        "title": "Mixing colours",
+        "alt": "Paintbrushes and bright paint",
+        "image": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1200&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g2",
+        "title": "Bold strokes",
+        "alt": "Thick blue and orange paint strokes",
+        "image": "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g3",
+        "title": "Big colours",
+        "alt": "Abstract painting in red, blue and yellow",
+        "image": "https://images.unsplash.com/photo-1531913764164-f85c52e6e654?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      },
+      {
+        "id": "g4",
+        "title": "Texture work",
+        "alt": "Dark blue and white painted texture",
+        "image": "https://images.unsplash.com/photo-1515405295579-ba7b45403062?auto=format&fit=crop&w=1000&q=82",
+        "enabled": true
+      }
+    ],
+    "reviews": [
+      {
+        "id": "r1",
+        "name": "Customer, Kondapur",
+        "text": "The jungle theme in my son’s room is stunning. He loves the animals and the colours are bright and neat.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r2",
+        "name": "Customer, Gachibowli",
+        "text": "Painted our restaurant wall with a bold design and our logo. Customers keep taking photos with it.",
+        "rating": 5,
+        "enabled": true
+      },
+      {
+        "id": "r3",
+        "name": "Customer, Madhapur",
+        "text": "He sent a sketch first and changed it until we were happy. The finished portrait wall looks amazing.",
+        "rating": 5,
+        "enabled": true
+      }
+    ],
+    "faqs": [
+      {
+        "id": "f1",
+        "question": "How do I get a price?",
+        "answer": "Send a photo of the wall, its size (width × height) and your idea on WhatsApp. We reply with a sketch and a price.",
+        "enabled": true
+      },
+      {
+        "id": "f2",
+        "question": "How long does a mural take?",
+        "answer": "Most walls take 2 to 5 days, depending on size and detail. Big or very detailed walls take longer.",
+        "enabled": true
+      },
+      {
+        "id": "f3",
+        "question": "Can I choose my own design?",
+        "answer": "Yes. Share a photo or an idea and we will make a sketch for you. You can ask for changes before we start.",
+        "enabled": true
+      },
+      {
+        "id": "f4",
+        "question": "Which paint do you use?",
+        "answer": "Good-quality acrylic and weather-proof paints, chosen to suit indoor or outdoor walls.",
+        "enabled": true
+      },
+      {
+        "id": "f5",
+        "question": "How do I pay?",
+        "answer": "A small advance to start and the balance when the wall is finished and you are happy. UPI or cash.",
+        "enabled": true
+      }
+    ],
+    "hours": [
+      {
+        "id": "mon",
+        "day": "Monday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "tue",
+        "day": "Tuesday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "wed",
+        "day": "Wednesday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "thu",
+        "day": "Thursday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "fri",
+        "day": "Friday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sat",
+        "day": "Saturday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "closed": false,
+        "enabled": true
+      },
+      {
+        "id": "sun",
+        "day": "Sunday",
+        "open": "9:00 AM",
+        "close": "7:00 PM",
+        "closed": true,
+        "enabled": true
+      }
+    ],
+    "contact": {
+      "phone": "+91 98765 43210",
+      "whatsapp": "919876543210",
+      "email": "hello@colourcanvas.example",
+      "address": "Your studio address, City",
+      "maps": "https://maps.google.com/",
+      "hours": "Mon–Sat · 9:00 AM – 7:00 PM",
+      "instagram": "https://www.instagram.com/",
+      "facebook": "https://www.facebook.com/",
+      "youtube": ""
+    },
+    "payment": {
+      "upiId": "",
+      "qr": "",
+      "link": ""
+    },
+    "settings": {
+      "showHome": true,
+      "showAbout": true,
+      "showMenu": true,
+      "showCombos": true,
+      "showWork": true,
+      "showGallery": true,
+      "showReviews": true,
+      "showFaq": true,
+      "showEnquiry": true,
+      "showHours": true,
+      "showLocation": true,
+      "showContact": true,
+      "showSocial": true,
+      "passwordProtected": false,
+      "adminPassword": ""
+    }
+  },
+  "admin": {
+    "storageKey": "sitecraft:wallart-01",
+    "heroPath": "hero",
+    "overviewNamePath": "brand.businessName",
+    "overviewMottoPath": "brand.tagline",
+    "sections": [
+      {
+        "id": "overview",
+        "label": "Overview",
+        "type": "overview"
+      },
+      {
+        "id": "business",
+        "label": "Studio Details",
+        "fields": [
+          {
+            "path": "brand.businessName",
+            "label": "Studio name"
+          },
+          {
+            "path": "brand.ownerName",
+            "label": "Owner / manager"
+          },
+          {
+            "path": "brand.tagline",
+            "label": "Tagline"
+          },
+          {
+            "path": "brand.motto",
+            "label": "About heading"
+          },
+          {
+            "path": "brand.about",
+            "label": "About the studio",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "home",
+        "label": "Hero",
+        "fields": [
+          {
+            "path": "home.eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "path": "home.title",
+            "label": "Hero heading"
+          },
+          {
+            "path": "home.text",
+            "label": "Hero text",
+            "type": "textarea"
+          },
+          {
+            "path": "hero",
+            "label": "Hero photo",
+            "type": "media"
+          }
+        ]
+      },
+      {
+        "id": "menu",
+        "label": "Products & Prices",
+        "type": "collection",
+        "itemLabel": "piece",
+        "path": "menu",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Piece name"
+          },
+          {
+            "key": "category",
+            "label": "Category (e.g. Nature & Forest, Animals, Portraits, Designs, Lettering)"
+          },
+          {
+            "key": "price",
+            "label": "Price"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "tag",
+            "label": "Label (e.g. New, Offer)"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "imageAlt",
+            "label": "Photo description"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New piece",
+          "category": "Nature & Forest",
+          "price": "Ask for price",
+          "description": "",
+          "tag": "",
+          "image": "",
+          "imageAlt": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "combos",
+        "label": "Commission Packages",
+        "type": "collection",
+        "itemLabel": "offer",
+        "path": "combos",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Offer name"
+          },
+          {
+            "key": "description",
+            "label": "What's included",
+            "type": "textarea"
+          },
+          {
+            "key": "price",
+            "label": "Offer price"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New offer",
+          "description": "",
+          "price": "Ask for price",
+          "enabled": true
+        }
+      },
+      {
+        "id": "work",
+        "label": "Why Choose Us",
+        "type": "collection",
+        "itemLabel": "highlight",
+        "path": "highlights",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "icon",
+            "label": "Icon"
+          },
+          {
+            "key": "title",
+            "label": "Title"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "icon": "✳",
+          "title": "New highlight",
+          "description": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "meetups",
+        "label": "Booking Form: Wall Locations",
+        "type": "collection",
+        "itemLabel": "wall location",
+        "path": "meetupTypes",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Wall location"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "New wall location",
+          "enabled": true
+        }
+      },
+      {
+        "id": "gallery",
+        "label": "Gallery",
+        "type": "collection",
+        "itemLabel": "photo",
+        "path": "gallery",
+        "titleKey": "title",
+        "fields": [
+          {
+            "key": "title",
+            "label": "Caption"
+          },
+          {
+            "key": "alt",
+            "label": "Image description"
+          },
+          {
+            "key": "image",
+            "label": "Photo",
+            "type": "media"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "title": "New photo",
+          "alt": "Store photo",
+          "image": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "reviews",
+        "label": "Customer Reviews",
+        "type": "collection",
+        "itemLabel": "review",
+        "path": "reviews",
+        "titleKey": "name",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Customer label"
+          },
+          {
+            "key": "text",
+            "label": "Review",
+            "type": "textarea"
+          },
+          {
+            "key": "rating",
+            "label": "Rating",
+            "type": "select",
+            "options": [
+              5,
+              4,
+              3,
+              2,
+              1
+            ]
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "name": "Customer, Hyderabad",
+          "text": "",
+          "rating": 5,
+          "enabled": true
+        }
+      },
+      {
+        "id": "faq",
+        "label": "FAQ",
+        "type": "collection",
+        "itemLabel": "question",
+        "path": "faqs",
+        "titleKey": "question",
+        "fields": [
+          {
+            "key": "question",
+            "label": "Question"
+          },
+          {
+            "key": "answer",
+            "label": "Answer",
+            "type": "textarea"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "question": "New question",
+          "answer": "",
+          "enabled": true
+        }
+      },
+      {
+        "id": "hours",
+        "label": "Opening Hours",
+        "type": "collection",
+        "itemLabel": "day",
+        "path": "hours",
+        "titleKey": "day",
+        "fields": [
+          {
+            "key": "day",
+            "label": "Day"
+          },
+          {
+            "key": "open",
+            "label": "Opening time"
+          },
+          {
+            "key": "close",
+            "label": "Closing time"
+          },
+          {
+            "key": "closed",
+            "label": "Closed all day",
+            "type": "checkbox"
+          },
+          {
+            "key": "enabled",
+            "label": "Show",
+            "type": "checkbox"
+          }
+        ],
+        "addDefaults": {
+          "day": "Monday",
+          "open": "10:00 AM",
+          "close": "9:00 PM",
+          "enabled": true,
+          "closed": false
+        }
+      },
+      {
+        "id": "contact",
+        "label": "Contact & Location",
+        "fields": [
+          {
+            "path": "contact.phone",
+            "label": "Phone"
+          },
+          {
+            "path": "contact.whatsapp",
+            "label": "WhatsApp"
+          },
+          {
+            "path": "contact.email",
+            "label": "Email",
+            "type": "email"
+          },
+          {
+            "path": "contact.address",
+            "label": "Address",
+            "type": "textarea"
+          },
+          {
+            "path": "contact.maps",
+            "label": "Google Maps URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.hours",
+            "label": "Opening hours summary"
+          },
+          {
+            "path": "contact.instagram",
+            "label": "Instagram URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.facebook",
+            "label": "Facebook URL",
+            "type": "url"
+          },
+          {
+            "path": "contact.youtube",
+            "label": "YouTube URL",
+            "type": "url"
+          }
+        ]
+      },
+      {
+        "id": "payments",
+        "label": "Payments (UPI)",
+        "fields": [
+          {
+            "path": "payment.upiId",
+            "label": "UPI ID",
+            "placeholder": "yourshop@okaxis"
+          },
+          {
+            "path": "payment.payeeName",
+            "label": "Name shown in UPI apps (optional)"
+          },
+          {
+            "path": "payment.qr",
+            "label": "UPI QR code image",
+            "type": "media"
+          },
+          {
+            "path": "payment.link",
+            "label": "Payment link (Razorpay, PhonePe, Paytm…)",
+            "type": "url",
+            "placeholder": "https://"
+          },
+          {
+            "path": "payment.linkLabel",
+            "label": "Payment link button text",
+            "placeholder": "Pay by card / net banking"
+          },
+          {
+            "path": "payment.note",
+            "label": "Payment note",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "visibility",
+        "label": "Section Visibility",
+        "fields": [
+          {
+            "path": "settings.showHome",
+            "label": "Home / Hero",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showAbout",
+            "label": "About",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showMenu",
+            "label": "Our work",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showCombos",
+            "label": "Commission packages",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showWork",
+            "label": "How it works",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showGallery",
+            "label": "Gallery",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showReviews",
+            "label": "Reviews",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showFaq",
+            "label": "FAQ",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showEnquiry",
+            "label": "Book a wall form",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showHours",
+            "label": "Opening hours",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showLocation",
+            "label": "Location",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showContact",
+            "label": "Contact",
+            "type": "checkbox"
+          },
+          {
+            "path": "settings.showSocial",
+            "label": "Social links",
+            "type": "checkbox"
+          }
+        ]
+      },
+      {
+        "id": "security",
+        "label": "Security",
+        "type": "security"
+      }
+    ]
+  }
+}
