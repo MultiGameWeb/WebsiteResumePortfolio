@@ -32,3 +32,4 @@
 - 300 free words per new browser wallet; word packs ₹49 (1K), ₹79 (2K), ₹179 (5K), ₹349 (10K), ₹849 (25K) through Razorpay.
 - In-app Report button for AI voices; daily word cap protects API spending.
 - Backend: `backend/sitecraft-ai/voice-studio.js`, routes under `/api/voice/`.
+- Text to Voice: prices in the visitor's currency (₹ India, £ UK, € Europe, $ everywhere else), 27 styles in groups (Basic, Instagram & creators, Emotions, Genres) and 47 accents across India, the US and the UK.

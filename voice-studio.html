@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f1016">
-<meta name="description" content="AI Text to Voice: paste text in Telugu, Hindi, English and 8 more languages and get a natural voice in the same language. Emotional, comedy, narration and Telangana, Godavari, Rayalaseema accents. 300 words free.">
+<meta name="description" content="AI Text to Voice: paste text in Telugu, Hindi, English and 8 more languages and get a natural voice in the same language. 27 styles from emotional to reel hooks, and 45+ accents from across India, the US and the UK. 300 words free.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://multigameweb.github.io/WebsiteResumePortfolio/voice-studio.html">
 <meta property="og:title" content="AI Text to Voice | SiteCraft">
@@ -29,7 +29,8 @@
   <ul class="vs-chips" aria-label="Highlights">
    <li><b id="freeWordsChip">300</b> words free</li>
    <li>11 languages</li>
-   <li>Telangana · Godavari · Rayalaseema accents</li>
+   <li>27 styles</li>
+   <li>45+ accents · India, US, UK</li>
    <li>No login</li>
   </ul>
  </section>
@@ -47,6 +48,7 @@
   </div>
 
   <p class="vs-banner" id="offBanner" hidden></p>
+  <div class="vs-banner vs-owner" id="ownerBanner" role="status" hidden></div>
 
   <section class="vs-studio" aria-label="Text to voice">
    <div class="vs-card vs-editor">
@@ -68,7 +70,7 @@
    <div class="vs-card vs-settings">
     <fieldset>
      <legend class="vs-label">Style</legend>
-     <div class="vs-styles" id="styles" role="radiogroup"></div>
+     <div id="styles" role="radiogroup"></div>
     </fieldset>
     <div class="vs-row">
      <fieldset>
@@ -79,11 +81,11 @@
       </div>
      </fieldset>
      <div>
-      <label class="vs-label" for="dialect">Telugu accent</label>
+      <label class="vs-label" for="dialect">Accent</label>
       <select id="dialect"></select>
      </div>
     </div>
-    <p class="vs-hint" id="engineHint">Normal, Narration and News use a native Indian voice. Acting styles and accents use our expressive voice.</p>
+    <p class="vs-hint" id="engineHint">Pick an accent that matches your script's language: Telangana for Telugu, Bambaiya for Hindi, Southern US for English. Accents change how it sounds; “Make it spoken” can also change the words.</p>
     <label class="vs-label vs-file" for="fileName">File name</label>
     <input id="fileName" maxlength="60" placeholder="e.g. episode-12" autocomplete="off">
     <p class="vs-hint">Parts download as <b>name-1.wav</b>, <b>name-2.wav</b>…</p>
@@ -98,6 +100,7 @@
       <button type="button" class="vs-btn primary" id="downloadAll" hidden>⬇ Download all parts</button>
       <button type="button" class="vs-btn primary" id="mergeBtn" hidden>🔗 Merge into one file</button>
       <button type="button" class="vs-btn ghost" id="reportToggle">🚩 Report</button>
+      <button type="button" class="vs-btn ghost" id="clearJob" hidden title="Remove these parts from this device">🗑 Clear</button>
      </div>
      <form class="vs-report" id="reportForm" hidden>
       <label class="vs-label" for="reportReason">What is wrong?</label>
@@ -125,7 +128,7 @@
   <section class="vs-faq" aria-labelledby="faqTitle">
    <h2 id="faqTitle">Good to know</h2>
    <details><summary>Which languages work?</summary><p>Telugu, Hindi, English, Tamil, Kannada, Malayalam, Bengali, Marathi, Gujarati, Punjabi and Odia. The voice comes out in the language you paste. Write Indian languages in their own script for the best result.</p></details>
-   <details><summary>How long can my script be?</summary><p>Any length. Long scripts are split at sentence ends into parts of about 5–6 minutes (around 750 words). Each part is made one after another and downloads as name-1.wav, name-2.wav and so on. Tap “Merge into one file” to get name-full.wav with everything joined; merging is free and happens on your device. If your words run out in the middle, buy a pack and tap Continue: the finished parts stay.</p></details>
+   <details><summary>How long can my script be?</summary><p>Any length. Long scripts are split at sentence ends into parts of about 5–6 minutes (around 750 words). Each part is made one after another and downloads as name-1.wav, name-2.wav and so on. Tap “Merge into one file” to get name-full.wav with everything joined; merging is free and happens on your device. If something stops in the middle, tap Continue: the finished parts stay, even if you refresh or close the page, and only the missing parts are made.</p></details>
    <details><summary>How are words counted?</summary><p>Each word counts once. Very long words count a little more (every 8 letters count as at least one word), because they make longer audio. You see the exact count before you make the voice. If a voice fails, your words are given back.</p></details>
    <details><summary>Can I use the voice in my videos?</summary><p>Yes, you can use voices you make in your own videos, ads and social media posts.</p></details>
    <details><summary>What is not allowed?</summary><p>Do not make voices that pretend to be a real person, cheat people, spread hate or harm anyone. Use 🚩 Report if a voice sounds wrong or offensive.</p></details>

@@ -21,17 +21,18 @@
       { id: 'whisper', label: 'Whisper', acting: true },
     ],
     dialects: [{ id: 'none', label: 'Standard' }, { id: 'telangana', label: 'Telangana' }, { id: 'andhra', label: 'Godavari / Coastal Andhra' }, { id: 'rayalaseema', label: 'Rayalaseema' }, { id: 'hyderabadi', label: 'Hyderabadi' }],
+    currency: 'INR',
     packs: [
-      { id: 'w1k', words: 1000, paise: 4900, label: '1K words' }, { id: 'w2k', words: 2000, paise: 7900, label: '2K words' },
-      { id: 'w5k', words: 5000, paise: 17900, label: '5K words', badge: 'Most popular' },
-      { id: 'w10k', words: 10000, paise: 34900, label: '10K words' }, { id: 'w25k', words: 25000, paise: 84900, label: '25K words', badge: 'Best value' },
+      { id: 'w1k', words: 1000, amount: 4900, currency: 'INR', label: '1K words' }, { id: 'w2k', words: 2000, amount: 7900, currency: 'INR', label: '2K words' },
+      { id: 'w5k', words: 5000, amount: 17900, currency: 'INR', label: '5K words', badge: 'Most popular' },
+      { id: 'w10k', words: 10000, amount: 34900, currency: 'INR', label: '10K words' }, { id: 'w25k', words: 25000, amount: 84900, currency: 'INR', label: '25K words', badge: 'Best value' },
     ],
   };
-  const STYLE_NOTES = { normal: 'Clear & neutral', narration: 'Story / audiobook', news: 'Formal & crisp', conversational: 'Like a friend', emotional: 'Heartfelt', comedy: 'Fun & timing', motivational: 'Energetic', whisper: 'Soft & close' };
 
   const state = { config: FALLBACK, token: store.get(WALLET_KEY), words: null, urls: [], job: null, running: false, stop: false, lastText: '', undoText: '' };
   // ~5–6 minutes of speech per part; must stay under the server's 800-word limit.
   const PART_WORDS = 750;
+  const AUTO_RETRIES = 3;
 
   // Same rule as the server: each word once, and 8 letters count as at least one word.
   function billableWords(text) {
@@ -74,17 +75,31 @@
     const box = $('#styles');
     const current = box.querySelector('input:checked')?.value || 'normal';
     box.innerHTML = '';
+    let group = null;
+    let grid = null;
     state.config.styles.forEach((s) => {
+      if (!grid || (s.group || '') !== group) {
+        group = s.group || '';
+        if (group) {
+          const head = document.createElement('p');
+          head.className = 'vs-style-group';
+          head.textContent = group;
+          box.append(head);
+        }
+        grid = document.createElement('div');
+        grid.className = 'vs-styles';
+        box.append(grid);
+      }
       const label = document.createElement('label');
       label.className = 'vs-style';
       const input = Object.assign(document.createElement('input'), { type: 'radio', name: 'style', value: s.id, checked: s.id === current });
       const span = document.createElement('span');
       span.append(s.label);
       const small = document.createElement('small');
-      small.textContent = (STYLE_NOTES[s.id] || '') + (s.acting ? ' · acting' : '');
+      small.textContent = s.note || '';
       span.append(small);
       label.append(input, span);
-      box.append(label);
+      grid.append(label);
     });
   }
 
@@ -92,30 +107,49 @@
     const select = $('#dialect');
     const current = select.value || 'none';
     select.innerHTML = '';
-    state.config.dialects.forEach((d) => select.append(new Option(d.label, d.id, false, d.id === current)));
+    const groups = new Map();
+    state.config.dialects.forEach((d) => {
+      const option = new Option(d.label, d.id, false, d.id === current);
+      if (!d.group) { select.append(option); return; }
+      if (!groups.has(d.group)) {
+        const og = document.createElement('optgroup');
+        og.label = d.group;
+        groups.set(d.group, og);
+        select.append(og);
+      }
+      groups.get(d.group).append(option);
+    });
   }
 
-  const rupees = (paise) => '₹' + Math.round(paise / 100).toLocaleString('en-IN');
+  // amount is in the smallest unit of the currency (1/100).
+  function money(amount, currency) {
+    const value = amount / 100;
+    try {
+      return new Intl.NumberFormat(currency === 'INR' ? 'en-IN' : 'en', { style: 'currency', currency, minimumFractionDigits: currency === 'INR' ? 0 : 2, maximumFractionDigits: 2 }).format(value);
+    } catch {
+      return `${currency} ${value.toFixed(2)}`;
+    }
+  }
 
   function renderPacks() {
     const grid = $('#packGrid');
     grid.innerHTML = '';
     const base = state.config.packs[0];
-    const basePer1k = base ? base.paise / (base.words / 1000) : 0;
+    const basePer1k = base ? base.amount / (base.words / 1000) : 0;
     state.config.packs.forEach((p) => {
-      const per1k = p.paise / (p.words / 1000);
+      const per1k = p.amount / (p.words / 1000);
       const save = basePer1k && per1k < basePer1k ? Math.round((1 - per1k / basePer1k) * 100) : 0;
       const card = document.createElement('div');
       card.className = 'vs-pack' + (p.badge === 'Most popular' ? ' hot' : '');
       card.innerHTML = (p.badge ? '<span class="badge"></span>' : '') + '<h3></h3><div class="price"></div><div class="per"></div><div class="save"></div><button type="button" class="vs-btn primary">Buy</button>';
       if (p.badge) card.querySelector('.badge').textContent = p.badge;
       card.querySelector('h3').textContent = p.label;
-      card.querySelector('.price').textContent = rupees(p.paise);
-      card.querySelector('.per').textContent = '₹' + (per1k / 100).toFixed(1).replace(/\.0$/, '') + ' per 1K words';
+      card.querySelector('.price').textContent = money(p.amount, p.currency);
+      card.querySelector('.per').textContent = money(Math.round(per1k), p.currency) + ' per 1K words';
       card.querySelector('.save').textContent = save ? `Save ${save}%` : '';
       const button = card.querySelector('button');
       button.dataset.pack = p.id;
-      button.setAttribute('aria-label', `Buy ${p.label} for ${rupees(p.paise)}`);
+      button.setAttribute('aria-label', `Buy ${p.label} for ${money(p.amount, p.currency)}`);
       button.addEventListener('click', () => buy(p, button));
       grid.append(card);
     });
@@ -150,13 +184,107 @@
 
   // ---------- wallet ----------
 
+  // Only wallets listed in VOICE_TEST_WALLETS get `owner` and `health` back.
+  function renderOwner(result) {
+    const box = $('#ownerBanner');
+    state.owner = Boolean(result && result.owner);
+    if (!state.owner) { box.hidden = true; return; }
+    box.hidden = false;
+    box.innerHTML = '';
+    const head = document.createElement('strong');
+    const list = Array.isArray(result.health) ? result.health : [];
+    head.textContent = list.length ? '⚠ Owner alert (last 24 hours)' : '✓ Owner: no voice problems in the last 24 hours';
+    box.append(head);
+    box.classList.toggle('ok', !list.length);
+    list.forEach((h) => {
+      const line = document.createElement('div');
+      const mins = Math.max(1, Math.round((Date.now() - Date.parse(h.lastAt)) / 60000));
+      const ago = mins < 60 ? `${mins} min ago` : `${Math.round(mins / 60)} h ago`;
+      line.textContent = `${h.message} Failed voices today: ${h.count}. Last: ${ago}.`;
+      box.append(line);
+    });
+  }
+
   async function loadWallet(token) {
     const result = await post('wallet', { token });
     if (!result.ok) { setWords(null); return false; }
     setToken(result.token);
     setWords(result.words);
+    renderOwner(result);
     if (result.isNew && result.freeGiven) status(`Welcome! ${result.words} free words are added. Try it now.`, 'ok');
     return true;
+  }
+
+  // ---------- keep the current job across refreshes (IndexedDB) ----------
+  // Finished parts are saved with their audio, so a refresh or closed tab
+  // never loses them; Continue makes only the parts that are left.
+
+  function idb() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open('sc_voice', 1);
+      req.onupgradeneeded = () => req.result.createObjectStore('kv');
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+  async function idbDo(mode, fn) {
+    const db = await idb();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('kv', mode);
+      const req = fn(tx.objectStore('kv'));
+      tx.oncomplete = () => { db.close(); resolve(req?.result); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    });
+  }
+  const idbGet = (key) => idbDo('readonly', (st) => st.get(key));
+  const idbSet = (key, value) => idbDo('readwrite', (st) => st.put(value, key));
+  const idbDel = (key) => idbDo('readwrite', (st) => st.delete(key));
+
+  async function saveJob(job) {
+    try {
+      await idbSet('job', {
+        savedAt: Date.now(), fullText: job.fullText, base: job.base, style: job.style, voice: job.voice, dialect: job.dialect,
+        parts: job.parts.map((p) => ({ text: p.text, words: p.words, fileName: p.fileName, done: p.done, blob: p.blob || null })),
+      });
+    } catch { /* private mode or storage full: the job still works, it just is not kept */ }
+  }
+
+  function buildRows(job) {
+    const list = $('#parts');
+    list.innerHTML = '';
+    job.rows = [];
+    job.parts.forEach((p, i) => { const row = partRow(job, i); job.rows.push(row); list.append(row); setPartState(job, i, p.done ? 'Ready ✓' : 'Waiting', p.done ? 'ok' : ''); });
+    $('#result').hidden = false;
+    $('#reportForm').hidden = true;
+    $('#mergedBox').hidden = true;
+  }
+
+  async function restoreJob() {
+    let saved;
+    try { saved = await idbGet('job'); } catch { return; }
+    if (!saved || !Array.isArray(saved.parts) || !saved.parts.length) return;
+    const job = { ...saved, parts: saved.parts.map((p) => ({ ...p, done: Boolean(p.done && p.blob) })), rows: [] };
+    if (!$('#script').value && job.fullText) $('#script').value = job.fullText;
+    if (!$('#fileName').value && job.base && job.base !== 'voice') $('#fileName').value = job.base;
+    const styleInput = document.querySelector(`input[name="style"][value="${job.style}"]`);
+    if (styleInput) styleInput.checked = true;
+    const voiceInput = document.querySelector(`input[name="voice"][value="${job.voice}"]`);
+    if (voiceInput) voiceInput.checked = true;
+    if (job.dialect) $('#dialect').value = job.dialect;
+    buildRows(job);
+    job.parts.forEach((p, i) => { if (p.done) showPartReady(job, i, p.blob); });
+    state.job = job;
+    state.lastText = String(job.fullText || '').slice(0, 2000);
+    const ready = job.parts.filter((p) => p.done).length;
+    const allDone = ready === job.parts.length;
+    $('#downloadAll').hidden = !allDone || job.parts.length < 2;
+    $('#mergeBtn').hidden = !allDone || job.parts.length < 2;
+    $('#clearJob').hidden = false;
+    if (!allDone) {
+      showContinue(job);
+      status(`Welcome back! Your last script has ${ready} of ${job.parts.length} parts ready. Tap “Continue” to make the rest.`, 'ok');
+    }
+    updateCount();
   }
 
   async function init() {
@@ -173,6 +301,7 @@
     } else {
       setWords(null);
     }
+    await restoreJob();
   }
 
   // ---------- actions ----------
@@ -229,10 +358,15 @@
 
   async function makePart(job, index) {
     const part = job.parts[index];
-    const response = await fetch(API + 'generate', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: state.token, text: part.text, style: job.style, voice: job.voice, dialect: job.dialect }),
-    });
+    let response;
+    try {
+      response = await fetch(API + 'generate', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: state.token, text: part.text, style: job.style, voice: job.voice, dialect: job.dialect }),
+      });
+    } catch {
+      throw Object.assign(new Error('Could not reach the server.'), { code: 'NETWORK' });
+    }
     const type = response.headers.get('Content-Type') || '';
     if (!response.ok || !type.includes('audio')) {
       const data = await response.json().catch(() => ({}));
@@ -240,6 +374,15 @@
       throw Object.assign(new Error(data.error || 'The voice could not be made.'), { code: data.code });
     }
     const blob = await response.blob();
+    part.blob = blob;
+    part.done = true;
+    showPartReady(job, index, blob);
+    setWords(response.headers.get('X-Words-Left'));
+    await saveJob(job);
+  }
+
+  function showPartReady(job, index, blob) {
+    const part = job.parts[index];
     part.url = URL.createObjectURL(blob);
     state.urls.push(part.url);
     const row = job.rows[index];
@@ -251,14 +394,12 @@
     link.download = part.fileName;
     link.textContent = `⬇ ${part.fileName}`;
     link.hidden = false;
-    setWords(response.headers.get('X-Words-Left'));
     setPartState(job, index, 'Ready ✓', 'ok');
     audio.addEventListener('loadedmetadata', () => {
       const m = Math.floor(audio.duration / 60);
       const sec = String(Math.round(audio.duration % 60)).padStart(2, '0');
       if (Number.isFinite(audio.duration)) setPartState(job, index, `Ready ✓ ${m}:${sec}`, 'ok');
     }, { once: true });
-    part.done = true;
   }
 
   async function runJob(job) {
@@ -270,7 +411,8 @@
     btn.disabled = true;
     try {
       for (let i = 0; i < job.parts.length; i += 1) {
-        if (job.parts[i].done) continue;
+        const part = job.parts[i];
+        if (part.done) continue;
         if (state.stop) { status(`Stopped. ${job.parts.filter((p) => p.done).length} of ${job.parts.length} parts are ready.`, 'error'); showContinue(job); return; }
         const label = job.parts.length > 1 ? `Making part ${i + 1} of ${job.parts.length}…` : 'Making your voice…';
         btn.textContent = '⏳ ' + label;
@@ -279,7 +421,21 @@
         try {
           await makePart(job, i);
           if (i === 0) job.rows[0].querySelector('audio').play().catch(() => {});
+          part.retries = 0;
         } catch (error) {
+          // Busy or a hiccup: wait and try the same part again, up to 3 times.
+          if (state.owner) post('wallet', { token: state.token }).then(renderOwner).catch(() => {});
+          if ((error.code === 'BUSY' || error.code === 'FAILED' || error.code === 'NETWORK') && (part.retries || 0) < AUTO_RETRIES && !state.stop) {
+            part.retries = (part.retries || 0) + 1;
+            const wait = error.code === 'BUSY' ? 30 : 15;
+            for (let left = wait; left > 0 && !state.stop; left -= 1) {
+              setPartState(job, i, `Retrying in ${left}s`);
+              status(`Part ${i + 1} hit a hiccup. Trying again automatically in ${left}s (try ${part.retries} of ${AUTO_RETRIES})…`);
+              await new Promise((r) => setTimeout(r, 1000));
+            }
+            i -= 1; // run this part again
+            continue;
+          }
           setPartState(job, i, 'Not made', 'error');
           status(error.code === 'NO_WORDS'
             ? `Words finished at part ${i + 1}. Buy a pack, then tap “Continue”.`
@@ -322,20 +478,19 @@
     state.urls = [];
     const base = fileBase();
     const job = {
+      fullText: text, base,
       style: selected('style'), voice: selected('voice'), dialect: $('#dialect').value,
       parts: texts.map((t, i) => ({ text: t, words: billableWords(t), done: false, fileName: texts.length > 1 ? `${base}-${i + 1}.wav` : `${base}.wav` })),
       rows: [],
     };
-    const list = $('#parts');
-    list.innerHTML = '';
-    job.parts.forEach((p, i) => { const row = partRow(job, i); job.rows.push(row); list.append(row); setPartState(job, i, 'Waiting'); });
-    $('#result').hidden = false;
-    $('#reportForm').hidden = true;
+    buildRows(job);
     $('#downloadAll').hidden = true;
     $('#mergeBtn').hidden = true;
-    $('#mergedBox').hidden = true;
+    $('#continueBtn').hidden = true;
+    $('#clearJob').hidden = false;
     state.lastText = text.slice(0, 2000);
     state.job = job;
+    await saveJob(job);
     await runJob(job);
   }
 
@@ -458,22 +613,28 @@
     });
   }
 
+  function whatsappBuy(pack) {
+    payStatus('Online payment starts very soon. To buy words today, ', 'error');
+    const link = Object.assign(document.createElement('a'), {
+      href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Text to Voice ${pack.label} pack (${money(pack.amount, pack.currency)}). My wallet code: ${state.token}`),
+      target: '_blank', rel: 'noopener noreferrer', textContent: 'message us on WhatsApp ↗',
+    });
+    link.style.color = '#fcd34d';
+    $('#payStatus').append(link);
+  }
+
   async function buy(pack, button) {
-    if (!state.config.payments) {
-      payStatus('Online payment starts very soon. To buy words today, ', 'error');
-      const link = Object.assign(document.createElement('a'), {
-        href: 'https://wa.me/917981587505?text=' + encodeURIComponent(`Hi SiteCraft, I want to buy the Text to Voice ${pack.label} pack (${rupees(pack.paise)}). My wallet code: ${state.token}`),
-        target: '_blank', rel: 'noopener noreferrer', textContent: 'message us on WhatsApp ↗',
-      });
-      link.style.color = '#fcd34d';
-      $('#payStatus').append(link);
-      return;
-    }
     if (!state.token) { payStatus('Please reload the page and try again.', 'error'); return; }
     button.disabled = true;
     payStatus('Opening payment…');
     try {
       const order = await post('order', { token: state.token, pack: pack.id });
+      if (order.ok && order.test) {
+        setWords(order.words);
+        payStatus(`Test purchase ✓ Added ${fmt(order.added)} words, no money charged. You now have ${fmt(order.words)} words.`, 'ok');
+        return;
+      }
+      if (order.code === 'PAYMENTS_OFF') { whatsappBuy(pack); return; }
       if (!order.ok) { payStatus(order.error || 'Payments are not available right now.', 'error'); return; }
       store.set(ORDER_KEY, order.orderId);
       await loadCheckout();
@@ -526,9 +687,21 @@
   $('#script').addEventListener('input', updateCount);
   $('#generateBtn').addEventListener('click', generate);
   $('#stopBtn').addEventListener('click', () => { state.stop = true; status('Stopping after this part…'); });
-  $('#continueBtn').addEventListener('click', () => { if (state.job && !state.running) runJob(state.job); });
+  $('#continueBtn').addEventListener('click', () => { if (state.job && !state.running) { state.job.parts.forEach((p) => { p.retries = 0; }); runJob(state.job); } });
   $('#downloadAll').addEventListener('click', downloadAll);
   $('#mergeBtn').addEventListener('click', mergeParts);
+  $('#clearJob').addEventListener('click', async () => {
+    if (state.running) return;
+    try { await idbDel('job'); } catch {}
+    state.urls.forEach((u) => URL.revokeObjectURL(u));
+    state.urls = [];
+    state.job = null;
+    $('#parts').innerHTML = '';
+    $('#result').hidden = true;
+    $('#continueBtn').hidden = true;
+    $('#clearJob').hidden = true;
+    status('Cleared. Paste a new script to start.');
+  });
   $('#rewriteBtn').addEventListener('click', (e) => textTool('rewrite', e.currentTarget));
   $('#translateBtn').addEventListener('click', (e) => textTool('translate', e.currentTarget));
   $('#undoBtn').addEventListener('click', () => { $('#script').value = state.undoText; $('#undoBtn').hidden = true; updateCount(); status(''); });

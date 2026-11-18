@@ -33,6 +33,10 @@
 //   VOICE_DAILY_WORD_LIMIT  words per day across everyone, default 20000 (spending cap)
 //   VOICE_FREE_WALLETS_PER_IP  free wallets per IP per day, default 2
 //   VOICE_DISABLED          "true" switches the studio off
+//   VOICE_PAYMENTS          "off" holds buying packs (free words and /grant still work)
+//   VOICE_TEST_WALLETS      wallet codes (comma separated) whose "Buy" adds words free, for testing;
+//                           these wallets also see the owner alert banner (service problems)
+//   TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID  optional: service problems are also sent to Telegram
 //   VOICE_TTS_MODEL_FLASH / VOICE_TTS_MODEL_LITE / VOICE_TEXT_MODEL / SARVAM_TTS_MODEL  optional
 //
 // Privacy: the text is sent to Sarvam or Google to make the audio and is not
@@ -51,7 +55,7 @@ export const MAX_WORDS_PER_GENERATION = 800;
 const MAX_TEXT_CHARS = 8000;
 const CHUNK_CHARS = 1800;
 const CHUNK_GAP_MS = 250;
-const CHUNK_CONCURRENCY = 3;
+const CHUNK_CONCURRENCY = 2;
 const DEFAULT_FREE_WORDS = 300;
 const DEFAULT_DAILY_WORDS = 20000;
 const DEFAULT_FREE_WALLETS_PER_IP = 2;
@@ -64,35 +68,121 @@ const DEFAULT_MODELS = {
   sarvam: "bulbul:v3"
 };
 
-// Prices live here only. Same on the website and (later) the app.
+// Prices live here only, in the smallest unit of each currency (paise,
+// cents, pence). The visitor's country picks the currency (see currencyFor).
 export const PACKS = {
-  w1k: { words: 1000, paise: 4900, label: "1K words" },
-  w2k: { words: 2000, paise: 7900, label: "2K words" },
-  w5k: { words: 5000, paise: 17900, label: "5K words", badge: "Most popular" },
-  w10k: { words: 10000, paise: 34900, label: "10K words" },
-  w25k: { words: 25000, paise: 84900, label: "25K words", badge: "Best value" }
+  w1k: { words: 1000, label: "1K words" },
+  w2k: { words: 2000, label: "2K words" },
+  w5k: { words: 5000, label: "5K words", badge: "Most popular" },
+  w10k: { words: 10000, label: "10K words" },
+  w25k: { words: 25000, label: "25K words", badge: "Best value" }
 };
+export const PRICES = {
+  INR: { w1k: 4900, w2k: 7900, w5k: 17900, w10k: 34900, w25k: 84900 },
+  USD: { w1k: 99, w2k: 179, w5k: 399, w10k: 699, w25k: 1499 },
+  GBP: { w1k: 89, w2k: 149, w5k: 349, w10k: 599, w25k: 1299 },
+  EUR: { w1k: 99, w2k: 169, w5k: 379, w10k: 649, w25k: 1399 }
+};
+const EURO_COUNTRIES = new Set("AT BE BG HR CY CZ DK EE FI FR DE GR HU IE IT LV LT LU MT NL PL PT RO SK SI ES SE IS LI NO".split(" "));
 
-// engine "auto": Sarvam for Indian scripts, Gemini Flash-Lite otherwise.
-// engine "acting": Gemini Flash (the stronger actor).
+// India pays in rupees, the UK in pounds, Europe in euros, everyone else in dollars.
+export function currencyFor(country) {
+  const c = String(country || "").toUpperCase();
+  if (c === "IN") return "INR";
+  if (c === "GB") return "GBP";
+  if (EURO_COUNTRIES.has(c)) return "EUR";
+  return "USD";
+}
+export const packPrice = (id, currency) => PRICES[currency]?.[id] ?? PRICES.USD[id];
+
+// engine "auto": Sarvam for Indian scripts when its key is set, otherwise
+// Gemini Flash-Lite. engine "acting": Gemini Flash (the stronger actor).
+const style = (group, label, note, prompt, engine = "acting") => ({ group, label, note, prompt, engine });
 export const STYLES = {
-  normal: { label: "Normal", engine: "auto", prompt: "clear, natural and neutral, at an even pace" },
-  narration: { label: "Narration", engine: "auto", prompt: "a warm storyteller narrating an audiobook, unhurried, with natural pauses" },
-  news: { label: "News", engine: "auto", prompt: "a confident news presenter, crisp and formal, steady pace" },
-  conversational: { label: "Conversational", engine: "acting", prompt: "casual and friendly, like chatting with a close friend" },
-  emotional: { label: "Emotional", engine: "acting", prompt: "deeply emotional and heartfelt, gentle, with real feeling in every line" },
-  comedy: { label: "Comedy", engine: "acting", prompt: "playful and funny, energetic, with comic timing and expressive reactions" },
-  motivational: { label: "Motivational", engine: "acting", prompt: "powerful and inspiring, with rising energy, like a motivational speaker" },
-  whisper: { label: "Whisper", engine: "acting", prompt: "a soft, intimate whisper, quiet and close" }
+  normal: style("Basic", "Normal", "Clear & neutral", "clear, natural and neutral, at an even pace", "auto"),
+  narration: style("Basic", "Narration", "Story / audiobook", "a warm storyteller narrating an audiobook, unhurried, with natural pauses", "auto"),
+  news: style("Basic", "News", "Formal & crisp", "a confident news presenter, crisp and formal, steady pace", "auto"),
+  conversational: style("Basic", "Conversational", "Like a friend", "casual and friendly, like chatting with a close friend"),
+
+  reel_hook: style("Instagram & creators", "Reel hook", "Grabs attention fast", "a fast, punchy social media reel voice-over that hooks the listener in the first second, upbeat, confident and energetic"),
+  genz: style("Instagram & creators", "Gen Z creator", "Trendy & expressive", "a trendy young social media creator, casual, expressive and full of personality, natural and relatable"),
+  podcast: style("Instagram & creators", "Podcast", "Relaxed host", "a relaxed, warm podcast host talking to listeners, natural and engaging"),
+  ad: style("Instagram & creators", "Ad / promo", "Sells with energy", "a persuasive advertisement voice-over, warm and energetic, building excitement towards a clear call to action"),
+  explainer: style("Instagram & creators", "Explainer", "Teacher style", "a clear, friendly teacher explaining step by step, patient and easy to follow"),
+  review: style("Instagram & creators", "Product review", "Honest & friendly", "an honest, friendly product reviewer sharing real opinions, conversational and trustworthy"),
+
+  emotional: style("Emotions", "Emotional", "Heartfelt", "deeply emotional and heartfelt, gentle, with real feeling in every line"),
+  happy: style("Emotions", "Happy", "Cheerful & bright", "happy and cheerful, smiling while speaking, bright and positive"),
+  sad: style("Emotions", "Sad", "Soft & heavy", "sad and sorrowful, soft and slow, with a heavy heart"),
+  angry: style("Emotions", "Angry", "Fiery & intense", "angry and intense, forceful and fiery, but still clear"),
+  romantic: style("Emotions", "Romantic", "Warm & tender", "romantic, warm and tender, affectionate and soft"),
+  motivational: style("Emotions", "Motivational", "Energetic", "powerful and inspiring, with rising energy, like a motivational speaker"),
+  sarcastic: style("Emotions", "Sarcastic", "Dry & witty", "dry and sarcastic, witty, with playful exaggeration"),
+
+  comedy: style("Genres", "Comedy", "Fun & timing", "playful and funny, energetic, with comic timing and expressive reactions"),
+  suspense: style("Genres", "Suspense story", "Gripping & dramatic", "a gripping storyteller building suspense, with dramatic pauses and rising tension"),
+  horror: style("Genres", "Horror", "Spooky & eerie", "spooky and eerie, slow and chilling, like a horror story told at night"),
+  documentary: style("Genres", "Documentary", "Deep & measured", "a deep, measured documentary narrator, calm and authoritative"),
+  trailer: style("Genres", "Movie trailer", "Epic & bold", "an epic movie trailer voice, deep, bold and dramatic"),
+  sports: style("Genres", "Sports commentary", "Fast & thrilling", "a fast, thrilling sports commentator, excited and full of energy"),
+  devotional: style("Genres", "Devotional", "Calm & reverent", "calm, reverent and devotional, peaceful and sincere"),
+  kids: style("Genres", "Kids story", "Fun for children", "a cheerful, animated storyteller for young children, playful and gentle"),
+  meditation: style("Genres", "Calm / meditation", "Slow & soothing", "a slow, soothing meditation guide, very calm and relaxing"),
+  whisper: style("Genres", "Whisper", "Soft & close", "a soft, intimate whisper, quiet and close")
 };
 
-// Dialects need acting control, so they always use Gemini Flash.
+// Accents need acting control, so they always use Gemini Flash. They change
+// how the words sound, not the words; "Make it spoken" can change the words.
+const accent = (group, label, desc) => ({ group, label, prompt: `Speak with an authentic ${desc} accent, rhythm and intonation.` });
 export const DIALECTS = {
-  none: { label: "Standard", prompt: "" },
-  telangana: { label: "Telangana", prompt: "Speak with an authentic Telangana Telugu accent and rhythm." },
-  andhra: { label: "Godavari / Coastal Andhra", prompt: "Speak with an authentic Godavari (coastal Andhra) Telugu accent and rhythm." },
-  rayalaseema: { label: "Rayalaseema", prompt: "Speak with an authentic Rayalaseema Telugu accent and rhythm." },
-  hyderabadi: { label: "Hyderabadi", prompt: "Speak in a casual Hyderabadi style with its typical accent and rhythm." }
+  none: { group: "", label: "Standard (no accent)", prompt: "" },
+  telangana: accent("Telugu", "Telangana", "Telangana Telugu"),
+  andhra: accent("Telugu", "Godavari / Coastal Andhra", "Godavari (coastal Andhra) Telugu"),
+  rayalaseema: accent("Telugu", "Rayalaseema", "Rayalaseema Telugu"),
+  uttarandhra: accent("Telugu", "Uttarandhra (Srikakulam, Vizag)", "Uttarandhra (north coastal Andhra, Srikakulam and Vizag) Telugu"),
+  hyderabadi: accent("Telugu", "Hyderabadi (Dakhni)", "casual Hyderabadi Dakhni"),
+  delhi: accent("Hindi & North India", "Delhi Hindi", "Delhi Hindi"),
+  bambaiya: accent("Hindi & North India", "Mumbai (Bambaiya)", "Mumbai Bambaiya Hindi"),
+  bihari: accent("Hindi & North India", "Bihari / Bhojpuri style", "Bihari, Bhojpuri-flavoured Hindi"),
+  haryanvi: accent("Hindi & North India", "Haryanvi", "Haryanvi"),
+  rajasthani: accent("Hindi & North India", "Rajasthani", "Rajasthani-flavoured Hindi"),
+  lucknowi: accent("Hindi & North India", "Lucknowi (polite)", "polite Lucknowi Awadhi-flavoured Hindi"),
+  hinglish: accent("Hindi & North India", "Hinglish (city youth)", "urban Indian Hinglish, the way young people in Delhi and Mumbai talk,"),
+  chennai: accent("Tamil", "Chennai Tamil", "Chennai Tamil"),
+  madurai: accent("Tamil", "Madurai Tamil", "Madurai Tamil"),
+  kongu: accent("Tamil", "Kongu (Coimbatore)", "Kongu (Coimbatore) Tamil"),
+  bengaluru: accent("Kannada", "Bengaluru Kannada", "Bengaluru Kannada"),
+  north_karnataka: accent("Kannada", "North Karnataka (Dharwad)", "North Karnataka (Dharwad) Kannada"),
+  mangaluru: accent("Kannada", "Mangaluru (coastal)", "coastal Mangaluru Kannada"),
+  thrissur: accent("Malayalam", "Thrissur (Central Kerala)", "Thrissur (central Kerala) Malayalam"),
+  malabar: accent("Malayalam", "Malabar (Kozhikode)", "Malabar (Kozhikode) Malayalam"),
+  trivandrum: accent("Malayalam", "Thiruvananthapuram", "Thiruvananthapuram (south Kerala) Malayalam"),
+  puneri: accent("Marathi", "Puneri", "Puneri Marathi"),
+  mumbai_marathi: accent("Marathi", "Mumbai Marathi", "Mumbai Marathi"),
+  varhadi: accent("Marathi", "Varhadi (Vidarbha)", "Varhadi (Vidarbha) Marathi"),
+  kolkata: accent("Bengali", "Kolkata Bengali", "Kolkata Bengali"),
+  bangal: accent("Bengali", "Bangal (East Bengal)", "Bangal (East Bengal) Bengali"),
+  ahmedabad: accent("Gujarati", "Ahmedabad Gujarati", "Ahmedabad Gujarati"),
+  kathiawadi: accent("Gujarati", "Kathiawadi", "Kathiawadi Gujarati"),
+  majhi: accent("Punjabi", "Majhi (Amritsar)", "Majhi (Amritsar) Punjabi"),
+  malwai: accent("Punjabi", "Malwai", "Malwai Punjabi"),
+  cuttack: accent("Odia", "Cuttack Odia", "Cuttack Odia"),
+  sambalpuri: accent("Odia", "Sambalpuri", "Sambalpuri"),
+  indian_english: accent("English (India)", "Indian English", "neutral Indian English"),
+  south_indian_english: accent("English (India)", "South Indian English", "South Indian English"),
+  us_general: accent("English (US)", "American (neutral)", "neutral General American English"),
+  us_southern: accent("English (US)", "Southern US", "Southern American English"),
+  us_newyork: accent("English (US)", "New York", "New York City English"),
+  us_california: accent("English (US)", "California (casual)", "casual Californian West Coast English"),
+  us_midwest: accent("English (US)", "Midwest", "Midwestern American English"),
+  uk_rp: accent("English (UK & more)", "British (BBC / RP)", "British Received Pronunciation (BBC English)"),
+  uk_london: accent("English (UK & more)", "London (Cockney / Estuary)", "London Cockney and Estuary English"),
+  uk_northern: accent("English (UK & more)", "Northern English (Manchester)", "Northern English (Manchester)"),
+  uk_scottish: accent("English (UK & more)", "Scottish", "Scottish English"),
+  uk_irish: accent("English (UK & more)", "Irish", "Irish English"),
+  uk_welsh: accent("English (UK & more)", "Welsh", "Welsh English"),
+  australian: accent("English (UK & more)", "Australian", "Australian English"),
+  canadian: accent("English (UK & more)", "Canadian", "Canadian English")
 };
 
 const VOICES = {
@@ -124,7 +214,12 @@ const settings = env => ({
   freeWalletsPerIp: num(env?.VOICE_FREE_WALLETS_PER_IP, DEFAULT_FREE_WALLETS_PER_IP, 0)
 });
 const engines = env => ({ sarvam: Boolean(env?.SARVAM_API_KEY), gemini: Boolean(env?.VOICE_GEMINI_API_KEY) });
-const razorpayReady = env => Boolean(env?.RAZORPAY_KEY_ID && env?.RAZORPAY_KEY_SECRET);
+// VOICE_PAYMENTS = "off" holds buying (e.g. while testing) without touching
+// the Razorpay keys that other features share.
+// Owner's own wallets: "Buy" adds the pack free, no Razorpay. Works even with
+// VOICE_PAYMENTS = "off". Codes are 32 hex letters; anything else is ignored.
+const testWallets = env => new Set(String(env?.VOICE_TEST_WALLETS || "").toLowerCase().split(/[\s,]+/).filter(t => TOKEN_PATTERN.test(t)));
+const razorpayReady = env => env?.VOICE_PAYMENTS !== "off" && Boolean(env?.RAZORPAY_KEY_ID && env?.RAZORPAY_KEY_SECRET);
 const today = () => new Date().toISOString().slice(0, 10);
 const randomToken = () => [...crypto.getRandomValues(new Uint8Array(16))].map(b => b.toString(16).padStart(2, "0")).join("");
 
@@ -336,18 +431,70 @@ const LOCATION_ERROR = /location is not supported/i;
 const RETRYABLE = new Set([429, 500, 502, 503, 504]);
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-async function fetchWithRetry(doFetch, attempts = 3) {
+// How long Google asks us to wait on a 429 (Retry-After header or the
+// "retryDelay": "23s" field in the error body), capped at 30 seconds.
+async function retryDelayMs(response) {
+  const header = Number(response.headers.get("Retry-After"));
+  if (Number.isFinite(header) && header > 0) return Math.min(header * 1000, 30000);
+  const body = await response.clone().text().catch(() => "");
+  const match = /"retryDelay"\s*:\s*"(\d+(?:\.\d+)?)s"/.exec(body);
+  return match ? Math.min(Number(match[1]) * 1000, 30000) : 0;
+}
+
+async function fetchWithRetry(doFetch, attempts = 4) {
   let last;
   for (let i = 0; i < attempts; i += 1) {
     last = await doFetch(i);
     if (last.ok || !RETRYABLE.has(last.status) || i === attempts - 1) return last;
-    await sleep(400 * (2 ** i) + Math.floor(Math.random() * 200));
+    // Out of credits will not fix itself in a few seconds.
+    if (last.status === 429 && /credit|prepa|billing/i.test(await last.clone().text().catch(() => ""))) return last;
+    const asked = last.status === 429 ? await retryDelayMs(last) : 0;
+    await sleep(Math.max(asked, (last.status === 429 ? 3000 : 600) * (2 ** i)) + Math.floor(Math.random() * 400));
   }
   return last;
 }
 
+// What went wrong with Google, in words the owner understands.
+//   CREDITS     prepaid credits ran out / billing problem (retrying will not help)
+//   RATE_LIMIT  too many requests for the current tier (429)
+//   DOWN        Google error 5xx or timeouts
+//   OTHER       anything else
+export function classifyFailure(error) {
+  const text = String(error?.message || error || "");
+  if (/credit|prepa(y|id)|billing|payment required|insufficient.*(fund|balance)/i.test(text)) return "CREDITS";
+  if (/HTTP 429|RESOURCE_EXHAUSTED|quota/i.test(text)) return "RATE_LIMIT";
+  if (/HTTP 5\d\d|timeout|timed out|aborted|network/i.test(text)) return "DOWN";
+  return "OTHER";
+}
+
+// One chunk with Gemini. If the chosen model fails (busy, down, no audio),
+// the other TTS model is tried: Flash and Flash-Lite have separate limits.
 async function geminiTts(env, plan, text) {
-  const model = plan.engine === "gemini-flash"
+  const primary = plan.engine === "gemini-flash" ? "flash" : "lite";
+  const backup = primary === "flash" ? "lite" : "flash";
+  try {
+    return await geminiTtsModel(env, plan, text, primary, 2);
+  } catch (error) {
+    if (classifyFailure(error) === "CREDITS" || error.badRequest) throw error;
+    plan.usedBackup = true;
+    return geminiTtsModel(env, plan, text, backup, 4);
+  }
+}
+
+// Gemini TTS sometimes answers 200 with no audio; try that chunk again.
+async function geminiTtsModel(env, plan, text, which, attempts) {
+  for (let attempt = 0; ; attempt += 1) {
+    try {
+      return await geminiTtsOnce(env, plan, text, which, attempts);
+    } catch (error) {
+      if (!error.noAudio || attempt >= 2) throw error;
+      await sleep(1500 * (attempt + 1));
+    }
+  }
+}
+
+async function geminiTtsOnce(env, plan, text, which, attempts = 4) {
+  const model = which === "flash"
     ? env?.VOICE_TTS_MODEL_FLASH || DEFAULT_MODELS.flash
     : env?.VOICE_TTS_MODEL_LITE || DEFAULT_MODELS.lite;
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
@@ -363,18 +510,24 @@ async function geminiTts(env, plan, text) {
   };
   const proxy = geminiUsProxy(env);
   let viaProxy = false;
-  let response = await fetchWithRetry(() => (viaProxy ? proxy.fetch(endpoint, init) : fetch(endpoint, { ...init, signal: AbortSignal.timeout(90000) })));
+  let response = await fetchWithRetry(() => (viaProxy ? proxy.fetch(endpoint, init) : fetch(endpoint, { ...init, signal: AbortSignal.timeout(90000) })), attempts);
   if (!response.ok && response.status === 400 && proxy) {
     const detail = await response.clone().text();
     if (LOCATION_ERROR.test(detail)) {
       viaProxy = true;
-      response = await fetchWithRetry(() => proxy.fetch(endpoint, init));
+      response = await fetchWithRetry(() => proxy.fetch(endpoint, init), attempts);
     }
   }
-  if (!response.ok) throw new Error(`Gemini TTS HTTP ${response.status}: ${(await response.text()).slice(0, 500)}`);
+  if (!response.ok) {
+    const detail = (await response.text()).slice(0, 500);
+    const error = new Error(`Gemini TTS HTTP ${response.status}: ${detail}`);
+    // A plain 400 (bad text, blocked content) fails the same on the other model.
+    if (response.status === 400 && !/credit|billing|prepa/i.test(detail)) error.badRequest = true;
+    throw error;
+  }
   const payload = await response.json();
   const parts = (payload?.candidates?.[0]?.content?.parts || []).filter(p => p.inlineData?.data);
-  if (!parts.length) throw new Error(`Gemini TTS returned no audio (finishReason=${payload?.candidates?.[0]?.finishReason || "unknown"}).`);
+  if (!parts.length) throw Object.assign(new Error(`Gemini TTS returned no audio (finishReason=${payload?.candidates?.[0]?.finishReason || "unknown"}).`), { noAudio: true });
   const pieces = parts.map(p => readAudio(base64ToBytes(p.inlineData.data), p.inlineData.mimeType));
   return pieces.length === 1 ? pieces[0] : readAudio(joinWav(pieces, 0));
 }
@@ -425,15 +578,25 @@ export async function synthesize(env, plan, text) {
 
 // ---------- database ----------
 
+let migrated = false;
 async function tables(db) {
+  await createTables(db);
+  if (migrated) return;
+  // Orders tables made before currencies existed get the column once.
+  await db.prepare("ALTER TABLE voice_orders ADD COLUMN currency TEXT NOT NULL DEFAULT 'INR'").run().catch(() => {});
+  migrated = true;
+}
+
+async function createTables(db) {
   await db.batch([
     db.prepare("CREATE TABLE IF NOT EXISTS voice_wallets (token TEXT PRIMARY KEY, words INTEGER NOT NULL, source TEXT NOT NULL, created_at TEXT NOT NULL)"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_free_claims (day TEXT NOT NULL, ip_hash TEXT NOT NULL, claims INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, ip_hash))"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_daily (day TEXT PRIMARY KEY, words INTEGER NOT NULL DEFAULT 0)"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_text_usage (day TEXT NOT NULL, token TEXT NOT NULL, calls INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (day, token))"),
     db.prepare("CREATE TABLE IF NOT EXISTS voice_generations (id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT NOT NULL, words INTEGER NOT NULL, chars INTEGER NOT NULL, engine TEXT NOT NULL, style TEXT NOT NULL, lang TEXT, created_at TEXT NOT NULL)"),
-    db.prepare("CREATE TABLE IF NOT EXISTS voice_orders (order_id TEXT PRIMARY KEY, token TEXT NOT NULL, pack TEXT NOT NULL, words INTEGER NOT NULL, amount INTEGER NOT NULL, status TEXT NOT NULL, payment_id TEXT, credited INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL)"),
-    db.prepare("CREATE TABLE IF NOT EXISTS voice_reports (id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT, reason TEXT NOT NULL, text TEXT, created_at TEXT NOT NULL)")
+    db.prepare("CREATE TABLE IF NOT EXISTS voice_orders (order_id TEXT PRIMARY KEY, token TEXT NOT NULL, pack TEXT NOT NULL, words INTEGER NOT NULL, amount INTEGER NOT NULL, status TEXT NOT NULL, payment_id TEXT, credited INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL, currency TEXT NOT NULL DEFAULT 'INR')"),
+    db.prepare("CREATE TABLE IF NOT EXISTS voice_reports (id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT, reason TEXT NOT NULL, text TEXT, created_at TEXT NOT NULL)"),
+    db.prepare("CREATE TABLE IF NOT EXISTS voice_health (kind TEXT PRIMARY KEY, count_day TEXT NOT NULL, count INTEGER NOT NULL DEFAULT 0, last_at TEXT NOT NULL, detail TEXT, alerted_at TEXT)")
   ]);
 }
 
@@ -495,6 +658,40 @@ async function razorpay(env, path, init = {}) {
   return data;
 }
 
+// ---------- owner alerts ----------
+
+const FAILURE_WORDS = {
+  CREDITS: "Google AI credits ran out (or billing has a problem). Voices stop until credits are added.",
+  RATE_LIMIT: "Google rate limit reached (too many voices at once for your Gemini tier).",
+  DOWN: "Google's voice service had errors or timed out.",
+  OTHER: "A voice failed for another reason."
+};
+
+// Counts failures per kind per day and pings Telegram at most every 30 min per kind.
+async function recordFailure(db, env, kind, detail) {
+  const now = new Date().toISOString();
+  const day = now.slice(0, 10);
+  const row = await db.prepare(`INSERT INTO voice_health (kind, count_day, count, last_at, detail) VALUES (?1, ?2, 1, ?3, ?4)
+    ON CONFLICT(kind) DO UPDATE SET count = CASE WHEN count_day = ?2 THEN count + 1 ELSE 1 END, count_day = ?2, last_at = ?3, detail = ?4
+    RETURNING count, alerted_at`).bind(kind, day, now, String(detail || "").slice(0, 300)).first();
+  const last = row?.alerted_at ? Date.parse(row.alerted_at) : 0;
+  if (!env?.TELEGRAM_BOT_TOKEN || !env?.TELEGRAM_CHAT_ID || Date.now() - last < 30 * 60 * 1000) return;
+  await db.prepare("UPDATE voice_health SET alerted_at = ? WHERE kind = ?").bind(now, kind).run();
+  await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: `⚠️ SiteCraft Text to Voice\n${FAILURE_WORDS[kind]}\nFailed voices today: ${row?.count || 1}` }),
+    signal: AbortSignal.timeout(8000)
+  }).catch(() => {});
+}
+
+// Problems in the last 24 hours, for the owner banner.
+async function healthReport(db) {
+  const since = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
+  const { results = [] } = await db.prepare("SELECT kind, count, last_at FROM voice_health WHERE last_at >= ? ORDER BY last_at DESC").bind(since).all();
+  return results.map(r => ({ kind: r.kind, message: FAILURE_WORDS[r.kind] || r.kind, count: Number(r.count), lastAt: r.last_at }));
+}
+
 // ---------- text helpers (Gemini) ----------
 
 const TEXT_SCHEMA = { type: "OBJECT", properties: { text: { type: "STRING" } }, required: ["text"] };
@@ -509,7 +706,7 @@ async function rewriteSpoken(env, text, dialect) {
       "You rewrite scripts for voice-overs so they sound like natural spoken language, the way people really talk.",
       "Keep the same language as the input and the same meaning. Do not add new facts.",
       "Write Indian languages in their own script (Telugu in Telugu script, Hindi in Devanagari).",
-      d ? `Use the everyday ${d} way of speaking Telugu where the text is Telugu.` : "Use simple everyday spoken words instead of bookish ones.",
+      d ? `Use everyday ${d} words and expressions where they fit the text's language; otherwise just make it natural and spoken.` : "Use simple everyday spoken words instead of bookish ones.",
       "Return only the script to be read aloud: no titles, notes, stage directions or emojis.",
       "Return JSON: {\"text\": \"...\"}."
     ].join(" "),
@@ -538,8 +735,9 @@ async function translateText(env, text, to) {
 
 // ---------- routes ----------
 
-function configReply(env) {
+function configReply(env, country) {
   const e = engines(env);
+  const currency = currencyFor(country);
   const s = settings(env);
   return {
     ok: true,
@@ -550,9 +748,10 @@ function configReply(env) {
     maxWordsPerGeneration: MAX_WORDS_PER_GENERATION,
     payments: razorpayReady(env),
     keyId: razorpayReady(env) ? env.RAZORPAY_KEY_ID : "",
-    packs: Object.entries(PACKS).map(([id, p]) => ({ id, ...p })),
-    styles: Object.entries(STYLES).map(([id, st]) => ({ id, label: st.label, acting: st.engine === "acting" })),
-    dialects: Object.entries(DIALECTS).map(([id, d]) => ({ id, label: d.label })),
+    currency,
+    packs: Object.entries(PACKS).map(([id, p]) => ({ id, ...p, amount: packPrice(id, currency), currency })),
+    styles: Object.entries(STYLES).map(([id, st]) => ({ id, label: st.label, note: st.note, group: st.group, acting: st.engine === "acting" })),
+    dialects: Object.entries(DIALECTS).map(([id, d]) => ({ id, label: d.label, group: d.group })),
     languages: Object.entries(LANGUAGES).map(([id, label]) => ({ id, label }))
   };
 }
@@ -565,7 +764,8 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: headers(origin) });
   const action = path.slice(PREFIX.length);
 
-  if (action === "config" && request.method === "GET") return reply(configReply(env), 200, origin);
+  const country = request.cf?.country || request.headers.get("CF-IPCountry") || "";
+  if (action === "config" && request.method === "GET") return reply(configReply(env, country), 200, origin);
   if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
   if (env?.VOICE_DISABLED === "true") return reply({ ok: false, error: "Text to Voice is switched off for now." }, 503, origin);
   const db = env?.DB;
@@ -584,7 +784,10 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
   try {
     if (action === "wallet") {
       const words = await walletWords(db, token);
-      if (words !== null) return reply({ ok: true, token, words, isNew: false }, 200, origin);
+      if (words !== null) {
+        const owner = testWallets(env).has(token);
+        return reply({ ok: true, token, words, isNew: false, ...(owner ? { owner: true, health: await healthReport(db) } : {}) }, 200, origin);
+      }
       // "Use a code" only switches to an existing wallet; it never makes one.
       if (body.lookupOnly) return reply({ ok: false, error: "That code was not found." }, 404, origin);
       const s = settings(env);
@@ -623,7 +826,17 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
       } catch (error) {
         console.error("Voice generate failed", plan.engine, error);
         await Promise.all([giveWords(db, token, words), releaseDaily(db, words)]);
-        return reply({ ok: false, error: "The voice could not be made right now. Your words were not used. Please try again." }, 502, origin);
+        const kind = classifyFailure(error);
+        const note = recordFailure(db, env, kind, error?.message).catch(() => {});
+        if (ctx?.waitUntil) ctx.waitUntil(note); else await note;
+        const replies = {
+          CREDITS: ["PAUSED", 503, "Voices are paused for a short while. Your words were not used. Please try again later."],
+          RATE_LIMIT: ["BUSY", 503, "The voice service is busy right now. Your words were not used."],
+          DOWN: ["BUSY", 503, "The voice service is busy right now. Your words were not used."],
+          OTHER: ["FAILED", 502, "The voice could not be made right now. Your words were not used."]
+        };
+        const [code, status, message] = replies[kind];
+        return reply({ ok: false, code, error: message }, status, origin);
       }
 
       const log = db.prepare("INSERT INTO voice_generations (token, words, chars, engine, style, lang, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
@@ -637,7 +850,7 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
           "Content-Disposition": "attachment; filename=\"voice.wav\"",
           "X-Words-Used": String(words),
           "X-Words-Left": String(left ?? 0),
-          "X-Voice-Engine": plan.fallback ? `${plan.engine} (fallback)` : plan.engine
+          "X-Voice-Engine": plan.fallback || plan.usedBackup ? `${plan.engine} (backup model)` : plan.engine
         })
       });
     }
@@ -678,19 +891,30 @@ export async function handleVoiceStudioRoute(request, env, url, ctx) {
     }
 
     // Buying words
-    if (!razorpayReady(env)) return reply({ ok: false, error: "Online payment starts very soon." }, 503, origin);
+    if (action === "order" && testWallets(env).has(token) && (await walletWords(db, token)) !== null) {
+      const pack = PACKS[body.pack];
+      if (!pack) return reply({ ok: false, error: "Choose a pack." }, 400, origin);
+      await db.prepare("INSERT INTO voice_orders (order_id, token, pack, words, amount, status, credited, created_at) VALUES (?, ?, ?, ?, 0, 'test', 1, ?)")
+        .bind(`test_${randomToken()}`, token, body.pack, pack.words, new Date().toISOString()).run();
+      await giveWords(db, token, pack.words);
+      return reply({ ok: true, test: true, added: pack.words, words: await walletWords(db, token) }, 200, origin);
+    }
+    if (!razorpayReady(env)) return reply({ ok: false, error: "Online payment starts very soon.", code: "PAYMENTS_OFF" }, 503, origin);
     if ((await walletWords(db, token)) === null) return reply({ ok: false, error: "Your wallet was not found. Please reload the page." }, 401, origin);
 
     if (action === "order") {
       const pack = PACKS[body.pack];
       if (!pack) return reply({ ok: false, error: "Choose a pack." }, 400, origin);
+      // The server picks the currency from the visitor's country, never the browser.
+      const currency = currencyFor(country);
+      const amount = packPrice(body.pack, currency);
       const order = await razorpay(env, "/orders", {
         method: "POST",
-        body: JSON.stringify({ amount: pack.paise, currency: "INR", receipt: `voice_${Date.now().toString(36)}`, notes: { product: `Text to Voice ${pack.label}` } })
+        body: JSON.stringify({ amount, currency, receipt: `voice_${Date.now().toString(36)}`, notes: { product: `Text to Voice ${pack.label}` } })
       });
-      await db.prepare("INSERT INTO voice_orders (order_id, token, pack, words, amount, status, created_at) VALUES (?, ?, ?, ?, ?, 'created', ?)")
-        .bind(order.id, token, body.pack, pack.words, pack.paise, new Date().toISOString()).run();
-      return reply({ ok: true, orderId: order.id, amount: pack.paise, currency: "INR", keyId: env.RAZORPAY_KEY_ID, words: pack.words }, 200, origin);
+      await db.prepare("INSERT INTO voice_orders (order_id, token, pack, words, amount, currency, status, created_at) VALUES (?, ?, ?, ?, ?, ?, 'created', ?)")
+        .bind(order.id, token, body.pack, pack.words, amount, currency, new Date().toISOString()).run();
+      return reply({ ok: true, orderId: order.id, amount, currency, keyId: env.RAZORPAY_KEY_ID, words: pack.words }, 200, origin);
     }
 
     if (action === "verify") {
