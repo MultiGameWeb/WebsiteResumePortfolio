@@ -33,3 +33,6 @@
 - In-app Report button for AI voices; daily word cap protects API spending.
 - Backend: `backend/sitecraft-ai/voice-studio.js`, routes under `/api/voice/`.
 - Text to Voice: prices in the visitor's currency (₹ India, £ UK, € Europe, $ everywhere else), 27 styles in groups (Basic, Instagram & creators, Emotions, Genres) and 47 accents across India, the US and the UK.
+
+## BotCraft: hide / show items
+- The owner can hide an item from customers without deleting it, from the owner page (Hide / Show to customers) or by chat or voice ("hide gold chain", "show silver anklet again"). Hidden items stay in the owner page and come back with all details. Hidden items are kept out of the customer page, offline copy and the assistant. Stored as stock_status "hidden", so no database change.

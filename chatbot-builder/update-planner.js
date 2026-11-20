@@ -16,6 +16,8 @@ const KW = {
   price: /\b(price|rate|cost|mrp|amount|dhara|ret|rupees|rs)\b|ధర|రేటు|రేట్|కాస్ట్|कीमत|दाम|भाव|रेट/i,
   out: /\b(out of stock|no stock|stock (?:is )?(?:over|finished|empty|less)|finished|sold out|not available|unavailable|over|stock ledu|ayipoyindi|ayipoyindhi|aipoyindi)\b|స్టాక్ లేదు|అయిపోయింది|అయిపోయిన|లేదు|खत्म|स्टॉक नहीं|उपलब्ध नहीं/i,
   back: /\b(back in stock|in stock|available again|available|stock (?:came|arrived|vachindi|undi)|restocked|new stock)\b|స్టాక్ ఉంది|స్టాక్ వచ్చింది|అందుబాటులో|उपलब्ध|स्टॉक आ गया/i,
+  unhide: /\b(unhide|show again|show it again|make (?:it )?visible|visible again|start showing|chupinchu|chupinchandi)\b|మళ్ళీ చూపించు|చూపించు|చూపండి|दिखाओ|दिखा दो|फिर से दिखा/i,
+  hide: /\b(hide|hidden|don'?t show|do not show|stop showing|daachu|dachu|dachandi|daachandi)\b|దాచు|దాచండి|దాచేయి|छुपा|छिपा/i,
   del: /\b(delete|remove|drop|tholagimchu|teesey|teeseyi)\b|తొలగించు|తీసేయి|తీసివేయి|డిలీట్|हटा|हटाएं|हटाओ|डिलीट/i,
   add: /^\s*(add|new item|new|create|insert|jodinchu)\b|^\s*(జోడించు|కొత్త|యాడ్|जोड़ें|जोड़|नया)/i,
   timings: /\b(timings?|timing|opening hours?|open(?:s|ing)?|hours|working hours)\b|టైమింగ్స్|సమయం|సమయాలు|समय|खुलने/i,
@@ -202,6 +204,8 @@ export function planLocally(text, { products = [], imageCount = 0 } = {}) {
 
     if (found.product) {
       const product = found.product;
+      if (KW.unhide.test(lower) && !KW.hide.test(lower)) { ops.push({ type: 'set_visibility', name: product.name, key: product.name_key, hidden: false }); continue; }
+      if (KW.hide.test(lower)) { ops.push({ type: 'set_visibility', name: product.name, key: product.name_key, hidden: true }); continue; }
       if (KW.del.test(lower)) { ops.push({ type: 'delete_item', name: product.name, key: product.name_key }); continue; }
       const wantsOut = KW.out.test(lower);
       const wantsBack = KW.back.test(lower) && !/\bnot available|unavailable\b/i.test(lower);
@@ -270,6 +274,7 @@ export function describeOp(op, products = [], info = {}) {
     case 'set_stock': return { icon: op.out_of_stock ? '⛔' : '✅', text: `${op.name}: mark ${op.out_of_stock ? 'out of stock' : 'back in stock'}` };
     case 'set_details': return { icon: '✎', text: `${op.name}: details → ${op.details}` };
     case 'add_item': return { icon: '＋', text: `Add new item: ${op.name}${op.price ? ` — ${op.price}` : ''}${op.details ? ` (${op.details})` : ''}` };
+    case 'set_visibility': return { icon: op.hidden ? '🙈' : '👁', text: `${op.name}: ${op.hidden ? 'hide from customers (not deleted)' : 'show to customers again'}` };
     case 'delete_item': return { icon: '🗑', text: `Delete item: ${op.name}`, danger: true };
     case 'set_info': { const old = info[op.field]; return { icon: 'ⓘ', text: `${FIELD_LABELS[op.field] || op.field}: ${old ? `${old} → ` : ''}${op.value}` }; }
     case 'rename_bot': return { icon: '🤖', text: `Assistant name → ${op.value}` };

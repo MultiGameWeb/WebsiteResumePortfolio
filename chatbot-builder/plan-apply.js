@@ -28,9 +28,14 @@ export async function applyPlan({ ops, images = [], call, getView }) {
     if (op.type === 'set_price' && product) {
       undo.push({ action: 'save_product', data: fields(product) });
       ok = await call('save_product', fields(product, { price_text: op.price }));
-    } else if (op.type === 'set_stock' && product) {
+    } else if (op.type === 'set_stock' && product && product.stock_status !== 'hidden') {
       undo.push({ action: 'save_product', data: fields(product) });
       ok = await call('save_product', fields(product, { stock_status: op.out_of_stock ? 'out_of_stock' : 'in_stock' }));
+    } else if (op.type === 'set_visibility' && product) {
+      undo.push({ action: 'save_product', data: fields(product) });
+      ok = await call('save_product', fields(product, { stock_status: op.hidden ? 'hidden' : 'in_stock' }));
+    } else if (op.type === 'set_stock' && product && product.stock_status === 'hidden') {
+      ok = true; // a hidden item stays hidden; show it first to change its stock
     } else if (op.type === 'set_details' && product) {
       undo.push({ action: 'save_product', data: fields(product) });
       ok = await call('save_product', fields(product, { details: op.details }));

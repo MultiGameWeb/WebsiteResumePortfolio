@@ -135,7 +135,7 @@
       },
       offline: {
         faqs: faqs,
-        items: state.products.map(function (p) {
+        items: state.products.filter(function (p) { return p.stock_status !== 'hidden'; }).map(function (p) {
           return { key: p.name_key, name: p.name, price: p.price_text || '', details: p.details || '', out: p.stock_status === 'out_of_stock', photo: p.photo_id || '' };
         }),
         savedAt: new Date(state.savedAt).toISOString()
@@ -224,7 +224,7 @@
       var key = clip(body.key, 140);
       var newKey = nameKey(name);
       var existing = state.products.find(function (p) { return p.name_key === (key || newKey); });
-      var record = { name_key: newKey, name: name, price_text: clip(body.price_text, 80), details: clip(body.details, 600), stock_status: body.stock_status === 'out_of_stock' ? 'out_of_stock' : 'in_stock', photo_id: '' };
+      var record = { name_key: newKey, name: name, price_text: clip(body.price_text, 80), details: clip(body.details, 600), stock_status: ['out_of_stock', 'hidden'].indexOf(body.stock_status) !== -1 ? body.stock_status : 'in_stock', photo_id: '' };
       if (existing) {
         state.photos.forEach(function (p) { if (p.kind === 'product' && p.product_key === existing.name_key) p.product_key = newKey; });
         Object.assign(existing, record);

@@ -944,7 +944,7 @@ async function ownerView(env, shopId) {
   const saved = await loadShop(env, shopId, 0);
   const facts = cleanFacts(saved?.facts);
   const [products, photos, questions, answeredQuestions, requests, orders, settings] = await Promise.all([
-    listProducts(env, shopId), listPhotos(env, shopId), listCustomerQuestions(env, shopId, "open"), listCustomerQuestions(env, shopId, "answered"),
+    listProducts(env, shopId, { includeHidden: true }), listPhotos(env, shopId), listCustomerQuestions(env, shopId, "open"), listCustomerQuestions(env, shopId, "answered"),
     listRequests(env, shopId), listOrders(env, shopId), loadSettings(env, shopId)
   ]);
   return {
@@ -1074,7 +1074,7 @@ async function handlePlanUpdate(env, shopId, body, origin) {
     .filter(img => PHOTO_TYPES.has(img?.mimeType) && typeof img?.data === "string" && img.data.length < 1_500_000)
     .slice(0, 3);
   if (!text && !images.length) return reply({ ok: false, error: "Please write what to change." }, 400, origin);
-  const [products, saved] = await Promise.all([listProducts(env, shopId), loadShop(env, shopId, 0)]);
+  const [products, saved] = await Promise.all([listProducts(env, shopId, { includeHidden: true }), loadShop(env, shopId, 0)]);
   const facts = cleanFacts(saved?.facts);
   const info = Object.fromEntries(Object.keys(INFO_FIELDS).map(key => [key, String(facts[key] || "")]));
   const parts = [{ text: text || "(photos only)" }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.data } }))];
@@ -1120,7 +1120,7 @@ async function handleOwner(request, env, origin, ctx) {
       name,
       price_text: clip(body?.price_text, 80),
       details: clip(body?.details, 600),
-      stock_status: body?.stock_status === "out_of_stock" ? "out_of_stock" : "in_stock"
+      stock_status: ["out_of_stock", "hidden"].includes(body?.stock_status) ? body.stock_status : "in_stock"
     });
   } else if (action === "delete_product") {
     await deleteProduct(env, shopId, clip(body?.key, 140));

@@ -258,13 +258,14 @@ export async function updateFacts(env, shopId, patch) {
   return facts;
 }
 
-export async function listProducts(env, shopId) {
+// Hidden items are for the owner only; customers never get them (includeHidden is false by default).
+export async function listProducts(env, shopId, { includeHidden = false } = {}) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   const rows = await db.prepare(
     "SELECT p.name_key, p.name, p.price_text, p.details, p.stock_status, " +
     "(SELECT photo_id FROM botcraft_photos f WHERE f.shop_id = p.shop_id AND f.kind = 'product' AND f.product_key = p.name_key LIMIT 1) AS photo_id " +
-    "FROM botcraft_products p WHERE p.shop_id = ? ORDER BY p.updated_at DESC LIMIT 500"
+    "FROM botcraft_products p WHERE p.shop_id = ? " + (includeHidden ? "" : "AND p.stock_status != 'hidden' ") + "ORDER BY p.updated_at DESC LIMIT 500"
   ).bind(shopId).all();
   return rows.results || [];
 }

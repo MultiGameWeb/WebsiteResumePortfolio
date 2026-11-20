@@ -8,7 +8,7 @@
 export const INFO_FIELDS = {
   timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400
 };
-const OP_TYPES = ["set_price", "set_stock", "set_details", "add_item", "delete_item", "set_info", "rename_bot", "attach_photo"];
+const OP_TYPES = ["set_price", "set_stock", "set_details", "add_item", "delete_item", "set_visibility", "set_info", "rename_bot", "attach_photo"];
 const PHOTO_KINDS = ["product", "main", "owner", "gallery"];
 const MAX_OPS = 12;
 
@@ -26,6 +26,7 @@ export const PLAN_SCHEMA = {
           price: { type: "STRING", description: "price text with the rupee sign, e.g. ₹52,000" },
           details: { type: "STRING", description: "item details text" },
           out_of_stock: { type: "BOOLEAN", description: "true when the item is finished, false when it is back" },
+          hidden: { type: "BOOLEAN", description: "true to hide the item from customers, false to show it again (set_visibility)" },
           field: { type: "STRING", enum: Object.keys(INFO_FIELDS), description: "which shop information to change (set_info)" },
           value: { type: "STRING", description: "the new value (set_info, rename_bot)" },
           photo_kind: { type: "STRING", enum: PHOTO_KINDS, description: "where a sent photo goes (attach_photo)" },
@@ -43,7 +44,7 @@ const clip = (value, max) => String(value ?? "").trim().slice(0, max);
 export const itemKey = name => String(name || "").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-+|-+$/g, "").slice(0, 140);
 
 export function buildPlanPrompt(products, info, imageCount) {
-  const items = (products || []).slice(0, 200).map(p => `- ${p.name}${p.price_text ? ` | ${p.price_text}` : ""}${p.stock_status === "out_of_stock" ? " | out of stock" : ""}`).join("\n") || "- (no items yet)";
+  const items = (products || []).slice(0, 200).map(p => `- ${p.name}${p.price_text ? ` | ${p.price_text}` : ""}${p.stock_status === "out_of_stock" ? " | out of stock" : p.stock_status === "hidden" ? " | HIDDEN from customers" : ""}`).join("\n") || "- (no items yet)";
   const known = Object.entries(info || {}).filter(([, v]) => v).map(([k, v]) => `- ${k}: ${v}`).join("\n") || "- (nothing saved yet)";
   return [
     "You help a shop owner update their shop assistant. The owner writes or speaks (English, Telugu, Hindi or mixed) and may send photos.",
@@ -53,6 +54,7 @@ export function buildPlanPrompt(products, info, imageCount) {
     "- set_stock: mark an existing item finished (out_of_stock true) or back in stock (false).",
     "- set_details: change an existing item's details text.",
     "- add_item: a NEW item (name, price, details). Use it only when the owner clearly adds something new.",
+    "- set_visibility: hide an existing item from customers without deleting it (hidden true), or show a hidden item again (hidden false). Use it when the owner says hide / don't show / show again.",
     "- delete_item: remove an existing item, only when the owner clearly says delete/remove.",
     "- set_info: change shop information. field is one of: timings, weekly_holiday, address, call_number, whatsapp_number, map_link, about.",
     "- rename_bot: the assistant's name (value).",
@@ -90,7 +92,7 @@ export function cleanPlan(raw, products, imageCount = 0) {
       const name = clip(op.name, 120);
       if (!name) continue;
       ops.push({ type, name, price: clip(op.price, 80), details: clip(op.details, 600) });
-    } else if (type === "set_price" || type === "set_stock" || type === "set_details" || type === "delete_item") {
+    } else if (type === "set_price" || type === "set_stock" || type === "set_details" || type === "delete_item" || type === "set_visibility") {
       const product = findProduct(products, op.name);
       if (!product) { dropped.push(clip(op.name, 120)); continue; }
       if (type === "set_price") {
@@ -98,6 +100,7 @@ export function cleanPlan(raw, products, imageCount = 0) {
         if (!price) continue;
         ops.push({ type, name: product.name, key: product.name_key, price });
       } else if (type === "set_stock") ops.push({ type, name: product.name, key: product.name_key, out_of_stock: op.out_of_stock !== false });
+      else if (type === "set_visibility") ops.push({ type, name: product.name, key: product.name_key, hidden: op.hidden !== false });
       else if (type === "set_details") ops.push({ type, name: product.name, key: product.name_key, details: clip(op.details, 600) });
       else ops.push({ type, name: product.name, key: product.name_key });
     } else if (type === "set_info") {

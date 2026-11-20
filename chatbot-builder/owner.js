@@ -142,6 +142,7 @@ function renderItems() {
     const info = element('div');
     const name = element('div', 'item-name', item.name);
     if (item.stock_status === 'out_of_stock') name.append(element('span', 'badge', 'Out of stock'));
+    if (item.stock_status === 'hidden') name.append(element('span', 'badge', 'Hidden from customers'));
     info.append(name);
     if (item.price_text) info.append(element('div', 'item-price', item.price_text));
     if (item.details) info.append(element('div', 'item-details', item.details));
@@ -155,10 +156,17 @@ function renderItems() {
       key: item.name_key, name: item.name, price_text: item.price_text, details: item.details,
       stock_status: item.stock_status === 'out_of_stock' ? 'in_stock' : 'out_of_stock',
     }));
+    const hidden = item.stock_status === 'hidden';
+    const hide = element('button', 'btn btn-light btn-small', hidden ? 'Show to customers' : 'Hide');
+    hide.type = 'button';
+    hide.addEventListener('click', () => call('save_product', {
+      key: item.name_key, name: item.name, price_text: item.price_text, details: item.details,
+      stock_status: hidden ? 'in_stock' : 'hidden',
+    }));
     const remove = element('button', 'btn btn-danger btn-small', 'Delete');
     remove.type = 'button';
     remove.addEventListener('click', () => { if (window.confirm(`Delete ${item.name}?`)) call('delete_product', { key: item.name_key }); });
-    actions.append(edit, stock, remove);
+    actions.append(edit, stock, hide, remove);
     info.append(actions);
     card.append(info);
     return card;
