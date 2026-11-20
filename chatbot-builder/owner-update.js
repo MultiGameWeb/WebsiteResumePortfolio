@@ -6,8 +6,8 @@
 // (no key yet, offline, busy, or demo mode) the rule-based planner in
 // update-planner.js is used instead, and the screen says so.
 
-import { applyPlan, runUndo } from './plan-apply.js';
-import { describeOp, planLocally } from './update-planner.js';
+import { applyPlan, runUndo } from './plan-apply.js?v=2';
+import { describeOp, planLocally } from './update-planner.js?v=2';
 
 const EXAMPLES = ['Gold chain price 52000', 'Silver anklet out of stock', 'Add Silk saree 3500', 'Timings 10 am to 8 pm', 'Closed on Sunday'];
 const LANGS = [['te-IN', 'తెలుగు'], ['en-IN', 'English'], ['hi-IN', 'हिन्दी'], ['ta-IN', 'தமிழ்'], ['kn-IN', 'ಕನ್ನಡ']];
@@ -202,6 +202,7 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
   }
 
   // ---- Voice: speak the change instead of typing it ----
+  const PHOTO_WORDS = /\b(photo|photos|picture|pictures|pic|pics|image|images)\b|ఫోటో|ఫొటో|చిత్రం|फोटो|तस्वीर/i;
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognizer = null;
   const savedLang = (() => { try { return localStorage.getItem(LANG_KEY); } catch { return null; } })();
@@ -239,7 +240,14 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
       micButton.classList.remove('uc-listening');
       micButton.setAttribute('aria-pressed', 'false');
       input.placeholder = 'Type or speak a change…';
-      if (heard.trim()) submit(heard);
+      if (!heard.trim()) return;
+      // "this is the gold chain photo" with no photo yet: keep the words and ask for the photo, so they are sent together.
+      if (!attached.length && PHOTO_WORDS.test(heard)) {
+        input.value = heard;
+        bubble('bot', 'Now tap 📷 to add the photo, then press Check.');
+        return;
+      }
+      submit(heard);
     };
     try { recognizer.start(); } catch { micButton.classList.remove('uc-listening'); }
   }

@@ -1,12 +1,12 @@
 import { createBot, currentBotId, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261031c';
-import { applyPlan, runUndo } from './plan-apply.js?v=1';
-import { describeOp, planLocally } from './update-planner.js?v=1';
+import { applyPlan, runUndo } from './plan-apply.js?v=2';
+import { describeOp, planLocally } from './update-planner.js?v=2';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261031c';
+} from './components.js?v=20261120a';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
