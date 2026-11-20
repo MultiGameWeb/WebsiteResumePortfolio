@@ -31,3 +31,6 @@ Not priced yet: needs the current Gemini Flash-Lite input and output rates (http
 ## Still to build
 - Reply metering (token usage per reply), reply balance, recharge and the out-of-replies behaviour.
 - Payment gate. The landing page (`ai-chatbots.html`) still says "Rs 1,999, 10,000 replies included" and must be updated.
+
+## Premium owner voice (ElevenLabs)
+The owner mic uses ElevenLabs Speech to Text when the Worker has the key. Cost is per minute of audio and is not in the package prices yet; it must be added (cost x 1.96) once the real ElevenLabs rate is known. The daily limit per shop (ELEVENLABS_DAILY_LIMIT, default 150) caps spending.

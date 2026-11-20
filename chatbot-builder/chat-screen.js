@@ -1,12 +1,13 @@
-import { createBot, currentBotId, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261031c';
-import { applyPlan, runUndo } from './plan-apply.js?v=5';
-import { describeOp, planLocally } from './update-planner.js?v=5';
+import { apiBase, createBot, currentBotId, premiumVoiceOn, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261120e';
+import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
+import { applyPlan, runUndo } from './plan-apply.js?v=6';
+import { describeOp, planLocally } from './update-planner.js?v=6';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261120a';
+} from './components.js?v=20261120e';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -629,8 +630,55 @@ function stopListening() {
   state.micActive = false;
 }
 
+// Premium voice (ElevenLabs on the server): record, then turn the recording into text.
+// If the server cannot do it, the phone's own voice typing takes over.
+let recording = null;
+let premiumDown = false;
+const usePremium = () => !premiumDown && premiumRecordingSupported() && premiumVoiceOn();
+
+function putSpokenText(text) {
+  const box = inputHost.querySelector('#messageInput');
+  if (!box || !text) return;
+  box.value = `${box.value ? `${box.value.trim()} ` : ''}${text}`;
+  autosizeTextarea(box);
+  syncComposerControls();
+  box.focus({ preventScroll: true });
+}
+
+async function startPremiumRecording() {
+  try {
+    recording = await startRecording({ apiBase: apiBase(), shopId: currentBotId() });
+  } catch {
+    showToast('Please allow the microphone for this page, then tap the mic again.');
+    return;
+  }
+  state.micActive = true;
+  render();
+  const started = recording;
+  started.ended.then(() => { if (recording === started) finishPremiumRecording(); });
+}
+
+async function finishPremiumRecording() {
+  const active = recording;
+  recording = null;
+  if (!active) return;
+  state.micActive = false;
+  render();
+  showToast('Turning your voice into text…');
+  const result = await active.stop();
+  if (result.error) {
+    showToast(result.error);
+    if (result.fallback && (window.SpeechRecognition || window.webkitSpeechRecognition)) premiumDown = true;
+    return;
+  }
+  if (!result.text) { showToast('I did not hear anything. Tap the mic and try again.'); return; }
+  putSpokenText(result.text);
+}
+
 function setMicState() {
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (recording) { finishPremiumRecording(); return; }
+  if (!recognizer && usePremium()) { startPremiumRecording(); return; }
   if (!Recognition) { showToast('Voice typing is not supported in this browser. Please type your answer.'); return; }
   if (recognizer) { stopListening(); render(); return; }
   const textarea = inputHost.querySelector('#messageInput');
@@ -791,6 +839,7 @@ inputHost.addEventListener('submit', (event) => {
   if (event.target.id !== 'composerForm') return;
   event.preventDefault();
   if (recognizer) stopListening();
+  if (recording) { recording.cancel(); recording = null; state.micActive = false; }
   handleSend({ text: inputHost.querySelector('#messageInput')?.value ?? '' });
 });
 

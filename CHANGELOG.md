@@ -47,3 +47,8 @@
 
 ## BotCraft: shop name and page sections
 - The owner can change the shop name (owner page or chat: "change shop name to ...") and hide or show the About, Gallery and Map sections of the customer page (owner page card or chat: "hide gallery", "show map again"). Hidden sections are removed on the server before the customer page and bot see them; nothing is deleted. Stored in the shop settings (hiddenSections).
+
+## BotCraft: premium owner voice (ElevenLabs)
+- The owner page and the setup chat can use ElevenLabs Speech to Text (Scribe) for the owner mic: much better Telugu, Hindi and mixed speech than the phone voice typing. The owner taps the mic, speaks, taps again, and the text appears (owner page: sent for checking; setup chat: put in the message box to check before sending). Nothing is stored.
+- Server: action transcribe on /api/botcraft/owner (botcraft-voice.js). Secret ELEVENLABS_API_KEY; optional ELEVENLABS_STT_MODEL (default scribe_v1) and ELEVENLABS_DAILY_LIMIT (default 150 per shop per day, spending cap). Without the key, or when ElevenLabs fails, the page falls back to the phone voice typing.
+- Not tested against the real ElevenLabs API yet (no key in the build environment). ElevenLabs cost is not in docs/BOTCRAFT_PRICING.md yet.

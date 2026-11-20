@@ -567,7 +567,7 @@ export function InputBar(attachments = [], error = '', micActive = false) {
   textarea.setAttribute('aria-describedby', 'composerHint composerError');
   textareaWrap.append(textarea);
   // The phone turns speech into text (browsers without it get no mic button).
-  const speechSupported = Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
+  const speechSupported = Boolean(window.SpeechRecognition || window.webkitSpeechRecognition || (navigator.mediaDevices?.getUserMedia && window.MediaRecorder));
   const mic = iconButton('mic', micActive ? 'Stop listening' : 'Speak your answer', `mic-button${micActive ? ' mic-active' : ''}`, 'toggle-mic');
   mic.setAttribute('aria-pressed', String(micActive));
   mic.hidden = !speechSupported;

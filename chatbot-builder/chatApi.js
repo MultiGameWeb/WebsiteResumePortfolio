@@ -6,6 +6,9 @@
  */
 import { sendChatAction as sendDemoAction } from './mockChat.js?v=20261031b';
 
+export let premiumVoiceKnown = false; // set from the server's replies: premium voice (ElevenLabs) is on
+export const premiumVoiceOn = () => premiumVoiceKnown || Boolean(ownerView?.premiumVoice);
+export const apiBase = () => API_BASE;
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SEND_AS_IMAGE = new Set(['image/jpeg', 'image/png', 'image/webp']);
 const MAX_IMAGE_SIDE = 1600;
@@ -212,6 +215,7 @@ export async function sendChatAction(action) {
     return { ok: false, error: (data?.error || 'BotCraft could not reply. Please try again.') + detail };
   }
 
+  if (typeof data.premiumVoice === 'boolean') premiumVoiceKnown = data.premiumVoice;
   facts = { ...facts, ...data.facts };
   answers = data.resetAnswers ? {} : { ...answers, ...data.answers };
   const sentFiles = payload.images.length + payload.otherFiles.length;

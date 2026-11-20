@@ -8,6 +8,7 @@ import {
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deleteAnswerRow, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
+import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
 import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
 import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
@@ -758,7 +759,8 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
     // "missing": basics are done but this shop type has no question bank yet,
     // so the page asks /api/botcraft/bank to prepare one.
     bankStatus: !merged.shop_type ? "none" : mergedBank ? "ready" : coreComplete(merged) ? "missing" : "later",
-    shopTypeName: shopTypeName(merged.shop_type)
+    shopTypeName: shopTypeName(merged.shop_type),
+    premiumVoice: premiumVoiceAvailable(env)
   }, 200, origin);
 }
 
@@ -952,6 +954,7 @@ async function ownerView(env, shopId) {
   return {
     ok: true,
     savedAnswers,
+    premiumVoice: premiumVoiceAvailable(env),
     hiddenSections: Array.isArray(settings.hiddenSections) ? settings.hiddenSections : [],
     shopName: facts.shop_name || "",
     botName: botName(facts),
@@ -1245,6 +1248,9 @@ async function handleOwner(request, env, origin, ctx) {
     if (!(await writeAbout(env, shopId, { force: true }))) return reply({ ok: false, error: "Could not write the text right now. Please try again or write it yourself." }, 503, origin);
   } else if (action === "plan_update") {
     return handlePlanUpdate(env, shopId, body, origin);
+  } else if (action === "transcribe") {
+    const result = await transcribeOwnerVoice(env, shopId, body?.audio);
+    return reply(result.body, result.status, origin);
   } else if (action !== "load") {
     return reply({ ok: false, error: "Unknown action." }, 400, origin);
   }
