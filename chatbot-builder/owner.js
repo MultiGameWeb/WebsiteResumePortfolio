@@ -232,6 +232,34 @@ function answerCard(item) {
   return card;
 }
 
+function renderPage() {
+  const page = view.page;
+  const card = $('#pageCard');
+  card.hidden = !view.publicId;
+  const info = $('#pageInfo');
+  if (page) {
+    const link = element('a', '', page.url);
+    link.href = page.url;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    const until = page.hosting?.expiresAt ? ` · hosted until ${new Date(page.hosting.expiresAt).toLocaleDateString()}` : '';
+    info.replaceChildren(element('strong', '', 'Live: '), link, element('span', '', until));
+  } else info.textContent = 'Not published yet.';
+  $('#pageSlugLabel').hidden = Boolean(page);
+  $('#pageButton').textContent = page ? 'Update my page' : 'Publish my page';
+  $('#pageCopy').hidden = !page;
+}
+
+$('#pageForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+  call('publish_page', { slug: event.target.elements.slug.value.trim().toLowerCase() });
+});
+$('#pageCopy').addEventListener('click', async () => {
+  const url = view.page?.url;
+  if (!url) return;
+  try { await navigator.clipboard.writeText(url); showStatus('Link copied ✓'); } catch { window.prompt('Copy this link', url); }
+});
+
 const SECTION_LABELS = [['about', 'About us'], ['gallery', 'Gallery photos'], ['map', 'Map / directions button']];
 function renderSections() {
   const hidden = view.hiddenSections || [];
@@ -391,11 +419,12 @@ function render() {
   if (document.activeElement !== input) input.value = view.customBotName || '';
   const openBot = $('#openBot');
   openBot.hidden = !view.publicId;
-  if (view.publicId) openBot.href = new URL(`../salesbot/?s=${encodeURIComponent(view.publicId)}`, window.location.href).href;
+  if (view.publicId) openBot.href = view.page?.url || new URL(`../salesbot/?s=${encodeURIComponent(view.publicId)}`, window.location.href).href;
   renderInfo();
   renderQuestions();
   renderAnswers();
   renderSections();
+  renderPage();
   renderRequests();
   renderOrders();
   renderFeatures();

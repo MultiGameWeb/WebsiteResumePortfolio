@@ -25,7 +25,8 @@ function writeStore(key, value) {
 }
 
 const params = new URLSearchParams(window.location.search);
-const shopId = params.get('s') || readStore(LAST_SHOP_KEY) || '';
+// A hosted shop page (its own web address) has its shop built in; QR links use ?s=<id>.
+const shopId = window.SALESBOT_SHOP || params.get('s') || readStore(LAST_SHOP_KEY) || '';
 if (params.get('s')) writeStore(LAST_SHOP_KEY, shopId);
 
 const history = [];

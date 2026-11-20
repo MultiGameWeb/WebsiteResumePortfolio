@@ -388,7 +388,8 @@ function showBotReady(bot) {
   const existing = state.messages.find((message) => message.botCard);
   // Keep the card's name and Wi-Fi current (the owner may add Wi-Fi later).
   if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.botName = bot.botName || existing.botCard.botName; existing.botCard.wifi = bot.wifi || null; existing.botCard.openQuestions = bot.openQuestions || 0; existing.botCard.features = bot.features || existing.botCard.features; return; }
-  const url = new URL(`../salesbot/?s=${encodeURIComponent(bot.publicId)}`, window.location.href).href;
+  // Once the owner has published the page, the QR poster points to its own address.
+  const url = getOwnerView().page?.url || new URL(`../salesbot/?s=${encodeURIComponent(bot.publicId)}`, window.location.href).href;
   state.messages.push({
     id: makeId('message'), role: 'assistant', time: new Date(),
     text: `Your shop assistant${bot.botName ? ` "${bot.botName}"` : ''} is ready! 🎉 Open the link to try it like a customer. Print the QR poster and keep it in your shop — customers scan it to chat. Add photos and items in "Manage my bot", and keep answering questions to make it smarter.`,

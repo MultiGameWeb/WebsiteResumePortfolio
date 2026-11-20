@@ -8,6 +8,7 @@ import {
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deleteAnswerRow, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
+import { publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
 import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
 import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
@@ -150,6 +151,17 @@ function corsHeaders(origin) {
 
 function reply(data, status, origin) {
   return new Response(JSON.stringify(data), { status, headers: corsHeaders(origin) });
+}
+
+// The shop's own hosted page (https://<slug>.<HOSTING_DOMAIN>, or this Worker's /s/<slug>/ path)
+// may call the customer endpoints only. The owner and setup endpoints stay on the allowed list.
+const CUSTOMER_PATHS = new Set(["/api/botcraft/public", "/api/botcraft/ask", "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order", "/api/botcraft/push"]);
+function originAllowed(env, origin, path, url) {
+  if (allowedOrigins(env).has(origin)) return true;
+  if (!CUSTOMER_PATHS.has(path) || !origin) return false;
+  if (origin === url.origin) return true;
+  const domain = String(env?.HOSTING_DOMAIN || "").trim().toLowerCase();
+  return Boolean(domain) && new RegExp("^https://[a-z0-9-]{1,40}\\." + domain.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$").test(origin);
 }
 
 export function allowedOrigins(env) {
@@ -481,7 +493,7 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   if (path === "/api/botcraft/photo") return servePhoto(env, url);
 
   const origin = request.headers.get("Origin") || "";
-  if (!allowedOrigins(env).has(origin)) {
+  if (!originAllowed(env, origin, path, url)) {
     return new Response(JSON.stringify({ ok: false, error: "Origin not allowed." }), {
       status: 403,
       headers: { "Content-Type": "application/json; charset=utf-8" }
@@ -943,7 +955,7 @@ async function servePhoto(env, url) {
   });
 }
 
-async function ownerView(env, shopId) {
+async function ownerView(env, shopId, url) {
   const saved = await loadShop(env, shopId, 0);
   const facts = cleanFacts(saved?.facts);
   const [products, photos, questions, answeredQuestions, requests, orders, settings] = await Promise.all([
@@ -951,8 +963,10 @@ async function ownerView(env, shopId) {
     listRequests(env, shopId), listOrders(env, shopId), loadSettings(env, shopId)
   ]);
   const savedAnswers = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, await resolveBank(env, facts), answeredQuestions, settings.hiddenAnswers);
+  const page = await shopPageInfo(env, url, settings.pageSlug);
   return {
     ok: true,
+    page,
     savedAnswers,
     premiumVoice: premiumVoiceAvailable(env),
     hiddenSections: Array.isArray(settings.hiddenSections) ? settings.hiddenSections : [],
@@ -1219,6 +1233,21 @@ async function handleOwner(request, env, origin, ctx) {
   } else if (action === "save_answer" || action === "delete_answer" || action === "hide_answer") {
     const error = await changeAnswer(env, shopId, action, body);
     if (error) return reply({ ok: false, error }, 400, origin);
+  } else if (action === "publish_page") {
+    // Puts the customer page on its own web address (same hosting as the website templates).
+    const saved = await loadShop(env, shopId, 0);
+    const facts = cleanFacts(saved?.facts);
+    if (!coreComplete(facts)) return reply({ ok: false, error: "Finish the basic setup questions first, then publish your page." }, 400, origin);
+    const settings = await loadSettings(env, shopId);
+    const published = await publishShopPage(env, request, new URL(request.url), {
+      publicId: await ensurePublicId(env, shopId),
+      shopName: facts.shop_name || "",
+      description: facts.about || "",
+      existingSlug: settings.pageSlug || "",
+      requestedSlug: clip(body?.slug, 40)
+    });
+    if (!published.ok) return reply({ ok: false, error: published.error }, published.status || 500, origin);
+    if (published.slug !== settings.pageSlug) await saveSettings(env, shopId, { pageSlug: published.slug });
   } else if (action === "set_section") {
     const section = String(body?.section || "");
     if (!SECTIONS.includes(section)) return reply({ ok: false, error: "Unknown section." }, 400, origin);
@@ -1254,5 +1283,5 @@ async function handleOwner(request, env, origin, ctx) {
   } else if (action !== "load") {
     return reply({ ok: false, error: "Unknown action." }, 400, origin);
   }
-  return reply(await ownerView(env, shopId), 200, origin);
+  return reply(await ownerView(env, shopId, new URL(request.url)), 200, origin);
 }
