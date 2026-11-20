@@ -566,11 +566,15 @@ export function InputBar(attachments = [], error = '', micActive = false) {
   textarea.setAttribute('aria-label', 'Write your answer');
   textarea.setAttribute('aria-describedby', 'composerHint composerError');
   textareaWrap.append(textarea);
-  // Voice input is a later phase, so no mic button yet.
+  // The phone turns speech into text (browsers without it get no mic button).
+  const speechSupported = Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
+  const mic = iconButton('mic', micActive ? 'Stop listening' : 'Speak your answer', `mic-button${micActive ? ' mic-active' : ''}`, 'toggle-mic');
+  mic.setAttribute('aria-pressed', String(micActive));
+  mic.hidden = !speechSupported;
   const send = iconButton('send', 'Send message', 'send-button', 'send-message');
   send.type = 'submit';
   send.disabled = true;
-  row.append(attach, textareaWrap, send);
+  row.append(attach, textareaWrap, mic, send);
   form.append(row);
   dock.append(form);
   const hint = makeElement('div', 'composer-hint', 'Enter to send · Shift + Enter for a new line');

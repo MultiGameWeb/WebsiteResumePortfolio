@@ -613,10 +613,61 @@ function fallbackCopy(text, onCopied) {
   helper.remove();
 }
 
+// Voice answers: the phone turns speech into text and puts it in the message
+// box, so the owner can read and fix it before sending. No audio is stored.
+const SPEECH_LANGS = {
+  English: 'en-IN', Telugu: 'te-IN', Hindi: 'hi-IN', Tamil: 'ta-IN', Kannada: 'kn-IN', Malayalam: 'ml-IN',
+  Marathi: 'mr-IN', Bengali: 'bn-IN', Gujarati: 'gu-IN', Odia: 'or-IN', Punjabi: 'pa-IN', Urdu: 'ur-IN',
+};
+let recognizer = null;
+let spokenBefore = '';
+
+function stopListening() {
+  const active = recognizer;
+  recognizer = null;
+  try { active?.stop(); } catch {}
+  state.micActive = false;
+}
+
 function setMicState() {
-  state.micActive = !state.micActive;
-  render();
-  showToast(state.micActive ? 'Demo recording state is on. Real voice recording is not connected yet.' : 'Demo recording state stopped. No audio was recorded.');
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!Recognition) { showToast('Voice typing is not supported in this browser. Please type your answer.'); return; }
+  if (recognizer) { stopListening(); render(); return; }
+  const textarea = inputHost.querySelector('#messageInput');
+  spokenBefore = textarea?.value ? `${textarea.value.trim()} ` : '';
+  const active = new Recognition();
+  recognizer = active;
+  // "Auto language" listens in Telugu, the main language of our shop owners.
+  active.lang = SPEECH_LANGS[state.language] || 'te-IN';
+  active.interimResults = true;
+  active.continuous = false;
+  active.onresult = (event) => {
+    const heard = Array.from(event.results).map((result) => result[0].transcript).join('');
+    const box = inputHost.querySelector('#messageInput');
+    if (!box) return;
+    box.value = spokenBefore + heard;
+    autosizeTextarea(box);
+    syncComposerControls();
+  };
+  active.onerror = (event) => {
+    if (event.error === 'not-allowed' || event.error === 'service-not-allowed') showToast('Please allow the microphone for this page, then tap the mic again.');
+    else if (event.error === 'no-speech') showToast('I did not hear anything. Tap the mic and try again.');
+  };
+  active.onend = () => {
+    if (recognizer !== active) return;
+    recognizer = null;
+    state.micActive = false;
+    render();
+    inputHost.querySelector('#messageInput')?.focus({ preventScroll: true });
+  };
+  try {
+    active.start();
+    state.micActive = true;
+    render();
+    // render() rebuilds the box; keep what was typed.
+    const box = inputHost.querySelector('#messageInput');
+    if (box && spokenBefore) { box.value = spokenBefore; syncComposerControls(); }
+  } catch { recognizer = null; state.micActive = false; render(); }
 }
 
 app.addEventListener('click', (event) => {
@@ -739,6 +790,7 @@ app.addEventListener('change', (event) => {
 inputHost.addEventListener('submit', (event) => {
   if (event.target.id !== 'composerForm') return;
   event.preventDefault();
+  if (recognizer) stopListening();
   handleSend({ text: inputHost.querySelector('#messageInput')?.value ?? '' });
 });
 
