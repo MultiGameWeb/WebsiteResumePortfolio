@@ -2,7 +2,7 @@
 // customer sees is changed from here (or from the setup chat). The private
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
-import { initUpdateChat } from './owner-update.js?v=3';
+import { initUpdateChat } from './owner-update.js?v=4';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';
@@ -214,6 +214,33 @@ function renderQuestions() {
   $('#answeredList').replaceChildren(...answered.map((q) => questionCard(q, true)));
 }
 
+function answerCard(item) {
+  const card = element('article', 'question');
+  const head = element('div', 'item-name', item.question);
+  if (item.hidden) head.append(element('span', 'badge', 'Hidden from customers'));
+  card.append(head, element('div', 'question-answer', item.answer));
+  const actions = element('div', 'item-actions');
+  actions.append(
+    actionButton('Edit', 'btn-light', () => {
+      const next = window.prompt(item.question, item.answer);
+      if (next && next.trim() && next.trim() !== item.answer) call('save_answer', { answerId: item.id, answer: next.trim() });
+    }),
+    actionButton(item.hidden ? 'Show to customers' : 'Hide', 'btn-light', () => call('hide_answer', { answerId: item.id, hidden: !item.hidden })),
+    actionButton('Delete', 'btn-danger', () => { if (window.confirm('Delete this answer? Customers will no longer get it.')) call('delete_answer', { answerId: item.id }); })
+  );
+  card.append(actions);
+  return card;
+}
+
+function renderAnswers() {
+  const list = view.savedAnswers || [];
+  $('#answersCard').hidden = !list.length;
+  const badge = $('#answersCount');
+  badge.hidden = !list.length;
+  badge.textContent = String(list.length);
+  $('#answersList').replaceChildren(...list.map(answerCard));
+}
+
 const REQUEST_STATES = { new: 'New', accepted: 'Accepted', ready: 'Ready', done: 'Done', rejected: 'Not possible' };
 const ORDER_STATES = { received: 'Received', in_progress: 'In progress', ready: 'Ready', delivered: 'Delivered' };
 
@@ -354,6 +381,7 @@ function render() {
   if (view.publicId) openBot.href = new URL(`../salesbot/?s=${encodeURIComponent(view.publicId)}`, window.location.href).href;
   renderInfo();
   renderQuestions();
+  renderAnswers();
   renderRequests();
   renderOrders();
   renderFeatures();

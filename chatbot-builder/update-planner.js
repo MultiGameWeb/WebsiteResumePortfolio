@@ -307,6 +307,10 @@ export function describeOp(op, products = [], info = {}) {
     case 'set_details': return { icon: '✎', text: `${op.name}: details → ${op.details}` };
     case 'add_item': return { icon: '＋', text: `Add new item: ${op.name}${op.price ? ` — ${op.price}` : ''}${op.details ? ` (${op.details})` : ''}` };
     case 'set_visibility': return { icon: op.hidden ? '🙈' : '👁', text: `${op.name}: ${op.hidden ? 'hide from customers (not deleted)' : 'show to customers again'}` };
+    case 'edit_answer': return { icon: '✎', text: `Answer “${op.question}” → ${op.value}` };
+    case 'delete_answer': return { icon: '🗑', text: `Delete answer: ${op.question}`, danger: true };
+    case 'set_answer_visibility': return { icon: op.hidden ? '🙈' : '👁', text: `Answer “${op.question}”: ${op.hidden ? 'hide from customers (not deleted)' : 'show to customers again'}` };
+    case 'add_note': return { icon: '＋', text: `Add information for customers: ${op.value}` };
     case 'rename_item': return { icon: '✎', text: `Rename item: ${op.name} → ${op.new_name}` };
     case 'delete_photo': {
       const where = { main: 'main shop photo', owner: 'owner photo', gallery: `gallery photo ${op.index}`, product: `photo of ${op.name}` }[op.kind];

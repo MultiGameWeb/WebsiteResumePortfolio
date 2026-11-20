@@ -6,8 +6,8 @@
 // (no key yet, offline, busy, or demo mode) the rule-based planner in
 // update-planner.js is used instead, and the screen says so.
 
-import { applyPlan, runUndo } from './plan-apply.js?v=3';
-import { describeOp, planLocally } from './update-planner.js?v=3';
+import { applyPlan, runUndo } from './plan-apply.js?v=4';
+import { describeOp, planLocally } from './update-planner.js?v=4';
 
 const EXAMPLES = ['Gold chain price 52000', 'Silver anklet out of stock', 'Add Silk saree 3500', 'Timings 10 am to 8 pm', 'Closed on Sunday'];
 const LANGS = [['te-IN', 'తెలుగు'], ['en-IN', 'English'], ['hi-IN', 'हिन्दी'], ['ta-IN', 'தமிழ்'], ['kn-IN', 'ಕನ್ನಡ']];

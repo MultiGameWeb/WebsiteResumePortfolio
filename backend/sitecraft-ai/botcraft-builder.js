@@ -6,8 +6,9 @@ import {
   GALLERY_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
-  deletePushSubscription, savePushSubscription, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
+  deleteAnswerRow, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
+import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
 import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
 import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
 
@@ -947,8 +948,10 @@ async function ownerView(env, shopId) {
     listProducts(env, shopId, { includeHidden: true }), listPhotos(env, shopId), listCustomerQuestions(env, shopId, "open"), listCustomerQuestions(env, shopId, "answered"),
     listRequests(env, shopId), listOrders(env, shopId), loadSettings(env, shopId)
   ]);
+  const savedAnswers = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, await resolveBank(env, facts), answeredQuestions, settings.hiddenAnswers);
   return {
     ok: true,
+    savedAnswers,
     shopName: facts.shop_name || "",
     botName: botName(facts),
     defaultBotName: botName({ ...facts, bot_name: "" }),
@@ -1068,6 +1071,44 @@ async function writeAbout(env, shopId, { force = false } = {}) {
   return true;
 }
 
+// Edit, delete or hide one saved answer (ids are made by botcraft-answers.js). Returns an error text, or "" when done.
+async function changeAnswer(env, shopId, action, body) {
+  const id = String(body?.answerId || "");
+  if (!ANSWER_ID.test(id)) return "Unknown answer.";
+  const [kind, ...rest] = id.split(":");
+  const key = rest.join(":");
+  // Only an answer this shop really has can be changed.
+  const [saved, answered, settings] = await Promise.all([loadShop(env, shopId, 0), listCustomerQuestions(env, shopId, "answered"), loadSettings(env, shopId)]);
+  const facts = cleanFacts(saved?.facts);
+  const current = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, await resolveBank(env, facts), answered, settings.hiddenAnswers);
+  if (!current.some(item => item.id === id)) return "That answer was not found. Please refresh.";
+  if (action === "hide_answer") {
+    await saveSettings(env, shopId, { hiddenAnswers: nextHidden(settings.hiddenAnswers, id, body?.hidden !== false) });
+    return "";
+  }
+  const remove = action === "delete_answer";
+  const value = clip(body?.answer, 600);
+  if (!remove && !value) return "Please write the answer.";
+  if (kind === "f") {
+    await updateFacts(env, shopId, { [key]: remove ? "" : value });
+  } else if (kind === "a") {
+    if (remove) await deleteAnswerRow(env, shopId, key); else await setAnswerValue(env, shopId, key, value);
+  } else if (kind === "x") {
+    const extra = extraQuestions(saved?.answers).find(item => item.id === key);
+    if (!extra) return "Unknown answer.";
+    if (remove) await deleteAnswerRow(env, shopId, key); else await setAnswerValue(env, shopId, key, JSON.stringify({ q: extra.q, a: value }));
+  } else if (kind === "n") {
+    const index = Number(key.split(":")[0]);
+    const notes = [...(saved?.notes || [])];
+    if (!Number.isInteger(index) || !notes[index] || !notes[index].startsWith(key.slice(String(index).length + 1))) return "That note has changed. Please refresh.";
+    if (remove) notes.splice(index, 1); else notes[index] = value;
+    await setNotes(env, shopId, notes);
+  } else if (kind === "o") {
+    if (remove) await dismissCustomerQuestion(env, shopId, key); else await answerCustomerQuestion(env, shopId, key, value);
+  }
+  return "";
+}
+
 async function handlePlanUpdate(env, shopId, body, origin) {
   const text = clip(body?.text, 1500);
   const images = (Array.isArray(body?.images) ? body.images : [])
@@ -1077,11 +1118,13 @@ async function handlePlanUpdate(env, shopId, body, origin) {
   const [products, saved] = await Promise.all([listProducts(env, shopId, { includeHidden: true }), loadShop(env, shopId, 0)]);
   const facts = cleanFacts(saved?.facts);
   const info = Object.fromEntries(Object.keys(INFO_FIELDS).map(key => [key, String(facts[key] || "")]));
+  const [answered, settings, bank] = await Promise.all([listCustomerQuestions(env, shopId, "answered"), loadSettings(env, shopId), resolveBank(env, facts)]);
+  const savedAnswers = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, bank, answered, settings.hiddenAnswers);
   const parts = [{ text: text || "(photos only)" }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.data } }))];
   const modelErrors = [];
   try {
     const { result } = await callWithFallback(env, {
-      system: buildPlanPrompt(products, info, images.length),
+      system: buildPlanPrompt(products, info, images.length, savedAnswers),
       contents: [{ role: "user", parts }],
       schema: PLAN_SCHEMA,
       models: CHAT_MODELS,
@@ -1090,7 +1133,7 @@ async function handlePlanUpdate(env, shopId, body, origin) {
       maxAttempts: 1,
       log: message => modelErrors.push(message.slice(0, 160))
     });
-    return reply({ ok: true, plan: cleanPlan(result, products, images.length) }, 200, origin);
+    return reply({ ok: true, plan: cleanPlan(result, products, images.length, savedAnswers) }, 200, origin);
   } catch (error) {
     console.error("BotCraft plan_update failed", error, modelErrors);
     return reply({ ok: false, error: "The AI helper is busy right now. Please try again." }, 503, origin);
@@ -1169,6 +1212,14 @@ async function handleOwner(request, env, origin, ctx) {
     const features = Object.fromEntries(FEATURE_KEYS.filter(key => typeof body?.features?.[key] === "boolean").map(key => [key, body.features[key]]));
     const current = await loadSettings(env, shopId);
     await saveSettings(env, shopId, { features: { ...(current.features || {}), ...features } });
+  } else if (action === "save_answer" || action === "delete_answer" || action === "hide_answer") {
+    const error = await changeAnswer(env, shopId, action, body);
+    if (error) return reply({ ok: false, error }, 400, origin);
+  } else if (action === "add_note") {
+    const note = clip(body?.note, 300);
+    if (!note) return reply({ ok: false, error: "Please write the information." }, 400, origin);
+    const saved = await loadShop(env, shopId, 0);
+    await setNotes(env, shopId, [...(saved?.notes || []), note]);
   } else if (action === "set_bot_name") {
     await updateFacts(env, shopId, { bot_name: clip(body?.name, 40) });
   } else if (action === "save_info") {

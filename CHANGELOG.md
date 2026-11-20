@@ -39,3 +39,8 @@
 
 ## BotCraft: rename item, delete photo by chat
 - By chat or voice the owner can rename an item ("rename gold chain to Gold Necklace") and delete a photo without deleting the item ("delete gold chain photo", "remove main photo", "delete gallery photo 2"). The photo of a renamed item moves with it. A rename never overwrites another item with the same name (also checked on the server). Photo deletes cannot be undone.
+
+## BotCraft: edit, hide and delete saved answers
+- New "Saved answers" card on the owner page lists what the assistant tells customers (offers, delivery, policies, extra questions, notes, answers to customer questions). Each can be edited, hidden (stays saved) or deleted.
+- By chat or voice the owner can also edit an answer, hide or show it, delete it, or add new information ("add: free gift above 50k"). Edit and hide can be undone; delete and add cannot.
+- Hidden answers are removed on the server before the customer page, offline copy and assistant see the shop. Stored in the shop settings (hiddenAnswers), no database change. Needs the AI helper for chat; the offline planner does not understand answers.

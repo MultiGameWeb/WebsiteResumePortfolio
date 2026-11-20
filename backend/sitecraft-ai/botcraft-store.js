@@ -2,6 +2,8 @@
 // botcraft-db), separate from the website templates' sitecraft-db. Tables are
 // created on first use, so no manual migration step is needed.
 
+import { withoutHidden } from "./botcraft-answers.js";
+
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS botcraft_shops (
     shop_id TEXT PRIMARY KEY,
@@ -235,7 +237,9 @@ export async function loadPublicShop(env, publicId) {
   const [products, photos, ownerAnswers] = await Promise.all([
     listProducts(env, row.shop_id), listPhotos(env, row.shop_id), listCustomerQuestions(env, row.shop_id, "answered")
   ]);
-  return { ...shop, shopId: row.shop_id, products, photos, ownerAnswers };
+  // Answers the owner hid stay saved but never reach customers or the bot.
+  const settings = await loadSettings(env, row.shop_id);
+  return { ...withoutHidden({ ...shop, ownerAnswers }, settings.hiddenAnswers), shopId: row.shop_id, products, photos };
 }
 
 const nameKey = name => String(name).toLowerCase().replace(/\s+/g, " ").trim();
@@ -392,6 +396,29 @@ export async function dismissCustomerQuestion(env, shopId, key) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   await db.prepare("UPDATE botcraft_customer_questions SET status = 'dismissed' WHERE shop_id = ? AND q_key = ?").bind(shopId, key).run();
+}
+
+// Setup-chat answers the owner edits or deletes from the owner page.
+export async function setAnswerValue(env, shopId, questionId, value) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare(
+    "INSERT INTO botcraft_answers (shop_id, question_id, value, updated_at) VALUES (?, ?, ?, ?) " +
+    "ON CONFLICT(shop_id, question_id) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at"
+  ).bind(shopId, questionId, value, new Date().toISOString()).run();
+}
+
+export async function deleteAnswerRow(env, shopId, questionId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("DELETE FROM botcraft_answers WHERE shop_id = ? AND question_id = ?").bind(shopId, questionId).run();
+}
+
+export async function setNotes(env, shopId, notes) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("UPDATE botcraft_shops SET notes_json = ?, updated_at = ? WHERE shop_id = ?")
+    .bind(JSON.stringify(notes.slice(-MAX_NOTES)), new Date().toISOString(), shopId).run();
 }
 
 export async function loadSettings(env, shopId) {

@@ -31,6 +31,22 @@ export async function applyPlan({ ops, images = [], call, getView }) {
     } else if (op.type === 'set_stock' && product && product.stock_status !== 'hidden') {
       undo.push({ action: 'save_product', data: fields(product) });
       ok = await call('save_product', fields(product, { stock_status: op.out_of_stock ? 'out_of_stock' : 'in_stock' }));
+    } else if (op.type === 'edit_answer' || op.type === 'delete_answer' || op.type === 'set_answer_visibility') {
+      const answer = (getView().savedAnswers || []).find((a) => a.id === op.answer_id);
+      if (!answer) ok = false;
+      else if (op.type === 'edit_answer') {
+        undo.push({ action: 'save_answer', data: { answerId: answer.id, answer: answer.answer } });
+        ok = await call('save_answer', { answerId: answer.id, answer: op.value });
+      } else if (op.type === 'set_answer_visibility') {
+        undo.push({ action: 'hide_answer', data: { answerId: answer.id, hidden: Boolean(answer.hidden) } });
+        ok = await call('hide_answer', { answerId: answer.id, hidden: op.hidden });
+      } else {
+        undoable = false;
+        ok = await call('delete_answer', { answerId: answer.id });
+      }
+    } else if (op.type === 'add_note') {
+      undoable = false;
+      ok = await call('add_note', { note: op.value });
     } else if (op.type === 'rename_item' && product) {
       const same = (getView().products || []).some((p) => p.name_key !== product.name_key && p.name.trim().toLowerCase() === String(op.new_name).trim().toLowerCase());
       ok = !same && await call('save_product', { ...fields(product, { name: op.new_name }), key: product.name_key });
