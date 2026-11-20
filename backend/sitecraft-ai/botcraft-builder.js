@@ -3,7 +3,7 @@ import { ABOUT_SCHEMA, INFO_FIELDS, PLAN_SCHEMA, buildAboutPrompt, buildPlanProm
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, deleteRequest,
+  GALLERY_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deletePushSubscription, savePushSubscription, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
@@ -1115,8 +1115,14 @@ async function handleOwner(request, env, origin, ctx) {
   if (action === "save_product") {
     const name = clip(body?.name, 120);
     if (!name) return reply({ ok: false, error: "Please enter the item name." }, 400, origin);
+    const nameKey = text => String(text).toLowerCase().replace(/\s+/g, " ").trim(); // same rule as the store
+    // Renaming must never overwrite a different item that already has the new name.
+    const oldKey = clip(body?.key, 140);
+    if (oldKey && nameKey(name) !== oldKey && await productExists(env, shopId, name)) {
+      return reply({ ok: false, error: "You already have an item with this name." }, 400, origin);
+    }
     await saveProduct(env, shopId, {
-      key: clip(body?.key, 140),
+      key: oldKey,
       name,
       price_text: clip(body?.price_text, 80),
       details: clip(body?.details, 600),

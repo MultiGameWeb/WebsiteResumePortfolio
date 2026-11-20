@@ -8,7 +8,7 @@
 export const INFO_FIELDS = {
   timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400
 };
-const OP_TYPES = ["set_price", "set_stock", "set_details", "add_item", "delete_item", "set_visibility", "set_info", "rename_bot", "attach_photo"];
+const OP_TYPES = ["set_price", "set_stock", "set_details", "add_item", "delete_item", "rename_item", "delete_photo", "set_visibility", "set_info", "rename_bot", "attach_photo"];
 const PHOTO_KINDS = ["product", "main", "owner", "gallery"];
 const MAX_OPS = 12;
 
@@ -26,6 +26,8 @@ export const PLAN_SCHEMA = {
           price: { type: "STRING", description: "price text with the rupee sign, e.g. ₹52,000" },
           details: { type: "STRING", description: "item details text" },
           out_of_stock: { type: "BOOLEAN", description: "true when the item is finished, false when it is back" },
+          new_name: { type: "STRING", description: "the item's new name (rename_item)" },
+          photo_index: { type: "INTEGER", description: "1-based number of the gallery photo to delete (delete_photo, photo_kind gallery)" },
           hidden: { type: "BOOLEAN", description: "true to hide the item from customers, false to show it again (set_visibility)" },
           field: { type: "STRING", enum: Object.keys(INFO_FIELDS), description: "which shop information to change (set_info)" },
           value: { type: "STRING", description: "the new value (set_info, rename_bot)" },
@@ -55,6 +57,8 @@ export function buildPlanPrompt(products, info, imageCount) {
     "- set_details: change an existing item's details text.",
     "- add_item: a NEW item (name, price, details). Use it only when the owner clearly adds something new.",
     "- set_visibility: hide an existing item from customers without deleting it (hidden true), or show a hidden item again (hidden false). Use it when the owner says hide / don't show / show again.",
+    "- rename_item: change an existing item's name (name = its current name, new_name).",
+    "- delete_photo: remove a photo without deleting the item. photo_kind: product (name = the item), main (shop front), owner, or gallery (photo_index = its number, counting from 1). Use it only when the owner clearly says delete/remove the photo.",
     "- delete_item: remove an existing item, only when the owner clearly says delete/remove.",
     "- set_info: change shop information. field is one of: timings, weekly_holiday, address, call_number, whatsapp_number, map_link, about.",
     "- rename_bot: the assistant's name (value).",
@@ -103,6 +107,23 @@ export function cleanPlan(raw, products, imageCount = 0) {
       else if (type === "set_visibility") ops.push({ type, name: product.name, key: product.name_key, hidden: op.hidden !== false });
       else if (type === "set_details") ops.push({ type, name: product.name, key: product.name_key, details: clip(op.details, 600) });
       else ops.push({ type, name: product.name, key: product.name_key });
+    } else if (type === "rename_item") {
+      const product = findProduct(products, op.name);
+      const newName = clip(op.new_name, 120);
+      if (!product) { dropped.push(clip(op.name, 120)); continue; }
+      if (!newName || newName.toLowerCase().replace(/\s+/g, " ") === product.name_key) continue;
+      ops.push({ type, name: product.name, key: product.name_key, new_name: newName });
+    } else if (type === "delete_photo") {
+      const kind = PHOTO_KINDS.includes(op.photo_kind) ? op.photo_kind : "";
+      if (!kind) continue;
+      if (kind === "product") {
+        const product = findProduct(products, op.name);
+        if (!product) { dropped.push(clip(op.name, 120)); continue; }
+        ops.push({ type, kind, name: product.name, key: product.name_key });
+      } else if (kind === "gallery") {
+        const index = Number(op.photo_index);
+        if (Number.isInteger(index) && index >= 1) ops.push({ type, kind, index });
+      } else ops.push({ type, kind });
     } else if (type === "set_info") {
       const field = String(op.field || "");
       if (!(field in INFO_FIELDS)) continue;

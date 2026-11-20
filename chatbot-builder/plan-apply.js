@@ -31,6 +31,18 @@ export async function applyPlan({ ops, images = [], call, getView }) {
     } else if (op.type === 'set_stock' && product && product.stock_status !== 'hidden') {
       undo.push({ action: 'save_product', data: fields(product) });
       ok = await call('save_product', fields(product, { stock_status: op.out_of_stock ? 'out_of_stock' : 'in_stock' }));
+    } else if (op.type === 'rename_item' && product) {
+      const same = (getView().products || []).some((p) => p.name_key !== product.name_key && p.name.trim().toLowerCase() === String(op.new_name).trim().toLowerCase());
+      ok = !same && await call('save_product', { ...fields(product, { name: op.new_name }), key: product.name_key });
+      const renamed = ok ? findProduct('', op.new_name) : null;
+      if (renamed) undo.push({ action: 'save_product', data: { ...fields(renamed, { name: product.name }), key: renamed.name_key } });
+    } else if (op.type === 'delete_photo') {
+      undoable = false;
+      const photos = getView().photos || [];
+      const target = op.kind === 'product'
+        ? photos.find((p) => p.kind === 'product' && p.product_key === product?.name_key)
+        : op.kind === 'gallery' ? photos.filter((p) => p.kind === 'gallery')[(op.index || 0) - 1] : photos.find((p) => p.kind === op.kind);
+      ok = target ? await call('delete_photo', { photoId: target.photo_id }) : false;
     } else if (op.type === 'set_visibility' && product) {
       undo.push({ action: 'save_product', data: fields(product) });
       ok = await call('save_product', fields(product, { stock_status: op.hidden ? 'hidden' : 'in_stock' }));

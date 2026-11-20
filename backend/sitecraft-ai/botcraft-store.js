@@ -291,6 +291,14 @@ export async function saveProduct(env, shopId, { key, name, price_text, details,
   return newKey;
 }
 
+// True when the shop already has an item with this name (used before renaming).
+export async function productExists(env, shopId, name) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT 1 AS found FROM botcraft_products WHERE shop_id = ? AND name_key = ?").bind(shopId, nameKey(name)).first();
+  return Boolean(row);
+}
+
 export async function deleteProduct(env, shopId, key) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);

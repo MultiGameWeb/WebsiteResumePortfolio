@@ -18,6 +18,8 @@ const KW = {
   back: /\b(back in stock|in stock|available again|available|stock (?:came|arrived|vachindi|undi)|restocked|new stock)\b|స్టాక్ ఉంది|స్టాక్ వచ్చింది|అందుబాటులో|उपलब्ध|स्टॉक आ गया/i,
   unhide: /\b(unhide|show again|show it again|make (?:it )?visible|visible again|start showing|chupinchu|chupinchandi)\b|మళ్ళీ చూపించు|చూపించు|చూపండి|दिखाओ|दिखा दो|फिर से दिखा/i,
   hide: /\b(hide|hidden|don'?t show|do not show|stop showing|daachu|dachu|dachandi|daachandi)\b|దాచు|దాచండి|దాచేయి|छुपा|छिपा/i,
+  rename: /^\s*(?:please\s+)?(?:rename|change (?:the )?name of|change name of)\s+(.+?)\s+(?:to|as|into)\s+(.+)$/i,
+  delPhoto: /\b(delete|remove|erase|take (?:off|down))\b[^.]*\b(photo|picture|pic|image)\b|\b(photo|picture|pic|image)\b[^.]*\b(delete|remove|erase)\b|(ఫోటో|ఫొటో).*(తొలగించు|తీసేయి|తీసివేయి|డిలీట్)|(తొలగించు|తీసేయి|డిలీట్).*(ఫోటో|ఫొటో)|फोटो.*(हटा|डिलीट)|(हटा|डिलीट).*फोटो/i,
   del: /\b(delete|remove|drop|tholagimchu|teesey|teeseyi)\b|తొలగించు|తీసేయి|తీసివేయి|డిలీట్|हटा|हटाएं|हटाओ|डिलीट/i,
   add: /^\s*(add|new item|new|create|insert|jodinchu)\b|^\s*(జోడించు|కొత్త|యాడ్|जोड़ें|जोड़|नया)/i,
   timings: /\b(timings?|timing|opening hours?|open(?:s|ing)?|hours|working hours)\b|టైమింగ్స్|సమయం|సమయాలు|समय|खुलने/i,
@@ -188,6 +190,36 @@ export function planLocally(text, { products = [], imageCount = 0 } = {}) {
       continue;
     }
 
+    // ---- Rename an item ----
+    const renameMatch = clause.match(KW.rename);
+    if (renameMatch) {
+      const target = matchProduct(renameMatch[1], products);
+      const newName = renameMatch[2].trim().replace(/^["'“”]|["'“”]$/g, '').slice(0, 120);
+      if (target.ambiguous.length) questions.push(`Which item do you mean: ${target.ambiguous.join(' or ')}?`);
+      else if (!target.product) questions.push(`I could not find “${renameMatch[1].trim().slice(0, 60)}” in your items. Please write its name as it appears in your items.`);
+      else if (!newName) questions.push(`What should the new name of ${target.product.name} be?`);
+      else ops.push({ type: 'rename_item', name: target.product.name, key: target.product.name_key, new_name: newName });
+      continue;
+    }
+
+    // ---- Delete a photo (never the item itself) ----
+    if (KW.delPhoto.test(lower)) {
+      const gallery = lower.match(/\bgallery\b[^\d]*(\d+)|\b(\d+)(?:st|nd|rd|th)?\s+(?:gallery\s+)?(?:photo|picture|pic)\b.*\bgallery\b/);
+      if (/\b(main photo|shop photo|shop front|front photo|banner|cover|signboard)\b|మెయిన్/i.test(lower)) ops.push({ type: 'delete_photo', kind: 'main' });
+      else if (/\b(my photo|owner photo|owner)\b|నా ఫోటో|ఓనర్/i.test(lower)) ops.push({ type: 'delete_photo', kind: 'owner' });
+      else if (/\bgallery\b|గ్యాలరీ/i.test(lower)) {
+        const number = gallery && Number(gallery[1] || gallery[2]);
+        if (number >= 1) ops.push({ type: 'delete_photo', kind: 'gallery', index: number });
+        else questions.push('Which gallery photo should I delete? Say its number, for example “delete gallery photo 2”.');
+      } else {
+        const found = matchProduct(clause, products);
+        if (found.ambiguous.length) questions.push(`Which item do you mean: ${found.ambiguous.join(' or ')}?`);
+        else if (found.product) ops.push({ type: 'delete_photo', kind: 'product', name: found.product.name, key: found.product.name_key });
+        else questions.push('Which photo should I delete? Say the item name, “main photo”, “owner photo” or “gallery photo 2”.');
+      }
+      continue;
+    }
+
     // ---- Items ----
     if (KW.add.test(clause)) {
       const item = addItemFromClause(clause);
@@ -275,6 +307,11 @@ export function describeOp(op, products = [], info = {}) {
     case 'set_details': return { icon: '✎', text: `${op.name}: details → ${op.details}` };
     case 'add_item': return { icon: '＋', text: `Add new item: ${op.name}${op.price ? ` — ${op.price}` : ''}${op.details ? ` (${op.details})` : ''}` };
     case 'set_visibility': return { icon: op.hidden ? '🙈' : '👁', text: `${op.name}: ${op.hidden ? 'hide from customers (not deleted)' : 'show to customers again'}` };
+    case 'rename_item': return { icon: '✎', text: `Rename item: ${op.name} → ${op.new_name}` };
+    case 'delete_photo': {
+      const where = { main: 'main shop photo', owner: 'owner photo', gallery: `gallery photo ${op.index}`, product: `photo of ${op.name}` }[op.kind];
+      return { icon: '🗑', text: `Delete ${where} (the item stays)`, danger: true };
+    }
     case 'delete_item': return { icon: '🗑', text: `Delete item: ${op.name}`, danger: true };
     case 'set_info': { const old = info[op.field]; return { icon: 'ⓘ', text: `${FIELD_LABELS[op.field] || op.field}: ${old ? `${old} → ` : ''}${op.value}` }; }
     case 'rename_bot': return { icon: '🤖', text: `Assistant name → ${op.value}` };
