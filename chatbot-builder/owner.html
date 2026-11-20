@@ -45,6 +45,7 @@
         <h2>Shop information</h2>
         <p class="muted">Shown on your customer page and used by the assistant. You can also change these from the chat above.</p>
         <form class="info-form" id="infoForm">
+          <label class="wide">Shop name <input name="shop_name" maxlength="80" placeholder="Your shop name"></label>
           <label>Timings <input name="timings" maxlength="120" placeholder="10:00 AM – 8:30 PM"></label>
           <label>Weekly holiday <input name="weekly_holiday" maxlength="60" placeholder="Sunday"></label>
           <label>Address <input name="address" maxlength="200" placeholder="Shop number, street, landmark, city"></label>
@@ -55,6 +56,12 @@
           <div class="about-tools"><button class="btn btn-light" type="button" id="aboutWrite">✨ Write it for me</button> <span class="muted" id="aboutNote"></span></div>
           <div><button class="btn" type="submit">Save information</button></div>
         </form>
+      </section>
+
+      <section class="card" id="sectionsCard">
+        <h2>Customer page sections</h2>
+        <p class="muted">Hide a section to stop customers seeing it. Nothing is deleted, and you can show it again any time. You can also say it in "Update with chat".</p>
+        <div class="section-toggles" id="sectionToggles"></div>
       </section>
 
       <section class="card help-card">
@@ -189,6 +196,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=11"></script>
+  <script type="module" src="./owner.js?v=12"></script>
 </body>
 </html>

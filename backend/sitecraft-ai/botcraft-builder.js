@@ -1,5 +1,5 @@
 import { CORE_QUESTIONS, callWithFallback, generateQuestionBank, toBankRecord } from "./botcraft-question-bank.js";
-import { ABOUT_SCHEMA, INFO_FIELDS, PLAN_SCHEMA, buildAboutPrompt, buildPlanPrompt, cleanAbout, cleanPlan, templateAbout } from "./botcraft-owner-update.js";
+import { ABOUT_SCHEMA, INFO_FIELDS, SECTIONS, PLAN_SCHEMA, buildAboutPrompt, buildPlanPrompt, cleanAbout, cleanPlan, templateAbout } from "./botcraft-owner-update.js";
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
@@ -952,6 +952,7 @@ async function ownerView(env, shopId) {
   return {
     ok: true,
     savedAnswers,
+    hiddenSections: Array.isArray(settings.hiddenSections) ? settings.hiddenSections : [],
     shopName: facts.shop_name || "",
     botName: botName(facts),
     defaultBotName: botName({ ...facts, bot_name: "" }),
@@ -1215,6 +1216,12 @@ async function handleOwner(request, env, origin, ctx) {
   } else if (action === "save_answer" || action === "delete_answer" || action === "hide_answer") {
     const error = await changeAnswer(env, shopId, action, body);
     if (error) return reply({ ok: false, error }, 400, origin);
+  } else if (action === "set_section") {
+    const section = String(body?.section || "");
+    if (!SECTIONS.includes(section)) return reply({ ok: false, error: "Unknown section." }, 400, origin);
+    const current = await loadSettings(env, shopId);
+    const rest = (current.hiddenSections || []).filter(item => item !== section);
+    await saveSettings(env, shopId, { hiddenSections: body?.hidden === false ? rest : [...rest, section] });
   } else if (action === "add_note") {
     const note = clip(body?.note, 300);
     if (!note) return reply({ ok: false, error: "Please write the information." }, 400, origin);
@@ -1230,6 +1237,7 @@ async function handleOwner(request, env, origin, ctx) {
       let value = clip(body.info[key], max);
       if (key === "call_number" || key === "whatsapp_number") value = value.replace(/\D/g, "").slice(0, 13);
       if (key === "map_link" && value && !/^https?:\/\/[^\s]+$/i.test(value)) continue;
+      if (key === "shop_name" && !value) continue; // the shop always keeps a name
       patch[key] = value;
     }
     if (Object.keys(patch).length) await updateFacts(env, shopId, patch);

@@ -6,11 +6,12 @@
 // tested without a database or an AI key.
 
 export const INFO_FIELDS = {
-  timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400
+  shop_name: 80, timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400
 };
-const OP_TYPES = ["set_price", "set_stock", "set_details", "add_item", "delete_item", "rename_item", "delete_photo", "set_visibility", "edit_answer", "delete_answer", "set_answer_visibility", "add_note", "set_info", "rename_bot", "attach_photo"];
+const OP_TYPES = ["set_price", "set_stock", "set_details", "add_item", "delete_item", "rename_item", "delete_photo", "set_visibility", "set_section", "edit_answer", "delete_answer", "set_answer_visibility", "add_note", "set_info", "rename_bot", "attach_photo"];
 const PHOTO_KINDS = ["product", "main", "owner", "gallery"];
 const MAX_OPS = 12;
+export const SECTIONS = ["about", "gallery", "map"];
 
 export const PLAN_SCHEMA = {
   type: "OBJECT",
@@ -26,6 +27,7 @@ export const PLAN_SCHEMA = {
           price: { type: "STRING", description: "price text with the rupee sign, e.g. ₹52,000" },
           details: { type: "STRING", description: "item details text" },
           out_of_stock: { type: "BOOLEAN", description: "true when the item is finished, false when it is back" },
+          section: { type: "STRING", enum: SECTIONS, description: "customer page section (set_section)" },
           answer_id: { type: "STRING", description: "id of a saved answer from the list, exactly as written (edit_answer, delete_answer, set_answer_visibility)" },
           new_name: { type: "STRING", description: "the item's new name (rename_item)" },
           photo_index: { type: "INTEGER", description: "1-based number of the gallery photo to delete (delete_photo, photo_kind gallery)" },
@@ -65,8 +67,9 @@ export function buildPlanPrompt(products, info, imageCount, savedAnswers = []) {
     "- delete_answer: remove one saved answer (answer_id). Only when the owner clearly says delete/remove.",
     "- set_answer_visibility: hide a saved answer from customers without deleting it (hidden true), or show it again (hidden false).",
     "- add_note: new information the assistant should tell customers that matches no existing answer, for example a new offer or policy (value = one clear sentence). If an existing saved answer covers it, use edit_answer instead.",
+    "- set_section: hide or show a whole section of the customer web page without deleting anything. section is about, gallery (photos) or map (directions link); hidden true to hide, false to show again.",
     "- delete_item: remove an existing item, only when the owner clearly says delete/remove.",
-    "- set_info: change shop information. field is one of: timings, weekly_holiday, address, call_number, whatsapp_number, map_link, about.",
+    "- set_info: change shop information. field is one of: shop_name, timings, weekly_holiday, address, call_number, whatsapp_number, map_link, about.",
     "- rename_bot: the assistant's name (value).",
     `- attach_photo: a photo the owner sent (image = 0-based number, ${imageCount} sent). photo_kind: product (name = the item it shows), main (shop front), owner (the owner), gallery.`,
     "Use the EXACT item name from the list below when the owner means an existing item. Prices keep the rupee sign and Indian digit grouping (₹52,000).",
@@ -116,6 +119,9 @@ export function cleanPlan(raw, products, imageCount = 0, savedAnswers = []) {
       else if (type === "set_visibility") ops.push({ type, name: product.name, key: product.name_key, hidden: op.hidden !== false });
       else if (type === "set_details") ops.push({ type, name: product.name, key: product.name_key, details: clip(op.details, 600) });
       else ops.push({ type, name: product.name, key: product.name_key });
+    } else if (type === "set_section") {
+      const section = String(op.section || "");
+      if (SECTIONS.includes(section)) ops.push({ type, section, hidden: op.hidden !== false });
     } else if (type === "edit_answer" || type === "delete_answer" || type === "set_answer_visibility") {
       const answer = answerById.get(String(op.answer_id || ""));
       if (!answer) { dropped.push(clip(op.answer_id || op.name, 120)); continue; }

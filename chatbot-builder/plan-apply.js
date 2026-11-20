@@ -44,6 +44,10 @@ export async function applyPlan({ ops, images = [], call, getView }) {
         undoable = false;
         ok = await call('delete_answer', { answerId: answer.id });
       }
+    } else if (op.type === 'set_section') {
+      const was = (getView().hiddenSections || []).includes(op.section);
+      undo.push({ action: 'set_section', data: { section: op.section, hidden: was } });
+      ok = await call('set_section', { section: op.section, hidden: op.hidden });
     } else if (op.type === 'add_note') {
       undoable = false;
       ok = await call('add_note', { note: op.value });

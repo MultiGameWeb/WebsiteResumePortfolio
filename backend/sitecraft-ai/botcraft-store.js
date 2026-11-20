@@ -239,7 +239,16 @@ export async function loadPublicShop(env, publicId) {
   ]);
   // Answers the owner hid stay saved but never reach customers or the bot.
   const settings = await loadSettings(env, row.shop_id);
-  return { ...withoutHidden({ ...shop, ownerAnswers }, settings.hiddenAnswers), shopId: row.shop_id, products, photos };
+  const visible = withoutHidden({ ...shop, ownerAnswers }, settings.hiddenAnswers);
+  // Page sections the owner hid (about, gallery, map): customers never get them.
+  const hiddenSections = new Set(settings.hiddenSections || []);
+  const facts = { ...visible.facts };
+  if (hiddenSections.has("about")) delete facts.about;
+  if (hiddenSections.has("map")) delete facts.map_link;
+  return {
+    ...visible, facts, shopId: row.shop_id, products,
+    photos: hiddenSections.has("gallery") ? photos.filter(photo => photo.kind !== "gallery") : photos
+  };
 }
 
 const nameKey = name => String(name).toLowerCase().replace(/\s+/g, " ").trim();
@@ -257,8 +266,9 @@ export async function updateFacts(env, shopId, patch) {
   const row = await db.prepare("SELECT facts_json FROM botcraft_shops WHERE shop_id = ?").bind(shopId).first();
   if (!row) return null;
   const facts = { ...JSON.parse(row.facts_json || "{}"), ...patch };
-  await db.prepare("UPDATE botcraft_shops SET facts_json = ?, updated_at = ? WHERE shop_id = ?")
-    .bind(JSON.stringify(facts), new Date().toISOString(), shopId).run();
+  // The shop name also lives in its own column (used for lists), so keep both the same.
+  await db.prepare("UPDATE botcraft_shops SET facts_json = ?, shop_name = ?, updated_at = ? WHERE shop_id = ?")
+    .bind(JSON.stringify(facts), String(facts.shop_name || ""), new Date().toISOString(), shopId).run();
   return facts;
 }
 

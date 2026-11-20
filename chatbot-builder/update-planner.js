@@ -20,6 +20,8 @@ const KW = {
   hide: /\b(hide|hidden|don'?t show|do not show|stop showing|daachu|dachu|dachandi|daachandi)\b|దాచు|దాచండి|దాచేయి|छुपा|छिपा/i,
   rename: /^\s*(?:please\s+)?(?:rename|change (?:the )?name of|change name of)\s+(.+?)\s+(?:to|as|into)\s+(.+)$/i,
   delPhoto: /\b(delete|remove|erase|take (?:off|down))\b[^.]*\b(photo|picture|pic|image)\b|\b(photo|picture|pic|image)\b[^.]*\b(delete|remove|erase)\b|(ఫోటో|ఫొటో).*(తొలగించు|తీసేయి|తీసివేయి|డిలీట్)|(తొలగించు|తీసేయి|డిలీట్).*(ఫోటో|ఫొటో)|फोटो.*(हटा|डिलीट)|(हटा|डिलीट).*फोटो/i,
+  shopName: /^\s*(?:shop|business|store)\s*name\b[\s:,-]*(?:to|is|=|as)?\s*|^\s*(?:change|rename|update)\s+(?:the\s+|my\s+)?(?:shop|business|store)(?:\s+name)?\s+(?:to|as)\s+|^\s*(?:షాప్ పేరు|దుకాణం పేరు|दुकान का नाम)\s*[:\-]?\s*/i,
+  sectionWord: /\b(about(?: us| section)?|gallery|photos? section|map|directions?|location link)\b|గ్యాలరీ|మ్యాప్/i,
   del: /\b(delete|remove|drop|tholagimchu|teesey|teeseyi)\b|తొలగించు|తీసేయి|తీసివేయి|డిలీట్|हटा|हटाएं|हटाओ|डिलीट/i,
   add: /^\s*(add|new item|new|create|insert|jodinchu)\b|^\s*(జోడించు|కొత్త|యాడ్|जोड़ें|जोड़|नया)/i,
   timings: /\b(timings?|timing|opening hours?|open(?:s|ing)?|hours|working hours)\b|టైమింగ్స్|సమయం|సమయాలు|समय|खुलने/i,
@@ -171,6 +173,15 @@ export function planLocally(text, { products = [], imageCount = 0 } = {}) {
     if (urlMatch && /maps|goo\.gl|g\.page/i.test(urlMatch[0])) { ops.push({ type: 'set_info', field: 'map_link', value: urlMatch[0] }); continue; }
     const botMatch = clause.match(KW.bot);
     if (botMatch) { const value = clause.slice(botMatch.index + botMatch[0].length).trim(); if (value) { ops.push({ type: 'rename_bot', value: value.slice(0, 40) }); continue; } }
+    const nameMatch = clause.match(KW.shopName);
+    if (nameMatch && clause.length > nameMatch[0].length + 1 && !KW.bot.test(clause)) { ops.push({ type: 'set_info', field: 'shop_name', value: clause.slice(nameMatch[0].length).trim().replace(/^["'“”]|["'“”]$/g, '').slice(0, 80) }); continue; }
+    // Hide or show a whole section of the customer page ("hide gallery", "show map again").
+    const wantsShow = KW.unhide.test(lower) || /\b(show|unhide|display|visible)\b/.test(lower);
+    if (KW.sectionWord.test(lower) && (KW.hide.test(lower) || wantsShow) && !matchProduct(clause, products).product) {
+      const section = /\b(gallery|photos? section)\b|గ్యాలరీ/i.test(lower) ? 'gallery' : /\b(map|directions?|location link)\b|మ్యాప్/i.test(lower) ? 'map' : 'about';
+      ops.push({ type: 'set_section', section, hidden: KW.hide.test(lower) && !wantsShow });
+      continue;
+    }
     const aboutMatch = clause.match(KW.about);
     if (aboutMatch && clause.length > aboutMatch[0].length + 5) { ops.push({ type: 'set_info', field: 'about', value: clause.slice(aboutMatch[0].length).trim().slice(0, 400) }); continue; }
     const addressMatch = clause.match(KW.address);
@@ -300,7 +311,7 @@ function findProductByWord(clause, products) {
 // A readable line for each change (used on the confirm card).
 export function describeOp(op, products = [], info = {}) {
   const find = (key) => products.find((p) => p.name_key === key);
-  const FIELD_LABELS = { timings: 'Timings', weekly_holiday: 'Weekly holiday', address: 'Address', call_number: 'Phone', whatsapp_number: 'WhatsApp', map_link: 'Map link', about: 'About' };
+  const FIELD_LABELS = { shop_name: 'Shop name', timings: 'Timings', weekly_holiday: 'Weekly holiday', address: 'Address', call_number: 'Phone', whatsapp_number: 'WhatsApp', map_link: 'Map link', about: 'About' };
   switch (op.type) {
     case 'set_price': { const old = find(op.key)?.price_text; return { icon: '₹', text: `${op.name}: price ${old ? `${old} → ` : ''}${op.price}` }; }
     case 'set_stock': return { icon: op.out_of_stock ? '⛔' : '✅', text: `${op.name}: mark ${op.out_of_stock ? 'out of stock' : 'back in stock'}` };
@@ -311,6 +322,10 @@ export function describeOp(op, products = [], info = {}) {
     case 'delete_answer': return { icon: '🗑', text: `Delete answer: ${op.question}`, danger: true };
     case 'set_answer_visibility': return { icon: op.hidden ? '🙈' : '👁', text: `Answer “${op.question}”: ${op.hidden ? 'hide from customers (not deleted)' : 'show to customers again'}` };
     case 'add_note': return { icon: '＋', text: `Add information for customers: ${op.value}` };
+    case 'set_section': {
+      const label = { about: 'About section', gallery: 'Gallery section', map: 'Map / directions' }[op.section] || op.section;
+      return { icon: op.hidden ? '🙈' : '👁', text: `${label}: ${op.hidden ? 'hide from customers (not deleted)' : 'show to customers again'}` };
+    }
     case 'rename_item': return { icon: '✎', text: `Rename item: ${op.name} → ${op.new_name}` };
     case 'delete_photo': {
       const where = { main: 'main shop photo', owner: 'owner photo', gallery: `gallery photo ${op.index}`, product: `photo of ${op.name}` }[op.kind];

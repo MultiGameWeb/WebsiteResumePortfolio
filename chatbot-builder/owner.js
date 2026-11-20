@@ -2,7 +2,7 @@
 // customer sees is changed from here (or from the setup chat). The private
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
-import { initUpdateChat } from './owner-update.js?v=4';
+import { initUpdateChat } from './owner-update.js?v=5';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';
@@ -232,6 +232,19 @@ function answerCard(item) {
   return card;
 }
 
+const SECTION_LABELS = [['about', 'About us'], ['gallery', 'Gallery photos'], ['map', 'Map / directions button']];
+function renderSections() {
+  const hidden = view.hiddenSections || [];
+  $('#sectionToggles').replaceChildren(...SECTION_LABELS.map(([key, label]) => {
+    const isHidden = hidden.includes(key);
+    const row = element('div', 'item-actions');
+    row.append(element('span', 'item-name', label));
+    if (isHidden) row.querySelector('.item-name').append(element('span', 'badge', 'Hidden from customers'));
+    row.append(actionButton(isHidden ? 'Show to customers' : 'Hide', 'btn-light', () => call('set_section', { section: key, hidden: !isHidden })));
+    return row;
+  }));
+}
+
 function renderAnswers() {
   const list = view.savedAnswers || [];
   $('#answersCard').hidden = !list.length;
@@ -348,7 +361,7 @@ function renderFeatures() {
   for (const key of FEATURE_KEYS) form.elements[key].checked = Boolean(view.features?.[key]);
 }
 
-const INFO_KEYS = ['timings', 'weekly_holiday', 'address', 'call_number', 'whatsapp_number', 'map_link', 'about'];
+const INFO_KEYS = ['shop_name', 'timings', 'weekly_holiday', 'address', 'call_number', 'whatsapp_number', 'map_link', 'about'];
 
 function renderInfo() {
   const form = $('#infoForm');
@@ -382,6 +395,7 @@ function render() {
   renderInfo();
   renderQuestions();
   renderAnswers();
+  renderSections();
   renderRequests();
   renderOrders();
   renderFeatures();
