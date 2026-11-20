@@ -1,0 +1,33 @@
+# BotCraft + website pricing (decided November 2026)
+
+Rule decided by the owner of SiteCraft: for every option, our cost plus 40%, then 40% again on that price. The customer pays the final price (cost x 1.96, rounded up).
+
+## Our cost per website
+- Chatbot and web page creation: Rs 599, once.
+- R2 storage (5 GB) and Cloudflare hosting: Rs 101 per year (a safe estimate; Cloudflare has no per-site fee, see below).
+
+## Packages (website, chatbot, QR poster, owner chat and voice updates, hosting, 5 GB storage)
+| Package | Our cost | Customer price |
+|---|---|---|
+| Starter, 1 year | Rs 700 | Rs 1,399 |
+| Growth, 2 years (recommended) | Rs 801 | Rs 1,599 |
+| Pro, 3 years | Rs 902 | Rs 1,799 |
+
+Renewal after the term: Rs 101 x 1.96 = Rs 198, so Rs 199 per year (hosting and storage).
+
+## Replies
+Replies are not a subscription. They are usage packs the shop recharges when they run out (even if 10,000 are used in one day).
+Price per pack = Gemini cost x 1.96, rounded up. Planned packs: 1,000, 5,000, 10,000 and 25,000 replies.
+Not priced yet: needs the current Gemini Flash-Lite input and output rates (https://ai.google.dev/gemini-api/docs/pricing) and the real tokens used per reply.
+
+## Not counted yet
+- Payment gateway fee and GST.
+- Custom domain (separate yearly cost, if the customer wants one).
+
+## Cloudflare notes (checked November 2026)
+- Workers paid plan: minimum $5 per month per account, not per website. Static asset requests are free. https://developers.cloudflare.com/workers/platform/pricing/
+- R2: $0.015 per GB-month, 10 GB free per account, no egress fee. https://developers.cloudflare.com/r2/pricing
+
+## Still to build
+- Reply metering (token usage per reply), reply balance, recharge and the out-of-replies behaviour.
+- Payment gate. The landing page (`ai-chatbots.html`) still says "Rs 1,999, 10,000 replies included" and must be updated.
