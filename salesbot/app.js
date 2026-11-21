@@ -749,6 +749,7 @@ async function ask(text, product = null, { voice = false } = {}) {
   }
   busy = true;
   send.disabled = true;
+  let noReplies = false;
   const typing = addMessage('bot', '…');
   typing.classList.add('typing');
   try {
@@ -759,7 +760,7 @@ async function ask(text, product = null, { voice = false } = {}) {
     });
     const data = await response.json();
     typing.remove();
-    if (!response.ok || !data.ok) throw new Error(data.error);
+    if (!response.ok || !data.ok) { noReplies = data.code === 'no_replies'; throw new Error(data.error); }
     history.push({ role: 'customer', text: question }, { role: 'bot', text: data.reply });
     addMessage('bot', data.reply, data.suggestions || []);
     return data.reply;
@@ -767,7 +768,7 @@ async function ask(text, product = null, { voice = false } = {}) {
     // No connection or the AI is busy: answer from the saved copy.
     typing.remove();
     const answer = offlineAnswer(question);
-    addMessage('bot', `(Basic answer — AI not available right now)\n${answer}`, OFFLINE_CHIPS);
+    addMessage('bot', `(Basic answer — ${noReplies ? 'the AI assistant is resting for now' : 'AI not available right now'})\n${answer}`, OFFLINE_CHIPS);
     return answer;
   } finally {
     busy = false;

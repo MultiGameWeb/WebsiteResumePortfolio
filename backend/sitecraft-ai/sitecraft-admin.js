@@ -13,6 +13,7 @@
 // GET  /api/admin/callbacks?status=&offset=  executive call-back requests (domain, online payment, renewal)
 // POST /api/admin/callbacks { id, status: "new" | "called" | "done" }
 import { allowedOrigins, shopFeatures } from "./botcraft-builder.js";
+import { addReplies, freeRepliesFor, replyStatus } from "./botcraft-store.js";
 import { siteUrls, hostingInfo, extendedExpiry } from "./hosting.js";
 import { ensureCallbackSchema } from "./callbacks.js";
 
@@ -138,7 +139,8 @@ async function botDetail(env, shopId) {
       photos: Object.fromEntries(photos.map(p => [p.kind, p.n])),
       // What the customer bot shows now, including defaults for the business type.
       features: shopFeatures(shop.shop_type, parse(settings?.settings_json, {})),
-      products, questions, requests
+      products, questions, requests,
+      replies: await replyStatus(env, shopId, freeRepliesFor(env)).catch(() => null)
     }
   };
 }
@@ -158,6 +160,11 @@ async function updateBot(env, body) {
     settings.features = { ...(settings.features || {}), ...chosen };
     await db.prepare("INSERT INTO botcraft_settings (shop_id, settings_json, updated_at) VALUES (?, ?, ?) ON CONFLICT(shop_id) DO UPDATE SET settings_json = excluded.settings_json, updated_at = excluded.updated_at")
       .bind(shopId, JSON.stringify(settings), now).run();
+  } else if (body?.action === "add_replies") {
+    // A recharge or a gift of AI replies (negative numbers take replies away).
+    const count = Math.trunc(Number(body?.count));
+    if (!Number.isFinite(count) || count === 0 || Math.abs(count) > 1000000) return { status: 400, data: { ok: false, error: "Enter a number of replies between 1 and 1,000,000." } };
+    await addReplies(env, shopId, count, freeRepliesFor(env));
   } else {
     return { status: 400, data: { ok: false, error: "Unknown action." } };
   }

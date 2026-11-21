@@ -37,3 +37,6 @@ The owner mic uses ElevenLabs Speech to Text when the Worker has the key. Cost i
 
 ## Photo studio (AI clean studio photo)
 Estimated Gemini cost about $0.039 per image (1,290 output tokens at $30 per million; not confirmed on the official page; check before pricing). At Rs 88 per dollar that is about Rs 3.4, so about Rs 7 per photo after the x 1.96 rule. Planned as a separate pack (for example 50 photos Rs 349, 100 photos Rs 699). Until payment exists it is free with a daily cap per shop. Retries cost again and are not in these numbers.
+
+## Reply metering (built)
+Each customer AI reply uses one credit; shops start with 200 free (BOTCRAFT_FREE_REPLIES). Tokens used are logged per shop per day (admin bot panel shows average tokens per reply), so the real Gemini cost per reply can be read after a few days of use and the pack prices set (cost x 1.96). Recharge is added by the admin until payment is built. Owner-side AI (setup chat, update chat, photo studio, voice) is not metered and is a cost to us.

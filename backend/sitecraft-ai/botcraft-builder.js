@@ -6,7 +6,7 @@ import {
   GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
-  deleteAnswerRow, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
+  deleteAnswerRow, freeRepliesFor, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
 import { publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
 import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-photo-studio.js";
@@ -823,9 +823,22 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
       else out.push(m);
       return out;
     }, []);
+  // Reply metering: one credit per AI reply, taken first and given back if the AI fails.
+  const credit = await reserveReply(env, shop.shopId, freeRepliesFor(env)).catch(error => { console.error("BotCraft reply credit failed", error); return { ok: true, balance: -1 }; });
+  if (!credit.ok) {
+    return reply({ ok: false, code: "no_replies", error: "This shop's assistant has used all its AI replies for now. Basic answers still work, or please ask at the counter." }, 402, origin);
+  }
+  if (credit.balance === 20 || credit.balance === 0) {
+    await later(ctx, notifyOwner(env, shop.shopId, {
+      title: credit.balance === 0 ? "Your assistant has no AI replies left" : "Your assistant has 20 AI replies left",
+      body: "Customers still get basic answers. Recharge to keep the full AI assistant.", url: "owner.html#replies", tag: "botcraft-replies"
+    }));
+  }
   const modelErrors = [];
+  let usage = null;
   try {
     const { result } = await callWithFallback(env, {
+      onUsage: metadata => { usage = metadata; },
       system: salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true ? VOICE_RULE : ""),
       contents,
       schema: SALESBOT_SCHEMA,
@@ -840,12 +853,18 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
       const isNew = await logUnanswered(env, shop.shopId, text, product?.name || "").catch(error => console.error("BotCraft question log failed", error));
       if (isNew) await later(ctx, notifyOwner(env, shop.shopId, { title: "New customer question", body: clip(text, 140), url: "owner.html#questions", tag: "botcraft-questions" }));
     }
+    // What this reply cost in tokens (thinking tokens are billed as output).
+    await later(ctx, recordUsage(env, shop.shopId, {
+      inTokens: Number(usage?.promptTokenCount) || 0,
+      outTokens: (Number(usage?.candidatesTokenCount) || 0) + (Number(usage?.thoughtsTokenCount) || 0)
+    }).catch(error => console.error("BotCraft usage log failed", error)));
     return reply({
       ok: true,
       reply: clip(result?.reply, 1500) || "Sorry, please ask again.",
       suggestions: (Array.isArray(result?.suggestions) ? result.suggestions : []).map(q => clip(q, 80)).filter(Boolean).slice(0, 3)
     }, 200, origin);
   } catch (error) {
+    if (credit.balance >= 0) await releaseReply(env, shop.shopId).catch(() => {});
     console.error("BotCraft salesbot failed", error, modelErrors);
     return reply({ ok: false, error: "The assistant is busy right now. Please try again in a moment, or ask at the counter." }, 503, origin);
   }
@@ -965,9 +984,11 @@ async function ownerView(env, shopId, url) {
   ]);
   const savedAnswers = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, await resolveBank(env, facts), answeredQuestions, settings.hiddenAnswers);
   const page = await shopPageInfo(env, url, settings.pageSlug);
+  const replies = await replyStatus(env, shopId, freeRepliesFor(env)).catch(() => null);
   return {
     ok: true,
     page,
+    replies,
     savedAnswers,
     premiumVoice: premiumVoiceAvailable(env),
     photoStudio: { available: photoStudioAvailable(env), leftToday: studioLeftToday(env, settings) },

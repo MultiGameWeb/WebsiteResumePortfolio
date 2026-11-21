@@ -150,6 +150,7 @@ Engines: Normal, Narration and News use Sarvam Bulbul for Indian scripts; acting
 | `BOTCRAFT_IMAGE_GEMINI_API_KEY` | secret | Optional key for the BotCraft photo studio (clean studio photos). Falls back to `BOTCRAFT_GEMINI_API_KEY` |
 | `BOTCRAFT_IMAGE_MODEL` | variable | optional, default `gemini-2.5-flash-image` |
 | `BOTCRAFT_STUDIO_DAILY_LIMIT` | variable | clean-ups per shop per day, default 20 (spending cap) |
+| `BOTCRAFT_FREE_REPLIES` | variable | free AI replies for every new shop, default 200. Set 0 to give none |
 | `VOICE_FREE_WALLETS_PER_IP` | variable | free wallets per IP per day, default 2 |
 | `VOICE_DISABLED` | variable | `true` switches the studio off |
 | `VOICE_PAYMENTS` | variable | `off` holds buying packs while testing (free words and `/grant` still work) |

@@ -96,7 +96,7 @@
         closed: state.requests.filter(function (r) { return r.kind !== 'order' && ['done', 'rejected'].indexOf(r.status) !== -1; })
       },
       orders: state.orders, features: state.features, galleryLimit: GALLERY_LIMIT,
-      hiddenSections: state.hiddenSections || [], productPhotoLimit: 5, photoStudio: { available: true, leftToday: 20 },
+      hiddenSections: state.hiddenSections || [], productPhotoLimit: 5, photoStudio: { available: true, leftToday: 20 }, replies: { balance: 187, granted: 200, used: 13, usedToday: 4, usedMonth: 13, tokens: { in: 0, out: 0, replies: 0 }, low: false },
       info: {
         shop_name: f.shop_name || '', timings: f.timings || '', weekly_holiday: f.weekly_holiday || '', address: f.address || '',
         call_number: f.call_number || '', whatsapp_number: f.whatsapp_number || '', map_link: f.map_link || '', about: f.about || ''

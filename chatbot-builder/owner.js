@@ -338,6 +338,24 @@ function answerCard(item) {
   return card;
 }
 
+function renderReplies() {
+  const replies = view.replies;
+  $('#replies').hidden = !replies;
+  if (!replies) return;
+  const line = (label, value) => { const row = element('div', 'item-actions'); row.append(element('strong', '', label), element('span', '', ` ${value}`)); return row; };
+  $('#repliesInfo').replaceChildren(
+    line('Replies left:', replies.balance.toLocaleString()),
+    line('Used this month:', replies.usedMonth.toLocaleString()),
+    line('Used today:', replies.usedToday.toLocaleString()),
+  );
+  const low = $('#repliesLow');
+  low.hidden = !replies.low;
+  low.textContent = replies.balance <= 0 ? 'None left' : 'Running low';
+  $('#repliesNote').textContent = replies.low
+    ? 'Your replies are running low. To add more replies, contact SiteCraft (online recharge is coming soon).'
+    : 'Online recharge is coming soon. To add replies now, contact SiteCraft.';
+}
+
 function renderPage() {
   const page = view.page;
   const card = $('#pageCard');
@@ -531,6 +549,7 @@ function render() {
   renderAnswers();
   renderSections();
   renderPage();
+  renderReplies();
   renderRequests();
   renderOrders();
   renderFeatures();

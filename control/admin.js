@@ -206,8 +206,32 @@ function renderBot(bot) {
     for (const item of items) box.append(element('div', '', text(item)));
     return box;
   };
+  // AI replies: what is left, what was used, and what the replies really cost (tokens), plus a recharge or gift.
+  const replies = bot.replies;
+  const repliesBox = element('div');
+  if (replies) {
+    repliesBox.append(definitionList([
+      ['Replies left', number(replies.balance)], ['Given in total', number(replies.granted)], ['Used', number(replies.used)],
+      ['Used today / this month', `${number(replies.usedToday)} / ${number(replies.usedMonth)}`],
+      ['Gemini tokens (in / out)', `${number(replies.tokens.in)} / ${number(replies.tokens.out)}`],
+      ['Average per reply (in / out)', replies.tokens.replies ? `${number(Math.round(replies.tokens.in / replies.tokens.replies))} / ${number(Math.round(replies.tokens.out / replies.tokens.replies))}` : '—'],
+    ]));
+    const row = element('div', 'actions');
+    const count = element('input');
+    count.type = 'number'; count.step = '1'; count.placeholder = 'Replies to add (negative removes)'; count.setAttribute('aria-label', 'Replies to add');
+    const add = element('button', 'btn', 'Add replies');
+    add.type = 'button';
+    add.addEventListener('click', () => {
+      const n = Math.trunc(Number(count.value));
+      if (!n) { showStatus('Enter a number of replies.'); return; }
+      if (window.confirm(`${n > 0 ? 'Add' : 'Remove'} ${Math.abs(n)} AI replies for this shop?`)) updateBot({ action: 'add_replies', count: n });
+    });
+    row.append(count, add);
+    repliesBox.append(row);
+  } else repliesBox.append(element('p', 'empty', 'No reply data yet.'));
   body.replaceChildren(
     summary, actions,
+    element('h3', '', 'AI replies'), repliesBox,
     element('h3', '', 'Bot buttons'), features, featureNote,
     element('h3', '', `Items (${bot.products.length})`), list(bot.products, (p) => `${p.name} · ${p.price_text || 'no price'}${p.stock_status === 'out_of_stock' ? ' · out of stock' : ''}`),
     element('h3', '', 'Customer questions'), list(bot.questions, (q) => `${q.status === 'open' ? '❓' : q.status === 'answered' ? '✅' : '✖'} ${q.question} (${q.times}×)${q.answer ? ` → ${q.answer}` : ''}`),

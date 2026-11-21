@@ -124,6 +124,24 @@ const SCHEMA = [
     PRIMARY KEY (endpoint, shop_id, role, request_id)
   )`,
   `CREATE INDEX IF NOT EXISTS idx_botcraft_push_shop ON botcraft_push_subs(shop_id, role, request_id)`,
+  // Reply metering. A customer reply uses one credit; the shop starts with free replies and
+  // is topped up later (payment, or the admin). Atomic updates, so two customers at once never overspend.
+  `CREATE TABLE IF NOT EXISTS botcraft_replies (
+    shop_id TEXT PRIMARY KEY,
+    balance INTEGER NOT NULL DEFAULT 0,
+    granted INTEGER NOT NULL DEFAULT 0,
+    used INTEGER NOT NULL DEFAULT 0,
+    updated_at TEXT NOT NULL
+  )`,
+  // What the replies really cost: replies and Gemini tokens per shop per day.
+  `CREATE TABLE IF NOT EXISTS botcraft_usage (
+    shop_id TEXT NOT NULL,
+    day TEXT NOT NULL,
+    replies INTEGER NOT NULL DEFAULT 0,
+    in_tokens INTEGER NOT NULL DEFAULT 0,
+    out_tokens INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (shop_id, day)
+  )`,
   // Server keys made once by the Worker (the VAPID key pair for Web Push).
   `CREATE TABLE IF NOT EXISTS botcraft_keys (
     name TEXT PRIMARY KEY,
@@ -450,6 +468,70 @@ export async function setNotes(env, shopId, notes) {
   await ensureSchema(db);
   await db.prepare("UPDATE botcraft_shops SET notes_json = ?, updated_at = ? WHERE shop_id = ?")
     .bind(JSON.stringify(notes.slice(-MAX_NOTES)), new Date().toISOString(), shopId).run();
+}
+
+// ---- Reply metering ----
+export const DEFAULT_FREE_REPLIES = 200;
+export const freeRepliesFor = env => (Number(env?.BOTCRAFT_FREE_REPLIES) >= 0 && env?.BOTCRAFT_FREE_REPLIES !== undefined && env?.BOTCRAFT_FREE_REPLIES !== "" ? Math.floor(Number(env.BOTCRAFT_FREE_REPLIES)) : DEFAULT_FREE_REPLIES);
+
+// Takes one credit before the AI is asked. { ok: true, balance } or { ok: false, balance: 0 }.
+export async function reserveReply(env, shopId, freeReplies = DEFAULT_FREE_REPLIES) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const now = new Date().toISOString();
+  // A shop's first customer reply creates its row with the free replies.
+  await db.prepare("INSERT OR IGNORE INTO botcraft_replies (shop_id, balance, granted, used, updated_at) VALUES (?, ?, ?, 0, ?)").bind(shopId, freeReplies, freeReplies, now).run();
+  const taken = await db.prepare("UPDATE botcraft_replies SET balance = balance - 1, used = used + 1, updated_at = ? WHERE shop_id = ? AND balance > 0").bind(now, shopId).run();
+  if (!taken.meta?.changes) return { ok: false, balance: 0 };
+  const row = await db.prepare("SELECT balance FROM botcraft_replies WHERE shop_id = ?").bind(shopId).first();
+  return { ok: true, balance: Number(row?.balance ?? 0) };
+}
+
+// The AI failed: give the credit back.
+export async function releaseReply(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await db.prepare("UPDATE botcraft_replies SET balance = balance + 1, used = MAX(0, used - 1), updated_at = ? WHERE shop_id = ?").bind(new Date().toISOString(), shopId).run();
+}
+
+export async function recordUsage(env, shopId, { inTokens = 0, outTokens = 0 } = {}) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare(
+    "INSERT INTO botcraft_usage (shop_id, day, replies, in_tokens, out_tokens) VALUES (?, ?, 1, ?, ?) " +
+    "ON CONFLICT(shop_id, day) DO UPDATE SET replies = replies + 1, in_tokens = in_tokens + excluded.in_tokens, out_tokens = out_tokens + excluded.out_tokens"
+  ).bind(shopId, new Date().toISOString().slice(0, 10), Math.max(0, Math.floor(inTokens)), Math.max(0, Math.floor(outTokens))).run();
+}
+
+// Adds replies (a recharge or a gift). Creates the row with the free replies first when the shop has none yet.
+export async function addReplies(env, shopId, count, freeReplies = DEFAULT_FREE_REPLIES) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const now = new Date().toISOString();
+  await db.prepare("INSERT OR IGNORE INTO botcraft_replies (shop_id, balance, granted, used, updated_at) VALUES (?, ?, ?, 0, ?)").bind(shopId, freeReplies, freeReplies, now).run();
+  await db.prepare("UPDATE botcraft_replies SET balance = MAX(0, balance + ?), granted = granted + MAX(0, ?), updated_at = ? WHERE shop_id = ?").bind(count, count, now, shopId).run();
+  return replyStatus(env, shopId, freeReplies);
+}
+
+// What the owner page and the admin show. A shop that has had no customer replies yet still shows its free replies.
+export async function replyStatus(env, shopId, freeReplies = DEFAULT_FREE_REPLIES) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT balance, granted, used FROM botcraft_replies WHERE shop_id = ?").bind(shopId).first();
+  const day = new Date().toISOString().slice(0, 10);
+  const monthStart = day.slice(0, 8) + "01";
+  const [today, month, total] = await Promise.all([
+    db.prepare("SELECT replies, in_tokens, out_tokens FROM botcraft_usage WHERE shop_id = ? AND day = ?").bind(shopId, day).first(),
+    db.prepare("SELECT COALESCE(SUM(replies), 0) AS replies, COALESCE(SUM(in_tokens), 0) AS in_tokens, COALESCE(SUM(out_tokens), 0) AS out_tokens FROM botcraft_usage WHERE shop_id = ? AND day >= ?").bind(shopId, monthStart).first(),
+    db.prepare("SELECT COALESCE(SUM(replies), 0) AS replies, COALESCE(SUM(in_tokens), 0) AS in_tokens, COALESCE(SUM(out_tokens), 0) AS out_tokens FROM botcraft_usage WHERE shop_id = ?").bind(shopId).first()
+  ]);
+  const balance = row ? Number(row.balance) : freeReplies;
+  const granted = row ? Number(row.granted) : freeReplies;
+  return {
+    balance, granted, used: row ? Number(row.used) : 0,
+    usedToday: Number(today?.replies || 0), usedMonth: Number(month?.replies || 0),
+    tokens: { in: Number(total?.in_tokens || 0), out: Number(total?.out_tokens || 0), replies: Number(total?.replies || 0) },
+    low: balance <= Math.max(10, Math.floor(granted * 0.1))
+  };
 }
 
 export async function loadSettings(env, shopId) {
