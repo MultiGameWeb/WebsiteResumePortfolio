@@ -157,9 +157,11 @@ function reply(data, status, origin) {
 // The shop's own hosted page (https://<slug>.<HOSTING_DOMAIN>, or this Worker's /s/<slug>/ path)
 // may call the customer endpoints only. The owner and setup endpoints stay on the allowed list.
 const CUSTOMER_PATHS = new Set(["/api/botcraft/public", "/api/botcraft/ask", "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order", "/api/botcraft/push"]);
-function originAllowed(env, origin, path, url) {
+function originAllowed(env, origin, path, url, request) {
   if (allowedOrigins(env).has(origin)) return true;
-  if (!CUSTOMER_PATHS.has(path) || !origin) return false;
+  if (!CUSTOMER_PATHS.has(path)) return false;
+  // Browsers send no Origin on a same-origin GET (the hosted page reading its own shop data).
+  if (!origin) return request?.headers.get("Sec-Fetch-Site") === "same-origin";
   if (origin === url.origin) return true;
   const domain = String(env?.HOSTING_DOMAIN || "").trim().toLowerCase();
   return Boolean(domain) && new RegExp("^https://[a-z0-9-]{1,40}\\." + domain.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$").test(origin);
@@ -494,7 +496,7 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   if (path === "/api/botcraft/photo") return servePhoto(env, url);
 
   const origin = request.headers.get("Origin") || "";
-  if (!originAllowed(env, origin, path, url)) {
+  if (!originAllowed(env, origin, path, url, request)) {
     return new Response(JSON.stringify({ ok: false, error: "Origin not allowed." }), {
       status: 403,
       headers: { "Content-Type": "application/json; charset=utf-8" }
@@ -1132,7 +1134,8 @@ async function changeAnswer(env, shopId, action, body) {
   const value = clip(body?.answer, 600);
   if (!remove && !value) return "Please write the answer.";
   if (kind === "f") {
-    await updateFacts(env, shopId, { [key]: remove ? "" : value });
+    // A deleted answer to a setup question becomes "skipped" (not empty), so the shop still counts as set up.
+    await updateFacts(env, shopId, { [key]: remove ? "skipped" : value });
   } else if (kind === "a") {
     if (remove) await deleteAnswerRow(env, shopId, key); else await setAnswerValue(env, shopId, key, value);
   } else if (kind === "x") {

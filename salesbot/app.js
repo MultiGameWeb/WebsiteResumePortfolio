@@ -712,6 +712,16 @@ function itemLine(item) {
   return `• ${item.name}${item.price ? ` — ${item.price}` : ''}${item.out ? ' (out of stock)' : ''}`;
 }
 
+// Words that mean timings, address or phone, in English, Telugu and Hindi.
+function quickAnswer(lower, shop) {
+  if (/\b(timings?|time|open|opening|closing|close|closed|hours|holiday)\b|సమయం|టైమింగ్|సెలవు|टाइम|समय|खुलने|छुट्टी/.test(lower)) {
+    return [shop.timings && `Timings: ${shop.timings}`, shop.weeklyHoliday && `Weekly holiday: ${shop.weeklyHoliday}`].filter(Boolean).join('\n');
+  }
+  if (/\b(address|where|location|directions?|map|reach)\b|చిరునామా|ఎక్కడ|पता|कहाँ/.test(lower)) return shop.address || '';
+  if (/\b(phone|call|number|contact|whatsapp)\b|ఫోన్|नंबर|फोन/.test(lower)) return shop.call ? `Call us: ${shop.call}` : '';
+  return '';
+}
+
 function offlineAnswer(question) {
   if (!saved) return 'I need the internet to answer. Please connect, or ask at the counter.';
   const shop = saved.shop;
@@ -731,6 +741,9 @@ function offlineAnswer(question) {
   const faqHits = faqs.map((faq) => ({ faq, s: score(faq.q) * 2 + score(faq.a) })).filter((hit) => hit.s > 0)
     .sort((a, b) => b.s - a.s).slice(0, 2).map((hit) => `${hit.faq.q}\n→ ${hit.faq.a}`);
   if (!itemHits.length && !faqHits.length) {
+    // Typed questions such as "timings?" or "where is the shop": the shop's own details.
+    const quick = quickAnswer(String(question).toLowerCase(), shop);
+    if (quick) return quick;
     return 'I could not find that in the saved answers. Please ask at the counter, or try again with internet.';
   }
   return [...itemHits, ...faqHits].join('\n\n');

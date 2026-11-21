@@ -80,3 +80,8 @@
 - The owner gets a notification at 20 replies left and at 0. The owner page has an "AI replies" card (left, used today and this month, low warning). The admin bot panel shows the balance, tokens used (in/out) and average tokens per reply, and can add or remove replies (action add_replies).
 - Tables botcraft_replies and botcraft_usage (created on first use). Gemini token counts are logged per shop per day, so the real cost per reply can be worked out and the reply pack prices set.
 - Not metered yet: the owner side (setup chat, update chat, photo studio, premium voice). Online recharge and payment are not built; recharge is done by the admin for now.
+
+## Testing: end-to-end checks and three bugs they found
+- New backend/sitecraft-ai/tests/ (run with: bash backend/sitecraft-ai/tests/run.sh). It starts the real Worker locally with a local database and runs 61 checks: items, rename, sections, answers, photos, publishing and serving the shop page, origins, reply credits, admin recharge and the failure paths of the AI features. No keys or deploy needed.
+- Also run in Chromium against that local Worker: owner page (items, photo upload, hide, publish), the hosted shop page (items, photo gallery, chat fallback). No JavaScript errors.
+- Bugs found and fixed: (1) deleting a saved answer to a required setup question made the shop look unfinished, which blocked publishing (it now becomes "skipped"); (2) the hosted shop page could not load its own data because browsers send no Origin header on a same-origin GET (now allowed when Sec-Fetch-Site is same-origin, customer endpoints only); (3) the basic fallback could not answer a typed "timings?" (now understands timing, address and phone words in English, Telugu and Hindi).
