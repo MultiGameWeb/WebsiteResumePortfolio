@@ -64,3 +64,8 @@
 - Each item can have up to 5 photos (first = cover). Owner page: photo strip per item with remove and add; chat can add item photos and delete one by number ("delete photo 2 of ceiling fan"). The server refuses a sixth photo.
 - Item photos are tidied on the owner phone before saving (photo-enhance.js): right way up, centred on a square white canvas with space around, brighter when dark or flat. It does not remove a cluttered background; that needs AI image editing (paid, not built).
 - Not run in a browser yet (checked in node only; the canvas code needs a browser).
+
+## Browser check (demo mode, Chromium, phone size)
+- Item photos tidy on upload (square, white around), up to 5 per item, strip on the owner page, swipe gallery and full-screen zoom on the customer page, hide gallery and rename and delete-photo-by-number and shop name by chat: all worked.
+- Found and fixed: spoken text vanished in the setup chat when voice typing ended (the message box was rebuilt); the offline planner ignored the photo number ("delete photo 2" deleted the first); the tidy-up crushed a dark background to pure black.
+- Demo mode now supports hiding sections and the shop name field.

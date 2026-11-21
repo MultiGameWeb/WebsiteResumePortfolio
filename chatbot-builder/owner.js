@@ -2,8 +2,8 @@
 // customer sees is changed from here (or from the setup chat). The private
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
-import { enhanceProductPhoto } from './photo-enhance.js?v=1';
-import { initUpdateChat } from './owner-update.js?v=7';
+import { enhanceProductPhoto } from './photo-enhance.js?v=2';
+import { initUpdateChat } from './owner-update.js?v=8';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';

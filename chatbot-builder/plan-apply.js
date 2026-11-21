@@ -5,7 +5,7 @@
 //   call(action, data)  → Promise<boolean>: sends one owner action, refreshes the view
 //   getView()           → the latest owner view ({ products, info, customBotName, … })
 
-import { enhanceProductPhoto } from './photo-enhance.js?v=1';
+import { enhanceProductPhoto } from './photo-enhance.js?v=2';
 
 export async function applyPlan({ ops, images = [], call, getView }) {
   const undo = [];

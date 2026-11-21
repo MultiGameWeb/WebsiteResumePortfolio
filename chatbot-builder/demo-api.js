@@ -96,8 +96,9 @@
         closed: state.requests.filter(function (r) { return r.kind !== 'order' && ['done', 'rejected'].indexOf(r.status) !== -1; })
       },
       orders: state.orders, features: state.features, galleryLimit: GALLERY_LIMIT,
+      hiddenSections: state.hiddenSections || [], productPhotoLimit: 5,
       info: {
-        timings: f.timings || '', weekly_holiday: f.weekly_holiday || '', address: f.address || '',
+        shop_name: f.shop_name || '', timings: f.timings || '', weekly_holiday: f.weekly_holiday || '', address: f.address || '',
         call_number: f.call_number || '', whatsapp_number: f.whatsapp_number || '', map_link: f.map_link || '', about: f.about || ''
       }
     };
@@ -128,10 +129,10 @@
       shop: {
         name: f.shop_name, botName: f.bot_name || defaultBotName(f),
         mainPhoto: main ? main.photo_id : '', ownerPhoto: owner ? owner.photo_id : '',
-        gallery: state.photos.filter(function (p) { return p.kind === 'gallery'; }).map(function (p) { return p.photo_id; }),
+        gallery: (state.hiddenSections || []).indexOf('gallery') !== -1 ? [] : state.photos.filter(function (p) { return p.kind === 'gallery'; }).map(function (p) { return p.photo_id; }),
         type: 'Jewellery shop', address: f.address || '', timings: f.timings || '', weeklyHoliday: f.weekly_holiday || '',
-        about: f.about || '', call: digits(f.call_number), whatsapp: digits(f.whatsapp_number) || digits(f.call_number),
-        mapLink: f.map_link || '', features: state.features
+        about: (state.hiddenSections || []).indexOf('about') !== -1 ? '' : (f.about || ''), call: digits(f.call_number), whatsapp: digits(f.whatsapp_number) || digits(f.call_number),
+        mapLink: (state.hiddenSections || []).indexOf('map') !== -1 ? '' : (f.map_link || ''), features: state.features
       },
       offline: {
         faqs: faqs,
@@ -167,7 +168,7 @@
     return null;
   }
 
-  var INFO_KEYS = { timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400 };
+  var INFO_KEYS = { shop_name: 80, timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400 };
 
   function aboutFrom(facts) {
     var name = clip(facts.shop_name, 80);
@@ -275,7 +276,12 @@
       state.facts.bot_name = clip(body.name, 40);
     } else if (action === 'save_info') {
       var info = body.info || {};
-      Object.keys(INFO_KEYS).forEach(function (k) { if (typeof info[k] === 'string') state.facts[k] = clip(info[k], INFO_KEYS[k]); });
+      Object.keys(INFO_KEYS).forEach(function (k) { if (typeof info[k] === 'string' && !(k === 'shop_name' && !info[k].trim())) state.facts[k] = clip(info[k], INFO_KEYS[k]); });
+    } else if (action === 'set_section') {
+      var section = String(body.section || '');
+      if (['about', 'gallery', 'map'].indexOf(section) === -1) throw new Error('Unknown section.');
+      state.hiddenSections = (state.hiddenSections || []).filter(function (x) { return x !== section; });
+      if (body.hidden !== false) state.hiddenSections.push(section);
     } else if (action === 'generate_about') {
       state.facts.about = aboutFrom(state.facts);
       if (!state.facts.about) throw new Error('Please add your shop name first.');

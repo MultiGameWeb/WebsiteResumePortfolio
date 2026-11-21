@@ -31,7 +31,8 @@ function autoLevels(context, x, y, width, height) {
   if (!total) return;
   const mean = sum / total;
   const percentile = (share) => { let running = 0; for (let v = 0; v < 256; v += 1) { running += histogram[v]; if (running >= total * share) return v; } return 255; };
-  const low = percentile(0.01);
+  // Never move the black point far: a dark photo with a big dark background must not turn pure black.
+  const low = Math.min(percentile(0.01), 12);
   const high = percentile(0.99);
   const range = Math.max(1, high - low);
   // Flat photos get stretched (at most 1.7x); photos that already use the full range are left alone.

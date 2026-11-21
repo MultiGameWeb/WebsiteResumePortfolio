@@ -92,6 +92,15 @@ export function matchProduct(clause, products) {
   return { product: top.product, ambiguous: [], matchedTokens: top.hits };
 }
 
+// "photo 2", "2nd photo", "second photo" -> 2 (0 when no number is given).
+const ORDINALS = { first: 1, second: 2, third: 3, fourth: 4, fifth: 5 };
+function photoNumber(lower) {
+  const word = lower.match(/\b(first|second|third|fourth|fifth)\s+(?:photo|picture|pic|image)\b/);
+  if (word) return ORDINALS[word[1]];
+  const digit = lower.match(/\b(?:photo|picture|pic|image)\s*(?:no\.?|number|#)?\s*(\d)\b|\b(\d)(?:st|nd|rd|th)?\s+(?:photo|picture|pic|image)\b/);
+  return digit ? Number(digit[1] || digit[2]) : 0;
+}
+
 function formatTime(hour, minute, suffix) {
   const h = hour % 12 === 0 ? 12 : hour % 12;
   return `${h}:${String(minute).padStart(2, '0')} ${suffix}`;
@@ -225,7 +234,7 @@ export function planLocally(text, { products = [], imageCount = 0 } = {}) {
       } else {
         const found = matchProduct(clause, products);
         if (found.ambiguous.length) questions.push(`Which item do you mean: ${found.ambiguous.join(' or ')}?`);
-        else if (found.product) ops.push({ type: 'delete_photo', kind: 'product', name: found.product.name, key: found.product.name_key });
+        else if (found.product) { const number = photoNumber(lower); ops.push({ type: 'delete_photo', kind: 'product', name: found.product.name, key: found.product.name_key, ...(number ? { index: number } : {}) }); }
         else questions.push('Which photo should I delete? Say the item name, “main photo”, “owner photo” or “gallery photo 2”.');
       }
       continue;

@@ -1,7 +1,7 @@
 import { apiBase, createBot, currentBotId, premiumVoiceOn, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261120e';
 import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
-import { applyPlan, runUndo } from './plan-apply.js?v=7';
-import { describeOp, planLocally } from './update-planner.js?v=6';
+import { applyPlan, runUndo } from './plan-apply.js?v=8';
+import { describeOp, planLocally } from './update-planner.js?v=7';
 import {
   ImageLightbox,
   InputBar,
@@ -664,7 +664,10 @@ async function finishPremiumRecording() {
   recording = null;
   if (!active) return;
   state.micActive = false;
+  const typed = inputHost.querySelector('#messageInput')?.value || '';
   render();
+  const typedBox = inputHost.querySelector('#messageInput');
+  if (typedBox && typed) { typedBox.value = typed; syncComposerControls(); }
   showToast('Turning your voice into text…');
   const result = await active.stop();
   if (result.error) {
@@ -681,7 +684,14 @@ function setMicState() {
   if (recording) { finishPremiumRecording(); return; }
   if (!recognizer && usePremium()) { startPremiumRecording(); return; }
   if (!Recognition) { showToast('Voice typing is not supported in this browser. Please type your answer.'); return; }
-  if (recognizer) { stopListening(); render(); return; }
+  if (recognizer) {
+    stopListening();
+    const kept = inputHost.querySelector('#messageInput')?.value || '';
+    render();
+    const box = inputHost.querySelector('#messageInput');
+    if (box && kept) { box.value = kept; syncComposerControls(); }
+    return;
+  }
   const textarea = inputHost.querySelector('#messageInput');
   spokenBefore = textarea?.value ? `${textarea.value.trim()} ` : '';
   const active = new Recognition();
@@ -706,8 +716,11 @@ function setMicState() {
     if (recognizer !== active) return;
     recognizer = null;
     state.micActive = false;
+    // render() builds a new message box: keep what was spoken and typed.
+    const kept = inputHost.querySelector('#messageInput')?.value || '';
     render();
-    inputHost.querySelector('#messageInput')?.focus({ preventScroll: true });
+    const box = inputHost.querySelector('#messageInput');
+    if (box) { box.value = kept; autosizeTextarea(box); syncComposerControls(); box.focus({ preventScroll: true }); }
   };
   try {
     active.start();
