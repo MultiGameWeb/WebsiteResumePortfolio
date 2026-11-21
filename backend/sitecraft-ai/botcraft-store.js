@@ -132,6 +132,7 @@ const SCHEMA = [
 ];
 
 export const GALLERY_LIMIT = 10;
+export const PRODUCT_PHOTO_LIMIT = 5; // photos per item (front, side, close-up ...)
 const SHOP_PHOTO_LIMIT = 500;
 
 const MAX_NOTES = 200;
@@ -278,7 +279,7 @@ export async function listProducts(env, shopId, { includeHidden = false } = {}) 
   await ensureSchema(db);
   const rows = await db.prepare(
     "SELECT p.name_key, p.name, p.price_text, p.details, p.stock_status, " +
-    "(SELECT photo_id FROM botcraft_photos f WHERE f.shop_id = p.shop_id AND f.kind = 'product' AND f.product_key = p.name_key LIMIT 1) AS photo_id " +
+    "(SELECT photo_id FROM botcraft_photos f WHERE f.shop_id = p.shop_id AND f.kind = 'product' AND f.product_key = p.name_key ORDER BY f.created_at LIMIT 1) AS photo_id " +
     "FROM botcraft_products p WHERE p.shop_id = ? " + (includeHidden ? "" : "AND p.stock_status != 'hidden' ") + "ORDER BY p.updated_at DESC LIMIT 500"
   ).bind(shopId).all();
   return rows.results || [];
@@ -339,7 +340,11 @@ export async function savePhoto(env, shopId, { kind, productKey = "", mime, byte
   if ((count?.n || 0) >= SHOP_PHOTO_LIMIT) return { error: "This shop has reached its photo limit." };
   const photoId = crypto.randomUUID().replace(/-/g, "");
   const statements = [];
-  if (kind !== "gallery") {
+  if (kind === "product") {
+    // An item keeps several photos; the first one is its cover.
+    const have = await db.prepare("SELECT COUNT(*) AS n FROM botcraft_photos WHERE shop_id = ? AND kind = 'product' AND product_key = ?").bind(shopId, productKey).first();
+    if ((have?.n || 0) >= PRODUCT_PHOTO_LIMIT) return { error: `An item holds up to ${PRODUCT_PHOTO_LIMIT} photos. Remove one first.` };
+  } else if (kind !== "gallery") {
     statements.push(db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = ? AND product_key = ?").bind(shopId, kind, productKey));
   }
   statements.push(db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")

@@ -30,7 +30,7 @@ export const PLAN_SCHEMA = {
           section: { type: "STRING", enum: SECTIONS, description: "customer page section (set_section)" },
           answer_id: { type: "STRING", description: "id of a saved answer from the list, exactly as written (edit_answer, delete_answer, set_answer_visibility)" },
           new_name: { type: "STRING", description: "the item's new name (rename_item)" },
-          photo_index: { type: "INTEGER", description: "1-based number of the gallery photo to delete (delete_photo, photo_kind gallery)" },
+          photo_index: { type: "INTEGER", description: "1-based number of the photo to delete (delete_photo: a gallery photo, or one of an item's photos; the first is the cover)" },
           hidden: { type: "BOOLEAN", description: "true to hide the item from customers, false to show it again (set_visibility)" },
           field: { type: "STRING", enum: Object.keys(INFO_FIELDS), description: "which shop information to change (set_info)" },
           value: { type: "STRING", description: "the new value (set_info, rename_bot)" },
@@ -62,7 +62,7 @@ export function buildPlanPrompt(products, info, imageCount, savedAnswers = []) {
     "- add_item: a NEW item (name, price, details). Use it only when the owner clearly adds something new.",
     "- set_visibility: hide an existing item from customers without deleting it (hidden true), or show a hidden item again (hidden false). Use it when the owner says hide / don't show / show again.",
     "- rename_item: change an existing item's name (name = its current name, new_name).",
-    "- delete_photo: remove a photo without deleting the item. photo_kind: product (name = the item), main (shop front), owner, or gallery (photo_index = its number, counting from 1). Use it only when the owner clearly says delete/remove the photo.",
+    "- delete_photo: remove a photo without deleting the item. photo_kind: product (name = the item), main (shop front), owner, or gallery (photo_index = its number, counting from 1). An item can have up to 5 photos; say which one with photo_index. Use it only when the owner clearly says delete/remove the photo.",
     "- edit_answer: change what the assistant tells customers for one saved answer (answer_id from the list below, value = the new answer text).",
     "- delete_answer: remove one saved answer (answer_id). Only when the owner clearly says delete/remove.",
     "- set_answer_visibility: hide a saved answer from customers without deleting it (hidden true), or show it again (hidden false).",
@@ -146,7 +146,8 @@ export function cleanPlan(raw, products, imageCount = 0, savedAnswers = []) {
       if (kind === "product") {
         const product = findProduct(products, op.name);
         if (!product) { dropped.push(clip(op.name, 120)); continue; }
-        ops.push({ type, kind, name: product.name, key: product.name_key });
+        const number = Number(op.photo_index);
+        ops.push({ type, kind, name: product.name, key: product.name_key, ...(Number.isInteger(number) && number >= 1 ? { index: number } : {}) });
       } else if (kind === "gallery") {
         const index = Number(op.photo_index);
         if (Number.isInteger(index) && index >= 1) ops.push({ type, kind, index });

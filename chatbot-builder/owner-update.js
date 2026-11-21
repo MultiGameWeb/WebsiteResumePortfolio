@@ -6,7 +6,7 @@
 // (no key yet, offline, busy, or demo mode) the rule-based planner in
 // update-planner.js is used instead, and the screen says so.
 
-import { applyPlan, runUndo } from './plan-apply.js?v=6';
+import { applyPlan, runUndo } from './plan-apply.js?v=7';
 import { describeOp, planLocally } from './update-planner.js?v=6';
 import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
 

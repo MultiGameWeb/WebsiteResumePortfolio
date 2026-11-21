@@ -58,3 +58,9 @@
 - Only the home page is stored in the hosting tables (template id botcraft-page, owner action publish_page, botcraft-hosting.js). The page code is served from salesbot/ in the SiteCraft source, and items, photos and answers are read live, so owner updates and code fixes show without publishing again.
 - The hosted page may call the customer API (public, ask, request, requests, order, push) from its own address; owner and setup endpoints stay on the allowed origins. Once published, the open link and the QR poster use the new address.
 - Needs the Worker DB binding (sitecraft-db) as the templates do. Not yet: extending the term to 2 or 3 years (waits for payment), and the demo mode does not support publishing.
+
+## BotCraft: shopping-app item photos
+- Customer page: item cards show the whole item on white (nothing cropped). The item sheet is a swipeable photo gallery with dots; tapping a photo opens it full screen (pinch to zoom).
+- Each item can have up to 5 photos (first = cover). Owner page: photo strip per item with remove and add; chat can add item photos and delete one by number ("delete photo 2 of ceiling fan"). The server refuses a sixth photo.
+- Item photos are tidied on the owner phone before saving (photo-enhance.js): right way up, centred on a square white canvas with space around, brighter when dark or flat. It does not remove a cluttered background; that needs AI image editing (paid, not built).
+- Not run in a browser yet (checked in node only; the canvas code needs a browser).

@@ -2,7 +2,8 @@
 // customer sees is changed from here (or from the setup chat). The private
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
-import { initUpdateChat } from './owner-update.js?v=6';
+import { enhanceProductPhoto } from './photo-enhance.js?v=1';
+import { initUpdateChat } from './owner-update.js?v=7';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';
@@ -75,7 +76,8 @@ async function uploadPhoto(kind, file, productKey = '') {
   if (!file) return;
   try {
     showStatus('Uploading photo…');
-    const image = await prepareImage(file);
+    // Item photos are tidied first (square, white space around, brighter when dark).
+    const image = (kind === 'product' && (await enhanceProductPhoto(file))) || (await prepareImage(file));
     await call('upload_photo', { kind, productKey, image });
   } catch {
     showStatus('This photo could not be read. Please choose a JPG or PNG photo.');
@@ -146,6 +148,32 @@ function renderItems() {
     info.append(name);
     if (item.price_text) info.append(element('div', 'item-price', item.price_text));
     if (item.details) info.append(element('div', 'item-details', item.details));
+    // All photos of the item (up to 5): the first is the cover customers see first.
+    const itemPhotos = (view.photos || []).filter((p) => p.kind === 'product' && p.product_key === item.name_key);
+    const strip = element('div', 'photo-strip');
+    itemPhotos.forEach((photo, index) => {
+      const cell = element('div', 'strip-photo');
+      const thumb = element('img');
+      thumb.src = photoUrl(photo.photo_id);
+      thumb.alt = `Photo ${index + 1}`;
+      thumb.loading = 'lazy';
+      const x = element('button', 'strip-remove', '×');
+      x.type = 'button';
+      x.title = 'Remove this photo';
+      x.setAttribute('aria-label', `Remove photo ${index + 1} of ${item.name}`);
+      x.addEventListener('click', () => { if (window.confirm('Remove this photo?')) call('delete_photo', { photoId: photo.photo_id }); });
+      cell.append(thumb, x);
+      strip.append(cell);
+    });
+    if (itemPhotos.length < (view.productPhotoLimit || 5)) {
+      const add = element('label', 'strip-add', itemPhotos.length ? '+ Photo' : '+ Add photo');
+      const file = element('input');
+      file.type = 'file'; file.accept = 'image/*';
+      file.addEventListener('change', () => uploadPhoto('product', file.files[0], item.name_key));
+      add.append(file);
+      strip.append(add);
+    }
+    info.append(strip);
     const actions = element('div', 'item-actions');
     const edit = element('button', 'btn btn-light btn-small', 'Edit');
     edit.type = 'button';

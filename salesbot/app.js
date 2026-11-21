@@ -378,11 +378,36 @@ document.querySelector('#addThis').addEventListener('click', () => {
   sheet.close();
 });
 
+// The item's photos like a shopping app: swipe through them, tap one to see it full screen.
+function renderSheetPhotos(item) {
+  const ids = (item.photos && item.photos.length ? item.photos : [item.photo]).filter(Boolean);
+  const gallery = document.querySelector('#sheetGallery');
+  const track = document.querySelector('#sheetTrack');
+  const dots = document.querySelector('#sheetDots');
+  gallery.hidden = !ids.length;
+  track.scrollLeft = 0;
+  track.replaceChildren(...ids.map((id, index) => {
+    const slide = element('button', 'sheet-slide');
+    slide.type = 'button';
+    slide.setAttribute('aria-label', `${item.name}, photo ${index + 1} of ${ids.length}. Tap to enlarge`);
+    const image = element('img');
+    image.src = photoUrl(id);
+    image.alt = '';
+    slide.append(image);
+    slide.addEventListener('click', () => { document.querySelector('#zoomPhoto').src = photoUrl(id); document.querySelector('#zoomDialog').showModal(); });
+    return slide;
+  }));
+  dots.replaceChildren(...(ids.length > 1 ? ids.map((_, index) => element('span', index === 0 ? 'dot on' : 'dot')) : []));
+  track.onscroll = () => {
+    const index = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+    [...dots.children].forEach((dot, i) => dot.classList.toggle('on', i === index));
+  };
+}
+document.querySelector('#zoomDialog').addEventListener('click', () => document.querySelector('#zoomDialog').close());
+
 function openSheet(item) {
   sheetProduct = item;
-  const image = document.querySelector('#sheetPhoto');
-  image.hidden = !item.photo;
-  if (item.photo) image.src = photoUrl(item.photo);
+  renderSheetPhotos(item);
   document.querySelector('#sheetName').textContent = item.name;
   document.querySelector('#sheetPrice').textContent = [item.price, item.out ? 'Out of stock' : ''].filter(Boolean).join(' · ');
   document.querySelector('#sheetDetails').textContent = item.details || '';

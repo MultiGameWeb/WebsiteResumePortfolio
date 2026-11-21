@@ -1,6 +1,6 @@
 import { apiBase, createBot, currentBotId, premiumVoiceOn, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261120e';
 import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
-import { applyPlan, runUndo } from './plan-apply.js?v=6';
+import { applyPlan, runUndo } from './plan-apply.js?v=7';
 import { describeOp, planLocally } from './update-planner.js?v=6';
 import {
   ImageLightbox,

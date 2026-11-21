@@ -136,7 +136,7 @@
       offline: {
         faqs: faqs,
         items: state.products.filter(function (p) { return p.stock_status !== 'hidden'; }).map(function (p) {
-          return { key: p.name_key, name: p.name, price: p.price_text || '', details: p.details || '', out: p.stock_status === 'out_of_stock', photo: p.photo_id || '' };
+          return { key: p.name_key, name: p.name, price: p.price_text || '', details: p.details || '', out: p.stock_status === 'out_of_stock', photo: p.photo_id || '', photos: state.photos.filter(function (x) { return x.kind === 'product' && x.product_key === p.name_key; }).map(function (x) { return x.photo_id; }) };
         }),
         savedAt: new Date(state.savedAt).toISOString()
       }
@@ -241,8 +241,10 @@
       var pk = kind === 'product' ? clip(body.productKey, 140) : '';
       if (kind === 'gallery') {
         if (state.photos.filter(function (p) { return p.kind === 'gallery'; }).length >= GALLERY_LIMIT) throw new Error('The gallery is full. Remove a photo first.');
+      } else if (kind === 'product') {
+        if (state.photos.filter(function (p) { return p.kind === 'product' && p.product_key === pk; }).length >= 5) throw new Error('An item holds up to 5 photos. Remove one first.');
       } else {
-        state.photos = state.photos.filter(function (p) { return !(p.kind === kind && (kind !== 'product' || p.product_key === pk)); });
+        state.photos = state.photos.filter(function (p) { return !(p.kind === kind); });
       }
       state.photos.push({ photo_id: id, kind: kind, product_key: pk });
       syncProductPhotos(state);

@@ -328,7 +328,7 @@ export function describeOp(op, products = [], info = {}) {
     }
     case 'rename_item': return { icon: '✎', text: `Rename item: ${op.name} → ${op.new_name}` };
     case 'delete_photo': {
-      const where = { main: 'main shop photo', owner: 'owner photo', gallery: `gallery photo ${op.index}`, product: `photo of ${op.name}` }[op.kind];
+      const where = { main: 'main shop photo', owner: 'owner photo', gallery: `gallery photo ${op.index}`, product: `photo${op.index ? ` ${op.index}` : ''} of ${op.name}` }[op.kind];
       return { icon: '🗑', text: `Delete ${where} (the item stays)`, danger: true };
     }
     case 'delete_item': return { icon: '🗑', text: `Delete item: ${op.name}`, danger: true };

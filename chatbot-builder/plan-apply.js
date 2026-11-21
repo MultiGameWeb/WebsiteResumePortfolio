@@ -5,6 +5,8 @@
 //   call(action, data)  → Promise<boolean>: sends one owner action, refreshes the view
 //   getView()           → the latest owner view ({ products, info, customBotName, … })
 
+import { enhanceProductPhoto } from './photo-enhance.js?v=1';
+
 export async function applyPlan({ ops, images = [], call, getView }) {
   const undo = [];
   let undoable = true;
@@ -60,7 +62,7 @@ export async function applyPlan({ ops, images = [], call, getView }) {
       undoable = false;
       const photos = getView().photos || [];
       const target = op.kind === 'product'
-        ? photos.find((p) => p.kind === 'product' && p.product_key === product?.name_key)
+        ? photos.filter((p) => p.kind === 'product' && p.product_key === product?.name_key)[(op.index || 1) - 1]
         : op.kind === 'gallery' ? photos.filter((p) => p.kind === 'gallery')[(op.index || 0) - 1] : photos.find((p) => p.kind === op.kind);
       ok = target ? await call('delete_photo', { photoId: target.photo_id }) : false;
     } else if (op.type === 'set_visibility' && product) {
@@ -89,7 +91,9 @@ export async function applyPlan({ ops, images = [], call, getView }) {
       undoable = false;
       const image = images[op.image];
       const key = op.kind === 'product' ? (op.key || created.get(String(op.name || '').toLowerCase()) || findProduct('', op.name)?.name_key || '') : '';
-      ok = !image || (op.kind === 'product' && !key) ? false : await call('upload_photo', { kind: op.kind, productKey: key, image });
+      // Item photos are tidied first: square, white space around, brighter when dark.
+      const ready = image && op.kind === 'product' ? (await enhanceProductPhoto(image)) || image : image;
+      ok = !ready || (op.kind === 'product' && !key) ? false : await call('upload_photo', { kind: op.kind, productKey: key, image: ready });
     } else {
       ok = false;
     }
