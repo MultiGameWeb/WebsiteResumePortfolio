@@ -353,6 +353,22 @@ export async function savePhoto(env, shopId, { kind, productKey = "", mime, byte
   return { photoId };
 }
 
+// Swaps an item photo for a new one (a studio clean-up the owner approved). The new photo
+// takes the old one's place in the list, so a cover photo stays the cover.
+export async function replacePhoto(env, shopId, oldPhotoId, { mime, bytes }) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const old = await db.prepare("SELECT kind, product_key, created_at FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, oldPhotoId).first();
+  if (!old || old.kind !== "product") return { error: "That photo was not found." };
+  const photoId = crypto.randomUUID().replace(/-/g, "");
+  await db.batch([
+    db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, oldPhotoId),
+    db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at) VALUES (?, ?, 'product', ?, ?, ?, ?)")
+      .bind(photoId, shopId, old.product_key, mime, bytes, old.created_at)
+  ]);
+  return { photoId };
+}
+
 export async function deletePhoto(env, shopId, photoId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);

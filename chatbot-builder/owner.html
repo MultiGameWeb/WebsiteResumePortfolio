@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./owner.css?v=5">
+  <link rel="stylesheet" href="./owner.css?v=6">
 </head>
 <body>
   <script src="./demo-api.js"></script>
@@ -58,6 +58,21 @@
         </form>
       </section>
 
+      <dialog class="studio-dialog" id="studioDialog" aria-labelledby="studioTitle">
+        <h2 id="studioTitle">✨ Clean studio photo</h2>
+        <p class="muted" id="studioStatus">Cleaning your photo… this takes about 15 seconds.</p>
+        <div class="studio-compare" id="studioCompare" hidden>
+          <figure><img id="studioBefore" alt="Your photo"><figcaption>Your photo</figcaption></figure>
+          <figure><img id="studioAfter" alt="Clean studio photo"><figcaption>Clean photo</figcaption></figure>
+        </div>
+        <p class="muted" id="studioNote" hidden>Check that the item looks exactly like yours. If anything looks wrong, keep your own photo.</p>
+        <div class="studio-actions">
+          <button class="btn" type="button" id="studioUse" hidden>Use clean photo</button>
+          <button class="btn btn-light" type="button" id="studioRetry" hidden>Try again</button>
+          <button class="btn btn-light" type="button" id="studioClose">Keep my photo</button>
+        </div>
+      </dialog>
+
       <section class="card" id="pageCard">
         <h2>Your web page</h2>
         <p class="muted">Put your customer page on its own web address, hosted for you for one year. Share the link on WhatsApp or Instagram, or print it in your QR poster. Items, photos and answers always show the latest changes; you only publish once.</p>
@@ -82,7 +97,8 @@
             <li>New item: Items → "+ Add item" → name, price, details and a photo → "Save item".</li>
             <li>Price changed: find the item → "Edit" → change the price → "Save item".</li>
             <li>Item finished: "Mark out of stock". When it is back, "Mark in stock".</li>
-            <li>Photos: add your main shop photo, your photo and up to 10 gallery photos.</li>
+            <li>Photos: add your main shop photo, your photo and up to 10 gallery photos. Each item can have up to 5 photos.</li>
+            <li>Neat item photos: tap ✨ on an item photo to get a clean studio photo (white background). Without it, your photo is shown as you took it (only straightened and brightened), so a messy background stays messy.</li>
             <li>Customer questions: answer the questions your bot could not answer. From then on the bot uses your answer.</li>
             <li>Customer requests: photos and pre-orders customers send from the Requests tab of your bot. Accept, mark ready or reply — the customer sees it in the bot.</li>
             <li>Order status: add each order by its bill number and update it (received → ready → delivered). Customers check it in the bot.</li>
@@ -206,6 +222,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=16"></script>
+  <script type="module" src="./owner.js?v=18"></script>
 </body>
 </html>

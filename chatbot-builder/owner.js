@@ -84,6 +84,75 @@ async function uploadPhoto(kind, file, productKey = '') {
   }
 }
 
+// ---- Photo studio: a clean studio version of an item photo, shown first, saved only if the owner accepts ----
+const studio = { photoId: '', result: null, run: 0 };
+
+async function pngToJpeg(image) {
+  const bytes = Uint8Array.from(atob(image.data), (c) => c.charCodeAt(0));
+  const bitmap = await createImageBitmap(new Blob([bytes], { type: image.mimeType }));
+  const side = Math.min(1000, Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = side; canvas.height = side;
+  const context = canvas.getContext('2d');
+  context.fillStyle = '#ffffff';
+  context.fillRect(0, 0, side, side);
+  const scale = Math.min(side / bitmap.width, side / bitmap.height);
+  context.drawImage(bitmap, (side - bitmap.width * scale) / 2, (side - bitmap.height * scale) / 2, bitmap.width * scale, bitmap.height * scale);
+  bitmap.close?.();
+  const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.88));
+  const data = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result).split(',')[1] || ''); reader.onerror = () => reject(reader.error); reader.readAsDataURL(blob); });
+  return { mimeType: 'image/jpeg', data };
+}
+
+async function runStudio() {
+  const run = ++studio.run; // a result that arrives after the owner closed the box is ignored
+  $('#studioStatus').textContent = 'Cleaning your photo… this takes about 15 seconds.';
+  for (const id of ['#studioCompare', '#studioNote', '#studioUse', '#studioRetry']) $(id).hidden = true;
+  $('#studioBefore').src = photoUrl(studio.photoId);
+  try {
+    const response = await fetch(`${API_BASE}/api/botcraft/owner`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ shopId, action: 'studio_photo', photoId: studio.photoId }),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (run !== studio.run) return;
+    if (!response.ok || !data.ok) throw new Error(data.error || 'The photo studio could not clean this photo.');
+    studio.result = data.image;
+    $('#studioAfter').src = `data:${data.image.mimeType};base64,${data.image.data}`;
+    $('#studioStatus').textContent = data.left >= 0 ? `Done. ${data.left} clean-up${data.left === 1 ? '' : 's'} left today.` : 'Done.';
+    $('#studioCompare').hidden = false;
+    $('#studioNote').hidden = false;
+    $('#studioUse').hidden = false;
+    $('#studioRetry').hidden = false;
+  } catch (error) {
+    if (run !== studio.run) return;
+    $('#studioStatus').textContent = `${error.message} Your photo stays as it is.`;
+    $('#studioRetry').hidden = false;
+  }
+}
+
+function openStudio(photoId) {
+  studio.photoId = photoId;
+  studio.result = null;
+  $('#studioDialog').showModal();
+  runStudio();
+}
+
+$('#studioClose').addEventListener('click', () => { studio.run += 1; $('#studioDialog').close(); });
+$('#studioRetry').addEventListener('click', runStudio);
+$('#studioUse').addEventListener('click', async () => {
+  if (!studio.result) return;
+  $('#studioUse').disabled = true;
+  try {
+    const image = await pngToJpeg(studio.result);
+    $('#studioDialog').close();
+    await call('replace_photo', { photoId: studio.photoId, image });
+  } catch {
+    $('#studioStatus').textContent = 'Could not save the clean photo. Your photo stays as it is.';
+  }
+  $('#studioUse').disabled = false;
+});
+
 function photoThumb(photo) {
   const box = element('div', 'thumb');
   const image = element('img');
@@ -163,6 +232,14 @@ function renderItems() {
       x.setAttribute('aria-label', `Remove photo ${index + 1} of ${item.name}`);
       x.addEventListener('click', () => { if (window.confirm('Remove this photo?')) call('delete_photo', { photoId: photo.photo_id }); });
       cell.append(thumb, x);
+      if (view.photoStudio?.available) {
+        const magic = element('button', 'strip-studio', '✨');
+        magic.type = 'button';
+        magic.title = 'Clean studio photo (white background)';
+        magic.setAttribute('aria-label', `Clean studio photo for photo ${index + 1} of ${item.name}`);
+        magic.addEventListener('click', () => openStudio(photo.photo_id));
+        cell.append(magic);
+      }
       strip.append(cell);
     });
     if (itemPhotos.length < (view.productPhotoLimit || 5)) {
@@ -174,6 +251,7 @@ function renderItems() {
       strip.append(add);
     }
     info.append(strip);
+    if (itemPhotos.length && view.photoStudio?.available) info.append(element('div', 'studio-hint', '✨ makes it a clean studio photo. Without it your photo is shown as you took it.'));
     const actions = element('div', 'item-actions');
     const edit = element('button', 'btn btn-light btn-small', 'Edit');
     edit.type = 'button';

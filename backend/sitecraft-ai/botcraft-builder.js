@@ -6,9 +6,10 @@ import {
   GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
-  deleteAnswerRow, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
+  deleteAnswerRow, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
 import { publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
+import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-photo-studio.js";
 import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
 import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
@@ -969,6 +970,7 @@ async function ownerView(env, shopId, url) {
     page,
     savedAnswers,
     premiumVoice: premiumVoiceAvailable(env),
+    photoStudio: { available: photoStudioAvailable(env), leftToday: studioLeftToday(env, settings) },
     hiddenSections: Array.isArray(settings.hiddenSections) ? settings.hiddenSections : [],
     shopName: facts.shop_name || "",
     botName: botName(facts),
@@ -1278,6 +1280,18 @@ async function handleOwner(request, env, origin, ctx) {
     if (!(await writeAbout(env, shopId, { force: true }))) return reply({ ok: false, error: "Could not write the text right now. Please try again or write it yourself." }, 503, origin);
   } else if (action === "plan_update") {
     return handlePlanUpdate(env, shopId, body, origin);
+  } else if (action === "studio_photo") {
+    // Clean studio version of an item photo: only a preview, saved when the owner accepts (replace_photo).
+    const result = await studioPhoto(env, shopId, String(body?.photoId || ""));
+    return reply(result.body, result.status, origin);
+  } else if (action === "replace_photo") {
+    const photoId = String(body?.photoId || "");
+    const image = body?.image;
+    if (!PHOTO_ID_PATTERN.test(photoId) || !PHOTO_TYPES.has(image?.mimeType) || typeof image?.data !== "string") return reply({ ok: false, error: "Please choose a JPG, PNG or WebP photo." }, 400, origin);
+    const bytes = base64Bytes(image.data);
+    if (bytes.length > MAX_PHOTO_BYTES) return reply({ ok: false, error: "The photo is too large." }, 413, origin);
+    const result = await replacePhoto(env, shopId, photoId, { mime: image.mimeType, bytes });
+    if (result.error) return reply({ ok: false, error: result.error }, 404, origin);
   } else if (action === "transcribe") {
     const result = await transcribeOwnerVoice(env, shopId, body?.audio);
     return reply(result.body, result.status, origin);

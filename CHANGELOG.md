@@ -69,3 +69,8 @@
 - Item photos tidy on upload (square, white around), up to 5 per item, strip on the owner page, swipe gallery and full-screen zoom on the customer page, hide gallery and rename and delete-photo-by-number and shop name by chat: all worked.
 - Found and fixed: spoken text vanished in the setup chat when voice typing ended (the message box was rebuilt); the offline planner ignored the photo number ("delete photo 2" deleted the first); the tidy-up crushed a dark background to pure black.
 - Demo mode now supports hiding sections and the shop name field.
+
+## BotCraft: photo studio (AI clean studio photo)
+- On the owner page each item photo has a ✨ button. The server asks Gemini image editing (default gemini-2.5-flash-image) to keep the item exactly as it is and put it on a plain white studio background. The owner sees Your photo and Clean photo side by side and chooses Use clean photo, Try again or Keep my photo. Nothing is saved until they accept; accepting replaces that photo in the same place (the cover stays the cover).
+- Free for now, capped per shop per day (BOTCRAFT_STUDIO_DAILY_LIMIT, default 20). A failed call is not counted. Photos that skip the studio are shown as uploaded (only straightened, squared and brightened), and the owner page says so.
+- Server: actions studio_photo and replace_photo (botcraft-photo-studio.js). Checked in node with a stubbed Gemini and in Chromium demo mode (demo returns the same photo, no AI). Not tried against the real Gemini image model yet.

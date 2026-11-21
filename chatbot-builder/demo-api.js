@@ -96,7 +96,7 @@
         closed: state.requests.filter(function (r) { return r.kind !== 'order' && ['done', 'rejected'].indexOf(r.status) !== -1; })
       },
       orders: state.orders, features: state.features, galleryLimit: GALLERY_LIMIT,
-      hiddenSections: state.hiddenSections || [], productPhotoLimit: 5,
+      hiddenSections: state.hiddenSections || [], productPhotoLimit: 5, photoStudio: { available: true, leftToday: 20 },
       info: {
         shop_name: f.shop_name || '', timings: f.timings || '', weekly_holiday: f.weekly_holiday || '', address: f.address || '',
         call_number: f.call_number || '', whatsapp_number: f.whatsapp_number || '', map_link: f.map_link || '', about: f.about || ''
@@ -277,6 +277,17 @@
     } else if (action === 'save_info') {
       var info = body.info || {};
       Object.keys(INFO_KEYS).forEach(function (k) { if (typeof info[k] === 'string' && !(k === 'shop_name' && !info[k].trim())) state.facts[k] = clip(info[k], INFO_KEYS[k]); });
+    } else if (action === 'studio_photo') {
+      // Demo only: no AI here, so the "clean" photo is the same photo.
+      var found = state.photos.find(function (p) { return p.photo_id === body.photoId && p.kind === 'product'; });
+      if (!found) throw new Error('That photo was not found.');
+      var parts = /^data:([^;]+);base64,(.*)$/.exec(found.photo_id);
+      return { ok: true, image: { mimeType: parts[1], data: parts[2] }, left: 19 };
+    } else if (action === 'replace_photo') {
+      var old = state.photos.find(function (p) { return p.photo_id === body.photoId && p.kind === 'product'; });
+      if (!old || !body.image || !body.image.data) throw new Error('That photo was not found.');
+      old.photo_id = 'data:' + (body.image.mimeType || 'image/jpeg') + ';base64,' + body.image.data;
+      syncProductPhotos(state);
     } else if (action === 'set_section') {
       var section = String(body.section || '');
       if (['about', 'gallery', 'map'].indexOf(section) === -1) throw new Error('Unknown section.');
