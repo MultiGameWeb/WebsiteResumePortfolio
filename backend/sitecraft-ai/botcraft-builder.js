@@ -6,7 +6,7 @@ import {
   GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
-  deleteAnswerRow, freeRepliesFor, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
+  deleteAnswerRow, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
 import { publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
 import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-photo-studio.js";
@@ -481,6 +481,11 @@ function base64Size(data) {
 }
 
 // Work that may finish after the response (sending notifications).
+async function visitorHash(address, shopId) {
+  const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`${shopId}|${address}`));
+  return [...new Uint8Array(bytes)].slice(0, 12).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 function later(ctx, task) {
   const safe = task.catch(error => console.error("BotCraft background task failed", error));
   if (ctx?.waitUntil) ctx.waitUntil(safe);
@@ -825,6 +830,15 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
       else out.push(m);
       return out;
     }, []);
+  // Abuse protection: a daily limit for the shop and for each visitor, so nobody can drain a shop's replies.
+  const visitor = await visitorHash(request.headers.get("CF-Connecting-IP") || "unknown", shop.shopId);
+  const slot = await takeDailyAsk(env, shop.shopId, visitor, { shopLimit: shopDailyLimit(env), visitorLimit: visitorDailyLimit(env) }).catch(error => { console.error("BotCraft daily cap failed", error); return { ok: true }; });
+  if (!slot.ok) {
+    return reply({
+      ok: false, code: slot.code,
+      error: slot.code === "visitor_limit" ? "You have asked a lot of questions today. Basic answers still work, or please ask at the counter." : "This shop's assistant is very busy today. Basic answers still work, or please ask at the counter."
+    }, 429, origin);
+  }
   // Reply metering: one credit per AI reply, taken first and given back if the AI fails.
   const credit = await reserveReply(env, shop.shopId, freeRepliesFor(env)).catch(error => { console.error("BotCraft reply credit failed", error); return { ok: true, balance: -1 }; });
   if (!credit.ok) {

@@ -133,6 +133,15 @@ const SCHEMA = [
     used INTEGER NOT NULL DEFAULT 0,
     updated_at TEXT NOT NULL
   )`,
+  // Abuse protection: customer AI questions per day, for a whole shop (visitor '*') and per visitor.
+  // The visitor is a one-way hash of the connection address and the shop, never the address itself.
+  `CREATE TABLE IF NOT EXISTS botcraft_daily_asks (
+    shop_id TEXT NOT NULL,
+    day TEXT NOT NULL,
+    visitor TEXT NOT NULL,
+    n INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (shop_id, day, visitor)
+  )`,
   // What the replies really cost: replies and Gemini tokens per shop per day.
   `CREATE TABLE IF NOT EXISTS botcraft_usage (
     shop_id TEXT NOT NULL,
@@ -468,6 +477,37 @@ export async function setNotes(env, shopId, notes) {
   await ensureSchema(db);
   await db.prepare("UPDATE botcraft_shops SET notes_json = ?, updated_at = ? WHERE shop_id = ?")
     .bind(JSON.stringify(notes.slice(-MAX_NOTES)), new Date().toISOString(), shopId).run();
+}
+
+// ---- Daily caps (abuse protection) ----
+export const DEFAULT_SHOP_DAILY_ASKS = 500;
+export const DEFAULT_VISITOR_DAILY_ASKS = 40;
+const positive = (value, fallback) => (Number(value) > 0 ? Math.floor(Number(value)) : fallback);
+export const shopDailyLimit = env => positive(env?.BOTCRAFT_SHOP_DAILY_REPLIES, DEFAULT_SHOP_DAILY_ASKS);
+export const visitorDailyLimit = env => positive(env?.BOTCRAFT_VISITOR_DAILY_REPLIES, DEFAULT_VISITOR_DAILY_ASKS);
+
+// One counter step that never goes past the limit: true when a slot was taken.
+async function takeSlot(db, shopId, day, visitor, limit) {
+  const result = await db.prepare(
+    "INSERT INTO botcraft_daily_asks (shop_id, day, visitor, n) VALUES (?, ?, ?, 1) " +
+    "ON CONFLICT(shop_id, day, visitor) DO UPDATE SET n = n + 1 WHERE n < ?"
+  ).bind(shopId, day, visitor, limit).run();
+  return Boolean(result.meta?.changes);
+}
+
+// Takes one slot from the shop's daily total and one from this visitor's. Returns
+// { ok: true } or { ok: false, code: "daily_limit" | "visitor_limit" }.
+export async function takeDailyAsk(env, shopId, visitorHash, { shopLimit = DEFAULT_SHOP_DAILY_ASKS, visitorLimit = DEFAULT_VISITOR_DAILY_ASKS } = {}) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const day = new Date().toISOString().slice(0, 10);
+  if (Math.random() < 0.02) await db.prepare("DELETE FROM botcraft_daily_asks WHERE day < ?").bind(new Date(Date.now() - 2 * 86400000).toISOString().slice(0, 10)).run().catch(() => {});
+  if (!(await takeSlot(db, shopId, day, "*", shopLimit))) return { ok: false, code: "daily_limit" };
+  if (!(await takeSlot(db, shopId, day, visitorHash, visitorLimit))) {
+    await db.prepare("UPDATE botcraft_daily_asks SET n = MAX(0, n - 1) WHERE shop_id = ? AND day = ? AND visitor = '*'").bind(shopId, day).run();
+    return { ok: false, code: "visitor_limit" };
+  }
+  return { ok: true };
 }
 
 // ---- Reply metering ----

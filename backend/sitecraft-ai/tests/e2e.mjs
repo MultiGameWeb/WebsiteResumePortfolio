@@ -87,6 +87,12 @@ v=await owner('load'); ok('credit given back when the AI fails',v.replies.balanc
 const adm=(body)=>post('/api/admin/bot',body,{Authorization:'Bearer test-admin-token'});
 r=await adm({id:SID,action:'add_replies',count:-5}); ok('admin removes replies',r.ok&&r.bot.replies.balance===0,JSON.stringify(r).slice(0,150));
 r=await ask(); ok('no replies left -> 402 no_replies',r.status===402&&r.code==='no_replies',JSON.stringify(r).slice(0,120));
+// daily caps: one visitor (same address) may ask 3 times a day; the shop 6 times in total
+const sameIp={'CF-Connecting-IP':'203.0.113.9'}; const caps=[]; for(let i=0;i<4;i++) caps.push(await post('/api/botcraft/ask',{s:publicId,text:'hello'},{Origin:API,...sameIp}));
+ok('same visitor: first 3 questions pass the daily cap',caps.slice(0,3).every(x=>x.status===503||x.status===402),JSON.stringify(caps.map(x=>x.status)));
+ok('same visitor: 4th question is stopped (visitor_limit, 429)',caps[3].status===429&&caps[3].code==='visitor_limit',JSON.stringify(caps[3]).slice(0,120));
+const shopA=await post('/api/botcraft/ask',{s:publicId,text:'hello'},{Origin:API}); const shopB=await post('/api/botcraft/ask',{s:publicId,text:'hello'},{Origin:API});
+ok('shop daily total: stopped after the shop limit (daily_limit, 429)',shopA.status!==429&&shopB.status===429&&shopB.code==='daily_limit',JSON.stringify([shopA.status,shopB.status,shopB.code]));
 r=await adm({id:SID,action:'add_replies',count:100}); ok('admin recharge adds replies',r.bot.replies.balance===100);
 r=await post('/api/admin/bot',{id:SID,action:'add_replies',count:5},{Authorization:'Bearer wrong'}); ok('admin refuses a wrong key',r.status===401);
 r=await adm({id:SID,action:'add_replies',count:0}); ok('admin refuses zero',r.status===400);
