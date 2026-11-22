@@ -11,8 +11,8 @@ if(focusPages.has(leaf)){document.body.classList.add("sc-focus-page");return;}
 const workspacePages=new Set(["portfolio-creator.html","resume-builder.html","presentation-maker.html"]);
 if(workspacePages.has(leaf))document.body.classList.add("sc-workspace-page");
 const menuItems=[
- ["Websites","templates.html","templates"],
  ["AI Chatbots","ai-chatbots.html","chatbots"],
+ ["Websites","templates.html","templates"],
  ["Portfolio","portfolio-creator.html","portfolio"],
  ["Resume","resume-builder.html","resume"],
  ["PDF Tools","pdf-tools.html","pdf"],

@@ -97,3 +97,7 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Deleting a photo, an item, a customer request, or replacing a main or owner photo also deletes the file. A file that fails to delete only costs a little storage and never fails the action.
 - The binding is in wrangler.toml as a commented block: create the bucket (wrangler r2 bucket create botcraft-photos), remove the #, deploy, then migrate.
 - tests/run.sh now runs two phases: the 66 checks without R2, then 17 more with a local R2 bucket on the same database (old photos still served, new ones in R2, migration byte for byte, deletes remove files). 83 checks pass.
+
+## Website order: AI Chatbot first, website templates next
+- Top menu: AI Chatbots now comes before Websites (site-navigation.js, so every page).
+- Home page: the AI chatbot section comes before the website templates section; the hero buttons are Create AI Chatbot, then Browse Templates; the phone bottom bar now opens the AI chatbot section. The hero headline and text are unchanged.
