@@ -144,6 +144,15 @@ Engines: Normal, Narration and News use Sarvam Bulbul for Indian scripts; acting
 | `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` | secret | buying packs (free words work without them) |
 | `VOICE_FREE_WORDS` | variable | free words per new wallet, default 300 |
 | `VOICE_DAILY_WORD_LIMIT` | variable | words per day across everyone, default 20000 (spending cap) |
+| `ELEVENLABS_API_KEY` | secret | ElevenLabs key for the premium owner voice (BotCraft). Without it the owner mic uses the phone voice typing |
+| `ELEVENLABS_STT_MODEL` | variable | optional, default `scribe_v1` |
+| `ELEVENLABS_DAILY_LIMIT` | variable | owner voice messages per shop per day, default 150 (spending cap) |
+| `BOTCRAFT_IMAGE_GEMINI_API_KEY` | secret | Optional key for the BotCraft photo studio (clean studio photos). Falls back to `BOTCRAFT_GEMINI_API_KEY` |
+| `BOTCRAFT_IMAGE_MODEL` | variable | optional, default `gemini-2.5-flash-image` |
+| `BOTCRAFT_STUDIO_DAILY_LIMIT` | variable | clean-ups per shop per day, default 20 (spending cap) |
+| `BOTCRAFT_FREE_REPLIES` | variable | free AI replies for every new shop, default 200. Set 0 to give none |
+| `BOTCRAFT_SHOP_DAILY_REPLIES` | variable | customer AI questions per shop per day, default 500 (abuse protection) |
+| `BOTCRAFT_VISITOR_DAILY_REPLIES` | variable | customer AI questions per visitor per shop per day, default 40 |
 | `VOICE_FREE_WALLETS_PER_IP` | variable | free wallets per IP per day, default 2 |
 | `VOICE_DISABLED` | variable | `true` switches the studio off |
 | `VOICE_PAYMENTS` | variable | `off` holds buying packs while testing (free words and `/grant` still work) |
@@ -193,3 +202,18 @@ current end date). The checkout's hosting price is `HOSTING_COST_PER_YEAR × 1.7
 `callbacks.js`: `POST /api/requests/callback` is sent by the success page when the customer asked for
 a domain or online payments at checkout (and by the renewal button). Owner dashboard → **Call
 requests** lists them newest first, refreshes every minute, and shows a count in the tab title.
+
+## Photo storage in R2 (optional)
+
+Photos are stored in the D1 database until an R2 bucket is connected. D1 is fine for testing, but R2 is the place for many shops and the 5 GB per shop in the packages.
+
+1. Create the bucket: `wrangler r2 bucket create botcraft-photos`
+2. In `wrangler.toml`, remove the leading `#` from the `[[r2_buckets]]` block (binding `BOTCRAFT_PHOTOS`) and deploy.
+3. New photos now go to R2 (the D1 row keeps only the details). Photos already in D1 keep working.
+4. Move the old ones with the admin key, repeating until `remaining` is 0 (20 photos per call by default, 50 at most):
+   ```bash
+   curl -X POST https://<worker>/api/admin/photos -H "Authorization: Bearer <ADMIN_TOKEN>" -H "Origin: <an allowed origin>" -H "Content-Type: application/json" -d '{"action":"migrate"}'
+   ```
+   `GET /api/admin/photos` shows how many photos are in D1 and in R2. A photo is emptied in D1 only after its file is safely in R2, and the step is safe to repeat.
+
+Deleting a photo, an item, a customer request or replacing a main or owner photo also deletes the file in R2.

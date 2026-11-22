@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./owner.css?v=4">
+  <link rel="stylesheet" href="./owner.css?v=6">
 </head>
 <body>
   <script src="./demo-api.js"></script>
@@ -45,6 +45,7 @@
         <h2>Shop information</h2>
         <p class="muted">Shown on your customer page and used by the assistant. You can also change these from the chat above.</p>
         <form class="info-form" id="infoForm">
+          <label class="wide">Shop name <input name="shop_name" maxlength="80" placeholder="Your shop name"></label>
           <label>Timings <input name="timings" maxlength="120" placeholder="10:00 AM – 8:30 PM"></label>
           <label>Weekly holiday <input name="weekly_holiday" maxlength="60" placeholder="Sunday"></label>
           <label>Address <input name="address" maxlength="200" placeholder="Shop number, street, landmark, city"></label>
@@ -57,6 +58,44 @@
         </form>
       </section>
 
+      <dialog class="studio-dialog" id="studioDialog" aria-labelledby="studioTitle">
+        <h2 id="studioTitle">✨ Clean studio photo</h2>
+        <p class="muted" id="studioStatus">Cleaning your photo… this takes about 15 seconds.</p>
+        <div class="studio-compare" id="studioCompare" hidden>
+          <figure><img id="studioBefore" alt="Your photo"><figcaption>Your photo</figcaption></figure>
+          <figure><img id="studioAfter" alt="Clean studio photo"><figcaption>Clean photo</figcaption></figure>
+        </div>
+        <p class="muted" id="studioNote" hidden>Check that the item looks exactly like yours. If anything looks wrong, keep your own photo.</p>
+        <div class="studio-actions">
+          <button class="btn" type="button" id="studioUse" hidden>Use clean photo</button>
+          <button class="btn btn-light" type="button" id="studioRetry" hidden>Try again</button>
+          <button class="btn btn-light" type="button" id="studioClose">Keep my photo</button>
+        </div>
+      </dialog>
+
+      <section class="card" id="replies">
+        <h2>AI replies <span class="count-badge" id="repliesLow" hidden>Low</span></h2>
+        <p class="muted">Each answer your assistant gives a customer uses one AI reply. When they run out, customers still get basic answers (items, prices, timings), but not the full AI assistant.</p>
+        <div id="repliesInfo"></div>
+        <p class="muted" id="repliesNote"></p>
+      </section>
+
+      <section class="card" id="pageCard">
+        <h2>Your web page</h2>
+        <p class="muted">Put your customer page on its own web address, hosted for you for one year. Share the link on WhatsApp or Instagram, or print it in your QR poster. Items, photos and answers always show the latest changes; you only publish once.</p>
+        <div id="pageInfo" class="muted"></div>
+        <form class="info-form" id="pageForm">
+          <label id="pageSlugLabel">Address (optional) <input name="slug" maxlength="40" placeholder="your-shop-name" autocomplete="off"></label>
+          <div><button class="btn" type="submit" id="pageButton">Publish my page</button> <button class="btn btn-light" type="button" id="pageCopy" hidden>Copy link</button></div>
+        </form>
+      </section>
+
+      <section class="card" id="sectionsCard">
+        <h2>Customer page sections</h2>
+        <p class="muted">Hide a section to stop customers seeing it. Nothing is deleted, and you can show it again any time. You can also say it in "Update with chat".</p>
+        <div class="section-toggles" id="sectionToggles"></div>
+      </section>
+
       <section class="card help-card">
         <p><strong>This is your owner page.</strong> Every change you make here shows in your customer bot right away — no need to print the QR code again.</p>
         <details>
@@ -65,7 +104,8 @@
             <li>New item: Items → "+ Add item" → name, price, details and a photo → "Save item".</li>
             <li>Price changed: find the item → "Edit" → change the price → "Save item".</li>
             <li>Item finished: "Mark out of stock". When it is back, "Mark in stock".</li>
-            <li>Photos: add your main shop photo, your photo and up to 10 gallery photos.</li>
+            <li>Photos: add your main shop photo, your photo and up to 10 gallery photos. Each item can have up to 5 photos.</li>
+            <li>Neat item photos: tap ✨ on an item photo to get a clean studio photo (white background). Without it, your photo is shown as you took it (only straightened and brightened), so a messy background stays messy.</li>
             <li>Customer questions: answer the questions your bot could not answer. From then on the bot uses your answer.</li>
             <li>Customer requests: photos and pre-orders customers send from the Requests tab of your bot. Accept, mark ready or reply — the customer sees it in the bot.</li>
             <li>Order status: add each order by its bill number and update it (received → ready → delivered). Customers check it in the bot.</li>
@@ -91,6 +131,12 @@
           <summary>Answered questions (<span id="answeredCount">0</span>)</summary>
           <div class="questions" id="answeredList"></div>
         </details>
+      </section>
+
+      <section class="card" id="answersCard">
+        <h2>Saved answers <span class="count-badge" id="answersCount" hidden></span></h2>
+        <p class="muted">What your assistant tells customers, from your setup answers. Edit, hide (keeps it saved) or delete any of them. You can also say it in "Update with chat".</p>
+        <div class="questions" id="answersList"></div>
       </section>
 
       <section class="card" id="requests">
@@ -183,6 +229,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=8"></script>
+  <script type="module" src="./owner.js?v=19"></script>
 </body>
 </html>

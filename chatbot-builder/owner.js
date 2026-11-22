@@ -2,7 +2,8 @@
 // customer sees is changed from here (or from the setup chat). The private
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
-import { initUpdateChat } from './owner-update.js?v=1';
+import { enhanceProductPhoto } from './photo-enhance.js?v=2';
+import { initUpdateChat } from './owner-update.js?v=8';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';
@@ -75,12 +76,82 @@ async function uploadPhoto(kind, file, productKey = '') {
   if (!file) return;
   try {
     showStatus('Uploading photo…');
-    const image = await prepareImage(file);
+    // Item photos are tidied first (square, white space around, brighter when dark).
+    const image = (kind === 'product' && (await enhanceProductPhoto(file))) || (await prepareImage(file));
     await call('upload_photo', { kind, productKey, image });
   } catch {
     showStatus('This photo could not be read. Please choose a JPG or PNG photo.');
   }
 }
+
+// ---- Photo studio: a clean studio version of an item photo, shown first, saved only if the owner accepts ----
+const studio = { photoId: '', result: null, run: 0 };
+
+async function pngToJpeg(image) {
+  const bytes = Uint8Array.from(atob(image.data), (c) => c.charCodeAt(0));
+  const bitmap = await createImageBitmap(new Blob([bytes], { type: image.mimeType }));
+  const side = Math.min(1000, Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = side; canvas.height = side;
+  const context = canvas.getContext('2d');
+  context.fillStyle = '#ffffff';
+  context.fillRect(0, 0, side, side);
+  const scale = Math.min(side / bitmap.width, side / bitmap.height);
+  context.drawImage(bitmap, (side - bitmap.width * scale) / 2, (side - bitmap.height * scale) / 2, bitmap.width * scale, bitmap.height * scale);
+  bitmap.close?.();
+  const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.88));
+  const data = await new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result).split(',')[1] || ''); reader.onerror = () => reject(reader.error); reader.readAsDataURL(blob); });
+  return { mimeType: 'image/jpeg', data };
+}
+
+async function runStudio() {
+  const run = ++studio.run; // a result that arrives after the owner closed the box is ignored
+  $('#studioStatus').textContent = 'Cleaning your photo… this takes about 15 seconds.';
+  for (const id of ['#studioCompare', '#studioNote', '#studioUse', '#studioRetry']) $(id).hidden = true;
+  $('#studioBefore').src = photoUrl(studio.photoId);
+  try {
+    const response = await fetch(`${API_BASE}/api/botcraft/owner`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ shopId, action: 'studio_photo', photoId: studio.photoId }),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (run !== studio.run) return;
+    if (!response.ok || !data.ok) throw new Error(data.error || 'The photo studio could not clean this photo.');
+    studio.result = data.image;
+    $('#studioAfter').src = `data:${data.image.mimeType};base64,${data.image.data}`;
+    $('#studioStatus').textContent = data.left >= 0 ? `Done. ${data.left} clean-up${data.left === 1 ? '' : 's'} left today.` : 'Done.';
+    $('#studioCompare').hidden = false;
+    $('#studioNote').hidden = false;
+    $('#studioUse').hidden = false;
+    $('#studioRetry').hidden = false;
+  } catch (error) {
+    if (run !== studio.run) return;
+    $('#studioStatus').textContent = `${error.message} Your photo stays as it is.`;
+    $('#studioRetry').hidden = false;
+  }
+}
+
+function openStudio(photoId) {
+  studio.photoId = photoId;
+  studio.result = null;
+  $('#studioDialog').showModal();
+  runStudio();
+}
+
+$('#studioClose').addEventListener('click', () => { studio.run += 1; $('#studioDialog').close(); });
+$('#studioRetry').addEventListener('click', runStudio);
+$('#studioUse').addEventListener('click', async () => {
+  if (!studio.result) return;
+  $('#studioUse').disabled = true;
+  try {
+    const image = await pngToJpeg(studio.result);
+    $('#studioDialog').close();
+    await call('replace_photo', { photoId: studio.photoId, image });
+  } catch {
+    $('#studioStatus').textContent = 'Could not save the clean photo. Your photo stays as it is.';
+  }
+  $('#studioUse').disabled = false;
+});
 
 function photoThumb(photo) {
   const box = element('div', 'thumb');
@@ -142,9 +213,45 @@ function renderItems() {
     const info = element('div');
     const name = element('div', 'item-name', item.name);
     if (item.stock_status === 'out_of_stock') name.append(element('span', 'badge', 'Out of stock'));
+    if (item.stock_status === 'hidden') name.append(element('span', 'badge', 'Hidden from customers'));
     info.append(name);
     if (item.price_text) info.append(element('div', 'item-price', item.price_text));
     if (item.details) info.append(element('div', 'item-details', item.details));
+    // All photos of the item (up to 5): the first is the cover customers see first.
+    const itemPhotos = (view.photos || []).filter((p) => p.kind === 'product' && p.product_key === item.name_key);
+    const strip = element('div', 'photo-strip');
+    itemPhotos.forEach((photo, index) => {
+      const cell = element('div', 'strip-photo');
+      const thumb = element('img');
+      thumb.src = photoUrl(photo.photo_id);
+      thumb.alt = `Photo ${index + 1}`;
+      thumb.loading = 'lazy';
+      const x = element('button', 'strip-remove', '×');
+      x.type = 'button';
+      x.title = 'Remove this photo';
+      x.setAttribute('aria-label', `Remove photo ${index + 1} of ${item.name}`);
+      x.addEventListener('click', () => { if (window.confirm('Remove this photo?')) call('delete_photo', { photoId: photo.photo_id }); });
+      cell.append(thumb, x);
+      if (view.photoStudio?.available) {
+        const magic = element('button', 'strip-studio', '✨');
+        magic.type = 'button';
+        magic.title = 'Clean studio photo (white background)';
+        magic.setAttribute('aria-label', `Clean studio photo for photo ${index + 1} of ${item.name}`);
+        magic.addEventListener('click', () => openStudio(photo.photo_id));
+        cell.append(magic);
+      }
+      strip.append(cell);
+    });
+    if (itemPhotos.length < (view.productPhotoLimit || 5)) {
+      const add = element('label', 'strip-add', itemPhotos.length ? '+ Photo' : '+ Add photo');
+      const file = element('input');
+      file.type = 'file'; file.accept = 'image/*';
+      file.addEventListener('change', () => uploadPhoto('product', file.files[0], item.name_key));
+      add.append(file);
+      strip.append(add);
+    }
+    info.append(strip);
+    if (itemPhotos.length && view.photoStudio?.available) info.append(element('div', 'studio-hint', '✨ makes it a clean studio photo. Without it your photo is shown as you took it.'));
     const actions = element('div', 'item-actions');
     const edit = element('button', 'btn btn-light btn-small', 'Edit');
     edit.type = 'button';
@@ -155,10 +262,17 @@ function renderItems() {
       key: item.name_key, name: item.name, price_text: item.price_text, details: item.details,
       stock_status: item.stock_status === 'out_of_stock' ? 'in_stock' : 'out_of_stock',
     }));
+    const hidden = item.stock_status === 'hidden';
+    const hide = element('button', 'btn btn-light btn-small', hidden ? 'Show to customers' : 'Hide');
+    hide.type = 'button';
+    hide.addEventListener('click', () => call('save_product', {
+      key: item.name_key, name: item.name, price_text: item.price_text, details: item.details,
+      stock_status: hidden ? 'in_stock' : 'hidden',
+    }));
     const remove = element('button', 'btn btn-danger btn-small', 'Delete');
     remove.type = 'button';
     remove.addEventListener('click', () => { if (window.confirm(`Delete ${item.name}?`)) call('delete_product', { key: item.name_key }); });
-    actions.append(edit, stock, remove);
+    actions.append(edit, stock, hide, remove);
     info.append(actions);
     card.append(info);
     return card;
@@ -204,6 +318,92 @@ function renderQuestions() {
   const answered = view.answeredQuestions || [];
   $('#answeredCount').textContent = String(answered.length);
   $('#answeredList').replaceChildren(...answered.map((q) => questionCard(q, true)));
+}
+
+function answerCard(item) {
+  const card = element('article', 'question');
+  const head = element('div', 'item-name', item.question);
+  if (item.hidden) head.append(element('span', 'badge', 'Hidden from customers'));
+  card.append(head, element('div', 'question-answer', item.answer));
+  const actions = element('div', 'item-actions');
+  actions.append(
+    actionButton('Edit', 'btn-light', () => {
+      const next = window.prompt(item.question, item.answer);
+      if (next && next.trim() && next.trim() !== item.answer) call('save_answer', { answerId: item.id, answer: next.trim() });
+    }),
+    actionButton(item.hidden ? 'Show to customers' : 'Hide', 'btn-light', () => call('hide_answer', { answerId: item.id, hidden: !item.hidden })),
+    actionButton('Delete', 'btn-danger', () => { if (window.confirm('Delete this answer? Customers will no longer get it.')) call('delete_answer', { answerId: item.id }); })
+  );
+  card.append(actions);
+  return card;
+}
+
+function renderReplies() {
+  const replies = view.replies;
+  $('#replies').hidden = !replies;
+  if (!replies) return;
+  const line = (label, value) => { const row = element('div', 'item-actions'); row.append(element('strong', '', label), element('span', '', ` ${value}`)); return row; };
+  $('#repliesInfo').replaceChildren(
+    line('Replies left:', replies.balance.toLocaleString()),
+    line('Used this month:', replies.usedMonth.toLocaleString()),
+    line('Used today:', replies.usedToday.toLocaleString()),
+  );
+  const low = $('#repliesLow');
+  low.hidden = !replies.low;
+  low.textContent = replies.balance <= 0 ? 'None left' : 'Running low';
+  $('#repliesNote').textContent = replies.low
+    ? 'Your replies are running low. To add more replies, contact SiteCraft (online recharge is coming soon).'
+    : 'Online recharge is coming soon. To add replies now, contact SiteCraft.';
+}
+
+function renderPage() {
+  const page = view.page;
+  const card = $('#pageCard');
+  card.hidden = !view.publicId;
+  const info = $('#pageInfo');
+  if (page) {
+    const link = element('a', '', page.url);
+    link.href = page.url;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    const until = page.hosting?.expiresAt ? ` · hosted until ${new Date(page.hosting.expiresAt).toLocaleDateString()}` : '';
+    info.replaceChildren(element('strong', '', 'Live: '), link, element('span', '', until));
+  } else info.textContent = 'Not published yet.';
+  $('#pageSlugLabel').hidden = Boolean(page);
+  $('#pageButton').textContent = page ? 'Update my page' : 'Publish my page';
+  $('#pageCopy').hidden = !page;
+}
+
+$('#pageForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+  call('publish_page', { slug: event.target.elements.slug.value.trim().toLowerCase() });
+});
+$('#pageCopy').addEventListener('click', async () => {
+  const url = view.page?.url;
+  if (!url) return;
+  try { await navigator.clipboard.writeText(url); showStatus('Link copied ✓'); } catch { window.prompt('Copy this link', url); }
+});
+
+const SECTION_LABELS = [['about', 'About us'], ['gallery', 'Gallery photos'], ['map', 'Map / directions button']];
+function renderSections() {
+  const hidden = view.hiddenSections || [];
+  $('#sectionToggles').replaceChildren(...SECTION_LABELS.map(([key, label]) => {
+    const isHidden = hidden.includes(key);
+    const row = element('div', 'item-actions');
+    row.append(element('span', 'item-name', label));
+    if (isHidden) row.querySelector('.item-name').append(element('span', 'badge', 'Hidden from customers'));
+    row.append(actionButton(isHidden ? 'Show to customers' : 'Hide', 'btn-light', () => call('set_section', { section: key, hidden: !isHidden })));
+    return row;
+  }));
+}
+
+function renderAnswers() {
+  const list = view.savedAnswers || [];
+  $('#answersCard').hidden = !list.length;
+  const badge = $('#answersCount');
+  badge.hidden = !list.length;
+  badge.textContent = String(list.length);
+  $('#answersList').replaceChildren(...list.map(answerCard));
 }
 
 const REQUEST_STATES = { new: 'New', accepted: 'Accepted', ready: 'Ready', done: 'Done', rejected: 'Not possible' };
@@ -313,7 +513,7 @@ function renderFeatures() {
   for (const key of FEATURE_KEYS) form.elements[key].checked = Boolean(view.features?.[key]);
 }
 
-const INFO_KEYS = ['timings', 'weekly_holiday', 'address', 'call_number', 'whatsapp_number', 'map_link', 'about'];
+const INFO_KEYS = ['shop_name', 'timings', 'weekly_holiday', 'address', 'call_number', 'whatsapp_number', 'map_link', 'about'];
 
 function renderInfo() {
   const form = $('#infoForm');
@@ -343,9 +543,13 @@ function render() {
   if (document.activeElement !== input) input.value = view.customBotName || '';
   const openBot = $('#openBot');
   openBot.hidden = !view.publicId;
-  if (view.publicId) openBot.href = new URL(`../salesbot/?s=${encodeURIComponent(view.publicId)}`, window.location.href).href;
+  if (view.publicId) openBot.href = view.page?.url || new URL(`../salesbot/?s=${encodeURIComponent(view.publicId)}`, window.location.href).href;
   renderInfo();
   renderQuestions();
+  renderAnswers();
+  renderSections();
+  renderPage();
+  renderReplies();
   renderRequests();
   renderOrders();
   renderFeatures();

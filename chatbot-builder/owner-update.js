@@ -6,8 +6,9 @@
 // (no key yet, offline, busy, or demo mode) the rule-based planner in
 // update-planner.js is used instead, and the screen says so.
 
-import { applyPlan, runUndo } from './plan-apply.js';
-import { describeOp, planLocally } from './update-planner.js';
+import { applyPlan, runUndo } from './plan-apply.js?v=8';
+import { describeOp, planLocally } from './update-planner.js?v=7';
+import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
 
 const EXAMPLES = ['Gold chain price 52000', 'Silver anklet out of stock', 'Add Silk saree 3500', 'Timings 10 am to 8 pm', 'Closed on Sunday'];
 const LANGS = [['te-IN', 'తెలుగు'], ['en-IN', 'English'], ['hi-IN', 'हिन्दी'], ['ta-IN', 'தமிழ்'], ['kn-IN', 'ಕನ್ನಡ']];
@@ -202,6 +203,7 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
   }
 
   // ---- Voice: speak the change instead of typing it ----
+  const PHOTO_WORDS = /\b(photo|photos|picture|pictures|pic|pics|image|images)\b|ఫోటో|ఫొటో|చిత్రం|फोटो|तस्वीर/i;
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognizer = null;
   const savedLang = (() => { try { return localStorage.getItem(LANG_KEY); } catch { return null; } })();
@@ -212,6 +214,55 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
     return option;
   }));
   langSelect.addEventListener('change', () => { try { localStorage.setItem(LANG_KEY, langSelect.value); } catch {} });
+
+  // What the owner said (from either voice engine): send it, or wait for a photo first.
+  function handleHeard(heard) {
+    if (!heard.trim()) return;
+    // "this is the gold chain photo" with no photo yet: keep the words and ask for the photo, so they are sent together.
+    if (!attached.length && PHOTO_WORDS.test(heard)) {
+      input.value = heard;
+      bubble('bot', 'Now tap 📷 to add the photo, then press Check.');
+      return;
+    }
+    submit(heard);
+  }
+
+  // Premium voice (ElevenLabs on the server): record, then turn the recording into text.
+  // If the server cannot do it, the phone's own voice typing takes over.
+  let recording = null;
+  let premiumDown = false;
+  const usePremium = () => !premiumDown && premiumRecordingSupported() && Boolean(getView().premiumVoice);
+  function showListening(on, placeholder) {
+    micButton.classList.toggle('uc-listening', on);
+    micButton.setAttribute('aria-pressed', String(on));
+    input.placeholder = placeholder;
+  }
+  async function startPremium() {
+    window.speechSynthesis?.cancel();
+    try {
+      recording = await startRecording({ apiBase, shopId });
+    } catch {
+      bubble('bot', 'Please allow the microphone for this page, then tap the mic again.');
+      return;
+    }
+    showListening(true, 'Recording… tap the mic when you finish');
+    const started = recording;
+    started.ended.then(() => { if (recording === started) finishPremium(); });
+  }
+  async function finishPremium() {
+    const active = recording;
+    recording = null;
+    if (!active) return;
+    showListening(false, 'Turning your voice into text…');
+    const result = await active.stop();
+    showListening(false, 'Type or speak a change…');
+    if (result.error) {
+      bubble('bot', result.error);
+      if (result.fallback && Recognition) { premiumDown = true; bubble('bot', 'I will use your phone\'s voice typing now. Tap the mic and speak again.'); }
+      return;
+    }
+    handleHeard(result.text);
+  }
 
   function stopListening() {
     recognizer?.stop();
@@ -239,12 +290,17 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
       micButton.classList.remove('uc-listening');
       micButton.setAttribute('aria-pressed', 'false');
       input.placeholder = 'Type or speak a change…';
-      if (heard.trim()) submit(heard);
+      handleHeard(heard);
     };
     try { recognizer.start(); } catch { micButton.classList.remove('uc-listening'); }
   }
-  if (Recognition) {
-    micButton.addEventListener('click', () => { if (recognizer) stopListening(); else startListening(); });
+  if (Recognition || premiumRecordingSupported()) {
+    micButton.addEventListener('click', () => {
+      if (recording) finishPremium();
+      else if (recognizer) stopListening();
+      else if (usePremium()) startPremium();
+      else startListening();
+    });
   } else {
     micButton.hidden = true;
     langSelect.hidden = true;

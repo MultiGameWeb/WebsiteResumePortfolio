@@ -2,6 +2,8 @@
 // botcraft-db), separate from the website templates' sitecraft-db. Tables are
 // created on first use, so no manual migration step is needed.
 
+import { withoutHidden } from "./botcraft-answers.js";
+
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS botcraft_shops (
     shop_id TEXT PRIMARY KEY,
@@ -122,6 +124,33 @@ const SCHEMA = [
     PRIMARY KEY (endpoint, shop_id, role, request_id)
   )`,
   `CREATE INDEX IF NOT EXISTS idx_botcraft_push_shop ON botcraft_push_subs(shop_id, role, request_id)`,
+  // Reply metering. A customer reply uses one credit; the shop starts with free replies and
+  // is topped up later (payment, or the admin). Atomic updates, so two customers at once never overspend.
+  `CREATE TABLE IF NOT EXISTS botcraft_replies (
+    shop_id TEXT PRIMARY KEY,
+    balance INTEGER NOT NULL DEFAULT 0,
+    granted INTEGER NOT NULL DEFAULT 0,
+    used INTEGER NOT NULL DEFAULT 0,
+    updated_at TEXT NOT NULL
+  )`,
+  // Abuse protection: customer AI questions per day, for a whole shop (visitor '*') and per visitor.
+  // The visitor is a one-way hash of the connection address and the shop, never the address itself.
+  `CREATE TABLE IF NOT EXISTS botcraft_daily_asks (
+    shop_id TEXT NOT NULL,
+    day TEXT NOT NULL,
+    visitor TEXT NOT NULL,
+    n INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (shop_id, day, visitor)
+  )`,
+  // What the replies really cost: replies and Gemini tokens per shop per day.
+  `CREATE TABLE IF NOT EXISTS botcraft_usage (
+    shop_id TEXT NOT NULL,
+    day TEXT NOT NULL,
+    replies INTEGER NOT NULL DEFAULT 0,
+    in_tokens INTEGER NOT NULL DEFAULT 0,
+    out_tokens INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (shop_id, day)
+  )`,
   // Server keys made once by the Worker (the VAPID key pair for Web Push).
   `CREATE TABLE IF NOT EXISTS botcraft_keys (
     name TEXT PRIMARY KEY,
@@ -130,6 +159,7 @@ const SCHEMA = [
 ];
 
 export const GALLERY_LIMIT = 10;
+export const PRODUCT_PHOTO_LIMIT = 5; // photos per item (front, side, close-up ...)
 const SHOP_PHOTO_LIMIT = 500;
 
 const MAX_NOTES = 200;
@@ -142,7 +172,10 @@ export function storeAvailable(env) {
 // Once per Worker isolate.
 async function ensureSchema(db) {
   if (!schemaReady) {
-    schemaReady = db.batch(SCHEMA.map(sql => db.prepare(sql))).catch(error => {
+    schemaReady = db.batch(SCHEMA.map(sql => db.prepare(sql)))
+      // Added later: where a photo's bytes live, 'd1' (in the row) or 'r2' (in the photo bucket).
+      .then(() => db.prepare("ALTER TABLE botcraft_photos ADD COLUMN storage TEXT NOT NULL DEFAULT 'd1'").run().catch(() => null))
+      .catch(error => {
       schemaReady = null;
       throw error;
     });
@@ -235,7 +268,18 @@ export async function loadPublicShop(env, publicId) {
   const [products, photos, ownerAnswers] = await Promise.all([
     listProducts(env, row.shop_id), listPhotos(env, row.shop_id), listCustomerQuestions(env, row.shop_id, "answered")
   ]);
-  return { ...shop, shopId: row.shop_id, products, photos, ownerAnswers };
+  // Answers the owner hid stay saved but never reach customers or the bot.
+  const settings = await loadSettings(env, row.shop_id);
+  const visible = withoutHidden({ ...shop, ownerAnswers }, settings.hiddenAnswers);
+  // Page sections the owner hid (about, gallery, map): customers never get them.
+  const hiddenSections = new Set(settings.hiddenSections || []);
+  const facts = { ...visible.facts };
+  if (hiddenSections.has("about")) delete facts.about;
+  if (hiddenSections.has("map")) delete facts.map_link;
+  return {
+    ...visible, facts, shopId: row.shop_id, products,
+    photos: hiddenSections.has("gallery") ? photos.filter(photo => photo.kind !== "gallery") : photos
+  };
 }
 
 const nameKey = name => String(name).toLowerCase().replace(/\s+/g, " ").trim();
@@ -253,18 +297,20 @@ export async function updateFacts(env, shopId, patch) {
   const row = await db.prepare("SELECT facts_json FROM botcraft_shops WHERE shop_id = ?").bind(shopId).first();
   if (!row) return null;
   const facts = { ...JSON.parse(row.facts_json || "{}"), ...patch };
-  await db.prepare("UPDATE botcraft_shops SET facts_json = ?, updated_at = ? WHERE shop_id = ?")
-    .bind(JSON.stringify(facts), new Date().toISOString(), shopId).run();
+  // The shop name also lives in its own column (used for lists), so keep both the same.
+  await db.prepare("UPDATE botcraft_shops SET facts_json = ?, shop_name = ?, updated_at = ? WHERE shop_id = ?")
+    .bind(JSON.stringify(facts), String(facts.shop_name || ""), new Date().toISOString(), shopId).run();
   return facts;
 }
 
-export async function listProducts(env, shopId) {
+// Hidden items are for the owner only; customers never get them (includeHidden is false by default).
+export async function listProducts(env, shopId, { includeHidden = false } = {}) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   const rows = await db.prepare(
     "SELECT p.name_key, p.name, p.price_text, p.details, p.stock_status, " +
-    "(SELECT photo_id FROM botcraft_photos f WHERE f.shop_id = p.shop_id AND f.kind = 'product' AND f.product_key = p.name_key LIMIT 1) AS photo_id " +
-    "FROM botcraft_products p WHERE p.shop_id = ? ORDER BY p.updated_at DESC LIMIT 500"
+    "(SELECT photo_id FROM botcraft_photos f WHERE f.shop_id = p.shop_id AND f.kind = 'product' AND f.product_key = p.name_key ORDER BY f.created_at LIMIT 1) AS photo_id " +
+    "FROM botcraft_products p WHERE p.shop_id = ? " + (includeHidden ? "" : "AND p.stock_status != 'hidden' ") + "ORDER BY p.updated_at DESC LIMIT 500"
   ).bind(shopId).all();
   return rows.results || [];
 }
@@ -290,13 +336,41 @@ export async function saveProduct(env, shopId, { key, name, price_text, details,
   return newKey;
 }
 
+// True when the shop already has an item with this name (used before renaming).
+export async function productExists(env, shopId, name) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT 1 AS found FROM botcraft_products WHERE shop_id = ? AND name_key = ?").bind(shopId, nameKey(name)).first();
+  return Boolean(row);
+}
+
+// ---- Photo files: D1 rows hold the details; the bytes go to R2 when the BOTCRAFT_PHOTOS bucket is bound ----
+const bucketOf = env => env?.BOTCRAFT_PHOTOS || null;
+export const photoBucketAvailable = env => Boolean(bucketOf(env));
+const photoKey = (shopId, photoId) => `${shopId}/${photoId}`;
+const EMPTY_BYTES = new Uint8Array(0);
+
+// Files (in R2) of the photos a condition matches; call before their rows are deleted.
+async function r2KeysWhere(db, where, ...binds) {
+  const rows = await db.prepare(`SELECT shop_id, photo_id FROM botcraft_photos WHERE storage = 'r2' AND (${where})`).bind(...binds).all();
+  return (rows.results || []).map(row => photoKey(row.shop_id, row.photo_id));
+}
+// A file that cannot be deleted only costs a little storage, so it never fails the owner's action.
+async function deleteFiles(env, keys) {
+  const bucket = bucketOf(env);
+  if (!bucket || !keys.length) return;
+  try { await bucket.delete(keys); } catch (error) { console.error("BotCraft photo file delete failed", error); }
+}
+
 export async function deleteProduct(env, shopId, key) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
+  const files = await r2KeysWhere(db, "shop_id = ? AND kind = 'product' AND product_key = ?", shopId, key);
   await db.batch([
     db.prepare("DELETE FROM botcraft_products WHERE shop_id = ? AND name_key = ?").bind(shopId, key),
     db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'product' AND product_key = ?").bind(shopId, key)
   ]);
+  await deleteFiles(env, files);
 }
 
 export async function listPhotos(env, shopId) {
@@ -316,25 +390,98 @@ export async function savePhoto(env, shopId, { kind, productKey = "", mime, byte
   if ((count?.n || 0) >= SHOP_PHOTO_LIMIT) return { error: "This shop has reached its photo limit." };
   const photoId = crypto.randomUUID().replace(/-/g, "");
   const statements = [];
-  if (kind !== "gallery") {
+  let replacedFiles = [];
+  if (kind === "product") {
+    // An item keeps several photos; the first one is its cover.
+    const have = await db.prepare("SELECT COUNT(*) AS n FROM botcraft_photos WHERE shop_id = ? AND kind = 'product' AND product_key = ?").bind(shopId, productKey).first();
+    if ((have?.n || 0) >= PRODUCT_PHOTO_LIMIT) return { error: `An item holds up to ${PRODUCT_PHOTO_LIMIT} photos. Remove one first.` };
+  } else if (kind !== "gallery") {
+    // One photo of this kind (main, owner): the new one replaces the old one and its file.
+    replacedFiles = await r2KeysWhere(db, "shop_id = ? AND kind = ? AND product_key = ?", shopId, kind, productKey);
     statements.push(db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = ? AND product_key = ?").bind(shopId, kind, productKey));
   }
-  statements.push(db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
-    .bind(photoId, shopId, kind, productKey, mime, bytes, new Date().toISOString()));
-  await db.batch(statements);
+  const bucket = bucketOf(env);
+  if (bucket) await bucket.put(photoKey(shopId, photoId), bytes, { httpMetadata: { contentType: mime } });
+  statements.push(db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at, storage) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+    .bind(photoId, shopId, kind, productKey, mime, bucket ? EMPTY_BYTES : bytes, new Date().toISOString(), bucket ? "r2" : "d1"));
+  try {
+    await db.batch(statements);
+  } catch (error) {
+    if (bucket) await deleteFiles(env, [photoKey(shopId, photoId)]);
+    throw error;
+  }
+  await deleteFiles(env, replacedFiles);
+  return { photoId };
+}
+
+// Swaps an item photo for a new one (a studio clean-up the owner approved). The new photo
+// takes the old one's place in the list, so a cover photo stays the cover.
+export async function replacePhoto(env, shopId, oldPhotoId, { mime, bytes }) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const old = await db.prepare("SELECT kind, product_key, created_at FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, oldPhotoId).first();
+  if (!old || old.kind !== "product") return { error: "That photo was not found." };
+  const photoId = crypto.randomUUID().replace(/-/g, "");
+  const oldFiles = await r2KeysWhere(db, "shop_id = ? AND photo_id = ?", shopId, oldPhotoId);
+  const bucket = bucketOf(env);
+  if (bucket) await bucket.put(photoKey(shopId, photoId), bytes, { httpMetadata: { contentType: mime } });
+  try {
+    await db.batch([
+      db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, oldPhotoId),
+      db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at, storage) VALUES (?, ?, 'product', ?, ?, ?, ?, ?)")
+        .bind(photoId, shopId, old.product_key, mime, bucket ? EMPTY_BYTES : bytes, old.created_at, bucket ? "r2" : "d1")
+    ]);
+  } catch (error) {
+    if (bucket) await deleteFiles(env, [photoKey(shopId, photoId)]);
+    throw error;
+  }
+  await deleteFiles(env, oldFiles);
   return { photoId };
 }
 
 export async function deletePhoto(env, shopId, photoId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
+  const files = await r2KeysWhere(db, "shop_id = ? AND photo_id = ?", shopId, photoId);
   await db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, photoId).run();
+  await deleteFiles(env, files);
 }
 
 export async function loadPhoto(env, photoId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
-  return db.prepare("SELECT mime, data FROM botcraft_photos WHERE photo_id = ?").bind(photoId).first();
+  const row = await db.prepare("SELECT shop_id, mime, data, storage FROM botcraft_photos WHERE photo_id = ?").bind(photoId).first();
+  if (!row) return null;
+  if (row.storage !== "r2") return { mime: row.mime, data: row.data };
+  const bucket = bucketOf(env);
+  const object = bucket ? await bucket.get(photoKey(row.shop_id, photoId)) : null;
+  return object ? { mime: row.mime, data: await object.arrayBuffer() } : null;
+}
+
+// Moves photos still stored in D1 to R2, a few at a time (admin action). Safe to repeat.
+export async function migratePhotosToR2(env, limit = 20) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const bucket = bucketOf(env);
+  if (!bucket) return { ok: false, error: "The photo bucket (BOTCRAFT_PHOTOS) is not connected." };
+  const rows = await db.prepare("SELECT photo_id, shop_id, mime, data FROM botcraft_photos WHERE storage = 'd1' LIMIT ?").bind(Math.max(1, Math.min(50, Math.floor(limit) || 20))).all();
+  let moved = 0;
+  for (const row of rows.results || []) {
+    const bytes = row.data instanceof ArrayBuffer || ArrayBuffer.isView(row.data) ? row.data : Uint8Array.from(row.data);
+    await bucket.put(photoKey(row.shop_id, row.photo_id), bytes, { httpMetadata: { contentType: row.mime } });
+    // Only after the file is safely in R2 is the copy in the row emptied.
+    const changed = await db.prepare("UPDATE botcraft_photos SET storage = 'r2', data = ? WHERE photo_id = ? AND storage = 'd1'").bind(EMPTY_BYTES, row.photo_id).run();
+    if (changed.meta?.changes) moved += 1;
+  }
+  return { ok: true, moved, ...(await photoStorageStats(env)) };
+}
+
+export async function photoStorageStats(env) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const rows = await db.prepare("SELECT storage, COUNT(*) AS n, COALESCE(SUM(LENGTH(data)), 0) AS bytes FROM botcraft_photos GROUP BY storage").all();
+  const by = Object.fromEntries((rows.results || []).map(row => [row.storage, row]));
+  return { r2Available: photoBucketAvailable(env), inD1: Number(by.d1?.n || 0), inD1Bytes: Number(by.d1?.bytes || 0), inR2: Number(by.r2?.n || 0), remaining: Number(by.d1?.n || 0) };
 }
 
 const questionKey = text => String(text).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim().slice(0, 200);
@@ -385,6 +532,124 @@ export async function dismissCustomerQuestion(env, shopId, key) {
   await db.prepare("UPDATE botcraft_customer_questions SET status = 'dismissed' WHERE shop_id = ? AND q_key = ?").bind(shopId, key).run();
 }
 
+// Setup-chat answers the owner edits or deletes from the owner page.
+export async function setAnswerValue(env, shopId, questionId, value) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare(
+    "INSERT INTO botcraft_answers (shop_id, question_id, value, updated_at) VALUES (?, ?, ?, ?) " +
+    "ON CONFLICT(shop_id, question_id) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at"
+  ).bind(shopId, questionId, value, new Date().toISOString()).run();
+}
+
+export async function deleteAnswerRow(env, shopId, questionId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("DELETE FROM botcraft_answers WHERE shop_id = ? AND question_id = ?").bind(shopId, questionId).run();
+}
+
+export async function setNotes(env, shopId, notes) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("UPDATE botcraft_shops SET notes_json = ?, updated_at = ? WHERE shop_id = ?")
+    .bind(JSON.stringify(notes.slice(-MAX_NOTES)), new Date().toISOString(), shopId).run();
+}
+
+// ---- Daily caps (abuse protection) ----
+export const DEFAULT_SHOP_DAILY_ASKS = 500;
+export const DEFAULT_VISITOR_DAILY_ASKS = 40;
+const positive = (value, fallback) => (Number(value) > 0 ? Math.floor(Number(value)) : fallback);
+export const shopDailyLimit = env => positive(env?.BOTCRAFT_SHOP_DAILY_REPLIES, DEFAULT_SHOP_DAILY_ASKS);
+export const visitorDailyLimit = env => positive(env?.BOTCRAFT_VISITOR_DAILY_REPLIES, DEFAULT_VISITOR_DAILY_ASKS);
+
+// One counter step that never goes past the limit: true when a slot was taken.
+async function takeSlot(db, shopId, day, visitor, limit) {
+  const result = await db.prepare(
+    "INSERT INTO botcraft_daily_asks (shop_id, day, visitor, n) VALUES (?, ?, ?, 1) " +
+    "ON CONFLICT(shop_id, day, visitor) DO UPDATE SET n = n + 1 WHERE n < ?"
+  ).bind(shopId, day, visitor, limit).run();
+  return Boolean(result.meta?.changes);
+}
+
+// Takes one slot from the shop's daily total and one from this visitor's. Returns
+// { ok: true } or { ok: false, code: "daily_limit" | "visitor_limit" }.
+export async function takeDailyAsk(env, shopId, visitorHash, { shopLimit = DEFAULT_SHOP_DAILY_ASKS, visitorLimit = DEFAULT_VISITOR_DAILY_ASKS } = {}) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const day = new Date().toISOString().slice(0, 10);
+  if (Math.random() < 0.02) await db.prepare("DELETE FROM botcraft_daily_asks WHERE day < ?").bind(new Date(Date.now() - 2 * 86400000).toISOString().slice(0, 10)).run().catch(() => {});
+  if (!(await takeSlot(db, shopId, day, "*", shopLimit))) return { ok: false, code: "daily_limit" };
+  if (!(await takeSlot(db, shopId, day, visitorHash, visitorLimit))) {
+    await db.prepare("UPDATE botcraft_daily_asks SET n = MAX(0, n - 1) WHERE shop_id = ? AND day = ? AND visitor = '*'").bind(shopId, day).run();
+    return { ok: false, code: "visitor_limit" };
+  }
+  return { ok: true };
+}
+
+// ---- Reply metering ----
+export const DEFAULT_FREE_REPLIES = 200;
+export const freeRepliesFor = env => (Number(env?.BOTCRAFT_FREE_REPLIES) >= 0 && env?.BOTCRAFT_FREE_REPLIES !== undefined && env?.BOTCRAFT_FREE_REPLIES !== "" ? Math.floor(Number(env.BOTCRAFT_FREE_REPLIES)) : DEFAULT_FREE_REPLIES);
+
+// Takes one credit before the AI is asked. { ok: true, balance } or { ok: false, balance: 0 }.
+export async function reserveReply(env, shopId, freeReplies = DEFAULT_FREE_REPLIES) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const now = new Date().toISOString();
+  // A shop's first customer reply creates its row with the free replies.
+  await db.prepare("INSERT OR IGNORE INTO botcraft_replies (shop_id, balance, granted, used, updated_at) VALUES (?, ?, ?, 0, ?)").bind(shopId, freeReplies, freeReplies, now).run();
+  const taken = await db.prepare("UPDATE botcraft_replies SET balance = balance - 1, used = used + 1, updated_at = ? WHERE shop_id = ? AND balance > 0").bind(now, shopId).run();
+  if (!taken.meta?.changes) return { ok: false, balance: 0 };
+  const row = await db.prepare("SELECT balance FROM botcraft_replies WHERE shop_id = ?").bind(shopId).first();
+  return { ok: true, balance: Number(row?.balance ?? 0) };
+}
+
+// The AI failed: give the credit back.
+export async function releaseReply(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await db.prepare("UPDATE botcraft_replies SET balance = balance + 1, used = MAX(0, used - 1), updated_at = ? WHERE shop_id = ?").bind(new Date().toISOString(), shopId).run();
+}
+
+export async function recordUsage(env, shopId, { inTokens = 0, outTokens = 0 } = {}) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare(
+    "INSERT INTO botcraft_usage (shop_id, day, replies, in_tokens, out_tokens) VALUES (?, ?, 1, ?, ?) " +
+    "ON CONFLICT(shop_id, day) DO UPDATE SET replies = replies + 1, in_tokens = in_tokens + excluded.in_tokens, out_tokens = out_tokens + excluded.out_tokens"
+  ).bind(shopId, new Date().toISOString().slice(0, 10), Math.max(0, Math.floor(inTokens)), Math.max(0, Math.floor(outTokens))).run();
+}
+
+// Adds replies (a recharge or a gift). Creates the row with the free replies first when the shop has none yet.
+export async function addReplies(env, shopId, count, freeReplies = DEFAULT_FREE_REPLIES) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const now = new Date().toISOString();
+  await db.prepare("INSERT OR IGNORE INTO botcraft_replies (shop_id, balance, granted, used, updated_at) VALUES (?, ?, ?, 0, ?)").bind(shopId, freeReplies, freeReplies, now).run();
+  await db.prepare("UPDATE botcraft_replies SET balance = MAX(0, balance + ?), granted = granted + MAX(0, ?), updated_at = ? WHERE shop_id = ?").bind(count, count, now, shopId).run();
+  return replyStatus(env, shopId, freeReplies);
+}
+
+// What the owner page and the admin show. A shop that has had no customer replies yet still shows its free replies.
+export async function replyStatus(env, shopId, freeReplies = DEFAULT_FREE_REPLIES) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT balance, granted, used FROM botcraft_replies WHERE shop_id = ?").bind(shopId).first();
+  const day = new Date().toISOString().slice(0, 10);
+  const monthStart = day.slice(0, 8) + "01";
+  const [today, month, total] = await Promise.all([
+    db.prepare("SELECT replies, in_tokens, out_tokens FROM botcraft_usage WHERE shop_id = ? AND day = ?").bind(shopId, day).first(),
+    db.prepare("SELECT COALESCE(SUM(replies), 0) AS replies, COALESCE(SUM(in_tokens), 0) AS in_tokens, COALESCE(SUM(out_tokens), 0) AS out_tokens FROM botcraft_usage WHERE shop_id = ? AND day >= ?").bind(shopId, monthStart).first(),
+    db.prepare("SELECT COALESCE(SUM(replies), 0) AS replies, COALESCE(SUM(in_tokens), 0) AS in_tokens, COALESCE(SUM(out_tokens), 0) AS out_tokens FROM botcraft_usage WHERE shop_id = ?").bind(shopId).first()
+  ]);
+  const balance = row ? Number(row.balance) : freeReplies;
+  const granted = row ? Number(row.granted) : freeReplies;
+  return {
+    balance, granted, used: row ? Number(row.used) : 0,
+    usedToday: Number(today?.replies || 0), usedMonth: Number(month?.replies || 0),
+    tokens: { in: Number(total?.in_tokens || 0), out: Number(total?.out_tokens || 0), replies: Number(total?.replies || 0) },
+    low: balance <= Math.max(10, Math.floor(granted * 0.1))
+  };
+}
+
 export async function loadSettings(env, shopId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
@@ -408,21 +673,23 @@ const CLOSED_REQUEST_DAYS = 30;
 const DAILY_REQUEST_LIMIT = 200;
 const REQUEST_FIELDS = "request_id, kind, code, message, pickup, customer_name, photo_id, status, reply, created_at, updated_at";
 
-async function pruneRequests(db, shopId) {
+async function pruneRequests(env, db, shopId) {
   const cutoff = new Date(Date.now() - CLOSED_REQUEST_DAYS * 86400000).toISOString();
   const old = "shop_id = ? AND updated_at < ? AND status IN ('done', 'rejected', 'delivered')";
+  const files = await r2KeysWhere(db, `shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE ${old})`, shopId, shopId, cutoff);
   await db.batch([
     db.prepare(`DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE ${old})`).bind(shopId, shopId, cutoff),
     db.prepare(`DELETE FROM botcraft_requests WHERE ${old}`).bind(shopId, cutoff),
     db.prepare("DELETE FROM botcraft_push_subs WHERE shop_id = ? AND role = 'customer' AND request_id NOT IN (SELECT request_id FROM botcraft_requests WHERE shop_id = ?)").bind(shopId, shopId)
   ]);
+  await deleteFiles(env, files);
 }
 
 // A customer's photo question or pre-order. Returns the request, or an error.
 export async function createRequest(env, shopId, { kind, message, pickup = "", name = "", image = null }) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
-  await pruneRequests(db, shopId);
+  await pruneRequests(env, db, shopId);
   const since = new Date(Date.now() - 86400000).toISOString();
   const today = await db.prepare("SELECT COUNT(*) AS n FROM botcraft_requests WHERE shop_id = ? AND kind != 'order' AND created_at > ?").bind(shopId, since).first();
   if ((today?.n || 0) >= DAILY_REQUEST_LIMIT) return { error: "The shop is getting many requests right now. Please call or WhatsApp the shop." };
@@ -484,11 +751,13 @@ export async function updateRequest(env, shopId, requestId, { status, reply }) {
 export async function deleteRequest(env, shopId, requestId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
+  const files = await r2KeysWhere(db, "shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE shop_id = ? AND request_id = ?)", shopId, shopId, requestId);
   await db.batch([
     db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE shop_id = ? AND request_id = ?)").bind(shopId, shopId, requestId),
     db.prepare("DELETE FROM botcraft_requests WHERE shop_id = ? AND request_id = ?").bind(shopId, requestId),
     db.prepare("DELETE FROM botcraft_push_subs WHERE shop_id = ? AND role = 'customer' AND request_id = ?").bind(shopId, requestId)
   ]);
+  await deleteFiles(env, files);
 }
 
 const orderCode = code => String(code).toUpperCase().replace(/\s+/g, "");
@@ -497,7 +766,7 @@ const orderCode = code => String(code).toUpperCase().replace(/\s+/g, "");
 export async function saveOrder(env, shopId, { code, status, note }) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
-  await pruneRequests(db, shopId);
+  await pruneRequests(env, db, shopId);
   const key = orderCode(code);
   const now = new Date().toISOString();
   const existing = await db.prepare("SELECT request_id FROM botcraft_requests WHERE shop_id = ? AND kind = 'order' AND code = ?").bind(shopId, key).first();

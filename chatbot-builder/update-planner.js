@@ -16,6 +16,12 @@ const KW = {
   price: /\b(price|rate|cost|mrp|amount|dhara|ret|rupees|rs)\b|ధర|రేటు|రేట్|కాస్ట్|कीमत|दाम|भाव|रेट/i,
   out: /\b(out of stock|no stock|stock (?:is )?(?:over|finished|empty|less)|finished|sold out|not available|unavailable|over|stock ledu|ayipoyindi|ayipoyindhi|aipoyindi)\b|స్టాక్ లేదు|అయిపోయింది|అయిపోయిన|లేదు|खत्म|स्टॉक नहीं|उपलब्ध नहीं/i,
   back: /\b(back in stock|in stock|available again|available|stock (?:came|arrived|vachindi|undi)|restocked|new stock)\b|స్టాక్ ఉంది|స్టాక్ వచ్చింది|అందుబాటులో|उपलब्ध|स्टॉक आ गया/i,
+  unhide: /\b(unhide|show again|show it again|make (?:it )?visible|visible again|start showing|chupinchu|chupinchandi)\b|మళ్ళీ చూపించు|చూపించు|చూపండి|दिखाओ|दिखा दो|फिर से दिखा/i,
+  hide: /\b(hide|hidden|don'?t show|do not show|stop showing|daachu|dachu|dachandi|daachandi)\b|దాచు|దాచండి|దాచేయి|छुपा|छिपा/i,
+  rename: /^\s*(?:please\s+)?(?:rename|change (?:the )?name of|change name of)\s+(.+?)\s+(?:to|as|into)\s+(.+)$/i,
+  delPhoto: /\b(delete|remove|erase|take (?:off|down))\b[^.]*\b(photo|picture|pic|image)\b|\b(photo|picture|pic|image)\b[^.]*\b(delete|remove|erase)\b|(ఫోటో|ఫొటో).*(తొలగించు|తీసేయి|తీసివేయి|డిలీట్)|(తొలగించు|తీసేయి|డిలీట్).*(ఫోటో|ఫొటో)|फोटो.*(हटा|डिलीट)|(हटा|डिलीट).*फोटो/i,
+  shopName: /^\s*(?:shop|business|store)\s*name\b[\s:,-]*(?:to|is|=|as)?\s*|^\s*(?:change|rename|update)\s+(?:the\s+|my\s+)?(?:shop|business|store)(?:\s+name)?\s+(?:to|as)\s+|^\s*(?:షాప్ పేరు|దుకాణం పేరు|दुकान का नाम)\s*[:\-]?\s*/i,
+  sectionWord: /\b(about(?: us| section)?|gallery|photos? section|map|directions?|location link)\b|గ్యాలరీ|మ్యాప్/i,
   del: /\b(delete|remove|drop|tholagimchu|teesey|teeseyi)\b|తొలగించు|తీసేయి|తీసివేయి|డిలీట్|हटा|हटाएं|हटाओ|डिलीट/i,
   add: /^\s*(add|new item|new|create|insert|jodinchu)\b|^\s*(జోడించు|కొత్త|యాడ్|जोड़ें|जोड़|नया)/i,
   timings: /\b(timings?|timing|opening hours?|open(?:s|ing)?|hours|working hours)\b|టైమింగ్స్|సమయం|సమయాలు|समय|खुलने/i,
@@ -84,6 +90,15 @@ export function matchProduct(clause, products) {
   const tied = scored.filter((entry) => Math.abs(entry.score - top.score) < 0.001);
   if (tied.length > 1) return { product: null, ambiguous: tied.map((entry) => entry.product.name).slice(0, 3) };
   return { product: top.product, ambiguous: [], matchedTokens: top.hits };
+}
+
+// "photo 2", "2nd photo", "second photo" -> 2 (0 when no number is given).
+const ORDINALS = { first: 1, second: 2, third: 3, fourth: 4, fifth: 5 };
+function photoNumber(lower) {
+  const word = lower.match(/\b(first|second|third|fourth|fifth)\s+(?:photo|picture|pic|image)\b/);
+  if (word) return ORDINALS[word[1]];
+  const digit = lower.match(/\b(?:photo|picture|pic|image)\s*(?:no\.?|number|#)?\s*(\d)\b|\b(\d)(?:st|nd|rd|th)?\s+(?:photo|picture|pic|image)\b/);
+  return digit ? Number(digit[1] || digit[2]) : 0;
 }
 
 function formatTime(hour, minute, suffix) {
@@ -167,6 +182,15 @@ export function planLocally(text, { products = [], imageCount = 0 } = {}) {
     if (urlMatch && /maps|goo\.gl|g\.page/i.test(urlMatch[0])) { ops.push({ type: 'set_info', field: 'map_link', value: urlMatch[0] }); continue; }
     const botMatch = clause.match(KW.bot);
     if (botMatch) { const value = clause.slice(botMatch.index + botMatch[0].length).trim(); if (value) { ops.push({ type: 'rename_bot', value: value.slice(0, 40) }); continue; } }
+    const nameMatch = clause.match(KW.shopName);
+    if (nameMatch && clause.length > nameMatch[0].length + 1 && !KW.bot.test(clause)) { ops.push({ type: 'set_info', field: 'shop_name', value: clause.slice(nameMatch[0].length).trim().replace(/^["'“”]|["'“”]$/g, '').slice(0, 80) }); continue; }
+    // Hide or show a whole section of the customer page ("hide gallery", "show map again").
+    const wantsShow = KW.unhide.test(lower) || /\b(show|unhide|display|visible)\b/.test(lower);
+    if (KW.sectionWord.test(lower) && (KW.hide.test(lower) || wantsShow) && !matchProduct(clause, products).product) {
+      const section = /\b(gallery|photos? section)\b|గ్యాలరీ/i.test(lower) ? 'gallery' : /\b(map|directions?|location link)\b|మ్యాప్/i.test(lower) ? 'map' : 'about';
+      ops.push({ type: 'set_section', section, hidden: KW.hide.test(lower) && !wantsShow });
+      continue;
+    }
     const aboutMatch = clause.match(KW.about);
     if (aboutMatch && clause.length > aboutMatch[0].length + 5) { ops.push({ type: 'set_info', field: 'about', value: clause.slice(aboutMatch[0].length).trim().slice(0, 400) }); continue; }
     const addressMatch = clause.match(KW.address);
@@ -186,6 +210,36 @@ export function planLocally(text, { products = [], imageCount = 0 } = {}) {
       continue;
     }
 
+    // ---- Rename an item ----
+    const renameMatch = clause.match(KW.rename);
+    if (renameMatch) {
+      const target = matchProduct(renameMatch[1], products);
+      const newName = renameMatch[2].trim().replace(/^["'“”]|["'“”]$/g, '').slice(0, 120);
+      if (target.ambiguous.length) questions.push(`Which item do you mean: ${target.ambiguous.join(' or ')}?`);
+      else if (!target.product) questions.push(`I could not find “${renameMatch[1].trim().slice(0, 60)}” in your items. Please write its name as it appears in your items.`);
+      else if (!newName) questions.push(`What should the new name of ${target.product.name} be?`);
+      else ops.push({ type: 'rename_item', name: target.product.name, key: target.product.name_key, new_name: newName });
+      continue;
+    }
+
+    // ---- Delete a photo (never the item itself) ----
+    if (KW.delPhoto.test(lower)) {
+      const gallery = lower.match(/\bgallery\b[^\d]*(\d+)|\b(\d+)(?:st|nd|rd|th)?\s+(?:gallery\s+)?(?:photo|picture|pic)\b.*\bgallery\b/);
+      if (/\b(main photo|shop photo|shop front|front photo|banner|cover|signboard)\b|మెయిన్/i.test(lower)) ops.push({ type: 'delete_photo', kind: 'main' });
+      else if (/\b(my photo|owner photo|owner)\b|నా ఫోటో|ఓనర్/i.test(lower)) ops.push({ type: 'delete_photo', kind: 'owner' });
+      else if (/\bgallery\b|గ్యాలరీ/i.test(lower)) {
+        const number = gallery && Number(gallery[1] || gallery[2]);
+        if (number >= 1) ops.push({ type: 'delete_photo', kind: 'gallery', index: number });
+        else questions.push('Which gallery photo should I delete? Say its number, for example “delete gallery photo 2”.');
+      } else {
+        const found = matchProduct(clause, products);
+        if (found.ambiguous.length) questions.push(`Which item do you mean: ${found.ambiguous.join(' or ')}?`);
+        else if (found.product) { const number = photoNumber(lower); ops.push({ type: 'delete_photo', kind: 'product', name: found.product.name, key: found.product.name_key, ...(number ? { index: number } : {}) }); }
+        else questions.push('Which photo should I delete? Say the item name, “main photo”, “owner photo” or “gallery photo 2”.');
+      }
+      continue;
+    }
+
     // ---- Items ----
     if (KW.add.test(clause)) {
       const item = addItemFromClause(clause);
@@ -202,6 +256,8 @@ export function planLocally(text, { products = [], imageCount = 0 } = {}) {
 
     if (found.product) {
       const product = found.product;
+      if (KW.unhide.test(lower) && !KW.hide.test(lower)) { ops.push({ type: 'set_visibility', name: product.name, key: product.name_key, hidden: false }); continue; }
+      if (KW.hide.test(lower)) { ops.push({ type: 'set_visibility', name: product.name, key: product.name_key, hidden: true }); continue; }
       if (KW.del.test(lower)) { ops.push({ type: 'delete_item', name: product.name, key: product.name_key }); continue; }
       const wantsOut = KW.out.test(lower);
       const wantsBack = KW.back.test(lower) && !/\bnot available|unavailable\b/i.test(lower);
@@ -264,12 +320,26 @@ function findProductByWord(clause, products) {
 // A readable line for each change (used on the confirm card).
 export function describeOp(op, products = [], info = {}) {
   const find = (key) => products.find((p) => p.name_key === key);
-  const FIELD_LABELS = { timings: 'Timings', weekly_holiday: 'Weekly holiday', address: 'Address', call_number: 'Phone', whatsapp_number: 'WhatsApp', map_link: 'Map link', about: 'About' };
+  const FIELD_LABELS = { shop_name: 'Shop name', timings: 'Timings', weekly_holiday: 'Weekly holiday', address: 'Address', call_number: 'Phone', whatsapp_number: 'WhatsApp', map_link: 'Map link', about: 'About' };
   switch (op.type) {
     case 'set_price': { const old = find(op.key)?.price_text; return { icon: '₹', text: `${op.name}: price ${old ? `${old} → ` : ''}${op.price}` }; }
     case 'set_stock': return { icon: op.out_of_stock ? '⛔' : '✅', text: `${op.name}: mark ${op.out_of_stock ? 'out of stock' : 'back in stock'}` };
     case 'set_details': return { icon: '✎', text: `${op.name}: details → ${op.details}` };
     case 'add_item': return { icon: '＋', text: `Add new item: ${op.name}${op.price ? ` — ${op.price}` : ''}${op.details ? ` (${op.details})` : ''}` };
+    case 'set_visibility': return { icon: op.hidden ? '🙈' : '👁', text: `${op.name}: ${op.hidden ? 'hide from customers (not deleted)' : 'show to customers again'}` };
+    case 'edit_answer': return { icon: '✎', text: `Answer “${op.question}” → ${op.value}` };
+    case 'delete_answer': return { icon: '🗑', text: `Delete answer: ${op.question}`, danger: true };
+    case 'set_answer_visibility': return { icon: op.hidden ? '🙈' : '👁', text: `Answer “${op.question}”: ${op.hidden ? 'hide from customers (not deleted)' : 'show to customers again'}` };
+    case 'add_note': return { icon: '＋', text: `Add information for customers: ${op.value}` };
+    case 'set_section': {
+      const label = { about: 'About section', gallery: 'Gallery section', map: 'Map / directions' }[op.section] || op.section;
+      return { icon: op.hidden ? '🙈' : '👁', text: `${label}: ${op.hidden ? 'hide from customers (not deleted)' : 'show to customers again'}` };
+    }
+    case 'rename_item': return { icon: '✎', text: `Rename item: ${op.name} → ${op.new_name}` };
+    case 'delete_photo': {
+      const where = { main: 'main shop photo', owner: 'owner photo', gallery: `gallery photo ${op.index}`, product: `photo${op.index ? ` ${op.index}` : ''} of ${op.name}` }[op.kind];
+      return { icon: '🗑', text: `Delete ${where} (the item stays)`, danger: true };
+    }
     case 'delete_item': return { icon: '🗑', text: `Delete item: ${op.name}`, danger: true };
     case 'set_info': { const old = info[op.field]; return { icon: 'ⓘ', text: `${FIELD_LABELS[op.field] || op.field}: ${old ? `${old} → ` : ''}${op.value}` }; }
     case 'rename_bot': return { icon: '🤖', text: `Assistant name → ${op.value}` };

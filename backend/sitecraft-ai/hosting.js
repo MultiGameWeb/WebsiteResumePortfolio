@@ -38,6 +38,7 @@ const UPLOAD_TYPES = {
 const MIME_BY_EXT = {
   html: "text/html; charset=utf-8", js: "text/javascript; charset=utf-8", css: "text/css; charset=utf-8",
   json: "application/json; charset=utf-8", txt: "text/plain; charset=utf-8",
+  svg: "image/svg+xml", webmanifest: "application/manifest+json",
   jpg: "image/jpeg", png: "image/png", webp: "image/webp", gif: "image/gif",
   pdf: "application/pdf", epub: "application/epub+zip", mp3: "audio/mpeg", m4a: "audio/mp4", wav: "audio/wav"
 };
@@ -72,7 +73,7 @@ const SCHEMA = [
 ];
 
 let schemaReady = null;
-function ensureSchema(db) {
+export function ensureSchema(db) {
   if (!schemaReady) {
     schemaReady = db.batch(SCHEMA.map(sql => db.prepare(sql)))
       // Added after the first release: one year of hosting per site.
@@ -84,9 +85,9 @@ function ensureSchema(db) {
 
 // One year of hosting from the first publish. After it ends the site keeps working for a grace
 // week; the customer is told about the grace week only once the year has ended.
-const HOSTING_DAYS = 365;
+export const HOSTING_DAYS = 365;
 const GRACE_DAYS = 7;
-const DAY_MS = 86400000;
+export const DAY_MS = 86400000;
 export function hostingTerm(row, now = Date.now()) {
   const expires = row?.expires_at ? Date.parse(row.expires_at) : Date.parse(row?.created_at || new Date(now).toISOString()) + HOSTING_DAYS * DAY_MS;
   const graceEnds = expires + GRACE_DAYS * DAY_MS;
@@ -134,12 +135,12 @@ export function slugify(value) {
   return s.length >= 3 ? s : (s ? s + "-site" : "my-site");
 }
 
-async function sha256(text) {
+export async function sha256(text) {
   const buf = await crypto.subtle.digest("SHA-256", enc.encode(text));
   return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-function newEditKey() {
+export function newEditKey() {
   const bytes = crypto.getRandomValues(new Uint8Array(24));
   return btoa(String.fromCharCode(...bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
@@ -157,7 +158,7 @@ function sourceBase(env) {
 }
 
 const sourceCache = new Map();
-async function fetchSource(env, path) {
+export async function fetchSource(env, path) {
   const url = sourceBase(env) + path;
   const hit = sourceCache.get(url);
   if (hit && Date.now() - hit.at < 5 * 60 * 1000) return hit.text;
@@ -278,11 +279,11 @@ export function buildIndexHtml(templateId, data, selected, templateName, siteUrl
     + '</script></body></html>';
 }
 
-function clientIp(request) {
+export function clientIp(request) {
   return request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For")?.split(",")[0]?.trim() || "unknown";
 }
 
-async function bumpCounter(db, ip, kind, limit) {
+export async function bumpCounter(db, ip, kind, limit) {
   const day = nowIso().slice(0, 10);
   const row = await db.prepare("SELECT n FROM hosted_publish_log WHERE day = ? AND ip = ? AND kind = ?").bind(day, ip, kind).first();
   if (row && Number(row.n) >= limit) return false;
@@ -290,7 +291,7 @@ async function bumpCounter(db, ip, kind, limit) {
   return true;
 }
 
-async function pickFreeSlug(db, base) {
+export async function pickFreeSlug(db, base) {
   let candidate = RESERVED.has(base) ? base + "-site" : base;
   for (let i = 0; i < 50; i++) {
     const slug = i === 0 ? candidate : (candidate.slice(0, 36).replace(/-+$/, "") + "-" + (i + 1));
@@ -457,6 +458,10 @@ async function handleCheck(env, url, origin) {
   return reply({ ok: true, slug: wanted, available: !taken, suggestion, url: siteUrls(env, url, suggestion).url }, 200, origin);
 }
 
+// Template id of hosted BotCraft shop pages, and the files they load from salesbot/.
+export const BOT_PAGE = "botcraft-page";
+const BOT_PAGE_FILES = new Set(["app.js", "styles.css", "sw.js", "manifest.webmanifest", "icon.svg"]);
+
 const CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'",
@@ -482,13 +487,25 @@ async function serveFile(request, env, slug, filePath) {
   if (!env.DB) return page(503, "Website unavailable", "Hosting storage is not configured.");
   if (!SLUG.test(slug)) return page(404, "Website not found", "Please check the address and try again.");
   await ensureSchema(env.DB);
-  const site = await env.DB.prepare("SELECT status, created_at, expires_at FROM hosted_sites WHERE slug = ?").bind(slug).first();
+  const site = await env.DB.prepare("SELECT status, created_at, expires_at, template_id FROM hosted_sites WHERE slug = ?").bind(slug).first();
   if (!site) return page(404, "Website not found", "Please check the address and try again.");
   if (site.status !== "live" || hostingTerm(site).state === "ended") return page(410, "Website unavailable", "This website is not available right now.");
   let path = filePath || "index.html";
   if (path.endsWith("/")) path += "index.html";
   if (path.includes("..") || path.length > 200) return page(404, "Not found", "This page does not exist.");
   const row = await env.DB.prepare("SELECT mime, body, size_bytes FROM hosted_files WHERE slug = ? AND path = ?").bind(slug, path).first();
+  // A BotCraft shop page keeps only its home page here; the page's code comes from the
+  // SiteCraft source (salesbot/), so every shop gets improvements without publishing again.
+  if (!row && site.template_id === BOT_PAGE && BOT_PAGE_FILES.has(path)) {
+    try {
+      const text = await fetchSource(env, "salesbot/" + path);
+      const ext = path.split(".").pop();
+      const headers = { "Content-Type": MIME_BY_EXT[ext] || "text/plain; charset=utf-8", "Cache-Control": "public, max-age=300", "X-Content-Type-Options": "nosniff" };
+      return request.method === "HEAD" ? new Response(null, { status: 200, headers }) : new Response(text, { status: 200, headers });
+    } catch {
+      return page(502, "Page unavailable", "Please try again in a minute.");
+    }
+  }
   if (!row) {
     // Single-page sites: unknown paths without an extension show the home page.
     if (!/\.[a-z0-9]{2,5}$/i.test(path)) return serveFile(request, env, slug, "index.html");

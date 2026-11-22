@@ -25,7 +25,8 @@ function writeStore(key, value) {
 }
 
 const params = new URLSearchParams(window.location.search);
-const shopId = params.get('s') || readStore(LAST_SHOP_KEY) || '';
+// A hosted shop page (its own web address) has its shop built in; QR links use ?s=<id>.
+const shopId = window.SALESBOT_SHOP || params.get('s') || readStore(LAST_SHOP_KEY) || '';
 if (params.get('s')) writeStore(LAST_SHOP_KEY, shopId);
 
 const history = [];
@@ -377,11 +378,36 @@ document.querySelector('#addThis').addEventListener('click', () => {
   sheet.close();
 });
 
+// The item's photos like a shopping app: swipe through them, tap one to see it full screen.
+function renderSheetPhotos(item) {
+  const ids = (item.photos && item.photos.length ? item.photos : [item.photo]).filter(Boolean);
+  const gallery = document.querySelector('#sheetGallery');
+  const track = document.querySelector('#sheetTrack');
+  const dots = document.querySelector('#sheetDots');
+  gallery.hidden = !ids.length;
+  track.scrollLeft = 0;
+  track.replaceChildren(...ids.map((id, index) => {
+    const slide = element('button', 'sheet-slide');
+    slide.type = 'button';
+    slide.setAttribute('aria-label', `${item.name}, photo ${index + 1} of ${ids.length}. Tap to enlarge`);
+    const image = element('img');
+    image.src = photoUrl(id);
+    image.alt = '';
+    slide.append(image);
+    slide.addEventListener('click', () => { document.querySelector('#zoomPhoto').src = photoUrl(id); document.querySelector('#zoomDialog').showModal(); });
+    return slide;
+  }));
+  dots.replaceChildren(...(ids.length > 1 ? ids.map((_, index) => element('span', index === 0 ? 'dot on' : 'dot')) : []));
+  track.onscroll = () => {
+    const index = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+    [...dots.children].forEach((dot, i) => dot.classList.toggle('on', i === index));
+  };
+}
+document.querySelector('#zoomDialog').addEventListener('click', () => document.querySelector('#zoomDialog').close());
+
 function openSheet(item) {
   sheetProduct = item;
-  const image = document.querySelector('#sheetPhoto');
-  image.hidden = !item.photo;
-  if (item.photo) image.src = photoUrl(item.photo);
+  renderSheetPhotos(item);
   document.querySelector('#sheetName').textContent = item.name;
   document.querySelector('#sheetPrice').textContent = [item.price, item.out ? 'Out of stock' : ''].filter(Boolean).join(' · ');
   document.querySelector('#sheetDetails').textContent = item.details || '';
@@ -686,6 +712,16 @@ function itemLine(item) {
   return `• ${item.name}${item.price ? ` — ${item.price}` : ''}${item.out ? ' (out of stock)' : ''}`;
 }
 
+// Words that mean timings, address or phone, in English, Telugu and Hindi.
+function quickAnswer(lower, shop) {
+  if (/\b(timings?|time|open|opening|closing|close|closed|hours|holiday)\b|సమయం|టైమింగ్|సెలవు|टाइम|समय|खुलने|छुट्टी/.test(lower)) {
+    return [shop.timings && `Timings: ${shop.timings}`, shop.weeklyHoliday && `Weekly holiday: ${shop.weeklyHoliday}`].filter(Boolean).join('\n');
+  }
+  if (/\b(address|where|location|directions?|map|reach)\b|చిరునామా|ఎక్కడ|पता|कहाँ/.test(lower)) return shop.address || '';
+  if (/\b(phone|call|number|contact|whatsapp)\b|ఫోన్|नंबर|फोन/.test(lower)) return shop.call ? `Call us: ${shop.call}` : '';
+  return '';
+}
+
 function offlineAnswer(question) {
   if (!saved) return 'I need the internet to answer. Please connect, or ask at the counter.';
   const shop = saved.shop;
@@ -705,6 +741,9 @@ function offlineAnswer(question) {
   const faqHits = faqs.map((faq) => ({ faq, s: score(faq.q) * 2 + score(faq.a) })).filter((hit) => hit.s > 0)
     .sort((a, b) => b.s - a.s).slice(0, 2).map((hit) => `${hit.faq.q}\n→ ${hit.faq.a}`);
   if (!itemHits.length && !faqHits.length) {
+    // Typed questions such as "timings?" or "where is the shop": the shop's own details.
+    const quick = quickAnswer(String(question).toLowerCase(), shop);
+    if (quick) return quick;
     return 'I could not find that in the saved answers. Please ask at the counter, or try again with internet.';
   }
   return [...itemHits, ...faqHits].join('\n\n');
@@ -723,6 +762,7 @@ async function ask(text, product = null, { voice = false } = {}) {
   }
   busy = true;
   send.disabled = true;
+  let limitCode = '';
   const typing = addMessage('bot', '…');
   typing.classList.add('typing');
   try {
@@ -733,7 +773,7 @@ async function ask(text, product = null, { voice = false } = {}) {
     });
     const data = await response.json();
     typing.remove();
-    if (!response.ok || !data.ok) throw new Error(data.error);
+    if (!response.ok || !data.ok) { limitCode = data.code || ''; throw new Error(data.error); }
     history.push({ role: 'customer', text: question }, { role: 'bot', text: data.reply });
     addMessage('bot', data.reply, data.suggestions || []);
     return data.reply;
@@ -741,7 +781,7 @@ async function ask(text, product = null, { voice = false } = {}) {
     // No connection or the AI is busy: answer from the saved copy.
     typing.remove();
     const answer = offlineAnswer(question);
-    addMessage('bot', `(Basic answer — AI not available right now)\n${answer}`, OFFLINE_CHIPS);
+    addMessage('bot', `(Basic answer — ${limitCode === 'no_replies' ? 'the AI assistant is resting for now' : limitCode === 'daily_limit' || limitCode === 'visitor_limit' ? 'too many questions for today' : 'AI not available right now'})\n${answer}`, OFFLINE_CHIPS);
     return answer;
   } finally {
     busy = false;

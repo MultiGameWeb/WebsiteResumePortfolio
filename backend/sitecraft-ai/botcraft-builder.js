@@ -1,13 +1,17 @@
 import { CORE_QUESTIONS, callWithFallback, generateQuestionBank, toBankRecord } from "./botcraft-question-bank.js";
-import { ABOUT_SCHEMA, INFO_FIELDS, PLAN_SCHEMA, buildAboutPrompt, buildPlanPrompt, cleanAbout, cleanPlan, templateAbout } from "./botcraft-owner-update.js";
+import { ABOUT_SCHEMA, INFO_FIELDS, SECTIONS, PLAN_SCHEMA, buildAboutPrompt, buildPlanPrompt, cleanAbout, cleanPlan, templateAbout } from "./botcraft-owner-update.js";
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, deleteRequest,
+  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
-  deletePushSubscription, savePushSubscription, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
+  deleteAnswerRow, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
+import { publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
+import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-photo-studio.js";
+import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
+import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
 import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
 import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
 
@@ -148,6 +152,19 @@ function corsHeaders(origin) {
 
 function reply(data, status, origin) {
   return new Response(JSON.stringify(data), { status, headers: corsHeaders(origin) });
+}
+
+// The shop's own hosted page (https://<slug>.<HOSTING_DOMAIN>, or this Worker's /s/<slug>/ path)
+// may call the customer endpoints only. The owner and setup endpoints stay on the allowed list.
+const CUSTOMER_PATHS = new Set(["/api/botcraft/public", "/api/botcraft/ask", "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order", "/api/botcraft/push"]);
+function originAllowed(env, origin, path, url, request) {
+  if (allowedOrigins(env).has(origin)) return true;
+  if (!CUSTOMER_PATHS.has(path)) return false;
+  // Browsers send no Origin on a same-origin GET (the hosted page reading its own shop data).
+  if (!origin) return request?.headers.get("Sec-Fetch-Site") === "same-origin";
+  if (origin === url.origin) return true;
+  const domain = String(env?.HOSTING_DOMAIN || "").trim().toLowerCase();
+  return Boolean(domain) && new RegExp("^https://[a-z0-9-]{1,40}\\." + domain.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$").test(origin);
 }
 
 export function allowedOrigins(env) {
@@ -464,6 +481,11 @@ function base64Size(data) {
 }
 
 // Work that may finish after the response (sending notifications).
+async function visitorHash(address, shopId) {
+  const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`${shopId}|${address}`));
+  return [...new Uint8Array(bytes)].slice(0, 12).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 function later(ctx, task) {
   const safe = task.catch(error => console.error("BotCraft background task failed", error));
   if (ctx?.waitUntil) ctx.waitUntil(safe);
@@ -479,7 +501,7 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   if (path === "/api/botcraft/photo") return servePhoto(env, url);
 
   const origin = request.headers.get("Origin") || "";
-  if (!allowedOrigins(env).has(origin)) {
+  if (!originAllowed(env, origin, path, url, request)) {
     return new Response(JSON.stringify({ ok: false, error: "Origin not allowed." }), {
       status: 403,
       headers: { "Content-Type": "application/json; charset=utf-8" }
@@ -757,7 +779,8 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
     // "missing": basics are done but this shop type has no question bank yet,
     // so the page asks /api/botcraft/bank to prepare one.
     bankStatus: !merged.shop_type ? "none" : mergedBank ? "ready" : coreComplete(merged) ? "missing" : "later",
-    shopTypeName: shopTypeName(merged.shop_type)
+    shopTypeName: shopTypeName(merged.shop_type),
+    premiumVoice: premiumVoiceAvailable(env)
   }, 200, origin);
 }
 
@@ -807,9 +830,31 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
       else out.push(m);
       return out;
     }, []);
+  // Abuse protection: a daily limit for the shop and for each visitor, so nobody can drain a shop's replies.
+  const visitor = await visitorHash(request.headers.get("CF-Connecting-IP") || "unknown", shop.shopId);
+  const slot = await takeDailyAsk(env, shop.shopId, visitor, { shopLimit: shopDailyLimit(env), visitorLimit: visitorDailyLimit(env) }).catch(error => { console.error("BotCraft daily cap failed", error); return { ok: true }; });
+  if (!slot.ok) {
+    return reply({
+      ok: false, code: slot.code,
+      error: slot.code === "visitor_limit" ? "You have asked a lot of questions today. Basic answers still work, or please ask at the counter." : "This shop's assistant is very busy today. Basic answers still work, or please ask at the counter."
+    }, 429, origin);
+  }
+  // Reply metering: one credit per AI reply, taken first and given back if the AI fails.
+  const credit = await reserveReply(env, shop.shopId, freeRepliesFor(env)).catch(error => { console.error("BotCraft reply credit failed", error); return { ok: true, balance: -1 }; });
+  if (!credit.ok) {
+    return reply({ ok: false, code: "no_replies", error: "This shop's assistant has used all its AI replies for now. Basic answers still work, or please ask at the counter." }, 402, origin);
+  }
+  if (credit.balance === 20 || credit.balance === 0) {
+    await later(ctx, notifyOwner(env, shop.shopId, {
+      title: credit.balance === 0 ? "Your assistant has no AI replies left" : "Your assistant has 20 AI replies left",
+      body: "Customers still get basic answers. Recharge to keep the full AI assistant.", url: "owner.html#replies", tag: "botcraft-replies"
+    }));
+  }
   const modelErrors = [];
+  let usage = null;
   try {
     const { result } = await callWithFallback(env, {
+      onUsage: metadata => { usage = metadata; },
       system: salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true ? VOICE_RULE : ""),
       contents,
       schema: SALESBOT_SCHEMA,
@@ -824,12 +869,18 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
       const isNew = await logUnanswered(env, shop.shopId, text, product?.name || "").catch(error => console.error("BotCraft question log failed", error));
       if (isNew) await later(ctx, notifyOwner(env, shop.shopId, { title: "New customer question", body: clip(text, 140), url: "owner.html#questions", tag: "botcraft-questions" }));
     }
+    // What this reply cost in tokens (thinking tokens are billed as output).
+    await later(ctx, recordUsage(env, shop.shopId, {
+      inTokens: Number(usage?.promptTokenCount) || 0,
+      outTokens: (Number(usage?.candidatesTokenCount) || 0) + (Number(usage?.thoughtsTokenCount) || 0)
+    }).catch(error => console.error("BotCraft usage log failed", error)));
     return reply({
       ok: true,
       reply: clip(result?.reply, 1500) || "Sorry, please ask again.",
       suggestions: (Array.isArray(result?.suggestions) ? result.suggestions : []).map(q => clip(q, 80)).filter(Boolean).slice(0, 3)
     }, 200, origin);
   } catch (error) {
+    if (credit.balance >= 0) await releaseReply(env, shop.shopId).catch(() => {});
     console.error("BotCraft salesbot failed", error, modelErrors);
     return reply({ ok: false, error: "The assistant is busy right now. Please try again in a moment, or ask at the counter." }, 503, origin);
   }
@@ -940,15 +991,24 @@ async function servePhoto(env, url) {
   });
 }
 
-async function ownerView(env, shopId) {
+async function ownerView(env, shopId, url) {
   const saved = await loadShop(env, shopId, 0);
   const facts = cleanFacts(saved?.facts);
   const [products, photos, questions, answeredQuestions, requests, orders, settings] = await Promise.all([
-    listProducts(env, shopId), listPhotos(env, shopId), listCustomerQuestions(env, shopId, "open"), listCustomerQuestions(env, shopId, "answered"),
+    listProducts(env, shopId, { includeHidden: true }), listPhotos(env, shopId), listCustomerQuestions(env, shopId, "open"), listCustomerQuestions(env, shopId, "answered"),
     listRequests(env, shopId), listOrders(env, shopId), loadSettings(env, shopId)
   ]);
+  const savedAnswers = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, await resolveBank(env, facts), answeredQuestions, settings.hiddenAnswers);
+  const page = await shopPageInfo(env, url, settings.pageSlug);
+  const replies = await replyStatus(env, shopId, freeRepliesFor(env)).catch(() => null);
   return {
     ok: true,
+    page,
+    replies,
+    savedAnswers,
+    premiumVoice: premiumVoiceAvailable(env),
+    photoStudio: { available: photoStudioAvailable(env), leftToday: studioLeftToday(env, settings) },
+    hiddenSections: Array.isArray(settings.hiddenSections) ? settings.hiddenSections : [],
     shopName: facts.shop_name || "",
     botName: botName(facts),
     defaultBotName: botName({ ...facts, bot_name: "" }),
@@ -962,6 +1022,7 @@ async function ownerView(env, shopId) {
     orders,
     features: shopFeatures(facts.shop_type, settings),
     galleryLimit: GALLERY_LIMIT,
+    productPhotoLimit: PRODUCT_PHOTO_LIMIT,
     info: Object.fromEntries(Object.keys(INFO_FIELDS).map(key => [key, String(facts[key] || "")]))
   };
 }
@@ -1068,20 +1129,61 @@ async function writeAbout(env, shopId, { force = false } = {}) {
   return true;
 }
 
+// Edit, delete or hide one saved answer (ids are made by botcraft-answers.js). Returns an error text, or "" when done.
+async function changeAnswer(env, shopId, action, body) {
+  const id = String(body?.answerId || "");
+  if (!ANSWER_ID.test(id)) return "Unknown answer.";
+  const [kind, ...rest] = id.split(":");
+  const key = rest.join(":");
+  // Only an answer this shop really has can be changed.
+  const [saved, answered, settings] = await Promise.all([loadShop(env, shopId, 0), listCustomerQuestions(env, shopId, "answered"), loadSettings(env, shopId)]);
+  const facts = cleanFacts(saved?.facts);
+  const current = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, await resolveBank(env, facts), answered, settings.hiddenAnswers);
+  if (!current.some(item => item.id === id)) return "That answer was not found. Please refresh.";
+  if (action === "hide_answer") {
+    await saveSettings(env, shopId, { hiddenAnswers: nextHidden(settings.hiddenAnswers, id, body?.hidden !== false) });
+    return "";
+  }
+  const remove = action === "delete_answer";
+  const value = clip(body?.answer, 600);
+  if (!remove && !value) return "Please write the answer.";
+  if (kind === "f") {
+    // A deleted answer to a setup question becomes "skipped" (not empty), so the shop still counts as set up.
+    await updateFacts(env, shopId, { [key]: remove ? "skipped" : value });
+  } else if (kind === "a") {
+    if (remove) await deleteAnswerRow(env, shopId, key); else await setAnswerValue(env, shopId, key, value);
+  } else if (kind === "x") {
+    const extra = extraQuestions(saved?.answers).find(item => item.id === key);
+    if (!extra) return "Unknown answer.";
+    if (remove) await deleteAnswerRow(env, shopId, key); else await setAnswerValue(env, shopId, key, JSON.stringify({ q: extra.q, a: value }));
+  } else if (kind === "n") {
+    const index = Number(key.split(":")[0]);
+    const notes = [...(saved?.notes || [])];
+    if (!Number.isInteger(index) || !notes[index] || !notes[index].startsWith(key.slice(String(index).length + 1))) return "That note has changed. Please refresh.";
+    if (remove) notes.splice(index, 1); else notes[index] = value;
+    await setNotes(env, shopId, notes);
+  } else if (kind === "o") {
+    if (remove) await dismissCustomerQuestion(env, shopId, key); else await answerCustomerQuestion(env, shopId, key, value);
+  }
+  return "";
+}
+
 async function handlePlanUpdate(env, shopId, body, origin) {
   const text = clip(body?.text, 1500);
   const images = (Array.isArray(body?.images) ? body.images : [])
     .filter(img => PHOTO_TYPES.has(img?.mimeType) && typeof img?.data === "string" && img.data.length < 1_500_000)
     .slice(0, 3);
   if (!text && !images.length) return reply({ ok: false, error: "Please write what to change." }, 400, origin);
-  const [products, saved] = await Promise.all([listProducts(env, shopId), loadShop(env, shopId, 0)]);
+  const [products, saved] = await Promise.all([listProducts(env, shopId, { includeHidden: true }), loadShop(env, shopId, 0)]);
   const facts = cleanFacts(saved?.facts);
   const info = Object.fromEntries(Object.keys(INFO_FIELDS).map(key => [key, String(facts[key] || "")]));
+  const [answered, settings, bank] = await Promise.all([listCustomerQuestions(env, shopId, "answered"), loadSettings(env, shopId), resolveBank(env, facts)]);
+  const savedAnswers = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, bank, answered, settings.hiddenAnswers);
   const parts = [{ text: text || "(photos only)" }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.data } }))];
   const modelErrors = [];
   try {
     const { result } = await callWithFallback(env, {
-      system: buildPlanPrompt(products, info, images.length),
+      system: buildPlanPrompt(products, info, images.length, savedAnswers),
       contents: [{ role: "user", parts }],
       schema: PLAN_SCHEMA,
       models: CHAT_MODELS,
@@ -1090,7 +1192,7 @@ async function handlePlanUpdate(env, shopId, body, origin) {
       maxAttempts: 1,
       log: message => modelErrors.push(message.slice(0, 160))
     });
-    return reply({ ok: true, plan: cleanPlan(result, products, images.length) }, 200, origin);
+    return reply({ ok: true, plan: cleanPlan(result, products, images.length, savedAnswers) }, 200, origin);
   } catch (error) {
     console.error("BotCraft plan_update failed", error, modelErrors);
     return reply({ ok: false, error: "The AI helper is busy right now. Please try again." }, 503, origin);
@@ -1115,12 +1217,18 @@ async function handleOwner(request, env, origin, ctx) {
   if (action === "save_product") {
     const name = clip(body?.name, 120);
     if (!name) return reply({ ok: false, error: "Please enter the item name." }, 400, origin);
+    const nameKey = text => String(text).toLowerCase().replace(/\s+/g, " ").trim(); // same rule as the store
+    // Renaming must never overwrite a different item that already has the new name.
+    const oldKey = clip(body?.key, 140);
+    if (oldKey && nameKey(name) !== oldKey && await productExists(env, shopId, name)) {
+      return reply({ ok: false, error: "You already have an item with this name." }, 400, origin);
+    }
     await saveProduct(env, shopId, {
-      key: clip(body?.key, 140),
+      key: oldKey,
       name,
       price_text: clip(body?.price_text, 80),
       details: clip(body?.details, 600),
-      stock_status: body?.stock_status === "out_of_stock" ? "out_of_stock" : "in_stock"
+      stock_status: ["out_of_stock", "hidden"].includes(body?.stock_status) ? body.stock_status : "in_stock"
     });
   } else if (action === "delete_product") {
     await deleteProduct(env, shopId, clip(body?.key, 140));
@@ -1163,6 +1271,35 @@ async function handleOwner(request, env, origin, ctx) {
     const features = Object.fromEntries(FEATURE_KEYS.filter(key => typeof body?.features?.[key] === "boolean").map(key => [key, body.features[key]]));
     const current = await loadSettings(env, shopId);
     await saveSettings(env, shopId, { features: { ...(current.features || {}), ...features } });
+  } else if (action === "save_answer" || action === "delete_answer" || action === "hide_answer") {
+    const error = await changeAnswer(env, shopId, action, body);
+    if (error) return reply({ ok: false, error }, 400, origin);
+  } else if (action === "publish_page") {
+    // Puts the customer page on its own web address (same hosting as the website templates).
+    const saved = await loadShop(env, shopId, 0);
+    const facts = cleanFacts(saved?.facts);
+    if (!coreComplete(facts)) return reply({ ok: false, error: "Finish the basic setup questions first, then publish your page." }, 400, origin);
+    const settings = await loadSettings(env, shopId);
+    const published = await publishShopPage(env, request, new URL(request.url), {
+      publicId: await ensurePublicId(env, shopId),
+      shopName: facts.shop_name || "",
+      description: facts.about || "",
+      existingSlug: settings.pageSlug || "",
+      requestedSlug: clip(body?.slug, 40)
+    });
+    if (!published.ok) return reply({ ok: false, error: published.error }, published.status || 500, origin);
+    if (published.slug !== settings.pageSlug) await saveSettings(env, shopId, { pageSlug: published.slug });
+  } else if (action === "set_section") {
+    const section = String(body?.section || "");
+    if (!SECTIONS.includes(section)) return reply({ ok: false, error: "Unknown section." }, 400, origin);
+    const current = await loadSettings(env, shopId);
+    const rest = (current.hiddenSections || []).filter(item => item !== section);
+    await saveSettings(env, shopId, { hiddenSections: body?.hidden === false ? rest : [...rest, section] });
+  } else if (action === "add_note") {
+    const note = clip(body?.note, 300);
+    if (!note) return reply({ ok: false, error: "Please write the information." }, 400, origin);
+    const saved = await loadShop(env, shopId, 0);
+    await setNotes(env, shopId, [...(saved?.notes || []), note]);
   } else if (action === "set_bot_name") {
     await updateFacts(env, shopId, { bot_name: clip(body?.name, 40) });
   } else if (action === "save_info") {
@@ -1173,6 +1310,7 @@ async function handleOwner(request, env, origin, ctx) {
       let value = clip(body.info[key], max);
       if (key === "call_number" || key === "whatsapp_number") value = value.replace(/\D/g, "").slice(0, 13);
       if (key === "map_link" && value && !/^https?:\/\/[^\s]+$/i.test(value)) continue;
+      if (key === "shop_name" && !value) continue; // the shop always keeps a name
       patch[key] = value;
     }
     if (Object.keys(patch).length) await updateFacts(env, shopId, patch);
@@ -1180,8 +1318,23 @@ async function handleOwner(request, env, origin, ctx) {
     if (!(await writeAbout(env, shopId, { force: true }))) return reply({ ok: false, error: "Could not write the text right now. Please try again or write it yourself." }, 503, origin);
   } else if (action === "plan_update") {
     return handlePlanUpdate(env, shopId, body, origin);
+  } else if (action === "studio_photo") {
+    // Clean studio version of an item photo: only a preview, saved when the owner accepts (replace_photo).
+    const result = await studioPhoto(env, shopId, String(body?.photoId || ""));
+    return reply(result.body, result.status, origin);
+  } else if (action === "replace_photo") {
+    const photoId = String(body?.photoId || "");
+    const image = body?.image;
+    if (!PHOTO_ID_PATTERN.test(photoId) || !PHOTO_TYPES.has(image?.mimeType) || typeof image?.data !== "string") return reply({ ok: false, error: "Please choose a JPG, PNG or WebP photo." }, 400, origin);
+    const bytes = base64Bytes(image.data);
+    if (bytes.length > MAX_PHOTO_BYTES) return reply({ ok: false, error: "The photo is too large." }, 413, origin);
+    const result = await replacePhoto(env, shopId, photoId, { mime: image.mimeType, bytes });
+    if (result.error) return reply({ ok: false, error: result.error }, 404, origin);
+  } else if (action === "transcribe") {
+    const result = await transcribeOwnerVoice(env, shopId, body?.audio);
+    return reply(result.body, result.status, origin);
   } else if (action !== "load") {
     return reply({ ok: false, error: "Unknown action." }, 400, origin);
   }
-  return reply(await ownerView(env, shopId), 200, origin);
+  return reply(await ownerView(env, shopId, new URL(request.url)), 200, origin);
 }

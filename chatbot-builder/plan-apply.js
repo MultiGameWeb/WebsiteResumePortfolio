@@ -5,6 +5,8 @@
 //   call(action, data)  → Promise<boolean>: sends one owner action, refreshes the view
 //   getView()           → the latest owner view ({ products, info, customBotName, … })
 
+import { enhanceProductPhoto } from './photo-enhance.js?v=2';
+
 export async function applyPlan({ ops, images = [], call, getView }) {
   const undo = [];
   let undoable = true;
@@ -28,9 +30,46 @@ export async function applyPlan({ ops, images = [], call, getView }) {
     if (op.type === 'set_price' && product) {
       undo.push({ action: 'save_product', data: fields(product) });
       ok = await call('save_product', fields(product, { price_text: op.price }));
-    } else if (op.type === 'set_stock' && product) {
+    } else if (op.type === 'set_stock' && product && product.stock_status !== 'hidden') {
       undo.push({ action: 'save_product', data: fields(product) });
       ok = await call('save_product', fields(product, { stock_status: op.out_of_stock ? 'out_of_stock' : 'in_stock' }));
+    } else if (op.type === 'edit_answer' || op.type === 'delete_answer' || op.type === 'set_answer_visibility') {
+      const answer = (getView().savedAnswers || []).find((a) => a.id === op.answer_id);
+      if (!answer) ok = false;
+      else if (op.type === 'edit_answer') {
+        undo.push({ action: 'save_answer', data: { answerId: answer.id, answer: answer.answer } });
+        ok = await call('save_answer', { answerId: answer.id, answer: op.value });
+      } else if (op.type === 'set_answer_visibility') {
+        undo.push({ action: 'hide_answer', data: { answerId: answer.id, hidden: Boolean(answer.hidden) } });
+        ok = await call('hide_answer', { answerId: answer.id, hidden: op.hidden });
+      } else {
+        undoable = false;
+        ok = await call('delete_answer', { answerId: answer.id });
+      }
+    } else if (op.type === 'set_section') {
+      const was = (getView().hiddenSections || []).includes(op.section);
+      undo.push({ action: 'set_section', data: { section: op.section, hidden: was } });
+      ok = await call('set_section', { section: op.section, hidden: op.hidden });
+    } else if (op.type === 'add_note') {
+      undoable = false;
+      ok = await call('add_note', { note: op.value });
+    } else if (op.type === 'rename_item' && product) {
+      const same = (getView().products || []).some((p) => p.name_key !== product.name_key && p.name.trim().toLowerCase() === String(op.new_name).trim().toLowerCase());
+      ok = !same && await call('save_product', { ...fields(product, { name: op.new_name }), key: product.name_key });
+      const renamed = ok ? findProduct('', op.new_name) : null;
+      if (renamed) undo.push({ action: 'save_product', data: { ...fields(renamed, { name: product.name }), key: renamed.name_key } });
+    } else if (op.type === 'delete_photo') {
+      undoable = false;
+      const photos = getView().photos || [];
+      const target = op.kind === 'product'
+        ? photos.filter((p) => p.kind === 'product' && p.product_key === product?.name_key)[(op.index || 1) - 1]
+        : op.kind === 'gallery' ? photos.filter((p) => p.kind === 'gallery')[(op.index || 0) - 1] : photos.find((p) => p.kind === op.kind);
+      ok = target ? await call('delete_photo', { photoId: target.photo_id }) : false;
+    } else if (op.type === 'set_visibility' && product) {
+      undo.push({ action: 'save_product', data: fields(product) });
+      ok = await call('save_product', fields(product, { stock_status: op.hidden ? 'hidden' : 'in_stock' }));
+    } else if (op.type === 'set_stock' && product && product.stock_status === 'hidden') {
+      ok = true; // a hidden item stays hidden; show it first to change its stock
     } else if (op.type === 'set_details' && product) {
       undo.push({ action: 'save_product', data: fields(product) });
       ok = await call('save_product', fields(product, { details: op.details }));
@@ -52,7 +91,9 @@ export async function applyPlan({ ops, images = [], call, getView }) {
       undoable = false;
       const image = images[op.image];
       const key = op.kind === 'product' ? (op.key || created.get(String(op.name || '').toLowerCase()) || findProduct('', op.name)?.name_key || '') : '';
-      ok = !image || (op.kind === 'product' && !key) ? false : await call('upload_photo', { kind: op.kind, productKey: key, image });
+      // Item photos are tidied first: square, white space around, brighter when dark.
+      const ready = image && op.kind === 'product' ? (await enhanceProductPhoto(image)) || image : image;
+      ok = !ready || (op.kind === 'product' && !key) ? false : await call('upload_photo', { kind: op.kind, productKey: key, image: ready });
     } else {
       ok = false;
     }

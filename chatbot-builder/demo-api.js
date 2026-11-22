@@ -96,8 +96,9 @@
         closed: state.requests.filter(function (r) { return r.kind !== 'order' && ['done', 'rejected'].indexOf(r.status) !== -1; })
       },
       orders: state.orders, features: state.features, galleryLimit: GALLERY_LIMIT,
+      hiddenSections: state.hiddenSections || [], productPhotoLimit: 5, photoStudio: { available: true, leftToday: 20 }, replies: { balance: 187, granted: 200, used: 13, usedToday: 4, usedMonth: 13, tokens: { in: 0, out: 0, replies: 0 }, low: false },
       info: {
-        timings: f.timings || '', weekly_holiday: f.weekly_holiday || '', address: f.address || '',
+        shop_name: f.shop_name || '', timings: f.timings || '', weekly_holiday: f.weekly_holiday || '', address: f.address || '',
         call_number: f.call_number || '', whatsapp_number: f.whatsapp_number || '', map_link: f.map_link || '', about: f.about || ''
       }
     };
@@ -128,15 +129,15 @@
       shop: {
         name: f.shop_name, botName: f.bot_name || defaultBotName(f),
         mainPhoto: main ? main.photo_id : '', ownerPhoto: owner ? owner.photo_id : '',
-        gallery: state.photos.filter(function (p) { return p.kind === 'gallery'; }).map(function (p) { return p.photo_id; }),
+        gallery: (state.hiddenSections || []).indexOf('gallery') !== -1 ? [] : state.photos.filter(function (p) { return p.kind === 'gallery'; }).map(function (p) { return p.photo_id; }),
         type: 'Jewellery shop', address: f.address || '', timings: f.timings || '', weeklyHoliday: f.weekly_holiday || '',
-        about: f.about || '', call: digits(f.call_number), whatsapp: digits(f.whatsapp_number) || digits(f.call_number),
-        mapLink: f.map_link || '', features: state.features
+        about: (state.hiddenSections || []).indexOf('about') !== -1 ? '' : (f.about || ''), call: digits(f.call_number), whatsapp: digits(f.whatsapp_number) || digits(f.call_number),
+        mapLink: (state.hiddenSections || []).indexOf('map') !== -1 ? '' : (f.map_link || ''), features: state.features
       },
       offline: {
         faqs: faqs,
-        items: state.products.map(function (p) {
-          return { key: p.name_key, name: p.name, price: p.price_text || '', details: p.details || '', out: p.stock_status === 'out_of_stock', photo: p.photo_id || '' };
+        items: state.products.filter(function (p) { return p.stock_status !== 'hidden'; }).map(function (p) {
+          return { key: p.name_key, name: p.name, price: p.price_text || '', details: p.details || '', out: p.stock_status === 'out_of_stock', photo: p.photo_id || '', photos: state.photos.filter(function (x) { return x.kind === 'product' && x.product_key === p.name_key; }).map(function (x) { return x.photo_id; }) };
         }),
         savedAt: new Date(state.savedAt).toISOString()
       }
@@ -167,7 +168,7 @@
     return null;
   }
 
-  var INFO_KEYS = { timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400 };
+  var INFO_KEYS = { shop_name: 80, timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400 };
 
   function aboutFrom(facts) {
     var name = clip(facts.shop_name, 80);
@@ -224,7 +225,7 @@
       var key = clip(body.key, 140);
       var newKey = nameKey(name);
       var existing = state.products.find(function (p) { return p.name_key === (key || newKey); });
-      var record = { name_key: newKey, name: name, price_text: clip(body.price_text, 80), details: clip(body.details, 600), stock_status: body.stock_status === 'out_of_stock' ? 'out_of_stock' : 'in_stock', photo_id: '' };
+      var record = { name_key: newKey, name: name, price_text: clip(body.price_text, 80), details: clip(body.details, 600), stock_status: ['out_of_stock', 'hidden'].indexOf(body.stock_status) !== -1 ? body.stock_status : 'in_stock', photo_id: '' };
       if (existing) {
         state.photos.forEach(function (p) { if (p.kind === 'product' && p.product_key === existing.name_key) p.product_key = newKey; });
         Object.assign(existing, record);
@@ -241,8 +242,10 @@
       var pk = kind === 'product' ? clip(body.productKey, 140) : '';
       if (kind === 'gallery') {
         if (state.photos.filter(function (p) { return p.kind === 'gallery'; }).length >= GALLERY_LIMIT) throw new Error('The gallery is full. Remove a photo first.');
+      } else if (kind === 'product') {
+        if (state.photos.filter(function (p) { return p.kind === 'product' && p.product_key === pk; }).length >= 5) throw new Error('An item holds up to 5 photos. Remove one first.');
       } else {
-        state.photos = state.photos.filter(function (p) { return !(p.kind === kind && (kind !== 'product' || p.product_key === pk)); });
+        state.photos = state.photos.filter(function (p) { return !(p.kind === kind); });
       }
       state.photos.push({ photo_id: id, kind: kind, product_key: pk });
       syncProductPhotos(state);
@@ -273,7 +276,23 @@
       state.facts.bot_name = clip(body.name, 40);
     } else if (action === 'save_info') {
       var info = body.info || {};
-      Object.keys(INFO_KEYS).forEach(function (k) { if (typeof info[k] === 'string') state.facts[k] = clip(info[k], INFO_KEYS[k]); });
+      Object.keys(INFO_KEYS).forEach(function (k) { if (typeof info[k] === 'string' && !(k === 'shop_name' && !info[k].trim())) state.facts[k] = clip(info[k], INFO_KEYS[k]); });
+    } else if (action === 'studio_photo') {
+      // Demo only: no AI here, so the "clean" photo is the same photo.
+      var found = state.photos.find(function (p) { return p.photo_id === body.photoId && p.kind === 'product'; });
+      if (!found) throw new Error('That photo was not found.');
+      var parts = /^data:([^;]+);base64,(.*)$/.exec(found.photo_id);
+      return { ok: true, image: { mimeType: parts[1], data: parts[2] }, left: 19 };
+    } else if (action === 'replace_photo') {
+      var old = state.photos.find(function (p) { return p.photo_id === body.photoId && p.kind === 'product'; });
+      if (!old || !body.image || !body.image.data) throw new Error('That photo was not found.');
+      old.photo_id = 'data:' + (body.image.mimeType || 'image/jpeg') + ';base64,' + body.image.data;
+      syncProductPhotos(state);
+    } else if (action === 'set_section') {
+      var section = String(body.section || '');
+      if (['about', 'gallery', 'map'].indexOf(section) === -1) throw new Error('Unknown section.');
+      state.hiddenSections = (state.hiddenSections || []).filter(function (x) { return x !== section; });
+      if (body.hidden !== false) state.hiddenSections.push(section);
     } else if (action === 'generate_about') {
       state.facts.about = aboutFrom(state.facts);
       if (!state.facts.about) throw new Error('Please add your shop name first.');

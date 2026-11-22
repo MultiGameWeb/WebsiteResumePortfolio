@@ -117,7 +117,9 @@ export function offlineData(shop, bank) {
   }
   for (const q of shop.ownerAnswers || []) faqs.push({ q: q.question, a: q.answer });
   const items = (shop.products || []).slice(0, 200).map(p => ({
-    key: p.name_key, name: p.name, price: p.price_text || "", details: p.details || "", out: p.stock_status === "out_of_stock", photo: p.photo_id || ""
+    key: p.name_key, name: p.name, price: p.price_text || "", details: p.details || "", out: p.stock_status === "out_of_stock", photo: p.photo_id || "",
+    // All photos of the item, cover first (the customer page shows them like a shopping app).
+    photos: (shop.photos || []).filter(photo => photo.kind === "product" && photo.product_key === p.name_key).map(photo => photo.photo_id).slice(0, 5)
   }));
   return { faqs: faqs.slice(0, 300), items, savedAt: new Date().toISOString() };
 }

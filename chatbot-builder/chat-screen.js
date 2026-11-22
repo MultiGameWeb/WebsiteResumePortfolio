@@ -1,12 +1,13 @@
-import { createBot, currentBotId, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261031c';
-import { applyPlan, runUndo } from './plan-apply.js?v=1';
-import { describeOp, planLocally } from './update-planner.js?v=1';
+import { apiBase, createBot, currentBotId, premiumVoiceOn, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261120e';
+import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
+import { applyPlan, runUndo } from './plan-apply.js?v=8';
+import { describeOp, planLocally } from './update-planner.js?v=7';
 import {
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261031c';
+} from './components.js?v=20261120e';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -387,7 +388,8 @@ function showBotReady(bot) {
   const existing = state.messages.find((message) => message.botCard);
   // Keep the card's name and Wi-Fi current (the owner may add Wi-Fi later).
   if (existing) { existing.botCard.name = bot.name || existing.botCard.name; existing.botCard.botName = bot.botName || existing.botCard.botName; existing.botCard.wifi = bot.wifi || null; existing.botCard.openQuestions = bot.openQuestions || 0; existing.botCard.features = bot.features || existing.botCard.features; return; }
-  const url = new URL(`../salesbot/?s=${encodeURIComponent(bot.publicId)}`, window.location.href).href;
+  // Once the owner has published the page, the QR poster points to its own address.
+  const url = getOwnerView().page?.url || new URL(`../salesbot/?s=${encodeURIComponent(bot.publicId)}`, window.location.href).href;
   state.messages.push({
     id: makeId('message'), role: 'assistant', time: new Date(),
     text: `Your shop assistant${bot.botName ? ` "${bot.botName}"` : ''} is ready! 🎉 Open the link to try it like a customer. Print the QR poster and keep it in your shop — customers scan it to chat. Add photos and items in "Manage my bot", and keep answering questions to make it smarter.`,
@@ -613,10 +615,121 @@ function fallbackCopy(text, onCopied) {
   helper.remove();
 }
 
-function setMicState() {
-  state.micActive = !state.micActive;
+// Voice answers: the phone turns speech into text and puts it in the message
+// box, so the owner can read and fix it before sending. No audio is stored.
+const SPEECH_LANGS = {
+  English: 'en-IN', Telugu: 'te-IN', Hindi: 'hi-IN', Tamil: 'ta-IN', Kannada: 'kn-IN', Malayalam: 'ml-IN',
+  Marathi: 'mr-IN', Bengali: 'bn-IN', Gujarati: 'gu-IN', Odia: 'or-IN', Punjabi: 'pa-IN', Urdu: 'ur-IN',
+};
+let recognizer = null;
+let spokenBefore = '';
+
+function stopListening() {
+  const active = recognizer;
+  recognizer = null;
+  try { active?.stop(); } catch {}
+  state.micActive = false;
+}
+
+// Premium voice (ElevenLabs on the server): record, then turn the recording into text.
+// If the server cannot do it, the phone's own voice typing takes over.
+let recording = null;
+let premiumDown = false;
+const usePremium = () => !premiumDown && premiumRecordingSupported() && premiumVoiceOn();
+
+function putSpokenText(text) {
+  const box = inputHost.querySelector('#messageInput');
+  if (!box || !text) return;
+  box.value = `${box.value ? `${box.value.trim()} ` : ''}${text}`;
+  autosizeTextarea(box);
+  syncComposerControls();
+  box.focus({ preventScroll: true });
+}
+
+async function startPremiumRecording() {
+  try {
+    recording = await startRecording({ apiBase: apiBase(), shopId: currentBotId() });
+  } catch {
+    showToast('Please allow the microphone for this page, then tap the mic again.');
+    return;
+  }
+  state.micActive = true;
   render();
-  showToast(state.micActive ? 'Demo recording state is on. Real voice recording is not connected yet.' : 'Demo recording state stopped. No audio was recorded.');
+  const started = recording;
+  started.ended.then(() => { if (recording === started) finishPremiumRecording(); });
+}
+
+async function finishPremiumRecording() {
+  const active = recording;
+  recording = null;
+  if (!active) return;
+  state.micActive = false;
+  const typed = inputHost.querySelector('#messageInput')?.value || '';
+  render();
+  const typedBox = inputHost.querySelector('#messageInput');
+  if (typedBox && typed) { typedBox.value = typed; syncComposerControls(); }
+  showToast('Turning your voice into text…');
+  const result = await active.stop();
+  if (result.error) {
+    showToast(result.error);
+    if (result.fallback && (window.SpeechRecognition || window.webkitSpeechRecognition)) premiumDown = true;
+    return;
+  }
+  if (!result.text) { showToast('I did not hear anything. Tap the mic and try again.'); return; }
+  putSpokenText(result.text);
+}
+
+function setMicState() {
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (recording) { finishPremiumRecording(); return; }
+  if (!recognizer && usePremium()) { startPremiumRecording(); return; }
+  if (!Recognition) { showToast('Voice typing is not supported in this browser. Please type your answer.'); return; }
+  if (recognizer) {
+    stopListening();
+    const kept = inputHost.querySelector('#messageInput')?.value || '';
+    render();
+    const box = inputHost.querySelector('#messageInput');
+    if (box && kept) { box.value = kept; syncComposerControls(); }
+    return;
+  }
+  const textarea = inputHost.querySelector('#messageInput');
+  spokenBefore = textarea?.value ? `${textarea.value.trim()} ` : '';
+  const active = new Recognition();
+  recognizer = active;
+  // "Auto language" listens in Telugu, the main language of our shop owners.
+  active.lang = SPEECH_LANGS[state.language] || 'te-IN';
+  active.interimResults = true;
+  active.continuous = false;
+  active.onresult = (event) => {
+    const heard = Array.from(event.results).map((result) => result[0].transcript).join('');
+    const box = inputHost.querySelector('#messageInput');
+    if (!box) return;
+    box.value = spokenBefore + heard;
+    autosizeTextarea(box);
+    syncComposerControls();
+  };
+  active.onerror = (event) => {
+    if (event.error === 'not-allowed' || event.error === 'service-not-allowed') showToast('Please allow the microphone for this page, then tap the mic again.');
+    else if (event.error === 'no-speech') showToast('I did not hear anything. Tap the mic and try again.');
+  };
+  active.onend = () => {
+    if (recognizer !== active) return;
+    recognizer = null;
+    state.micActive = false;
+    // render() builds a new message box: keep what was spoken and typed.
+    const kept = inputHost.querySelector('#messageInput')?.value || '';
+    render();
+    const box = inputHost.querySelector('#messageInput');
+    if (box) { box.value = kept; autosizeTextarea(box); syncComposerControls(); box.focus({ preventScroll: true }); }
+  };
+  try {
+    active.start();
+    state.micActive = true;
+    render();
+    // render() rebuilds the box; keep what was typed.
+    const box = inputHost.querySelector('#messageInput');
+    if (box && spokenBefore) { box.value = spokenBefore; syncComposerControls(); }
+  } catch { recognizer = null; state.micActive = false; render(); }
 }
 
 app.addEventListener('click', (event) => {
@@ -739,6 +852,8 @@ app.addEventListener('change', (event) => {
 inputHost.addEventListener('submit', (event) => {
   if (event.target.id !== 'composerForm') return;
   event.preventDefault();
+  if (recognizer) stopListening();
+  if (recording) { recording.cancel(); recording = null; state.micActive = false; }
   handleSend({ text: inputHost.querySelector('#messageInput')?.value ?? '' });
 });
 

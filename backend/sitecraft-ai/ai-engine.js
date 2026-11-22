@@ -52,7 +52,8 @@ export async function callGemini(env, keySlot, {
   tools,
   timeoutMs = 90000,
   contents,
-  maxAttempts = 4
+  maxAttempts = 4,
+  onUsage
 }) {
   // keySlot is a numbered slot (1-5) or the name of a Worker secret.
   const envName = KEY_ENV[keySlot] || keySlot;
@@ -104,6 +105,9 @@ export async function callGemini(env, keySlot, {
       } catch {
         throw new Error("Gemini returned invalid JSON.");
       }
+
+      // Token counts, for reply metering (what a reply really costs).
+      if (onUsage && payload?.usageMetadata) onUsage(payload.usageMetadata);
 
       // Grounded responses can split the answer across several text parts.
       const text = (payload?.candidates?.[0]?.content?.parts || [])
