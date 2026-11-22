@@ -238,3 +238,16 @@
 
 /* Four photos: the last one fills the row so there is no empty cell */
 .wallart-01 .wa-gallery-grid>:nth-child(4):last-child{grid-column:span 2}
+
+
+/* Animated 16:9 mural banner — scoped to the wallart template only */
+.wallart-01 .wa-art-banner{position:relative;isolation:isolate;width:calc(100% - clamp(28px,5vw,76px));aspect-ratio:16/9;height:auto;max-height:520px;min-height:0;margin:clamp(14px,2vw,24px) auto 0;overflow:hidden;border:1px solid rgba(83,63,44,.08);border-radius:clamp(14px,2vw,24px);background:#faf6f0;box-shadow:0 20px 40px rgba(0,0,0,.08)}
+.wallart-01 .wa-art-banner-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
+.wallart-01 .wa-art-banner-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,rgba(250,246,240,.14),rgba(250,246,240,0) 68%)}
+.wallart-01 .wa-art-banner-copy{position:absolute;top:clamp(15px,3.1vw,34px);left:clamp(15px,3.1vw,34px);z-index:2;max-width:min(480px,70%);pointer-events:none}
+.wallart-01 .wa-art-banner-copy h2{margin:0;color:#1c1917;font-family:Georgia,'Times New Roman',serif;font-size:clamp(22px,3.5vw,43px);font-weight:500;line-height:1.13;letter-spacing:-.035em}
+.wallart-01 .wa-art-banner-copy h2 em{color:#e11d48;font-weight:500}
+.wallart-01 .wa-art-banner-copy span{display:inline-block;margin-top:clamp(8px,1.5vw,13px);padding:7px 15px;border:1px solid rgba(255,255,255,.7);border-radius:999px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);box-shadow:0 4px 12px rgba(0,0,0,.05);color:#44403c;font-size:clamp(8px,1.05vw,12px);font-weight:700;line-height:1.3}
+@media(max-width:560px){.wallart-01 .wa-art-banner{width:calc(100% - 24px);margin-top:12px;border-radius:14px}.wallart-01 .wa-art-banner-copy{top:12px;left:12px;max-width:80%}.wallart-01 .wa-art-banner-copy h2{font-size:clamp(16px,5.1vw,25px);letter-spacing:-.025em}.wallart-01 .wa-art-banner-copy span{margin-top:7px;padding:5px 9px;font-size:7px}}
+@media(prefers-reduced-motion:reduce){.wallart-01 .wa-art-banner-copy *{transition:none!important}}
+
