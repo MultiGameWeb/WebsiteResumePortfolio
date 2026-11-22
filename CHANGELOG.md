@@ -88,3 +88,6 @@
 
 ## BotCraft: daily caps on customer questions
 - Each shop allows 500 AI questions a day in total and 40 per visitor (BOTCRAFT_SHOP_DAILY_REPLIES, BOTCRAFT_VISITOR_DAILY_REPLIES), so nobody can drain a shop replies by spamming its QR page. The visitor is a one-way hash of the connection address and the shop; the address is not stored. Past the cap the customer page gives basic answers and a clear message (429 daily_limit or visitor_limit). Old counters are cleaned up automatically. Covered by tests/e2e.mjs (64 checks).
+
+## Landing page prices (ai-chatbots.html)
+The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are replaced by the three packages (Starter 1 year Rs 1,399, Growth 2 years Rs 1,599, Pro 3 years Rs 1,799), the Rs 199 a year renewal, 200 free replies, and a no-subscription replies note. Reply pack and photo studio prices are shown as "announced soon" because the real Gemini cost per reply is not known yet. Checked at desktop and phone width.

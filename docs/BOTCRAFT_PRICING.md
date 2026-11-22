@@ -18,7 +18,7 @@ Renewal after the term: Rs 101 x 1.96 = Rs 198, so Rs 199 per year (hosting and 
 ## Replies
 Replies are not a subscription. They are usage packs the shop recharges when they run out (even if 10,000 are used in one day).
 Price per pack = Gemini cost x 1.96, rounded up. Planned packs: 1,000, 5,000, 10,000 and 25,000 replies.
-Not priced yet: needs the current Gemini Flash-Lite input and output rates (https://ai.google.dev/gemini-api/docs/pricing) and the real tokens used per reply.
+Not priced yet (the landing page says "announced soon"): needs the current Gemini Flash-Lite input and output rates (https://ai.google.dev/gemini-api/docs/pricing) and the real tokens used per reply.
 
 ## Not counted yet
 - Payment gateway fee and GST.
