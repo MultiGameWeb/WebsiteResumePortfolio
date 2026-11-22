@@ -130,10 +130,14 @@
     return copy;
   }
   function seeded(seed) {
+    // mulberry32: consecutive seeds (e.g. consecutive day numbers) give unrelated sequences.
     let value = seed >>> 0;
     return function() {
-      value = (value * 1664525 + 1013904223) >>> 0;
-      return value / 4294967296;
+      value = (value + 0x6D2B79F5) >>> 0;
+      let t = value;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
   }
   function dateKey() {
@@ -291,7 +295,7 @@
     function paintDailyConnections() {
       view.innerHTML = commonHead('DAILY CONNECTIONS · WORD LOGIC', 'Find four groups of four connected words.', '↻ Reload game') +
         '<p class="sc-extra-status">A daily word-connection challenge in Telugu and English. Select four related words, submit your guess and solve all four groups. Your daily progress is saved in this browser.</p>' +
-        '<div class="sc-pg-daily-connections-shell"><iframe class="sc-pg-daily-connections-frame" data-daily-connections-frame src="games/daily-connections.html" title="Daily Connections Telugu and English game" loading="lazy" allow="clipboard-write" allow="fullscreen" allowfullscreen></iframe></div>';
+        '<div class="sc-pg-daily-connections-shell"><iframe class="sc-pg-daily-connections-frame" data-daily-connections-frame src="games/daily-connections.html" title="Daily Connections Telugu and English game" loading="lazy" allow="clipboard-write; fullscreen" allowfullscreen></iframe></div>';
     }
     function paintNQueens() {
       view.innerHTML = commonHead('N-QUEENS · CHESS LOGIC', 'Place N queens so none can attack another.', '↻ New challenge') +
@@ -769,7 +773,7 @@
         '<div class="sc-extra-toggle"><button type="button" data-typing-lang="en" aria-pressed="' + (typing.lang==='en') + '">English</button><button type="button" data-typing-lang="te" aria-pressed="' + (typing.lang==='te') + '">తెలుగు</button></div>' +
         '<p class="sc-extra-status sc-extra-center" data-typing-status>' + (typing.done?'Time is up! Your result is ready.':typing.started?'Keep going — the clock is running.':'The 60-second timer starts with your first keystroke.') + '</p>' +
         '<div class="sc-extra-timer"><div><span>TIME REMAINING</span><strong data-typing-time>' + typing.seconds + 's</strong></div><div class="sc-extra-timer-track"><i data-typing-progress style="width:' + progress + '%"></i></div></div>' +
-        '<div class="sc-extra-stats"><span>Speed<strong data-typing-wpm>' + typing.wpm + ' WPM</strong></span><span>Accuracy<strong data-typing-accuracy>' + typing.accuracy + '%</strong></span><span>Best<strong>' + best('typing-'+typing.lang,typing.wpm) + ' WPM</strong></span><span>Sentences<strong>' + typing.sentenceCount + ' unique</strong></span></div>' +
+        '<div class="sc-extra-stats"><span>Speed<strong data-typing-wpm>' + typing.wpm + ' WPM</strong></span><span>Accuracy<strong data-typing-accuracy>' + typing.accuracy + '%</strong></span><span>Best<strong>' + (typing.done ? best('typing-'+typing.lang,typing.wpm) : (Number(safeGet('sitecraft-game-best-typing-'+typing.lang, 0)) || 0)) + ' WPM</strong></span><span>Sentences<strong>' + typing.sentenceCount + ' unique</strong></span></div>' +
         '<div class="sc-extra-typing-prompt" aria-label="Text to type" data-typing-prompt>' + typingPromptHtml(stats) + '</div>' +
         '<textarea class="sc-extra-typing-input" data-typing-input rows="3" placeholder="' + (typing.lang==='te'?'ఇక్కడ టైప్ చేయండి…':'Start typing here…') + '" autocapitalize="off" autocomplete="off" spellcheck="false"' + (typing.done?' disabled':'') + '>' + esc(typing.value) + '</textarea>' +
         '<p class="sc-extra-muted sc-extra-center">Type continuously until the timer ends. Every round uses a shuffled set of unique sentences, so a sentence will not repeat during that test. Telugu typing works with your device’s Telugu keyboard / input method.</p>';
@@ -1346,6 +1350,11 @@
       }
       if(active==='typing' && event.target.matches('[data-typing-input]') && !event.isComposing)updateTypingLive();
       if(active==='math' && event.target.matches('[data-math-answer]'))queueMathAutoSubmit();
+    });
+    // IME input (Telugu keyboards, etc.) fires input events with isComposing=true; pick the text up when composition ends.
+    section.addEventListener('compositionend', event => {
+      if(active==='word' && event.target.matches('[data-word-input]')) word.guess=event.target.value;
+      if(active==='typing' && event.target.matches('[data-typing-input]')) updateTypingLive();
     });
     section.addEventListener('keydown', event => {
       if(active==='word' && event.target.matches('[data-word-input]') && event.key==='Enter') {event.preventDefault();submitWord();return;}

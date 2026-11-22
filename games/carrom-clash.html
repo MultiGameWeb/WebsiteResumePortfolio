@@ -227,13 +227,21 @@ function finishShot(){
  else{statusEl.textContent='Computer is lining up a shot…';cpuTimer=setTimeout(computerShot,650);}
  draw();
 }
-function gameLoop(){
- if(phase==='moving'){
-   physicsStep();
-   if(anyMoving())settled=0;else settled++;
-   if(settled>20)finishShot();
-   updateHud();
+let lastFrame=0,accumulator=0;
+const STEP_MS=1000/60;
+function gameLoop(now){
+ if(!lastFrame)lastFrame=now||performance.now();
+ accumulator+=Math.min(100,(now||performance.now())-lastFrame);lastFrame=now||performance.now();
+ // Physics advances in fixed 60 Hz steps so the game plays the same on 60/120/144 Hz screens.
+ while(accumulator>=STEP_MS){
+   accumulator-=STEP_MS;
+   if(phase==='moving'){
+     physicsStep();
+     if(anyMoving())settled=0;else settled++;
+     if(settled>20){finishShot();break;}
+   }
  }
+ if(phase==='moving')updateHud();
  draw();
  raf=requestAnimationFrame(gameLoop);
 }

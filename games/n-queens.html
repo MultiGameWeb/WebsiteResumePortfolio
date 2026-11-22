@@ -297,8 +297,9 @@ select{cursor:pointer}.btn{cursor:pointer;transition:transform .12s ease,backgro
     var cols=new Set(), diagA=new Set(), diagB=new Set();
     function search(row){
       if(row===size) return placed.slice();
+      var preset=fixed[row];
       var candidates=[];
-      if(placed[row]>=0) candidates=[placed[row]];
+      if(preset>=0) candidates=[preset];
       else {
         for(var c=0;c<size;c++) candidates.push(c);
         for(var i=candidates.length-1;i>0;i--){
@@ -312,7 +313,7 @@ select{cursor:pointer}.btn{cursor:pointer;transition:transform .12s ease,backgro
         placed[row]=col;cols.add(col);diagA.add(a);diagB.add(b);
         var result=search(row+1);
         if(result) return result;
-        cols.delete(col);diagA.delete(a);diagB.delete(b);placed[row]=-1;
+        cols.delete(col);diagA.delete(a);diagB.delete(b);placed[row]=preset;
       }
       return null;
     }

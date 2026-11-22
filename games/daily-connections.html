@@ -556,7 +556,7 @@
         isGameOver,
         didWin
       };
-      localStorage.setItem(getStorageKey(currentLang), JSON.stringify(state));
+      try { localStorage.setItem(getStorageKey(currentLang), JSON.stringify(state)); } catch (e) {}
     }
 
     function loadDailyGame() {
@@ -580,10 +580,14 @@
       activeCategories = getDailyFourCategories(currentLang);
       selectedWords = [];
 
-      const savedRaw = localStorage.getItem(getStorageKey(currentLang));
+      let savedRaw = null;
+      try { savedRaw = localStorage.getItem(getStorageKey(currentLang)); } catch (e) {}
 
-      if (savedRaw) {
-        const saved = JSON.parse(savedRaw);
+      let savedParsed = null;
+      try { savedParsed = savedRaw ? JSON.parse(savedRaw) : null; } catch (e) { savedParsed = null; }
+
+      if (savedParsed && typeof savedParsed === 'object') {
+        const saved = savedParsed;
         mistakesRemaining = saved.mistakesRemaining;
         guessHistory = saved.guessHistory || [];
         previousGuesses = new Set(saved.previousGuesses || []);
@@ -849,7 +853,20 @@
     function shareResult() {
       const todayStr = getTodayDateString();
       const text = `Daily Connections (${currentLang.toUpperCase()}) - ${todayStr}\n${guessHistory.join('\n')}`;
-      navigator.clipboard.writeText(text).then(() => showToast("Copied to clipboard! 📋"));
+      const done = () => showToast("Copied to clipboard! 📋");
+      const fallback = () => {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select();
+          const ok = document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast(ok ? "Copied to clipboard! 📋" : "Copy not available — select the grid text manually.");
+        } catch (e) { showToast("Copy not available — select the grid text manually."); }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
     }
 
     // అర్ధరాత్రి 12 గంటల వరకు కౌంట్‌డౌన్ టైమర్

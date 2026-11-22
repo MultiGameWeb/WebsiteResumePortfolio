@@ -81,9 +81,11 @@ const palette=[
   ['#ed7640','#ffc09b'],['#7888a8','#becbe3']
 ];
 const grid=document.getElementById('tubeGrid'),message=document.getElementById('message');
-let level=Math.max(1,Number(localStorage.getItem('waterSortLevel')||1));
+function lsGet(k){try{return localStorage.getItem(k);}catch(_){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(_){}}
+let level=Math.max(1,Number(lsGet('waterSortLevel')||1)||1);
 let tubes=[],initial=[],history=[],moves=0,selected=-1,won=false;
-let bestMap={};try{bestMap=JSON.parse(localStorage.getItem('waterSortBest')||'{}')||{};}catch(_){bestMap={};}
+let bestMap={};try{bestMap=JSON.parse(lsGet('waterSortBest')||'{}')||{};}catch(_){bestMap={};}
 const clone=a=>a.map(t=>t.slice());
 const rand=n=>Math.floor(Math.random()*n);
 function config(){return {colours:Math.min(8,3+Math.floor((level-1)/2)),capacity:4};}
@@ -141,7 +143,7 @@ function tapTube(i){
 function checkWin(){
  if(!solved())return;
  won=true;selected=-1;
- const old=bestMap[level];if(!old||moves<old){bestMap[level]=moves;localStorage.setItem('waterSortBest',JSON.stringify(bestMap));}
+ const old=bestMap[level];if(!old||moves<old){bestMap[level]=moves;lsSet('waterSortBest',JSON.stringify(bestMap));}
  document.getElementById('best').textContent=bestMap[level];
  document.getElementById('undoBtn').disabled=true;document.getElementById('hintBtn').disabled=true;
  document.getElementById('nextBtn').hidden=false;
@@ -150,7 +152,7 @@ function checkWin(){
  document.getElementById('continueBtn').textContent='Next Level →';
  document.getElementById('winOverlay').classList.add('show');
 }
-function next(){level++;localStorage.setItem('waterSortLevel',String(level));makeLevel();}
+function next(){level++;lsSet('waterSortLevel',String(level));makeLevel();}
 function undo(){if(!history.length||won)return;const s=history.pop();tubes=clone(s.tubes);moves=s.moves;selected=-1;message.textContent='Last move undone.';render();}
 function hint(){
  if(won)return;

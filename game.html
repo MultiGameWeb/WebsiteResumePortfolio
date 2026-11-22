@@ -122,6 +122,11 @@
           const fullBtn=document.getElementById('playerFullscreen');
           fullBtn.hidden=false;
           fullBtn.addEventListener('click',function(){
+            if(document.fullscreenElement===frame||document.webkitFullscreenElement===frame){
+              const exit=document.exitFullscreen||document.webkitExitFullscreen;
+              if(exit){const result=exit.call(document);if(result&&typeof result.catch==='function')result.catch(()=>{});}
+              return;
+            }
             const request=frame.requestFullscreen||frame.webkitRequestFullscreen;
             if(request){const result=request.call(frame);if(result&&typeof result.catch==='function')result.catch(()=>{});}
           });

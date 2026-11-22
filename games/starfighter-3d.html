@@ -367,7 +367,7 @@
         let nextBossScore = 400;
 
         let score = 0;
-        let highScore = parseInt(localStorage.getItem('starfighter3d_best') || '0', 10);
+        let highScore = (parseInt((function(){try{return localStorage.getItem('starfighter3d_best');}catch(e){return null;}})() || '0', 10) || 0);
         let lives = 3;
         let screenShake = 0;
 
@@ -907,7 +907,7 @@
                 isGameOver = true;
                 if (score > highScore) {
                     highScore = score;
-                    localStorage.setItem('starfighter3d_best', highScore);
+                    try { localStorage.setItem('starfighter3d_best', highScore); } catch (e) {}
                 }
                 updateUI();
                 document.getElementById('final-score').innerText = score;
@@ -1232,7 +1232,7 @@
             document.getElementById('score').innerText = score;
             if (score > highScore) {
                 highScore = score;
-                localStorage.setItem('starfighter3d_best', highScore);
+                try { localStorage.setItem('starfighter3d_best', highScore); } catch (e) {}
             }
             document.getElementById('best-score').innerText = highScore;
             document.getElementById('weapon-lvl').innerText = 'Lv.' + player.weaponLevel;
@@ -1304,6 +1304,18 @@
 
         window.addEventListener('resize', setupResponsiveBoard);
 
+        // Game logic is tuned per 60 Hz frame; step it on a fixed clock so speed is the same on 90/120/144 Hz screens.
+        const SIM_STEP_MS = 1000 / 60;
+        let simLast = 0, simAcc = 0;
+        function stepSimulation(now) {
+            if (!simLast) simLast = now;
+            simAcc += Math.min(100, now - simLast);
+            simLast = now;
+            let steps = 0;
+            while (simAcc >= SIM_STEP_MS && steps < 4) { updateGame(now); simAcc -= SIM_STEP_MS; steps++; }
+            if (steps >= 4) simAcc = 0;
+        }
+
         function gameLoop(now) {
             requestAnimationFrame(gameLoop);
 
@@ -1320,7 +1332,7 @@
                 return;
             }
 
-            updateGame(now);
+            stepSimulation(now);
 
             draw3DPowerups(now);
             enemies.forEach(e => draw3DEnemy(e, now));

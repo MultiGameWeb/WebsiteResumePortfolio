@@ -159,7 +159,14 @@
         score('You', youPairs) + score('Computer', computerPairs) + score('Pairs found', matched.size / 2 + '/8') +
         '</div>';
     }
+    // Timers started in one round must never act on the next round (e.g. after "New round").
+    let memoryRound = 0;
+    function memoryLater(fn, ms) {
+      const round = memoryRound;
+      return window.setTimeout(() => { if (round === memoryRound) fn(); }, ms);
+    }
     function resetMemory() {
+      memoryRound++;
       const theme = shuffle(memoryThemes)[0];
       memoryTheme = theme.name;
       const picks = shuffle(theme.items).slice(0, 8);
@@ -191,14 +198,14 @@
         locked = false;
         memoryTurn = who;
         paintMemory(who === 'you' ? 'Nice match! You get another turn.' : 'Computer found a pair and gets another turn.');
-        if (memoryTurn === 'computer') window.setTimeout(runComputerMemoryTurn, 700);
+        if (memoryTurn === 'computer') memoryLater(runComputerMemoryTurn, 700);
       } else {
-        window.setTimeout(() => {
+        memoryLater(() => {
           if (game !== 'memory') return;
           opened = []; locked = false;
           memoryTurn = who === 'you' ? 'computer' : 'you';
           paintMemory(who === 'you' ? 'No match. Computer turn.' : 'Computer missed. Your turn!');
-          if (memoryTurn === 'computer') window.setTimeout(runComputerMemoryTurn, 550);
+          if (memoryTurn === 'computer') memoryLater(runComputerMemoryTurn, 550);
         }, 850);
       }
     }
@@ -219,7 +226,7 @@
         first = shuffle(choices)[0];
       }
       opened = [first]; memoryRemember(first); paintMemory('Computer reveals a card…');
-      window.setTimeout(() => {
+      memoryLater(() => {
         if (game !== 'memory' || memoryTurn !== 'computer') return;
         if (second < 0 || matched.has(second) || second === first) {
           const available = deck.map((_, i) => i).filter(i => !matched.has(i) && i !== first);
@@ -235,7 +242,7 @@
         if (second == null || second < 0) { opened = []; locked = false; memoryTurn = 'you'; paintMemory('Your turn.'); return; }
         opened.push(second); memoryRemember(second);
         paintMemory('Computer reveals its second card…');
-        window.setTimeout(() => {
+        memoryLater(() => {
           if (game !== 'memory' || memoryTurn !== 'computer') return;
           resolveMemoryPair('computer');
         }, 650);
@@ -431,7 +438,7 @@
         }
         locked = true;
         paintMemory('Checking your pair…');
-        window.setTimeout(() => {
+        memoryLater(() => {
           if (game === 'memory' && memoryTurn === 'you') resolveMemoryPair('you');
         }, 550);
         return;
