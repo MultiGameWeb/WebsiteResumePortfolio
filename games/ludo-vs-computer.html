@@ -427,7 +427,7 @@ document.getElementById('newBtn').addEventListener('click',()=>setup(false));
 document.getElementById('playAgainBtn').addEventListener('click',()=>setup(true));
 document.getElementById('muteBtn').addEventListener('click',()=>{muted=!muted;updateMuteButton();saveGame();if(!muted)playSound('safe');});
 document.getElementById('resetStatsBtn').addEventListener('click',resetStats);
-document.querySelectorAll('.diff').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.level;updateHud();statusEl.textContent='Computer difficulty: '+difficulty.toUpperCase()+'. Stats will count under '+gameDifficulty.toUpperCase()+' until a new game starts.';if(phase==='roll')saveStable();else saveGame();}));
+document.querySelectorAll('.diff').forEach(b=>b.addEventListener('click',()=>{difficulty=b.dataset.level;if(!gameStarted&&!finished)gameDifficulty=difficulty;updateHud();statusEl.textContent='Computer difficulty: '+difficulty.toUpperCase()+'.'+(gameDifficulty!==difficulty?' Stats will count under '+gameDifficulty.toUpperCase()+' until a new game starts.':'');if(phase==='roll')saveStable();else saveGame();}));
 const resumed=loadGame();
 applyColorTheme();
 updateFullscreenButton();
