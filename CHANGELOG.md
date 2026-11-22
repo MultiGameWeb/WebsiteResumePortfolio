@@ -91,3 +91,9 @@
 
 ## Landing page prices (ai-chatbots.html)
 The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are replaced by the three packages (Starter 1 year Rs 1,399, Growth 2 years Rs 1,599, Pro 3 years Rs 1,799), the Rs 199 a year renewal, 200 free replies, and a no-subscription replies note. Reply pack and photo studio prices are shown as "announced soon" because the real Gemini cost per reply is not known yet. Checked at desktop and phone width.
+
+## BotCraft: photos in R2 (optional, switched on by binding a bucket)
+- With the BOTCRAFT_PHOTOS bucket bound, new photos are stored in R2 and the D1 row keeps only the details (new column storage). Without it nothing changes. Photos already in D1 keep working, and the admin action POST /api/admin/photos {"action":"migrate"} moves them a few at a time (empty the D1 copy only after the file is in R2; safe to repeat). GET /api/admin/photos shows the counts.
+- Deleting a photo, an item, a customer request, or replacing a main or owner photo also deletes the file. A file that fails to delete only costs a little storage and never fails the action.
+- The binding is in wrangler.toml as a commented block: create the bucket (wrangler r2 bucket create botcraft-photos), remove the #, deploy, then migrate.
+- tests/run.sh now runs two phases: the 66 checks without R2, then 17 more with a local R2 bucket on the same database (old photos still served, new ones in R2, migration byte for byte, deletes remove files). 83 checks pass.

@@ -13,6 +13,14 @@ binding = "BOTCRAFT_DB"
 database_name = "botcraft-db"
 database_id = "53b8dd82-40ff-424a-bbf1-29a51a1f9cf2"
 
+# Photo bucket (optional). Without it photos are stored in the D1 database. To switch it on:
+#   1. wrangler r2 bucket create botcraft-photos
+#   2. remove the leading # from the three lines below and deploy
+#   3. move the photos already in D1:  POST /api/admin/photos {"action":"migrate"}  (repeat until remaining is 0)
+# [[r2_buckets]]
+# binding = "BOTCRAFT_PHOTOS"
+# bucket_name = "botcraft-photos"
+
 # Run the Worker in a US region. Gemini rejects requests from some
 # Cloudflare locations with "User location is not supported for the API use".
 [placement]

@@ -172,7 +172,10 @@ export function storeAvailable(env) {
 // Once per Worker isolate.
 async function ensureSchema(db) {
   if (!schemaReady) {
-    schemaReady = db.batch(SCHEMA.map(sql => db.prepare(sql))).catch(error => {
+    schemaReady = db.batch(SCHEMA.map(sql => db.prepare(sql)))
+      // Added later: where a photo's bytes live, 'd1' (in the row) or 'r2' (in the photo bucket).
+      .then(() => db.prepare("ALTER TABLE botcraft_photos ADD COLUMN storage TEXT NOT NULL DEFAULT 'd1'").run().catch(() => null))
+      .catch(error => {
       schemaReady = null;
       throw error;
     });
@@ -341,13 +344,33 @@ export async function productExists(env, shopId, name) {
   return Boolean(row);
 }
 
+// ---- Photo files: D1 rows hold the details; the bytes go to R2 when the BOTCRAFT_PHOTOS bucket is bound ----
+const bucketOf = env => env?.BOTCRAFT_PHOTOS || null;
+export const photoBucketAvailable = env => Boolean(bucketOf(env));
+const photoKey = (shopId, photoId) => `${shopId}/${photoId}`;
+const EMPTY_BYTES = new Uint8Array(0);
+
+// Files (in R2) of the photos a condition matches; call before their rows are deleted.
+async function r2KeysWhere(db, where, ...binds) {
+  const rows = await db.prepare(`SELECT shop_id, photo_id FROM botcraft_photos WHERE storage = 'r2' AND (${where})`).bind(...binds).all();
+  return (rows.results || []).map(row => photoKey(row.shop_id, row.photo_id));
+}
+// A file that cannot be deleted only costs a little storage, so it never fails the owner's action.
+async function deleteFiles(env, keys) {
+  const bucket = bucketOf(env);
+  if (!bucket || !keys.length) return;
+  try { await bucket.delete(keys); } catch (error) { console.error("BotCraft photo file delete failed", error); }
+}
+
 export async function deleteProduct(env, shopId, key) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
+  const files = await r2KeysWhere(db, "shop_id = ? AND kind = 'product' AND product_key = ?", shopId, key);
   await db.batch([
     db.prepare("DELETE FROM botcraft_products WHERE shop_id = ? AND name_key = ?").bind(shopId, key),
     db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'product' AND product_key = ?").bind(shopId, key)
   ]);
+  await deleteFiles(env, files);
 }
 
 export async function listPhotos(env, shopId) {
@@ -367,16 +390,27 @@ export async function savePhoto(env, shopId, { kind, productKey = "", mime, byte
   if ((count?.n || 0) >= SHOP_PHOTO_LIMIT) return { error: "This shop has reached its photo limit." };
   const photoId = crypto.randomUUID().replace(/-/g, "");
   const statements = [];
+  let replacedFiles = [];
   if (kind === "product") {
     // An item keeps several photos; the first one is its cover.
     const have = await db.prepare("SELECT COUNT(*) AS n FROM botcraft_photos WHERE shop_id = ? AND kind = 'product' AND product_key = ?").bind(shopId, productKey).first();
     if ((have?.n || 0) >= PRODUCT_PHOTO_LIMIT) return { error: `An item holds up to ${PRODUCT_PHOTO_LIMIT} photos. Remove one first.` };
   } else if (kind !== "gallery") {
+    // One photo of this kind (main, owner): the new one replaces the old one and its file.
+    replacedFiles = await r2KeysWhere(db, "shop_id = ? AND kind = ? AND product_key = ?", shopId, kind, productKey);
     statements.push(db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = ? AND product_key = ?").bind(shopId, kind, productKey));
   }
-  statements.push(db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
-    .bind(photoId, shopId, kind, productKey, mime, bytes, new Date().toISOString()));
-  await db.batch(statements);
+  const bucket = bucketOf(env);
+  if (bucket) await bucket.put(photoKey(shopId, photoId), bytes, { httpMetadata: { contentType: mime } });
+  statements.push(db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at, storage) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+    .bind(photoId, shopId, kind, productKey, mime, bucket ? EMPTY_BYTES : bytes, new Date().toISOString(), bucket ? "r2" : "d1"));
+  try {
+    await db.batch(statements);
+  } catch (error) {
+    if (bucket) await deleteFiles(env, [photoKey(shopId, photoId)]);
+    throw error;
+  }
+  await deleteFiles(env, replacedFiles);
   return { photoId };
 }
 
@@ -388,24 +422,66 @@ export async function replacePhoto(env, shopId, oldPhotoId, { mime, bytes }) {
   const old = await db.prepare("SELECT kind, product_key, created_at FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, oldPhotoId).first();
   if (!old || old.kind !== "product") return { error: "That photo was not found." };
   const photoId = crypto.randomUUID().replace(/-/g, "");
-  await db.batch([
-    db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, oldPhotoId),
-    db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at) VALUES (?, ?, 'product', ?, ?, ?, ?)")
-      .bind(photoId, shopId, old.product_key, mime, bytes, old.created_at)
-  ]);
+  const oldFiles = await r2KeysWhere(db, "shop_id = ? AND photo_id = ?", shopId, oldPhotoId);
+  const bucket = bucketOf(env);
+  if (bucket) await bucket.put(photoKey(shopId, photoId), bytes, { httpMetadata: { contentType: mime } });
+  try {
+    await db.batch([
+      db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, oldPhotoId),
+      db.prepare("INSERT INTO botcraft_photos (photo_id, shop_id, kind, product_key, mime, data, created_at, storage) VALUES (?, ?, 'product', ?, ?, ?, ?, ?)")
+        .bind(photoId, shopId, old.product_key, mime, bucket ? EMPTY_BYTES : bytes, old.created_at, bucket ? "r2" : "d1")
+    ]);
+  } catch (error) {
+    if (bucket) await deleteFiles(env, [photoKey(shopId, photoId)]);
+    throw error;
+  }
+  await deleteFiles(env, oldFiles);
   return { photoId };
 }
 
 export async function deletePhoto(env, shopId, photoId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
+  const files = await r2KeysWhere(db, "shop_id = ? AND photo_id = ?", shopId, photoId);
   await db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND photo_id = ?").bind(shopId, photoId).run();
+  await deleteFiles(env, files);
 }
 
 export async function loadPhoto(env, photoId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
-  return db.prepare("SELECT mime, data FROM botcraft_photos WHERE photo_id = ?").bind(photoId).first();
+  const row = await db.prepare("SELECT shop_id, mime, data, storage FROM botcraft_photos WHERE photo_id = ?").bind(photoId).first();
+  if (!row) return null;
+  if (row.storage !== "r2") return { mime: row.mime, data: row.data };
+  const bucket = bucketOf(env);
+  const object = bucket ? await bucket.get(photoKey(row.shop_id, photoId)) : null;
+  return object ? { mime: row.mime, data: await object.arrayBuffer() } : null;
+}
+
+// Moves photos still stored in D1 to R2, a few at a time (admin action). Safe to repeat.
+export async function migratePhotosToR2(env, limit = 20) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const bucket = bucketOf(env);
+  if (!bucket) return { ok: false, error: "The photo bucket (BOTCRAFT_PHOTOS) is not connected." };
+  const rows = await db.prepare("SELECT photo_id, shop_id, mime, data FROM botcraft_photos WHERE storage = 'd1' LIMIT ?").bind(Math.max(1, Math.min(50, Math.floor(limit) || 20))).all();
+  let moved = 0;
+  for (const row of rows.results || []) {
+    const bytes = row.data instanceof ArrayBuffer || ArrayBuffer.isView(row.data) ? row.data : Uint8Array.from(row.data);
+    await bucket.put(photoKey(row.shop_id, row.photo_id), bytes, { httpMetadata: { contentType: row.mime } });
+    // Only after the file is safely in R2 is the copy in the row emptied.
+    const changed = await db.prepare("UPDATE botcraft_photos SET storage = 'r2', data = ? WHERE photo_id = ? AND storage = 'd1'").bind(EMPTY_BYTES, row.photo_id).run();
+    if (changed.meta?.changes) moved += 1;
+  }
+  return { ok: true, moved, ...(await photoStorageStats(env)) };
+}
+
+export async function photoStorageStats(env) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const rows = await db.prepare("SELECT storage, COUNT(*) AS n, COALESCE(SUM(LENGTH(data)), 0) AS bytes FROM botcraft_photos GROUP BY storage").all();
+  const by = Object.fromEntries((rows.results || []).map(row => [row.storage, row]));
+  return { r2Available: photoBucketAvailable(env), inD1: Number(by.d1?.n || 0), inD1Bytes: Number(by.d1?.bytes || 0), inR2: Number(by.r2?.n || 0), remaining: Number(by.d1?.n || 0) };
 }
 
 const questionKey = text => String(text).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim().slice(0, 200);
@@ -597,21 +673,23 @@ const CLOSED_REQUEST_DAYS = 30;
 const DAILY_REQUEST_LIMIT = 200;
 const REQUEST_FIELDS = "request_id, kind, code, message, pickup, customer_name, photo_id, status, reply, created_at, updated_at";
 
-async function pruneRequests(db, shopId) {
+async function pruneRequests(env, db, shopId) {
   const cutoff = new Date(Date.now() - CLOSED_REQUEST_DAYS * 86400000).toISOString();
   const old = "shop_id = ? AND updated_at < ? AND status IN ('done', 'rejected', 'delivered')";
+  const files = await r2KeysWhere(db, `shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE ${old})`, shopId, shopId, cutoff);
   await db.batch([
     db.prepare(`DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE ${old})`).bind(shopId, shopId, cutoff),
     db.prepare(`DELETE FROM botcraft_requests WHERE ${old}`).bind(shopId, cutoff),
     db.prepare("DELETE FROM botcraft_push_subs WHERE shop_id = ? AND role = 'customer' AND request_id NOT IN (SELECT request_id FROM botcraft_requests WHERE shop_id = ?)").bind(shopId, shopId)
   ]);
+  await deleteFiles(env, files);
 }
 
 // A customer's photo question or pre-order. Returns the request, or an error.
 export async function createRequest(env, shopId, { kind, message, pickup = "", name = "", image = null }) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
-  await pruneRequests(db, shopId);
+  await pruneRequests(env, db, shopId);
   const since = new Date(Date.now() - 86400000).toISOString();
   const today = await db.prepare("SELECT COUNT(*) AS n FROM botcraft_requests WHERE shop_id = ? AND kind != 'order' AND created_at > ?").bind(shopId, since).first();
   if ((today?.n || 0) >= DAILY_REQUEST_LIMIT) return { error: "The shop is getting many requests right now. Please call or WhatsApp the shop." };
@@ -673,11 +751,13 @@ export async function updateRequest(env, shopId, requestId, { status, reply }) {
 export async function deleteRequest(env, shopId, requestId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
+  const files = await r2KeysWhere(db, "shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE shop_id = ? AND request_id = ?)", shopId, shopId, requestId);
   await db.batch([
     db.prepare("DELETE FROM botcraft_photos WHERE shop_id = ? AND kind = 'request' AND photo_id IN (SELECT photo_id FROM botcraft_requests WHERE shop_id = ? AND request_id = ?)").bind(shopId, shopId, requestId),
     db.prepare("DELETE FROM botcraft_requests WHERE shop_id = ? AND request_id = ?").bind(shopId, requestId),
     db.prepare("DELETE FROM botcraft_push_subs WHERE shop_id = ? AND role = 'customer' AND request_id = ?").bind(shopId, requestId)
   ]);
+  await deleteFiles(env, files);
 }
 
 const orderCode = code => String(code).toUpperCase().replace(/\s+/g, "");
@@ -686,7 +766,7 @@ const orderCode = code => String(code).toUpperCase().replace(/\s+/g, "");
 export async function saveOrder(env, shopId, { code, status, note }) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
-  await pruneRequests(db, shopId);
+  await pruneRequests(env, db, shopId);
   const key = orderCode(code);
   const now = new Date().toISOString();
   const existing = await db.prepare("SELECT request_id FROM botcraft_requests WHERE shop_id = ? AND kind = 'order' AND code = ?").bind(shopId, key).first();

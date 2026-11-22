@@ -202,3 +202,18 @@ current end date). The checkout's hosting price is `HOSTING_COST_PER_YEAR × 1.7
 `callbacks.js`: `POST /api/requests/callback` is sent by the success page when the customer asked for
 a domain or online payments at checkout (and by the renewal button). Owner dashboard → **Call
 requests** lists them newest first, refreshes every minute, and shows a count in the tab title.
+
+## Photo storage in R2 (optional)
+
+Photos are stored in the D1 database until an R2 bucket is connected. D1 is fine for testing, but R2 is the place for many shops and the 5 GB per shop in the packages.
+
+1. Create the bucket: `wrangler r2 bucket create botcraft-photos`
+2. In `wrangler.toml`, remove the leading `#` from the `[[r2_buckets]]` block (binding `BOTCRAFT_PHOTOS`) and deploy.
+3. New photos now go to R2 (the D1 row keeps only the details). Photos already in D1 keep working.
+4. Move the old ones with the admin key, repeating until `remaining` is 0 (20 photos per call by default, 50 at most):
+   ```bash
+   curl -X POST https://<worker>/api/admin/photos -H "Authorization: Bearer <ADMIN_TOKEN>" -H "Origin: <an allowed origin>" -H "Content-Type: application/json" -d '{"action":"migrate"}'
+   ```
+   `GET /api/admin/photos` shows how many photos are in D1 and in R2. A photo is emptied in D1 only after its file is safely in R2, and the step is safe to repeat.
+
+Deleting a photo, an item, a customer request or replacing a main or owner photo also deletes the file in R2.

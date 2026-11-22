@@ -93,6 +93,8 @@ ok('same visitor: first 3 questions pass the daily cap',caps.slice(0,3).every(x=
 ok('same visitor: 4th question is stopped (visitor_limit, 429)',caps[3].status===429&&caps[3].code==='visitor_limit',JSON.stringify(caps[3]).slice(0,120));
 const shopA=await post('/api/botcraft/ask',{s:publicId,text:'hello'},{Origin:API}); const shopB=await post('/api/botcraft/ask',{s:publicId,text:'hello'},{Origin:API});
 ok('shop daily total: stopped after the shop limit (daily_limit, 429)',shopA.status!==429&&shopB.status===429&&shopB.code==='daily_limit',JSON.stringify([shopA.status,shopB.status,shopB.code]));
+r=await post('/api/admin/photos',{action:'migrate'},{Authorization:'Bearer test-admin-token'}); ok('photo migration refused when no photo bucket is connected',r.status===503,JSON.stringify(r).slice(0,100));
+r=await get('/api/admin/photos',{Authorization:'Bearer test-admin-token'}); ok('photo stats: bucket not connected, photos in D1',r.r2Available===false&&r.inD1>0&&r.inR2===0,JSON.stringify(r));
 r=await adm({id:SID,action:'add_replies',count:100}); ok('admin recharge adds replies',r.bot.replies.balance===100);
 r=await post('/api/admin/bot',{id:SID,action:'add_replies',count:5},{Authorization:'Bearer wrong'}); ok('admin refuses a wrong key',r.status===401);
 r=await adm({id:SID,action:'add_replies',count:0}); ok('admin refuses zero',r.status===400);

@@ -13,7 +13,7 @@
 // GET  /api/admin/callbacks?status=&offset=  executive call-back requests (domain, online payment, renewal)
 // POST /api/admin/callbacks { id, status: "new" | "called" | "done" }
 import { allowedOrigins, shopFeatures } from "./botcraft-builder.js";
-import { addReplies, freeRepliesFor, replyStatus } from "./botcraft-store.js";
+import { addReplies, freeRepliesFor, migratePhotosToR2, photoStorageStats, replyStatus } from "./botcraft-store.js";
 import { siteUrls, hostingInfo, extendedExpiry } from "./hosting.js";
 import { ensureCallbackSchema } from "./callbacks.js";
 
@@ -277,6 +277,15 @@ export async function handleAdminRoute(request, env, url) {
     try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
     const result = await updateBot(env, body);
     return reply(result.data, result.status, origin);
+  }
+  // Photo storage: how many photos are in D1 and in R2, and moving the D1 ones to R2 (a few per call; repeat until none remain).
+  if (request.method === "GET" && path === "/api/admin/photos") return reply({ ok: true, ...(await photoStorageStats(env)) }, 200, origin);
+  if (request.method === "POST" && path === "/api/admin/photos") {
+    let body;
+    try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
+    if (body?.action !== "migrate") return reply({ ok: false, error: "Unknown action." }, 400, origin);
+    const result = await migratePhotosToR2(env, Number(body?.limit) || 20);
+    return reply(result, result.ok ? 200 : 503, origin);
   }
   if (request.method === "GET" && path === "/api/admin/sites") return reply(await listSites(env, url), 200, origin);
   if (request.method === "GET" && path === "/api/admin/hosted") return reply(await listHosted(env, url), 200, origin);
