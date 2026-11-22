@@ -302,11 +302,6 @@ function resolveRoll(side){
   statusEl.textContent=(side==='red'?'Only one red token can move.':'Only one yellow token can move.')+' Moving automatically…';
   document.getElementById('hint').textContent='Auto-moving in 350 ms.';phase='auto';setRollControls();drawBoard();timer=setTimeout(()=>moveToken(side,legal[0]),350);return;
  }
- if(side==='red'&&dice===6&&tokens.red.some(t=>t.progress<0)){
-  const first=legal.find(i=>tokens.red[i].progress<0);phase='auto';statusEl.textContent='Six! Your token is coming out…';
-  document.getElementById('hint').textContent='Launching token from your base.';setRollControls();drawBoard();
-  timer=setTimeout(()=>moveToken(side,first),180);return;
- }
  if(side==='red'){
   statusEl.textContent='You rolled '+dice+'. Choose one of your glowing tokens.';
   document.getElementById('hint').textContent=legal.map(i=>'Token '+(i+1)).join(' · ')+' can move.';setRollControls();drawBoard();

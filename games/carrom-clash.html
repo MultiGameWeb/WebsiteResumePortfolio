@@ -163,6 +163,7 @@ function markPocket(body){
  body.alive=false;body.vx=0;body.vy=0;
  if(body.kind==='striker'){events.foul=true;return;}
  if(body.kind==='queen'){events.queen=true;return;}
+ if((body.kind==='white'&&turn==='computer')||(body.kind==='black'&&turn==='player')){(events.returned=events.returned||[]).push(body.kind);return;}
  if(body.kind==='white')events.playerOwn++;
  if(body.kind==='black')events.cpuOwn++;
  if(body.kind==='white'&&turn==='player')playerScore++;
@@ -200,6 +201,15 @@ function startShot(vx,vy){
 }
 function finishShot(){
  phase='ready';
+ // An opponent's coin pocketed by mistake goes back on the board near the centre.
+ if(events.returned&&events.returned.length){
+   const spots=[[350,350],[350,310],[350,390],[310,350],[390,350],[320,320],[380,380],[320,380],[380,320]];
+   events.returned.forEach(kind=>{
+     const spot=spots.find(sp=>bodies().every(b=>Math.hypot(b.x-sp[0],b.y-sp[1])>=26))||spots[0];
+     coins.push(coin(spot[0],spot[1],kind));
+   });
+   statusEl.textContent=(turn==='player'?'You':'Computer')+' pocketed an opponent coin — it returns to the board.';
+ }
  if(events.foul){
    if(turn==='player')playerScore=Math.max(0,playerScore-1);else cpuScore=Math.max(0,cpuScore-1);
    statusEl.textContent=(turn==='player'?'Foul!':'Computer foul!')+' Striker pocketed — 1 point penalty.';

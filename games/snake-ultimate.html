@@ -2065,6 +2065,7 @@
         });
 
         window.addEventListener('keydown', e => {
+            if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
             if ((inCinematicIntro || isRulesOpen) && (e.key === 'Enter' || e.key === ' ')) {
                 e.preventDefault();
                 startGameNow();

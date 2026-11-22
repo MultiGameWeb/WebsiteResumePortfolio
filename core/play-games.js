@@ -253,11 +253,11 @@
       const turnLabel = tttMode === 'two'
         ? 'Player ' + (turn === 'X' ? '1' : '2') + ' turn — ' + turn + '.'
         : (currentTttTurn === 'you' ? 'Your turn — you are X.' : 'Computer is thinking…');
-      const sizeOptions = [3,4,5].map(n => '<option value="' + n + '"' + (tttSize === n ? ' selected' : '') + '>' + n + ' × ' + n + ' (' + n + ' in a row)</option>').join('');
+      const sizeOptions = [3,4,5].map(n => '<option value="' + n + '"' + (tttSize === n ? ' selected' : '') + '>' + n + ' × ' + n + ' (' + tttWinLen(n) + ' in a row)</option>').join('');
       const modeOptions = '<option value="computer"' + (tttMode === 'computer' ? ' selected' : '') + '>Play vs Computer</option><option value="two"' + (tttMode === 'two' ? ' selected' : '') + '>2 Players</option>';
       const difficultyOptions = ['easy','medium','hard'].map(level => '<option value="' + level + '"' + (tttDifficulty === level ? ' selected' : '') + '>' + level.charAt(0).toUpperCase() + level.slice(1) + '</option>').join('');
       panel.innerHTML = header('TIC-TAC-TOE · ' + modeLabel.toUpperCase(), 'Choose your board. Make a line to win.', '↻ New game',
-        '<b>Board:</b> Choose 3 × 3, 4 × 4 or 5 × 5. The number of marks needed to win matches the board size. <b>Modes:</b> Play against the computer or take turns with a second player on the same device. <b>Computer:</b> Choose Easy, Medium or Hard difficulty.') +
+        '<b>Board:</b> Choose 3 × 3, 4 × 4 or 5 × 5. Make 3 in a row on 3 × 3 and 4 × 4, or 4 in a row on 5 × 5. <b>Modes:</b> Play against the computer or take turns with a second player on the same device. <b>Computer:</b> Choose Easy, Medium or Hard difficulty.') +
         '<div class="sc-pg-ttt-controls">' +
           '<label class="sc-pg-ttt-control">Board size<select data-ttt-size aria-label="Tic-Tac-Toe board size">' + sizeOptions + '</select></label>' +
           '<label class="sc-pg-ttt-control">Game mode<select data-ttt-mode aria-label="Tic-Tac-Toe game mode">' + modeOptions + '</select></label>' +
@@ -267,10 +267,11 @@
         board.map((value, i) => '<button type="button" data-pg-cell="' + i + '" class="' +
           (value ? value.toLowerCase() : '') + '"' + (value || ended || (tttMode === 'computer' && currentTttTurn !== 'you') ? ' disabled' : '') + ' aria-label="Cell ' +
           (i + 1) + (value ? ': ' + value : ': empty') + '">' + value + '</button>').join('') + '</div>' +
-        '<div class="sc-pg-score">' + score('Board', tttSize + ' × ' + tttSize) + score('Win line', tttSize + ' marks') + score('Mode', modeLabel) + '</div>';
+        '<div class="sc-pg-score">' + score('Board', tttSize + ' × ' + tttSize) + score('Win line', tttWinLen(tttSize) + ' marks') + score('Mode', modeLabel) + '</div>';
     }
+    function tttWinLen(n) { return n >= 5 ? 4 : 3; }
     function tttWinner(state, mark) {
-      const n=tttSize,k=tttSize;
+      const n=tttSize,k=tttWinLen(n);
       for(let r=0;r<n;r++)for(let c=0;c<n;c++){
         if(c+k<=n&&Array.from({length:k},(_,j)=>state[r*n+c+j]).every(v=>v===mark))return true;
         if(r+k<=n&&Array.from({length:k},(_,j)=>state[(r+j)*n+c]).every(v=>v===mark))return true;
@@ -288,7 +289,7 @@
       return -1;
     }
     function tttPotential(mark) {
-      const n=tttSize,k=tttSize,opponent=mark==='X'?'O':'X';
+      const n=tttSize,k=tttWinLen(n),opponent=mark==='X'?'O':'X';
       let scoreValue=0;
       for(const [dr,dc] of [[0,1],[1,0],[1,1],[1,-1]]){
         for(let r=0;r<n;r++)for(let c=0;c<n;c++){

@@ -1328,6 +1328,7 @@
         canvas.addEventListener('pointercancel', endPointerDrag);
 
         window.addEventListener('keydown', e => {
+            if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
             if (inIntro && (e.key === 'Enter' || e.key === ' ')) {
                 startGameNow();
                 return;
