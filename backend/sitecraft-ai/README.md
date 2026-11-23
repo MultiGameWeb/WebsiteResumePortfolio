@@ -151,6 +151,7 @@ Engines: Normal, Narration and News use Sarvam Bulbul for Indian scripts; acting
 | `BOTCRAFT_IMAGE_MODEL` | variable | optional, default `gemini-2.5-flash-image` |
 | `BOTCRAFT_STUDIO_DAILY_LIMIT` | variable | clean-ups per shop per day, default 20 (spending cap) |
 | `BOTCRAFT_FREE_REPLIES` | variable | free AI replies for every new shop, default 200. Set 0 to give none |
+| `BOTCRAFT_VOICE_REPLY` | variable | set to `off` to stop the spoken answer in the customer voice chat (the text answer still comes). The spoken answer uses `VOICE_GEMINI_API_KEY` (or `BOTCRAFT_GEMINI_API_KEY` when it is not set) and, for Indian languages, `SARVAM_API_KEY` when set |
 | `BOTCRAFT_SHOP_DAILY_REPLIES` | variable | customer AI questions per shop per day, default 500 (abuse protection) |
 | `BOTCRAFT_VISITOR_DAILY_REPLIES` | variable | customer AI questions per visitor per shop per day, default 40 |
 | `VOICE_FREE_WALLETS_PER_IP` | variable | free wallets per IP per day, default 2 |

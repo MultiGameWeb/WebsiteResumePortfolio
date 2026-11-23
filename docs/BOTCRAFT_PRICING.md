@@ -40,3 +40,6 @@ Estimated Gemini cost about $0.039 per image (1,290 output tokens at $30 per mil
 
 ## Reply metering (built)
 Each customer AI reply uses one credit; shops start with 200 free (BOTCRAFT_FREE_REPLIES). Tokens used are logged per shop per day (admin bot panel shows average tokens per reply), so the real Gemini cost per reply can be read after a few days of use and the pack prices set (cost x 1.96). Recharge is added by the admin until payment is built. Owner-side AI (setup chat, update chat, photo studio, voice) is not metered and is a cost to us.
+
+## Voice to voice (customer chat)
+Each voice exchange has two extra costs not in the token log yet: the recording the AI hears (audio input) and the spoken answer (speech output; Sarvam or Gemini speech). Check both on the official pricing pages and read a few days of real use before setting a price; today one exchange uses one reply credit.

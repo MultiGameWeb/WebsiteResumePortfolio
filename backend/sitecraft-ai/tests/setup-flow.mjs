@@ -3,6 +3,8 @@
 // Run with: node backend/sitecraft-ai/tests/setup-flow.mjs
 import { evidenceFound, ownerCorpus, valueAccepted, guardSetupReply, notApplicableQuestions, nextStep, pendingCore, shopFeatures, customerImages, withCustomerImages } from '../botcraft-builder.js';
 import { SHOP_TYPES } from '../botcraft-shop-types.js';
+import { customerAudio, withCustomerAudio, speakReply, VOICE_SCHEMA, AUDIO_RULE } from '../botcraft-speech.js';
+import { SALESBOT_SCHEMA } from '../botcraft-salesbot.js';
 import { CORE_QUESTIONS } from '../botcraft-question-bank.js';
 import { QUESTION_BANKS } from '../botcraft-banks/index.js';
 let pass = 0, fail = 0; const ok = (name, cond, extra='') => { cond ? pass++ : fail++; console.log((cond ? 'PASS  ' : 'FAIL  ') + name + (cond ? '' : '  -> ' + extra)); };
@@ -72,4 +74,32 @@ const withImg = withCustomerImages(msgs, [okImg]);
 ok('customer photos: added to the last customer message only', withImg[2].parts.length === 2 && withImg[2].parts[1].inlineData.mimeType === 'image/jpeg' && withImg[0].parts.length === 1 && withImg[1].parts.length === 1);
 ok('customer photos: the original messages are not changed', msgs[2].parts.length === 1);
 ok('customer photos: no photos -> messages as they were', withCustomerImages(msgs, []) === msgs);
+// Voice to voice (customer speaks, the answer comes back as a voice)
+const wavBase64 = Buffer.from('RIFF0000WAVEfmt ').toString('base64');
+ok('voice: a WAV recording is accepted', customerAudio({ mimeType: 'audio/wav', data: wavBase64 })?.mimeType === 'audio/wav');
+ok('voice: the mime type may carry a codec note', Boolean(customerAudio({ mimeType: 'audio/wav; codecs=1', data: wavBase64 })));
+ok('voice: other sound types are refused', customerAudio({ mimeType: 'audio/webm', data: wavBase64 }) === null && customerAudio({ mimeType: 'text/html', data: wavBase64 }) === null);
+ok('voice: a huge recording is refused', customerAudio({ mimeType: 'audio/wav', data: 'A'.repeat(2_100_000) }) === null);
+ok('voice: data that is not base64 is refused', customerAudio({ mimeType: 'audio/wav', data: '<script>' }) === null && customerAudio({ mimeType: 'audio/wav' }) === null && customerAudio(undefined) === null);
+const spoken = withCustomerAudio(msgs, { mimeType: 'audio/wav', data: wavBase64 });
+ok('voice: the recording is added to the last customer message only', spoken[2].parts.length === 2 && spoken[2].parts[1].inlineData.mimeType === 'audio/wav' && spoken[0].parts.length === 1 && msgs[2].parts.length === 1);
+ok('voice: the answer format also asks what the customer said', VOICE_SCHEMA.required[0] === 'heard' && VOICE_SCHEMA.properties.heard && VOICE_SCHEMA.properties.reply && SALESBOT_SCHEMA.properties.heard === undefined);
+ok('voice: the instructions say not to guess when there is no clear speech', /no clear speech/.test(AUDIO_RULE));
+// the spoken answer, with the speech services stubbed
+const pcm = Buffer.alloc(4800).toString('base64');
+const realFetch = globalThis.fetch; let calls = [];
+globalThis.fetch = async (url, init) => { calls.push(String(url)); if (/sarvam/.test(url)) return new Response(JSON.stringify({ audios: [Buffer.from(Uint8Array.from([82,73,70,70,36,0,0,0,87,65,86,69,102,109,116,32,16,0,0,0,1,0,1,0,128,187,0,0,0,119,1,0,2,0,16,0,100,97,116,97,0,0,0,0])).toString('base64')] }), { status: 200 }); return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ inlineData: { mimeType: 'audio/L16;codec=pcm;rate=24000', data: pcm } }] } }] }), { status: 200 }); };
+let audio = await speakReply({ BOTCRAFT_GEMINI_API_KEY: 'k' }, 'We are open from 10 AM to 9 PM.');
+ok('voice: the answer comes back as a WAV voice (Gemini speech)', audio?.mimeType === 'audio/wav' && Buffer.from(audio.data, 'base64').subarray(0, 4).toString() === 'RIFF' && calls.some(u => /generativelanguage/.test(u)), JSON.stringify(calls));
+calls = []; audio = await speakReply({ BOTCRAFT_GEMINI_API_KEY: 'k', SARVAM_API_KEY: 's' }, 'మేము ఉదయం 10 నుండి రాత్రి 9 వరకు తెరిచి ఉంటాము.');
+ok('voice: a Telugu answer uses the Indian-language voice when its key is set', calls.some(u => /sarvam/.test(u)) && audio?.mimeType === 'audio/wav', JSON.stringify(calls));
+calls = []; await speakReply({ BOTCRAFT_GEMINI_API_KEY: 'k', SARVAM_API_KEY: 's' }, 'We are open from 10 AM.');
+ok('voice: an English answer uses the Gemini voice', calls.length === 1 && /generativelanguage/.test(calls[0]), JSON.stringify(calls));
+calls = []; ok('voice: switched off with BOTCRAFT_VOICE_REPLY=off', (await speakReply({ BOTCRAFT_GEMINI_API_KEY: 'k', BOTCRAFT_VOICE_REPLY: 'off' }, 'Hello there')) === null && calls.length === 0);
+ok('voice: no key at all -> no sound (the page reads the text instead)', (await speakReply({}, 'Hello there')) === null);
+globalThis.fetch = async () => new Response('boom', { status: 500 });
+const quiet = console.error; console.error = () => {};
+ok('voice: a failing speech service gives no sound, not an error', (await speakReply({ BOTCRAFT_GEMINI_API_KEY: 'k' }, 'Hello there')) === null);
+console.error = quiet; globalThis.fetch = realFetch;
+ok('voice: markdown and links are not read out', await (async () => { let sent = ''; globalThis.fetch = async (u, init) => { sent = init.body; return new Response('x', { status: 500 }); }; console.error = () => {}; await speakReply({ BOTCRAFT_GEMINI_API_KEY: 'k' }, '**Hello** see https://example.com now 😀'); console.error = quiet; globalThis.fetch = realFetch; return !/\*\*|https:|😀/.test(sent) && /Hello/.test(sent); })());
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
