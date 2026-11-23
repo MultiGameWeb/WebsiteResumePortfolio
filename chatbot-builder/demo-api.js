@@ -345,7 +345,7 @@
             if (query.get('s') !== PUBLIC_ID || (state.onboarding && !state.onboarding.done)) { resolve(json({ ok: false, error: 'This shop\'s bot was not found.' }, 404)); return; }
             resolve(json(publicView(state)));
           } else if (path === '/api/botcraft/ask') {
-            var answer = demoAnswer(state, body.text || '', body.product || '');
+            var answer = (body.images && body.images.length) ? 'Demo: I received your photo' + (body.images.length > 1 ? 's' : '') + '. In the real bot the AI looks at the photo and matches it to this shop\'s items.' : demoAnswer(state, body.text || '', body.product || '');
             if (answer === null) {
               var qk = nameKey(body.text || '').slice(0, 200);
               var existing = state.questions.find(function (x) { return x.q_key === qk; });

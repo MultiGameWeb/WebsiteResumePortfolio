@@ -890,6 +890,26 @@ const PUBLIC_ID_PATTERN = /^[a-f0-9]{16}$/;
 const MAX_CUSTOMER_HISTORY = 12;
 
 // Talk mode on the customer bot: the reply is read aloud by the phone.
+// Photos a customer sends in the chat: used only to understand the question, never saved.
+const CUSTOMER_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+const MAX_CUSTOMER_IMAGES = 3;
+const MAX_CUSTOMER_IMAGE_CHARS = 1_800_000; // base64 characters, about 1.3 MB of picture
+export function customerImages(raw) {
+  return (Array.isArray(raw) ? raw : [])
+    .filter(img => CUSTOMER_IMAGE_TYPES.has(img?.mimeType) && typeof img?.data === "string" && img.data.length > 0 && img.data.length <= MAX_CUSTOMER_IMAGE_CHARS && /^[A-Za-z0-9+/=]+$/.test(img.data))
+    .slice(0, MAX_CUSTOMER_IMAGES)
+    .map(img => ({ mimeType: img.mimeType, data: img.data }));
+}
+// Adds the photos to the customer's last message.
+export function withCustomerImages(contents, images) {
+  if (!images.length) return contents;
+  const out = contents.map(m => ({ ...m, parts: [...m.parts] }));
+  const last = out[out.length - 1];
+  if (last) last.parts.push(...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.data } })));
+  return out;
+}
+const IMAGE_RULE = "\n- The customer sent one or more photos. Use them only to understand what the customer is asking about: match what you see to the items in the shop information (name, price, availability) or answer their question about it from the shop information. Say in a few words what you see. If the photo is unclear, or it is not one of the shop's items, say you are not sure and suggest asking at the counter. Never identify or describe people, never read out personal details (ID cards, bank or card numbers), and never give an answer that is not in the shop information.";
+
 const VOICE_RULE = "\n- The customer is talking to you by voice and will hear your reply read aloud: answer in one to three short spoken sentences in the customer's language, with no lists, symbols, links or emojis.";
 
 async function handleSalesbot(request, env, url, path, origin, ctx) {
@@ -901,6 +921,7 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
     if (throttled(request.headers.get("CF-Connecting-IP") || "unknown", Date.now())) {
       return reply({ ok: false, error: "Too many messages. Please wait a minute." }, 429, origin);
     }
+    if (Number(request.headers.get("Content-Length") || 0) > 7 * 1024 * 1024) return reply({ ok: false, error: "The photos are too large. Please send smaller ones." }, 413, origin);
     try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
   } else if (request.method !== "GET") {
     return reply({ ok: false, error: "Use GET." }, 405, origin);
@@ -954,11 +975,12 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   }
   const modelErrors = [];
   let usage = null;
+  const photos = customerImages(body?.images);
   try {
     const { result } = await callWithFallback(env, {
       onUsage: metadata => { usage = metadata; },
-      system: salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true ? VOICE_RULE : ""),
-      contents,
+      system: salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true ? VOICE_RULE : "") + (photos.length ? IMAGE_RULE : ""),
+      contents: withCustomerImages(contents, photos),
       schema: SALESBOT_SCHEMA,
       models: CHAT_MODELS,
       temperature: 0.3,
@@ -999,8 +1021,11 @@ const ORDER_STATUS_TYPES = new Set(["packers_movers", "laundry", "ironing_shop",
 // voice (talk mode) is on by default (the phone does the speech work; replies cost the same as chat). Cart (WhatsApp orders) is off until the owner turns it on.
 const FEATURE_KEYS = ["photo", "preorder", "orderStatus", "voice", "cart"];
 
+const PHOTO_OFF_BY_DEFAULT = new Set(["electronics_store", "appliances_showroom"]);
+
 export function shopFeatures(shopType, settings) {
-  const defaults = { photo: true, preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType), voice: true, cart: false };
+  // "Send a photo" suits shops where customers show something (a medicine, a repair, a design); not an electronics shop, so it starts off there. The owner can turn it on.
+  const defaults = { photo: !PHOTO_OFF_BY_DEFAULT.has(shopType), preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType), voice: true, cart: false };
   const chosen = settings?.features || {};
   return Object.fromEntries(FEATURE_KEYS.map(key => [key, typeof chosen[key] === "boolean" ? chosen[key] : defaults[key]]));
 }

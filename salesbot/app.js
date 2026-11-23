@@ -62,8 +62,13 @@ function speak(text, button) {
   synth.speak(utterance);
 }
 
-function addMessage(role, text, suggestions = []) {
+function addMessage(role, text, suggestions = [], photos = []) {
   const row = element('div', `msg msg-${role}`);
+  if (photos.length) {
+    const strip = element('div', 'bubble-photos');
+    for (const url of photos) { const image = element('img', 'bubble-photo'); image.src = url; image.alt = 'Photo you sent'; strip.append(image); }
+    row.append(strip);
+  }
   row.append(element('p', 'bubble', text));
   if (role === 'bot' && text !== '…' && window.speechSynthesis) {
     const listen = element('button', 'listen', '🔊 Listen');
@@ -526,7 +531,7 @@ function setChatLarge(large) {
 }
 expandButton.addEventListener('click', () => setChatLarge(!chatSheetEl.classList.contains('is-large')));
 try { if (localStorage.getItem('salesbot:chatLarge') === '1') setChatLarge(true); } catch {}
-document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !chatSheet.hidden && !sheet.open) closeChat(); });
+document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !chatSheet.hidden && !sheet.open && document.querySelector('#attachMenu').hidden) closeChat(); });  // Escape first closes the photo menu, then the chat
 document.querySelector('#shareButton').addEventListener('click', async () => {
   const url = window.location.href.split('#')[0];
   const title = saved?.shop?.name || document.title;
@@ -766,11 +771,116 @@ function offlineAnswer(question) {
   return [...itemHits, ...faqHits].join('\n\n');
 }
 
+// ---- Photos in the chat ----
+// The customer adds photos (gallery or camera) and asks about them, typing or by voice (talk mode). The AI
+// looks at them to understand the question and answers from the shop's own information. They are not saved.
+const MAX_CHAT_PHOTOS = 3;
+const staged = []; // { url, image: { mimeType, data } }
+const attachTray = document.querySelector('#attachTray');
+const attachMenu = document.querySelector('#attachMenu');
+const attachButton = document.querySelector('#attach');
+const fileGallery = document.querySelector('#fileGallery');
+const fileCamera = document.querySelector('#fileCamera');
+
+function renderTray() {
+  attachTray.replaceChildren(...staged.map((photo, index) => {
+    const cell = element('div', 'attach-thumb');
+    const image = element('img');
+    image.src = photo.url;
+    image.alt = `Photo ${index + 1}`;
+    const remove = element('button', 'attach-remove', '×');
+    remove.type = 'button';
+    remove.setAttribute('aria-label', `Remove photo ${index + 1}`);
+    remove.addEventListener('click', () => { URL.revokeObjectURL(photo.url); staged.splice(staged.indexOf(photo), 1); renderTray(); });
+    cell.append(image, remove);
+    return cell;
+  }));
+  attachTray.hidden = !staged.length;
+  chat.scrollTop = chat.scrollHeight;
+}
+
+async function addPhotos(fileList) {
+  const files = Array.from(fileList || []).filter((file) => /^image\//.test(file.type));
+  if (!files.length) return;
+  for (const file of files) {
+    if (staged.length >= MAX_CHAT_PHOTOS) { addMessage('bot', `You can send up to ${MAX_CHAT_PHOTOS} photos at a time.`); break; }
+    try {
+      staged.push({ url: URL.createObjectURL(file), image: await prepareImage(file) });
+    } catch {
+      addMessage('bot', 'I could not read that photo. Please try another one.');
+    }
+  }
+  renderTray();
+  if (!talking) input.focus();
+}
+
+function openAttachMenu() {
+  attachMenu.hidden = false;
+  attachButton.setAttribute('aria-expanded', 'true');
+}
+function closeAttachMenu() {
+  attachMenu.hidden = true;
+  attachButton.setAttribute('aria-expanded', 'false');
+}
+const toggleAttachMenu = () => (attachMenu.hidden ? openAttachMenu() : closeAttachMenu());
+
+// Camera: a phone opens its own camera app; a computer shows a live camera box.
+const cameraDialog = document.querySelector('#cameraDialog');
+const cameraVideo = document.querySelector('#cameraVideo');
+let cameraStream = null;
+function stopCamera() {
+  cameraStream?.getTracks().forEach((track) => track.stop());
+  cameraStream = null;
+  cameraVideo.srcObject = null;
+}
+async function takePhoto() {
+  closeAttachMenu();
+  if (window.matchMedia('(pointer: coarse)').matches || !navigator.mediaDevices?.getUserMedia) { fileCamera.click(); return; }
+  try {
+    cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+    cameraVideo.srcObject = cameraStream;
+    cameraDialog.showModal();
+  } catch {
+    // No camera or no permission: let the customer choose a picture instead.
+    stopCamera();
+    fileGallery.click();
+  }
+}
+document.querySelector('#cameraSnap').addEventListener('click', () => {
+  const canvas = document.createElement('canvas');
+  canvas.width = cameraVideo.videoWidth || 1280;
+  canvas.height = cameraVideo.videoHeight || 720;
+  canvas.getContext('2d').drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
+  canvas.toBlob((blob) => { if (blob) addPhotos([new File([blob], 'camera.jpg', { type: 'image/jpeg' })]); }, 'image/jpeg', 0.9);
+  cameraDialog.close();
+});
+document.querySelector('#cameraCancel').addEventListener('click', () => cameraDialog.close());
+cameraDialog.addEventListener('close', stopCamera);
+
+attachButton.addEventListener('click', (event) => { event.stopPropagation(); toggleAttachMenu(); });
+document.querySelector('#talkPhoto').addEventListener('click', (event) => { event.stopPropagation(); toggleAttachMenu(); });
+document.querySelector('#attachGallery').addEventListener('click', () => { closeAttachMenu(); fileGallery.click(); });
+document.querySelector('#attachCamera').addEventListener('click', takePhoto);
+fileGallery.addEventListener('change', () => { addPhotos(fileGallery.files); fileGallery.value = ''; });
+fileCamera.addEventListener('change', () => { addPhotos(fileCamera.files); fileCamera.value = ''; });
+document.addEventListener('click', (event) => { if (!attachMenu.hidden && !attachMenu.contains(event.target)) closeAttachMenu(); });
+document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeAttachMenu(); });
+// The photo button next to the microphone: open the chat with the photo choices.
+document.querySelector('#photoFab').addEventListener('click', (event) => { event.stopPropagation(); openChat({ focus: false }); openAttachMenu(); });
+
 // Returns the reply shown (so talk mode can read it aloud).
 async function ask(text, product = null, { voice = false } = {}) {
-  const question = String(text || '').trim();
-  if (!question || busy) return '';
-  addMessage('customer', question);
+  const photos = staged.splice(0);
+  // A photo alone is enough: it is sent with a plain question.
+  const question = String(text || '').trim() || (photos.length ? 'Do you have this? Please look at my photo.' : '');
+  if (!question || busy) { staged.unshift(...photos); return ''; }
+  if (photos.length && !navigator.onLine) {
+    staged.unshift(...photos);
+    addMessage('bot', 'Photos need the internet. Please connect and try again, or ask in words.');
+    return '';
+  }
+  addMessage('customer', question, [], photos.map((photo) => photo.url));
+  renderTray();
   input.value = '';
   if (!navigator.onLine) {
     const answer = offlineAnswer(question);
@@ -786,12 +896,12 @@ async function ask(text, product = null, { voice = false } = {}) {
     const response = await fetch(`${API_BASE}/api/botcraft/ask`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ s: shopId, text: question, history: history.slice(-HISTORY_LIMIT), product: product?.key || undefined, voice: voice || undefined }),
+      body: JSON.stringify({ s: shopId, text: question, history: history.slice(-HISTORY_LIMIT), product: product?.key || undefined, voice: voice || undefined, images: photos.length ? photos.map((photo) => photo.image) : undefined }),
     });
     const data = await response.json();
     typing.remove();
     if (!response.ok || !data.ok) { limitCode = data.code || ''; throw new Error(data.error); }
-    history.push({ role: 'customer', text: question }, { role: 'bot', text: data.reply });
+    history.push({ role: 'customer', text: photos.length ? `${question} [sent ${photos.length} photo${photos.length === 1 ? '' : 's'}]` : question }, { role: 'bot', text: data.reply });
     addMessage('bot', data.reply, data.suggestions || []);
     return data.reply;
   } catch {

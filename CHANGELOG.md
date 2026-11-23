@@ -142,3 +142,12 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Checked in Chromium: the page and its menu, the redirect, the Manage my bot button, Setup chat, and delete, with no JavaScript errors.
 
 - The button is now called "Owner page: manage my bot" (with a hover note that only the owner can open it), and the help text uses the same name.
+
+## "Send a photo" is off by default for electronics shops
+- The customer page option "Order & requests > Send a photo" was on for every shop type. It suits shops where customers show something (medicine, repair, design). It now starts off for the electronics store and the appliances showroom; the owner can turn it on in the owner page under Bot buttons. An owner who already chose keeps the choice. The form placeholder no longer talks about medicine ("Write your question about this photo").
+
+## Customer chat: ask with a photo (gallery, camera, voice)
+- The customer chat has a + button (Take a photo / Choose from gallery) and a camera button next to the microphone button. Up to 3 photos; they show in the customer message. The AI looks at them to understand the question and answers only from the shop information (it says what it sees in a few words, never describes people or reads personal details, and says it is not sure when the photo is unclear or not an item of the shop). Photos are used for that one answer and are not saved.
+- A photo alone can be sent. Talk mode (voice) sends the staged photo with the spoken question, and has its own photo button. On a phone the camera app opens; on a computer a live camera box opens (a file chooser if there is no camera or permission).
+- The "Send a photo" form in Order and requests is now called "Send a photo to the shop owner" (the owner replies personally; still off by default for electronics). Escape closes the photo menu before the chat.
+- Server: customer photos are checked (jpeg, png, webp, 3 at most, about 1.3 MB each, base64 only) and added to the last customer message; the ask request is limited to 7 MB. One photo question uses one reply credit. 59 checks in tests/setup-flow.mjs; checked in Chromium (gallery, alone, limit of 3, remove, live camera, voice with a photo). The real AI answer to a photo was not run (needs the Gemini key).

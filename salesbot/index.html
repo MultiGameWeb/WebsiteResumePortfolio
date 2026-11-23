@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=14">
+  <link rel="stylesheet" href="./styles.css?v=16">
   <script src="../chatbot-builder/demo-api.js"></script>
 </head>
 <body>
@@ -78,13 +78,13 @@
       <section class="block requests-panel" id="requestsSection" hidden>
         <h2>Order &amp; requests</h2>
         <div class="request-buttons" id="requestButtons">
-          <button type="button" data-form="photo" hidden>📸 Send a photo</button>
+          <button type="button" data-form="photo" hidden>📸 Send a photo to the shop owner</button>
           <button type="button" data-form="preorder" hidden>⚡ Pre-order</button>
           <button type="button" data-form="order" hidden>🔍 Order status</button>
         </div>
         <form class="request-form" id="photoForm" data-kind="photo" hidden>
           <label>Photo <input type="file" name="photo" accept="image/*" required></label>
-          <label>Your question <textarea name="message" maxlength="600" rows="3" placeholder="For example: Which medicine for this? Can you repair this? Do you have this design?"></textarea></label>
+          <label>Your question <textarea name="message" maxlength="600" rows="3" placeholder="Write your question about this photo"></textarea></label>
           <label>Your name <span class="optional">(optional)</span> <input name="name" maxlength="60" autocomplete="off"></label>
           <button type="submit" class="request-submit">Send to the shop</button>
         </form>
@@ -113,6 +113,7 @@
     </main>
 
     <div class="fab-row" id="fabRow" hidden>
+      <button type="button" class="fab fab-photo" id="photoFab" aria-label="Ask the assistant with a photo" title="Ask with a photo">📷</button>
       <button type="button" class="fab fab-mic" id="micFab" aria-label="Talk to the assistant" title="Talk" hidden>🎙️</button>
       <button type="button" class="fab fab-chat" id="chatFab"><span class="fab-icon">💬</span> <span id="chatFabLabel">Ask the assistant</span></button>
     </div>
@@ -126,10 +127,18 @@
         </span>
       </header>
       <main class="chat" id="chat" aria-live="polite"></main>
+      <div class="attach-tray" id="attachTray" aria-label="Photos ready to send" hidden></div>
+      <div class="attach-menu" id="attachMenu" role="menu" aria-label="Add a photo" hidden>
+        <button type="button" role="menuitem" id="attachCamera">📷 Take a photo</button>
+        <button type="button" role="menuitem" id="attachGallery">🖼️ Choose from gallery</button>
+      </div>
+      <input type="file" id="fileGallery" accept="image/*" multiple hidden>
+      <input type="file" id="fileCamera" accept="image/*" capture="environment" hidden>
       <section class="talk-panel" id="talkPanel" role="region" aria-label="Talk mode" hidden>
         <div class="talk-head">
           <strong>🎙️ Talk mode</strong>
           <select id="talkLang" aria-label="Language you speak"></select>
+          <button type="button" class="talk-photo" id="talkPhoto" aria-label="Add a photo" aria-haspopup="menu" title="Add a photo">📷</button>
           <button type="button" class="talk-end" id="talkEnd">End</button>
         </div>
         <div class="talk-stage">
@@ -142,11 +151,20 @@
         <p class="talk-note" id="talkNote">Your phone turns your voice into text. Never say passwords, OTPs or bank details.</p>
       </section>
       <form class="composer" id="composer" autocomplete="off">
+        <button id="attach" type="button" aria-label="Add a photo" aria-haspopup="menu" aria-expanded="false" title="Add a photo">＋</button>
         <input id="input" type="text" maxlength="1000" placeholder="Ask about items, prices, offers…" aria-label="Your question">
         <button id="talk" type="button" aria-label="Talk to the assistant" title="Talk" hidden>🎙️</button>
         <button id="send" type="submit" aria-label="Send">➤</button>
       </form>
     </section>
+
+    <dialog class="camera-dialog" id="cameraDialog" aria-label="Take a photo">
+      <video id="cameraVideo" autoplay playsinline muted></video>
+      <div class="camera-actions">
+        <button type="button" id="cameraSnap">📸 Take photo</button>
+        <button type="button" id="cameraCancel">Cancel</button>
+      </div>
+    </dialog>
 
     <dialog class="product-sheet" id="productSheet" aria-labelledby="sheetName">
       <div class="sheet-gallery" id="sheetGallery" hidden>
@@ -180,6 +198,6 @@
       </div>
     </dialog>
   </div>
-  <script type="module" src="./app.js?v=16"></script>
+  <script type="module" src="./app.js?v=19"></script>
 </body>
 </html>
