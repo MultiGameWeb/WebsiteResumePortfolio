@@ -272,7 +272,8 @@ export function BotReadyCard(message) {
   poster.type = 'button';
   poster.dataset.action = 'download-poster';
   poster.dataset.messageId = message.id;
-  const manage = makeElement('a', 'quick-chip bot-ready-manage', 'Manage my bot (photos, items)');
+  const manage = makeElement('a', 'quick-chip bot-ready-manage', 'Owner page: manage my bot');
+  manage.title = 'Your owner page: items, prices, photos and answers. Only you can open it, from this browser.';
   // The owner page opens as a full page on the SiteCraft site (with the site menu), not inside the chat box.
   manage.href = '../ai-chatbot-owner.html';
   manage.target = '_top';
@@ -317,7 +318,7 @@ function BotExtras(message) {
 }
 
 const UPDATE_STEPS = [
-  'Tap "Manage my bot (photos, items)". This is your owner page — only you can open it, from this browser.',
+  'Tap "Owner page: manage my bot". This is your owner page — only you can open it, from this browser.',
   'New item: Items → "+ Add item" → name, price, details and a photo → "Save item".',
   'Price changed: find the item → "Edit" → change the price → "Save item".',
   'Item finished: "Mark out of stock". When it is back, "Mark in stock".',

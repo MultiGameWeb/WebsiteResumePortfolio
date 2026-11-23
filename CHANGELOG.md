@@ -140,3 +140,5 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - "Setup chat" on the owner page, the owner link in the "customer questions waiting" note, and the page after "Delete this bot" all go to full pages.
 - Access is still by the private id kept in the browser that created the bot; only that browser opens the owner page until sign-in is built.
 - Checked in Chromium: the page and its menu, the redirect, the Manage my bot button, Setup chat, and delete, with no JavaScript errors.
+
+- The button is now called "Owner page: manage my bot" (with a hover note that only the owner can open it), and the help text uses the same name.
