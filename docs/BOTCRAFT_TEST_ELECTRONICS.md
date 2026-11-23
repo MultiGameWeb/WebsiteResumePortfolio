@@ -113,3 +113,43 @@ Send two or three real photos from your phone, such as a TV, a phone box and the
 - "Change shop name to Sri Balaji Electronics and Mobiles"
 
 Stock counts, sales and payment methods are not built yet. Today an item is only in stock, out of stock or hidden.
+
+## 7. Photo prompts for Gemini (made up, for testing)
+
+Each prompt asks for 5 images in one go. If Gemini returns fewer, ask: "Now make the remaining images in the same style." The photos are meant to look like a shop owner took them on a phone, with a normal shop background, so you can test the tidy-up and the AI photo studio. Brand logos are avoided on purpose.
+
+**Shop front (1 image)**
+```
+A realistic phone photo of the front of a small electronics showroom in an Indian city, daytime. A signboard says "Sri Balaji Electronics" in bold letters, with small pictures of a mobile, TV and fridge. A glass door, TVs visible inside, bikes parked outside. Natural light, slightly imperfect framing like a phone camera. No people.
+```
+
+**Template: 5 photos of one product**
+```
+Make 5 separate realistic phone photos of the same [PRODUCT], as a shop owner would take them inside an electronics showroom with a normal busy background (shelves, other boxes, shop lights). Photo 1: front view. Photo 2: side angle. Photo 3: back or ports view. Photo 4: close-up of the screen or main feature. Photo 5: with its retail box beside it. Same product in every photo. No brand logos, no text overlays, no people.
+```
+Replace `[PRODUCT]` with one of these:
+```
+55 inch smart TV on a retail stand, black bezel
+```
+```
+smartphone, 6.7 inch, black, on a glass counter
+```
+```
+15.6 inch laptop, silver, open on a table
+```
+```
+double door refrigerator, 242 litre, steel grey, standing on the showroom floor
+```
+```
+pair of wireless earbuds with a charging case and a 20000 mAh power bank, on a counter
+```
+
+**Photos for the other items:** repeat the template with the product name, or use this to get 5 different products in one prompt:
+```
+Make 5 separate realistic phone photos, one image per product, each taken in an electronics showroom with a normal busy background: (1) a smartphone box and phone, (2) a laptop, (3) a single door refrigerator, (4) a 32 inch TV, (5) a fast charger and a tempered glass pack. No brand logos, no text overlays, no people.
+```
+
+**Tips**
+- Save the photos with the item name, for example `tv-55-front.jpg`, so it is easy to match them.
+- Send the shop front photo in the setup chat. Add item photos from the owner page: open the item and use "+ Add photo" (up to 5 per item).
+- A photo with a messy background is the right test for the ✨ photo studio.
