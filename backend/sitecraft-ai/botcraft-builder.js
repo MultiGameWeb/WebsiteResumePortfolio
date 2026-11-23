@@ -283,6 +283,21 @@ function formAnswerValues(raw, facts, bank, answers) {
 
 // What to ask next: the core questions as forms, then the core photos one at a
 // time, then the shop questions as forms.
+// The questions to add to a reply's form: the next ones still unanswered after this message.
+export function nextFormQuestions({ questions, merged, mergedAnswers, mergedBank, sameBank, text, modelAsked = false, formSubmitted = false }) {
+  // The owner is answering questions once any shop detail beyond the shop type is known (this message counts).
+  const answering = Object.keys(merged).some(key => key !== "shop_type");
+  if (!((modelAsked || formSubmitted || answering) && sameBank && text !== FINISH_OPTION)) return [];
+  const next = nextStep(merged, mergedAnswers, mergedBank);
+  const extra = next.form.map(q => ({ id: q.key || q.id, question: q.owner_question, options: q.options || [] }));
+  const added = [];
+  for (const q of formQuestions(extra, merged, mergedAnswers, mergedBank)) {
+    if (questions.length + added.length >= MAX_FORM_QUESTIONS) break;
+    if (!questions.some(asked => asked.id === q.id)) added.push(q);
+  }
+  return added;
+}
+
 function nextStep(facts, answers, bank) {
   const core = pendingCore(facts);
   const coreForm = core.filter(q => q.answer_type !== "image");
@@ -437,8 +452,9 @@ You are talking to the SHOP OWNER to set up their bot. Steps:
    Before asking a core question, check it makes sense for this shop_type. If a question is marked "only for" shops that do not include this shop_type, or clearly does not fit (for example EMI for a restaurant, or return/exchange for a salon), do not ask it: record that key with the value "not applicable" and ask the next one.
    Photo questions (shop_front_photo, owner_photo) are never put in "questions": ask for the photo in "reply" (alone, with no form), and when the owner sends a photo, record that key with the value "photo received" and move on.
 5. When no core question is left:
+   - Never say the setup is finished, or that the assistant is ready, while any shop question below is still unanswered. After the owner sends many details at once, say that you saved them and how many questions are still open, and that the assistant can only answer customers about the topics that are answered, so every answer helps. Then ask the next ones.
    - If there are shop questions below, tell the owner the basics are complete (once), then ask the shop questions the same way, up to ${MAX_FORM_QUESTIONS} at a time in the given order, in "questions" with their ids. If a shop question clearly does not fit this shop, do not ask it: record it in "answers" as "not applicable". If it asks for something the owner already told you (in the facts, an earlier answer or a message, even in other words), do not ask it again: record that earlier answer for it in "answers". When the form has no mandatory question, set "options" to ["${FINISH_OPTION}"]; otherwise leave "options" empty.
-   - Record answers the owner writes in chat in "answers" with the question id. If they choose "${FINISH_OPTION}", thank them, leave "questions" empty, and say they can come back any time to answer more.
+   - Record answers the owner writes in chat in "answers" with the question id. If they choose "${FINISH_OPTION}", thank them, leave "questions" empty, say that customers will not get answers about the topics still unanswered, and that they can come back any time to answer more.
    - Answers the owner submits in a form are already saved; do not ask those again. After a submitted form you must always send the next form in "questions" (unless nothing is left).
    - If there are no shop questions for this shop type yet, tell the owner the basics are complete and that you are now preparing the detailed questions customers of their kind of business ask; it takes 1-2 minutes and you will continue right after.
 6. Whenever the owner sends details or files, also record answers to any shop questions listed below that their message answers, so those are never asked.
@@ -703,16 +719,11 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   const modelAsked = (Array.isArray(result?.questions) && result.questions.length > 0)
     || /[:：]\s*$/.test(clip(result?.reply, 1500));
   const formSubmitted = Object.keys(form.facts).length + Object.keys(form.answers).length > 0;
-  // Once the owner is answering questions (any core fact beyond the shop type),
-  // every reply carries the next form, unless they chose to finish for now.
-  const answering = Object.keys(facts).some(key => key !== "shop_type");
-  if ((modelAsked || formSubmitted || answering) && sameBank && text !== FINISH_OPTION) {
-    const extra = step.form.map(q => ({ id: q.key || q.id, question: q.owner_question, options: q.options || [] }));
-    const added = [];
-    for (const q of formQuestions(extra, merged, mergedAnswers, mergedBank)) {
-      if (questions.length + added.length >= MAX_FORM_QUESTIONS) break;
-      if (!questions.some(asked => asked.id === q.id)) added.push(q);
-    }
+  // Every reply carries the next form while questions are left, unless the owner chose to finish for now.
+  // The next questions are worked out from what is known AFTER this message: an owner who sends all the
+  // details at once has answered the early questions already, so the form must move on to the next ones.
+  {
+    const added = nextFormQuestions({ questions, merged, mergedAnswers, mergedBank, sameBank, text, modelAsked, formSubmitted });
     const target = language || (LANGUAGES.has(result?.language) ? result.language : null);
     if (added.length && target && target !== "English") await translateQuestions(env, added, target);
     questions.push(...added);

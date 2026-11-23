@@ -111,3 +111,9 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Adding or removing a photo or file rebuilt the whole message box, so the typed text was lost and Ctrl+Z could not bring it back. Now only the attachment tray is updated; the message box stays, so the text stays and Ctrl+Z / Ctrl+Shift+Z work. Pasting an image works the same.
 - Safety net: any other redraw (voice typing ending, a reply arriving) keeps the draft text, cursor and focus. Sending still empties the box.
 - Checked in Chromium: file picker, pasted image, remove attachment, send, and a draft typed while the bot answers.
+
+## Fix: the setup chat keeps asking until the questions are answered
+- Problem: after the owner sent all details in one message, the bot said the assistant was ready and only offered "Finish for now", although 18 of 57 questions were answered. The next questions were worked out from what was known before the message (already answered), and the bot only continued if the owner had answered something earlier.
+- Fix: the next form is now worked out after each message (nextFormQuestions), so it moves on to the questions still open. The bot is told never to say the setup is finished while shop questions are open, to say how many are left, and that customers get no answers about unanswered topics.
+- "Finish for now" with questions still open now asks first: "You have answered X of Y important questions... Finish anyway?". Cancel keeps the owner answering.
+- Checked: the form logic in node (bulk message, only shop type known, Finish, all answered, 8 at most) and the Finish check in Chromium. The real AI conversation was not run here (needs the Gemini key).

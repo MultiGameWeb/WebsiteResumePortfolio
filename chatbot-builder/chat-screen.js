@@ -804,6 +804,14 @@ app.addEventListener('click', (event) => {
   if (action === 'open-picker') { openPicker(button.dataset.picker); return; }
   if (action === 'remove-attachment') { removeStagedAttachment(button.dataset.attachmentId); return; }
   if (action === 'quick-option') {
+    // "Finish for now" while questions are open: customers get no answers about those topics, so check first.
+    if (button.dataset.value === 'Finish for now') {
+      const left = Math.max(0, (state.total || 0) - (state.answered || 0));
+      if (left > 0 && !window.confirm(`You have answered ${state.answered} of ${state.total} important questions.\n\nYour assistant can only answer customers about the topics you have answered. For the other ${left}, it will say it is not sure and send customers to the counter.\n\nFinish anyway? (Choose Cancel to keep answering.)`)) {
+        handleSend({ text: 'Please continue with the remaining questions.' });
+        return;
+      }
+    }
     const option = markOptionUsed(button.dataset.optionId) ?? { id: button.dataset.optionId, value: button.dataset.value, label: button.textContent };
     handleSend({ text: button.dataset.value, option });
     return;
