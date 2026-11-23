@@ -66,5 +66,15 @@ const r2After = (await stats()).inR2;
 ok("deleting an item removes its photo files", r2Before - r2After === itemPhotos && itemPhotos > 0, `${r2Before} -> ${r2After}, had ${itemPhotos}`);
 ok("admin photo stats need the admin key", (await call("GET", "/api/admin/photos", null, { Authorization: "Bearer wrong" })).status === 401);
 
+// deleting a whole bot removes its photo files from R2
+const SID3 = "33333333-4444-4555-8666-777777777777";
+const owner3 = (action, data = {}) => call("POST", "/api/botcraft/owner", { shopId: SID3, action, ...data });
+const r2Start = (await stats()).inR2;
+await owner3("upload_photo", { kind: "main", image: { mimeType: "image/png", data: PNG } });
+await owner3("upload_photo", { kind: "gallery", image: { mimeType: "image/png", data: PNG2 } });
+ok("third shop: two photos went to R2", (await stats()).inR2 === r2Start + 2, JSON.stringify(await stats()));
+const gone = await owner3("delete_bot", { confirm: "DELETE" });
+ok("deleting a whole bot removes all its photo files from R2", gone.ok && (await stats()).inR2 === r2Start, JSON.stringify(await stats()));
+
 console.log(results.join("\n")); console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

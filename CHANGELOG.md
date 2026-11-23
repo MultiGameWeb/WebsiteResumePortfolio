@@ -101,3 +101,36 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 ## Website order: AI Chatbot first, website templates next
 - Top menu: AI Chatbots now comes before Websites (site-navigation.js, so every page).
 - Home page: the AI chatbot section comes before the website templates section; the hero buttons are Create AI Chatbot, then Browse Templates; the phone bottom bar now opens the AI chatbot section. The hero headline and text are unchanged.
+
+## BotCraft: delete a bot and start over
+- New "Delete this bot and start over" in the setup chat My bots menu and on the owner page. It asks to confirm, then deletes everything about the bot on the server: setup chat, answers, items, photos (and their R2 files), customer questions and requests, public link and QR, settings, reply credits and usage, push subscriptions, and the published web page. The browser then starts a new empty bot from the first question. The server needs the word DELETE in the request, so it cannot happen by accident.
+- Create new bot still keeps the old bot; delete removes it for good.
+- Checked with 98 end-to-end checks (79 + 19 with R2) and in Chromium against the local Worker.
+
+## Fix: attaching a photo no longer wipes the typed text (setup chat)
+- Adding or removing a photo or file rebuilt the whole message box, so the typed text was lost and Ctrl+Z could not bring it back. Now only the attachment tray is updated; the message box stays, so the text stays and Ctrl+Z / Ctrl+Shift+Z work. Pasting an image works the same.
+- Safety net: any other redraw (voice typing ending, a reply arriving) keeps the draft text, cursor and focus. Sending still empties the box.
+- Checked in Chromium: file picker, pasted image, remove attachment, send, and a draft typed while the bot answers.
+
+## Fix: the setup chat keeps asking until the questions are answered
+- Problem: after the owner sent all details in one message, the bot said the assistant was ready and only offered "Finish for now", although 18 of 57 questions were answered. The next questions were worked out from what was known before the message (already answered), and the bot only continued if the owner had answered something earlier.
+- Fix: the next form is now worked out after each message (nextFormQuestions), so it moves on to the questions still open. The bot is told never to say the setup is finished while shop questions are open, to say how many are left, and that customers get no answers about unanswered topics.
+- "Finish for now" with questions still open now asks first: "You have answered X of Y important questions... Finish anyway?". Cancel keeps the owner answering.
+- Checked: the form logic in node (bulk message, only shop type known, Finish, all answered, 8 at most) and the Finish check in Chromium. The real AI conversation was not run here (needs the Gemini key).
+
+## Audit of the setup chat question flow (fixes)
+- Audit of the ready-made question lists: 103 shop types, 4,436 questions (249 mandatory, 1,362 important, 2,825 optional). Every list has mandatory questions and is ordered mandatory, important, optional. The lists are fine; the flow around them was the problem.
+- Found: (1) the model could fill answers from a long message with no check (summaries, guesses), so questions were never asked; (2) the bot could say the assistant was fully ready while 38 important questions were open; (3) an optional photo (the owner photo) blocked the shop questions, and its Send photo / Skip buttons appeared with no question; (4) the next form was built from state before the message (fixed earlier).
+- Fixes: every recorded fact and answer needs "evidence", the owner exact words, and is dropped if those words are not in what the owner wrote (photos and "not applicable" excepted; shop type is a classification); the server replaces a "ready / complete" claim while important questions are open; a photo button always comes with its question; a required photo comes before the shop questions and an optional photo after them; when everything is answered the bot lists what it marked "not applicable" so the owner can correct it; "Finish for now" warns first (earlier fix).
+- Checked in node (23 checks in tests/setup-flow.mjs). The real AI conversation was not run here: it needs the Gemini key, and the model must now return the evidence field.
+
+## Electronics store: one combined question list
+- Audit: the "Electronics & home appliances showroom" list is built for TVs, fridges, washing machines, ACs and kitchen items; only 6 of its 125 questions mention phones, laptops or accessories. A shop selling mobiles, laptops, fridges, TVs and accessories only got that list, so the mobile and laptop questions (in the mobile shop and computer shop lists) were never asked, and six topics customers ask about were in no list (5G / eSIM, screen and battery replacement price, Windows / Office, accessory compatibility, old phone buyback, recharge and SIM).
+- New shop type "Electronics store (mobiles, laptops, TVs, fridges & accessories)" with a combined list of 182 questions (7 mandatory, 58 important, 117 optional): the three lists merged (repeats kept once, highest priority) plus 14 new questions. The products question now offers phones, laptops and accessories. EMI basics and the phone-shop assistant rules apply to it. The words "electronics shop / store / showroom" now choose it.
+- Built by scripts/build-electronics-store-bank.mjs (run it again to rebuild). A topic checklist of 56 customer questions is covered 56 of 56 (keyword check). tests/setup-flow.mjs has 44 checks.
+- An existing bot keeps its old list: delete it and start over to get the new one.
+
+## Customer page: website view on computers, bigger chat
+- On screens 1024 px and wider the customer page looks like a website: a top bar with the shop name and section links, a full-width hero with a large title, sections in a 1,200 px container with alternating backgrounds, About and Info in two columns (map beside the details), a larger item grid with hover, and a dark footer. Phones keep the old layout. The hosted shop page uses the same code.
+- The chat has a bigger-chat button on computer screens (460 x 740 by default, up to 1000 px wide and full height); the choice is remembered. Hidden on phones, where the chat is already full screen.
+- Checked in Chromium at 1440, 1920 and phone width: no sideways scroll, no JavaScript errors.

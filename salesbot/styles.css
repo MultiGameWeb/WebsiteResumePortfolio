@@ -246,3 +246,85 @@ body.chat-open .fab-row { display: none; }
 @media (prefers-reduced-motion: reduce) { .talk-ring { animation: none !important; } }
 .demo-ribbon { background: #fff3c4; color: #5f4300; text-align: center; font-size: 13px; padding: 6px 10px; position: relative; z-index: 60; }
 .demo-ribbon a { color: #5f4300; font-weight: 700; }
+
+/* =====================================================================
+   Computer screens: the page looks like a website (wide layout, top bar, big hero,
+   columns, a footer). Phones keep the layout above.
+   ===================================================================== */
+.chat-expand { display: none; }
+.chat-head-actions { display: flex; gap: 8px; align-items: center; }
+.chat-expand { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 18px; cursor: pointer; }
+
+@media (min-width: 900px) {
+  .chat-expand { display: inline-block; }
+  .chat-sheet { width: 460px; height: min(740px, calc(100dvh - 48px)); }
+  .chat-sheet.is-large { width: min(1000px, calc(100vw - 48px)); max-width: none; height: calc(100dvh - 48px); }
+  .chat-sheet.is-large .chat-head strong { font-size: 18px; }
+  .chat-sheet.is-large .msg { max-width: 76%; }
+  .chat-sheet.is-large .msg .bubble, .chat-sheet.is-large .msg > div { font-size: 16.5px; line-height: 1.6; }
+  .chat-sheet.is-large .composer input { font-size: 16.5px; padding: 14px 18px; }
+}
+
+@media (min-width: 1024px) {
+  :root { --site-pad: max(40px, calc((100% - 1200px) / 2)); }
+  .app { max-width: none; padding-bottom: 0; }
+
+  /* Top bar */
+  .sections-nav { padding: 0 var(--site-pad); gap: 6px; align-items: center; background: color-mix(in srgb, var(--page) 94%, transparent); backdrop-filter: blur(8px); box-shadow: 0 1px 0 var(--border), 0 6px 18px rgb(0 0 0 / 6%); }
+  .sections-nav::before { content: attr(data-brand); margin-right: auto; padding: 14px 0; font-size: 17px; font-weight: 800; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40%; }
+  .sections-nav a { padding: 18px 18px 15px; font-size: 15px; }
+  html { scroll-padding-top: 66px; }
+
+  /* Hero */
+  .shop-header { min-height: 440px; gap: 22px; padding-bottom: 56px; }
+  .shop-header .shop-title, .shop-header .contact-row { width: min(1200px, calc(100% - 80px)); margin-left: auto; margin-right: auto; }
+  .shop-title h1 { font-size: clamp(44px, 5vw, 68px); letter-spacing: -.02em; }
+  .shop-header .bot-name { font-size: 14px; letter-spacing: .14em; }
+  .shop-header .shop-meta { font-size: 18px; max-width: 760px; }
+  .open-chip { font-size: 14px; padding: 6px 14px; }
+  .contact { padding: 14px 26px; font-size: 16px; }
+
+  /* Sections */
+  .sections { display: block; }
+  .block { padding: 72px var(--site-pad); border-bottom: 0; }
+  .block.alt { background: var(--surface); }
+  .block h2 { font-size: 34px; margin-bottom: 28px; letter-spacing: -.01em; }
+  .block h2::after { content: ""; display: block; width: 56px; height: 4px; border-radius: 4px; background: var(--accent); margin-top: 12px; }
+
+  .about-block { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 0 56px; align-items: start; }
+  .about-block h2 { grid-column: 1 / -1; }
+  .about-row { gap: 24px; }
+  .owner-photo { width: 132px; height: 132px; }
+  .about-text { font-size: 19px; line-height: 1.7; }
+  .about-type { font-size: 15px; }
+  .about-block .faq { margin-top: 0; }
+  .faq-item { background: var(--page); }
+  .faq-item summary { padding: 15px 0; font-size: 16px; }
+
+  .product-search { max-width: 460px; padding: 13px 20px; font-size: 15px; background: var(--page); }
+  .product-grid { grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 24px; margin-top: 22px; }
+  .product-card { padding: 12px; border-radius: 18px; gap: 6px; background: var(--page); transition: transform .15s ease, box-shadow .15s ease; }
+  .product-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgb(0 0 0 / 14%); }
+  .product-name { font-size: 16px; }
+  .product-price { font-size: 17px; font-weight: 800; }
+  .product-card img, .product-no-photo { border-radius: 14px; }
+  .photo-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+  .gallery-photo img { border-radius: 16px; }
+
+  .info-block { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 0 56px; align-items: start; }
+  .info-block h2 { grid-column: 1 / -1; }
+  .info-list { font-size: 17px; gap: 14px 22px; }
+  .map-frame { height: 400px; margin-top: 0; grid-column: 2; grid-row: 2 / span 2; border-radius: 20px; }
+  .info-actions { margin-top: 8px; }
+
+  .requests-panel > * { max-width: 760px; }
+  .page-footer { padding: 52px var(--site-pad) 120px; margin-top: 0; text-align: left; background: #101114; color: #b9bcc4; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .page-footer p { margin: 0; }
+  .share-button { background: transparent; color: #fff; border-color: rgb(255 255 255 / 30%); }
+  .cart-bar { bottom: 24px; }
+}
+
+@media (min-width: 1700px) {
+  :root { --site-pad: max(40px, calc((100% - 1360px) / 2)); }
+  .product-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+}

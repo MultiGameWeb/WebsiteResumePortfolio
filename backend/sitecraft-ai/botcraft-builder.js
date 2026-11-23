@@ -6,9 +6,9 @@ import {
   GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
-  deleteAnswerRow, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
+  deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
-import { publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
+import { deleteShopPage, publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
 import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-photo-studio.js";
 import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
@@ -89,8 +89,11 @@ const REPLY_SCHEMA = {
       description: "core facts learned from the owner's latest message or files",
       items: {
         type: "OBJECT",
-        properties: { key: { type: "STRING" }, value: { type: "STRING" } },
-        required: ["key", "value"]
+        properties: {
+          key: { type: "STRING" }, value: { type: "STRING" },
+          evidence: { type: "STRING", description: "the owner's exact words this value comes from, copied word for word; empty only for photos or \"not applicable\"" }
+        },
+        required: ["key", "value", "evidence"]
       }
     },
     answers: {
@@ -98,8 +101,11 @@ const REPLY_SCHEMA = {
       description: "answers to shop questions (by id) learned from the owner's latest message or files",
       items: {
         type: "OBJECT",
-        properties: { id: { type: "STRING" }, value: { type: "STRING" } },
-        required: ["id", "value"]
+        properties: {
+          id: { type: "STRING" }, value: { type: "STRING" },
+          evidence: { type: "STRING", description: "the owner's exact words this answer comes from, copied word for word; empty only for photos or \"not applicable\"" }
+        },
+        required: ["id", "value", "evidence"]
       }
     },
     extra_questions: {
@@ -220,7 +226,7 @@ function posterWifi(facts) {
   return { ssid, password: /^(skipped|not applicable)$/i.test(password) ? "" : password };
 }
 
-function pendingCore(facts) {
+export function pendingCore(facts) {
   return CORE_QUESTIONS.filter(q => !facts[q.key] && conditionMet(q, facts));
 }
 
@@ -283,14 +289,78 @@ function formAnswerValues(raw, facts, bank, answers) {
 
 // What to ask next: the core questions as forms, then the core photos one at a
 // time, then the shop questions as forms.
-function nextStep(facts, answers, bank) {
+// ---- Keeping the setup honest ----
+// A recorded value must come from the owner's own words. The model gives the exact words as "evidence"; a value
+// whose evidence cannot be found in what the owner wrote is dropped, so the question is asked instead of guessed
+// or filled in from a summary.
+const normalizeText = text => String(text || "").normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+export function evidenceFound(evidence, corpus) {
+  const words = normalizeText(evidence).split(" ").filter(Boolean);
+  if (!words.length) return false;
+  if (corpus.includes(` ${words.join(" ")} `)) return true;
+  // Tolerate a copying slip in a longer quote: most of its words must be in the owner's text, in the same order.
+  if (words.length < 5) return false;
+  const have = corpus.split(" ");
+  let from = 0, hits = 0;
+  for (const word of words) { const at = have.indexOf(word, from); if (at >= 0) { hits += 1; from = at + 1; } }
+  return hits / words.length >= 0.85;
+}
+export const ownerCorpus = parts => ` ${normalizeText(parts.filter(Boolean).join(" \n "))} `;
+// A value is accepted when the owner said it (evidence found), it came from a photo, or it is "not applicable".
+export function valueAccepted({ value, evidence, corpus, fromPhoto = false, exempt = false }) {
+  if (exempt || fromPhoto || /^not applicable$/i.test(String(value).trim())) return true;
+  return evidenceFound(evidence, corpus);
+}
+
+// The bot must not say the setup is finished while important questions are open, and a photo button needs its question.
+const COMPLETION_CLAIM = /\b(fully ready|now ready|is ready|are ready|ready to (use|go)|set ?up (is )?(complete|completed|done|finished)|all (done|set)|everything is (done|saved|ready)|(completed|finished) (the )?set ?up)\b/i;
+export function guardSetupReply(reply, { left = 0, formCount = 0, photoQuestion = "", finishing = false } = {}) {
+  let text = String(reply || "");
+  const stillAsking = !finishing && left > 0 && (formCount > 0 || Boolean(photoQuestion));
+  if (stillAsking && COMPLETION_CLAIM.test(text)) {
+    const open = `${left} important question${left === 1 ? " is" : "s are"} still open`;
+    text = formCount
+      ? `Thank you, I saved that. ${open}. Please answer these: the more you answer, the better your assistant replies to your customers.`
+      : `Thank you, I saved that. ${open}, and I will ask them next.`;
+  }
+  if (photoQuestion && !formCount && !text.includes(photoQuestion)) text += `\n\n📷 ${photoQuestion}`;
+  return text;
+}
+
+// Shop questions the bot marked "not applicable", so the owner can correct a wrong one.
+export function notApplicableQuestions(bank, answers) {
+  return (bank?.questions || []).filter(q => /^not applicable$/i.test(String(answers[q.id] || "").trim())).map(q => q.owner_question);
+}
+
+// The questions to add to a reply's form: the next ones still unanswered after this message.
+export function nextFormQuestions({ questions, merged, mergedAnswers, mergedBank, sameBank, text, modelAsked = false, formSubmitted = false }) {
+  // The owner is answering questions once any shop detail beyond the shop type is known (this message counts).
+  const answering = Object.keys(merged).some(key => key !== "shop_type");
+  if (!((modelAsked || formSubmitted || answering) && sameBank && text !== FINISH_OPTION)) return [];
+  const next = nextStep(merged, mergedAnswers, mergedBank);
+  const extra = next.form.map(q => ({ id: q.key || q.id, question: q.owner_question, options: q.options || [] }));
+  const added = [];
+  for (const q of formQuestions(extra, merged, mergedAnswers, mergedBank)) {
+    if (questions.length + added.length >= MAX_FORM_QUESTIONS) break;
+    if (!questions.some(asked => asked.id === q.id)) added.push(q);
+  }
+  return added;
+}
+
+export function nextStep(facts, answers, bank) {
   const core = pendingCore(facts);
   const coreForm = core.filter(q => q.answer_type !== "image");
   if (coreForm.length) return { form: coreForm.slice(0, MAX_FORM_QUESTIONS) };
-  const photo = core.find(q => q.answer_type === "image");
-  if (photo) return { form: [], photo };
+  const photos = core.filter(q => q.answer_type === "image");
+  const photo = photos.find(q => q.priority === "mandatory") || photos[0];
+  // A required photo (the shop front) comes before the shop questions. An optional one (the owner's own
+  // photo) comes after them, so it can never hold the shop questions back.
+  if (photo && photo.priority === "mandatory") return { form: [], photo };
   const bankForm = pendingBank(bank, answers, facts);
-  return { form: (bankForm.length ? bankForm : pendingExtras(answers)).slice(0, MAX_FORM_QUESTIONS) };
+  if (bankForm.length) return { form: bankForm.slice(0, MAX_FORM_QUESTIONS) };
+  const extras = pendingExtras(answers);
+  if (extras.length) return { form: extras.slice(0, MAX_FORM_QUESTIONS) };
+  return photo ? { form: [], photo } : { form: [] };
 }
 
 function planLines(step) {
@@ -437,11 +507,13 @@ You are talking to the SHOP OWNER to set up their bot. Steps:
    Before asking a core question, check it makes sense for this shop_type. If a question is marked "only for" shops that do not include this shop_type, or clearly does not fit (for example EMI for a restaurant, or return/exchange for a salon), do not ask it: record that key with the value "not applicable" and ask the next one.
    Photo questions (shop_front_photo, owner_photo) are never put in "questions": ask for the photo in "reply" (alone, with no form), and when the owner sends a photo, record that key with the value "photo received" and move on.
 5. When no core question is left:
+   - Never say the setup is finished, or that the assistant is ready, while any shop question below is still unanswered. After the owner sends many details at once, say that you saved them and how many questions are still open, and that the assistant can only answer customers about the topics that are answered, so every answer helps. Then ask the next ones.
    - If there are shop questions below, tell the owner the basics are complete (once), then ask the shop questions the same way, up to ${MAX_FORM_QUESTIONS} at a time in the given order, in "questions" with their ids. If a shop question clearly does not fit this shop, do not ask it: record it in "answers" as "not applicable". If it asks for something the owner already told you (in the facts, an earlier answer or a message, even in other words), do not ask it again: record that earlier answer for it in "answers". When the form has no mandatory question, set "options" to ["${FINISH_OPTION}"]; otherwise leave "options" empty.
-   - Record answers the owner writes in chat in "answers" with the question id. If they choose "${FINISH_OPTION}", thank them, leave "questions" empty, and say they can come back any time to answer more.
+   - Record answers the owner writes in chat in "answers" with the question id. If they choose "${FINISH_OPTION}", thank them, leave "questions" empty, say that customers will not get answers about the topics still unanswered, and that they can come back any time to answer more.
    - Answers the owner submits in a form are already saved; do not ask those again. After a submitted form you must always send the next form in "questions" (unless nothing is left).
    - If there are no shop questions for this shop type yet, tell the owner the basics are complete and that you are now preparing the detailed questions customers of their kind of business ask; it takes 1-2 minutes and you will continue right after.
 6. Whenever the owner sends details or files, also record answers to any shop questions listed below that their message answers, so those are never asked.
+7. Every fact and answer you record from the owner's words needs "evidence": the owner's exact words it comes from, copied word for word from their messages (not rewritten, not a summary). Record only what the owner really said. Never guess, never invent a value, and never turn the business description into answers: a question the owner did not answer must stay unanswered so it is asked. A value read from a photo needs no evidence, and neither does "not applicable".
 
 Rules:
 ${language
@@ -647,9 +719,15 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
     return reply({ ok: false, error: "BotCraft is busy right now. Please try again in a moment.", detail }, 503, origin);
   }
 
+  // What the owner has written so far: this message, earlier messages, and what is already saved.
+  const rawHistory = saved ? saved.messages : Array.isArray(body?.history) ? body.history : [];
+  const corpus = ownerCorpus([text, ...rawHistory.filter(m => m?.role === "owner").map(m => m.text), ...Object.values(facts), ...Object.values(answers), ...Object.values(form.facts), ...Object.values(form.answers)]);
+  let droppedValues = 0;
   const learned = { ...form.facts };
   for (const fact of Array.isArray(result?.facts) ? result.facts : []) {
     const key = String(fact?.key || "");
+    // The shop type is a classification; everything else must be backed by the owner's words (or a photo).
+    if (key !== "shop_type" && !valueAccepted({ value: fact?.value, evidence: fact?.evidence, corpus, fromPhoto: images.length > 0 })) { droppedValues += 1; continue; }
     // Files alone may add facts but never overwrite what the owner typed.
     if (!text && facts[key]) continue;
     if (form.facts[key]) continue;
@@ -672,8 +750,11 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   const newAnswers = { ...form.answers };
   for (const answer of Array.isArray(result?.answers) ? result.answers : []) {
     const id = String(answer?.id || "");
-    if (shownIds.has(id) && clip(answer?.value, 600)) newAnswers[id] = clip(answer.value, 600);
+    if (!shownIds.has(id) || !clip(answer?.value, 600)) continue;
+    if (!valueAccepted({ value: answer.value, evidence: answer.evidence, corpus, fromPhoto: images.length > 0 })) { droppedValues += 1; continue; }
+    newAnswers[id] = clip(answer.value, 600);
   }
+  if (droppedValues) console.log(`BotCraft setup: ${droppedValues} recorded value(s) dropped (not backed by the owner's words)`);
   // Extra questions the AI added, saved unanswered ({q, a: ""}) and asked as a form.
   const newExtras = [];
   if (askExtras) {
@@ -703,16 +784,11 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   const modelAsked = (Array.isArray(result?.questions) && result.questions.length > 0)
     || /[:：]\s*$/.test(clip(result?.reply, 1500));
   const formSubmitted = Object.keys(form.facts).length + Object.keys(form.answers).length > 0;
-  // Once the owner is answering questions (any core fact beyond the shop type),
-  // every reply carries the next form, unless they chose to finish for now.
-  const answering = Object.keys(facts).some(key => key !== "shop_type");
-  if ((modelAsked || formSubmitted || answering) && sameBank && text !== FINISH_OPTION) {
-    const extra = step.form.map(q => ({ id: q.key || q.id, question: q.owner_question, options: q.options || [] }));
-    const added = [];
-    for (const q of formQuestions(extra, merged, mergedAnswers, mergedBank)) {
-      if (questions.length + added.length >= MAX_FORM_QUESTIONS) break;
-      if (!questions.some(asked => asked.id === q.id)) added.push(q);
-    }
+  // Every reply carries the next form while questions are left, unless the owner chose to finish for now.
+  // The next questions are worked out from what is known AFTER this message: an owner who sends all the
+  // details at once has answered the early questions already, so the form must move on to the next ones.
+  {
+    const added = nextFormQuestions({ questions, merged, mergedAnswers, mergedBank, sameBank, text, modelAsked, formSubmitted });
     const target = language || (LANGUAGES.has(result?.language) ? result.language : null);
     if (added.length && target && target !== "English") await translateQuestions(env, added, target);
     questions.push(...added);
@@ -727,6 +803,32 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   const allowSkip = questions.length ? questions.every(q => !q.mandatory) : !nextQuestion || nextQuestion.priority !== "mandatory";
 
   let botText = clip(result?.reply, 1500) || "Sorry, please say that again.";
+  // The bot must not claim the setup is finished while important questions are open, and a photo
+  // button must come with its question.
+  {
+    const prog = progress(merged, mergedAnswers, mergedBank);
+    const guarded = guardSetupReply(botText, {
+      left: Math.max(0, prog.total - prog.answered),
+      formCount: questions.length,
+      photoQuestion: nextPhoto && !questions.length ? nextPhoto.owner_question : "",
+      finishing: text === FINISH_OPTION
+    });
+    if (guarded !== botText) {
+      botText = guarded;
+      const lang = language || (LANGUAGES.has(result?.language) ? result.language : null);
+      if (lang && lang !== "English") {
+        const pseudo = [{ id: "reply", question: botText, options: [] }];
+        await translateQuestions(env, pseudo, lang);
+        botText = pseudo[0].question || botText;
+      }
+    }
+    // Everything is answered: show what was marked "not applicable", so a wrong one can be corrected.
+    const lastBot = [...rawHistory].reverse().find(m => m?.role === "botcraft")?.text || "";
+    if (sameBank && !questions.length && !nextPhoto && prog.total - prog.answered <= 0 && !/not applicable/i.test(lastBot)) {
+      const skipped = notApplicableQuestions(mergedBank, mergedAnswers).slice(0, 8).map(q => `• ${clip(q, 110)}`);
+      if (skipped.length) botText += `\n\nFor your shop I marked these questions as not applicable:\n${skipped.join("\n")}\nIf any of them does apply to your business, tell me and I will add it.`;
+    }
+  }
   // A page that cannot show forms (an older cached copy) gets the questions as text.
   if (questions.length && body?.forms !== true) {
     botText += "\n\n" + questions.map((q, i) => `${i + 1}. ${q.question}${q.options.length ? ` (${q.options.map(o => o.label).join(" / ")})` : ""}`).join("\n");
@@ -1214,6 +1316,14 @@ async function handleOwner(request, env, origin, ctx) {
   }
 
   const action = String(body?.action || "");
+  if (action === "delete_bot") {
+    // Delete the whole bot and start over. The page must send the word DELETE, so it can never happen by accident.
+    if (body?.confirm !== "DELETE") return reply({ ok: false, error: "Please confirm that you want to delete this bot." }, 400, origin);
+    const settings = await loadSettings(env, shopId);
+    await deleteShop(env, shopId);
+    await deleteShopPage(env, settings.pageSlug);
+    return reply({ ok: true, deleted: true }, 200, origin);
+  }
   if (action === "save_product") {
     const name = clip(body?.name, 120);
     if (!name) return reply({ ok: false, error: "Please enter the item name." }, 400, origin);

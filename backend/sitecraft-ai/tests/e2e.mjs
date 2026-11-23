@@ -99,4 +99,21 @@ r=await adm({id:SID,action:'add_replies',count:100}); ok('admin recharge adds re
 r=await post('/api/admin/bot',{id:SID,action:'add_replies',count:5},{Authorization:'Bearer wrong'}); ok('admin refuses a wrong key',r.status===401);
 r=await adm({id:SID,action:'add_replies',count:0}); ok('admin refuses zero',r.status===400);
 
+// --- delete the whole bot (a second shop, so the other checks are not affected)
+const SID2='22222222-3333-4444-8555-666666666666'; const owner2=(action,data={})=>post('/api/botcraft/owner',{shopId:SID2,action,...data});
+let v2=await owner2('load'); const publicId2=v2.publicId; ok('second shop loads and has a public link',v2.ok&&Boolean(publicId2),JSON.stringify(v2).slice(0,100));
+await owner2('upload_photo',{kind:'product',productKey:'test item',image:{mimeType:'image/png',data:PNG}}); await owner2('add_note',{note:'a note'}); await owner2('hide_answer',{answerId:'f:offers',hidden:true});
+const pub2=await owner2('publish_page',{slug:'delete-me'}); v2=await owner2('load'); const slug2=v2.page?.slug; ok('second shop page published',pub2.ok&&Boolean(slug2),JSON.stringify(pub2).slice(0,100));
+const photoId2=v2.photos[0]?.photo_id; ok('second shop has a photo before delete',Boolean(photoId2)&&(await fetch(API+'/api/botcraft/photo?id='+photoId2)).status===200);
+let d=await owner2('delete_bot',{}); ok('delete without the confirm word is refused',d.status===400);
+d=await owner2('delete_bot',{confirm:'yes'}); ok('delete with a wrong confirm word is refused',d.status===400);
+v2=await owner2('load'); ok('shop still exists after refused deletes',v2.ok===true);
+d=await owner2('delete_bot',{confirm:'DELETE'}); ok('delete bot works',d.ok&&d.deleted===true,JSON.stringify(d));
+v2=await owner2('load'); ok('deleted bot is gone for the owner (404)',v2.status===404);
+ok("deleted bot's public link is gone (404)",(await get('/api/botcraft/public?s='+publicId2)).status===404);
+ok("deleted bot's photo is gone (404)",(await fetch(API+'/api/botcraft/photo?id='+photoId2)).status===404);
+ok("deleted bot's web page is gone",[404,410].includes((await fetch(`${API}/s/${slug2}/`)).status));
+d=await owner2('delete_bot',{confirm:'DELETE'}); ok('deleting again says not found (404)',d.status===404);
+v=await owner('load'); ok('the other shop is untouched',v.ok&&v.products.length>=1);
+
 console.log(results.join('\n')); console.log(`\n${pass} passed, ${fail} failed`);

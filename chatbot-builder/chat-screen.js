@@ -1,13 +1,14 @@
-import { apiBase, createBot, currentBotId, premiumVoiceOn, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261120e';
+import { apiBase, createBot, currentBotId, deleteCurrentBot, premiumVoiceOn, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261123a';
 import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
 import { applyPlan, runUndo } from './plan-apply.js?v=8';
 import { describeOp, planLocally } from './update-planner.js?v=7';
 import {
+  AttachmentTray,
   ImageLightbox,
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261120e';
+} from './components.js?v=20261123a';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -94,7 +95,19 @@ function render({ forceBottom = false } = {}) {
   headerHost.replaceChildren(ProgressHeader({ answered: state.answered, total: state.total, language: state.language, bots: myBots(), currentBot: currentBotId() }));
   const list = MessageList(state.messages, state.pendingCount > 0);
   messageHost.replaceChildren(list);
+  // The message box is rebuilt here, so keep what the owner has typed (text, cursor and focus).
+  const draftBox = inputHost.querySelector('#messageInput');
+  const draft = draftBox ? { value: draftBox.value, start: draftBox.selectionStart, end: draftBox.selectionEnd, focused: document.activeElement === draftBox } : null;
   inputHost.replaceChildren(InputBar(state.stagedAttachments, state.inputError, state.micActive));
+  if (draft?.value) {
+    const box = inputHost.querySelector('#messageInput');
+    if (box) {
+      box.value = draft.value;
+      autosizeTextarea(box);
+      try { box.setSelectionRange(draft.start, draft.end); } catch {}
+      if (draft.focused) box.focus({ preventScroll: true });
+    }
+  }
   applyTheme();
   syncComposerControls();
   updateScrollButton();
@@ -160,6 +173,19 @@ function validateFile(file) {
   return '';
 }
 
+// Updates only the attachment tray and the error line. The message box itself is not rebuilt,
+// so what the owner typed stays, and Ctrl+Z keeps working.
+function refreshAttachments() {
+  const dock = inputHost.querySelector('.input-dock');
+  const tray = dock?.querySelector('.attachment-tray');
+  const errorBox = dock?.querySelector('#composerError');
+  if (!tray || !errorBox) { render(); return; }
+  tray.replaceWith(AttachmentTray(state.stagedAttachments));
+  errorBox.textContent = state.inputError;
+  errorBox.hidden = !state.inputError;
+  syncComposerControls();
+}
+
 function addFiles(fileList) {
   const files = Array.from(fileList ?? []);
   if (!files.length) return;
@@ -183,7 +209,7 @@ function addFiles(fileList) {
     state.stagedAttachments.push(attachment);
   }
   state.inputError = errors.join(' ');
-  render();
+  refreshAttachments();
   if (errors.length) announce(errors.join(' '));
   else if (files.length) announce(`${files.length} file${files.length === 1 ? '' : 's'} ready to attach.`);
   const textarea = inputHost.querySelector('#messageInput');
@@ -196,7 +222,7 @@ function removeStagedAttachment(id) {
   const [removed] = state.stagedAttachments.splice(index, 1);
   URL.revokeObjectURL(removed.url);
   state.inputError = '';
-  render();
+  refreshAttachments();
   const textarea = inputHost.querySelector('#messageInput');
   textarea?.focus({ preventScroll: true });
 }
@@ -229,6 +255,9 @@ async function handleSend({ text = '', option = null, attachments = null, retryM
     state.messages.push(userMessage);
     state.stagedAttachments = [];
     state.inputError = '';
+    // The text was sent: empty the message box (a new draft the owner types stays untouched).
+    const sentBox = inputHost.querySelector('#messageInput');
+    if (sentBox && cleanText && sentBox.value.trim() === cleanText) sentBox.value = '';
     const actionType = option ? 'quick-option' : (outgoingAttachments.length && !cleanText ? 'attachment' : 'message');
     render({ forceBottom: true });
     // Once the bot is ready, "Gold chain price 52000" is an update: show it for Confirm instead of chatting.
@@ -377,6 +406,17 @@ async function prepareBankForShop(typeName) {
 
 // Another shop's bot: a fresh setup. This bot stays saved and can be opened
 // again from "My bots".
+async function deleteThisBot() {
+  if (!window.confirm('Delete this bot and start over?\n\nThis deletes its chat, answers, items, photos and web page for good. Its QR code and link will stop working. This cannot be undone.')) return;
+  try {
+    showToast('Deleting…');
+    await deleteCurrentBot();
+    window.location.reload();
+  } catch (error) {
+    showToast(error.message || 'Could not delete the bot. Please try again.');
+  }
+}
+
 function startNewBot() {
   if (!window.confirm('Create a new bot for another shop or business? This bot stays saved — open it again any time from "My bots".')) return;
   createBot();
@@ -764,6 +804,14 @@ app.addEventListener('click', (event) => {
   if (action === 'open-picker') { openPicker(button.dataset.picker); return; }
   if (action === 'remove-attachment') { removeStagedAttachment(button.dataset.attachmentId); return; }
   if (action === 'quick-option') {
+    // "Finish for now" while questions are open: customers get no answers about those topics, so check first.
+    if (button.dataset.value === 'Finish for now') {
+      const left = Math.max(0, (state.total || 0) - (state.answered || 0));
+      if (left > 0 && !window.confirm(`You have answered ${state.answered} of ${state.total} important questions.\n\nYour assistant can only answer customers about the topics you have answered. For the other ${left}, it will say it is not sure and send customers to the counter.\n\nFinish anyway? (Choose Cancel to keep answering.)`)) {
+        handleSend({ text: 'Please continue with the remaining questions.' });
+        return;
+      }
+    }
     const option = markOptionUsed(button.dataset.optionId) ?? { id: button.dataset.optionId, value: button.dataset.value, label: button.textContent };
     handleSend({ text: button.dataset.value, option });
     return;
@@ -834,6 +882,7 @@ app.addEventListener('change', (event) => {
   if (event.target.matches('.bot-select')) {
     const choice = event.target.value;
     if (choice === '__new') { event.target.value = currentBotId(); startNewBot(); }
+    else if (choice === '__delete') { event.target.value = currentBotId(); deleteThisBot(); }
     else if (choice !== currentBotId()) openBot(choice);
     return;
   }

@@ -110,6 +110,21 @@ export function rememberBotName(name) {
 }
 
 // Opens another bot of this browser (or a new one) by reloading the page.
+// Deletes this bot everywhere (the server and this browser), so the owner can start again from the first question.
+export async function deleteCurrentBot() {
+  const id = shopId;
+  const response = await fetch(`${API_BASE}/api/botcraft/owner`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ shopId: id, action: 'delete_bot', confirm: 'DELETE' }),
+  });
+  const data = await response.json().catch(() => ({}));
+  // 404: the server never saved this bot (no chat yet), so there is nothing to delete there.
+  if (!(response.ok && data.ok) && response.status !== 404) throw new Error(data.error || 'Could not delete the bot. Please try again.');
+  writeBots(readBots().filter((bot) => bot.id !== id));
+  try { localStorage.removeItem(SHOP_ID_KEY); } catch {}
+}
+
 export function openBot(id) {
   try { localStorage.setItem(SHOP_ID_KEY, id); } catch {}
   window.location.reload();

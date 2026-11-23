@@ -141,6 +141,7 @@ function showShop(shop) {
   setMeta('#ogTitle', 'content', shop.name);
   setMeta('#ogDescription', 'content', blurb || shop.name);
   document.querySelector('#shopName').textContent = shop.name;
+  document.querySelector('#sectionsNav').dataset.brand = shop.name || '';
   document.querySelector('#botName').textContent = shop.type || '';
   const hero = document.querySelector('#heroPhoto');
   hero.hidden = !shop.mainPhoto;
@@ -465,6 +466,8 @@ function setupSections() {
   const visible = { aboutSection: hasAbout, productsSection: items.length > 0, photosSection: gallery.length > 0, infoSection: !sections.info.hidden, requestsSection: anyRequest };
   for (const link of sectionsNav.querySelectorAll('[data-section]')) link.hidden = !visible[link.dataset.section];
   sectionsNav.hidden = Object.values(visible).filter(Boolean).length < 2;
+  // Computer screens: every other visible section gets a light background, whichever sections are shown.
+  [...document.querySelectorAll('#sections .block')].filter((block) => !block.hidden).forEach((block, index) => block.classList.toggle('alt', index % 2 === 1));
   for (const button of document.querySelectorAll('#requestButtons [data-form]')) {
     button.hidden = !features[{ photo: 'photo', preorder: 'preorder', order: 'orderStatus' }[button.dataset.form]];
   }
@@ -509,6 +512,20 @@ document.querySelector('#askThis').addEventListener('click', () => {
 });
 document.querySelector('#chatFab').addEventListener('click', () => openChat());
 document.querySelector('#chatClose').addEventListener('click', closeChat);
+
+// A bigger chat on a computer screen: the owner's customers can read long answers comfortably. The choice is remembered.
+const chatSheetEl = document.querySelector('#chatSheet');
+const expandButton = document.querySelector('#chatExpand');
+function setChatLarge(large) {
+  chatSheetEl.classList.toggle('is-large', large);
+  expandButton.setAttribute('aria-pressed', String(large));
+  expandButton.setAttribute('aria-label', large ? 'Make the chat smaller' : 'Make the chat bigger');
+  expandButton.title = large ? 'Smaller chat' : 'Bigger chat';
+  expandButton.textContent = large ? '⤡' : '⤢';
+  try { localStorage.setItem('salesbot:chatLarge', large ? '1' : '0'); } catch {}
+}
+expandButton.addEventListener('click', () => setChatLarge(!chatSheetEl.classList.contains('is-large')));
+try { if (localStorage.getItem('salesbot:chatLarge') === '1') setChatLarge(true); } catch {}
 document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !chatSheet.hidden && !sheet.open) closeChat(); });
 document.querySelector('#shareButton').addEventListener('click', async () => {
   const url = window.location.href.split('#')[0];

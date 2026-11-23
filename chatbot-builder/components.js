@@ -119,6 +119,9 @@ export function ProgressHeader({ answered = 0, total = 0, language = 'auto', bot
   const add = makeElement('option', '', '➕ Create new bot');
   add.value = '__new';
   botSelect.append(add);
+  const remove = makeElement('option', '', '🗑 Delete this bot and start over…');
+  remove.value = '__delete';
+  botSelect.append(remove);
   const theme = iconButton('moon', 'Switch to dark mode', 'theme-toggle', 'theme-toggle');
   tools.append(botSelect, select, theme);
   header.append(identity, progress, tools);

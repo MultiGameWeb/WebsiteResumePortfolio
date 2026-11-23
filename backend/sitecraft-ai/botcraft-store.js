@@ -362,6 +362,21 @@ async function deleteFiles(env, keys) {
   try { await bucket.delete(keys); } catch (error) { console.error("BotCraft photo file delete failed", error); }
 }
 
+// Deletes a whole bot: its chat, answers, items, photos (and their R2 files), customer questions and requests,
+// public link, settings, reply credits and usage. The owner asked for it; it cannot be undone.
+export async function deleteShop(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const files = await r2KeysWhere(db, "shop_id = ?", shopId);
+  const tables = [
+    "botcraft_answers", "botcraft_products", "botcraft_builder_messages", "botcraft_photos", "botcraft_customer_questions",
+    "botcraft_requests", "botcraft_public", "botcraft_settings", "botcraft_push_subs", "botcraft_replies", "botcraft_usage",
+    "botcraft_daily_asks", "botcraft_shops"
+  ];
+  await db.batch(tables.map(table => db.prepare(`DELETE FROM ${table} WHERE shop_id = ?`).bind(shopId)));
+  await deleteFiles(env, files);
+}
+
 export async function deleteProduct(env, shopId, key) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);

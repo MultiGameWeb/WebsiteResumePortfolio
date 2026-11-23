@@ -29,6 +29,7 @@ import bank_driving_school from "./driving_school.json" with { type: "json" };
 import bank_driving_school_rto from "./driving_school_rto.json" with { type: "json" };
 import bank_electrical_hardware from "./electrical_hardware.json" with { type: "json" };
 import bank_electrical_shop from "./electrical_shop.json" with { type: "json" };
+import bank_electronics_store from "./electronics_store.json" with { type: "json" };
 import bank_event_decorator from "./event_decorator.json" with { type: "json" };
 import bank_fast_food from "./fast_food.json" with { type: "json" };
 import bank_finance_gold from "./finance_gold.json" with { type: "json" };
@@ -134,6 +135,7 @@ export const QUESTION_BANKS = {
   "driving_school_rto": bank_driving_school_rto,
   "electrical_hardware": bank_electrical_hardware,
   "electrical_shop": bank_electrical_shop,
+  "electronics_store": bank_electronics_store,
   "event_decorator": bank_event_decorator,
   "fast_food": bank_fast_food,
   "finance_gold": bank_finance_gold,
