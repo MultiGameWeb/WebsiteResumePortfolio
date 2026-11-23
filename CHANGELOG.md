@@ -129,3 +129,8 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - New shop type "Electronics store (mobiles, laptops, TVs, fridges & accessories)" with a combined list of 182 questions (7 mandatory, 58 important, 117 optional): the three lists merged (repeats kept once, highest priority) plus 14 new questions. The products question now offers phones, laptops and accessories. EMI basics and the phone-shop assistant rules apply to it. The words "electronics shop / store / showroom" now choose it.
 - Built by scripts/build-electronics-store-bank.mjs (run it again to rebuild). A topic checklist of 56 customer questions is covered 56 of 56 (keyword check). tests/setup-flow.mjs has 44 checks.
 - An existing bot keeps its old list: delete it and start over to get the new one.
+
+## Customer page: website view on computers, bigger chat
+- On screens 1024 px and wider the customer page looks like a website: a top bar with the shop name and section links, a full-width hero with a large title, sections in a 1,200 px container with alternating backgrounds, About and Info in two columns (map beside the details), a larger item grid with hover, and a dark footer. Phones keep the old layout. The hosted shop page uses the same code.
+- The chat has a bigger-chat button on computer screens (460 x 740 by default, up to 1000 px wide and full height); the choice is remembered. Hidden on phones, where the chat is already full screen.
+- Checked in Chromium at 1440, 1920 and phone width: no sideways scroll, no JavaScript errors.

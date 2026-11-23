@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=11">
+  <link rel="stylesheet" href="./styles.css?v=14">
   <script src="../chatbot-builder/demo-api.js"></script>
 </head>
 <body>
@@ -120,7 +120,10 @@
     <section class="chat-sheet" id="chatSheet" role="dialog" aria-label="Chat with the assistant" hidden>
       <header class="chat-head">
         <strong id="chatTitle">Assistant</strong>
-        <button type="button" class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+        <span class="chat-head-actions">
+          <button type="button" class="chat-expand" id="chatExpand" aria-label="Make the chat bigger" aria-pressed="false" title="Bigger chat">⤢</button>
+          <button type="button" class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+        </span>
       </header>
       <main class="chat" id="chat" aria-live="polite"></main>
       <section class="talk-panel" id="talkPanel" role="region" aria-label="Talk mode" hidden>
@@ -177,6 +180,6 @@
       </div>
     </dialog>
   </div>
-  <script type="module" src="./app.js?v=14"></script>
+  <script type="module" src="./app.js?v=16"></script>
 </body>
 </html>
