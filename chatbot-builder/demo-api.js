@@ -288,6 +288,9 @@
       if (!old || !body.image || !body.image.data) throw new Error('That photo was not found.');
       old.photo_id = 'data:' + (body.image.mimeType || 'image/jpeg') + ';base64,' + body.image.data;
       syncProductPhotos(state);
+    } else if (action === 'delete_bot') {
+      if (body.confirm !== 'DELETE') throw new Error('Please confirm that you want to delete this bot.');
+      return { ok: true, deleted: true };
     } else if (action === 'set_section') {
       var section = String(body.section || '');
       if (['about', 'gallery', 'map'].indexOf(section) === -1) throw new Error('Unknown section.');
@@ -324,7 +327,8 @@
           var state = load();
           if (path === '/api/botcraft/owner') {
             var view = handleOwner(state, body);
-            save(state);
+            // Deleting the demo bot clears the demo data instead of saving it again.
+            if (view && view.deleted) { try { localStorage.removeItem(STATE_KEY); } catch (e) {} } else save(state);
             resolve(json(view));
           } else if (path === '/api/botcraft/chat') {
             var out = chatStep(state, body.text || '');

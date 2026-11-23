@@ -338,6 +338,27 @@ function answerCard(item) {
   return card;
 }
 
+$('#deleteBot').addEventListener('click', async () => {
+  if (!window.confirm('Delete this bot and start over?\n\nThis deletes its chat, answers, items, photos and web page for good. Its QR code and link will stop working. This cannot be undone.')) return;
+  showStatus('Deleting…');
+  try {
+    const response = await fetch(`${API_BASE}/api/botcraft/owner`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ shopId, action: 'delete_bot', confirm: 'DELETE' }),
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!(response.ok && data.ok) && response.status !== 404) throw new Error(data.error || 'Could not delete the bot. Please try again.');
+    try {
+      const bots = JSON.parse(localStorage.getItem('botcraft:bots') || '[]').filter((bot) => bot.id !== shopId);
+      localStorage.setItem('botcraft:bots', JSON.stringify(bots));
+      localStorage.removeItem('botcraft:shopId');
+    } catch {}
+    window.location.href = './index.html';
+  } catch (error) {
+    showStatus(error.message);
+  }
+});
+
 function renderReplies() {
   const replies = view.replies;
   $('#replies').hidden = !replies;

@@ -6,9 +6,9 @@ import {
   GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
-  deleteAnswerRow, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
+  deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
-import { publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
+import { deleteShopPage, publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
 import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-photo-studio.js";
 import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
@@ -1214,6 +1214,14 @@ async function handleOwner(request, env, origin, ctx) {
   }
 
   const action = String(body?.action || "");
+  if (action === "delete_bot") {
+    // Delete the whole bot and start over. The page must send the word DELETE, so it can never happen by accident.
+    if (body?.confirm !== "DELETE") return reply({ ok: false, error: "Please confirm that you want to delete this bot." }, 400, origin);
+    const settings = await loadSettings(env, shopId);
+    await deleteShop(env, shopId);
+    await deleteShopPage(env, settings.pageSlug);
+    return reply({ ok: true, deleted: true }, 200, origin);
+  }
   if (action === "save_product") {
     const name = clip(body?.name, 120);
     if (!name) return reply({ ok: false, error: "Please enter the item name." }, 400, origin);

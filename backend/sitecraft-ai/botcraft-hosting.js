@@ -88,3 +88,17 @@ export async function shopPageInfo(env, url, slug) {
     return { slug, url: urls.url, pathUrl: urls.pathUrl, status: row.status, hosting: hostingInfo(row) };
   } catch { return null; }
 }
+
+// Removes a shop's published page (used when the owner deletes the whole bot). Only shop pages are touched.
+export async function deleteShopPage(env, slug) {
+  if (!slug || !env.DB) return;
+  try {
+    await ensureSchema(env.DB);
+    const row = await env.DB.prepare("SELECT template_id FROM hosted_sites WHERE slug = ?").bind(slug).first();
+    if (!row || row.template_id !== BOT_PAGE) return;
+    await env.DB.batch([
+      env.DB.prepare("DELETE FROM hosted_files WHERE slug = ?").bind(slug),
+      env.DB.prepare("DELETE FROM hosted_sites WHERE slug = ?").bind(slug)
+    ]);
+  } catch (error) { console.error("BotCraft page delete failed", error); }
+}

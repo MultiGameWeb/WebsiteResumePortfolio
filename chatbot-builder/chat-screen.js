@@ -1,4 +1,4 @@
-import { apiBase, createBot, currentBotId, premiumVoiceOn, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261120e';
+import { apiBase, createBot, currentBotId, deleteCurrentBot, premiumVoiceOn, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261123a';
 import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
 import { applyPlan, runUndo } from './plan-apply.js?v=8';
 import { describeOp, planLocally } from './update-planner.js?v=7';
@@ -7,7 +7,7 @@ import {
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261120e';
+} from './components.js?v=20261123a';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');
@@ -377,6 +377,17 @@ async function prepareBankForShop(typeName) {
 
 // Another shop's bot: a fresh setup. This bot stays saved and can be opened
 // again from "My bots".
+async function deleteThisBot() {
+  if (!window.confirm('Delete this bot and start over?\n\nThis deletes its chat, answers, items, photos and web page for good. Its QR code and link will stop working. This cannot be undone.')) return;
+  try {
+    showToast('Deleting…');
+    await deleteCurrentBot();
+    window.location.reload();
+  } catch (error) {
+    showToast(error.message || 'Could not delete the bot. Please try again.');
+  }
+}
+
 function startNewBot() {
   if (!window.confirm('Create a new bot for another shop or business? This bot stays saved — open it again any time from "My bots".')) return;
   createBot();
@@ -834,6 +845,7 @@ app.addEventListener('change', (event) => {
   if (event.target.matches('.bot-select')) {
     const choice = event.target.value;
     if (choice === '__new') { event.target.value = currentBotId(); startNewBot(); }
+    else if (choice === '__delete') { event.target.value = currentBotId(); deleteThisBot(); }
     else if (choice !== currentBotId()) openBot(choice);
     return;
   }

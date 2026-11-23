@@ -101,3 +101,8 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 ## Website order: AI Chatbot first, website templates next
 - Top menu: AI Chatbots now comes before Websites (site-navigation.js, so every page).
 - Home page: the AI chatbot section comes before the website templates section; the hero buttons are Create AI Chatbot, then Browse Templates; the phone bottom bar now opens the AI chatbot section. The hero headline and text are unchanged.
+
+## BotCraft: delete a bot and start over
+- New "Delete this bot and start over" in the setup chat My bots menu and on the owner page. It asks to confirm, then deletes everything about the bot on the server: setup chat, answers, items, photos (and their R2 files), customer questions and requests, public link and QR, settings, reply credits and usage, push subscriptions, and the published web page. The browser then starts a new empty bot from the first question. The server needs the word DELETE in the request, so it cannot happen by accident.
+- Create new bot still keeps the old bot; delete removes it for good.
+- Checked with 98 end-to-end checks (79 + 19 with R2) and in Chromium against the local Worker.
