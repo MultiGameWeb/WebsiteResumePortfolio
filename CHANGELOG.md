@@ -106,3 +106,8 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - New "Delete this bot and start over" in the setup chat My bots menu and on the owner page. It asks to confirm, then deletes everything about the bot on the server: setup chat, answers, items, photos (and their R2 files), customer questions and requests, public link and QR, settings, reply credits and usage, push subscriptions, and the published web page. The browser then starts a new empty bot from the first question. The server needs the word DELETE in the request, so it cannot happen by accident.
 - Create new bot still keeps the old bot; delete removes it for good.
 - Checked with 98 end-to-end checks (79 + 19 with R2) and in Chromium against the local Worker.
+
+## Fix: attaching a photo no longer wipes the typed text (setup chat)
+- Adding or removing a photo or file rebuilt the whole message box, so the typed text was lost and Ctrl+Z could not bring it back. Now only the attachment tray is updated; the message box stays, so the text stays and Ctrl+Z / Ctrl+Shift+Z work. Pasting an image works the same.
+- Safety net: any other redraw (voice typing ending, a reply arriving) keeps the draft text, cursor and focus. Sending still empties the box.
+- Checked in Chromium: file picker, pasted image, remove attachment, send, and a draft typed while the bot answers.
