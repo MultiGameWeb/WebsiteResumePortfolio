@@ -353,7 +353,7 @@ $('#deleteBot').addEventListener('click', async () => {
       localStorage.setItem('botcraft:bots', JSON.stringify(bots));
       localStorage.removeItem('botcraft:shopId');
     } catch {}
-    window.location.href = './index.html';
+    (window.top || window).location.href = '../ai-chatbot-software.html';
   } catch (error) {
     showStatus(error.message);
   }

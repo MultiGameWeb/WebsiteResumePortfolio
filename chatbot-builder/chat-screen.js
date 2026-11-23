@@ -8,7 +8,7 @@ import {
   InputBar,
   MessageList,
   ProgressHeader,
-} from './components.js?v=20261123a';
+} from './components.js?v=20261123d';
 
 const app = document.querySelector('#botcraftApp');
 const headerHost = document.querySelector('#progressHeader');

@@ -273,7 +273,9 @@ export function BotReadyCard(message) {
   poster.dataset.action = 'download-poster';
   poster.dataset.messageId = message.id;
   const manage = makeElement('a', 'quick-chip bot-ready-manage', 'Manage my bot (photos, items)');
-  manage.href = './owner.html';
+  // The owner page opens as a full page on the SiteCraft site (with the site menu), not inside the chat box.
+  manage.href = '../ai-chatbot-owner.html';
+  manage.target = '_top';
   const another = makeElement('button', 'quick-chip', '➕ Create another bot');
   another.type = 'button';
   another.dataset.action = 'new-bot';
@@ -331,7 +333,8 @@ export function OwnerHelp(openQuestions = 0) {
   help.append(makeElement('p', 'owner-help-text', 'Update your bot any time from "Manage my bot". Every change shows in your customer bot right away.'));
   if (openQuestions > 0) {
     const alert = makeElement('a', 'owner-help-alert', `🔔 ${openQuestions} customer question${openQuestions === 1 ? '' : 's'} or request${openQuestions === 1 ? '' : 's'} waiting — open Manage my bot`);
-    alert.href = './owner.html#questions';
+    alert.href = '../ai-chatbot-owner.html#questions';
+    alert.target = '_top';
     help.append(alert);
   }
   const steps = makeElement('details', 'owner-help-steps');

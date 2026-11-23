@@ -134,3 +134,9 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - On screens 1024 px and wider the customer page looks like a website: a top bar with the shop name and section links, a full-width hero with a large title, sections in a 1,200 px container with alternating backgrounds, About and Info in two columns (map beside the details), a larger item grid with hover, and a dark footer. Phones keep the old layout. The hosted shop page uses the same code.
 - The chat has a bigger-chat button on computer screens (460 x 740 by default, up to 1000 px wide and full height); the choice is remembered. Hidden on phones, where the chat is already full screen.
 - Checked in Chromium at 1440, 1920 and phone width: no sideways scroll, no JavaScript errors.
+
+## Owner page opens as a full page of the SiteCraft site
+- "Manage my bot" now opens the owner page as its own web page, ai-chatbot-owner.html, with the SiteCraft menu on top (AI Chatbots highlighted), instead of inside the setup chat box. The page is marked noindex. The old address chatbot-builder/owner.html (a bookmark or a notification) goes to it too, keeping the query and the #hash.
+- "Setup chat" on the owner page, the owner link in the "customer questions waiting" note, and the page after "Delete this bot" all go to full pages.
+- Access is still by the private id kept in the browser that created the bot; only that browser opens the owner page until sign-in is built.
+- Checked in Chromium: the page and its menu, the redirect, the Manage my bot button, Setup chat, and delete, with no JavaScript errors.

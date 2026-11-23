@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100f17">
+<meta name="description" content="Manage your BotCraft shop assistant: items, prices, photos, answers and your web page. Only the shop owner can open this page.">
+<meta name="robots" content="noindex, nofollow">
+<title>Manage my bot · BotCraft · SiteCraft</title>
+<link rel="stylesheet" href="global.css">
+<link rel="stylesheet" href="site-navigation.css">
+<style>
+  html, body { margin: 0; background: #ffffff; }
+  #botcraftEmbedShell { width: 100%; height: calc(100dvh - 84px); min-height: 420px; overflow: hidden; background: #ffffff; }
+  #botcraftEmbedFrame { display: block; width: 100%; height: 100%; border: 0; background: #ffffff; }
+  @media (max-width: 620px) { #botcraftEmbedShell { min-height: 0; height: calc(100dvh - 70px); } }
+</style>
+</head>
+<body class="scb-page">
+<main id="main-content">
+  <h1 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap">Manage my BotCraft bot (owner page)</h1>
+  <div id="botcraftEmbedShell" aria-label="BotCraft owner page">
+    <iframe id="botcraftEmbedFrame" src="chatbot-builder/owner.html?embed=1" title="BotCraft owner page" loading="eager"></iframe>
+  </div>
+</main>
+<script>
+(function () {
+  "use strict";
+  // Pass this page's own query (for example ?demo=1) and hash (for example #questions) on to the owner page.
+  (function forward() {
+    var frame = document.getElementById("botcraftEmbedFrame");
+    var extra = new URLSearchParams(location.search);
+    extra.delete("embed");
+    var query = "embed=1" + (extra.toString() ? "&" + extra.toString() : "");
+    frame.src = "chatbot-builder/owner.html?" + query + location.hash;
+  })();
+  function sizeBotCraftFrame() {
+    var shell = document.getElementById("botcraftEmbedShell");
+    var frame = document.getElementById("botcraftEmbedFrame");
+    var siteNav = document.getElementById("sitecraftGlobalNav");
+    if (!shell || !frame) return;
+    var navHeight = siteNav ? Math.ceil(siteNav.getBoundingClientRect().height) : 0;
+    var available = Math.max(420, window.innerHeight - navHeight);
+    shell.style.height = available + "px";
+    frame.style.height = available + "px";
+  }
+  window.addEventListener("DOMContentLoaded", sizeBotCraftFrame, { once: true });
+  window.addEventListener("resize", sizeBotCraftFrame);
+  window.addEventListener("orientationchange", sizeBotCraftFrame);
+  window.setTimeout(sizeBotCraftFrame, 0);
+})();
+</script>
+<script src="site-navigation.js"></script>
+</body>
+</html>
