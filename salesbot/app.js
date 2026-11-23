@@ -163,7 +163,9 @@ function showShop(shop) {
   if (shop.whatsapp) contacts.append(contactLink('WhatsApp', `https://wa.me/${whatsappNumber(shop.whatsapp)}`, true));
   if (shop.mapLink) contacts.append(contactLink('📍 Directions', shop.mapLink, true));
   document.querySelector('#chatTitle').textContent = botLabel;
-  document.querySelector('#chatFabLabel').textContent = `Ask ${shop.botName || 'the assistant'}`;
+  // A long shop name would be cut off on a phone, so a long label becomes a short one.
+  const askLabel = `Ask ${shop.botName || 'the assistant'}`;
+  document.querySelector('#chatFabLabel').textContent = askLabel.length > 24 ? 'Ask the assistant' : askLabel;
   // Search engines and link previews understand this.
   let ld = document.querySelector('#shopJsonLd');
   if (!ld) { ld = document.createElement('script'); ld.type = 'application/ld+json'; ld.id = 'shopJsonLd'; document.head.append(ld); }
