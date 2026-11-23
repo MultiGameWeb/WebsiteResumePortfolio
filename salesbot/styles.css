@@ -328,3 +328,27 @@ body.chat-open .fab-row { display: none; }
   :root { --site-pad: max(40px, calc((100% - 1360px) / 2)); }
   .product-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
 }
+
+/* Photos in the chat: add from the gallery or the camera, ask about them by typing or by voice. */
+#attach { width: 44px; height: 44px; flex: none; border: 1px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--text); font-size: 24px; line-height: 1; cursor: pointer; }
+#attach:focus-visible, .talk-photo:focus-visible, .attach-menu button:focus-visible, .fab-photo:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.attach-menu { position: absolute; left: 12px; bottom: 72px; z-index: 5; display: grid; gap: 2px; min-width: 210px; padding: 6px; border: 1px solid var(--border); border-radius: 14px; background: var(--page); box-shadow: 0 12px 32px rgb(0 0 0 / 22%); }
+.attach-menu[hidden] { display: none; }
+.attach-menu button { border: 0; background: transparent; color: var(--text); text-align: left; padding: 11px 12px; border-radius: 10px; font: inherit; font-size: 14.5px; cursor: pointer; }
+.attach-menu button:hover { background: var(--surface); }
+.attach-tray { display: flex; gap: 10px; padding: 8px 14px 0; flex-wrap: wrap; }
+.attach-tray[hidden] { display: none; }
+.attach-thumb { position: relative; }
+.attach-thumb img { width: 62px; height: 62px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border); display: block; }
+.attach-remove { position: absolute; top: -7px; right: -7px; width: 22px; height: 22px; border: 0; border-radius: 50%; background: #b42335; color: #fff; font-size: 15px; line-height: 22px; padding: 0; cursor: pointer; }
+.bubble-photos { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; margin-bottom: 4px; }
+.bubble-photo { width: 120px; height: 120px; object-fit: cover; border-radius: 14px; border: 1px solid var(--border); }
+.msg-customer .bubble-photos { align-self: flex-end; }
+.fab-photo { width: 54px; height: 54px; border-radius: 50%; background: #fff; color: #0d0d0d; font-size: 22px; }
+.talk-photo { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: 6px 12px; font-size: 15px; cursor: pointer; }
+.camera-dialog { border: 0; border-radius: 18px; padding: 12px; background: #111; max-width: min(92vw, 720px); }
+.camera-dialog::backdrop { background: rgb(0 0 0 / 70%); }
+.camera-dialog video { display: block; width: 100%; max-height: 70vh; border-radius: 12px; background: #000; }
+.camera-actions { display: flex; gap: 10px; justify-content: center; margin-top: 12px; }
+.camera-actions button { border: 0; border-radius: 999px; padding: 12px 22px; font: inherit; font-weight: 700; cursor: pointer; background: #fff; color: #111; }
+.camera-actions #cameraCancel { background: transparent; color: #fff; border: 1px solid rgb(255 255 255 / 40%); }

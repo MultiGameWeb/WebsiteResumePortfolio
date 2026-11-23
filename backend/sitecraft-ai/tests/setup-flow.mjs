@@ -1,7 +1,7 @@
 // Checks for the setup chat rules: values must be backed by the owner's words, the bot must not say it is finished while questions are open,
 // a photo button comes with its question, and an optional photo never holds the shop questions back.
 // Run with: node backend/sitecraft-ai/tests/setup-flow.mjs
-import { evidenceFound, ownerCorpus, valueAccepted, guardSetupReply, notApplicableQuestions, nextStep, pendingCore, shopFeatures } from '../botcraft-builder.js';
+import { evidenceFound, ownerCorpus, valueAccepted, guardSetupReply, notApplicableQuestions, nextStep, pendingCore, shopFeatures, customerImages, withCustomerImages } from '../botcraft-builder.js';
 import { SHOP_TYPES } from '../botcraft-shop-types.js';
 import { CORE_QUESTIONS } from '../botcraft-question-bank.js';
 import { QUESTION_BANKS } from '../botcraft-banks/index.js';
@@ -58,4 +58,18 @@ ok('send a photo is off by default for an appliances showroom', shopFeatures('ap
 ok('send a photo stays on by default for a pharmacy and a jewellery shop', shopFeatures('pharmacy', {}).photo === true && shopFeatures('jewellery', {}).photo === true);
 ok('the owner can turn it on for an electronics store', shopFeatures('electronics_store', { features: { photo: true } }).photo === true);
 ok('the owner can turn it off for a pharmacy', shopFeatures('pharmacy', { features: { photo: false } }).photo === false);
+// Photos a customer sends in the chat
+const okImg = { mimeType: 'image/jpeg', data: 'QUJD' };
+ok('customer photos: a good photo is kept', customerImages([okImg]).length === 1);
+ok('customer photos: at most 3', customerImages([okImg, okImg, okImg, okImg, okImg]).length === 3);
+ok('customer photos: only jpeg, png and webp', customerImages([{ mimeType: 'application/pdf', data: 'QUJD' }, { mimeType: 'image/svg+xml', data: 'QUJD' }, { mimeType: 'text/html', data: 'QUJD' }]).length === 0);
+ok('customer photos: a huge photo is refused', customerImages([{ mimeType: 'image/png', data: 'A'.repeat(1_900_000) }]).length === 0);
+ok('customer photos: data that is not base64 is refused', customerImages([{ mimeType: 'image/png', data: 'not base64 <script>' }]).length === 0);
+ok('customer photos: nothing sent -> nothing kept', customerImages(undefined).length === 0 && customerImages('x').length === 0);
+ok('customer photos: extra fields are dropped', Object.keys(customerImages([{ ...okImg, evil: 'x' }])[0]).join() === 'mimeType,data');
+const msgs = [{ role: 'user', parts: [{ text: 'hello' }] }, { role: 'model', parts: [{ text: 'hi' }] }, { role: 'user', parts: [{ text: 'do you have this?' }] }];
+const withImg = withCustomerImages(msgs, [okImg]);
+ok('customer photos: added to the last customer message only', withImg[2].parts.length === 2 && withImg[2].parts[1].inlineData.mimeType === 'image/jpeg' && withImg[0].parts.length === 1 && withImg[1].parts.length === 1);
+ok('customer photos: the original messages are not changed', msgs[2].parts.length === 1);
+ok('customer photos: no photos -> messages as they were', withCustomerImages(msgs, []) === msgs);
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
