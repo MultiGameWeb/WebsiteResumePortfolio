@@ -142,3 +142,6 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Checked in Chromium: the page and its menu, the redirect, the Manage my bot button, Setup chat, and delete, with no JavaScript errors.
 
 - The button is now called "Owner page: manage my bot" (with a hover note that only the owner can open it), and the help text uses the same name.
+
+## "Send a photo" is off by default for electronics shops
+- The customer page option "Order & requests > Send a photo" was on for every shop type. It suits shops where customers show something (medicine, repair, design). It now starts off for the electronics store and the appliances showroom; the owner can turn it on in the owner page under Bot buttons. An owner who already chose keeps the choice. The form placeholder no longer talks about medicine ("Write your question about this photo").

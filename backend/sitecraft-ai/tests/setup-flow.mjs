@@ -1,7 +1,7 @@
 // Checks for the setup chat rules: values must be backed by the owner's words, the bot must not say it is finished while questions are open,
 // a photo button comes with its question, and an optional photo never holds the shop questions back.
 // Run with: node backend/sitecraft-ai/tests/setup-flow.mjs
-import { evidenceFound, ownerCorpus, valueAccepted, guardSetupReply, notApplicableQuestions, nextStep, pendingCore } from '../botcraft-builder.js';
+import { evidenceFound, ownerCorpus, valueAccepted, guardSetupReply, notApplicableQuestions, nextStep, pendingCore, shopFeatures } from '../botcraft-builder.js';
 import { SHOP_TYPES } from '../botcraft-shop-types.js';
 import { CORE_QUESTIONS } from '../botcraft-question-bank.js';
 import { QUESTION_BANKS } from '../botcraft-banks/index.js';
@@ -52,4 +52,10 @@ for (const [name, re] of Object.entries(topics)) ok(`electronics store list cove
 ok('electronics store: the products question offers phones, laptops and accessories', (eb.questions[0].options || []).some(o => /Mobile phones/.test(o)) && eb.questions[0].options.some(o => /Laptops/.test(o)));
 ok('electronics store: the EMI basics are asked (not marked not applicable)', pendingCore({ shop_type: 'electronics_store' }).some(q => q.key === 'emi'));
 ok('electronics store: no question is repeated', new Set(eb.questions.map(q => q.owner_question)).size === eb.questions.length);
+// "Send a photo" on the customer page
+ok('send a photo is off by default for an electronics store', shopFeatures('electronics_store', {}).photo === false);
+ok('send a photo is off by default for an appliances showroom', shopFeatures('appliances_showroom', {}).photo === false);
+ok('send a photo stays on by default for a pharmacy and a jewellery shop', shopFeatures('pharmacy', {}).photo === true && shopFeatures('jewellery', {}).photo === true);
+ok('the owner can turn it on for an electronics store', shopFeatures('electronics_store', { features: { photo: true } }).photo === true);
+ok('the owner can turn it off for a pharmacy', shopFeatures('pharmacy', { features: { photo: false } }).photo === false);
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

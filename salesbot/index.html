@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=14">
+  <link rel="stylesheet" href="./styles.css?v=15">
   <script src="../chatbot-builder/demo-api.js"></script>
 </head>
 <body>
@@ -84,7 +84,7 @@
         </div>
         <form class="request-form" id="photoForm" data-kind="photo" hidden>
           <label>Photo <input type="file" name="photo" accept="image/*" required></label>
-          <label>Your question <textarea name="message" maxlength="600" rows="3" placeholder="For example: Which medicine for this? Can you repair this? Do you have this design?"></textarea></label>
+          <label>Your question <textarea name="message" maxlength="600" rows="3" placeholder="Write your question about this photo"></textarea></label>
           <label>Your name <span class="optional">(optional)</span> <input name="name" maxlength="60" autocomplete="off"></label>
           <button type="submit" class="request-submit">Send to the shop</button>
         </form>
@@ -180,6 +180,6 @@
       </div>
     </dialog>
   </div>
-  <script type="module" src="./app.js?v=16"></script>
+  <script type="module" src="./app.js?v=17"></script>
 </body>
 </html>

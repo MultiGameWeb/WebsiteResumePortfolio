@@ -999,8 +999,11 @@ const ORDER_STATUS_TYPES = new Set(["packers_movers", "laundry", "ironing_shop",
 // voice (talk mode) is on by default (the phone does the speech work; replies cost the same as chat). Cart (WhatsApp orders) is off until the owner turns it on.
 const FEATURE_KEYS = ["photo", "preorder", "orderStatus", "voice", "cart"];
 
+const PHOTO_OFF_BY_DEFAULT = new Set(["electronics_store", "appliances_showroom"]);
+
 export function shopFeatures(shopType, settings) {
-  const defaults = { photo: true, preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType), voice: true, cart: false };
+  // "Send a photo" suits shops where customers show something (a medicine, a repair, a design); not an electronics shop, so it starts off there. The owner can turn it on.
+  const defaults = { photo: !PHOTO_OFF_BY_DEFAULT.has(shopType), preorder: PREORDER_TYPES.has(shopType), orderStatus: ORDER_STATUS_TYPES.has(shopType), voice: true, cart: false };
   const chosen = settings?.features || {};
   return Object.fromEntries(FEATURE_KEYS.map(key => [key, typeof chosen[key] === "boolean" ? chosen[key] : defaults[key]]));
 }
