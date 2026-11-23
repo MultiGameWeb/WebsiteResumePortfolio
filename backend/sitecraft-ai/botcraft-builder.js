@@ -226,7 +226,7 @@ function posterWifi(facts) {
   return { ssid, password: /^(skipped|not applicable)$/i.test(password) ? "" : password };
 }
 
-function pendingCore(facts) {
+export function pendingCore(facts) {
   return CORE_QUESTIONS.filter(q => !facts[q.key] && conditionMet(q, facts));
 }
 

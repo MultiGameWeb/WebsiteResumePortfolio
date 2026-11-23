@@ -1,0 +1,2084 @@
+{
+ "shop_type_key": "electronics_store",
+ "name": "Electronics store (mobiles, laptops, TVs, fridges & accessories)",
+ "version": 1,
+ "model": "merged",
+ "generated_at": "2026-11-23",
+ "question_count": 182,
+ "questions": [
+  {
+   "id": "electronics_store-001",
+   "category": "Products & brands",
+   "owner_question": "Which products do you sell?",
+   "customer_question": "Do you sell washing machines?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Mobile phones",
+    "Laptops",
+    "Desktop computers & printers",
+    "TVs",
+    "Refrigerators",
+    "Washing machines",
+    "ACs",
+    "Microwaves / ovens",
+    "Water purifiers",
+    "Kitchen appliances (mixie, grinder, induction)",
+    "Fans & coolers",
+    "Soundbars & speakers",
+    "Smart watches & earbuds",
+    "Mobile accessories (chargers, covers, screen guards)",
+    "Computer accessories (mouse, keyboard, bags, pen drives)"
+   ]
+  },
+  {
+   "id": "electronics_store-002",
+   "category": "Products & brands",
+   "owner_question": "Which brands do you sell?",
+   "customer_question": "Do you have LG?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Samsung",
+    "LG",
+    "Sony",
+    "Whirlpool",
+    "Godrej",
+    "Haier",
+    "Voltas",
+    "Daikin",
+    "IFB",
+    "Bosch",
+    "Panasonic"
+   ]
+  },
+  {
+   "id": "electronics_store-003",
+   "category": "Products & brands",
+   "owner_question": "Are your products brand new and original, with the company's official warranty?",
+   "customer_question": "Is this original with company warranty?",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "All original with brand warranty",
+    "Some imported / without Indian warranty",
+    "We also sell refurbished"
+   ]
+  },
+  {
+   "id": "electronics_store-004",
+   "category": "Prices & bills",
+   "owner_question": "Do you give a GST bill for every product (needed for warranty)?",
+   "customer_question": "Will I get a GST bill?",
+   "priority": "mandatory",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-005",
+   "category": "Warranty & service",
+   "owner_question": "What happens if a product is defective on the first day (dead on arrival)?",
+   "customer_question": "The phone is not working on day one!",
+   "priority": "mandatory",
+   "answer_type": "options",
+   "options": [
+    "We replace it",
+    "We send it to the company service centre",
+    "Depends on the brand"
+   ]
+  },
+  {
+   "id": "electronics_store-006",
+   "category": "Products & brands",
+   "owner_question": "Which phone brands do you sell?",
+   "customer_question": "Do you have Samsung phones?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "Apple",
+    "Samsung",
+    "OnePlus",
+    "Vivo",
+    "Oppo",
+    "Realme",
+    "Redmi / Xiaomi / Poco",
+    "iQOO",
+    "Motorola",
+    "Nothing",
+    "Google Pixel",
+    "Honor",
+    "Tecno / Infinix / itel",
+    "Lava",
+    "Nokia (keypad)"
+   ]
+  },
+  {
+   "id": "electronics_store-007",
+   "category": "Products & brands",
+   "owner_question": "Which laptop and computer brands do you sell?",
+   "customer_question": "Do you have Dell laptops?",
+   "priority": "mandatory",
+   "answer_type": "list",
+   "options": [
+    "HP",
+    "Dell",
+    "Lenovo",
+    "Asus",
+    "Acer",
+    "Apple",
+    "MSI"
+   ]
+  },
+  {
+   "id": "electronics_store-008",
+   "category": "Products & brands",
+   "owner_question": "Do you sell refurbished or second-hand products?",
+   "customer_question": "Do you have second-hand phones?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "No, only new",
+    "Refurbished",
+    "Second-hand",
+    "Both"
+   ]
+  },
+  {
+   "id": "electronics_store-009",
+   "category": "Products & brands",
+   "owner_question": "If you sell second-hand or refurbished products, do they come with the box, a bill, an IMEI / ownership check (not stolen) and a warranty? For used iPhones, do you show the real battery health and whether parts were replaced?",
+   "customer_question": "Is there warranty on a used phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-010",
+   "category": "Products & brands",
+   "owner_question": "Do you get new launches on the launch day, or can customers pre-book them?",
+   "customer_question": "Is the new Samsung available?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Available on launch day",
+    "Pre-booking available",
+    "Comes later"
+   ]
+  },
+  {
+   "id": "electronics_store-011",
+   "category": "Products & brands",
+   "owner_question": "If a model is out of stock, how many days does it take to get it?",
+   "customer_question": "When will this model come?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-012",
+   "category": "Products & brands",
+   "owner_question": "Which TV sizes do you stock?",
+   "customer_question": "Do you have a 55-inch TV?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "32 inch",
+    "43 inch",
+    "50 / 55 inch",
+    "65 inch",
+    "75 inch and above"
+   ]
+  },
+  {
+   "id": "electronics_store-013",
+   "category": "Products & brands",
+   "owner_question": "Which TV display types do you sell?",
+   "customer_question": "Do you have OLED TVs?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "LED",
+    "QLED",
+    "OLED",
+    "Smart TVs",
+    "Android / Google TV"
+   ]
+  },
+  {
+   "id": "electronics_store-014",
+   "category": "Products & brands",
+   "owner_question": "Which refrigerator types do you sell?",
+   "customer_question": "Do you have double-door fridges?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Single door",
+    "Double door (frost-free)",
+    "Convertible (5-in-1)",
+    "Side-by-side with water dispenser",
+    "Mini / bar fridge"
+   ]
+  },
+  {
+   "id": "electronics_store-015",
+   "category": "Products & brands",
+   "owner_question": "Which washing machine types do you sell?",
+   "customer_question": "Do you have front load machines?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Semi-automatic",
+    "Top load",
+    "Front load",
+    "With in-built heater / steam wash",
+    "Washer-dryer"
+   ]
+  },
+  {
+   "id": "electronics_store-016",
+   "category": "Products & brands",
+   "owner_question": "Which AC types do you sell?",
+   "customer_question": "Do you have window ACs?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Split",
+    "Window",
+    "Inverter",
+    "Convertible 5-in-1 inverter",
+    "Portable"
+   ]
+  },
+  {
+   "id": "electronics_store-017",
+   "category": "Products & brands",
+   "owner_question": "Do you always give a new factory-sealed piece (not the display unit), opened in front of the customer?",
+   "customer_question": "Is this the display TV or a new box?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-018",
+   "category": "Prices & bills",
+   "owner_question": "Is GST included in the price on the tag?",
+   "customer_question": "Is GST extra?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Included in the tag price",
+    "Added at billing"
+   ]
+  },
+  {
+   "id": "electronics_store-019",
+   "category": "Prices & bills",
+   "owner_question": "Are your prices fixed, or can customers get a discount?",
+   "customer_question": "Can you reduce the price?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Fixed price",
+    "Small discount possible",
+    "Negotiable"
+   ]
+  },
+  {
+   "id": "electronics_store-020",
+   "category": "Prices & bills",
+   "owner_question": "Do you match online prices (Amazon, Flipkart), and can you get online-only models for customers?",
+   "customer_question": "It's cheaper on Amazon, can you match?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Yes, we match",
+    "Sometimes, depends on the model",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-021",
+   "category": "Prices & bills",
+   "owner_question": "Do you take an old product in exchange when buying a new one? How is its value decided?",
+   "customer_question": "How much will you give for my old phone?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-022",
+   "category": "Buying & checking",
+   "owner_question": "Do you have demo pieces customers can try before buying?",
+   "customer_question": "Can I try the phone first?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-023",
+   "category": "Buying & checking",
+   "owner_question": "Do you open and check the product in front of the customer before billing?",
+   "customer_question": "Will you open the box and check?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-024",
+   "category": "Delivery & installation",
+   "owner_question": "Is installation free? For which products is it charged?",
+   "customer_question": "Is AC installation free?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-025",
+   "category": "Delivery & installation",
+   "owner_question": "For AC installation, are copper pipe, stand and extra piping charged extra? How much?",
+   "customer_question": "Is extra pipe charged?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-026",
+   "category": "Delivery & installation",
+   "owner_question": "How soon are delivery and installation done (same day?), and should customers wait for the technician before opening the box?",
+   "customer_question": "When will you install it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-027",
+   "category": "Delivery & installation",
+   "owner_question": "Is delivery of big appliances free, and do you carry them up to upper floors?",
+   "customer_question": "Will you carry the fridge to the 3rd floor?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-028",
+   "category": "Warranty & service",
+   "owner_question": "Within how many days of purchase can a defective product be replaced?",
+   "customer_question": "Can I replace it after 3 days?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-029",
+   "category": "Returns & refunds",
+   "owner_question": "Do you take a product back if the customer simply doesn't like it, or only if it has a manufacturing defect?",
+   "customer_question": "Can I return it if I don't like it?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Any reason, unused",
+    "Only manufacturing defects",
+    "No returns"
+   ]
+  },
+  {
+   "id": "electronics_store-030",
+   "category": "Returns & refunds",
+   "owner_question": "If a product is returned, how do you give the money back?",
+   "customer_question": "Will I get cash back?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Cash / original payment",
+    "Store credit only",
+    "Exchange only"
+   ]
+  },
+  {
+   "id": "electronics_store-031",
+   "category": "Warranty & service",
+   "owner_question": "How many years of company warranty do your main products have (for example TV panel, fridge compressor with free gas refill, washing machine motor and drum, phone)?",
+   "customer_question": "How many years warranty on this fridge?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-032",
+   "category": "Warranty & service",
+   "owner_question": "During warranty, does the customer bring the product to you, or does the company technician visit the home?",
+   "customer_question": "Will the technician come home for warranty repair?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Technician visits home",
+    "Bring it to the shop / service centre",
+    "Depends on the product"
+   ]
+  },
+  {
+   "id": "electronics_store-033",
+   "category": "Warranty & service",
+   "owner_question": "Do you help customers with warranty claims and service centre visits?",
+   "customer_question": "Will you help with the warranty claim?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-034",
+   "category": "Warranty & service",
+   "owner_question": "Do you sell extended warranty or protection plans? Price?",
+   "customer_question": "Can I get extra warranty?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-035",
+   "category": "Warranty & service",
+   "owner_question": "Do you do AC servicing and gas refilling?",
+   "customer_question": "Can you service my AC?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-036",
+   "category": "Finance & loans",
+   "owner_question": "Which finance companies and EMI options do you have?",
+   "customer_question": "Can I get it on Bajaj EMI?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Bajaj Finserv",
+    "TVS Credit",
+    "HDB Financial",
+    "Home Credit",
+    "IDFC First",
+    "Samsung Finance+",
+    "DMI Finance",
+    "Credit card EMI",
+    "Zero down payment",
+    "No-cost EMI"
+   ]
+  },
+  {
+   "id": "electronics_store-037",
+   "category": "Finance & loans",
+   "owner_question": "What is the minimum bill amount for buying on a loan / finance?",
+   "customer_question": "Can I take a loan for a ₹6,000 phone?",
+   "priority": "important",
+   "answer_type": "price"
+  },
+  {
+   "id": "electronics_store-038",
+   "category": "Finance & loans",
+   "owner_question": "How much down payment is usually needed (percentage of the price)?",
+   "customer_question": "How much do I pay first?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-039",
+   "category": "Finance & loans",
+   "owner_question": "What processing fee or file charge do finance companies take?",
+   "customer_question": "Is there a processing fee?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-040",
+   "category": "Products & brands",
+   "owner_question": "Are your phones (iPhone, OnePlus and others) Indian units or imported / global pieces? Do imported ones get Indian warranty and work on Jio / Airtel 5G?",
+   "customer_question": "Is the iPhone Indian warranty?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-041",
+   "category": "Products & brands",
+   "owner_question": "Which accessories do you sell?",
+   "customer_question": "Do you have a fast charger?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Covers & cases",
+    "Tempered glass",
+    "Custom back skins & lamination (cut by machine)",
+    "Original fast chargers & cables",
+    "OTG & adapters (Type-C to 3.5 mm)",
+    "Wired earphones & neckbands",
+    "Earbuds / ANC headphones",
+    "Smartwatches (calling, health tracking)",
+    "Smartwatch straps & chargers",
+    "Bluetooth speakers",
+    "Power banks",
+    "Memory cards & pen drives",
+    "Bike & car mobile holders, car chargers",
+    "Selfie sticks, tripods, ring lights & collar mics",
+    "PopSockets, table stands & rain pouches",
+    "Pocket Wi-Fi (JioFi) & UPI sound boxes",
+    "SIM trays, SIM pins & cable protectors"
+   ]
+  },
+  {
+   "id": "electronics_store-042",
+   "category": "Products & brands",
+   "owner_question": "Which screen guards do you have, and do you fit them bubble-free?",
+   "customer_question": "Do you have privacy glass?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Full-glue tempered glass (11D / HD+)",
+    "Privacy (anti-spy) glass",
+    "Matte gaming glass",
+    "UV glass for curved screens",
+    "Hydrogel / memory film",
+    "Camera lens protectors",
+    "Smartwatch screen guards"
+   ]
+  },
+  {
+   "id": "electronics_store-043",
+   "category": "Products & brands",
+   "owner_question": "Which phone covers do you keep?",
+   "customer_question": "Do you have a MagSafe cover?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Clear covers that don't turn yellow",
+    "Shockproof / puff covers",
+    "Leather covers",
+    "MagSafe covers",
+    "Flip covers & belt pouches",
+    "Rugged / armour covers",
+    "Custom photo covers"
+   ]
+  },
+  {
+   "id": "electronics_store-044",
+   "category": "Products & brands",
+   "owner_question": "Are your accessories original brand products, or compatible ones?",
+   "customer_question": "Is this charger original?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original brand",
+    "Compatible / local",
+    "Both, clearly marked"
+   ]
+  },
+  {
+   "id": "electronics_store-045",
+   "category": "Products & brands",
+   "owner_question": "Which phone variants do you keep in stock?",
+   "customer_question": "Do you have the 8 GB / 256 GB model?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "5G phones",
+    "High RAM / storage variants (8–12 GB, 256 GB+)",
+    "All colours of popular models",
+    "Foldable / flip phones",
+    "Big-font / easy phones for elders",
+    "Rugged / big-battery phones",
+    "Water-resistant (IP67 / IP68) phones"
+   ]
+  },
+  {
+   "id": "electronics_store-046",
+   "category": "Products & brands",
+   "owner_question": "Which phone price ranges do you stock?",
+   "customer_question": "Any good phone under 15,000?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Under ₹10,000",
+    "₹10,000–20,000",
+    "₹20,000–30,000",
+    "₹30,000–50,000",
+    "Above ₹50,000"
+   ]
+  },
+  {
+   "id": "electronics_store-047",
+   "category": "Buying & checking",
+   "owner_question": "Do you transfer data from the old phone (also Android to iPhone, with WhatsApp chats and photos) and set up the new phone for free?",
+   "customer_question": "Will you move my WhatsApp and photos?",
+   "priority": "important",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-048",
+   "category": "Buying & checking",
+   "owner_question": "Do you put on a tempered glass and cover when someone buys a phone?",
+   "customer_question": "Is screen guard free?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Free",
+    "Paid",
+    "Not available"
+   ]
+  },
+  {
+   "id": "electronics_store-049",
+   "category": "Warranty & service",
+   "owner_question": "Do you repair phones? Which repairs?",
+   "customer_question": "Can you change my phone screen?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Screen",
+    "Battery",
+    "Charging port",
+    "Speaker / mic",
+    "Water damage",
+    "Software / unlocking",
+    "No repairs"
+   ]
+  },
+  {
+   "id": "electronics_store-050",
+   "category": "Warranty & service",
+   "owner_question": "For repairs, do you use original or compatible parts?",
+   "customer_question": "Is the new screen original?",
+   "priority": "important",
+   "answer_type": "options",
+   "options": [
+    "Original parts",
+    "Compatible parts",
+    "Customer's choice"
+   ]
+  },
+  {
+   "id": "electronics_store-051",
+   "category": "Warranty & service",
+   "owner_question": "Do you give a warranty on repairs (display, battery, parts)? How long, and what does it not cover (for example a new fall or water)?",
+   "customer_question": "Is there warranty on the repair?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-052",
+   "category": "Warranty & service",
+   "owner_question": "Is there a checking (diagnosis) charge if the customer decides not to repair, and is the phone returned as it was?",
+   "customer_question": "Do you charge just to check it?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-053",
+   "category": "Products & brands",
+   "owner_question": "Which laptop configurations do you usually stock?",
+   "customer_question": "Do you have an i5 laptop?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Intel i3 / Ryzen 3",
+    "Intel i5 / Ryzen 5",
+    "Intel i7 / Ryzen 7",
+    "Gaming laptops",
+    "MacBooks"
+   ]
+  },
+  {
+   "id": "electronics_store-054",
+   "category": "Products & brands",
+   "owner_question": "Which software do you sell or install?",
+   "customer_question": "Can you install Tally?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Windows",
+    "MS Office",
+    "Antivirus",
+    "Tally",
+    "Adobe",
+    "None"
+   ]
+  },
+  {
+   "id": "electronics_store-055",
+   "category": "Delivery & installation",
+   "owner_question": "Do you install Windows and MS Office? Is the licence genuine, is it charged, and do you keep the customer's files safe when formatting?",
+   "customer_question": "Will Windows be installed?",
+   "priority": "important",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-056",
+   "category": "Warranty & service",
+   "owner_question": "Do you repair laptops and computers? Which problems?",
+   "customer_question": "My laptop is not starting, can you fix it?",
+   "priority": "important",
+   "answer_type": "list",
+   "options": [
+    "Hardware",
+    "Screen",
+    "Keyboard",
+    "Hinges",
+    "Battery",
+    "Overheating (fan cleaning, thermal paste)",
+    "SSD & RAM upgrades",
+    "Software / virus",
+    "Data recovery",
+    "No repairs"
+   ]
+  },
+  {
+   "id": "electronics_store-057",
+   "category": "Products & brands",
+   "priority": "important",
+   "answer_type": "text",
+   "owner_question": "Do your phones support 5G, dual SIM and eSIM? How do customers check this for a model?",
+   "customer_question": "Does this phone support 5G, dual SIM or eSIM?"
+  },
+  {
+   "id": "electronics_store-058",
+   "category": "Buying advice",
+   "priority": "important",
+   "answer_type": "text",
+   "owner_question": "How do you help a customer choose a phone or laptop for their budget and need (for example under Rs 20,000, for study, gaming, camera or office work)?",
+   "customer_question": "Which phone or laptop is good for my budget?"
+  },
+  {
+   "id": "electronics_store-059",
+   "category": "Products & brands",
+   "priority": "important",
+   "answer_type": "text",
+   "owner_question": "What comes in the box with phones and laptops (charger, earphones, cover, bag)? Is anything not included?",
+   "customer_question": "Is the charger included in the box?"
+  },
+  {
+   "id": "electronics_store-060",
+   "category": "Products & brands",
+   "priority": "important",
+   "answer_type": "text",
+   "owner_question": "Do your laptops come with genuine Windows? Is MS Office included, or charged extra?",
+   "customer_question": "Does the laptop come with Windows and MS Office?"
+  },
+  {
+   "id": "electronics_store-061",
+   "category": "Products & brands",
+   "priority": "important",
+   "answer_type": "text",
+   "owner_question": "Can you tell a customer which charger, cover, screen guard or bag fits their phone or laptop model?",
+   "customer_question": "Is this charger, cover or bag compatible with my model?"
+  },
+  {
+   "id": "electronics_store-062",
+   "category": "Warranty & service",
+   "priority": "important",
+   "answer_type": "text",
+   "owner_question": "Do accessories (chargers, earbuds, power banks, cables) have a warranty, and can they be returned or replaced?",
+   "customer_question": "Is there a warranty or return on accessories?"
+  },
+  {
+   "id": "electronics_store-063",
+   "category": "Prices & bills",
+   "priority": "important",
+   "answer_type": "text",
+   "owner_question": "Do you give discounts for students, corporate or bulk orders, or to government employees?",
+   "customer_question": "Do you give a student, corporate or bulk discount?"
+  },
+  {
+   "id": "electronics_store-064",
+   "category": "Warranty & service",
+   "priority": "important",
+   "answer_type": "text",
+   "owner_question": "Do you replace phone screens and batteries in the shop? Roughly what does it cost for popular models, and how long does it take?",
+   "customer_question": "How much is a screen or battery replacement?"
+  },
+  {
+   "id": "electronics_store-065",
+   "category": "Prices & bills",
+   "priority": "important",
+   "answer_type": "text",
+   "owner_question": "Do you buy old phones or laptops (buyback)? How is the price decided and what proof does the customer need?",
+   "customer_question": "Will you buy my old phone or laptop?"
+  },
+  {
+   "id": "electronics_store-066",
+   "category": "Products & brands",
+   "owner_question": "On which day of the week does new stock usually arrive?",
+   "customer_question": "When will new models come?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-067",
+   "category": "Products & brands",
+   "owner_question": "Can customers reserve a product by paying an advance?",
+   "customer_question": "Can you keep one aside for me?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-068",
+   "category": "Products & brands",
+   "owner_question": "Do you sell energy-saving (5-star, inverter) models, and do you explain the yearly power-bill saving (for example 3-star vs 5-star)?",
+   "customer_question": "Do you have inverter AC?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-069",
+   "category": "Products & brands",
+   "owner_question": "Do you sell voltage stabilisers for ACs, fridges and TVs?",
+   "customer_question": "Do I need a stabiliser?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-070",
+   "category": "Products & brands",
+   "owner_question": "Is a stabiliser given free with an AC?",
+   "customer_question": "Will you give a stabiliser with the AC?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Free with AC",
+    "Paid",
+    "Not needed for inverter ACs"
+   ]
+  },
+  {
+   "id": "electronics_store-071",
+   "category": "Products & brands",
+   "owner_question": "With a smart TV, do you activate any free OTT subscriptions (Netflix, Prime, Hotstar)?",
+   "customer_question": "Will Netflix be free with the TV?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-072",
+   "category": "Products & brands",
+   "owner_question": "Do your smart TVs run all apps (YouTube, Netflix, Hotstar, Aha), with voice remote, screen mirroring and Dolby audio?",
+   "customer_question": "Does this TV have Aha?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-073",
+   "category": "Products & brands",
+   "owner_question": "Do you sell TV screen protectors for homes with small children?",
+   "customer_question": "Do you have a screen guard for the TV?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-074",
+   "category": "Products & brands",
+   "owner_question": "Do you tell customers which fridges and TVs run on a home inverter, and how long fridges stay cold in a power cut?",
+   "customer_question": "Will this fridge run on my inverter?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-075",
+   "category": "Products & brands",
+   "owner_question": "Do you have washing machines for hard water and low water pressure?",
+   "customer_question": "Our water is salty, which machine?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-076",
+   "category": "Products & brands",
+   "owner_question": "Do your ACs have 100% copper coils and anti-corrosion (blue / gold fin) coating?",
+   "customer_question": "Is this AC copper?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-077",
+   "category": "Products & brands",
+   "owner_question": "Do your air coolers have honeycomb pads and mosquito nets?",
+   "customer_question": "Does the cooler have a mosquito net?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-078",
+   "category": "Products & brands",
+   "owner_question": "Do your rice cookers come with stainless steel pots?",
+   "customer_question": "Is the rice cooker pot steel?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-079",
+   "category": "Products & brands",
+   "owner_question": "Do you sell kitchen chimneys (auto-clean) and hobs / gas stoves, with installation and combo offers?",
+   "customer_question": "Do you install chimneys?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-080",
+   "category": "Buying advice",
+   "owner_question": "How do you help customers choose a TV size for their room (viewing distance), and LED vs QLED vs OLED?",
+   "customer_question": "43 inch or 55 inch for my hall?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-081",
+   "category": "Buying advice",
+   "owner_question": "How do you help customers choose a fridge for their family (single / double door, litres)?",
+   "customer_question": "Which fridge for 4 people?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-082",
+   "category": "Buying advice",
+   "owner_question": "How do you advise top load vs front load washing machines?",
+   "customer_question": "Top load or front load?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-083",
+   "category": "Buying advice",
+   "owner_question": "How do you advise AC tonnage for a room (size, top floor, sun)?",
+   "customer_question": "1 ton or 1.5 ton for my bedroom?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-084",
+   "category": "Buying advice",
+   "owner_question": "How do you advise customers on kitchen appliances (heavy-duty mixie wattage, convection microwave vs OTG, instant vs storage geyser)?",
+   "customer_question": "Microwave or OTG?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-085",
+   "category": "Buying advice",
+   "owner_question": "For water purifiers, do you check the water's TDS at home, which type do you suggest for bore water, and what does a yearly filter change cost?",
+   "customer_question": "Which purifier for bore water?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-086",
+   "category": "Products & brands",
+   "owner_question": "Do you sell inverters and batteries for power backup (for example a set for 4–5 hours of fans, lights and TV), with fitting? Price?",
+   "customer_question": "Do you have inverter batteries?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-087",
+   "category": "Products & brands",
+   "owner_question": "Do you sell commercial appliances (deep freezers, cassette / tower ACs, commercial fridges)? Is the warranty different for commercial use?",
+   "customer_question": "Do you have a deep freezer for my restaurant?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-088",
+   "category": "Products & brands",
+   "owner_question": "Does the warranty start from your bill date (as shown on the brand's website for the serial number)?",
+   "customer_question": "When does my laptop warranty start?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-089",
+   "category": "Products & brands",
+   "owner_question": "Do you sell display or open-box pieces at a lower price?",
+   "customer_question": "Do you have any display piece for less?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-090",
+   "category": "Products & brands",
+   "owner_question": "Do you sell smart home and security devices?",
+   "customer_question": "Do you have Alexa?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Smart bulbs & plugs",
+    "Alexa / Google Home",
+    "Wi-Fi smart cameras",
+    "Digital door locks",
+    "Video doorbells",
+    "None"
+   ]
+  },
+  {
+   "id": "electronics_store-091",
+   "category": "Prices & bills",
+   "owner_question": "Do you give a B2B GST invoice so business customers can claim input tax credit?",
+   "customer_question": "Can I get a GST invoice with my company GSTIN?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-092",
+   "category": "Prices & bills",
+   "owner_question": "Do you have cashback or bank card offers right now? (Change them any time with Update.)",
+   "customer_question": "Any HDFC card offer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-093",
+   "category": "Prices & bills",
+   "owner_question": "Do you give combo deals when buying products together (for example TV + sound bar, or TV + fridge + washing machine + mixie for a wedding or gruhapravesam)?",
+   "customer_question": "Any offer if I buy a fridge and washing machine?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-094",
+   "category": "Prices & bills",
+   "owner_question": "Do you take old products in exchange even if they are not working?",
+   "customer_question": "My old TV is dead, will you still exchange it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-095",
+   "category": "Prices & bills",
+   "owner_question": "For an exchange, does the customer need the old product's original box and bill?",
+   "customer_question": "I don't have the box, can I still exchange?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Not needed",
+    "Bill needed",
+    "Box and bill needed"
+   ]
+  },
+  {
+   "id": "electronics_store-096",
+   "category": "Prices & bills",
+   "owner_question": "Can customers exchange an old product of one brand for a new one of another brand (for example old Samsung for new LG)?",
+   "customer_question": "Can I exchange my Samsung TV for an LG?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-097",
+   "category": "Prices & bills",
+   "owner_question": "Can customers negotiate the exchange value you offer for their old product?",
+   "customer_question": "Can you give more for my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-098",
+   "category": "Prices & bills",
+   "owner_question": "If a customer loses the bill, can you print a duplicate using their mobile number or the serial number?",
+   "customer_question": "I lost my bill, can you give a copy?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-099",
+   "category": "Prices & bills",
+   "owner_question": "Do you sell gift vouchers or gift cards?",
+   "customer_question": "Can I buy a gift card?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-100",
+   "category": "Prices & bills",
+   "owner_question": "Do you run lucky draws, scratch cards or festival cash discounts?",
+   "customer_question": "Is there a Diwali lucky draw?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-101",
+   "category": "Prices & bills",
+   "owner_question": "Do you give free gifts or accessories with purchases?",
+   "customer_question": "Any free gift with this TV?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-102",
+   "category": "Prices & bills",
+   "owner_question": "Do you give discounts for bulk, corporate or student purchases?",
+   "customer_question": "Any discount for 10 laptops?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-103",
+   "category": "Prices & bills",
+   "owner_question": "Do you give special discounts or commission for customers referred by builders or interior designers?",
+   "customer_question": "My interior designer sent me, any discount?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-104",
+   "category": "Prices & bills",
+   "owner_question": "Can customers order online or on WhatsApp and collect from the shop (click and collect)?",
+   "customer_question": "Can I order now and pick up later?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-105",
+   "category": "Prices & bills",
+   "owner_question": "Do you have an upgrade or assured buy-back plan (for example a fixed value for the phone after 1 year when buying a new one)?",
+   "customer_question": "Is there a buy-back offer?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-106",
+   "category": "Prices & bills",
+   "owner_question": "If the price drops within a few days after purchase, do you refund the difference (price-drop protection)?",
+   "customer_question": "The price dropped after I bought it, will you refund?",
+   "priority": "optional",
+   "answer_type": "text",
+   "city_only": true
+  },
+  {
+   "id": "electronics_store-107",
+   "category": "Prices & bills",
+   "owner_question": "Are your offers and prices the same in all your branches and on your website?",
+   "customer_question": "Is this offer at the other branch too?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "city_only": true
+  },
+  {
+   "id": "electronics_store-108",
+   "category": "Buying & checking",
+   "owner_question": "Do you have a demo area to watch TVs and listen to sound systems?",
+   "customer_question": "Can I see the TV picture quality?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-109",
+   "category": "Delivery & installation",
+   "owner_question": "Do you give free extras like a fridge / washing machine stand, inlet pipe, dust cover, rat mesh or microwave starter kit?",
+   "customer_question": "Will you give a stand with the fridge?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-110",
+   "category": "Delivery & installation",
+   "owner_question": "With TV wall mounting, do you give a set-top box stand or wire cover?",
+   "customer_question": "Will you hide the TV wires?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-111",
+   "category": "Delivery & installation",
+   "owner_question": "How many free AC services does the company give in the first year?",
+   "customer_question": "How many free AC services?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-112",
+   "category": "Delivery & installation",
+   "owner_question": "Do you pick up the old appliance from the customer's home (for exchange or disposal)? Is there a charge?",
+   "customer_question": "Will you take my old fridge? Any charge?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Free pickup",
+    "Pickup with a transport charge",
+    "Customer brings it"
+   ]
+  },
+  {
+   "id": "electronics_store-113",
+   "category": "Delivery & installation",
+   "owner_question": "If a product gets damaged during delivery, who covers it?",
+   "customer_question": "What if the TV breaks on the way?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "We replace it",
+    "Covered by transit insurance",
+    "Customer checks before accepting"
+   ]
+  },
+  {
+   "id": "electronics_store-114",
+   "category": "Delivery & installation",
+   "owner_question": "Do customers need to pay or tip the delivery and loading staff?",
+   "customer_question": "Do I have to pay the delivery boys?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Nothing extra",
+    "Tip is optional",
+    "Loading charge for upper floors"
+   ]
+  },
+  {
+   "id": "electronics_store-115",
+   "category": "Delivery & installation",
+   "owner_question": "Do you send the delivery person's number or a tracking link when the product leaves the shop?",
+   "customer_question": "Where is my delivery?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-116",
+   "category": "Delivery & installation",
+   "owner_question": "If a product breaks during delivery, how many days does it take to give a new one?",
+   "customer_question": "When will I get a new TV?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-117",
+   "category": "Delivery & installation",
+   "owner_question": "Do you provide a TV wall mount and fitting? Price?",
+   "customer_question": "Is wall mounting free?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-118",
+   "category": "Delivery & installation",
+   "owner_question": "Do you patiently show customers, including elderly people, how to use the product (in Telugu if needed)?",
+   "customer_question": "Can you teach my mother how to use it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-119",
+   "category": "Delivery & installation",
+   "owner_question": "Do you help set up smart devices on the customer's phone and connect them to Wi-Fi?",
+   "customer_question": "Can you connect it to my Wi-Fi?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-120",
+   "category": "Delivery & installation",
+   "owner_question": "Are user manuals available in Telugu, or only in English?",
+   "customer_question": "Is there a Telugu manual?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Telugu available",
+    "English only"
+   ]
+  },
+  {
+   "id": "electronics_store-121",
+   "category": "Delivery & installation",
+   "owner_question": "For big products, is the box opened in front of the delivery staff?",
+   "customer_question": "Should I open the box when it arrives?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Yes, opened in front of our staff",
+    "Customer opens later",
+    "Our technician opens at installation"
+   ]
+  },
+  {
+   "id": "electronics_store-122",
+   "category": "Delivery & installation",
+   "owner_question": "If the product has scratches or dents when unboxed, can the customer refuse the delivery right there?",
+   "customer_question": "There is a dent, can I refuse it?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-123",
+   "category": "Delivery & installation",
+   "owner_question": "Do your delivery staff take away the boxes and thermocol after delivery?",
+   "customer_question": "Will you take the empty box?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-124",
+   "category": "Delivery & installation",
+   "owner_question": "Does a TV come with a table-top stand in the box if the customer doesn't want wall mounting?",
+   "customer_question": "Does the TV come with legs?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Yes, stand in the box",
+    "Depends on the model",
+    "Stand is extra"
+   ]
+  },
+  {
+   "id": "electronics_store-125",
+   "category": "Delivery & installation",
+   "owner_question": "If copper pipe or wire is left over after installation, do you take it back and reduce the bill?",
+   "customer_question": "Will you refund the extra pipe?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-126",
+   "category": "Delivery & installation",
+   "owner_question": "When customers shift house, do your technicians uninstall and reinstall appliances (AC, TV)? What is the charge?",
+   "customer_question": "Can you shift my AC to the new house?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-127",
+   "category": "Returns & refunds",
+   "owner_question": "Do you have a 7-day return policy like online stores?",
+   "customer_question": "Is there a 7-day return?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Yes, 7 days",
+    "Yes, a few days",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-128",
+   "category": "Returns & refunds",
+   "owner_question": "If the product doesn't fit the space at home, can customers change it for another size? Within how many days?",
+   "customer_question": "The TV is too big for my wall, can I change it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-129",
+   "category": "Warranty & service",
+   "owner_question": "Where are the nearest authorised service centres for the brands you sell?",
+   "customer_question": "Where is the Samsung service centre?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-130",
+   "category": "Warranty & service",
+   "owner_question": "Is your extended warranty from the brand itself, or from a third party (for example OneAssist, ResQ)?",
+   "customer_question": "Who gives the extended warranty?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "From the brand",
+    "Third party",
+    "Both available"
+   ]
+  },
+  {
+   "id": "electronics_store-131",
+   "category": "Warranty & service",
+   "owner_question": "Does the extended warranty cover both parts and labour?",
+   "customer_question": "Do I pay labour in extended warranty?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "Parts and labour free",
+    "Only parts",
+    "Only labour"
+   ]
+  },
+  {
+   "id": "electronics_store-132",
+   "category": "Warranty & service",
+   "owner_question": "During a warranty repair, do you give a standby product to use until it comes back?",
+   "customer_question": "Will I get a TV to use while mine is repaired?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-133",
+   "category": "Warranty & service",
+   "owner_question": "Which protection or insurance plans do you sell?",
+   "customer_question": "Does the insurance cover water damage?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Accidental damage",
+    "Liquid damage",
+    "Theft",
+    "Short circuit / power surge",
+    "None"
+   ]
+  },
+  {
+   "id": "electronics_store-134",
+   "category": "Warranty & service",
+   "owner_question": "Can customers buy a protection plan later (a week or a month after purchase)?",
+   "customer_question": "Can I take insurance next month?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-135",
+   "category": "Warranty & service",
+   "owner_question": "If a customer needs to claim insurance, do you help, or do they deal with the insurance company directly?",
+   "customer_question": "Will you help with my insurance claim?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "We handle the claim",
+    "We help with the papers",
+    "Customer contacts the insurer"
+   ]
+  },
+  {
+   "id": "electronics_store-136",
+   "category": "Warranty & service",
+   "owner_question": "Do you repair or service appliances, or only through the brand's service?",
+   "customer_question": "Can you repair my washing machine?",
+   "priority": "optional",
+   "answer_type": "options",
+   "options": [
+    "We repair",
+    "Only brand service",
+    "Both"
+   ]
+  },
+  {
+   "id": "electronics_store-137",
+   "category": "Warranty & service",
+   "owner_question": "For small appliances (mixie, grinder, juicer, induction), do you give your own replacement warranty?",
+   "customer_question": "If the mixie stops working, will you replace it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-138",
+   "category": "Warranty & service",
+   "owner_question": "Do you offer yearly service plans for ACs and water purifiers?",
+   "customer_question": "Is there an AC service plan?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-139",
+   "category": "Shop & service",
+   "owner_question": "Do you take old electronics for safe recycling (e-waste)?",
+   "customer_question": "Can I give my old phone for recycling?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-140",
+   "category": "Shop & service",
+   "owner_question": "Do you have an online store or a WhatsApp catalogue, and do you send price quotations on WhatsApp?",
+   "customer_question": "Can I see your products online?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-141",
+   "category": "Shop & service",
+   "owner_question": "Do you send a copy of the bill on WhatsApp?",
+   "customer_question": "Can you send the bill on WhatsApp?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-142",
+   "category": "Shop & service",
+   "owner_question": "Is there a separate number for complaints (product problems or late delivery)?",
+   "customer_question": "Whom do I call to complain?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-143",
+   "category": "Shop & service",
+   "owner_question": "Do you have other branches in the city? Can warranty service be done at any branch?",
+   "customer_question": "Do you have a branch in Kukatpally?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-144",
+   "category": "Finance & loans",
+   "owner_question": "Can customers whose Aadhaar has another town's address get a loan? What extra proof do they need?",
+   "customer_question": "My Aadhaar has my village address, will I get EMI?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-145",
+   "category": "Finance & loans",
+   "owner_question": "Can customers without a credit or debit card get an instant consumer loan with just Aadhaar?",
+   "customer_question": "I don't have a card, can I still get a loan?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-146",
+   "category": "Finance & loans",
+   "owner_question": "What minimum CIBIL score do finance companies usually need?",
+   "customer_question": "Will I get a loan with a low CIBIL score?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-147",
+   "category": "Finance & loans",
+   "owner_question": "What income proof do self-employed people or farmers need for a loan?",
+   "customer_question": "I'm a farmer, can I get a loan?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-148",
+   "category": "Finance & loans",
+   "owner_question": "How long does loan approval usually take in the shop?",
+   "customer_question": "How long will the loan approval take?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-149",
+   "category": "Finance & loans",
+   "owner_question": "Is there a penalty for paying off the loan early (foreclosure)?",
+   "customer_question": "Can I close the loan early?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-150",
+   "category": "Shop & service",
+   "owner_question": "Do you bring products home for a demo before buying?",
+   "customer_question": "Can you show the TV at my home?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-151",
+   "category": "Shop & service",
+   "owner_question": "Do you have a loyalty or points programme for regular customers?",
+   "customer_question": "Do I get points?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-152",
+   "category": "Shop & service",
+   "owner_question": "Which languages can your staff speak?",
+   "customer_question": "Does anyone speak Hindi?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Telugu",
+    "Hindi",
+    "English",
+    "Urdu",
+    "Tamil",
+    "Kannada"
+   ]
+  },
+  {
+   "id": "electronics_store-153",
+   "category": "Shop & service",
+   "owner_question": "Please share your Google reviews link, if you have one.",
+   "customer_question": "Where can I see your reviews?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-154",
+   "category": "Products & brands",
+   "owner_question": "From what price do earbuds, neckbands, calling smartwatches and power banks start?",
+   "customer_question": "How much are earbuds?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-155",
+   "category": "Products & brands",
+   "owner_question": "What warranty do chargers, cables, earbuds and power banks have, and are they replaced at the shop or at the service centre?",
+   "customer_question": "My neckband stopped working, will you change it?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-156",
+   "category": "Products & brands",
+   "owner_question": "Do you sell new SIM cards, do number porting (MNP), duplicate SIMs for lost phones, eSIM activation and recharges? For which networks?",
+   "customer_question": "Can I get a new Jio SIM here?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "Jio",
+    "Airtel",
+    "Vi",
+    "BSNL",
+    "None"
+   ]
+  },
+  {
+   "id": "electronics_store-157",
+   "category": "Products & brands",
+   "owner_question": "Which other services do you offer at the counter?",
+   "customer_question": "Can I pay my current bill here?",
+   "priority": "optional",
+   "answer_type": "list",
+   "options": [
+    "DTH recharges",
+    "Electricity & other bill payments",
+    "Money transfer / cash withdrawal (AEPS)",
+    "FASTag",
+    "Xerox & printouts",
+    "PAN / ticket booking help",
+    "None"
+   ]
+  },
+  {
+   "id": "electronics_store-158",
+   "category": "Buying advice",
+   "owner_question": "How do you help customers choose a phone (camera, battery, gaming without heating, curved vs flat screen, budget), and do you compare two models side by side?",
+   "customer_question": "Which is better for camera under 20,000?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-159",
+   "category": "Products & brands",
+   "owner_question": "Do you buy old phones for cash, even when the customer is not buying a new one (also broken or dead phones for parts)?",
+   "customer_question": "Will you buy my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-160",
+   "category": "Products & brands",
+   "owner_question": "When you take an old phone (exchange or purchase), do you erase all its data in front of the customer?",
+   "customer_question": "Will my photos be deleted from my old phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-161",
+   "category": "Products & brands",
+   "owner_question": "Do you sell keypad phones (4G / Jio Bharat, big buttons, loud ring, torch for elders)? From what price?",
+   "customer_question": "Do you have a basic keypad phone?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-162",
+   "category": "Products & brands",
+   "owner_question": "Do you sell tablets / iPads?",
+   "customer_question": "Do you have iPads?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-163",
+   "category": "Products & brands",
+   "owner_question": "Do you sell gaming accessories (thumb sleeves, triggers, phone coolers, controllers)?",
+   "customer_question": "Do you have a phone cooler for gaming?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-164",
+   "category": "Buying & checking",
+   "owner_question": "Do you open sealed-box phones in front of the customer and show the IMEI on the box, bill and phone match?",
+   "customer_question": "Is the box sealed? Does the IMEI match?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-165",
+   "category": "Buying & checking",
+   "owner_question": "Do you help register the brand warranty and set up the phone (Google account, apps, dual WhatsApp, large font, Telugu voice keyboard) when it's bought?",
+   "customer_question": "Can you set up my new phone?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-166",
+   "category": "Warranty & service",
+   "owner_question": "How long does a common repair (screen, battery) usually take?",
+   "customer_question": "How long to change the screen?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-167",
+   "category": "Warranty & service",
+   "owner_question": "Do you pick up and drop devices for repair?",
+   "customer_question": "Can you collect my laptop for repair?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-168",
+   "category": "Warranty & service",
+   "owner_question": "Do you give a spare phone to use while the customer's phone is being repaired?",
+   "customer_question": "Can I get a phone while mine is repaired?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-169",
+   "category": "Finance & loans",
+   "owner_question": "Do you explain the EMI due date and auto-debit, and that a phone bought on finance can get locked if an EMI is missed? If the lock stays after paying, do you help remove it?",
+   "customer_question": "Will my phone get locked if I miss an EMI?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-170",
+   "category": "Products & brands",
+   "owner_question": "Do you have budget laptops for students?",
+   "customer_question": "Any laptop for college under 40,000?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-171",
+   "category": "Products & brands",
+   "owner_question": "Do you rent laptops or desktops?",
+   "customer_question": "Can I rent a laptop for a month?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-172",
+   "category": "Products & brands",
+   "owner_question": "Do you sell ink-tank printers?",
+   "customer_question": "Do you have ink-tank printers?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-173",
+   "category": "Delivery & installation",
+   "owner_question": "Do you send a technician to install CCTV cameras and Wi-Fi networks at homes and offices? What is the charge?",
+   "customer_question": "Can you install CCTV at my house? How much?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-174",
+   "category": "Warranty & service",
+   "owner_question": "Do you visit homes or offices for service? What is the visit charge?",
+   "customer_question": "Can someone come to my office?",
+   "priority": "optional",
+   "answer_type": "text"
+  },
+  {
+   "id": "electronics_store-175",
+   "category": "Warranty & service",
+   "owner_question": "Do you upgrade RAM and SSD, and tell customers before buying whether a laptop's RAM is soldered or has a free slot?",
+   "customer_question": "Can I add more RAM later?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-176",
+   "category": "Warranty & service",
+   "owner_question": "Do you assemble custom or gaming desktops?",
+   "customer_question": "Can you build a gaming PC?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-177",
+   "category": "Warranty & service",
+   "owner_question": "Do you sell and refill printer cartridges?",
+   "customer_question": "Do you refill ink cartridges?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-178",
+   "category": "Warranty & service",
+   "owner_question": "Do you offer annual maintenance (AMC) for offices?",
+   "customer_question": "Do you do AMC for offices?",
+   "priority": "optional",
+   "answer_type": "yes_no",
+   "options": [
+    "Yes",
+    "No"
+   ]
+  },
+  {
+   "id": "electronics_store-179",
+   "category": "Products & brands",
+   "priority": "optional",
+   "answer_type": "text",
+   "owner_question": "Can customers upgrade the RAM or SSD of a laptop in your shop? What does it cost?",
+   "customer_question": "Can I upgrade the RAM or SSD of this laptop?"
+  },
+  {
+   "id": "electronics_store-180",
+   "category": "Products & brands",
+   "priority": "optional",
+   "answer_type": "text",
+   "owner_question": "Do you give anything free with a laptop or phone (bag, mouse, tempered glass, cover)?",
+   "customer_question": "Is anything free with this laptop or phone?"
+  },
+  {
+   "id": "electronics_store-181",
+   "category": "Buying & checking",
+   "priority": "optional",
+   "answer_type": "text",
+   "owner_question": "Do you help customers move their data and set up a new phone or laptop at the shop? Is it free?",
+   "customer_question": "Will you transfer my data to the new phone?"
+  },
+  {
+   "id": "electronics_store-182",
+   "category": "Shop & service",
+   "priority": "optional",
+   "answer_type": "text",
+   "owner_question": "Do you offer mobile recharge, new SIM cards or bill payments in the shop?",
+   "customer_question": "Do you do mobile recharge or SIM cards?"
+  }
+ ]
+}

@@ -1,7 +1,8 @@
 // Checks for the setup chat rules: values must be backed by the owner's words, the bot must not say it is finished while questions are open,
 // a photo button comes with its question, and an optional photo never holds the shop questions back.
 // Run with: node backend/sitecraft-ai/tests/setup-flow.mjs
-import { evidenceFound, ownerCorpus, valueAccepted, guardSetupReply, notApplicableQuestions, nextStep } from '../botcraft-builder.js';
+import { evidenceFound, ownerCorpus, valueAccepted, guardSetupReply, notApplicableQuestions, nextStep, pendingCore } from '../botcraft-builder.js';
+import { SHOP_TYPES } from '../botcraft-shop-types.js';
 import { CORE_QUESTIONS } from '../botcraft-question-bank.js';
 import { QUESTION_BANKS } from '../botcraft-banks/index.js';
 let pass = 0, fail = 0; const ok = (name, cond, extra='') => { cond ? pass++ : fail++; console.log((cond ? 'PASS  ' : 'FAIL  ') + name + (cond ? '' : '  -> ' + extra)); };
@@ -42,4 +43,13 @@ step = nextStep({ ...core, shop_front_photo: 'photo received', owner_photo: 'ski
 
 const answers = { [bank.questions[0].id]: 'Not applicable', [bank.questions[1].id]: 'Yes' };
 ok('questions marked "not applicable" are listed for the owner', notApplicableQuestions(bank, answers).length === 1 && notApplicableQuestions(bank, answers)[0] === bank.questions[0].owner_question);
+// The electronics store list (mobiles, laptops, TVs, fridges, accessories in one shop)
+const eb = QUESTION_BANKS.electronics_store;
+ok('electronics store: a ready question list exists for the shop type', Boolean(eb) && SHOP_TYPES.some(t => t.key === 'electronics_store'));
+ok('electronics store: list is large and ordered mandatory, important, optional', eb.questions.length >= 150 && eb.questions.every((q, i, a) => i === 0 || ({ mandatory: 0, important: 1, optional: 2 }[q.priority] >= { mandatory: 0, important: 1, optional: 2 }[a[i - 1].priority])));
+const topics = { 'phone brands': /phone brands/i, 'laptop brands': /laptop .*brands/i, 'TV sizes': /TV sizes/i, 'fridge types': /refrigerator types/i, 'accessories': /accessories/i, '5G / eSIM': /5G/i, 'Windows / Office': /Windows/i, 'compatible accessories': /fits their phone or laptop/i, 'screen / battery replacement': /screens and batteries/i, 'buyback': /buy old phones/i, 'exchange': /exchange/i, 'delivery': /deliver/i, 'installation': /install/i, 'warranty': /warranty/i, 'refurbished': /refurbished/i, 'EMI / finance': /EMI/i };
+for (const [name, re] of Object.entries(topics)) ok(`electronics store list covers: ${name}`, eb.questions.some(q => re.test(q.owner_question)));
+ok('electronics store: the products question offers phones, laptops and accessories', (eb.questions[0].options || []).some(o => /Mobile phones/.test(o)) && eb.questions[0].options.some(o => /Laptops/.test(o)));
+ok('electronics store: the EMI basics are asked (not marked not applicable)', pendingCore({ shop_type: 'electronics_store' }).some(q => q.key === 'emi'));
+ok('electronics store: no question is repeated', new Set(eb.questions.map(q => q.owner_question)).size === eb.questions.length);
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
