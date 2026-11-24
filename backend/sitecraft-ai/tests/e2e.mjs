@@ -43,6 +43,13 @@ r=await owner('save_product',{key:'gold necklace 22k',name:'Gold Necklace',price
 r=await owner('set_quantity',{key:'gold necklace',quantity:null}); ok('the owner can stop counting an item',r.products.find(x=>x.name==='Gold Necklace').qty===null);
 r=await owner('set_quantity',{key:'no such item',quantity:1}); ok('stock count of an unknown item is refused',r.status===400);
 r=await owner('set_quantity',{key:'silver anklet',quantity:2,mode:'set'});
+// Owner AI cap (test limit: 2 update-helper calls a day; the fake key makes each call fail, but it still counts)
+let o1=await owner('plan_update',{text:'Gold chain price 50000'}); let o2=await owner('plan_update',{text:'Gold chain price 51000'}); let o3=await owner('plan_update',{text:'Gold chain price 52000'});
+ok('the update helper works up to the daily limit',o1.status===503&&o2.status===503,JSON.stringify([o1.status,o2.status]));
+ok('over the limit the helper is refused with a clear message (429)',o3.status===429&&/limit/i.test(o3.error||''),JSON.stringify([o3.status,o3.error]));
+r=await owner('record_sale',{key:'gold necklace',quantity:1}); ok('simple changes still work over the AI limit',r.ok);
+const c1=await post('/api/botcraft/chat',{shopId:SID,text:'hello shop'}); const c2=await post('/api/botcraft/chat',{shopId:SID,text:'hello again'}); const c3=await post('/api/botcraft/chat',{shopId:SID,text:'hello third'});
+ok('setup chat is capped per day too',c3.status===429&&c3.limit==='setup'&&c1.status!==429&&c2.status!==429,JSON.stringify([c1.status,c2.status,c3.status]));
 // Sales tab report
 r=await owner('load'); const today=r.sales.day;
 r=await owner('sales_report',{from:today,to:today}); const rep=r.report;

@@ -119,6 +119,17 @@ const SCHEMA = [
     sold_at TEXT NOT NULL
   )`,
   `CREATE INDEX IF NOT EXISTS idx_botcraft_sales_shop ON botcraft_sales(shop_id, day)`,
+  // Gemini calls made for the OWNER (setup chat, update chat, About text): how many each day, and their tokens,
+  // so the cost of owner changes is known and capped. kind is setup, update or about.
+  `CREATE TABLE IF NOT EXISTS botcraft_owner_ai (
+    shop_id TEXT NOT NULL,
+    day TEXT NOT NULL,
+    kind TEXT NOT NULL,
+    calls INTEGER NOT NULL DEFAULT 0,
+    in_tokens INTEGER NOT NULL DEFAULT 0,
+    out_tokens INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (shop_id, day, kind)
+  )`,
   // Owner settings that are not shop facts (which bot buttons are on).
   `CREATE TABLE IF NOT EXISTS botcraft_settings (
     shop_id TEXT PRIMARY KEY,
@@ -389,7 +400,7 @@ export async function deleteShop(env, shopId) {
   const files = await r2KeysWhere(db, "shop_id = ?", shopId);
   const tables = [
     "botcraft_answers", "botcraft_products", "botcraft_builder_messages", "botcraft_photos", "botcraft_customer_questions",
-    "botcraft_requests", "botcraft_sales", "botcraft_public", "botcraft_settings", "botcraft_push_subs", "botcraft_replies", "botcraft_usage",
+    "botcraft_requests", "botcraft_sales", "botcraft_owner_ai", "botcraft_public", "botcraft_settings", "botcraft_push_subs", "botcraft_replies", "botcraft_usage",
     "botcraft_daily_asks", "botcraft_shops"
   ];
   await db.batch(tables.map(table => db.prepare(`DELETE FROM ${table} WHERE shop_id = ?`).bind(shopId)));
@@ -1016,4 +1027,35 @@ export async function salesReport(env, shopId, from, to, now = new Date()) {
     items: [...byItem.values()].sort((a, b) => b.total - a.total || b.qty - a.qty),
     rows: rows.slice(0, 1000).map(row => ({ id: row.sale_id, name: row.item_name, qty: row.qty, unit_price: row.unit_price, total: row.qty * row.unit_price, payment: row.payment, day: row.day, at: row.sold_at }))
   };
+}
+
+// ---- Owner AI cap: every Gemini call made for the owner is counted and capped per shop per day ----
+
+export const OWNER_AI_DEFAULTS = { setup: 80, update: 40, about: 6 };
+
+// Takes one call of the day. False when the shop's limit for this kind is used up (the call is then not made).
+export async function takeOwnerAi(env, shopId, kind, limit, now = new Date()) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const day = shopDay(now);
+  await db.prepare("INSERT OR IGNORE INTO botcraft_owner_ai (shop_id, day, kind, calls) VALUES (?, ?, ?, 0)").bind(shopId, day, kind).run();
+  const result = await db.prepare("UPDATE botcraft_owner_ai SET calls = calls + 1 WHERE shop_id = ? AND day = ? AND kind = ? AND calls < ?").bind(shopId, day, kind, limit).run();
+  return (result?.meta?.changes || 0) > 0;
+}
+
+export async function addOwnerTokens(env, shopId, kind, { inTokens = 0, outTokens = 0 } = {}, now = new Date()) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("UPDATE botcraft_owner_ai SET in_tokens = in_tokens + ?, out_tokens = out_tokens + ? WHERE shop_id = ? AND day = ? AND kind = ?")
+    .bind(Math.max(0, Math.round(inTokens)), Math.max(0, Math.round(outTokens)), shopId, shopDay(now), kind).run();
+}
+
+// This month's owner AI use of a shop, for the owner page and for admin.
+export async function ownerAiMonth(env, shopId, now = new Date()) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const since = shopDay(new Date(now.getTime() - 29 * 86400000));
+  const rows = (await db.prepare("SELECT kind, SUM(calls) AS calls, SUM(in_tokens) AS in_tokens, SUM(out_tokens) AS out_tokens FROM botcraft_owner_ai WHERE shop_id = ? AND day >= ? GROUP BY kind").bind(shopId, since).all()).results || [];
+  const today = (await db.prepare("SELECT kind, calls FROM botcraft_owner_ai WHERE shop_id = ? AND day = ?").bind(shopId, shopDay(now)).all()).results || [];
+  return { month: rows, today: Object.fromEntries(today.map(row => [row.kind, row.calls])) };
 }
