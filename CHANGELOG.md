@@ -164,3 +164,16 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 ## Customer page: one chat button on phones
 - The page now has a single floating "Ask the assistant" button. The separate camera and mic buttons are gone, because three buttons ran off the screen on phones.
 - The mic (voice to voice) and the camera/gallery (the + menu) are inside the chat box. Checked in Chromium at 320, 360, 412 and 1440 px: the button stays on screen, and the + / text / mic / send controls all fit.
+
+## Owner page: suggestions use the shop's own items
+- The example chips under "Update with chat" were fixed jewellery examples (gold chain, silver anklet, silk saree). They now come from the shop's items, for example "HP 15s price", "iPhone 15 out of stock", "Hide Laptop bag", plus timings and holiday. A shop with no items sees "Add first item and price". The chips refresh after every change.
+
+## Owner: record sales and see today's sales
+- The owner tells the update chat what was sold: "Sold 2 iPhone 15", "1 TV sale 24000 upi", or in Telugu ("ammanu"). The chat shows the sale (quantity, amount, payment) for Confirm, and Undo works. The amount uses the item's own price unless the owner says another price. "Sold out" still means the stock is finished, not a sale.
+- New "Sales" card on the owner page: Today, last 7 days, last 30 days (amount, number of sales and items), today's items with amounts, how it was paid, and recent sales with a Remove button for mistakes.
+- Asking the chat "Today sales?" or "sales this week" answers from the saved sales without the AI.
+- Only sales the owner records are counted; customers' cart orders and shop counter sales that are not told to the bot are not. Item stock counts (quantity left) are not built yet.
+- Backend: new table botcraft_sales (created automatically), owner actions record_sale and delete_sale, the owner view returns a sales summary, deleting a bot deletes its sales. Deploy the Worker for it to work live. Checked: 90 end-to-end checks (6 new), planner cases, and a browser run of the owner page in demo mode.
+
+## Customer assistant no longer says "no online payment"
+- The assistant's rules said "Online payment is not available", so it told customers the shop has no online payment. It now says only that it cannot take payment in the chat, sends the customer to the owner at the counter, and never states which payment methods the shop accepts unless the owner's saved information says so.

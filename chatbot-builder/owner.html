@@ -33,7 +33,7 @@
     <main id="sections" hidden>
       <section class="card update-chat" id="updateChat">
         <h2>💬 Update with chat</h2>
-        <p class="muted">Type, speak or send a photo — for example “Gold chain price 52000” or “Silver anklet out of stock”. You always see the changes first and confirm.</p>
+        <p class="muted">Type, speak or send a photo — for example “&lt;item name&gt; price 52000” or “&lt;item name&gt; out of stock”. You always see the changes first and confirm.</p>
         <div class="uc-log" aria-live="polite"></div>
         <div class="uc-chips" aria-label="Examples"></div>
         <div class="uc-tray" hidden></div>
@@ -44,6 +44,15 @@
           <button class="uc-mic" type="button" aria-label="Speak" aria-pressed="false" title="Speak">🎙️</button>
           <button class="uc-send btn" type="submit">Check</button>
         </form>
+      </section>
+
+      <section class="card" id="salesCard">
+        <h2>🧾 Sales</h2>
+        <p class="muted">Tell the chat above what you sold, for example “Sold 2 iPhone 15” or “1 TV sale 24000 upi”. Only sales you record here are counted.</p>
+        <div class="sales-tabs" role="tablist"></div>
+        <div class="sales-total"></div>
+        <ul class="sales-items"></ul>
+        <details class="sales-recent"><summary>Recent sales</summary><ul class="sales-list"></ul></details>
       </section>
 
       <section class="card" id="infoCard">
@@ -240,6 +249,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=21"></script>
+  <script type="module" src="./owner.js?v=23"></script>
 </body>
 </html>

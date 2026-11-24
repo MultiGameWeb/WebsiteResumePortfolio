@@ -8,7 +8,7 @@
 export const INFO_FIELDS = {
   shop_name: 80, timings: 120, weekly_holiday: 60, address: 200, call_number: 20, whatsapp_number: 20, map_link: 300, about: 400
 };
-const OP_TYPES = ["set_price", "set_stock", "set_details", "add_item", "delete_item", "rename_item", "delete_photo", "set_visibility", "set_section", "edit_answer", "delete_answer", "set_answer_visibility", "add_note", "set_info", "rename_bot", "attach_photo"];
+const OP_TYPES = ["set_price", "set_stock", "set_details", "add_item", "delete_item", "rename_item", "delete_photo", "set_visibility", "set_section", "edit_answer", "delete_answer", "set_answer_visibility", "add_note", "set_info", "rename_bot", "attach_photo", "record_sale"];
 const PHOTO_KINDS = ["product", "main", "owner", "gallery"];
 const MAX_OPS = 12;
 export const SECTIONS = ["about", "gallery", "map"];
@@ -35,7 +35,9 @@ export const PLAN_SCHEMA = {
           field: { type: "STRING", enum: Object.keys(INFO_FIELDS), description: "which shop information to change (set_info)" },
           value: { type: "STRING", description: "the new value (set_info, rename_bot)" },
           photo_kind: { type: "STRING", enum: PHOTO_KINDS, description: "where a sent photo goes (attach_photo)" },
-          image: { type: "INTEGER", description: "0-based number of the photo the owner sent (attach_photo)" }
+          image: { type: "INTEGER", description: "0-based number of the photo the owner sent (attach_photo)" },
+          quantity: { type: "INTEGER", description: "how many were sold (record_sale), 1 when not said" },
+          payment: { type: "STRING", enum: ["cash", "upi", "card", "other"], description: "how the customer paid (record_sale), only when the owner said" }
         },
         required: ["type"]
       }
@@ -71,6 +73,7 @@ export function buildPlanPrompt(products, info, imageCount, savedAnswers = []) {
     "- delete_item: remove an existing item, only when the owner clearly says delete/remove.",
     "- set_info: change shop information. field is one of: shop_name, timings, weekly_holiday, address, call_number, whatsapp_number, map_link, about.",
     "- rename_bot: the assistant's name (value).",
+    "- record_sale: the owner SOLD an existing item today (name, quantity = how many, 1 if not said; price = the selling price of ONE piece only if the owner said it; payment cash/upi/card only if said). Use it for 'sold 2 iPhone 15', 'ఒక ఫ్యాన్ అమ్మాను', 'sale 1 TV 24000 upi'. It does not change the item's price or stock.",
     `- attach_photo: a photo the owner sent (image = 0-based number, ${imageCount} sent). photo_kind: product (name = the item it shows), main (shop front), owner (the owner), gallery.`,
     "Use the EXACT item name from the list below when the owner means an existing item. Prices keep the rupee sign and Indian digit grouping (₹52,000).",
     "If the owner's message is unclear or an item is not in the list, add a short question in `unclear` and leave that change out.",
@@ -152,6 +155,12 @@ export function cleanPlan(raw, products, imageCount = 0, savedAnswers = []) {
         const index = Number(op.photo_index);
         if (Number.isInteger(index) && index >= 1) ops.push({ type, kind, index });
       } else ops.push({ type, kind });
+    } else if (type === "record_sale") {
+      const product = findProduct(products, op.name);
+      if (!product) { dropped.push(clip(op.name, 120)); continue; }
+      const quantity = Math.round(Number(op.quantity));
+      const unit = digits(op.price).slice(0, 9);
+      ops.push({ type, name: product.name, key: product.name_key, quantity: Number.isInteger(quantity) && quantity >= 1 ? Math.min(quantity, 9999) : 1, ...(unit ? { price: unit } : {}), ...(["cash", "upi", "card", "other"].includes(op.payment) ? { payment: op.payment } : {}) });
     } else if (type === "set_info") {
       const field = String(op.field || "");
       if (!(field in INFO_FIELDS)) continue;

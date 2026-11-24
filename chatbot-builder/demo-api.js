@@ -43,7 +43,7 @@
         { q: 'Do you exchange old gold?', a: 'Yes, old gold is exchanged at the market rate of the day.' },
         { q: 'Do you give a bill and hallmark certificate?', a: 'Yes, every item comes with a GST bill and a hallmark certificate.' }
       ],
-      questions: [], answeredQuestions: [], requests: [], orders: [],
+      questions: [], answeredQuestions: [], requests: [], orders: [], sales: [],
       features: { photo: true, preorder: false, orderStatus: true, voice: true, cart: false },
       onboarding: { done: true, step: 8 },
       savedAt: Date.now()
@@ -82,10 +82,33 @@
     return cleaned + ' Assistant';
   }
 
+  function shopDay(ms) { return new Date(ms + 5.5 * 3600000).toISOString().slice(0, 10); }
+  function salesSummary(state) {
+    var now = Date.now(), today = shopDay(now), weekStart = shopDay(now - 6 * 86400000), monthStart = shopDay(now - 29 * 86400000);
+    var blank = function () { return { sales: 0, qty: 0, total: 0, unpriced: 0 }; };
+    var out = { day: today, today: blank(), week: blank(), month: blank(), todayItems: [], todayByPayment: {}, recent: [] };
+    var items = {};
+    (state.sales || []).filter(function (r) { return r.day >= monthStart; }).sort(function (a, b) { return b.at - a.at; }).forEach(function (r) {
+      var amount = r.qty * r.unit_price;
+      function add(b) { b.sales += 1; b.qty += r.qty; b.total += amount; if (!r.unit_price) b.unpriced += 1; }
+      add(out.month); if (r.day >= weekStart) add(out.week);
+      if (r.day === today) {
+        add(out.today);
+        var e = items[r.name_key] || (items[r.name_key] = { name: r.name, qty: 0, total: 0 });
+        e.qty += r.qty; e.total += amount;
+        var pay = r.payment || 'other'; out.todayByPayment[pay] = (out.todayByPayment[pay] || 0) + amount;
+      }
+      if (out.recent.length < 20) out.recent.push({ id: r.id, name: r.name, qty: r.qty, unit_price: r.unit_price, total: amount, payment: r.payment, day: r.day, at: new Date(r.at).toISOString() });
+    });
+    out.todayItems = Object.keys(items).map(function (k) { return items[k]; }).sort(function (a, b) { return b.total - a.total || b.qty - a.qty; });
+    return out;
+  }
+
   function ownerView(state) {
     var f = state.facts;
     return {
       ok: true,
+      sales: salesSummary(state),
       shopName: f.shop_name, botName: f.bot_name || defaultBotName(f), defaultBotName: defaultBotName({ shop_name: f.shop_name }),
       customBotName: f.bot_name || '', publicId: PUBLIC_ID,
       products: state.products.map(function (p) { return Object.assign({}, p, { photo_id: p.photo_id || '' }); }),
@@ -231,6 +254,14 @@
         Object.assign(existing, record);
       } else state.products.unshift(record);
       syncProductPhotos(state);
+    } else if (action === 'record_sale') {
+      var sp = state.products.find(function (p) { return p.name_key === clip(body.key, 140); });
+      if (!sp) throw new Error('That item was not found.');
+      var priceOf = function (t) { var m = String(t || '').replace(/,/g, '').match(/\d+/); return m ? Number(m[0]) : 0; };
+      state.sales = state.sales || [];
+      state.sales.push({ id: 's_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name_key: sp.name_key, name: sp.name, qty: Math.min(Math.max(Math.round(Number(body.quantity)) || 1, 1), 9999), unit_price: priceOf(body.price) || priceOf(sp.price_text), payment: ['cash', 'upi', 'card', 'other'].indexOf(body.payment) !== -1 ? body.payment : '', day: shopDay(Date.now()), at: Date.now() });
+    } else if (action === 'delete_sale') {
+      state.sales = (state.sales || []).filter(function (r) { return r.id !== body.saleId; });
     } else if (action === 'delete_product') {
       var dkey = clip(body.key, 140);
       state.products = state.products.filter(function (p) { return p.name_key !== dkey; });

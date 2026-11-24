@@ -105,6 +105,20 @@ const SCHEMA = [
     updated_at TEXT NOT NULL
   )`,
   `CREATE INDEX IF NOT EXISTS idx_botcraft_requests_shop ON botcraft_requests(shop_id, kind, updated_at)`,
+  // Sales the owner recorded ("Sold 2 iPhone 15"). unit_price is whole rupees
+  // (0 when the item had no price). day is the shop's local date (India, UTC+5:30).
+  `CREATE TABLE IF NOT EXISTS botcraft_sales (
+    sale_id TEXT PRIMARY KEY,
+    shop_id TEXT NOT NULL,
+    name_key TEXT NOT NULL DEFAULT '',
+    item_name TEXT NOT NULL,
+    qty INTEGER NOT NULL DEFAULT 1,
+    unit_price INTEGER NOT NULL DEFAULT 0,
+    payment TEXT NOT NULL DEFAULT '',
+    day TEXT NOT NULL,
+    sold_at TEXT NOT NULL
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_botcraft_sales_shop ON botcraft_sales(shop_id, day)`,
   // Owner settings that are not shop facts (which bot buttons are on).
   `CREATE TABLE IF NOT EXISTS botcraft_settings (
     shop_id TEXT PRIMARY KEY,
@@ -370,7 +384,7 @@ export async function deleteShop(env, shopId) {
   const files = await r2KeysWhere(db, "shop_id = ?", shopId);
   const tables = [
     "botcraft_answers", "botcraft_products", "botcraft_builder_messages", "botcraft_photos", "botcraft_customer_questions",
-    "botcraft_requests", "botcraft_public", "botcraft_settings", "botcraft_push_subs", "botcraft_replies", "botcraft_usage",
+    "botcraft_requests", "botcraft_sales", "botcraft_public", "botcraft_settings", "botcraft_push_subs", "botcraft_replies", "botcraft_usage",
     "botcraft_daily_asks", "botcraft_shops"
   ];
   await db.batch(tables.map(table => db.prepare(`DELETE FROM ${table} WHERE shop_id = ?`).bind(shopId)));
@@ -865,4 +879,69 @@ export async function loadVapidKeys(env) {
   }
   vapidKeys = JSON.parse(row.value);
   return vapidKeys;
+}
+
+
+// ---- Sales the owner records ----
+
+const SALE_PAYMENTS = ["cash", "upi", "card", "other"];
+const shopDay = date => new Date(date.getTime() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+
+// First whole-rupee amount in a price text such as "₹52,990" or "Rs 799 onwards". 0 when there is none.
+export function priceNumber(text) {
+  const match = String(text ?? "").replace(/,/g, "").match(/\d+(?:\.\d+)?/);
+  return match ? Math.round(Number(match[0])) : 0;
+}
+
+export async function recordSale(env, shopId, { key = "", name, qty = 1, unitPrice = 0, payment = "", now = new Date() }) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const id = `s_${now.getTime().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+  const count = Math.min(Math.max(Math.round(Number(qty)) || 1, 1), 9999);
+  const price = Math.min(Math.max(Math.round(Number(unitPrice)) || 0, 0), 99999999);
+  await db.prepare("INSERT INTO botcraft_sales (sale_id, shop_id, name_key, item_name, qty, unit_price, payment, day, sold_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+    .bind(id, shopId, String(key).slice(0, 140), String(name).slice(0, 120), count, price, SALE_PAYMENTS.includes(payment) ? payment : "", shopDay(now), now.toISOString()).run();
+  return id;
+}
+
+export async function deleteSale(env, shopId, saleId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  await db.prepare("DELETE FROM botcraft_sales WHERE shop_id = ? AND sale_id = ?").bind(shopId, String(saleId)).run();
+}
+
+// Totals for today, the last 7 days and the last 30 days, today's items, and the latest sales.
+export async function salesSummary(env, shopId, now = new Date()) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const today = shopDay(now);
+  const since = shopDay(new Date(now.getTime() - 29 * 86400000));
+  const rows = (await db.prepare("SELECT sale_id, name_key, item_name, qty, unit_price, payment, day, sold_at FROM botcraft_sales WHERE shop_id = ? AND day >= ? ORDER BY sold_at DESC LIMIT 2000")
+    .bind(shopId, since).all()).results || [];
+  const weekStart = shopDay(new Date(now.getTime() - 6 * 86400000));
+  const blank = () => ({ sales: 0, qty: 0, total: 0, unpriced: 0 });
+  const totals = { today: blank(), week: blank(), month: blank() };
+  const byItem = new Map();
+  const byPayment = {};
+  for (const row of rows) {
+    const amount = row.qty * row.unit_price;
+    const add = bucket => { bucket.sales += 1; bucket.qty += row.qty; bucket.total += amount; if (!row.unit_price) bucket.unpriced += 1; };
+    add(totals.month);
+    if (row.day >= weekStart) add(totals.week);
+    if (row.day === today) {
+      add(totals.today);
+      const entry = byItem.get(row.name_key || row.item_name) || { name: row.item_name, qty: 0, total: 0 };
+      entry.qty += row.qty; entry.total += amount;
+      byItem.set(row.name_key || row.item_name, entry);
+      const pay = row.payment || "other";
+      byPayment[pay] = (byPayment[pay] || 0) + amount;
+    }
+  }
+  return {
+    day: today,
+    ...totals,
+    todayItems: [...byItem.values()].sort((a, b) => b.total - a.total || b.qty - a.qty),
+    todayByPayment: byPayment,
+    recent: rows.slice(0, 20).map(row => ({ id: row.sale_id, name: row.item_name, qty: row.qty, unit_price: row.unit_price, total: row.qty * row.unit_price, payment: row.payment, day: row.day, at: row.sold_at }))
+  };
 }

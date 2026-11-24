@@ -22,6 +22,14 @@ p=await pub(); ok('shown again after unhide',p.offline.items.some(i=>i.name==='S
 let r=await owner('save_product',{key:'gold chain 22k',name:'Gold Necklace',price_text:'₹48,500',details:'10 grams',stock_status:'in_stock'}); ok('rename item',r.ok&&r.products.some(x=>x.name==='Gold Necklace')&&!r.products.some(x=>x.name==='Gold Chain 22K'));
 r=await owner('save_product',{key:'gold necklace',name:'silver anklet',price_text:'1',details:'',stock_status:'in_stock'}); ok('rename onto an existing item is refused',r.status===400&&/already/i.test(r.error||''),JSON.stringify(r).slice(0,120));
 r=await owner('load'); ok('both items still exist after refused rename',r.products.length===2);
+// Sales the owner records
+r=await owner('load'); ok('no sales yet',r.sales&&r.sales.today.sales===0&&r.sales.recent.length===0,JSON.stringify(r.sales).slice(0,100));
+r=await owner('record_sale',{key:'gold necklace',quantity:2}); ok('sale uses the item price',r.ok&&r.sales.today.sales===1&&r.sales.today.qty===2&&r.sales.today.total===97000,JSON.stringify(r.sales&&r.sales.today));
+r=await owner('record_sale',{key:'silver anklet',quantity:1,price:'₹3,000',payment:'upi'}); ok('sale with its own price and payment',r.ok&&r.sales.today.total===100000&&r.sales.todayByPayment.upi===3000&&r.sales.todayItems.length===2,JSON.stringify(r.sales&&r.sales.todayByPayment));
+ok('week and month include today',r.sales.week.total===100000&&r.sales.month.sales===2);
+r=await owner('record_sale',{key:'no such item',quantity:1}); ok('sale for an unknown item is refused',r.status===400);
+r=await owner('load'); const saleId=r.sales.recent[0].id; r=await owner('delete_sale',{saleId}); ok('a sale can be removed',r.ok&&r.sales.today.sales===1,JSON.stringify(r.sales&&r.sales.today));
+
 
 // --- sections
 await owner('set_section',{section:'about',hidden:true}); await owner('set_section',{section:'map',hidden:true});

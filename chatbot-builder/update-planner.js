@@ -12,6 +12,27 @@ const WEEKDAYS = [
   ['Friday', /\b(friday|fri)\b|శుక్రవారం|शुक्रवार/i], ['Saturday', /\b(saturday|sat)\b|శనివారం|शनिवार/i]
 ];
 
+// "sold 2 iPhone 15", "1 TV sale 24000 upi" (not "sold out", which means the stock is finished).
+const SOLD = /\b(sold|sale|sales|sell|selling|becha|bika|biki|ammanu|ammaanu|ammesanu)\b|అమ్మాను|అమ్మేశాను|అమ్ముడు|అమ్ముడైంది|बेचा|बिका|बेच दिया/i;
+const PAYMENT_WORDS = [['upi', /\b(upi|gpay|google ?pay|phone ?pe|paytm)\b/i], ['card', /\b(card|debit|credit)\b/i], ['cash', /\bcash\b|క్యాష్|नकद/i]];
+
+// Quantity and selling price from the words around the item name.
+function saleDetails(rest) {
+  const cleaned = rest.replace(/\b(sold|sale|sales|sell|selling|pcs?|pieces?|nos?|units?|upi|gpay|cash|card|paytm|phone ?pe|today|just)\b/gi, ' ');
+  let price = '';
+  let qty = 1;
+  const marked = cleaned.match(/(?:₹|rs\.?|inr|@|\bat\b|\bfor\b|\bprice\b|\brate\b)\s*(\d[\d,]*)/i);
+  if (marked) price = marked[1].replace(/,/g, '');
+  const others = [...cleaned.replace(marked ? marked[0] : '', ' ').matchAll(/\d[\d,]*/g)].map((m) => m[0].replace(/,/g, ''));
+  for (const number of others) {
+    if (!price && Number(number) > 99) price = number;
+    else if (Number(number) >= 1 && Number(number) <= 999 && qty === 1) qty = Number(number);
+  }
+  const word = cleaned.match(/\b(one|two|three|four|five|six|seven|eight|nine|ten)\b/i);
+  if (word && qty === 1 && !others.some((n) => Number(n) <= 99)) qty = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'].indexOf(word[1].toLowerCase()) + 1;
+  return { qty, price };
+}
+
 const KW = {
   price: /\b(price|rate|cost|mrp|amount|dhara|ret|rupees|rs)\b|ధర|రేటు|రేట్|కాస్ట్|कीमत|दाम|भाव|रेट/i,
   out: /\b(out of stock|no stock|stock (?:is )?(?:over|finished|empty|less)|finished|sold out|not available|unavailable|over|stock ledu|ayipoyindi|ayipoyindhi|aipoyindi)\b|స్టాక్ లేదు|అయిపోయింది|అయిపోయిన|లేదు|खत्म|स्टॉक नहीं|उपलब्ध नहीं/i,
@@ -254,6 +275,13 @@ export function planLocally(text, { products = [], imageCount = 0 } = {}) {
     const found = matchProduct(clause, products);
     if (found.ambiguous.length) { questions.push(`Which item do you mean: ${found.ambiguous.join(' or ')}?`); continue; }
 
+    if (found.product && SOLD.test(lower) && !/\bsold out\b|\bsold-out\b/i.test(lower)) {
+      const product = found.product;
+      const { qty, price } = saleDetails(stripItemName(clause, product));
+      const payment = (PAYMENT_WORDS.find(([, pattern]) => pattern.test(lower)) || [])[0];
+      ops.push({ type: 'record_sale', name: product.name, key: product.name_key, quantity: qty, ...(price ? { price } : {}), ...(payment ? { payment } : {}) });
+      continue;
+    }
     if (found.product) {
       const product = found.product;
       if (KW.unhide.test(lower) && !KW.hide.test(lower)) { ops.push({ type: 'set_visibility', name: product.name, key: product.name_key, hidden: false }); continue; }
@@ -342,6 +370,11 @@ export function describeOp(op, products = [], info = {}) {
     }
     case 'delete_item': return { icon: '🗑', text: `Delete item: ${op.name}`, danger: true };
     case 'set_info': { const old = info[op.field]; return { icon: 'ⓘ', text: `${FIELD_LABELS[op.field] || op.field}: ${old ? `${old} → ` : ''}${op.value}` }; }
+    case 'record_sale': {
+      const unit = op.price ? Number(op.price) : Number(String(find(op.key)?.price_text || '').replace(/,/g, '').match(/\d+/)?.[0] || 0);
+      const money = unit ? ` = ₹${(unit * op.quantity).toLocaleString('en-IN')}${op.price ? '' : ` (at ₹${unit.toLocaleString('en-IN')} each)`}` : ' (no price set, amount will be ₹0)';
+      return { icon: '🧾', text: `Sale: ${op.quantity} × ${op.name}${money}${op.payment ? `, paid by ${op.payment.toUpperCase()}` : ''}` };
+    }
     case 'rename_bot': return { icon: '🤖', text: `Assistant name → ${op.value}` };
     case 'attach_photo': {
       const where = { main: 'main shop photo', owner: 'owner photo', gallery: 'gallery', product: op.name ? `photo of ${op.name}` : 'item photo' }[op.kind];

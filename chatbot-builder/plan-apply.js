@@ -80,6 +80,11 @@ export async function applyPlan({ ops, images = [], call, getView }) {
     } else if (op.type === 'delete_item' && product) {
       undoable = false;
       ok = await call('delete_product', { key: product.name_key });
+    } else if (op.type === 'record_sale' && product) {
+      const before = new Set(((getView().sales || {}).recent || []).map((sale) => sale.id));
+      ok = await call('record_sale', { key: product.name_key, quantity: op.quantity, price: op.price || '', payment: op.payment || '' });
+      const made = ok ? ((getView().sales || {}).recent || []).find((sale) => !before.has(sale.id)) : null;
+      if (made) undo.push({ action: 'delete_sale', data: { saleId: made.id } });
     } else if (op.type === 'set_info') {
       infoBefore[op.field] = getView().info?.[op.field] || '';
       infoPatch[op.field] = op.value;

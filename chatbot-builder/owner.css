@@ -148,3 +148,13 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-
 .studio-compare img { width: 100%; aspect-ratio: 1; object-fit: contain; background: #fff; border: 1px solid var(--border); border-radius: 12px; display: block; }
 .studio-compare figcaption { text-align: center; font-size: 12px; color: var(--soft); margin-top: 4px; }
 .studio-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+.sales-tabs{display:flex;gap:6px;margin:8px 0}
+.sales-tabs button{border:1px solid #cdd5f3;background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;cursor:pointer}
+.sales-tabs button[aria-selected="true"]{background:#1f3fd1;color:#fff;border-color:#1f3fd1}
+.sales-total{font-size:22px;font-weight:700;margin:6px 0}
+.sales-total small{display:block;font-size:13px;font-weight:400;color:#5a6280}
+.sales-items,.sales-list{list-style:none;margin:6px 0;padding:0}
+.sales-items li,.sales-list li{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid #eceffa;font-size:14px}
+.sales-list li button{border:0;background:none;color:#b3261e;cursor:pointer;font-size:13px}
+.sales-recent{margin-top:8px}
