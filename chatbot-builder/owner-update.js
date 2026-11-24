@@ -10,7 +10,16 @@ import { applyPlan, runUndo } from './plan-apply.js?v=8';
 import { describeOp, planLocally } from './update-planner.js?v=7';
 import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
 
-const EXAMPLES = ['Gold chain price 52000', 'Silver anklet out of stock', 'Add Silk saree 3500', 'Timings 10 am to 8 pm', 'Closed on Sunday'];
+const GENERAL_EXAMPLES = ['Timings 10 am to 8 pm', 'Closed on Sunday'];
+
+// Suggestions use the shop's own items, so an electronics shop never sees jewellery examples.
+function examplesFor(view) {
+  const names = ((view && view.products) || []).filter((item) => item.stock_status !== 'hidden').map((item) => item.name).filter(Boolean);
+  if (!names.length) return ['Add first item and price', ...GENERAL_EXAMPLES];
+  const pick = (index) => names[index % names.length];
+  const step = Math.max(1, Math.floor(names.length / 3));
+  return [`${pick(0)} price `, `${pick(step)} out of stock`, `Hide ${pick(step * 2)}`, ...GENERAL_EXAMPLES];
+}
 const LANGS = [['te-IN', 'తెలుగు'], ['en-IN', 'English'], ['hi-IN', 'हिन्दी'], ['ta-IN', 'தமிழ்'], ['kn-IN', 'ಕನ್ನಡ']];
 const LANG_KEY = 'botcraft:ownerVoiceLang';
 
@@ -309,12 +318,21 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
   // ---- Wiring ----
   form.addEventListener('submit', (event) => { event.preventDefault(); submit(); });
   input.addEventListener('keydown', (event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); submit(); } });
-  chips.replaceChildren(...EXAMPLES.map((example) => {
-    const chip = el('button', 'uc-chip', example);
-    chip.type = 'button';
-    chip.addEventListener('click', () => { input.value = example; input.focus(); });
-    return chip;
-  }));
+  let chipKey = '';
+  const renderChips = () => {
+    const examples = examplesFor(getView());
+    const key = examples.join('|');
+    if (key === chipKey) return;
+    chipKey = key;
+    chips.replaceChildren(...examples.map((example) => {
+      const chip = el('button', 'uc-chip', example.trim());
+      chip.type = 'button';
+      chip.addEventListener('click', () => { input.value = example; input.focus(); });
+      return chip;
+    }));
+  };
+  renderChips();
+  document.addEventListener('botcraft:view', renderChips);
   bubble('bot', 'Tell me what changed in your shop — type it, speak it, or send a photo. I will show you the changes first, and nothing is saved until you confirm.');
   return { submit };
 }

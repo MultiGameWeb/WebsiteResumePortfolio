@@ -164,3 +164,6 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 ## Customer page: one chat button on phones
 - The page now has a single floating "Ask the assistant" button. The separate camera and mic buttons are gone, because three buttons ran off the screen on phones.
 - The mic (voice to voice) and the camera/gallery (the + menu) are inside the chat box. Checked in Chromium at 320, 360, 412 and 1440 px: the button stays on screen, and the + / text / mic / send controls all fit.
+
+## Owner page: suggestions use the shop's own items
+- The example chips under "Update with chat" were fixed jewellery examples (gold chain, silver anklet, silk saree). They now come from the shop's items, for example "HP 15s price", "iPhone 15 out of stock", "Hide Laptop bag", plus timings and holiday. A shop with no items sees "Add first item and price". The chips refresh after every change.
