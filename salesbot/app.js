@@ -826,6 +826,28 @@ function quickAnswer(lower, shop) {
   return '';
 }
 
+// Plain questions about the shop's timings, address or phone are answered from the saved shop details, with no AI
+// (so no cost to the shop). Only questions made of these simple words qualify; anything else goes to the AI.
+const FREE_TOPICS = [
+  ['timings', /\b(timings?|time|opening|open|closing|hours)\b/, ['timing', 'timings', 'time', 'opening', 'open', 'closing', 'hours', 'working', 'shop', 'store', 'your', 'the', 'what', 'are', 'is', 'when', 'do', 'you', 'entha', 'enti', 'enta', 'yenti', 'kya', 'hai', 'ka', 'ki', 'mi', 'mee', 'meeru', 'ela', 'cheppandi', 'tell', 'me', 'please', 'pls', 'of', 'ur']],
+  ['address', /\b(address|location|where|ekkada|kahan|directions?)\b/, ['address', 'location', 'where', 'is', 'are', 'the', 'your', 'shop', 'store', 'ur', 'ekkada', 'undi', 'unnaru', 'unnara', 'hai', 'kahan', 'directions', 'direction', 'tell', 'me', 'what', 'please', 'pls', 'of', 'map', 'located']],
+  ['phone', /\b(phone|number|contact|mobile|whatsapp)\b/, ['phone', 'number', 'contact', 'mobile', 'whatsapp', 'what', 'is', 'the', 'your', 'shop', 'ur', 'tell', 'me', 'please', 'pls', 'of', 'no', 'details', 'entha', 'enti', 'kya', 'hai']],
+];
+function freeAnswer(question) {
+  if (!saved?.shop) return '';
+  const lower = String(question || '').toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
+  const tokens = lower.split(' ').filter(Boolean);
+  if (!tokens.length || tokens.length > 7) return '';
+  const shop = saved.shop;
+  for (const [topic, key, vocabulary] of FREE_TOPICS) {
+    if (!key.test(lower) || !tokens.every((token) => vocabulary.includes(token))) continue;
+    if (topic === 'timings') return [shop.timings && `Timings: ${shop.timings}`, shop.weeklyHoliday && `Weekly holiday: ${shop.weeklyHoliday}`].filter(Boolean).join('\n');
+    if (topic === 'address') return shop.address ? `Address: ${shop.address}` : '';
+    return shop.call ? `Call us: ${shop.call}` : '';
+  }
+  return '';
+}
+
 function offlineAnswer(question) {
   if (!saved) return 'I need the internet to answer. Please connect, or ask at the counter.';
   const shop = saved.shop;
@@ -1001,6 +1023,15 @@ async function ask(text, product = null, { voice = false } = {}) {
     addMessage('bot', answer, OFFLINE_CHIPS);
     return answer;
   }
+  // Timings, address and phone are answered from the shop's saved details: instant, and no AI cost.
+  if (!photos.length && !files.length && !product && !voice) {
+    const free = freeAnswer(question);
+    if (free) {
+      history.push({ role: 'customer', text: question }, { role: 'bot', text: free });
+      addMessage('bot', free, ['Items & prices', 'Offers']);
+      return free;
+    }
+  }
   busy = true;
   send.disabled = true;
   let limitCode = '';
@@ -1022,7 +1053,7 @@ async function ask(text, product = null, { voice = false } = {}) {
     // No connection or the AI is busy: answer from the saved copy.
     typing.remove();
     const answer = offlineAnswer(question);
-    addMessage('bot', `(Basic answer — ${limitCode === 'no_replies' ? 'the AI assistant is resting for now' : limitCode === 'daily_limit' || limitCode === 'visitor_limit' ? 'too many questions for today' : 'AI not available right now'})\n${answer}`, OFFLINE_CHIPS);
+    addMessage('bot', `(Basic answer — ${limitCode === 'no_replies' ? 'the AI assistant is resting for now' : limitCode === 'low_credits' ? 'voice, photos and files need more AI credits than this shop has left, so please type your question' : limitCode === 'daily_limit' || limitCode === 'visitor_limit' ? 'too many questions for today' : 'AI not available right now'})\n${answer}`, OFFLINE_CHIPS);
     return answer;
   } finally {
     busy = false;

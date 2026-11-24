@@ -3,7 +3,7 @@ import { ABOUT_SCHEMA, INFO_FIELDS, SECTIONS, PLAN_SCHEMA, buildAboutPrompt, bui
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, addOwnerTokens, changeQty, ownerAiMonth, OWNER_AI_DEFAULTS, salesReport, takeOwnerAi, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
+  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, addOwnerTokens, replyCost, changeQty, ownerAiMonth, OWNER_AI_DEFAULTS, salesReport, takeOwnerAi, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
@@ -1056,11 +1056,16 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
     }, 429, origin);
   }
   // Reply metering: one credit per AI reply, taken first and given back if the AI fails.
-  const credit = await reserveReply(env, shop.shopId, freeRepliesFor(env)).catch(error => { console.error("BotCraft reply credit failed", error); return { ok: true, balance: -1 }; });
+  // Voice, photo and file replies cost the AI more, so they use more credits (voice 3, photo 2, file 2 by default).
+  const photos = customerImages(body?.images);
+  const files = customerFiles(body);
+  const cost = replyCost(env, { voice: isVoice, photos: photos.length, files: files.count });
+  const credit = await reserveReply(env, shop.shopId, freeRepliesFor(env), cost).catch(error => { console.error("BotCraft reply credit failed", error); return { ok: true, balance: -1 }; });
   if (!credit.ok) {
+    if (credit.short) return reply({ ok: false, code: "low_credits", error: `This needs ${cost} AI credits and the shop has fewer left. A typed question still works.` }, 402, origin);
     return reply({ ok: false, code: "no_replies", error: "This shop's assistant has used all its AI replies for now. Basic answers still work, or please ask at the counter." }, 402, origin);
   }
-  if (credit.balance === 20 || credit.balance === 0) {
+  if ((credit.balance <= 20 && credit.balance + cost > 20) || credit.balance === 0) {
     await later(ctx, notifyOwner(env, shop.shopId, {
       title: credit.balance === 0 ? "Your assistant has no AI replies left" : "Your assistant has 20 AI replies left",
       body: "Customers still get basic answers. Recharge to keep the full AI assistant.", url: "owner.html#replies", tag: "botcraft-replies"
@@ -1068,8 +1073,6 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   }
   const modelErrors = [];
   let usage = null;
-  const photos = customerImages(body?.images);
-  const files = customerFiles(body);
   try {
     const { result } = await callWithFallback(env, {
       onUsage: metadata => { usage = metadata; },
@@ -1085,7 +1088,7 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
     // Voice: what the customer said, as written by the AI. No clear speech means no answer and no charge.
     const heard = isVoice ? clip(result?.heard, 600) : "";
     if (isVoice && !heard.trim()) {
-      if (credit.balance >= 0) await releaseReply(env, shop.shopId).catch(() => {});
+      if (credit.balance >= 0) await releaseReply(env, shop.shopId, cost).catch(() => {});
       return reply({ ok: true, noSpeech: true }, 200, origin);
     }
     const asked = isVoice ? heard : text;
@@ -1107,7 +1110,7 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
       suggestions: (Array.isArray(result?.suggestions) ? result.suggestions : []).map(q => clip(q, 80)).filter(Boolean).slice(0, 3)
     }, 200, origin);
   } catch (error) {
-    if (credit.balance >= 0) await releaseReply(env, shop.shopId).catch(() => {});
+    if (credit.balance >= 0) await releaseReply(env, shop.shopId, cost).catch(() => {});
     console.error("BotCraft salesbot failed", error, modelErrors);
     return reply({ ok: false, error: "The assistant is busy right now. Please try again in a moment, or ask at the counter." }, 503, origin);
   }

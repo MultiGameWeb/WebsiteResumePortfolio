@@ -636,22 +636,34 @@ export const DEFAULT_FREE_REPLIES = 200;
 export const freeRepliesFor = env => (Number(env?.BOTCRAFT_FREE_REPLIES) >= 0 && env?.BOTCRAFT_FREE_REPLIES !== undefined && env?.BOTCRAFT_FREE_REPLIES !== "" ? Math.floor(Number(env.BOTCRAFT_FREE_REPLIES)) : DEFAULT_FREE_REPLIES);
 
 // Takes one credit before the AI is asked. { ok: true, balance } or { ok: false, balance: 0 }.
-export async function reserveReply(env, shopId, freeReplies = DEFAULT_FREE_REPLIES) {
+export async function reserveReply(env, shopId, freeReplies = DEFAULT_FREE_REPLIES, cost = 1) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   const now = new Date().toISOString();
+  const credits = Math.max(1, Math.floor(Number(cost)) || 1);
   // A shop's first customer reply creates its row with the free replies.
   await db.prepare("INSERT OR IGNORE INTO botcraft_replies (shop_id, balance, granted, used, updated_at) VALUES (?, ?, ?, 0, ?)").bind(shopId, freeReplies, freeReplies, now).run();
-  const taken = await db.prepare("UPDATE botcraft_replies SET balance = balance - 1, used = used + 1, updated_at = ? WHERE shop_id = ? AND balance > 0").bind(now, shopId).run();
-  if (!taken.meta?.changes) return { ok: false, balance: 0 };
+  const taken = await db.prepare("UPDATE botcraft_replies SET balance = balance - ?, used = used + ?, updated_at = ? WHERE shop_id = ? AND balance >= ?").bind(credits, credits, now, shopId, credits).run();
   const row = await db.prepare("SELECT balance FROM botcraft_replies WHERE shop_id = ?").bind(shopId).first();
-  return { ok: true, balance: Number(row?.balance ?? 0) };
+  const balance = Number(row?.balance ?? 0);
+  // short: some credits are left, just not enough for a voice, photo or file reply (a text reply still works).
+  if (!taken.meta?.changes) return { ok: false, balance, short: balance > 0 };
+  return { ok: true, balance };
 }
 
-// The AI failed: give the credit back.
-export async function releaseReply(env, shopId) {
+// The AI failed: give the credits back.
+export async function releaseReply(env, shopId, cost = 1) {
   const db = env.BOTCRAFT_DB;
-  await db.prepare("UPDATE botcraft_replies SET balance = balance + 1, used = MAX(0, used - 1), updated_at = ? WHERE shop_id = ?").bind(new Date().toISOString(), shopId).run();
+  const credits = Math.max(1, Math.floor(Number(cost)) || 1);
+  await db.prepare("UPDATE botcraft_replies SET balance = balance + ?, used = MAX(0, used - ?), updated_at = ? WHERE shop_id = ?").bind(credits, credits, new Date().toISOString(), shopId).run();
+}
+
+// Credits one reply uses. A text reply is 1; voice, photos and files cost the AI more, so they use more.
+// Change them with BOTCRAFT_COST_VOICE, BOTCRAFT_COST_PHOTO and BOTCRAFT_COST_FILE.
+export function replyCost(env, { voice = false, photos = 0, files = 0 } = {}) {
+  const read = (name, fallback) => { const n = Number(env?.[name]); return Number.isFinite(n) && n >= 1 ? Math.min(Math.floor(n), 20) : fallback; };
+  if (voice) return read("BOTCRAFT_COST_VOICE", 3);
+  return Math.max(1, photos ? read("BOTCRAFT_COST_PHOTO", 2) : 1, files ? read("BOTCRAFT_COST_FILE", 2) : 1);
 }
 
 export async function recordUsage(env, shopId, { inTokens = 0, outTokens = 0 } = {}) {

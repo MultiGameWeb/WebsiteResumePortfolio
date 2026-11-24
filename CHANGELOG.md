@@ -220,3 +220,8 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Owners can still only make the changes the update chat knows (items, stock, sales, shop information, sections, saved answers, photos). It is not an open chat for other jobs.
 - Reply credits for customers are unchanged. Deleting a bot deletes its counters. `ownerAiMonth` in the store gives a shop's last 30 days of owner AI calls and tokens (for admin; no screen yet).
 - Checked: 113 end-to-end checks (4 new: limit reached gives 429, simple changes still work, setup chat is capped too).
+
+## Cost control for customer replies: weighted credits and free answers for plain questions
+- Voice, photo and file replies now use more credits than a text reply: voice 3, photo 2, file 2 (text stays 1). Change them with the Worker variables BOTCRAFT_COST_VOICE, BOTCRAFT_COST_PHOTO and BOTCRAFT_COST_FILE. A reply that needs more credits than the shop has left is refused with "a typed question still works" (text keeps working down to zero). A failed AI call gives back all of its credits. The 20-credits-left alert still fires when a heavier reply crosses 20.
+- Plain questions about the shop's timings, address or phone ("shop timings entha?", "Where is the shop?", "phone number") are answered on the page from the saved shop details: instant, no AI call, no credit. Only questions made of these simple words qualify; "time to deliver", "open on Sunday late?", prices and anything about an item go to the AI. Not used with photos, files, a selected item or talk mode.
+- Checked: 116 end-to-end checks (3 new for weighted credits; the test shop's daily limit became 9) and a browser run: four plain questions answered free, three others went to the AI.
