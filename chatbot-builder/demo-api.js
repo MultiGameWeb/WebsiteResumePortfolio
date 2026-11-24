@@ -104,6 +104,30 @@
     return out;
   }
 
+  function addDaysStr(day, n) { return new Date(Date.parse(day + 'T00:00:00Z') + n * 86400000).toISOString().slice(0, 10); }
+  function salesReport(state, from, to) {
+    var today = shopDay(Date.now());
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(from) || !/^\d{4}-\d{2}-\d{2}$/.test(to)) throw new Error('Please choose the dates.');
+    if (from > to) { var t = from; from = to; to = t; }
+    if (to > today) to = today;
+    if (from > to) from = to;
+    var rows = (state.sales || []).filter(function (r) { return r.day >= from && r.day <= to; }).sort(function (a, b) { return b.at - a.at; });
+    var days = {}, order = [];
+    for (var d = from; d <= to; d = addDaysStr(d, 1)) { days[d] = { day: d, sales: 0, qty: 0, total: 0 }; order.push(d); }
+    var items = {}, payments = {}, totals = { sales: 0, qty: 0, total: 0, unpriced: 0 };
+    rows.forEach(function (r) {
+      var amount = r.qty * r.unit_price;
+      var dr = days[r.day]; if (dr) { dr.sales += 1; dr.qty += r.qty; dr.total += amount; }
+      var it = items[r.name_key] || (items[r.name_key] = { name: r.name, qty: 0, total: 0, sales: 0 });
+      it.qty += r.qty; it.total += amount; it.sales += 1;
+      var pay = r.payment || 'other'; payments[pay] = (payments[pay] || 0) + amount;
+      totals.sales += 1; totals.qty += r.qty; totals.total += amount; if (!r.unit_price) totals.unpriced += 1;
+    });
+    return { from: from, to: to, today: today, totals: totals, payments: payments, days: order.map(function (k) { return days[k]; }),
+      items: Object.keys(items).map(function (k) { return items[k]; }).sort(function (a, b) { return b.total - a.total || b.qty - a.qty; }),
+      rows: rows.slice(0, 1000).map(function (r) { return { id: r.id, name: r.name, qty: r.qty, unit_price: r.unit_price, total: r.qty * r.unit_price, payment: r.payment, day: r.day, at: new Date(r.at).toISOString() }; }) };
+  }
+
   function ownerView(state) {
     var f = state.facts;
     return {
@@ -351,6 +375,9 @@
     } else if (action === 'generate_about') {
       state.facts.about = aboutFrom(state.facts);
       if (!state.facts.about) throw new Error('Please add your shop name first.');
+    } else if (action === 'sales_report') {
+      var rep = salesReport(state, String(body.from || ''), String(body.to || ''));
+      var viewWithReport = ownerView(state); viewWithReport.report = rep; return viewWithReport;
     } else if (action === 'plan_update') {
       var err = new Error('The AI helper is not available in the demo.');
       err.status = 501;

@@ -43,6 +43,16 @@ r=await owner('save_product',{key:'gold necklace 22k',name:'Gold Necklace',price
 r=await owner('set_quantity',{key:'gold necklace',quantity:null}); ok('the owner can stop counting an item',r.products.find(x=>x.name==='Gold Necklace').qty===null);
 r=await owner('set_quantity',{key:'no such item',quantity:1}); ok('stock count of an unknown item is refused',r.status===400);
 r=await owner('set_quantity',{key:'silver anklet',quantity:2,mode:'set'});
+// Sales tab report
+r=await owner('load'); const today=r.sales.day;
+r=await owner('sales_report',{from:today,to:today}); const rep=r.report;
+ok('report for today has totals, items and payments',r.ok&&rep&&rep.totals.sales>=2&&rep.items.length>=1&&rep.days.length===1&&Object.keys(rep.payments).length>=1,JSON.stringify(rep&&rep.totals));
+ok('report rows add up to the total',rep.rows.reduce((a,x)=>a+x.total,0)===rep.totals.total&&rep.days[0].total===rep.totals.total);
+r=await owner('sales_report',{from:'2020-01-01',to:today}); ok('a long range is cut to one year with a row for each day',r.report.days.length===366,String(r.report.days.length));
+r=await owner('sales_report',{from:today,to:'2099-01-01'}); ok('future dates are cut to today',r.report.to===today);
+r=await owner('sales_report',{from:'yesterday',to:today}); ok('bad dates are refused',r.status===400);
+r=await owner('sales_report',{from:'2020-01-01',to:'2020-01-31'}); ok('an empty period gives zeros',r.ok&&r.report.totals.sales===0&&r.report.items.length===0);
+
 p=await pub(); const anklet=(p.offline?.items||[]).find(x=>x.name==='Silver Anklet'); ok('customers see only a low count, never the exact stock',anklet&&anklet.left===2&&anklet.qty===undefined,JSON.stringify(anklet));
 
 
