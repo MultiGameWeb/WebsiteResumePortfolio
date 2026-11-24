@@ -363,3 +363,13 @@ body.chat-open .fab-row { display: none; }
 #talk.active { background: #e53935; color: #fff; border-color: #e53935; }
 #talk:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .fab-chat { max-width: calc(100vw - 28px); }
+
+/* Items without a photo show a group icon; groups can be used as filters. */
+.product-no-photo { font-size: 44px; font-weight: 400; background: linear-gradient(135deg, var(--surface), #fff); }
+.category-chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 0 12px; scrollbar-width: none; }
+.category-chips::-webkit-scrollbar { display: none; }
+.category-chips[hidden] { display: none; }
+.category-chip { flex: none; border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: 8px 14px; font: inherit; font-size: 14px; cursor: pointer; white-space: nowrap; }
+.category-chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+/* The cart bar and the chat button never sit on top of each other on wide screens. */
+@media (min-width: 900px) { body.has-cart:not(.chat-open) .fab-row { bottom: 96px; } }

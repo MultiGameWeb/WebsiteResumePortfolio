@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=18">
+  <link rel="stylesheet" href="./styles.css?v=19">
   <script src="../chatbot-builder/demo-api.js"></script>
 </head>
 <body>
@@ -57,6 +57,7 @@
       <section class="block products-panel" id="productsSection" hidden>
         <h2>Items &amp; prices</h2>
         <input class="product-search" id="productSearch" type="search" placeholder="Search items" aria-label="Search items">
+        <div class="category-chips" id="categoryChips" hidden aria-label="Item groups"></div>
         <div class="product-grid" id="productGrid"></div>
         <div class="cart-bar" id="cartBar" hidden>
           <button type="button" id="openCart">🛒 <span id="cartSummary"></span> · View cart</button>
@@ -196,6 +197,6 @@
       </div>
     </dialog>
   </div>
-  <script type="module" src="./app.js?v=23"></script>
+  <script type="module" src="./app.js?v=24"></script>
 </body>
 </html>
