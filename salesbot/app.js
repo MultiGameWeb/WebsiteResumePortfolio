@@ -163,7 +163,9 @@ function showShop(shop) {
   if (shop.whatsapp) contacts.append(contactLink('WhatsApp', `https://wa.me/${whatsappNumber(shop.whatsapp)}`, true));
   if (shop.mapLink) contacts.append(contactLink('📍 Directions', shop.mapLink, true));
   document.querySelector('#chatTitle').textContent = botLabel;
-  document.querySelector('#chatFabLabel').textContent = `Ask ${shop.botName || 'the assistant'}`;
+  // A long shop name would be cut off on a phone, so a long label becomes a short one.
+  const askLabel = `Ask ${shop.botName || 'the assistant'}`;
+  document.querySelector('#chatFabLabel').textContent = askLabel.length > 24 ? 'Ask the assistant' : askLabel;
   // Search engines and link previews understand this.
   let ld = document.querySelector('#shopJsonLd');
   if (!ld) { ld = document.createElement('script'); ld.type = 'application/ld+json'; ld.id = 'shopJsonLd'; document.head.append(ld); }
@@ -939,6 +941,7 @@ let recognizer = null;
 const talkSaid = document.querySelector('#talkSaid');
 const talkNote = document.querySelector('#talkNote');
 const TALK_NOTE = 'Your phone turns your voice into text. Never say passwords, OTPs or bank details.';
+const TALK_NOTE_V2 = 'Just speak and pause: I answer in my voice. Never say passwords, OTPs or bank details.';
 
 function setTalkState(state, status) {
   talkState = state;
@@ -1014,18 +1017,230 @@ function listen() {
   try { recognizer.start(); } catch { setTalkState('idle', 'Tap to talk'); }
 }
 
+// ---- Voice to voice ----
+// The customer speaks; the recording goes to the server, where the AI hears it directly (no phone speech-to-text
+// that spoils Telugu), answers from the shop's information, and the answer comes back as a natural voice. The page
+// listens again by itself, so it is a conversation: speak, pause, hear the answer, speak again. If the server
+// cannot do this (or the phone has no microphone access to the audio engine) the older mode below is used.
+const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+const voiceToVoice = Boolean(navigator.mediaDevices?.getUserMedia && AudioContextClass && window.AudioWorkletNode);
+let voiceServerOk = true;
+const useVoiceToVoice = () => voiceToVoice && voiceServerOk;
+
+const WORKLET_CODE = "class PcmCapture extends AudioWorkletProcessor { process(inputs) { const channel = inputs[0] && inputs[0][0]; if (channel) this.port.postMessage(channel.slice(0)); return true; } } registerProcessor('pcm-capture', PcmCapture);";
+const VAD = { minSpeechMs: 350, endSilenceMs: 1300, noSpeechMs: 9000, maxMs: 25000, floor: 0.012 };
+
+// 16 kHz, 16 bit, mono WAV from the captured sound.
+function encodeWav(samples, sampleRate) {
+  const target = 16000;
+  const ratio = sampleRate / target;
+  const length = Math.floor(samples.length / ratio);
+  const buffer = new ArrayBuffer(44 + length * 2);
+  const view = new DataView(buffer);
+  const write = (offset, text) => { for (let i = 0; i < text.length; i += 1) view.setUint8(offset + i, text.charCodeAt(i)); };
+  write(0, 'RIFF'); view.setUint32(4, 36 + length * 2, true); write(8, 'WAVE'); write(12, 'fmt ');
+  view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 1, true);
+  view.setUint32(24, target, true); view.setUint32(28, target * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+  write(36, 'data'); view.setUint32(40, length * 2, true);
+  for (let i = 0; i < length; i += 1) {
+    // Average the samples that fall in this 16 kHz step (a simple low-pass before shrinking).
+    const from = Math.floor(i * ratio);
+    const to = Math.min(samples.length, Math.max(from + 1, Math.floor((i + 1) * ratio)));
+    let sum = 0;
+    for (let j = from; j < to; j += 1) sum += samples[j];
+    const value = Math.max(-1, Math.min(1, sum / (to - from)));
+    view.setInt16(44 + i * 2, value < 0 ? value * 0x8000 : value * 0x7fff, true);
+  }
+  return new Uint8Array(buffer);
+}
+function bytesToBase64(bytes) {
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(binary);
+}
+
+// Records until the customer stops talking: speech starts, then a pause ends it. Resolves
+// { reason: 'speech' | 'silence' | 'tapped' | 'long', samples, sampleRate }.
+function captureSpeech(onLevel) {
+  let stream; let context; let node; let finish;
+  const chunks = [];
+  const result = new Promise((resolve) => { finish = resolve; });
+  let done = false;
+  const stop = (reason) => {
+    if (done) return;
+    done = true;
+    stream?.getTracks().forEach((track) => track.stop());
+    const sampleRate = context?.sampleRate || 48000;
+    context?.close().catch(() => {});
+    const total = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+    const samples = new Float32Array(total);
+    let offset = 0;
+    for (const chunk of chunks) { samples.set(chunk, offset); offset += chunk.length; }
+    finish({ reason, samples, sampleRate });
+  };
+  const ready = (async () => {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
+    context = new AudioContextClass();
+    const url = URL.createObjectURL(new Blob([WORKLET_CODE], { type: 'text/javascript' }));
+    await context.audioWorklet.addModule(url);
+    URL.revokeObjectURL(url);
+    const source = context.createMediaStreamSource(stream);
+    node = new AudioWorkletNode(context, 'pcm-capture');
+    const mute = context.createGain();
+    mute.gain.value = 0; // the microphone is never played back
+    source.connect(node); node.connect(mute); mute.connect(context.destination);
+    const started = performance.now();
+    let windowSum = 0; let windowCount = 0; let windowStart = started;
+    let floor = 0; let calibrated = false; let speechMs = 0; let silenceMs = 0; let spoke = false;
+    node.port.onmessage = (event) => {
+      if (done) return;
+      const chunk = event.data;
+      chunks.push(chunk);
+      for (let i = 0; i < chunk.length; i += 1) windowSum += chunk[i] * chunk[i];
+      windowCount += chunk.length;
+      const now = performance.now();
+      if (now - windowStart < 60) return;
+      const level = Math.sqrt(windowSum / Math.max(1, windowCount));
+      const span = now - windowStart;
+      windowSum = 0; windowCount = 0; windowStart = now;
+      onLevel?.(level);
+      // The first moments set what "quiet" sounds like in this place. The quietest moment counts, so a customer
+      // who starts talking the instant they tap is not mistaken for background noise.
+      if (!calibrated) { floor = floor ? Math.min(floor, level) : level; if (now - started > 350) calibrated = true; return; }
+      const threshold = Math.min(0.06, Math.max(VAD.floor, floor * 3));
+      if (level > threshold) { speechMs += span; silenceMs = 0; if (speechMs >= VAD.minSpeechMs) spoke = true; }
+      else if (spoke) silenceMs += span;
+      if (spoke && silenceMs >= VAD.endSilenceMs) stop('speech');
+      else if (!spoke && now - started > VAD.noSpeechMs) stop('silence');
+      else if (now - started > VAD.maxMs) stop(spoke ? 'long' : 'silence');
+    };
+  })();
+  return { ready, result, stop };
+}
+
+let capture = null;
+let playback = null;
+let playbackDone = null;
+function stopPlayback() {
+  if (playback) { playback.pause(); playback = null; }
+  playbackDone?.();
+  playbackDone = null;
+}
+function playAnswer(audio) {
+  return new Promise((resolve) => {
+    playbackDone = resolve;
+    playback = new Audio(`data:${audio.mimeType};base64,${audio.data}`);
+    playback.onended = () => { playback = null; playbackDone = null; resolve(); };
+    playback.onerror = () => { playback = null; playbackDone = null; resolve(); };
+    playback.play().catch(() => { playback = null; playbackDone = null; resolve(); });
+  });
+}
+function stopVoice() {
+  capture?.stop('tapped');
+  capture = null;
+  stopPlayback();
+}
+
+async function listenVoice() {
+  if (!talking) return;
+  window.speechSynthesis?.cancel();
+  stopPlayback();
+  setTalkState('listening', 'Listening… speak, and pause when you finish');
+  const session = captureSpeech((level) => talkPanel.style.setProperty('--level', String(Math.min(1, level * 12))));
+  capture = session;
+  try {
+    await session.ready;
+  } catch (error) {
+    capture = null;
+    session.stop('tapped');
+    if (error?.name === 'NotAllowedError' || error?.name === 'SecurityError') { talking = false; setTalkState('idle', 'Please allow the microphone for this page, then tap to talk.'); return; }
+    if (error?.name === 'NotFoundError') { talking = false; setTalkState('idle', 'No microphone was found on this device.'); return; }
+    // Anything else: use the older mode on this phone.
+    useOlderVoice();
+    return;
+  }
+  const recorded = await session.result;
+  if (capture === session) capture = null;
+  if (!talking) return;
+  if (recorded.reason === 'silence' || recorded.samples.length < recorded.sampleRate * 0.4) {
+    setTalkState('idle', 'I didn’t hear anything. Tap to talk.');
+    return;
+  }
+  if (!navigator.onLine) { setTalkState('idle', 'Voice needs the internet. Please check your connection and tap to talk.'); return; }
+  setTalkState('thinking', 'Thinking…');
+  const photos = staged.splice(0);
+  renderTray();
+  let data;
+  try {
+    const response = await fetch(`${API_BASE}/api/botcraft/voice`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        s: shopId, history: history.slice(-HISTORY_LIMIT),
+        audio: { mimeType: 'audio/wav', data: bytesToBase64(encodeWav(recorded.samples, recorded.sampleRate)) },
+        images: photos.length ? photos.map((photo) => photo.image) : undefined,
+      }),
+    });
+    data = await response.json();
+    if (!response.ok || !data.ok) {
+      staged.unshift(...photos); renderTray();
+      // This server does not do voice to voice (or is busy): the older mode takes over; limits are shown as they are.
+      if (!data.code && (response.status === 404 || response.status >= 500)) {
+        useOlderVoice();
+        return;
+      }
+      setTalkState('idle', data.error || 'The assistant is busy. Tap to talk.');
+      return;
+    }
+  } catch {
+    staged.unshift(...photos); renderTray();
+    setTalkState('idle', 'Could not reach the assistant. Check your connection and tap to talk.');
+    return;
+  }
+  if (!talking) return;
+  if (data.noSpeech || !data.reply) {
+    staged.unshift(...photos); renderTray();
+    setTalkState('idle', 'I didn’t catch that. Tap to talk.');
+    return;
+  }
+  const heard = String(data.heard || '').trim() || 'Voice message';
+  addMessage('customer', heard, [], photos.map((photo) => photo.url));
+  history.push({ role: 'customer', text: photos.length ? `${heard} [sent ${photos.length} photo${photos.length === 1 ? '' : 's'}]` : heard }, { role: 'bot', text: data.reply });
+  addMessage('bot', data.reply, data.suggestions || []);
+  talkHeard.textContent = heard;
+  talkSaid.textContent = String(data.reply).replace(/\s+/g, ' ').slice(0, 220);
+  setTalkState('speaking', 'Speaking… tap to interrupt');
+  if (data.audio?.data) { talkNote.textContent = TALK_NOTE_V2; await playAnswer(data.audio); }
+  else { talkNote.textContent = 'The answer is read with your phone’s own voice.'; await speakText(data.reply); }
+  if (talking && talkState === 'speaking') listenVoice();
+}
+
+// The server cannot do voice to voice (or this phone cannot record it): use the older speech mode from now on.
+function useOlderVoice() {
+  voiceServerOk = false;
+  talkNote.textContent = TALK_NOTE;
+  talkLang.hidden = false;
+  if (!Recognition) { talking = false; setTalkState('idle', 'Voice is not available on this phone. You can type your question.'); return; }
+  listen();
+}
+
+const startListening = () => (useVoiceToVoice() ? listenVoice() : listen());
+
 function startTalk() {
   openChat({ focus: false });
   talking = true;
   talkSaid.textContent = '';
-  talkNote.textContent = TALK_NOTE;
+  talkNote.textContent = useVoiceToVoice() ? TALK_NOTE_V2 : TALK_NOTE;
+  // The new voice mode finds the language by itself; the language box is for the older mode only.
+  talkLang.hidden = useVoiceToVoice();
   talkPanel.hidden = false;
   form.hidden = true;
-  listen();
+  startListening();
 }
 
 function endTalk() {
   talking = false;
+  stopVoice();
   recognizer?.abort();
   recognizer = null;
   window.speechSynthesis?.cancel();
@@ -1034,7 +1249,7 @@ function endTalk() {
   setTalkState('idle', 'Tap to talk');
 }
 
-if (Recognition && window.speechSynthesis) {
+if (voiceToVoice || (Recognition && window.speechSynthesis)) {
   const saved = readStore(TALK_LANG_KEY);
   const browser = (navigator.language || '').slice(0, 2);
   const preferred = saved || TALK_LANGS.find(([code]) => code.startsWith(browser) && browser !== 'en')?.[0] || 'te-IN';
@@ -1050,11 +1265,19 @@ if (Recognition && window.speechSynthesis) {
   document.querySelector('#talkEnd').addEventListener('click', endTalk);
   talkLang.addEventListener('change', () => {
     writeStore(TALK_LANG_KEY, talkLang.value);
+    if (useVoiceToVoice()) return;
     if (talkState === 'listening') recognizer?.abort();
     else if (talking) listen();
   });
   talkOrb.addEventListener('click', () => {
-    if (!talking) { talking = true; listen(); return; }
+    if (!talking) { talking = true; startListening(); return; }
+    if (useVoiceToVoice()) {
+      // Tapping while listening sends now; while speaking it interrupts and listens; while idle it starts.
+      if (talkState === 'listening') capture?.stop('tapped');
+      else if (talkState === 'speaking') { stopPlayback(); talkState = 'interrupted'; listenVoice(); }
+      else if (talkState === 'idle') listenVoice();
+      return;
+    }
     if (talkState === 'listening') recognizer?.stop();
     else if (talkState === 'speaking') { talkState = 'interrupted'; listen(); }
     else if (talkState === 'idle') listen();

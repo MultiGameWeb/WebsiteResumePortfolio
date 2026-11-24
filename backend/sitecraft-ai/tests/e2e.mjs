@@ -83,11 +83,18 @@ r=await fetch(API+'/api/botcraft/owner',{method:'POST',headers:{'Sec-Fetch-Site'
 // --- reply metering
 const ask=()=>post('/api/botcraft/ask',{s:publicId,text:'what are your timings?'},{Origin:API});
 r=await ask(); ok('ask with a fake Gemini key fails cleanly',r.status===503&&r.ok===false,JSON.stringify(r).slice(0,120));
+const wavHead=Buffer.from('RIFF0000WAVEfmt ').toString('base64');
+r=await post('/api/botcraft/voice',{s:publicId,audio:{mimeType:'audio/webm',data:wavHead}},{Origin:API}); ok('voice: a recording in an unsupported format is refused (400)',r.status===400,JSON.stringify(r).slice(0,100));
+r=await post('/api/botcraft/voice',{s:publicId},{Origin:API}); ok('voice: a request with no recording is refused (400)',r.status===400);
+v=await owner('load'); const balanceBeforeVoice=v.replies.balance;
+r=await post('/api/botcraft/voice',{s:publicId,audio:{mimeType:'audio/wav',data:wavHead}},{Origin:API}); ok('voice: with a fake Gemini key it fails cleanly (503)',r.status===503&&r.ok===false,JSON.stringify(r).slice(0,100));
+v=await owner('load'); ok('voice: the credit is given back when the AI fails',v.replies.balance===balanceBeforeVoice,JSON.stringify(v.replies));
+r=await fetch(API+'/api/botcraft/voice',{method:'POST',headers:{Origin:'https://evil.example','Content-Type':'application/json','CF-Connecting-IP':nextIp()},body:JSON.stringify({s:publicId,audio:{mimeType:'audio/wav',data:wavHead}})}); ok('voice: an unknown origin is refused (403)',r.status===403);
 v=await owner('load'); ok('credit given back when the AI fails',v.replies.balance===5&&v.replies.used===0,JSON.stringify(v.replies));
 const adm=(body)=>post('/api/admin/bot',body,{Authorization:'Bearer test-admin-token'});
 r=await adm({id:SID,action:'add_replies',count:-5}); ok('admin removes replies',r.ok&&r.bot.replies.balance===0,JSON.stringify(r).slice(0,150));
 r=await ask(); ok('no replies left -> 402 no_replies',r.status===402&&r.code==='no_replies',JSON.stringify(r).slice(0,120));
-// daily caps: one visitor (same address) may ask 3 times a day; the shop 6 times in total
+// daily caps: one visitor (same address) may ask 3 times a day; the shop 7 times in total
 const sameIp={'CF-Connecting-IP':'203.0.113.9'}; const caps=[]; for(let i=0;i<4;i++) caps.push(await post('/api/botcraft/ask',{s:publicId,text:'hello'},{Origin:API,...sameIp}));
 ok('same visitor: first 3 questions pass the daily cap',caps.slice(0,3).every(x=>x.status===503||x.status===402),JSON.stringify(caps.map(x=>x.status)));
 ok('same visitor: 4th question is stopped (visitor_limit, 429)',caps[3].status===429&&caps[3].code==='visitor_limit',JSON.stringify(caps[3]).slice(0,120));

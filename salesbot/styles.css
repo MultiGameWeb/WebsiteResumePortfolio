@@ -352,3 +352,8 @@ body.chat-open .fab-row { display: none; }
 .camera-actions { display: flex; gap: 10px; justify-content: center; margin-top: 12px; }
 .camera-actions button { border: 0; border-radius: 999px; padding: 12px 22px; font: inherit; font-weight: 700; cursor: pointer; background: #fff; color: #111; }
 .camera-actions #cameraCancel { background: transparent; color: #fff; border: 1px solid rgb(255 255 255 / 40%); }
+
+/* Prices line up along the bottom of every card in a row, whether the item name takes one line or two. */
+.product-card .product-price { margin-top: auto; }
+.product-card .product-name { min-height: 2.6em; }
+.product-card .product-no-photo, .product-card img { flex: none; }

@@ -9,6 +9,7 @@ import {
   deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
 import { deleteShopPage, publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
+import { AUDIO_RULE, VOICE_SCHEMA, customerAudio, speakReply, withCustomerAudio } from "./botcraft-speech.js";
 import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-photo-studio.js";
 import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
@@ -162,7 +163,7 @@ function reply(data, status, origin) {
 
 // The shop's own hosted page (https://<slug>.<HOSTING_DOMAIN>, or this Worker's /s/<slug>/ path)
 // may call the customer endpoints only. The owner and setup endpoints stay on the allowed list.
-const CUSTOMER_PATHS = new Set(["/api/botcraft/public", "/api/botcraft/ask", "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order", "/api/botcraft/push"]);
+const CUSTOMER_PATHS = new Set(["/api/botcraft/public", "/api/botcraft/ask", "/api/botcraft/voice", "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order", "/api/botcraft/push"]);
 function originAllowed(env, origin, path, url, request) {
   if (allowedOrigins(env).has(origin)) return true;
   if (!CUSTOMER_PATHS.has(path)) return false;
@@ -567,7 +568,7 @@ function later(ctx, task) {
 export async function handleBotcraftRoute(request, env, url, ctx) {
   const path = url.pathname.replace(/\/+$/, "") || "/";
   if (!["/api/botcraft/chat", "/api/botcraft/shop", "/api/botcraft/bank", "/api/botcraft/public", "/api/botcraft/ask", "/api/botcraft/photo", "/api/botcraft/owner",
-    "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order", "/api/botcraft/push"].includes(path)) return null;
+    "/api/botcraft/request", "/api/botcraft/requests", "/api/botcraft/order", "/api/botcraft/push", "/api/botcraft/voice"].includes(path)) return null;
 
   // Photos are loaded by <img> tags, which send no Origin header.
   if (path === "/api/botcraft/photo") return servePhoto(env, url);
@@ -594,7 +595,7 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
     return reply({ ok: true, messages: saved.messages, progress: progress(savedFacts, answers, bank), bot }, 200, origin);
   }
 
-  if (path === "/api/botcraft/public" || path === "/api/botcraft/ask") return handleSalesbot(request, env, url, path, origin, ctx);
+  if (path === "/api/botcraft/public" || path === "/api/botcraft/ask" || path === "/api/botcraft/voice") return handleSalesbot(request, env, url, path, origin, ctx);
   if (path === "/api/botcraft/request" || path === "/api/botcraft/requests" || path === "/api/botcraft/order") return handleCustomerRequests(request, env, url, path, origin, ctx);
   if (path === "/api/botcraft/owner") return handleOwner(request, env, origin, ctx);
   if (path === "/api/botcraft/push") return handlePush(request, env, origin);
@@ -915,7 +916,9 @@ const VOICE_RULE = "\n- The customer is talking to you by voice and will hear yo
 async function handleSalesbot(request, env, url, path, origin, ctx) {
   if (!storeAvailable(env)) return reply({ ok: false, error: "This bot is not available right now." }, 503, origin);
   let body = {};
-  if (path === "/api/botcraft/ask") {
+  // "voice" is the same as "ask", but the question is a voice recording and the answer comes back as sound too.
+  const isVoice = path === "/api/botcraft/voice";
+  if (path === "/api/botcraft/ask" || isVoice) {
     if (request.method !== "POST") return reply({ ok: false, error: "Use POST." }, 405, origin);
     if (!env?.BOTCRAFT_GEMINI_API_KEY) return reply({ ok: false, error: "This bot is not available right now." }, 503, origin);
     if (throttled(request.headers.get("CF-Connecting-IP") || "unknown", Date.now())) {
@@ -926,7 +929,7 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   } else if (request.method !== "GET") {
     return reply({ ok: false, error: "Use GET." }, 405, origin);
   }
-  const publicId = String(path === "/api/botcraft/ask" ? body?.s : url.searchParams.get("s") || "");
+  const publicId = String(path === "/api/botcraft/ask" || isVoice ? body?.s : url.searchParams.get("s") || "");
   const shop = PUBLIC_ID_PATTERN.test(publicId) ? await loadPublicShop(env, publicId) : null;
   if (!shop) return reply({ ok: false, error: "This shop's bot was not found." }, 404, origin);
 
@@ -940,7 +943,9 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
     return reply({ ok: true, shop: profile, offline: offlineData({ ...shop, facts, answers }, bank) }, 200, origin);
   }
 
-  const text = clip(body?.text, MAX_TEXT);
+  const audio = isVoice ? customerAudio(body?.audio) : null;
+  if (isVoice && !audio) return reply({ ok: false, error: "The recording could not be read. Please try again." }, 400, origin);
+  const text = isVoice ? "(The customer spoke; the voice recording is attached.)" : clip(body?.text, MAX_TEXT);
   if (!text) return reply({ ok: false, error: "Message is empty." }, 400, origin);
   const knowledge = shopKnowledge({ ...shop, facts, answers }, bank, typeName);
   const product = shop.products.find(p => p.name_key === String(body?.product || "")) || null;
@@ -979,28 +984,37 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   try {
     const { result } = await callWithFallback(env, {
       onUsage: metadata => { usage = metadata; },
-      system: salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true ? VOICE_RULE : "") + (photos.length ? IMAGE_RULE : ""),
-      contents: withCustomerImages(contents, photos),
-      schema: SALESBOT_SCHEMA,
+      system: salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true || isVoice ? VOICE_RULE : "") + (isVoice ? AUDIO_RULE : "") + (photos.length ? IMAGE_RULE : ""),
+      contents: withCustomerAudio(withCustomerImages(contents, photos), audio),
+      schema: isVoice ? VOICE_SCHEMA : SALESBOT_SCHEMA,
       models: CHAT_MODELS,
       temperature: 0.3,
       timeoutMs: 40000,
       maxAttempts: 1,
       log: message => modelErrors.push(message.slice(0, 160))
     });
+    // Voice: what the customer said, as written by the AI. No clear speech means no answer and no charge.
+    const heard = isVoice ? clip(result?.heard, 600) : "";
+    if (isVoice && !heard.trim()) {
+      if (credit.balance >= 0) await releaseReply(env, shop.shopId).catch(() => {});
+      return reply({ ok: true, noSpeech: true }, 200, origin);
+    }
+    const asked = isVoice ? heard : text;
     // Questions the bot could not answer go to the owner page.
     if (result?.answered === false) {
-      const isNew = await logUnanswered(env, shop.shopId, text, product?.name || "").catch(error => console.error("BotCraft question log failed", error));
-      if (isNew) await later(ctx, notifyOwner(env, shop.shopId, { title: "New customer question", body: clip(text, 140), url: "owner.html#questions", tag: "botcraft-questions" }));
+      const isNew = await logUnanswered(env, shop.shopId, asked, product?.name || "").catch(error => console.error("BotCraft question log failed", error));
+      if (isNew) await later(ctx, notifyOwner(env, shop.shopId, { title: "New customer question", body: clip(asked, 140), url: "owner.html#questions", tag: "botcraft-questions" }));
     }
     // What this reply cost in tokens (thinking tokens are billed as output).
     await later(ctx, recordUsage(env, shop.shopId, {
       inTokens: Number(usage?.promptTokenCount) || 0,
       outTokens: (Number(usage?.candidatesTokenCount) || 0) + (Number(usage?.thoughtsTokenCount) || 0)
     }).catch(error => console.error("BotCraft usage log failed", error)));
+    const answerText = clip(result?.reply, 1500) || "Sorry, please ask again.";
     return reply({
       ok: true,
-      reply: clip(result?.reply, 1500) || "Sorry, please ask again.",
+      reply: answerText,
+      ...(isVoice ? { heard, audio: await speakReply(env, answerText) } : {}),
       suggestions: (Array.isArray(result?.suggestions) ? result.suggestions : []).map(q => clip(q, 80)).filter(Boolean).slice(0, 3)
     }, 200, origin);
   } catch (error) {

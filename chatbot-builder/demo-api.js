@@ -344,6 +344,12 @@
           } else if (path === '/api/botcraft/public') {
             if (query.get('s') !== PUBLIC_ID || (state.onboarding && !state.onboarding.done)) { resolve(json({ ok: false, error: 'This shop\'s bot was not found.' }, 404)); return; }
             resolve(json(publicView(state)));
+          } else if (path === '/api/botcraft/voice') {
+            // Demo only: no AI hears the recording; a fixed question and a short silent "voice" show how it works.
+            window.__lastVoice = { start: atob(String((body.audio && body.audio.data) || '').slice(0, 8)).slice(0, 4), chars: String((body.audio && body.audio.data) || '').length, photos: (body.images || []).length };
+            var heardText = 'What are your timings?';
+            var silent = (function () { var n = 48000, b = new Uint8Array(44 + n * 2), v = new DataView(b.buffer), w = function (o, t) { for (var i = 0; i < t.length; i++) v.setUint8(o + i, t.charCodeAt(i)); }; w(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, 16000, true); v.setUint32(28, 32000, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n * 2, true); var s = ''; for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]); return btoa(s); })();
+            resolve(json({ ok: true, heard: heardText, reply: demoAnswer(state, heardText, '') || 'Please ask at the counter.', audio: { mimeType: 'audio/wav', data: silent }, suggestions: ['Show items & prices'] }));
           } else if (path === '/api/botcraft/ask') {
             var answer = (body.images && body.images.length) ? 'Demo: I received your photo' + (body.images.length > 1 ? 's' : '') + '. In the real bot the AI looks at the photo and matches it to this shop\'s items.' : demoAnswer(state, body.text || '', body.product || '');
             if (answer === null) {
