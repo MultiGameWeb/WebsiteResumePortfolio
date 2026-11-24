@@ -5,6 +5,8 @@
 // Online, every question goes to the AI. The page also keeps a copy of the
 // shop's answers and items, so without internet (or when the AI is busy) it
 // still answers the basics from that copy, without AI.
+import { FILE_ACCEPT, readFile, unreadableMessage } from './file-reader.js?v=1';
+
 const API_BASE = window.SALESBOT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const LAST_SHOP_KEY = 'salesbot:lastShop';
 const DATA_KEY_PREFIX = 'salesbot:data:';
@@ -856,6 +858,8 @@ function offlineAnswer(question) {
 // looks at them to understand the question and answers from the shop's own information. They are not saved.
 const MAX_CHAT_PHOTOS = 3;
 const staged = []; // { url, image: { mimeType, data } }
+const MAX_CHAT_FILES = 2;
+const stagedFiles = []; // { name, kind: 'pdf' | 'text', mimeType, data, text }
 const attachTray = document.querySelector('#attachTray');
 const attachMenu = document.querySelector('#attachMenu');
 const attachButton = document.querySelector('#attach');
@@ -874,8 +878,17 @@ function renderTray() {
     remove.addEventListener('click', () => { URL.revokeObjectURL(photo.url); staged.splice(staged.indexOf(photo), 1); renderTray(); });
     cell.append(image, remove);
     return cell;
+  }), ...stagedFiles.map((file) => {
+    const chip = element('div', 'attach-file');
+    chip.append(element('span', 'attach-file-name', `${file.kind === 'pdf' ? '📕' : '📄'} ${file.name}`));
+    const remove = element('button', 'attach-file-remove', '×');
+    remove.type = 'button';
+    remove.setAttribute('aria-label', `Remove ${file.name}`);
+    remove.addEventListener('click', () => { stagedFiles.splice(stagedFiles.indexOf(file), 1); renderTray(); });
+    chip.append(remove);
+    return chip;
   }));
-  attachTray.hidden = !staged.length;
+  attachTray.hidden = !staged.length && !stagedFiles.length;
   chat.scrollTop = chat.scrollHeight;
 }
 
@@ -891,6 +904,22 @@ async function addPhotos(fileList) {
     }
   }
   renderTray();
+  if (!talking) input.focus();
+}
+
+// Files: PDFs go to the AI as they are; Word, Excel, PowerPoint and text files are read here first. A file that
+// cannot be opened is explained to the customer, who is asked to type the question or send a photo instead.
+async function addFiles(fileList) {
+  const failed = [];
+  for (const file of Array.from(fileList || [])) {
+    if (/^image\//.test(file.type)) { await addPhotos([file]); continue; }
+    const opened = await readFile(file);
+    if (!opened.ok) failed.push(opened);
+    else if (stagedFiles.length >= MAX_CHAT_FILES) failed.push({ name: file.name, reason: `only ${MAX_CHAT_FILES} files can be sent at a time` });
+    else stagedFiles.push(opened);
+  }
+  renderTray();
+  if (failed.length) addMessage('bot', unreadableMessage(failed));
   if (!talking) input.focus();
 }
 
@@ -941,6 +970,10 @@ attachButton.addEventListener('click', (event) => { event.stopPropagation(); tog
 document.querySelector('#talkPhoto').addEventListener('click', (event) => { event.stopPropagation(); toggleAttachMenu(); });
 document.querySelector('#attachGallery').addEventListener('click', () => { closeAttachMenu(); fileGallery.click(); });
 document.querySelector('#attachCamera').addEventListener('click', takePhoto);
+const fileDocs = document.querySelector('#fileDocs');
+fileDocs.accept = `image/*,${FILE_ACCEPT}`;
+document.querySelector('#attachFile').addEventListener('click', () => { closeAttachMenu(); fileDocs.click(); });
+fileDocs.addEventListener('change', () => { addFiles(fileDocs.files); fileDocs.value = ''; });
 fileGallery.addEventListener('change', () => { addPhotos(fileGallery.files); fileGallery.value = ''; });
 fileCamera.addEventListener('change', () => { addPhotos(fileCamera.files); fileCamera.value = ''; });
 document.addEventListener('click', (event) => { if (!attachMenu.hidden && !attachMenu.contains(event.target)) closeAttachMenu(); });
@@ -950,15 +983,17 @@ document.addEventListener('keydown', (event) => { if (event.key === 'Escape') cl
 // Returns the reply shown (so talk mode can read it aloud).
 async function ask(text, product = null, { voice = false } = {}) {
   const photos = staged.splice(0);
-  // A photo alone is enough: it is sent with a plain question.
-  const question = String(text || '').trim() || (photos.length ? 'Do you have this? Please look at my photo.' : '');
-  if (!question || busy) { staged.unshift(...photos); return ''; }
-  if (photos.length && !navigator.onLine) {
+  const files = stagedFiles.splice(0);
+  // A photo or a file alone is enough: it is sent with a plain question.
+  const question = String(text || '').trim() || (files.length ? 'Please read my file and help me.' : photos.length ? 'Do you have this? Please look at my photo.' : '');
+  if (!question || busy) { staged.unshift(...photos); stagedFiles.unshift(...files); return ''; }
+  if ((photos.length || files.length) && !navigator.onLine) {
     staged.unshift(...photos);
-    addMessage('bot', 'Photos need the internet. Please connect and try again, or ask in words.');
+    stagedFiles.unshift(...files);
+    addMessage('bot', 'Photos and files need the internet. Please connect and try again, or ask in words.');
     return '';
   }
-  addMessage('customer', question, [], photos.map((photo) => photo.url));
+  addMessage('customer', files.length ? `${question}\n${files.map((file) => `📎 ${file.name}`).join('\n')}` : question, [], photos.map((photo) => photo.url));
   renderTray();
   input.value = '';
   if (!navigator.onLine) {
@@ -975,12 +1010,12 @@ async function ask(text, product = null, { voice = false } = {}) {
     const response = await fetch(`${API_BASE}/api/botcraft/ask`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ s: shopId, text: question, history: history.slice(-HISTORY_LIMIT), product: product?.key || undefined, voice: voice || undefined, images: photos.length ? photos.map((photo) => photo.image) : undefined }),
+      body: JSON.stringify({ s: shopId, text: question, history: history.slice(-HISTORY_LIMIT), product: product?.key || undefined, voice: voice || undefined, images: photos.length ? photos.map((photo) => photo.image) : undefined, documents: files.filter((file) => file.kind === 'pdf').map((file) => ({ mimeType: file.mimeType, data: file.data })).slice(0, 2), fileTexts: files.filter((file) => file.kind === 'text').map((file) => ({ name: file.name, text: file.text })).slice(0, 3) }),
     });
     const data = await response.json();
     typing.remove();
     if (!response.ok || !data.ok) { limitCode = data.code || ''; throw new Error(data.error); }
-    history.push({ role: 'customer', text: photos.length ? `${question} [sent ${photos.length} photo${photos.length === 1 ? '' : 's'}]` : question }, { role: 'bot', text: data.reply });
+    history.push({ role: 'customer', text: [question, photos.length ? `[sent ${photos.length} photo${photos.length === 1 ? '' : 's'}]` : '', files.length ? `[sent ${files.length} file${files.length === 1 ? '' : 's'}]` : ''].filter(Boolean).join(' ') }, { role: 'bot', text: data.reply });
     addMessage('bot', data.reply, data.suggestions || []);
     return data.reply;
   } catch {

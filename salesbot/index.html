@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=21">
+  <link rel="stylesheet" href="./styles.css?v=22">
   <script src="../chatbot-builder/demo-api.js"></script>
 </head>
 <body>
@@ -127,11 +127,13 @@
       </header>
       <main class="chat" id="chat" aria-live="polite"></main>
       <div class="attach-tray" id="attachTray" aria-label="Photos ready to send" hidden></div>
-      <div class="attach-menu" id="attachMenu" role="menu" aria-label="Add a photo" hidden>
+      <div class="attach-menu" id="attachMenu" role="menu" aria-label="Add a photo or file" hidden>
         <button type="button" role="menuitem" id="attachCamera">📷 Take a photo</button>
         <button type="button" role="menuitem" id="attachGallery">🖼️ Choose from gallery</button>
+        <button type="button" role="menuitem" id="attachFile">📎 Files (PDF, Word, Excel, text)</button>
       </div>
       <input type="file" id="fileGallery" accept="image/*" multiple hidden>
+      <input type="file" id="fileDocs" multiple hidden>
       <input type="file" id="fileCamera" accept="image/*" capture="environment" hidden>
       <section class="talk-panel" id="talkPanel" role="region" aria-label="Talk mode" hidden>
         <div class="talk-head">
@@ -201,6 +203,6 @@
       </div>
     </dialog>
   </div>
-  <script type="module" src="./app.js?v=26"></script>
+  <script type="module" src="./app.js?v=27"></script>
 </body>
 </html>

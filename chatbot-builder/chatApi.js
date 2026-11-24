@@ -4,6 +4,7 @@
  * stays on the Worker. If the Worker is unreachable or not configured yet,
  * the local demo in mockChat.js answers instead, so the page never breaks.
  */
+import { readFile } from './file-reader.js?v=1';
 import { sendChatAction as sendDemoAction } from './mockChat.js?v=20261031b';
 
 export let premiumVoiceKnown = false; // set from the server's replies: premium voice (ElevenLabs) is on
@@ -177,14 +178,21 @@ async function buildPayload(action) {
   const text = String(action.text ?? action.option?.value ?? '').trim();
   const images = [];
   const otherFiles = [];
+  const documents = []; // PDFs, which the AI opens itself
+  const fileTexts = []; // the text read from Word, Excel, PowerPoint, text and similar files
   for (const attachment of action.attachments ?? []) {
     const image = attachment.isImage ? await prepareImage(attachment.file) : null;
-    if (image) images.push(image);
-    else otherFiles.push(attachment.name);
+    if (image) { images.push(image); continue; }
+    if (attachment.isImage) { otherFiles.push(attachment.name); continue; }
+    // Open the file as far as possible; only what cannot be opened is reported to the AI as unreadable.
+    const opened = await readFile(attachment.file);
+    if (opened.ok && opened.kind === 'pdf' && documents.length < 2) documents.push({ mimeType: opened.mimeType, data: opened.data });
+    else if (opened.ok && opened.kind === 'text' && fileTexts.length < 3) fileTexts.push({ name: opened.name, text: opened.text });
+    else otherFiles.push(opened.ok ? `${attachment.name} (too many files at once)` : `${attachment.name} (${opened.reason})`);
   }
   const formAnswers = action.formAnswers ?? [];
   // forms: this page shows question forms (older pages get the questions as text).
-  return { shopId, forms: true, language: action.language, text, images, otherFiles, formAnswers, history: history.slice(-HISTORY_LIMIT), facts, answers };
+  return { shopId, forms: true, language: action.language, text, images, documents, fileTexts, otherFiles, formAnswers, history: history.slice(-HISTORY_LIMIT), facts, answers };
 }
 
 /**
@@ -233,7 +241,7 @@ export async function sendChatAction(action) {
   if (typeof data.premiumVoice === 'boolean') premiumVoiceKnown = data.premiumVoice;
   facts = { ...facts, ...data.facts };
   answers = data.resetAnswers ? {} : { ...answers, ...data.answers };
-  const sentFiles = payload.images.length + payload.otherFiles.length;
+  const sentFiles = payload.images.length + payload.otherFiles.length + payload.documents.length + payload.fileTexts.length;
   history.push(
     { role: 'owner', text: payload.text || `(sent ${sentFiles} file${sentFiles === 1 ? '' : 's'})` },
     { role: 'botcraft', text: data.reply },
