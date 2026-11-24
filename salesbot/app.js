@@ -481,7 +481,6 @@ function setupSections() {
   document.querySelector('#fabRow').hidden = false;
   const voiceOn = talkSupported && features.voice !== false;
   talkButton.hidden = !voiceOn;
-  document.querySelector('#micFab').hidden = !voiceOn;
   if (items.length) renderProducts();
   document.querySelector('#photoGrid').replaceChildren(...gallery.map((photoId) => {
     const link = element('a', 'gallery-photo');
@@ -868,7 +867,6 @@ fileCamera.addEventListener('change', () => { addPhotos(fileCamera.files); fileC
 document.addEventListener('click', (event) => { if (!attachMenu.hidden && !attachMenu.contains(event.target)) closeAttachMenu(); });
 document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeAttachMenu(); });
 // The photo button next to the microphone: open the chat with the photo choices.
-document.querySelector('#photoFab').addEventListener('click', (event) => { event.stopPropagation(); openChat({ focus: false }); openAttachMenu(); });
 
 // Returns the reply shown (so talk mode can read it aloud).
 async function ask(text, product = null, { voice = false } = {}) {
@@ -949,7 +947,7 @@ function setTalkState(state, status) {
   talkStatus.textContent = status;
   talkOrb.textContent = state === 'speaking' ? '🔊' : state === 'thinking' ? '…' : state === 'listening' ? '⏹' : '🎙️';
   talkOrb.setAttribute('aria-label', state === 'listening' ? 'Done speaking' : state === 'speaking' ? 'Stop and talk' : 'Tap to talk');
-  document.querySelector('#micFab').classList.toggle('active', talking);
+  talkButton.classList.toggle('active', talking);
 }
 
 // Reads a reply aloud; resolves when it ends (or fails).
@@ -1261,7 +1259,6 @@ if (voiceToVoice || (Recognition && window.speechSynthesis)) {
   }));
   talkSupported = true;
   talkButton.addEventListener('click', startTalk);
-  document.querySelector('#micFab').addEventListener('click', () => { if (talking) { openChat({ focus: false }); } else startTalk(); });
   document.querySelector('#talkEnd').addEventListener('click', endTalk);
   talkLang.addEventListener('change', () => {
     writeStore(TALK_LANG_KEY, talkLang.value);
