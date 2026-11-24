@@ -174,3 +174,6 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Asking the chat "Today sales?" or "sales this week" answers from the saved sales without the AI.
 - Only sales the owner records are counted; customers' cart orders and shop counter sales that are not told to the bot are not. Item stock counts (quantity left) are not built yet.
 - Backend: new table botcraft_sales (created automatically), owner actions record_sale and delete_sale, the owner view returns a sales summary, deleting a bot deletes its sales. Deploy the Worker for it to work live. Checked: 90 end-to-end checks (6 new), planner cases, and a browser run of the owner page in demo mode.
+
+## Customer assistant no longer says "no online payment"
+- The assistant's rules said "Online payment is not available", so it told customers the shop has no online payment. It now says only that it cannot take payment in the chat, sends the customer to the owner at the counter, and never states which payment methods the shop accepts unless the owner's saved information says so.
