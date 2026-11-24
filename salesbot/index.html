@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./styles.css?v=19">
+  <link rel="stylesheet" href="./styles.css?v=20">
   <script src="../chatbot-builder/demo-api.js"></script>
 </head>
 <body>
@@ -173,6 +173,10 @@
       <h2 id="sheetName"></h2>
       <p class="sheet-price" id="sheetPrice"></p>
       <p class="sheet-details" id="sheetDetails"></p>
+      <div class="sheet-similar" id="sheetSimilar" hidden>
+        <h3>Similar items</h3>
+        <div class="similar-row"></div>
+      </div>
       <div class="sheet-actions">
         <button type="button" class="ask-this" id="addThis" hidden>🛒 Add to cart</button>
         <button type="button" class="ask-this" id="askThis">Ask about this</button>
@@ -197,6 +201,6 @@
       </div>
     </dialog>
   </div>
-  <script type="module" src="./app.js?v=24"></script>
+  <script type="module" src="./app.js?v=25"></script>
 </body>
 </html>
