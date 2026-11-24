@@ -100,7 +100,7 @@ r=await owner('publish_page',{slug:''}); v=await owner('load'); ok('publish page
 const slug=v.page?.slug; const home=await fetch(`${API}/s/${slug}/`); const html=await home.text();
 ok('hosted page home loads',home.status===200&&html.includes(`SALESBOT_SHOP="${publicId}"`)&&!html.includes('demo-api.js'));
 ok('hosted page title is the shop name',html.includes('<title>Sri Vinay Jewellers</title>'));
-for(const f of ['app.js','styles.css','manifest.webmanifest','sw.js','icon.svg']){ const x=await fetch(`${API}/s/${slug}/${f}`); ok('hosted page serves '+f,x.status===200,String(x.status)); }
+for(const f of ['app.js','file-reader.js','styles.css','manifest.webmanifest','sw.js','icon.svg']){ const x=await fetch(`${API}/s/${slug}/${f}`); ok('hosted page serves '+f,x.status===200,String(x.status)); }
 ok('unlisted file on hosted page is 404',(await fetch(`${API}/s/${slug}/package.json`)).status===404);
 const again=await owner('publish_page',{slug:'other-name'}); v=await owner('load'); ok('publish again keeps the same address',again.ok&&v.page.slug===slug);
 ok('hosting term set (one year)',Boolean(v.page.hosting?.expiresAt)&&v.page.hosting.state==='active');

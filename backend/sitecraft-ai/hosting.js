@@ -460,7 +460,7 @@ async function handleCheck(env, url, origin) {
 
 // Template id of hosted BotCraft shop pages, and the files they load from salesbot/.
 export const BOT_PAGE = "botcraft-page";
-const BOT_PAGE_FILES = new Set(["app.js", "styles.css", "sw.js", "manifest.webmanifest", "icon.svg"]);
+const BOT_PAGE_FILES = new Set(["app.js", "file-reader.js", "styles.css", "sw.js", "manifest.webmanifest", "icon.svg"]);
 
 const CSP = [
   "default-src 'self'",
