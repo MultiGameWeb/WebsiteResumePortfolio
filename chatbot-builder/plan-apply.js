@@ -80,6 +80,10 @@ export async function applyPlan({ ops, images = [], call, getView }) {
     } else if (op.type === 'delete_item' && product) {
       undoable = false;
       ok = await call('delete_product', { key: product.name_key });
+    } else if ((op.type === 'set_quantity' || op.type === 'add_quantity') && product) {
+      undo.push({ action: 'save_product', data: fields(product) }); // restores the stock status, which a count of 0 changes
+      undo.push({ action: 'set_quantity', data: { key: product.name_key, quantity: Number.isInteger(product.qty) ? product.qty : null } });
+      ok = await call('set_quantity', { key: product.name_key, quantity: op.quantity, mode: op.type === 'add_quantity' ? 'add' : 'set' });
     } else if (op.type === 'record_sale' && product) {
       const before = new Set(((getView().sales || {}).recent || []).map((sale) => sale.id));
       ok = await call('record_sale', { key: product.name_key, quantity: op.quantity, price: op.price || '', payment: op.payment || '' });

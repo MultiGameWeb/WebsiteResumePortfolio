@@ -238,6 +238,7 @@
           <label>Name <input name="name" maxlength="120" required></label>
           <label>Price <input name="price_text" maxlength="80" placeholder="For example ₹799 or ₹499–₹999"></label>
           <label>Details <textarea name="details" maxlength="600" rows="3" placeholder="One point per line, or separate with |, for example: 8GB RAM | 512GB SSD | 1 year warranty"></textarea></label>
+          <label>Stock count (optional) <input name="qty" type="number" min="0" max="999999" step="1" inputmode="numeric" placeholder="How many pieces you have. Leave empty if you do not count."></label>
           <label class="check"><input type="checkbox" name="out"> Out of stock</label>
           <label>Photo <input type="file" name="photo" accept="image/*"></label>
           <div class="row">
@@ -249,6 +250,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=24"></script>
+  <script type="module" src="./owner.js?v=25"></script>
 </body>
 </html>

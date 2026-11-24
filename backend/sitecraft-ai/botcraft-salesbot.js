@@ -96,7 +96,7 @@ export function shopKnowledge(shop, bank, typeName) {
   for (const note of shop.notes || []) lines.push(`- ${note}`);
   for (const q of shop.ownerAnswers || []) lines.push(`- ${q.question} ${q.answer}`);
   const products = (shop.products || []).map(p =>
-    `- ${p.name}${p.price_text ? ` — ${p.price_text}` : ""}${p.details ? ` — ${p.details}` : ""}${p.stock_status === "out_of_stock" ? " (out of stock)" : ""}`);
+    `- ${p.name}${p.price_text ? ` — ${p.price_text}` : ""}${p.details ? ` — ${p.details}` : ""}${p.stock_status === "out_of_stock" ? " (out of stock)" : Number.isInteger(p.qty) && p.qty > 0 && p.qty <= 3 ? ` (only ${p.qty} left)` : ""}`);
   return `Shop information:\n${lines.join("\n")}\n\nItems:\n${products.join("\n") || "- (no item list yet)"}`;
 }
 
@@ -117,7 +117,7 @@ export function offlineData(shop, bank) {
   }
   for (const q of shop.ownerAnswers || []) faqs.push({ q: q.question, a: q.answer });
   const items = (shop.products || []).slice(0, 200).map(p => ({
-    key: p.name_key, name: p.name, price: p.price_text || "", details: p.details || "", out: p.stock_status === "out_of_stock", photo: p.photo_id || "",
+    key: p.name_key, name: p.name, price: p.price_text || "", details: p.details || "", out: p.stock_status === "out_of_stock", left: p.stock_status !== "out_of_stock" && Number.isInteger(p.qty) && p.qty > 0 && p.qty <= 3 ? p.qty : 0, photo: p.photo_id || "",
     // All photos of the item, cover first (the customer page shows them like a shopping app).
     photos: (shop.photos || []).filter(photo => photo.kind === "product" && photo.product_key === p.name_key).map(photo => photo.photo_id).slice(0, 5)
   }));

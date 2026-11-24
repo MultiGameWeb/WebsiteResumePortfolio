@@ -29,6 +29,22 @@ r=await owner('record_sale',{key:'silver anklet',quantity:1,price:'₹3,000',pay
 ok('week and month include today',r.sales.week.total===100000&&r.sales.month.sales===2);
 r=await owner('record_sale',{key:'no such item',quantity:1}); ok('sale for an unknown item is refused',r.status===400);
 r=await owner('load'); const saleId=r.sales.recent[0].id; r=await owner('delete_sale',{saleId}); ok('a sale can be removed',r.ok&&r.sales.today.sales===1,JSON.stringify(r.sales&&r.sales.today));
+// Stock count
+r=await owner('load'); ok('items are uncounted at first',r.products.every(x=>x.qty===null||x.qty===undefined));
+r=await owner('record_sale',{key:'gold necklace',quantity:1}); ok('selling an uncounted item leaves it uncounted',r.products.find(x=>x.name==='Gold Necklace').qty==null);
+r=await owner('set_quantity',{key:'gold necklace',quantity:3,mode:'set'}); ok('set a stock count',r.ok&&r.products.find(x=>x.name==='Gold Necklace').qty===3);
+r=await owner('record_sale',{key:'gold necklace',quantity:2}); ok('a sale takes pieces off the count',r.products.find(x=>x.name==='Gold Necklace').qty===1);
+r=await owner('record_sale',{key:'gold necklace',quantity:1}); let gn=r.products.find(x=>x.name==='Gold Necklace'); ok('count 0 marks the item out of stock',gn.qty===0&&gn.stock_status==='out_of_stock',JSON.stringify(gn));
+r=await owner('set_quantity',{key:'gold necklace',quantity:5,mode:'add'}); gn=r.products.find(x=>x.name==='Gold Necklace'); ok('new stock brings the item back',gn.qty===5&&gn.stock_status==='in_stock',JSON.stringify(gn));
+r=await owner('load'); const lastSale=r.sales.recent[0].id; r=await owner('delete_sale',{saleId:lastSale}); ok('removing a sale puts the pieces back',r.products.find(x=>x.name==='Gold Necklace').qty===6,JSON.stringify(r.products.find(x=>x.name==='Gold Necklace')));
+r=await owner('save_product',{key:'gold necklace',name:'Gold Necklace',price_text:'₹48,500',details:'10 grams',stock_status:'in_stock'}); ok('editing the item keeps its count',r.products.find(x=>x.name==='Gold Necklace').qty===6);
+r=await owner('save_product',{key:'gold necklace',name:'Gold Necklace 22K',price_text:'₹48,500',details:'10 grams',stock_status:'in_stock'}); ok('renaming keeps the count',r.products.find(x=>x.name==='Gold Necklace 22K')?.qty===6,JSON.stringify(r.products.map(x=>[x.name,x.qty])));
+r=await owner('save_product',{key:'gold necklace 22k',name:'Gold Necklace',price_text:'₹48,500',details:'10 grams',stock_status:'in_stock'});
+r=await owner('set_quantity',{key:'gold necklace',quantity:null}); ok('the owner can stop counting an item',r.products.find(x=>x.name==='Gold Necklace').qty===null);
+r=await owner('set_quantity',{key:'no such item',quantity:1}); ok('stock count of an unknown item is refused',r.status===400);
+r=await owner('set_quantity',{key:'silver anklet',quantity:2,mode:'set'});
+p=await pub(); const anklet=(p.offline?.items||[]).find(x=>x.name==='Silver Anklet'); ok('customers see only a low count, never the exact stock',anklet&&anklet.left===2&&anklet.qty===undefined,JSON.stringify(anklet));
+
 
 
 // --- sections

@@ -160,7 +160,7 @@
       offline: {
         faqs: faqs,
         items: state.products.filter(function (p) { return p.stock_status !== 'hidden'; }).map(function (p) {
-          return { key: p.name_key, name: p.name, price: p.price_text || '', details: p.details || '', out: p.stock_status === 'out_of_stock', photo: p.photo_id || '', photos: state.photos.filter(function (x) { return x.kind === 'product' && x.product_key === p.name_key; }).map(function (x) { return x.photo_id; }) };
+          return { key: p.name_key, name: p.name, price: p.price_text || '', details: p.details || '', out: p.stock_status === 'out_of_stock', left: p.stock_status !== 'out_of_stock' && typeof p.qty === 'number' && p.qty > 0 && p.qty <= 3 ? p.qty : 0, photo: p.photo_id || '', photos: state.photos.filter(function (x) { return x.kind === 'product' && x.product_key === p.name_key; }).map(function (x) { return x.photo_id; }) };
         }),
         savedAt: new Date(state.savedAt).toISOString()
       }
@@ -240,6 +240,13 @@
     return { ok: true, reply: reply, options: options, questions: [], progress: { answered: Math.min(o.step, 7), total: 7 }, facts: f, answers: {}, bot: bot, bankStatus: 'ready' };
   }
 
+  // A count of 0 marks the item out of stock; a count above 0 brings an out-of-stock item back. Hidden stays hidden.
+  function applyQtyStatus(p) {
+    if (typeof p.qty !== 'number' || p.stock_status === 'hidden') return;
+    if (p.qty === 0) p.stock_status = 'out_of_stock';
+    else if (p.stock_status === 'out_of_stock') p.stock_status = 'in_stock';
+  }
+
   function handleOwner(state, body) {
     var action = String(body.action || '');
     if (action === 'save_product') {
@@ -248,7 +255,10 @@
       var key = clip(body.key, 140);
       var newKey = nameKey(name);
       var existing = state.products.find(function (p) { return p.name_key === (key || newKey); });
-      var record = { name_key: newKey, name: name, price_text: clip(body.price_text, 80), details: clip(body.details, 600), stock_status: ['out_of_stock', 'hidden'].indexOf(body.stock_status) !== -1 ? body.stock_status : 'in_stock', photo_id: '' };
+      var record = { name_key: newKey, name: name, price_text: clip(body.price_text, 80), details: clip(body.details, 600), stock_status: ['out_of_stock', 'hidden'].indexOf(body.stock_status) !== -1 ? body.stock_status : 'in_stock', photo_id: '', qty: existing && typeof existing.qty === 'number' ? existing.qty : null };
+      if (body.qty === null || body.qty === '') record.qty = null;
+      else if (body.qty !== undefined && isFinite(Number(body.qty)) && !(body.stock_status === 'out_of_stock' && Number(body.qty) > 0)) record.qty = Math.max(0, Math.round(Number(body.qty)));
+      applyQtyStatus(record);
       if (existing) {
         state.photos.forEach(function (p) { if (p.kind === 'product' && p.product_key === existing.name_key) p.product_key = newKey; });
         Object.assign(existing, record);
@@ -259,9 +269,20 @@
       if (!sp) throw new Error('That item was not found.');
       var priceOf = function (t) { var m = String(t || '').replace(/,/g, '').match(/\d+/); return m ? Number(m[0]) : 0; };
       state.sales = state.sales || [];
+      if (typeof sp.qty === 'number') { sp.qty = Math.max(0, sp.qty - (Math.min(Math.max(Math.round(Number(body.quantity)) || 1, 1), 9999))); applyQtyStatus(sp); }
       state.sales.push({ id: 's_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name_key: sp.name_key, name: sp.name, qty: Math.min(Math.max(Math.round(Number(body.quantity)) || 1, 1), 9999), unit_price: priceOf(body.price) || priceOf(sp.price_text), payment: ['cash', 'upi', 'card', 'other'].indexOf(body.payment) !== -1 ? body.payment : '', day: shopDay(Date.now()), at: Date.now() });
     } else if (action === 'delete_sale') {
+      var gone = (state.sales || []).filter(function (r) { return r.id === body.saleId; })[0];
       state.sales = (state.sales || []).filter(function (r) { return r.id !== body.saleId; });
+      var back = gone && state.products.filter(function (p) { return p.name_key === gone.name_key; })[0];
+      if (back && typeof back.qty === 'number') { back.qty += gone.qty; applyQtyStatus(back); }
+    } else if (action === 'set_quantity') {
+      var qp = state.products.filter(function (p) { return p.name_key === clip(body.key, 140); })[0];
+      if (!qp) throw new Error('That item was not found.');
+      if (body.quantity === null) qp.qty = null;
+      else if (body.mode === 'add') qp.qty = Math.max(0, (typeof qp.qty === 'number' ? qp.qty : 0) + Math.round(Number(body.quantity)));
+      else qp.qty = Math.max(0, Math.round(Number(body.quantity)));
+      applyQtyStatus(qp);
     } else if (action === 'delete_product') {
       var dkey = clip(body.key, 140);
       state.products = state.products.filter(function (p) { return p.name_key !== dkey; });

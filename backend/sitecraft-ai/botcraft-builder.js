@@ -3,7 +3,7 @@ import { ABOUT_SCHEMA, INFO_FIELDS, SECTIONS, PLAN_SCHEMA, buildAboutPrompt, bui
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
+  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, changeQty, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
@@ -1374,13 +1374,16 @@ async function handleOwner(request, env, origin, ctx) {
     if (oldKey && nameKey(name) !== oldKey && await productExists(env, shopId, name)) {
       return reply({ ok: false, error: "You already have an item with this name." }, 400, origin);
     }
-    await saveProduct(env, shopId, {
+    const newKey = await saveProduct(env, shopId, {
       key: oldKey,
       name,
       price_text: clip(body?.price_text, 80),
       details: clip(body?.details, 600),
       stock_status: ["out_of_stock", "hidden"].includes(body?.stock_status) ? body.stock_status : "in_stock"
     });
+    // The item form may carry a stock count: a number sets it, an empty value stops counting.
+    if (body?.qty === null || body?.qty === "") await changeQty(env, shopId, newKey, { qty: null });
+    else if (body?.qty !== undefined && Number.isFinite(Number(body.qty)) && !(body?.stock_status === "out_of_stock" && Number(body.qty) > 0)) await changeQty(env, shopId, newKey, { qty: Number(body.qty) });
   } else if (action === "delete_product") {
     await deleteProduct(env, shopId, clip(body?.key, 140));
   } else if (action === "record_sale") {
@@ -1390,9 +1393,19 @@ async function handleOwner(request, env, origin, ctx) {
     const product = products.find(p => p.name_key === key);
     if (!product) return reply({ ok: false, error: "That item was not found." }, 400, origin);
     const given = priceNumber(body?.price);
-    await recordSale(env, shopId, { key: product.name_key, name: product.name, qty: body?.quantity, unitPrice: given || priceNumber(product.price_text), payment: String(body?.payment || "") });
+    const count = Math.min(Math.max(Math.round(Number(body?.quantity)) || 1, 1), 9999);
+    await recordSale(env, shopId, { key: product.name_key, name: product.name, qty: count, unitPrice: given || priceNumber(product.price_text), payment: String(body?.payment || "") });
+    await changeQty(env, shopId, product.name_key, { delta: -count, fromSale: true });
   } else if (action === "delete_sale") {
-    await deleteSale(env, shopId, clip(body?.saleId, 40));
+    // A removed sale puts its pieces back in stock (only for items the owner counts).
+    const removed = await deleteSale(env, shopId, clip(body?.saleId, 40));
+    if (removed?.key) await changeQty(env, shopId, removed.key, { delta: removed.qty, fromSale: true });
+  } else if (action === "set_quantity") {
+    const key = clip(body?.key, 140);
+    const given = body?.quantity === null ? null : Number(body?.quantity);
+    if (given !== null && !Number.isFinite(given)) return reply({ ok: false, error: "Please enter a number." }, 400, origin);
+    const done = body?.mode === "add" ? await changeQty(env, shopId, key, { delta: given }) : await changeQty(env, shopId, key, { qty: given });
+    if (done === undefined) return reply({ ok: false, error: "That item was not found." }, 400, origin);
   } else if (action === "upload_photo") {
     const kind = String(body?.kind || "");
     const image = body?.image;
