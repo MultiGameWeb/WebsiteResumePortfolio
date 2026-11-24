@@ -357,3 +357,9 @@ body.chat-open .fab-row { display: none; }
 .product-card .product-price { margin-top: auto; }
 .product-card .product-name { min-height: 2.6em; }
 .product-card .product-no-photo, .product-card img { flex: none; }
+
+/* One chat button on the page. The photo and microphone buttons are inside the chat, so nothing runs off a small screen. */
+#talk { width: 44px; height: 44px; flex: none; border: 1px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--text); font-size: 19px; cursor: pointer; }
+#talk.active { background: #e53935; color: #fff; border-color: #e53935; }
+#talk:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.fab-chat { max-width: calc(100vw - 28px); }
