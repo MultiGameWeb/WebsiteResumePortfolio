@@ -177,3 +177,6 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 
 ## Customer assistant no longer says "no online payment"
 - The assistant's rules said "Online payment is not available", so it told customers the shop has no online payment. It now says only that it cannot take payment in the chat, sends the customer to the owner at the counter, and never states which payment methods the shop accepts unless the owner's saved information says so.
+
+## Customer assistant sticks to the shop's facts
+- The assistant answered a customer's guess with an invented business plan ("we plan to sell vegetables too"). The rules now forbid talking about the shop's plans, future products or opinions, and agreeing with a customer's guess the saved information does not confirm.
