@@ -249,9 +249,48 @@ function closeChat() {
   document.body.classList.remove('chat-open');
 }
 
+// Item groups found from the item names, used for the icon when an item has no photo and for the filter chips.
+const CATEGORIES = [
+  ['🔌', 'Accessories', /\b(charger|cable|adapter|power ?bank|cover|case|screen guard|tempered|mouse|keyboard|pen ?drive|memory card|bag|stand|game tools?|router)\b/i],
+  ['📱', 'Mobiles', /\b(mobile|phone|iphone|smartphone|galaxy|redmi|realme|oneplus|vivo|oppo|pixel)\b/i],
+  ['💻', 'Laptops', /\b(laptop|notebook|macbook|chromebook|ideapad|thinkpad|vivobook)\b/i],
+  ['📺', 'TVs', /\b(tv|television|led|oled|qled|smart tv)\b/i],
+  ['🧊', 'Fridges', /\b(fridge|refrigerator|freezer)\b/i],
+  ['🧺', 'Washing machines', /\b(washing machine|washer|dryer)\b/i],
+  ['❄️', 'AC & coolers', /\b(ac|air conditioner|cooler|split)\b/i],
+  ['🌀', 'Fans & home', /\b(fan|mixer|grinder|iron|heater|geyser|induction|cooker|oven|microwave|vacuum)\b/i],
+  ['🎧', 'Audio', /\b(headphone|headphones|earbuds?|earphones?|speaker|soundbar|airpods?|neckband|home theatre)\b/i],
+  ['⌚', 'Watches', /\b(watch|smartwatch|band)\b/i],
+  ['📷', 'Cameras', /\b(camera|cctv|tripod)\b/i],
+  ['💍', 'Jewellery', /\b(ring|chain|necklace|bangle|bangles|earring|earrings|anklet|gold|silver|diamond|pendant)\b/i],
+  ['👕', 'Clothes', /\b(saree|shirt|jeans|kurta|dress|t-?shirt|pant|trousers|lehenga)\b/i],
+  ['🥬', 'Groceries', /\b(rice|dal|oil|vegetables?|fruits?|milk|atta|sugar|spice|tomato|onion|potato)\b/i],
+  ['💊', 'Medicines', /\b(tablet|syrup|capsule|medicine|ointment)\b/i],
+];
+const categoryOf = (item) => CATEGORIES.find(([, , pattern]) => pattern.test(item.name)) || ['📦', 'Other', null];
+let categoryFilter = '';
+
+function renderCategoryChips(all) {
+  const box = document.querySelector('#categoryChips');
+  const groups = new Map();
+  for (const item of all) { const [icon, label] = categoryOf(item); groups.set(label, { icon, count: (groups.get(label)?.count || 0) + 1 }); }
+  if (groups.size < 2 || all.length < 6) { box.hidden = true; box.replaceChildren(); categoryFilter = ''; return; }
+  if (categoryFilter && !groups.has(categoryFilter)) categoryFilter = '';
+  box.hidden = false;
+  const make = (label, text) => {
+    const chip = element('button', 'category-chip', text);
+    chip.type = 'button';
+    chip.setAttribute('aria-pressed', String(categoryFilter === label));
+    chip.addEventListener('click', () => { categoryFilter = label; renderProducts(); });
+    return chip;
+  };
+  box.replaceChildren(make('', `All (${all.length})`), ...[...groups].sort((a, b) => b[1].count - a[1].count).map(([label, g]) => make(label, `${g.icon} ${label} (${g.count})`)));
+}
+
 function renderProducts() {
   const query = document.querySelector('#productSearch').value.trim().toLowerCase();
-  const items = (saved.offline?.items || []).filter((item) => !query || `${item.name} ${item.details} ${item.price}`.toLowerCase().includes(query));
+  renderCategoryChips(saved.offline?.items || []);
+  const items = (saved.offline?.items || []).filter((item) => (!query || `${item.name} ${item.details} ${item.price}`.toLowerCase().includes(query)) && (!categoryFilter || categoryOf(item)[1] === categoryFilter));
   const grid = document.querySelector('#productGrid');
   if (!items.length) { grid.replaceChildren(element('p', 'empty', 'No products found.')); return; }
   grid.replaceChildren(...items.map((item) => {
@@ -264,7 +303,11 @@ function renderProducts() {
       image.alt = '';
       image.loading = 'lazy';
       card.append(image);
-    } else card.append(element('span', 'product-no-photo', item.name.slice(0, 1).toUpperCase()));
+    } else {
+      const placeholder = element('span', 'product-no-photo', categoryOf(item)[0]);
+      placeholder.setAttribute('aria-hidden', 'true');
+      card.append(placeholder);
+    }
     card.append(element('span', 'product-name', item.name));
     if (item.price) card.append(element('span', 'product-price', item.price));
     if (item.out) card.append(element('span', 'product-out', 'Out of stock'));
@@ -327,6 +370,7 @@ function renderCartBar() {
   const count = lines.reduce((sum, line) => sum + line.qty, 0);
   const total = cartTotal(lines);
   document.querySelector('#cartBar').hidden = !count;
+  document.body.classList.toggle('has-cart', Boolean(count));
   document.querySelector('#cartSummary').textContent = `${count} item${count === 1 ? '' : 's'}${total !== null ? ` · ${rupees(total)}` : ''}`;
 }
 

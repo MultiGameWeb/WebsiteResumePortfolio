@@ -180,3 +180,9 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 
 ## Customer assistant sticks to the shop's facts
 - The assistant agreed with a customer's guess about the shop. The rules now say: share plans and changes the owner told it (for example "vegetables start in December") exactly as written, never add dates or details that were not told, never invent plans or opinions, and never confirm a customer's guess the saved information does not confirm.
+
+## Customer page: item icons, group filters, cart bar clear of the chat button
+- An item without a photo now shows a group icon (📱 mobile, 💻 laptop, 📺 TV, 🧊 fridge, 🎧 audio, 🔌 accessories, 💍 jewellery and more, 📦 otherwise) instead of the first letter.
+- Group chips above the items (All, Mobiles, Laptops, TVs ...) with counts filter the list, together with the search. They show only when there are 6 or more items in 2 or more groups. Groups are found from the item names.
+- On wide screens the chat button moves above the cart bar when the cart has items, so they never overlap.
+- Checked in Chromium (desktop and phone) with a 10-item electronics list in demo mode: chips, filter, icons and no overlap.
