@@ -186,3 +186,9 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Group chips above the items (All, Mobiles, Laptops, TVs ...) with counts filter the list, together with the search. They show only when there are 6 or more items in 2 or more groups. Groups are found from the item names.
 - On wide screens the chat button moves above the cart bar when the cart has items, so they never overlap.
 - Checked in Chromium (desktop and phone) with a 10-item electronics list in demo mode: chips, filter, icons and no overlap.
+
+## Customer page: item popup with spec points and similar items
+- Item details written as points ("8GB RAM | 512GB SSD | 1 year warranty", or one per line) show as short chips in the item popup. Plain sentences stay a paragraph. The owner's item form now explains this.
+- "Similar items": up to three other in-stock items of the same group (for example other laptops) at the bottom of the popup; tapping one opens it. "Ask about this" already sent the item to the assistant and still does.
+- Groups are found from item names, so an item whose name has no known word (for example "Dell Inspiron" before this change) is not grouped. More laptop model words were added.
+- Checked in Chromium (desktop and phone) in demo mode.

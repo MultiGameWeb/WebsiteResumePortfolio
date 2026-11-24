@@ -253,7 +253,7 @@ function closeChat() {
 const CATEGORIES = [
   ['🔌', 'Accessories', /\b(charger|cable|adapter|power ?bank|cover|case|screen guard|tempered|mouse|keyboard|pen ?drive|memory card|bag|stand|game tools?|router)\b/i],
   ['📱', 'Mobiles', /\b(mobile|phone|iphone|smartphone|galaxy|redmi|realme|oneplus|vivo|oppo|pixel)\b/i],
-  ['💻', 'Laptops', /\b(laptop|notebook|macbook|chromebook|ideapad|thinkpad|vivobook)\b/i],
+  ['💻', 'Laptops', /\b(laptop|notebook|macbook|chromebook|ideapad|thinkpad|vivobook|inspiron|latitude|aspire|pavilion|zenbook|legion)\b/i],
   ['📺', 'TVs', /\b(tv|television|led|oled|qled|smart tv)\b/i],
   ['🧊', 'Fridges', /\b(fridge|refrigerator|freezer)\b/i],
   ['🧺', 'Washing machines', /\b(washing machine|washer|dryer)\b/i],
@@ -457,14 +457,48 @@ function renderSheetPhotos(item) {
 }
 document.querySelector('#zoomDialog').addEventListener('click', () => document.querySelector('#zoomDialog').close());
 
+// "8GB RAM | 512GB SSD | Core i5" (or one per line) is shown as a list of short points; plain text stays a paragraph.
+function specParts(text) {
+  const parts = String(text || '').split(/\n|\||•|;|(?<=\D),(?=\s)/).map((part) => part.trim()).filter(Boolean);
+  return parts.length >= 2 && parts.every((part) => part.length <= 48) ? parts : null;
+}
+
+function renderSheetDetails(text) {
+  const box = document.querySelector('#sheetDetails');
+  const parts = specParts(text);
+  box.classList.toggle('as-specs', Boolean(parts));
+  if (!parts) { box.textContent = text; return; }
+  box.replaceChildren(...parts.map((part) => element('span', 'spec-chip', part)));
+}
+
+// Up to three other items of the same group, so a customer can compare without going back.
+function renderSimilar(item) {
+  const box = document.querySelector('#sheetSimilar');
+  const [, label] = categoryOf(item);
+  const others = (saved.offline?.items || []).filter((other) => other.key !== item.key && !other.out && categoryOf(other)[1] === label && label !== 'Other').slice(0, 3);
+  box.hidden = !others.length;
+  box.querySelector('.similar-row').replaceChildren(...others.map((other) => {
+    const card = element('button', 'similar-card');
+    card.type = 'button';
+    if (other.photo) { const image = element('img'); image.src = photoUrl(other.photo); image.alt = ''; image.loading = 'lazy'; card.append(image); }
+    else card.append(element('span', 'similar-icon', categoryOf(other)[0]));
+    card.append(element('span', 'similar-name', other.name));
+    if (other.price) card.append(element('span', 'similar-price', other.price));
+    card.addEventListener('click', () => openSheet(other));
+    return card;
+  }));
+}
+
 function openSheet(item) {
   sheetProduct = item;
   renderSheetPhotos(item);
   document.querySelector('#sheetName').textContent = item.name;
   document.querySelector('#sheetPrice').textContent = [item.price, item.out ? 'Out of stock' : ''].filter(Boolean).join(' · ');
-  document.querySelector('#sheetDetails').textContent = item.details || '';
+  renderSheetDetails(item.details || '');
+  renderSimilar(item);
   document.querySelector('#addThis').hidden = !cartOn() || item.out;
-  sheet.showModal();
+  if (!sheet.open) sheet.showModal();
+  sheet.scrollTop = 0;
 }
 
 function renderAbout(shop, faqs) {
