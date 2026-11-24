@@ -375,9 +375,22 @@ function renderReplies() {
   const low = $('#repliesLow');
   low.hidden = !replies.low;
   low.textContent = replies.balance <= 0 ? 'None left' : 'Running low';
-  $('#repliesNote').textContent = replies.low
-    ? 'Your replies are running low. To add more replies, contact SiteCraft (online recharge is coming soon).'
-    : 'Online recharge is coming soon. To add replies now, contact SiteCraft.';
+  const packs = view.packs || [];
+  $('#packList').replaceChildren(...packs.map((pack) => {
+    const li = element('li');
+    const label = element('span');
+    label.append(element('strong', '', `${pack.replies.toLocaleString('en-IN')} replies`), element('span', 'pack-each', `  ₹${(pack.price / pack.replies).toFixed(2)} each`));
+    const ask = element('a', 'btn btn-light btn-small', `₹${pack.price.toLocaleString('en-IN')} · Recharge`);
+    const text = `Hello SiteCraft, I want to recharge ${pack.replies.toLocaleString('en-IN')} AI replies for my assistant "${view.shopName || ''}".`;
+    ask.href = `https://wa.me/917981587505?text=${encodeURIComponent(text)}`;
+    ask.target = '_blank';
+    ask.rel = 'noopener';
+    li.append(label, ask);
+    return li;
+  }));
+  $('#packList').hidden = !packs.length;
+  document.querySelector('.pack-title').hidden = !packs.length;
+  $('#repliesNote').textContent = (replies.low ? 'Your replies are running low. ' : '') + 'A text answer uses 1 reply, a photo or file question 2, a voice answer 3. Online payment is coming soon: tap Recharge to message SiteCraft and we add the replies for you.';
 }
 
 function renderPage() {

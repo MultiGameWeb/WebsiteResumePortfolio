@@ -131,6 +131,7 @@ v=await owner('load'); const balanceBeforeVoice=v.replies.balance;
 r=await post('/api/botcraft/voice',{s:publicId,audio:{mimeType:'audio/wav',data:wavHead}},{Origin:API}); ok('voice: with a fake Gemini key it fails cleanly (503)',r.status===503&&r.ok===false,JSON.stringify(r).slice(0,100));
 v=await owner('load'); ok('voice: the credit is given back when the AI fails',v.replies.balance===balanceBeforeVoice,JSON.stringify(v.replies));
 r=await fetch(API+'/api/botcraft/voice',{method:'POST',headers:{Origin:'https://evil.example','Content-Type':'application/json','CF-Connecting-IP':nextIp()},body:JSON.stringify({s:publicId,audio:{mimeType:'audio/wav',data:wavHead}})}); ok('voice: an unknown origin is refused (403)',r.status===403);
+v=await owner('load'); ok('owner view lists the three recharge packs (5K, 10K, 25K) with prices',Array.isArray(v.packs)&&v.packs.map(x=>x.replies).join()==='5000,10000,25000'&&v.packs.map(x=>x.price).join()==='1010,2020,5040',JSON.stringify(v.packs));
 v=await owner('load'); ok('credit given back when the AI fails',v.replies.balance===5&&v.replies.used===0,JSON.stringify(v.replies));
 const adm=(body)=>post('/api/admin/bot',body,{Authorization:'Bearer test-admin-token'});
 r=await adm({id:SID,action:'add_replies',count:-5}); ok('admin removes replies',r.ok&&r.bot.replies.balance===0,JSON.stringify(r).slice(0,150));

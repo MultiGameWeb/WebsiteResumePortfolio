@@ -13,6 +13,7 @@ import { AUDIO_RULE, VOICE_SCHEMA, customerAudio, speakReply, withCustomerAudio 
 import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-photo-studio.js";
 import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
+import { PACKS } from "./botcraft-packs.js";
 import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
 import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
 
@@ -1239,6 +1240,7 @@ async function ownerView(env, shopId, url) {
     ok: true,
     page,
     replies,
+    packs: PACKS,
     savedAnswers,
     premiumVoice: premiumVoiceAvailable(env),
     photoStudio: { available: photoStudioAvailable(env), leftToday: studioLeftToday(env, settings) },

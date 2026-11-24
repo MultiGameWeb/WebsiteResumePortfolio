@@ -632,7 +632,8 @@ export async function takeDailyAsk(env, shopId, visitorHash, { shopLimit = DEFAU
 }
 
 // ---- Reply metering ----
-export const DEFAULT_FREE_REPLIES = 200;
+// A small allowance so the owner can test the assistant. Plans do not include free replies. Change it with BOTCRAFT_FREE_REPLIES.
+export const DEFAULT_FREE_REPLIES = 50;
 export const freeRepliesFor = env => (Number(env?.BOTCRAFT_FREE_REPLIES) >= 0 && env?.BOTCRAFT_FREE_REPLIES !== undefined && env?.BOTCRAFT_FREE_REPLIES !== "" ? Math.floor(Number(env.BOTCRAFT_FREE_REPLIES)) : DEFAULT_FREE_REPLIES);
 
 // Takes one credit before the AI is asked. { ok: true, balance } or { ok: false, balance: 0 }.
