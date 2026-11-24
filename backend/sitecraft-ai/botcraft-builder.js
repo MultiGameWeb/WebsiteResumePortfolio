@@ -3,7 +3,7 @@ import { ABOUT_SCHEMA, INFO_FIELDS, SECTIONS, PLAN_SCHEMA, buildAboutPrompt, bui
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, changeQty, salesReport, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
+  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, addOwnerTokens, changeQty, ownerAiMonth, OWNER_AI_DEFAULTS, salesReport, takeOwnerAi, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
@@ -571,6 +571,22 @@ async function visitorHash(address, shopId) {
   return [...new Uint8Array(bytes)].slice(0, 12).map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+// The daily limit of owner AI calls for one kind (setup, update, about). Change it with BOTCRAFT_OWNER_AI_SETUP / _UPDATE / _ABOUT.
+function ownerAiLimit(env, kind) {
+  const set = Number(env?.[`BOTCRAFT_OWNER_AI_${kind.toUpperCase()}`]);
+  return Number.isFinite(set) && set >= 0 ? Math.floor(set) : OWNER_AI_DEFAULTS[kind];
+}
+// Counts one AI call for the owner. True when it may go ahead (also when there is no stored shop, such as a first visit).
+async function allowOwnerAi(env, shopId, kind) {
+  if (!shopId || !storeAvailable(env)) return true;
+  try { return await takeOwnerAi(env, shopId, kind, ownerAiLimit(env, kind)); } catch (error) { console.error("BotCraft owner AI count failed", error); return true; }
+}
+const OWNER_AI_LIMIT_MESSAGE = {
+  setup: "You have used today's setup chat limit for this bot. Please continue tomorrow, or use “Manage my bot” to change items and information now.",
+  update: "You have used today's AI helper limit. Simple changes (price, stock, timings, hide, sales) still work without it.",
+  about: "You have used today's limit for writing the About text. Please write it yourself or try tomorrow."
+};
+
 function later(ctx, task) {
   const safe = task.catch(error => console.error("BotCraft background task failed", error));
   if (ctx?.waitUntil) ctx.waitUntil(safe);
@@ -715,8 +731,11 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   const askExtras = Boolean(saved) && text !== FINISH_OPTION && extrasOpen(facts, answers, bank);
   let result;
   const modelErrors = [];
+  if (saved && !(await allowOwnerAi(env, shopId, "setup"))) return reply({ ok: false, error: OWNER_AI_LIMIT_MESSAGE.setup, limit: "setup" }, 429, origin);
+  let setupUsage = null;
   try {
     ({ result } = await callWithFallback(env, {
+      onUsage: metadata => { setupUsage = metadata; },
       system: systemPrompt(facts, answers, bankShown, bank, step, language, askExtras),
       contents,
       schema: REPLY_SCHEMA,
@@ -736,6 +755,7 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
     return reply({ ok: false, error: "BotCraft is busy right now. Please try again in a moment.", detail }, 503, origin);
   }
 
+  if (saved) await later(ctx, addOwnerTokens(env, shopId, "setup", { inTokens: Number(setupUsage?.promptTokenCount) || 0, outTokens: (Number(setupUsage?.candidatesTokenCount) || 0) + (Number(setupUsage?.thoughtsTokenCount) || 0) }));
   // What the owner has written so far: this message, earlier messages, and what is already saved.
   const rawHistory = saved ? saved.messages : Array.isArray(body?.history) ? body.history : [];
   const corpus = ownerCorpus([text, ...rawHistory.filter(m => m?.role === "owner").map(m => m.text), ...Object.values(facts), ...Object.values(answers), ...Object.values(form.facts), ...Object.values(form.answers)]);
@@ -1317,6 +1337,7 @@ async function writeAbout(env, shopId, { force = false } = {}) {
   if (!saved) return false;
   const facts = cleanFacts(saved.facts);
   if (!force && (facts.about || saved.facts?.about_auto_tried)) return false;
+  if (!(await allowOwnerAi(env, shopId, "about"))) return false;
   const products = await listProducts(env, shopId);
   let about = "";
   const modelErrors = [];
@@ -1380,7 +1401,7 @@ async function changeAnswer(env, shopId, action, body) {
   return "";
 }
 
-async function handlePlanUpdate(env, shopId, body, origin) {
+async function handlePlanUpdate(env, shopId, body, origin, ctx) {
   const text = clip(body?.text, 1500);
   const images = (Array.isArray(body?.images) ? body.images : [])
     .filter(img => PHOTO_TYPES.has(img?.mimeType) && typeof img?.data === "string" && img.data.length < 1_500_000)
@@ -1393,8 +1414,12 @@ async function handlePlanUpdate(env, shopId, body, origin) {
   const savedAnswers = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, bank, answered, settings.hiddenAnswers);
   const parts = [{ text: text || "(photos only)" }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.data } }))];
   const modelErrors = [];
+  // Over the daily limit the page falls back to its own rules (price, stock, timings, hide, sales ...), which cost nothing.
+  if (!(await allowOwnerAi(env, shopId, "update"))) return reply({ ok: false, error: OWNER_AI_LIMIT_MESSAGE.update, limit: "update" }, 429, origin);
+  let planUsage = null;
   try {
     const { result } = await callWithFallback(env, {
+      onUsage: metadata => { planUsage = metadata; },
       system: buildPlanPrompt(products, info, images.length, savedAnswers),
       contents: [{ role: "user", parts }],
       schema: PLAN_SCHEMA,
@@ -1404,6 +1429,7 @@ async function handlePlanUpdate(env, shopId, body, origin) {
       maxAttempts: 1,
       log: message => modelErrors.push(message.slice(0, 160))
     });
+    await later(ctx, addOwnerTokens(env, shopId, "update", { inTokens: Number(planUsage?.promptTokenCount) || 0, outTokens: (Number(planUsage?.candidatesTokenCount) || 0) + (Number(planUsage?.thoughtsTokenCount) || 0) }));
     return reply({ ok: true, plan: cleanPlan(result, products, images.length, savedAnswers) }, 200, origin);
   } catch (error) {
     console.error("BotCraft plan_update failed", error, modelErrors);
@@ -1564,7 +1590,7 @@ async function handleOwner(request, env, origin, ctx) {
   } else if (action === "generate_about") {
     if (!(await writeAbout(env, shopId, { force: true }))) return reply({ ok: false, error: "Could not write the text right now. Please try again or write it yourself." }, 503, origin);
   } else if (action === "plan_update") {
-    return handlePlanUpdate(env, shopId, body, origin);
+    return handlePlanUpdate(env, shopId, body, origin, ctx);
   } else if (action === "studio_photo") {
     // Clean studio version of an item photo: only a preview, saved when the owner accepts (replace_photo).
     const result = await studioPhoto(env, shopId, String(body?.photoId || ""));
