@@ -33,6 +33,22 @@ function saleDetails(rest) {
   return { qty, price };
 }
 
+// "iPhone 15 stock 10" sets the count; "received 5 iPhone 15" adds to it.
+const RECEIVED = /\b(received|arrived|came|restocked?|new stock|more (?:came|arrived)|stock (?:came|arrived|added))\b|add(?:ed)? (?:\d+ )?(?:to|in) stock|వచ్చాయి|వచ్చింది|आया|आए/i;
+const COUNT_WORD = /\b(stock|qty|quantity|count|units?|pcs?|pieces?|left|remaining)\b|స్టాక్|बाकी|स्टॉक/i;
+// The clause without any word of the item's name (numbers in a name such as "iPhone 15" must not count as a quantity).
+function withoutName(clause, product) {
+  let rest = ` ${clause} `;
+  for (const word of String(product.name).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean)) {
+    rest = rest.replace(new RegExp(`(^|[^\\p{L}\\p{N}])${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![\\p{L}\\p{N}])`, 'iu'), ' ');
+  }
+  return rest;
+}
+function countFrom(rest) {
+  const match = String(rest || '').replace(/(\d),(?=\d{3})/g, '$1').match(/\d+/);
+  return match ? Number(match[0]) : null;
+}
+
 const KW = {
   price: /\b(price|rate|cost|mrp|amount|dhara|ret|rupees|rs)\b|ధర|రేటు|రేట్|కాస్ట్|कीमत|दाम|भाव|रेट/i,
   out: /\b(out of stock|no stock|stock (?:is )?(?:over|finished|empty|less)|finished|sold out|not available|unavailable|over|stock ledu|ayipoyindi|ayipoyindhi|aipoyindi)\b|స్టాక్ లేదు|అయిపోయింది|అయిపోయిన|లేదు|खत्म|स्टॉक नहीं|उपलब्ध नहीं/i,
@@ -282,6 +298,15 @@ export function planLocally(text, { products = [], imageCount = 0 } = {}) {
       ops.push({ type: 'record_sale', name: product.name, key: product.name_key, quantity: qty, ...(price ? { price } : {}), ...(payment ? { payment } : {}) });
       continue;
     }
+    if (found.product && !SOLD.test(lower) && (RECEIVED.test(lower) || (COUNT_WORD.test(lower) && !KW.price.test(lower) && !/₹|\brs\.?\s*\d/i.test(lower) && !(KW.out.test(lower) && countFrom(withoutName(clause, found.product)) === null)))) {
+      const product = found.product;
+      const number = countFrom(withoutName(clause, product));
+      if (number !== null && number <= 999999) {
+        const adding = RECEIVED.test(lower);
+        if (adding && number >= 1) { ops.push({ type: 'add_quantity', name: product.name, key: product.name_key, quantity: number }); continue; }
+        if (!adding) { ops.push({ type: 'set_quantity', name: product.name, key: product.name_key, quantity: number }); continue; }
+      }
+    }
     if (found.product) {
       const product = found.product;
       if (KW.unhide.test(lower) && !KW.hide.test(lower)) { ops.push({ type: 'set_visibility', name: product.name, key: product.name_key, hidden: false }); continue; }
@@ -370,6 +395,8 @@ export function describeOp(op, products = [], info = {}) {
     }
     case 'delete_item': return { icon: '🗑', text: `Delete item: ${op.name}`, danger: true };
     case 'set_info': { const old = info[op.field]; return { icon: 'ⓘ', text: `${FIELD_LABELS[op.field] || op.field}: ${old ? `${old} → ` : ''}${op.value}` }; }
+    case 'set_quantity': { const old = find(op.key)?.qty; return { icon: '📦', text: `${op.name}: stock ${Number.isInteger(old) ? `${old} → ` : ''}${op.quantity}${op.quantity === 0 ? ' (will be marked out of stock)' : ''}` }; }
+    case 'add_quantity': { const old = find(op.key)?.qty; return { icon: '📦', text: `${op.name}: add ${op.quantity} to stock${Number.isInteger(old) ? ` (${old} → ${old + op.quantity})` : ''}` }; }
     case 'record_sale': {
       const unit = op.price ? Number(op.price) : Number(String(find(op.key)?.price_text || '').replace(/,/g, '').match(/\d+/)?.[0] || 0);
       const money = unit ? ` = ₹${(unit * op.quantity).toLocaleString('en-IN')}${op.price ? '' : ` (at ₹${unit.toLocaleString('en-IN')} each)`}` : ' (no price set, amount will be ₹0)';

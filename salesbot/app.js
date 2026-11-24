@@ -311,6 +311,7 @@ function renderProducts() {
     card.append(element('span', 'product-name', item.name));
     if (item.price) card.append(element('span', 'product-price', item.price));
     if (item.out) card.append(element('span', 'product-out', 'Out of stock'));
+    else if (item.left) card.append(element('span', 'product-low', `Only ${item.left} left`));
     card.addEventListener('click', () => openSheet(item));
     wrap.append(card);
     if (cartOn() && !item.out) {
@@ -493,7 +494,7 @@ function openSheet(item) {
   sheetProduct = item;
   renderSheetPhotos(item);
   document.querySelector('#sheetName').textContent = item.name;
-  document.querySelector('#sheetPrice').textContent = [item.price, item.out ? 'Out of stock' : ''].filter(Boolean).join(' · ');
+  document.querySelector('#sheetPrice').textContent = [item.price, item.out ? 'Out of stock' : item.left ? `Only ${item.left} left` : ''].filter(Boolean).join(' · ');
   renderSheetDetails(item.details || '');
   renderSimilar(item);
   document.querySelector('#addThis').hidden = !cartOn() || item.out;

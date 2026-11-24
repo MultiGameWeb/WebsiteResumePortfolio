@@ -3,7 +3,7 @@
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
 import { enhanceProductPhoto } from './photo-enhance.js?v=2';
-import { initUpdateChat } from './owner-update.js?v=10';
+import { initUpdateChat } from './owner-update.js?v=11';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';
@@ -214,6 +214,8 @@ function renderItems() {
     const info = element('div');
     const name = element('div', 'item-name', item.name);
     if (item.stock_status === 'out_of_stock') name.append(element('span', 'badge', 'Out of stock'));
+    else if (Number.isInteger(item.qty) && item.stock_status !== 'hidden') name.append(element('span', item.qty <= 3 ? 'badge badge-low' : 'badge badge-count', item.qty <= 3 ? `Low stock: ${item.qty} left` : `${item.qty} in stock`));
+    else if (Number.isInteger(item.qty)) name.append(element('span', 'badge badge-count', `${item.qty} in stock`));
     if (item.stock_status === 'hidden') name.append(element('span', 'badge', 'Hidden from customers'));
     info.append(name);
     if (item.price_text) info.append(element('div', 'item-price', item.price_text));
@@ -632,6 +634,7 @@ function openForm(item = null) {
   form.elements.price_text.value = item?.price_text || '';
   form.elements.details.value = item?.details || '';
   form.elements.out.checked = item?.stock_status === 'out_of_stock';
+  form.elements.qty.value = Number.isInteger(item?.qty) ? String(item.qty) : '';
   form.elements.photo.value = '';
   form.hidden = false;
   form.elements.name.focus();
@@ -652,6 +655,7 @@ $('#itemForm').addEventListener('submit', async (event) => {
     price_text: form.elements.price_text.value.trim(),
     details: form.elements.details.value.trim(),
     stock_status: form.elements.out.checked ? 'out_of_stock' : 'in_stock',
+    qty: form.elements.qty.value.trim() === '' ? null : Number(form.elements.qty.value),
   });
   if (!saved) return;
   const key = view.products.find((item) => item.name.toLowerCase().replace(/\s+/g, ' ').trim() === name.toLowerCase().replace(/\s+/g, ' ').trim())?.name_key;

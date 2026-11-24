@@ -6,8 +6,8 @@
 // (no key yet, offline, busy, or demo mode) the rule-based planner in
 // update-planner.js is used instead, and the screen says so.
 
-import { applyPlan, runUndo } from './plan-apply.js?v=8';
-import { describeOp, planLocally } from './update-planner.js?v=7';
+import { applyPlan, runUndo } from './plan-apply.js?v=9';
+import { describeOp, planLocally } from './update-planner.js?v=8';
 import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
 
 const GENERAL_EXAMPLES = ['Timings 10 am to 8 pm', 'Closed on Sunday'];

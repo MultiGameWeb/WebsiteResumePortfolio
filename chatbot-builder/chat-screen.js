@@ -1,7 +1,7 @@
 import { apiBase, createBot, currentBotId, deleteCurrentBot, premiumVoiceOn, enableFeature, getOwnerView, loadOwnerView, loadSavedConversation, myBots, openBot, ownerCall, ownerViewLoaded, prepareImages, prepareQuestionBank, rememberBotName, requestUpdatePlan, sendChatAction } from './chatApi.js?v=20261123a';
 import { premiumRecordingSupported, startRecording } from './premium-voice.js?v=1';
-import { applyPlan, runUndo } from './plan-apply.js?v=8';
-import { describeOp, planLocally } from './update-planner.js?v=7';
+import { applyPlan, runUndo } from './plan-apply.js?v=9';
+import { describeOp, planLocally } from './update-planner.js?v=8';
 import {
   AttachmentTray,
   ImageLightbox,

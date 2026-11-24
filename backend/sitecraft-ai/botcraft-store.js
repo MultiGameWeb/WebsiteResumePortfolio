@@ -189,6 +189,8 @@ async function ensureSchema(db) {
     schemaReady = db.batch(SCHEMA.map(sql => db.prepare(sql)))
       // Added later: where a photo's bytes live, 'd1' (in the row) or 'r2' (in the photo bucket).
       .then(() => db.prepare("ALTER TABLE botcraft_photos ADD COLUMN storage TEXT NOT NULL DEFAULT 'd1'").run().catch(() => null))
+      // Added later: how many pieces are in stock. NULL means the owner does not count this item.
+      .then(() => db.prepare("ALTER TABLE botcraft_products ADD COLUMN qty INTEGER").run().catch(() => null))
       .catch(error => {
       schemaReady = null;
       throw error;
@@ -322,7 +324,7 @@ export async function listProducts(env, shopId, { includeHidden = false } = {}) 
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   const rows = await db.prepare(
-    "SELECT p.name_key, p.name, p.price_text, p.details, p.stock_status, " +
+    "SELECT p.name_key, p.name, p.price_text, p.details, p.stock_status, p.qty, " +
     "(SELECT photo_id FROM botcraft_photos f WHERE f.shop_id = p.shop_id AND f.kind = 'product' AND f.product_key = p.name_key ORDER BY f.created_at LIMIT 1) AS photo_id " +
     "FROM botcraft_products p WHERE p.shop_id = ? " + (includeHidden ? "" : "AND p.stock_status != 'hidden' ") + "ORDER BY p.updated_at DESC LIMIT 500"
   ).bind(shopId).all();
@@ -336,16 +338,19 @@ export async function saveProduct(env, shopId, { key, name, price_text, details,
   const now = new Date().toISOString();
   const newKey = nameKey(name);
   const statements = [];
+  let carriedQty = null;
   if (key && key !== newKey) {
+    const old = await db.prepare("SELECT qty FROM botcraft_products WHERE shop_id = ? AND name_key = ?").bind(shopId, key).first();
+    carriedQty = old?.qty ?? null;
     statements.push(
       db.prepare("DELETE FROM botcraft_products WHERE shop_id = ? AND name_key = ?").bind(shopId, key),
       db.prepare("UPDATE botcraft_photos SET product_key = ? WHERE shop_id = ? AND kind = 'product' AND product_key = ?").bind(newKey, shopId, key)
     );
   }
   statements.push(db.prepare(
-    "INSERT INTO botcraft_products (shop_id, name_key, name, price_text, details, stock_status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+    "INSERT INTO botcraft_products (shop_id, name_key, name, price_text, details, stock_status, qty, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) " +
     "ON CONFLICT(shop_id, name_key) DO UPDATE SET name = excluded.name, price_text = excluded.price_text, details = excluded.details, stock_status = excluded.stock_status, updated_at = excluded.updated_at"
-  ).bind(shopId, newKey, name, price_text, details, stock_status, now, now));
+  ).bind(shopId, newKey, name, price_text, details, stock_status, carriedQty, now, now));
   await db.batch(statements);
   return newKey;
 }
@@ -907,7 +912,9 @@ export async function recordSale(env, shopId, { key = "", name, qty = 1, unitPri
 export async function deleteSale(env, shopId, saleId) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
+  const row = await db.prepare("SELECT name_key, qty FROM botcraft_sales WHERE shop_id = ? AND sale_id = ?").bind(shopId, String(saleId)).first();
   await db.prepare("DELETE FROM botcraft_sales WHERE shop_id = ? AND sale_id = ?").bind(shopId, String(saleId)).run();
+  return row ? { key: row.name_key, qty: row.qty } : null;
 }
 
 // Totals for today, the last 7 days and the last 30 days, today's items, and the latest sales.
@@ -944,4 +951,30 @@ export async function salesSummary(env, shopId, now = new Date()) {
     todayByPayment: byPayment,
     recent: rows.slice(0, 20).map(row => ({ id: row.sale_id, name: row.item_name, qty: row.qty, unit_price: row.unit_price, total: row.qty * row.unit_price, payment: row.payment, day: row.day, at: row.sold_at }))
   };
+}
+
+
+// ---- Stock count ----
+
+export const LOW_STOCK = 3;
+
+// Sets (qty) or changes (delta) the count of one item. Items the owner never counted (qty NULL) stay uncounted
+// when a sale is taken off. Reaching 0 marks the item out of stock; a count above 0 brings an out-of-stock item back.
+// A hidden item stays hidden. Returns the new count, or null when the item is uncounted.
+export async function changeQty(env, shopId, key, { qty, delta, fromSale = false }) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT qty, stock_status FROM botcraft_products WHERE shop_id = ? AND name_key = ?").bind(shopId, key).first();
+  if (!row) return undefined;
+  const clamp = n => Math.min(Math.max(Math.round(Number(n)) || 0, 0), 999999);
+  let next;
+  if (qty === null) next = null;
+  else if (qty !== undefined) next = clamp(qty);
+  else if (row.qty === null || row.qty === undefined) next = fromSale ? null : clamp(delta);
+  else next = clamp(row.qty + Number(delta || 0));
+  let status = row.stock_status;
+  if (next !== null && status !== "hidden") status = next === 0 ? "out_of_stock" : status === "out_of_stock" ? "in_stock" : status;
+  await db.prepare("UPDATE botcraft_products SET qty = ?, stock_status = ?, updated_at = ? WHERE shop_id = ? AND name_key = ?")
+    .bind(next, status, new Date().toISOString(), shopId, key).run();
+  return next;
 }

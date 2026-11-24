@@ -192,3 +192,10 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - "Similar items": up to three other in-stock items of the same group (for example other laptops) at the bottom of the popup; tapping one opens it. "Ask about this" already sent the item to the assistant and still does.
 - Groups are found from item names, so an item whose name has no known word (for example "Dell Inspiron" before this change) is not grouped. More laptop model words were added.
 - Checked in Chromium (desktop and phone) in demo mode.
+
+## Stock count (how many pieces are left)
+- The owner can count an item: in the update chat ("iPhone 15 stock 10", "received 5 iPhone 15", "only 2 TVs left", "fan stock 0") or in the item form ("Stock count, optional"). An item with no count works as before.
+- A sale takes its pieces off the count. At 0 the item is marked out of stock by itself; new stock brings it back. Removing a sale (or Undo) puts the pieces back. Hidden items stay hidden. Renaming or editing an item keeps its count.
+- Owner page: each counted item shows "N in stock" or "Low stock: N left" (3 or fewer).
+- Customers never see the exact stock. When 3 or fewer are left they see "Only N left" on the item, in its popup, and the assistant can say it.
+- Backend: column qty on botcraft_products (added automatically), owner action set_quantity, plan operations set_quantity and add_quantity. Deploy the Worker for it to work live. Checked: 102 end-to-end checks (12 new), planner cases, browser run in demo mode (set count, low-stock badge, customer "Only 2 left", sale, out of stock, restock).
