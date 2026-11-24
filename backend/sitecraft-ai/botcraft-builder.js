@@ -3,7 +3,7 @@ import { ABOUT_SCHEMA, INFO_FIELDS, SECTIONS, PLAN_SCHEMA, buildAboutPrompt, bui
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
+  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
@@ -1139,6 +1139,7 @@ async function ownerView(env, shopId, url) {
     listProducts(env, shopId, { includeHidden: true }), listPhotos(env, shopId), listCustomerQuestions(env, shopId, "open"), listCustomerQuestions(env, shopId, "answered"),
     listRequests(env, shopId), listOrders(env, shopId), loadSettings(env, shopId)
   ]);
+  const sales = await salesSummary(env, shopId).catch(() => null);
   const savedAnswers = answerList({ facts, answers: saved?.answers, notes: saved?.notes }, await resolveBank(env, facts), answeredQuestions, settings.hiddenAnswers);
   const page = await shopPageInfo(env, url, settings.pageSlug);
   const replies = await replyStatus(env, shopId, freeRepliesFor(env)).catch(() => null);
@@ -1161,6 +1162,7 @@ async function ownerView(env, shopId, url) {
     answeredQuestions,
     requests,
     orders,
+    sales,
     features: shopFeatures(facts.shop_type, settings),
     galleryLimit: GALLERY_LIMIT,
     productPhotoLimit: PRODUCT_PHOTO_LIMIT,
@@ -1381,6 +1383,16 @@ async function handleOwner(request, env, origin, ctx) {
     });
   } else if (action === "delete_product") {
     await deleteProduct(env, shopId, clip(body?.key, 140));
+  } else if (action === "record_sale") {
+    // The owner sold an item. The unit price is the one the owner said, else the item's own price.
+    const products = await listProducts(env, shopId, { includeHidden: true });
+    const key = clip(body?.key, 140);
+    const product = products.find(p => p.name_key === key);
+    if (!product) return reply({ ok: false, error: "That item was not found." }, 400, origin);
+    const given = priceNumber(body?.price);
+    await recordSale(env, shopId, { key: product.name_key, name: product.name, qty: body?.quantity, unitPrice: given || priceNumber(product.price_text), payment: String(body?.payment || "") });
+  } else if (action === "delete_sale") {
+    await deleteSale(env, shopId, clip(body?.saleId, 40));
   } else if (action === "upload_photo") {
     const kind = String(body?.kind || "");
     const image = body?.image;

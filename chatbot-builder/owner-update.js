@@ -18,7 +18,7 @@ function examplesFor(view) {
   if (!names.length) return ['Add first item and price', ...GENERAL_EXAMPLES];
   const pick = (index) => names[index % names.length];
   const step = Math.max(1, Math.floor(names.length / 3));
-  return [`${pick(0)} price `, `${pick(step)} out of stock`, `Hide ${pick(step * 2)}`, ...GENERAL_EXAMPLES];
+  return [`Sold 1 ${pick(0)}`, 'Today sales', `${pick(step)} out of stock`, `${pick(step)} price `, ...GENERAL_EXAMPLES];
 }
 const LANGS = [['te-IN', 'తెలుగు'], ['en-IN', 'English'], ['hi-IN', 'हिन्दी'], ['ta-IN', 'தமிழ்'], ['kn-IN', 'ಕನ್ನಡ']];
 const LANG_KEY = 'botcraft:ownerVoiceLang';
@@ -28,6 +28,27 @@ function el(tag, className, text) {
   if (className) node.className = className;
   if (text) node.textContent = text;
   return node;
+}
+
+// "Today sales?", "how much sale this week", "ఈరోజు సేల్స్": answered from the saved sales, no AI needed.
+const SALES_QUESTION = /^\s*(?:(?:what|how|show|tell|give|today'?s?|this|my|total|sales?|report|which|ఈరోజు|ఇవాళ)\b[^]*\b(?:sales?|sold|revenue|collection)\b|[^]*\b(?:sales? (?:report|today|total|summary)|today'?s? sales?|sales? (?:this|last) (?:week|month))\b[^]*|[^]*(?:సేల్స్|అమ్మకాలు|बिक्री)[^]*)\s*\??\s*$/i;
+const UPDATE_VERB = /\b(sold|sale)\s+\d|\bsold\s+(?:one|two|three|an?|the)\b/i;
+
+export function salesReport(sales, text = '') {
+  if (!sales) return 'Sales records are not available right now.';
+  const period = /\b(month|30)\b|నెల/i.test(text) ? 'month' : /\b(week|7)\b|వారం/i.test(text) ? 'week' : 'today';
+  const label = { today: 'Today', week: 'In the last 7 days', month: 'In the last 30 days' }[period];
+  const data = sales[period];
+  if (!data.sales) return `${label}: no sales recorded yet. Tell me what you sold, for example “Sold 2 iPhone 15”.`;
+  const money = (n) => `₹${Number(n || 0).toLocaleString('en-IN')}`;
+  const lines = [`${label}: ${data.sales} sale${data.sales === 1 ? '' : 's'}, ${data.qty} item${data.qty === 1 ? '' : 's'}, total ${money(data.total)}.`];
+  if (period === 'today') {
+    for (const item of sales.todayItems.slice(0, 8)) lines.push(`• ${item.qty} × ${item.name} — ${money(item.total)}`);
+    const pay = Object.entries(sales.todayByPayment || {}).filter(([, a]) => a).map(([how, a]) => `${how === 'other' ? 'Not said' : how.toUpperCase()} ${money(a)}`);
+    if (pay.length) lines.push(`Paid by: ${pay.join(', ')}`);
+  }
+  if (data.unpriced) lines.push(`${data.unpriced} sale${data.unpriced === 1 ? ' has' : 's have'} no price, so ${data.unpriced === 1 ? 'it is' : 'they are'} counted as ₹0. Set the item price to fix future sales.`);
+  return lines.join('\n');
 }
 
 export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId }) {
@@ -113,6 +134,7 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
     attached = [];
     renderTray();
     dropPending();
+    if (!sent.length && SALES_QUESTION.test(text) && !UPDATE_VERB.test(text)) { bubble('bot', salesReport(getView().sales, text)); busy = false; sendButton.disabled = false; return; }
     const thinking = bubble('bot', 'Checking…');
     thinking.classList.add('uc-typing');
     const images = sent.map((item) => item.image);

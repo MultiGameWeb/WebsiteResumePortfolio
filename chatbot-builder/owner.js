@@ -3,7 +3,7 @@
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
 import { enhanceProductPhoto } from './photo-enhance.js?v=2';
-import { initUpdateChat } from './owner-update.js?v=9';
+import { initUpdateChat } from './owner-update.js?v=10';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';
@@ -557,8 +557,53 @@ $('#aboutWrite').addEventListener('click', async () => {
   if (ok) { const area = $('#infoForm').elements.about; area.value = view.info?.about || ''; }
 });
 
+const rupees = (n) => `₹${Number(n || 0).toLocaleString('en-IN')}`;
+let salesTab = 'today';
+function renderSales() {
+  const sales = view.sales;
+  const card = $('#salesCard');
+  if (!sales) { card.hidden = true; return; }
+  card.hidden = false;
+  const tabs = card.querySelector('.sales-tabs');
+  tabs.replaceChildren(...[['today', 'Today'], ['week', 'Last 7 days'], ['month', 'Last 30 days']].map(([key, label]) => {
+    const button = element('button', '', label);
+    button.type = 'button';
+    button.setAttribute('role', 'tab');
+    button.setAttribute('aria-selected', String(key === salesTab));
+    button.addEventListener('click', () => { salesTab = key; renderSales(); });
+    return button;
+  }));
+  const total = sales[salesTab];
+  const box = card.querySelector('.sales-total');
+  box.replaceChildren(document.createTextNode(rupees(total.total)));
+  box.append(element('small', '', total.sales
+    ? `${total.sales} sale${total.sales === 1 ? '' : 's'} · ${total.qty} item${total.qty === 1 ? '' : 's'}${total.unpriced ? ` · ${total.unpriced} without a price` : ''}`
+    : 'No sales recorded yet'));
+  const list = card.querySelector('.sales-items');
+  if (salesTab === 'today') {
+    list.replaceChildren(...sales.todayItems.map((item) => {
+      const li = element('li');
+      li.append(element('span', '', `${item.qty} × ${item.name}`), element('strong', '', rupees(item.total)));
+      return li;
+    }));
+    const pay = Object.entries(sales.todayByPayment || {}).filter(([, amount]) => amount).map(([how, amount]) => `${how === 'other' ? 'Not said' : how.toUpperCase()} ${rupees(amount)}`);
+    if (pay.length) { const li = element('li'); li.append(element('span', 'muted', `Paid by: ${pay.join(' · ')}`)); list.append(li); }
+  } else list.replaceChildren();
+  card.querySelector('.sales-list').replaceChildren(...sales.recent.map((sale) => {
+    const li = element('li');
+    const when = new Date(sale.at).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
+    li.append(element('span', '', `${when} · ${sale.qty} × ${sale.name} · ${rupees(sale.total)}${sale.payment ? ` · ${sale.payment.toUpperCase()}` : ''}`));
+    const remove = element('button', '', 'Remove');
+    remove.type = 'button';
+    remove.addEventListener('click', () => { if (window.confirm('Remove this sale from your records?')) call('delete_sale', { saleId: sale.id }); });
+    li.append(remove);
+    return li;
+  }));
+}
+
 function render() {
   $('#sections').hidden = false;
+  renderSales();
   $('#shopName').textContent = view.shopName || 'Your shop';
   $('#defaultName').textContent = view.defaultBotName || 'Shop Assistant';
   const input = $('#botNameInput');
