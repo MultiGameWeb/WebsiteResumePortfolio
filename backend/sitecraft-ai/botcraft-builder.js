@@ -3,7 +3,7 @@ import { ABOUT_SCHEMA, INFO_FIELDS, SECTIONS, PLAN_SCHEMA, buildAboutPrompt, bui
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, changeQty, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
+  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, changeQty, salesReport, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
@@ -1400,6 +1400,10 @@ async function handleOwner(request, env, origin, ctx) {
     // A removed sale puts its pieces back in stock (only for items the owner counts).
     const removed = await deleteSale(env, shopId, clip(body?.saleId, 40));
     if (removed?.key) await changeQty(env, shopId, removed.key, { delta: removed.qty, fromSale: true });
+  } else if (action === "sales_report") {
+    const report = await salesReport(env, shopId, String(body?.from || ""), String(body?.to || ""));
+    if (report.error) return reply({ ok: false, error: report.error }, 400, origin);
+    return reply({ ...(await ownerView(env, shopId, new URL(request.url))), report }, 200, origin);
   } else if (action === "set_quantity") {
     const key = clip(body?.key, 140);
     const given = body?.quantity === null ? null : Number(body?.quantity);

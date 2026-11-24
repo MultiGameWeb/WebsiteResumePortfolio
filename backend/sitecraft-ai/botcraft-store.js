@@ -978,3 +978,42 @@ export async function changeQty(env, shopId, key, { qty, delta, fromSale = false
     .bind(next, status, new Date().toISOString(), shopId, key).run();
   return next;
 }
+
+const DAY_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const addDays = (day, n) => new Date(Date.parse(`${day}T00:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
+
+// The Sales tab: every day between two dates (shop days), item and payment totals, and the sales themselves.
+export async function salesReport(env, shopId, from, to, now = new Date()) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const today = shopDay(now);
+  if (!DAY_PATTERN.test(String(from)) || !DAY_PATTERN.test(String(to))) return { error: "Please choose the dates." };
+  if (from > to) [from, to] = [to, from];
+  if (to > today) to = today;
+  if (from > to) from = to;
+  if (Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`) > 365 * 86400000) from = addDays(to, -365);
+  const rows = (await db.prepare("SELECT sale_id, name_key, item_name, qty, unit_price, payment, day, sold_at FROM botcraft_sales WHERE shop_id = ? AND day >= ? AND day <= ? ORDER BY sold_at DESC LIMIT 5000")
+    .bind(shopId, from, to).all()).results || [];
+  const byDay = new Map();
+  for (let day = from; day <= to; day = addDays(day, 1)) byDay.set(day, { day, sales: 0, qty: 0, total: 0 });
+  const byItem = new Map();
+  const payments = {};
+  const totals = { sales: 0, qty: 0, total: 0, unpriced: 0 };
+  for (const row of rows) {
+    const amount = row.qty * row.unit_price;
+    const dayRow = byDay.get(row.day);
+    if (dayRow) { dayRow.sales += 1; dayRow.qty += row.qty; dayRow.total += amount; }
+    const item = byItem.get(row.name_key || row.item_name) || { name: row.item_name, qty: 0, total: 0, sales: 0 };
+    item.qty += row.qty; item.total += amount; item.sales += 1;
+    byItem.set(row.name_key || row.item_name, item);
+    const pay = row.payment || "other";
+    payments[pay] = (payments[pay] || 0) + amount;
+    totals.sales += 1; totals.qty += row.qty; totals.total += amount; if (!row.unit_price) totals.unpriced += 1;
+  }
+  return {
+    from, to, today, totals, payments,
+    days: [...byDay.values()],
+    items: [...byItem.values()].sort((a, b) => b.total - a.total || b.qty - a.qty),
+    rows: rows.slice(0, 1000).map(row => ({ id: row.sale_id, name: row.item_name, qty: row.qty, unit_price: row.unit_price, total: row.qty * row.unit_price, payment: row.payment, day: row.day, at: row.sold_at }))
+  };
+}

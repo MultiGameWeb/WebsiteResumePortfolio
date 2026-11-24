@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./owner.css?v=6">
+  <link rel="stylesheet" href="./owner.css?v=8">
 </head>
 <body>
   <script src="./demo-api.js"></script>
@@ -30,7 +30,11 @@
       </nav>
     </header>
     <p class="status" id="status" role="status" hidden></p>
-    <main id="sections" hidden>
+    <nav class="owner-tabs" id="ownerTabs" role="tablist" aria-label="Owner pages" hidden>
+      <button type="button" role="tab" data-tab="home" aria-selected="true">🏠 My bot</button>
+      <button type="button" role="tab" data-tab="sales" aria-selected="false">🧾 Sales</button>
+    </nav>
+    <main id="sections" data-tab="home" hidden>
       <section class="card update-chat" id="updateChat">
         <h2>💬 Update with chat</h2>
         <p class="muted">Type, speak or send a photo — for example “&lt;item name&gt; price 52000” or “&lt;item name&gt; out of stock”. You always see the changes first and confirm.</p>
@@ -47,12 +51,33 @@
       </section>
 
       <section class="card" id="salesCard">
-        <h2>🧾 Sales</h2>
-        <p class="muted">Tell the chat above what you sold, for example “Sold 2 iPhone 15” or “1 TV sale 24000 upi”. Only sales you record here are counted.</p>
-        <div class="sales-tabs" role="tablist"></div>
+        <h2>🧾 Sales today</h2>
         <div class="sales-total"></div>
-        <ul class="sales-items"></ul>
-        <details class="sales-recent"><summary>Recent sales</summary><ul class="sales-list"></ul></details>
+        <p class="muted sales-note">Tell the chat above what you sold, for example “Sold 2 iPhone 15”. Only sales you record are counted.</p>
+        <button class="btn btn-light" type="button" id="openSalesTab">See all sales details →</button>
+      </section>
+
+      <section class="card" id="salesTab" aria-label="Sales details">
+        <h2>🧾 Sales details</h2>
+        <p class="muted">Only sales you tell the chat are counted (for example “Sold 2 iPhone 15”). Remove a wrong entry in the list below.</p>
+        <div class="range-row" id="rangeRow"></div>
+        <div class="range-custom" id="rangeCustom" hidden>
+          <label>From <input type="date" id="rangeFrom"></label>
+          <label>To <input type="date" id="rangeTo"></label>
+          <button class="btn btn-light" type="button" id="rangeApply">Show</button>
+        </div>
+        <div class="report-totals" id="reportTotals"></div>
+        <h3>Day by day</h3>
+        <div class="day-chart" id="dayChart" role="img" aria-label="Sales amount for each day"></div>
+        <h3>Items sold</h3>
+        <table class="report-table"><thead><tr><th>Item</th><th>Qty</th><th>Amount</th></tr></thead><tbody id="reportItems"></tbody></table>
+        <h3>How customers paid</h3>
+        <div class="pay-split" id="paySplit"></div>
+        <h3>Running low <span class="muted">(items you count)</span></h3>
+        <ul class="low-list" id="lowList"></ul>
+        <h3>All sales in this period</h3>
+        <ul class="sales-list" id="reportRows"></ul>
+        <button class="btn" type="button" id="downloadCsv">⬇ Download Excel (CSV)</button>
       </section>
 
       <section class="card" id="infoCard">
@@ -250,6 +275,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=25"></script>
+  <script type="module" src="./owner.js?v=26"></script>
 </body>
 </html>

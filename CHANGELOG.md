@@ -199,3 +199,8 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Owner page: each counted item shows "N in stock" or "Low stock: N left" (3 or fewer).
 - Customers never see the exact stock. When 3 or fewer are left they see "Only N left" on the item, in its popup, and the assistant can say it.
 - Backend: column qty on botcraft_products (added automatically), owner action set_quantity, plan operations set_quantity and add_quantity. Deploy the Worker for it to work live. Checked: 102 end-to-end checks (12 new), planner cases, browser run in demo mode (set count, low-stock badge, customer "Only 2 left", sale, out of stock, restock).
+
+## Owner page: Sales tab
+- The owner page has two tabs: "My bot" (everything as before) and "Sales". My bot keeps a small "Sales today" card with a button to the tab.
+- Sales tab: Today, Yesterday, Last 7 days, Last 30 days or picked dates (up to one year); total, number of sales, items sold and average per sale; a bar for each day; items sold with quantity and amount; how customers paid (Cash, UPI, Card, Not said); items running low (counted items with 3 or fewer left); every sale in the period with Remove for mistakes; "Download Excel (CSV)" for accounts.
+- Backend: owner action sales_report (from, to; shop days in India). The tabs show only when the Worker has the sales feature, so the old page is unchanged until you deploy. Checked: 108 end-to-end checks (6 new for the report) and a browser run in demo mode (tabs, ranges, chart, CSV, remove).

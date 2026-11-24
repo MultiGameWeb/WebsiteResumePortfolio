@@ -3,7 +3,7 @@
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
 import { enhanceProductPhoto } from './photo-enhance.js?v=2';
-import { initUpdateChat } from './owner-update.js?v=11';
+import { initUpdateChat } from './owner-update.js?v=12';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';
@@ -560,52 +560,153 @@ $('#aboutWrite').addEventListener('click', async () => {
 });
 
 const rupees = (n) => `₹${Number(n || 0).toLocaleString('en-IN')}`;
-let salesTab = 'today';
+const PAY_LABEL = { cash: 'Cash', upi: 'UPI', card: 'Card', other: 'Not said' };
+
+// Home: only today's total, with a button to the Sales tab.
 function renderSales() {
   const sales = view.sales;
-  const card = $('#salesCard');
-  if (!sales) { card.hidden = true; return; }
-  card.hidden = false;
-  const tabs = card.querySelector('.sales-tabs');
-  tabs.replaceChildren(...[['today', 'Today'], ['week', 'Last 7 days'], ['month', 'Last 30 days']].map(([key, label]) => {
+  $('#salesCard').hidden = !sales;
+  if (!sales) { $('#ownerTabs').hidden = true; return; }
+  $('#ownerTabs').hidden = false;
+  const box = $('#salesCard .sales-total');
+  box.replaceChildren(document.createTextNode(rupees(sales.today.total)));
+  box.append(element('small', '', sales.today.sales
+    ? `${sales.today.sales} sale${sales.today.sales === 1 ? '' : 's'} · ${sales.today.qty} item${sales.today.qty === 1 ? '' : 's'}`
+    : 'No sales recorded today'));
+}
+
+// ---- Sales tab ----
+let lastReport = null;
+let rangeKey = 'week';
+const dayMath = (day, n) => new Date(Date.parse(`${day}T00:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
+const RANGES = [['today', 'Today'], ['yesterday', 'Yesterday'], ['week', 'Last 7 days'], ['month', 'Last 30 days'], ['custom', 'Pick dates']];
+
+function rangeDates(key) {
+  const today = view.sales?.day || new Date().toISOString().slice(0, 10);
+  if (key === 'today') return [today, today];
+  if (key === 'yesterday') return [dayMath(today, -1), dayMath(today, -1)];
+  if (key === 'month') return [dayMath(today, -29), today];
+  return [dayMath(today, -6), today];
+}
+
+async function loadReport(from, to) {
+  await call('sales_report', { from, to });
+}
+
+function setTab(tab) {
+  $('#sections').dataset.tab = tab;
+  document.querySelectorAll('#ownerTabs button').forEach((button) => button.setAttribute('aria-selected', String(button.dataset.tab === tab)));
+  if (tab === 'sales' && view?.sales) loadReport(...rangeDates(rangeKey));
+  window.scrollTo({ top: 0 });
+}
+
+function renderRanges() {
+  $('#rangeRow').replaceChildren(...RANGES.map(([key, label]) => {
     const button = element('button', '', label);
     button.type = 'button';
-    button.setAttribute('role', 'tab');
-    button.setAttribute('aria-selected', String(key === salesTab));
-    button.addEventListener('click', () => { salesTab = key; renderSales(); });
+    button.setAttribute('aria-pressed', String(key === rangeKey));
+    button.addEventListener('click', () => {
+      rangeKey = key;
+      $('#rangeCustom').hidden = key !== 'custom';
+      renderRanges();
+      if (key !== 'custom') loadReport(...rangeDates(key));
+      else { const [from, to] = lastReport ? [lastReport.from, lastReport.to] : rangeDates('week'); $('#rangeFrom').value = from; $('#rangeTo').value = to; $('#rangeTo').max = view.sales?.day || ''; $('#rangeFrom').max = view.sales?.day || ''; }
+    });
     return button;
   }));
-  const total = sales[salesTab];
-  const box = card.querySelector('.sales-total');
-  box.replaceChildren(document.createTextNode(rupees(total.total)));
-  box.append(element('small', '', total.sales
-    ? `${total.sales} sale${total.sales === 1 ? '' : 's'} · ${total.qty} item${total.qty === 1 ? '' : 's'}${total.unpriced ? ` · ${total.unpriced} without a price` : ''}`
-    : 'No sales recorded yet'));
-  const list = card.querySelector('.sales-items');
-  if (salesTab === 'today') {
-    list.replaceChildren(...sales.todayItems.map((item) => {
-      const li = element('li');
-      li.append(element('span', '', `${item.qty} × ${item.name}`), element('strong', '', rupees(item.total)));
-      return li;
-    }));
-    const pay = Object.entries(sales.todayByPayment || {}).filter(([, amount]) => amount).map(([how, amount]) => `${how === 'other' ? 'Not said' : how.toUpperCase()} ${rupees(amount)}`);
-    if (pay.length) { const li = element('li'); li.append(element('span', 'muted', `Paid by: ${pay.join(' · ')}`)); list.append(li); }
-  } else list.replaceChildren();
-  card.querySelector('.sales-list').replaceChildren(...sales.recent.map((sale) => {
+}
+
+function renderSalesTab() {
+  const report = lastReport;
+  renderRanges();
+  if (!report) return;
+  const totals = report.totals;
+  $('#reportTotals').replaceChildren(...[
+    [rupees(totals.total), 'Total sales'], [String(totals.sales), 'Number of sales'], [String(totals.qty), 'Items sold'],
+    [totals.sales ? rupees(Math.round(totals.total / totals.sales)) : '₹0', 'Average per sale'],
+  ].map(([value, label]) => { const box = element('div'); box.append(element('strong', '', value), element('span', '', label)); return box; }));
+  if (totals.unpriced) $('#reportTotals').append(element('p', 'muted', `${totals.unpriced} sale${totals.unpriced === 1 ? ' has' : 's have'} no price, counted as ₹0.`));
+
+  const peak = Math.max(1, ...report.days.map((day) => day.total));
+  const chart = $('#dayChart');
+  chart.replaceChildren(...report.days.map((day) => {
+    const bar = element('div', day.total ? 'day-bar' : 'day-bar zero');
+    if (day.total) bar.style.height = `${Math.max(4, Math.round((day.total / peak) * 100))}%`;
+    bar.title = `${day.day}: ${rupees(day.total)} (${day.sales} sale${day.sales === 1 ? '' : 's'})`;
+    return bar;
+  }));
+  const axis = chart.nextElementSibling?.classList.contains('day-axis') ? chart.nextElementSibling : chart.insertAdjacentElement('afterend', element('div', 'day-axis'));
+  axis.replaceChildren(element('span', '', report.from), element('span', '', `Highest day: ${rupees(peak === 1 && !totals.total ? 0 : peak)}`), element('span', '', report.to));
+
+  $('#reportItems').replaceChildren(...(report.items.length ? report.items : [null]).map((item) => {
+    const row = element('tr');
+    if (!item) { const cell = element('td', 'muted', 'No sales in this period'); cell.colSpan = 3; row.append(cell); return row; }
+    row.append(element('td', '', item.name), element('td', '', String(item.qty)), element('td', '', rupees(item.total)));
+    return row;
+  }));
+
+  const payTotal = Object.values(report.payments).reduce((sum, n) => sum + n, 0) || 1;
+  $('#paySplit').replaceChildren(...(Object.keys(report.payments).length ? Object.entries(report.payments) : [['', 0]]).map(([how, amount]) => {
+    const row = element('div', 'pay-row');
+    if (!how) { row.append(element('span', 'muted', 'No sales in this period')); return row; }
+    const bar = element('div', 'pay-bar'); const fill = element('i'); fill.style.width = `${Math.round((amount / payTotal) * 100)}%`; bar.append(fill);
+    row.append(element('span', '', PAY_LABEL[how] || how), bar, element('strong', '', rupees(amount)));
+    return row;
+  }));
+
+  const low = (view.products || []).filter((item) => Number.isInteger(item.qty) && item.qty <= 3 && item.stock_status !== 'hidden').sort((a, b) => a.qty - b.qty);
+  $('#lowList').replaceChildren(...(low.length ? low : [null]).map((item) => {
     const li = element('li');
+    if (!item) { li.append(element('span', 'muted', 'Nothing is running low.')); return li; }
+    li.append(element('span', '', item.name), element('strong', '', item.qty === 0 ? 'Out of stock' : `${item.qty} left`));
+    return li;
+  }));
+
+  $('#reportRows').replaceChildren(...(report.rows.length ? report.rows : [null]).map((sale) => {
+    const li = element('li');
+    if (!sale) { li.append(element('span', 'muted', 'No sales in this period')); return li; }
     const when = new Date(sale.at).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
-    li.append(element('span', '', `${when} · ${sale.qty} × ${sale.name} · ${rupees(sale.total)}${sale.payment ? ` · ${sale.payment.toUpperCase()}` : ''}`));
+    li.append(element('span', '', `${when} · ${sale.qty} × ${sale.name} · ${rupees(sale.total)}${sale.payment ? ` · ${(PAY_LABEL[sale.payment] || sale.payment)}` : ''}`));
     const remove = element('button', '', 'Remove');
     remove.type = 'button';
-    remove.addEventListener('click', () => { if (window.confirm('Remove this sale from your records?')) call('delete_sale', { saleId: sale.id }); });
+    remove.addEventListener('click', async () => {
+      if (!window.confirm('Remove this sale from your records?')) return;
+      await call('delete_sale', { saleId: sale.id });
+      await loadReport(report.from, report.to);
+    });
     li.append(remove);
     return li;
   }));
 }
 
+const csvCell = (value) => `"${String(value ?? '').replace(/"/g, '""')}"`;
+function downloadCsv() {
+  if (!lastReport) return;
+  const lines = [['Date', 'Time', 'Item', 'Quantity', 'Price each', 'Amount', 'Payment'].map(csvCell).join(',')];
+  for (const sale of [...lastReport.rows].reverse()) {
+    const at = new Date(sale.at);
+    lines.push([sale.day, at.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }), sale.name, sale.qty, sale.unit_price, sale.total, PAY_LABEL[sale.payment] || 'Not said'].map(csvCell).join(','));
+  }
+  const url = URL.createObjectURL(new Blob(['\ufeff' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `sales-${lastReport.from}-to-${lastReport.to}.csv`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+document.querySelectorAll('#ownerTabs button').forEach((button) => button.addEventListener('click', () => setTab(button.dataset.tab)));
+$('#openSalesTab').addEventListener('click', () => setTab('sales'));
+$('#rangeApply').addEventListener('click', () => { if ($('#rangeFrom').value && $('#rangeTo').value) loadReport($('#rangeFrom').value, $('#rangeTo').value); });
+$('#downloadCsv').addEventListener('click', downloadCsv);
+
 function render() {
   $('#sections').hidden = false;
   renderSales();
+  if (view.report) lastReport = view.report;
+  renderSalesTab();
   $('#shopName').textContent = view.shopName || 'Your shop';
   $('#defaultName').textContent = view.defaultBotName || 'Shop Assistant';
   const input = $('#botNameInput');
