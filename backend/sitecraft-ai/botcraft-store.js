@@ -130,6 +130,18 @@ const SCHEMA = [
     out_tokens INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY (shop_id, day, kind)
   )`,
+  // Answers the AI already gave, so the same question is not answered (and paid for) again. The key is a hash of the
+  // whole prompt (shop information, rules) and the question, so any change to the shop makes old answers unused.
+  `CREATE TABLE IF NOT EXISTS botcraft_answer_cache (
+    shop_id TEXT NOT NULL,
+    cache_key TEXT NOT NULL,
+    reply TEXT NOT NULL,
+    suggestions TEXT NOT NULL DEFAULT '[]',
+    hits INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT NOT NULL,
+    last_hit_at TEXT NOT NULL,
+    PRIMARY KEY (shop_id, cache_key)
+  )`,
   // Owner settings that are not shop facts (which bot buttons are on).
   `CREATE TABLE IF NOT EXISTS botcraft_settings (
     shop_id TEXT PRIMARY KEY,
@@ -402,7 +414,7 @@ export async function deleteShop(env, shopId) {
   const files = await r2KeysWhere(db, "shop_id = ?", shopId);
   const tables = [
     "botcraft_answers", "botcraft_products", "botcraft_builder_messages", "botcraft_photos", "botcraft_customer_questions",
-    "botcraft_requests", "botcraft_sales", "botcraft_owner_ai", "botcraft_public", "botcraft_settings", "botcraft_push_subs", "botcraft_replies", "botcraft_usage",
+    "botcraft_requests", "botcraft_sales", "botcraft_owner_ai", "botcraft_answer_cache", "botcraft_public", "botcraft_settings", "botcraft_push_subs", "botcraft_replies", "botcraft_usage",
     "botcraft_daily_asks", "botcraft_shops"
   ];
   await db.batch(tables.map(table => db.prepare(`DELETE FROM ${table} WHERE shop_id = ?`).bind(shopId)));
@@ -1074,4 +1086,49 @@ export async function ownerAiMonth(env, shopId, now = new Date()) {
   const rows = (await db.prepare("SELECT kind, SUM(calls) AS calls, SUM(in_tokens) AS in_tokens, SUM(out_tokens) AS out_tokens FROM botcraft_owner_ai WHERE shop_id = ? AND day >= ? GROUP BY kind").bind(shopId, since).all()).results || [];
   const today = (await db.prepare("SELECT kind, calls FROM botcraft_owner_ai WHERE shop_id = ? AND day = ?").bind(shopId, shopDay(now)).all()).results || [];
   return { month: rows, today: Object.fromEntries(today.map(row => [row.kind, row.calls])) };
+}
+
+// ---- Answer cache ----
+
+export const CACHE_MAX_PER_SHOP = 300;
+export const CACHE_MAX_AGE_DAYS = 30;
+
+export async function sha256Hex(text) {
+  const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(bytes)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+// The question in a form that ignores case, punctuation and extra spaces ("What are your timings??" = "what are your timings").
+export const normalizeQuestion = text => String(text || "").toLowerCase().replace(/[^\p{L}\p{M}\p{N}\s]/gu, " ").replace(/\s+/g, " ").trim();
+
+export async function getCachedAnswer(env, shopId, cacheKey, now = new Date()) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT reply, suggestions, created_at FROM botcraft_answer_cache WHERE shop_id = ? AND cache_key = ?").bind(shopId, cacheKey).first();
+  if (!row) return null;
+  if (Date.parse(row.created_at) < now.getTime() - CACHE_MAX_AGE_DAYS * 86400000) return null;
+  await db.prepare("UPDATE botcraft_answer_cache SET hits = hits + 1, last_hit_at = ? WHERE shop_id = ? AND cache_key = ?").bind(now.toISOString(), shopId, cacheKey).run();
+  let suggestions = [];
+  try { suggestions = JSON.parse(row.suggestions); } catch { /* none */ }
+  return { reply: row.reply, suggestions: Array.isArray(suggestions) ? suggestions : [] };
+}
+
+export async function saveCachedAnswer(env, shopId, cacheKey, { reply, suggestions = [] }, now = new Date()) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const stamp = now.toISOString();
+  await db.prepare(
+    "INSERT INTO botcraft_answer_cache (shop_id, cache_key, reply, suggestions, hits, created_at, last_hit_at) VALUES (?, ?, ?, ?, 0, ?, ?) " +
+    "ON CONFLICT(shop_id, cache_key) DO UPDATE SET reply = excluded.reply, suggestions = excluded.suggestions, created_at = excluded.created_at, last_hit_at = excluded.last_hit_at"
+  ).bind(shopId, cacheKey, String(reply).slice(0, 1500), JSON.stringify(suggestions.slice(0, 3)), stamp, stamp).run();
+  // Keep the shop's most recently used answers; old ones go.
+  await db.prepare("DELETE FROM botcraft_answer_cache WHERE shop_id = ? AND cache_key NOT IN (SELECT cache_key FROM botcraft_answer_cache WHERE shop_id = ? ORDER BY last_hit_at DESC LIMIT ?)")
+    .bind(shopId, shopId, CACHE_MAX_PER_SHOP).run();
+}
+
+export async function cacheStats(env, shopId) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const row = await db.prepare("SELECT COUNT(*) AS saved, COALESCE(SUM(hits), 0) AS hits FROM botcraft_answer_cache WHERE shop_id = ?").bind(shopId).first();
+  return { saved: Number(row?.saved || 0), hits: Number(row?.hits || 0) };
 }

@@ -833,6 +833,27 @@ const FREE_TOPICS = [
   ['address', /\b(address|location|where|ekkada|kahan|directions?)\b/, ['address', 'location', 'where', 'is', 'are', 'the', 'your', 'shop', 'store', 'ur', 'ekkada', 'undi', 'unnaru', 'unnara', 'hai', 'kahan', 'directions', 'direction', 'tell', 'me', 'what', 'please', 'pls', 'of', 'map', 'located']],
   ['phone', /\b(phone|number|contact|mobile|whatsapp)\b/, ['phone', 'number', 'contact', 'mobile', 'whatsapp', 'what', 'is', 'the', 'your', 'shop', 'ur', 'tell', 'me', 'please', 'pls', 'of', 'no', 'details', 'entha', 'enti', 'kya', 'hai']],
 ];
+// Greetings, thanks and goodbyes need no AI: a short fixed reply in the customer's script (English, Telugu or Hindi).
+const SMALL_TALK = [
+  ['greeting', ['hi', 'hii', 'hiii', 'hello', 'helo', 'hey', 'hai', 'namaste', 'namaskaram', 'namaskar', 'good', 'morning', 'afternoon', 'evening', 'sir', 'madam', 'anna', 'bhai', 'నమస్కారం', 'నమస్తే', 'హాయ్', 'హలో', 'नमस्ते', 'हेलो', 'हैलो']],
+  ['thanks', ['thanks', 'thank', 'you', 'thx', 'tq', 'thanku', 'ok', 'okay', 'dhanyavadalu', 'dhanyavad', 'shukriya', 'ధన్యవాదాలు', 'థాంక్స్', 'ఓకే', 'धन्यवाद', 'शुक्रिया', 'थैंक्स', 'ओके']],
+  ['bye', ['bye', 'goodbye', 'tata', 'బై', 'बाय']],
+];
+function smallTalk(question) {
+  const tokens = String(question || '').toLowerCase().replace(/[^\p{L}\p{M}\p{N}\s]/gu, ' ').split(/\s+/).filter(Boolean);
+  if (!tokens.length || tokens.length > 4 || !saved?.shop) return '';
+  const kind = SMALL_TALK.find(([, words]) => tokens.every((token) => words.includes(token)) && !(tokens.length === 1 && tokens[0] === 'you'))?.[0];
+  if (!kind) return '';
+  const script = /[\u0C00-\u0C7F]/.test(question) ? 'te' : /[\u0900-\u097F]/.test(question) ? 'hi' : 'en';
+  const name = saved.shop.botName || `the assistant of ${saved.shop.name}`;
+  const text = {
+    greeting: { en: `Hi! I'm ${name}. Ask me about items, prices, offers or timings.`, te: `నమస్కారం! నేను ${name}. వస్తువులు, ధరలు, ఆఫర్లు, టైమింగ్స్ గురించి అడగండి.`, hi: `नमस्ते! मैं ${name} हूँ। आइटम, कीमत, ऑफर या समय के बारे में पूछिए।` },
+    thanks: { en: "You're welcome! Anything else I can help with?", te: 'ధన్యవాదాలు! ఇంకేమైనా సహాయం కావాలా?', hi: 'आपका स्वागत है! और कुछ पूछना है?' },
+    bye: { en: 'Thank you for visiting! Have a nice day.', te: 'ధన్యవాదాలు! మళ్ళీ రండి.', hi: 'धन्यवाद! फिर आइए।' },
+  }[kind][script];
+  return text;
+}
+
 function freeAnswer(question) {
   if (!saved?.shop) return '';
   const lower = String(question || '').toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
@@ -1025,7 +1046,7 @@ async function ask(text, product = null, { voice = false } = {}) {
   }
   // Timings, address and phone are answered from the shop's saved details: instant, and no AI cost.
   if (!photos.length && !files.length && !product && !voice) {
-    const free = freeAnswer(question);
+    const free = smallTalk(question) || freeAnswer(question);
     if (free) {
       history.push({ role: 'customer', text: question }, { role: 'bot', text: free });
       addMessage('bot', free, ['Items & prices', 'Offers']);

@@ -79,7 +79,30 @@ export function publicProfile(facts, typeName, photos = []) {
   };
 }
 
-export function shopKnowledge(shop, bank, typeName) {
+// Shops with many items would send every item with all its details on every question, which is most of the cost of
+// a reply. Over TRIM_FROM items, the items most related to the question (and the chat so far) are shown in full
+// and every other item is still listed, by name and price only, so "do you have ...?" and price comparisons still
+// work. Smaller shops, voice questions (no text to match) and an item the customer is looking at are never cut.
+export const TRIM_FROM = 30;
+export const FULL_ITEMS = 20;
+const MIN_FULL_ITEMS = 8;
+const QUERY_STOP = new Set(["the", "you", "are", "any", "have", "can", "with", "for", "this", "that", "what", "how", "much", "does", "your", "and", "not", "there", "get", "give", "want", "need", "please", "tell", "about", "show", "from", "will", "shop", "price", "cost", "entha", "enti", "undi", "kya", "hai", "kitna", "chahiye", "kavali", "cheppandi"]);
+const searchTokens = text => String(text || "").toLowerCase().replace(/[^\p{L}\p{M}\p{N}\s]/gu, " ").split(/\s+/).filter(token => (token.length > 2 || /^\d{2}$/.test(token)) && !QUERY_STOP.has(token));
+
+function relatedScore(queryTokens, product) {
+  const own = searchTokens(`${product.name} ${product.details || ""}`);
+  let score = 0;
+  for (const word of queryTokens) {
+    if (own.some(token => token === word || (word.length >= 4 && token.length >= 4 && (token.startsWith(word) || word.startsWith(token))))) score += 1;
+  }
+  return score;
+}
+
+const stockNote = p => (p.stock_status === "out_of_stock" ? " (out of stock)" : Number.isInteger(p.qty) && p.qty > 0 && p.qty <= 3 ? ` (only ${p.qty} left)` : "");
+const fullLine = p => `- ${p.name}${p.price_text ? ` — ${p.price_text}` : ""}${p.details ? ` — ${p.details}` : ""}${stockNote(p)}`;
+const compactLine = p => `- ${p.name}${p.price_text ? ` — ${p.price_text}` : ""}${stockNote(p)}`;
+
+export function shopKnowledge(shop, bank, typeName, { focus = "", productKey = "" } = {}) {
   const lines = [`- Shop type: ${typeName || shop.facts.shop_type || "shop"}`];
   for (const q of CORE_QUESTIONS) {
     const value = shop.facts[q.key];
@@ -95,9 +118,19 @@ export function shopKnowledge(shop, bank, typeName) {
   }
   for (const note of shop.notes || []) lines.push(`- ${note}`);
   for (const q of shop.ownerAnswers || []) lines.push(`- ${q.question} ${q.answer}`);
-  const products = (shop.products || []).map(p =>
-    `- ${p.name}${p.price_text ? ` — ${p.price_text}` : ""}${p.details ? ` — ${p.details}` : ""}${p.stock_status === "out_of_stock" ? " (out of stock)" : Number.isInteger(p.qty) && p.qty > 0 && p.qty <= 3 ? ` (only ${p.qty} left)` : ""}`);
-  return `Shop information:\n${lines.join("\n")}\n\nItems:\n${products.join("\n") || "- (no item list yet)"}`;
+  const all = shop.products || [];
+  let itemText = all.map(fullLine).join("\n") || "- (no item list yet)";
+  const queryTokens = searchTokens(focus);
+  if (all.length > TRIM_FROM && queryTokens.length) {
+    const scored = all.map((p, index) => ({ p, index, score: p.name_key && p.name_key === productKey ? 1000 : relatedScore(queryTokens, p) }));
+    const related = scored.filter(entry => entry.score > 0).sort((a, b) => b.score - a.score || a.index - b.index).slice(0, FULL_ITEMS);
+    const full = new Set(related.map(entry => entry.index));
+    for (const entry of scored) { if (full.size >= MIN_FULL_ITEMS) break; full.add(entry.index); }
+    const shown = scored.filter(entry => full.has(entry.index));
+    const rest = scored.filter(entry => !full.has(entry.index));
+    itemText = `${shown.map(entry => fullLine(entry.p)).join("\n")}\n\nOther items (name and price only; the customer can ask about one by name to get its details):\n${rest.map(entry => compactLine(entry.p)).join("\n")}`;
+  }
+  return `Shop information:\n${lines.join("\n")}\n\nItems${all.length > TRIM_FROM && queryTokens.length ? " (most related to this question, with details)" : ""}:\n${itemText}`;
 }
 
 // A copy of the answers for the page's offline mode (no AI): questions with

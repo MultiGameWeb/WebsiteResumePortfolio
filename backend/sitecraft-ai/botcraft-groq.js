@@ -19,7 +19,7 @@ const INDIC_ROMAN = new Set(["entha", "enta", "enti", "yenti", "undi", "unnaya",
 const ENGLISH_COMMON = new Set(["the", "a", "an", "is", "are", "do", "does", "you", "your", "what", "which", "how", "much", "many", "when", "where", "can", "i", "me", "my", "we", "it", "this", "that", "for", "with", "have", "has", "any", "price", "cost", "open", "close", "today", "offer", "offers", "available", "stock", "delivery", "warranty", "tell", "please", "show", "want", "need", "buy", "of", "on", "in", "at", "to", "and", "or", "if", "will", "there", "good", "best", "cheap", "new", "old"]);
 
 export function looksEnglish(text) {
-  const tokens = String(text || "").toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, " ").split(/\s+/).filter(Boolean);
+  const tokens = String(text || "").toLowerCase().replace(/[^\p{L}\p{M}\p{N}\s]/gu, " ").split(/\s+/).filter(Boolean);
   if (tokens.length < 3) return false;
   if (/[^\u0000-ɏ\s\p{P}\p{N}\p{S}]/u.test(String(text))) return false; // any non-Latin script
   if (tokens.some(token => INDIC_ROMAN.has(token))) return false;

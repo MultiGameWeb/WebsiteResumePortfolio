@@ -24,6 +24,8 @@ node "$HERE/seed.mjs" "$WORK/seed.sql"
 (cd "$HERE" && $WRANGLER d1 execute BOTCRAFT_DB --config wrangler.test.toml --local --persist-to "$WORK/state" --file "$WORK/seed.sql" >/dev/null)
 node "$HERE/pricing.test.mjs"
 node "$HERE/groq.test.mjs"
+node "$HERE/trim.test.mjs"
+node --no-warnings "$HERE/cache.test.mjs"
 node "$HERE/e2e.mjs"
 
 # Phase 2: the same database, now with the R2 photo bucket connected.
