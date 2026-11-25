@@ -202,6 +202,8 @@ async function ensureSchema(db) {
       .then(() => db.prepare("ALTER TABLE botcraft_photos ADD COLUMN storage TEXT NOT NULL DEFAULT 'd1'").run().catch(() => null))
       // Added later: how many pieces are in stock. NULL means the owner does not count this item.
       .then(() => db.prepare("ALTER TABLE botcraft_products ADD COLUMN qty INTEGER").run().catch(() => null))
+      // Added later: how many of the day's replies were made by the optional second provider (Groq).
+      .then(() => db.prepare("ALTER TABLE botcraft_usage ADD COLUMN groq_replies INTEGER NOT NULL DEFAULT 0").run().catch(() => null))
       .catch(error => {
       schemaReady = null;
       throw error;
@@ -667,13 +669,14 @@ export function replyCost(env, { voice = false, photos = 0, files = 0 } = {}) {
   return Math.max(1, photos ? read("BOTCRAFT_COST_PHOTO", 2) : 1, files ? read("BOTCRAFT_COST_FILE", 2) : 1);
 }
 
-export async function recordUsage(env, shopId, { inTokens = 0, outTokens = 0 } = {}) {
+export async function recordUsage(env, shopId, { inTokens = 0, outTokens = 0, provider = "gemini" } = {}) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
+  const groq = provider === "groq" ? 1 : 0;
   await db.prepare(
-    "INSERT INTO botcraft_usage (shop_id, day, replies, in_tokens, out_tokens) VALUES (?, ?, 1, ?, ?) " +
-    "ON CONFLICT(shop_id, day) DO UPDATE SET replies = replies + 1, in_tokens = in_tokens + excluded.in_tokens, out_tokens = out_tokens + excluded.out_tokens"
-  ).bind(shopId, new Date().toISOString().slice(0, 10), Math.max(0, Math.floor(inTokens)), Math.max(0, Math.floor(outTokens))).run();
+    "INSERT INTO botcraft_usage (shop_id, day, replies, in_tokens, out_tokens, groq_replies) VALUES (?, ?, 1, ?, ?, ?) " +
+    "ON CONFLICT(shop_id, day) DO UPDATE SET replies = replies + 1, in_tokens = in_tokens + excluded.in_tokens, out_tokens = out_tokens + excluded.out_tokens, groq_replies = groq_replies + excluded.groq_replies"
+  ).bind(shopId, new Date().toISOString().slice(0, 10), Math.max(0, Math.floor(inTokens)), Math.max(0, Math.floor(outTokens)), groq).run();
 }
 
 // Adds replies (a recharge or a gift). Creates the row with the free replies first when the shop has none yet.

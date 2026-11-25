@@ -237,3 +237,10 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Starter 1 year Rs 1,099 with 500 AI replies, Growth 2 years Rs 1,699 with 1,000, Pro 3 years Rs 2,299 with 1,500. Each price is the build price (999 / 1,499 / 1,999) plus the replies at Rs 0.20 (our cost + about 30%), so the included replies are paid for by the price and a new owner can test the assistant with real customers instead of buying a pack first.
 - The landing page shows "AI replies included (worth Rs 100 / 200 / 300)". Recharge packs (5K / 10K / 25K) are unchanged. Plans are in `botcraft-packs.js` (PLANS) and `tests/pricing.test.mjs` checks the arithmetic (it runs in `tests/run.sh`).
 - No online payment yet: after a shop pays, the admin adds the included replies (admin add replies). Until then a new shop gets the 50-reply test allowance.
+
+## Optional Groq provider for cheaper text replies (off by default, Gemini always the fallback)
+- New `botcraft-groq.js`: when the Worker has `GROQ_API_KEY` and `BOTCRAFT_GROQ_MODE` is `english` or `text`, a plain text question (no photo, file, recording or talk mode) is answered by Groq (default model `openai/gpt-oss-120b`, `GROQ_MODEL` to change). Any error, timeout or bad answer falls back to Gemini automatically. Nothing changes until both the key and the mode are set.
+- `english` mode sends only questions that look like English (no Telugu or Hindi script, no Telugu or Hindi words in English letters). `text` mode sends every text-only question.
+- The day's Groq replies are counted (`botcraft_usage.groq_replies`).
+- `tests/provider-eval.mjs`: run on your own computer with a Gemini key and a (free) Groq key; it asks 40 customer questions in English, Telugu, Hindi and Tenglish, and writes a side-by-side report with automatic checks, tokens, time and cost. Use it to decide before putting the Groq key into production.
+- Checked: 30 unit checks for the provider (when it is used, the request, every failure falls back, a hanging call is cut off), the full 117 end-to-end checks (Groq off), and a dry run of the evaluation script. Not tried against the real Groq.

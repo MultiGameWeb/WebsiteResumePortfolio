@@ -14,6 +14,7 @@ import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-p
 import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
 import { PACKS } from "./botcraft-packs.js";
+import { callGroq, groqEligible } from "./botcraft-groq.js";
 import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
 import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
 
@@ -1075,9 +1076,24 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   const modelErrors = [];
   let usage = null;
   try {
-    const { result } = await callWithFallback(env, {
+    const systemText = salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true || isVoice ? VOICE_RULE : "") + (isVoice ? AUDIO_RULE : "") + (photos.length ? IMAGE_RULE : "") + (files.count ? FILE_RULE : "");
+    // Optional cheaper provider for plain text questions (off unless GROQ_API_KEY and BOTCRAFT_GROQ_MODE are set).
+    // Any problem and Gemini answers as usual.
+    let result = null;
+    let provider = "gemini";
+    if (groqEligible(env, { question: text, photos: photos.length, files: files.count, voice: isVoice || body?.voice === true })) {
+      try {
+        const groq = await callGroq(env, { system: systemText, contents });
+        result = groq.result;
+        usage = groq.usage;
+        provider = "groq";
+      } catch (error) {
+        console.error("BotCraft Groq failed, using Gemini", String(error?.message || error).slice(0, 120));
+      }
+    }
+    if (!result) ({ result } = await callWithFallback(env, {
       onUsage: metadata => { usage = metadata; },
-      system: salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true || isVoice ? VOICE_RULE : "") + (isVoice ? AUDIO_RULE : "") + (photos.length ? IMAGE_RULE : "") + (files.count ? FILE_RULE : ""),
+      system: systemText,
       contents: withCustomerAudio(withCustomerFiles(withCustomerImages(contents, photos), files), audio),
       schema: isVoice ? VOICE_SCHEMA : SALESBOT_SCHEMA,
       models: CHAT_MODELS,
@@ -1085,7 +1101,7 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
       timeoutMs: 40000,
       maxAttempts: 1,
       log: message => modelErrors.push(message.slice(0, 160))
-    });
+    }));
     // Voice: what the customer said, as written by the AI. No clear speech means no answer and no charge.
     const heard = isVoice ? clip(result?.heard, 600) : "";
     if (isVoice && !heard.trim()) {
@@ -1101,7 +1117,8 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
     // What this reply cost in tokens (thinking tokens are billed as output).
     await later(ctx, recordUsage(env, shop.shopId, {
       inTokens: Number(usage?.promptTokenCount) || 0,
-      outTokens: (Number(usage?.candidatesTokenCount) || 0) + (Number(usage?.thoughtsTokenCount) || 0)
+      outTokens: (Number(usage?.candidatesTokenCount) || 0) + (Number(usage?.thoughtsTokenCount) || 0),
+      provider
     }).catch(error => console.error("BotCraft usage log failed", error)));
     const answerText = clip(result?.reply, 1500) || "Sorry, please ask again.";
     return reply({
