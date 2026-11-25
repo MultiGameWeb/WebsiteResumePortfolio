@@ -22,6 +22,7 @@ grep -q "Ready on" "$WORK/dev.log" || { echo "The local Worker did not start:"; 
 curl -s "http://127.0.0.1:8787/api/botcraft/shop?id=11111111-2222-4333-8444-555555555555" -H "Origin: http://127.0.0.1:8765" >/dev/null
 node "$HERE/seed.mjs" "$WORK/seed.sql"
 (cd "$HERE" && $WRANGLER d1 execute BOTCRAFT_DB --config wrangler.test.toml --local --persist-to "$WORK/state" --file "$WORK/seed.sql" >/dev/null)
+node "$HERE/pricing.test.mjs"
 node "$HERE/e2e.mjs"
 
 # Phase 2: the same database, now with the R2 photo bucket connected.

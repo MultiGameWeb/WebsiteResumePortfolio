@@ -6,16 +6,19 @@ Older rule (cost plus 40%, then 40% again, x 1.96) was replaced in November 2026
 - Chatbot and web page creation: Rs 599, once.
 - R2 storage (5 GB) and Cloudflare hosting: Rs 101 per year (a safe estimate; Cloudflare has no per-site fee, see below).
 
-## Packages (website, chatbot, QR poster, owner chat and voice updates, hosting, 5 GB storage) (decided later in November 2026)
-The owner of SiteCraft set the customer prices directly: Rs 999, Rs 1,499, Rs 1,999. Packages include no free replies.
-| Package | Our cost | Customer price | Our margin |
-|---|---|---|---|
-| Starter, 1 year | Rs 700 | Rs 999 | Rs 299 |
-| Growth, 2 years (recommended) | Rs 801 | Rs 1,499 | Rs 698 |
-| Pro, 3 years | Rs 902 | Rs 1,999 | Rs 1,097 |
+## Packages (website, chatbot, QR poster, owner chat and voice updates, hosting, 5 GB storage, AI replies included) (final, November 2026)
+The owner of SiteCraft decided: the price of the build includes some AI replies, called "included replies" in marketing, so a new owner can try the assistant with real customers instead of buying a pack first. The cost of those replies is paid by the price: build price (Rs 999 / 1,499 / 1,999) plus the replies at Rs 0.20 each (our cost + about 30%).
+| Package | Customer price | Build price | Included replies | Value at Rs 0.20 | Our cost of the replies |
+|---|---|---|---|---|---|
+| Starter, 1 year | Rs 1,099 | Rs 999 | 500 | Rs 100 | Rs 78 |
+| Growth, 2 years (recommended) | Rs 1,699 | Rs 1,499 | 1,000 | Rs 200 | Rs 155 |
+| Pro, 3 years | Rs 2,299 | Rs 1,999 | 1,500 | Rs 300 | Rs 233 |
 
+Our cost of the build and hosting: Rs 700 / 801 / 902 (see above), so the margin on the build is unchanged (Rs 299 / 698 / 1,097) and the replies add about 30%.
 Renewal after the term: Rs 199 per year (hosting and storage; our cost Rs 101).
-A shop starts with a small test allowance of 50 replies (BOTCRAFT_FREE_REPLIES, default 50) so the owner can try the assistant. It is not part of the package and is not advertised.
+Defined in backend/sitecraft-ai/botcraft-packs.js (PLANS) and checked by tests/pricing.test.mjs.
+There is no online payment yet. After a shop pays, the admin adds the included replies to it (admin bot panel, add replies). Until then a new shop starts with a 50-reply test allowance (BOTCRAFT_FREE_REPLIES, default 50) so the owner can try the assistant; it is not advertised.
+Included replies are used like bought ones: text 1, photo or file 2, voice 3.
 
 ## Reply recharge packs (rule changed: our Gemini cost + 30%, rounded up to the next Rs 10)
 Replies are not a subscription. They are usage packs the shop recharges when they run out. The owner page lists the packs and each Recharge button opens a WhatsApp message to SiteCraft (the replies are added by admin until online payment exists).

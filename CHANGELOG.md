@@ -232,3 +232,8 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - The cost basis is an estimate (Rs 0.155 per reply for a typical shop; gemini-3.1-flash-lite at $0.25 / $1.50 per 1M tokens; Rs 90 to the dollar). Recheck it with the real token log after use. Full working in `docs/BOTCRAFT_PRICING.md`.
 - A new shop now starts with a 50-reply test allowance instead of 200 (BOTCRAFT_FREE_REPLIES), not advertised as part of a package.
 - Checked: 117 end-to-end checks and a browser run of the owner page and the landing page.
+
+## New packages: the build price includes AI replies
+- Starter 1 year Rs 1,099 with 500 AI replies, Growth 2 years Rs 1,699 with 1,000, Pro 3 years Rs 2,299 with 1,500. Each price is the build price (999 / 1,499 / 1,999) plus the replies at Rs 0.20 (our cost + about 30%), so the included replies are paid for by the price and a new owner can test the assistant with real customers instead of buying a pack first.
+- The landing page shows "AI replies included (worth Rs 100 / 200 / 300)". Recharge packs (5K / 10K / 25K) are unchanged. Plans are in `botcraft-packs.js` (PLANS) and `tests/pricing.test.mjs` checks the arithmetic (it runs in `tests/run.sh`).
+- No online payment yet: after a shop pays, the admin adds the included replies (admin add replies). Until then a new shop gets the 50-reply test allowance.
