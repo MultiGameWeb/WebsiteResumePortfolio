@@ -131,11 +131,19 @@ v=await owner('load'); const balanceBeforeVoice=v.replies.balance;
 r=await post('/api/botcraft/voice',{s:publicId,audio:{mimeType:'audio/wav',data:wavHead}},{Origin:API}); ok('voice: with a fake Gemini key it fails cleanly (503)',r.status===503&&r.ok===false,JSON.stringify(r).slice(0,100));
 v=await owner('load'); ok('voice: the credit is given back when the AI fails',v.replies.balance===balanceBeforeVoice,JSON.stringify(v.replies));
 r=await fetch(API+'/api/botcraft/voice',{method:'POST',headers:{Origin:'https://evil.example','Content-Type':'application/json','CF-Connecting-IP':nextIp()},body:JSON.stringify({s:publicId,audio:{mimeType:'audio/wav',data:wavHead}})}); ok('voice: an unknown origin is refused (403)',r.status===403);
+v=await owner('load'); ok('owner view lists the three recharge packs (5K, 10K, 25K) with prices',Array.isArray(v.packs)&&v.packs.map(x=>x.replies).join()==='5000,10000,25000'&&v.packs.map(x=>x.price).join()==='1010,2020,5040',JSON.stringify(v.packs));
 v=await owner('load'); ok('credit given back when the AI fails',v.replies.balance===5&&v.replies.used===0,JSON.stringify(v.replies));
 const adm=(body)=>post('/api/admin/bot',body,{Authorization:'Bearer test-admin-token'});
 r=await adm({id:SID,action:'add_replies',count:-5}); ok('admin removes replies',r.ok&&r.bot.replies.balance===0,JSON.stringify(r).slice(0,150));
 r=await ask(); ok('no replies left -> 402 no_replies',r.status===402&&r.code==='no_replies',JSON.stringify(r).slice(0,120));
-// daily caps: one visitor (same address) may ask 3 times a day; the shop 7 times in total
+// Voice, photos and files use more credits than a text reply
+r=await adm({id:SID,action:'add_replies',count:2});
+r=await post('/api/botcraft/voice',{s:publicId,audio:{mimeType:'audio/wav',data:wavHead}},{Origin:API}); ok('voice needs 3 credits: 2 left -> 402 low_credits',r.status===402&&r.code==='low_credits',JSON.stringify(r).slice(0,120));
+r=await post('/api/botcraft/ask',{s:publicId,text:'is this available?',documents:[{mimeType:'application/pdf',data:'JVBERi0x'}]},{Origin:API}); ok('a file reply needs 2 credits: 2 left is enough (the fake AI fails, credits come back)',r.status===503,JSON.stringify(r).slice(0,100));
+v=await owner('load'); ok('the credits were given back after the failed file reply',v.replies.balance===2,JSON.stringify(v.replies));
+r=await adm({id:SID,action:'add_replies',count:-2});
+
+// daily caps: one visitor (same address) may ask 3 times a day; the shop 9 times in total
 const sameIp={'CF-Connecting-IP':'203.0.113.9'}; const caps=[]; for(let i=0;i<4;i++) caps.push(await post('/api/botcraft/ask',{s:publicId,text:'hello'},{Origin:API,...sameIp}));
 ok('same visitor: first 3 questions pass the daily cap',caps.slice(0,3).every(x=>x.status===503||x.status===402),JSON.stringify(caps.map(x=>x.status)));
 ok('same visitor: 4th question is stopped (visitor_limit, 429)',caps[3].status===429&&caps[3].code==='visitor_limit',JSON.stringify(caps[3]).slice(0,120));

@@ -220,3 +220,20 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Owners can still only make the changes the update chat knows (items, stock, sales, shop information, sections, saved answers, photos). It is not an open chat for other jobs.
 - Reply credits for customers are unchanged. Deleting a bot deletes its counters. `ownerAiMonth` in the store gives a shop's last 30 days of owner AI calls and tokens (for admin; no screen yet).
 - Checked: 113 end-to-end checks (4 new: limit reached gives 429, simple changes still work, setup chat is capped too).
+
+## Cost control for customer replies: weighted credits and free answers for plain questions
+- Voice, photo and file replies now use more credits than a text reply: voice 3, photo 2, file 2 (text stays 1). Change them with the Worker variables BOTCRAFT_COST_VOICE, BOTCRAFT_COST_PHOTO and BOTCRAFT_COST_FILE. A reply that needs more credits than the shop has left is refused with "a typed question still works" (text keeps working down to zero). A failed AI call gives back all of its credits. The 20-credits-left alert still fires when a heavier reply crosses 20.
+- Plain questions about the shop's timings, address or phone ("shop timings entha?", "Where is the shop?", "phone number") are answered on the page from the saved shop details: instant, no AI call, no credit. Only questions made of these simple words qualify; "time to deliver", "open on Sunday late?", prices and anything about an item go to the AI. Not used with photos, files, a selected item or talk mode.
+- Checked: 116 end-to-end checks (3 new for weighted credits; the test shop's daily limit became 9) and a browser run: four plain questions answered free, three others went to the AI.
+
+## Prices: packages Rs 999 / 1,499 / 1,999 and reply recharge packs 5K / 10K / 25K
+- Packages (customer price): Starter 1 year Rs 999, Growth 2 years Rs 1,499, Pro 3 years Rs 1,999 (renewal Rs 199 a year). The landing page (`ai-chatbots.html`) shows them; "200 free AI replies" is gone from the packages.
+- Reply recharge packs, our Gemini cost + 30% rounded up to the next Rs 10: 5,000 replies Rs 1,010, 10,000 replies Rs 2,020, 25,000 replies Rs 5,040 (about Rs 0.20 a reply). The landing page lists them, and the owner page "AI replies" card shows them with a Recharge button that opens a WhatsApp message to SiteCraft (replies are added by admin until online payment exists). Prices are in one file, `botcraft-packs.js`.
+- The cost basis is an estimate (Rs 0.155 per reply for a typical shop; gemini-3.1-flash-lite at $0.25 / $1.50 per 1M tokens; Rs 90 to the dollar). Recheck it with the real token log after use. Full working in `docs/BOTCRAFT_PRICING.md`.
+- A new shop now starts with a 50-reply test allowance instead of 200 (BOTCRAFT_FREE_REPLIES), not advertised as part of a package.
+- Checked: 117 end-to-end checks and a browser run of the owner page and the landing page.
+
+## New packages: the build price includes AI replies
+- Starter 1 year Rs 1,099 with 500 AI replies, Growth 2 years Rs 1,699 with 1,000, Pro 3 years Rs 2,299 with 1,500. Each price is the build price (999 / 1,499 / 1,999) plus the replies at Rs 0.20 (our cost + about 30%), so the included replies are paid for by the price and a new owner can test the assistant with real customers instead of buying a pack first.
+- The landing page shows "AI replies included (worth Rs 100 / 200 / 300)". Recharge packs (5K / 10K / 25K) are unchanged. Plans are in `botcraft-packs.js` (PLANS) and `tests/pricing.test.mjs` checks the arithmetic (it runs in `tests/run.sh`).
+- No online payment yet: after a shop pays, the admin adds the included replies (admin add replies). Until then a new shop gets the 50-reply test allowance.
