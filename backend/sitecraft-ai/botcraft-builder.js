@@ -3,7 +3,7 @@ import { ABOUT_SCHEMA, INFO_FIELDS, SECTIONS, PLAN_SCHEMA, buildAboutPrompt, bui
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, addOwnerTokens, replyCost, changeQty, ownerAiMonth, OWNER_AI_DEFAULTS, salesReport, takeOwnerAi, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
+  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, addOwnerTokens, getCachedAnswer, normalizeQuestion, saveCachedAnswer, sha256Hex, replyCost, changeQty, ownerAiMonth, OWNER_AI_DEFAULTS, salesReport, takeOwnerAi, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
@@ -14,6 +14,7 @@ import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-p
 import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
 import { PACKS } from "./botcraft-packs.js";
+import { callGroq, groqEligible } from "./botcraft-groq.js";
 import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
 import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
 
@@ -1036,8 +1037,10 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   if (isVoice && !audio) return reply({ ok: false, error: "The recording could not be read. Please try again." }, 400, origin);
   const text = isVoice ? "(The customer spoke; the voice recording is attached.)" : clip(body?.text, MAX_TEXT);
   if (!text) return reply({ ok: false, error: "Message is empty." }, 400, origin);
-  const knowledge = shopKnowledge({ ...shop, facts, answers }, bank, typeName);
   const product = shop.products.find(p => p.name_key === String(body?.product || "")) || null;
+  // For a shop with many items, the question and the last customer messages decide which items are sent in full.
+  const focus = isVoice ? "" : [...(Array.isArray(body?.history) ? body.history : []).filter(m => m?.role === "customer").slice(-2).map(m => clip(m?.text, 300)), text, product?.name || ""].join(" ");
+  const knowledge = shopKnowledge({ ...shop, facts, answers }, bank, typeName, { focus, productKey: product?.name_key || "" });
   const contents = [...(Array.isArray(body?.history) ? body.history : []).slice(-MAX_CUSTOMER_HISTORY), { role: "customer", text }]
     .map(m => ({ role: m?.role === "bot" ? "model" : "user", parts: [{ text: clip(m?.text, MAX_TEXT) || "..." }] }))
     .filter((m, i, all) => !(i === 0 && m.role === "model"))
@@ -1061,6 +1064,17 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   const photos = customerImages(body?.images);
   const files = customerFiles(body);
   const cost = replyCost(env, { voice: isVoice, photos: photos.length, files: files.count });
+  const systemText = salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true || isVoice ? VOICE_RULE : "") + (isVoice ? AUDIO_RULE : "") + (photos.length ? IMAGE_RULE : "") + (files.count ? FILE_RULE : "");
+  // The same first question (for example "What are your timings?") is answered from what the AI said before,
+  // free for the shop and instant. Only a plain text question that starts a chat can be reused (a follow-up depends
+  // on the conversation). The key covers the whole prompt, so any change to the shop's information or rules starts afresh.
+  const history = Array.isArray(body?.history) ? body.history : [];
+  const cacheable = !isVoice && !photos.length && !files.count && !history.length;
+  const cacheKey = cacheable ? await sha256Hex(`${systemText}\n${normalizeQuestion(text)}`) : "";
+  if (cacheable) {
+    const hit = await getCachedAnswer(env, shop.shopId, cacheKey).catch(() => null);
+    if (hit) return reply({ ok: true, reply: hit.reply, suggestions: hit.suggestions.map(q => clip(q, 80)).filter(Boolean).slice(0, 3), cached: true }, 200, origin);
+  }
   const credit = await reserveReply(env, shop.shopId, freeRepliesFor(env), cost).catch(error => { console.error("BotCraft reply credit failed", error); return { ok: true, balance: -1 }; });
   if (!credit.ok) {
     if (credit.short) return reply({ ok: false, code: "low_credits", error: `This needs ${cost} AI credits and the shop has fewer left. A typed question still works.` }, 402, origin);
@@ -1075,9 +1089,23 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   const modelErrors = [];
   let usage = null;
   try {
-    const { result } = await callWithFallback(env, {
+    // Optional cheaper provider for plain text questions (off unless GROQ_API_KEY and BOTCRAFT_GROQ_MODE are set).
+    // Any problem and Gemini answers as usual.
+    let result = null;
+    let provider = "gemini";
+    if (groqEligible(env, { question: text, photos: photos.length, files: files.count, voice: isVoice || body?.voice === true })) {
+      try {
+        const groq = await callGroq(env, { system: systemText, contents });
+        result = groq.result;
+        usage = groq.usage;
+        provider = "groq";
+      } catch (error) {
+        console.error("BotCraft Groq failed, using Gemini", String(error?.message || error).slice(0, 120));
+      }
+    }
+    if (!result) ({ result } = await callWithFallback(env, {
       onUsage: metadata => { usage = metadata; },
-      system: salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true || isVoice ? VOICE_RULE : "") + (isVoice ? AUDIO_RULE : "") + (photos.length ? IMAGE_RULE : "") + (files.count ? FILE_RULE : ""),
+      system: systemText,
       contents: withCustomerAudio(withCustomerFiles(withCustomerImages(contents, photos), files), audio),
       schema: isVoice ? VOICE_SCHEMA : SALESBOT_SCHEMA,
       models: CHAT_MODELS,
@@ -1085,7 +1113,7 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
       timeoutMs: 40000,
       maxAttempts: 1,
       log: message => modelErrors.push(message.slice(0, 160))
-    });
+    }));
     // Voice: what the customer said, as written by the AI. No clear speech means no answer and no charge.
     const heard = isVoice ? clip(result?.heard, 600) : "";
     if (isVoice && !heard.trim()) {
@@ -1101,9 +1129,13 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
     // What this reply cost in tokens (thinking tokens are billed as output).
     await later(ctx, recordUsage(env, shop.shopId, {
       inTokens: Number(usage?.promptTokenCount) || 0,
-      outTokens: (Number(usage?.candidatesTokenCount) || 0) + (Number(usage?.thoughtsTokenCount) || 0)
+      outTokens: (Number(usage?.candidatesTokenCount) || 0) + (Number(usage?.thoughtsTokenCount) || 0),
+      provider
     }).catch(error => console.error("BotCraft usage log failed", error)));
     const answerText = clip(result?.reply, 1500) || "Sorry, please ask again.";
+    if (cacheable && result?.answered !== false && clip(result?.reply, 1500)) {
+      await later(ctx, saveCachedAnswer(env, shop.shopId, cacheKey, { reply: answerText, suggestions: (Array.isArray(result?.suggestions) ? result.suggestions : []).map(q => clip(q, 80)).filter(Boolean) }));
+    }
     return reply({
       ok: true,
       reply: answerText,
