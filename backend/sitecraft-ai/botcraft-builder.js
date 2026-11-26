@@ -589,6 +589,32 @@ const OWNER_AI_LIMIT_MESSAGE = {
   about: "You have used today's limit for writing the About text. Please write it yourself or try tomorrow."
 };
 
+// When a bot's setup is complete, its web page goes live by itself (once), so the owner has a link and a QR poster
+// straight away. Switch off with BOTCRAFT_AUTO_PUBLISH="false". When payment is required for publishing
+// (HOSTING_REQUIRE_PAYMENT="true") nothing is published here: the payment step does it. One try per shop;
+// the owner can still publish or update from "Manage my bot".
+export async function autoPublishPage(env, request, shopId, facts, deps = {}) {
+  const load = deps.loadSettings || loadSettings;
+  const save = deps.saveSettings || saveSettings;
+  const publicIdOf = deps.ensurePublicId || ensurePublicId;
+  const publish = deps.publish || publishShopPage;
+  if (String(env.BOTCRAFT_AUTO_PUBLISH || "true").toLowerCase() === "false") return null;
+  if (String(env.HOSTING_REQUIRE_PAYMENT || "") === "true" || String(env.HOSTING_DISABLED || "") === "true") return null;
+  const settings = await load(env, shopId);
+  if (settings.pageSlug || settings.pageAutoTried) return null;
+  await save(env, shopId, { pageAutoTried: true });
+  const published = await publish(env, request, new URL(request.url), {
+    publicId: await publicIdOf(env, shopId),
+    shopName: facts.shop_name || "",
+    description: facts.about || "",
+    existingSlug: "",
+    requestedSlug: ""
+  });
+  if (!published.ok) { console.error("BotCraft auto publish failed", published.error); return null; }
+  await save(env, shopId, { pageSlug: published.slug });
+  return published;
+}
+
 function later(ctx, task) {
   const safe = task.catch(error => console.error("BotCraft background task failed", error));
   if (ctx?.waitUntil) ctx.waitUntil(safe);
@@ -838,6 +864,8 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
   const bot = saved && coreComplete(merged) ? { publicId: await ensurePublicId(env, shopId).catch(() => null), name: merged.shop_name || "", botName: botName(merged), wifi: posterWifi(merged), openQuestions: (await countOpenQuestions(env, shopId).catch(() => 0)) + (await countNewRequests(env, shopId).catch(() => 0)), features: shopFeatures(merged.shop_type, await loadSettings(env, shopId).catch(() => ({}))) } : null;
   // The first time the basics are complete, write the "About us" text for the shop page.
   if (bot?.publicId && !merged.about && !saved?.facts?.about_auto_tried) await later(ctx, writeAbout(env, shopId));
+  // ... and put the web page live.
+  const livePage = bot?.publicId ? await autoPublishPage(env, request, shopId, merged).catch(error => { console.error("BotCraft auto publish failed", error); return null; }) : null;
   const nextPhoto = sameBank && text !== FINISH_OPTION ? nextStep(merged, mergedAnswers, mergedBank).photo : null;
   const allowSkip = questions.length ? questions.every(q => !q.mandatory) : !nextQuestion || nextQuestion.priority !== "mandatory";
 
@@ -873,6 +901,7 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
     botText += "\n\n" + questions.map((q, i) => `${i + 1}. ${q.question}${q.options.length ? ` (${q.options.map(o => o.label).join(" / ")})` : ""}`).join("\n");
     questions.length = 0;
   }
+  if (livePage?.url) botText += `\n\n🌐 Your web page is live: ${livePage.url}\nYou can change or unpublish it any time in "Manage my bot".`;
   const notes = (Array.isArray(result?.notes) ? result.notes : []).map(n => clip(n, 300)).filter(Boolean).slice(0, 20);
   const items = (Array.isArray(result?.items) ? result.items : []).slice(0, 30).map(item => ({
     name: clip(item?.name, 120),
