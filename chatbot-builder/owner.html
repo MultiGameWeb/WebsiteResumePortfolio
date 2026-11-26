@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
   <!-- Bump ?v= on every change to these files, so browsers never mix cached old and new files. -->
-  <link rel="stylesheet" href="./owner.css?v=9">
+  <link rel="stylesheet" href="./owner.css?v=10">
 </head>
 <body>
   <script src="./demo-api.js"></script>
@@ -116,6 +116,8 @@
         <h2>AI replies <span class="count-badge" id="repliesLow" hidden>Low</span></h2>
         <p class="muted">Each answer your assistant gives a customer uses one AI reply. When they run out, customers still get basic answers (items, prices, timings), but not the full AI assistant.</p>
         <div id="repliesInfo"></div>
+        <h3 class="pack-title">What uses your credits</h3>
+        <ul class="use-list" id="creditUses"></ul>
         <h3 class="pack-title">Recharge packs</h3>
         <ul class="pack-list" id="packList"></ul>
         <p class="muted" id="repliesNote"></p>
@@ -277,6 +279,6 @@
       </section>
     </main>
   </div>
-  <script type="module" src="./owner.js?v=27"></script>
+  <script type="module" src="./owner.js?v=28"></script>
 </body>
 </html>

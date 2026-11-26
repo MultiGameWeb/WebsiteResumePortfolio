@@ -3,7 +3,7 @@
 // shop id saved by the setup chat in this browser is the owner's key until
 // sign-in exists.
 import { enhanceProductPhoto } from './photo-enhance.js?v=2';
-import { initUpdateChat } from './owner-update.js?v=12';
+import { initUpdateChat } from './owner-update.js?v=13';
 
 const API_BASE = window.BOTCRAFT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const SHOP_ID_KEY = 'botcraft:shopId';
@@ -106,6 +106,8 @@ async function pngToJpeg(image) {
 }
 
 async function runStudio() {
+  const cost = view.ownerCosts?.studio;
+  if (cost && !window.confirm(`The clean studio photo uses ${cost} AI credits from your balance (the same credits as customer replies). If the photo cannot be made, no credits are used. Continue?`)) { $('#studioDialog').close?.(); return; }
   const run = ++studio.run; // a result that arrives after the owner closed the box is ignored
   $('#studioStatus').textContent = 'Cleaning your photo… this takes about 15 seconds.';
   for (const id of ['#studioCompare', '#studioNote', '#studioUse', '#studioRetry']) $(id).hidden = true;
@@ -390,7 +392,16 @@ function renderReplies() {
   }));
   $('#packList').hidden = !packs.length;
   document.querySelector('.pack-title').hidden = !packs.length;
-  $('#repliesNote').textContent = (replies.low ? 'Your replies are running low. ' : '') + 'A text answer uses 1 reply, a photo or file question 2, a voice answer 3. Online payment is coming soon: tap Recharge to message SiteCraft and we add the replies for you.';
+  const costs = view.ownerCosts || {};
+  $('#repliesNote').textContent = (replies.low ? 'Your credits are running low. ' : '') + 'Online payment is coming soon: tap Recharge to message SiteCraft and we add the credits for you.';
+  const uses = $('#creditUses');
+  if (uses) uses.replaceChildren(...[
+    ['Customer answer', 'text 1 credit · photo or file 2 · voice 3 (plain timings, address, phone questions and greetings are free)'],
+    ['AI helper in your update chat', `${costs.update ?? 1} credit for each change it works out`],
+    ['AI “write my About text”', `${costs.about ?? 2} credits`],
+    ['Clean studio photo', `${costs.studio ?? 20} credits (nothing if the photo cannot be made)`],
+    ['Changes that need no AI', 'free: price, stock count, hide or show, delete, timings and shop information, sales you record, editing a saved answer by hand'],
+  ].map(([what, price]) => { const li = element('li'); li.append(element('strong', '', what), document.createTextNode(` — ${price}`)); return li; }));
 }
 
 function renderPage() {
@@ -566,6 +577,8 @@ $('#infoForm').addEventListener('submit', (event) => {
 
 $('#aboutWrite').addEventListener('click', async () => {
   const note = $('#aboutNote');
+  const cost = view.ownerCosts?.about;
+  if (cost && !window.confirm(`Writing the About text with AI uses ${cost} credits from your balance (the same credits as customer replies). Continue?`)) return;
   note.textContent = 'Writing…';
   const ok = await call('generate_about');
   note.textContent = ok ? 'Done — read it and edit if you like.' : '';

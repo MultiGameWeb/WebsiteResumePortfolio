@@ -78,3 +78,17 @@ Quality in Telugu and Hindi is the risk. Decide with the test first, without put
 - The address is <shop>.<HOSTING_DOMAIN> when HOSTING_DOMAIN is set and a wildcard route points at the Worker, otherwise <worker address>/s/<shop>/.
 - When payment exists: set HOSTING_REQUIRE_PAYMENT="true" so nothing is published before payment, and let the payment success step publish the page, add the plan's included replies and set the hosting years.
 - Custom domain (for example balajielectronics.in): not built and not needed now. The shop owner buys it (about Rs 600-1,200 a year, not our cost) and we charge a separate setup fee; we would connect it by hand (Cloudflare custom hostname or DNS) when asked.
+
+## What uses credits (decided November 2026: every AI call that costs us is paid by the shop)
+One balance of credits pays for all AI work. Recharging is not only for customer replies.
+| Work | Credits |
+|---|---|
+| Customer answer: text | 1 |
+| Customer answer: photo or file | 2 |
+| Customer answer: voice | 3 |
+| Owner: AI helper in "Update with chat" (one change worked out) | 1 |
+| Owner: "Write my About text" with AI | 2 |
+| Owner: clean studio photo (AI image) | 20 (about Rs 4; our cost about Rs 3.4 + 30%) |
+Free (no AI call, no cost to us): price, stock count, hide or show, delete, rename, timings and shop information, sales, editing a saved answer by hand, simple changes the page works out itself in the update chat (basic mode), plain timing, address and phone questions from customers, greetings, and repeated first questions answered from a saved copy.
+Included in the build price: the setup chat (about Rs 15-30 of AI per shop once), capped at 80 messages a day (BOTCRAFT_OWNER_AI_SETUP).
+Credits are taken before the AI call and given back when it fails (or when a studio photo could not be made, or the About text was only a plain sentence from the facts). With no credits the owner sees why, and the update chat uses its free basic mode. Costs: BOTCRAFT_COST_OWNER_UPDATE / _ABOUT / _STUDIO. The owner page shows this list in the "AI replies" card, asks before an AI About text or a studio photo, and the update chat says how many credits an AI change used.

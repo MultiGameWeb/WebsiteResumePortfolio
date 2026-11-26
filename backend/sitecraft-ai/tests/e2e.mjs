@@ -43,6 +43,19 @@ r=await owner('save_product',{key:'gold necklace 22k',name:'Gold Necklace',price
 r=await owner('set_quantity',{key:'gold necklace',quantity:null}); ok('the owner can stop counting an item',r.products.find(x=>x.name==='Gold Necklace').qty===null);
 r=await owner('set_quantity',{key:'no such item',quantity:1}); ok('stock count of an unknown item is refused',r.status===400);
 r=await owner('set_quantity',{key:'silver anklet',quantity:2,mode:'set'});
+// AI work the owner starts uses credits (the same balance as customer replies); work that needs no AI does not
+v=await owner('load'); ok('the owner view tells what AI work costs (update 1, About 2, studio 20)',v.ownerCosts&&v.ownerCosts.update===1&&v.ownerCosts.about===2&&v.ownerCosts.studio===20,JSON.stringify(v.ownerCosts));
+let credits0=v.replies.balance; await post('/api/admin/bot',{id:SID,action:'add_replies',count:-credits0},{Authorization:'Bearer test-admin-token'});
+let nc=await owner('plan_update',{text:'Gold chain price 54000'}); ok('with no credits the AI helper is refused and says why (402 no_credits)',nc.status===402&&nc.code==='no_credits'&&/no AI|still work/i.test(nc.error||''),JSON.stringify(nc).slice(0,160));
+nc=await owner('generate_about'); ok('the AI About text needs credits too',nc.status===402&&nc.code==='no_credits'&&nc.cost===2,JSON.stringify(nc).slice(0,120));
+nc=await owner('studio_photo',{photoId:'b'.repeat(32)}); ok('the studio photo needs credits too',nc.status===402&&nc.cost===20,JSON.stringify(nc).slice(0,120));
+r=await owner('record_sale',{key:'gold necklace',quantity:1}); ok('a sale, an edit and other no-AI changes still work with zero credits',r.ok);
+r=await owner('save_product',{key:'gold necklace',name:'Gold Necklace',price_text:'₹48,500',details:'10 grams',stock_status:'in_stock'}); ok('editing an item works with zero credits',r.ok);
+await post('/api/admin/bot',{id:SID,action:'add_replies',count:credits0+5},{Authorization:'Bearer test-admin-token'});
+let with5=await owner('load'); const bal5=with5.replies.balance;
+nc=await owner('generate_about'); with5=await owner('load'); ok('an About text the AI could not write (a plain sentence is used instead) costs no credits',nc.status===200&&with5.replies.balance===bal5,JSON.stringify([nc.status,with5.replies.balance,bal5]));
+nc=await owner('plan_update',{text:'Gold chain price 55000'}); with5=await owner('load'); ok('a failed AI update gives its credit back',nc.status===503&&with5.replies.balance===bal5,JSON.stringify([nc.status,with5.replies.balance,bal5]));
+await post('/api/admin/bot',{id:SID,action:'add_replies',count:-5},{Authorization:'Bearer test-admin-token'});
 // Owner AI cap (test limit: 2 update-helper calls a day; the fake key makes each call fail, but it still counts)
 let o1=await owner('plan_update',{text:'Gold chain price 50000'}); let o2=await owner('plan_update',{text:'Gold chain price 51000'}); let o3=await owner('plan_update',{text:'Gold chain price 52000'});
 ok('the update helper works up to the daily limit',o1.status===503&&o2.status===503,JSON.stringify([o1.status,o2.status]));
@@ -97,9 +110,13 @@ ok('replaced photo keeps its place (still the cover)',after[0].photo_id!==itemPh
 r=await owner('replace_photo',{photoId:'a'.repeat(32),image:{mimeType:'image/png',data:PNG}}); ok('replace of unknown photo refused',r.status===404);
 await owner('delete_photo',{photoId:after[4].photo_id}); v=await owner('load'); ok('photo deleted',v.photos.filter(x=>x.product_key==='gold necklace').length===4);
 const img=await fetch(API+'/api/botcraft/photo?id='+after[0].photo_id); ok('photo served as an image',img.status===200&&/image\/png/.test(img.headers.get('content-type')||''));
+const admin0=(count)=>post('/api/admin/bot',{id:SID,action:'add_replies',count},{Authorization:'Bearer test-admin-token'});
+await admin0(30); v=await owner('load'); const creditsBeforeStudio=v.replies.balance;
 r=await owner('studio_photo',{photoId:after[0].photo_id}); ok('photo studio: Gemini failure is handled, not a crash',[502,422,503].includes(r.status)&&r.ok===false,JSON.stringify(r).slice(0,140));
 v=await owner('load'); ok('failed studio call is not counted',v.photoStudio.leftToday===3);
 r=await owner('studio_photo',{photoId:'b'.repeat(32)}); ok('studio on an unknown photo refused',r.status===404);
+v=await owner('load'); ok('credits used for a photo that could not be made are given back',v.replies.balance===creditsBeforeStudio,JSON.stringify([v.replies.balance,creditsBeforeStudio]));
+await admin0(-30);
 r=await owner('transcribe',{audio:{mimeType:'audio/webm',data:'AAAA'}}); ok('premium voice off falls back',r.status===503&&r.fallback===true);
 
 // --- hosting (publish the shop page)

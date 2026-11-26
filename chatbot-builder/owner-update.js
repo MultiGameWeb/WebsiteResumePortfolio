@@ -106,6 +106,7 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
   // ---- Planning: AI helper first, rules as the fallback ----
   async function requestPlan(text, images) {
     const view = getView();
+    let creditNote = '';
     if (!window.BOTCRAFT_DEMO) {
       try {
         const response = await fetch(`${apiBase}/api/botcraft/owner`, {
@@ -113,11 +114,13 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
           body: JSON.stringify({ shopId, action: 'plan_update', text, images }),
         });
         const data = await response.json();
-        if (response.ok && data.ok && data.plan) return { ...data.plan, source: 'ai' };
+        if (response.ok && data.ok && data.plan) return { ...data.plan, source: 'ai', credits: data.credits || null };
+        // No credits left: say so, then use the basic rules, which cost nothing.
+        if (response.status === 402 && data.code === 'no_credits') creditNote = data.error;
       } catch { /* fall through to the basic planner */ }
     }
     const plan = planLocally(text, { products: view.products || [], imageCount: images.length });
-    return { ...plan, source: 'basic' };
+    return { ...plan, source: 'basic', creditNote };
   }
 
   async function submit(textOverride) {
@@ -164,7 +167,7 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
     const lines = plan.ops.map((op) => describeOp(op, view.products || [], view.info || {}));
     const head = plan.source === 'basic' ? 'I will make these changes (basic mode — please check each line):' : 'I will make these changes:';
     if (!plan.ops.length) {
-      bubble('bot', plan.unclear || plan.summary || 'I could not find a change to make. Try: “Gold chain price 52000”.');
+      bubble('bot', [plan.unclear || plan.summary || 'I could not find a change to make. Try: “Gold chain price 52000”.', plan.creditNote, plan.credits?.used ? `🪙 The AI helper used ${plan.credits.used} credit${plan.credits.used === 1 ? '' : 's'} for this.` : ''].filter(Boolean).join('\n\n'));
       return;
     }
     const card = el('div', 'uc-msg uc-bot uc-plan');
@@ -177,6 +180,8 @@ export function initUpdateChat({ getView, call, prepareImage, apiBase, shopId })
     }
     card.append(list);
     if (plan.unclear) card.append(el('p', 'uc-note', plan.unclear));
+    if (plan.creditNote) card.append(el('p', 'uc-note', plan.creditNote));
+    if (plan.credits?.used) card.append(el('p', 'uc-note', `🪙 The AI helper used ${plan.credits.used} credit${plan.credits.used === 1 ? '' : 's'} for this. Changes that need no AI cost nothing.`));
     const actions = el('div', 'uc-actions');
     const confirm = el('button', 'btn uc-confirm', '✅ Confirm & update');
     confirm.type = 'button';

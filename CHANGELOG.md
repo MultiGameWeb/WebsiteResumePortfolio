@@ -257,3 +257,10 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Switch off with BOTCRAFT_AUTO_PUBLISH="false". It does nothing when HOSTING_REQUIRE_PAYMENT="true" (for when payment is added: the payment step should publish then) or HOSTING_DISABLED="true".
 - Hosting is 365 days from the first publish. Plan years, renewal and payment gate are still to build (no Razorpay account yet). Custom domains are not built (the shop owner would buy the domain and we would charge a setup fee).
 - Checked: 9 checks for the auto-publish rules (once only, failure not retried, switches), and the full suite.
+
+## Credits pay for AI work the owner starts, not only customer replies
+- The same credit balance now also pays for the AI work an owner starts: the AI helper in "Update with chat" (1 credit for each change it works out), "Write my About text" with AI (2 credits) and a clean studio photo (20 credits). Credits are taken before the AI call and given back when it fails, when a studio photo could not be made, or when the About text was only a plain sentence from the facts.
+- Changes that need no AI stay free: price, stock count, hide or show, delete, rename, timings and shop information, sales, editing a saved answer by hand, and the basic mode of the update chat. The setup chat is part of the build price (capped at 80 messages a day).
+- With no credits the owner is told why, and the update chat falls back to its free basic mode. The owner page "AI replies" card now has a "What uses your credits" list, asks before an AI About text or a studio photo, and the update chat says how many credits an AI change used. The landing page says it too.
+- Costs can be changed with BOTCRAFT_COST_OWNER_UPDATE / _ABOUT / _STUDIO. Table of everything that uses credits: `docs/BOTCRAFT_PRICING.md`.
+- Checked: 126 end-to-end checks (10 new: costs in the owner view, 402 with no credits for update, About and studio, no-AI changes work with zero credits, credits come back on failure).

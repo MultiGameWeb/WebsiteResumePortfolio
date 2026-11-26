@@ -615,6 +615,27 @@ export async function autoPublishPage(env, request, shopId, facts, deps = {}) {
   return published;
 }
 
+// Credits for AI work the owner starts (the same balance that pays for customer replies). Work that needs no AI
+// (price, stock, hide, delete, timings, sales, saved-answer edits typed by hand) costs nothing.
+// Change the costs with BOTCRAFT_COST_OWNER_UPDATE / _ABOUT / _STUDIO. The setup chat is part of the build price.
+const OWNER_CREDIT_DEFAULTS = { update: 1, about: 2, studio: 20 };
+export function ownerCreditCost(env, kind) {
+  const set = Number(env?.[`BOTCRAFT_COST_OWNER_${kind.toUpperCase()}`]);
+  return Number.isFinite(set) && set >= 0 ? Math.min(Math.floor(set), 200) : OWNER_CREDIT_DEFAULTS[kind];
+}
+async function takeOwnerCredits(env, shopId, kind) {
+  const cost = ownerCreditCost(env, kind);
+  if (!cost) return { ok: true, cost: 0, balance: -1 };
+  const credit = await reserveReply(env, shopId, freeRepliesFor(env), cost).catch(error => { console.error("BotCraft owner credit failed", error); return { ok: true, balance: -1 }; });
+  return { ...credit, cost };
+}
+const giveBackOwnerCredits = (env, shopId, credit) => (credit.ok && credit.cost && credit.balance >= 0 ? releaseReply(env, shopId, credit.cost).catch(() => {}) : null);
+const OWNER_NO_CREDITS = {
+  update: cost => `The AI helper uses ${cost} credit${cost === 1 ? "" : "s"} for each change and your credits are finished. Changes that need no AI (price, stock, hide, delete, timings, sales) still work. Recharge in “AI replies” to use the AI helper.`,
+  about: cost => `Writing the About text with AI uses ${cost} credits and you do not have enough. You can write it yourself, or recharge in “AI replies”.`,
+  studio: cost => `A clean studio photo uses ${cost} credits and you do not have enough. Your own photo stays as it is. Recharge in “AI replies” to use the photo studio.`
+};
+
 function later(ctx, task) {
   const safe = task.catch(error => console.error("BotCraft background task failed", error));
   if (ctx?.waitUntil) ctx.waitUntil(safe);
@@ -1302,6 +1323,7 @@ async function ownerView(env, shopId, url) {
     page,
     replies,
     packs: PACKS,
+    ownerCosts: { update: ownerCreditCost(env, "update"), about: ownerCreditCost(env, "about"), studio: ownerCreditCost(env, "studio") },
     savedAnswers,
     premiumVoice: premiumVoiceAvailable(env),
     photoStudio: { available: photoStudioAvailable(env), leftToday: studioLeftToday(env, settings) },
@@ -1406,6 +1428,7 @@ async function writeAbout(env, shopId, { force = false } = {}) {
   if (!(await allowOwnerAi(env, shopId, "about"))) return false;
   const products = await listProducts(env, shopId);
   let about = "";
+  let source = "ai";
   const modelErrors = [];
   try {
     const { result } = await callWithFallback(env, {
@@ -1422,10 +1445,11 @@ async function writeAbout(env, shopId, { force = false } = {}) {
   } catch (error) {
     console.error("BotCraft about text failed", error, modelErrors);
   }
-  if (!about) about = templateAbout(facts, shopTypeName(facts.shop_type));
+  if (!about) { about = templateAbout(facts, shopTypeName(facts.shop_type)); source = "template"; }
   if (!about) return false;
   await updateFacts(env, shopId, { about, about_auto_tried: "1" });
-  return true;
+  // "ai" when the AI wrote it; "template" when a plain sentence from the facts was used (no AI work was done).
+  return source;
 }
 
 // Edit, delete or hide one saved answer (ids are made by botcraft-answers.js). Returns an error text, or "" when done.
@@ -1482,6 +1506,8 @@ async function handlePlanUpdate(env, shopId, body, origin, ctx) {
   const modelErrors = [];
   // Over the daily limit the page falls back to its own rules (price, stock, timings, hide, sales ...), which cost nothing.
   if (!(await allowOwnerAi(env, shopId, "update"))) return reply({ ok: false, error: OWNER_AI_LIMIT_MESSAGE.update, limit: "update" }, 429, origin);
+  const credit = await takeOwnerCredits(env, shopId, "update");
+  if (!credit.ok) return reply({ ok: false, code: "no_credits", cost: credit.cost, error: OWNER_NO_CREDITS.update(credit.cost) }, 402, origin);
   let planUsage = null;
   try {
     const { result } = await callWithFallback(env, {
@@ -1496,8 +1522,9 @@ async function handlePlanUpdate(env, shopId, body, origin, ctx) {
       log: message => modelErrors.push(message.slice(0, 160))
     });
     await later(ctx, addOwnerTokens(env, shopId, "update", { inTokens: Number(planUsage?.promptTokenCount) || 0, outTokens: (Number(planUsage?.candidatesTokenCount) || 0) + (Number(planUsage?.thoughtsTokenCount) || 0) }));
-    return reply({ ok: true, plan: cleanPlan(result, products, images.length, savedAnswers) }, 200, origin);
+    return reply({ ok: true, plan: cleanPlan(result, products, images.length, savedAnswers), credits: { used: credit.cost, left: credit.balance } }, 200, origin);
   } catch (error) {
+    await giveBackOwnerCredits(env, shopId, credit);
     console.error("BotCraft plan_update failed", error, modelErrors);
     return reply({ ok: false, error: "The AI helper is busy right now. Please try again." }, 503, origin);
   }
@@ -1654,13 +1681,21 @@ async function handleOwner(request, env, origin, ctx) {
     }
     if (Object.keys(patch).length) await updateFacts(env, shopId, patch);
   } else if (action === "generate_about") {
-    if (!(await writeAbout(env, shopId, { force: true }))) return reply({ ok: false, error: "Could not write the text right now. Please try again or write it yourself." }, 503, origin);
+    const credit = await takeOwnerCredits(env, shopId, "about");
+    if (!credit.ok) return reply({ ok: false, code: "no_credits", cost: credit.cost, error: OWNER_NO_CREDITS.about(credit.cost) }, 402, origin);
+    const wrote = await writeAbout(env, shopId, { force: true });
+    // Credits are for AI work only: a plain sentence made from the shop's facts, or a failure, costs nothing.
+    if (wrote !== "ai") await giveBackOwnerCredits(env, shopId, credit);
+    if (!wrote) return reply({ ok: false, error: "Could not write the text right now. Please try again or write it yourself. No credits were used." }, 503, origin);
   } else if (action === "plan_update") {
     return handlePlanUpdate(env, shopId, body, origin, ctx);
   } else if (action === "studio_photo") {
     // Clean studio version of an item photo: only a preview, saved when the owner accepts (replace_photo).
+    const credit = await takeOwnerCredits(env, shopId, "studio");
+    if (!credit.ok) return reply({ ok: false, code: "no_credits", cost: credit.cost, error: OWNER_NO_CREDITS.studio(credit.cost) }, 402, origin);
     const result = await studioPhoto(env, shopId, String(body?.photoId || ""));
-    return reply(result.body, result.status, origin);
+    if (result.status !== 200) await giveBackOwnerCredits(env, shopId, credit); // a photo that could not be made costs nothing
+    return reply(result.status === 200 ? { ...result.body, credits: { used: credit.cost, left: credit.balance } } : result.body, result.status, origin);
   } else if (action === "replace_photo") {
     const photoId = String(body?.photoId || "");
     const image = body?.image;
