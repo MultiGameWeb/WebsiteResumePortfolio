@@ -143,6 +143,7 @@
         closed: state.requests.filter(function (r) { return r.kind !== 'order' && ['done', 'rejected'].indexOf(r.status) !== -1; })
       },
       orders: state.orders, features: state.features, galleryLimit: GALLERY_LIMIT,
+      ownerCosts: { update: 1, about: 2, studio: 20 },
       packs: [{ id: 'replies-5000', replies: 5000, price: 1010 }, { id: 'replies-10000', replies: 10000, price: 2020 }, { id: 'replies-25000', replies: 25000, price: 5040 }],
       hiddenSections: state.hiddenSections || [], productPhotoLimit: 5, photoStudio: { available: true, leftToday: 20 }, replies: { balance: 187, granted: 200, used: 13, usedToday: 4, usedMonth: 13, tokens: { in: 0, out: 0, replies: 0 }, low: false },
       info: {
