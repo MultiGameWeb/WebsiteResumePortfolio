@@ -251,3 +251,9 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - Greetings, thanks and goodbyes ("hi", "thank you", "bye", also in Telugu and Hindi script) get a short fixed reply on the page: no AI, no credit.
 - Telugu and other Indian-script words are no longer broken at their vowel marks when questions are matched (a fix in three small functions).
 - Checked: 117 end-to-end checks, 12 trimming checks, 10 cache checks on a real SQLite database, and a browser run (nine greetings free, a greeting plus a question still goes to the AI).
+
+## The web page goes live by itself when the bot is ready
+- Until now the owner had to tap "Publish my page". Now, the first time a bot's setup is complete, its page is published once, automatically, at a free address made from the shop name, and the chat message says "Your web page is live: <link>". The owner can still update or unpublish it in "Manage my bot". If it fails, there is no retry loop (the owner publishes by hand).
+- Switch off with BOTCRAFT_AUTO_PUBLISH="false". It does nothing when HOSTING_REQUIRE_PAYMENT="true" (for when payment is added: the payment step should publish then) or HOSTING_DISABLED="true".
+- Hosting is 365 days from the first publish. Plan years, renewal and payment gate are still to build (no Razorpay account yet). Custom domains are not built (the shop owner would buy the domain and we would charge a setup fee).
+- Checked: 9 checks for the auto-publish rules (once only, failure not retried, switches), and the full suite.

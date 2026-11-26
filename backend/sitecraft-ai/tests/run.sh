@@ -25,6 +25,7 @@ node "$HERE/seed.mjs" "$WORK/seed.sql"
 node "$HERE/pricing.test.mjs"
 node "$HERE/groq.test.mjs"
 node "$HERE/trim.test.mjs"
+node --no-warnings "$HERE/autopublish.test.mjs"
 node --no-warnings "$HERE/cache.test.mjs"
 node "$HERE/e2e.mjs"
 
