@@ -17,7 +17,7 @@ The owner of SiteCraft decided: the price of the build includes some AI replies,
 Our cost of the build and hosting: Rs 700 / 801 / 902 (see above), so the margin on the build is unchanged (Rs 299 / 698 / 1,097) and the replies add about 30%.
 Renewal after the term: Rs 199 per year (hosting and storage; our cost Rs 101).
 Defined in backend/sitecraft-ai/botcraft-packs.js (PLANS) and checked by tests/pricing.test.mjs.
-There is no online payment yet. After a shop pays, the admin adds the included replies to it (admin bot panel, add replies). Until then a new shop starts with a 50-reply test allowance (BOTCRAFT_FREE_REPLIES, default 50) so the owner can try the assistant; it is not advertised.
+There is no online payment yet. After a shop pays, the admin adds the included replies to it (admin bot panel, add replies). Until then a new shop starts with a 20-reply test allowance (BOTCRAFT_FREE_REPLIES, default 20, about Rs 3 of AI) so the owner can try the assistant; it is not advertised.
 Included replies are used like bought ones: text 1, photo or file 2, voice 3.
 
 ## Reply recharge packs (rule changed: our Gemini cost + 30%, rounded up to the next Rs 10)
@@ -88,7 +88,18 @@ One balance of credits pays for all AI work. Recharging is not only for customer
 | Customer answer: voice | 3 |
 | Owner: AI helper in "Update with chat" (one change worked out) | 1 |
 | Owner: "Write my About text" with AI | 2 |
-| Owner: clean studio photo (AI image) | 20 (about Rs 4; our cost about Rs 3.4 + 30%) |
+| Owner: clean studio photo (AI image) | 25 (Rs 5; our cost Rs 3.5, $0.039 an image at Rs 90, checked on the official price page) |
 Free (no AI call, no cost to us): price, stock count, hide or show, delete, rename, timings and shop information, sales, editing a saved answer by hand, simple changes the page works out itself in the update chat (basic mode), plain timing, address and phone questions from customers, greetings, and repeated first questions answered from a saved copy.
 Included in the build price: the setup chat (about Rs 15-30 of AI per shop once), capped at 80 messages a day (BOTCRAFT_OWNER_AI_SETUP).
 Credits are taken before the AI call and given back when it fails (or when a studio photo could not be made, or the About text was only a plain sentence from the facts). With no credits the owner sees why, and the update chat uses its free basic mode. Costs: BOTCRAFT_COST_OWNER_UPDATE / _ABOUT / _STUDIO. The owner page shows this list in the "AI replies" card, asks before an AI About text or a studio photo, and the update chat says how many credits an AI change used.
+
+## Loss protection (built, November 2026)
+Nothing may cost us more than it earns. What is in place, and what to set before real customers:
+1. **Abuse before payment.** One internet connection can start 5 new assistants a day (BOTCRAFT_NEW_SHOPS_PER_IP) and send 300 setup messages a day (BOTCRAFT_SETUP_MSGS_PER_IP). The test allowance is 20 replies. Each setup chat is also capped per shop (80 a day).
+2. **Launch mode: BOTCRAFT_REQUIRE_PAID="true".** A shop's web page (automatic or by the Publish button) goes live only after the admin marks it paid. Set this before launch. In the admin bot panel, "Mark as paid" with a plan adds the plan's replies, publishes the page (if the setup is complete) and sets the hosting years (1, 2 or 3). Doing it again for a renewal adds the replies again and extends the hosting. Without the setting (the default, for testing) pages still go live for free.
+3. **Update helper cost.** Its prompt now sends only the saved answers related to what the owner wrote (at most 25, a few if none match); every item is still listed. A shop with 200 items and 120 answers sends about 40% of the answer text. 1 credit stays enough for a typical shop; the profit report shows if not.
+4. **Studio photo: 25 credits (Rs 5).** Gemini 2.5 Flash Image costs $0.039 an image (checked on the official price page), about Rs 3.5, so Rs 5 keeps a margin of about 40% for retries and exchange-rate changes.
+5. **PDF limits.** Customers: one PDF at a time, at most 1 MB and 10 pages (counted on the page and again on the server, which refuses a longer one with a clear message). Other file types are read as text (12,000 characters each).
+6. **Profit report.** Admin, tab "Profit" (and in each bot's panel): for the last 30 days, credits used, what they are worth (Rs 0.20 each), our estimated AI cost (tokens at the published rates, voice answers Rs 0.25 each, studio photos Rs 3.6 each), the margin, and a LOSS flag, worst shops first. Rates can be changed with PROFIT_USD_TO_INR, PROFIT_IN_USD_PER_M, PROFIT_OUT_USD_PER_M, PROFIT_CREDIT_INR, PROFIT_VOICE_TTS_INR, PROFIT_STUDIO_INR. Replies answered by Groq are priced at Gemini rates (the tokens are not split by provider), which overstates their cost.
+Not counted in the profit report: hosting and storage (Rs 101 a year, inside the package price), the payment gateway fee and GST, and the setup chat (inside the build price).
+Still open: online payment, the 2027 text-to-speech price rise (voice may need 4 credits then), and checking the real tokens per reply after deployment.

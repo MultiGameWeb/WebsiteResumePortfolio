@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>SiteCraft Admin</title>
-  <link rel="stylesheet" href="./admin.css?v=2">
+  <link rel="stylesheet" href="./admin.css?v=3">
 </head>
 <body>
   <div class="admin-app">
@@ -17,6 +17,7 @@
       <nav class="tabs" id="tabs" hidden>
         <button type="button" data-tab="overview" aria-pressed="true">Overview</button>
         <button type="button" data-tab="bots" aria-pressed="false">BotCraft bots</button>
+        <button type="button" data-tab="profit" aria-pressed="false">Profit</button>
         <button type="button" data-tab="calls" aria-pressed="false">Call requests <span class="badge" id="callBadge" hidden></span></button>
         <button type="button" data-tab="hosted" aria-pressed="false">Published sites</button>
         <button type="button" data-tab="sites" aria-pressed="false">Websites</button>
@@ -60,6 +61,20 @@
           </table>
         </div>
         <button class="btn ghost" type="button" id="moreBots" hidden>Load more</button>
+      </section>
+
+      <section id="profit" class="panel" hidden>
+        <div class="card">
+          <h2>AI cost against credits used (last 30 days)</h2>
+          <p class="muted" id="profitNote">Credits are worth ₹0.20 each. Cost is estimated from the tokens used and the published Gemini prices, plus voice answers and studio photos. The worst shops are first. A shop marked LOSS cost more than its credits are worth.</p>
+          <div class="stats" id="profitTotals"></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Shop</th><th class="num">Credits used</th><th class="num">Worth ₹</th><th class="num">AI cost ₹</th><th class="num">Margin ₹</th><th class="num">Margin %</th><th></th></tr></thead>
+            <tbody id="profitRows"></tbody>
+          </table>
+        </div>
       </section>
 
       <section id="calls" class="panel" hidden>
@@ -111,6 +126,6 @@
       <div id="botBody"></div>
     </dialog>
   </div>
-  <script type="module" src="./admin.js?v=4"></script>
+  <script type="module" src="./admin.js?v=5"></script>
 </body>
 </html>

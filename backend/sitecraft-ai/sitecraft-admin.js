@@ -6,14 +6,15 @@
 // GET  /api/admin/summary
 // GET  /api/admin/bots?q=&offset=
 // GET  /api/admin/bot?id=<shopId>
-// POST /api/admin/bot  { id, action: "set_features" | "set_status", features?, status? }
+// POST /api/admin/bot  { id, action: "set_features" | "set_status" | "add_replies" | "mark_paid", features?, status?, count?, plan? }
+// GET  /api/admin/profit                    AI cost against the value of credits used, last 30 days, worst first
 // GET  /api/admin/sites?offset=
 // GET  /api/admin/hosted?q=&offset=         websites published with auto hosting
 // POST /api/admin/hosted  { slug, action: "block" | "unblock" | "extend" }
 // GET  /api/admin/callbacks?status=&offset=  executive call-back requests (domain, online payment, renewal)
 // POST /api/admin/callbacks { id, status: "new" | "called" | "done" }
-import { allowedOrigins, shopFeatures } from "./botcraft-builder.js";
-import { addReplies, freeRepliesFor, migratePhotosToR2, photoStorageStats, replyStatus } from "./botcraft-store.js";
+import { allowedOrigins, markShopPaid, shopFeatures } from "./botcraft-builder.js";
+import { addReplies, freeRepliesFor, migratePhotosToR2, photoStorageStats, profitReport, replyStatus } from "./botcraft-store.js";
 import { siteUrls, hostingInfo, extendedExpiry } from "./hosting.js";
 import { ensureCallbackSchema } from "./callbacks.js";
 
@@ -140,12 +141,14 @@ async function botDetail(env, shopId) {
       // What the customer bot shows now, including defaults for the business type.
       features: shopFeatures(shop.shop_type, parse(settings?.settings_json, {})),
       products, questions, requests,
-      replies: await replyStatus(env, shopId, freeRepliesFor(env)).catch(() => null)
+      replies: await replyStatus(env, shopId, freeRepliesFor(env)).catch(() => null),
+      profit: await profitReport(env, shopId).then(report => ({ rates: report.rates, ...(report.shops[0] || report.total) })).catch(() => null),
+      paid: parse(settings?.settings_json, {}).paid ? { plan: parse(settings?.settings_json, {}).plan || null, paidAt: parse(settings?.settings_json, {}).paidAt || null } : null
     }
   };
 }
 
-async function updateBot(env, body) {
+async function updateBot(env, body, request) {
   const db = env.BOTCRAFT_DB;
   const shopId = String(body?.id || "");
   if (!SHOP_ID_PATTERN.test(shopId) || !(await first(db, "SELECT 1 AS ok FROM botcraft_shops WHERE shop_id = ?", shopId))) return { status: 404, data: { ok: false, error: "Bot not found." } };
@@ -160,6 +163,10 @@ async function updateBot(env, body) {
     settings.features = { ...(settings.features || {}), ...chosen };
     await db.prepare("INSERT INTO botcraft_settings (shop_id, settings_json, updated_at) VALUES (?, ?, ?) ON CONFLICT(shop_id) DO UPDATE SET settings_json = excluded.settings_json, updated_at = excluded.updated_at")
       .bind(shopId, JSON.stringify(settings), now).run();
+  } else if (body?.action === "mark_paid") {
+    // The shop paid (until online payment exists): plan replies, page live, hosting years.
+    const paid = await markShopPaid(env, request, shopId, String(body?.plan || ""));
+    if (!paid.ok) return { status: paid.status || 400, data: { ok: false, error: paid.error } };
   } else if (body?.action === "add_replies") {
     // A recharge or a gift of AI replies (negative numbers take replies away).
     const count = Math.trunc(Number(body?.count));
@@ -267,6 +274,8 @@ export async function handleAdminRoute(request, env, url) {
 
   if (request.method === "GET" && path === "/api/admin/summary") return reply(await summary(env), 200, origin);
   if (request.method === "GET" && path === "/api/admin/bots") return reply(await listBots(env, url), 200, origin);
+  // What the AI cost us against what the credits used are worth, last 30 days, worst margins first.
+  if (request.method === "GET" && path === "/api/admin/profit") return reply({ ok: true, ...(await profitReport(env)) }, 200, origin);
   if (request.method === "GET" && path === "/api/admin/bot") {
     const shopId = String(url.searchParams.get("id") || "");
     const detail = SHOP_ID_PATTERN.test(shopId) ? await botDetail(env, shopId) : null;
@@ -275,7 +284,7 @@ export async function handleAdminRoute(request, env, url) {
   if (request.method === "POST" && path === "/api/admin/bot") {
     let body;
     try { body = await request.json(); } catch { return reply({ ok: false, error: "Request body must be JSON." }, 400, origin); }
-    const result = await updateBot(env, body);
+    const result = await updateBot(env, body, request);
     return reply(result.data, result.status, origin);
   }
   // Photo storage: how many photos are in D1 and in R2, and moving the D1 ones to R2 (a few per call; repeat until none remain).

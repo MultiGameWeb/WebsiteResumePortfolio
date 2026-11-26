@@ -399,7 +399,7 @@ function renderReplies() {
     ['Customer answer', 'text 1 credit · photo or file 2 · voice 3 (plain timings, address, phone questions and greetings are free)'],
     ['AI helper in your update chat', `${costs.update ?? 1} credit for each change it works out`],
     ['AI “write my About text”', `${costs.about ?? 2} credits`],
-    ['Clean studio photo', `${costs.studio ?? 20} credits (nothing if the photo cannot be made)`],
+    ['Clean studio photo', `${costs.studio ?? 25} credits (nothing if the photo cannot be made)`],
     ['Changes that need no AI', 'free: price, stock count, hide or show, delete, timings and shop information, sales you record, editing a saved answer by hand'],
   ].map(([what, price]) => { const li = element('li'); li.append(element('strong', '', what), document.createTextNode(` — ${price}`)); return li; }));
 }
@@ -416,7 +416,8 @@ function renderPage() {
     link.rel = 'noopener';
     const until = page.hosting?.expiresAt ? ` · hosted until ${new Date(page.hosting.expiresAt).toLocaleDateString()}` : '';
     info.replaceChildren(element('strong', '', 'Live: '), link, element('span', '', until));
-  } else info.textContent = 'Not published yet.';
+  } else info.textContent = view.publishNeedsPayment ? 'Not published yet. Your web page goes live after payment: call or WhatsApp SiteCraft to complete it.' : 'Not published yet.';
+  $('#pageButton').disabled = Boolean(view.publishNeedsPayment && !page);
   $('#pageSlugLabel').hidden = Boolean(page);
   $('#pageButton').textContent = page ? 'Update my page' : 'Publish my page';
   $('#pageCopy').hidden = !page;

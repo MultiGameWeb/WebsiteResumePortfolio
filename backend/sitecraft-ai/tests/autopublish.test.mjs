@@ -1,5 +1,5 @@
 // A finished bot puts its page live once, unless that is switched off or payment is required first.
-import { autoPublishPage } from '../botcraft-builder.js';
+import { autoPublishPage, publishNeedsPayment } from '../botcraft-builder.js';
 let pass = 0, fail = 0;
 const ok = (name, cond, extra = '') => { cond ? pass++ : fail++; console.log(`${cond ? 'PASS' : 'FAIL'}  ${name}${cond ? '' : '  -> ' + extra}`); };
 const request = new Request('https://worker.example/api/botcraft/chat');
@@ -40,5 +40,12 @@ ok('when hosting is switched off, nothing is published', r === null && f.state.p
 f = fakes({ start: { pageSlug: 'already-live' } });
 r = await autoPublishPage({}, request, 'shop4', facts, f.deps);
 ok('a shop that published by hand is left alone', r === null && f.state.publishCalls.length === 0);
+f = fakes();
+r = await autoPublishPage({ BOTCRAFT_REQUIRE_PAID: 'true' }, request, 'shop5', facts, f.deps);
+ok('launch mode (BOTCRAFT_REQUIRE_PAID): an unpaid shop is not published, and no try is used up', r === null && f.state.publishCalls.length === 0 && !f.state.settings.pageAutoTried);
+f = fakes({ start: { paid: true } });
+r = await autoPublishPage({ BOTCRAFT_REQUIRE_PAID: 'true' }, request, 'shop6', facts, f.deps);
+ok('launch mode: a paid shop is published', r?.url === 'https://sri-balaji.example/');
+ok('the payment rule says what it should', publishNeedsPayment({ BOTCRAFT_REQUIRE_PAID: 'true' }, {}) && !publishNeedsPayment({ BOTCRAFT_REQUIRE_PAID: 'true' }, { paid: true }) && !publishNeedsPayment({}, {}) && !publishNeedsPayment({ BOTCRAFT_REQUIRE_PAID: 'false' }, {}));
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

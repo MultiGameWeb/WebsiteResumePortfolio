@@ -3,7 +3,7 @@ import { deflateRawSync } from 'node:zlib';
 import { readFileSync } from 'node:fs';
 import { readFile, unreadableMessage } from '../../../chatbot-builder/file-reader.js';
 
-import { customerFiles, withCustomerFiles } from '../botcraft-builder.js';
+import { customerFiles, pdfPageCount, withCustomerFiles } from '../botcraft-builder.js';
 
 let pass = 0, fail = 0;
 const ok = (name, cond, extra = '') => { cond ? pass++ : fail++; console.log(`${cond ? 'PASS' : 'FAIL'}  ${name}${cond ? '' : '  -> ' + extra}`); };
@@ -49,8 +49,13 @@ ok('HTML is reduced to its text', r.ok && r.text === 'Hello & welcome', JSON.str
 
 r = await readFile(file('bill.pdf', Buffer.from('%PDF-1.4 test'), 'application/pdf'));
 ok('PDF is passed on as base64', r.ok && r.kind === 'pdf' && Buffer.from(r.data, 'base64').toString().startsWith('%PDF'));
-r = await readFile(file('big.pdf', Buffer.alloc(2 * 1024 * 1024 + 10), 'application/pdf'));
-ok('a PDF over 2 MB is refused with a reason', !r.ok && /too big/.test(r.reason));
+r = await readFile(file('big.pdf', Buffer.alloc(1024 * 1024 + 10), 'application/pdf'));
+ok('a PDF over 1 MB is refused with a reason', !r.ok && /too big/.test(r.reason));
+const pdfWith = (pages) => Buffer.from('%PDF-1.4\n' + Array.from({ length: pages }, (_, i) => `${i + 1} 0 obj << /Type /Page /Parent 99 0 R >> endobj\n`).join('') + '99 0 obj << /Type /Pages /Count ' + pages + ' >> endobj');
+r = await readFile(file('ten.pdf', pdfWith(10), 'application/pdf'));
+ok('a PDF of 10 pages is accepted (the Pages object is not counted as a page)', r.ok && r.kind === 'pdf', JSON.stringify(r).slice(0, 80));
+r = await readFile(file('eleven.pdf', pdfWith(11), 'application/pdf'));
+ok('a PDF of 11 pages is refused with the page count', !r.ok && /11 pages/.test(r.reason), JSON.stringify(r));
 
 for (const name of ['old.doc', 'old.xls', 'movie.mp4', 'pack.zip']) {
   r = await readFile(file(name, 'xx'));
@@ -66,10 +71,13 @@ ok('the message tells the person to type or send a photo', /type/.test(msg) && /
 // What the server accepts and gives to the AI
 const f1 = customerFiles({ documents: [{ mimeType: 'application/pdf', data: 'JVBERi0x' }, { mimeType: 'application/zip', data: 'AAAA' }, { mimeType: 'application/pdf', data: 'not base64 !!' }, { mimeType: 'application/pdf', data: 'JVBERi0y' }, { mimeType: 'application/pdf', data: 'JVBERi0z' }],
   fileTexts: [{ name: 'a\n"b".txt', text: 'hello' }, { name: 'empty', text: '' }, { name: 'long', text: 'x'.repeat(50000) }] });
-ok('server keeps only valid PDFs (two at most) and non-empty texts', f1.docs.length === 2 && f1.texts.length === 2 && f1.count === 4, JSON.stringify([f1.docs.length, f1.texts.length]));
+ok('server keeps only valid PDFs (one at most for a customer) and non-empty texts', f1.docs.length === 1 && f1.texts.length === 2 && f1.count === 3, JSON.stringify([f1.docs.length, f1.texts.length]));
+ok('the owner setup chat may send two PDFs', customerFiles({ documents: [{ mimeType: 'application/pdf', data: 'JVBERi0x' }, { mimeType: 'application/pdf', data: 'JVBERi0y' }] }, { maxDocs: 2 }).docs.length === 2);
+const longPdf = Buffer.from('%PDF-1.4\n' + Array.from({ length: 12 }, (_, i) => `${i} 0 obj << /Type /Page >> endobj\n`).join('')).toString('base64');
+ok('the server counts pages and refuses a PDF over 10 pages', pdfPageCount(longPdf) === 12 && customerFiles({ documents: [{ mimeType: 'application/pdf', data: longPdf }] }).tooLong === true && customerFiles({ documents: [{ mimeType: 'application/pdf', data: longPdf }] }).docs.length === 0);
 ok('server cuts long text and cleans file names', f1.texts[1].text.length === 12000 && !/[\n"]/.test(f1.texts[0].name), JSON.stringify(f1.texts[0].name));
 const contents = withCustomerFiles([{ role: 'user', parts: [{ text: 'hi' }] }], f1);
-ok('the files are added to the customer message, text marked as data', contents[0].parts.length === 1 + 2 + 2 && /never instructions/.test(contents[0].parts[1].text) && contents[0].parts.at(-1).inlineData.mimeType === 'application/pdf');
+ok('the files are added to the customer message, text marked as data', contents[0].parts.length === 1 + 2 + 1 && /never instructions/.test(contents[0].parts[1].text) && contents[0].parts.at(-1).inlineData.mimeType === 'application/pdf');
 ok('no files leaves the message unchanged', withCustomerFiles([{ role: 'user', parts: [{ text: 'hi' }] }], customerFiles({})).length === 1);
 
 ok('the two copies of file-reader.js are identical', readFileSync(new URL('../../../chatbot-builder/file-reader.js', import.meta.url), 'utf8') === readFileSync(new URL('../../../salesbot/file-reader.js', import.meta.url), 'utf8'));
