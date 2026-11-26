@@ -142,6 +142,14 @@ const SCHEMA = [
     last_hit_at TEXT NOT NULL,
     PRIMARY KEY (shop_id, cache_key)
   )`,
+  // How many new assistants and setup messages one internet connection may use in a day (abuse protection before payment).
+  `CREATE TABLE IF NOT EXISTS botcraft_ip_limits (
+    ip_hash TEXT NOT NULL,
+    day TEXT NOT NULL,
+    kind TEXT NOT NULL,
+    count INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (ip_hash, day, kind)
+  )`,
   // Owner settings that are not shop facts (which bot buttons are on).
   `CREATE TABLE IF NOT EXISTS botcraft_settings (
     shop_id TEXT PRIMARY KEY,
@@ -216,6 +224,10 @@ async function ensureSchema(db) {
       .then(() => db.prepare("ALTER TABLE botcraft_products ADD COLUMN qty INTEGER").run().catch(() => null))
       // Added later: how many of the day's replies were made by the optional second provider (Groq).
       .then(() => db.prepare("ALTER TABLE botcraft_usage ADD COLUMN groq_replies INTEGER NOT NULL DEFAULT 0").run().catch(() => null))
+      // Added later, for the profit report: credits charged and voice replies per day, and owner credits per kind.
+      .then(() => db.prepare("ALTER TABLE botcraft_usage ADD COLUMN credits INTEGER NOT NULL DEFAULT 0").run().catch(() => null))
+      .then(() => db.prepare("ALTER TABLE botcraft_usage ADD COLUMN voice_replies INTEGER NOT NULL DEFAULT 0").run().catch(() => null))
+      .then(() => db.prepare("ALTER TABLE botcraft_owner_ai ADD COLUMN credits INTEGER NOT NULL DEFAULT 0").run().catch(() => null))
       .catch(error => {
       schemaReady = null;
       throw error;
@@ -646,8 +658,8 @@ export async function takeDailyAsk(env, shopId, visitorHash, { shopLimit = DEFAU
 }
 
 // ---- Reply metering ----
-// A small allowance so the owner can test the assistant. Plans do not include free replies. Change it with BOTCRAFT_FREE_REPLIES.
-export const DEFAULT_FREE_REPLIES = 50;
+// A small allowance so the owner can test the assistant before paying (20 replies, about Rs 3 of AI). It is not part of a plan. Change it with BOTCRAFT_FREE_REPLIES.
+export const DEFAULT_FREE_REPLIES = 20;
 export const freeRepliesFor = env => (Number(env?.BOTCRAFT_FREE_REPLIES) >= 0 && env?.BOTCRAFT_FREE_REPLIES !== undefined && env?.BOTCRAFT_FREE_REPLIES !== "" ? Math.floor(Number(env.BOTCRAFT_FREE_REPLIES)) : DEFAULT_FREE_REPLIES);
 
 // Takes one credit before the AI is asked. { ok: true, balance } or { ok: false, balance: 0 }.
@@ -681,14 +693,14 @@ export function replyCost(env, { voice = false, photos = 0, files = 0 } = {}) {
   return Math.max(1, photos ? read("BOTCRAFT_COST_PHOTO", 2) : 1, files ? read("BOTCRAFT_COST_FILE", 2) : 1);
 }
 
-export async function recordUsage(env, shopId, { inTokens = 0, outTokens = 0, provider = "gemini" } = {}) {
+export async function recordUsage(env, shopId, { inTokens = 0, outTokens = 0, provider = "gemini", credits = 1, voice = false } = {}) {
   const db = env.BOTCRAFT_DB;
   await ensureSchema(db);
   const groq = provider === "groq" ? 1 : 0;
   await db.prepare(
-    "INSERT INTO botcraft_usage (shop_id, day, replies, in_tokens, out_tokens, groq_replies) VALUES (?, ?, 1, ?, ?, ?) " +
-    "ON CONFLICT(shop_id, day) DO UPDATE SET replies = replies + 1, in_tokens = in_tokens + excluded.in_tokens, out_tokens = out_tokens + excluded.out_tokens, groq_replies = groq_replies + excluded.groq_replies"
-  ).bind(shopId, new Date().toISOString().slice(0, 10), Math.max(0, Math.floor(inTokens)), Math.max(0, Math.floor(outTokens)), groq).run();
+    "INSERT INTO botcraft_usage (shop_id, day, replies, in_tokens, out_tokens, groq_replies, credits, voice_replies) VALUES (?, ?, 1, ?, ?, ?, ?, ?) " +
+    "ON CONFLICT(shop_id, day) DO UPDATE SET replies = replies + 1, in_tokens = in_tokens + excluded.in_tokens, out_tokens = out_tokens + excluded.out_tokens, groq_replies = groq_replies + excluded.groq_replies, credits = credits + excluded.credits, voice_replies = voice_replies + excluded.voice_replies"
+  ).bind(shopId, new Date().toISOString().slice(0, 10), Math.max(0, Math.floor(inTokens)), Math.max(0, Math.floor(outTokens)), groq, Math.max(0, Math.floor(credits)), voice ? 1 : 0).run();
 }
 
 // Adds replies (a recharge or a gift). Creates the row with the free replies first when the shop has none yet.
@@ -1131,4 +1143,73 @@ export async function cacheStats(env, shopId) {
   await ensureSchema(db);
   const row = await db.prepare("SELECT COUNT(*) AS saved, COALESCE(SUM(hits), 0) AS hits FROM botcraft_answer_cache WHERE shop_id = ?").bind(shopId).first();
   return { saved: Number(row?.saved || 0), hits: Number(row?.hits || 0) };
+}
+
+// ---- Abuse protection: limits per internet connection per day ----
+
+export async function takeIpLimit(env, ipHash, kind, limit, now = new Date()) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const day = now.toISOString().slice(0, 10);
+  await db.prepare("INSERT OR IGNORE INTO botcraft_ip_limits (ip_hash, day, kind, count) VALUES (?, ?, ?, 0)").bind(ipHash, day, kind).run();
+  const result = await db.prepare("UPDATE botcraft_ip_limits SET count = count + 1 WHERE ip_hash = ? AND day = ? AND kind = ? AND count < ?").bind(ipHash, day, kind, limit).run();
+  // Old days are not needed.
+  if (Math.random() < 0.02) await db.prepare("DELETE FROM botcraft_ip_limits WHERE day < ?").bind(new Date(now.getTime() - 3 * 86400000).toISOString().slice(0, 10)).run().catch(() => {});
+  return (result?.meta?.changes || 0) > 0;
+}
+
+// Owner AI credits are recorded once the work succeeded (for the profit report). countCall adds a call too (the studio has no daily call counter of its own).
+export async function recordOwnerCredits(env, shopId, kind, credits, { countCall = false, now = new Date() } = {}) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const day = shopDay(now);
+  await db.prepare("INSERT OR IGNORE INTO botcraft_owner_ai (shop_id, day, kind, calls) VALUES (?, ?, ?, 0)").bind(shopId, day, kind).run();
+  await db.prepare("UPDATE botcraft_owner_ai SET credits = credits + ?, calls = calls + ? WHERE shop_id = ? AND day = ? AND kind = ?").bind(Math.max(0, Math.round(credits)), countCall ? 1 : 0, shopId, day, kind).run();
+}
+
+// ---- Profit report: what the AI cost us against what the credits are worth ----
+// Rates are estimates from the published prices; change them with the Worker variables if the prices change:
+//   PROFIT_USD_TO_INR (90), PROFIT_IN_USD_PER_M (0.25), PROFIT_OUT_USD_PER_M (1.5), PROFIT_CREDIT_INR (0.20),
+//   PROFIT_VOICE_TTS_INR (0.25 per spoken answer), PROFIT_STUDIO_INR (3.6 per studio photo).
+export function profitRates(env) {
+  const n = (name, fallback) => { const v = Number(env?.[name]); return Number.isFinite(v) && v >= 0 ? v : fallback; };
+  return { fx: n("PROFIT_USD_TO_INR", 90), inRate: n("PROFIT_IN_USD_PER_M", 0.25), outRate: n("PROFIT_OUT_USD_PER_M", 1.5), creditInr: n("PROFIT_CREDIT_INR", 0.2), voiceInr: n("PROFIT_VOICE_TTS_INR", 0.25), studioInr: n("PROFIT_STUDIO_INR", 3.6) };
+}
+
+// Turns summed usage into rupees. Pure, so it is easy to check.
+export function profitOf(rates, { replies = 0, groqReplies = 0, voiceReplies = 0, customerCredits = 0, inTokens = 0, outTokens = 0, ownerCredits = 0, ownerInTokens = 0, ownerOutTokens = 0, studioPhotos = 0 }) {
+  const tokenCost = (inT, outT) => ((inT * rates.inRate + outT * rates.outRate) / 1e6) * rates.fx;
+  const cost = tokenCost(inTokens + ownerInTokens, outTokens + ownerOutTokens) + voiceReplies * rates.voiceInr + studioPhotos * rates.studioInr;
+  const revenue = (customerCredits + ownerCredits) * rates.creditInr;
+  return {
+    replies, groqReplies, voiceReplies, customerCredits, ownerCredits, studioPhotos,
+    tokens: { in: inTokens + ownerInTokens, out: outTokens + ownerOutTokens },
+    costInr: Math.round(cost * 100) / 100, revenueInr: Math.round(revenue * 100) / 100,
+    marginInr: Math.round((revenue - cost) * 100) / 100,
+    marginPct: revenue > 0 ? Math.round(((revenue - cost) / revenue) * 1000) / 10 : null,
+    loss: cost > revenue + 0.005
+  };
+}
+
+// Last 30 days. One shop, or every shop that had any use (shopId = null), worst margins first.
+export async function profitReport(env, shopId = null, now = new Date()) {
+  const db = env.BOTCRAFT_DB;
+  await ensureSchema(db);
+  const since = shopDay(new Date(now.getTime() - 29 * 86400000));
+  const rates = profitRates(env);
+  const where = shopId ? "WHERE shop_id = ? AND day >= ?" : "WHERE day >= ?";
+  const binds = shopId ? [shopId, since] : [since];
+  const usage = (await db.prepare(`SELECT shop_id, SUM(replies) AS replies, SUM(groq_replies) AS groq, SUM(voice_replies) AS voice, SUM(credits) AS credits, SUM(in_tokens) AS in_t, SUM(out_tokens) AS out_t FROM botcraft_usage ${where} GROUP BY shop_id`).bind(...binds).all()).results || [];
+  const owner = (await db.prepare(`SELECT shop_id, kind, SUM(calls) AS calls, SUM(credits) AS credits, SUM(in_tokens) AS in_t, SUM(out_tokens) AS out_t FROM botcraft_owner_ai ${where} GROUP BY shop_id, kind`).bind(...binds).all()).results || [];
+  const byShop = new Map();
+  const slot = id => { if (!byShop.has(id)) byShop.set(id, { replies: 0, groqReplies: 0, voiceReplies: 0, customerCredits: 0, inTokens: 0, outTokens: 0, ownerCredits: 0, ownerInTokens: 0, ownerOutTokens: 0, studioPhotos: 0 }); return byShop.get(id); };
+  for (const row of usage) Object.assign(slot(row.shop_id), { replies: Number(row.replies), groqReplies: Number(row.groq), voiceReplies: Number(row.voice), customerCredits: Number(row.credits), inTokens: Number(row.in_t), outTokens: Number(row.out_t) });
+  for (const row of owner) {
+    const entry = slot(row.shop_id);
+    entry.ownerCredits += Number(row.credits); entry.ownerInTokens += Number(row.in_t); entry.ownerOutTokens += Number(row.out_t);
+    if (row.kind === "studio") entry.studioPhotos += Number(row.calls);
+  }
+  const shops = [...byShop.entries()].map(([id, entry]) => ({ shopId: id, ...profitOf(rates, entry) })).sort((a, b) => a.marginInr - b.marginInr);
+  const total = profitOf(rates, [...byShop.values()].reduce((sum, e) => { for (const k of Object.keys(e)) sum[k] = (sum[k] || 0) + e[k]; return sum; }, {}));
+  return { days: 30, rates, total, shops: shopId ? shops.slice(0, 1) : shops.slice(0, 200) };
 }

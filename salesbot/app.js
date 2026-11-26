@@ -5,7 +5,7 @@
 // Online, every question goes to the AI. The page also keeps a copy of the
 // shop's answers and items, so without internet (or when the AI is busy) it
 // still answers the basics from that copy, without AI.
-import { FILE_ACCEPT, readFile, unreadableMessage } from './file-reader.js?v=1';
+import { FILE_ACCEPT, readFile, unreadableMessage } from './file-reader.js?v=2';
 
 const API_BASE = window.SALESBOT_API_BASE || 'https://sitecraft-ai.kammarivinaykumar216.workers.dev';
 const LAST_SHOP_KEY = 'salesbot:lastShop';
@@ -958,6 +958,7 @@ async function addFiles(fileList) {
     if (/^image\//.test(file.type)) { await addPhotos([file]); continue; }
     const opened = await readFile(file);
     if (!opened.ok) failed.push(opened);
+    else if (opened.kind === 'pdf' && stagedFiles.some((staged) => staged.kind === 'pdf')) failed.push({ name: file.name, reason: 'only one PDF can be sent at a time' });
     else if (stagedFiles.length >= MAX_CHAT_FILES) failed.push({ name: file.name, reason: `only ${MAX_CHAT_FILES} files can be sent at a time` });
     else stagedFiles.push(opened);
   }

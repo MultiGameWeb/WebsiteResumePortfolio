@@ -44,11 +44,11 @@ r=await owner('set_quantity',{key:'gold necklace',quantity:null}); ok('the owner
 r=await owner('set_quantity',{key:'no such item',quantity:1}); ok('stock count of an unknown item is refused',r.status===400);
 r=await owner('set_quantity',{key:'silver anklet',quantity:2,mode:'set'});
 // AI work the owner starts uses credits (the same balance as customer replies); work that needs no AI does not
-v=await owner('load'); ok('the owner view tells what AI work costs (update 1, About 2, studio 20)',v.ownerCosts&&v.ownerCosts.update===1&&v.ownerCosts.about===2&&v.ownerCosts.studio===20,JSON.stringify(v.ownerCosts));
+v=await owner('load'); ok('the owner view tells what AI work costs (update 1, About 2, studio 25)',v.ownerCosts&&v.ownerCosts.update===1&&v.ownerCosts.about===2&&v.ownerCosts.studio===25,JSON.stringify(v.ownerCosts));
 let credits0=v.replies.balance; await post('/api/admin/bot',{id:SID,action:'add_replies',count:-credits0},{Authorization:'Bearer test-admin-token'});
 let nc=await owner('plan_update',{text:'Gold chain price 54000'}); ok('with no credits the AI helper is refused and says why (402 no_credits)',nc.status===402&&nc.code==='no_credits'&&/no AI|still work/i.test(nc.error||''),JSON.stringify(nc).slice(0,160));
 nc=await owner('generate_about'); ok('the AI About text needs credits too',nc.status===402&&nc.code==='no_credits'&&nc.cost===2,JSON.stringify(nc).slice(0,120));
-nc=await owner('studio_photo',{photoId:'b'.repeat(32)}); ok('the studio photo needs credits too',nc.status===402&&nc.cost===20,JSON.stringify(nc).slice(0,120));
+nc=await owner('studio_photo',{photoId:'b'.repeat(32)}); ok('the studio photo needs credits too',nc.status===402&&nc.cost===25,JSON.stringify(nc).slice(0,120));
 r=await owner('record_sale',{key:'gold necklace',quantity:1}); ok('a sale, an edit and other no-AI changes still work with zero credits',r.ok);
 r=await owner('save_product',{key:'gold necklace',name:'Gold Necklace',price_text:'₹48,500',details:'10 grams',stock_status:'in_stock'}); ok('editing an item works with zero credits',r.ok);
 await post('/api/admin/bot',{id:SID,action:'add_replies',count:credits0+5},{Authorization:'Bearer test-admin-token'});
@@ -188,5 +188,25 @@ ok("deleted bot's photo is gone (404)",(await fetch(API+'/api/botcraft/photo?id=
 ok("deleted bot's web page is gone",[404,410].includes((await fetch(`${API}/s/${slug2}/`)).status));
 d=await owner2('delete_bot',{confirm:'DELETE'}); ok('deleting again says not found (404)',d.status===404);
 v=await owner('load'); ok('the other shop is untouched',v.ok&&v.products.length>=1);
+
+// Abuse protection before payment: new assistants per internet connection (test limit 2 a day)
+const sameConn={'CF-Connecting-IP':'198.51.100.77'};
+const startShop=(id)=>post('/api/botcraft/chat',{shopId:id,text:'hello'},sameConn);
+const n1=await startShop('aaaaaaaa-1111-4222-8333-444444444441'), n2=await startShop('aaaaaaaa-1111-4222-8333-444444444442'), n3=await startShop('aaaaaaaa-1111-4222-8333-444444444443');
+ok('one connection may start 2 new assistants a day; the 3rd is refused (429 new_shop_limit)',n1.status!==429&&n2.status!==429&&n3.status===429&&n3.code==='new_shop_limit',JSON.stringify([n1.status,n2.status,n3.status,n3.code]));
+const ex=await post('/api/botcraft/chat',{shopId:SID,text:'hello again'},sameConn); ok('an assistant that already exists is not counted as new',ex.code!=='new_shop_limit',JSON.stringify(ex).slice(0,100));
+
+// The admin marks a payment: plan replies, page live, hosting years
+v=await owner('load'); const paidBefore=v.replies.balance;
+r=await adm({id:SID,action:'mark_paid',plan:'nonsense'}); ok('mark_paid needs a real plan',r.status===400);
+r=await adm({id:'ffffffff-1111-4222-8333-444444444444',action:'mark_paid',plan:'growth'}); ok('mark_paid on an unknown bot is refused',r.status===404);
+r=await adm({id:SID,action:'mark_paid',plan:'growth'}); ok('mark_paid adds the plan replies (growth: 1,000) and records the plan',r.ok&&r.bot.paid&&r.bot.paid.plan==='growth'&&r.bot.replies.balance===paidBefore+1000,JSON.stringify([r.ok,r.bot&&r.bot.paid,r.bot&&r.bot.replies&&r.bot.replies.balance,paidBefore]));
+v=await owner('load'); ok('the owner view shows the shop as paid',v.paid===true&&v.plan==='growth'&&v.publishNeedsPayment===false);
+const expiresIn=v.page&&v.page.hosting&&Date.parse(v.page.hosting.expiresAt)-Date.now();
+ok('the page (published earlier) is hosted for the 2 years of the plan',v.page&&expiresIn>700*86400000&&expiresIn<740*86400000,JSON.stringify(v.page&&v.page.hosting));
+const profit=await fetch(API+'/api/admin/profit',{headers:{Authorization:'Bearer test-admin-token',Origin:ORIGIN}}).then(x=>x.json());
+ok('the admin profit report answers with totals, rates and shops',profit.ok&&profit.total&&profit.rates.creditInr===0.2&&Array.isArray(profit.shops),JSON.stringify(profit).slice(0,140));
+r=await fetch(API+'/api/admin/profit',{headers:{Authorization:'Bearer wrong',Origin:ORIGIN}}); ok('the profit report needs the admin key',r.status===401);
+r=await fetch(API+'/api/admin/bot?id='+SID,{headers:{Authorization:'Bearer test-admin-token',Origin:ORIGIN}}).then(x=>x.json()); ok('the admin bot panel shows profit and the plan paid',r.bot&&r.bot.profit&&typeof r.bot.profit.costInr==='number'&&r.bot.paid&&r.bot.paid.plan==='growth',JSON.stringify(r).slice(0,300));
 
 console.log(results.join('\n')); console.log(`\n${pass} passed, ${fail} failed`);

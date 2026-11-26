@@ -63,9 +63,10 @@ function lock(message = '') {
 
 function selectTab(name) {
   for (const button of document.querySelectorAll('#tabs [data-tab]')) button.setAttribute('aria-pressed', String(button.dataset.tab === name));
-  for (const id of ['overview', 'bots', 'calls', 'hosted', 'sites']) $(`#${id}`).hidden = id !== name;
+  for (const id of ['overview', 'bots', 'profit', 'calls', 'hosted', 'sites']) $(`#${id}`).hidden = id !== name;
   if (name === 'overview') loadSummary();
   if (name === 'bots' && !$('#botRows').children.length) loadBots(true);
+  if (name === 'profit') loadProfit();
   if (name === 'sites' && !$('#siteRows').children.length) loadSites(true);
   if (name === 'hosted' && !$('#hostedRows').children.length) loadHosted(true);
   clearInterval(callTimer);
@@ -229,9 +230,30 @@ function renderBot(bot) {
     row.append(count, add);
     repliesBox.append(row);
   } else repliesBox.append(element('p', 'empty', 'No reply data yet.'));
+  // Payment: until online payment exists, mark a shop as paid here. It adds the plan's replies, puts the page live and sets the hosting years.
+  const payBox = element('div');
+  payBox.append(element('p', 'muted', bot.paid ? `Paid: ${bot.paid.plan}${bot.paid.paidAt ? ` on ${new Date(bot.paid.paidAt).toLocaleDateString()}` : ''}. Marking again (a renewal) adds the replies again and extends the hosting.` : 'Not marked as paid yet.'));
+  const planSelect = element('select');
+  for (const [value, label] of [['starter', 'Starter · 1 year · 500 replies'], ['growth', 'Growth · 2 years · 1,000 replies'], ['pro', 'Pro · 3 years · 1,500 replies']]) { const option = element('option', '', label); option.value = value; planSelect.append(option); }
+  planSelect.setAttribute('aria-label', 'Plan');
+  const payButton = element('button', 'btn', 'Mark as paid');
+  payButton.type = 'button';
+  payButton.addEventListener('click', () => { if (window.confirm(`Mark this shop as paid (${planSelect.value})? This adds its replies and puts its page live.`)) updateBot({ action: 'mark_paid', plan: planSelect.value }); });
+  const payRow = element('div', 'item-actions');
+  payRow.append(planSelect, payButton);
+  payBox.append(payRow);
+  const profit = bot.profit;
+  const profitBox = element('div');
+  if (profit) profitBox.append(definitionList([
+    ['Credits used (30 days)', number(profit.customerCredits + profit.ownerCredits)], ['Worth', rupees(profit.revenueInr)], ['AI cost (estimate)', rupees(profit.costInr)],
+    ['Margin', `${rupees(profit.marginInr)}${profit.marginPct === null ? '' : ` (${profit.marginPct}%)`}${profit.loss ? ' — LOSS' : ''}`],
+  ]));
+  else profitBox.append(element('p', 'empty', 'No use yet.'));
   body.replaceChildren(
     summary, actions,
+    element('h3', '', 'Payment and plan'), payBox,
     element('h3', '', 'AI replies'), repliesBox,
+    element('h3', '', 'Profit (last 30 days)'), profitBox,
     element('h3', '', 'Bot buttons'), features, featureNote,
     element('h3', '', `Items (${bot.products.length})`), list(bot.products, (p) => `${p.name} · ${p.price_text || 'no price'}${p.stock_status === 'out_of_stock' ? ' · out of stock' : ''}`),
     element('h3', '', 'Customer questions'), list(bot.questions, (q) => `${q.status === 'open' ? '❓' : q.status === 'answered' ? '✅' : '✖'} ${q.question} (${q.times}×)${q.answer ? ` → ${q.answer}` : ''}`),
@@ -254,6 +276,37 @@ async function updateBot(change) {
     renderBot(data.bot);
     showStatus('Saved.');
     loadBots(true);
+  } catch (error) { showStatus(error.message); }
+}
+
+// ---- Profit ----
+
+const rupees = (value) => (value === null || value === undefined ? '—' : `₹${Number(value).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`);
+
+async function loadProfit() {
+  try {
+    const data = await api('/api/admin/profit');
+    const total = data.total;
+    const stat = (label, value) => { const box = element('div', 'stat'); box.append(element('strong', '', value), element('span', '', label)); return box; };
+    $('#profitTotals').replaceChildren(
+      stat('Credits used', number(total.customerCredits + total.ownerCredits)), stat('Worth', rupees(total.revenueInr)), stat('AI cost', rupees(total.costInr)),
+      stat('Margin', `${rupees(total.marginInr)}${total.marginPct === null ? '' : ` (${total.marginPct}%)`}`),
+    );
+    $('#profitRows').replaceChildren(...data.shops.map((shop) => {
+      const row = element('tr');
+      const name = element('td', '', shop.shopId.slice(0, 8));
+      const open = element('button', 'btn btn-light btn-small', 'Open');
+      open.type = 'button';
+      open.addEventListener('click', () => openBot(shop.shopId));
+      const cells = [name, ...[number(shop.customerCredits + shop.ownerCredits), rupees(shop.revenueInr), rupees(shop.costInr), rupees(shop.marginInr), shop.marginPct === null ? '—' : `${shop.marginPct}%`].map((text) => element('td', 'num', text))];
+      const last = element('td');
+      if (shop.loss) last.append(element('span', 'badge', 'LOSS'));
+      last.append(document.createTextNode(' '), open);
+      row.append(...cells, last);
+      if (shop.loss) row.classList.add('loss-row');
+      return row;
+    }));
+    if (!data.shops.length) { const row = element('tr'); const cell = element('td', 'empty', 'No AI use in the last 30 days.'); cell.colSpan = 7; row.append(cell); $('#profitRows').replaceChildren(row); }
   } catch (error) { showStatus(error.message); }
 }
 

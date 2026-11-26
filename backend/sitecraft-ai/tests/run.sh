@@ -27,6 +27,9 @@ node "$HERE/groq.test.mjs"
 node "$HERE/trim.test.mjs"
 node --no-warnings "$HERE/autopublish.test.mjs"
 node --no-warnings "$HERE/cache.test.mjs"
+node --no-warnings "$HERE/profit.test.mjs"
+node "$HERE/updateprompt.test.mjs"
+node --no-warnings "$HERE/file-reader.test.mjs"
 node "$HERE/e2e.mjs"
 
 # Phase 2: the same database, now with the R2 photo bucket connected.

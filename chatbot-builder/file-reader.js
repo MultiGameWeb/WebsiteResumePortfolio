@@ -11,7 +11,8 @@
 export const FILE_ACCEPT = '.pdf,.txt,.csv,.tsv,.md,.json,.html,.htm,.xml,.rtf,.docx,.xlsx,.pptx,application/pdf,text/*';
 
 const TEXT_EXTENSIONS = new Set(['txt', 'csv', 'tsv', 'md', 'json', 'html', 'htm', 'xml', 'log']);
-const MAX_PDF_BYTES = 2 * 1024 * 1024;
+const MAX_PDF_BYTES = 1024 * 1024; // 1 MB: a long PDF costs a lot of AI work
+export const MAX_PDF_PAGES = 10;
 const MAX_ZIP_BYTES = 10 * 1024 * 1024;
 const MAX_TEXT_BYTES = 2 * 1024 * 1024;
 export const MAX_FILE_TEXT = 12000;
@@ -137,8 +138,12 @@ export async function readFile(file) {
   const type = String(file?.type || '').toLowerCase();
   try {
     if (type === 'application/pdf' || extension === 'pdf') {
-      if (file.size > MAX_PDF_BYTES) return { ok: false, name, reason: 'this PDF is too big (more than 2 MB)' };
-      return { ok: true, kind: 'pdf', name, mimeType: 'application/pdf', data: toBase64(new Uint8Array(await file.arrayBuffer())) };
+      if (file.size > MAX_PDF_BYTES) return { ok: false, name, reason: 'this PDF is too big (more than 1 MB)' };
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      // Pages are counted from the PDF's page objects; a long PDF costs a lot, so ask for a shorter one.
+      const pages = (new TextDecoder('latin1').decode(bytes).match(/\/Type\s*\/Page(?![A-Za-z])/g) || []).length;
+      if (pages > MAX_PDF_PAGES) return { ok: false, name, reason: `this PDF has ${pages} pages (the limit is ${MAX_PDF_PAGES})` };
+      return { ok: true, kind: 'pdf', name, mimeType: 'application/pdf', data: toBase64(bytes) };
     }
     if (extension === 'docx' || extension === 'xlsx' || extension === 'pptx') {
       if (file.size > MAX_ZIP_BYTES) return { ok: false, name, reason: 'this file is too big' };

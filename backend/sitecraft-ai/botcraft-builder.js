@@ -3,17 +3,18 @@ import { ABOUT_SCHEMA, INFO_FIELDS, SECTIONS, PLAN_SCHEMA, buildAboutPrompt, bui
 import { SHOP_TYPES, SHOP_TYPE_KEYS } from "./botcraft-shop-types.js";
 import { QUESTION_BANKS } from "./botcraft-banks/index.js";
 import {
-  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, addOwnerTokens, getCachedAnswer, normalizeQuestion, saveCachedAnswer, sha256Hex, replyCost, changeQty, ownerAiMonth, OWNER_AI_DEFAULTS, salesReport, takeOwnerAi, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
+  GALLERY_LIMIT, PRODUCT_PHOTO_LIMIT, addOwnerTokens, recordOwnerCredits, takeIpLimit, addReplies, getCachedAnswer, normalizeQuestion, saveCachedAnswer, sha256Hex, replyCost, changeQty, ownerAiMonth, OWNER_AI_DEFAULTS, salesReport, takeOwnerAi, deleteSale, priceNumber, recordSale, salesSummary, answerCustomerQuestion, countNewRequests, countOpenQuestions, createRequest, deletePhoto, deleteProduct, productExists, deleteRequest,
   dismissCustomerQuestion, ensurePublicId, findOrder, getRequests, listCustomerQuestions, listOrders, listRequests, logUnanswered,
   listPhotos, listProducts, loadPhoto, loadPublicShop, loadSettings, loadShop, loadStoredBank, saveOrder, savePhoto, saveProduct,
   deleteAnswerRow, deleteShop, freeRepliesFor, shopDailyLimit, takeDailyAsk, visitorDailyLimit, recordUsage, releaseReply, replyStatus, reserveReply, replacePhoto, deletePushSubscription, savePushSubscription, setAnswerValue, setNotes, saveSettings, saveStoredBank, saveTurn, shopExists, storeAvailable, updateFacts, updateRequest
 } from "./botcraft-store.js";
 import { deleteShopPage, publishShopPage, shopPageInfo } from "./botcraft-hosting.js";
+import { setHostingYears } from "./hosting.js";
 import { AUDIO_RULE, VOICE_SCHEMA, customerAudio, speakReply, withCustomerAudio } from "./botcraft-speech.js";
 import { photoStudioAvailable, studioLeftToday, studioPhoto } from "./botcraft-photo-studio.js";
 import { premiumVoiceAvailable, transcribeOwnerVoice } from "./botcraft-voice.js";
 import { ANSWER_ID, answerList, nextHidden } from "./botcraft-answers.js";
-import { PACKS } from "./botcraft-packs.js";
+import { PACKS, PLANS } from "./botcraft-packs.js";
 import { callGroq, groqEligible } from "./botcraft-groq.js";
 import { notifyCustomer, notifyOwner, vapidPublicKey } from "./botcraft-push.js";
 import { EXTRA_ID, SALESBOT_SCHEMA, botName, extraQuestions, offlineData, publicProfile, salesbotPrompt, shopKnowledge } from "./botcraft-salesbot.js";
@@ -593,6 +594,34 @@ const OWNER_AI_LIMIT_MESSAGE = {
 // straight away. Switch off with BOTCRAFT_AUTO_PUBLISH="false". When payment is required for publishing
 // (HOSTING_REQUIRE_PAYMENT="true") nothing is published here: the payment step does it. One try per shop;
 // the owner can still publish or update from "Manage my bot".
+// The admin marks a shop as paid (until online payment exists): the plan's included replies are added, the web page
+// goes live if the setup is complete, and hosting lasts the plan's years. Calling it again for a renewal adds the
+// replies again and extends the hosting.
+export async function markShopPaid(env, request, shopId, planId) {
+  const plan = PLANS.find(item => item.id === planId);
+  if (!plan) return { ok: false, status: 400, error: "Choose a plan: starter, growth or pro." };
+  if (!(await shopExists(env, shopId))) return { ok: false, status: 404, error: "Bot not found." };
+  const settings = await loadSettings(env, shopId);
+  await addReplies(env, shopId, plan.replies, freeRepliesFor(env));
+  await saveSettings(env, shopId, { paid: true, plan: plan.id, paidAt: new Date().toISOString(), paidCount: (Number(settings.paidCount) || 0) + 1 });
+  const saved = await loadShop(env, shopId, 0);
+  const facts = cleanFacts(saved?.facts);
+  let slug = settings.pageSlug || "";
+  let published = false;
+  if (coreComplete(facts) && env.DB) {
+    if (!slug) {
+      const result = await publishShopPage(env, request, new URL(request.url), { publicId: await ensurePublicId(env, shopId), shopName: facts.shop_name || "", description: facts.about || "", existingSlug: "", requestedSlug: "" }).catch(error => ({ ok: false, error: String(error?.message || error) }));
+      if (result.ok) { slug = result.slug; published = true; await saveSettings(env, shopId, { pageSlug: slug, pageAutoTried: true }); }
+      else console.error("BotCraft publish after payment failed", result.error);
+    }
+    if (slug) await setHostingYears(env, slug, plan.years).catch(error => console.error("BotCraft hosting years failed", error));
+  }
+  return { ok: true, plan: plan.id, replies: plan.replies, years: plan.years, pageSlug: slug || null, published };
+}
+
+// Launch mode (BOTCRAFT_REQUIRE_PAID="true"): a page goes live only for a shop whose payment the admin has marked.
+export const publishNeedsPayment = (env, settings) => String(env?.BOTCRAFT_REQUIRE_PAID || "").toLowerCase() === "true" && !settings?.paid;
+
 export async function autoPublishPage(env, request, shopId, facts, deps = {}) {
   const load = deps.loadSettings || loadSettings;
   const save = deps.saveSettings || saveSettings;
@@ -602,6 +631,7 @@ export async function autoPublishPage(env, request, shopId, facts, deps = {}) {
   if (String(env.HOSTING_REQUIRE_PAYMENT || "") === "true" || String(env.HOSTING_DISABLED || "") === "true") return null;
   const settings = await load(env, shopId);
   if (settings.pageSlug || settings.pageAutoTried) return null;
+  if (publishNeedsPayment(env, settings)) return null; // goes live when the admin marks the payment (markShopPaid)
   await save(env, shopId, { pageAutoTried: true });
   const published = await publish(env, request, new URL(request.url), {
     publicId: await publicIdOf(env, shopId),
@@ -618,7 +648,7 @@ export async function autoPublishPage(env, request, shopId, facts, deps = {}) {
 // Credits for AI work the owner starts (the same balance that pays for customer replies). Work that needs no AI
 // (price, stock, hide, delete, timings, sales, saved-answer edits typed by hand) costs nothing.
 // Change the costs with BOTCRAFT_COST_OWNER_UPDATE / _ABOUT / _STUDIO. The setup chat is part of the build price.
-const OWNER_CREDIT_DEFAULTS = { update: 1, about: 2, studio: 20 };
+const OWNER_CREDIT_DEFAULTS = { update: 1, about: 2, studio: 25 };
 export function ownerCreditCost(env, kind) {
   const set = Number(env?.[`BOTCRAFT_COST_OWNER_${kind.toUpperCase()}`]);
   return Number.isFinite(set) && set >= 0 ? Math.min(Math.floor(set), 200) : OWNER_CREDIT_DEFAULTS[kind];
@@ -726,12 +756,29 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
 
   const shopId = SHOP_ID_PATTERN.test(String(body?.shopId || "")) ? body.shopId : null;
   let saved = null;
+  let isNewShop = false;
   if (shopId && storeAvailable(env)) {
     try {
-      saved = (await loadShop(env, shopId, MAX_HISTORY)) || { facts: {}, notes: [], answers: {}, messages: [] };
+      const loaded = await loadShop(env, shopId, MAX_HISTORY);
+      isNewShop = !loaded;
+      saved = loaded || { facts: {}, notes: [], answers: {}, messages: [] };
     } catch (error) {
       console.error("BotCraft load failed", error);
     }
+  }
+  // Abuse protection before payment: one internet connection can start only a few assistants, and use only so
+  // many setup messages, in a day. (BOTCRAFT_NEW_SHOPS_PER_IP default 5, BOTCRAFT_SETUP_MSGS_PER_IP default 300.)
+  if (saved) {
+    const ipHash = await sha256Hex(`ip:${clientKey}`);
+    const limitOf = (name, fallback) => { const v = Number(env?.[name]); return Number.isFinite(v) && v >= 0 ? Math.floor(v) : fallback; };
+    try {
+      if (isNewShop && !(await takeIpLimit(env, ipHash, "new_shop", limitOf("BOTCRAFT_NEW_SHOPS_PER_IP", 5)))) {
+        return reply({ ok: false, code: "new_shop_limit", error: "Too many new assistants were started from this internet connection today. Please continue with your existing assistant, or try again tomorrow." }, 429, origin);
+      }
+      if (!(await takeIpLimit(env, ipHash, "setup_msg", limitOf("BOTCRAFT_SETUP_MSGS_PER_IP", 300)))) {
+        return reply({ ok: false, code: "setup_limit", error: "Too many setup messages from this internet connection today. Please continue tomorrow." }, 429, origin);
+      }
+    } catch (error) { console.error("BotCraft ip limit failed", error); }
   }
   // Saved state wins over what the browser sends.
   const facts = cleanFacts(saved ? saved.facts : body?.facts);
@@ -748,7 +795,8 @@ export async function handleBotcraftRoute(request, env, url, ctx) {
     .slice(0, MAX_IMAGES);
   const skippedFiles = (Array.isArray(body?.otherFiles) ? body.otherFiles : []).map(f => clip(f, 120)).filter(Boolean).slice(0, 5);
   // PDFs go to the AI as they are; other files arrive as the text the page read from them.
-  const fileInput = customerFiles({ documents: body?.documents, fileTexts: body?.fileTexts });
+  const fileInput = customerFiles({ documents: body?.documents, fileTexts: body?.fileTexts }, { maxDocs: 2 });
+  if (fileInput.tooLong) return reply({ ok: false, error: `A PDF has more than ${MAX_PDF_PAGES} pages. Please send a shorter one, or type the details here.` }, 400, origin);
   if (!text && !images.length && !skippedFiles.length && !fileInput.count) return reply({ ok: false, error: "Message is empty." }, 400, origin);
 
   const history = (saved ? saved.messages : Array.isArray(body?.history) ? body.history : [])
@@ -1015,20 +1063,28 @@ export function customerImages(raw) {
     .map(img => ({ mimeType: img.mimeType, data: img.data }));
 }
 // PDFs (the AI opens them itself) and the text of other files the page already read (TXT, CSV, DOCX, XLSX ...).
-const MAX_CUSTOMER_DOCS = 2;
-const MAX_CUSTOMER_DOC_CHARS = 2_800_000; // base64 characters, about 2 MB of PDF
+const MAX_CUSTOMER_DOCS = 1; // one PDF at a time: a PDF can be many pages, and every page costs the shop credits' worth of AI
+const MAX_CUSTOMER_DOC_CHARS = 1_400_000; // base64 characters, about 1 MB of PDF
+export const MAX_PDF_PAGES = 10;
 const MAX_CUSTOMER_FILE_TEXTS = 3;
 const MAX_FILE_TEXT_CHARS = 12000;
-export function customerFiles(body) {
-  const docs = (Array.isArray(body?.documents) ? body.documents : [])
-    .filter(doc => doc?.mimeType === "application/pdf" && typeof doc?.data === "string" && doc.data.length > 0 && doc.data.length <= MAX_CUSTOMER_DOC_CHARS && /^[A-Za-z0-9+/=]+$/.test(doc.data))
-    .slice(0, MAX_CUSTOMER_DOCS)
-    .map(doc => ({ mimeType: doc.mimeType, data: doc.data }));
+// Pages of a PDF, counted from its page objects (a good estimate; the page also counts before sending).
+export function pdfPageCount(base64) {
+  try {
+    const binary = atob(base64);
+    return (binary.match(/\/Type\s*\/Page(?![A-Za-z])/g) || []).length;
+  } catch { return 0; }
+}
+export function customerFiles(body, { maxDocs = MAX_CUSTOMER_DOCS } = {}) {
+  const valid = (Array.isArray(body?.documents) ? body.documents : [])
+    .filter(doc => doc?.mimeType === "application/pdf" && typeof doc?.data === "string" && doc.data.length > 0 && doc.data.length <= MAX_CUSTOMER_DOC_CHARS && /^[A-Za-z0-9+/=]+$/.test(doc.data));
+  const docs = valid.filter(doc => pdfPageCount(doc.data) <= MAX_PDF_PAGES).slice(0, maxDocs).map(doc => ({ mimeType: doc.mimeType, data: doc.data }));
+  const tooLong = valid.some(doc => pdfPageCount(doc.data) > MAX_PDF_PAGES);
   const texts = (Array.isArray(body?.fileTexts) ? body.fileTexts : [])
     .map(file => ({ name: clip(file?.name, 80).replace(/[\r\n"]+/g, " "), text: clip(file?.text, MAX_FILE_TEXT_CHARS) }))
     .filter(file => file.text)
     .slice(0, MAX_CUSTOMER_FILE_TEXTS);
-  return { docs, texts, count: docs.length + texts.length };
+  return { docs, texts, count: docs.length + texts.length, tooLong };
 }
 export function withCustomerFiles(contents, files) {
   if (!files.count) return contents;
@@ -1113,6 +1169,7 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
   // Voice, photo and file replies cost the AI more, so they use more credits (voice 3, photo 2, file 2 by default).
   const photos = customerImages(body?.images);
   const files = customerFiles(body);
+  if (files.tooLong) return reply({ ok: false, code: "pdf_too_long", error: `This PDF has more than ${MAX_PDF_PAGES} pages. Please send a shorter one, or type your question.` }, 400, origin);
   const cost = replyCost(env, { voice: isVoice, photos: photos.length, files: files.count });
   const systemText = salesbotPrompt(profile, knowledge, product, facts.shop_type) + (body?.voice === true || isVoice ? VOICE_RULE : "") + (isVoice ? AUDIO_RULE : "") + (photos.length ? IMAGE_RULE : "") + (files.count ? FILE_RULE : "");
   // The same first question (for example "What are your timings?") is answered from what the AI said before,
@@ -1180,7 +1237,7 @@ async function handleSalesbot(request, env, url, path, origin, ctx) {
     await later(ctx, recordUsage(env, shop.shopId, {
       inTokens: Number(usage?.promptTokenCount) || 0,
       outTokens: (Number(usage?.candidatesTokenCount) || 0) + (Number(usage?.thoughtsTokenCount) || 0),
-      provider
+      provider, credits: cost, voice: isVoice
     }).catch(error => console.error("BotCraft usage log failed", error)));
     const answerText = clip(result?.reply, 1500) || "Sorry, please ask again.";
     if (cacheable && result?.answered !== false && clip(result?.reply, 1500)) {
@@ -1327,6 +1384,9 @@ async function ownerView(env, shopId, url) {
     savedAnswers,
     premiumVoice: premiumVoiceAvailable(env),
     photoStudio: { available: photoStudioAvailable(env), leftToday: studioLeftToday(env, settings) },
+    paid: Boolean(settings.paid),
+    plan: settings.plan || null,
+    publishNeedsPayment: publishNeedsPayment(env, settings),
     hiddenSections: Array.isArray(settings.hiddenSections) ? settings.hiddenSections : [],
     shopName: facts.shop_name || "",
     botName: botName(facts),
@@ -1512,7 +1572,7 @@ async function handlePlanUpdate(env, shopId, body, origin, ctx) {
   try {
     const { result } = await callWithFallback(env, {
       onUsage: metadata => { planUsage = metadata; },
-      system: buildPlanPrompt(products, info, images.length, savedAnswers),
+      system: buildPlanPrompt(products, info, images.length, savedAnswers, text),
       contents: [{ role: "user", parts }],
       schema: PLAN_SCHEMA,
       models: CHAT_MODELS,
@@ -1522,6 +1582,7 @@ async function handlePlanUpdate(env, shopId, body, origin, ctx) {
       log: message => modelErrors.push(message.slice(0, 160))
     });
     await later(ctx, addOwnerTokens(env, shopId, "update", { inTokens: Number(planUsage?.promptTokenCount) || 0, outTokens: (Number(planUsage?.candidatesTokenCount) || 0) + (Number(planUsage?.thoughtsTokenCount) || 0) }));
+    await later(ctx, recordOwnerCredits(env, shopId, "update", credit.cost));
     return reply({ ok: true, plan: cleanPlan(result, products, images.length, savedAnswers), credits: { used: credit.cost, left: credit.balance } }, 200, origin);
   } catch (error) {
     await giveBackOwnerCredits(env, shopId, credit);
@@ -1646,6 +1707,7 @@ async function handleOwner(request, env, origin, ctx) {
     const facts = cleanFacts(saved?.facts);
     if (!coreComplete(facts)) return reply({ ok: false, error: "Finish the basic setup questions first, then publish your page." }, 400, origin);
     const settings = await loadSettings(env, shopId);
+    if (publishNeedsPayment(env, settings)) return reply({ ok: false, code: "PAYMENT_REQUIRED", error: "Your web page goes live after payment. Please call or WhatsApp SiteCraft to complete it." }, 402, origin);
     const published = await publishShopPage(env, request, new URL(request.url), {
       publicId: await ensurePublicId(env, shopId),
       shopName: facts.shop_name || "",
@@ -1685,7 +1747,7 @@ async function handleOwner(request, env, origin, ctx) {
     if (!credit.ok) return reply({ ok: false, code: "no_credits", cost: credit.cost, error: OWNER_NO_CREDITS.about(credit.cost) }, 402, origin);
     const wrote = await writeAbout(env, shopId, { force: true });
     // Credits are for AI work only: a plain sentence made from the shop's facts, or a failure, costs nothing.
-    if (wrote !== "ai") await giveBackOwnerCredits(env, shopId, credit);
+    if (wrote !== "ai") await giveBackOwnerCredits(env, shopId, credit); else await recordOwnerCredits(env, shopId, "about", credit.cost).catch(() => {});
     if (!wrote) return reply({ ok: false, error: "Could not write the text right now. Please try again or write it yourself. No credits were used." }, 503, origin);
   } else if (action === "plan_update") {
     return handlePlanUpdate(env, shopId, body, origin, ctx);
@@ -1695,6 +1757,7 @@ async function handleOwner(request, env, origin, ctx) {
     if (!credit.ok) return reply({ ok: false, code: "no_credits", cost: credit.cost, error: OWNER_NO_CREDITS.studio(credit.cost) }, 402, origin);
     const result = await studioPhoto(env, shopId, String(body?.photoId || ""));
     if (result.status !== 200) await giveBackOwnerCredits(env, shopId, credit); // a photo that could not be made costs nothing
+    else await recordOwnerCredits(env, shopId, "studio", credit.cost, { countCall: true }).catch(() => {});
     return reply(result.status === 200 ? { ...result.body, credits: { used: credit.cost, left: credit.balance } } : result.body, result.status, origin);
   } else if (action === "replace_photo") {
     const photoId = String(body?.photoId || "");

@@ -264,3 +264,12 @@ The old "Rs 1,999, 10,000 replies included" and "Rs 599 per 10,000 replies" are 
 - With no credits the owner is told why, and the update chat falls back to its free basic mode. The owner page "AI replies" card now has a "What uses your credits" list, asks before an AI About text or a studio photo, and the update chat says how many credits an AI change used. The landing page says it too.
 - Costs can be changed with BOTCRAFT_COST_OWNER_UPDATE / _ABOUT / _STUDIO. Table of everything that uses credits: `docs/BOTCRAFT_PRICING.md`.
 - Checked: 126 end-to-end checks (10 new: costs in the owner view, 402 with no credits for update, About and studio, no-AI changes work with zero credits, credits come back on failure).
+
+## Loss protection: abuse limits, launch mode, cheaper update helper, studio and PDF limits, profit report
+- Abuse before payment: one internet connection can start 5 new assistants and send 300 setup messages a day (`BOTCRAFT_NEW_SHOPS_PER_IP`, `BOTCRAFT_SETUP_MSGS_PER_IP`); the test allowance is now 20 replies.
+- Launch mode `BOTCRAFT_REQUIRE_PAID="true"`: a shop's page goes live (automatically or with Publish) only after the admin marks it paid. New admin action "Mark as paid" (plan starter, growth or pro): adds the plan's replies, publishes the page if the setup is complete and sets hosting to the plan's years. The owner page says the page goes live after payment.
+- The update helper's prompt sends only the saved answers related to what the owner wrote (at most 25); every item stays listed.
+- A clean studio photo costs 25 credits (was 20): Gemini 2.5 Flash Image is $0.039 an image on the official price page, about Rs 3.5.
+- A customer can send one PDF at a time, at most 1 MB and 10 pages (counted in the browser and again on the server).
+- Profit report: admin tab "Profit" and a block in each bot's panel (30 days: credits used, their worth, estimated AI cost, margin, LOSS flag, worst first). Usage now records credits per day, voice answers and owner credits per kind. Table `botcraft_ip_limits`.
+- Checked: 136 end-to-end checks (13 new) plus profit (15), update-prompt (7), file-reader (23), cache, trim, groq, pricing and auto-publish checks, and the admin page loads without errors.

@@ -50,8 +50,24 @@ export const PLAN_SCHEMA = {
 const clip = (value, max) => String(value ?? "").trim().slice(0, max);
 export const itemKey = name => String(name || "").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-+|-+$/g, "").slice(0, 140);
 
-export function buildPlanPrompt(products, info, imageCount, savedAnswers = []) {
-  const answerLines = (savedAnswers || []).slice(0, 120).map(a => `- [${a.id}] ${a.question} → ${String(a.answer).slice(0, 160)}${a.hidden ? " (HIDDEN from customers)" : ""}`).join("\n") || "- (no saved answers)";
+// The saved answers are most of this prompt's size, so only the ones related to what the owner wrote are sent (at
+// most MAX_PLAN_ANSWERS); with nothing related, a few are sent so "edit the first answer" style asks still work.
+// Every item is always listed (name and price only), so item changes never miss.
+export const MAX_PLAN_ANSWERS = 25;
+const FEW_ANSWERS = 8;
+const planTokens = text => String(text || "").toLowerCase().replace(/[^\p{L}\p{M}\p{N}\s]/gu, " ").split(/\s+/).filter(token => token.length > 2);
+export function relevantAnswers(savedAnswers, text) {
+  const all = (savedAnswers || []).slice(0, 200);
+  if (all.length <= MAX_PLAN_ANSWERS) return all;
+  const wanted = new Set(planTokens(text));
+  const scored = all.map((answer, index) => ({ answer, index, score: planTokens(`${answer.question} ${answer.answer}`).filter(token => wanted.has(token)).length }));
+  const related = scored.filter(entry => entry.score > 0).sort((a, b) => b.score - a.score || a.index - b.index).slice(0, MAX_PLAN_ANSWERS);
+  const chosen = related.length ? related : scored.slice(0, FEW_ANSWERS);
+  return chosen.sort((a, b) => a.index - b.index).map(entry => entry.answer);
+}
+
+export function buildPlanPrompt(products, info, imageCount, savedAnswers = [], text = "") {
+  const answerLines = relevantAnswers(savedAnswers, text).map(a => `- [${a.id}] ${a.question} → ${String(a.answer).slice(0, 160)}${a.hidden ? " (HIDDEN from customers)" : ""}`).join("\n") || "- (no saved answers)";
   const items = (products || []).slice(0, 200).map(p => `- ${p.name}${p.price_text ? ` | ${p.price_text}` : ""}${p.stock_status === "out_of_stock" ? " | out of stock" : p.stock_status === "hidden" ? " | HIDDEN from customers" : ""}`).join("\n") || "- (no items yet)";
   const known = Object.entries(info || {}).filter(([, v]) => v).map(([k, v]) => `- ${k}: ${v}`).join("\n") || "- (nothing saved yet)";
   return [
@@ -83,7 +99,7 @@ export function buildPlanPrompt(products, info, imageCount, savedAnswers = []) {
     "",
     "Current items:", items,
     "",
-    "Saved answers (what the assistant tells customers):", answerLines,
+    `Saved answers (what the assistant tells customers${(savedAnswers || []).length > MAX_PLAN_ANSWERS ? "; the ones most related to this message, there are more" : ""}):`, answerLines,
     "",
     "Current shop information:", known
   ].join("\n");

@@ -4,7 +4,7 @@
  * stays on the Worker. If the Worker is unreachable or not configured yet,
  * the local demo in mockChat.js answers instead, so the page never breaks.
  */
-import { readFile } from './file-reader.js?v=1';
+import { readFile } from './file-reader.js?v=2';
 import { sendChatAction as sendDemoAction } from './mockChat.js?v=20261031b';
 
 export let premiumVoiceKnown = false; // set from the server's replies: premium voice (ElevenLabs) is on

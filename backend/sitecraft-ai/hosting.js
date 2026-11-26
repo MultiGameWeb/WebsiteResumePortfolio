@@ -105,6 +105,16 @@ export function extendedExpiry(row, now = Date.now()) {
   return new Date(Math.max(now, t.expires) + HOSTING_DAYS * DAY_MS).toISOString();
 }
 
+// A paid plan of `years` years: hosting lasts at least that long from now (never shorter than it already is).
+export async function setHostingYears(env, slug, years, now = Date.now()) {
+  const row = await env.DB.prepare("SELECT created_at, expires_at FROM hosted_sites WHERE slug = ?").bind(slug).first();
+  if (!row) return null;
+  const wanted = now + Math.max(1, Math.floor(years)) * HOSTING_DAYS * DAY_MS;
+  const expires = new Date(Math.max(wanted, hostingTerm(row, now).expires)).toISOString();
+  await env.DB.prepare("UPDATE hosted_sites SET expires_at = ?, updated_at = ? WHERE slug = ?").bind(expires, new Date(now).toISOString(), slug).run();
+  return expires;
+}
+
 const nowIso = () => new Date().toISOString();
 const enc = new TextEncoder();
 
